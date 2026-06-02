@@ -413,44 +413,34 @@ The `displayValue` property (`display-value` attribute) on `bq-option` overrides
   <style>
     bq-select::part(panel) { z-index: 12; }
 
-    .flex {
+    .payment-option {
       display: flex;
-    }
-
-    .flex-col {
       flex-direction: column;
-    }
-
-    .items-center {
-      align-items: center;
-    }
-
-    .gap-xs {
-      gap: var(--bq-spacing-xs);
-    }
-
-    .gap-xs2 {
       gap: var(--bq-spacing-xs2);
     }
 
-    .text-secondary {
+    .payment-option__header {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+
+    .payment-option__name {
+      font-weight: 600;
+    }
+
+    .payment-option__meta,
+    .payment-option__owner {
+      padding-inline-start: 28px;
       color: var(--bq-text--secondary);
     }
 
-    .text-s {
+    .payment-option__meta {
       font-size: var(--bq-font-size--s);
     }
 
-    .text-xs {
+    .payment-option__owner {
       font-size: var(--bq-font-size--xs);
-    }
-
-    .option-indent {
-      padding-inline-start: 28px;
-    }
-
-    .font-semibold {
-      font-weight: 600;
     }
   </style>
 
@@ -460,37 +450,69 @@ The `displayValue` property (`display-value` attribute) on `bq-option` overrides
       You will not be charged until you review your order on the next page
     </span>
     <bq-option value="visa-1234" display-value="Visa •••• 1234">
-      <div class="flex flex-col gap-xs2">
-        <div class="flex items-center gap-xs">
+      <div class="payment-option">
+        <div class="payment-option__header">
           <bq-icon name="credit-card" size="20"></bq-icon>
-          <span class="font-semibold">Visa ending in 1234</span>
+          <span class="payment-option__name">Visa ending in 1234</span>
         </div>
-        <span class="text-secondary text-s option-indent">Expires 12/2025</span>
-        <span class="text-secondary text-xs option-indent">John Doe</span>
+        <span class="payment-option__meta">Expires 12/2025</span>
+        <span class="payment-option__owner">John Doe</span>
       </div>
     </bq-option>
     <bq-option value="mastercard-5678" display-value="Mastercard •••• 5678">
-      <div class="flex flex-col gap-xs2">
-        <div class="flex items-center gap-xs">
+      <div class="payment-option">
+        <div class="payment-option__header">
           <bq-icon name="credit-card" size="20"></bq-icon>
-          <span class="font-semibold">Mastercard ending in 5678</span>
+          <span class="payment-option__name">Mastercard ending in 5678</span>
         </div>
-        <span class="text-secondary text-s option-indent">Expires 08/2026</span>
-        <span class="text-secondary text-xs option-indent">Jane Smith</span>
+        <span class="payment-option__meta">Expires 08/2026</span>
+        <span class="payment-option__owner">Jane Smith</span>
       </div>
     </bq-option>
     <bq-option value="paypal" display-value="PayPal">
-      <div class="flex flex-col gap-xs2">
-        <div class="flex items-center gap-xs">
+      <div class="payment-option">
+        <div class="payment-option__header">
           <bq-icon name="paypal-logo" size="20"></bq-icon>
-          <span class="font-semibold">Pay with PayPal</span>
+          <span class="payment-option__name">Pay with PayPal</span>
         </div>
-        <span class="text-secondary text-s option-indent">john.doe@email.com</span>
+        <span class="payment-option__meta">john.doe@email.com</span>
       </div>
     </bq-option>
   </bq-select>
 `}>
   <CodeGroup>
+    ```css payment-option.css icon="css3"
+    .payment-option {
+      display: flex;
+      flex-direction: column;
+      gap: var(--bq-spacing-xs2);
+    }
+
+    .payment-option__header {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+
+    .payment-option__name {
+      font-weight: 600;
+    }
+
+    .payment-option__meta,
+    .payment-option__owner {
+      padding-inline-start: 28px;
+      color: var(--bq-text--secondary);
+    }
+
+    .payment-option__meta {
+      font-size: var(--bq-font-size--s);
+    }
+
+    .payment-option__owner {
+      font-size: var(--bq-font-size--xs);
+    }
+    ```
+
     ```html HTML icon="html5"
     <bq-select placeholder="Payment method..." open>
       <label slot="label">Choose a payment method</label>
@@ -498,32 +520,32 @@ The `displayValue` property (`display-value` attribute) on `bq-option` overrides
         You will not be charged until you review your order on the next page
       </span>
       <bq-option value="visa-1234" display-value="Visa •••• 1234">
-        <div class="flex flex-col gap-xs2">
-          <div class="flex items-center gap-xs">
+        <div class="payment-option">
+          <div class="payment-option__header">
             <bq-icon name="credit-card" size="20"></bq-icon>
-            <span class="font-semibold">Visa ending in 1234</span>
+            <span class="payment-option__name">Visa ending in 1234</span>
           </div>
-          <span class="text-secondary text-s option-indent">Expires 12/2025</span>
-          <span class="text-secondary text-xs option-indent">John Doe</span>
+          <span class="payment-option__meta">Expires 12/2025</span>
+          <span class="payment-option__owner">John Doe</span>
         </div>
       </bq-option>
       <bq-option value="mastercard-5678" display-value="Mastercard •••• 5678">
-        <div class="flex flex-col gap-xs2">
-          <div class="flex items-center gap-xs">
+        <div class="payment-option">
+          <div class="payment-option__header">
             <bq-icon name="credit-card" size="20"></bq-icon>
-            <span class="font-semibold">Mastercard ending in 5678</span>
+            <span class="payment-option__name">Mastercard ending in 5678</span>
           </div>
-          <span class="text-secondary text-s option-indent">Expires 08/2026</span>
-          <span class="text-secondary text-xs option-indent">Jane Smith</span>
+          <span class="payment-option__meta">Expires 08/2026</span>
+          <span class="payment-option__owner">Jane Smith</span>
         </div>
       </bq-option>
       <bq-option value="paypal" display-value="PayPal">
-        <div class="flex flex-col gap-xs2">
-          <div class="flex items-center gap-xs">
+        <div class="payment-option">
+          <div class="payment-option__header">
             <bq-icon name="paypal-logo" size="20"></bq-icon>
-            <span class="font-semibold">Pay with PayPal</span>
+            <span class="payment-option__name">Pay with PayPal</span>
           </div>
-          <span class="text-secondary text-s option-indent">john.doe@email.com</span>
+          <span class="payment-option__meta">john.doe@email.com</span>
         </div>
       </bq-option>
     </bq-select>
@@ -531,6 +553,7 @@ The `displayValue` property (`display-value` attribute) on `bq-option` overrides
 
     ```jsx React icon="react"
     import { BqIcon, BqOption, BqSelect } from "@beeq/react";
+    import "./payment-option.css";
 
     <BqSelect placeholder="Payment method..." open>
       <label slot="label">Choose a payment method</label>
@@ -538,32 +561,32 @@ The `displayValue` property (`display-value` attribute) on `bq-option` overrides
         You will not be charged until you review your order on the next page
       </span>
       <BqOption value="visa-1234" displayValue="Visa •••• 1234">
-        <div className="flex flex-col gap-xs2">
-          <div className="flex items-center gap-xs">
+        <div className="payment-option">
+          <div className="payment-option__header">
             <BqIcon name="credit-card" size="20" />
-            <span className="font-semibold">Visa ending in 1234</span>
+            <span className="payment-option__name">Visa ending in 1234</span>
           </div>
-          <span className="text-secondary text-s option-indent">Expires 12/2025</span>
-          <span className="text-secondary text-xs option-indent">John Doe</span>
+          <span className="payment-option__meta">Expires 12/2025</span>
+          <span className="payment-option__owner">John Doe</span>
         </div>
       </BqOption>
       <BqOption value="mastercard-5678" displayValue="Mastercard •••• 5678">
-        <div className="flex flex-col gap-xs2">
-          <div className="flex items-center gap-xs">
+        <div className="payment-option">
+          <div className="payment-option__header">
             <BqIcon name="credit-card" size="20" />
-            <span className="font-semibold">Mastercard ending in 5678</span>
+            <span className="payment-option__name">Mastercard ending in 5678</span>
           </div>
-          <span className="text-secondary text-s option-indent">Expires 08/2026</span>
-          <span className="text-secondary text-xs option-indent">Jane Smith</span>
+          <span className="payment-option__meta">Expires 08/2026</span>
+          <span className="payment-option__owner">Jane Smith</span>
         </div>
       </BqOption>
       <BqOption value="paypal" displayValue="PayPal">
-        <div className="flex flex-col gap-xs2">
-          <div className="flex items-center gap-xs">
+        <div className="payment-option">
+          <div className="payment-option__header">
             <BqIcon name="paypal-logo" size="20" />
-            <span className="font-semibold">Pay with PayPal</span>
+            <span className="payment-option__name">Pay with PayPal</span>
           </div>
-          <span className="text-secondary text-s option-indent">john.doe@email.com</span>
+          <span className="payment-option__meta">john.doe@email.com</span>
         </div>
       </BqOption>
     </BqSelect>
@@ -583,41 +606,78 @@ The `displayValue` property (`display-value` attribute) on `bq-option` overrides
             You will not be charged until you review your order on the next page
           </span>
           <bq-option value="visa-1234" display-value="Visa •••• 1234">
-            <div class="flex flex-col gap-xs2">
-              <div class="flex items-center gap-xs">
+            <div class="payment-option">
+              <div class="payment-option__header">
                 <bq-icon name="credit-card" size="20"></bq-icon>
-                <span class="font-semibold">Visa ending in 1234</span>
+                <span class="payment-option__name">Visa ending in 1234</span>
               </div>
-              <span class="text-secondary text-s option-indent">Expires 12/2025</span>
-              <span class="text-secondary text-xs option-indent">John Doe</span>
+              <span class="payment-option__meta">Expires 12/2025</span>
+              <span class="payment-option__owner">John Doe</span>
             </div>
           </bq-option>
           <bq-option value="mastercard-5678" display-value="Mastercard •••• 5678">
-            <div class="flex flex-col gap-xs2">
-              <div class="flex items-center gap-xs">
+            <div class="payment-option">
+              <div class="payment-option__header">
                 <bq-icon name="credit-card" size="20"></bq-icon>
-                <span class="font-semibold">Mastercard ending in 5678</span>
+                <span class="payment-option__name">Mastercard ending in 5678</span>
               </div>
-              <span class="text-secondary text-s option-indent">Expires 08/2026</span>
-              <span class="text-secondary text-xs option-indent">Jane Smith</span>
+              <span class="payment-option__meta">Expires 08/2026</span>
+              <span class="payment-option__owner">Jane Smith</span>
             </div>
           </bq-option>
           <bq-option value="paypal" display-value="PayPal">
-            <div class="flex flex-col gap-xs2">
-              <div class="flex items-center gap-xs">
+            <div class="payment-option">
+              <div class="payment-option__header">
                 <bq-icon name="paypal-logo" size="20"></bq-icon>
-                <span class="font-semibold">Pay with PayPal</span>
+                <span class="payment-option__name">Pay with PayPal</span>
               </div>
-              <span class="text-secondary text-s option-indent">john.doe@email.com</span>
+              <span class="payment-option__meta">john.doe@email.com</span>
             </div>
           </bq-option>
         </bq-select>
-      `
+      `,
+      styles: [
+        `
+          .payment-option {
+            display: flex;
+            flex-direction: column;
+            gap: var(--bq-spacing-xs2);
+          }
+
+          .payment-option__header {
+            display: flex;
+            align-items: center;
+            gap: var(--bq-spacing-xs);
+          }
+
+          .payment-option__name {
+            font-weight: 600;
+          }
+
+          .payment-option__meta,
+          .payment-option__owner {
+            padding-inline-start: 28px;
+            color: var(--bq-text--secondary);
+          }
+
+          .payment-option__meta {
+            font-size: var(--bq-font-size--s);
+          }
+
+          .payment-option__owner {
+            font-size: var(--bq-font-size--xs);
+          }
+        `
+      ],
     })
     export class DisplayValueSelectComponent {}
     ```
 
     ```vue Vue icon="vuejs"
+    <script setup>
+    import { BqIcon, BqOption, BqSelect } from "@beeq/vue";
+    </script>
+
     <template>
       <BqSelect placeholder="Payment method..." open>
         <label slot="label">Choose a payment method</label>
@@ -625,40 +685,68 @@ The `displayValue` property (`display-value` attribute) on `bq-option` overrides
           You will not be charged until you review your order on the next page
         </span>
         <BqOption value="visa-1234" displayValue="Visa •••• 1234">
-          <div class="flex flex-col gap-xs2">
-            <div class="flex items-center gap-xs">
+          <div class="payment-option">
+            <div class="payment-option__header">
               <BqIcon name="credit-card" size="20" />
-              <span class="font-semibold">Visa ending in 1234</span>
+              <span class="payment-option__name">Visa ending in 1234</span>
             </div>
-            <span class="text-secondary text-s option-indent">Expires 12/2025</span>
-            <span class="text-secondary text-xs option-indent">John Doe</span>
+            <span class="payment-option__meta">Expires 12/2025</span>
+            <span class="payment-option__owner">John Doe</span>
           </div>
         </BqOption>
         <BqOption value="mastercard-5678" displayValue="Mastercard •••• 5678">
-          <div class="flex flex-col gap-xs2">
-            <div class="flex items-center gap-xs">
+          <div class="payment-option">
+            <div class="payment-option__header">
               <BqIcon name="credit-card" size="20" />
-              <span class="font-semibold">Mastercard ending in 5678</span>
+              <span class="payment-option__name">Mastercard ending in 5678</span>
             </div>
-            <span class="text-secondary text-s option-indent">Expires 08/2026</span>
-            <span class="text-secondary text-xs option-indent">Jane Smith</span>
+            <span class="payment-option__meta">Expires 08/2026</span>
+            <span class="payment-option__owner">Jane Smith</span>
           </div>
         </BqOption>
         <BqOption value="paypal" displayValue="PayPal">
-          <div class="flex flex-col gap-xs2">
-            <div class="flex items-center gap-xs">
+          <div class="payment-option">
+            <div class="payment-option__header">
               <BqIcon name="paypal-logo" size="20" />
-              <span class="font-semibold">Pay with PayPal</span>
+              <span class="payment-option__name">Pay with PayPal</span>
             </div>
-            <span class="text-secondary text-s option-indent">john.doe@email.com</span>
+            <span class="payment-option__meta">john.doe@email.com</span>
           </div>
         </BqOption>
       </BqSelect>
     </template>
 
-    <script setup>
-    import { BqIcon, BqOption, BqSelect } from "@beeq/vue";
-    </script>
+    <style>
+    .payment-option {
+      display: flex;
+      flex-direction: column;
+      gap: var(--bq-spacing-xs2);
+    }
+
+    .payment-option__header {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+
+    .payment-option__name {
+      font-weight: 600;
+    }
+
+    .payment-option__meta,
+    .payment-option__owner {
+      padding-inline-start: 28px;
+      color: var(--bq-text--secondary);
+    }
+
+    .payment-option__meta {
+      font-size: var(--bq-font-size--s);
+    }
+
+    .payment-option__owner {
+      font-size: var(--bq-font-size--xs);
+    }
+    </style>
     ```
   </CodeGroup>
 </CodeLivePreview>
@@ -2240,145 +2328,244 @@ Call `preventDefault()` on the `bqInput` event to take full control of option fi
 </Tip>
 
 <CodeLivePreview code={`
-  <style>
-    bq-select::part(panel) { z-index: 12; }
-  </style>
-
   <bq-select id="custom-select" placeholder="Search options..." debounce-time="300">
     <label slot="label">Custom filtering</label>
+    <bq-option value="running" display-value="Running" data-label="Running" data-icon="sneaker-move">
+      <bq-icon slot="prefix" name="sneaker-move"></bq-icon> Running
+    </bq-option>
+    <bq-option value="hiking" display-value="Hiking" data-label="Hiking" data-icon="boot">
+      <bq-icon slot="prefix" name="boot"></bq-icon> Hiking
+    </bq-option>
+    <bq-option value="biking" display-value="Biking" data-label="Biking" data-icon="person-simple-bike">
+      <bq-icon slot="prefix" name="person-simple-bike"></bq-icon> Biking
+    </bq-option>
+    <bq-option value="swimming" display-value="Swimming" data-label="Swimming" data-icon="swimming-pool">
+      <bq-icon slot="prefix" name="swimming-pool"></bq-icon> Swimming
+    </bq-option>
+    <bq-option value="pizza" display-value="Pizza" data-label="Pizza" data-icon="pizza">
+      <bq-icon slot="prefix" name="pizza"></bq-icon> Pizza
+    </bq-option>
+    <bq-option value="hamburger" display-value="Hamburger" data-label="Hamburger" data-icon="hamburger">
+      <bq-icon slot="prefix" name="hamburger"></bq-icon> Hamburger
+    </bq-option>
+    <bq-option value="cookie" display-value="Cookie" data-label="Cookie" data-icon="cookie">
+      <bq-icon slot="prefix" name="cookie"></bq-icon> Cookie
+    </bq-option>
+    <bq-option value="ice-cream" display-value="Ice-cream" data-label="Ice-cream" data-icon="ice-cream">
+      <bq-icon slot="prefix" name="ice-cream"></bq-icon> Ice-cream
+    </bq-option>
   </bq-select>
 
   <script>
     (() => {
-      const ALL_OPTIONS = [
-        { label: 'Running', value: 'running', icon: 'sneaker-move' },
-        { label: 'Hiking', value: 'hiking', icon: 'boot' },
-        { label: 'Biking', value: 'biking', icon: 'person-simple-bike' },
-        { label: 'Swimming', value: 'swimming', icon: 'swimming-pool' },
-        { label: 'Pizza', value: 'pizza', icon: 'pizza' },
-        { label: 'Hamburger', value: 'hamburger', icon: 'hamburger' },
-        { label: 'Cookie', value: 'cookie', icon: 'cookie' },
-        { label: 'Ice-cream', value: 'ice-cream', icon: 'ice-cream' },
-      ];
-
       const select = previewRoot.querySelector('#custom-select');
+      const staticOpts = Array.from(select.querySelectorAll('bq-option'));
 
       function highlight(text, query) {
-        return text.replace(new RegExp('(' + query + ')', 'gi'), '<b>$1</b>');
+        const escaped = query.replace(/[.*+?^{}()|[\]\\$]/g, '\\$&');
+        return text.replace(new RegExp('(' + escaped + ')', 'gi'), '<b>$1</b>');
       }
 
-      function renderOptions(items, query) {
-        select.querySelectorAll('bq-option').forEach(function(el) { el.remove(); });
+      function removeTempOpts() {
+        select.querySelectorAll('bq-option[data-temp]').forEach(function(opt) { opt.remove(); });
+      }
 
-        if (items.length === 0) {
-          const opt = document.createElement('bq-option');
-          opt.setAttribute('disabled', '');
-          opt.innerHTML = '<bq-icon slot="prefix" name="x-circle"></bq-icon> No results found';
-          select.appendChild(opt);
-          return;
-        }
+      function insertTempOption(icon, message) {
+        select.insertAdjacentHTML('beforeend',
+          '<bq-option disabled data-temp="">' +
+          '<bq-icon slot="prefix" name="' + icon + '"></bq-icon> ' + message +
+          '</bq-option>'
+        );
+      }
 
-        items.forEach(function(item) {
-          const opt = document.createElement('bq-option');
-          opt.value = item.value;
-          const labelHtml = query ? highlight(item.label, query) : item.label;
-          opt.innerHTML = '<bq-icon slot="prefix" name="' + item.icon + '"></bq-icon><span>' + labelHtml + '</span>';
-          select.appendChild(opt);
+      function showAllOptions() {
+        staticOpts.forEach(function(opt) {
+          opt.hidden = false;
+          opt.innerHTML =
+            '<bq-icon slot="prefix" name="' + opt.getAttribute('data-icon') + '"></bq-icon> ' +
+            opt.getAttribute('data-label');
         });
       }
 
-      renderOptions(ALL_OPTIONS);
+      async function fetchFilteredOptions(query) {
+        await new Promise(function(resolve) { setTimeout(resolve, 500); });
+        const q = query.toLowerCase();
+        return staticOpts.filter(function(opt) {
+          return opt.getAttribute('data-label').toLowerCase().includes(q);
+        });
+      }
 
-      select.addEventListener('bqInput', function(ev) {
+      select.addEventListener('bqInput', async function(ev) {
         ev.preventDefault();
         const query = ev.detail.value;
-        if (!query) { renderOptions(ALL_OPTIONS); return; }
-        const q = query.toLowerCase();
-        renderOptions(
-          ALL_OPTIONS.filter(function(o) { return o.label.toLowerCase().includes(q); }),
-          query
+
+        removeTempOpts();
+
+        if (!query) {
+          showAllOptions();
+          return;
+        }
+
+        staticOpts.forEach(function(opt) { opt.hidden = true; });
+        select.insertAdjacentHTML('beforeend',
+          '<bq-option disabled data-temp="">' +
+          '<bq-spinner slot="prefix" animation size="small" text-position="right"></bq-spinner>' +
+          ' Loading...' +
+          '</bq-option>'
         );
+
+        try {
+          const matches = await fetchFilteredOptions(query);
+          removeTempOpts();
+
+          if (matches.length === 0) {
+            insertTempOption('x-circle', 'No results found');
+          } else {
+            matches.forEach(function(opt) {
+              opt.hidden = false;
+              opt.innerHTML =
+                '<bq-icon slot="prefix" name="' + opt.getAttribute('data-icon') + '"></bq-icon>' +
+                '<span>' + highlight(opt.getAttribute('data-label'), query) + '</span>';
+            });
+          }
+        } catch (_) {
+          removeTempOpts();
+          insertTempOption('warning', 'Error loading options');
+        }
       });
 
       select.addEventListener('bqSelect', function() {
-        renderOptions(ALL_OPTIONS);
+        removeTempOpts();
+        showAllOptions();
       });
     })();
   </script>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-select id="custom-select" placeholder="Search options..." debounce-time="300">
       <label slot="label">Custom filtering</label>
+      <bq-option value="running" display-value="Running" data-label="Running" data-icon="sneaker-move">
+        <bq-icon slot="prefix" name="sneaker-move"></bq-icon> Running
+      </bq-option>
+      <bq-option value="hiking" display-value="Hiking" data-label="Hiking" data-icon="boot">
+        <bq-icon slot="prefix" name="boot"></bq-icon> Hiking
+      </bq-option>
+      <bq-option value="biking" display-value="Biking" data-label="Biking" data-icon="person-simple-bike">
+        <bq-icon slot="prefix" name="person-simple-bike"></bq-icon> Biking
+      </bq-option>
+      <bq-option value="swimming" display-value="Swimming" data-label="Swimming" data-icon="swimming-pool">
+        <bq-icon slot="prefix" name="swimming-pool"></bq-icon> Swimming
+      </bq-option>
+      <bq-option value="pizza" display-value="Pizza" data-label="Pizza" data-icon="pizza">
+        <bq-icon slot="prefix" name="pizza"></bq-icon> Pizza
+      </bq-option>
+      <bq-option value="hamburger" display-value="Hamburger" data-label="Hamburger" data-icon="hamburger">
+        <bq-icon slot="prefix" name="hamburger"></bq-icon> Hamburger
+      </bq-option>
+      <bq-option value="cookie" display-value="Cookie" data-label="Cookie" data-icon="cookie">
+        <bq-icon slot="prefix" name="cookie"></bq-icon> Cookie
+      </bq-option>
+      <bq-option value="ice-cream" display-value="Ice-cream" data-label="Ice-cream" data-icon="ice-cream">
+        <bq-icon slot="prefix" name="ice-cream"></bq-icon> Ice-cream
+      </bq-option>
     </bq-select>
-    ```
 
-    ```js JS icon="square-js"
-    const ALL_OPTIONS = [
-      { label: 'Running', value: 'running', icon: 'sneaker-move' },
-      { label: 'Hiking', value: 'hiking', icon: 'boot' },
-      { label: 'Biking', value: 'biking', icon: 'person-simple-bike' },
-      { label: 'Swimming', value: 'swimming', icon: 'swimming-pool' },
-      { label: 'Pizza', value: 'pizza', icon: 'pizza' },
-      { label: 'Hamburger', value: 'hamburger', icon: 'hamburger' },
-      { label: 'Cookie', value: 'cookie', icon: 'cookie' },
-      { label: 'Ice-cream', value: 'ice-cream', icon: 'ice-cream' },
-    ];
+    <script>
+      const select = document.querySelector('#custom-select');
+      const staticOpts = Array.from(select.querySelectorAll('bq-option'));
 
-    const select = document.querySelector('#custom-select');
-
-    function highlight(text, query) {
-      const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      return text.replace(new RegExp(`(${escaped})`, 'gi'), '<b>$1</b>');
-    }
-
-    function renderOptions(items, query = '') {
-      select.querySelectorAll('bq-option').forEach((el) => el.remove());
-
-      if (items.length === 0) {
-        const opt = document.createElement('bq-option');
-        opt.setAttribute('disabled', '');
-        opt.innerHTML = `<bq-icon slot="prefix" name="x-circle"></bq-icon> No results found`;
-        select.appendChild(opt);
-        return;
+      function highlight(text, query) {
+        const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        return text.replace(new RegExp(`(${escaped})`, 'gi'), '<b>$1</b>');
       }
 
-      items.forEach(({ label, value, icon }) => {
-        const opt = document.createElement('bq-option');
-        opt.value = value;
-        const labelHtml = query ? highlight(label, query) : label;
-        opt.innerHTML = `<bq-icon slot="prefix" name="${icon}"></bq-icon><span>${labelHtml}</span>`;
-        select.appendChild(opt);
+      function removeTempOpts() {
+        select.querySelectorAll('bq-option[data-temp]').forEach((opt) => opt.remove());
+      }
+
+      function insertTempOption(icon, message) {
+        select.insertAdjacentHTML('beforeend',
+          `<bq-option disabled data-temp="">` +
+          `<bq-icon slot="prefix" name="${icon}"></bq-icon> ${message}` +
+          `</bq-option>`
+        );
+      }
+
+      function showAllOptions() {
+        staticOpts.forEach((opt) => {
+          opt.hidden = false;
+          opt.innerHTML =
+            `<bq-icon slot="prefix" name="${opt.getAttribute('data-icon')}"></bq-icon> ` +
+            opt.getAttribute('data-label');
+        });
+      }
+
+      async function fetchFilteredOptions(query) {
+        await new Promise((resolve) => setTimeout(resolve, 500));
+        const q = query.toLowerCase();
+        return staticOpts.filter((opt) => opt.getAttribute('data-label').toLowerCase().includes(q));
+      }
+
+      select.addEventListener('bqInput', async (ev) => {
+        ev.preventDefault();
+        const query = ev.detail.value;
+
+        removeTempOpts();
+
+        if (!query) {
+          showAllOptions();
+          return;
+        }
+
+        staticOpts.forEach((opt) => (opt.hidden = true));
+        select.insertAdjacentHTML('beforeend',
+          `<bq-option disabled data-temp="">` +
+          `<bq-spinner slot="prefix" animation size="small" text-position="right"></bq-spinner>` +
+          ` Loading...</bq-option>`
+        );
+
+        try {
+          const matches = await fetchFilteredOptions(query);
+          removeTempOpts();
+
+          if (matches.length === 0) {
+            insertTempOption('x-circle', 'No results found');
+          } else {
+            matches.forEach((opt) => {
+              opt.hidden = false;
+              opt.innerHTML =
+                `<bq-icon slot="prefix" name="${opt.getAttribute('data-icon')}"></bq-icon>` +
+                `<span>${highlight(opt.getAttribute('data-label'), query)}</span>`;
+            });
+          }
+        } catch (_) {
+          removeTempOpts();
+          insertTempOption('warning', 'Error loading options');
+        }
       });
-    }
 
-    renderOptions(ALL_OPTIONS);
-
-    select.addEventListener('bqInput', (ev) => {
-      ev.preventDefault();
-      const query = ev.detail.value;
-      if (!query) { renderOptions(ALL_OPTIONS); return; }
-      const q = query.toLowerCase();
-      renderOptions(ALL_OPTIONS.filter((o) => o.label.toLowerCase().includes(q)), query);
-    });
-
-    select.addEventListener('bqSelect', () => renderOptions(ALL_OPTIONS));
+      select.addEventListener('bqSelect', () => {
+        removeTempOpts();
+        showAllOptions();
+      });
+    </script>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { useState } from 'react';
     import type { BqSelectCustomEvent } from '@beeq/core';
     import { BqIcon, BqOption, BqSelect, BqSpinner } from '@beeq/react';
 
     const ALL_OPTIONS = [
-      { label: 'Running', value: 'running', icon: 'sneaker-move' },
-      { label: 'Hiking', value: 'hiking', icon: 'boot' },
-      { label: 'Biking', value: 'biking', icon: 'person-simple-bike' },
-      { label: 'Swimming', value: 'swimming', icon: 'swimming-pool' },
-      { label: 'Pizza', value: 'pizza', icon: 'pizza' },
-      { label: 'Hamburger', value: 'hamburger', icon: 'hamburger' },
-      { label: 'Cookie', value: 'cookie', icon: 'cookie' },
-      { label: 'Ice-cream', value: 'ice-cream', icon: 'ice-cream' },
+      { label: 'Running', value: 'running', icon: 'sneaker-move', displayValue: 'Running' },
+      { label: 'Hiking', value: 'hiking', icon: 'boot', displayValue: 'Hiking' },
+      { label: 'Biking', value: 'biking', icon: 'person-simple-bike', displayValue: 'Biking' },
+      { label: 'Swimming', value: 'swimming', icon: 'swimming-pool', displayValue: 'Swimming' },
+      { label: 'Pizza', value: 'pizza', icon: 'pizza', displayValue: 'Pizza' },
+      { label: 'Hamburger', value: 'hamburger', icon: 'hamburger', displayValue: 'Hamburger' },
+      { label: 'Cookie', value: 'cookie', icon: 'cookie', displayValue: 'Cookie' },
+      { label: 'Ice-cream', value: 'ice-cream', icon: 'ice-cream', displayValue: 'Ice-cream' },
     ];
 
     function highlight(text: string, query: string) {
@@ -2449,7 +2636,7 @@ Call `preventDefault()` on the `bqInput` event to take full control of option fi
             </BqOption>
           ) : (
             visibleOptions.map((option) => (
-              <BqOption key={option.value} value={option.value}>
+              <BqOption key={option.value} value={option.value} displayValue={option.displayValue}>
                 <BqIcon slot="prefix" name={option.icon} />
                 <span dangerouslySetInnerHTML={{ __html: option.label }} />
               </BqOption>
@@ -2460,20 +2647,20 @@ Call `preventDefault()` on the `bqInput` event to take full control of option fi
     }
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqOption, BqSelect, BqSpinner } from "@beeq/angular/standalone";
     import type { BqSelectCustomEvent } from "@beeq/core";
 
     const ALL_OPTIONS = [
-      { label: 'Running', value: 'running', icon: 'sneaker-move' },
-      { label: 'Hiking', value: 'hiking', icon: 'boot' },
-      { label: 'Biking', value: 'biking', icon: 'person-simple-bike' },
-      { label: 'Swimming', value: 'swimming', icon: 'swimming-pool' },
-      { label: 'Pizza', value: 'pizza', icon: 'pizza' },
-      { label: 'Hamburger', value: 'hamburger', icon: 'hamburger' },
-      { label: 'Cookie', value: 'cookie', icon: 'cookie' },
-      { label: 'Ice-cream', value: 'ice-cream', icon: 'ice-cream' },
+      { label: 'Running', value: 'running', icon: 'sneaker-move', displayValue: 'Running' },
+      { label: 'Hiking', value: 'hiking', icon: 'boot', displayValue: 'Hiking' },
+      { label: 'Biking', value: 'biking', icon: 'person-simple-bike', displayValue: 'Biking' },
+      { label: 'Swimming', value: 'swimming', icon: 'swimming-pool', displayValue: 'Swimming' },
+      { label: 'Pizza', value: 'pizza', icon: 'pizza', displayValue: 'Pizza' },
+      { label: 'Hamburger', value: 'hamburger', icon: 'hamburger', displayValue: 'Hamburger' },
+      { label: 'Cookie', value: 'cookie', icon: 'cookie', displayValue: 'Cookie' },
+      { label: 'Ice-cream', value: 'ice-cream', icon: 'ice-cream', displayValue: 'Ice-cream' },
     ];
 
     @Component({
@@ -2500,7 +2687,7 @@ Call `preventDefault()` on the `bqInput` event to take full control of option fi
               </bq-option>
             }
             @for (option of visibleOptions; track option.value) {
-              <bq-option [value]="option.value">
+              <bq-option [value]="option.value" [attr.display-value]="option.displayValue">
                 <bq-icon slot="prefix" [name]="option.icon"></bq-icon>
                 <span [innerHTML]="option.label"></span>
               </bq-option>
@@ -2542,7 +2729,7 @@ Call `preventDefault()` on the `bqInput` event to take full control of option fi
     }
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <template>
       <BqSelect
         placeholder="Search options..."
@@ -2560,7 +2747,7 @@ Call `preventDefault()` on the `bqInput` event to take full control of option fi
             <BqIcon slot="prefix" name="x-circle" />
             No results found
           </BqOption>
-          <BqOption v-for="option in visibleOptions" :key="option.value" :value="option.value">
+          <BqOption v-for="option in visibleOptions" :key="option.value" :value="option.value" :displayValue="option.displayValue">
             <BqIcon slot="prefix" :name="option.icon" />
             <span v-html="option.label" />
           </BqOption>
@@ -2573,14 +2760,14 @@ Call `preventDefault()` on the `bqInput` event to take full control of option fi
     import { BqIcon, BqOption, BqSelect, BqSpinner } from '@beeq/vue';
 
     const ALL_OPTIONS = [
-      { label: 'Running', value: 'running', icon: 'sneaker-move' },
-      { label: 'Hiking', value: 'hiking', icon: 'boot' },
-      { label: 'Biking', value: 'biking', icon: 'person-simple-bike' },
-      { label: 'Swimming', value: 'swimming', icon: 'swimming-pool' },
-      { label: 'Pizza', value: 'pizza', icon: 'pizza' },
-      { label: 'Hamburger', value: 'hamburger', icon: 'hamburger' },
-      { label: 'Cookie', value: 'cookie', icon: 'cookie' },
-      { label: 'Ice-cream', value: 'ice-cream', icon: 'ice-cream' },
+      { label: 'Running', value: 'running', icon: 'sneaker-move', displayValue: 'Running' },
+      { label: 'Hiking', value: 'hiking', icon: 'boot', displayValue: 'Hiking' },
+      { label: 'Biking', value: 'biking', icon: 'person-simple-bike', displayValue: 'Biking' },
+      { label: 'Swimming', value: 'swimming', icon: 'swimming-pool', displayValue: 'Swimming' },
+      { label: 'Pizza', value: 'pizza', icon: 'pizza', displayValue: 'Pizza' },
+      { label: 'Hamburger', value: 'hamburger', icon: 'hamburger', displayValue: 'Hamburger' },
+      { label: 'Cookie', value: 'cookie', icon: 'cookie', displayValue: 'Cookie' },
+      { label: 'Ice-cream', value: 'ice-cream', icon: 'ice-cream', displayValue: 'Ice-cream' },
     ];
 
     const visibleOptions = ref([...ALL_OPTIONS]);

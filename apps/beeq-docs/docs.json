@@ -135,19 +135,14 @@
               "components/checkbox",
               "components/date-picker",
               "components/input",
+              "components/option",
+              "components/option-group",
+              "components/option-list",
               "components/radio",
               "components/select",
               "components/slider",
               "components/switch",
               "components/textarea"
-            ]
-          },
-          {
-            "group": "Options",
-            "pages": [
-              "components/option",
-              "components/option-group",
-              "components/option-list"
             ]
           },
           {

@@ -186,7 +186,7 @@ A simple list of options inside a `bq-option-list`. Each option carries a `value
         </bq-option-list>
       `,
     })
-    export class AppComponent {}
+    export class DefaultOptionComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -293,7 +293,7 @@ Add a `bq-icon` in the `prefix` slot to give each item a visual anchor. Icons ma
         </bq-option-list>
       `,
     })
-    export class AppComponent {}
+    export class OptionWithPrefixIconComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -419,7 +419,7 @@ Use the `suffix` slot for a right-aligned secondary indicator. Common uses inclu
         </bq-option-list>
       `,
     })
-    export class AppComponent {}
+    export class OptionWithSuffixIconComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -535,7 +535,7 @@ Set `selected` on the option that reflects the current active value. The compone
         </bq-option-list>
       `,
     })
-    export class AppComponent {}
+    export class SelectedOptionComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -661,7 +661,7 @@ Set `disabled` on individual options to mark them as contextually unavailable. D
         </bq-option-list>
       `,
     })
-    export class AppComponent {}
+    export class DisabledOptionComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -676,6 +676,136 @@ Set `disabled` on individual options to mark them as contextually unavailable. D
           <span>User profile</span>
         </BqOption>
         <BqOption :disabled="true" value="admin">
+          <BqIcon slot="prefix" name="layout" />
+          <span>Admin dashboard</span>
+        </BqOption>
+        <BqOption value="password">
+          <BqIcon slot="prefix" name="lock-simple" />
+          <span>Change password</span>
+        </BqOption>
+        <BqOption value="logout">
+          <BqIcon slot="prefix" name="sign-out" />
+          <span>Close session</span>
+        </BqOption>
+      </BqOptionList>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Hidden state
+
+Set `hidden` on an option to remove it from the visible list and the accessibility tree while keeping it in the DOM. Unlike `disabled`, a hidden option is completely invisible — screen readers skip it and it cannot be focused. Use this for options that are programmatically toggled based on application state.
+
+<CodeLivePreview code={`
+  <bq-option-list>
+    <bq-option value="profile">
+      <bq-icon slot="prefix" name="user"></bq-icon>
+      <span>User profile</span>
+    </bq-option>
+    <bq-option hidden value="admin">
+      <bq-icon slot="prefix" name="layout"></bq-icon>
+      <span>Admin dashboard</span>
+    </bq-option>
+    <bq-option value="password">
+      <bq-icon slot="prefix" name="lock-simple"></bq-icon>
+      <span>Change password</span>
+    </bq-option>
+    <bq-option value="logout">
+      <bq-icon slot="prefix" name="sign-out"></bq-icon>
+      <span>Close session</span>
+    </bq-option>
+  </bq-option-list>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-option-list>
+      <bq-option value="profile">
+        <bq-icon slot="prefix" name="user"></bq-icon>
+        <span>User profile</span>
+      </bq-option>
+      <bq-option hidden value="admin">
+        <bq-icon slot="prefix" name="layout"></bq-icon>
+        <span>Admin dashboard</span>
+      </bq-option>
+      <bq-option value="password">
+        <bq-icon slot="prefix" name="lock-simple"></bq-icon>
+        <span>Change password</span>
+      </bq-option>
+      <bq-option value="logout">
+        <bq-icon slot="prefix" name="sign-out"></bq-icon>
+        <span>Close session</span>
+      </bq-option>
+    </bq-option-list>
+    ```
+
+    ```tsx React icon="react"
+    import { BqIcon, BqOption, BqOptionList } from "@beeq/react";
+
+    <BqOptionList>
+      <BqOption value="profile">
+        <BqIcon slot="prefix" name="user" />
+        <span>User profile</span>
+      </BqOption>
+      <BqOption hidden value="admin">
+        <BqIcon slot="prefix" name="layout" />
+        <span>Admin dashboard</span>
+      </BqOption>
+      <BqOption value="password">
+        <BqIcon slot="prefix" name="lock-simple" />
+        <span>Change password</span>
+      </BqOption>
+      <BqOption value="logout">
+        <BqIcon slot="prefix" name="sign-out" />
+        <span>Close session</span>
+      </BqOption>
+    </BqOptionList>
+    ```
+
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon, BqOption, BqOptionList } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqIcon, BqOption, BqOptionList],
+      template: `
+        <bq-option-list>
+          <bq-option value="profile">
+            <bq-icon slot="prefix" name="user"></bq-icon>
+            <span>User profile</span>
+          </bq-option>
+          <bq-option [hidden]="true" value="admin">
+            <bq-icon slot="prefix" name="layout"></bq-icon>
+            <span>Admin dashboard</span>
+          </bq-option>
+          <bq-option value="password">
+            <bq-icon slot="prefix" name="lock-simple"></bq-icon>
+            <span>Change password</span>
+          </bq-option>
+          <bq-option value="logout">
+            <bq-icon slot="prefix" name="sign-out"></bq-icon>
+            <span>Close session</span>
+          </bq-option>
+        </bq-option-list>
+      `,
+    })
+    export class HiddenOptionComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqIcon, BqOption, BqOptionList } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqOptionList>
+        <BqOption value="profile">
+          <BqIcon slot="prefix" name="user" />
+          <span>User profile</span>
+        </BqOption>
+        <BqOption :hidden="true" value="admin">
           <BqIcon slot="prefix" name="layout" />
           <span>Admin dashboard</span>
         </BqOption>
@@ -837,7 +967,7 @@ As a developer, you are responsible for:
 </Expandable>
 
 <Tip>
-  Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).
+  Learn more about [styling with shadow parts](/guides/styles) and [CSS custom properties](/theming/global-css-variables).
 </Tip>
 
 ## Resources

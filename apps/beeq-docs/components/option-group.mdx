@@ -256,7 +256,7 @@ Two groups of options inside a single `bq-option-list`. Each group carries a `he
         </bq-option-list>
       `,
     })
-    export class AppComponent {}
+    export class BasicOptionGroupComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -344,16 +344,28 @@ Add a `bq-icon` in the `header-prefix` slot to give the group label a visual cat
       <bq-option-group>
         <bq-icon slot="header-prefix" name="sneaker-move"></bq-icon>
         <span slot="header-label">Sport</span>
-        <bq-option value="running"><span>Running</span></bq-option>
-        <bq-option value="hiking"><span>Hiking</span></bq-option>
-        <bq-option value="biking"><span>Biking</span></bq-option>
+        <bq-option value="running">
+          <span>Running</span>
+        </bq-option>
+        <bq-option value="hiking">
+          <span>Hiking</span>
+        </bq-option>
+        <bq-option value="biking">
+          <span>Biking</span>
+        </bq-option>
       </bq-option-group>
       <bq-option-group>
         <bq-icon slot="header-prefix" name="pizza"></bq-icon>
         <span slot="header-label">Food</span>
-        <bq-option value="pizza"><span>Pizza</span></bq-option>
-        <bq-option value="hamburger"><span>Hamburger</span></bq-option>
-        <bq-option value="cookie"><span>Cookie</span></bq-option>
+        <bq-option value="pizza">
+          <span>Pizza</span>
+        </bq-option>
+        <bq-option value="hamburger">
+          <span>Hamburger</span>
+        </bq-option>
+        <bq-option value="cookie">
+          <span>Cookie</span>
+        </bq-option>
       </bq-option-group>
     </bq-option-list>
     ```
@@ -365,16 +377,28 @@ Add a `bq-icon` in the `header-prefix` slot to give the group label a visual cat
       <BqOptionGroup>
         <BqIcon slot="header-prefix" name="sneaker-move" />
         <span slot="header-label">Sport</span>
-        <BqOption value="running"><span>Running</span></BqOption>
-        <BqOption value="hiking"><span>Hiking</span></BqOption>
-        <BqOption value="biking"><span>Biking</span></BqOption>
+        <BqOption value="running">
+          <span>Running</span>
+        </BqOption>
+        <BqOption value="hiking">
+          <span>Hiking</span>
+        </BqOption>
+        <BqOption value="biking">
+          <span>Biking</span>
+        </BqOption>
       </BqOptionGroup>
       <BqOptionGroup>
         <BqIcon slot="header-prefix" name="pizza" />
         <span slot="header-label">Food</span>
-        <BqOption value="pizza"><span>Pizza</span></BqOption>
-        <BqOption value="hamburger"><span>Hamburger</span></BqOption>
-        <BqOption value="cookie"><span>Cookie</span></BqOption>
+        <BqOption value="pizza">
+          <span>Pizza</span>
+        </BqOption>
+        <BqOption value="hamburger">
+          <span>Hamburger</span>
+        </BqOption>
+        <BqOption value="cookie">
+          <span>Cookie</span>
+        </BqOption>
       </BqOptionGroup>
     </BqOptionList>
     ```
@@ -392,21 +416,33 @@ Add a `bq-icon` in the `header-prefix` slot to give the group label a visual cat
           <bq-option-group>
             <bq-icon slot="header-prefix" name="sneaker-move"></bq-icon>
             <span slot="header-label">Sport</span>
-            <bq-option value="running"><span>Running</span></bq-option>
-            <bq-option value="hiking"><span>Hiking</span></bq-option>
-            <bq-option value="biking"><span>Biking</span></bq-option>
+            <bq-option value="running">
+              <span>Running</span>
+            </bq-option>
+            <bq-option value="hiking">
+              <span>Hiking</span>
+            </bq-option>
+            <bq-option value="biking">
+              <span>Biking</span>
+            </bq-option>
           </bq-option-group>
           <bq-option-group>
             <bq-icon slot="header-prefix" name="pizza"></bq-icon>
             <span slot="header-label">Food</span>
-            <bq-option value="pizza"><span>Pizza</span></bq-option>
-            <bq-option value="hamburger"><span>Hamburger</span></bq-option>
-            <bq-option value="cookie"><span>Cookie</span></bq-option>
+            <bq-option value="pizza">
+              <span>Pizza</span>
+            </bq-option>
+            <bq-option value="hamburger">
+              <span>Hamburger</span>
+            </bq-option>
+            <bq-option value="cookie">
+              <span>Cookie</span>
+            </bq-option>
           </bq-option-group>
         </bq-option-list>
       `,
     })
-    export class AppComponent {}
+    export class OptionGroupWithPrefixIconComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -419,16 +455,28 @@ Add a `bq-icon` in the `header-prefix` slot to give the group label a visual cat
         <BqOptionGroup>
           <BqIcon slot="header-prefix" name="sneaker-move" />
           <span slot="header-label">Sport</span>
-          <BqOption value="running"><span>Running</span></BqOption>
-          <BqOption value="hiking"><span>Hiking</span></BqOption>
-          <BqOption value="biking"><span>Biking</span></BqOption>
+          <BqOption value="running">
+            <span>Running</span>
+          </BqOption>
+          <BqOption value="hiking">
+            <span>Hiking</span>
+          </BqOption>
+          <BqOption value="biking">
+            <span>Biking</span>
+          </BqOption>
         </BqOptionGroup>
         <BqOptionGroup>
           <BqIcon slot="header-prefix" name="pizza" />
           <span slot="header-label">Food</span>
-          <BqOption value="pizza"><span>Pizza</span></BqOption>
-          <BqOption value="hamburger"><span>Hamburger</span></BqOption>
-          <BqOption value="cookie"><span>Cookie</span></BqOption>
+          <BqOption value="pizza">
+            <span>Pizza</span>
+          </BqOption>
+          <BqOption value="hamburger">
+            <span>Hamburger</span>
+          </BqOption>
+          <BqOption value="cookie">
+            <span>Cookie</span>
+          </BqOption>
         </BqOptionGroup>
       </BqOptionList>
     </template>
@@ -598,7 +646,7 @@ Use the `header-suffix` slot to place a count badge, status chip, or secondary i
         </bq-option-list>
       `,
     })
-    export class AppComponent {}
+    export class OptionGroupWithSuffixBadgeComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -716,7 +764,7 @@ Use the `header-suffix` slot to place a count badge, status chip, or secondary i
 
 ## Accessibility
 
-`bq-option-group` renders a `role="group"` container div that holds the slotted option items. The `aria-label="Options"` attribute is set on this container automatically, providing a generic fallback label for assistive technologies.
+`bq-option-group` renders a `role="group"` container div that holds the slotted option items. The internal container carries `aria-label="Options"` as a hardcoded fallback — this is not configurable via a prop. Screen readers use the text in the `header-label` slot to identify the group; the hardcoded `aria-label` is only a structural safety net for the container element itself.
 
 As a developer, you are responsible for:
 
@@ -765,7 +813,7 @@ As a developer, you are responsible for:
 </Expandable>
 
 <Tip>
-  Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).
+  Learn more about [styling with shadow parts](/guides/styles) and [CSS custom properties](/theming/global-css-variables).
 </Tip>
 
 ## Resources
