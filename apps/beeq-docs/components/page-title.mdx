@@ -462,7 +462,7 @@ Use the suffix slot when the title area needs page-level actions such as edit or
   `}
 >
   <CodeGroup>
-    ```css styles.css icon="css" expandable
+    ```css styles.css icon="css3" expandable
     bq-page-title {
       inline-size: 100% !important;
 
@@ -542,7 +542,7 @@ Use the suffix slot when the title area needs page-level actions such as edit or
           </div>
         </bq-page-title>
       `,
-      style: `
+      styles: [`
         bq-page-title {
           inline-size: 100% !important;
 
@@ -556,7 +556,7 @@ Use the suffix slot when the title area needs page-level actions such as edit or
             padding: var(--bq-spacing-xs2);
           }
         }
-      `,
+      `],
     })
     export class AppComponent {}
     ```

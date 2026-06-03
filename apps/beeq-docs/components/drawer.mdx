@@ -185,7 +185,7 @@ The default state of the drawer component displays a standard drawer with a head
   </script>
 `}>
   <CodeGroup>
-    ```css styles.css icon="css" expandable
+    ```css styles.css icon="css3" expandable
     .drawer-title {
       display: flex;
       align-items: center;
@@ -283,7 +283,7 @@ The default state of the drawer component displays a standard drawer with a head
           </div>
         </bq-drawer>
       `,
-      style: `
+      styles: [`
             .drawer-title {
               display: flex;
               align-items: center;
@@ -306,7 +306,7 @@ The default state of the drawer component displays a standard drawer with a head
               gap: var(--bq-spacing-xs);
               flex: 1;
             }
-      `,
+      `],
     })
     export class AppComponent {}
     ```
@@ -421,7 +421,7 @@ The no-footer variant removes the footer section, providing a cleaner interface 
   </script>
 `}>
   <CodeGroup>
-    ```css styles.css icon="css" expandable
+    ```css styles.css icon="css3" expandable
     .drawer-title {
       display: flex;
       align-items: center;
@@ -500,7 +500,7 @@ The no-footer variant removes the footer section, providing a cleaner interface 
           <div class="drawer-description">Content</div>
         </bq-drawer>
       `,
-      style: `
+      styles: [`
             .drawer-title {
               display: flex;
               align-items: center;
@@ -516,7 +516,7 @@ The no-footer variant removes the footer section, providing a cleaner interface 
               border: 1px dashed var(--bq-stroke--brand);
               background-color: var(--bq-red-100);
             }
-      `,
+      `],
     })
     export class AppComponent {}
     ```
@@ -631,7 +631,7 @@ The `position` prop allows you to specify the edge from which the drawer appears
   </script>
 `}>
   <CodeGroup>
-    ```css styles.css icon="css" expandable
+    ```css styles.css icon="css3" expandable
     .drawer-title {
       display: flex;
       align-items: center;
@@ -729,7 +729,7 @@ The `position` prop allows you to specify the edge from which the drawer appears
           </div>
         </bq-drawer>
       `,
-      style: `
+      styles: [`
             .drawer-title {
               display: flex;
               align-items: center;
@@ -752,7 +752,7 @@ The `position` prop allows you to specify the edge from which the drawer appears
               gap: var(--bq-spacing-xs);
               flex: 1;
             }
-      `,
+      `],
     })
     export class AppComponent {}
     ```
@@ -880,7 +880,7 @@ The backdrop variant adds a semi-transparent overlay behind the drawer, helping 
   </script>
 `}>
   <CodeGroup>
-    ```css styles.css icon="css" expandable
+    ```css styles.css icon="css3" expandable
     .drawer-title {
       display: flex;
       align-items: center;
@@ -978,7 +978,7 @@ The backdrop variant adds a semi-transparent overlay behind the drawer, helping 
           </div>
         </bq-drawer>
       `,
-      style: `
+      styles: [`
             .drawer-title {
               display: flex;
               align-items: center;
@@ -1001,7 +1001,7 @@ The backdrop variant adds a semi-transparent overlay behind the drawer, helping 
               gap: var(--bq-spacing-xs);
               flex: 1;
             }
-      `,
+      `],
     })
     export class AppComponent {}
     ```
@@ -1133,7 +1133,7 @@ Replace the default footer divider by slotting a custom element into `slot="foot
   </script>
 `}>
   <CodeGroup>
-    ```css styles.css icon="css" expandable
+    ```css styles.css icon="css3" expandable
     .drawer-title {
       display: flex;
       align-items: center;
@@ -1239,7 +1239,7 @@ Replace the default footer divider by slotting a custom element into `slot="foot
           </div>
         </bq-drawer>
       `,
-      style: `
+      styles: [`
             .drawer-title {
               display: flex;
               align-items: center;
@@ -1267,7 +1267,7 @@ Replace the default footer divider by slotting a custom element into `slot="foot
               gap: var(--bq-spacing-xs);
               flex: 1;
             }
-      `,
+      `],
     })
     export class AppComponent {}
     ```
@@ -1375,7 +1375,7 @@ By default, clicking outside the panel or pressing `Esc` closes the drawer. Set 
   </script>
 `}>
   <CodeGroup>
-    ```css styles.css icon="css" expandable
+    ```css styles.css icon="css3" expandable
     .drawer-content {
       padding: var(--bq-spacing-m) 0;
     }
@@ -1439,11 +1439,11 @@ By default, clicking outside the panel or pressing `Esc` closes the drawer. Set 
           </div>
         </bq-drawer>
       `,
-      style: `
+      styles: [`
             .drawer-content {
               padding: var(--bq-spacing-m) 0;
             }
-      `,
+      `],
     })
     export class AppComponent {}
     ```

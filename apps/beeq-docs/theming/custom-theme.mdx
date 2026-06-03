@@ -540,7 +540,7 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
   </script>
 `}>
   <CodeGroup>
-    ```css styles.css icon="css" expandable
+    ```css styles.css icon="css3" expandable
     /* -------------------------------------------------------------------------- */
     /* BASE THEME VARIABLES                                                       */
     /* -------------------------------------------------------------------------- */
@@ -939,7 +939,7 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
           <h1>Settings tab!</h1>
         }
       `,
-      style: `
+      styles: [`
             /* -------------------------------------------------------------------------- */
             /* BASE THEME VARIABLES                                                       */
             /* -------------------------------------------------------------------------- */
@@ -1094,7 +1094,7 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
               --bq-state--hover:    rgba(255, 255, 255, 0.10);
               --bq-state--active:   rgba(255, 255, 255, 0.15);
             }
-      `,
+      `],
     })
     export class AppComponent {
       private readonly document = inject(DOCUMENT);

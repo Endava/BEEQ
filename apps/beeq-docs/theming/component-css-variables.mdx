@@ -95,7 +95,7 @@ Applies the custom styles to every `bq-badge` in the application.
     <bq-badge>99+</bq-badge>
 `}>
   <CodeGroup>
-    ```css styles.css icon="css" expandable
+    ```css styles.css icon="css3" expandable
     bq-badge {
       --bq-badge--background-color: var(--bq-green-400);
       --bq-badge--box-shadow: var(--bq-box-shadow--l);
@@ -137,7 +137,7 @@ Applies the custom styles to every `bq-badge` in the application.
         <bq-badge size="medium"></bq-badge>
         <bq-badge>99+</bq-badge>
       `,
-      style: `
+      styles: [`
         bq-badge {
           --bq-badge--background-color: var(--bq-green-400);
           --bq-badge--box-shadow: var(--bq-box-shadow--l);
@@ -146,7 +146,7 @@ Applies the custom styles to every `bq-badge` in the application.
           --bq-badge--border-width: 1px;
           --bq-badge--border-radius: 4px;
         }
-      `,
+      `],
     })
     export class AppComponent {}
     ```
@@ -205,7 +205,7 @@ Only the `bq-badge` elements with the matching CSS class will have the overridde
   <bq-badge class="success">completed</bq-badge>
 `}>
   <CodeGroup>
-    ```css styles.css icon="css" expandable
+    ```css styles.css icon="css3" expandable
     bq-badge.success {
       --bq-badge--background-color: var(--bq-green-400);
       --bq-badge--box-shadow: var(--bq-box-shadow--l);
@@ -250,7 +250,7 @@ Only the `bq-badge` elements with the matching CSS class will have the overridde
         <bq-badge>99+</bq-badge>
         <bq-badge class="success">completed</bq-badge>
       `,
-      style: `
+      styles: [`
         bq-badge.success {
           --bq-badge--background-color: var(--bq-green-400);
           --bq-badge--box-shadow: var(--bq-box-shadow--l);
@@ -259,7 +259,7 @@ Only the `bq-badge` elements with the matching CSS class will have the overridde
           --bq-badge--border-width: 1px;
           --bq-badge--border-radius: 4px;
         }
-      `,
+      `],
     })
     export class AppComponent {}
     ```

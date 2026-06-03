@@ -484,7 +484,7 @@ The `displayValue` property (`display-value` attribute) on `bq-option` overrides
   </bq-select>
 `}>
   <CodeGroup>
-    ```css styles.css icon="css" expandable
+    ```css styles.css icon="css3" expandable
     .payment-option {
       display: flex;
       flex-direction: column;
@@ -640,7 +640,7 @@ The `displayValue` property (`display-value` attribute) on `bq-option` overrides
           </bq-option>
         </bq-select>
       `,
-      style: `
+      styles: [`
 
           .payment-option {
             display: flex;
@@ -672,7 +672,7 @@ The `displayValue` property (`display-value` attribute) on `bq-option` overrides
             font-size: var(--bq-font-size--xs);
           }
         
-      `,
+      `],
     })
     export class AppComponent {}
     ```
@@ -2491,24 +2491,6 @@ Call `preventDefault()` on the `bqInput` event to take full control of option fi
       const select = document.querySelector('#custom-select');
       const staticOpts = Array.from(select.querySelectorAll('bq-option'));
 
-    const select = previewRoot.querySelector('#custom-select');
-
-    function highlight(text, query) {
-      const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      return text.replace(new RegExp(`(${escaped})`, 'gi'), '<b>$1</b>');
-    }
-
-    function renderOptions(items, query = '') {
-      select.querySelectorAll('bq-option').forEach((el) => el.remove());
-
-      if (items.length === 0) {
-        const opt = document.createElement('bq-option');
-        opt.setAttribute('disabled', '');
-        opt.innerHTML = `<bq-icon slot="prefix" name="x-circle"></bq-icon> No results found`;
-        select.appendChild(opt);
-        return;
-      }
-
       function removeTempOpts() {
         select.querySelectorAll('bq-option[data-temp]').forEach((opt) => opt.remove());
       }
@@ -2578,6 +2560,11 @@ Call `preventDefault()` on the `bqInput` event to take full control of option fi
         removeTempOpts();
         showAllOptions();
       });
+
+      function highlight(text, query) {
+        const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        return text.replace(new RegExp(`(${escaped})`, 'gi'), '<b>$1</b>');
+      }
     </script>
     ```
 

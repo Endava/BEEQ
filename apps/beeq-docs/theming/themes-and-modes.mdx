@@ -209,7 +209,7 @@ Here is a working example showing how to read the user's preferred color scheme 
   </script>
 `}>
   <CodeGroup>
-    ```css styles.css icon="css" expandable
+    ```css styles.css icon="css3" expandable
     @import "@beeq/core/dist/beeq/beeq.css";
 
     .nav-bar {
@@ -377,7 +377,7 @@ Here is a working example showing how to read the user's preferred color scheme 
           <div class="content"></div>
         </main>
       `,
-      style: `
+      styles: [`
             @import "@beeq/core/dist/beeq/beeq.css";
 
             .nav-bar {
@@ -423,7 +423,7 @@ Here is a working example showing how to read the user's preferred color scheme 
               height: 10rem;
               width: 100%;
             }
-      `,
+      `],
     })
     export class AppComponent implements OnInit {
       private readonly document = inject(DOCUMENT);

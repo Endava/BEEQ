@@ -269,7 +269,7 @@ The default side menu is a versatile container for organizing and displaying nav
           </bq-side-menu-item>
         </bq-side-menu>
       `,
-      styles: `
+      styles: [`
         .app-logo {
           display: flex;
           align-items: center;
@@ -287,7 +287,7 @@ The default side menu is a versatile container for organizing and displaying nav
           font-size: var(--bq-font-size--xl);
           white-space: nowrap;
         }
-      `
+      `]
     })
     export class DefaultSideMenuComponent {}
     ```
@@ -1447,7 +1447,7 @@ Use the footer slot for supplementary actions, links, or information at the bott
           </div>
         </bq-side-menu>
       `,
-      styles: `
+      styles: [`
         .app-logo {
           display: flex;
           align-items: center;
@@ -1465,7 +1465,7 @@ Use the footer slot for supplementary actions, links, or information at the bott
           font-size: var(--bq-font-size--xl);
           white-space: nowrap;
         }
-      `
+      `]
     })
     export class DefaultSideMenuComponent {}
     ```
@@ -1658,7 +1658,7 @@ Wire your app control to the side menu state so the button can expand and collap
   </script>
 `}>
   <CodeGroup>
-    ```css styles.css icon="css" expandable
+    ```css styles.css icon="css3" expandable
     .app-menu[collapse] [slot="logo"] {
       padding-inline: var(--bq-spacing-xs);
     }
@@ -1876,7 +1876,7 @@ Wire your app control to the side menu state so the button can expand and collap
           </div>
         </main>
       `,
-      styles: `
+      styles: [`
         .app-menu[collapse] [slot="logo"] {
           padding-inline: var(--bq-spacing-xs);
         }
@@ -1924,7 +1924,7 @@ Wire your app control to the side menu state so the button can expand and collap
           border: 2px dashed var(--bq-color-primary);
           background-color: var(--bq-ui--alt);
         }
-      `
+      `]
     })
     export class CollapsibleSideMenuComponent {
       isCollapsed = true;

@@ -1096,7 +1096,7 @@ Developers can [rely on the exposed shadow DOM parts](https://www.beeq.design/3d
   </bq-accordion-group>
 `}>
   <CodeGroup>
-    ```css styles.css icon="css" expandable
+    ```css styles.css icon="css3" expandable
     .my-accordion {
       &::part(header) {
         flex-direction: row-reverse;
@@ -1182,7 +1182,7 @@ Developers can [rely on the exposed shadow DOM parts](https://www.beeq.design/3d
           </bq-accordion>
         </bq-accordion-group>
       `,
-      style: `
+      styles: [`
         .my-accordion {
           &::part(header) {
             flex-direction: row-reverse;
@@ -1192,7 +1192,7 @@ Developers can [rely on the exposed shadow DOM parts](https://www.beeq.design/3d
             justify-content: space-between;
           }
         }
-      `,
+      `],
     })
     export class AppComponent {}
     ```

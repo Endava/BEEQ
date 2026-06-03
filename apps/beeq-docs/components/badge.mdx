@@ -237,7 +237,7 @@ When a badge is paired with an icon or trigger, position it on the outer edge so
   </div>
 `}>
   <CodeGroup>
-    ```css styles.css icon="css" expandable
+    ```css styles.css icon="css3" expandable
     .badge--icon {
       position: relative;
       display: inline-flex;
@@ -281,7 +281,7 @@ When a badge is paired with an icon or trigger, position it on the outer edge so
           <bq-badge>9</bq-badge>
         </div>
       `,
-      style: `
+      styles: [`
         .badge--icon {
           position: relative;
           display: inline-flex;
@@ -292,7 +292,7 @@ When a badge is paired with an icon or trigger, position it on the outer edge so
             inset-inline-end: -4px;
           }
         }
-      `,
+      `],
     })
     export class AppComponent {}
     ```

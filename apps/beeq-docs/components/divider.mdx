@@ -196,7 +196,7 @@ Set `orientation="vertical"` when the divider separates side-by-side content, su
   </div>
 `}>
   <CodeGroup>
-    ```css styles.css icon="css" expandable
+    ```css styles.css icon="css3" expandable
     .divider--vertical-example {
       display: flex;
       align-items: center;
@@ -240,7 +240,7 @@ Set `orientation="vertical"` when the divider separates side-by-side content, su
           <span>Right</span>
         </div>
       `,
-      style: `
+      styles: [`
         .divider--vertical-example {
           display: flex;
           align-items: center;
@@ -248,7 +248,7 @@ Set `orientation="vertical"` when the divider separates side-by-side content, su
           block-size: 120px;
           gap: var(--bq-spacing-m);
         }
-      `,
+      `],
     })
     export class AppComponent {}
     ```
@@ -378,7 +378,7 @@ Use `title-alignment` to place title content at the start, middle, or end of the
   </bq-divider>
 `}>
   <CodeGroup>
-    ```css styles.css icon="css" expandable
+    ```css styles.css icon="css3" expandable
     bq-divider {
       white-space: nowrap;
     }
@@ -412,11 +412,11 @@ Use `title-alignment` to place title content at the start, middle, or end of the
         <bq-divider title-alignment="middle">Text middle</bq-divider>
         <bq-divider title-alignment="end">Text end</bq-divider>
       `,
-      style: `
+      styles: [`
         bq-divider {
           white-space: nowrap;
         }
-      `,
+      `],
     })
     export class AppComponent {}
     ```
