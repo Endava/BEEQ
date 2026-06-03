@@ -1544,6 +1544,7 @@ Use the footer slot for supplementary actions, links, or information at the bott
 
 Use `collapse` to create a compact side menu. Collapsed menus show icons and hide labels, but the logo can be customized to show or hide based on the collapsed state.
 The menu items will display their label content in a tooltip on hover when the menu is collapsed.
+Wire your app control to the side menu state so the button can expand and collapse the menu. Keep the icon-only button `label` in sync with the current state.
 
 <CodeLivePreview mode="iframe" height="30rem" removePadding code={`
   <style>
@@ -1622,7 +1623,7 @@ The menu items will display their label content in a tooltip on hover when the m
     </bq-side-menu-item>
 
     <div slot="footer">
-      <bq-button appearance="text" data-action="collapse" only-icon>
+      <bq-button appearance="text" data-action="collapse" label="Expand side menu" only-icon>
         <bq-icon name="arrow-line-left"></bq-icon>
       </bq-button>
     </div>
@@ -1641,20 +1642,18 @@ The menu items will display their label content in a tooltip on hover when the m
       const collapseButton = previewRoot.querySelector('bq-button[data-action="collapse"]');
       if (!sideMenu || !collapseButton) return;
 
-      // Keep initial a11y label in sync with current state.
-      const syncButtonState = () => {
+      // Keep the icon-only button accessible as the menu state changes.
+      const syncButtonLabel = () => {
         const isCollapsed = sideMenu.hasAttribute('collapse');
-        collapseButton.toggleAttribute('only-icon', isCollapsed);
-        collapseButton.setAttribute('aria-label', isCollapsed ? 'Expand side menu' : 'Collapse side menu');
+        collapseButton.setAttribute('label', isCollapsed ? 'Expand side menu' : 'Collapse side menu');
       };
 
-      syncButtonState();
-
-      collapseButton.addEventListener('bqClick', () => {
-        const nextCollapsed = !sideMenu.hasAttribute('collapse');
-        sideMenu.toggleAttribute('collapse', nextCollapsed);
-        syncButtonState();
+      collapseButton.addEventListener('bqClick', async () => {
+        await sideMenu.toggleCollapse();
+        syncButtonLabel();
       });
+
+      syncButtonLabel();
     })();
   </script>
 `}>
@@ -1710,7 +1709,7 @@ The menu items will display their label content in a tooltip on hover when the m
     ```
 
     ```html HTML icon="html5" expandable
-    <bq-side-menu>
+    <bq-side-menu class="app-menu" collapse>
       <div class="app-logo" slot="logo">
         <bq-icon name="square-logo" size="40"></bq-icon>
         <h1>App Name</h1>
@@ -1735,7 +1734,7 @@ The menu items will display their label content in a tooltip on hover when the m
       </bq-side-menu-item>
 
       <div slot="footer">
-        <bq-button appearance="text" data-action="collapse" only-icon>
+        <bq-button appearance="text" data-action="collapse" label="Expand side menu" only-icon>
           <bq-icon name="arrow-line-left"></bq-icon>
         </bq-button>
       </div>
@@ -1747,51 +1746,83 @@ The menu items will display their label content in a tooltip on hover when the m
         <!-- Your content -->
       </div>
     </main>
+
+    <script>
+      const sideMenu = document.querySelector('.app-menu');
+      const collapseButton = document.querySelector('bq-button[data-action="collapse"]');
+      if (!sideMenu || !collapseButton) return;
+
+      // Keep the icon-only button accessible as the menu state changes.
+      const syncButtonLabel = () => {
+        const isCollapsed = sideMenu.hasAttribute('collapse');
+        collapseButton.setAttribute('label', isCollapsed ? 'Expand side menu' : 'Collapse side menu');
+      };
+
+      collapseButton.addEventListener('bqClick', async () => {
+        await sideMenu.toggleCollapse();
+        syncButtonLabel();
+      });
+
+      syncButtonLabel();
+    </script>
     ```
 
     ```jsx React icon="react" expandable
+    import { useState } from "react";
     import { BqBadge, BqButton, BqDivider, BqIcon, BqSideMenu, BqSideMenuItem } from "@beeq/react";
     import "./styles.css";
 
-    <>
-      <BqSideMenu>
-        <div class="app-logo" slot="logo">
-          <BqIcon name="square-logo" size="40" />
-          <h1>App Name</h1>
-        </div>
-        <BqDivider />
-        <BqSideMenuItem active>
-          <BqIcon name="diamonds-four" slot="prefix" />
-          Dashboard
-        </BqSideMenuItem>
-        <BqSideMenuItem>
-          <BqIcon name="package" slot="prefix" />
-          Products
-          <BqBadge slot="suffix">5</BqBadge>
-        </BqSideMenuItem>
-        <BqSideMenuItem>
-          <BqIcon name="truck" slot="prefix" />
-          Deliver
-        </BqSideMenuItem>
-        <BqSideMenuItem>
-          <BqIcon name="files" slot="prefix" />
-          Documents
-        </BqSideMenuItem>
+    export function CollapsibleSideMenu() {
+      const [isCollapsed, setIsCollapsed] = useState(true);
+      const collapseButtonLabel = isCollapsed ? "Expand side menu" : "Collapse side menu";
 
-        <div slot="footer">
-          <BqButton appearance="text" data-action="collapse" only-icon>
-            <BqIcon name="arrow-line-left"></BqIcon>
-          </BqButton>
-        </div>
-      </BqSideMenu>
+      return (
+        <>
+          <BqSideMenu className="app-menu" collapse={isCollapsed}>
+            <div className="app-logo" slot="logo">
+              <BqIcon name="square-logo" size="40" />
+              <h1>App Name</h1>
+            </div>
+            <BqDivider />
+            <BqSideMenuItem active>
+              <BqIcon name="diamonds-four" slot="prefix" />
+              Dashboard
+            </BqSideMenuItem>
+            <BqSideMenuItem>
+              <BqIcon name="package" slot="prefix" />
+              Products
+              <BqBadge slot="suffix">5</BqBadge>
+            </BqSideMenuItem>
+            <BqSideMenuItem>
+              <BqIcon name="truck" slot="prefix" />
+              Deliver
+            </BqSideMenuItem>
+            <BqSideMenuItem>
+              <BqIcon name="files" slot="prefix" />
+              Documents
+            </BqSideMenuItem>
 
-      <main className="app-content">
-        <h1>Dashboard</h1>
-        <div className="app-surface">
-          {/* Your content */}
-        </div>
-      </main>
-    </>
+            <div slot="footer">
+              <BqButton
+                appearance="text"
+                label={collapseButtonLabel}
+                onlyIcon
+                onBqClick={() => setIsCollapsed((value) => !value)}
+              >
+                <BqIcon name="arrow-line-left" />
+              </BqButton>
+            </div>
+          </BqSideMenu>
+
+          <main className="app-content">
+            <h1>Dashboard</h1>
+            <div className="app-surface">
+              {/* Your content */}
+            </div>
+          </main>
+        </>
+      );
+    }
     ```
 
     ```ts Angular icon="angular" expandable
@@ -1802,7 +1833,7 @@ The menu items will display their label content in a tooltip on hover when the m
       standalone: true,
       imports: [BqBadge, BqButton, BqDivider, BqIcon, BqSideMenu, BqSideMenuItem],
       template: `
-        <bq-side-menu>
+        <bq-side-menu class="app-menu" [collapse]="isCollapsed">
           <div class="app-logo" slot="logo">
             <bq-icon name="square-logo" size="40"></bq-icon>
             <h1>App Name</h1>
@@ -1825,6 +1856,17 @@ The menu items will display their label content in a tooltip on hover when the m
             <bq-icon name="files" slot="prefix" ></bq-icon>
             Documents
           </bq-side-menu-item>
+
+          <div slot="footer">
+            <bq-button
+              appearance="text"
+              only-icon
+              [label]="collapseButtonLabel"
+              (bqClick)="toggleSideMenu()"
+            >
+              <bq-icon name="arrow-line-left"></bq-icon>
+            </bq-button>
+          </div>
         </bq-side-menu>
 
         <main class="app-content">
@@ -1884,16 +1926,34 @@ The menu items will display their label content in a tooltip on hover when the m
         }
       `
     })
-    export class BrandSideMenuComponent {}
+    export class CollapsibleSideMenuComponent {
+      isCollapsed = true;
+
+      get collapseButtonLabel(): string {
+        return this.isCollapsed ? "Expand side menu" : "Collapse side menu";
+      }
+
+      toggleSideMenu(): void {
+        this.isCollapsed = !this.isCollapsed;
+      }
+    }
     ```
 
     ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
+    import { computed, ref } from "vue";
     import { BqBadge, BqButton, BqDivider, BqIcon, BqSideMenu, BqSideMenuItem } from "@beeq/vue";
+
+    const isCollapsed = ref(true);
+    const collapseButtonLabel = computed(() => (isCollapsed.value ? "Expand side menu" : "Collapse side menu"));
+
+    const toggleSideMenu = () => {
+      isCollapsed.value = !isCollapsed.value;
+    };
     </script>
 
     <template>
-      <BqSideMenu>
+      <BqSideMenu class="app-menu" :collapse="isCollapsed">
         <div class="app-logo" slot="logo">
           <BqIcon name="square-logo" size="40" />
           <h1>App Name</h1>
@@ -1918,8 +1978,8 @@ The menu items will display their label content in a tooltip on hover when the m
         </BqSideMenuItem>
 
         <div slot="footer">
-          <BqButton appearance="text" data-action="collapse" only-icon>
-            <BqIcon name="arrow-line-left"></BqIcon>
+          <BqButton appearance="text" onlyIcon :label="collapseButtonLabel" @bqClick="toggleSideMenu">
+            <BqIcon name="arrow-line-left" />
           </BqButton>
         </div>
       </BqSideMenu>
