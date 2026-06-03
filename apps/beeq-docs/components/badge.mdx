@@ -101,19 +101,19 @@ Use the badge without slot content when you only need a small visual signal. `si
   <bq-badge size="medium"></bq-badge>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-badge></bq-badge>
     <bq-badge size="medium"></bq-badge>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqBadge } from "@beeq/react";
 
     <BqBadge />
     <BqBadge size="medium" />
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqBadge } from "@beeq/angular/standalone";
     @Component({
@@ -128,7 +128,7 @@ Use the badge without slot content when you only need a small visual signal. `si
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqBadge } from "@beeq/vue";
     </script>
@@ -154,19 +154,19 @@ Add slot content when the badge needs to communicate a count. Keep the value sho
   <bq-badge>12</bq-badge>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-badge>2</bq-badge>
     <bq-badge>12</bq-badge>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqBadge } from "@beeq/react";
 
     <BqBadge>2</BqBadge>
     <BqBadge>12</BqBadge>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqBadge } from "@beeq/angular/standalone";
     @Component({
@@ -181,7 +181,7 @@ Add slot content when the badge needs to communicate a count. Keep the value sho
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqBadge } from "@beeq/vue";
     </script>
@@ -235,7 +235,7 @@ When a badge is paired with an icon or trigger, position it on the outer edge so
   </div>
 `}>
   <CodeGroup>
-    ```css CSS icon="css"
+    ```css styles.css icon="css" expandable
     .badge--icon {
       position: relative;
       display: inline-flex;
@@ -248,15 +248,16 @@ When a badge is paired with an icon or trigger, position it on the outer edge so
     }
     ```
 
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <div class="badge--icon" aria-label="Notifications">
       <bq-icon name="bell-ringing" size="24"></bq-icon>
       <bq-badge>9</bq-badge>
     </div>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqBadge, BqIcon } from "@beeq/react";
+    import "./styles.css";
 
     <div className="badge--icon" aria-label="Notifications">
       <BqIcon name="bell-ringing" size="24" />
@@ -264,7 +265,7 @@ When a badge is paired with an icon or trigger, position it on the outer edge so
     </div>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqBadge } from "@beeq/angular/standalone";
     @Component({
@@ -277,11 +278,23 @@ When a badge is paired with an icon or trigger, position it on the outer edge so
           <bq-badge>9</bq-badge>
         </div>
       `,
+      style: `
+        .badge--icon {
+          position: relative;
+          display: inline-flex;
+
+          & bq-badge {
+            position: absolute;
+            inset-block-start: -4px;
+            inset-inline-end: -4px;
+          }
+        }
+      `,
     })
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqBadge, BqIcon } from "@beeq/vue";
     </script>
@@ -292,6 +305,21 @@ When a badge is paired with an icon or trigger, position it on the outer edge so
         <BqBadge>9</BqBadge>
       </div>
     </template>
+
+
+    <style>
+    .badge--icon {
+      position: relative;
+      display: inline-flex;
+
+      & bq-badge {
+        position: absolute;
+        inset-block-start: -4px;
+        inset-inline-end: -4px;
+      }
+    }
+
+    </style>
     ```
   </CodeGroup>
 </CodeLivePreview>

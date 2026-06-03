@@ -185,7 +185,7 @@ The default state of the drawer component displays a standard drawer with a head
   </script>
 `}>
   <CodeGroup>
-    ```css CSS icon="css3"
+    ```css styles.css icon="css" expandable
     .drawer-title {
       display: flex;
       align-items: center;
@@ -210,7 +210,7 @@ The default state of the drawer component displays a standard drawer with a head
     }
     ```
 
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-button>Open Drawer</bq-button>
 
     <bq-drawer position="end">
@@ -226,15 +226,16 @@ The default state of the drawer component displays a standard drawer with a head
     </bq-drawer>
     ```
 
-    ```javascript JavaScript icon="js"
+    ```javascript JavaScript icon="js" expandable
     const btn = document.querySelector('bq-button');
     const drawer = document.querySelector('bq-drawer');
     btn.addEventListener('bqClick', () => drawer.show());
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { useRef } from "react";
     import { BqButton, BqDrawer, BqIcon } from "@beeq/react";
+    import "./styles.css";
 
     export default function App() {
       const drawerRef = useRef(null);
@@ -259,7 +260,7 @@ The default state of the drawer component displays a standard drawer with a head
     }
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqButton, BqDrawer, BqIcon } from "@beeq/angular/standalone";
 
@@ -282,11 +283,35 @@ The default state of the drawer component displays a standard drawer with a head
           </div>
         </bq-drawer>
       `,
+      style: `
+            .drawer-title {
+              display: flex;
+              align-items: center;
+              gap: var(--bq-spacing-xs);
+            }
+
+            .drawer-description {
+              display: flex;
+              height: 100%;
+              align-items: center;
+              justify-content: center;
+              border-radius: var(--bq-radius--xs);
+              border: 1px dashed var(--bq-stroke--brand);
+              background-color: var(--bq-red-100);
+            }
+
+            .drawer-footer {
+              display: flex;
+              justify-content: center;
+              gap: var(--bq-spacing-xs);
+              flex: 1;
+            }
+      `,
     })
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { ref } from "vue";
     import { BqButton, BqDrawer, BqIcon } from "@beeq/vue";
@@ -309,6 +334,31 @@ The default state of the drawer component displays a standard drawer with a head
         </div>
       </BqDrawer>
     </template>
+
+    <style>
+    .drawer-title {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+
+    .drawer-description {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--bq-radius--xs);
+      border: 1px dashed var(--bq-stroke--brand);
+      background-color: var(--bq-red-100);
+    }
+
+    .drawer-footer {
+      display: flex;
+      justify-content: center;
+      gap: var(--bq-spacing-xs);
+      flex: 1;
+    }
+    </style>
     ```
   </CodeGroup>
 </CodeLivePreview>
@@ -371,7 +421,7 @@ The no-footer variant removes the footer section, providing a cleaner interface 
   </script>
 `}>
   <CodeGroup>
-    ```css CSS icon="css3"
+    ```css styles.css icon="css" expandable
     .drawer-title {
       display: flex;
       align-items: center;
@@ -389,7 +439,7 @@ The no-footer variant removes the footer section, providing a cleaner interface 
     }
     ```
 
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-button>Open Drawer</bq-button>
 
     <bq-drawer position="end">
@@ -401,15 +451,16 @@ The no-footer variant removes the footer section, providing a cleaner interface 
     </bq-drawer>
     ```
 
-    ```javascript JavaScript icon="js"
+    ```javascript JavaScript icon="js" expandable
     const btn = document.querySelector('bq-button');
     const drawer = document.querySelector('bq-drawer');
     btn.addEventListener('bqClick', () => drawer.show());
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { useRef } from "react";
     import { BqButton, BqDrawer, BqIcon } from "@beeq/react";
+    import "./styles.css";
 
     export default function App() {
       const drawerRef = useRef(null);
@@ -430,7 +481,7 @@ The no-footer variant removes the footer section, providing a cleaner interface 
     }
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqButton, BqDrawer, BqIcon } from "@beeq/angular/standalone";
 
@@ -449,11 +500,28 @@ The no-footer variant removes the footer section, providing a cleaner interface 
           <div class="drawer-description">Content</div>
         </bq-drawer>
       `,
+      style: `
+            .drawer-title {
+              display: flex;
+              align-items: center;
+              gap: var(--bq-spacing-xs);
+            }
+
+            .drawer-description {
+              display: flex;
+              height: 100%;
+              align-items: center;
+              justify-content: center;
+              border-radius: var(--bq-radius--xs);
+              border: 1px dashed var(--bq-stroke--brand);
+              background-color: var(--bq-red-100);
+            }
+      `,
     })
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { ref } from "vue";
     import { BqButton, BqDrawer, BqIcon } from "@beeq/vue";
@@ -472,6 +540,24 @@ The no-footer variant removes the footer section, providing a cleaner interface 
         <div class="drawer-description">Content</div>
       </BqDrawer>
     </template>
+
+    <style>
+    .drawer-title {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+
+    .drawer-description {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--bq-radius--xs);
+      border: 1px dashed var(--bq-stroke--brand);
+      background-color: var(--bq-red-100);
+    }
+    </style>
     ```
   </CodeGroup>
 </CodeLivePreview>
@@ -545,7 +631,7 @@ The `position` prop allows you to specify the edge from which the drawer appears
   </script>
 `}>
   <CodeGroup>
-    ```css CSS icon="css3"
+    ```css styles.css icon="css" expandable
     .drawer-title {
       display: flex;
       align-items: center;
@@ -570,7 +656,7 @@ The `position` prop allows you to specify the edge from which the drawer appears
     }
     ```
 
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-button>Open Drawer</bq-button>
 
     <bq-drawer position="start">
@@ -586,15 +672,16 @@ The `position` prop allows you to specify the edge from which the drawer appears
     </bq-drawer>
     ```
 
-    ```javascript JavaScript icon="js"
+    ```javascript JavaScript icon="js" expandable
     const btn = document.querySelector('bq-button');
     const drawer = document.querySelector('bq-drawer');
     btn.addEventListener('bqClick', () => drawer.show());
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { useRef } from "react";
     import { BqButton, BqDrawer, BqIcon } from "@beeq/react";
+    import "./styles.css";
 
     export default function App() {
       const drawerRef = useRef(null);
@@ -619,7 +706,7 @@ The `position` prop allows you to specify the edge from which the drawer appears
     }
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqButton, BqDrawer, BqIcon } from "@beeq/angular/standalone";
 
@@ -642,11 +729,35 @@ The `position` prop allows you to specify the edge from which the drawer appears
           </div>
         </bq-drawer>
       `,
+      style: `
+            .drawer-title {
+              display: flex;
+              align-items: center;
+              gap: var(--bq-spacing-xs);
+            }
+
+            .drawer-description {
+              display: flex;
+              height: 100%;
+              align-items: center;
+              justify-content: center;
+              border-radius: var(--bq-radius--xs);
+              border: 1px dashed var(--bq-stroke--brand);
+              background-color: var(--bq-red-100);
+            }
+
+            .drawer-footer {
+              display: flex;
+              justify-content: center;
+              gap: var(--bq-spacing-xs);
+              flex: 1;
+            }
+      `,
     })
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { ref } from "vue";
     import { BqButton, BqDrawer, BqIcon } from "@beeq/vue";
@@ -669,6 +780,31 @@ The `position` prop allows you to specify the edge from which the drawer appears
         </div>
       </BqDrawer>
     </template>
+
+    <style>
+    .drawer-title {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+
+    .drawer-description {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--bq-radius--xs);
+      border: 1px dashed var(--bq-stroke--brand);
+      background-color: var(--bq-red-100);
+    }
+
+    .drawer-footer {
+      display: flex;
+      justify-content: center;
+      gap: var(--bq-spacing-xs);
+      flex: 1;
+    }
+    </style>
     ```
   </CodeGroup>
 </CodeLivePreview>
@@ -744,7 +880,7 @@ The backdrop variant adds a semi-transparent overlay behind the drawer, helping 
   </script>
 `}>
   <CodeGroup>
-    ```css CSS icon="css3"
+    ```css styles.css icon="css" expandable
     .drawer-title {
       display: flex;
       align-items: center;
@@ -769,7 +905,7 @@ The backdrop variant adds a semi-transparent overlay behind the drawer, helping 
     }
     ```
 
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-button>Open Drawer</bq-button>
 
     <bq-drawer position="end" enable-backdrop>
@@ -785,15 +921,16 @@ The backdrop variant adds a semi-transparent overlay behind the drawer, helping 
     </bq-drawer>
     ```
 
-    ```javascript JavaScript icon="js"
+    ```javascript JavaScript icon="js" expandable
     const btn = document.querySelector('bq-button');
     const drawer = document.querySelector('bq-drawer');
     btn.addEventListener('bqClick', () => drawer.show());
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { useRef } from "react";
     import { BqButton, BqDrawer, BqIcon } from "@beeq/react";
+    import "./styles.css";
 
     export default function App() {
       const drawerRef = useRef(null);
@@ -818,7 +955,7 @@ The backdrop variant adds a semi-transparent overlay behind the drawer, helping 
     }
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqButton, BqDrawer, BqIcon } from "@beeq/angular/standalone";
 
@@ -841,11 +978,35 @@ The backdrop variant adds a semi-transparent overlay behind the drawer, helping 
           </div>
         </bq-drawer>
       `,
+      style: `
+            .drawer-title {
+              display: flex;
+              align-items: center;
+              gap: var(--bq-spacing-xs);
+            }
+
+            .drawer-description {
+              display: flex;
+              height: 100%;
+              align-items: center;
+              justify-content: center;
+              border-radius: var(--bq-radius--xs);
+              border: 1px dashed var(--bq-stroke--brand);
+              background-color: var(--bq-red-100);
+            }
+
+            .drawer-footer {
+              display: flex;
+              justify-content: center;
+              gap: var(--bq-spacing-xs);
+              flex: 1;
+            }
+      `,
     })
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { ref } from "vue";
     import { BqButton, BqDrawer, BqIcon } from "@beeq/vue";
@@ -868,6 +1029,31 @@ The backdrop variant adds a semi-transparent overlay behind the drawer, helping 
         </div>
       </BqDrawer>
     </template>
+
+    <style>
+    .drawer-title {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+
+    .drawer-description {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--bq-radius--xs);
+      border: 1px dashed var(--bq-stroke--brand);
+      background-color: var(--bq-red-100);
+    }
+
+    .drawer-footer {
+      display: flex;
+      justify-content: center;
+      gap: var(--bq-spacing-xs);
+      flex: 1;
+    }
+    </style>
     ```
   </CodeGroup>
 </CodeLivePreview>
@@ -947,7 +1133,7 @@ Replace the default footer divider by slotting a custom element into `slot="foot
   </script>
 `}>
   <CodeGroup>
-    ```css CSS icon="css3"
+    ```css styles.css icon="css" expandable
     .drawer-title {
       display: flex;
       align-items: center;
@@ -977,7 +1163,7 @@ Replace the default footer divider by slotting a custom element into `slot="foot
     }
     ```
 
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-button>Open Drawer</bq-button>
 
     <bq-drawer position="end" enable-backdrop>
@@ -994,15 +1180,16 @@ Replace the default footer divider by slotting a custom element into `slot="foot
     </bq-drawer>
     ```
 
-    ```javascript JavaScript icon="js"
+    ```javascript JavaScript icon="js" expandable
     const btn = document.querySelector('bq-button');
     const drawer = document.querySelector('bq-drawer');
     btn.addEventListener('bqClick', () => drawer.show());
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { useRef } from "react";
     import { BqButton, BqDivider, BqDrawer, BqIcon } from "@beeq/react";
+    import "./styles.css";
 
     export default function App() {
       const drawerRef = useRef(null);
@@ -1028,7 +1215,7 @@ Replace the default footer divider by slotting a custom element into `slot="foot
     }
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqButton, BqDivider, BqDrawer, BqIcon } from "@beeq/angular/standalone";
 
@@ -1052,11 +1239,40 @@ Replace the default footer divider by slotting a custom element into `slot="foot
           </div>
         </bq-drawer>
       `,
+      style: `
+            .drawer-title {
+              display: flex;
+              align-items: center;
+              gap: var(--bq-spacing-xs);
+            }
+
+            .drawer-description {
+              display: flex;
+              height: 100%;
+              align-items: center;
+              justify-content: center;
+              border-radius: var(--bq-radius--xs);
+              border: 1px dashed var(--bq-stroke--brand);
+              background-color: var(--bq-red-100);
+            }
+
+            .drawer-footer-divider {
+              display: block;
+              margin-bottom: var(--bq-spacing-m);
+            }
+
+            .drawer-footer {
+              display: flex;
+              justify-content: center;
+              gap: var(--bq-spacing-xs);
+              flex: 1;
+            }
+      `,
     })
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { ref } from "vue";
     import { BqButton, BqDivider, BqDrawer, BqIcon } from "@beeq/vue";
@@ -1080,6 +1296,36 @@ Replace the default footer divider by slotting a custom element into `slot="foot
         </div>
       </BqDrawer>
     </template>
+
+    <style>
+    .drawer-title {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+
+    .drawer-description {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--bq-radius--xs);
+      border: 1px dashed var(--bq-stroke--brand);
+      background-color: var(--bq-red-100);
+    }
+
+    .drawer-footer-divider {
+      display: block;
+      margin-bottom: var(--bq-spacing-m);
+    }
+
+    .drawer-footer {
+      display: flex;
+      justify-content: center;
+      gap: var(--bq-spacing-xs);
+      flex: 1;
+    }
+    </style>
     ```
   </CodeGroup>
 </CodeLivePreview>
@@ -1129,13 +1375,13 @@ By default, clicking outside the panel or pressing `Esc` closes the drawer. Set 
   </script>
 `}>
   <CodeGroup>
-    ```css CSS icon="css3"
+    ```css styles.css icon="css" expandable
     .drawer-content {
       padding: var(--bq-spacing-m) 0;
     }
     ```
 
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-button>Open locked drawer</bq-button>
 
     <bq-drawer position="end" enable-backdrop close-on-click-outside close-on-esc>
@@ -1146,15 +1392,16 @@ By default, clicking outside the panel or pressing `Esc` closes the drawer. Set 
     </bq-drawer>
     ```
 
-    ```javascript JavaScript icon="js"
+    ```javascript JavaScript icon="js" expandable
     const btn = document.querySelector('bq-button');
     const drawer = document.querySelector('bq-drawer');
     btn.addEventListener('bqClick', () => drawer.show());
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { useRef } from "react";
     import { BqButton, BqDrawer } from "@beeq/react";
+    import "./styles.css";
 
     export default function App() {
       const drawerRef = useRef(null);
@@ -1174,7 +1421,7 @@ By default, clicking outside the panel or pressing `Esc` closes the drawer. Set 
     }
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqButton, BqDrawer } from "@beeq/angular/standalone";
 
@@ -1192,11 +1439,16 @@ By default, clicking outside the panel or pressing `Esc` closes the drawer. Set 
           </div>
         </bq-drawer>
       `,
+      style: `
+            .drawer-content {
+              padding: var(--bq-spacing-m) 0;
+            }
+      `,
     })
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { ref } from "vue";
     import { BqButton, BqDrawer } from "@beeq/vue";
@@ -1214,6 +1466,12 @@ By default, clicking outside the panel or pressing `Esc` closes the drawer. Set 
         </div>
       </BqDrawer>
     </template>
+
+    <style>
+    .drawer-content {
+      padding: var(--bq-spacing-m) 0;
+    }
+    </style>
     ```
   </CodeGroup>
 </CodeLivePreview>

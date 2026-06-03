@@ -209,7 +209,7 @@ Here is a working example showing how to read the user's preferred color scheme 
   </script>
 `}>
   <CodeGroup>
-    ```css CSS icon="css" expandable
+    ```css styles.css icon="css" expandable
     @import "@beeq/core/dist/beeq/beeq.css";
 
     .nav-bar {
@@ -362,7 +362,6 @@ Here is a working example showing how to read the user's preferred color scheme 
       selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqSwitch],
-      styleUrl: "./styles.css",
       template: `
         <header class="nav-bar">
           <div class="nav-bar__main">
@@ -377,6 +376,53 @@ Here is a working example showing how to read the user's preferred color scheme 
           <h1>Dashboard</h1>
           <div class="content"></div>
         </main>
+      `,
+      style: `
+            @import "@beeq/core/dist/beeq/beeq.css";
+
+            .nav-bar {
+              display: flex;
+              justify-content: center;
+              background-color: var(--bq-ui--primary);
+              border-bottom: 1px solid var(--bq-stroke--primary);
+            }
+
+            .nav-bar__main {
+              flex: 1;
+              display: flex;
+              align-items: center;
+              flex-direction: column;
+              justify-content: end;
+              gap: var(--bq-spacing-xl);
+              padding: var(--bq-spacing-m);
+              max-width: 1440px;
+
+              @media (min-width: 600px) {
+                flex-direction: row;
+              }
+            }
+
+            .nav-bar__mode {
+              display: flex;
+              align-items: center;
+              gap: var(--bq-spacing-xs);
+              color: var(--bq-text--primary);
+            }
+
+            .main {
+              padding: var(--bq-spacing-m);
+
+              h1 {
+                margin-block-end: var(--bq-spacing-l);
+              }
+            }
+
+            .content {
+              background: var(--bq-ui--alt);
+              border: 2px dashed var(--bq-stroke--primary);
+              height: 10rem;
+              width: 100%;
+            }
       `,
     })
     export class AppComponent implements OnInit {
@@ -436,6 +482,54 @@ Here is a working example showing how to read the user's preferred color scheme 
         <div class="content" />
       </main>
     </template>
+
+    <style>
+    @import "@beeq/core/dist/beeq/beeq.css";
+
+    .nav-bar {
+      display: flex;
+      justify-content: center;
+      background-color: var(--bq-ui--primary);
+      border-bottom: 1px solid var(--bq-stroke--primary);
+    }
+
+    .nav-bar__main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: end;
+      gap: var(--bq-spacing-xl);
+      padding: var(--bq-spacing-m);
+      max-width: 1440px;
+
+      @media (min-width: 600px) {
+        flex-direction: row;
+      }
+    }
+
+    .nav-bar__mode {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+      color: var(--bq-text--primary);
+    }
+
+    .main {
+      padding: var(--bq-spacing-m);
+
+      h1 {
+        margin-block-end: var(--bq-spacing-l);
+      }
+    }
+
+    .content {
+      background: var(--bq-ui--alt);
+      border: 2px dashed var(--bq-stroke--primary);
+      height: 10rem;
+      width: 100%;
+    }
+    </style>
     ```
   </CodeGroup>
 </CodeLivePreview>

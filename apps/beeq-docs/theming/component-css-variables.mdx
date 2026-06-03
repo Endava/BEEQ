@@ -95,7 +95,7 @@ Applies the custom styles to every `bq-badge` in the application.
     <bq-badge>99+</bq-badge>
 `}>
   <CodeGroup>
-    ```css CSS icon="css"
+    ```css styles.css icon="css" expandable
     bq-badge {
       --bq-badge--background-color: var(--bq-green-400);
       --bq-badge--box-shadow: var(--bq-box-shadow--l);
@@ -106,14 +106,15 @@ Applies the custom styles to every `bq-badge` in the application.
     }
     ```
 
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-badge size="small"></bq-badge>
     <bq-badge size="medium"></bq-badge>
     <bq-badge>99+</bq-badge>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqBadge } from "@beeq/react";
+    import "./styles.css";
     // Import the CSS override in your global stylesheet
 
     <BqBadge size="small" />
@@ -121,7 +122,7 @@ Applies the custom styles to every `bq-badge` in the application.
     <BqBadge>99+</BqBadge>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqBadge } from "@beeq/angular/standalone";
 
@@ -136,11 +137,21 @@ Applies the custom styles to every `bq-badge` in the application.
         <bq-badge size="medium"></bq-badge>
         <bq-badge>99+</bq-badge>
       `,
+      style: `
+        bq-badge {
+          --bq-badge--background-color: var(--bq-green-400);
+          --bq-badge--box-shadow: var(--bq-box-shadow--l);
+          --bq-badge--border-color: var(--bq-green-600);
+          --bq-badge--border-style: solid;
+          --bq-badge--border-width: 1px;
+          --bq-badge--border-radius: 4px;
+        }
+      `,
     })
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqBadge } from "@beeq/vue";
     // Import the CSS override in your global stylesheet
@@ -151,6 +162,19 @@ Applies the custom styles to every `bq-badge` in the application.
       <BqBadge size="medium" />
       <BqBadge>99+</BqBadge>
     </template>
+
+
+    <style>
+    bq-badge {
+      --bq-badge--background-color: var(--bq-green-400);
+      --bq-badge--box-shadow: var(--bq-box-shadow--l);
+      --bq-badge--border-color: var(--bq-green-600);
+      --bq-badge--border-style: solid;
+      --bq-badge--border-width: 1px;
+      --bq-badge--border-radius: 4px;
+    }
+
+    </style>
     ```
   </CodeGroup>
 </CodeLivePreview>
@@ -181,7 +205,7 @@ Only the `bq-badge` elements with the matching CSS class will have the overridde
   <bq-badge class="success">completed</bq-badge>
 `}>
   <CodeGroup>
-    ```css CSS icon="css"
+    ```css styles.css icon="css" expandable
     bq-badge.success {
       --bq-badge--background-color: var(--bq-green-400);
       --bq-badge--box-shadow: var(--bq-box-shadow--l);
@@ -192,15 +216,16 @@ Only the `bq-badge` elements with the matching CSS class will have the overridde
     }
     ```
 
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-badge size="small"></bq-badge>
     <bq-badge size="medium"></bq-badge>
     <bq-badge>99+</bq-badge>
     <bq-badge class="success">completed</bq-badge>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqBadge } from "@beeq/react";
+    import "./styles.css";
     // Import the CSS override in your global stylesheet
 
     <BqBadge size="small" />
@@ -209,7 +234,7 @@ Only the `bq-badge` elements with the matching CSS class will have the overridde
     <BqBadge className="success">completed</BqBadge>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqBadge } from "@beeq/angular/standalone";
 
@@ -225,11 +250,21 @@ Only the `bq-badge` elements with the matching CSS class will have the overridde
         <bq-badge>99+</bq-badge>
         <bq-badge class="success">completed</bq-badge>
       `,
+      style: `
+        bq-badge.success {
+          --bq-badge--background-color: var(--bq-green-400);
+          --bq-badge--box-shadow: var(--bq-box-shadow--l);
+          --bq-badge--border-color: var(--bq-green-600);
+          --bq-badge--border-style: solid;
+          --bq-badge--border-width: 1px;
+          --bq-badge--border-radius: 4px;
+        }
+      `,
     })
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqBadge } from "@beeq/vue";
     // Import the CSS override in your global stylesheet
@@ -241,6 +276,19 @@ Only the `bq-badge` elements with the matching CSS class will have the overridde
       <BqBadge>99+</BqBadge>
       <BqBadge class="success">completed</BqBadge>
     </template>
+
+
+    <style>
+    bq-badge.success {
+      --bq-badge--background-color: var(--bq-green-400);
+      --bq-badge--box-shadow: var(--bq-box-shadow--l);
+      --bq-badge--border-color: var(--bq-green-600);
+      --bq-badge--border-style: solid;
+      --bq-badge--border-width: 1px;
+      --bq-badge--border-radius: 4px;
+    }
+
+    </style>
     ```
   </CodeGroup>
 </CodeLivePreview>

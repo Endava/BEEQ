@@ -138,7 +138,7 @@ Enhance user interaction by implementing the default select variant. Perfect for
   </bq-select>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-select placeholder="Placeholder">
       <label slot="label">Select label</label>
       <span slot="helper-text">
@@ -151,7 +151,7 @@ Enhance user interaction by implementing the default select variant. Perfect for
     </bq-select>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqIcon, BqOption, BqSelect } from "@beeq/react";
 
     <BqSelect placeholder="Placeholder">
@@ -166,7 +166,7 @@ Enhance user interaction by implementing the default select variant. Perfect for
     </BqSelect>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
 
@@ -190,7 +190,7 @@ Enhance user interaction by implementing the default select variant. Perfect for
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <template>
       <BqSelect placeholder="Placeholder">
         <label slot="label">Select label</label>
@@ -237,7 +237,7 @@ Use the `open` attribute to display the select dropdown by default, offering use
   </bq-select>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-select autofocus open placeholder="Placeholder">
       <label slot="label">Select label</label>
       <span slot="helper-text">
@@ -250,7 +250,7 @@ Use the `open` attribute to display the select dropdown by default, offering use
     </bq-select>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqIcon, BqOption, BqSelect } from "@beeq/react";
 
     <BqSelect autofocus open placeholder="Placeholder">
@@ -265,7 +265,7 @@ Use the `open` attribute to display the select dropdown by default, offering use
     </BqSelect>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
 
@@ -289,7 +289,7 @@ Use the `open` attribute to display the select dropdown by default, offering use
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <template>
       <BqSelect autofocus open placeholder="Placeholder">
         <label slot="label">Select label</label>
@@ -335,7 +335,7 @@ Set an initial `value` for the select component to preselect an option, providin
   </bq-select>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-select placeholder="Placeholder" value="2">
       <label slot="label">Select label</label>
       <span slot="helper-text">
@@ -348,7 +348,7 @@ Set an initial `value` for the select component to preselect an option, providin
     </bq-select>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqIcon, BqOption, BqSelect } from "@beeq/react";
 
     <BqSelect placeholder="Placeholder" value="2">
@@ -363,7 +363,7 @@ Set an initial `value` for the select component to preselect an option, providin
     </BqSelect>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
 
@@ -387,7 +387,7 @@ Set an initial `value` for the select component to preselect an option, providin
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <template>
       <BqSelect placeholder="Placeholder" value="2">
         <label slot="label">Select label</label>
@@ -484,7 +484,7 @@ The `displayValue` property (`display-value` attribute) on `bq-option` overrides
   </bq-select>
 `}>
   <CodeGroup>
-    ```css payment-option.css icon="css3"
+    ```css styles.css icon="css" expandable
     .payment-option {
       display: flex;
       flex-direction: column;
@@ -516,7 +516,7 @@ The `displayValue` property (`display-value` attribute) on `bq-option` overrides
     }
     ```
 
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-select placeholder="Payment method..." open>
       <label slot="label">Choose a payment method</label>
       <span slot="helper-text">
@@ -554,9 +554,9 @@ The `displayValue` property (`display-value` attribute) on `bq-option` overrides
     </bq-select>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqIcon, BqOption, BqSelect } from "@beeq/react";
-    import "./payment-option.css";
+    import "./styles.css";
 
     <BqSelect placeholder="Payment method..." open>
       <label slot="label">Choose a payment method</label>
@@ -595,7 +595,7 @@ The `displayValue` property (`display-value` attribute) on `bq-option` overrides
     </BqSelect>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
 
@@ -640,8 +640,8 @@ The `displayValue` property (`display-value` attribute) on `bq-option` overrides
           </bq-option>
         </bq-select>
       `,
-      styles: [
-        `
+      style: `
+
           .payment-option {
             display: flex;
             flex-direction: column;
@@ -671,13 +671,13 @@ The `displayValue` property (`display-value` attribute) on `bq-option` overrides
           .payment-option__owner {
             font-size: var(--bq-font-size--xs);
           }
-        `
-      ],
+        
+      `,
     })
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup>
     import { BqIcon, BqOption, BqSelect } from "@beeq/vue";
     </script>
@@ -781,7 +781,7 @@ Employ the `disabled` attribute to restrict user interaction with the select com
   </bq-select>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-select disabled placeholder="Placeholder" value="3">
       <label slot="label">Select label</label>
       <span slot="helper-text">
@@ -794,7 +794,7 @@ Employ the `disabled` attribute to restrict user interaction with the select com
     </bq-select>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqIcon, BqOption, BqSelect } from "@beeq/react";
 
     <BqSelect disabled placeholder="Placeholder" value="3">
@@ -809,7 +809,7 @@ Employ the `disabled` attribute to restrict user interaction with the select com
     </BqSelect>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
 
@@ -833,7 +833,7 @@ Employ the `disabled` attribute to restrict user interaction with the select com
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <template>
       <BqSelect disabled placeholder="Placeholder" value="3">
         <label slot="label">Select label</label>
@@ -907,7 +907,7 @@ Use the `multiple` property to enable multiple selections. Use `keep-open-on-sel
   </bq-select>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-select
       multiple
       keep-open-on-select
@@ -947,7 +947,7 @@ Use the `multiple` property to enable multiple selections. Use `keep-open-on-sel
     </bq-select>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqIcon, BqOption, BqSelect } from "@beeq/react";
 
     <BqSelect
@@ -989,7 +989,7 @@ Use the `multiple` property to enable multiple selections. Use `keep-open-on-sel
     </BqSelect>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
 
@@ -1040,7 +1040,7 @@ Use the `multiple` property to enable multiple selections. Use `keep-open-on-sel
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <template>
       <BqSelect
         multiple
@@ -1117,7 +1117,7 @@ Use the `prefix` slot to include additional visual elements or context, such as 
   </bq-select>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-select placeholder="Placeholder">
       <label slot="label">Select label</label>
       <bq-icon name="user-circle" slot="prefix"></bq-icon>
@@ -1131,7 +1131,7 @@ Use the `prefix` slot to include additional visual elements or context, such as 
     </bq-select>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqIcon, BqOption, BqSelect } from "@beeq/react";
 
     <BqSelect placeholder="Placeholder">
@@ -1147,7 +1147,7 @@ Use the `prefix` slot to include additional visual elements or context, such as 
     </BqSelect>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
 
@@ -1172,7 +1172,7 @@ Use the `prefix` slot to include additional visual elements or context, such as 
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <template>
       <BqSelect placeholder="Placeholder">
         <label slot="label">Select label</label>
@@ -1221,7 +1221,7 @@ Leverage the `suffix` slot to enhance the select component with extra elements. 
   </bq-select>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-select placeholder="Placeholder">
       <label slot="label">Select label</label>
       <bq-icon name="arrow-down" slot="suffix"></bq-icon>
@@ -1235,7 +1235,7 @@ Leverage the `suffix` slot to enhance the select component with extra elements. 
     </bq-select>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqIcon, BqOption, BqSelect } from "@beeq/react";
 
     <BqSelect placeholder="Placeholder">
@@ -1251,7 +1251,7 @@ Leverage the `suffix` slot to enhance the select component with extra elements. 
     </BqSelect>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
 
@@ -1276,7 +1276,7 @@ Leverage the `suffix` slot to enhance the select component with extra elements. 
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <template>
       <BqSelect placeholder="Placeholder">
         <label slot="label">Select label</label>
@@ -1346,7 +1346,7 @@ Use `validation-status` to signal the validation state (`error`, `warning`, or `
   </bq-select>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-select placeholder="Placeholder" validation-status="error" value="1">
       <label slot="label">Select label</label>
       <span slot="helper-text">
@@ -1381,7 +1381,7 @@ Use `validation-status` to signal the validation state (`error`, `warning`, or `
     </bq-select>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqIcon, BqOption, BqSelect } from "@beeq/react";
 
     <BqSelect placeholder="Placeholder" validationStatus="error" value="1">
@@ -1418,7 +1418,7 @@ Use `validation-status` to signal the validation state (`error`, `warning`, or `
     </BqSelect>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
 
@@ -1464,7 +1464,7 @@ Use `validation-status` to signal the validation state (`error`, `warning`, or `
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <template>
       <BqSelect placeholder="Placeholder" validationStatus="error" value="1">
         <label slot="label">Select label</label>
@@ -1553,7 +1553,7 @@ Choose this style when you want to include an optional label for additional cont
   </bq-select>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-select placeholder="Placeholder">
       <div slot="label">
         <label>Select label</label>
@@ -1570,7 +1570,7 @@ Choose this style when you want to include an optional label for additional cont
     </bq-select>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqIcon, BqOption, BqSelect } from "@beeq/react";
 
     <BqSelect placeholder="Placeholder">
@@ -1589,7 +1589,7 @@ Choose this style when you want to include an optional label for additional cont
     </BqSelect>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
 
@@ -1617,7 +1617,7 @@ Choose this style when you want to include an optional label for additional cont
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <template>
       <BqSelect placeholder="Placeholder">
         <div slot="label">
@@ -1698,7 +1698,7 @@ Enhance user understanding by incorporating a `bq-tooltip` alongside the label, 
   </bq-select>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-select placeholder="Placeholder">
       <div slot="label">
         <label>
@@ -1721,7 +1721,7 @@ Enhance user understanding by incorporating a `bq-tooltip` alongside the label, 
     </bq-select>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqIcon, BqOption, BqSelect, BqTooltip } from "@beeq/react";
 
     <BqSelect placeholder="Placeholder">
@@ -1746,7 +1746,7 @@ Enhance user understanding by incorporating a `bq-tooltip` alongside the label, 
     </BqSelect>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqOption, BqSelect, BqTooltip } from "@beeq/angular/standalone";
 
@@ -1780,7 +1780,7 @@ Enhance user understanding by incorporating a `bq-tooltip` alongside the label, 
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <template>
       <BqSelect placeholder="Placeholder">
         <div slot="label">
@@ -1855,7 +1855,7 @@ Adjust the panel placement to suit your layout. Use the `placement` attribute to
   </bq-select>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-select placeholder="Placeholder" placement="top">
       <label slot="label">
         Select label
@@ -1875,7 +1875,7 @@ Adjust the panel placement to suit your layout. Use the `placement` attribute to
     </bq-select>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqIcon, BqOption, BqSelect, BqTooltip } from "@beeq/react";
 
     <BqSelect placeholder="Placeholder" placement="top">
@@ -1897,7 +1897,7 @@ Adjust the panel placement to suit your layout. Use the `placement` attribute to
     </BqSelect>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqOption, BqSelect, BqTooltip } from "@beeq/angular/standalone";
 
@@ -1928,7 +1928,7 @@ Adjust the panel placement to suit your layout. Use the `placement` attribute to
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <template>
       <BqSelect placeholder="Placeholder" placement="top">
         <label slot="label">
@@ -1983,7 +1983,7 @@ Use this style when you prefer a minimal look and the field's purpose is conveye
   </bq-select>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-select placeholder="Placeholder">
       <bq-icon name="user-circle" slot="prefix"></bq-icon>
       <span slot="helper-text">
@@ -1996,7 +1996,7 @@ Use this style when you prefer a minimal look and the field's purpose is conveye
     </bq-select>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqIcon, BqOption, BqSelect } from "@beeq/react";
 
     <BqSelect placeholder="Placeholder">
@@ -2011,7 +2011,7 @@ Use this style when you prefer a minimal look and the field's purpose is conveye
     </BqSelect>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
 
@@ -2035,7 +2035,7 @@ Use this style when you prefer a minimal look and the field's purpose is conveye
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <template>
       <BqSelect placeholder="Placeholder">
         <BqIcon name="user-circle" slot="prefix" />
@@ -2074,7 +2074,7 @@ Select this variant when you don't need additional helper text, giving users a s
   </bq-select>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-select placeholder="Placeholder">
       <label slot="label">Select label</label>
       <bq-icon name="user-circle" slot="prefix"></bq-icon>
@@ -2084,7 +2084,7 @@ Select this variant when you don't need additional helper text, giving users a s
     </bq-select>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqIcon, BqOption, BqSelect } from "@beeq/react";
 
     <BqSelect placeholder="Placeholder">
@@ -2096,7 +2096,7 @@ Select this variant when you don't need additional helper text, giving users a s
     </BqSelect>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
 
@@ -2117,7 +2117,7 @@ Select this variant when you don't need additional helper text, giving users a s
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <template>
       <BqSelect placeholder="Placeholder">
         <label slot="label">Select label</label>
@@ -2162,7 +2162,7 @@ A readonly select shows the current value but prevents the panel from opening. U
   </bq-select>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-select placeholder="Placeholder" value="2" readonly>
       <label slot="label">Select label</label>
       <span slot="helper-text">
@@ -2175,7 +2175,7 @@ A readonly select shows the current value but prevents the panel from opening. U
     </bq-select>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqIcon, BqOption, BqSelect } from "@beeq/react";
 
     <BqSelect placeholder="Placeholder" value="2" readOnly>
@@ -2190,7 +2190,7 @@ A readonly select shows the current value but prevents the panel from opening. U
     </BqSelect>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
 
@@ -2214,7 +2214,7 @@ A readonly select shows the current value but prevents the panel from opening. U
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <template>
       <BqSelect placeholder="Placeholder" value="2" readonly>
         <label slot="label">Select label</label>
@@ -2262,7 +2262,7 @@ Set `disable-clear` to hide the clear button and prevent one-click deselection. 
   </bq-select>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-select placeholder="Placeholder" value="1" disable-clear>
       <label slot="label">Select label</label>
       <span slot="helper-text">
@@ -2275,7 +2275,7 @@ Set `disable-clear` to hide the clear button and prevent one-click deselection. 
     </bq-select>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqIcon, BqOption, BqSelect } from "@beeq/react";
 
     <BqSelect placeholder="Placeholder" value="1" disableClear>
@@ -2290,7 +2290,7 @@ Set `disable-clear` to hide the clear button and prevent one-click deselection. 
     </BqSelect>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
 
@@ -2314,7 +2314,7 @@ Set `disable-clear` to hide the clear button and prevent one-click deselection. 
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <template>
       <BqSelect placeholder="Placeholder" value="1" disableClear>
         <label slot="label">Select label</label>

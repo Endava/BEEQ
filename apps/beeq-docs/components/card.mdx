@@ -169,7 +169,7 @@ A card with icon, title, description, and a call-to-action — use when users ne
   </bq-card>
 `}>
   <CodeGroup>
-    ```css CSS icon="css"
+    ```css styles.css icon="css" expandable
     .card--default {
       max-width: 24rem;
       width: 100%;
@@ -191,7 +191,7 @@ A card with icon, title, description, and a call-to-action — use when users ne
     }
     ```
 
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-card class="card--default">
       <div class="header">
         <bq-icon color="text--brand" size="56" name="star-bold"></bq-icon>
@@ -208,8 +208,9 @@ A card with icon, title, description, and a call-to-action — use when users ne
     </bq-card>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqButton, BqCard, BqIcon } from "@beeq/react";
+    import "./styles.css";
 
     <BqCard className="card--default">
       <div className="header">
@@ -227,7 +228,7 @@ A card with icon, title, description, and a call-to-action — use when users ne
     </BqCard>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqCard, BqIcon, BqButton } from "@beeq/angular/standalone";
     @Component({
@@ -250,11 +251,32 @@ A card with icon, title, description, and a call-to-action — use when users ne
           </div>
         </bq-card>
       `,
+      style: `
+        .card--default {
+          max-width: 24rem;
+          width: 100%;
+
+          &::part(wrapper) {
+            display: flex;
+            flex-direction: column;
+            gap: var(--bq-spacing-m);
+          }
+
+          h6 {
+            font-size: var(--bq-font-size--m);
+            font-weight: var(--bq-font-weight--bold);
+          }
+
+          p {
+            margin-block-start: var(--bq-spacing-m);
+          }
+        }
+      `,
     })
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqButton, BqCard, BqIcon } from "@beeq/vue";
     </script>
@@ -275,6 +297,30 @@ A card with icon, title, description, and a call-to-action — use when users ne
         </div>
       </BqCard>
     </template>
+
+
+    <style>
+    .card--default {
+      max-width: 24rem;
+      width: 100%;
+
+      &::part(wrapper) {
+        display: flex;
+        flex-direction: column;
+        gap: var(--bq-spacing-m);
+      }
+
+      h6 {
+        font-size: var(--bq-font-size--m);
+        font-weight: var(--bq-font-weight--bold);
+      }
+
+      p {
+        margin-block-start: var(--bq-spacing-m);
+      }
+    }
+
+    </style>
     ```
   </CodeGroup>
 </CodeLivePreview>
@@ -335,7 +381,7 @@ Use a card list when you have a collection of items that share the same structur
   </bq-card>
 `}>
   <CodeGroup>
-    ```css CSS icon="css"
+    ```css styles.css icon="css" expandable
     .card--highlights {
       width: 100%;
       max-width: 24rem;
@@ -364,7 +410,7 @@ Use a card list when you have a collection of items that share the same structur
     }
     ```
 
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-card class="card--highlights">
       <h6>Title</h6>
       <section>
@@ -388,8 +434,9 @@ Use a card list when you have a collection of items that share the same structur
     </bq-card>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqCard, BqIcon } from "@beeq/react";
+    import "./styles.css";
 
     <BqCard className="card--highlights">
       <h6>Title</h6>
@@ -414,7 +461,7 @@ Use a card list when you have a collection of items that share the same structur
     </BqCard>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqCard, BqIcon } from "@beeq/angular/standalone";
     @Component({
@@ -444,11 +491,39 @@ Use a card list when you have a collection of items that share the same structur
           </section>
         </bq-card>
       `,
+      style: `
+        .card--highlights {
+          width: 100%;
+          max-width: 24rem;
+
+          &::part(wrapper) {
+            display: flex;
+            flex-direction: column;
+            gap: var(--bq-spacing-m);
+          }
+
+          & h6 {
+            font-size: var(--bq-font-size--l);
+            font-weight: var(--bq-font-weight--bold);
+          }
+
+          & section {
+            display: flex;
+            flex-direction: column;
+            gap: var(--bq-spacing-s);
+
+            & .item {
+              display: flex;
+              gap: var(--bq-spacing-s);
+            }
+          }
+        }
+      `,
     })
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqCard, BqIcon } from "@beeq/vue";
     </script>
@@ -476,6 +551,37 @@ Use a card list when you have a collection of items that share the same structur
         </section>
       </BqCard>
     </template>
+
+
+    <style>
+    .card--highlights {
+      width: 100%;
+      max-width: 24rem;
+
+      &::part(wrapper) {
+        display: flex;
+        flex-direction: column;
+        gap: var(--bq-spacing-m);
+      }
+
+      & h6 {
+        font-size: var(--bq-font-size--l);
+        font-weight: var(--bq-font-weight--bold);
+      }
+
+      & section {
+        display: flex;
+        flex-direction: column;
+        gap: var(--bq-spacing-s);
+
+        & .item {
+          display: flex;
+          gap: var(--bq-spacing-s);
+        }
+      }
+    }
+
+    </style>
     ```
 </CodeGroup>
 </CodeLivePreview>
@@ -544,7 +650,7 @@ A KPI card combining an icon, headline value, and trend indicator — ideal for 
   </bq-card>
 `}>
   <CodeGroup>
-    ```css CSS icon="css" expandable
+    ```css styles.css icon="css" expandable
     .card--overview {
       width: 100%;
       max-width: 24rem;
@@ -586,7 +692,7 @@ A KPI card combining an icon, headline value, and trend indicator — ideal for 
     }
     ```
 
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-card class="card--overview">
       <div class="card-thumbnail">
         <bq-icon color="text--brand" size="56" name="star-bold"></bq-icon>
@@ -605,8 +711,9 @@ A KPI card combining an icon, headline value, and trend indicator — ideal for 
     </bq-card>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqCard, BqIcon } from "@beeq/react";
+    import "./styles.css";
 
     <BqCard className="card--overview">
       <div className="card-thumbnail">
@@ -626,7 +733,7 @@ A KPI card combining an icon, headline value, and trend indicator — ideal for 
     </BqCard>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqCard, BqIcon } from "@beeq/angular/standalone";
     @Component({
@@ -651,11 +758,52 @@ A KPI card combining an icon, headline value, and trend indicator — ideal for 
           </div>
         </bq-card>
       `,
+      style: `
+        .card--overview {
+          width: 100%;
+          max-width: 24rem;
+
+          &::part(wrapper) {
+            display: flex;
+            gap: var(--bq-spacing-m);
+          }
+
+          & h4 {
+            font-size: var(--bq-font-size--xxl);
+          }
+
+          & .card--body {
+            display: flex;
+            flex-direction: column;
+            gap: var(--bq-spacing-xs2);
+          }
+
+          & .body__top {
+            display: flex;
+            align-items: center;
+            gap: var(--bq-spacing-xs2);
+          }
+
+          & .body__bottom {
+            display: flex;
+            align-items: flex-end;
+            gap: var(--bq-spacing-xs);
+          }
+
+          & .text-secondary {
+            color: var(--bq-text--secondary);
+          }
+
+          & .text-success {
+            color: var(--bq-text--success);
+          }
+        }
+      `,
     })
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqCard, BqIcon } from "@beeq/vue";
     </script>
@@ -678,6 +826,50 @@ A KPI card combining an icon, headline value, and trend indicator — ideal for 
         </div>
       </BqCard>
     </template>
+
+
+    <style>
+    .card--overview {
+      width: 100%;
+      max-width: 24rem;
+
+      &::part(wrapper) {
+        display: flex;
+        gap: var(--bq-spacing-m);
+      }
+
+      & h4 {
+        font-size: var(--bq-font-size--xxl);
+      }
+
+      & .card--body {
+        display: flex;
+        flex-direction: column;
+        gap: var(--bq-spacing-xs2);
+      }
+
+      & .body__top {
+        display: flex;
+        align-items: center;
+        gap: var(--bq-spacing-xs2);
+      }
+
+      & .body__bottom {
+        display: flex;
+        align-items: flex-end;
+        gap: var(--bq-spacing-xs);
+      }
+
+      & .text-secondary {
+        color: var(--bq-text--secondary);
+      }
+
+      & .text-success {
+        color: var(--bq-text--success);
+      }
+    }
+
+    </style>
     ```
   </CodeGroup>
 </CodeLivePreview>
@@ -749,7 +941,7 @@ A compact horizontal card using `type="minimal"` that removes built-in padding, 
   </bq-card>
 `}>
   <CodeGroup>
-    ```css CSS icon="css" expandable
+    ```css styles.css icon="css" expandable
     .card--mini {
       width: 100%;
       max-width: 24rem;
@@ -796,7 +988,7 @@ A compact horizontal card using `type="minimal"` that removes built-in padding, 
     }
     ```
 
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-card type="minimal" class="card--mini">
       <div class="content--start">
         <bq-icon color="text--alt" name="graduation-cap-bold"></bq-icon>
@@ -813,8 +1005,9 @@ A compact horizontal card using `type="minimal"` that removes built-in padding, 
     </bq-card>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqCard, BqIcon } from "@beeq/react";
+    import "./styles.css";
 
     <BqCard type="minimal" className="card--mini">
       <div className="content--start">
@@ -832,7 +1025,7 @@ A compact horizontal card using `type="minimal"` that removes built-in padding, 
     </BqCard>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqCard, BqIcon } from "@beeq/angular/standalone";
     @Component({
@@ -855,11 +1048,57 @@ A compact horizontal card using `type="minimal"` that removes built-in padding, 
           </div>
         </bq-card>
       `,
+      style: `
+        .card--mini {
+          width: 100%;
+          max-width: 24rem;
+
+          &::part(wrapper) {
+            display: flex;
+            overflow: clip;
+          }
+
+          & .content--start {
+            display: flex;
+            align-items: center;
+            padding: var(--bq-spacing-l);
+            background-color: var(--bq-background--brand);
+          }
+
+          & .content--end {
+            display: flex;
+            flex: 1;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--bq-card--paddingMinimal);
+          }
+
+          & .body {
+            display: flex;
+            flex-direction: column;
+            padding-left: 0.5rem;
+          }
+
+          & h6 {
+            font-size: var(--bq-font-size--m);
+            font-weight: var(--bq-font-weight--medium);
+          }
+
+          & p {
+            font-size: var(--bq-font-size--xs);
+            color: var(--bq-text--secondary);
+          }
+
+          & .decorator {
+            padding: var(--bq-card--paddingMinimal);
+          }
+        }
+      `,
     })
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqCard, BqIcon } from "@beeq/vue";
     </script>
@@ -880,6 +1119,55 @@ A compact horizontal card using `type="minimal"` that removes built-in padding, 
         </div>
       </BqCard>
     </template>
+
+
+    <style>
+    .card--mini {
+      width: 100%;
+      max-width: 24rem;
+
+      &::part(wrapper) {
+        display: flex;
+        overflow: clip;
+      }
+
+      & .content--start {
+        display: flex;
+        align-items: center;
+        padding: var(--bq-spacing-l);
+        background-color: var(--bq-background--brand);
+      }
+
+      & .content--end {
+        display: flex;
+        flex: 1;
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--bq-card--paddingMinimal);
+      }
+
+      & .body {
+        display: flex;
+        flex-direction: column;
+        padding-left: 0.5rem;
+      }
+
+      & h6 {
+        font-size: var(--bq-font-size--m);
+        font-weight: var(--bq-font-weight--medium);
+      }
+
+      & p {
+        font-size: var(--bq-font-size--xs);
+        color: var(--bq-text--secondary);
+      }
+
+      & .decorator {
+        padding: var(--bq-card--paddingMinimal);
+      }
+    }
+
+    </style>
     ```
   </CodeGroup>
 </CodeLivePreview>
@@ -917,7 +1205,7 @@ A compact horizontal card using `type="minimal"` that removes built-in padding, 
   </div>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <div class="type-grid">
       <bq-card type="default">
         <p>Default — built-in padding applied automatically</p>
@@ -928,7 +1216,7 @@ A compact horizontal card using `type="minimal"` that removes built-in padding, 
     </div>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqCard } from "@beeq/react";
 
     <div className="type-grid">
@@ -941,7 +1229,7 @@ A compact horizontal card using `type="minimal"` that removes built-in padding, 
     </div>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqCard } from "@beeq/angular/standalone";
     @Component({
@@ -962,7 +1250,7 @@ A compact horizontal card using `type="minimal"` that removes built-in padding, 
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqCard } from "@beeq/vue";
     </script>
@@ -1033,7 +1321,7 @@ Use the `border` property to control the card corner radius.
   </div>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-card border="none">
       <span>border="none"</span>
     </bq-card>
@@ -1057,7 +1345,7 @@ Use the `border` property to control the card corner radius.
     </bq-card>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqCard } from "@beeq/react";
 
     <BqCard border="none">
@@ -1083,7 +1371,7 @@ Use the `border` property to control the card corner radius.
     </BqCard>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqCard } from "@beeq/angular/standalone";
     @Component({
@@ -1117,7 +1405,7 @@ Use the `border` property to control the card corner radius.
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqCard } from "@beeq/vue";
     </script>
@@ -1317,7 +1605,7 @@ When a card represents a link destination (for example, an article or product), 
   </a>
 `}>
   <CodeGroup>
-    ```css CSS icon="css" expandable
+    ```css styles.css icon="css" expandable
     .card-link {
       border-radius: var(--bq-radius--m);
       text-decoration: none;
@@ -1350,7 +1638,7 @@ When a card represents a link destination (for example, an article or product), 
     }
     ```
 
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <a href="https://example.com/article" class="card-link">
       <bq-card type="minimal" class="card--mini">
         <div class="content--start">
@@ -1369,8 +1657,9 @@ When a card represents a link destination (for example, an article or product), 
     </a>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqCard, BqIcon } from "@beeq/react";
+    import "./styles.css";
 
     <a href="https://example.com/article" className="card-link">
       <BqCard type="minimal" className="card--mini">
@@ -1390,7 +1679,7 @@ When a card represents a link destination (for example, an article or product), 
     </a>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqCard, BqIcon } from "@beeq/angular/standalone";
     @Component({
@@ -1415,11 +1704,43 @@ When a card represents a link destination (for example, an article or product), 
           </bq-card>
         </a>
       `,
+      style: `
+        .card-link {
+          border-radius: var(--bq-radius--m);
+          text-decoration: none;
+          cursor: pointer;
+
+          &:hover {
+            & .card--mini::part(wrapper) {
+              transform: translateY(-0.125rem);
+              box-shadow: var(--bq-box-shadow--m);
+            }
+          }
+
+          &:focus-visible {
+            outline-offset: 2px;
+            outline: 2px solid var(--bq-focus);
+          }
+
+          .card--mini {
+            width: 100%;
+            max-width: 24rem;
+
+            &::part(wrapper) {
+              display: flex;
+              overflow: clip;
+              transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+            }
+
+            /** Same as the [Mini card example](#mini-card) */
+          }
+        }
+      `,
     })
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqCard, BqIcon } from "@beeq/vue";
     </script>
@@ -1442,6 +1763,41 @@ When a card represents a link destination (for example, an article or product), 
         </BqCard>
       </a>
     </template>
+
+
+    <style>
+    .card-link {
+      border-radius: var(--bq-radius--m);
+      text-decoration: none;
+      cursor: pointer;
+
+      &:hover {
+        & .card--mini::part(wrapper) {
+          transform: translateY(-0.125rem);
+          box-shadow: var(--bq-box-shadow--m);
+        }
+      }
+
+      &:focus-visible {
+        outline-offset: 2px;
+        outline: 2px solid var(--bq-focus);
+      }
+
+      .card--mini {
+        width: 100%;
+        max-width: 24rem;
+
+        &::part(wrapper) {
+          display: flex;
+          overflow: clip;
+          transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+        }
+
+        /** Same as the [Mini card example](#mini-card) */
+      }
+    }
+
+    </style>
     ```
   </CodeGroup>
 </CodeLivePreview>

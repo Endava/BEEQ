@@ -81,14 +81,14 @@ Accordion items are collapsed by default. This works best when the heading alone
   </bq-accordion>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-accordion>
       <span slot="header">Accordion title</span>
       <p>This is the accordion panel content. It is hidden by default and revealed when the header is clicked.</p>
     </bq-accordion>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqAccordion } from "@beeq/react";
 
     <BqAccordion>
@@ -97,7 +97,7 @@ Accordion items are collapsed by default. This works best when the heading alone
     </BqAccordion>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqAccordion } from "@beeq/angular/standalone";
     @Component({
@@ -114,7 +114,7 @@ Accordion items are collapsed by default. This works best when the heading alone
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqAccordion } from "@beeq/vue";
     </script>
@@ -140,14 +140,14 @@ Use the `expanded` attribute when a section should start open — for example wh
   </bq-accordion>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-accordion expanded>
       <span slot="header">Expanded by default</span>
       <p>This panel is visible when the component first renders.</p>
     </bq-accordion>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqAccordion } from "@beeq/react";
 
     <BqAccordion expanded>
@@ -156,7 +156,7 @@ Use the `expanded` attribute when a section should start open — for example wh
     </BqAccordion>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqAccordion } from "@beeq/angular/standalone";
     @Component({
@@ -173,7 +173,7 @@ Use the `expanded` attribute when a section should start open — for example wh
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqAccordion } from "@beeq/vue";
     </script>
@@ -211,7 +211,7 @@ Two appearance values are available:
   </div>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <!-- Filled: default, no need to set appearance explicitly -->
     <bq-accordion expanded>
       <span slot="header">Filled (default)</span>
@@ -225,7 +225,7 @@ Two appearance values are available:
     </bq-accordion>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqAccordion } from "@beeq/react";
 
     {/* Filled: default */}
@@ -241,7 +241,7 @@ Two appearance values are available:
     </BqAccordion>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqAccordion } from "@beeq/angular/standalone";
     @Component({
@@ -265,7 +265,7 @@ Two appearance values are available:
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqAccordion } from "@beeq/vue";
     </script>
@@ -305,7 +305,7 @@ The `small` size uses more compact padding and a smaller border radius, giving i
   </div>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-accordion size="medium" expanded>
       <span slot="header">Medium accordion (default)</span>
       <p>This is the medium size — more padding, suitable for most use cases.</p>
@@ -317,7 +317,7 @@ The `small` size uses more compact padding and a smaller border radius, giving i
     </bq-accordion>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqAccordion } from "@beeq/react";
 
     <BqAccordion size="medium" expanded>
@@ -331,7 +331,7 @@ The `small` size uses more compact padding and a smaller border radius, giving i
     </BqAccordion>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqAccordion } from "@beeq/angular/standalone";
     @Component({
@@ -353,7 +353,7 @@ The `small` size uses more compact padding and a smaller border radius, giving i
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqAccordion } from "@beeq/vue";
     </script>
@@ -408,7 +408,7 @@ Use the default group behavior when the sections are mutually exclusive or when 
   </bq-accordion-group>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-accordion-group>
       <bq-accordion>
         <span slot="header">Section one</span>
@@ -425,7 +425,7 @@ Use the default group behavior when the sections are mutually exclusive or when 
     </bq-accordion-group>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqAccordion, BqAccordionGroup } from "@beeq/react";
 
     <BqAccordionGroup>
@@ -444,7 +444,7 @@ Use the default group behavior when the sections are mutually exclusive or when 
     </BqAccordionGroup>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqAccordionGroup, BqAccordion } from "@beeq/angular/standalone";
     @Component({
@@ -471,7 +471,7 @@ Use the default group behavior when the sections are mutually exclusive or when 
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqAccordion, BqAccordionGroup } from "@beeq/vue";
     </script>
@@ -517,7 +517,7 @@ Allow multiple sections to stay open when people may need to review, reference, 
   </bq-accordion-group>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-accordion-group multiple>
       <bq-accordion expanded>
         <span slot="header">Section one</span>
@@ -534,7 +534,7 @@ Allow multiple sections to stay open when people may need to review, reference, 
     </bq-accordion-group>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqAccordion, BqAccordionGroup } from "@beeq/react";
 
     <BqAccordionGroup multiple>
@@ -553,7 +553,7 @@ Allow multiple sections to stay open when people may need to review, reference, 
     </BqAccordionGroup>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqAccordionGroup, BqAccordion } from "@beeq/angular/standalone";
     @Component({
@@ -580,7 +580,7 @@ Allow multiple sections to stay open when people may need to review, reference, 
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqAccordion, BqAccordionGroup } from "@beeq/vue";
     </script>
@@ -638,7 +638,7 @@ These provide additional context to help people scan and understand the sections
   </bq-accordion-group>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <!-- Prefix icon -->
     <bq-accordion>
       <bq-icon name="heart" slot="prefix"></bq-icon>
@@ -665,7 +665,7 @@ These provide additional context to help people scan and understand the sections
     </bq-accordion>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqAccordion, BqAvatar, BqIcon } from "@beeq/react";
 
     {/* Prefix icon */}
@@ -694,7 +694,7 @@ These provide additional context to help people scan and understand the sections
     </BqAccordion>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqAccordion, BqIcon, BqAvatar } from "@beeq/angular/standalone";
     @Component({
@@ -731,7 +731,7 @@ These provide additional context to help people scan and understand the sections
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqAccordion, BqAvatar, BqIcon } from "@beeq/vue";
     </script>
@@ -779,14 +779,14 @@ Use `disabled` only when a section is temporarily unavailable. The header will n
   </bq-accordion>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-accordion disabled>
       <span slot="header">Disabled accordion</span>
       <p>This content cannot be accessed while the accordion is disabled.</p>
     </bq-accordion>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqAccordion } from "@beeq/react";
 
     <BqAccordion disabled>
@@ -795,7 +795,7 @@ Use `disabled` only when a section is temporarily unavailable. The header will n
     </BqAccordion>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqAccordion } from "@beeq/angular/standalone";
     @Component({
@@ -812,7 +812,7 @@ Use `disabled` only when a section is temporarily unavailable. The header will n
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqAccordion } from "@beeq/vue";
     </script>
@@ -845,7 +845,7 @@ Add the `no-animation` attribute to disable this and make the panel appear/disap
   </div>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <!-- Default: animated -->
     <bq-accordion>
       <span slot="header">With animation (default)</span>
@@ -859,7 +859,7 @@ Add the `no-animation` attribute to disable this and make the panel appear/disap
     </bq-accordion>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqAccordion } from "@beeq/react";
 
     {/* Default: animated */}
@@ -875,7 +875,7 @@ Add the `no-animation` attribute to disable this and make the panel appear/disap
     </BqAccordion>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqAccordion } from "@beeq/angular/standalone";
     @Component({
@@ -899,7 +899,7 @@ Add the `no-animation` attribute to disable this and make the panel appear/disap
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqAccordion } from "@beeq/vue";
     </script>
@@ -954,7 +954,7 @@ Alternatively, combine a single icon in the `expand` slot with the `rotate` prop
     </bq-accordion-group>
   `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <!-- Two separate icons: different icon for each state -->
     <bq-accordion>
       <bq-icon name="folder-simple" slot="expand"></bq-icon>
@@ -971,7 +971,7 @@ Alternatively, combine a single icon in the `expand` slot with the `rotate` prop
     </bq-accordion>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqAccordion, BqIcon } from "@beeq/react";
 
     {/* Two separate icons */}
@@ -990,7 +990,7 @@ Alternatively, combine a single icon in the `expand` slot with the `rotate` prop
     </BqAccordion>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqAccordion, BqIcon } from "@beeq/angular/standalone";
     @Component({
@@ -1017,7 +1017,7 @@ Alternatively, combine a single icon in the `expand` slot with the `rotate` prop
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqAccordion, BqIcon } from "@beeq/vue";
     </script>
@@ -1086,7 +1086,7 @@ Developers can [rely on the exposed shadow DOM parts](https://www.beeq.design/3d
   </bq-accordion-group>
 `}>
   <CodeGroup>
-    ```css CSS icon="css"
+    ```css styles.css icon="css" expandable
     .my-accordion {
       &::part(header) {
         flex-direction: row-reverse;
@@ -1098,7 +1098,7 @@ Developers can [rely on the exposed shadow DOM parts](https://www.beeq.design/3d
     }
     ```
 
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-accordion-group appearance="ghost">
       <bq-accordion class="my-accordion" rotate>
         <bq-icon name="caret-down" slot="expand"></bq-icon>
@@ -1119,9 +1119,10 @@ Developers can [rely on the exposed shadow DOM parts](https://www.beeq.design/3d
     </bq-accordion-group>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqAccordion, BqAccordionGroup, BqIcon } from "@beeq/react";
     import "./my-accordion.css";
+    import "./styles.css";
 
     <BqAccordionGroup appearance="ghost">
       <BqAccordion className="my-accordion" rotate>
@@ -1143,7 +1144,7 @@ Developers can [rely on the exposed shadow DOM parts](https://www.beeq.design/3d
     </BqAccordionGroup>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqAccordionGroup, BqAccordion, BqIcon } from "@beeq/angular/standalone";
     @Component({
@@ -1170,11 +1171,22 @@ Developers can [rely on the exposed shadow DOM parts](https://www.beeq.design/3d
           </bq-accordion>
         </bq-accordion-group>
       `,
+      style: `
+        .my-accordion {
+          &::part(header) {
+            flex-direction: row-reverse;
+          }
+          div[slot="header"] {
+            display: flex;
+            justify-content: space-between;
+          }
+        }
+      `,
     })
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <template>
       <BqAccordionGroup appearance="ghost">
         <BqAccordion class="my-accordion" rotate>
@@ -1195,6 +1207,18 @@ Developers can [rely on the exposed shadow DOM parts](https://www.beeq.design/3d
         </BqAccordion>
       </BqAccordionGroup>
     </template>
+
+    <style>
+    .my-accordion {
+      &::part(header) {
+        flex-direction: row-reverse;
+      }
+      div[slot="header"] {
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+    </style>
     ```
   </CodeGroup>
 </CodeLivePreview>
