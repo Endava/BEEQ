@@ -42,15 +42,18 @@ Steps guide users through a sequential process such as a wizard, onboarding flow
 
 ## Patterns
 
-<CardGroup cols={3}>
-  <Card title="Dots">
-    Dots provide a compact progress indicator for straightforward linear flows.
+<CardGroup cols={2}>
+  <Card title="Multistep forms">
+    Split long forms into clear stages so users can see what is complete, where they are, and what remains.
   </Card>
-  <Card title="Numbers">
-    Numbers make the order explicit when users need to understand sequence at a glance.
+  <Card title="Onboarding and wizards">
+    Guide users through setup flows where each step depends on the previous one.
   </Card>
-  <Card title="Icons">
-    Icons add visual meaning when each step represents a recognizable action or context.
+  <Card title="Process overviews">
+    Summarize a task, service, or project flow when readers need the full sequence before they start.
+  </Card>
+  <Card title="Progress tracking">
+    Show completed, current, upcoming, blocked, or disabled stages in a process that changes over time.
   </Card>
 </CardGroup>
 
@@ -107,353 +110,91 @@ Steps are composed of a label or prefix, title, optional description, and divide
 
 Labels describe each step, while icons provide visual cues. Use meaningful titles and reserve icons for cases where the symbol helps users understand the action or context.
 
-### States
-
-Steps support `default`, `current`, `completed`, `error`, and `disabled` states. Use these states to show what users have finished, where they are now, and what requires attention.
-
 ## Usage
 
-### Dots
+Start with `bq-steps` and one `bq-step-item` for each stage. There are three types of steps: `numeric`, `dot`, and `icon`.
 
-Use `type="dot"` for a minimal progress indicator when the sequence is clear and the step labels carry most of the meaning.
+<Warning>
+  You **must specify the type** you want to use on `bq-steps`. If you don't, the default styles will apply, but it may not match your content or design intent.
+</Warning>
 
-<CodeLivePreview code={`<bq-steps type="dot">
-  <bq-step-item status="default">
-    <bq-icon aria-hidden="true" slot="prefix" name="circle"></bq-icon>
-    <span>Details</span>
-    <span slot="description">Add your personal details</span>
-  </bq-step-item>
-  <bq-step-item status="error">
-    <bq-icon aria-hidden="true" slot="prefix" name="x-circle"></bq-icon>
-    <span>Payment</span>
-    <span slot="description">Resolve the payment error</span>
-  </bq-step-item>
-  <bq-step-item status="completed">
-    <bq-icon aria-hidden="true" slot="prefix" name="check-circle"></bq-icon>
-    <span>Review</span>
-    <span slot="description">Review completed</span>
-  </bq-step-item>
-  <bq-step-item status="current">
-    <bq-icon aria-hidden="true" slot="prefix" name="circle"></bq-icon>
-    <span>Confirm</span>
-    <span slot="description">Confirm your request</span>
-  </bq-step-item>
-</bq-steps>`}>
+### Numeric
+
+Start with the numeric type to show a clear sequence and position in the process. Each step should have a number prefix that matches its order.
+
+<CodeLivePreview mode="iframe" height="15rem" removePadding code={`
+  <style>
+    body {
+      padding: var(--bq-spacing-m);
+    }
+
+    /* Optional: Set a fixed width for numeric prefixes */
+    span[slot="prefix"] {
+      min-inline-size: var(--bq-step-item--prefix-number-size, var(--bq-spacing-xl));
+    }
+  </style>
+  <bq-steps type="numeric">
+    <bq-step-item>
+      <span aria-label="Step 1" slot="prefix">1</span>
+      <span>Account</span>
+      <span slot="description">Create your account</span>
+    </bq-step-item>
+    <bq-step-item>
+      <span aria-label="Step 2" slot="prefix">2</span>
+      <span>Profile</span>
+      <span slot="description">Complete your profile details</span>
+    </bq-step-item>
+    <bq-step-item>
+      <span aria-label="Step 3" slot="prefix">3</span>
+      <span>Review and Submit</span>
+      <span slot="description">Review your details and submit</span>
+    </bq-step-item>
+  </bq-steps>
+`}>
   <CodeGroup>
-    ```html HTML icon="html5"
-    <bq-steps type="dot">
-      <bq-step-item status="default">
-        <bq-icon aria-hidden="true" slot="prefix" name="circle"></bq-icon>
-        <span>Details</span>
-        <span slot="description">Add your personal details</span>
-      </bq-step-item>
-      <bq-step-item status="error">
-        <bq-icon aria-hidden="true" slot="prefix" name="x-circle"></bq-icon>
-        <span>Payment</span>
-        <span slot="description">Resolve the payment error</span>
-      </bq-step-item>
-      <bq-step-item status="completed">
-        <bq-icon aria-hidden="true" slot="prefix" name="check-circle"></bq-icon>
-        <span>Review</span>
-        <span slot="description">Review completed</span>
-      </bq-step-item>
-      <bq-step-item status="current">
-        <bq-icon aria-hidden="true" slot="prefix" name="circle"></bq-icon>
-        <span>Confirm</span>
-        <span slot="description">Confirm your request</span>
-      </bq-step-item>
-    </bq-steps>
-    ```
-    ```jsx React icon="react"
-    import { BqIcon, BqStepItem, BqSteps } from "@beeq/react";
-
-    <BqSteps type="dot">
-      <BqStepItem status="default">
-        <BqIcon aria-hidden="true" slot="prefix" name="circle" />
-        <span>Details</span>
-        <span slot="description">Add your personal details</span>
-      </BqStepItem>
-      <BqStepItem status="error">
-        <BqIcon aria-hidden="true" slot="prefix" name="x-circle" />
-        <span>Payment</span>
-        <span slot="description">Resolve the payment error</span>
-      </BqStepItem>
-      <BqStepItem status="completed">
-        <BqIcon aria-hidden="true" slot="prefix" name="check-circle" />
-        <span>Review</span>
-        <span slot="description">Review completed</span>
-      </BqStepItem>
-      <BqStepItem status="current">
-        <BqIcon aria-hidden="true" slot="prefix" name="circle" />
-        <span>Confirm</span>
-        <span slot="description">Confirm your request</span>
-      </BqStepItem>
-    </BqSteps>
-    ```
-    ```ts Angular icon="angular"
-    import { Component } from "@angular/core";
-    import { BqIcon, BqStepItem, BqSteps } from "@beeq/angular/standalone";
-
-    @Component({
-      standalone: true,
-      imports: [BqIcon, BqStepItem, BqSteps],
-      template: `
-        <bq-steps type="dot">
-          <bq-step-item status="default">
-            <bq-icon aria-hidden="true" slot="prefix" name="circle"></bq-icon>
-            <span>Details</span>
-            <span slot="description">Add your personal details</span>
-          </bq-step-item>
-          <bq-step-item status="error">
-            <bq-icon aria-hidden="true" slot="prefix" name="x-circle"></bq-icon>
-            <span>Payment</span>
-            <span slot="description">Resolve the payment error</span>
-          </bq-step-item>
-          <bq-step-item status="completed">
-            <bq-icon aria-hidden="true" slot="prefix" name="check-circle"></bq-icon>
-            <span>Review</span>
-            <span slot="description">Review completed</span>
-          </bq-step-item>
-          <bq-step-item status="current">
-            <bq-icon aria-hidden="true" slot="prefix" name="circle"></bq-icon>
-            <span>Confirm</span>
-            <span slot="description">Confirm your request</span>
-          </bq-step-item>
-        </bq-steps>
-      `
-    })
-    export class DotStepsComponent {}
-    ```
-    ```vue Vue icon="vuejs"
-    <script setup lang="ts">
-    import { BqIcon, BqStepItem, BqSteps } from "@beeq/vue";
-    </script>
-
-    <template>
-      <BqSteps type="dot">
-        <BqStepItem status="default">
-          <BqIcon aria-hidden="true" slot="prefix" name="circle" />
-          <span>Details</span>
-          <span slot="description">Add your personal details</span>
-        </BqStepItem>
-        <BqStepItem status="error">
-          <BqIcon aria-hidden="true" slot="prefix" name="x-circle" />
-          <span>Payment</span>
-          <span slot="description">Resolve the payment error</span>
-        </BqStepItem>
-        <BqStepItem status="completed">
-          <BqIcon aria-hidden="true" slot="prefix" name="check-circle" />
-          <span>Review</span>
-          <span slot="description">Review completed</span>
-        </BqStepItem>
-        <BqStepItem status="current">
-          <BqIcon aria-hidden="true" slot="prefix" name="circle" />
-          <span>Confirm</span>
-          <span slot="description">Confirm your request</span>
-        </BqStepItem>
-      </BqSteps>
-    </template>
-    ```
-  </CodeGroup>
-</CodeLivePreview>
-
-### Icons
-
-Use `type="icon"` when each step benefits from a recognizable symbol. Icons should support the label, not replace it.
-
-<CodeLivePreview code={`<bq-steps type="icon">
-  <bq-step-item status="completed">
-    <bq-icon aria-hidden="true" slot="prefix" name="airplane-takeoff"></bq-icon>
-    <span>Flight</span>
-    <span slot="description">Reserve your flight</span>
-  </bq-step-item>
-  <bq-step-item status="error">
-    <bq-icon aria-hidden="true" slot="prefix" name="car"></bq-icon>
-    <span>Rent a car</span>
-    <span slot="description">There was an error with your reservation</span>
-  </bq-step-item>
-  <bq-step-item status="current">
-    <bq-icon aria-hidden="true" slot="prefix" name="tree-palm"></bq-icon>
-    <span>Enjoy your holidays!</span>
-    <span slot="description">You're ready for your vacations</span>
-  </bq-step-item>
-</bq-steps>`}>
-  <CodeGroup>
-    ```html HTML icon="html5"
-    <bq-steps type="icon">
-      <bq-step-item status="completed">
-        <bq-icon aria-hidden="true" slot="prefix" name="airplane-takeoff"></bq-icon>
-        <span>Flight</span>
-        <span slot="description">Reserve your flight</span>
-      </bq-step-item>
-      <bq-step-item status="error">
-        <bq-icon aria-hidden="true" slot="prefix" name="car"></bq-icon>
-        <span>Rent a car</span>
-        <span slot="description">There was an error with your reservation</span>
-      </bq-step-item>
-      <bq-step-item status="current">
-        <bq-icon aria-hidden="true" slot="prefix" name="tree-palm"></bq-icon>
-        <span>Enjoy your holidays!</span>
-        <span slot="description">You're ready for your vacations</span>
-      </bq-step-item>
-    </bq-steps>
-    ```
-    ```jsx React icon="react"
-    import { BqIcon, BqStepItem, BqSteps } from "@beeq/react";
-
-    <BqSteps type="icon">
-      <BqStepItem status="completed">
-        <BqIcon aria-hidden="true" slot="prefix" name="airplane-takeoff" />
-        <span>Flight</span>
-        <span slot="description">Reserve your flight</span>
-      </BqStepItem>
-      <BqStepItem status="error">
-        <BqIcon aria-hidden="true" slot="prefix" name="car" />
-        <span>Rent a car</span>
-        <span slot="description">There was an error with your reservation</span>
-      </BqStepItem>
-      <BqStepItem status="current">
-        <BqIcon aria-hidden="true" slot="prefix" name="tree-palm" />
-        <span>Enjoy your holidays!</span>
-        <span slot="description">You're ready for your vacations</span>
-      </BqStepItem>
-    </BqSteps>
-    ```
-    ```ts Angular icon="angular"
-    import { Component } from "@angular/core";
-    import { BqIcon, BqStepItem, BqSteps } from "@beeq/angular/standalone";
-
-    @Component({
-      standalone: true,
-      imports: [BqIcon, BqStepItem, BqSteps],
-      template: `
-        <bq-steps type="icon">
-          <bq-step-item status="completed">
-            <bq-icon aria-hidden="true" slot="prefix" name="airplane-takeoff"></bq-icon>
-            <span>Flight</span>
-            <span slot="description">Reserve your flight</span>
-          </bq-step-item>
-          <bq-step-item status="error">
-            <bq-icon aria-hidden="true" slot="prefix" name="car"></bq-icon>
-            <span>Rent a car</span>
-            <span slot="description">There was an error with your reservation</span>
-          </bq-step-item>
-          <bq-step-item status="current">
-            <bq-icon aria-hidden="true" slot="prefix" name="tree-palm"></bq-icon>
-            <span>Enjoy your holidays!</span>
-            <span slot="description">You're ready for your vacations</span>
-          </bq-step-item>
-        </bq-steps>
-      `
-    })
-    export class IconStepsComponent {}
-    ```
-    ```vue Vue icon="vuejs"
-    <script setup lang="ts">
-    import { BqIcon, BqStepItem, BqSteps } from "@beeq/vue";
-    </script>
-
-    <template>
-      <BqSteps type="icon">
-        <BqStepItem status="completed">
-          <BqIcon aria-hidden="true" slot="prefix" name="airplane-takeoff" />
-          <span>Flight</span>
-          <span slot="description">Reserve your flight</span>
-        </BqStepItem>
-        <BqStepItem status="error">
-          <BqIcon aria-hidden="true" slot="prefix" name="car" />
-          <span>Rent a car</span>
-          <span slot="description">There was an error with your reservation</span>
-        </BqStepItem>
-        <BqStepItem status="current">
-          <BqIcon aria-hidden="true" slot="prefix" name="tree-palm" />
-          <span>Enjoy your holidays!</span>
-          <span slot="description">You're ready for your vacations</span>
-        </BqStepItem>
-      </BqSteps>
-    </template>
-    ```
-  </CodeGroup>
-</CodeLivePreview>
-
-### Numbers
-
-Use `type="numeric"` when order and sequence need to be explicit.
-
-<CodeLivePreview code={`<bq-steps type="numeric">
-  <bq-step-item status="default">
-    <span aria-label="Step 1" slot="prefix">1</span>
-    <span>Details</span>
-    <span slot="description">Description</span>
-  </bq-step-item>
-  <bq-step-item status="completed">
-    <span aria-label="Step 2" slot="prefix">2</span>
-    <span>Review</span>
-    <span slot="description">Description</span>
-  </bq-step-item>
-  <bq-step-item status="error">
-    <span aria-label="Step 3" slot="prefix">3</span>
-    <span>Payment</span>
-    <span slot="description">Description</span>
-  </bq-step-item>
-  <bq-step-item status="current">
-    <span aria-label="Step 4" slot="prefix">4</span>
-    <span>Confirm</span>
-    <span slot="description">Description</span>
-  </bq-step-item>
-</bq-steps>`}>
-  <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-steps type="numeric">
-      <bq-step-item status="default">
+      <bq-step-item>
         <span aria-label="Step 1" slot="prefix">1</span>
-        <span>Details</span>
-        <span slot="description">Description</span>
+        <span>Account</span>
+        <span slot="description">Create your account</span>
       </bq-step-item>
-      <bq-step-item status="completed">
+      <bq-step-item>
         <span aria-label="Step 2" slot="prefix">2</span>
-        <span>Review</span>
-        <span slot="description">Description</span>
+        <span>Profile</span>
+        <span slot="description">Complete your profile details</span>
       </bq-step-item>
-      <bq-step-item status="error">
+      <bq-step-item>
         <span aria-label="Step 3" slot="prefix">3</span>
-        <span>Payment</span>
-        <span slot="description">Description</span>
-      </bq-step-item>
-      <bq-step-item status="current">
-        <span aria-label="Step 4" slot="prefix">4</span>
-        <span>Confirm</span>
-        <span slot="description">Description</span>
+        <span>Review and Submit</span>
+        <span slot="description">Review your details and submit</span>
       </bq-step-item>
     </bq-steps>
     ```
-    ```jsx React icon="react"
+
+    ```jsx React icon="react" expandable
     import { BqStepItem, BqSteps } from "@beeq/react";
 
     <BqSteps type="numeric">
-      <BqStepItem status="default">
+      <BqStepItem>
         <span aria-label="Step 1" slot="prefix">1</span>
-        <span>Details</span>
-        <span slot="description">Description</span>
+        <span>Account</span>
+        <span slot="description">Create your account</span>
       </BqStepItem>
-      <BqStepItem status="completed">
+      <BqStepItem>
         <span aria-label="Step 2" slot="prefix">2</span>
-        <span>Review</span>
-        <span slot="description">Description</span>
+        <span>Profile</span>
+        <span slot="description">Complete your profile details</span>
       </BqStepItem>
-      <BqStepItem status="error">
+      <BqStepItem>
         <span aria-label="Step 3" slot="prefix">3</span>
-        <span>Payment</span>
-        <span slot="description">Description</span>
-      </BqStepItem>
-      <BqStepItem status="current">
-        <span aria-label="Step 4" slot="prefix">4</span>
-        <span>Confirm</span>
-        <span slot="description">Description</span>
+        <span>Review and Submit</span>
+        <span slot="description">Review your details and submit</span>
       </BqStepItem>
     </BqSteps>
     ```
-    ```ts Angular icon="angular"
+
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqStepItem, BqSteps } from "@beeq/angular/standalone";
 
@@ -462,57 +203,477 @@ Use `type="numeric"` when order and sequence need to be explicit.
       imports: [BqStepItem, BqSteps],
       template: `
         <bq-steps type="numeric">
-          <bq-step-item status="default">
+          <bq-step-item>
             <span aria-label="Step 1" slot="prefix">1</span>
-            <span>Details</span>
-            <span slot="description">Description</span>
+            <span>Account</span>
+            <span slot="description">Create your account</span>
           </bq-step-item>
-          <bq-step-item status="completed">
+          <bq-step-item>
             <span aria-label="Step 2" slot="prefix">2</span>
-            <span>Review</span>
-            <span slot="description">Description</span>
+            <span>Profile</span>
+            <span slot="description">Complete your profile details</span>
           </bq-step-item>
-          <bq-step-item status="error">
+          <bq-step-item>
             <span aria-label="Step 3" slot="prefix">3</span>
-            <span>Payment</span>
-            <span slot="description">Description</span>
-          </bq-step-item>
-          <bq-step-item status="current">
-            <span aria-label="Step 4" slot="prefix">4</span>
-            <span>Confirm</span>
-            <span slot="description">Description</span>
+            <span>Review and Submit</span>
+            <span slot="description">Review your details and submit</span>
           </bq-step-item>
         </bq-steps>
       `
     })
     export class NumericStepsComponent {}
     ```
-    ```vue Vue icon="vuejs"
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqStepItem, BqSteps } from "@beeq/vue";
+    </script>
+
+    <template>
+      <bq-steps type="numeric">
+        <bq-step-item>
+          <span aria-label="Step 1" slot="prefix">1</span>
+          <span>Account</span>
+          <span slot="description">Create your account</span>
+        </bq-step-item>
+        <bq-step-item>
+          <span aria-label="Step 2" slot="prefix">2</span>
+          <span>Profile</span>
+          <span slot="description">Complete your profile details</span>
+        </bq-step-item>
+        <bq-step-item>
+          <span aria-label="Step 3" slot="prefix">3</span>
+          <span>Review and Submit</span>
+          <span slot="description">Review your details and submit</span>
+        </bq-step-item>
+      </bq-steps>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Dot
+
+Use `type="dot"` for a minimal progress indicator when the sequence is clear and the step labels carry most of the meaning.
+
+<CodeLivePreview mode="iframe" height="15rem" removePadding code={`
+  <style>
+    body {
+      padding: var(--bq-spacing-m);
+    }
+  </style>
+  <bq-steps type="dot">
+    <bq-step-item>
+      <bq-icon aria-hidden="true" slot="prefix" name="check-circle"></bq-icon>
+      <span>Plan</span>
+      <span slot="description">Scope approved</span>
+    </bq-step-item>
+    <bq-step-item>
+      <bq-icon aria-hidden="true" slot="prefix" name="circle"></bq-icon>
+      <span>Build</span>
+      <span slot="description">Work in progress</span>
+    </bq-step-item>
+    <bq-step-item>
+      <bq-icon aria-hidden="true" slot="prefix" name="circle"></bq-icon>
+      <span>Launch</span>
+      <span slot="description">Ready next</span>
+    </bq-step-item>
+  </bq-steps>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <bq-steps type="dot">
+      <bq-step-item>
+        <bq-icon aria-hidden="true" slot="prefix" name="check-circle"></bq-icon>
+        <span>Plan</span>
+        <span slot="description">Scope approved</span>
+      </bq-step-item>
+      <bq-step-item>
+        <bq-icon aria-hidden="true" slot="prefix" name="circle"></bq-icon>
+        <span>Build</span>
+        <span slot="description">Work in progress</span>
+      </bq-step-item>
+      <bq-step-item>
+        <bq-icon aria-hidden="true" slot="prefix" name="circle"></bq-icon>
+        <span>Launch</span>
+        <span slot="description">Ready next</span>
+      </bq-step-item>
+    </bq-steps>
+    ```
+
+    ```jsx React icon="react" expandable
+    import { BqIcon, BqStepItem, BqSteps } from "@beeq/react";
+
+    <BqSteps type="dot">
+      <BqStepItem>
+        <BqIcon aria-hidden="true" slot="prefix" name="check-circle" />
+        <span>Plan</span>
+        <span slot="description">Scope approved</span>
+      </BqStepItem>
+      <BqStepItem>
+        <BqIcon aria-hidden="true" slot="prefix" name="circle" />
+        <span>Build</span>
+        <span slot="description">Work in progress</span>
+      </BqStepItem>
+      <BqStepItem>
+        <BqIcon aria-hidden="true" slot="prefix" name="circle" />
+        <span>Launch</span>
+        <span slot="description">Ready next</span>
+      </BqStepItem>
+    </BqSteps>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqIcon, BqStepItem, BqSteps } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqIcon, BqStepItem, BqSteps],
+      template: `
+        <bq-steps type="dot">
+          <bq-step-item>
+            <bq-icon aria-hidden="true" slot="prefix" name="check-circle"></bq-icon>
+            <span>Plan</span>
+            <span slot="description">Scope approved</span>
+          </bq-step-item>
+          <bq-step-item>
+            <bq-icon aria-hidden="true" slot="prefix" name="circle"></bq-icon>
+            <span>Build</span>
+            <span slot="description">Work in progress</span>
+          </bq-step-item>
+          <bq-step-item>
+            <bq-icon aria-hidden="true" slot="prefix" name="circle"></bq-icon>
+            <span>Launch</span>
+            <span slot="description">Ready next</span>
+          </bq-step-item>
+        </bq-steps>
+      `
+    })
+    export class DotStepsComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqIcon, BqStepItem, BqSteps } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqSteps type="dot">
+        <BqStepItem>
+          <BqIcon aria-hidden="true" slot="prefix" name="check-circle" />
+          <span>Plan</span>
+          <span slot="description">Scope approved</span>
+        </BqStepItem>
+        <BqStepItem>
+          <BqIcon aria-hidden="true" slot="prefix" name="circle" />
+          <span>Build</span>
+          <span slot="description">Work in progress</span>
+        </BqStepItem>
+        <BqStepItem>
+          <BqIcon aria-hidden="true" slot="prefix" name="circle" />
+          <span>Launch</span>
+          <span slot="description">Ready next</span>
+        </BqStepItem>
+      </BqSteps>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Icon
+
+Use `type="icon"` when each step benefits from a recognizable symbol. Icons should support the label, not replace it.
+
+<CodeLivePreview mode="iframe" height="15rem" removePadding code={`
+  <style>
+    body {
+      padding: var(--bq-spacing-m);
+    }
+  </style>
+  <bq-steps type="icon">
+    <bq-step-item>
+      <bq-icon aria-hidden="true" slot="prefix" name="user"></bq-icon>
+      <span>Account</span>
+      <span slot="description">Account created</span>
+    </bq-step-item>
+    <bq-step-item>
+      <bq-icon aria-hidden="true" slot="prefix" name="gear"></bq-icon>
+      <span>Settings</span>
+      <span slot="description">Choose preferences</span>
+    </bq-step-item>
+    <bq-step-item>
+      <bq-icon aria-hidden="true" slot="prefix" name="check-circle"></bq-icon>
+      <span>Confirm</span>
+      <span slot="description">Review and submit</span>
+    </bq-step-item>
+  </bq-steps>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <bq-steps type="icon">
+      <bq-step-item>
+        <bq-icon aria-hidden="true" slot="prefix" name="user"></bq-icon>
+        <span>Account</span>
+        <span slot="description">Account created</span>
+      </bq-step-item>
+      <bq-step-item>
+        <bq-icon aria-hidden="true" slot="prefix" name="gear"></bq-icon>
+        <span>Settings</span>
+        <span slot="description">Choose preferences</span>
+      </bq-step-item>
+      <bq-step-item>
+        <bq-icon aria-hidden="true" slot="prefix" name="check-circle"></bq-icon>
+        <span>Confirm</span>
+        <span slot="description">Review and submit</span>
+      </bq-step-item>
+    </bq-steps>
+    ```
+
+    ```jsx React icon="react" expandable
+    import { BqIcon, BqStepItem, BqSteps } from "@beeq/react";
+
+    <BqSteps type="icon">
+      <BqStepItem>
+        <BqIcon aria-hidden="true" slot="prefix" name="user" />
+        <span>Account</span>
+        <span slot="description">Account created</span>
+      </BqStepItem>
+      <BqStepItem>
+        <BqIcon aria-hidden="true" slot="prefix" name="gear" />
+        <span>Settings</span>
+        <span slot="description">Choose preferences</span>
+      </BqStepItem>
+      <BqStepItem>
+        <BqIcon aria-hidden="true" slot="prefix" name="check-circle" />
+        <span>Confirm</span>
+        <span slot="description">Review and submit</span>
+      </BqStepItem>
+    </BqSteps>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqIcon, BqStepItem, BqSteps } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqIcon, BqStepItem, BqSteps],
+      template: `
+        <bq-steps type="icon">
+          <bq-step-item>
+            <bq-icon aria-hidden="true" slot="prefix" name="user"></bq-icon>
+            <span>Account</span>
+            <span slot="description">Account created</span>
+          </bq-step-item>
+          <bq-step-item>
+            <bq-icon aria-hidden="true" slot="prefix" name="gear"></bq-icon>
+            <span>Settings</span>
+            <span slot="description">Choose preferences</span>
+          </bq-step-item>
+          <bq-step-item>
+            <bq-icon aria-hidden="true" slot="prefix" name="check-circle"></bq-icon>
+            <span>Confirm</span>
+            <span slot="description">Review and submit</span>
+          </bq-step-item>
+        </bq-steps>
+      `
+    })
+    export class IconStepsComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqIcon, BqStepItem, BqSteps } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqSteps type="icon">
+        <BqStepItem>
+          <BqIcon aria-hidden="true" slot="prefix" name="user" />
+          <span>Account</span>
+          <span slot="description">Account created</span>
+        </BqStepItem>
+        <BqStepItem>
+          <BqIcon aria-hidden="true" slot="prefix" name="gear" />
+          <span>Settings</span>
+          <span slot="description">Choose preferences</span>
+        </BqStepItem>
+        <BqStepItem>
+          <BqIcon aria-hidden="true" slot="prefix" name="check-circle" />
+          <span>Confirm</span>
+          <span slot="description">Review and submit</span>
+        </BqStepItem>
+      </BqSteps>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+## Status
+
+Use the `status` attribute to show progress and guide users through the process.
+The current step should be visually distinct from completed and remaining steps.
+
+<Tip>
+  The status should be applied to the `bq-step-item` element. This ensures that the entire step, including the label and description, reflects the current state.
+</Tip>
+
+| Status | Description |
+|---|---|
+| `default` | The default state for steps that have not been reached yet. It should be visually distinct from current and completed steps. |
+| `current` | The step the user is currently on. It should be visually highlighted to indicate focus. |
+| `completed` | A step that has been finished. It should be visually distinct from the current and remaining steps. |
+| `disabled` | A step that is not available for interaction, often because a previous step has not been completed. It should be visually subdued to indicate it cannot be accessed yet. |
+| `error` | A step that has an issue that needs attention. It should be visually distinct to indicate a problem. |
+
+<CodeLivePreview mode="iframe" height="10rem" removePadding code={`
+  <style>
+    body {
+      padding: var(--bq-spacing-m);
+    }
+
+    span[slot="prefix"] {
+      min-inline-size: var(--bq-step-item--prefix-number-size, var(--bq-spacing-xl));
+    }
+  </style>
+  <bq-steps type="numeric">
+    <bq-step-item status="completed">
+      <span aria-label="Step 1" slot="prefix">1</span>
+      <span>Completed</span>
+      <span slot="description">Completed</span>
+    </bq-step-item>
+    <bq-step-item status="current">
+      <span aria-label="Step 2" slot="prefix">2</span>
+      <span>Current</span>
+      <span slot="description">Current step</span>
+    </bq-step-item>
+    <bq-step-item status="error">
+      <span aria-label="Step 3" slot="prefix">3</span>
+      <span>Error</span>
+      <span slot="description">You need to address an issue</span>
+    </bq-step-item>
+    <bq-step-item status="disabled">
+      <span aria-label="Step 4" slot="prefix">4</span>
+      <span>Disabled</span>
+      <span slot="description">Complete previous steps first</span>
+    </bq-step-item>
+  </bq-steps>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <bq-steps type="numeric">
+      <bq-step-item status="completed">
+        <span aria-label="Step 1" slot="prefix">1</span>
+        <span>Completed</span>
+        <span slot="description">Completed</span>
+      </bq-step-item>
+      <bq-step-item status="current">
+        <span aria-label="Step 2" slot="prefix">2</span>
+        <span>Current</span>
+        <span slot="description">Current step</span>
+      </bq-step-item>
+      <bq-step-item status="error">
+        <span aria-label="Step 3" slot="prefix">3</span>
+        <span>Error</span>
+        <span slot="description">You need to address an issue</span>
+      </bq-step-item>
+      <bq-step-item status="disabled">
+        <span aria-label="Step 4" slot="prefix">4</span>
+        <span>Disabled</span>
+        <span slot="description">Complete previous steps first</span>
+      </bq-step-item>
+    </bq-steps>
+    ```
+
+    ```jsx React icon="react" expandable
+    import { BqStepItem, BqSteps } from "@beeq/react";
+
+    <BqSteps type="numeric">
+      <BqStepItem status="completed">
+        <span aria-label="Step 1" slot="prefix">1</span>
+        <span>Completed</span>
+        <span slot="description">Completed</span>
+      </BqStepItem>
+      <BqStepItem status="current">
+        <span aria-label="Step 2" slot="prefix">2</span>
+        <span>Current</span>
+        <span slot="description">Current step</span>
+      </BqStepItem>
+      <BqStepItem status="error">
+        <span aria-label="Step 3" slot="prefix">3</span>
+        <span>Error</span>
+        <span slot="description">You need to address an issue</span>
+      </BqStepItem>
+      <BqStepItem status="disabled">
+        <span aria-label="Step 4" slot="prefix">4</span>
+        <span>Disabled</span>
+        <span slot="description">Complete previous steps first</span>
+      </BqStepItem>
+    </BqSteps>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqStepItem, BqSteps } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqStepItem, BqSteps],
+      template: `
+        <bq-steps type="numeric">
+          <bq-step-item status="completed">
+            <span aria-label="Step 1" slot="prefix">1</span>
+            <span>Completed</span>
+            <span slot="description">Completed</span>
+          </bq-step-item>
+          <bq-step-item status="current">
+            <span aria-label="Step 2" slot="prefix">2</span>
+            <span>Current</span>
+            <span slot="description">Current step</span>
+          </bq-step-item>
+          <bq-step-item status="error">
+            <span aria-label="Step 3" slot="prefix">3</span>
+            <span>Error</span>
+            <span slot="description">You need to address an issue</span>
+          </bq-step-item>
+          <bq-step-item status="disabled">
+            <span aria-label="Step 4" slot="prefix">4</span>
+            <span>Disabled</span>
+            <span slot="description">Complete previous steps first</span>
+          </bq-step-item>
+        </bq-steps>
+      `
+    })
+    export class StatusStepsComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqStepItem, BqSteps } from "@beeq/vue";
     </script>
 
     <template>
       <BqSteps type="numeric">
-        <BqStepItem status="default">
-          <span aria-label="Step 1" slot="prefix">1</span>
-          <span>Details</span>
-          <span slot="description">Description</span>
-        </BqStepItem>
         <BqStepItem status="completed">
+          <span aria-label="Step 1" slot="prefix">1</span>
+          <span>Completed</span>
+          <span slot="description">Completed</span>
+        </BqStepItem>
+        <BqStepItem status="current">
           <span aria-label="Step 2" slot="prefix">2</span>
-          <span>Review</span>
-          <span slot="description">Description</span>
+          <span>Current</span>
+          <span slot="description">Current step</span>
         </BqStepItem>
         <BqStepItem status="error">
           <span aria-label="Step 3" slot="prefix">3</span>
-          <span>Payment</span>
-          <span slot="description">Description</span>
+          <span>Error</span>
+          <span slot="description">You need to address an issue</span>
         </BqStepItem>
-        <BqStepItem status="current">
+        <BqStepItem status="disabled">
           <span aria-label="Step 4" slot="prefix">4</span>
-          <span>Confirm</span>
-          <span slot="description">Description</span>
+          <span>Disabled</span>
+          <span slot="description">Complete previous steps first</span>
         </BqStepItem>
       </BqSteps>
     </template>
@@ -526,162 +687,214 @@ Use `type="numeric"` when order and sequence need to be explicit.
 
 Use `orientation="vertical"` when the process should unfold from top to bottom or when labels and descriptions need more room.
 
-<CodeLivePreview code={`<style>
-  :host {
-    align-items: stretch !important;
-    justify-content: flex-start !important;
-  }
+<CodeLivePreview mode="iframe" height="20rem" removePadding code={`
+  <style>
+    body {
+      display: flex;
+      padding: var(--bq-spacing-m);
+    }
 
-  .steps-demo--vertical {
-    block-size: 28rem;
-    display: flex;
-  }
-</style>
+    .container {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
 
-<div class="steps-demo--vertical">
-  <bq-steps orientation="vertical" type="icon">
-    <bq-step-item status="completed">
-      <bq-icon aria-hidden="true" slot="prefix" name="airplane-takeoff"></bq-icon>
-      <span>Flight</span>
-      <span slot="description">Reserve your flight</span>
-    </bq-step-item>
-    <bq-step-item status="error">
-      <bq-icon aria-hidden="true" slot="prefix" name="car"></bq-icon>
-      <span>Rent a car</span>
-      <span slot="description">There was an error with your reservation</span>
-    </bq-step-item>
-    <bq-step-item status="current">
-      <bq-icon aria-hidden="true" slot="prefix" name="tree-palm"></bq-icon>
-      <span>Enjoy your holidays!</span>
-      <span slot="description">You're ready for your vacations</span>
-    </bq-step-item>
-  </bq-steps>
-</div>`}>
-  <CodeGroup>
-    ```html HTML icon="html5"
-    <bq-steps orientation="vertical" type="icon">
+    span[slot="prefix"] {
+      min-inline-size: var(--bq-step-item--prefix-number-size, var(--bq-spacing-xl));
+    }
+  </style>
+
+  <div class="container">
+    <bq-steps orientation="vertical" type="numeric">
       <bq-step-item status="completed">
-        <bq-icon aria-hidden="true" slot="prefix" name="airplane-takeoff"></bq-icon>
-        <span>Flight</span>
-        <span slot="description">Reserve your flight</span>
-      </bq-step-item>
-      <bq-step-item status="error">
-        <bq-icon aria-hidden="true" slot="prefix" name="car"></bq-icon>
-        <span>Rent a car</span>
-        <span slot="description">There was an error with your reservation</span>
+        <span aria-label="Step 1" slot="prefix">1</span>
+        <span>Request</span>
       </bq-step-item>
       <bq-step-item status="current">
-        <bq-icon aria-hidden="true" slot="prefix" name="tree-palm"></bq-icon>
-        <span>Enjoy your holidays!</span>
-        <span slot="description">You're ready for your vacations</span>
+        <span aria-label="Step 2" slot="prefix">2</span>
+        <span>Review</span>
+      </bq-step-item>
+      <bq-step-item>
+        <span aria-label="Step 3" slot="prefix">3</span>
+        <span>Decision</span>
       </bq-step-item>
     </bq-steps>
-    ```
-    ```jsx React icon="react"
-    import { BqIcon, BqStepItem, BqSteps } from "@beeq/react";
+  </div>
+`}>
+  <CodeGroup>
+    ```css styles.css icon="css" expandable
+    body {
+      display: flex;
+      padding: var(--bq-spacing-m);
+    }
 
-    <BqSteps orientation="vertical" type="icon">
-      <BqStepItem status="completed">
-        <BqIcon aria-hidden="true" slot="prefix" name="airplane-takeoff" />
-        <span>Flight</span>
-        <span slot="description">Reserve your flight</span>
-      </BqStepItem>
-      <BqStepItem status="error">
-        <BqIcon aria-hidden="true" slot="prefix" name="car" />
-        <span>Rent a car</span>
-        <span slot="description">There was an error with your reservation</span>
-      </BqStepItem>
-      <BqStepItem status="current">
-        <BqIcon aria-hidden="true" slot="prefix" name="tree-palm" />
-        <span>Enjoy your holidays!</span>
-        <span slot="description">You're ready for your vacations</span>
-      </BqStepItem>
-    </BqSteps>
+    .container {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
     ```
-    ```ts Angular icon="angular"
+    ```html HTML icon="html5" expandable
+    <div class="container">
+      <bq-steps orientation="vertical" type="numeric">
+        <bq-step-item status="completed">
+          <span aria-label="Step 1" slot="prefix">1</span>
+          <span>Request</span>
+        </bq-step-item>
+        <bq-step-item status="current">
+          <span aria-label="Step 2" slot="prefix">2</span>
+          <span>Review</span>
+        </bq-step-item>
+        <bq-step-item>
+          <span aria-label="Step 3" slot="prefix">3</span>
+          <span>Decision</span>
+        </bq-step-item>
+      </bq-steps>
+    </div>
+    ```
+
+    ```jsx React icon="react" expandable
+    import { BqStepItem, BqSteps } from "@beeq/react";
+    import "./styles.css";
+
+    <div className="container">
+      <BqSteps orientation="vertical" type="numeric">
+        <BqStepItem status="completed">
+          <span aria-label="Step 1" slot="prefix">1</span>
+          <span>Request</span>
+        </BqStepItem>
+        <BqStepItem status="current">
+          <span aria-label="Step 2" slot="prefix">2</span>
+          <span>Review</span>
+        </BqStepItem>
+        <BqStepItem>
+          <span aria-label="Step 3" slot="prefix">3</span>
+          <span>Decision</span>
+        </BqStepItem>
+      </BqSteps>
+    </div>
+    ```
+
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
-    import { BqIcon, BqStepItem, BqSteps } from "@beeq/angular/standalone";
+    import { BqStepItem, BqSteps } from "@beeq/angular/standalone";
 
     @Component({
       standalone: true,
-      imports: [BqIcon, BqStepItem, BqSteps],
+      imports: [BqStepItem, BqSteps],
       template: `
-        <bq-steps orientation="vertical" type="icon">
-          <bq-step-item status="completed">
-            <bq-icon aria-hidden="true" slot="prefix" name="airplane-takeoff"></bq-icon>
-            <span>Flight</span>
-            <span slot="description">Reserve your flight</span>
-          </bq-step-item>
-          <bq-step-item status="error">
-            <bq-icon aria-hidden="true" slot="prefix" name="car"></bq-icon>
-            <span>Rent a car</span>
-            <span slot="description">There was an error with your reservation</span>
-          </bq-step-item>
-          <bq-step-item status="current">
-            <bq-icon aria-hidden="true" slot="prefix" name="tree-palm"></bq-icon>
-            <span>Enjoy your holidays!</span>
-            <span slot="description">You're ready for your vacations</span>
-          </bq-step-item>
-        </bq-steps>
+        <div class="container">
+          <bq-steps orientation="vertical" type="numeric">
+            <bq-step-item status="completed">
+              <span aria-label="Step 1" slot="prefix">1</span>
+              <span>Request</span>
+            </bq-step-item>
+            <bq-step-item status="current">
+              <span aria-label="Step 2" slot="prefix">2</span>
+              <span>Review</span>
+            </bq-step-item>
+            <bq-step-item>
+              <span aria-label="Step 3" slot="prefix">3</span>
+              <span>Decision</span>
+            </bq-step-item>
+          </bq-steps>
+        </div>
+      `,
+      style: `
+        body {
+          display: flex;
+          padding: var(--bq-spacing-m);
+        }
+
+        .container {
+          display: flex;
+          flex-direction: column;
+          flex-grow: 1;
+        }
       `
     })
     export class VerticalStepsComponent {}
     ```
-    ```vue Vue icon="vuejs"
+
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
-    import { BqIcon, BqStepItem, BqSteps } from "@beeq/vue";
+    import { BqStepItem, BqSteps } from "@beeq/vue";
     </script>
 
     <template>
-      <BqSteps orientation="vertical" type="icon">
-        <BqStepItem status="completed">
-          <BqIcon aria-hidden="true" slot="prefix" name="airplane-takeoff" />
-          <span>Flight</span>
-          <span slot="description">Reserve your flight</span>
-        </BqStepItem>
-        <BqStepItem status="error">
-          <BqIcon aria-hidden="true" slot="prefix" name="car" />
-          <span>Rent a car</span>
-          <span slot="description">There was an error with your reservation</span>
-        </BqStepItem>
-        <BqStepItem status="current">
-          <BqIcon aria-hidden="true" slot="prefix" name="tree-palm" />
-          <span>Enjoy your holidays!</span>
-          <span slot="description">You're ready for your vacations</span>
-        </BqStepItem>
-      </BqSteps>
+      <div class="container">
+        <BqSteps orientation="vertical" type="numeric">
+          <BqStepItem status="completed">
+            <span aria-label="Step 1" slot="prefix">1</span>
+            <span>Request</span>
+          </BqStepItem>
+          <BqStepItem status="current">
+            <span aria-label="Step 2" slot="prefix">2</span>
+            <span>Review</span>
+          </BqStepItem>
+          <BqStepItem>
+            <span aria-label="Step 3" slot="prefix">3</span>
+            <span>Decision</span>
+          </BqStepItem>
+        </BqSteps>
+      </div>
     </template>
+
+    <style>
+      body {
+        display: flex;
+        padding: var(--bq-spacing-m);
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+      }
+    </style>
     ```
   </CodeGroup>
 </CodeLivePreview>
 
 <Tip>
-  Vertical steps adapt to the height of their container. Give the surrounding layout enough block size when you need the divider to span a taller area.
+  Vertical steps adapt to the height of their container. You must ensure that the container holding the steps has enough block size to allow the divider to span the desired area.
 </Tip>
 
 ### Size and divider color
 
 Use `size="small"` in compact layouts. Use `divider-color` with a declarative color token when the connector needs a different emphasis.
 
-<CodeLivePreview code={`<bq-steps divider-color="stroke--brand" size="small" type="numeric">
-  <bq-step-item status="completed">
-    <span aria-label="Step 1" slot="prefix">1</span>
-    <span>Account</span>
-    <span slot="description">Completed</span>
-  </bq-step-item>
-  <bq-step-item status="current">
-    <span aria-label="Step 2" slot="prefix">2</span>
-    <span>Preferences</span>
-    <span slot="description">Current step</span>
-  </bq-step-item>
-  <bq-step-item status="default">
-    <span aria-label="Step 3" slot="prefix">3</span>
-    <span>Finish</span>
-    <span slot="description">Next step</span>
-  </bq-step-item>
-</bq-steps>`}>
+<CodeLivePreview mode="iframe" height="10rem" removePadding code={`
+  <style>
+    body {
+      padding: var(--bq-spacing-m);
+    }
+
+    span[slot="prefix"] {
+      min-inline-size: var(--bq-spacing-l);
+    }
+  </style>
+  <bq-steps divider-color="stroke--brand" size="small" type="numeric">
+    <bq-step-item status="completed">
+      <span aria-label="Step 1" slot="prefix">1</span>
+      <span>Account</span>
+      <span slot="description">Completed</span>
+    </bq-step-item>
+    <bq-step-item status="current">
+      <span aria-label="Step 2" slot="prefix">2</span>
+      <span>Preferences</span>
+      <span slot="description">Current step</span>
+    </bq-step-item>
+    <bq-step-item>
+      <span aria-label="Step 3" slot="prefix">3</span>
+      <span>Finish</span>
+      <span slot="description">Next step</span>
+    </bq-step-item>
+  </bq-steps>
+`}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-steps divider-color="stroke--brand" size="small" type="numeric">
       <bq-step-item status="completed">
         <span aria-label="Step 1" slot="prefix">1</span>
@@ -693,14 +906,15 @@ Use `size="small"` in compact layouts. Use `divider-color` with a declarative co
         <span>Preferences</span>
         <span slot="description">Current step</span>
       </bq-step-item>
-      <bq-step-item status="default">
+      <bq-step-item>
         <span aria-label="Step 3" slot="prefix">3</span>
         <span>Finish</span>
         <span slot="description">Next step</span>
       </bq-step-item>
     </bq-steps>
     ```
-    ```jsx React icon="react"
+
+    ```jsx React icon="react" expandable
     import { BqStepItem, BqSteps } from "@beeq/react";
 
     <BqSteps dividerColor="stroke--brand" size="small" type="numeric">
@@ -714,14 +928,15 @@ Use `size="small"` in compact layouts. Use `divider-color` with a declarative co
         <span>Preferences</span>
         <span slot="description">Current step</span>
       </BqStepItem>
-      <BqStepItem status="default">
+      <BqStepItem>
         <span aria-label="Step 3" slot="prefix">3</span>
         <span>Finish</span>
         <span slot="description">Next step</span>
       </BqStepItem>
     </BqSteps>
     ```
-    ```ts Angular icon="angular"
+
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqStepItem, BqSteps } from "@beeq/angular/standalone";
 
@@ -740,7 +955,7 @@ Use `size="small"` in compact layouts. Use `divider-color` with a declarative co
             <span>Preferences</span>
             <span slot="description">Current step</span>
           </bq-step-item>
-          <bq-step-item status="default">
+          <bq-step-item>
             <span aria-label="Step 3" slot="prefix">3</span>
             <span>Finish</span>
             <span slot="description">Next step</span>
@@ -750,7 +965,8 @@ Use `size="small"` in compact layouts. Use `divider-color` with a declarative co
     })
     export class SmallStepsComponent {}
     ```
-    ```vue Vue icon="vuejs"
+
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqStepItem, BqSteps } from "@beeq/vue";
     </script>
@@ -767,7 +983,7 @@ Use `size="small"` in compact layouts. Use `divider-color` with a declarative co
           <span>Preferences</span>
           <span slot="description">Current step</span>
         </BqStepItem>
-        <BqStepItem status="default">
+        <BqStepItem>
           <span aria-label="Step 3" slot="prefix">3</span>
           <span>Finish</span>
           <span slot="description">Next step</span>
@@ -909,11 +1125,13 @@ The `bq-steps` container renders with `role="list"`, and each `bq-step-item` ren
 
 ### Events
 
-| Component | Event | Description | Type |
-|---|---|---|---|
-| `bq-step-item` | `bqClick` | Fires when an enabled step item is clicked | `CustomEvent<HTMLBqStepItemElement>` |
-| `bq-step-item` | `bqFocus` | Fires when a step item receives focus | `CustomEvent<HTMLBqStepItemElement>` |
-| `bq-step-item` | `bqBlur` | Fires when a step item loses focus | `CustomEvent<HTMLBqStepItemElement>` |
+#### `bq-step-item`
+
+| Event | Description | Type |
+|---|---|---|
+| `bqClick` | Fires when an enabled step item is clicked | `CustomEvent<HTMLBqStepItemElement>` |
+| `bqFocus` | Fires when a step item receives focus | `CustomEvent<HTMLBqStepItemElement>` |
+| `bqBlur` | Fires when a step item loses focus | `CustomEvent<HTMLBqStepItemElement>` |
 
 <Note>
   - In React, prefix events with `on`: `onBqClick`, `onBqFocus`, `onBqBlur`.
@@ -923,27 +1141,34 @@ The `bq-steps` container renders with `role="list"`, and each `bq-step-item` ren
 
 ### Methods
 
-| Component | Method | Description | Returns |
-|---|---|---|---|
-| `bq-steps` | `setCurrentStepItem(newCurrentStep)` | Sets the provided step item as current and resets the previous current item to default | `Promise<void>` |
+#### `bq-steps`
+
+| Method | Description | Returns |
+|---|---|---|
+| `setCurrentStepItem(newCurrentStep)` | Sets the provided step item as current and resets the previous current item to default | `Promise<void>` |
 
 ### CSS custom properties
 
-<Expandable title="CSS variables" defaultOpen={true}>
-  | Variable | Description | Default |
-  |---|---|---|
-  | `--bq-steps--divider-color` | Divider color | `var(--bq-stroke--secondary)` |
-  | `--bq-steps--gap` | Gap between steps | `var(--bq-spacing-m)` |
-  | `--bq-step-item--prefix-color` | Prefix icon color | `var(--bq-icon--secondary)` |
-  | `--bq-step-item--prefix-color-current` | Prefix icon color for the current state | `var(--bq-icon--brand)` |
-  | `--bq-step-item--prefix-color-completed` | Prefix icon color for the completed state | `var(--bq-icon--success)` |
-  | `--bq-step-item--prefix-color-error` | Prefix icon color for the error state | `var(--bq-icon--danger)` |
-  | `--bq-step-item--prefix-num-size` | Prefix number size | `var(--bq-spacing-xl)` |
-  | `--bq-step-item--prefix-num-bg-color` | Prefix number background color | `var(--bq-background--secondary)` |
-</Expandable>
+#### `bq-steps`
+
+| Variable | Description | Default |
+|---|---|---|
+| `--bq-steps--divider-color` | Divider color | `var(--bq-stroke--primary)` |
+| `--bq-steps--gap` | Gap between steps | `var(--bq-spacing-m)` |
+
+#### `bq-step-item`
+
+| Variable | Description | Default |
+|---|---|---|
+| `--bq-step-item--prefix-color` | Prefix icon color | `var(--bq-icon--secondary)` |
+| `--bq-step-item--prefix-color-current` | | Prefix icon color for the current state | `var(--bq-icon--brand)` |
+| `--bq-step-item--prefix-color-completed` | Prefix icon color for the completed state | `var(--bq-icon--success)` |
+| `--bq-step-item--prefix-color-error` | Prefix icon color for the error state | `var(--bq-icon--danger)` |
+| `--bq-step-item--prefix-num-size` | Prefix number size | `var(--bq-spacing-xl)` |
+| `--bq-step-item--prefix-num-bg-color` | Prefix number background color | `var(--bq-background--secondary)` |
 
 <Tip>
-  Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).
+  Learn more about [styling with shadow parts](/guides/styles) and [CSS custom properties](/theming/global-css-variables).
 </Tip>
 
 ## Resources

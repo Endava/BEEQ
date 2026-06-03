@@ -96,130 +96,341 @@ A side menu is composed of a container, selected item state, navigation items, a
 
 The default side menu is a versatile container for organizing and displaying navigation elements. Use it as the foundation for structured and intuitive navigation layouts.
 
-<CodeLivePreview code={`<style>
-  :host {
-    align-items: stretch !important;
-    justify-content: flex-start !important;
-    min-height: 22rem !important;
-    overflow: hidden !important;
-    padding: 0 !important;
-    position: relative !important;
-  }
+<CodeLivePreview mode="iframe" height="30rem" removePadding code={`
+  <style>
+    .app-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-s);
+      padding-inline: var(--bq-spacing-m);
+      padding-block-start: var(--bq-spacing-m);
+    }
 
-  bq-side-menu {
-    display: block;
-    inline-size: var(--bq-side-menu--width);
-    min-height: 22rem;
-    position: relative;
-  }
+    .app-logo svg {
+      height: 2.5rem;
+      width: 2.5rem;
+    }
 
-  bq-side-menu::part(base) {
-    block-size: 100% !important;
-    inset: 0 auto 0 0 !important;
-    min-block-size: 0 !important;
-    position: absolute !important;
-  }
+    .app-logo h1 {
+      font-size: var(--bq-font-size--xl);
+      white-space: nowrap;
+    }
+  </style>
 
-  .side-menu-demo__logo {
-    display: flex;
-    align-items: center;
-    gap: var(--bq-spacing-s);
-    padding: var(--bq-spacing-m);
-  }
-
-  .side-menu-demo__title {
-    margin: 0;
-    font-size: var(--bq-font-size--xl);
-    white-space: nowrap;
-  }
-</style>
-
-<bq-side-menu>
-  <div class="side-menu-demo__logo" slot="logo">
-    <bq-icon name="hexagon" size="32"></bq-icon>
-    <h1 class="side-menu-demo__title">BEEQ</h1>
-  </div>
-  <bq-side-menu-item active>
-    <bq-icon name="diamonds-four" slot="prefix"></bq-icon>
-    Dashboard
-  </bq-side-menu-item>
-  <bq-side-menu-item>
-    <bq-icon name="package" slot="prefix"></bq-icon>
-    Products
-    <bq-badge slot="suffix">5</bq-badge>
-  </bq-side-menu-item>
-  <bq-side-menu-item disabled>
-    <bq-icon name="gauge" slot="prefix"></bq-icon>
-    Performance
-  </bq-side-menu-item>
-</bq-side-menu>
-
-<script>
-  (() => {
-    const bodyClasses = ['bq-body--side-menu', 'bq-body--side-menu__expand', 'bq-body--side-menu__collapse'];
-    const previewDocument = previewRoot.host?.ownerDocument ?? document;
-    const resetBodyClasses = () => previewDocument.body.classList.remove(...bodyClasses);
-
-    const scheduleReset = () => requestAnimationFrame(() => requestAnimationFrame(resetBodyClasses));
-
-    // The production side menu reserves layout space on <body>; the docs preview
-    // keeps the demo contained, so remove those global layout classes after mount.
-    resetBodyClasses();
-    customElements.whenDefined('bq-side-menu').then(scheduleReset);
-  })();
-</script>`}>
+  <bq-side-menu>
+    <div class="app-logo" slot="logo">
+      <bq-icon name="square-logo" size="40"></bq-icon>
+      <h1>App Name</h1>
+    </div>
+    <bq-divider></bq-divider>
+    <bq-side-menu-item active>
+      <bq-icon name="diamonds-four" slot="prefix"></bq-icon>
+      Dashboard
+    </bq-side-menu-item>
+    <bq-side-menu-item>
+      <bq-icon name="package" slot="prefix"></bq-icon>
+      Products
+      <bq-badge slot="suffix">5</bq-badge>
+    </bq-side-menu-item>
+    <bq-side-menu-item disabled>
+      <bq-icon name="gauge" slot="prefix"></bq-icon>
+      Performance
+    </bq-side-menu-item>
+    <bq-side-menu-item>
+      <bq-icon name="truck" slot="prefix" ></bq-icon>
+      Deliver
+    </bq-side-menu-item>
+    <bq-side-menu-item>
+      <bq-icon name="files" slot="prefix" ></bq-icon>
+      Documents
+    </bq-side-menu-item>
+  </bq-side-menu>
+`}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```css styles.css icon="css3" expandable
+    .app-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-s);
+      padding-inline: var(--bq-spacing-m);
+      padding-block-start: var(--bq-spacing-m);
+    }
+
+    .app-logo svg {
+      height: 2.5rem;
+      width: 2.5rem;
+    }
+
+    .app-logo h1 {
+      font-size: var(--bq-font-size--xl);
+      white-space: nowrap;
+    }
+    ```
+
+    ```html HTML icon="html5" expandable
     <bq-side-menu>
       <div slot="logo">
-        <bq-icon name="hexagon" size="32"></bq-icon>
-        <h1>BEEQ</h1>
+        <bq-icon name="square-logo" size="40"></bq-icon>
+        <h1>App Name</h1>
       </div>
-
+      <bq-divider></bq-divider>
       <bq-side-menu-item active>
         <bq-icon name="diamonds-four" slot="prefix"></bq-icon>
         Dashboard
       </bq-side-menu-item>
-
       <bq-side-menu-item>
         <bq-icon name="package" slot="prefix"></bq-icon>
         Products
         <bq-badge slot="suffix">5</bq-badge>
       </bq-side-menu-item>
-
       <bq-side-menu-item disabled>
         <bq-icon name="gauge" slot="prefix"></bq-icon>
         Performance
       </bq-side-menu-item>
+      <bq-side-menu-item>
+        <bq-icon name="truck" slot="prefix" ></bq-icon>
+        Deliver
+      </bq-side-menu-item>
+      <bq-side-menu-item>
+        <bq-icon name="files" slot="prefix" ></bq-icon>
+        Documents
+      </bq-side-menu-item>
     </bq-side-menu>
     ```
-    ```jsx React icon="react"
-    import { BqBadge, BqIcon, BqSideMenu, BqSideMenuItem } from "@beeq/react";
+
+    ```jsx React icon="react" expandable
+    import { BqBadge, BqDivider, BqIcon, BqSideMenu, BqSideMenuItem } from "@beeq/react";
+    import "./styles.css";
 
     <BqSideMenu>
       <div slot="logo">
-        <BqIcon name="hexagon" size="32" />
-        <h1>BEEQ</h1>
+        <BqIcon name="square-logo" size="40" />
+        <h1>App Name</h1>
       </div>
-
+      <BqDivider />
       <BqSideMenuItem active>
         <BqIcon name="diamonds-four" slot="prefix" />
         Dashboard
       </BqSideMenuItem>
-
       <BqSideMenuItem>
         <BqIcon name="package" slot="prefix" />
         Products
         <BqBadge slot="suffix">5</BqBadge>
       </BqSideMenuItem>
-
       <BqSideMenuItem disabled>
         <BqIcon name="gauge" slot="prefix" />
         Performance
       </BqSideMenuItem>
+      <BqSideMenuItem>
+        <BqIcon name="truck" slot="prefix" />
+        Deliver
+      </BqSideMenuItem>
+      <BqSideMenuItem>
+        <BqIcon name="files" slot="prefix" />
+        Documents
+      </BqSideMenuItem>
     </BqSideMenu>
     ```
-    ```ts Angular icon="angular"
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqBadge, BqDivider, BqIcon, BqSideMenu, BqSideMenuItem } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqBadge, BqDivider, BqIcon, BqSideMenu, BqSideMenuItem],
+      template: `
+        <bq-side-menu>
+          <div slot="logo">
+            <bq-icon name="square-logo" size="40"></bq-icon>
+            <h1>App Name</h1>
+          </div>
+          <bq-divider></bq-divider>
+          <bq-side-menu-item active>
+            <bq-icon name="diamonds-four" slot="prefix"></bq-icon>
+            Dashboard
+          </bq-side-menu-item>
+          <bq-side-menu-item>
+            <bq-icon name="package" slot="prefix"></bq-icon>
+            Products
+            <bq-badge slot="suffix">5</bq-badge>
+          </bq-side-menu-item>
+          <bq-side-menu-item disabled>
+            <bq-icon name="gauge" slot="prefix"></bq-icon>
+            Performance
+          </bq-side-menu-item>
+          <bq-side-menu-item>
+            <bq-icon name="truck" slot="prefix" ></bq-icon>
+            Deliver
+          </bq-side-menu-item>
+          <bq-side-menu-item>
+            <bq-icon name="files" slot="prefix" ></bq-icon>
+            Documents
+          </bq-side-menu-item>
+        </bq-side-menu>
+      `,
+      styles: `
+        .app-logo {
+          display: flex;
+          align-items: center;
+          gap: var(--bq-spacing-s);
+          padding-inline: var(--bq-spacing-m);
+          padding-block-start: var(--bq-spacing-m);
+        }
+
+        .app-logo svg {
+          height: 2.5rem;
+          width: 2.5rem;
+        }
+
+        .app-logo h1 {
+          font-size: var(--bq-font-size--xl);
+          white-space: nowrap;
+        }
+      `
+    })
+    export class DefaultSideMenuComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqBadge, BqDivider, BqIcon, BqSideMenu, BqSideMenuItem } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqSideMenu>
+        <div slot="logo">
+          <BqIcon name="square-logo" size="40" />
+          <h1>App Name</h1>
+        </div>
+        <BqDivider />
+        <BqSideMenuItem active>
+          <BqIcon name="diamonds-four" slot="prefix" />
+          Dashboard
+        </BqSideMenuItem>
+        <BqSideMenuItem>
+          <BqIcon name="package" slot="prefix" />
+          Products
+          <BqBadge slot="suffix">5</BqBadge>
+        </BqSideMenuItem>
+        <BqSideMenuItem disabled>
+          <BqIcon name="gauge" slot="prefix" />
+          Performance
+        </BqSideMenuItem>
+        <BqSideMenuItem>
+          <BqIcon name="truck" slot="prefix" />
+          Deliver
+        </BqSideMenuItem>
+        <BqSideMenuItem>
+          <BqIcon name="files" slot="prefix" />
+          Documents
+        </BqSideMenuItem>
+      </BqSideMenu>
+    </template>
+
+    <style>
+    .app-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-s);
+      padding-inline: var(--bq-spacing-m);
+      padding-block-start: var(--bq-spacing-m);
+    }
+
+    .app-logo svg {
+      height: 2.5rem;
+      width: 2.5rem;
+    }
+
+    .app-logo h1 {
+      font-size: var(--bq-font-size--xl);
+      white-space: nowrap;
+    }
+    </style>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+## Side menu item behavior
+
+### Side menu item states
+
+`bq-side-menu-item` is a child component, not a standalone navigation pattern. Use it only inside `bq-side-menu`.
+
+Within a side menu, items support default, active, hover, focus, disabled, and with-counter states.
+
+<CodeLivePreview mode="iframe" height="30rem" removePadding code={`
+  <bq-side-menu>
+    <bq-side-menu-item>
+      <bq-icon name="diamonds-four" slot="prefix"></bq-icon>
+      Default
+    </bq-side-menu-item>
+    <bq-side-menu-item active>
+      <bq-icon name="package" slot="prefix"></bq-icon>
+      Active
+    </bq-side-menu-item>
+    <bq-side-menu-item disabled>
+      <bq-icon name="gauge" slot="prefix"></bq-icon>
+      Disabled
+    </bq-side-menu-item>
+    <bq-side-menu-item>
+      <bq-icon name="bell" slot="prefix"></bq-icon>
+      With counter
+      <bq-badge slot="suffix">5</bq-badge>
+    </bq-side-menu-item>
+  </bq-side-menu>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <bq-side-menu>
+      <bq-side-menu-item>
+        <bq-icon name="diamonds-four" slot="prefix"></bq-icon>
+        Default
+      </bq-side-menu-item>
+
+      <bq-side-menu-item active>
+        <bq-icon name="package" slot="prefix"></bq-icon>
+        Active
+      </bq-side-menu-item>
+
+      <bq-side-menu-item disabled>
+        <bq-icon name="gauge" slot="prefix"></bq-icon>
+        Disabled
+      </bq-side-menu-item>
+
+      <bq-side-menu-item>
+        <bq-icon name="bell" slot="prefix"></bq-icon>
+        With counter
+        <bq-badge slot="suffix">5</bq-badge>
+      </bq-side-menu-item>
+    </bq-side-menu>
+    ```
+
+    ```jsx React icon="react" expandable
+    import { BqBadge, BqIcon, BqSideMenu, BqSideMenuItem } from "@beeq/react";
+
+    <BqSideMenu>
+      <BqSideMenuItem>
+        <BqIcon name="diamonds-four" slot="prefix" />
+        Default
+      </BqSideMenuItem>
+      <BqSideMenuItem active>
+        <BqIcon name="package" slot="prefix" />
+        Active
+      </BqSideMenuItem>
+      <BqSideMenuItem disabled>
+        <BqIcon name="gauge" slot="prefix" />
+        Disabled
+      </BqSideMenuItem>
+      <BqSideMenuItem>
+        <BqIcon name="bell" slot="prefix" />
+        With counter
+        <BqBadge slot="suffix">5</BqBadge>
+      </BqSideMenuItem>
+    </BqSideMenu>
+    ```
+
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqBadge, BqIcon, BqSideMenu, BqSideMenuItem } from "@beeq/angular/standalone";
 
@@ -228,57 +439,55 @@ The default side menu is a versatile container for organizing and displaying nav
       imports: [BqBadge, BqIcon, BqSideMenu, BqSideMenuItem],
       template: `
         <bq-side-menu>
-          <div slot="logo">
-            <bq-icon name="hexagon" size="32"></bq-icon>
-            <h1>BEEQ</h1>
-          </div>
-
-          <bq-side-menu-item [active]="true">
+          <bq-side-menu-item>
             <bq-icon name="diamonds-four" slot="prefix"></bq-icon>
-            Dashboard
+            Default
+          </bq-side-menu-item>
+
+          <bq-side-menu-item active>
+            <bq-icon name="package" slot="prefix"></bq-icon>
+            Active
+          </bq-side-menu-item>
+
+          <bq-side-menu-item disabled>
+            <bq-icon name="gauge" slot="prefix"></bq-icon>
+            Disabled
           </bq-side-menu-item>
 
           <bq-side-menu-item>
-            <bq-icon name="package" slot="prefix"></bq-icon>
-            Products
+            <bq-icon name="bell" slot="prefix"></bq-icon>
+            With counter
             <bq-badge slot="suffix">5</bq-badge>
-          </bq-side-menu-item>
-
-          <bq-side-menu-item [disabled]="true">
-            <bq-icon name="gauge" slot="prefix"></bq-icon>
-            Performance
           </bq-side-menu-item>
         </bq-side-menu>
       `
     })
-    export class DefaultSideMenuComponent {}
+    export class SideMenuItemStatesComponent {}
     ```
-    ```vue Vue icon="vuejs"
+
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqBadge, BqIcon, BqSideMenu, BqSideMenuItem } from "@beeq/vue";
     </script>
 
     <template>
       <BqSideMenu>
-        <div slot="logo">
-          <BqIcon name="hexagon" size="32" />
-          <h1>BEEQ</h1>
-        </div>
-
-        <BqSideMenuItem active>
-          <BqIcon name="diamonds-four" slot="prefix" />
-          Dashboard
-        </BqSideMenuItem>
-
         <BqSideMenuItem>
-          <BqIcon name="package" slot="prefix" />
-          Products
-          <BqBadge slot="suffix">5</BqBadge>
+          <BqIcon name="diamonds-four" slot="prefix" />
+          Default
         </BqSideMenuItem>
-
+        <BqSideMenuItem active>
+          <BqIcon name="package" slot="prefix" />
+          Active
+        </BqSideMenuItem>
         <BqSideMenuItem disabled>
           <BqIcon name="gauge" slot="prefix" />
-          Performance
+          Disabled
+        </BqSideMenuItem>
+        <BqSideMenuItem>
+          <BqIcon name="bell" slot="prefix" />
+          With counter
+          <BqBadge slot="suffix">5</BqBadge>
         </BqSideMenuItem>
       </BqSideMenu>
     </template>
@@ -288,305 +497,69 @@ The default side menu is a versatile container for organizing and displaying nav
 
 ## Options
 
-### Item states
-
-Side menu items support default, active, hover, focus, disabled, and with-counter states.
-
-<CodeLivePreview code={`<style>
-  :host {
-    align-items: stretch !important;
-  }
-
-  .side-menu-states {
-    display: grid;
-    gap: var(--bq-spacing-xs);
-    inline-size: min(100%, 16rem);
-  }
-</style>
-
-<div class="side-menu-states">
-  <bq-side-menu-item>
-    <bq-icon name="diamonds-four" slot="prefix"></bq-icon>
-    Default
-  </bq-side-menu-item>
-  <bq-side-menu-item active>
-    <bq-icon name="package" slot="prefix"></bq-icon>
-    Active
-  </bq-side-menu-item>
-  <bq-side-menu-item disabled>
-    <bq-icon name="gauge" slot="prefix"></bq-icon>
-    Disabled
-  </bq-side-menu-item>
-  <bq-side-menu-item>
-    <bq-icon name="bell" slot="prefix"></bq-icon>
-    With counter
-    <bq-badge slot="suffix">5</bq-badge>
-  </bq-side-menu-item>
-</div>`}>
-  <CodeGroup>
-    ```html HTML icon="html5"
-    <bq-side-menu-item>
-      <bq-icon name="diamonds-four" slot="prefix"></bq-icon>
-      Default
-    </bq-side-menu-item>
-
-    <bq-side-menu-item active>
-      <bq-icon name="package" slot="prefix"></bq-icon>
-      Active
-    </bq-side-menu-item>
-
-    <bq-side-menu-item disabled>
-      <bq-icon name="gauge" slot="prefix"></bq-icon>
-      Disabled
-    </bq-side-menu-item>
-
-    <bq-side-menu-item>
-      <bq-icon name="bell" slot="prefix"></bq-icon>
-      With counter
-      <bq-badge slot="suffix">5</bq-badge>
-    </bq-side-menu-item>
-    ```
-    ```jsx React icon="react"
-    import { BqBadge, BqIcon, BqSideMenuItem } from "@beeq/react";
-
-    <>
-      <BqSideMenuItem>
-        <BqIcon name="diamonds-four" slot="prefix" />
-        Default
-      </BqSideMenuItem>
-      <BqSideMenuItem active>
-        <BqIcon name="package" slot="prefix" />
-        Active
-      </BqSideMenuItem>
-      <BqSideMenuItem disabled>
-        <BqIcon name="gauge" slot="prefix" />
-        Disabled
-      </BqSideMenuItem>
-      <BqSideMenuItem>
-        <BqIcon name="bell" slot="prefix" />
-        With counter
-        <BqBadge slot="suffix">5</BqBadge>
-      </BqSideMenuItem>
-    </>
-    ```
-    ```ts Angular icon="angular"
-    import { Component } from "@angular/core";
-    import { BqBadge, BqIcon, BqSideMenuItem } from "@beeq/angular/standalone";
-
-    @Component({
-      standalone: true,
-      imports: [BqBadge, BqIcon, BqSideMenuItem],
-      template: `
-        <bq-side-menu-item>
-          <bq-icon name="diamonds-four" slot="prefix"></bq-icon>
-          Default
-        </bq-side-menu-item>
-
-        <bq-side-menu-item [active]="true">
-          <bq-icon name="package" slot="prefix"></bq-icon>
-          Active
-        </bq-side-menu-item>
-
-        <bq-side-menu-item [disabled]="true">
-          <bq-icon name="gauge" slot="prefix"></bq-icon>
-          Disabled
-        </bq-side-menu-item>
-
-        <bq-side-menu-item>
-          <bq-icon name="bell" slot="prefix"></bq-icon>
-          With counter
-          <bq-badge slot="suffix">5</bq-badge>
-        </bq-side-menu-item>
-      `
-    })
-    export class SideMenuItemStatesComponent {}
-    ```
-    ```vue Vue icon="vuejs"
-    <script setup lang="ts">
-    import { BqBadge, BqIcon, BqSideMenuItem } from "@beeq/vue";
-    </script>
-
-    <template>
-      <BqSideMenuItem>
-        <BqIcon name="diamonds-four" slot="prefix" />
-        Default
-      </BqSideMenuItem>
-      <BqSideMenuItem active>
-        <BqIcon name="package" slot="prefix" />
-        Active
-      </BqSideMenuItem>
-      <BqSideMenuItem disabled>
-        <BqIcon name="gauge" slot="prefix" />
-        Disabled
-      </BqSideMenuItem>
-      <BqSideMenuItem>
-        <BqIcon name="bell" slot="prefix" />
-        With counter
-        <BqBadge slot="suffix">5</BqBadge>
-      </BqSideMenuItem>
-    </template>
-    ```
-  </CodeGroup>
-</CodeLivePreview>
-
 ### Appearance
 
 Use the `appearance` attribute to align the side menu with your application's visual language.
 
-<CodeLivePreview code={`<style>
-  :host {
-    align-items: stretch !important;
-    gap: var(--bq-spacing-m) !important;
-  }
+#### Default
 
-  .side-menu-appearance {
-    display: grid;
-    gap: var(--bq-spacing-s);
-    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
-    inline-size: min(100%, 44rem);
-  }
+The default appearance is a neutral style that works well in most contexts.
+It pairs with a light or dark background and uses color accents for active and hover states.
 
-  bq-side-menu {
-    block-size: 18rem;
-    display: block;
-    inline-size: 100%;
-    position: relative;
-  }
+<CodeLivePreview mode="iframe" height="30rem" removePadding code={`
+  <style>
+    .app-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-s);
+      padding-inline: var(--bq-spacing-m);
+      padding-block-start: var(--bq-spacing-m);
+    }
 
-  bq-side-menu::part(base) {
-    block-size: 100% !important;
-    inset: 0 auto 0 0 !important;
-    min-block-size: 0 !important;
-    position: absolute !important;
-  }
-</style>
+    .app-logo svg {
+      height: 2.5rem;
+      width: 2.5rem;
+    }
 
-<div class="side-menu-appearance">
-  <bq-side-menu appearance="default">
-    <bq-side-menu-item active>Dashboard</bq-side-menu-item>
-    <bq-side-menu-item>Reports</bq-side-menu-item>
+    .app-logo h1 {
+      font-size: var(--bq-font-size--xl);
+      white-space: nowrap;
+    }
+  </style>
+
+  <bq-side-menu>
+    <div class="app-logo" slot="logo">
+      <bq-icon name="square-logo" size="40"></bq-icon>
+      <h1>App Name</h1>
+    </div>
+    <bq-divider></bq-divider>
+    <bq-side-menu-item active>
+      <bq-icon name="diamonds-four" slot="prefix"></bq-icon>
+      Dashboard
+    </bq-side-menu-item>
+    <bq-side-menu-item>
+      <bq-icon name="package" slot="prefix"></bq-icon>
+      Products
+      <bq-badge slot="suffix">5</bq-badge>
+    </bq-side-menu-item>
+    <bq-side-menu-item>
+      <bq-icon name="truck" slot="prefix" ></bq-icon>
+      Deliver
+    </bq-side-menu-item>
+    <bq-side-menu-item>
+      <bq-icon name="files" slot="prefix" ></bq-icon>
+      Documents
+    </bq-side-menu-item>
   </bq-side-menu>
-  <bq-side-menu appearance="brand">
-    <bq-side-menu-item active>Dashboard</bq-side-menu-item>
-    <bq-side-menu-item>Reports</bq-side-menu-item>
-  </bq-side-menu>
-  <bq-side-menu appearance="inverse">
-    <bq-side-menu-item active>Dashboard</bq-side-menu-item>
-    <bq-side-menu-item>Reports</bq-side-menu-item>
-  </bq-side-menu>
-</div>
-
-<script>
-  (() => {
-    const bodyClasses = ['bq-body--side-menu', 'bq-body--side-menu__expand', 'bq-body--side-menu__collapse'];
-    const previewDocument = previewRoot.host?.ownerDocument ?? document;
-    const resetBodyClasses = () => previewDocument.body.classList.remove(...bodyClasses);
-    const scheduleReset = () => requestAnimationFrame(() => requestAnimationFrame(resetBodyClasses));
-
-    resetBodyClasses();
-    customElements.whenDefined('bq-side-menu').then(scheduleReset);
-  })();
-</script>`}>
+`}>
   <CodeGroup>
-    ```html HTML icon="html5"
-    <bq-side-menu appearance="brand">
-      <bq-side-menu-item active>Dashboard</bq-side-menu-item>
-      <bq-side-menu-item>Reports</bq-side-menu-item>
-    </bq-side-menu>
-    ```
-    ```jsx React icon="react"
-    import { BqSideMenu, BqSideMenuItem } from "@beeq/react";
-
-    <BqSideMenu appearance="brand">
-      <BqSideMenuItem active>Dashboard</BqSideMenuItem>
-      <BqSideMenuItem>Reports</BqSideMenuItem>
-    </BqSideMenu>
-    ```
-    ```ts Angular icon="angular"
-    import { Component } from "@angular/core";
-    import { BqSideMenu, BqSideMenuItem } from "@beeq/angular/standalone";
-
-    @Component({
-      standalone: true,
-      imports: [BqSideMenu, BqSideMenuItem],
-      template: `
-        <bq-side-menu appearance="brand">
-          <bq-side-menu-item [active]="true">Dashboard</bq-side-menu-item>
-          <bq-side-menu-item>Reports</bq-side-menu-item>
-        </bq-side-menu>
-      `
-    })
-    export class BrandSideMenuComponent {}
-    ```
-    ```vue Vue icon="vuejs"
-    <script setup lang="ts">
-    import { BqSideMenu, BqSideMenuItem } from "@beeq/vue";
-    </script>
-
-    <template>
-      <BqSideMenu appearance="brand">
-        <BqSideMenuItem active>Dashboard</BqSideMenuItem>
-        <BqSideMenuItem>Reports</BqSideMenuItem>
-      </BqSideMenu>
-    </template>
-    ```
-  </CodeGroup>
-</CodeLivePreview>
-
-### Collapse and size
-
-Use `collapse` to create a compact side menu. Use `size="small"` when space is constrained and labels remain readable.
-
-<CodeLivePreview code={`<style>
-  :host {
-    align-items: stretch !important;
-    justify-content: flex-start !important;
-    min-height: 18rem !important;
-    overflow: hidden !important;
-    padding: 0 !important;
-    position: relative !important;
-  }
-
-  bq-side-menu {
-    display: block;
-    inline-size: var(--bq-side-menu--width-collapse);
-    min-height: 18rem;
-    position: relative;
-  }
-
-  bq-side-menu::part(base) {
-    block-size: 100% !important;
-    inset: 0 auto 0 0 !important;
-    min-block-size: 0 !important;
-    position: absolute !important;
-  }
-</style>
-
-<bq-side-menu collapse size="small">
-  <bq-side-menu-item active>
-    <bq-icon name="diamonds-four" slot="prefix"></bq-icon>
-    Dashboard
-  </bq-side-menu-item>
-  <bq-side-menu-item>
-    <bq-icon name="package" slot="prefix"></bq-icon>
-    Products
-  </bq-side-menu-item>
-</bq-side-menu>
-
-<script>
-  (() => {
-    const bodyClasses = ['bq-body--side-menu', 'bq-body--side-menu__expand', 'bq-body--side-menu__collapse'];
-    const previewDocument = previewRoot.host?.ownerDocument ?? document;
-    const resetBodyClasses = () => previewDocument.body.classList.remove(...bodyClasses);
-    const scheduleReset = () => requestAnimationFrame(() => requestAnimationFrame(resetBodyClasses));
-
-    resetBodyClasses();
-    customElements.whenDefined('bq-side-menu').then(scheduleReset);
-  })();
-</script>`}>
-  <CodeGroup>
-    ```html HTML icon="html5"
-    <bq-side-menu collapse size="small">
+    ```html HTML icon="html5" expandable
+    <bq-side-menu>
+      <div class="app-logo" slot="logo">
+        <bq-icon name="square-logo" size="40"></bq-icon>
+        <h1>App Name</h1>
+      </div>
+      <bq-divider></bq-divider>
       <bq-side-menu-item active>
         <bq-icon name="diamonds-four" slot="prefix"></bq-icon>
         Dashboard
@@ -594,13 +567,27 @@ Use `collapse` to create a compact side menu. Use `size="small"` when space is c
       <bq-side-menu-item>
         <bq-icon name="package" slot="prefix"></bq-icon>
         Products
+        <bq-badge slot="suffix">5</bq-badge>
       </bq-side-menu-item>
-    </bq-side-menu>
+      <bq-side-menu-item>
+        <bq-icon name="truck" slot="prefix" ></bq-icon>
+        Deliver
+      </bq-side-menu-item>
+      <bq-side-menu-item>
+        <bq-icon name="files" slot="prefix" ></bq-icon>
+        Documents
+      </bq-side-menu-item>
     ```
-    ```jsx React icon="react"
-    import { BqIcon, BqSideMenu, BqSideMenuItem } from "@beeq/react";
 
-    <BqSideMenu collapse size="small">
+    ```jsx React icon="react" expandable
+    import { BqBadge, BqDivider, BqIcon, BqSideMenu, BqSideMenuItem } from "@beeq/react";
+
+    <BqSideMenu>
+      <div class="app-logo" slot="logo">
+        <BqIcon name="square-logo" size="40" />
+        <h1>App Name</h1>
+      </div>
+      <BqDivider />
       <BqSideMenuItem active>
         <BqIcon name="diamonds-four" slot="prefix" />
         Dashboard
@@ -608,38 +595,67 @@ Use `collapse` to create a compact side menu. Use `size="small"` when space is c
       <BqSideMenuItem>
         <BqIcon name="package" slot="prefix" />
         Products
+        <BqBadge slot="suffix">5</BqBadge>
+      </BqSideMenuItem>
+      <BqSideMenuItem>
+        <BqIcon name="truck" slot="prefix" />
+        Deliver
+      </BqSideMenuItem>
+      <BqSideMenuItem>
+        <BqIcon name="files" slot="prefix" />
+        Documents
       </BqSideMenuItem>
     </BqSideMenu>
     ```
-    ```ts Angular icon="angular"
+
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
-    import { BqIcon, BqSideMenu, BqSideMenuItem } from "@beeq/angular/standalone";
+    import { BqBadge, BqDivider, BqIcon, BqSideMenu, BqSideMenuItem } from "@beeq/angular/standalone";
 
     @Component({
       standalone: true,
-      imports: [BqIcon, BqSideMenu, BqSideMenuItem],
+      imports: [BqBadge, BqDivider, BqIcon, BqSideMenu, BqSideMenuItem],
       template: `
-        <bq-side-menu [collapse]="true" size="small">
-          <bq-side-menu-item [active]="true">
+        <bq-side-menu>
+          <div class="app-logo" slot="logo">
+            <bq-icon name="square-logo" size="40"></bq-icon>
+            <h1>App Name</h1>
+          </div>
+          <bq-side-menu-item active>
             <bq-icon name="diamonds-four" slot="prefix"></bq-icon>
             Dashboard
           </bq-side-menu-item>
           <bq-side-menu-item>
             <bq-icon name="package" slot="prefix"></bq-icon>
             Products
+            <bq-badge slot="suffix">5</bq-badge>
+          </bq-side-menu-item>
+          <bq-side-menu-item>
+            <bq-icon name="truck" slot="prefix" ></bq-icon>
+            Deliver
+          </bq-side-menu-item>
+          <bq-side-menu-item>
+            <bq-icon name="files" slot="prefix" ></bq-icon>
+            Documents
           </bq-side-menu-item>
         </bq-side-menu>
       `
     })
-    export class CollapsedSideMenuComponent {}
+    export class BrandSideMenuComponent {}
     ```
-    ```vue Vue icon="vuejs"
+
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
-    import { BqIcon, BqSideMenu, BqSideMenuItem } from "@beeq/vue";
+    import { BqBadge, BqDivider, BqIcon, BqSideMenu, BqSideMenuItem } from "@beeq/vue";
     </script>
 
     <template>
-      <BqSideMenu collapse size="small">
+      <BqSideMenu>
+        <div class="app-logo" slot="logo">
+          <BqIcon name="square-logo" size="40" />
+          <h1>App Name</h1>
+        </div>
+        <BqDivider />
         <BqSideMenuItem active>
           <BqIcon name="diamonds-four" slot="prefix" />
           Dashboard
@@ -647,6 +663,558 @@ Use `collapse` to create a compact side menu. Use `size="small"` when space is c
         <BqSideMenuItem>
           <BqIcon name="package" slot="prefix" />
           Products
+          <BqBadge slot="suffix">5</BqBadge>
+        </BqSideMenuItem>
+        <BqSideMenuItem>
+          <BqIcon name="truck" slot="prefix" />
+          Deliver
+        </BqSideMenuItem>
+        <BqSideMenuItem>
+          <BqIcon name="files" slot="prefix" />
+          Documents
+        </BqSideMenuItem>
+      </BqSideMenu>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+#### Brand
+
+The brand appearance highlight the brand color as the background of the side menu.
+This creates a strong visual presence and reinforces brand identity.
+
+<CodeLivePreview mode="iframe" height="30rem" removePadding code={`
+  <style>
+    .app-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-s);
+      padding-inline: var(--bq-spacing-m);
+      padding-block-start: var(--bq-spacing-m);
+    }
+
+    .app-logo svg {
+      height: 2.5rem;
+      width: 2.5rem;
+    }
+
+    .app-logo h1 {
+      font-size: var(--bq-font-size--xl);
+      white-space: nowrap;
+    }
+  </style>
+
+  <bq-side-menu appearance="brand">
+    <div class="app-logo" slot="logo">
+      <bq-icon name="square-logo" size="40"></bq-icon>
+      <h1>App Name</h1>
+    </div>
+    <bq-divider></bq-divider>
+    <bq-side-menu-item active>
+      <bq-icon name="diamonds-four" slot="prefix"></bq-icon>
+      Dashboard
+    </bq-side-menu-item>
+    <bq-side-menu-item>
+      <bq-icon name="package" slot="prefix"></bq-icon>
+      Products
+      <bq-badge slot="suffix">5</bq-badge>
+    </bq-side-menu-item>
+    <bq-side-menu-item>
+      <bq-icon name="truck" slot="prefix" ></bq-icon>
+      Deliver
+    </bq-side-menu-item>
+    <bq-side-menu-item>
+      <bq-icon name="files" slot="prefix" ></bq-icon>
+      Documents
+    </bq-side-menu-item>
+  </bq-side-menu>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <bq-side-menu>
+      <div class="app-logo" slot="logo">
+        <bq-icon name="square-logo" size="40"></bq-icon>
+        <h1>App Name</h1>
+      </div>
+      <bq-divider></bq-divider>
+      <bq-side-menu-item active>
+        <bq-icon name="diamonds-four" slot="prefix"></bq-icon>
+        Dashboard
+      </bq-side-menu-item>
+      <bq-side-menu-item>
+        <bq-icon name="package" slot="prefix"></bq-icon>
+        Products
+        <bq-badge slot="suffix">5</bq-badge>
+      </bq-side-menu-item>
+      <bq-side-menu-item>
+        <bq-icon name="truck" slot="prefix" ></bq-icon>
+        Deliver
+      </bq-side-menu-item>
+      <bq-side-menu-item>
+        <bq-icon name="files" slot="prefix" ></bq-icon>
+        Documents
+      </bq-side-menu-item>
+    ```
+
+    ```jsx React icon="react" expandable
+    import { BqBadge, BqDivider, BqIcon, BqSideMenu, BqSideMenuItem } from "@beeq/react";
+
+    <BqSideMenu>
+      <div class="app-logo" slot="logo">
+        <BqIcon name="square-logo" size="40" />
+        <h1>App Name</h1>
+      </div>
+      <BqDivider />
+      <BqSideMenuItem active>
+        <BqIcon name="diamonds-four" slot="prefix" />
+        Dashboard
+      </BqSideMenuItem>
+      <BqSideMenuItem>
+        <BqIcon name="package" slot="prefix" />
+        Products
+        <BqBadge slot="suffix">5</BqBadge>
+      </BqSideMenuItem>
+      <BqSideMenuItem>
+        <BqIcon name="truck" slot="prefix" />
+        Deliver
+      </BqSideMenuItem>
+      <BqSideMenuItem>
+        <BqIcon name="files" slot="prefix" />
+        Documents
+      </BqSideMenuItem>
+    </BqSideMenu>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqBadge, BqDivider, BqIcon, BqSideMenu, BqSideMenuItem } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqBadge, BqDivider, BqIcon, BqSideMenu, BqSideMenuItem],
+      template: `
+        <bq-side-menu>
+          <div class="app-logo" slot="logo">
+            <bq-icon name="square-logo" size="40"></bq-icon>
+            <h1>App Name</h1>
+          </div>
+          <bq-divider></bq-divider>
+          <bq-side-menu-item active>
+            <bq-icon name="diamonds-four" slot="prefix"></bq-icon>
+            Dashboard
+          </bq-side-menu-item>
+          <bq-side-menu-item>
+            <bq-icon name="package" slot="prefix"></bq-icon>
+            Products
+            <bq-badge slot="suffix">5</bq-badge>
+          </bq-side-menu-item>
+          <bq-side-menu-item>
+            <bq-icon name="truck" slot="prefix" ></bq-icon>
+            Deliver
+          </bq-side-menu-item>
+          <bq-side-menu-item>
+            <bq-icon name="files" slot="prefix" ></bq-icon>
+            Documents
+          </bq-side-menu-item>
+        </bq-side-menu>
+      `
+    })
+    export class BrandSideMenuComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqBadge, BqDivider, BqIcon, BqSideMenu, BqSideMenuItem } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqSideMenu>
+        <div class="app-logo" slot="logo">
+          <BqIcon name="square-logo" size="40" />
+          <h1>App Name</h1>
+        </div>
+        <BqDivider />
+        <BqSideMenuItem active>
+          <BqIcon name="diamonds-four" slot="prefix" />
+          Dashboard
+        </BqSideMenuItem>
+        <BqSideMenuItem>
+          <BqIcon name="package" slot="prefix" />
+          Products
+          <BqBadge slot="suffix">5</BqBadge>
+        </BqSideMenuItem>
+        <BqSideMenuItem>
+          <BqIcon name="truck" slot="prefix" />
+          Deliver
+        </BqSideMenuItem>
+        <BqSideMenuItem>
+          <BqIcon name="files" slot="prefix" />
+          Documents
+        </BqSideMenuItem>
+      </BqSideMenu>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+#### Inverse
+
+The inverse appearance is designed for use as the opposite of the BEEQ mode of the application.
+For example, if your app uses `bq-mode="light"`, the inverse side menu will use the dark appearance, and vice versa.
+
+<CodeLivePreview mode="iframe" height="30rem" removePadding code={`
+  <style>
+    .app-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-s);
+      padding-inline: var(--bq-spacing-m);
+      padding-block-start: var(--bq-spacing-m);
+    }
+
+    .app-logo svg {
+      height: 2.5rem;
+      width: 2.5rem;
+    }
+
+    .app-logo h1 {
+      font-size: var(--bq-font-size--xl);
+      white-space: nowrap;
+    }
+  </style>
+
+  <bq-side-menu appearance="inverse">
+    <div class="app-logo" slot="logo">
+      <bq-icon name="square-logo" size="40"></bq-icon>
+      <h1>App Name</h1>
+    </div>
+    <bq-divider></bq-divider>
+    <bq-side-menu-item active>
+      <bq-icon name="diamonds-four" slot="prefix"></bq-icon>
+      Dashboard
+    </bq-side-menu-item>
+    <bq-side-menu-item>
+      <bq-icon name="package" slot="prefix"></bq-icon>
+      Products
+      <bq-badge slot="suffix">5</bq-badge>
+    </bq-side-menu-item>
+    <bq-side-menu-item>
+      <bq-icon name="truck" slot="prefix" ></bq-icon>
+      Deliver
+    </bq-side-menu-item>
+    <bq-side-menu-item>
+      <bq-icon name="files" slot="prefix" ></bq-icon>
+      Documents
+    </bq-side-menu-item>
+  </bq-side-menu>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <bq-side-menu>
+      <div class="app-logo" slot="logo">
+        <bq-icon name="square-logo" size="40"></bq-icon>
+        <h1>App Name</h1>
+      </div>
+      <bq-divider></bq-divider>
+      <bq-side-menu-item active>
+        <bq-icon name="diamonds-four" slot="prefix"></bq-icon>
+        Dashboard
+      </bq-side-menu-item>
+      <bq-side-menu-item>
+        <bq-icon name="package" slot="prefix"></bq-icon>
+        Products
+        <bq-badge slot="suffix">5</bq-badge>
+      </bq-side-menu-item>
+      <bq-side-menu-item>
+        <bq-icon name="truck" slot="prefix" ></bq-icon>
+        Deliver
+      </bq-side-menu-item>
+      <bq-side-menu-item>
+        <bq-icon name="files" slot="prefix" ></bq-icon>
+        Documents
+      </bq-side-menu-item>
+    ```
+
+    ```jsx React icon="react" expandable
+    import { BqBadge, BqDivider, BqIcon, BqSideMenu, BqSideMenuItem } from "@beeq/react";
+
+    <BqSideMenu>
+      <div className="app-logo" slot="logo">
+        <BqIcon name="square-logo" size="40" />
+        <h1>App Name</h1>
+      </div>
+      <BqDivider />
+      <BqSideMenuItem active>
+        <BqIcon name="diamonds-four" slot="prefix" />
+        Dashboard
+      </BqSideMenuItem>
+      <BqSideMenuItem>
+        <BqIcon name="package" slot="prefix" />
+        Products
+        <BqBadge slot="suffix">5</BqBadge>
+      </BqSideMenuItem>
+      <BqSideMenuItem>
+        <BqIcon name="truck" slot="prefix" />
+        Deliver
+      </BqSideMenuItem>
+      <BqSideMenuItem>
+        <BqIcon name="files" slot="prefix" />
+        Documents
+      </BqSideMenuItem>
+    </BqSideMenu>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqBadge, BqDivider, BqIcon, BqSideMenu, BqSideMenuItem } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqBadge, BqDivider, BqIcon, BqSideMenu, BqSideMenuItem],
+      template: `
+        <bq-side-menu>
+          <div class="app-logo" slot="logo">
+            <bq-icon name="square-logo" size="40"></bq-icon>
+            <h1>App Name</h1>
+          </div>
+          <bq-divider></bq-divider>
+          <bq-side-menu-item active>
+            <bq-icon name="diamonds-four" slot="prefix"></bq-icon>
+            Dashboard
+          </bq-side-menu-item>
+          <bq-side-menu-item>
+            <bq-icon name="package" slot="prefix"></bq-icon>
+            Products
+            <bq-badge slot="suffix">5</bq-badge>
+          </bq-side-menu-item>
+          <bq-side-menu-item>
+            <bq-icon name="truck" slot="prefix" ></bq-icon>
+            Deliver
+          </bq-side-menu-item>
+          <bq-side-menu-item>
+            <bq-icon name="files" slot="prefix" ></bq-icon>
+            Documents
+          </bq-side-menu-item>
+        </bq-side-menu>
+      `
+    })
+    export class BrandSideMenuComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqBadge, BqDivider, BqIcon, BqSideMenu, BqSideMenuItem } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqSideMenu>
+        <div class="app-logo" slot="logo">
+          <BqIcon name="square-logo" size="40" />
+          <h1>App Name</h1>
+        </div>
+        <BqDivider />
+        <BqSideMenuItem active>
+          <BqIcon name="diamonds-four" slot="prefix" />
+          Dashboard
+        </BqSideMenuItem>
+        <BqSideMenuItem>
+          <BqIcon name="package" slot="prefix" />
+          Products
+          <BqBadge slot="suffix">5</BqBadge>
+        </BqSideMenuItem>
+        <BqSideMenuItem>
+          <BqIcon name="truck" slot="prefix" />
+          Deliver
+        </BqSideMenuItem>
+        <BqSideMenuItem>
+          <BqIcon name="files" slot="prefix" />
+          Documents
+        </BqSideMenuItem>
+      </BqSideMenu>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Size
+
+The side menu supports two sizes: medium (default) and small.
+The small size is a version of the side menu that shows only icons, hiding the text labels.
+Use the `size` attribute/property to switch between the two sizes.
+
+<Tip>
+  When using the medium size, there's no need to specify the `size` attribute, as it is the default.
+  Default values are not required to be set explicitly, but you can add `size="medium"` for clarity if desired.
+</Tip>
+
+<CodeLivePreview mode="iframe" height="30rem" removePadding code={`
+  <style>
+    .app-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-s);
+      padding-inline: var(--bq-spacing-m);
+      padding-block-start: var(--bq-spacing-s);
+    }
+
+    .app-logo svg {
+      height: 2rem;
+      width: 2rem;
+    }
+
+    .app-logo h1 {
+      font-size: var(--bq-font-size--l);
+      white-space: nowrap;
+    }
+  </style>
+
+  <bq-side-menu size="small">
+    <div class="app-logo" slot="logo">
+      <bq-icon name="square-logo" size="32"></bq-icon>
+      <h1>App Name</h1>
+    </div>
+    <bq-divider></bq-divider>
+    <bq-side-menu-item active>
+      <bq-icon name="diamonds-four" slot="prefix"></bq-icon>
+      Dashboard
+    </bq-side-menu-item>
+    <bq-side-menu-item>
+      <bq-icon name="package" slot="prefix"></bq-icon>
+      Products
+      <bq-badge slot="suffix">5</bq-badge>
+    </bq-side-menu-item>
+    <bq-side-menu-item>
+      <bq-icon name="truck" slot="prefix" ></bq-icon>
+      Deliver
+    </bq-side-menu-item>
+    <bq-side-menu-item>
+      <bq-icon name="files" slot="prefix" ></bq-icon>
+      Documents
+    </bq-side-menu-item>
+  </bq-side-menu>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <bq-side-menu size="small">
+      <div class="app-logo" slot="logo">
+        <bq-icon name="square-logo" size="40"></bq-icon>
+        <h1>App Name</h1>
+      </div>
+      <bq-divider></bq-divider>
+      <bq-side-menu-item active>
+        <bq-icon name="diamonds-four" slot="prefix"></bq-icon>
+        Dashboard
+      </bq-side-menu-item>
+      <bq-side-menu-item>
+        <bq-icon name="package" slot="prefix"></bq-icon>
+        Products
+        <bq-badge slot="suffix">5</bq-badge>
+      </bq-side-menu-item>
+      <bq-side-menu-item>
+        <bq-icon name="truck" slot="prefix" ></bq-icon>
+        Deliver
+      </bq-side-menu-item>
+      <bq-side-menu-item>
+        <bq-icon name="files" slot="prefix" ></bq-icon>
+        Documents
+      </bq-side-menu-item>
+    ```
+
+    ```jsx React icon="react" expandable
+    import { BqBadge, BqDivider, BqIcon, BqSideMenu, BqSideMenuItem } from "@beeq/react";
+
+    <BqSideMenu size="small">
+      <div class="app-logo" slot="logo">
+        <BqIcon name="square-logo" size="40" />
+        <h1>App Name</h1>
+      </div>
+      <BqDivider />
+      <BqSideMenuItem active>
+        <BqIcon name="diamonds-four" slot="prefix" />
+        Dashboard
+      </BqSideMenuItem>
+      <BqSideMenuItem>
+        <BqIcon name="package" slot="prefix" />
+        Products
+        <BqBadge slot="suffix">5</BqBadge>
+      </BqSideMenuItem>
+      <BqSideMenuItem>
+        <BqIcon name="truck" slot="prefix" />
+        Deliver
+      </BqSideMenuItem>
+      <BqSideMenuItem>
+        <BqIcon name="files" slot="prefix" />
+        Documents
+      </BqSideMenuItem>
+    </BqSideMenu>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqBadge, BqDivider, BqIcon, BqSideMenu, BqSideMenuItem } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqBadge, BqDivider, BqIcon, BqSideMenu, BqSideMenuItem],
+      template: `
+        <bq-side-menu size="small">
+          <div class="app-logo" slot="logo">
+            <bq-icon name="square-logo" size="40"></bq-icon>
+            <h1>App Name</h1>
+          </div>
+          <bq-divider></bq-divider>
+          <bq-side-menu-item active>
+            <bq-icon name="diamonds-four" slot="prefix"></bq-icon>
+            Dashboard
+          </bq-side-menu-item>
+          <bq-side-menu-item>
+            <bq-icon name="package" slot="prefix"></bq-icon>
+            Products
+            <bq-badge slot="suffix">5</bq-badge>
+          </bq-side-menu-item>
+          <bq-side-menu-item>
+            <bq-icon name="truck" slot="prefix" ></bq-icon>
+            Deliver
+          </bq-side-menu-item>
+          <bq-side-menu-item>
+            <bq-icon name="files" slot="prefix" ></bq-icon>
+            Documents
+          </bq-side-menu-item>
+        </bq-side-menu>
+      `,
+    })
+    export class BrandSideMenuComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqBadge, BqDivider, BqIcon, BqSideMenu, BqSideMenuItem } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqSideMenu size="small">
+        <div class="app-logo" slot="logo">
+          <BqIcon name="square-logo" size="40" />
+          <h1>App Name</h1>
+        </div>
+        <BqDivider />
+        <BqSideMenuItem active>
+          <BqIcon name="diamonds-four" slot="prefix" />
+          Dashboard
+        </BqSideMenuItem>
+        <BqSideMenuItem>
+          <BqIcon name="package" slot="prefix" />
+          Products
+          <BqBadge slot="suffix">5</BqBadge>
+        </BqSideMenuItem>
+        <BqSideMenuItem>
+          <BqIcon name="truck" slot="prefix" />
+          Deliver
+        </BqSideMenuItem>
+        <BqSideMenuItem>
+          <BqIcon name="files" slot="prefix" />
+          Documents
         </BqSideMenuItem>
       </BqSideMenu>
     </template>
@@ -658,104 +1226,761 @@ Use `collapse` to create a compact side menu. Use `size="small"` when space is c
 
 Use the footer slot for supplementary actions, links, or information at the bottom of the menu.
 
-<CodeLivePreview code={`<style>
-  :host {
-    align-items: stretch !important;
-    justify-content: flex-start !important;
-    min-height: 22rem !important;
-    overflow: hidden !important;
-    padding: 0 !important;
-    position: relative !important;
-  }
+<CodeLivePreview mode="iframe" height="30rem" removePadding code={`
+  <style>
+    .app-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-s);
+      padding-inline: var(--bq-spacing-m);
+      padding-block-start: var(--bq-spacing-m);
+    }
 
-  bq-side-menu {
-    display: block;
-    inline-size: var(--bq-side-menu--width);
-    min-height: 22rem;
-    position: relative;
-  }
+    .app-logo svg {
+      height: 2.5rem;
+      width: 2.5rem;
+    }
 
-  bq-side-menu::part(base) {
-    block-size: 100% !important;
-    inset: 0 auto 0 0 !important;
-    min-block-size: 0 !important;
-    position: absolute !important;
-  }
-</style>
+    .app-logo h1 {
+      font-size: var(--bq-font-size--xl);
+      white-space: nowrap;
+    }
+  </style>
 
-<bq-side-menu>
-  <bq-side-menu-item active>Dashboard</bq-side-menu-item>
-  <bq-side-menu-item>Reports</bq-side-menu-item>
-  <bq-button slot="footer" appearance="link" size="small">
-    Settings
-  </bq-button>
-</bq-side-menu>
+  <bq-side-menu>
+    <div class="app-logo" slot="logo">
+      <bq-icon name="square-logo" size="40"></bq-icon>
+      <h1>App Name</h1>
+    </div>
+    <bq-divider></bq-divider>
+    <bq-side-menu-item active>
+      <bq-icon name="diamonds-four" slot="prefix"></bq-icon>
+      Dashboard
+    </bq-side-menu-item>
+    <bq-side-menu-item>
+      <bq-icon name="package" slot="prefix"></bq-icon>
+      Products
+      <bq-badge slot="suffix">5</bq-badge>
+    </bq-side-menu-item>
+    <bq-side-menu-item disabled>
+      <bq-icon name="gauge" slot="prefix"></bq-icon>
+      Performance
+    </bq-side-menu-item>
+    <bq-side-menu-item>
+      <bq-icon name="truck" slot="prefix" ></bq-icon>
+      Deliver
+    </bq-side-menu-item>
+    <bq-side-menu-item>
+      <bq-icon name="files" slot="prefix" ></bq-icon>
+      Documents
+    </bq-side-menu-item>
 
-<script>
-  (() => {
-    const bodyClasses = ['bq-body--side-menu', 'bq-body--side-menu__expand', 'bq-body--side-menu__collapse'];
-    const previewDocument = previewRoot.host?.ownerDocument ?? document;
-    const resetBodyClasses = () => previewDocument.body.classList.remove(...bodyClasses);
-    const scheduleReset = () => requestAnimationFrame(() => requestAnimationFrame(resetBodyClasses));
-
-    resetBodyClasses();
-    customElements.whenDefined('bq-side-menu').then(scheduleReset);
-  })();
-</script>`}>
-  <CodeGroup>
-    ```html HTML icon="html5"
-    <bq-side-menu>
-      <bq-side-menu-item active>Dashboard</bq-side-menu-item>
-      <bq-side-menu-item>Reports</bq-side-menu-item>
-      <bq-button slot="footer" appearance="link" size="small">
-        Settings
+    <div slot="footer">
+      <bq-button appearance="text" only-icon>
+        <bq-icon name="bell"></bq-icon>
       </bq-button>
+      <bq-button appearance="text" only-icon>
+        <bq-icon name="chats-circle"></bq-icon>
+      </bq-button>
+      <bq-button appearance="text" only-icon>
+        <bq-icon name="sliders"></bq-icon>
+      </bq-button>
+    </div>
+  </bq-side-menu>
+`}>
+  <CodeGroup>
+    ```css styles.css icon="css3" expandable
+    app-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-s);
+      padding-inline: var(--bq-spacing-m);
+      padding-block-start: var(--bq-spacing-m);
+    }
+
+    app-logo svg {
+      height: 2.5rem;
+      width: 2.5rem;
+    }
+
+    app-logo h1 {
+      font-size: var(--bq-font-size--l);
+      white-space: nowrap;
+    }
+    ```
+
+    ```html HTML icon="html5" expandable
+    <bq-side-menu>
+      <div class="app-logo" slot="logo">
+        <bq-icon name="square-logo" size="40"></bq-icon>
+        <h1>App Name</h1>
+      </div>
+      <bq-divider></bq-divider>
+      <bq-side-menu-item active>
+        <bq-icon name="diamonds-four" slot="prefix"></bq-icon>
+        Dashboard
+      </bq-side-menu-item>
+      <bq-side-menu-item>
+        <bq-icon name="package" slot="prefix"></bq-icon>
+        Products
+        <bq-badge slot="suffix">5</bq-badge>
+      </bq-side-menu-item>
+      <bq-side-menu-item disabled>
+        <bq-icon name="gauge" slot="prefix"></bq-icon>
+        Performance
+      </bq-side-menu-item>
+      <bq-side-menu-item>
+        <bq-icon name="truck" slot="prefix" ></bq-icon>
+        Deliver
+      </bq-side-menu-item>
+      <bq-side-menu-item>
+        <bq-icon name="files" slot="prefix" ></bq-icon>
+        Documents
+      </bq-side-menu-item>
+
+      <div slot="footer">
+        <bq-button appearance="text" only-icon>
+          <bq-icon name="bell"></bq-icon>
+        </bq-button>
+        <bq-button appearance="text" only-icon>
+          <bq-icon name="chats-circle"></bq-icon>
+        </bq-button>
+        <bq-button appearance="text" only-icon>
+          <bq-icon name="sliders"></bq-icon>
+        </bq-button>
+      </div>
     </bq-side-menu>
     ```
-    ```jsx React icon="react"
-    import { BqButton, BqSideMenu, BqSideMenuItem } from "@beeq/react";
+
+    ```jsx React icon="react" expandable
+    import { BqBadge, BqDivider, BqIcon, BqSideMenu, BqSideMenuItem } from "@beeq/react";
+    import "./styles.css";
 
     <BqSideMenu>
-      <BqSideMenuItem active>Dashboard</BqSideMenuItem>
-      <BqSideMenuItem>Reports</BqSideMenuItem>
-      <BqButton slot="footer" appearance="link" size="small">
-        Settings
-      </BqButton>
+      <div className="app-logo" slot="logo">
+        <BqIcon name="square-logo" size="40" />
+        <h1>App Name</h1>
+      </div>
+      <BqDivider />
+      <BqSideMenuItem active>
+        <BqIcon name="diamonds-four" slot="prefix" />
+        Dashboard
+      </BqSideMenuItem>
+      <BqSideMenuItem>
+        <BqIcon name="package" slot="prefix" />
+        Products
+        <BqBadge slot="suffix">5</BqBadge>
+      </BqSideMenuItem>
+      <BqSideMenuItem disabled>
+        <BqIcon name="gauge" slot="prefix" />
+        Performance
+      </BqSideMenuItem>
+      <BqSideMenuItem>
+        <BqIcon name="truck" slot="prefix" />
+        Deliver
+      </BqSideMenuItem>
+      <BqSideMenuItem>
+        <BqIcon name="files" slot="prefix" />
+        Documents
+      </BqSideMenuItem>
+
+      <div slot="footer">
+        <BqButton appearance="text" only-icon>
+          <BqIcon name="bell"></BqIcon>
+        </BqButton>
+        <BqButton appearance="text" only-icon>
+          <BqIcon name="chats-circle"></BqIcon>
+        </BqButton>
+        <BqButton appearance="text" only-icon>
+          <BqIcon name="sliders"></BqIcon>
+        </BqButton>
+      </div>
     </BqSideMenu>
     ```
-    ```ts Angular icon="angular"
+
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
-    import { BqButton, BqSideMenu, BqSideMenuItem } from "@beeq/angular/standalone";
+    import { BqBadge, BqDivider, BqIcon, BqSideMenu, BqSideMenuItem } from "@beeq/angular/standalone";
 
     @Component({
       standalone: true,
-      imports: [BqButton, BqSideMenu, BqSideMenuItem],
+      imports: [BqBadge, BqDivider, BqIcon, BqSideMenu, BqSideMenuItem],
       template: `
         <bq-side-menu>
-          <bq-side-menu-item [active]="true">Dashboard</bq-side-menu-item>
-          <bq-side-menu-item>Reports</bq-side-menu-item>
-          <bq-button slot="footer" appearance="link" size="small">
-            Settings
-          </bq-button>
+          <div class="app-logo" slot="logo">
+            <bq-icon name="square-logo" size="40"></bq-icon>
+            <h1>App Name</h1>
+          </div>
+          <bq-divider></bq-divider>
+          <bq-side-menu-item active>
+            <bq-icon name="diamonds-four" slot="prefix"></bq-icon>
+            Dashboard
+          </bq-side-menu-item>
+          <bq-side-menu-item>
+            <bq-icon name="package" slot="prefix"></bq-icon>
+            Products
+            <bq-badge slot="suffix">5</bq-badge>
+          </bq-side-menu-item>
+          <bq-side-menu-item disabled>
+            <bq-icon name="gauge" slot="prefix"></bq-icon>
+            Performance
+          </bq-side-menu-item>
+          <bq-side-menu-item>
+            <bq-icon name="truck" slot="prefix" ></bq-icon>
+            Deliver
+          </bq-side-menu-item>
+          <bq-side-menu-item>
+            <bq-icon name="files" slot="prefix" ></bq-icon>
+            Documents
+          </bq-side-menu-item>
+
+          <div slot="footer">
+            <bq-button appearance="text" only-icon>
+              <bq-icon name="bell"></bq-icon>
+            </bq-button>
+            <bq-button appearance="text" only-icon>
+              <bq-icon name="chats-circle"></bq-icon>
+            </bq-button>
+            <bq-button appearance="text" only-icon>
+              <bq-icon name="sliders"></bq-icon>
+            </bq-button>
+          </div>
         </bq-side-menu>
+      `,
+      styles: `
+        .app-logo {
+          display: flex;
+          align-items: center;
+          gap: var(--bq-spacing-s);
+          padding-block: var(--bq-spacing-m);
+          padding-inline: var(--bq-spacing-l);
+        }
+
+        .app-logo svg {
+          height: 2.5rem;
+          width: 2.5rem;
+        }
+
+        .app-logo h1 {
+          font-size: var(--bq-font-size--xl);
+          white-space: nowrap;
+        }
       `
     })
-    export class SideMenuFooterComponent {}
+    export class DefaultSideMenuComponent {}
     ```
-    ```vue Vue icon="vuejs"
+
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
-    import { BqButton, BqSideMenu, BqSideMenuItem } from "@beeq/vue";
+    import { BqBadge, BqDivider, BqIcon, BqSideMenu, BqSideMenuItem } from "@beeq/vue";
     </script>
 
     <template>
       <BqSideMenu>
-        <BqSideMenuItem active>Dashboard</BqSideMenuItem>
-        <BqSideMenuItem>Reports</BqSideMenuItem>
-        <BqButton slot="footer" appearance="link" size="small">
-          Settings
-        </BqButton>
+        <div class="app-logo" slot="logo">
+          <BqIcon name="square-logo" size="40" />
+          <h1>App Name</h1>
+        </div>
+        <BqDivider />
+        <BqSideMenuItem active>
+          <BqIcon name="diamonds-four" slot="prefix" />
+          Dashboard
+        </BqSideMenuItem>
+        <BqSideMenuItem>
+          <BqIcon name="package" slot="prefix" />
+          Products
+          <BqBadge slot="suffix">5</BqBadge>
+        </BqSideMenuItem>
+        <BqSideMenuItem disabled>
+          <BqIcon name="gauge" slot="prefix" />
+          Performance
+        </BqSideMenuItem>
+        <BqSideMenuItem>
+          <BqIcon name="truck" slot="prefix" />
+          Deliver
+        </BqSideMenuItem>
+        <BqSideMenuItem>
+          <BqIcon name="files" slot="prefix" />
+          Documents
+        </BqSideMenuItem>
       </BqSideMenu>
+
+      <div slot="footer">
+        <BqButton appearance="text" only-icon>
+          <BqIcon name="bell"></bq-icon>
+        </BqButton>
+        <BqButton appearance="text" only-icon>
+          <BqIcon name="chats-circle"></bq-icon>
+        </BqButton>
+        <BqButton appearance="text" only-icon>
+          <BqIcon name="sliders"></bq-icon>
+        </BqButton>
+      </div>
     </template>
+
+    <style>
+    .app-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-s);
+      padding: var(--bq-spacing-m);
+    }
+
+    .app-logo svg {
+      height: 2.5rem;
+      width: 2.5rem;
+    }
+
+    .app-logo h1 {
+      font-size: var(--bq-font-size--xl);
+      white-space: nowrap;
+    }
+    </style>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Collapse
+
+Use `collapse` to create a compact side menu. Collapsed menus show icons and hide labels, but the logo can be customized to show or hide based on the collapsed state.
+The menu items will display their label content in a tooltip on hover when the menu is collapsed.
+
+<CodeLivePreview mode="iframe" height="30rem" removePadding code={`
+  <style>
+    .app-menu[collapse] [slot="logo"] {
+      padding-inline: var(--bq-spacing-xs);
+    }
+
+    .app-menu[collapse] [slot="logo"] h1 {
+      display: none;
+    }
+
+    .app-menu[collapse] [slot="footer"] bq-icon[name="arrow-line-left"] {
+      transform: rotate(180deg);
+    }
+
+    .app-menu .app-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-s);
+      padding-inline: var(--bq-spacing-m);
+      padding-block-start: var(--bq-spacing-m);
+    }
+
+    .app-menu .app-logo svg {
+      block-size: 2.5rem;
+      inline-size: 2.5rem;
+    }
+
+    .app-menu .app-logo h1 {
+      font-size: var(--bq-font-size--xl);
+      white-space: nowrap;
+    }
+
+    .app-menu bq-icon[name="arrow-line-left"] {
+      transition: transform 0.3s ease;
+    }
+
+    .app-content {
+      padding: var(--bq-spacing-m);
+    }
+
+    .app-content h1 {
+      margin-block-end: var(--bq-spacing-l);
+    }
+
+    .app-surface {
+      block-size: 20rem;
+      inline-size: 100%;
+      border: 2px dashed var(--bq-color-primary);
+      background-color: var(--bq-ui--alt);
+    }
+  </style>
+
+  <bq-side-menu class="app-menu" collapse>
+    <div class="app-logo" slot="logo">
+      <bq-icon name="square-logo" size="40"></bq-icon>
+      <h1>App Name</h1>
+    </div>
+    <bq-divider></bq-divider>
+    <bq-side-menu-item active>
+      <bq-icon name="diamonds-four" slot="prefix"></bq-icon>
+      Dashboard
+    </bq-side-menu-item>
+    <bq-side-menu-item>
+      <bq-icon name="package" slot="prefix"></bq-icon>
+      Products
+      <bq-badge slot="suffix">5</bq-badge>
+    </bq-side-menu-item>
+    <bq-side-menu-item>
+      <bq-icon name="truck" slot="prefix" ></bq-icon>
+      Deliver
+    </bq-side-menu-item>
+    <bq-side-menu-item>
+      <bq-icon name="files" slot="prefix" ></bq-icon>
+      Documents
+    </bq-side-menu-item>
+
+    <div slot="footer">
+      <bq-button appearance="text" data-action="collapse" only-icon>
+        <bq-icon name="arrow-line-left"></bq-icon>
+      </bq-button>
+    </div>
+  </bq-side-menu>
+
+  <main class="app-content">
+    <h1>Dashboard</h1>
+    <div class="app-surface">
+      <!-- Your content -->
+    </div>
+  </main>
+
+  <script>
+    (() => {
+      const sideMenu = previewRoot.querySelector('bq-side-menu');
+      const collapseButton = previewRoot.querySelector('bq-button[data-action="collapse"]');
+      if (!sideMenu || !collapseButton) return;
+
+      // Keep initial a11y label in sync with current state.
+      const syncButtonState = () => {
+        const isCollapsed = sideMenu.hasAttribute('collapse');
+        collapseButton.toggleAttribute('only-icon', isCollapsed);
+        collapseButton.setAttribute('aria-label', isCollapsed ? 'Expand side menu' : 'Collapse side menu');
+      };
+
+      syncButtonState();
+
+      collapseButton.addEventListener('bqClick', () => {
+        const nextCollapsed = !sideMenu.hasAttribute('collapse');
+        sideMenu.toggleAttribute('collapse', nextCollapsed);
+        syncButtonState();
+      });
+    })();
+  </script>
+`}>
+  <CodeGroup>
+    ```css styles.css icon="css" expandable
+    .app-menu[collapse] [slot="logo"] {
+      padding-inline: var(--bq-spacing-xs);
+    }
+
+    .app-menu[collapse] [slot="logo"] h1 {
+      display: none;
+    }
+
+    .app-menu[collapse] [slot="footer"] bq-icon[name="arrow-line-left"] {
+      transform: rotate(180deg);
+    }
+
+    .app-menu .app-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-s);
+      padding: var(--bq-spacing-m);
+    }
+
+    .app-menu .app-logo svg {
+      block-size: 2.5rem;
+      inline-size: 2.5rem;
+    }
+
+    .app-menu .app-logo h1 {
+      font-size: var(--bq-font-size--xl);
+      white-space: nowrap;
+    }
+
+    .app-menu bq-icon[name="arrow-line-left"] {
+      transition: transform 0.3s ease;
+    }
+
+    .app-content {
+      padding: var(--bq-spacing-m);
+    }
+
+    .app-content h1 {
+      margin-block-end: var(--bq-spacing-l);
+    }
+
+    .app-surface {
+      block-size: 20rem;
+      inline-size: 100%;
+      border: 2px dashed var(--bq-color-primary);
+      background-color: var(--bq-ui--alt);
+    }
+    ```
+
+    ```html HTML icon="html5" expandable
+    <bq-side-menu>
+      <div class="app-logo" slot="logo">
+        <bq-icon name="square-logo" size="40"></bq-icon>
+        <h1>App Name</h1>
+      </div>
+      <bq-divider></bq-divider>
+      <bq-side-menu-item active>
+        <bq-icon name="diamonds-four" slot="prefix"></bq-icon>
+        Dashboard
+      </bq-side-menu-item>
+      <bq-side-menu-item>
+        <bq-icon name="package" slot="prefix"></bq-icon>
+        Products
+        <bq-badge slot="suffix">5</bq-badge>
+      </bq-side-menu-item>
+      <bq-side-menu-item>
+        <bq-icon name="truck" slot="prefix" ></bq-icon>
+        Deliver
+      </bq-side-menu-item>
+      <bq-side-menu-item>
+        <bq-icon name="files" slot="prefix" ></bq-icon>
+        Documents
+      </bq-side-menu-item>
+
+      <div slot="footer">
+        <bq-button appearance="text" data-action="collapse" only-icon>
+          <bq-icon name="arrow-line-left"></bq-icon>
+        </bq-button>
+      </div>
+    </bq-side-menu>
+
+    <main class="app-content">
+      <h1>Dashboard</h1>
+      <div class="app-surface">
+        <!-- Your content -->
+      </div>
+    </main>
+    ```
+
+    ```jsx React icon="react" expandable
+    import { BqBadge, BqButton, BqDivider, BqIcon, BqSideMenu, BqSideMenuItem } from "@beeq/react";
+    import "./styles.css";
+
+    <>
+      <BqSideMenu>
+        <div class="app-logo" slot="logo">
+          <BqIcon name="square-logo" size="40" />
+          <h1>App Name</h1>
+        </div>
+        <BqDivider />
+        <BqSideMenuItem active>
+          <BqIcon name="diamonds-four" slot="prefix" />
+          Dashboard
+        </BqSideMenuItem>
+        <BqSideMenuItem>
+          <BqIcon name="package" slot="prefix" />
+          Products
+          <BqBadge slot="suffix">5</BqBadge>
+        </BqSideMenuItem>
+        <BqSideMenuItem>
+          <BqIcon name="truck" slot="prefix" />
+          Deliver
+        </BqSideMenuItem>
+        <BqSideMenuItem>
+          <BqIcon name="files" slot="prefix" />
+          Documents
+        </BqSideMenuItem>
+
+        <div slot="footer">
+          <BqButton appearance="text" data-action="collapse" only-icon>
+            <BqIcon name="arrow-line-left"></BqIcon>
+          </BqButton>
+        </div>
+      </BqSideMenu>
+
+      <main className="app-content">
+        <h1>Dashboard</h1>
+        <div className="app-surface">
+          {/* Your content */}
+        </div>
+      </main>
+    </>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqBadge, BqButton, BqDivider, BqIcon, BqSideMenu, BqSideMenuItem } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqBadge, BqButton, BqDivider, BqIcon, BqSideMenu, BqSideMenuItem],
+      template: `
+        <bq-side-menu>
+          <div class="app-logo" slot="logo">
+            <bq-icon name="square-logo" size="40"></bq-icon>
+            <h1>App Name</h1>
+          </div>
+          <bq-divider></bq-divider>
+          <bq-side-menu-item active>
+            <bq-icon name="diamonds-four" slot="prefix"></bq-icon>
+            Dashboard
+          </bq-side-menu-item>
+          <bq-side-menu-item>
+            <bq-icon name="package" slot="prefix"></bq-icon>
+            Products
+            <bq-badge slot="suffix">5</bq-badge>
+          </bq-side-menu-item>
+          <bq-side-menu-item>
+            <bq-icon name="truck" slot="prefix" ></bq-icon>
+            Deliver
+          </bq-side-menu-item>
+          <bq-side-menu-item>
+            <bq-icon name="files" slot="prefix" ></bq-icon>
+            Documents
+          </bq-side-menu-item>
+        </bq-side-menu>
+
+        <main class="app-content">
+          <h1>Dashboard</h1>
+          <div class="app-surface">
+            <!-- Your content -->
+          </div>
+        </main>
+      `,
+      styles: `
+        .app-menu[collapse] [slot="logo"] {
+          padding-inline: var(--bq-spacing-xs);
+        }
+
+        .app-menu[collapse] [slot="logo"] h1 {
+          display: none;
+        }
+
+        .app-menu[collapse] [slot="footer"] bq-icon[name="arrow-line-left"] {
+          transform: rotate(180deg);
+        }
+
+        .app-menu .app-logo {
+          display: flex;
+          align-items: center;
+          gap: var(--bq-spacing-s);
+          padding: var(--bq-spacing-m);
+        }
+
+        .app-menu .app-logo svg {
+          block-size: 2.5rem;
+          inline-size: 2.5rem;
+        }
+
+        .app-menu .app-logo h1 {
+          font-size: var(--bq-font-size--xl);
+          white-space: nowrap;
+        }
+
+        .app-menu bq-icon[name="arrow-line-left"] {
+          transition: transform 0.3s ease;
+        }
+
+        .app-content {
+          padding: var(--bq-spacing-m);
+        }
+
+        .app-content h1 {
+          margin-block-end: var(--bq-spacing-l);
+        }
+
+        .app-surface {
+          block-size: 20rem;
+          inline-size: 100%;
+          border: 2px dashed var(--bq-color-primary);
+          background-color: var(--bq-ui--alt);
+        }
+      `
+    })
+    export class BrandSideMenuComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqBadge, BqButton, BqDivider, BqIcon, BqSideMenu, BqSideMenuItem } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqSideMenu>
+        <div class="app-logo" slot="logo">
+          <BqIcon name="square-logo" size="40" />
+          <h1>App Name</h1>
+        </div>
+        <BqDivider />
+        <BqSideMenuItem active>
+          <BqIcon name="diamonds-four" slot="prefix" />
+          Dashboard
+        </BqSideMenuItem>
+        <BqSideMenuItem>
+          <BqIcon name="package" slot="prefix" />
+          Products
+          <BqBadge slot="suffix">5</BqBadge>
+        </BqSideMenuItem>
+        <BqSideMenuItem>
+          <BqIcon name="truck" slot="prefix" />
+          Deliver
+        </BqSideMenuItem>
+        <BqSideMenuItem>
+          <BqIcon name="files" slot="prefix" />
+          Documents
+        </BqSideMenuItem>
+
+        <div slot="footer">
+          <BqButton appearance="text" data-action="collapse" only-icon>
+            <BqIcon name="arrow-line-left"></BqIcon>
+          </BqButton>
+        </div>
+      </BqSideMenu>
+
+      <main class="app-content">
+        <h1>Dashboard</h1>
+        <div class="app-surface">
+          <!-- Your content -->
+        </div>
+      </main>
+    </template>
+
+    <style>
+      .app-menu[collapse] [slot="logo"] {
+        padding-inline: var(--bq-spacing-xs);
+      }
+
+      .app-menu[collapse] [slot="logo"] h1 {
+        display: none;
+      }
+
+      .app-menu[collapse] [slot="footer"] bq-icon[name="arrow-line-left"] {
+        transform: rotate(180deg);
+      }
+
+      .app-menu .app-logo {
+        display: flex;
+        align-items: center;
+        gap: var(--bq-spacing-s);
+        padding: var(--bq-spacing-m);
+      }
+
+      .app-menu .app-logo svg {
+        block-size: 2.5rem;
+        inline-size: 2.5rem;
+      }
+
+      .app-menu .app-logo h1 {
+        font-size: var(--bq-font-size--xl);
+        white-space: nowrap;
+      }
+
+      .app-menu bq-icon[name="arrow-line-left"] {
+        transition: transform 0.3s ease;
+      }
+
+      .app-content {
+        padding: var(--bq-spacing-m);
+      }
+
+      .app-content h1 {
+        margin-block-end: var(--bq-spacing-l);
+      }
+
+      .app-surface {
+        block-size: 20rem;
+        inline-size: 100%;
+        border: 2px dashed var(--bq-color-primary);
+        background-color: var(--bq-ui--alt);
+      }
+    </style>
     ```
   </CodeGroup>
 </CodeLivePreview>
@@ -893,13 +2118,20 @@ The side menu renders its root surface as an `<aside>` and places menu items ins
 
 ### Events
 
-| Component | Event | Description | Type |
-|---|---|---|---|
-| `bq-side-menu` | `bqCollapse` | Fires when the side menu changes its width from expanded to collapsed and vice versa | `CustomEvent<{ collapse: boolean; }>` |
-| `bq-side-menu` | `bqSelect` | Fires when the active or selected menu item changes | `CustomEvent<HTMLBqSideMenuItemElement>` |
-| `bq-side-menu-item` | `bqBlur` | Fires when the menu item loses focus | `CustomEvent<HTMLBqSideMenuItemElement>` |
-| `bq-side-menu-item` | `bqClick` | Fires when the menu item is clicked | `CustomEvent<HTMLBqSideMenuItemElement>` |
-| `bq-side-menu-item` | `bqFocus` | Fires when the menu item receives focus | `CustomEvent<HTMLBqSideMenuItemElement>` |
+#### `bq-side-menu`
+
+| Event | Description | Type |
+|---|---|---|
+| `bqCollapse` | Fires when the side menu changes its width from expanded to collapsed and vice versa | `CustomEvent<{ collapse: boolean; }>` |
+| `bqSelect` | Fires when the active or selected menu item changes | `CustomEvent<HTMLBqSideMenuItemElement>` |
+
+#### `bq-side-menu-item`
+
+| Event | Description | Type |
+|---|---|---|
+| `bqBlur` | Fires when the menu item loses focus | `CustomEvent<HTMLBqSideMenuItemElement>` |
+| `bqClick` | Fires when the menu item is clicked | `CustomEvent<HTMLBqSideMenuItemElement>` |
+| `bqFocus` | Fires when the menu item receives focus | `CustomEvent<HTMLBqSideMenuItemElement>` |
 
 <Note>
   - In React, prefix events with `on`: `onBqSelect`, `onBqCollapse`, `onBqClick`.
@@ -915,25 +2147,28 @@ The side menu renders its root surface as an `<aside>` and places menu items ins
 
 ### CSS custom properties
 
-<Expandable title="CSS variables" defaultOpen={true}>
-  | Variable | Description | Default |
-  |---|---|---|
-  | `--bq-side-menu--bg-color` | Side menu background color | `var(--bq-background--primary)` |
-  | `--bq-side-menu--brand-color` | Side menu logo color | `var(--bq-background--brand)` |
-  | `--bq-side-menu--border-color` | Side menu border color | `var(--bq-stroke--primary)` |
-  | `--bq-side-menu--footer-box-shadow` | Side menu footer box shadow | `0 -10px 12px -12px var(--bq-background--tertiary)` |
-  | `--bq-side-menu-item--bg-default` | Side menu item default background color | `transparent` |
-  | `--bq-side-menu-item--bg-active` | Side menu item active background color | `var(--bq-ui--brand-alt)` |
-  | `--bq-side-menu-item--text-default` | Side menu item default text color | `var(--bq-text--primary)` |
-  | `--bq-side-menu-item--text-active` | Side menu item active text color | `var(--bq-text--brand)` |
-  | `--bq-side-menu-item--paddingX` | Side menu item horizontal padding | `var(--bq-spacing-l)` |
-  | `--bq-side-menu-item--paddingY` | Side menu item vertical padding | `var(--bq-spacing-m)` |
-  | `--bq-side-menu--width` | Side menu width, added to the global `:root` scope | `16rem` |
-  | `--bq-side-menu--width-collapse` | Side menu width when collapsed, added to the global `:root` scope | `4.5rem` |
-</Expandable>
+#### `bq-side-menu`
+
+| Variable | Description | Default |
+|---|---|---|
+| `--bq-side-menu--bg-color` | Side menu background color | `var(--bq-background--primary)` |
+| `--bq-side-menu--brand-color` | Side menu logo color | `var(--bq-background--brand)` |
+| `--bq-side-menu--border-color` | Side menu border color | `var(--bq-stroke--primary)` |
+| `--bq-side-menu--footer-box-shadow` | Side menu footer box shadow | `0 -10px 12px -12px var(--bq-background--tertiary)` |
+
+#### `bq-side-menu-item`
+
+| Variable | Description | Default |
+|---|---|---|
+| `--bq-side-menu-item--bg-default` | Side menu item default background color | `transparent` |
+| `--bq-side-menu-item--bg-active` | Side menu item active background color | `var(--bq-ui--brand-alt)` |
+| `--bq-side-menu-item--text-default` | Side menu item default text color | `var(--bq-text--primary)` |
+| `--bq-side-menu-item--text-active` | Side menu item active text color | `var(--bq-text--brand)` |
+| `--bq-side-menu-item--paddingX` | Side menu item horizontal padding | `var(--bq-spacing-l)` |
+| `--bq-side-menu-item--paddingY` | Side menu item vertical padding | `var(--bq-spacing-m)` |
 
 <Tip>
-  Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).
+  Learn more about [styling with shadow parts](/guides/styles) and [CSS custom properties](/theming/component-css-variables).
 </Tip>
 
 ## Resources
