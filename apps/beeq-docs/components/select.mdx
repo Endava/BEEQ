@@ -641,37 +641,35 @@ The `displayValue` property (`display-value` attribute) on `bq-option` overrides
         </bq-select>
       `,
       styles: [`
+        .payment-option {
+          display: flex;
+          flex-direction: column;
+          gap: var(--bq-spacing-xs2);
+        }
 
-          .payment-option {
-            display: flex;
-            flex-direction: column;
-            gap: var(--bq-spacing-xs2);
-          }
+        .payment-option__header {
+          display: flex;
+          align-items: center;
+          gap: var(--bq-spacing-xs);
+        }
 
-          .payment-option__header {
-            display: flex;
-            align-items: center;
-            gap: var(--bq-spacing-xs);
-          }
+        .payment-option__name {
+          font-weight: 600;
+        }
 
-          .payment-option__name {
-            font-weight: 600;
-          }
+        .payment-option__meta,
+        .payment-option__owner {
+          padding-inline-start: 28px;
+          color: var(--bq-text--secondary);
+        }
 
-          .payment-option__meta,
-          .payment-option__owner {
-            padding-inline-start: 28px;
-            color: var(--bq-text--secondary);
-          }
+        .payment-option__meta {
+          font-size: var(--bq-font-size--s);
+        }
 
-          .payment-option__meta {
-            font-size: var(--bq-font-size--s);
-          }
-
-          .payment-option__owner {
-            font-size: var(--bq-font-size--xs);
-          }
-        
+        .payment-option__owner {
+          font-size: var(--bq-font-size--xs);
+        }
       `],
     })
     export class AppComponent {}
@@ -721,35 +719,35 @@ The `displayValue` property (`display-value` attribute) on `bq-option` overrides
     </template>
 
     <style>
-    .payment-option {
-      display: flex;
-      flex-direction: column;
-      gap: var(--bq-spacing-xs2);
-    }
+      .payment-option {
+        display: flex;
+        flex-direction: column;
+        gap: var(--bq-spacing-xs2);
+      }
 
-    .payment-option__header {
-      display: flex;
-      align-items: center;
-      gap: var(--bq-spacing-xs);
-    }
+      .payment-option__header {
+        display: flex;
+        align-items: center;
+        gap: var(--bq-spacing-xs);
+      }
 
-    .payment-option__name {
-      font-weight: 600;
-    }
+      .payment-option__name {
+        font-weight: 600;
+      }
 
-    .payment-option__meta,
-    .payment-option__owner {
-      padding-inline-start: 28px;
-      color: var(--bq-text--secondary);
-    }
+      .payment-option__meta,
+      .payment-option__owner {
+        padding-inline-start: 28px;
+        color: var(--bq-text--secondary);
+      }
 
-    .payment-option__meta {
-      font-size: var(--bq-font-size--s);
-    }
+      .payment-option__meta {
+        font-size: var(--bq-font-size--s);
+      }
 
-    .payment-option__owner {
-      font-size: var(--bq-font-size--xs);
-    }
+      .payment-option__owner {
+        font-size: var(--bq-font-size--xs);
+      }
     </style>
     ```
   </CodeGroup>

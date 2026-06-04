@@ -49,7 +49,7 @@ Style them using the `::part()` pseudo-element from your own stylesheet:
   </bq-button>
 `}>
   <CodeGroup>
-    ```css styles.css icon="css3"
+    ```css styles.css icon="css"
     .custom-button::part(label) {
       font-size: var(--bq-font-size--xl);
       font-weight: var(--bq-font-weight--semibold);
@@ -118,17 +118,17 @@ Style them using the `::part()` pseudo-element from your own stylesheet:
     </template>
 
     <style>
-    .custom-button::part(label) {
-      font-size: var(--bq-font-size--xl);
-      font-weight: var(--bq-font-weight--semibold);
-    }
+      .custom-button::part(label) {
+        font-size: var(--bq-font-size--xl);
+        font-weight: var(--bq-font-weight--semibold);
+      }
 
-    .custom-button::part(button) {
-      background-color: var(--bq-magenta-600);
-      border-radius: var(--bq-radius--full);
-      padding-block: var(--bq-spacing-xl);
-      padding-inline: var(--bq-spacing-xxl);
-    }
+      .custom-button::part(button) {
+        background-color: var(--bq-magenta-600);
+        border-radius: var(--bq-radius--full);
+        padding-block: var(--bq-spacing-xl);
+        padding-inline: var(--bq-spacing-xxl);
+      }
     </style>
     ```
   </CodeGroup>
@@ -165,7 +165,7 @@ BEEQ relies on CSS custom properties to maintain a consistent visual system acro
   </bq-button>
 `}>
   <CodeGroup>
-    ```css styles.css icon="css3"
+    ```css styles.css icon="css"
     :root {
       --bq-brand: var(--bq-orange-600);
     }
@@ -218,9 +218,9 @@ BEEQ relies on CSS custom properties to maintain a consistent visual system acro
     </template>
 
     <style>
-    :root {
-      --bq-brand: var(--bq-orange-600);
-    }
+      :root {
+        --bq-brand: var(--bq-orange-600);
+      }
     </style>
     ```
   </CodeGroup>
@@ -248,7 +248,7 @@ In the example below, the second button overrides one brand token locally while 
   </bq-button>
 `}>
   <CodeGroup>
-    ```css styles.css icon="css3"
+    ```css styles.css icon="css"
     .primary-magenta {
       --bq-ui--brand: var(--bq-magenta-600);
     }
@@ -319,9 +319,9 @@ In the example below, the second button overrides one brand token locally while 
     </template>
 
     <style>
-    .primary-magenta {
-      --bq-ui--brand: var(--bq-magenta-600);
-    }
+      .primary-magenta {
+        --bq-ui--brand: var(--bq-magenta-600);
+      }
     </style>
     ```
   </CodeGroup>
@@ -371,7 +371,7 @@ Combine component CSS variables and `::part()` selectors when token overrides al
   </bq-button>
 `}>
   <CodeGroup>
-    ```css styles.css icon="css3"
+    ```css styles.css icon="css"
     .larger-button {
       --bq-button--small-height: 42px;
       --bq-button--small-paddingY: 10px;
@@ -490,27 +490,27 @@ Combine component CSS variables and `::part()` selectors when token overrides al
     </template>
 
     <style>
-    .larger-button {
-      --bq-button--small-height: 42px;
-      --bq-button--small-paddingY: 10px;
-      --bq-button--small-paddingX: var(--bq-spacing-l);
-      --bq-button--medium-height: 53px;
-      --bq-button--medium-paddingY: 14px;
-      --bq-button--medium-paddingX: var(--bq-spacing-xl);
-      --bq-button--large-height: 60px;
-      --bq-button--large-paddingY: 18px;
-      --bq-button--large-paddingX: var(--bq-spacing-xxl);
-      --bq-ui--brand: #192b37;
-      --bq-focus: #192b37;
-    }
+      .larger-button {
+        --bq-button--small-height: 42px;
+        --bq-button--small-paddingY: 10px;
+        --bq-button--small-paddingX: var(--bq-spacing-l);
+        --bq-button--medium-height: 53px;
+        --bq-button--medium-paddingY: 14px;
+        --bq-button--medium-paddingX: var(--bq-spacing-xl);
+        --bq-button--large-height: 60px;
+        --bq-button--large-paddingY: 18px;
+        --bq-button--large-paddingX: var(--bq-spacing-xxl);
+        --bq-ui--brand: #192b37;
+        --bq-focus: #192b37;
+      }
 
-    .larger-button::part(button) {
-      border-radius: var(--bq-radius--full);
-    }
+      .larger-button::part(button) {
+        border-radius: var(--bq-radius--full);
+      }
 
-    .larger-button::part(label) {
-      font-size: var(--bq-font-size--l);
-    }
+      .larger-button::part(label) {
+        font-size: var(--bq-font-size--l);
+      }
     </style>
     ```
   </CodeGroup>

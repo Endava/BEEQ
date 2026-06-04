@@ -1219,15 +1219,15 @@ Developers can [rely on the exposed shadow DOM parts](https://www.beeq.design/3d
     </template>
 
     <style>
-    .my-accordion {
-      &::part(header) {
-        flex-direction: row-reverse;
+      .my-accordion {
+        &::part(header) {
+          flex-direction: row-reverse;
+        }
+        div[slot="header"] {
+          display: flex;
+          justify-content: space-between;
+        }
       }
-      div[slot="header"] {
-        display: flex;
-        justify-content: space-between;
-      }
-    }
     </style>
     ```
   </CodeGroup>

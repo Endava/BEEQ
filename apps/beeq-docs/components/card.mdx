@@ -301,26 +301,25 @@ A card with icon, title, description, and a call-to-action — use when users ne
 
 
     <style>
-    .card--default {
-      max-width: 24rem;
-      width: 100%;
+      .card--default {
+        max-width: 24rem;
+        width: 100%;
 
-      &::part(wrapper) {
-        display: flex;
-        flex-direction: column;
-        gap: var(--bq-spacing-m);
+        &::part(wrapper) {
+          display: flex;
+          flex-direction: column;
+          gap: var(--bq-spacing-m);
+        }
+
+        h6 {
+          font-size: var(--bq-font-size--m);
+          font-weight: var(--bq-font-weight--bold);
+        }
+
+        p {
+          margin-block-start: var(--bq-spacing-m);
+        }
       }
-
-      h6 {
-        font-size: var(--bq-font-size--m);
-        font-weight: var(--bq-font-weight--bold);
-      }
-
-      p {
-        margin-block-start: var(--bq-spacing-m);
-      }
-    }
-
     </style>
     ```
   </CodeGroup>
@@ -556,33 +555,32 @@ Use a card list when you have a collection of items that share the same structur
 
 
     <style>
-    .card--highlights {
-      width: 100%;
-      max-width: 24rem;
+      .card--highlights {
+        width: 100%;
+        max-width: 24rem;
 
-      &::part(wrapper) {
-        display: flex;
-        flex-direction: column;
-        gap: var(--bq-spacing-m);
-      }
-
-      & h6 {
-        font-size: var(--bq-font-size--l);
-        font-weight: var(--bq-font-weight--bold);
-      }
-
-      & section {
-        display: flex;
-        flex-direction: column;
-        gap: var(--bq-spacing-s);
-
-        & .item {
+        &::part(wrapper) {
           display: flex;
+          flex-direction: column;
+          gap: var(--bq-spacing-m);
+        }
+
+        & h6 {
+          font-size: var(--bq-font-size--l);
+          font-weight: var(--bq-font-weight--bold);
+        }
+
+        & section {
+          display: flex;
+          flex-direction: column;
           gap: var(--bq-spacing-s);
+
+          & .item {
+            display: flex;
+            gap: var(--bq-spacing-s);
+          }
         }
       }
-    }
-
     </style>
     ```
 </CodeGroup>
@@ -832,46 +830,45 @@ A KPI card combining an icon, headline value, and trend indicator — ideal for 
 
 
     <style>
-    .card--overview {
-      width: 100%;
-      max-width: 24rem;
+      .card--overview {
+        width: 100%;
+        max-width: 24rem;
 
-      &::part(wrapper) {
-        display: flex;
-        gap: var(--bq-spacing-m);
+        &::part(wrapper) {
+          display: flex;
+          gap: var(--bq-spacing-m);
+        }
+
+        & h4 {
+          font-size: var(--bq-font-size--xxl);
+        }
+
+        & .card--body {
+          display: flex;
+          flex-direction: column;
+          gap: var(--bq-spacing-xs2);
+        }
+
+        & .body__top {
+          display: flex;
+          align-items: center;
+          gap: var(--bq-spacing-xs2);
+        }
+
+        & .body__bottom {
+          display: flex;
+          align-items: flex-end;
+          gap: var(--bq-spacing-xs);
+        }
+
+        & .text-secondary {
+          color: var(--bq-text--secondary);
+        }
+
+        & .text-success {
+          color: var(--bq-text--success);
+        }
       }
-
-      & h4 {
-        font-size: var(--bq-font-size--xxl);
-      }
-
-      & .card--body {
-        display: flex;
-        flex-direction: column;
-        gap: var(--bq-spacing-xs2);
-      }
-
-      & .body__top {
-        display: flex;
-        align-items: center;
-        gap: var(--bq-spacing-xs2);
-      }
-
-      & .body__bottom {
-        display: flex;
-        align-items: flex-end;
-        gap: var(--bq-spacing-xs);
-      }
-
-      & .text-secondary {
-        color: var(--bq-text--secondary);
-      }
-
-      & .text-success {
-        color: var(--bq-text--success);
-      }
-    }
-
     </style>
     ```
   </CodeGroup>
@@ -1126,51 +1123,50 @@ A compact horizontal card using `type="minimal"` that removes built-in padding, 
 
 
     <style>
-    .card--mini {
-      width: 100%;
-      max-width: 24rem;
+      .card--mini {
+        width: 100%;
+        max-width: 24rem;
 
-      &::part(wrapper) {
-        display: flex;
-        overflow: clip;
+        &::part(wrapper) {
+          display: flex;
+          overflow: clip;
+        }
+
+        & .content--start {
+          display: flex;
+          align-items: center;
+          padding: var(--bq-spacing-l);
+          background-color: var(--bq-background--brand);
+        }
+
+        & .content--end {
+          display: flex;
+          flex: 1;
+          align-items: center;
+          justify-content: space-between;
+          padding: var(--bq-card--paddingMinimal);
+        }
+
+        & .body {
+          display: flex;
+          flex-direction: column;
+          padding-left: 0.5rem;
+        }
+
+        & h6 {
+          font-size: var(--bq-font-size--m);
+          font-weight: var(--bq-font-weight--medium);
+        }
+
+        & p {
+          font-size: var(--bq-font-size--xs);
+          color: var(--bq-text--secondary);
+        }
+
+        & .decorator {
+          padding: var(--bq-card--paddingMinimal);
+        }
       }
-
-      & .content--start {
-        display: flex;
-        align-items: center;
-        padding: var(--bq-spacing-l);
-        background-color: var(--bq-background--brand);
-      }
-
-      & .content--end {
-        display: flex;
-        flex: 1;
-        align-items: center;
-        justify-content: space-between;
-        padding: var(--bq-card--paddingMinimal);
-      }
-
-      & .body {
-        display: flex;
-        flex-direction: column;
-        padding-left: 0.5rem;
-      }
-
-      & h6 {
-        font-size: var(--bq-font-size--m);
-        font-weight: var(--bq-font-weight--medium);
-      }
-
-      & p {
-        font-size: var(--bq-font-size--xs);
-        color: var(--bq-text--secondary);
-      }
-
-      & .decorator {
-        padding: var(--bq-card--paddingMinimal);
-      }
-    }
-
     </style>
     ```
   </CodeGroup>
@@ -1774,37 +1770,36 @@ When a card represents a link destination (for example, an article or product), 
 
 
     <style>
-    .card-link {
-      border-radius: var(--bq-radius--m);
-      text-decoration: none;
-      cursor: pointer;
+      .card-link {
+        border-radius: var(--bq-radius--m);
+        text-decoration: none;
+        cursor: pointer;
 
-      &:hover {
-        & .card--mini::part(wrapper) {
-          transform: translateY(-0.125rem);
-          box-shadow: var(--bq-box-shadow--m);
-        }
-      }
-
-      &:focus-visible {
-        outline-offset: 2px;
-        outline: 2px solid var(--bq-focus);
-      }
-
-      .card--mini {
-        width: 100%;
-        max-width: 24rem;
-
-        &::part(wrapper) {
-          display: flex;
-          overflow: clip;
-          transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+        &:hover {
+          & .card--mini::part(wrapper) {
+            transform: translateY(-0.125rem);
+            box-shadow: var(--bq-box-shadow--m);
+          }
         }
 
-        /** Same as the [Mini card example](#mini-card) */
-      }
-    }
+        &:focus-visible {
+          outline-offset: 2px;
+          outline: 2px solid var(--bq-focus);
+        }
 
+        .card--mini {
+          width: 100%;
+          max-width: 24rem;
+
+          &::part(wrapper) {
+            display: flex;
+            overflow: clip;
+            transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+          }
+
+          /** Same as the [Mini card example](#mini-card) */
+        }
+      }
     </style>
     ```
   </CodeGroup>

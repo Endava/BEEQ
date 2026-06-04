@@ -524,29 +524,28 @@ Use a grouped avatar pattern when you need to represent multiple participants in
 
 
     <style>
-    .avatar--group {
-      display: flex;
-      align-items: center;
+      .avatar--group {
+        display: flex;
+        align-items: center;
 
-      & bq-avatar {
-        cursor: pointer;
-        margin-inline-start: calc(var(--bq-spacing-xs) * -1);
+        & bq-avatar {
+          cursor: pointer;
+          margin-inline-start: calc(var(--bq-spacing-xs) * -1);
 
-        &::part(base) {
-          transition: scale 0.25s ease-in-out;
-        }
+          &::part(base) {
+            transition: scale 0.25s ease-in-out;
+          }
 
-        &::part(base):hover {
-          scale: 1.2;
-          z-index: 1;
-        }
+          &::part(base):hover {
+            scale: 1.2;
+            z-index: 1;
+          }
 
-        &:first-child {
-          margin-inline-start: 0;
+          &:first-child {
+            margin-inline-start: 0;
+          }
         }
       }
-    }
-
     </style>
     ```
   </CodeGroup>

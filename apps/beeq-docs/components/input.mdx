@@ -1050,27 +1050,26 @@ Use this style when you want to include an optional marker to provide additional
 
 
     <style>
-    .label-row {
-      display: flex;
-      flex: 1 1 0%;
-
-      & > label {
+      .label-row {
         display: flex;
-        flex-grow: 1;
+        flex: 1 1 0%;
+
+        & > label {
+          display: flex;
+          flex-grow: 1;
+          align-items: center;
+        }
+
+        & > span {
+          color: var(--bq-text--secondary);
+        }
+      }
+
+      bq-input span[slot="helper-text"] {
+        display: flex;
         align-items: center;
+        gap: var(--bq-spacing-xs);
       }
-
-      & > span {
-        color: var(--bq-text--secondary);
-      }
-    }
-
-    bq-input span[slot="helper-text"] {
-      display: flex;
-      align-items: center;
-      gap: var(--bq-spacing-xs);
-    }
-
     </style>
     ```
   </CodeGroup>
@@ -1293,35 +1292,34 @@ Use this style when you want to include an informational tooltip alongside the i
 
 
     <style>
-    bq-tooltip {
-      margin-inline-start: var(--bq-spacing-xs);
+      bq-tooltip {
+        margin-inline-start: var(--bq-spacing-xs);
 
-      &::part(trigger) {
-        display: flex;
+        &::part(trigger) {
+          display: flex;
+        }
       }
-    }
 
-    .label-row {
-      display: flex;
-      flex: 1 1 0%;
-
-      & > label {
+      .label-row {
         display: flex;
-        flex-grow: 1;
+        flex: 1 1 0%;
+
+        & > label {
+          display: flex;
+          flex-grow: 1;
+          align-items: center;
+        }
+
+        & > span {
+          color: var(--bq-text--secondary);
+        }
+      }
+
+      bq-input span[slot="helper-text"] {
+        display: flex;
         align-items: center;
+        gap: var(--bq-spacing-xs);
       }
-
-      & > span {
-        color: var(--bq-text--secondary);
-      }
-    }
-
-    bq-input span[slot="helper-text"] {
-      display: flex;
-      align-items: center;
-      gap: var(--bq-spacing-xs);
-    }
-
     </style>
     ```
   </CodeGroup>

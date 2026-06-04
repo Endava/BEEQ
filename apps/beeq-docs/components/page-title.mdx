@@ -586,20 +586,19 @@ Use the suffix slot when the title area needs page-level actions such as edit or
 
 
     <style>
-    bq-page-title {
-      inline-size: 100% !important;
+      bq-page-title {
+        inline-size: 100% !important;
 
-      & [slot="suffix"] {
-        display: flex;
-        flex-grow: 1;
-        justify-content: end;
+        & [slot="suffix"] {
+          display: flex;
+          flex-grow: 1;
+          justify-content: end;
+        }
+
+        & [slot="suffix"] bq-button {
+          padding: var(--bq-spacing-xs2);
+        }
       }
-
-      & [slot="suffix"] bq-button {
-        padding: var(--bq-spacing-xs2);
-      }
-    }
-
     </style>
     ```
   </CodeGroup>
