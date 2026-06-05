@@ -1,0 +1,686 @@
+---
+title: Grid
+description: BEEQ grid guidance helps teams structure responsive layouts with consistent columns, gutters, margins, and spacing.
+---
+
+import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
+import { CardTile } from "/snippets/CardTile.jsx";
+
+<Frame className="px-4 py-4" caption="BEEQ grid system overview">
+  <img
+    className="block dark:hidden"
+    src="/foundations/images/grid/grid-overview-light.svg"
+    alt="BEEQ grid system overview - light mode"
+  />
+  <img
+    className="hidden dark:block"
+    src="/foundations/images/grid/grid-overview-dark.svg"
+    alt="BEEQ grid system overview - dark mode"
+  />
+</Frame>
+
+The grid helps you place content with consistent alignment, spacing, and hierarchy across screen sizes. It gives designers and developers a shared structure for page regions, cards, forms, and dense product layouts.
+
+Use the grid to guide layout decisions, not to force every screen into the same shape. Content should determine where the layout changes, which container strategy fits, and how much space sits between regions.
+
+<Note>
+  BEEQ does not ship grid utilities, grid classes, or a grid component. The grid is documented as layout guidance. Use CSS Grid, your application's layout framework, or any tool that fits your stack, then apply BEEQ spacing tokens for gutters and margins.
+</Note>
+
+---
+
+## Grid anatomy
+
+BEEQ grid layouts are built from columns, gutters, and margins. These three parts control where content sits, how regions separate, and how much breathing room the layout keeps at the viewport edge.
+
+<Frame className="px-4 py-4" caption="Grid anatomy: columns, gutters, and margins">
+  <img
+    className="block dark:hidden"
+    src="/foundations/images/grid/grid-anatomy-light.svg"
+    alt="Grid anatomy - light mode"
+  />
+  <img
+    className="hidden dark:block"
+    src="/foundations/images/grid/grid-anatomy-dark.svg"
+    alt="Grid anatomy - dark mode"
+  />
+</Frame>
+
+### Columns
+
+Columns define the vertical tracks that content can span. A 12-column structure is flexible because it divides cleanly into halves, thirds, fourths, and sixths.
+
+### Gutters
+
+Gutters are the space between columns. They separate layout regions and should use BEEQ spacing values so the page rhythm matches the components inside it.
+
+### Margins
+
+Margins are the space outside the grid columns. They keep content away from viewport edges and can be fixed, fluid, or responsive depending on the container strategy.
+
+---
+
+## Grid types
+
+Different grid types solve different layout problems. Most product screens use a column grid, while editorial, data-heavy, or text-heavy screens may need supporting structure from baseline, manuscript, or modular grids.
+
+<CardGroup cols={2}>
+  <CardTile
+    title="Baseline grid"
+    imageLightSrc="/foundations/images/grid/grid-type-baseline-light.svg"
+    imageDarkSrc="/foundations/images/grid/grid-type-baseline-dark.svg"
+  >
+    Baseline grids use horizontal rows to align text rhythm and vertical spacing. They help long, multi-column content feel ordered.
+  </CardTile>
+  <CardTile
+    title="Column grid"
+    imageLightSrc="/foundations/images/grid/grid-type-column-light.svg"
+    imageDarkSrc="/foundations/images/grid/grid-type-column-dark.svg"
+  >
+    Column grids split the page into vertical tracks. They are the default choice for responsive application layouts because regions can span different column counts at different widths.
+  </CardTile>
+  <CardTile
+    title="Manuscript grid"
+    imageLightSrc="/foundations/images/grid/grid-type-manuscript-light.svg"
+    imageDarkSrc="/foundations/images/grid/grid-type-manuscript-dark.svg"
+  >
+    Manuscript grids use one primary content column. Use them for long-form text, documentation, or reading surfaces where line length matters more than dashboard density.
+  </CardTile>
+  <CardTile
+    title="Modular grid"
+    imageLightSrc="/foundations/images/grid/grid-type-modular-light.svg"
+    imageDarkSrc="/foundations/images/grid/grid-type-modular-dark.svg"
+  >
+    Modular grids combine columns and rows into cells. They support dashboards, galleries, and structured content where items need consistent width and height relationships.
+  </CardTile>
+</CardGroup>
+
+---
+
+## 12-column layout
+
+Use a 12-column grid when a screen needs flexible region widths. It lets you create common spans such as full width, half width, thirds, fourths, and sidebars without inventing a new structure for each screen.
+
+<CodeLivePreview mode="iframe" height="18rem" removePadding code={`
+  <style>
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: var(--bq-spacing-m);
+      color: var(--bq-text--primary);
+      background: var(--bq-background--primary);
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: var(--bq-spacing-m);
+      max-inline-size: 64rem;
+      margin-inline: auto;
+    }
+
+    .grid-panel {
+      display: grid;
+      gap: var(--bq-spacing-xs);
+      align-content: start;
+      min-block-size: 5rem;
+      padding: var(--bq-spacing-s);
+      border: var(--bq-stroke-s) solid var(--bq-stroke--primary);
+      border-radius: var(--bq-radius--s);
+      background: var(--bq-background--secondary);
+    }
+
+    .grid-panel h3 {
+      font-size: var(--bq-font-size--l);
+      line-height: var(--bq-font-line-height--regular);
+    }
+
+    .grid-panel--wide {
+      grid-column: span 8;
+    }
+
+    .grid-panel--side {
+      grid-column: span 4;
+    }
+
+    .grid-panel--half {
+      grid-column: span 6;
+    }
+
+    .grid-panel p {
+      color: var(--bq-text--secondary);
+    }
+
+    @media (max-width: 36rem) {
+      .grid-panel,
+      .grid-panel--wide,
+      .grid-panel--side,
+      .grid-panel--half {
+        grid-column: 1 / -1;
+      }
+    }
+  </style>
+
+  <main class="dashboard-grid" aria-label="Responsive 12-column layout example">
+    <section class="grid-panel grid-panel--wide">
+      <h3>Overview</h3>
+      <p>Spans 8 of 12 columns on wider screens.</p>
+    </section>
+    <aside class="grid-panel grid-panel--side">
+      <h3>Summary</h3>
+      <p>Spans 4 columns beside the overview.</p>
+    </aside>
+    <section class="grid-panel grid-panel--half">
+      <h3>Activity</h3>
+      <p>Spans half the grid.</p>
+    </section>
+    <section class="grid-panel grid-panel--half">
+      <h3>Tasks</h3>
+      <p>Spans half the grid.</p>
+    </section>
+  </main>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <main class="dashboard-grid" aria-label="Responsive 12-column layout example">
+      <section class="grid-panel grid-panel--wide">
+        <h3>Overview</h3>
+        <p>Spans 8 of 12 columns on wider screens.</p>
+      </section>
+      <aside class="grid-panel grid-panel--side">
+        <h3>Summary</h3>
+        <p>Spans 4 columns beside the overview.</p>
+      </aside>
+      <section class="grid-panel grid-panel--half">
+        <h3>Activity</h3>
+        <p>Spans half the grid.</p>
+      </section>
+      <section class="grid-panel grid-panel--half">
+        <h3>Tasks</h3>
+        <p>Spans half the grid.</p>
+      </section>
+    </main>
+    ```
+
+    ```css CSS icon="css" expandable
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: var(--bq-spacing-m);
+      max-inline-size: 64rem;
+      margin-inline: auto;
+    }
+
+    .grid-panel {
+      display: grid;
+      gap: var(--bq-spacing-xs);
+      align-content: start;
+      min-block-size: 5rem;
+      padding: var(--bq-spacing-s);
+      border: var(--bq-stroke-s) solid var(--bq-stroke--primary);
+      border-radius: var(--bq-radius--s);
+      background: var(--bq-background--secondary);
+    }
+
+    .grid-panel--wide {
+      grid-column: span 8;
+    }
+
+    .grid-panel--side {
+      grid-column: span 4;
+    }
+
+    .grid-panel--half {
+      grid-column: span 6;
+    }
+
+    .grid-panel h3 {
+      font-size: var(--bq-font-size--l);
+      line-height: var(--bq-font-line-height--regular);
+    }
+
+    @media (max-width: 36rem) {
+      .grid-panel,
+      .grid-panel--wide,
+      .grid-panel--side,
+      .grid-panel--half {
+        grid-column: 1 / -1;
+      }
+    }
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+---
+
+## Breakpoints
+
+BEEQ breakpoint ranges are design guidance for deciding when a layout should change. They are not generated classes, custom `screens` values, or a container API.
+
+| Breakpoint | Viewport |
+| --- | --- |
+| Phones | `576-768px` |
+| Tablets | `768-992px` |
+| Desktop | `992-1200px` |
+| Large devices | `1200-1920px` |
+
+Use app-level media queries, container queries, or the layout tools already in your application to implement responsive behavior. Add a breakpoint when the content needs a different layout, not because a range exists in the table.
+
+<Frame className="px-4 py-4" caption="BEEQ breakpoints overview">
+  <img
+    className="block dark:hidden"
+    src="/foundations/images/grid/grid-breakpoints-light.svg"
+    alt="BEEQ breakpoints - light mode"
+  />
+  <img
+    className="hidden dark:block"
+    src="/foundations/images/grid/grid-breakpoints-dark.svg"
+    alt="BEEQ breakpoints - dark mode"
+  />
+</Frame>
+
+---
+
+## How grid works in code
+
+Use native CSS Grid for page structure and BEEQ spacing tokens for gutters, margins, and padding. CSS Grid is broadly supported and robust enough for most product layouts, so BEEQ keeps the grid guidance framework-agnostic instead of shipping layout-specific utilities.
+
+<CodeLivePreview mode="iframe" height="16rem" removePadding code={`
+  <style>
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      color: var(--bq-text--primary);
+      background: var(--bq-background--primary);
+    }
+
+    .content-container {
+      max-inline-size: 46rem;
+      margin-inline: auto;
+      padding-block: var(--bq-spacing-xl);
+      padding-inline: clamp(var(--bq-spacing-m), 4vw, var(--bq-spacing-xl));
+    }
+
+    .content-container h2 {
+      margin-block-end: var(--bq-spacing-m);
+    }
+
+    .content-container p {
+      color: var(--bq-text--secondary);
+    }
+  </style>
+
+  <article class="content-container">
+    <h2>Centered content container</h2>
+    <p>
+      Use max-inline-size to control reading width, margin-inline to center the region, and BEEQ spacing tokens for responsive edge spacing.
+    </p>
+  </article>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <article class="content-container">
+      <h2>Centered content container</h2>
+      <p>
+        Use max-inline-size to control reading width, margin-inline to center the region, and BEEQ spacing tokens for responsive edge spacing.
+      </p>
+    </article>
+    ```
+
+    ```css CSS icon="css" expandable
+    .content-container {
+      max-inline-size: 46rem;
+      margin-inline: auto;
+      padding-block: var(--bq-spacing-xl);
+      padding-inline: clamp(var(--bq-spacing-m), 4vw, var(--bq-spacing-xl));
+    }
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+Use gutters to separate layout regions. Do not place content inside the gutter itself.
+
+<CodeLivePreview mode="iframe" height="20rem" removePadding code={`
+  <style>
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: var(--bq-spacing-m);
+      color: var(--bq-text--primary);
+      background: var(--bq-background--primary);
+    }
+
+    .gutter-example {
+      display: grid;
+      gap: var(--bq-spacing-l);
+      max-inline-size: 48rem;
+      margin-inline: auto;
+    }
+
+    .gutter-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--bq-spacing-m);
+    }
+
+    .gutter-item {
+      padding: var(--bq-spacing-m);
+      border: var(--bq-stroke-s) solid var(--bq-stroke--primary);
+      border-radius: var(--bq-radius--s);
+      background: var(--bq-background--secondary);
+    }
+
+    .gutter-item h3 {
+      font-size: var(--bq-font-size--l);
+      line-height: var(--bq-font-line-height--regular);
+    }
+
+    .gutter-item p {
+      color: var(--bq-text--secondary);
+    }
+
+    @media (max-width: 40rem) {
+      .gutter-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+
+  <section class="gutter-example">
+    <div>
+      <h2>Gutters use the spacing scale</h2>
+      <p>Each card stays inside its column. The gap creates separation between regions.</p>
+    </div>
+    <div class="gutter-row">
+      <article class="gutter-item">
+        <h3>Column 1</h3>
+        <p>Content begins inside the column.</p>
+      </article>
+      <article class="gutter-item">
+        <h3>Column 2</h3>
+        <p>The gutter remains empty space.</p>
+      </article>
+      <article class="gutter-item">
+        <h3>Column 3</h3>
+        <p>Spacing uses BEEQ tokens.</p>
+      </article>
+    </div>
+  </section>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <section class="gutter-example">
+      <div>
+        <h2>Gutters use the spacing scale</h2>
+        <p>Each card stays inside its column. The gap creates separation between regions.</p>
+      </div>
+      <div class="gutter-row">
+        <article class="gutter-item">
+          <h3>Column 1</h3>
+          <p>Content begins inside the column.</p>
+        </article>
+        <article class="gutter-item">
+          <h3>Column 2</h3>
+          <p>The gutter remains empty space.</p>
+        </article>
+        <article class="gutter-item">
+          <h3>Column 3</h3>
+          <p>Spacing uses BEEQ tokens.</p>
+        </article>
+      </div>
+    </section>
+    ```
+
+    ```css CSS icon="css" expandable
+    .gutter-example {
+      display: grid;
+      gap: var(--bq-spacing-l);
+      max-inline-size: 48rem;
+      margin-inline: auto;
+    }
+
+    .gutter-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--bq-spacing-m);
+    }
+
+    .gutter-item {
+      padding: var(--bq-spacing-m);
+      border: var(--bq-stroke-s) solid var(--bq-stroke--primary);
+      border-radius: var(--bq-radius--s);
+      background: var(--bq-background--secondary);
+    }
+
+    .gutter-item h3 {
+      font-size: var(--bq-font-size--l);
+      line-height: var(--bq-font-line-height--regular);
+    }
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+---
+
+## Container strategies
+
+Containers control how wide a layout can become and how it responds to available space. Choose the strategy that protects the content, not the one that fills the most pixels.
+
+<CardGroup cols={2}>
+  <CardTile
+    title="Fluid"
+    imageLightSrc="/foundations/images/grid/grid-container-fluid-light.svg"
+    imageDarkSrc="/foundations/images/grid/grid-container-fluid-dark.svg"
+  >
+    Fluid containers stretch with the viewport. Use them for product screens, dashboards, and layouts where content can safely use more horizontal space.
+  </CardTile>
+  <CardTile
+    title="Fixed"
+    imageLightSrc="/foundations/images/grid/grid-container-fixed-light.svg"
+    imageDarkSrc="/foundations/images/grid/grid-container-fixed-dark.svg"
+  >
+    Fixed containers keep a specific width. Use them for focused workflows, reading surfaces, or regions that become harder to scan when they stretch.
+  </CardTile>
+</CardGroup>
+
+<Card title="Hybrid">
+  Hybrid containers are fluid up to a maximum width. Use them when the layout should adapt on smaller screens but stop growing when content reaches a comfortable width.
+</Card>
+---
+
+## Responsive and adaptive layouts
+
+Responsive and adaptive layouts both help interfaces work across screen sizes. The difference is how much the layout changes.
+
+### Responsive
+
+Responsive layouts use one content structure that reflows as space changes. This is the default approach for most BEEQ product screens because it keeps behavior predictable and avoids duplicate markup.
+
+<Frame caption="Responsive layout">
+  <img
+    className="block dark:hidden"
+    src="/foundations/images/grid/grid-layout-responsive-light.svg"
+    alt="Responsive layout - light mode"
+  />
+  <img
+    className="hidden dark:block"
+    src="/foundations/images/grid/grid-layout-responsive-dark.svg"
+    alt="Responsive layout - dark mode"
+  />
+</Frame>
+
+<CodeLivePreview mode="iframe" height="16rem" removePadding code={`
+  <style>
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: var(--bq-spacing-m);
+      color: var(--bq-text--primary);
+      background: var(--bq-background--primary);
+    }
+
+    .responsive-layout {
+      display: grid;
+      gap: var(--bq-spacing-m);
+      max-inline-size: 56rem;
+      margin-inline: auto;
+    }
+
+    .responsive-card {
+      display: grid;
+      gap: var(--bq-spacing-xs);
+      padding: var(--bq-spacing-m);
+      border: var(--bq-stroke-s) solid var(--bq-stroke--primary);
+      border-radius: var(--bq-radius--s);
+      background: var(--bq-background--secondary);
+    }
+
+    .responsive-card h3 {
+      font-size: var(--bq-font-size--l);
+      line-height: var(--bq-font-line-height--regular);
+    }
+
+    .responsive-card p {
+      color: var(--bq-text--secondary);
+    }
+
+    @media (min-width: 40rem) {
+      .responsive-layout {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+  </style>
+
+  <section class="responsive-layout" aria-label="Stacked to columns responsive layout">
+    <article class="responsive-card">
+      <h3>Profile</h3>
+      <p>Stacks first on narrow screens.</p>
+    </article>
+    <article class="responsive-card">
+      <h3>Security</h3>
+      <p>Moves into columns when space allows.</p>
+    </article>
+    <article class="responsive-card">
+      <h3>Billing</h3>
+      <p>Keeps the same source order in both layouts.</p>
+    </article>
+  </section>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <section class="responsive-layout" aria-label="Stacked to columns responsive layout">
+      <article class="responsive-card">
+        <h3>Profile</h3>
+        <p>Stacks first on narrow screens.</p>
+      </article>
+      <article class="responsive-card">
+        <h3>Security</h3>
+        <p>Moves into columns when space allows.</p>
+      </article>
+      <article class="responsive-card">
+        <h3>Billing</h3>
+        <p>Keeps the same source order in both layouts.</p>
+      </article>
+    </section>
+    ```
+
+    ```css CSS icon="css" expandable
+    .responsive-layout {
+      display: grid;
+      gap: var(--bq-spacing-m);
+      max-inline-size: 56rem;
+      margin-inline: auto;
+    }
+
+    .responsive-card {
+      display: grid;
+      gap: var(--bq-spacing-xs);
+      padding: var(--bq-spacing-m);
+      border: var(--bq-stroke-s) solid var(--bq-stroke--primary);
+      border-radius: var(--bq-radius--s);
+      background: var(--bq-background--secondary);
+    }
+
+    .responsive-card h3 {
+      font-size: var(--bq-font-size--l);
+      line-height: var(--bq-font-line-height--regular);
+    }
+
+    @media (min-width: 40rem) {
+      .responsive-layout {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Adaptive
+
+Adaptive layouts use different structures for different contexts. Use them when a screen needs a meaningfully different experience by device, input method, or available space.
+
+<Frame caption="Adaptive layout">
+  <img
+    className="block dark:hidden"
+    src="/foundations/images/grid/grid-layout-adaptive-light.svg"
+    alt="Adaptive layout - light mode"
+  />
+  <img
+    className="hidden dark:block"
+    src="/foundations/images/grid/grid-layout-adaptive-dark.svg"
+    alt="Adaptive layout - dark mode"
+  />
+</Frame>
+
+---
+
+## Usage guidelines
+
+<AccordionGroup>
+  <Accordion title="Keep content aligned to columns">
+    Align layout regions to column edges. This keeps scanning predictable and avoids uneven relationships between adjacent content.
+  </Accordion>
+  <Accordion title="Use gutters as separation">
+    Keep gutters empty. Place content inside columns, then use gutter spacing to separate neighboring regions.
+  </Accordion>
+  <Accordion title="Use BEEQ spacing tokens">
+    Use `--bq-spacing-*` values for gutters, margins, and container padding. If your application uses BEEQ's Tailwind preset, the same spacing scale is available through spacing utilities, but the grid structure remains yours to define.
+  </Accordion>
+  <Accordion title="Change layout when content needs it">
+    Add breakpoints when content becomes cramped, hard to compare, or difficult to read. Avoid creating a new layout for every viewport range.
+  </Accordion>
+  <Accordion title="Prefer fluid containers for product screens">
+    Product layouts often need to use available space for tables, forms, and dashboards. Add max widths when the content becomes harder to scan.
+  </Accordion>
+  <Accordion title="Use fixed widths for focused tasks">
+    Fixed or max-width containers work well for reading, setup flows, forms, and review screens where excessive line length slows users down.
+  </Accordion>
+  <Accordion title="Preserve source order when layouts reflow">
+    Keep the DOM order meaningful so keyboard, screen reader, and small-screen users encounter content in the same logical sequence.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Accessibility
+
+Grid accessibility depends on preserving meaning when the visual layout changes.
+
+- Keep source order logical. Do not use visual placement to make screen reader or keyboard users jump across unrelated content.
+- Support zoom and narrow viewports without horizontal scrolling for core page content.
+- Avoid using position alone to communicate priority, state, or relationships. Pair layout with headings, labels, and text.
+- Keep long text in comfortable containers. Wide grids should not force paragraphs into lines that are hard to read.
+- Test responsive changes with keyboard navigation so focus order still matches the user's reading path.
+
+---
+
+## Resources
+
+<CardGroup cols={2}>
+  <Card title="Global CSS variables" icon="code" href="/theming/global-css-variables">
+    Review the spacing and layout-related custom properties used by BEEQ themes.
+  </Card>
+  <Card title="Spacing token source" icon="github" href="https://github.com/Endava/BEEQ/blob/main/packages/beeq-tailwindcss/src/theme/default/root.ts#L91">
+    See the source that defines the BEEQ spacing values used for gutters, margins, and layout rhythm.
+  </Card>
+</CardGroup>

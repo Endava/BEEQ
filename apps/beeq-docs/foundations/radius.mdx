@@ -1,0 +1,724 @@
+---
+title: Radius
+description: BEEQ radius defines how corners behave across components, surfaces, and custom UI built with the design system.
+---
+
+import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
+
+Radius controls how sharp or soft an interface feels. BEEQ uses a shared radius scale so components, cards, controls, badges, and custom surfaces keep a consistent shape language.
+
+BEEQ components already include their default radius. Use these tokens when you build custom UI around them, override component-level radius variables, or need a product surface to align with the rest of the system.
+
+---
+
+## Radius scale
+
+The current BEEQ radius scale is exposed as CSS custom properties. Use these variables as the stable documentation reference because they are available wherever BEEQ styles are loaded.
+
+| Token | CSS variable | Value |
+| --- | --- | --- |
+| `none` | `--bq-radius--none` | `0` |
+| `xs2` | `--bq-radius--xs2` | `2px` |
+| `xs` | `--bq-radius--xs` | `4px` |
+| `s` | `--bq-radius--s` | `8px` |
+| `m` | `--bq-radius--m` | `12px` |
+| `l` | `--bq-radius--l` | `24px` |
+| `full` | `--bq-radius--full` | `9999px` |
+
+<CodeLivePreview mode="iframe" height="27rem" removePadding code={`
+  <style>
+    body {
+      box-sizing: border-box;
+      padding: var(--bq-spacing-m);
+      color: var(--bq-text--primary);
+      background: var(--bq-background--primary);
+    }
+
+    .radius-scale {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
+      gap: var(--bq-spacing-m);
+      max-width: 46rem;
+    }
+
+    .radius-token {
+      display: grid;
+      gap: var(--bq-spacing-xs);
+      min-block-size: 8rem;
+    }
+
+    .radius-shape {
+      block-size: 5rem;
+      border: var(--bq-stroke-s) solid var(--bq-stroke--primary);
+      background: var(--bq-background--secondary);
+    }
+
+    .radius-shape--none {
+      border-radius: var(--bq-radius--none);
+    }
+
+    .radius-shape--xs2 {
+      border-radius: var(--bq-radius--xs2);
+    }
+
+    .radius-shape--xs {
+      border-radius: var(--bq-radius--xs);
+    }
+
+    .radius-shape--s {
+      border-radius: var(--bq-radius--s);
+    }
+
+    .radius-shape--m {
+      border-radius: var(--bq-radius--m);
+    }
+
+    .radius-shape--l {
+      border-radius: var(--bq-radius--l);
+    }
+
+    .radius-shape--full {
+      border-radius: var(--bq-radius--full);
+    }
+
+    .radius-label {
+      display: grid;
+      gap: var(--bq-spacing-xs3);
+      font-size: var(--bq-font-size--s);
+      line-height: var(--bq-font-line-height--regular);
+    }
+
+    .radius-label span {
+      color: var(--bq-text--secondary);
+    }
+  </style>
+
+  <section class="radius-scale" aria-label="BEEQ radius scale">
+    <div class="radius-token">
+      <div class="radius-shape radius-shape--none"></div>
+      <div class="radius-label"><strong>none</strong><span>0</span></div>
+    </div>
+    <div class="radius-token">
+      <div class="radius-shape radius-shape--xs2"></div>
+      <div class="radius-label"><strong>xs2</strong><span>2px</span></div>
+    </div>
+    <div class="radius-token">
+      <div class="radius-shape radius-shape--xs"></div>
+      <div class="radius-label"><strong>xs</strong><span>4px</span></div>
+    </div>
+    <div class="radius-token">
+      <div class="radius-shape radius-shape--s"></div>
+      <div class="radius-label"><strong>s</strong><span>8px</span></div>
+    </div>
+    <div class="radius-token">
+      <div class="radius-shape radius-shape--m"></div>
+      <div class="radius-label"><strong>m</strong><span>12px</span></div>
+    </div>
+    <div class="radius-token">
+      <div class="radius-shape radius-shape--l"></div>
+      <div class="radius-label"><strong>l</strong><span>24px</span></div>
+    </div>
+    <div class="radius-token">
+      <div class="radius-shape radius-shape--full"></div>
+      <div class="radius-label"><strong>full</strong><span>9999px</span></div>
+    </div>
+  </section>
+`}>
+  <CodeGroup>
+    ```css styles.css icon="css" expandable
+    .radius-scale {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
+      gap: var(--bq-spacing-m);
+    }
+
+    .radius-shape {
+      block-size: 5rem;
+      border: var(--bq-stroke-s) solid var(--bq-stroke--primary);
+      background: var(--bq-background--secondary);
+    }
+
+    .radius-shape--none {
+      border-radius: var(--bq-radius--none);
+    }
+
+    .radius-shape--xs2 {
+      border-radius: var(--bq-radius--xs2);
+    }
+
+    .radius-shape--xs {
+      border-radius: var(--bq-radius--xs);
+    }
+
+    .radius-shape--s {
+      border-radius: var(--bq-radius--s);
+    }
+
+    .radius-shape--m {
+      border-radius: var(--bq-radius--m);
+    }
+
+    .radius-shape--l {
+      border-radius: var(--bq-radius--l);
+    }
+
+    .radius-shape--full {
+      border-radius: var(--bq-radius--full);
+    }
+    ```
+
+    ```html HTML icon="html5" expandable
+    <section class="radius-scale" aria-label="BEEQ radius scale">
+      <div class="radius-token">
+        <div class="radius-shape radius-shape--none"></div>
+        <div class="radius-label"><strong>none</strong><span>0</span></div>
+      </div>
+      <div class="radius-token">
+        <div class="radius-shape radius-shape--xs2"></div>
+        <div class="radius-label"><strong>xs2</strong><span>2px</span></div>
+      </div>
+      <div class="radius-token">
+        <div class="radius-shape radius-shape--xs"></div>
+        <div class="radius-label"><strong>xs</strong><span>4px</span></div>
+      </div>
+      <div class="radius-token">
+        <div class="radius-shape radius-shape--s"></div>
+        <div class="radius-label"><strong>s</strong><span>8px</span></div>
+      </div>
+      <div class="radius-token">
+        <div class="radius-shape radius-shape--m"></div>
+        <div class="radius-label"><strong>m</strong><span>12px</span></div>
+      </div>
+      <div class="radius-token">
+        <div class="radius-shape radius-shape--l"></div>
+        <div class="radius-label"><strong>l</strong><span>24px</span></div>
+      </div>
+      <div class="radius-token">
+        <div class="radius-shape radius-shape--full"></div>
+        <div class="radius-label"><strong>full</strong><span>9999px</span></div>
+      </div>
+    </section>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+---
+
+## How radius works in code
+
+BEEQ exposes one radius scale. Use it in this order:
+
+1. Use a component prop such as `border` when the component provides one.
+2. Use a component CSS variable when the component exposes one for scoped customization.
+3. Use global `--bq-radius--*` variables when you build a custom surface.
+
+If your application uses the BEEQ Tailwind preset, its border-radius keys map to the same variables, but CSS variables are the portable contract.
+
+Components that need radius customization expose their own API. Prefer those APIs instead of styling internal structure directly. In components like `bq-card` and `bq-button`, the `border` prop sets the component radius CSS variable for you.
+
+<CodeLivePreview mode="iframe" height="23rem" removePadding code={`
+  <style>
+    body {
+      box-sizing: border-box;
+      padding: var(--bq-spacing-m);
+      color: var(--bq-text--primary);
+      background: var(--bq-background--primary);
+    }
+
+    .radius-code {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+      gap: var(--bq-spacing-m);
+      max-width: 48rem;
+    }
+
+    .radius-code bq-card {
+      --bq-card--borderColor: var(--bq-stroke--primary);
+      --bq-card--borderWidth: var(--bq-stroke-s);
+    }
+
+    .radius-code .radius-card-variable {
+      --bq-card--borderRadius: var(--bq-radius--m);
+    }
+
+    .radius-code bq-card[border="l"] {
+      --bq-card--padding: var(--bq-spacing-m);
+    }
+
+    .radius-code bq-button {
+      --bq-button--border-radius: var(--bq-radius--full);
+    }
+
+    .radius-code bq-alert {
+      --bq-alert--min-width: 0;
+    }
+
+    .radius-card__label {
+      display: block;
+      margin-block-start: var(--bq-spacing-xs);
+      color: var(--bq-text--secondary);
+      font-size: var(--bq-font-size--s);
+    }
+  </style>
+
+  <section class="radius-code" aria-label="Radius implementation examples">
+    <bq-card border="l">
+      <strong>Card prop</strong>
+      <span class="radius-card__label">border="l"</span>
+    </bq-card>
+
+    <bq-card class="radius-card-variable">
+      <strong>Card CSS variable</strong>
+      <span class="radius-card__label">--bq-card--borderRadius</span>
+    </bq-card>
+
+    <bq-alert open disable-close border="s" type="info">
+      Alert prop
+      <span slot="body">border="s"</span>
+    </bq-alert>
+
+    <div>
+      <bq-button border="full">Pill button</bq-button>
+      <span class="radius-card__label">--bq-button--border-radius</span>
+    </div>
+  </section>
+`}>
+  <CodeGroup>
+    ```css styles.css icon="css" expandable
+    bq-card {
+      --bq-card--borderColor: var(--bq-stroke--primary);
+      --bq-card--borderWidth: var(--bq-stroke-s);
+    }
+
+    .radius-card-variable {
+      --bq-card--borderRadius: var(--bq-radius--m);
+    }
+
+    bq-button {
+      --bq-button--border-radius: var(--bq-radius--full);
+    }
+
+    bq-alert {
+      --bq-alert--min-width: 0;
+    }
+    ```
+
+    ```html HTML icon="html5" expandable
+    <section class="radius-code" aria-label="Radius implementation examples">
+      <bq-card border="l">
+        <strong>Card prop</strong>
+        <span class="radius-card__label">border="l"</span>
+      </bq-card>
+
+      <bq-card class="radius-card-variable">
+        <strong>Card CSS variable</strong>
+        <span class="radius-card__label">--bq-card--borderRadius</span>
+      </bq-card>
+
+      <bq-alert open disable-close border="s" type="info">
+        Alert prop
+        <span slot="body">border="s"</span>
+      </bq-alert>
+
+      <div>
+        <bq-button border="full">Pill button</bq-button>
+        <span class="radius-card__label">--bq-button--border-radius</span>
+      </div>
+    </section>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+---
+
+## Choosing radius
+
+Radius should support the role and size of the element. Larger surfaces can carry larger corners because they have more space around content. Smaller controls need smaller radii so the shape does not overwhelm the content inside.
+
+| Token | Use for |
+| --- | --- |
+| `none` | Square edges, dense data, or edge-to-edge regions where rounding would create visual noise. |
+| `xs2` | Very small shapes, icon backgrounds, and details that need slight softness. |
+| `xs` | Small custom elements and compact areas that should not look like cards. |
+| `s` | Inputs, dropdown panels, date cells, tabs, and small-to-medium component surfaces. |
+| `m` | Buttons, banners, snackbars, cards, and common custom panels. |
+| `l` | Large containers, hero panels, and prominent surfaces with enough padding. |
+| `full` | Circles, avatars, icon chips, status dots, and pill-shaped elements. |
+
+<CodeLivePreview mode="iframe" height="24rem" removePadding code={`
+  <style>
+    body {
+      padding: var(--bq-spacing-m);
+    }
+
+    .radius-workflow-card {
+      --bq-card--borderColor: var(--bq-stroke--primary);
+      --bq-card--borderWidth: var(--bq-stroke-s);
+    }
+
+    .radius-workflow-card::part(wrapper) {
+      display: grid;
+      gap: var(--bq-spacing-m);
+    }
+
+    .radius-card-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--bq-spacing-s);
+    }
+
+    .radius-card-copy {
+      display: grid;
+      gap: var(--bq-spacing-xs2);
+    }
+
+    .radius-card-title,
+    .radius-card-description {
+      margin: 0;
+    }
+
+    .radius-card-description {
+      color: var(--bq-text--secondary);
+    }
+
+    .radius-action-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--bq-spacing-s);
+    }
+
+    .radius-workflow-card bq-alert {
+      --bq-alert--min-width: 0;
+    }
+  </style>
+
+  <section aria-label="Radius choices with BEEQ components">
+    <bq-card class="radius-workflow-card" border="l">
+      <header class="radius-card-header">
+        <div class="radius-card-copy">
+          <h4 class="radius-card-title">Account setup</h4>
+          <p class="radius-card-description">Use a larger card radius for the main workflow surface.</p>
+        </div>
+        <bq-tag border="full" color="info" variant="filled">Active workflow</bq-tag>
+      </header>
+
+      <bq-alert open disable-close border="s" type="success">
+        Step saved
+        <span slot="body">Use a smaller radius for compact supporting feedback.</span>
+      </bq-alert>
+
+      <div class="radius-action-row">
+        <bq-button border="m">Continue</bq-button>
+        <bq-button appearance="secondary" border="m">View summary</bq-button>
+      </div>
+    </bq-card>
+  </section>
+`}>
+  <CodeGroup>
+    ```css styles.css icon="css" expandable
+    .radius-workflow-card {
+      --bq-card--borderColor: var(--bq-stroke--primary);
+      --bq-card--borderWidth: var(--bq-stroke-s);
+    }
+
+    .radius-workflow-card::part(wrapper) {
+      display: grid;
+      gap: var(--bq-spacing-m);
+    }
+
+    .radius-card-header,
+    .radius-action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--bq-spacing-s);
+    }
+
+    .radius-card-header {
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+
+    .radius-card-copy {
+      display: grid;
+      gap: var(--bq-spacing-xs2);
+    }
+
+    .radius-card-title,
+    .radius-card-description {
+      margin: 0;
+    }
+
+    .radius-card-description {
+      color: var(--bq-text--secondary);
+    }
+
+    .radius-action-row {
+      align-items: center;
+    }
+
+    .radius-workflow-card bq-alert {
+      --bq-alert--min-width: 0;
+    }
+    ```
+
+    ```html HTML icon="html5" expandable
+    <section aria-label="Radius choices with BEEQ components">
+      <bq-card class="radius-workflow-card" border="l">
+        <header class="radius-card-header">
+          <div class="radius-card-copy">
+            <h4 class="radius-card-title">Account setup</h4>
+            <p class="radius-card-description">
+              Use a larger card radius for the main workflow surface.
+            </p>
+          </div>
+          <bq-tag border="full" color="info" variant="filled">Active workflow</bq-tag>
+        </header>
+
+        <bq-alert open disable-close border="s" type="success">
+          Step saved
+          <span slot="body">Use a smaller radius for compact supporting feedback.</span>
+        </bq-alert>
+
+        <div class="radius-action-row">
+          <bq-button border="m">Continue</bq-button>
+          <bq-button appearance="secondary" border="m">View summary</bq-button>
+        </div>
+      </bq-card>
+    </section>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+---
+
+## Nested radius
+
+Nested surfaces look more balanced when the inner radius is smaller than the outer radius. The spacing between surfaces matters: the more padding between the outer and inner edge, the more room the outer surface has to use a larger radius.
+
+Use this as a practical rule: choose the outer radius first, then step the inner radius down by one token when the nested surface sits close to the edge. For example, pair `l` outside with `m` inside, or `m` outside with `s` inside.
+
+<CodeLivePreview mode="iframe" height="24rem" removePadding code={`
+  <style>
+    body {
+      padding: var(--bq-spacing-m);
+    }
+
+    .nested-radius {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+      gap: var(--bq-spacing-m);
+    }
+
+    .nested-radius bq-card {
+      --bq-card--borderColor: var(--bq-stroke--primary);
+      --bq-card--borderWidth: var(--bq-stroke-s);
+    }
+
+    .nested-radius__card::part(wrapper) {
+      display: grid;
+      gap: var(--bq-spacing-s);
+    }
+
+    .nested-radius__inner {
+      --bq-card--padding: var(--bq-spacing-m);
+      --bq-card--background: var(--bq-ui--primary);
+    }
+
+    .nested-radius__label {
+      color: var(--bq-text--secondary);
+      font-size: var(--bq-font-size--s);
+    }
+  </style>
+
+  <section class="nested-radius" aria-label="Nested radius comparison">
+    <bq-card class="nested-radius__card" border="l">
+      <h4>Balanced</h4>
+      <bq-card class="nested-radius__inner" border="m">
+        <p>Outer card border l, inner card border m.</p>
+      </bq-card>
+      <span class="nested-radius__label">Step nested radius down by one token.</span>
+    </bq-card>
+
+    <bq-card class="nested-radius__card" border="l">
+      <h4>Less balanced</h4>
+      <bq-card class="nested-radius__inner" border="l">
+        <p>Outer card border l, inner card border l.</p>
+      </bq-card>
+      <span class="nested-radius__label">Equal radii can make the inset feel cramped.</span>
+    </bq-card>
+  </section>
+`}>
+  <CodeGroup>
+    ```css styles.css icon="css" expandable
+    .nested-radius {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+      gap: var(--bq-spacing-m);
+    }
+
+    .nested-radius bq-card {
+      --bq-card--borderColor: var(--bq-stroke--primary);
+      --bq-card--borderWidth: var(--bq-stroke-s);
+    }
+
+    .nested-radius__card::part(wrapper) {
+      display: grid;
+      gap: var(--bq-spacing-s);
+    }
+
+    .nested-radius__inner {
+      --bq-card--background: var(--bq-ui--primary);
+      --bq-card--padding: var(--bq-spacing-m);
+    }
+
+    .nested-radius__label {
+      color: var(--bq-text--secondary);
+      font-size: var(--bq-font-size--s);
+    }
+    ```
+
+    ```html HTML icon="html5" expandable
+    <section class="nested-radius" aria-label="Nested radius comparison">
+      <bq-card class="nested-radius__card" border="l">
+        <h4>Balanced</h4>
+        <bq-card class="nested-radius__inner" border="m">
+          <p>Outer card border l, inner card border m.</p>
+        </bq-card>
+        <span class="nested-radius__label">Step nested radius down by one token.</span>
+      </bq-card>
+
+      <bq-card class="nested-radius__card" border="l">
+        <h4>Less balanced</h4>
+        <bq-card class="nested-radius__inner" border="l">
+          <p>Outer card border l, inner card border l.</p>
+        </bq-card>
+        <span class="nested-radius__label">Equal radii can make the inset feel cramped.</span>
+      </bq-card>
+    </section>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+---
+
+## Custom surfaces
+
+Use global radius variables when the surface is not a BEEQ component or when the layout is outside a component's structure. This is the right path for custom dashboards, charts, visual containers, and product-specific compositions.
+
+<CodeLivePreview mode="iframe" height="19rem" removePadding code={`
+  <style>
+    body {
+      padding: var(--bq-spacing-m);
+    }
+
+    .custom-radius-surface {
+      display: grid;
+      gap: var(--bq-spacing-s);
+      padding: var(--bq-spacing-l);
+      border: var(--bq-stroke-s) solid var(--bq-stroke--primary);
+      border-radius: var(--bq-radius--l);
+      background: var(--bq-background--secondary);
+    }
+
+    .custom-radius-surface__metric {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      inline-size: 4rem;
+      block-size: 4rem;
+      border-radius: var(--bq-radius--full);
+      background: var(--bq-ui--brand);
+      color: var(--bq-text--alt);
+      font-weight: var(--bq-font-weight--bold);
+    }
+  </style>
+
+  <article class="custom-radius-surface">
+    <span class="custom-radius-surface__metric">82%</span>
+    <h4>Custom dashboard tile</h4>
+    <p>Use global radius variables when no BEEQ component owns the surface.</p>
+  </article>
+`}>
+  <CodeGroup>
+    ```css styles.css icon="css" expandable
+    .custom-radius-surface {
+      padding: var(--bq-spacing-l);
+      border: var(--bq-stroke-s) solid var(--bq-stroke--primary);
+      border-radius: var(--bq-radius--l);
+      background: var(--bq-background--secondary);
+    }
+
+    .custom-radius-surface__metric {
+      inline-size: 4rem;
+      block-size: 4rem;
+      border-radius: var(--bq-radius--full);
+      background: var(--bq-ui--brand);
+      color: var(--bq-text--alt);
+    }
+    ```
+
+    ```html HTML icon="html5" expandable
+    <article class="custom-radius-surface">
+      <span class="custom-radius-surface__metric">82%</span>
+      <h4>Custom dashboard tile</h4>
+      <p>Use global radius variables when no BEEQ component owns the surface.</p>
+    </article>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+---
+
+## Usage guidelines
+
+<AccordionGroup>
+  <Accordion title="Start with component APIs">
+    Use a component's `border` prop when it exists. That keeps the radius decision inside the component contract and lets the component set its own radius CSS variable.
+  </Accordion>
+  <Accordion title="Use the BEEQ radius scale">
+    Choose `--bq-radius--*` values and component radius APIs instead of arbitrary pixels. If your project uses the BEEQ Tailwind preset, the matching radius utilities are available too.
+  </Accordion>
+  <Accordion title="Match radius to size and role">
+    Use smaller values for compact controls and details. Use larger values for larger containers that have enough padding and visual weight.
+  </Accordion>
+  <Accordion title="Use full for circles and pills">
+    Use `full` for avatars, status dots, icon chips, and pill-shaped labels. Avoid `full` on rectangular cards unless the shape is intentionally pill-like.
+  </Accordion>
+  <Accordion title="Step down nested radii">
+    When a surface contains another surface, choose a smaller radius for the inner element. This keeps the inset relationship clear.
+  </Accordion>
+  <Accordion title="Avoid arbitrary values">
+    Avoid values such as `6px`, `10px`, or `16px` unless a product-specific exception is intentional and documented.
+  </Accordion>
+  <Accordion title="Do not use rounding as the only signal">
+    Radius can support hierarchy and grouping, but it should not be the only way to communicate state, priority, or interactivity.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Accessibility and constraints
+
+Radius is visual, but it can still affect how usable a surface feels.
+
+- Keep focus rings visible. Large radii and clipped containers should not hide outlines or focus indicators.
+- Avoid clipping important content with `overflow: hidden` only to enforce rounded corners.
+- Do not rely on shape alone to communicate state or meaning. Pair visual treatment with text, icons, ARIA where needed, and color tokens.
+- Keep touch targets large enough when using pill-shaped controls or circular buttons.
+- Check nested surfaces at small widths so rounded containers do not crowd labels, icons, or controls.
+
+---
+
+## Resources
+
+<CardGroup cols={2}>
+  <Card title="Global CSS variables" icon="code" href="/theming/global-css-variables">
+    Review the radius custom properties used by BEEQ themes.
+  </Card>
+  <Card title="Radius token source" icon="github" href="https://github.com/Endava/BEEQ/blob/main/packages/beeq-tailwindcss/src/theme/default/root.ts#L56">
+    See the source that defines the BEEQ radius values.
+  </Card>
+</CardGroup>

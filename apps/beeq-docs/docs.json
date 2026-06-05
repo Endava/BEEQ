@@ -68,12 +68,13 @@
           {
             "group": "Foundations",
             "pages": [
-              "foundations/overview",
               "foundations/colors",
               "foundations/typography",
               "foundations/spacing",
               "foundations/grid",
-              "foundations/icons"
+              "foundations/radius",
+              "foundations/stroke",
+              "foundations/shadows"
             ]
           },
           {

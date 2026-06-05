@@ -19,18 +19,19 @@ argument-hint: Component name (e.g. "card") or path to the component tsx file, l
 
 - When the page already exists and only needs an audit → use [review-doc](../review-doc/SKILL.md).
 - When the component itself is missing or incomplete — finish the component first with [create-component](../create-component/SKILL.md) and [review-component](../review-component/SKILL.md).
-- For non-component pages (getting-started, guides, framework integrations).
+- For non-component pages such as foundations, theming, getting started, guides, framework integrations, or migration docs. Follow the shared documentation instructions and use [review-doc](../review-doc/SKILL.md) for review.
 
 ## Before You Start
 
 1. Read the instructions files for this task, in full before writing a single line:
-   - [Documentation instructions](../../instructions/documentation.instructions.md). It defines the mandatory page structure, all component usage patterns, CSS isolation rules, and framework tab ordering.
+   - [Documentation instructions](../../../.github/instructions/documentation.instructions.md). It defines the mandatory component page structure, non-component page guidance, component usage patterns, CSS isolation rules, and code tab ordering.
 2. Read the component source
-   - These files are the ground truth for the API reference. Do not  document any prop, event, slot, part, or CSS variable that does not exist in the source:
+   - These files are the ground truth for the API reference. Do not document any prop, event, slot, part, or CSS variable that does not exist in the source:
       - `packages/beeq/src/components/<name>/bq-<name>.tsx` — `@Prop`, `@Event`, `@Method`, class-level JSDoc (`@slot`, `@part`, `@cssprop`, `@attr`)
       - `packages/beeq/src/components/<name>/bq-<name>.types.ts` — prop type unions and constants
       - `packages/beeq/src/components/<name>/scss/bq-<name>.variables.scss` — all `--bq-<name>-*` CSS custom properties with their defaults
    - Cross-check against the Custom Elements Manifest output in [packages/beeq/cem/](../../../packages/beeq/cem/) — it is the canonical machine-readable description of every component's public API and should match what you put in the API tables.
+   - Do not infer props, events, slots, shadow parts, or CSS custom properties from Zeroheight or old docs. Migrated content is reference material for tone and concepts, not API truth.
    - Also read an existing complete documentation page as a structural reference:
     [apps/beeq-docs/components/icon.mdx](../../../apps/beeq-docs/components/icon.mdx) or [apps/beeq-docs/components/badge.mdx](../../../apps/beeq-docs/components/badge.mdx).
 
@@ -86,11 +87,21 @@ Every image appears twice — once with `className="block dark:hidden"` and once
 </CardGroup>
 ```
 
-### CodeLivePreview CSS isolation
+### CodeLivePreview isolation
 
-`CodeLivePreview` injects code into a **shadow root** — Mintlify/Tailwind styles cannot reach inside it. `beeq.css` is loaded automatically. CSS custom properties (`--bq-*`) still inherit through the boundary.
+Prefer `mode="iframe"` for new `CodeLivePreview` examples. Iframe mode gives the example a full document sandbox, so Mintlify layout, CSS, and page scripts cannot influence the preview, and preview scripts cannot disrupt the docs page.
 
-To override the host (`.preview`) layout, use `:host` inside a `<style>` block. Override properties require `!important` to beat the `CodeLivePreview` stylesheet:
+Always pass the mode explicitly:
+
+```mdx
+<CodeLivePreview mode="iframe" height="12rem" code={`...`} />
+```
+
+Use iframe mode whenever an example includes layout behavior, scripts, overlays, popovers, fixed or absolute positioning, responsive containers, page-like composition, or anything that could conflict with the Mintlify documentation shell. Always include an explicit `height`; use `removePadding` when preview padding would hide the real layout behavior.
+
+Shadow mode is still allowed for small, component-local examples that will not disrupt the Mintlify page and do not need full document isolation. In shadow mode, `CodeLivePreview` injects code into a **shadow root**. `beeq.css` is loaded automatically, and CSS custom properties (`--bq-*`) still inherit through the boundary.
+
+In shadow mode, override the host (`.preview`) layout with `:host` inside a `<style>` block. Override properties require `!important` to beat the `CodeLivePreview` stylesheet:
 ```html
 <style>
   :host { flex-direction: column !important; gap: var(--bq-spacing-m) !important; }
@@ -100,7 +111,7 @@ To override the host (`.preview`) layout, use `:host` inside a `<style>` block. 
 Do **not** use `@scope` — it was the old light-DOM approach and is no longer needed.
 Do **not** use `<style scoped>` — not a real browser feature.
 
-Every <script> block must use `previewRoot` to query elements — `document.currentScript` is always `null` for dynamically created scripts, and `document.querySelector` cannot cross shadow boundaries. Wrap in an IIFE to prevent variable leakage:
+Every <script> block must use `previewRoot` to query elements inside the preview. In iframe mode, `previewRoot` is the iframe document. In shadow mode, `previewRoot` is the shadow root. `document.currentScript` is always `null` for dynamically created scripts. Wrap in an IIFE to prevent variable leakage:
 ```html
 <script>
   (() => {
@@ -110,17 +121,39 @@ Every <script> block must use `previewRoot` to query elements — `document.curr
 </script>
 ```
 
-Do not wrap examples in unnecessary `<div>`s for alignment purposes — use `:scope` overrides instead.
+Do not wrap examples in unnecessary `<div>`s for alignment purposes. In shadow mode, use `:host` overrides for preview layout. In iframe mode, use normal document CSS inside the preview.
 
 ### CodeGroup tab order
 
-Every `CodeLivePreview` must be followed by a `CodeGroup` with tabs in this order:
-1. `HTML` (kebab-case attributes)
-2. `React` (camelCase props, `onBqEventName` for events)
-3. `Angular` (**`ts` code block**; full standalone `@Component`; `import { BqX } from "@beeq/angular/standalone"`; `(bqEventName)` for events; empty class body `{}` when no logic)
-4. `Vue` (camelCase props, `@bqEventName` for events)
+Every `CodeLivePreview` must be followed by a `CodeGroup`. The code shown in the tabs must align with what the preview renders.
 
-Add a `CSS` tab first only when custom styles are educationally relevant.
+Use this tab order:
+1. `CSS` — only when the styles are essential for understanding or reusing the example
+2. `JavaScript` — only when the script is long enough to deserve its own tab
+3. `HTML` (kebab-case attributes)
+4. `React` (camelCase props, `onBqEventName` for events)
+5. `Angular` (`ts` code block; standalone `@Component`; `import { BqX } from "@beeq/angular/standalone"`; `(bqEventName)` for events; empty class body `{}` when no logic)
+6. `Vue` (camelCase props, `@bqEventName` for events)
+
+Every fenced code block used as a Mintlify tab must include `expandable` and the correct icon:
+
+| Tab | Opening fence |
+|---|---|
+| CSS | `css styles.css icon="css" expandable` |
+| JavaScript | `javascript script.js icon="js" expandable` |
+| HTML | `html HTML icon="html5" expandable` |
+| React | `jsx React icon="react" expandable` |
+| React with TypeScript | `tsx React icon="react" expandable` |
+| Angular | `ts Angular icon="angular" expandable` |
+| Vue | `vue Vue icon="vuejs" expandable` |
+
+Keep one empty line between each fenced code block inside a `CodeGroup`.
+
+CSS tabs are required only when the styles are essential for understanding or reusing the example. Do not add a CSS tab for incidental preview layout. React examples must import the CSS filename shown in the CSS tab when one exists, for example `import "./styles.css";`.
+
+HTML tabs should include JavaScript inline when the behavior belongs to the HTML example. Add a separate JavaScript tab only when the script is too long to keep the HTML readable.
+
+Angular examples must use the standalone implementation approach, not Angular modules. Angular and Vue examples should use inline styles unless external CSS is critical to the example and appears in a CSS tab.
 
 ### Do / Don't card pattern (Best practices)
 
@@ -202,5 +235,6 @@ Extract all variables from `bq-<name>.variables.scss`. **Default values must use
 ✅ `The examples use inline <style> tags so you can run them directly.`
 
 - Output path: `apps/beeq-docs/components/<name>.mdx`.
+- When migrating from Zeroheight, remove visible `Keywords` sections, rewrite stale language for Mintlify, and verify values against current source before documenting them.
 
 After writing, run [review-doc](../review-doc/SKILL.md) on the new page to verify compliance.

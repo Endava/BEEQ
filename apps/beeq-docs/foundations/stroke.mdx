@@ -1,0 +1,618 @@
+---
+title: Stroke
+description: BEEQ stroke defines border widths, border colors, and outline treatment for components, states, and custom surfaces.
+---
+
+import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
+
+Stroke controls how surfaces separate, how states become visible, and how interactive elements communicate focus or selection. BEEQ uses stroke width tokens and semantic stroke colors so borders, dividers, outlines, and SVG strokes stay consistent across themes.
+
+BEEQ components include their default stroke treatment. Use these tokens when you customize component CSS variables, build custom surfaces around components, or need product-specific states to follow the same visual system.
+
+---
+
+## What BEEQ provides
+
+BEEQ provides a small stroke width scale and semantic stroke color variables. These are available as CSS custom properties wherever BEEQ styles are loaded.
+
+If your application uses the BEEQ Tailwind preset, the same values are also available through Tailwind border width, stroke width, border color, stroke color, and logical border utilities. Treat those utilities as a convenience layer. CSS variables are the portable contract.
+
+| BEEQ provides | Use it for |
+| --- | --- |
+| Stroke width variables | Border widths, dividers, outlines, and SVG stroke widths. |
+| Semantic stroke color variables | Theme-aware border, divider, outline, feedback, and state colors. |
+| Component CSS variables | Scoped border customization for components that expose border variables. |
+| Tailwind preset mappings | Utility classes when the consuming app installs the BEEQ Tailwind preset. |
+
+---
+
+## Stroke width scale
+
+The stroke width scale has three values. Use the smallest value for standard separation, the medium value for selected or focused states, and the largest value only when the surface has enough size and emphasis.
+
+| Token | CSS variable | Tailwind keys | Value | Common use |
+| --- | --- | --- | --- | --- |
+| `s` | `--bq-stroke-s` | `border-s`, `stroke-s` | `1px` | Default borders, dividers, table lines, and subtle separation. |
+| `m` | `--bq-stroke-m` | `border-m`, `stroke-m` | `2px` | Focus, active, selected, or emphasized states. |
+| `l` | `--bq-stroke-l` | `border-l`, `stroke-l` | `3px` | Large emphasis surfaces or highly visible outlines. |
+
+<CodeLivePreview mode="iframe" height="24rem" removePadding code={`
+  <style>
+    body {
+      padding: var(--bq-spacing-m);
+    }
+
+    .stroke-scale {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+      gap: var(--bq-spacing-m);
+    }
+
+    .stroke-scale__tile {
+      display: grid;
+      align-content: space-between;
+      gap: var(--bq-spacing-s);
+      aspect-ratio: 1;
+      padding: var(--bq-spacing-m);
+      border-style: solid;
+      border-color: var(--bq-stroke--brand);
+      border-radius: var(--bq-radius--m);
+      background: var(--bq-background--secondary);
+    }
+
+    .stroke-scale__tile--s {
+      border-width: var(--bq-stroke-s);
+    }
+
+    .stroke-scale__tile--m {
+      border-width: var(--bq-stroke-m);
+    }
+
+    .stroke-scale__tile--l {
+      border-width: var(--bq-stroke-l);
+    }
+
+    .stroke-scale__value {
+      color: var(--bq-text--secondary);
+      font-size: var(--bq-font-size--s);
+    }
+  </style>
+
+  <section class="stroke-scale" aria-label="BEEQ stroke width scale">
+    <div class="stroke-scale__tile stroke-scale__tile--s">
+      <strong>s</strong>
+      <span class="stroke-scale__value">1px default border</span>
+    </div>
+    <div class="stroke-scale__tile stroke-scale__tile--m">
+      <strong>m</strong>
+      <span class="stroke-scale__value">2px focus or active border</span>
+    </div>
+    <div class="stroke-scale__tile stroke-scale__tile--l">
+      <strong>l</strong>
+      <span class="stroke-scale__value">3px emphasis border</span>
+    </div>
+  </section>
+`}>
+  <CodeGroup>
+    ```css styles.css icon="css" expandable
+    .stroke-scale {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+      gap: var(--bq-spacing-m);
+    }
+
+    .stroke-scale__tile {
+      display: grid;
+      align-content: space-between;
+      gap: var(--bq-spacing-s);
+      aspect-ratio: 1;
+      padding: var(--bq-spacing-m);
+      border-style: solid;
+      border-color: var(--bq-stroke--brand);
+      border-radius: var(--bq-radius--m);
+      background: var(--bq-background--secondary);
+    }
+
+    .stroke-scale__tile--s {
+      border-width: var(--bq-stroke-s);
+    }
+
+    .stroke-scale__tile--m {
+      border-width: var(--bq-stroke-m);
+    }
+
+    .stroke-scale__tile--l {
+      border-width: var(--bq-stroke-l);
+    }
+    ```
+
+    ```html HTML icon="html5" expandable
+    <section class="stroke-scale" aria-label="BEEQ stroke width scale">
+      <div class="stroke-scale__tile stroke-scale__tile--s">
+        <strong>s</strong>
+        <span class="stroke-scale__value">1px default border</span>
+      </div>
+      <div class="stroke-scale__tile stroke-scale__tile--m">
+        <strong>m</strong>
+        <span class="stroke-scale__value">2px focus or active border</span>
+      </div>
+      <div class="stroke-scale__tile stroke-scale__tile--l">
+        <strong>l</strong>
+        <span class="stroke-scale__value">3px emphasis border</span>
+      </div>
+    </section>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+---
+
+## Stroke color roles
+
+Semantic stroke colors adapt to the active BEEQ theme. Use them instead of primitive color values so borders and outlines keep the right contrast in light and dark mode.
+
+| CSS variable | Role | Common use |
+| --- | --- | --- |
+| `--bq-stroke--primary` | Default separation | Card borders, dividers, table lines, and neutral outlines. |
+| `--bq-stroke--secondary` | Stronger neutral separation | Selected neutral states or higher emphasis borders. |
+| `--bq-stroke--tertiary` | High-contrast neutral separation | Strong outlines that still need a neutral color. |
+| `--bq-stroke--brand` | Brand or focus emphasis | Focus rings, active states, and brand-highlighted outlines. |
+| `--bq-stroke--success` | Positive state | Valid fields, saved states, and success feedback. |
+| `--bq-stroke--warning` | Caution state | Warning feedback or attention states. |
+| `--bq-stroke--danger` | Error state | Invalid fields, destructive states, and danger feedback. |
+| `--bq-stroke--info` | Informational state | Informational borders and support messaging. |
+| `--bq-stroke--inverse` | Inverse surfaces | Borders on dark or inverted surfaces. |
+| `--bq-stroke--alt` | Alternative low-emphasis surfaces | Subtle borders on alternative backgrounds. |
+
+<CodeLivePreview mode="iframe" height="25rem" removePadding code={`
+  <style>
+    body {
+      padding: var(--bq-spacing-m);
+    }
+
+    .stroke-colors {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+      gap: var(--bq-spacing-m);
+    }
+
+    .stroke-color-card {
+      display: grid;
+      gap: var(--bq-spacing-xs);
+      padding: var(--bq-spacing-m);
+      border: var(--bq-stroke-m) solid var(--stroke-color);
+      border-radius: var(--bq-radius--m);
+      background: var(--bq-background--secondary);
+    }
+
+    .stroke-color-card span {
+      color: var(--bq-text--secondary);
+      font-size: var(--bq-font-size--s);
+    }
+  </style>
+
+  <section class="stroke-colors" aria-label="Semantic stroke color examples">
+    <div class="stroke-color-card" style="--stroke-color: var(--bq-stroke--primary)">
+      <strong>Default</strong>
+      <span>--bq-stroke--primary</span>
+    </div>
+    <div class="stroke-color-card" style="--stroke-color: var(--bq-stroke--brand)">
+      <strong>Focus</strong>
+      <span>--bq-stroke--brand</span>
+    </div>
+    <div class="stroke-color-card" style="--stroke-color: var(--bq-stroke--success)">
+      <strong>Success</strong>
+      <span>--bq-stroke--success</span>
+    </div>
+    <div class="stroke-color-card" style="--stroke-color: var(--bq-stroke--warning)">
+      <strong>Warning</strong>
+      <span>--bq-stroke--warning</span>
+    </div>
+    <div class="stroke-color-card" style="--stroke-color: var(--bq-stroke--danger)">
+      <strong>Danger</strong>
+      <span>--bq-stroke--danger</span>
+    </div>
+    <div class="stroke-color-card" style="--stroke-color: var(--bq-stroke--info)">
+      <strong>Info</strong>
+      <span>--bq-stroke--info</span>
+    </div>
+  </section>
+`}>
+  <CodeGroup>
+    ```css styles.css icon="css" expandable
+    .stroke-colors {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+      gap: var(--bq-spacing-m);
+    }
+
+    .stroke-color-card {
+      display: grid;
+      gap: var(--bq-spacing-xs);
+      padding: var(--bq-spacing-m);
+      border: var(--bq-stroke-m) solid var(--stroke-color);
+      border-radius: var(--bq-radius--m);
+      background: var(--bq-background--secondary);
+    }
+    ```
+
+    ```html HTML icon="html5" expandable
+    <section class="stroke-colors" aria-label="Semantic stroke color examples">
+      <div class="stroke-color-card" style="--stroke-color: var(--bq-stroke--primary)">
+        <strong>Default</strong>
+        <span>--bq-stroke--primary</span>
+      </div>
+      <div class="stroke-color-card" style="--stroke-color: var(--bq-stroke--brand)">
+        <strong>Focus</strong>
+        <span>--bq-stroke--brand</span>
+      </div>
+      <div class="stroke-color-card" style="--stroke-color: var(--bq-stroke--success)">
+        <strong>Success</strong>
+        <span>--bq-stroke--success</span>
+      </div>
+      <div class="stroke-color-card" style="--stroke-color: var(--bq-stroke--warning)">
+        <strong>Warning</strong>
+        <span>--bq-stroke--warning</span>
+      </div>
+      <div class="stroke-color-card" style="--stroke-color: var(--bq-stroke--danger)">
+        <strong>Danger</strong>
+        <span>--bq-stroke--danger</span>
+      </div>
+      <div class="stroke-color-card" style="--stroke-color: var(--bq-stroke--info)">
+        <strong>Info</strong>
+        <span>--bq-stroke--info</span>
+      </div>
+    </section>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+---
+
+## Stroke style and positioning
+
+BEEQ uses solid strokes for normal borders, dividers, and outlines. Use dashed strokes only when the surface represents a placeholder, incomplete content, drop zone, or temporary target.
+
+BEEQ does not expose separate stroke-style tokens. Use CSS `border-style` for solid or dashed treatment, and keep the width and color tied to BEEQ tokens.
+
+Components are designed around CSS border behavior. With `box-sizing: border-box`, the border is included in the element size, which matches the inside stroke positioning used in design tools.
+
+<CodeLivePreview mode="iframe" height="22rem" removePadding code={`
+  <style>
+    body {
+      padding: var(--bq-spacing-m);
+    }
+
+    .stroke-style {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+      gap: var(--bq-spacing-m);
+    }
+
+    .stroke-style__surface {
+      display: grid;
+      gap: var(--bq-spacing-xs);
+      padding: var(--bq-spacing-l);
+      border-width: var(--bq-stroke-s);
+      border-color: var(--bq-stroke--primary);
+      border-radius: var(--bq-radius--m);
+      background: var(--bq-background--secondary);
+    }
+
+    .stroke-style__surface--solid {
+      border-style: solid;
+    }
+
+    .stroke-style__surface--dashed {
+      border-style: dashed;
+      border-color: var(--bq-stroke--brand);
+      background: var(--bq-ui--brand-alt);
+    }
+
+    .stroke-style__surface p {
+      margin: 0;
+      color: var(--bq-text--secondary);
+    }
+  </style>
+
+  <section class="stroke-style" aria-label="Solid and dashed stroke examples">
+    <article class="stroke-style__surface stroke-style__surface--solid">
+      <h4>Standard surface</h4>
+      <p>Use solid strokes for stable borders and separators.</p>
+    </article>
+
+    <article class="stroke-style__surface stroke-style__surface--dashed">
+      <h4>Drop zone</h4>
+      <p>Use dashed strokes for placeholder or drag-and-drop areas.</p>
+    </article>
+  </section>
+`}>
+  <CodeGroup>
+    ```css styles.css icon="css" expandable
+    .stroke-style {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+      gap: var(--bq-spacing-m);
+    }
+
+    .stroke-style__surface {
+      padding: var(--bq-spacing-l);
+      border-width: var(--bq-stroke-s);
+      border-color: var(--bq-stroke--primary);
+      border-radius: var(--bq-radius--m);
+      background: var(--bq-background--secondary);
+    }
+
+    .stroke-style__surface--solid {
+      border-style: solid;
+    }
+
+    .stroke-style__surface--dashed {
+      border-style: dashed;
+      border-color: var(--bq-stroke--brand);
+      background: var(--bq-ui--brand-alt);
+    }
+    ```
+
+    ```html HTML icon="html5" expandable
+    <section class="stroke-style" aria-label="Solid and dashed stroke examples">
+      <article class="stroke-style__surface stroke-style__surface--solid">
+        <h4>Standard surface</h4>
+        <p>Use solid strokes for stable borders and separators.</p>
+      </article>
+
+      <article class="stroke-style__surface stroke-style__surface--dashed">
+        <h4>Drop zone</h4>
+        <p>Use dashed strokes for placeholder or drag-and-drop areas.</p>
+      </article>
+    </section>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+---
+
+## How strokes work in code
+
+Use CSS variables directly when you build custom UI. Use component props and component CSS variables when the stroke belongs to a BEEQ component.
+
+If your project uses the BEEQ Tailwind preset, standard utilities such as `border-s`, `border-primary`, `stroke-m`, and `stroke-brand` map to the same token system. The preset also adds logical border utilities such as `border-bs-s`, `border-be-s`, `border-i-s`, and `border-is-s` for layout direction support.
+
+<CodeLivePreview mode="iframe" height="24rem" removePadding code={`
+  <style>
+    body {
+      padding: var(--bq-spacing-m);
+    }
+
+    .stroke-code {
+      display: grid;
+      gap: var(--bq-spacing-m);
+    }
+
+    .stroke-code__surface {
+      display: grid;
+      gap: var(--bq-spacing-xs);
+      padding: var(--bq-spacing-m);
+      border: var(--bq-stroke-s) solid var(--bq-stroke--primary);
+      border-radius: var(--bq-radius--m);
+      background: var(--bq-background--secondary);
+    }
+
+    .stroke-code__logical {
+      border-block-start: var(--bq-stroke-m) solid var(--bq-stroke--brand);
+      padding-block-start: var(--bq-spacing-m);
+    }
+
+    .stroke-code__surface p {
+      margin: 0;
+      color: var(--bq-text--secondary);
+    }
+  </style>
+
+  <section class="stroke-code" aria-label="Stroke implementation examples">
+    <article class="stroke-code__surface">
+      <h4>Full border</h4>
+      <p>Use a complete border when the surface needs a visible container edge.</p>
+    </article>
+
+    <article class="stroke-code__surface stroke-code__logical">
+      <h4>Logical emphasis</h4>
+      <p>Use logical borders when only one side needs emphasis and layout direction matters.</p>
+    </article>
+  </section>
+`}>
+  <CodeGroup>
+    ```css styles.css icon="css" expandable
+    .stroke-code__surface {
+      padding: var(--bq-spacing-m);
+      border: var(--bq-stroke-s) solid var(--bq-stroke--primary);
+      border-radius: var(--bq-radius--m);
+      background: var(--bq-background--secondary);
+    }
+
+    .stroke-code__logical {
+      border-block-start: var(--bq-stroke-m) solid var(--bq-stroke--brand);
+      padding-block-start: var(--bq-spacing-m);
+    }
+    ```
+
+    ```html HTML icon="html5" expandable
+    <section class="stroke-code" aria-label="Stroke implementation examples">
+      <article class="stroke-code__surface">
+        <h4>Full border</h4>
+        <p>Use a complete border when the surface needs a visible container edge.</p>
+      </article>
+
+      <article class="stroke-code__surface stroke-code__logical">
+        <h4>Logical emphasis</h4>
+        <p>Use logical borders when only one side needs emphasis and layout direction matters.</p>
+      </article>
+    </section>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+---
+
+## Component stroke customization
+
+Start with component APIs when a component exposes border or stroke-related props. Use component CSS variables for scoped overrides, and use `::part()` only when you need to adjust exposed internal structure.
+
+<CodeLivePreview mode="iframe" height="25rem" removePadding code={`
+  <style>
+    body {
+      padding: var(--bq-spacing-m);
+    }
+
+    .stroke-components {
+      display: grid;
+      gap: var(--bq-spacing-m);
+    }
+
+    .stroke-components__card {
+      --bq-card--borderColor: var(--bq-stroke--primary);
+      --bq-card--borderWidth: var(--bq-stroke-s);
+      --bq-card--borderStyle: solid;
+    }
+
+    .stroke-components__card::part(wrapper) {
+      display: grid;
+      gap: var(--bq-spacing-m);
+    }
+
+    .stroke-components bq-alert {
+      --bq-alert--min-width: 0;
+      --bq-alert--border-width: var(--bq-stroke-m);
+    }
+
+    .stroke-components bq-button[data-emphasis] {
+      --bq-button--border-width: var(--bq-stroke-m);
+      --bq-button--border-color: var(--bq-stroke--brand);
+    }
+  </style>
+
+  <section class="stroke-components" aria-label="BEEQ component stroke customization">
+    <bq-card class="stroke-components__card" border="m">
+      <h4>Review changes</h4>
+      <bq-alert open disable-close border="s" type="success">
+        Saved
+        <span slot="body">The alert uses a stronger stroke for state feedback.</span>
+      </bq-alert>
+      <div>
+        <bq-button data-emphasis appearance="secondary" border="m">Review details</bq-button>
+      </div>
+    </bq-card>
+  </section>
+`}>
+  <CodeGroup>
+    ```css styles.css icon="css" expandable
+    .stroke-components__card {
+      --bq-card--borderColor: var(--bq-stroke--primary);
+      --bq-card--borderWidth: var(--bq-stroke-s);
+      --bq-card--borderStyle: solid;
+    }
+
+    .stroke-components__card::part(wrapper) {
+      display: grid;
+      gap: var(--bq-spacing-m);
+    }
+
+    .stroke-components bq-alert {
+      --bq-alert--border-width: var(--bq-stroke-m);
+      --bq-alert--min-width: 0;
+    }
+
+    .stroke-components bq-button[data-emphasis] {
+      --bq-button--border-width: var(--bq-stroke-m);
+      --bq-button--border-color: var(--bq-stroke--brand);
+    }
+    ```
+
+    ```html HTML icon="html5" expandable
+    <section class="stroke-components" aria-label="BEEQ component stroke customization">
+      <bq-card class="stroke-components__card" border="m">
+        <h4>Review changes</h4>
+        <bq-alert open disable-close border="s" type="success">
+          Saved
+          <span slot="body">The alert uses a stronger stroke for state feedback.</span>
+        </bq-alert>
+        <div>
+          <bq-button data-emphasis appearance="secondary" border="m">Review details</bq-button>
+        </div>
+      </bq-card>
+    </section>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+---
+
+## Choosing stroke
+
+Stroke should support the role of the element and the state it communicates. Use lighter treatment for stable surfaces and stronger treatment for interaction feedback.
+
+| Use | Recommended stroke |
+| --- | --- |
+| Default container or divider | `var(--bq-stroke-s)` with `var(--bq-stroke--primary)` |
+| Hover or selected neutral state | `var(--bq-stroke-s)` or `var(--bq-stroke-m)` with a stronger semantic stroke color |
+| Focus or active state | `var(--bq-stroke-m)` with `var(--bq-stroke--brand)` |
+| Success, warning, danger, or info state | State color with a width that matches the component size |
+| Placeholder, drag-and-drop, or incomplete state | Dashed stroke with a semantic color |
+| Large emphasis surface | `var(--bq-stroke-l)` only when the surface has enough space and visual weight |
+
+---
+
+## Usage guidelines
+
+<AccordionGroup>
+  <Accordion title="Use BEEQ stroke tokens">
+    Use `--bq-stroke-s`, `--bq-stroke-m`, and `--bq-stroke-l` instead of one-off pixel values. The small scale keeps borders consistent across components and custom surfaces.
+  </Accordion>
+  <Accordion title="Prefer semantic stroke colors">
+    Use `--bq-stroke--*` variables instead of primitive colors. Semantic colors adapt to the theme and communicate the role of the border.
+  </Accordion>
+  <Accordion title="Use s for default separation">
+    Use `s` for cards, dividers, tables, and neutral containers. It creates separation without competing with content.
+  </Accordion>
+  <Accordion title="Use m for focus and active emphasis">
+    Use `m` when the border communicates interaction, selection, or keyboard focus. Pair it with a clear semantic color.
+  </Accordion>
+  <Accordion title="Use l sparingly">
+    Use `l` only for large or high-emphasis surfaces. Thick borders can crowd compact controls and make dense UI feel heavy.
+  </Accordion>
+  <Accordion title="Reserve dashed strokes for temporary surfaces">
+    Use dashed strokes for placeholders, incomplete content, drag-and-drop targets, and upload areas. Avoid dashed borders for stable containers.
+  </Accordion>
+  <Accordion title="Keep stroke, radius, and spacing aligned">
+    Choose stroke width together with radius and padding. A thicker border usually needs enough internal spacing to avoid a cramped layout.
+  </Accordion>
+  <Accordion title="Do not use stroke alone to communicate state">
+    Pair state borders with text, icons, labels, or ARIA where needed. Shape and color alone are not enough for every user.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Accessibility and constraints
+
+Stroke is visual, but it affects how people find and understand interactive states.
+
+- Keep focus indicators visible. Use enough contrast between the focus stroke and the surrounding surface.
+- Avoid replacing browser or component focus treatment without providing an equally visible alternative.
+- Do not rely on color or stroke width alone to communicate error, warning, success, or selected states.
+- Keep borders inside the element box with `box-sizing: border-box` so focus and active states do not shift layout.
+- Check dense layouts at zoomed and narrow widths. Thicker strokes reduce the available content area.
+- Use semantic state colors consistently so users can learn the meaning of success, warning, danger, and focus borders.
+
+---
+
+## Resources
+
+<CardGroup cols={2}>
+  <Card title="Global CSS variables" icon="code" href="/theming/global-css-variables">
+    Review the stroke width and semantic stroke color variables used by BEEQ themes.
+  </Card>
+  <Card title="Root token source" icon="github" href="https://github.com/Endava/BEEQ/blob/main/packages/beeq-tailwindcss/src/theme/default/root.ts#L102">
+    See the source that defines the BEEQ stroke width values.
+  </Card>
+</CardGroup>

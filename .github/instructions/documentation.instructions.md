@@ -1,5 +1,5 @@
 ---
-description: Guidelines for writing and maintaining Mintlify MDX documentation pages for BEEQ Design System components. Covers page structure, tone, Mintlify components, code examples, live previews, CSS isolation, and accessibility documentation.
+description: Guidelines for writing and maintaining Mintlify MDX documentation pages for BEEQ Design System. Covers component and non-component page structure, tone, Mintlify components, code examples, live previews, CSS isolation, and accessibility documentation.
 applyTo: apps/beeq-docs/**/*.{mdx,md,jsx}
 ---
 
@@ -73,6 +73,33 @@ Every component documentation page must follow this section order:
 13. **Accessibility** — built-in behaviors and requirements; do not repeat the API reference
 14. **API reference** — Properties, Slots, Shadow parts, CSS custom properties tables
 15. **Resources** — two-column `CardGroup` linking to Storybook and GitHub source
+
+### Non-component documentation pages
+
+Non-component pages include foundations, theming, setup, framework integration, usage guides, migration docs, and conceptual pages. These pages are less rigid than component API pages, but they must still be source-backed, practical, and easy to scan.
+
+Recommended flow:
+
+1. **Frontmatter** — `title` and `description`
+2. **Imports** — all MDX snippet imports at the top
+3. **Overview or visual frame** (optional) — only when an image helps explain the topic
+4. **Introduction paragraph** — what the page helps the reader understand or do
+5. **Context** — what BEEQ provides, recommends, or deliberately leaves to the consuming app
+6. **Core concepts** — the design or implementation model behind the topic
+7. **Source-backed values or references** — tokens, utilities, classes, or source files where relevant
+8. **Practical examples** — live examples and code that match what is rendered
+9. **Usage guidelines** — concise guidance using prose, `AccordionGroup`, or `CardTile`
+10. **Accessibility or constraints** (when relevant) — source order, contrast, motion, zoom, semantics, or implementation gotchas
+11. **Resources** — related docs, source files, or external references
+
+Rules:
+
+- Current repo source is canonical over migrated content or older design pages.
+- State clearly whether BEEQ ships a component, utility, class, token, or API, or whether the page is documenting guidance that users implement in their own app.
+- Remove visible `Keywords` sections from migrated content.
+- Rewrite migrated content for Mintlify. Do not preserve stale language, filler, or values that conflict with source.
+- Use BEEQ tokens, semantic utilities, and logical CSS properties when they are relevant to the topic.
+- Avoid framework examples on non-component pages when they do not teach anything beyond the HTML or CSS example.
 
 ---
 
@@ -165,11 +192,19 @@ Use `Note` for automatic or fallback behaviors that require no user action:
 
 ## CodeLivePreview
 
-`CodeLivePreview` injects the `code` prop into a **shadow root** attached to the `.preview` div. The shadow root provides full CSS isolation — Mintlify and Tailwind styles cannot reach inside it. `beeq.css` is loaded inside the shadow root automatically, so all BEEQ components and raw HTML elements render correctly without any extra setup.
+Prefer `mode="iframe"` for new `CodeLivePreview` examples. Iframe mode gives the example a full document sandbox, so Mintlify layout, CSS, and page scripts cannot influence the preview, and preview scripts cannot disrupt the docs page.
 
-CSS custom properties (`--bq-*`) inherit through the shadow boundary, so design tokens and dark/light mode work without changes.
+Always pass the mode explicitly:
 
-### CSS inside the `code` prop — use `:host`
+```mdx
+<CodeLivePreview mode="iframe" height="12rem" code={`...`} />
+```
+
+Use iframe mode whenever an example includes layout behavior, scripts, overlays, popovers, fixed or absolute positioning, responsive containers, page-like composition, or anything that could conflict with the Mintlify documentation shell. When using iframe mode, always include an explicit `height` and use `removePadding` when preview padding would hide the real layout behavior.
+
+Shadow mode is still allowed for small, component-local examples that will not disrupt the Mintlify page and do not need full document isolation. In shadow mode, `CodeLivePreview` injects the `code` prop into a **shadow root** attached to the `.preview` div. `beeq.css` is loaded inside the shadow root automatically, and CSS custom properties (`--bq-*`) inherit through the shadow boundary so design tokens and dark/light mode work without changes.
+
+### CSS inside shadow mode — use `:host`
 
 The shadow root's host element is the `.preview` div. The `CodeLivePreview` stylesheet sets the following properties on it by default: `display: flex`, `align-items: center`, `justify-content: center`, `flex-direction: column` (switching to `row` at ≥40rem via container query), `gap: var(--bq-spacing-m)`, and `padding: var(--bq-spacing-l)`.
 
@@ -224,7 +259,7 @@ To override host layout, use `:host` inside a `<style>` block:
 
 ### JavaScript in `code` prop
 
-Inline `<script>` blocks are executed via `new Function('previewRoot', ...)`. The shadow root is passed as the `previewRoot` parameter — use it to query elements inside the preview. Do **not** use `document.currentScript` (always `null` for dynamically created scripts) or `document.querySelector` (cannot cross shadow boundaries).
+Inline `<script>` blocks are executed via `new Function('previewRoot', ...)`. Use `previewRoot` to query elements inside the preview. In iframe mode, `previewRoot` is the iframe document. In shadow mode, `previewRoot` is the shadow root. Do **not** use `document.currentScript` because it is always `null` for dynamically created scripts.
 
 Wrap logic in an IIFE to avoid variable leakage across multiple re-renders:
 
@@ -239,9 +274,9 @@ Wrap logic in an IIFE to avoid variable leakage across multiple re-renders:
 
 ### Wrapper divs and layout
 
-The `.preview` shadow host already applies `display: flex`, `align-items: center`, `justify-content: center`, `flex-direction: column` (switching to `row` at ≥40rem via container query), `gap: var(--bq-spacing-m)`, and `padding: var(--bq-spacing-l)`. Do **not** add a wrapper `<div>` around the example just to achieve alignment, centering, or spacing between sibling components — the host handles all of it.
+In shadow mode, the `.preview` shadow host already applies `display: flex`, `align-items: center`, `justify-content: center`, `flex-direction: column` (switching to `row` at ≥40rem via container query), `gap: var(--bq-spacing-m)`, and `padding: var(--bq-spacing-l)`. Do **not** add a wrapper `<div>` around a shadow-mode example just to achieve alignment, centering, or spacing between sibling components — the host handles all of it.
 
-If you only need to tweak alignment or spacing, override `:host` directly (with `!important`):
+If a shadow-mode example only needs to tweak alignment or spacing, override `:host` directly (with `!important`):
 
 ```html
 <style>
@@ -252,7 +287,7 @@ If you only need to tweak alignment or spacing, override `:host` directly (with 
 </style>
 ```
 
-Only add a wrapper element when the layout the example needs is fundamentally different from the default `.preview` flex behavior, such as:
+In iframe mode, use normal document CSS inside the preview. Only add a wrapper element when the layout the example needs is fundamentally different from the preview surface or page body, such as:
 - `position: relative` for absolutely positioned children (e.g., a badge layered on top of an icon)
 - Negative margins for an overlapping group effect (e.g., stacked avatars)
 - A grid, multi-row, or wrapping layout that flex cannot express
@@ -271,6 +306,8 @@ When a wrapper is genuinely needed:
 
 The CSS tab in a `CodeGroup` is for **copy-paste documentation** — it shows users how to style the component in their own project. Apply these rules:
 
+- Include a CSS tab only when the styles are essential for understanding or reusing the example. Omit it when the styles only arrange the preview.
+- Use an explicit filename when React imports it, for example `styles.css`.
 - Use plain CSS selectors, **not** `@scope`. Users control their own scope naturally.
 - Use modern CSS nesting (`& child`, `&::part(x)`, `&:hover`) for readability.
 - Prefer `--bq-*` CSS custom properties and design tokens over hardcoded values.
@@ -303,14 +340,48 @@ The CSS tab in a `CodeGroup` is for **copy-paste documentation** — it shows us
 
 ## CodeGroup Framework Tabs
 
-Every `CodeLivePreview` must include a `CodeGroup` with tabs for all four frameworks in this order:
+The code shown in `CodeGroup` tabs must align with what `CodeLivePreview` renders. Do not document a different structure, state, or behavior than the preview shows.
 
-1. `HTML`
-2. `React`
-3. `Angular` (always a `ts` block using the standalone `@Component` pattern — see _Angular standalone pattern_ below)
-4. `Vue`
+Use this tab order:
 
-Add an optional `CSS` tab first when custom styles are part of the example and it's important for users to see them in context.
+1. `CSS` — only when the styles are essential for understanding or reusing the example
+2. `JavaScript` — only when the script is long enough to deserve its own tab
+3. `HTML`
+4. `React`
+5. `Angular`
+6. `Vue`
+
+Every fenced code block used as a Mintlify tab must include `expandable` and the correct icon:
+
+| Tab | Opening fence |
+|---|---|
+| CSS | `css styles.css icon="css" expandable` |
+| JavaScript | `javascript script.js icon="js" expandable` |
+| HTML | `html HTML icon="html5" expandable` |
+| React | `jsx React icon="react" expandable` |
+| React with TypeScript | `tsx React icon="react" expandable` |
+| Angular | `ts Angular icon="angular" expandable` |
+| Vue | `vue Vue icon="vuejs" expandable` |
+
+Component pages must include HTML, React, Angular, and Vue tabs unless the page has a documented reason not to. Non-component pages may use focused tabs such as HTML and CSS when framework examples do not add value.
+
+Keep one empty line between each fenced code block inside a `CodeGroup`.
+
+### JavaScript tabs
+
+HTML tabs should include JavaScript inline when the behavior belongs to the HTML example:
+
+```html HTML icon="html5" expandable
+<bq-button id="save">Save</bq-button>
+
+<script>
+  document.querySelector('#save')?.addEventListener('bqClick', () => {
+    console.log('Saved');
+  });
+</script>
+```
+
+Add a separate JavaScript tab only when the script is too long to keep the HTML example readable.
 
 ### Prop naming by framework
 
@@ -325,9 +396,9 @@ Vue component wrappers use camelCase — **never** copy HTML attribute names int
 
 ### Angular standalone pattern
 
-Every Angular tab must be a **`ts`** code block (not `html`) showing a complete standalone `@Component`. This applies even when the example has no class logic — consistency and the canonical import pattern matter more than brevity.
+Every Angular tab must be a **`ts`** code block (not `html`) showing a complete standalone `@Component`. Do not use Angular modules. This applies even when the example has no class logic — consistency and the canonical import pattern matter more than brevity.
 
-```ts Angular icon="angular"
+```ts Angular icon="angular" expandable
 import { Component } from "@angular/core";
 import { BqComponentA } from "@beeq/angular/standalone";
 
@@ -350,6 +421,12 @@ Rules:
 - Use an empty class body `{}` when there is no logic.
 - Use `[propName]="value"` for non-string or dynamic property bindings; plain HTML attributes (`prop-name="value"`) for static strings.
 - Use `(bqEventName)="handler($event)"` for event bindings.
+- Use inline styles in Angular examples unless the CSS is essential to the example and appears in a CSS tab.
+
+### React and Vue styling
+
+- React examples must import the CSS filename shown in the CSS tab when a CSS tab exists, for example `import "./styles.css";`.
+- Vue examples should use inline styles unless the CSS is essential to the example and appears in a CSS tab.
 
 ---
 
@@ -360,7 +437,8 @@ Rules:
 | `Frame` | Wrapping images with captions |
 | `CardGroup` | Side-by-side card layouts |
 | `Card` | Text-only cards (When to use, Best practices, Resources) |
-| `CardTile` | Image-bearing cards in Design guidelines |
+| `CardTile` | Visual option sets, conceptual groups, and image-supported guidance |
+| `AccordionGroup` / `Accordion` | Progressive guidance, usage guidelines, and scannable non-component content |
 | `Steps` / `Step` | Sequential, ordered guidance (e.g., size rules) |
 | `Note` | Neutral important information; automatic behaviors |
 | `Tip` | Actionable suggestions; customization hints |

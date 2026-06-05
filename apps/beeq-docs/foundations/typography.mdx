@@ -1,0 +1,551 @@
+---
+title: Typography
+description: BEEQ typography defines text hierarchy, reading rhythm, and the implementation classes developers use to apply type consistently.
+---
+
+import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
+
+<Frame className="px-4 py-4" caption="BEEQ typography overview">
+  <img
+    className="block dark:hidden"
+    src="/foundations/images/typography/typography-overview.png"
+    alt="BEEQ typography overview - light mode"
+  />
+  <img
+    className="hidden dark:block"
+    src="/foundations/images/typography/typography-overview.png"
+    alt="BEEQ typography overview - dark mode"
+  />
+</Frame>
+
+Typography helps people scan, understand, and act on information. BEEQ uses a shared type system for hierarchy, comfortable reading, and consistent implementation across product interfaces.
+
+The system is built from a typeface, a size scale, line-height tokens, semantic text styles, and utility classes that let you adjust weight or link treatment when a design style needs it.
+
+---
+
+## Typeface and themes
+
+BEEQ's default theme uses [Outfit](https://fonts.google.com/specimen/Outfit), an open-source typeface designed for clear interface text. Outfit is used for headings, body copy, captions, controls, and data-heavy product surfaces.
+
+The Endava theme uses Poppins through the same typography tokens. This keeps the implementation stable while allowing the visual identity to change by theme.
+
+| Theme | Font family token | Typeface |
+| --- | --- | --- |
+| BEEQ default | `--bq-font-family` | Outfit |
+| Endava | `--bq-font-family` | Poppins |
+
+Use typography classes and tokens instead of hardcoded font values. The active theme resolves the font family for you.
+
+---
+
+## Typography reset
+
+BEEQ's Tailwind preset includes an opinionated reset that makes typography predictable before you add any component or layout styles.
+
+| Reset behavior | What it does |
+| --- | --- |
+| `html` sets `font-family` and `font-size` | The page starts with the active theme font and a `16px` base size. |
+| `body` sets text color and line height | Body copy uses `var(--bq-text--primary)` and the regular `150%` line height by default. |
+| `*` removes margin and inherits font styles | Browser spacing and font defaults are removed so BEEQ tokens control the rhythm. |
+| Form controls inherit font styles | Inputs, buttons, selects, and textareas use the same typography as the surrounding interface. |
+| Paragraphs and headings wrap long words | Text is less likely to overflow narrow layouts. |
+
+This reset is why body text does not need a class. Use semantic typography selectors for display, headings, captions, and overlines, then add layout spacing intentionally with BEEQ spacing tokens.
+
+---
+
+## Type scale
+
+BEEQ's type scale moves from large display text to compact supporting text. Larger styles use tighter line height to keep headings visually grouped, while body, caption, and overline styles use a more open line height for readability.
+
+<CodeLivePreview mode="iframe" height="44rem" removePadding code={`
+  <style>
+    body {
+      box-sizing: border-box;
+      padding: 2rem;
+      color: var(--bq-text--primary);
+      background: var(--bq-background--primary);
+    }
+
+    .type-scale {
+      display: grid;
+      gap: 1.25rem;
+      max-width: 48rem;
+    }
+
+    .type-sample {
+      display: grid;
+      gap: 0.25rem;
+    }
+
+    .type-label {
+      color: var(--bq-text--secondary);
+      font-size: var(--bq-font-size--s);
+      line-height: var(--bq-font-line-height--regular);
+    }
+  </style>
+
+  <section class="type-scale" aria-label="BEEQ type scale">
+    <div class="type-sample">
+      <span class="type-label">Display</span>
+      <p class="display">Create better product experiences</p>
+    </div>
+
+    <div class="type-sample">
+      <span class="type-label">H1</span>
+      <h1>Account overview</h1>
+    </div>
+
+    <div class="type-sample">
+      <span class="type-label">H2</span>
+      <h2>Billing and invoices</h2>
+    </div>
+
+    <div class="type-sample">
+      <span class="type-label">Body</span>
+      <p>Use body text for most interface copy, descriptions, instructions, and longer reading surfaces.</p>
+    </div>
+
+    <div class="type-sample">
+      <span class="type-label">Caption</span>
+      <p class="caption">Updated 2 minutes ago</p>
+    </div>
+
+    <div class="type-sample">
+      <span class="type-label">Overline</span>
+      <p class="overline">Workspace settings</p>
+    </div>
+  </section>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <section class="type-scale" aria-label="BEEQ type scale">
+      <div class="type-sample">
+        <span class="type-label">Display</span>
+        <p class="display">Create better product experiences</p>
+      </div>
+
+      <div class="type-sample">
+        <span class="type-label">H1</span>
+        <h1>Account overview</h1>
+      </div>
+
+      <div class="type-sample">
+        <span class="type-label">H2</span>
+        <h2>Billing and invoices</h2>
+      </div>
+
+      <div class="type-sample">
+        <span class="type-label">Body</span>
+        <p>Use body text for most interface copy, descriptions, instructions, and longer reading surfaces.</p>
+      </div>
+
+      <div class="type-sample">
+        <span class="type-label">Caption</span>
+        <p class="caption">Updated 2 minutes ago</p>
+      </div>
+
+      <div class="type-sample">
+        <span class="type-label">Overline</span>
+        <p class="overline">Workspace settings</p>
+      </div>
+    </section>
+    ```
+
+    ```css CSS icon="css" expandable
+    .type-scale {
+      display: grid;
+      gap: 1.25rem;
+      max-width: 48rem;
+    }
+
+    .type-sample {
+      display: grid;
+      gap: 0.25rem;
+    }
+
+    .type-label {
+      color: var(--bq-text--secondary);
+      font-size: var(--bq-font-size--s);
+      line-height: var(--bq-font-line-height--regular);
+    }
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+| Style | Selector | Size token | Value | Line height |
+| --- | --- | --- | --- | --- |
+| Display | `.display` | `--bq-font-size--xxl5` | `64px` | `--bq-font-line-height--small` / `120%` |
+| H1 | `h1`, `.h1` | `--bq-font-size--xxl4` | `56px` | `--bq-font-line-height--small` / `120%` |
+| H2 | `h2`, `.h2` | `--bq-font-size--xxl3` | `48px` | `--bq-font-line-height--small` / `120%` |
+| H3 | `h3`, `.h3` | `--bq-font-size--xxl2` | `40px` | `--bq-font-line-height--small` / `120%` |
+| H4 | `h4`, `.h4` | `--bq-font-size--xxl` | `32px` | `--bq-font-line-height--small` / `120%` |
+| H5 | `h5`, `.h5` | `--bq-font-size--xl` | `24px` | `--bq-font-line-height--regular` / `150%` |
+| H6 | `h6`, `.h6` | `--bq-font-size--l` | `18px` | `--bq-font-line-height--regular` / `150%` |
+| Body | default text | `--bq-font-size--m` | `16px` | `--bq-font-line-height--regular` / `150%` |
+| Caption | `figcaption`, `.caption` | `--bq-font-size--s` | `14px` | `--bq-font-line-height--regular` / `150%` |
+| Overline | `.overline` | `--bq-font-size--xs` | `12px` | `--bq-font-line-height--regular` / `150%` |
+
+---
+
+## Text styles
+
+### Display
+
+Display text is the largest style in the system. Use it for short, high-impact messages, marketing moments, editorial layouts, or large numerals where the text needs strong visual presence.
+
+<Frame caption="Display text style">
+  <img
+    className="block dark:hidden"
+    src="/foundations/images/typography/typography-style-display.png"
+    alt="Display text style - light mode"
+  />
+  <img
+    className="hidden dark:block"
+    src="/foundations/images/typography/typography-style-display.png"
+    alt="Display text style - dark mode"
+  />
+</Frame>
+
+### Headings
+
+Headings create structure and help readers scan. Use native heading elements for document structure, and use visual heading classes when the visual size needs to differ from the semantic level.
+
+<Frame caption="Heading text styles">
+  <img
+    className="block dark:hidden"
+    src="/foundations/images/typography/typography-style-heading.png"
+    alt="Heading text styles - light mode"
+  />
+  <img
+    className="hidden dark:block"
+    src="/foundations/images/typography/typography-style-heading.png"
+    alt="Heading text styles - dark mode"
+  />
+</Frame>
+
+### Body
+
+Body text is the default reading style. Use it for paragraphs, descriptions, helper copy, instructions, empty states, and most product content.
+
+<Frame caption="Body text style">
+  <img
+    className="block dark:hidden"
+    src="/foundations/images/typography/typography-style-body.png"
+    alt="Body text style - light mode"
+  />
+  <img
+    className="hidden dark:block"
+    src="/foundations/images/typography/typography-style-body.png"
+    alt="Body text style - dark mode"
+  />
+</Frame>
+
+### Caption
+
+Caption text supports nearby content. Use it for timestamps, metadata, image captions, short helper details, and lower-emphasis information.
+
+<Frame caption="Caption text style">
+  <img
+    className="block dark:hidden"
+    src="/foundations/images/typography/typography-style-caption.png"
+    alt="Caption text style - light mode"
+  />
+  <img
+    className="hidden dark:block"
+    src="/foundations/images/typography/typography-style-caption.png"
+    alt="Caption text style - dark mode"
+  />
+</Frame>
+
+### Overline
+
+Overline text labels a section before the main heading. Use it for short category labels, context markers, or eyebrow text above a title.
+
+<Frame caption="Overline text style">
+  <img
+    className="block dark:hidden"
+    src="/foundations/images/typography/typography-style-overline.png"
+    alt="Overline text style - light mode"
+  />
+  <img
+    className="hidden dark:block"
+    src="/foundations/images/typography/typography-style-overline.png"
+    alt="Overline text style - dark mode"
+  />
+</Frame>
+
+---
+
+## Using typography in code
+
+BEEQ applies body typography globally through its base styles. For headings, use native heading tags when they match the document structure. Use BEEQ's visual classes when the visual hierarchy and semantic hierarchy need to be different.
+
+<CodeLivePreview mode="iframe" height="22rem" removePadding code={`
+  <style>
+    body {
+      padding: var(--bq-spacing-m);
+    }
+
+    .article-preview {
+      display: grid;
+      gap: var(--bq-spacing-m);
+      max-width: 44rem;
+    }
+  </style>
+
+  <article class="article-preview">
+    <p class="overline">Release notes</p>
+    <h2 class="h1">Payments dashboard updates</h2>
+    <p>
+      This section is semantically part of the page's second level, but it uses the H1 visual style because it starts a major content area.
+    </p>
+    <p class="caption">Published on June 4, 2026</p>
+  </article>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <article class="article-preview">
+      <p class="overline">Release notes</p>
+      <h2 class="h1">Payments dashboard updates</h2>
+      <p>
+        This section is semantically part of the page's second level, but it uses the H1 visual style because it starts a major content area.
+      </p>
+      <p class="caption">Published on June 4, 2026</p>
+    </article>
+    ```
+
+    ```css CSS icon="css" expandable
+    .article-preview {
+      display: grid;
+      gap: var(--bq-spacing-m);
+      max-width: 44rem;
+    }
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+Weight modifiers can be applied to BEEQ's semantic text styles. The typography implementation intentionally supports `.semibold` and `.bold` on display, heading, caption, and overline styles.
+
+<CodeLivePreview mode="iframe" height="20rem" removePadding code={`
+  <style>
+    body {
+      padding: var(--bq-spacing-m);
+    }
+
+    .weight-stack {
+      display: grid;
+      gap: var(--bq-spacing-m);
+      max-width: 36rem;
+    }
+  </style>
+
+  <div class="weight-stack">
+    <p class="h4">Regular heading text is the default.</p>
+    <p class="h4 semibold">Semibold heading text adds emphasis.</p>
+    <p class="h4 bold">Bold heading text creates stronger emphasis.</p>
+    <p class="caption semibold">Semibold caption text can label compact metadata.</p>
+    <p><a class="caption bq-link bold" href="#">Bold caption link text keeps compact actions visible.</a></p>
+  </div>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <div class="weight-stack">
+      <p class="h4">Regular heading text is the default.</p>
+      <p class="h4 semibold">Semibold heading text adds emphasis.</p>
+      <p class="h4 bold">Bold heading text creates stronger emphasis.</p>
+      <p class="caption semibold">Semibold caption text can label compact metadata.</p>
+      <p><a class="caption bq-link bold" href="#">Bold caption link text keeps compact actions visible.</a></p>
+    </div>
+    ```
+
+    ```css CSS icon="css" expandable
+    .weight-stack {
+      display: grid;
+      gap: var(--bq-spacing-m);
+      max-width: 36rem;
+    }
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+---
+
+## Design text styles in code
+
+Design tools may name text styles as combinations such as `body-medium`, `caption-link-regular`, or `h1-bold`. In code, these styles are composed from BEEQ's semantic type styles plus intentional weight and link treatment.
+
+`medium` styles in design use a `500` font weight, but BEEQ's semantic typography selectors do not define a `.medium` modifier. Use the `medium` weight token only when you need to match a design text style exactly. For standard BEEQ typography modifiers, use `.semibold` or `.bold`.
+
+For exact medium-weight matches, apply `font-weight: var(--bq-font-weight--medium)` in a scoped class for that specific use case.
+
+Use `.bq-link` for BEEQ-styled links. It applies brand color, focus styling, and an animated underline that matches the design system.
+
+| Design style | Code composition | Notes |
+| --- | --- | --- |
+| `display-regular` | `display` | Largest display style with regular weight. |
+| `display-medium` | `display` + medium weight token | Design style only; no dedicated `.medium` typography modifier. |
+| `display-bold` | `display bold` | Use sparingly for strong visual impact. |
+| `h1-regular` | `h1` or `.h1` | Native `h1` applies the same visual style. |
+| `h1-medium` | `h1` or `.h1` + medium weight token | Design style only; no dedicated `.medium` typography modifier. |
+| `h1-bold` | `h1 bold` or `.h1 bold` | Use for high-emphasis headings. |
+| `body-regular` | body default or `text-m leading-regular` | Body text is the default page text style. |
+| `body-medium` | body default + medium weight token | Design style only; body does not have a semantic `.medium` modifier. |
+| `body-bold` | body default + bold weight token | Use for strong emphasis inside body copy. |
+| `body-link-regular` | `bq-link` | Brand-colored link treatment with animated underline. |
+| `body-link-medium` | `bq-link` + medium weight token | Design style only; use when the design requires `500`. |
+| `body-link-bold` | `bq-link` + bold weight token | Reserve for high-priority links. |
+| `caption-regular` | `caption` | Supporting text and metadata. |
+| `caption-medium` | `caption` + medium weight token | Design style only; no dedicated `.medium` typography modifier. |
+| `caption-bold` | `caption bold` | Compact text with strong emphasis. |
+| `caption-link-regular` | `caption bq-link` | Supporting link text with BEEQ link styling. |
+| `caption-link-medium` | `caption bq-link` + medium weight token | Design style only; use when the design requires `500`. |
+| `caption-link-bold` | `caption bq-link bold` | Supporting link text with strong emphasis. |
+| `overline-regular` | `overline` | Short section labels. |
+| `overline-medium` | `overline` + medium weight token | Design style only; no dedicated `.medium` typography modifier. |
+| `overline-bold` | `overline bold` | Section labels with strong emphasis. |
+
+<Tip>
+  Treat design text-style names as recipes. The implementation starts with BEEQ's semantic typography selectors, then adds the exact weight or link treatment only when the design requires it.
+</Tip>
+
+---
+
+## Hierarchy, line height, and line length
+
+Typography creates hierarchy through size, weight, placement, and color. A larger style can introduce a new section, a heavier weight can highlight a key value, and supporting text can step back with a smaller size or lower-emphasis color.
+
+<Frame className="px-4 py-4" caption="Typography hierarchy">
+  <img
+    className="block dark:hidden"
+    src="/foundations/images/typography/typography-hierarchy.png"
+    alt="Typography hierarchy - light mode"
+  />
+  <img
+    className="hidden dark:block"
+    src="/foundations/images/typography/typography-hierarchy.png"
+    alt="Typography hierarchy - dark mode"
+  />
+</Frame>
+
+Line height keeps text legible. BEEQ uses `120%` for display and larger headings because they need tighter grouping, and `150%` for smaller headings, body, captions, and overlines because they need more reading space.
+
+<Frame className="px-4 py-4" caption="Line height">
+  <img
+    className="block dark:hidden"
+    src="/foundations/images/typography/typography-line-height.png"
+    alt="Line height - light mode"
+  />
+  <img
+    className="hidden dark:block"
+    src="/foundations/images/typography/typography-line-height.png"
+    alt="Line height - dark mode"
+  />
+</Frame>
+
+Line length affects how easily readers move from one line to the next. Aim for 50-90 characters per line for long-form text, including spaces.
+
+<CodeLivePreview mode="iframe" height="10rem" removePadding code={`
+  <style>
+    body {
+      padding: var(--bq-spacing-m);
+    }
+
+    .reading-width {
+      max-width: 68ch;
+    }
+
+    .reading-width h2 {
+      margin-block-end: var(--bq-spacing-m);
+    }
+  </style>
+
+  <article class="reading-width">
+    <h2>Comfortable reading width</h2>
+    <p>
+      Keep long paragraphs narrow enough for the eye to find the next line without effort. This improves comprehension and makes dense product content feel calmer.
+    </p>
+  </article>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <article class="reading-width">
+      <h2>Comfortable reading width</h2>
+      <p>
+        Keep long paragraphs narrow enough for the eye to find the next line without effort. This improves comprehension and makes dense product content feel calmer.
+      </p>
+    </article>
+    ```
+
+    ```css CSS icon="css" expandable
+    .reading-width {
+      max-width: 68ch;
+    }
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Frame className="px-4 py-4" caption="Line length">
+  <img
+    className="block dark:hidden"
+    src="/foundations/images/typography/typography-line-length.png"
+    alt="Line length - light mode"
+  />
+  <img
+    className="hidden dark:block"
+    src="/foundations/images/typography/typography-line-length.png"
+    alt="Line length - dark mode"
+  />
+</Frame>
+
+---
+
+## Usage guidelines
+
+<AccordionGroup>
+  <Accordion title="Use the BEEQ type scale">
+    Use the defined type scale instead of one-off font sizes. Custom sizes can weaken hierarchy, create uneven rhythm, and make product screens harder to maintain.
+  </Accordion>
+  <Accordion title="Keep structure semantic">
+    Use native heading elements in document order. Apply visual classes like `.h1` or `.h2` only when the visual size needs to differ from the semantic level.
+  </Accordion>
+  <Accordion title="Use weight intentionally">
+    Start with the regular weight provided by the semantic style. Use `.semibold` or `.bold` when emphasis helps users scan or compare information.
+  </Accordion>
+  <Accordion title="Keep long text comfortable">
+    Use body text for paragraphs, keep long lines around 50-90 characters, and avoid center alignment for content that wraps across several lines.
+  </Accordion>
+  <Accordion title="Use color as support">
+    Use text color tokens to reinforce hierarchy and status, but do not rely on color as the only signal. Check contrast when text appears on custom backgrounds.
+  </Accordion>
+  <Accordion title="Avoid unnecessary truncation">
+    Let text wrap when possible, especially labels, titles, and critical content. Use truncation only when space is constrained and the full value is available elsewhere.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Accessibility
+
+Typography accessibility depends on readable sizes, sufficient contrast, meaningful structure, and content that remains understandable when layouts change.
+
+- Use semantic headings in order. There should be one main page `h1`, followed by nested heading levels that match the content structure.
+- Keep paragraphs readable with comfortable line length, enough line height, and left alignment for left-to-right languages.
+- Do not use color as the only way to communicate importance, status, or errors.
+- Avoid all-caps text for long labels or paragraphs because it slows reading.
+- Let text wrap when possible. If truncation is necessary, make the full text available through the surrounding experience.
+- Test content at small and large viewport widths so typography still supports scanning and comprehension.
+
+---
+
+## Resources
+
+<CardGroup cols={2}>
+  <Card title="Global CSS variables" icon="code" href="/theming/global-css-variables">
+    Review the font family, size, weight, and line-height custom properties used by BEEQ themes.
+  </Card>
+  <Card title="Tailwind typography source" icon="github" href="https://github.com/Endava/BEEQ/tree/main/packages/beeq-tailwindcss/src/theme/typography">
+    See the source that defines BEEQ's semantic typography selectors.
+  </Card>
+</CardGroup>

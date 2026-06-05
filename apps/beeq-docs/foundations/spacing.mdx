@@ -1,0 +1,466 @@
+---
+title: Spacing
+description: BEEQ spacing defines the rhythm between elements, sections, and layouts using a shared 4px-based scale.
+---
+
+import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
+
+<Frame className="px-4 py-4" caption="BEEQ spacing overview">
+  <img
+    className="block dark:hidden"
+    src="/foundations/images/spacing/spacing-overview.png"
+    alt="BEEQ spacing overview - light mode"
+  />
+  <img
+    className="hidden dark:block"
+    src="/foundations/images/spacing/spacing-overview.png"
+    alt="BEEQ spacing overview - dark mode"
+  />
+</Frame>
+
+Spacing controls how close elements feel, how clearly sections separate, and how easily users can scan an interface. BEEQ uses one shared spacing scale for padding, margin, and gaps so product layouts stay consistent across components and screens.
+
+Use BEEQ spacing tokens instead of one-off pixel values. The scale gives designers and developers the same language for compact details, grouped content, and larger page regions.
+
+---
+
+## 4px grid system
+
+BEEQ spacing is built from a 4px grid. Most values are multiples of 4px, which creates predictable alignment and helps layouts scale cleanly across viewports.
+
+<Frame className="px-4 py-4" caption="BEEQ 4px spacing grid system">
+  <img
+    className="block dark:hidden"
+    src="/foundations/images/spacing/spacing-grid-system.png"
+    alt="BEEQ 4px spacing grid system - light mode"
+  />
+  <img
+    className="hidden dark:block"
+    src="/foundations/images/spacing/spacing-grid-system.png"
+    alt="BEEQ 4px spacing grid system - dark mode"
+  />
+</Frame>
+
+The scale uses T-shirt naming from `xs3` through `xxl4`. Smaller values support tight relationships inside components, while larger values create separation between regions.
+
+<Frame className="px-4 py-4" caption="BEEQ spacing tokens">
+  <img
+    className="block dark:hidden"
+    src="/foundations/images/spacing/spacing-tokens.png"
+    alt="BEEQ spacing tokens - light mode"
+  />
+  <img
+    className="hidden dark:block"
+    src="/foundations/images/spacing/spacing-tokens.png"
+    alt="BEEQ spacing tokens - dark mode"
+  />
+</Frame>
+
+---
+
+## Spacing scale
+
+The current BEEQ spacing scale is exposed as CSS custom properties and Tailwind spacing keys. The same scale powers padding, margin, gap, and BEEQ logical spacing utilities.
+
+| Token | CSS variable | Tailwind key | Value |
+| --- | --- | --- | --- |
+| `xs3` | `--bq-spacing-xs3` | `xs3` | `2px` |
+| `xs2` | `--bq-spacing-xs2` | `xs2` | `4px` |
+| `xs` | `--bq-spacing-xs` | `xs` | `8px` |
+| `s` | `--bq-spacing-s` | `s` | `12px` |
+| `m` | `--bq-spacing-m` | `m` | `16px` |
+| `l` | `--bq-spacing-l` | `l` | `24px` |
+| `xl` | `--bq-spacing-xl` | `xl` | `32px` |
+| `xxl` | `--bq-spacing-xxl` | `xxl` | `40px` |
+| `xxl2` | `--bq-spacing-xxl2` | `xxl2` | `56px` |
+| `xxl3` | `--bq-spacing-xxl3` | `xxl3` | `64px` |
+| `xxl4` | `--bq-spacing-xxl4` | `xxl4` | `72px` |
+
+<CodeLivePreview mode="iframe" height="28rem" removePadding code={`
+  <style>
+    body {
+      box-sizing: border-box;
+      padding: var(--bq-spacing-m);
+      color: var(--bq-text--primary);
+      background: var(--bq-background--primary);
+    }
+
+    .spacing-scale {
+      display: grid;
+      gap: var(--bq-spacing-m);
+      max-width: 42rem;
+    }
+
+    .spacing-row {
+      display: grid;
+      grid-template-columns: 4rem 1fr 4rem;
+      align-items: center;
+      gap: var(--bq-spacing-m);
+    }
+
+    .spacing-bar {
+      block-size: var(--bq-spacing-m);
+      border-radius: var(--bq-radius--full);
+      background: var(--bq-ui--brand);
+    }
+
+    .spacing-bar--xs3 {
+      inline-size: var(--bq-spacing-xs3);
+    }
+
+    .spacing-bar--xs {
+      inline-size: var(--bq-spacing-xs);
+    }
+
+    .spacing-bar--m {
+      inline-size: var(--bq-spacing-m);
+    }
+
+    .spacing-bar--l {
+      inline-size: var(--bq-spacing-l);
+    }
+
+    .spacing-bar--xl {
+      inline-size: var(--bq-spacing-xl);
+    }
+
+    .spacing-bar--xxl2 {
+      inline-size: var(--bq-spacing-xxl2);
+    }
+
+    .spacing-bar--xxl4 {
+      inline-size: var(--bq-spacing-xxl4);
+    }
+
+    .spacing-value {
+      color: var(--bq-text--secondary);
+      font-size: var(--bq-font-size--s);
+    }
+  </style>
+
+  <div class="spacing-scale" aria-label="Representative BEEQ spacing values">
+    <div class="spacing-row">
+      <strong>xs3</strong>
+      <span class="spacing-bar spacing-bar--xs3"></span>
+      <span class="spacing-value">2px</span>
+    </div>
+    <div class="spacing-row">
+      <strong>xs</strong>
+      <span class="spacing-bar spacing-bar--xs"></span>
+      <span class="spacing-value">8px</span>
+    </div>
+    <div class="spacing-row">
+      <strong>m</strong>
+      <span class="spacing-bar spacing-bar--m"></span>
+      <span class="spacing-value">16px</span>
+    </div>
+    <div class="spacing-row">
+      <strong>l</strong>
+      <span class="spacing-bar spacing-bar--l"></span>
+      <span class="spacing-value">24px</span>
+    </div>
+    <div class="spacing-row">
+      <strong>xl</strong>
+      <span class="spacing-bar spacing-bar--xl"></span>
+      <span class="spacing-value">32px</span>
+    </div>
+    <div class="spacing-row">
+      <strong>xxl2</strong>
+      <span class="spacing-bar spacing-bar--xxl2"></span>
+      <span class="spacing-value">56px</span>
+    </div>
+    <div class="spacing-row">
+      <strong>xxl4</strong>
+      <span class="spacing-bar spacing-bar--xxl4"></span>
+      <span class="spacing-value">72px</span>
+    </div>
+  </div>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <div class="spacing-scale" aria-label="Representative BEEQ spacing values">
+      <div class="spacing-row">
+        <strong>xs3</strong>
+        <span class="spacing-bar spacing-bar--xs3"></span>
+        <span class="spacing-value">2px</span>
+      </div>
+      <div class="spacing-row">
+        <strong>xs</strong>
+        <span class="spacing-bar spacing-bar--xs"></span>
+        <span class="spacing-value">8px</span>
+      </div>
+      <div class="spacing-row">
+        <strong>m</strong>
+        <span class="spacing-bar spacing-bar--m"></span>
+        <span class="spacing-value">16px</span>
+      </div>
+      <div class="spacing-row">
+        <strong>l</strong>
+        <span class="spacing-bar spacing-bar--l"></span>
+        <span class="spacing-value">24px</span>
+      </div>
+      <div class="spacing-row">
+        <strong>xl</strong>
+        <span class="spacing-bar spacing-bar--xl"></span>
+        <span class="spacing-value">32px</span>
+      </div>
+      <div class="spacing-row">
+        <strong>xxl2</strong>
+        <span class="spacing-bar spacing-bar--xxl2"></span>
+        <span class="spacing-value">56px</span>
+      </div>
+      <div class="spacing-row">
+        <strong>xxl4</strong>
+        <span class="spacing-bar spacing-bar--xxl4"></span>
+        <span class="spacing-value">72px</span>
+      </div>
+    </div>
+    ```
+
+    ```css CSS icon="css" expandable
+    .spacing-scale {
+      display: grid;
+      gap: var(--bq-spacing-m);
+      max-width: 42rem;
+    }
+
+    .spacing-bar--xs3 {
+      inline-size: var(--bq-spacing-xs3);
+    }
+
+    .spacing-bar--xs {
+      inline-size: var(--bq-spacing-xs);
+    }
+
+    .spacing-bar--m {
+      inline-size: var(--bq-spacing-m);
+    }
+
+    .spacing-bar--l {
+      inline-size: var(--bq-spacing-l);
+    }
+
+    .spacing-bar--xl {
+      inline-size: var(--bq-spacing-xl);
+    }
+
+    .spacing-bar--xxl2 {
+      inline-size: var(--bq-spacing-xxl2);
+    }
+
+    .spacing-bar--xxl4 {
+      inline-size: var(--bq-spacing-xxl4);
+    }
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+---
+
+## Using spacing in code
+
+BEEQ exposes one spacing scale. Gap utilities do not use separate gap tokens; they use the same values as padding and margin.
+
+| Use case | Example |
+| --- | --- |
+| CSS custom property | `padding: var(--bq-spacing-m);` |
+| Tailwind padding | `p-m`, `px-l`, `py-xs` |
+| Tailwind margin | `m-l`, `mt-xl`, `mb-xs2` |
+| Tailwind gap | `gap-m`, `gap-xl` |
+| Logical padding | `p-b-m`, `p-bs-xs`, `p-be-l`, `p-i-m` |
+| Logical margin | `m-b-l`, `m-bs-m`, `m-be-xl`, `m-i-m` |
+
+Use logical utilities for layouts that need to adapt to writing direction or avoid left/right assumptions. Use CSS custom properties when writing custom CSS outside Tailwind utility composition.
+
+<CodeLivePreview mode="iframe" height="24rem" removePadding code={`
+  <style>
+    body {
+      box-sizing: border-box;
+      padding: var(--bq-spacing-m);
+      color: var(--bq-text--primary);
+      background: var(--bq-background--primary);
+    }
+
+    .settings-panel {
+      max-width: 34rem;
+    }
+
+    .settings-panel__content {
+      display: grid;
+      gap: var(--bq-spacing-xs);
+    }
+
+    .settings-panel__description {
+      color: var(--bq-text--secondary);
+    }
+  </style>
+
+  <bq-card class="settings-panel">
+    <div class="settings-panel__content">
+      <h2>Workspace settings</h2>
+      <p class="settings-panel__description">
+        The card owns its internal padding. The content controls the smaller gap between related text.
+      </p>
+      <bq-button appearance="primary">Save changes</bq-button>
+    </div>
+  </bq-card>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <bq-card class="settings-panel">
+      <div class="settings-panel__content">
+        <h2>Workspace settings</h2>
+        <p class="settings-panel__description">
+          The card owns its internal padding. The content controls the smaller gap between related text.
+        </p>
+        <bq-button appearance="primary">Save changes</bq-button>
+      </div>
+    </bq-card>
+    ```
+
+    ```css CSS icon="css" expandable
+    .settings-panel {
+      max-width: 34rem;
+    }
+
+    .settings-panel__content {
+      display: grid;
+      gap: var(--bq-spacing-xs);
+    }
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+---
+
+## Internal and external spacing
+
+Internal spacing is the space inside an element or component. It usually uses smaller values because the content is related. External spacing is the space between elements, groups, or page regions. It usually uses larger values to create separation and improve scanability.
+
+Component internals already use BEEQ spacing. When you build custom layouts, use the same scale so page-level rhythm matches the components inside it.
+
+<Frame className="px-4 py-4" caption="Spacing inside and between components">
+  <img
+    className="block dark:hidden"
+    src="/foundations/images/spacing/spacing-usage-overview.png"
+    alt="Spacing inside and between components - light mode"
+  />
+  <img
+    className="hidden dark:block"
+    src="/foundations/images/spacing/spacing-usage-overview.png"
+    alt="Spacing inside and between components - dark mode"
+  />
+</Frame>
+
+<CodeLivePreview mode="iframe" height="24rem" removePadding code={`
+  <style>
+    body {
+      box-sizing: border-box;
+      padding: var(--bq-spacing-m);
+      color: var(--bq-text--primary);
+      background: var(--bq-background--primary);
+    }
+
+    .layout-example {
+      display: grid;
+      gap: var(--bq-spacing-xl);
+      max-width: 42rem;
+    }
+
+    .layout-card__content {
+      display: grid;
+      gap: var(--bq-spacing-xs);
+      padding: var(--bq-spacing-m);
+    }
+
+    .layout-card__content p {
+      color: var(--bq-text--secondary);
+    }
+  </style>
+
+  <div class="layout-example">
+    <bq-card type="minimal">
+      <article class="layout-card__content">
+        <h2>Account health</h2>
+        <p>Small internal gaps keep title and description connected.</p>
+      </article>
+    </bq-card>
+    <bq-card type="minimal">
+      <article class="layout-card__content">
+        <h2>Billing status</h2>
+        <p>The larger external gap separates this card from the previous region.</p>
+      </article>
+    </bq-card>
+  </div>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <div class="layout-example">
+      <bq-card type="minimal">
+        <article class="layout-card__content">
+          <h2>Account health</h2>
+          <p>Small internal gaps keep title and description connected.</p>
+        </article>
+      </bq-card>
+      <bq-card type="minimal">
+        <article class="layout-card__content">
+          <h2>Billing status</h2>
+          <p>The larger external gap separates this card from the previous region.</p>
+        </article>
+      </bq-card>
+    </div>
+    ```
+
+    ```css CSS icon="css" expandable
+    .layout-example {
+      display: grid;
+      gap: var(--bq-spacing-xl);
+      max-width: 42rem;
+    }
+
+    .layout-card__content {
+      display: grid;
+      gap: var(--bq-spacing-xs);
+      padding: var(--bq-spacing-m);
+    }
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+---
+
+## Usage guidelines
+
+<AccordionGroup>
+  <Accordion title="Use the BEEQ scale">
+    Choose spacing values from the BEEQ scale instead of arbitrary pixels. This keeps layout rhythm aligned with components and design tokens.
+  </Accordion>
+  <Accordion title="Group related content with smaller spacing">
+    Use smaller values such as `xs`, `s`, and `m` for labels, descriptions, icon-text pairs, and content that belongs together.
+  </Accordion>
+  <Accordion title="Separate regions with larger spacing">
+    Use larger values such as `l`, `xl`, `xxl`, and above to separate cards, panels, sections, and page regions.
+  </Accordion>
+  <Accordion title="Keep vertical rhythm consistent">
+    Use repeated spacing decisions for similar content patterns. Consistent rhythm makes pages easier to scan and reduces visual noise.
+  </Accordion>
+  <Accordion title="Use logical spacing utilities">
+    Prefer utilities such as `p-b-m`, `p-i-m`, `m-b-l`, and `m-i-l` when spacing should follow block and inline directions instead of physical top, right, bottom, and left.
+  </Accordion>
+  <Accordion title="Avoid arbitrary values">
+    Avoid values like `10px`, `18px`, or `30px` unless there is a clear exception. Custom values make interfaces harder to align and maintain.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Resources
+
+<CardGroup cols={2}>
+  <Card title="Global CSS variables" icon="code" href="/theming/global-css-variables">
+    Review the spacing custom properties used by BEEQ themes.
+  </Card>
+  <Card title="Tailwind spacing source" icon="github" href="https://github.com/Endava/BEEQ/tree/main/packages/beeq-tailwindcss/src/theme/default">
+    See the source that defines the BEEQ spacing scale.
+  </Card>
+</CardGroup>
