@@ -351,11 +351,9 @@ export class BqNotification {
               part="btn-close"
               size="small"
             >
-              <div class="flex">
-                <slot name="btn-close">
-                  <bq-icon aria-hidden="true" name="x" />
-                </slot>
-              </div>
+              <slot class="flex" name="btn-close">
+                <bq-icon aria-hidden="true" name="x" />
+              </slot>
             </bq-button>
           )}
           {/* ICON */}
