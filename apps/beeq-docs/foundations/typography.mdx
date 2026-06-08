@@ -120,56 +120,16 @@ BEEQ's type scale moves from large display text to compact supporting text. Larg
 `}>
   <CodeGroup>
     ```html HTML icon="html5" expandable
-    <section class="type-scale" aria-label="BEEQ type scale">
-      <div class="type-sample">
-        <span class="type-label">Display</span>
-        <p class="display">Create better product experiences</p>
-      </div>
+    <p class="display">Create better product experiences</p>
 
-      <div class="type-sample">
-        <span class="type-label">H1</span>
-        <h1>Account overview</h1>
-      </div>
+    <h1>Account overview</h1>
 
-      <div class="type-sample">
-        <span class="type-label">H2</span>
-        <h2>Billing and invoices</h2>
-      </div>
+    <h2>Billing and invoices</h2>
 
-      <div class="type-sample">
-        <span class="type-label">Body</span>
-        <p>Use body text for most interface copy, descriptions, instructions, and longer reading surfaces.</p>
-      </div>
+    <p class="caption">Updated 2 minutes ago</p>
 
-      <div class="type-sample">
-        <span class="type-label">Caption</span>
-        <p class="caption">Updated 2 minutes ago</p>
-      </div>
+    <p class="overline">Workspace settings</p>
 
-      <div class="type-sample">
-        <span class="type-label">Overline</span>
-        <p class="overline">Workspace settings</p>
-      </div>
-    </section>
-    ```
-
-    ```css CSS icon="css" expandable
-    .type-scale {
-      display: grid;
-      gap: 1.25rem;
-      max-width: 48rem;
-    }
-
-    .type-sample {
-      display: grid;
-      gap: 0.25rem;
-    }
-
-    .type-label {
-      color: var(--bq-text--secondary);
-      font-size: var(--bq-font-size--s);
-      line-height: var(--bq-font-line-height--regular);
-    }
     ```
   </CodeGroup>
 </CodeLivePreview>
@@ -315,14 +275,6 @@ BEEQ applies body typography globally through its base styles. For headings, use
       <p class="caption">Published on June 4, 2026</p>
     </article>
     ```
-
-    ```css CSS icon="css" expandable
-    .article-preview {
-      display: grid;
-      gap: var(--bq-spacing-m);
-      max-width: 44rem;
-    }
-    ```
   </CodeGroup>
 </CodeLivePreview>
 
@@ -350,22 +302,18 @@ Weight modifiers can be applied to BEEQ's semantic text styles. The typography i
   </div>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5" expandable
-    <div class="weight-stack">
-      <p class="h4">Regular heading text is the default.</p>
-      <p class="h4 semibold">Semibold heading text adds emphasis.</p>
-      <p class="h4 bold">Bold heading text creates stronger emphasis.</p>
-      <p class="caption semibold">Semibold caption text can label compact metadata.</p>
-      <p><a class="caption bq-link bold" href="#">Bold caption link text keeps compact actions visible.</a></p>
-    </div>
-    ```
+    ```html HTML icon="html5"
+    <p class="h4">Regular heading text is the default.</p>
 
-    ```css CSS icon="css" expandable
-    .weight-stack {
-      display: grid;
-      gap: var(--bq-spacing-m);
-      max-width: 36rem;
-    }
+    <p class="h4 semibold">Semibold heading text adds emphasis.</p>
+
+    <p class="h4 bold">Bold heading text creates stronger emphasis.</p>
+
+    <p class="caption semibold">Semibold caption text can label compact metadata.</p>
+
+    <p>
+      <a class="caption bq-link bold" href="#">Bold caption link text keeps compact actions visible.</a>
+    </p>
     ```
   </CodeGroup>
 </CodeLivePreview>
@@ -469,19 +417,19 @@ Line length affects how easily readers move from one line to the next. Aim for 5
   </article>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5" expandable
+    ```css CSS icon="css"
+    .reading-width {
+      max-width: 68ch;
+    }
+    ```
+
+    ```html HTML icon="html5"
     <article class="reading-width">
       <h2>Comfortable reading width</h2>
       <p>
         Keep long paragraphs narrow enough for the eye to find the next line without effort. This improves comprehension and makes dense product content feel calmer.
       </p>
     </article>
-    ```
-
-    ```css CSS icon="css" expandable
-    .reading-width {
-      max-width: 68ch;
-    }
     ```
   </CodeGroup>
 </CodeLivePreview>

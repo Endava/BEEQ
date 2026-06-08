@@ -134,15 +134,15 @@ A divider with slot content and `title-alignment="start"` doubles as a lightweig
 
 The simplest use — no attributes or slot content required. The divider renders as a full-width horizontal line.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-divider></bq-divider>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5" expandable
+    ```html HTML icon="html5"
     <bq-divider></bq-divider>
     ```
 
-    ```jsx React icon="react" expandable
+    ```jsx React icon="react"
     import { BqDivider } from "@beeq/react";
 
     <BqDivider />
@@ -163,7 +163,7 @@ The simplest use — no attributes or slot content required. The divider renders
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs" expandable
+    ```vue Vue icon="vuejs"
     <script setup lang="ts">
     import { BqDivider } from "@beeq/vue";
     </script>
@@ -179,7 +179,7 @@ The simplest use — no attributes or slot content required. The divider renders
 
 Set `orientation="vertical"` when the divider separates side-by-side content, such as adjacent actions or columns.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     .divider--vertical-example {
       display: flex;
@@ -196,7 +196,7 @@ Set `orientation="vertical"` when the divider separates side-by-side content, su
   </div>
 `}>
   <CodeGroup>
-    ```css styles.css icon="css" expandable
+    ```css styles.css icon="css"
     .divider--vertical-example {
       display: flex;
       align-items: center;
@@ -206,7 +206,7 @@ Set `orientation="vertical"` when the divider separates side-by-side content, su
     }
     ```
 
-    ```html HTML icon="html5" expandable
+    ```html HTML icon="html5"
     <div class="divider--vertical-example">
       <span>Left</span>
       <bq-divider orientation="vertical"></bq-divider>
@@ -290,7 +290,7 @@ Set `orientation="vertical"` when the divider separates side-by-side content, su
 
 Use `dashed` for a lighter visual boundary. Adjust `stroke-dash-width`, `stroke-dash-gap`, and `stroke-linecap` when the dash pattern needs to match the surrounding interface.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-divider
     dashed
     stroke-dash-width="12"
@@ -299,7 +299,7 @@ Use `dashed` for a lighter visual boundary. Adjust `stroke-dash-width`, `stroke-
   ></bq-divider>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5" expandable
+    ```html HTML icon="html5"
     <bq-divider
       dashed
       stroke-dash-width="12"
@@ -360,7 +360,7 @@ Use `dashed` for a lighter visual boundary. Adjust `stroke-dash-width`, `stroke-
 
 Use `title-alignment` to place title content at the start, middle, or end of the divider.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     bq-divider {
       white-space: nowrap;
@@ -377,19 +377,19 @@ Use `title-alignment` to place title content at the start, middle, or end of the
   </bq-divider>
 `}>
   <CodeGroup>
-    ```css styles.css icon="css" expandable
+    ```css styles.css icon="css"
     bq-divider {
       white-space: nowrap;
     }
     ```
 
-    ```html HTML icon="html5" expandable
+    ```html HTML icon="html5"
     <bq-divider title-alignment="start">Text start</bq-divider>
     <bq-divider title-alignment="middle">Text middle</bq-divider>
     <bq-divider title-alignment="end">Text end</bq-divider>
     ```
 
-    ```jsx React icon="react" expandable
+    ```jsx React icon="react"
     import { BqDivider } from "@beeq/react";
     import "./styles.css";
 
@@ -445,7 +445,7 @@ Use `title-alignment` to place title content at the start, middle, or end of the
 
 Use stroke attributes to match the divider to a specific visual treatment. Set `stroke-basis` to create an **inset** divider — give it the pixel width of the leading icon or avatar in your list so the line starts at the text column rather than the container edge.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-divider
     stroke-color="stroke--brand"
     stroke-thickness="2"
@@ -630,7 +630,7 @@ Use stroke attributes to match the divider to a specific visual treatment. Set `
 | `--bq-divider--title-marginX` | Space between title content and delimiter strokes | `var(--bq-spacing-m)` |
 
 <Tip>
-  Learn more about [styling with shadow parts](/usage-guides/customizations/styles#component-shadow-dom-parts) and [CSS custom properties](/usage-guides/customizations/styles#global-css-custom-properties).
+  Learn more about [styling with shadow parts](/guides/styles#component-shadow-dom-parts) and [CSS custom properties](/guides/styles#global-css-custom-properties).
 </Tip>
 
 ## Resources

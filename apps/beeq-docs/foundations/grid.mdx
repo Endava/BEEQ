@@ -181,27 +181,6 @@ Use a 12-column grid when a screen needs flexible region widths. It lets you cre
   </main>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5" expandable
-    <main class="dashboard-grid" aria-label="Responsive 12-column layout example">
-      <section class="grid-panel grid-panel--wide">
-        <h3>Overview</h3>
-        <p>Spans 8 of 12 columns on wider screens.</p>
-      </section>
-      <aside class="grid-panel grid-panel--side">
-        <h3>Summary</h3>
-        <p>Spans 4 columns beside the overview.</p>
-      </aside>
-      <section class="grid-panel grid-panel--half">
-        <h3>Activity</h3>
-        <p>Spans half the grid.</p>
-      </section>
-      <section class="grid-panel grid-panel--half">
-        <h3>Tasks</h3>
-        <p>Spans half the grid.</p>
-      </section>
-    </main>
-    ```
-
     ```css CSS icon="css" expandable
     .dashboard-grid {
       display: grid;
@@ -248,7 +227,28 @@ Use a 12-column grid when a screen needs flexible region widths. It lets you cre
       }
     }
     ```
-  </CodeGroup>
+
+    ```html HTML icon="html5" expandable
+    <main class="dashboard-grid" aria-label="Responsive 12-column layout example">
+      <section class="grid-panel grid-panel--wide">
+        <h3>Overview</h3>
+        <p>Spans 8 of 12 columns on wider screens.</p>
+      </section>
+      <aside class="grid-panel grid-panel--side">
+        <h3>Summary</h3>
+        <p>Spans 4 columns beside the overview.</p>
+      </aside>
+      <section class="grid-panel grid-panel--half">
+        <h3>Activity</h3>
+        <p>Spans half the grid.</p>
+      </section>
+      <section class="grid-panel grid-panel--half">
+        <h3>Tasks</h3>
+        <p>Spans half the grid.</p>
+      </section>
+    </main>
+    ```
+</CodeGroup>
 </CodeLivePreview>
 
 ---
@@ -318,16 +318,7 @@ Use native CSS Grid for page structure and BEEQ spacing tokens for gutters, marg
   </article>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5" expandable
-    <article class="content-container">
-      <h2>Centered content container</h2>
-      <p>
-        Use max-inline-size to control reading width, margin-inline to center the region, and BEEQ spacing tokens for responsive edge spacing.
-      </p>
-    </article>
-    ```
-
-    ```css CSS icon="css" expandable
+    ```css CSS icon="css"
     .content-container {
       max-inline-size: 46rem;
       margin-inline: auto;
@@ -335,7 +326,16 @@ Use native CSS Grid for page structure and BEEQ spacing tokens for gutters, marg
       padding-inline: clamp(var(--bq-spacing-m), 4vw, var(--bq-spacing-xl));
     }
     ```
-  </CodeGroup>
+
+    ```html HTML icon="html5"
+    <article class="content-container">
+      <h2>Centered content container</h2>
+      <p>
+        Use max-inline-size to control reading width, margin-inline to center the region, and BEEQ spacing tokens for responsive edge spacing.
+      </p>
+    </article>
+    ```
+</CodeGroup>
 </CodeLivePreview>
 
 Use gutters to separate layout regions. Do not place content inside the gutter itself.
@@ -408,29 +408,6 @@ Use gutters to separate layout regions. Do not place content inside the gutter i
   </section>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5" expandable
-    <section class="gutter-example">
-      <div>
-        <h2>Gutters use the spacing scale</h2>
-        <p>Each card stays inside its column. The gap creates separation between regions.</p>
-      </div>
-      <div class="gutter-row">
-        <article class="gutter-item">
-          <h3>Column 1</h3>
-          <p>Content begins inside the column.</p>
-        </article>
-        <article class="gutter-item">
-          <h3>Column 2</h3>
-          <p>The gutter remains empty space.</p>
-        </article>
-        <article class="gutter-item">
-          <h3>Column 3</h3>
-          <p>Spacing uses BEEQ tokens.</p>
-        </article>
-      </div>
-    </section>
-    ```
-
     ```css CSS icon="css" expandable
     .gutter-example {
       display: grid;
@@ -457,7 +434,30 @@ Use gutters to separate layout regions. Do not place content inside the gutter i
       line-height: var(--bq-font-line-height--regular);
     }
     ```
-  </CodeGroup>
+
+    ```html HTML icon="html5" expandable
+    <section class="gutter-example">
+      <div>
+        <h2>Gutters use the spacing scale</h2>
+        <p>Each card stays inside its column. The gap creates separation between regions.</p>
+      </div>
+      <div class="gutter-row">
+        <article class="gutter-item">
+          <h3>Column 1</h3>
+          <p>Content begins inside the column.</p>
+        </article>
+        <article class="gutter-item">
+          <h3>Column 2</h3>
+          <p>The gutter remains empty space.</p>
+        </article>
+        <article class="gutter-item">
+          <h3>Column 3</h3>
+          <p>Spacing uses BEEQ tokens.</p>
+        </article>
+      </div>
+    </section>
+    ```
+</CodeGroup>
 </CodeLivePreview>
 
 ---
@@ -567,23 +567,6 @@ Responsive layouts use one content structure that reflows as space changes. This
   </section>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5" expandable
-    <section class="responsive-layout" aria-label="Stacked to columns responsive layout">
-      <article class="responsive-card">
-        <h3>Profile</h3>
-        <p>Stacks first on narrow screens.</p>
-      </article>
-      <article class="responsive-card">
-        <h3>Security</h3>
-        <p>Moves into columns when space allows.</p>
-      </article>
-      <article class="responsive-card">
-        <h3>Billing</h3>
-        <p>Keeps the same source order in both layouts.</p>
-      </article>
-    </section>
-    ```
-
     ```css CSS icon="css" expandable
     .responsive-layout {
       display: grid;
@@ -612,7 +595,24 @@ Responsive layouts use one content structure that reflows as space changes. This
       }
     }
     ```
-  </CodeGroup>
+
+    ```html HTML icon="html5" expandable
+    <section class="responsive-layout" aria-label="Stacked to columns responsive layout">
+      <article class="responsive-card">
+        <h3>Profile</h3>
+        <p>Stacks first on narrow screens.</p>
+      </article>
+      <article class="responsive-card">
+        <h3>Security</h3>
+        <p>Moves into columns when space allows.</p>
+      </article>
+      <article class="responsive-card">
+        <h3>Billing</h3>
+        <p>Keeps the same source order in both layouts.</p>
+      </article>
+    </section>
+    ```
+</CodeGroup>
 </CodeLivePreview>
 
 ### Adaptive

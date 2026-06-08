@@ -102,7 +102,7 @@ Use `placement="start"` (default) to left-align horizontal tabs or top-align ver
 
 ### Default
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       flex-direction: column !important;
@@ -121,7 +121,7 @@ Use `placement="start"` (default) to left-align horizontal tabs or top-align ver
   </bq-tab-group>
 `}>
   <CodeGroup>
-```html HTML icon="html5"
+```html HTML icon="html5" expandable
 <bq-tab-group value="5">
   <bq-tab tab-id="1">Tab</bq-tab>
   <bq-tab tab-id="2">Tab</bq-tab>
@@ -133,7 +133,7 @@ Use `placement="start"` (default) to left-align horizontal tabs or top-align ver
   <bq-tab tab-id="8">Tab</bq-tab>
 </bq-tab-group>
 ```
-```tsx React icon="react"
+```tsx React icon="react" expandable
 import { BqTab, BqTabGroup } from "@beeq/react";
 
 export default () => (
@@ -149,7 +149,7 @@ export default () => (
   </BqTabGroup>
 );
 ```
-```ts Angular icon="angular"
+```ts Angular icon="angular" expandable
 import { Component } from "@angular/core";
 import { BqTab, BqTabGroup } from "@beeq/angular/standalone";
 
@@ -172,7 +172,7 @@ import { BqTab, BqTabGroup } from "@beeq/angular/standalone";
 })
 export class AppComponent {}
 ```
-```vue Vue icon="vuejs"
+```vue Vue icon="vuejs" expandable
 <script setup lang="ts">
 import { BqTab, BqTabGroup } from "@beeq/vue";
 </script>
@@ -199,7 +199,7 @@ import { BqTab, BqTabGroup } from "@beeq/vue";
 
 Tabs support an optional icon displayed before the label via the `icon` slot.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       flex-direction: column !important;
@@ -238,7 +238,7 @@ Tabs support an optional icon displayed before the label via the `icon` slot.
   </bq-tab-group>
 `}>
   <CodeGroup>
-```html HTML icon="html5"
+```html HTML icon="html5" expandable
 <bq-tab-group value="5" size="small">
   <bq-tab tab-id="1">
     <bq-icon name="pulse" slot="icon"></bq-icon>
@@ -270,7 +270,7 @@ Tabs support an optional icon displayed before the label via the `icon` slot.
   </bq-tab>
 </bq-tab-group>
 ```
-```tsx React icon="react"
+```tsx React icon="react" expandable
 import { BqIcon, BqTab, BqTabGroup } from "@beeq/react";
 
 export default () => (
@@ -306,7 +306,7 @@ export default () => (
   </BqTabGroup>
 );
 ```
-```ts Angular icon="angular"
+```ts Angular icon="angular" expandable
 import { Component } from "@angular/core";
 import { BqIcon, BqTab, BqTabGroup } from "@beeq/angular/standalone";
 
@@ -349,7 +349,7 @@ import { BqIcon, BqTab, BqTabGroup } from "@beeq/angular/standalone";
 })
 export class AppComponent {}
 ```
-```vue Vue icon="vuejs"
+```vue Vue icon="vuejs" expandable
 <script setup lang="ts">
 import { BqIcon, BqTab, BqTabGroup } from "@beeq/vue";
 </script>
@@ -392,7 +392,7 @@ import { BqIcon, BqTab, BqTabGroup } from "@beeq/vue";
 
 ### Sizes
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       flex-direction: column !important;
@@ -417,7 +417,7 @@ import { BqIcon, BqTab, BqTabGroup } from "@beeq/vue";
   </bq-tab-group>
 `}>
   <CodeGroup>
-```html HTML icon="html5"
+```html HTML icon="html5" expandable
 <!-- Small -->
 <bq-tab-group size="small" value="1">
   <bq-tab tab-id="1">Tab</bq-tab>
@@ -439,7 +439,7 @@ import { BqIcon, BqTab, BqTabGroup } from "@beeq/vue";
   <bq-tab tab-id="3">Long Tab name</bq-tab>
 </bq-tab-group>
 ```
-```tsx React icon="react"
+```tsx React icon="react" expandable
 import { BqTab, BqTabGroup } from "@beeq/react";
 
 export default () => (
@@ -467,7 +467,7 @@ export default () => (
   </>
 );
 ```
-```ts Angular icon="angular"
+```ts Angular icon="angular" expandable
 import { Component } from "@angular/core";
 import { BqTab, BqTabGroup } from "@beeq/angular/standalone";
 
@@ -497,7 +497,7 @@ import { BqTab, BqTabGroup } from "@beeq/angular/standalone";
 })
 export class AppComponent {}
 ```
-```vue Vue icon="vuejs"
+```vue Vue icon="vuejs" expandable
 <script setup lang="ts">
 import { BqTab, BqTabGroup } from "@beeq/vue";
 </script>
@@ -532,7 +532,7 @@ import { BqTab, BqTabGroup } from "@beeq/vue";
 
 Set `orientation="vertical"` on `bq-tab-group` to stack tabs in a column beside the content area.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       align-items: flex-start !important;
@@ -554,7 +554,7 @@ Set `orientation="vertical"` on `bq-tab-group` to stack tabs in a column beside 
   <bq-tab tab-id="4" disabled>Tab</bq-tab>
 </bq-tab-group>
 ```
-```tsx React icon="react"
+```tsx React icon="react" expandable
 import { BqTab, BqTabGroup } from "@beeq/react";
 
 export default () => (
@@ -566,7 +566,7 @@ export default () => (
   </BqTabGroup>
 );
 ```
-```ts Angular icon="angular"
+```ts Angular icon="angular" expandable
 import { Component } from "@angular/core";
 import { BqTab, BqTabGroup } from "@beeq/angular/standalone";
 
@@ -585,7 +585,7 @@ import { BqTab, BqTabGroup } from "@beeq/angular/standalone";
 })
 export class AppComponent {}
 ```
-```vue Vue icon="vuejs"
+```vue Vue icon="vuejs" expandable
 <script setup lang="ts">
 import { BqTab, BqTabGroup } from "@beeq/vue";
 </script>
@@ -606,7 +606,7 @@ import { BqTab, BqTabGroup } from "@beeq/vue";
 
 Use `disable-divider` to hide the underline separator between the tab list and the content area.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       flex-direction: column !important;
@@ -627,7 +627,7 @@ Use `disable-divider` to hide the underline separator between the tab list and t
   <bq-tab tab-id="3">Long Tab name</bq-tab>
 </bq-tab-group>
 ```
-```tsx React icon="react"
+```tsx React icon="react" expandable
 import { BqTab, BqTabGroup } from "@beeq/react";
 
 export default () => (
@@ -638,7 +638,7 @@ export default () => (
   </BqTabGroup>
 );
 ```
-```ts Angular icon="angular"
+```ts Angular icon="angular" expandable
 import { Component } from "@angular/core";
 import { BqTab, BqTabGroup } from "@beeq/angular/standalone";
 
@@ -656,7 +656,7 @@ import { BqTab, BqTabGroup } from "@beeq/angular/standalone";
 })
 export class AppComponent {}
 ```
-```vue Vue icon="vuejs"
+```vue Vue icon="vuejs" expandable
 <script setup lang="ts">
 import { BqTab, BqTabGroup } from "@beeq/vue";
 </script>
@@ -865,7 +865,7 @@ import { BqTab, BqTabGroup } from "@beeq/vue";
 </Expandable>
 
 <Tip>
-  Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).
+  Learn more about [styling with shadow parts](/guides/styles) and [CSS custom properties](/theming/global-css-variables).
 </Tip>
 
 ## Resources

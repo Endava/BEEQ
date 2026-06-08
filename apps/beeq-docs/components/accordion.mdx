@@ -20,7 +20,7 @@ Accordions organize related content into collapsible sections. Each section has 
 
 - **Best for:** FAQs, advanced settings, grouped secondary information, and long pages where not every section needs to stay open.
 - **Use with care:** If people need to compare sections side by side or keep several sections visible while working, an accordion may add friction.
-- **Related components:** Use [tabs](/components/tabs) when content belongs to a small set of peer views, or a simple show/hide pattern when only one section needs to expand.
+- **Related components:** Use [tabs](/components/tab) when content belongs to a small set of peer views, or a simple show/hide pattern when only one section needs to expand.
 
 ## When to use
 
@@ -66,7 +66,11 @@ Each accordion item includes a clickable header and a collapsible panel. The hea
 | **5** | Suffix          | An optional prefix for additional context after the header text (less common than prefix)           |
 | **6** | Expand/Collapse | Icon indicating the current state of the panel and providing a visual affordance for interactivity  |
 
-## Common usage patterns
+## Design guidelines
+
+Use accordions to reduce page density without hiding content that people need to complete the task. Keep each header specific, keep panel content focused, and use `bq-accordion-group` when several accordion items should behave as one coordinated set.
+
+## Usage
 
 The examples below cover the most common ways to use accordions in BEEQ. Start with a single accordion item when sections are independent, and use an accordion group when items should behave as one coordinated set.
 
@@ -74,21 +78,21 @@ The examples below cover the most common ways to use accordions in BEEQ. Start w
 
 Accordion items are collapsed by default. This works best when the heading alone gives enough context for someone to decide whether opening the section is worth it.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-accordion>
     <span slot="header">Accordion title</span>
     <p>This is the accordion panel content. It is hidden by default and revealed when the header is clicked.</p>
   </bq-accordion>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5" expandable
+    ```html HTML icon="html5"
     <bq-accordion>
       <span slot="header">Accordion title</span>
       <p>This is the accordion panel content. It is hidden by default and revealed when the header is clicked.</p>
     </bq-accordion>
     ```
 
-    ```jsx React icon="react" expandable
+    ```jsx React icon="react"
     import { BqAccordion } from "@beeq/react";
 
     <BqAccordion>
@@ -134,21 +138,21 @@ Accordion items are collapsed by default. This works best when the heading alone
 
 Use the `expanded` attribute when a section should start open — for example when the first item contains the most important information or when one section is expected to be reviewed first.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-accordion expanded>
     <span slot="header">Expanded by default</span>
     <p>This panel is visible when the component first renders.</p>
   </bq-accordion>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5" expandable
+    ```html HTML icon="html5"
     <bq-accordion expanded>
       <span slot="header">Expanded by default</span>
       <p>This panel is visible when the component first renders.</p>
     </bq-accordion>
     ```
 
-    ```jsx React icon="react" expandable
+    ```jsx React icon="react"
     import { BqAccordion } from "@beeq/react";
 
     <BqAccordion expanded>
@@ -190,7 +194,9 @@ Use the `expanded` attribute when a section should start open — for example wh
   </CodeGroup>
 </CodeLivePreview>
 
-## Appearance
+## Options
+
+### Appearance
 
 Two appearance values are available:
 - **filled**: (default) adds a background color to the header for a contained look
@@ -200,7 +206,7 @@ Two appearance values are available:
   Since `filled` is the default, there's no need to explicitly set `appearance="filled"` on the component.
 </Tip>
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <div class="flex flex-col gap-4 w-full">
     <bq-accordion expanded>
       <span slot="header">Filled (default)</span>
@@ -290,12 +296,12 @@ Two appearance values are available:
   </CodeGroup>
 </CodeLivePreview>
 
-## Size
+### Size
 
 Accordions support two sizes: `medium` (default) and `small`.
 The `small` size uses more compact padding and a smaller border radius, giving it a tighter look.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <div class="flex flex-col gap-4 w-full">
     <bq-accordion size="medium" expanded>
       <span slot="header">Medium accordion (default)</span>
@@ -381,7 +387,7 @@ The `small` size uses more compact padding and a smaller border radius, giving i
   Use the `small` size in dense layouts or sidebars where space is limited.
 </Note>
 
-## Group
+### Group
 
 Wrap related `bq-accordion` items inside `bq-accordion-group` when they should behave as a coordinated set. By default, only one item can stay open at a time. Add the `multiple` attribute when people may need to keep several sections open while reading or working.
 
@@ -395,7 +401,7 @@ The group also lets you set `appearance`, `size`, and `no-animation` once and ha
 
 Use the default group behavior when the sections are mutually exclusive or when keeping only one panel open helps reduce distraction.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-accordion-group>
     <bq-accordion>
       <span slot="header">Section one</span>
@@ -505,7 +511,7 @@ Use the default group behavior when the sections are mutually exclusive or when 
 
 Allow multiple sections to stay open when people may need to review, reference, or complete information across several panels at once.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-accordion-group multiple>
     <bq-accordion expanded>
       <span slot="header">Section one</span>
@@ -615,12 +621,12 @@ Allow multiple sections to stay open when people may need to review, reference, 
   Use `expand-all` attribute (`expandAll` prop) on the group to open every accordion simultaneously — useful for print views or when people need to scan all content at once.
 </Tip>
 
-## Header slots
+### Header slots
 
 Use the `prefix` slot for adding elements like icons or avatars before the header text, and the `suffix` slot for elements after the text.
 These provide additional context to help people scan and understand the sections.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-accordion-group>
     <bq-accordion>
       <bq-icon name="heart" slot="prefix"></bq-icon>
@@ -773,27 +779,27 @@ These provide additional context to help people scan and understand the sections
   </CodeGroup>
 </CodeLivePreview>
 
-## States
+### States
 
 ### Disabled
 
 Use `disabled` only when a section is temporarily unavailable. The header will not respond to interaction and the `bqOpen` / `bqClose` events will not fire.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-accordion disabled>
     <span slot="header">Disabled accordion</span>
     <p>This content cannot be accessed while the accordion is disabled.</p>
   </bq-accordion>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5" expandable
+    ```html HTML icon="html5"
     <bq-accordion disabled>
       <span slot="header">Disabled accordion</span>
       <p>This content cannot be accessed while the accordion is disabled.</p>
     </bq-accordion>
     ```
 
-    ```jsx React icon="react" expandable
+    ```jsx React icon="react"
     import { BqAccordion } from "@beeq/react";
 
     <BqAccordion disabled>
@@ -835,12 +841,12 @@ Use `disabled` only when a section is temporarily unavailable. The header will n
   </CodeGroup>
 </CodeLivePreview>
 
-## Animation
+### Animation
 
 By default, accordions animate the panel open and closed with a smooth height transition.
 Add the `no-animation` attribute to disable this and make the panel appear/disappear instantly.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <div class="flex flex-col gap-4 w-full">
     <bq-accordion expanded>
       <span slot="header">With animation (default)</span>
@@ -935,7 +941,7 @@ Add the `no-animation` attribute to disable this and make the panel appear/disap
   You can also set `no-animation` on `bq-accordion-group` to disable animation for all child accordions at once.
 </Tip>
 
-## Custom expand/collapse icons
+### Custom expand/collapse icons
 
 The accordion provides two separate slots — `expand` and `collapse` — to replace the default plus/minus icons.
 Use `expand` for the icon shown when the panel is closed and `collapse` for the icon shown when the panel is open.
@@ -947,7 +953,7 @@ Alternatively, combine a single icon in the `expand` slot with the `rotate` prop
   and **it's place in the `expand` slot**, as the rotation is applied to that icon when the accordion is expanded.
 </Note>
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
     <bq-accordion-group>
       <bq-accordion>
         <bq-icon name="folder-simple" slot="expand"></bq-icon>
@@ -1052,7 +1058,7 @@ Alternatively, combine a single icon in the `expand` slot with the `rotate` prop
   </CodeGroup>
 </CodeLivePreview>
 
-## Custom header layout
+### Custom header layout
 
 Sometimes customizations are needed to meet some requirements.
 For example, having the collapse/expand indicator in front instead of at the end (current position).
@@ -1063,7 +1069,7 @@ Developers can [rely on the exposed shadow DOM parts](https://www.beeq.design/3d
  Then, assuming the custom CSS file is imported in the project, we apply the custom class to the accordion to achieve the desired header layout.
 </Note>
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     .my-accordion {
       &::part(header) {
@@ -1288,6 +1294,24 @@ Developers can [rely on the exposed shadow DOM parts](https://www.beeq.design/3d
     </span>
     Do not use an accordion when a simpler show/hide pattern or a tab group would communicate the structure more clearly.
   </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+
+    Keep panel content focused on the promise made by the header so people can scan and decide quickly.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+
+    Do not use vague headers such as "More details" when a specific label would set clearer expectations.
+  </Card>
 </CardGroup>
 
 ## Accessibility
@@ -1467,7 +1491,7 @@ Developers can [rely on the exposed shadow DOM parts](https://www.beeq.design/3d
 </Expandable>
 
 <Tip>
-  Learn more about [styling with shadow parts](/usage-guides/customizations/styles#component-shadow-dom-parts) and [CSS custom properties](/usage-guides/customizations/styles#global-css-custom-properties).
+  Learn more about [styling with shadow parts](/guides/styles#component-shadow-dom-parts) and [CSS custom properties](/guides/styles#global-css-custom-properties).
 </Tip>
 
 ## Resources

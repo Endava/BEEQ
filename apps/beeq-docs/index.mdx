@@ -85,7 +85,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 
     {/* ── Right: browser mockup with live components ── */}
     <div className="w-full bq-hero__mockup-col">
-      <CodeLivePreview code={`
+      <CodeLivePreview mode="shadow" code={`
         <div style="width:100%;background:var(--bq-background--primary);border:1px solid var(--bq-stroke--primary);border-radius:14px;overflow:hidden;box-shadow:0 24px 64px var(--bq-background--secondary);font-family:system-ui,sans-serif">
 
           <!-- Title bar -->
@@ -299,7 +299,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
     {/* Left: code */}
     <div>
       <CodeGroup>
-        ```html CDN (easiest) icon="cloud"
+        ```html HTML icon="html5"
         <!-- 1. Load styles -->
         <link
           rel="stylesheet"
@@ -339,7 +339,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
         export class MyComponent {}
         ```
 
-        ```tsx Vue icon="vuejs"
+        ```vue Vue icon="vuejs"
         import { BqButton } from "@beeq/vue";
 
         <template>
@@ -408,7 +408,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 
     <Tabs>
       <Tab title="Actions">
-        <CodeLivePreview code={`
+        <CodeLivePreview mode="shadow" code={`
           <div style="display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;padding:.25rem 0">
             <bq-button appearance="primary">Primary</bq-button>
             <bq-button appearance="secondary">Secondary</bq-button>
@@ -470,7 +470,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
       </Tab>
 
       <Tab title="Form">
-        <CodeLivePreview code={`
+        <CodeLivePreview mode="shadow" code={`
           <div style="display:flex;flex-direction:column;gap:1.25rem;max-width:440px;width:100%">
             <bq-input placeholder="Enter your email" type="email">
               <label slot="label">Email address</label>
@@ -535,7 +535,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
       </Tab>
 
       <Tab title="Feedback">
-        <CodeLivePreview code={`
+        <CodeLivePreview mode="shadow" code={`
           <div style="display:flex;flex-direction:column;gap:1.5rem;align-items:flex-start;width:100%;max-width:520px">
             <div style="display:flex;gap:.65rem;flex-wrap:wrap;align-items:center">
               <bq-badge background-color="ui--tertiary">New</bq-badge>
@@ -618,7 +618,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
       </Tab>
 
       <Tab title="Display">
-        <CodeLivePreview code={`
+        <CodeLivePreview mode="shadow" code={`
           <div style="display:flex;flex-direction:column;gap:1.5rem;align-items:flex-start;width:100%;max-width:520px">
             <div style="display:flex;gap:.65rem;align-items:center;flex-wrap:wrap">
               <bq-avatar image="https://i.pravatar.cc/150?img=11"></bq-avatar>
@@ -936,7 +936,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
       <Card title="Component Library" icon="puzzle-piece" href="/components">
         Browse all 37 production-ready components with live examples.
       </Card>
-      <Card title="Theming" icon="palette" href="/theming">
+      <Card title="Theming" icon="palette" href="/theming/themes-and-modes">
         Learn how to fully customize BEEQ with CSS tokens for your brand.
       </Card>
       <Card title="GitHub" icon="github" href="https://github.com/Endava/BEEQ">

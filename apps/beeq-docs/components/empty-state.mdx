@@ -103,7 +103,7 @@ Use empty states to orient people quickly, explain why nothing is shown, and mak
 
 Use the default variant when you want the cleanest possible presentation and the title already communicates enough context.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-empty-state>
     Title
   </bq-empty-state>
@@ -119,7 +119,7 @@ Use the default variant when you want the cleanest possible presentation and the
     <BqEmptyState>Title</BqEmptyState>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqEmptyState } from "@beeq/angular/standalone";
 
@@ -156,7 +156,7 @@ Use the default variant when you want the cleanest possible presentation and the
 
 Use body content when the empty state needs a short explanation or a little more guidance about what happens next.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       gap: var(--bq-spacing-xxl4) !important;
@@ -176,7 +176,7 @@ Use body content when the empty state needs a short explanation or a little more
   </bq-empty-state>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-empty-state>
       Title
       <span slot="body">Description</span>
@@ -190,7 +190,7 @@ Use body content when the empty state needs a short explanation or a little more
     </bq-empty-state>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqEmptyState } from "@beeq/react";
 
     <BqEmptyState>
@@ -206,7 +206,7 @@ Use body content when the empty state needs a short explanation or a little more
     </BqEmptyState>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqEmptyState } from "@beeq/angular/standalone";
 
@@ -231,7 +231,7 @@ Use body content when the empty state needs a short explanation or a little more
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqEmptyState } from "@beeq/vue";
     </script>
@@ -257,7 +257,7 @@ Use body content when the empty state needs a short explanation or a little more
 
 Use the footer when the empty state should help people recover immediately. Prefer one primary action. Add a secondary action only when it offers a clearly different path.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       gap: var(--bq-spacing-xxl4) !important;
@@ -297,7 +297,7 @@ Use the footer when the empty state should help people recover immediately. Pref
   </bq-empty-state>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-empty-state size="medium">
       Title
       <span slot="body">
@@ -331,7 +331,7 @@ Use the footer when the empty state should help people recover immediately. Pref
     </bq-empty-state>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqButton, BqEmptyState } from "@beeq/react";
 
     <>
@@ -370,7 +370,7 @@ Use the footer when the empty state should help people recover immediately. Pref
     </>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqEmptyState, BqButton } from "@beeq/angular/standalone";
 
@@ -415,7 +415,7 @@ Use the footer when the empty state should help people recover immediately. Pref
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqButton, BqEmptyState } from "@beeq/vue";
     </script>
@@ -573,7 +573,7 @@ Choose size based on the available space and the prominence of the moment. `medi
 This component does not expose any CSS custom properties.
 
 <Tip>
-  Learn more about [styling with shadow parts](/usage-guides/customizations/styles#component-shadow-dom-parts) and [CSS custom properties](/usage-guides/customizations/styles#global-css-custom-properties).
+  Learn more about [styling with shadow parts](/guides/styles#component-shadow-dom-parts) and [CSS custom properties](/guides/styles#global-css-custom-properties).
 </Tip>
 
 ## Resources

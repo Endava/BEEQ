@@ -116,7 +116,7 @@ The select is composed of a label, an input field, a dropdown panel, and optiona
 
 Enhance user interaction by implementing the default select variant. Perfect for scenarios where you want users to choose from a list of options within a dropdown.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     bq-select::part(panel) { z-index: 12; }
     span {
@@ -215,7 +215,7 @@ Enhance user interaction by implementing the default select variant. Perfect for
 
 Use the `open` attribute to display the select dropdown by default, offering users quick access to the available options without additional clicks. Use `autofocus` to keep the input focused on render.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     bq-select::part(panel) { z-index: 12; }
     span {
@@ -314,7 +314,7 @@ Use the `open` attribute to display the select dropdown by default, offering use
 
 Set an initial `value` for the select component to preselect an option, providing a streamlined user experience and minimizing manual input.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     bq-select::part(panel) { z-index: 12; }
     span {
@@ -412,7 +412,7 @@ Set an initial `value` for the select component to preselect an option, providin
 
 The `displayValue` property (`display-value` attribute) on `bq-option` overrides the value shown inside the input after selection. Use it when the full option content (e.g., multi-line layout) should not be collapsed into the input field.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     bq-select::part(panel) { z-index: 12; }
 
@@ -757,7 +757,7 @@ The `displayValue` property (`display-value` attribute) on `bq-option` overrides
 
 Employ the `disabled` attribute to restrict user interaction with the select component temporarily, useful for scenarios where certain options are unavailable.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     bq-select::part(panel) { z-index: 12; }
     span {
@@ -856,7 +856,7 @@ Employ the `disabled` attribute to restrict user interaction with the select com
 
 Use the `multiple` property to enable multiple selections. Use `keep-open-on-select` to keep the panel open while the user selects options. The `max-tags-visible` attribute controls how many tags are shown before a `+N` overflow tag appears.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     bq-select::part(panel) { z-index: 12; }
     span {
@@ -1092,7 +1092,7 @@ Use the `multiple` property to enable multiple selections. Use `keep-open-on-sel
 
 Use the `prefix` slot to include additional visual elements or context, such as an icon, to provide users with extra visual cues about the field's purpose.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     bq-select::part(panel) { z-index: 12; }
     span {
@@ -1196,7 +1196,7 @@ Use the `prefix` slot to include additional visual elements or context, such as 
 
 Leverage the `suffix` slot to enhance the select component with extra elements. The default suffix is a rotating chevron caret; replace it with any icon to match your design context.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     bq-select::part(panel) { z-index: 12; }
     span {
@@ -1300,7 +1300,7 @@ Leverage the `suffix` slot to enhance the select component with extra elements. 
 
 Use `validation-status` to signal the validation state (`error`, `warning`, or `success`) of the select component, ensuring accurate data input and real-time feedback.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host { gap: var(--bq-spacing-l) !important; }
     bq-select::part(panel) { z-index: 12; }
@@ -1509,7 +1509,7 @@ Use `validation-status` to signal the validation state (`error`, `warning`, or `
 
 Choose this style when you want to include an optional label for additional context, providing users with guidance while maintaining a clean and unobtrusive design.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     bq-select::part(panel) { z-index: 12; }
 
@@ -1644,7 +1644,7 @@ Choose this style when you want to include an optional label for additional cont
 
 Enhance user understanding by incorporating a `bq-tooltip` alongside the label, offering additional information or clarification about the select.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     bq-select::part(panel) { z-index: 12; }
 
@@ -1813,7 +1813,7 @@ Enhance user understanding by incorporating a `bq-tooltip` alongside the label, 
 
 Adjust the panel placement to suit your layout. Use the `placement` attribute to position the dropdown relative to the input — useful when the select is near the bottom of the viewport.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     bq-select::part(panel) { z-index: 12; }
 
@@ -1958,7 +1958,7 @@ Adjust the panel placement to suit your layout. Use the `placement` attribute to
 
 Use this style when you prefer a minimal look and the field's purpose is conveyed by surrounding context — for example, inside a table or toolbar where a visible label would be redundant.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     bq-select::part(panel) { z-index: 12; }
 
@@ -2058,7 +2058,7 @@ Use this style when you prefer a minimal look and the field's purpose is conveye
 
 Select this variant when you don't need additional helper text, giving users a straightforward and uncluttered experience.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     bq-select::part(panel) { z-index: 12; }
   </style>
@@ -2072,7 +2072,7 @@ Select this variant when you don't need additional helper text, giving users a s
   </bq-select>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5" expandable
+    ```html HTML icon="html5"
     <bq-select placeholder="Placeholder">
       <label slot="label">Select label</label>
       <bq-icon name="user-circle" slot="prefix"></bq-icon>
@@ -2137,7 +2137,7 @@ Select this variant when you don't need additional helper text, giving users a s
 
 A readonly select shows the current value but prevents the panel from opening. Use it in review or summary screens where the displayed value is informational and should not be changed.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     bq-select::part(panel) { z-index: 12; }
 
@@ -2237,7 +2237,7 @@ A readonly select shows the current value but prevents the panel from opening. U
 
 Set `disable-clear` to hide the clear button and prevent one-click deselection. Use this when selecting a value is required and removing it should not be trivially easy.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     bq-select::part(panel) { z-index: 12; }
 
@@ -2341,7 +2341,7 @@ Call `preventDefault()` on the `bqInput` event to take full control of option fi
   Set `debounce-time` to throttle how often `bqInput` fires while the user types — `300` ms is a good default for async requests.
 </Tip>
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-select id="custom-select" placeholder="Search options..." debounce-time="300">
     <label slot="label">Custom filtering</label>
     <bq-option value="running" display-value="Running" data-label="Running" data-icon="sneaker-move">
@@ -3012,7 +3012,7 @@ Call `preventDefault()` on the `bqInput` event to take full control of option fi
 </Expandable>
 
 <Tip>
-  Learn more about [styling with shadow parts](/usage-guides/customizations/styles#component-shadow-dom-parts) and [CSS custom properties](/usage-guides/customizations/styles#global-css-custom-properties).
+  Learn more about [styling with shadow parts](/guides/styles#component-shadow-dom-parts) and [CSS custom properties](/guides/styles#global-css-custom-properties).
 </Tip>
 
 ## Resources

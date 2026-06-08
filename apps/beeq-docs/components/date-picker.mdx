@@ -111,7 +111,7 @@ Use the default `single` type when users need to choose one date. This is the be
   - Numeric format: `30/05/2024`, `05-30-2024`, `30.05.2024`, `05.30.2024` (with day/month heuristics)
 </Note>
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-date-picker name="appointment-date" placeholder="Select a date">
     <label slot="label">Appointment date</label>
   </bq-date-picker>
@@ -131,7 +131,7 @@ Use the default `single` type when users need to choose one date. This is the be
     </BqDatePicker>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqDatePicker } from "@beeq/angular/standalone";
 
@@ -148,7 +148,7 @@ Use the default `single` type when users need to choose one date. This is the be
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqDatePicker } from "@beeq/vue";
     </script>
@@ -170,7 +170,7 @@ Use the default `single` type when users need to choose one date. This is the be
 
 Use `type="range"` when users need a start and end date. Set `months="2"` so both months are visible in the panel and the interval is easier to understand.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-date-picker
     months="2"
     name="travel-dates"
@@ -181,7 +181,7 @@ Use `type="range"` when users need a start and end date. Set `months="2"` so bot
   </bq-date-picker>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-date-picker
       months="2"
       name="travel-dates"
@@ -192,7 +192,7 @@ Use `type="range"` when users need a start and end date. Set `months="2"` so bot
     </bq-date-picker>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqDatePicker } from "@beeq/react";
 
     <BqDatePicker
@@ -205,7 +205,7 @@ Use `type="range"` when users need a start and end date. Set `months="2"` so bot
     </BqDatePicker>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqDatePicker } from "@beeq/angular/standalone";
 
@@ -227,7 +227,7 @@ Use `type="range"` when users need a start and end date. Set `months="2"` so bot
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqDatePicker } from "@beeq/vue";
     </script>
@@ -254,7 +254,7 @@ Use `type="range"` when users need a start and end date. Set `months="2"` so bot
 
 Use `type="multi"` when users need to pick several non-consecutive dates. Unlike the single-date picker, the panel stays open while users continue selecting.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-date-picker
     months="2"
     name="training-dates"
@@ -266,7 +266,7 @@ Use `type="multi"` when users need to pick several non-consecutive dates. Unlike
   </bq-date-picker>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-date-picker
       months="2"
       name="training-dates"
@@ -278,7 +278,7 @@ Use `type="multi"` when users need to pick several non-consecutive dates. Unlike
     </bq-date-picker>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqDatePicker } from "@beeq/react";
 
     <BqDatePicker
@@ -292,7 +292,7 @@ Use `type="multi"` when users need to pick several non-consecutive dates. Unlike
     </BqDatePicker>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqDatePicker } from "@beeq/angular/standalone";
 
@@ -315,7 +315,7 @@ Use `type="multi"` when users need to pick several non-consecutive dates. Unlike
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqDatePicker } from "@beeq/vue";
     </script>
@@ -341,7 +341,7 @@ Use `type="multi"` when users need to pick several non-consecutive dates. Unlike
 
 Use `disabled` when the date field should not be interactive, such as when access is restricted based on user permissions or form state.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-date-picker disabled name="disabled-date" placeholder="Select a date" value="2026-05-25">
     <label slot="label">Departure date</label>
   </bq-date-picker>
@@ -361,7 +361,7 @@ Use `disabled` when the date field should not be interactive, such as when acces
     </BqDatePicker>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqDatePicker } from "@beeq/angular/standalone";
 
@@ -378,7 +378,7 @@ Use `disabled` when the date field should not be interactive, such as when acces
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqDatePicker } from "@beeq/vue";
     </script>
@@ -396,7 +396,7 @@ Use `disabled` when the date field should not be interactive, such as when acces
 
 Use `validation-status` when the field should show immediate visual feedback after validation.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       justify-content: flex-start !important;
@@ -419,7 +419,7 @@ Use `validation-status` when the field should show immediate visual feedback aft
   </bq-date-picker>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-date-picker name="date-error" validation-status="error" value="2026-05-25">
       <label slot="label">Error date</label>
     </bq-date-picker>
@@ -433,7 +433,7 @@ Use `validation-status` when the field should show immediate visual feedback aft
     </bq-date-picker>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqDatePicker } from "@beeq/react";
 
     <>
@@ -451,7 +451,7 @@ Use `validation-status` when the field should show immediate visual feedback aft
     </>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqDatePicker } from "@beeq/angular/standalone";
 
@@ -476,7 +476,7 @@ Use `validation-status` when the field should show immediate visual feedback aft
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqDatePicker } from "@beeq/vue";
     </script>
@@ -506,7 +506,7 @@ Use an optional indicator when the date adds context but is not required to comp
   You are responsible for the layout, styling, and accessibility of any custom content placed in the `label` slot.
 </Tip>
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     div[slot="label"] {
       display: flex;
@@ -539,7 +539,7 @@ Use an optional indicator when the date adds context but is not required to comp
     </bq-date-picker>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqDatePicker } from "@beeq/react";
 
     <BqDatePicker name="arrival-date" value="2026-08-10">
@@ -550,7 +550,7 @@ Use an optional indicator when the date adds context but is not required to comp
     </BqDatePicker>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqDatePicker } from "@beeq/angular/standalone";
 
@@ -570,7 +570,7 @@ Use an optional indicator when the date adds context but is not required to comp
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqDatePicker } from "@beeq/vue";
     </script>
@@ -591,7 +591,7 @@ Use an optional indicator when the date adds context but is not required to comp
 
 Combine the label slot with a tooltip when users may need a short explanation before selecting a date.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       min-height: 15rem !important;
@@ -620,7 +620,7 @@ Combine the label slot with a tooltip when users may need a short explanation be
   </bq-date-picker>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-date-picker name="arrival-date-tooltip" value="2026-09-11">
       <div slot="label">
         <label>Arrival date</label>
@@ -633,7 +633,7 @@ Combine the label slot with a tooltip when users may need a short explanation be
     </bq-date-picker>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqDatePicker, BqIcon, BqTooltip } from "@beeq/react";
 
     <BqDatePicker name="arrival-date-tooltip" value="2026-09-11">
@@ -648,7 +648,7 @@ Combine the label slot with a tooltip when users may need a short explanation be
     </BqDatePicker>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqDatePicker, BqIcon, BqTooltip } from "@beeq/angular/standalone";
 
@@ -672,7 +672,7 @@ Combine the label slot with a tooltip when users may need a short explanation be
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqDatePicker, BqIcon, BqTooltip } from "@beeq/vue";
     </script>
@@ -697,7 +697,7 @@ Combine the label slot with a tooltip when users may need a short explanation be
 
 Use a label-less date picker only when the surrounding context already makes the purpose unmistakable, such as within a tightly scoped filter row or a grouped form layout.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       justify-content: flex-start !important;
@@ -720,7 +720,7 @@ Use a label-less date picker only when the surrounding context already makes the
     <BqDatePicker name="date-no-label" placeholder="Select a date" value="2026-10-13" />
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqDatePicker } from "@beeq/angular/standalone";
 
@@ -755,7 +755,7 @@ Use a label-less date picker only when the surrounding context already makes the
 
 Use `locale` to match date formatting and calendar conventions to regional expectations.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       justify-content: flex-start !important;
@@ -778,7 +778,7 @@ Use `locale` to match date formatting and calendar conventions to regional expec
   </bq-date-picker>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-date-picker locale="en-GB" name="locale-gb" value="2026-10-13">
       <label slot="label">en-GB</label>
     </bq-date-picker>
@@ -792,7 +792,7 @@ Use `locale` to match date formatting and calendar conventions to regional expec
     </bq-date-picker>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqDatePicker } from "@beeq/react";
 
     <BqDatePicker locale="en-GB" name="locale-gb" value="2026-10-13">
@@ -808,7 +808,7 @@ Use `locale` to match date formatting and calendar conventions to regional expec
     </BqDatePicker>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqDatePicker } from "@beeq/angular/standalone";
 
@@ -833,7 +833,7 @@ Use `locale` to match date formatting and calendar conventions to regional expec
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqDatePicker } from "@beeq/vue";
     </script>
@@ -859,7 +859,7 @@ Use `locale` to match date formatting and calendar conventions to regional expec
 
 Use `first-day-of-week` to align the calendar grid with regional or business expectations.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       justify-content: flex-start !important;
@@ -888,7 +888,7 @@ Use `first-day-of-week` to align the calendar grid with regional or business exp
     </bq-date-picker>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqDatePicker } from "@beeq/react";
 
     <BqDatePicker firstDayOfWeek={1} locale="en-GB" name="week-monday" value="2026-10-13">
@@ -900,7 +900,7 @@ Use `first-day-of-week` to align the calendar grid with regional or business exp
     </BqDatePicker>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqDatePicker } from "@beeq/angular/standalone";
 
@@ -921,7 +921,7 @@ Use `first-day-of-week` to align the calendar grid with regional or business exp
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqDatePicker } from "@beeq/vue";
     </script>
@@ -943,7 +943,7 @@ Use `first-day-of-week` to align the calendar grid with regional or business exp
 
 By default, the calendar shows only the days of the displayed month. Enable `show-outside-days` when the additional context is helpful.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       justify-content: flex-start !important;
@@ -973,7 +973,7 @@ By default, the calendar shows only the days of the displayed month. Enable `sho
     </BqDatePicker>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqDatePicker } from "@beeq/angular/standalone";
 
@@ -990,7 +990,7 @@ By default, the calendar shows only the days of the displayed month. Enable `sho
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqDatePicker } from "@beeq/vue";
     </script>
@@ -1012,7 +1012,7 @@ By default, the calendar shows only the days of the displayed month. Enable `sho
 
 Use `isDateDisallowed` to make specific dates unavailable for selection. This is useful for holidays, sold-out inventory, blackout periods, or policy restrictions.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       justify-content: flex-start !important;
@@ -1042,12 +1042,6 @@ Use `isDateDisallowed` to make specific dates unavailable for selection. This is
   </script>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
-    <bq-date-picker name="disallowed-dates" value="2026-12-12">
-      <label slot="label">Appointment date</label>
-    </bq-date-picker>
-    ```
-
     ```js JavaScript icon="js"
     const datePickerElem = previewRoot.querySelector('bq-date-picker[name="disallowed-dates"]');
     const disallowedDates = ['2026-12-01', '2026-12-25', '2026-12-26'];
@@ -1058,7 +1052,13 @@ Use `isDateDisallowed` to make specific dates unavailable for selection. This is
     };
     ```
 
-    ```jsx React icon="react"
+    ```html HTML icon="html5"
+    <bq-date-picker name="disallowed-dates" value="2026-12-12">
+      <label slot="label">Appointment date</label>
+    </bq-date-picker>
+    ```
+
+    ```jsx React icon="react" expandable
     import { BqDatePicker } from "@beeq/react";
 
     const disallowedDates = ['2026-12-01', '2026-12-25', '2026-12-26'];
@@ -1077,7 +1077,7 @@ Use `isDateDisallowed` to make specific dates unavailable for selection. This is
     </BqDatePicker>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqDatePicker } from "@beeq/angular/standalone";
 
@@ -1105,7 +1105,7 @@ Use `isDateDisallowed` to make specific dates unavailable for selection. This is
     }
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqDatePicker } from "@beeq/vue";
 
@@ -1127,14 +1127,14 @@ Use `isDateDisallowed` to make specific dates unavailable for selection. This is
       </BqDatePicker>
     </template>
     ```
-  </CodeGroup>
+</CodeGroup>
 </CodeLivePreview>
 
 ### Custom display format
 
 Use `formatOptions` when the selected date needs a more descriptive text format in the input field.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       justify-content: flex-start !important;
@@ -1169,17 +1169,7 @@ Use `formatOptions` when the selected date needs a more descriptive text format 
   </script>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
-    <bq-date-picker
-      name="formatted-date"
-      type="single"
-      value="2026-11-18"
-    >
-      <label slot="label">Meeting date</label>
-    </bq-date-picker>
-    ```
-
-    ```js JavaScript icon="js"
+    ```js JavaScript icon="js" expandable
     const datePickerElem = previewRoot.querySelector('bq-date-picker[name="formatted-date"]');
 
     datePickerElem.formatOptions = {
@@ -1190,7 +1180,17 @@ Use `formatOptions` when the selected date needs a more descriptive text format 
     };
     ```
 
-    ```jsx React icon="react"
+    ```html HTML icon="html5"
+    <bq-date-picker
+      name="formatted-date"
+      type="single"
+      value="2026-11-18"
+    >
+      <label slot="label">Meeting date</label>
+    </bq-date-picker>
+    ```
+
+    ```jsx React icon="react" expandable
     import { BqDatePicker } from "@beeq/react";
 
     const formatOptions = {
@@ -1210,7 +1210,7 @@ Use `formatOptions` when the selected date needs a more descriptive text format 
     </BqDatePicker>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqDatePicker } from "@beeq/angular/standalone";
 
@@ -1239,7 +1239,7 @@ Use `formatOptions` when the selected date needs a more descriptive text format 
     }
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqDatePicker } from "@beeq/vue";
 
@@ -1262,7 +1262,7 @@ Use `formatOptions` when the selected date needs a more descriptive text format 
       </BqDatePicker>
     </template>
     ```
-  </CodeGroup>
+</CodeGroup>
 </CodeLivePreview>
 
 <Warning>
@@ -1473,7 +1473,7 @@ Use `formatOptions` when the selected date needs a more descriptive text format 
 </Expandable>
 
 <Tip>
-  Learn more about [styling with shadow parts](/usage-guides/customizations/styles#component-shadow-dom-parts) and [CSS custom properties](/usage-guides/customizations/styles#global-css-custom-properties).
+  Learn more about [styling with shadow parts](/guides/styles#component-shadow-dom-parts) and [CSS custom properties](/guides/styles#global-css-custom-properties).
 </Tip>
 
 ## Resources

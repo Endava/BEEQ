@@ -69,7 +69,11 @@ The label should always communicate the action clearly. Icons should reinforce m
 | **2** | Icon | Optional `prefix` or `suffix` slot content |
 | **3** | Label | The primary communicator of the action |
 
-## Variants
+## Design guidelines
+
+Choose the button variant based on the importance of the action. Use the strongest visual treatment for the main action in a region, keep labels short and specific, and avoid making several actions compete for the same level of emphasis.
+
+## Usage
 
 `appearance` defines the base style of the button. `variant` modifies supported appearances — `ghost` applies to both primary and secondary buttons, while `danger` is reserved for destructive actions on the primary appearance.
 
@@ -77,7 +81,7 @@ The label should always communicate the action clearly. Icons should reinforce m
 
 The highest priority action in a view. Only one per screen or section.
 
-<CodeLivePreview code={`<bq-button>Primary button</bq-button>`}>
+<CodeLivePreview mode="shadow" code={`<bq-button>Primary button</bq-button>`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-button>Primary button</bq-button>
@@ -87,7 +91,7 @@ The highest priority action in a view. Only one per screen or section.
 
     <BqButton>Primary button</BqButton>
     ```
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqButton } from "@beeq/angular/standalone";
 
@@ -122,7 +126,7 @@ Primary also supports `ghost` and `danger` variants:
 - **Danger**: reserved for actions that may result in critical or irreversible consequences, such as deleting important data or confirming a high-risk operation.
 - **Ghost**: a more subtle style for for secondary or less prominent actions that don't require immediate attention.
 
-<CodeLivePreview code={`<bq-button>Primary standard</bq-button>\n<bq-button variant="ghost">Primary ghost</bq-button>\n<bq-button variant="danger">Primary danger</bq-button>`}>
+<CodeLivePreview mode="shadow" code={`<bq-button>Primary standard</bq-button>\n<bq-button variant="ghost">Primary ghost</bq-button>\n<bq-button variant="danger">Primary danger</bq-button>`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-button>Primary standard</bq-button>
@@ -136,7 +140,7 @@ Primary also supports `ghost` and `danger` variants:
     <BqButton variant="ghost">Primary ghost</BqButton>
     <BqButton variant="danger">Primary danger</BqButton>
     ```
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqButton } from "@beeq/angular/standalone";
 
@@ -152,7 +156,7 @@ Primary also supports `ghost` and `danger` variants:
     })
     export class AppComponent {}
     ```
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqButton } from "@beeq/vue";
     </script>
@@ -170,7 +174,7 @@ Primary also supports `ghost` and `danger` variants:
 
 Lower-emphasis actions. Can stand alone or pair with a primary button to perform secondary actions. Supports the `ghost` variant.
 
-<CodeLivePreview code={`<bq-button appearance="secondary">Secondary</bq-button>\n<bq-button appearance="secondary" variant="ghost">Secondary ghost</bq-button>`}>
+<CodeLivePreview mode="shadow" code={`<bq-button appearance="secondary">Secondary</bq-button>\n<bq-button appearance="secondary" variant="ghost">Secondary ghost</bq-button>`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-button appearance="secondary">Secondary</bq-button>
@@ -182,7 +186,7 @@ Lower-emphasis actions. Can stand alone or pair with a primary button to perform
     <BqButton appearance="secondary">Secondary</BqButton>
     <BqButton appearance="secondary" variant="ghost">Secondary ghost</BqButton>
     ```
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqButton } from "@beeq/angular/standalone";
 
@@ -197,7 +201,7 @@ Lower-emphasis actions. Can stand alone or pair with a primary button to perform
     })
     export class AppComponent {}
     ```
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqButton } from "@beeq/vue";
     </script>
@@ -214,7 +218,7 @@ Lower-emphasis actions. Can stand alone or pair with a primary button to perform
 
 Renders as an `<a>` element under the hood when `href` is provided. Still action-oriented, not for plain navigation.
 
-<CodeLivePreview code={`<bq-button appearance="link" href="https://www.example.com" target="_blank">Link button</bq-button>`}>
+<CodeLivePreview mode="shadow" code={`<bq-button appearance="link" href="https://www.example.com" target="_blank">Link button</bq-button>`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-button appearance="link" href="https://www.example.com" target="_blank">
@@ -228,7 +232,7 @@ Renders as an `<a>` element under the hood when `href` is provided. Still action
       Link button
     </BqButton>
     ```
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqButton } from "@beeq/angular/standalone";
 
@@ -244,7 +248,7 @@ Renders as an `<a>` element under the hood when `href` is provided. Still action
     })
     export class AppComponent {}
     ```
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqButton } from "@beeq/vue";
     </script>
@@ -266,7 +270,7 @@ Renders as an `<a>` element under the hood when `href` is provided. Still action
 
 No background or border. Suitable for inline actions, subtle calls to action, or options within a form.
 
-<CodeLivePreview code={`<bq-button appearance="text">Text button</bq-button>`}>
+<CodeLivePreview mode="shadow" code={`<bq-button appearance="text">Text button</bq-button>`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-button appearance="text">Text button</bq-button>
@@ -276,7 +280,7 @@ No background or border. Suitable for inline actions, subtle calls to action, or
 
     <BqButton appearance="text">Text button</BqButton>
     ```
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqButton } from "@beeq/angular/standalone";
 
@@ -302,7 +306,9 @@ No background or border. Suitable for inline actions, subtle calls to action, or
   </CodeGroup>
 </CodeLivePreview>
 
-## Size and shape
+## Options
+
+### Size and shape
 
 ### Sizes
 
@@ -314,7 +320,7 @@ Choose the size that best matches the context. Medium is the default and preferr
 | **Medium** | Default — suitable for most interfaces |
 | **Large** | To increase the significance of an action; use sparingly |
 
-<CodeLivePreview code={`<bq-button size="small">Small</bq-button>\n<bq-button size="medium">Medium</bq-button>\n<bq-button size="large">Large</bq-button>`}>
+<CodeLivePreview mode="shadow" code={`<bq-button size="small">Small</bq-button>\n<bq-button size="medium">Medium</bq-button>\n<bq-button size="large">Large</bq-button>`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-button size="small">Small</bq-button>
@@ -328,7 +334,7 @@ Choose the size that best matches the context. Medium is the default and preferr
     <BqButton size="medium">Medium</BqButton>
     <BqButton size="large">Large</BqButton>
     ```
-    ```ts Angular  icon="angular"
+    ```ts Angular  icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqButton } from "@beeq/angular/standalone";
 
@@ -344,7 +350,7 @@ Choose the size that best matches the context. Medium is the default and preferr
     })
     export class AppComponent {}
     ```
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqButton } from "@beeq/vue";
     </script>
@@ -362,7 +368,7 @@ Choose the size that best matches the context. Medium is the default and preferr
 
 Use the `block` attribute to make the button stretch to its parent width.
 
-<CodeLivePreview code={`<bq-button block>Full width button</bq-button>`}>
+<CodeLivePreview mode="shadow" code={`<bq-button block>Full width button</bq-button>`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-button block>Full width button</bq-button>
@@ -372,7 +378,7 @@ Use the `block` attribute to make the button stretch to its parent width.
 
     <BqButton block>Full width button</BqButton>
     ```
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqButton } from "@beeq/angular/standalone";
 
@@ -402,7 +408,7 @@ Use the `block` attribute to make the button stretch to its parent width.
 
 Use the `border` property to control the corner radius.
 
-<CodeLivePreview code={`<bq-button border="full">Primary</bq-button>\n<bq-button variant="ghost" border="full">Ghost</bq-button>\n<bq-button variant="danger" border="full">Danger</bq-button>\n<bq-button appearance="secondary" border="full">Secondary</bq-button>`}>
+<CodeLivePreview mode="shadow" code={`<bq-button border="full">Primary</bq-button>\n<bq-button variant="ghost" border="full">Ghost</bq-button>\n<bq-button variant="danger" border="full">Danger</bq-button>\n<bq-button appearance="secondary" border="full">Secondary</bq-button>`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-button border="full">Primary</bq-button>
@@ -418,7 +424,7 @@ Use the `border` property to control the corner radius.
     <BqButton variant="danger" border="full">Danger</BqButton>
     <BqButton appearance="secondary" border="full">Secondary</BqButton>
     ```
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqButton } from "@beeq/angular/standalone";
 
@@ -435,7 +441,7 @@ Use the `border` property to control the corner radius.
     })
     export class AppComponent {}
     ```
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqButton } from "@beeq/vue";
     </script>
@@ -450,7 +456,7 @@ Use the `border` property to control the corner radius.
   </CodeGroup>
 </CodeLivePreview>
 
-## States
+### States
 
 For each button appearance and variant, there are five visual states: **enabled**, **hover**, **focus**, **active**, **loading** and **disabled**.
 
@@ -463,7 +469,7 @@ For each button appearance and variant, there are five visual states: **enabled*
 
 The `disabled` attribute can be applied to any button variation. When disabled, no interaction is allowed and the `bqClick` event won't fire.
 
-<CodeLivePreview code={`<bq-button disabled>Primary</bq-button>\n<bq-button variant="ghost" disabled>Ghost</bq-button>\n<bq-button variant="danger" disabled>Danger</bq-button>\n<bq-button appearance="secondary" disabled>Secondary</bq-button>`}>
+<CodeLivePreview mode="shadow" code={`<bq-button disabled>Primary</bq-button>\n<bq-button variant="ghost" disabled>Ghost</bq-button>\n<bq-button variant="danger" disabled>Danger</bq-button>\n<bq-button appearance="secondary" disabled>Secondary</bq-button>`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-button disabled>Primary</bq-button>
@@ -479,7 +485,7 @@ The `disabled` attribute can be applied to any button variation. When disabled, 
     <BqButton variant="danger" disabled>Danger</BqButton>
     <BqButton appearance="secondary" disabled>Secondary</BqButton>
     ```
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqButton } from "@beeq/angular/standalone";
 
@@ -496,7 +502,7 @@ The `disabled` attribute can be applied to any button variation. When disabled, 
     })
     export class AppComponent {}
     ```
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqButton } from "@beeq/vue";
     </script>
@@ -519,7 +525,7 @@ The `disabled` attribute can be applied to any button variation. When disabled, 
 
 Use the `loading` attribute to indicate something is being processed. Pair with `disabled` to prevent duplicate actions.
 
-<CodeLivePreview code={`<bq-button loading>Loading</bq-button>\n<bq-button loading disabled>Loading disabled</bq-button>`}>
+<CodeLivePreview mode="shadow" code={`<bq-button loading>Loading</bq-button>\n<bq-button loading disabled>Loading disabled</bq-button>`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-button loading>Loading</bq-button>
@@ -531,7 +537,7 @@ Use the `loading` attribute to indicate something is being processed. Pair with 
     <BqButton loading>Loading</BqButton>
     <BqButton loading disabled>Loading disabled</BqButton>
     ```
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqButton } from "@beeq/angular/standalone";
 
@@ -546,7 +552,7 @@ Use the `loading` attribute to indicate something is being processed. Pair with 
     })
     export class AppComponent {}
     ```
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqButton } from "@beeq/vue";
     </script>
@@ -559,15 +565,15 @@ Use the `loading` attribute to indicate something is being processed. Pair with 
   </CodeGroup>
 </CodeLivePreview>
 
-## Icons
+### Icons
 
 ### Leading and trailing icons
 
 Use the `prefix` or `suffix` slot to add icons. Icons should reinforce the label — never use them for decoration only.
 
-<CodeLivePreview code={`<bq-button>\n  <bq-icon name="arrow-circle-left" slot="prefix"></bq-icon>\n  Go back\n</bq-button>\n<bq-button>\n  Next step\n  <bq-icon name="arrow-circle-right" slot="suffix"></bq-icon>\n</bq-button>`}>
+<CodeLivePreview mode="shadow" code={`<bq-button>\n  <bq-icon name="arrow-circle-left" slot="prefix"></bq-icon>\n  Go back\n</bq-button>\n<bq-button>\n  Next step\n  <bq-icon name="arrow-circle-right" slot="suffix"></bq-icon>\n</bq-button>`}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-button>
       <bq-icon name="arrow-circle-left" slot="prefix"></bq-icon>
       Go back
@@ -578,7 +584,7 @@ Use the `prefix` or `suffix` slot to add icons. Icons should reinforce the label
       <bq-icon name="arrow-circle-right" slot="suffix"></bq-icon>
     </bq-button>
     ```
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqButton, BqIcon } from "@beeq/react";
 
     <BqButton>
@@ -591,7 +597,7 @@ Use the `prefix` or `suffix` slot to add icons. Icons should reinforce the label
       <BqIcon name="arrow-circle-right" slot="suffix" />
     </BqButton>
     ```
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqButton, BqIcon } from "@beeq/angular/standalone";
 
@@ -615,7 +621,7 @@ Use the `prefix` or `suffix` slot to add icons. Icons should reinforce the label
     })
     export class AppComponent {}
     ```
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqButton, BqIcon } from "@beeq/vue";
     </script>
@@ -640,9 +646,9 @@ Use the `prefix` or `suffix` slot to add icons. Icons should reinforce the label
 Use icon-only buttons only for common, easily recognized actions.
 Always provide a `label` so assistive technologies can announce the action correctly.
 
-<CodeLivePreview code={`<bq-button only-icon label="Notifications">\n  <bq-icon name="bell-ringing"></bq-icon>\n</bq-button>\n<bq-button only-icon variant="ghost" label="Notifications">\n  <bq-icon name="bell-ringing"></bq-icon>\n</bq-button>\n<bq-button only-icon appearance="secondary" label="Notifications">\n  <bq-icon name="bell-ringing"></bq-icon>\n</bq-button>`}>
+<CodeLivePreview mode="shadow" code={`<bq-button only-icon label="Notifications">\n  <bq-icon name="bell-ringing"></bq-icon>\n</bq-button>\n<bq-button only-icon variant="ghost" label="Notifications">\n  <bq-icon name="bell-ringing"></bq-icon>\n</bq-button>\n<bq-button only-icon appearance="secondary" label="Notifications">\n  <bq-icon name="bell-ringing"></bq-icon>\n</bq-button>`}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-button only-icon label="Notifications">
       <bq-icon name="bell-ringing"></bq-icon>
     </bq-button>
@@ -653,7 +659,7 @@ Always provide a `label` so assistive technologies can announce the action corre
       <bq-icon name="bell-ringing"></bq-icon>
     </bq-button>
     ```
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqButton, BqIcon } from "@beeq/react";
 
     <BqButton onlyIcon label="Notifications">
@@ -666,7 +672,7 @@ Always provide a `label` so assistive technologies can announce the action corre
       <BqIcon name="bell-ringing" />
     </BqButton>
     ```
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqButton, BqIcon } from "@beeq/angular/standalone";
 
@@ -688,7 +694,7 @@ Always provide a `label` so assistive technologies can announce the action corre
     })
     export class AppComponent {}
     ```
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqButton, BqIcon } from "@beeq/vue";
     </script>
@@ -770,6 +776,22 @@ Always provide a `label` so assistive technologies can announce the action corre
       Don't
     </span>
     Don't use icons as decoration. Every icon should reinforce the label meaning.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Use icon-only buttons only when the action is familiar and the `label` prop provides an accessible name.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not rely on an icon alone when the action is uncommon, destructive, or easy to misunderstand.
   </Card>
 </CardGroup>
 
@@ -856,7 +878,7 @@ Always provide a `label` so assistive technologies can announce the action corre
 </Expandable>
 
 <Tip>
-  Learn more about [styling with shadow parts](/usage-guides/customizations/styles#component-shadow-dom-parts) and [CSS custom properties](/usage-guides/customizations/styles#global-css-custom-properties).
+  Learn more about [styling with shadow parts](/guides/styles#component-shadow-dom-parts) and [CSS custom properties](/guides/styles#global-css-custom-properties).
 </Tip>
 
 ## Resources

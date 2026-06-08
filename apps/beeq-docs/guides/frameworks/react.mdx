@@ -63,7 +63,7 @@ You can add BEEQ to an existing React project in a few steps:
       @import "@beeq/core/dist/beeq/beeq.css";
       ```
 
-      ```tsx src/main.tsx
+      ```tsx src/main.tsx expandable
       import React from "react";
       import ReactDOM from "react-dom/client";
       import App from "./App";
@@ -101,7 +101,7 @@ You can add BEEQ to an existing React project in a few steps:
         Then copy the BEEQ SVG files from `node_modules` into your build output and set the base path during app startup.
 
         <CodeGroup>
-          ```ts vite.config.ts highlight={3,8-15}
+          ```ts vite.config.ts highlight={3,8-15} expandable
           import { defineConfig } from "vite";
           import react from "@vitejs/plugin-react";
           import { viteStaticCopy } from "vite-plugin-static-copy";
@@ -121,7 +121,7 @@ You can add BEEQ to an existing React project in a few steps:
           });
           ```
 
-          ```tsx src/main.tsx highlight={3,7}
+          ```tsx src/main.tsx highlight={3,7} expandable
           import React from "react";
           import ReactDOM from "react-dom/client";
           import { setBasePath } from "@beeq/core";
@@ -244,7 +244,7 @@ You can add BEEQ to an existing React project in a few steps:
           export { copyBeeqIcons };
 
           ```
-          ```ts vite.config.ts focus={3,8-11}
+          ```ts vite.config.ts focus={3,8-11} expandable
           import react from '@vitejs/plugin-react';
           import { defineConfig } from 'vite';
           import { copyBeeqIcons } from './vite.copyIcons';
@@ -259,7 +259,7 @@ You can add BEEQ to an existing React project in a few steps:
             ],
           });
           ```
-          ```tsx src/main.tsx focus={7}
+          ```tsx src/main.tsx focus={7} expandable
           import React from "react";
           import ReactDOM from "react-dom/client";
           import { setBasePath } from "@beeq/core";
@@ -363,14 +363,14 @@ export function NameField() {
 
 To place content into BEEQ slots in React, pass slot to the child element:
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
 <bq-button>
   Save changes
   <bq-icon name="floppy-disk" slot="suffix" />
 </bq-button>
 `}>
   <CodeGroup>
-    ```tsx highlight={7}
+    ```tsx highlight={7} expandable
     import { BqButton, BqIcon } from "@beeq/react";
 
     export function ContinueButton() {
@@ -505,7 +505,7 @@ Use explicit event types when:
   <Card title="Explore components" href="/components" icon="boxes-stacked" iconType="duotone">
     Start with a real component page to see props, events, slots, and framework examples.
   </Card>
-  <Card title="Customize the theme" href="/theming" icon="palette" iconType="duotone">
+  <Card title="Customize the theme" href="/theming/themes-and-modes" icon="palette" iconType="duotone">
     Review theming options if your product needs brand customization.
   </Card>
   <Card title="Open Storybook" href="https://storybook.beeq.design" icon="book" iconType="duotone">

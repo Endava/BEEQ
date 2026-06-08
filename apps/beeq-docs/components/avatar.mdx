@@ -132,18 +132,18 @@ Avatar supports two primary variants: `Text` for initials and `Image` for profil
 
 Use initials when no uploaded image is available or when the interface is intentionally compact. Pass short values rather than full names; the component trims the visible text based on the selected `size`.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-avatar
     initials="BQ"
     label="Avatar component label"
   ></bq-avatar>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5" expandable
+    ```html HTML icon="html5"
     <bq-avatar initials="BQ" label="Avatar component label"></bq-avatar>
     ```
 
-    ```jsx React icon="react" expandable
+    ```jsx React icon="react"
     import { BqAvatar } from "@beeq/react";
 
     <BqAvatar initials="BQ" label="Avatar component label" />
@@ -167,7 +167,7 @@ Use initials when no uploaded image is available or when the interface is intent
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs" expandable
+    ```vue Vue icon="vuejs"
     <script setup lang="ts">
     import { BqAvatar } from "@beeq/vue";
     </script>
@@ -187,7 +187,7 @@ Use initials when no uploaded image is available or when the interface is intent
 
 When a profile photo or logo is available, pass both `image` and `initials`. The image is shown first, while initials remain a built-in fallback if the image fails to load.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-avatar
     alt-text="User profile"
     image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?auto=format&fit=crop&w=1000&q=80"
@@ -196,7 +196,7 @@ When a profile photo or logo is available, pass both `image` and `initials`. The
   ></bq-avatar>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5" expandable
+    ```html HTML icon="html5"
     <bq-avatar
       alt-text="User profile"
       image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?auto=format&fit=crop&w=1000&q=80"
@@ -259,7 +259,7 @@ When a profile photo or logo is available, pass both `image` and `initials`. The
 
 Avatar supports four sizes (`xsmall`, `small`, `medium`, `large`) and two shapes (`circle`, `square`). Choose size based on context: `small` works well in dense lists and inline layouts; `large` suits profile headers and contact cards where identity is the focal point. Keep shape and size consistent within the same group so the UI feels intentional and easy to scan.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     .avatar--sizes {
       display: flex;
@@ -276,14 +276,14 @@ Avatar supports four sizes (`xsmall`, `small`, `medium`, `large`) and two shapes
   </div>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5" expandable
+    ```html HTML icon="html5"
     <bq-avatar label="Extra small avatar" initials="B" size="xsmall"></bq-avatar>
     <bq-avatar label="Small avatar" initials="BQ" size="small"></bq-avatar>
     <bq-avatar label="Medium square avatar" initials="BQ" shape="square" size="medium"></bq-avatar>
     <bq-avatar label="Large square avatar" initials="BQ" shape="square" size="large"></bq-avatar>
     ```
 
-    ```jsx React icon="react" expandable
+    ```jsx React icon="react"
     import { BqAvatar } from "@beeq/react";
 
     <BqAvatar label="Extra small avatar" initials="B" size="xsmall" />
@@ -333,7 +333,7 @@ Use a grouped avatar pattern when you need to represent multiple participants in
   Avatar grouping is not a built-in feature — the component renders avatars independently. A few lines of CSS are all you need to create an overlapping stack, as shown in the example below.
 </Tip>
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     .avatar--group {
       display: flex;
@@ -555,7 +555,7 @@ Use a grouped avatar pattern when you need to represent multiple participants in
 
 Use the `badge` slot when the avatar needs a compact status or count indicator. `bq-badge` is the most common choice.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-avatar
     alt-text="User profile"
     image="https://i.pravatar.cc/500"
@@ -864,7 +864,7 @@ If the avatar appears alongside other interactive elements such as names, links,
 </Expandable>
 
 <Tip>
-  Learn more about [styling with shadow parts](/usage-guides/customizations/styles#component-shadow-dom-parts) and [CSS custom properties](/usage-guides/customizations/styles#global-css-custom-properties).
+  Learn more about [styling with shadow parts](/guides/styles#component-shadow-dom-parts) and [CSS custom properties](/guides/styles#global-css-custom-properties).
 </Tip>
 
 ## Resources

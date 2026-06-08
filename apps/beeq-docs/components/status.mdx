@@ -92,7 +92,7 @@ Use statuses consistently so people can recognize state changes without pausing 
 
 Use the default neutral status when the message should stay present without strong emphasis.
 
-<CodeLivePreview code={`<bq-status>Neutral status</bq-status>`}>
+<CodeLivePreview mode="shadow" code={`<bq-status>Neutral status</bq-status>`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-status>Neutral status</bq-status>
@@ -104,7 +104,7 @@ Use the default neutral status when the message should stay present without stro
     <BqStatus>Neutral status</BqStatus>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqStatus } from "@beeq/angular/standalone";
 
@@ -143,7 +143,7 @@ Use the `type` prop to communicate the nature of the status message. Each value 
 
 Use `type="alert"` when the message needs immediate attention.
 
-<CodeLivePreview code={`<bq-status type="alert">Alert status</bq-status>`}>
+<CodeLivePreview mode="shadow" code={`<bq-status type="alert">Alert status</bq-status>`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-status type="alert">Alert status</bq-status>
@@ -155,7 +155,7 @@ Use `type="alert"` when the message needs immediate attention.
     <BqStatus type="alert">Alert status</BqStatus>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqStatus } from "@beeq/angular/standalone";
 
@@ -190,7 +190,7 @@ Use `type="alert"` when the message needs immediate attention.
 
 Use `type="danger"` when the state signals risk, failure, or a blocked condition.
 
-<CodeLivePreview code={`<bq-status type="danger">Danger status</bq-status>`}>
+<CodeLivePreview mode="shadow" code={`<bq-status type="danger">Danger status</bq-status>`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-status type="danger">Danger status</bq-status>
@@ -202,7 +202,7 @@ Use `type="danger"` when the state signals risk, failure, or a blocked condition
     <BqStatus type="danger">Danger status</BqStatus>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqStatus } from "@beeq/angular/standalone";
 
@@ -237,7 +237,7 @@ Use `type="danger"` when the state signals risk, failure, or a blocked condition
 
 Use `type="info"` when the status provides neutral or supporting context.
 
-<CodeLivePreview code={`<bq-status type="info">Information status</bq-status>`}>
+<CodeLivePreview mode="shadow" code={`<bq-status type="info">Information status</bq-status>`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-status type="info">Information status</bq-status>
@@ -249,7 +249,7 @@ Use `type="info"` when the status provides neutral or supporting context.
     <BqStatus type="info">Information status</BqStatus>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqStatus } from "@beeq/angular/standalone";
 
@@ -284,7 +284,7 @@ Use `type="info"` when the status provides neutral or supporting context.
 
 Use `type="success"` when the state confirms a positive outcome.
 
-<CodeLivePreview code={`<bq-status type="success">Success status</bq-status>`}>
+<CodeLivePreview mode="shadow" code={`<bq-status type="success">Success status</bq-status>`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-status type="success">Success status</bq-status>
@@ -296,7 +296,7 @@ Use `type="success"` when the state confirms a positive outcome.
     <BqStatus type="success">Success status</BqStatus>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqStatus } from "@beeq/angular/standalone";
 
@@ -425,7 +425,7 @@ Use `type="success"` when the state confirms a positive outcome.
 | `--bq-status-circle--size` | Status circle size | `12px` |
 
 <Tip>
-  Learn more about [styling with shadow parts](/usage-guides/customizations/styles#component-shadow-dom-parts) and [CSS custom properties](/usage-guides/customizations/styles#global-css-custom-properties).
+  Learn more about [styling with shadow parts](/guides/styles#component-shadow-dom-parts) and [CSS custom properties](/guides/styles#global-css-custom-properties).
 </Tip>
 
 ## Resources

@@ -96,17 +96,17 @@ Keep counter content short — three characters maximum, including the `+` symbo
 
 Use the badge without slot content when you only need a small visual signal. `size` matters most in this variant because it controls the dot diameter.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-badge></bq-badge>
   <bq-badge size="medium"></bq-badge>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5" expandable
+    ```html HTML icon="html5"
     <bq-badge></bq-badge>
     <bq-badge size="medium"></bq-badge>
     ```
 
-    ```jsx React icon="react" expandable
+    ```jsx React icon="react"
     import { BqBadge } from "@beeq/react";
 
     <BqBadge />
@@ -150,17 +150,17 @@ Use the badge without slot content when you only need a small visual signal. `si
 
 Add slot content when the badge needs to communicate a count. Keep the value short and meaningful so the badge stays compact and easy to scan.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-badge>2</bq-badge>
   <bq-badge>12</bq-badge>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5" expandable
+    ```html HTML icon="html5"
     <bq-badge>2</bq-badge>
     <bq-badge>12</bq-badge>
     ```
 
-    ```jsx React icon="react" expandable
+    ```jsx React icon="react"
     import { BqBadge } from "@beeq/react";
 
     <BqBadge>2</BqBadge>
@@ -218,7 +218,7 @@ Badge color should reinforce meaning, not create it on its own. Keep semantic us
 
 When a badge is paired with an icon or trigger, position it on the outer edge so it remains visible without covering the main symbol.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     .badge--icon {
       position: relative;
@@ -250,14 +250,14 @@ When a badge is paired with an icon or trigger, position it on the outer edge so
     }
     ```
 
-    ```html HTML icon="html5" expandable
+    ```html HTML icon="html5"
     <div class="badge--icon" aria-label="Notifications">
       <bq-icon name="bell-ringing" size="24"></bq-icon>
       <bq-badge>9</bq-badge>
     </div>
     ```
 
-    ```jsx React icon="react" expandable
+    ```jsx React icon="react"
     import { BqBadge, BqIcon } from "@beeq/react";
     import "./styles.css";
 
@@ -329,6 +329,8 @@ When a badge is paired with an icon or trigger, position it on the outer edge so
 <Note>
   To create a "cutout ring" effect — useful when a badge sits on top of an image or avatar — add a border using the `--bq-badge--border-color`, `--bq-badge--border-style`, and `--bq-badge--border-width` CSS custom properties. Match the border color to the surface behind the badge for a clean visual separation.
 </Note>
+
+## Best practices
 
 <CardGroup cols={2}>
   <Card>
@@ -451,7 +453,7 @@ Do not rely on color alone. Use text, labels, or accessible names on the related
 </Expandable>
 
 <Tip>
-  Learn more about [styling with shadow parts](/usage-guides/customizations/styles#component-shadow-dom-parts) and [CSS custom properties](/usage-guides/customizations/styles#global-css-custom-properties).
+  Learn more about [styling with shadow parts](/guides/styles#component-shadow-dom-parts) and [CSS custom properties](/guides/styles#global-css-custom-properties).
 </Tip>
 
 ## Resources

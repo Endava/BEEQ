@@ -91,7 +91,7 @@ Set `validation-status` to `error`, `warning`, or `success` to communicate the s
 
 Use the default textarea when you need a standard multi-line text input. Provide a `label` slot for the field name and a `helper-text` slot for any additional guidance.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     span {
       display: flex;
@@ -118,7 +118,7 @@ Use the default textarea when you need a standard multi-line text input. Provide
       </span>
     </bq-textarea>
     ```
-    ```tsx React icon="react"
+    ```tsx React icon="react" expandable
     import { BqIcon, BqTextarea } from "@beeq/react";
 
     export default () => (
@@ -131,7 +131,7 @@ Use the default textarea when you need a standard multi-line text input. Provide
       </BqTextarea>
     );
     ```
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqTextarea } from "@beeq/angular/standalone";
 
@@ -151,7 +151,7 @@ Use the default textarea when you need a standard multi-line text input. Provide
     })
     export class AppComponent {}
     ```
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqIcon, BqTextarea } from "@beeq/vue";
     </script>
@@ -173,7 +173,7 @@ Use the default textarea when you need a standard multi-line text input. Provide
 
 Pre-populate your textarea with an initial `value` attribute to streamline user interactions and provide a helpful starting point.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     span {
       display: flex;
@@ -194,7 +194,7 @@ Pre-populate your textarea with an initial `value` attribute to streamline user 
   </bq-textarea>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-textarea
       placeholder="Placeholder..."
       value="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora, nulla. Ab non odio facere enim, voluptatum voluptates quod molestias suscipit fugiat et expedita accusamus quidem nostrum maxime illo recusandae ratione?"
@@ -206,7 +206,7 @@ Pre-populate your textarea with an initial `value` attribute to streamline user 
       </span>
     </bq-textarea>
     ```
-    ```tsx React icon="react"
+    ```tsx React icon="react" expandable
     import { BqIcon, BqTextarea } from "@beeq/react";
 
     export default () => (
@@ -222,7 +222,7 @@ Pre-populate your textarea with an initial `value` attribute to streamline user 
       </BqTextarea>
     );
     ```
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqTextarea } from "@beeq/angular/standalone";
 
@@ -245,7 +245,7 @@ Pre-populate your textarea with an initial `value` attribute to streamline user 
     })
     export class AppComponent {}
     ```
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqIcon, BqTextarea } from "@beeq/vue";
     </script>
@@ -272,7 +272,7 @@ Pre-populate your textarea with an initial `value` attribute to streamline user 
 
 Set `disabled` when the field is not currently available for interaction. Use it to present non-editable content in a form context. Always communicate why the field is disabled through surrounding text or a tooltip.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     span {
       display: flex;
@@ -294,7 +294,7 @@ Set `disabled` when the field is not currently available for interaction. Use it
   </bq-textarea>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-textarea
       disabled
       placeholder="Placeholder..."
@@ -307,7 +307,7 @@ Set `disabled` when the field is not currently available for interaction. Use it
       </span>
     </bq-textarea>
     ```
-    ```tsx React icon="react"
+    ```tsx React icon="react" expandable
     import { BqIcon, BqTextarea } from "@beeq/react";
 
     export default () => (
@@ -324,7 +324,7 @@ Set `disabled` when the field is not currently available for interaction. Use it
       </BqTextarea>
     );
     ```
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqTextarea } from "@beeq/angular/standalone";
 
@@ -348,7 +348,7 @@ Set `disabled` when the field is not currently available for interaction. Use it
     })
     export class AppComponent {}
     ```
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqIcon, BqTextarea } from "@beeq/vue";
     </script>
@@ -374,7 +374,7 @@ Set `disabled` when the field is not currently available for interaction. Use it
 
 Add `disable-resize` to prevent users from resizing the textarea. This is useful when you need a stable layout with a consistent textarea height.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     .textarea--resize-group {
       display: grid;
@@ -406,7 +406,7 @@ Add `disable-resize` to prevent users from resizing the textarea. This is useful
   </div>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <div class="textarea--resize-group">
       <bq-textarea placeholder="Resize is enabled">
         <label slot="label">Label</label>
@@ -424,7 +424,7 @@ Add `disable-resize` to prevent users from resizing the textarea. This is useful
       </bq-textarea>
     </div>
     ```
-    ```tsx React icon="react"
+    ```tsx React icon="react" expandable
     import { BqIcon, BqTextarea } from "@beeq/react";
 
     export default () => (
@@ -446,7 +446,7 @@ Add `disable-resize` to prevent users from resizing the textarea. This is useful
       </>
     );
     ```
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqTextarea } from "@beeq/angular/standalone";
 
@@ -475,7 +475,7 @@ Add `disable-resize` to prevent users from resizing the textarea. This is useful
     })
     export class AppComponent {}
     ```
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqIcon, BqTextarea } from "@beeq/vue";
     </script>
@@ -510,7 +510,7 @@ Add `disable-resize` to prevent users from resizing the textarea. This is useful
 
 Set `maxlength` to limit the number of characters users can enter. A character counter appears automatically below the textarea to show progress toward the limit. Input is truncated once the limit is reached.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     span {
       display: flex;
@@ -532,7 +532,7 @@ Set `maxlength` to limit the number of characters users can enter. A character c
   </bq-textarea>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-textarea
       maxlength="100"
       placeholder="Placeholder..."
@@ -545,7 +545,7 @@ Set `maxlength` to limit the number of characters users can enter. A character c
       </span>
     </bq-textarea>
     ```
-    ```tsx React icon="react"
+    ```tsx React icon="react" expandable
     import { BqIcon, BqTextarea } from "@beeq/react";
 
     export default () => (
@@ -562,7 +562,7 @@ Set `maxlength` to limit the number of characters users can enter. A character c
       </BqTextarea>
     );
     ```
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqTextarea } from "@beeq/angular/standalone";
 
@@ -586,7 +586,7 @@ Set `maxlength` to limit the number of characters users can enter. A character c
     })
     export class AppComponent {}
     ```
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqIcon, BqTextarea } from "@beeq/vue";
     </script>
@@ -612,7 +612,7 @@ Set `maxlength` to limit the number of characters users can enter. A character c
 
 Set `readonly` to display the value without allowing edits. Unlike `disabled`, a read-only textarea is still focusable and its value is submitted with the form.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     span {
       display: flex;
@@ -634,7 +634,7 @@ Set `readonly` to display the value without allowing edits. Unlike `disabled`, a
   </bq-textarea>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-textarea
       placeholder="Placeholder..."
       readonly
@@ -647,7 +647,7 @@ Set `readonly` to display the value without allowing edits. Unlike `disabled`, a
       </span>
     </bq-textarea>
     ```
-    ```tsx React icon="react"
+    ```tsx React icon="react" expandable
     import { BqIcon, BqTextarea } from "@beeq/react";
 
     export default () => (
@@ -664,7 +664,7 @@ Set `readonly` to display the value without allowing edits. Unlike `disabled`, a
       </BqTextarea>
     );
     ```
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqTextarea } from "@beeq/angular/standalone";
 
@@ -688,7 +688,7 @@ Set `readonly` to display the value without allowing edits. Unlike `disabled`, a
     })
     export class AppComponent {}
     ```
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqIcon, BqTextarea } from "@beeq/vue";
     </script>
@@ -714,7 +714,7 @@ Set `readonly` to display the value without allowing edits. Unlike `disabled`, a
 
 Set `validation-status` to `error`, `warning`, or `success` to communicate the state of the field. Always pair a validation status with a descriptive `helper-text` message so users understand the issue and how to resolve it.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     .textarea--validation-group {
       display: grid;
@@ -768,7 +768,7 @@ Set `validation-status` to `error`, `warning`, or `success` to communicate the s
   </div>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <div class="textarea--validation-group">
       <bq-textarea
         maxlength="100"
@@ -808,7 +808,7 @@ Set `validation-status` to `error`, `warning`, or `success` to communicate the s
       </bq-textarea>
     </div>
     ```
-    ```tsx React icon="react"
+    ```tsx React icon="react" expandable
     import { BqIcon, BqTextarea } from "@beeq/react";
 
     export default () => (
@@ -852,7 +852,7 @@ Set `validation-status` to `error`, `warning`, or `success` to communicate the s
       </>
     );
     ```
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqTextarea } from "@beeq/angular/standalone";
 
@@ -903,7 +903,7 @@ Set `validation-status` to `error`, `warning`, or `success` to communicate the s
     })
     export class AppComponent {}
     ```
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqIcon, BqTextarea } from "@beeq/vue";
     </script>
@@ -1118,7 +1118,7 @@ Set `validation-status` to `error`, `warning`, or `success` to communicate the s
 </Expandable>
 
 <Tip>
-  Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).
+  Learn more about [styling with shadow parts](/guides/styles) and [CSS custom properties](/theming/global-css-variables).
 </Tip>
 
 ## Resources

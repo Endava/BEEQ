@@ -168,17 +168,13 @@
       {
         "tab": "Releases",
         "pages": [
-          "releases/changelog",
-          "releases/migrations",
-          "releases/deprecations"
+          "releases/changelog"
         ]
       },
       {
         "tab": "About",
         "pages": [
-          "about/overview",
-          "about/contributing",
-          "about/team"
+          "about/overview"
         ]
       }
     ],

@@ -132,7 +132,7 @@ Use a default breadcrumb to show the current page within a hierarchy. When `href
   Always place `bq-breadcrumb-item` elements directly inside `bq-breadcrumb`. Items rendered outside the component will not receive separator or `aria-current` handling.
 </Note>
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-breadcrumb label="Breadcrumb">
     <bq-breadcrumb-item>Home</bq-breadcrumb-item>
     <bq-breadcrumb-item>Men's clothing</bq-breadcrumb-item>
@@ -150,7 +150,7 @@ Use a default breadcrumb to show the current page within a hierarchy. When `href
     </bq-breadcrumb>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqBreadcrumb, BqBreadcrumbItem } from "@beeq/react";
 
     <BqBreadcrumb label="Breadcrumb">
@@ -161,7 +161,7 @@ Use a default breadcrumb to show the current page within a hierarchy. When `href
     </BqBreadcrumb>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqBreadcrumb, BqBreadcrumbItem } from "@beeq/angular/standalone";
 
@@ -181,7 +181,7 @@ Use a default breadcrumb to show the current page within a hierarchy. When `href
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqBreadcrumb, BqBreadcrumbItem } from "@beeq/vue";
     </script>
@@ -202,16 +202,16 @@ Use a default breadcrumb to show the current page within a hierarchy. When `href
 
 Use the `separator` slot to replace the default `/` separator.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-breadcrumb label="Breadcrumb">
     <bq-icon name="caret-right" size="12" slot="separator"></bq-icon>
     <bq-breadcrumb-item href="/">Home</bq-breadcrumb-item>
-    <bq-breadcrumb-item href="/catalog">Catalog</bq-breadcrumb-item>
+    <bq-breadcrumb-item href="/components">Catalog</bq-breadcrumb-item>
     <bq-breadcrumb-item>Casual shirts</bq-breadcrumb-item>
   </bq-breadcrumb>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
       <bq-breadcrumb label="Breadcrumb">
         <bq-icon slot="separator" name="caret-right" size="12"></bq-icon>
         <bq-breadcrumb-item aria-label="Home page">
@@ -230,18 +230,18 @@ Use the `separator` slot to replace the default `/` separator.
       </bq-breadcrumb>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqBreadcrumb, BqBreadcrumbItem, BqIcon } from "@beeq/react";
 
     <BqBreadcrumb label="Breadcrumb">
       <BqIcon name="caret-right" size="12" slot="separator" />
       <BqBreadcrumbItem href="/">Home</BqBreadcrumbItem>
-      <BqBreadcrumbItem href="/catalog">Catalog</BqBreadcrumbItem>
+      <BqBreadcrumbItem href="/components">Catalog</BqBreadcrumbItem>
       <BqBreadcrumbItem>Casual shirts</BqBreadcrumbItem>
     </BqBreadcrumb>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqBreadcrumb, BqIcon, BqBreadcrumbItem } from "@beeq/angular/standalone";
 
@@ -253,7 +253,7 @@ Use the `separator` slot to replace the default `/` separator.
         <bq-breadcrumb label="Breadcrumb">
           <bq-icon name="caret-right" size="12" slot="separator"></bq-icon>
           <bq-breadcrumb-item href="/">Home</bq-breadcrumb-item>
-          <bq-breadcrumb-item href="/catalog">Catalog</bq-breadcrumb-item>
+          <bq-breadcrumb-item href="/components">Catalog</bq-breadcrumb-item>
           <bq-breadcrumb-item>Casual shirts</bq-breadcrumb-item>
         </bq-breadcrumb>
       `,
@@ -261,7 +261,7 @@ Use the `separator` slot to replace the default `/` separator.
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqBreadcrumb, BqBreadcrumbItem, BqIcon } from "@beeq/vue";
     </script>
@@ -270,7 +270,7 @@ Use the `separator` slot to replace the default `/` separator.
       <BqBreadcrumb label="Breadcrumb">
         <BqIcon name="caret-right" size="12" slot="separator" />
         <BqBreadcrumbItem href="/">Home</BqBreadcrumbItem>
-        <BqBreadcrumbItem href="/catalog">Catalog</BqBreadcrumbItem>
+        <BqBreadcrumbItem href="/components">Catalog</BqBreadcrumbItem>
         <BqBreadcrumbItem>Casual shirts</BqBreadcrumbItem>
       </BqBreadcrumb>
     </template>
@@ -290,7 +290,7 @@ The following example shows how to combine icons with breadcrumb items.
 
 Icons next to labels help users recognize categories at a glance. Use `size="16"` icons and always pair them with a text label or `aria-label` for screen reader clarity.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-breadcrumb label="Breadcrumb">
     <bq-breadcrumb-item aria-label="Home page">
       <bq-icon name="house-line" size="16"></bq-icon>
@@ -303,7 +303,7 @@ Icons next to labels help users recognize categories at a glance. Use `size="16"
   </bq-breadcrumb>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-breadcrumb label="Breadcrumb">
       <bq-breadcrumb-item aria-label="Home page">
         <bq-icon name="house-line" size="16"></bq-icon>
@@ -316,7 +316,7 @@ Icons next to labels help users recognize categories at a glance. Use `size="16"
     </bq-breadcrumb>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqBreadcrumb, BqBreadcrumbItem, BqIcon } from "@beeq/react";
 
     <BqBreadcrumb label="Breadcrumb">
@@ -331,7 +331,7 @@ Icons next to labels help users recognize categories at a glance. Use `size="16"
     </BqBreadcrumb>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqBreadcrumb, BqBreadcrumbItem, BqIcon } from "@beeq/angular/standalone";
 
@@ -355,7 +355,7 @@ Icons next to labels help users recognize categories at a glance. Use `size="16"
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqBreadcrumb, BqBreadcrumbItem, BqIcon } from "@beeq/vue";
     </script>
@@ -535,7 +535,7 @@ Events are emitted by `bq-breadcrumb-item`.
 </Expandable>
 
 <Tip>
-  Learn more about [styling with shadow parts](/usage-guides/customizations/styles#component-shadow-dom-parts) and [CSS custom properties](/usage-guides/customizations/styles#global-css-custom-properties).
+  Learn more about [styling with shadow parts](/guides/styles#component-shadow-dom-parts) and [CSS custom properties](/guides/styles#global-css-custom-properties).
 </Tip>
 
 ## Resources

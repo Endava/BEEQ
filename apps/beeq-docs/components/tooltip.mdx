@@ -57,13 +57,17 @@ Tooltips provide supplemental context about an element without cluttering the in
 | **3** | Content      | The actual tooltip content, which can be plain text or any HTML content (default slot) |
 | **3** | Arrow        | The directional pointer connecting the panel to the trigger (hidden with `hide-arrow`) |
 
+## Design guidelines
+
+Use tooltips for short contextual help attached to a specific control or value. Keep content brief, avoid placing essential instructions only inside a tooltip, and make sure the trigger remains understandable without the tooltip.
+
 ## Usage
 
 ### Default
 
 By default the tooltip appears **above** the trigger on hover. Tooltip content goes in the default slot; the interactive element goes in the `trigger` slot.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       min-height: 15rem !important;
@@ -91,7 +95,7 @@ By default the tooltip appears **above** the trigger on hover. Tooltip content g
     </BqTooltip>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqButton, BqTooltip } from "@beeq/angular/standalone";
 
@@ -109,7 +113,7 @@ By default the tooltip appears **above** the trigger on hover. Tooltip content g
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqButton, BqTooltip } from "@beeq/vue";
     </script>
@@ -133,7 +137,7 @@ By default the tooltip appears **above** the trigger on hover. Tooltip content g
 
 Use `placement` to control which side of the trigger the tooltip appears on. The four primary values are `top` (default), `right`, `bottom`, and `left`. Each also supports `-start` and `-end` sub-variants for fine-grained alignment.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       min-height: 15rem !important;
@@ -157,7 +161,7 @@ Use `placement` to control which side of the trigger the tooltip appears on. The
   </bq-tooltip>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-tooltip placement="top">
       Top placement
       <bq-button slot="trigger">Top</bq-button>
@@ -179,7 +183,7 @@ Use `placement` to control which side of the trigger the tooltip appears on. The
     </bq-tooltip>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqButton, BqTooltip } from "@beeq/react";
 
     <BqTooltip placement="top">
@@ -203,7 +207,7 @@ Use `placement` to control which side of the trigger the tooltip appears on. The
     </BqTooltip>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqButton, BqTooltip } from "@beeq/angular/standalone";
 
@@ -236,7 +240,7 @@ Use `placement` to control which side of the trigger the tooltip appears on. The
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqButton, BqTooltip } from "@beeq/vue";
     </script>
@@ -274,7 +278,7 @@ Use `placement` to control which side of the trigger the tooltip appears on. The
 
 Set `display-on="click"` when the trigger element is not naturally focusable (e.g., a plain icon or image) or when hover behavior would conflict with touch devices. The tooltip toggles on each click and closes on <kbd>Esc</kbd> or an outside click.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       min-height: 15rem !important;
@@ -302,7 +306,7 @@ Set `display-on="click"` when the trigger element is not naturally focusable (e.
     </BqTooltip>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqButton, BqTooltip } from "@beeq/angular/standalone";
 
@@ -320,7 +324,7 @@ Set `display-on="click"` when the trigger element is not naturally focusable (e.
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqButton, BqTooltip } from "@beeq/vue";
     </script>
@@ -343,7 +347,7 @@ Use `always-visible` to keep the tooltip permanently displayed regardless of use
   When `always-visible` is set, the programmatic `hide()` method has no effect.
 </Note>
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       min-height: 15rem !important;
@@ -371,7 +375,7 @@ Use `always-visible` to keep the tooltip permanently displayed regardless of use
     </BqTooltip>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqButton, BqTooltip } from "@beeq/angular/standalone";
 
@@ -389,7 +393,7 @@ Use `always-visible` to keep the tooltip permanently displayed regardless of use
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqButton, BqTooltip } from "@beeq/vue";
     </script>
@@ -410,7 +414,7 @@ Use the `visible` prop when your application needs to control the tooltip's open
 
 Unlike `always-visible`, a controlled tooltip can still be dismissed by the user moving focus away (hover mode) or pressing <kbd>Esc</kbd> (click mode).
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       min-height: 15rem !important;
@@ -439,7 +443,7 @@ Unlike `always-visible`, a controlled tooltip can still be dismissed by the user
   </script>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-tooltip id="my-tooltip" placement="top">
       Controlled by app state
       <bq-button slot="trigger">Trigger</bq-button>
@@ -454,7 +458,7 @@ Unlike `always-visible`, a controlled tooltip can still be dismissed by the user
     </script>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { useState } from "react";
     import { BqButton, BqTooltip } from "@beeq/react";
 
@@ -478,7 +482,7 @@ Unlike `always-visible`, a controlled tooltip can still be dismissed by the user
     }
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqButton, BqTooltip } from "@beeq/angular/standalone";
 
@@ -498,7 +502,7 @@ Unlike `always-visible`, a controlled tooltip can still be dismissed by the user
     }
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { ref } from "vue";
     import { BqButton, BqTooltip } from "@beeq/vue";
@@ -520,7 +524,7 @@ Unlike `always-visible`, a controlled tooltip can still be dismissed by the user
 
 The `show()` and `hide()` async methods give you imperative control over the tooltip from outside the component — useful when another UI element or an application event should trigger the tooltip rather than the trigger element's own interaction.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       min-height: 15rem !important;
@@ -547,7 +551,7 @@ The `show()` and `hide()` async methods give you imperative control over the too
   </script>
 `}>
 <CodeGroup>
-  ```html HTML icon="html5"
+  ```html HTML icon="html5" expandable
   <bq-tooltip id="my-tooltip">
     Programmatically controlled
     <bq-button slot="trigger">Trigger (hover also works)</bq-button>
@@ -563,7 +567,7 @@ The `show()` and `hide()` async methods give you imperative control over the too
   </script>
   ```
 
-  ```jsx React icon="react"
+  ```jsx React icon="react" expandable
   import { useRef } from "react";
   import { BqButton, BqTooltip } from "@beeq/react";
 
@@ -583,7 +587,7 @@ The `show()` and `hide()` async methods give you imperative control over the too
   }
   ```
 
-  ```ts Angular icon="angular"
+  ```ts Angular icon="angular" expandable
   import { Component } from "@angular/core";
   import { BqButton, BqTooltip } from "@beeq/angular/standalone";
 
@@ -604,7 +608,7 @@ The `show()` and `hide()` async methods give you imperative control over the too
   export class AppComponent {}
   ```
 
-  ```vue Vue icon="vuejs"
+  ```vue Vue icon="vuejs" expandable
   <script setup lang="ts">
   import { ref } from "vue";
   import { BqButton, BqTooltip } from "@beeq/vue";
@@ -628,7 +632,7 @@ The `show()` and `hide()` async methods give you imperative control over the too
 
 All five tooltip events support `preventDefault()`. Calling it inside a handler cancels the tooltip's default open or close action — the event still fires and your handler runs, but the panel will not toggle. This is useful for temporarily suppressing the tooltip while an async operation is in progress or based on application state.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       min-height: 15rem !important;
@@ -740,7 +744,7 @@ All five tooltip events support `preventDefault()`. Calling it inside a handler 
     }
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqButton, BqSwitch, BqTooltip } from "@beeq/angular/standalone";
 
@@ -804,7 +808,7 @@ All five tooltip events support `preventDefault()`. Calling it inside a handler 
 
 Add `hide-arrow` to remove the directional pointer. Use this when the tooltip is associated with a wide trigger element or when the arrow would visually conflict with nearby content.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       min-height: 15rem !important;
@@ -820,7 +824,7 @@ Add `hide-arrow` to remove the directional pointer. Use this when the tooltip is
   </bq-tooltip>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <!-- Default: arrow is shown -->
     <bq-tooltip>
       With arrow (default)
@@ -834,7 +838,7 @@ Add `hide-arrow` to remove the directional pointer. Use this when the tooltip is
     </bq-tooltip>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqButton, BqTooltip } from "@beeq/react";
 
     {/* Default: arrow is shown */}
@@ -850,7 +854,7 @@ Add `hide-arrow` to remove the directional pointer. Use this when the tooltip is
     </BqTooltip>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqButton, BqTooltip } from "@beeq/angular/standalone";
 
@@ -875,7 +879,7 @@ Add `hide-arrow` to remove the directional pointer. Use this when the tooltip is
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqButton, BqTooltip } from "@beeq/vue";
     </script>
@@ -901,7 +905,7 @@ Add `hide-arrow` to remove the directional pointer. Use this when the tooltip is
 
 Set `same-width` to match the tooltip panel width to the trigger element. Useful when the tooltip content is shorter than the trigger and you want a more contained alignment.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       min-height: 15rem !important;
@@ -929,7 +933,7 @@ Set `same-width` to match the tooltip panel width to the trigger element. Useful
     </BqTooltip>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqButton, BqTooltip } from "@beeq/angular/standalone";
 
@@ -947,7 +951,7 @@ Set `same-width` to match the tooltip panel width to the trigger element. Useful
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqButton, BqTooltip } from "@beeq/vue";
     </script>
@@ -966,7 +970,7 @@ Set `same-width` to match the tooltip panel width to the trigger element. Useful
 
 The `distance` prop controls the gap in pixels between the trigger and the tooltip panel. The default is `10`. Increase it for more breathing room; decrease it for a tighter alignment.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       min-height: 15rem !important;
@@ -987,7 +991,7 @@ The `distance` prop controls the gap in pixels between the trigger and the toolt
   </bq-tooltip>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-tooltip distance="4">
       4px gap
       <bq-button slot="trigger">Close (4px)</bq-button>
@@ -1004,7 +1008,7 @@ The `distance` prop controls the gap in pixels between the trigger and the toolt
     </bq-tooltip>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqButton, BqTooltip } from "@beeq/react";
 
     <BqTooltip distance={4}>
@@ -1023,7 +1027,7 @@ The `distance` prop controls the gap in pixels between the trigger and the toolt
     </BqTooltip>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqButton, BqTooltip } from "@beeq/angular/standalone";
 
@@ -1051,7 +1055,7 @@ The `distance` prop controls the gap in pixels between the trigger and the toolt
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqButton, BqTooltip } from "@beeq/vue";
     </script>
@@ -1120,6 +1124,22 @@ The `distance` prop controls the gap in pixels between the trigger and the toolt
       Don't
     </span>
     Don't place the tooltip inside a parent that is both a scroll container and a containing block for positioned elements. An ancestor with `overflow: hidden` or `overflow: auto` that also establishes a containing block will clip the panel regardless of the positioning strategy used.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Keep the trigger label or icon understandable without the tooltip so the interface still works on touch devices and assistive technologies.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not put required instructions only in a tooltip. Move essential guidance into visible helper text or the main content.
   </Card>
 </CardGroup>
 
@@ -1204,7 +1224,7 @@ The `distance` prop controls the gap in pixels between the trigger and the toolt
 </Expandable>
 
 <Tip>
-  Learn more about [styling with shadow parts](/usage-guides/customizations/styles#component-shadow-dom-parts) and [CSS custom properties](/usage-guides/customizations/styles#global-css-custom-properties).
+  Learn more about [styling with shadow parts](/guides/styles#component-shadow-dom-parts) and [CSS custom properties](/guides/styles#global-css-custom-properties).
 </Tip>
 
 ## Resources

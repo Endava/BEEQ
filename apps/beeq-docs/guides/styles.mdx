@@ -6,7 +6,7 @@ sidebarTitle: Styling components
 
 import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 
-This page covers the three techniques you reach for when customizing a specific component: shadow DOM parts, global token overrides, and component-level CSS variables. For building a full custom theme or understanding the complete token system, see the [Theming](/theming) section.
+This page covers the three techniques you reach for when customizing a specific component: shadow DOM parts, global token overrides, and component-level CSS variables. For building a full custom theme or understanding the complete token system, see the [Theming](/theming/themes-and-modes) section.
 
 <Note>
   The examples use inline `<style>` tags so you can run them directly. In a real project, place these overrides in your own stylesheet.
@@ -29,7 +29,7 @@ For example, `bq-button` exposes its button wrapper and label as separate parts:
 
 Style them using the `::part()` pseudo-element from your own stylesheet:
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     .custom-button::part(label) {
       font-size: var(--bq-font-size--xl);
@@ -49,7 +49,7 @@ Style them using the `::part()` pseudo-element from your own stylesheet:
   </bq-button>
 `}>
   <CodeGroup>
-    ```css styles.css icon="css"
+    ```css styles.css icon="css" expandable
     .custom-button::part(label) {
       font-size: var(--bq-font-size--xl);
       font-weight: var(--bq-font-weight--semibold);
@@ -78,7 +78,7 @@ Style them using the `::part()` pseudo-element from your own stylesheet:
     }
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqButton } from "@beeq/angular/standalone";
 
@@ -108,7 +108,7 @@ Style them using the `::part()` pseudo-element from your own stylesheet:
     export class ExampleComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqButton } from "@beeq/vue";
     </script>
@@ -153,7 +153,7 @@ BEEQ relies on CSS custom properties to maintain a consistent visual system acro
 }
 ```
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     bq-button::part(button) {
       --bq-ui--brand: var(--bq-orange-600) !important;
@@ -186,7 +186,7 @@ BEEQ relies on CSS custom properties to maintain a consistent visual system acro
     }
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqButton } from "@beeq/angular/standalone";
 
@@ -208,7 +208,7 @@ BEEQ relies on CSS custom properties to maintain a consistent visual system acro
     export class ExampleComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqButton } from "@beeq/vue";
     </script>
@@ -232,7 +232,7 @@ Component-level CSS variables are scoped to a single component instance and do n
 
 In the example below, the second button overrides one brand token locally while the first keeps the theme default:
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     .primary-magenta {
       --bq-ui--brand: var(--bq-magenta-600);
@@ -264,7 +264,7 @@ In the example below, the second button overrides one brand token locally while 
     </bq-button>
     ```
 
-    ```tsx React icon="react"
+    ```tsx React icon="react" expandable
     import { BqButton } from "@beeq/react";
     import "./styles.css";
 
@@ -280,7 +280,7 @@ In the example below, the second button overrides one brand token locally while 
     }
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqButton } from "@beeq/angular/standalone";
 
@@ -306,7 +306,7 @@ In the example below, the second button overrides one brand token locally while 
     export class ExampleComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqButton } from "@beeq/vue";
     </script>
@@ -333,7 +333,7 @@ Some components also expose CSS variables that scope to that component only — 
 
 Combine component CSS variables and `::part()` selectors when token overrides alone aren't enough — you get scoped sizing control and structural styling from a single class.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     .larger-button {
       --bq-button--small-height: 42px;
@@ -371,7 +371,7 @@ Combine component CSS variables and `::part()` selectors when token overrides al
   </bq-button>
 `}>
   <CodeGroup>
-    ```css styles.css icon="css"
+    ```css styles.css icon="css" expandable
     .larger-button {
       --bq-button--small-height: 42px;
       --bq-button--small-paddingY: 10px;
@@ -395,7 +395,7 @@ Combine component CSS variables and `::part()` selectors when token overrides al
     }
     ```
 
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-button class="larger-button" size="small">
       Button
     </bq-button>
@@ -409,7 +409,7 @@ Combine component CSS variables and `::part()` selectors when token overrides al
     </bq-button>
     ```
 
-    ```tsx React icon="react"
+    ```tsx React icon="react" expandable
     import { BqButton } from "@beeq/react";
     import "./styles.css";
 
@@ -430,7 +430,7 @@ Combine component CSS variables and `::part()` selectors when token overrides al
     }
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqButton } from "@beeq/angular/standalone";
 
@@ -478,7 +478,7 @@ Combine component CSS variables and `::part()` selectors when token overrides al
     export class ExampleComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqButton } from "@beeq/vue";
     </script>

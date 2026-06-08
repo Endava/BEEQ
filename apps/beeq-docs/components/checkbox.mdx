@@ -123,7 +123,7 @@ Use checkbox labels and grouping patterns that make the selected state easy to u
 
 Use the default checkbox for a straightforward binary choice with a short label.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-checkbox name="updates" value="updates">
     Send me product updates
   </bq-checkbox>
@@ -143,7 +143,7 @@ Use the default checkbox for a straightforward binary choice with a short label.
     </BqCheckbox>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqCheckbox } from "@beeq/angular/standalone";
 
@@ -160,7 +160,7 @@ Use the default checkbox for a straightforward binary choice with a short label.
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqCheckbox } from "@beeq/vue";
     </script>
@@ -182,7 +182,7 @@ Use the default checkbox for a straightforward binary choice with a short label.
 
 Use a longer label when people need more context before deciding, but keep the core meaning easy to scan at the beginning of the sentence.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     .checkbox-long {
       max-inline-size: 18rem;
@@ -208,7 +208,7 @@ Use a longer label when people need more context before deciding, but keep the c
     </BqCheckbox>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqCheckbox } from "@beeq/angular/standalone";
 
@@ -225,7 +225,7 @@ Use a longer label when people need more context before deciding, but keep the c
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqCheckbox } from "@beeq/vue";
     </script>
@@ -245,7 +245,7 @@ Use a longer label when people need more context before deciding, but keep the c
 
 Use `background-on-hover` when the surrounding layout benefits from a larger perceived hit area and stronger hover feedback.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-checkbox name="notifications" value="notifications" background-on-hover>
     Email me about account activity
   </bq-checkbox>
@@ -265,7 +265,7 @@ Use `background-on-hover` when the surrounding layout benefits from a larger per
     </BqCheckbox>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqCheckbox } from "@beeq/angular/standalone";
 
@@ -282,7 +282,7 @@ Use `background-on-hover` when the surrounding layout benefits from a larger per
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqCheckbox } from "@beeq/vue";
     </script>
@@ -300,7 +300,7 @@ Use `background-on-hover` when the surrounding layout benefits from a larger per
 
 Use `checked` for a preselected default, and `disabled` when the option is currently unavailable or not editable in the current context.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-checkbox checked name="newsletter" value="newsletter">
     Subscribe to the newsletter
   </bq-checkbox>
@@ -318,7 +318,7 @@ Use `checked` for a preselected default, and `disabled` when the option is curre
     </bq-checkbox>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqCheckbox } from "@beeq/react";
 
     <BqCheckbox checked name="newsletter" value="newsletter">
@@ -329,7 +329,7 @@ Use `checked` for a preselected default, and `disabled` when the option is curre
     </BqCheckbox>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqCheckbox } from "@beeq/angular/standalone";
 
@@ -349,7 +349,7 @@ Use `checked` for a preselected default, and `disabled` when the option is curre
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqCheckbox } from "@beeq/vue";
     </script>
@@ -370,7 +370,7 @@ Use `checked` for a preselected default, and `disabled` when the option is curre
 
 Use the indeterminate state when a parent checkbox controls a related set of child options and only some of them are selected.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     .checkbox-group__children {
       display: flex;
@@ -433,26 +433,6 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
   </script>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
-    <div>
-      <bq-checkbox name="all-interests" value="all" background-on-hover>
-        Interests
-      </bq-checkbox>
-
-      <div class="checkbox-group__children">
-        <bq-checkbox checked name="interest" value="music" background-on-hover>
-          Music
-        </bq-checkbox>
-        <bq-checkbox name="interest" value="travel" background-on-hover>
-          Travel
-        </bq-checkbox>
-        <bq-checkbox checked name="interest" value="sport" background-on-hover>
-          Sport
-        </bq-checkbox>
-      </div>
-    </div>
-    ```
-
     ```js JavaScript icon="js" expandable
     const allCheckboxChange = (event) => {
       const interestCheckboxes = Array.from(
@@ -489,6 +469,26 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
     });
 
     interestCheckboxChange();
+    ```
+
+    ```html HTML icon="html5" expandable
+    <div>
+      <bq-checkbox name="all-interests" value="all" background-on-hover>
+        Interests
+      </bq-checkbox>
+
+      <div class="checkbox-group__children">
+        <bq-checkbox checked name="interest" value="music" background-on-hover>
+          Music
+        </bq-checkbox>
+        <bq-checkbox name="interest" value="travel" background-on-hover>
+          Travel
+        </bq-checkbox>
+        <bq-checkbox checked name="interest" value="sport" background-on-hover>
+          Sport
+        </bq-checkbox>
+      </div>
+    </div>
     ```
 
     ```jsx React icon="react" expandable
@@ -709,7 +709,7 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
       </div>
     </template>
     ```
-  </CodeGroup>
+</CodeGroup>
 </CodeLivePreview>
 
 <Warning>
@@ -843,7 +843,7 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
 | `--bq-checkbox--border-width` | Checkbox border width | `var(--bq-stroke-m)` |
 
 <Tip>
-  Learn more about [styling with shadow parts](/usage-guides/customizations/styles#component-shadow-dom-parts) and [CSS custom properties](/usage-guides/customizations/styles#global-css-custom-properties).
+  Learn more about [styling with shadow parts](/guides/styles#component-shadow-dom-parts) and [CSS custom properties](/guides/styles#global-css-custom-properties).
 </Tip>
 
 ## Resources

@@ -90,7 +90,7 @@ By default, the label appears to the right of the control. Set `reverse-order` t
 
 The default switch provides a basic on/off toggle functionality, allowing users to control a binary state effortlessly.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-switch>Toggle me!</bq-switch>
 `}>
   <CodeGroup>
@@ -104,7 +104,7 @@ The default switch provides a basic on/off toggle functionality, allowing users 
       <BqSwitch>Toggle me!</BqSwitch>
     );
     ```
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqSwitch } from "@beeq/angular/standalone";
 
@@ -136,7 +136,7 @@ The default switch provides a basic on/off toggle functionality, allowing users 
 
 Use the `checked` attribute to set the initial state of the toggle as ON. This is ideal when you want the switch to start in an activated position.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-switch checked>Toggle me!</bq-switch>
 `}>
   <CodeGroup>
@@ -150,7 +150,7 @@ Use the `checked` attribute to set the initial state of the toggle as ON. This i
       <BqSwitch checked>Toggle me!</BqSwitch>
     );
     ```
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqSwitch } from "@beeq/angular/standalone";
 
@@ -180,7 +180,7 @@ Use the `checked` attribute to set the initial state of the toggle as ON. This i
 
 The disabled switch prevents user interaction, making it visually clear that the toggle functionality is not currently available or applicable. Use the `disabled` attribute to enable this type of switch.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-switch disabled>Toggle me!</bq-switch>
 `}>
   <CodeGroup>
@@ -194,7 +194,7 @@ The disabled switch prevents user interaction, making it visually clear that the
       <BqSwitch disabled>Toggle me!</BqSwitch>
     );
     ```
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqSwitch } from "@beeq/angular/standalone";
 
@@ -222,7 +222,7 @@ The disabled switch prevents user interaction, making it visually clear that the
 
 Enhance user understanding by incorporating an inner label that provides context about the current state of the switch. Use the `inner-label="icon"` attribute to activate this variant.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-switch inner-label="icon">Toggle me!</bq-switch>
 `}>
   <CodeGroup>
@@ -236,7 +236,7 @@ Enhance user understanding by incorporating an inner label that provides context
       <BqSwitch innerLabel="icon">Toggle me!</BqSwitch>
     );
     ```
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqSwitch } from "@beeq/angular/standalone";
 
@@ -264,7 +264,7 @@ Enhance user understanding by incorporating an inner label that provides context
 
 The reverse order switch alters the visual arrangement, placing the toggle on the opposite side for a customizable user interface by adding the `reverse-order` attribute.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-switch reverse-order>Toggle me!</bq-switch>
 `}>
   <CodeGroup>
@@ -278,7 +278,7 @@ The reverse order switch alters the visual arrangement, placing the toggle on th
       <BqSwitch reverseOrder>Toggle me!</BqSwitch>
     );
     ```
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqSwitch } from "@beeq/angular/standalone";
 
@@ -306,7 +306,7 @@ The reverse order switch alters the visual arrangement, placing the toggle on th
 
 Use `full-width` with `reverse-order` and `justify-content="space-between"` to build standard settings-list rows where the label is on the left and the toggle sits flush to the right edge.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host { 
       flex-direction: column !important; 
@@ -360,7 +360,7 @@ Use `full-width` with `reverse-order` and `justify-content="space-between"` to b
   </bq-switch>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-switch
       background-on-hover
       full-width
@@ -405,7 +405,7 @@ Use `full-width` with `reverse-order` and `justify-content="space-between"` to b
       Show app notifications
     </bq-switch>
     ```
-    ```tsx React icon="react"
+    ```tsx React icon="react" expandable
     import { BqSwitch } from "@beeq/react";
 
     export default () => (
@@ -456,7 +456,7 @@ Use `full-width` with `reverse-order` and `justify-content="space-between"` to b
       </>
     );
     ```
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqSwitch } from "@beeq/angular/standalone";
 
@@ -512,7 +512,7 @@ Use `full-width` with `reverse-order` and `justify-content="space-between"` to b
     })
     export class AppComponent {}
     ```
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqSwitch } from "@beeq/vue";
     </script>
@@ -713,7 +713,7 @@ Use `full-width` with `reverse-order` and `justify-content="space-between"` to b
 | `--bq-switch--justify-content` | Space distribution between the control and label | `start` |
 
 <Tip>
-  Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).
+  Learn more about [styling with shadow parts](/guides/styles) and [CSS custom properties](/theming/global-css-variables).
 </Tip>
 
 ## Resources

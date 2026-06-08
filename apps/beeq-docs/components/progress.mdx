@@ -120,7 +120,7 @@ Choose the progress treatment that matches how precise the feedback needs to be.
 
 Use the default progress bar for general task tracking when the process has a measurable completion point.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       flex-direction: column !important;
@@ -146,7 +146,7 @@ Use the default progress bar for general task tracking when the process has a me
     <bq-progress value="100"></bq-progress>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqProgress } from "@beeq/react";
 
     <>
@@ -157,7 +157,7 @@ Use the default progress bar for general task tracking when the process has a me
     </>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqProgress } from "@beeq/angular/standalone";
 
@@ -175,7 +175,7 @@ Use the default progress bar for general task tracking when the process has a me
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqProgress } from "@beeq/vue";
     </script>
@@ -196,7 +196,7 @@ Use the default progress bar for general task tracking when the process has a me
 
 Use `thickness="large"` to increase the visual weight of the progress bar in more prominent layouts.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       flex-direction: column !important;
@@ -227,7 +227,7 @@ Use `thickness="large"` to increase the visual weight of the progress bar in mor
     </>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqProgress } from "@beeq/angular/standalone";
 
@@ -243,7 +243,7 @@ Use `thickness="large"` to increase the visual weight of the progress bar in mor
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqProgress } from "@beeq/vue";
     </script>
@@ -260,7 +260,7 @@ Use `thickness="large"` to increase the visual weight of the progress bar in mor
 
 Use `type="error"` to communicate that a process failed or needs attention.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     bq-progress {
       width: 250px;
@@ -280,7 +280,7 @@ Use `type="error"` to communicate that a process failed or needs attention.
     <BqProgress type="error" value={30} />
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqProgress } from "@beeq/angular/standalone";
 
@@ -313,7 +313,7 @@ Use `type="error"` to communicate that a process failed or needs attention.
 
 Use `border-shape="square"` when you want a straighter edge treatment. The default is `rounded`.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       flex-direction: column !important;
@@ -344,7 +344,7 @@ Use `border-shape="square"` when you want a straighter edge treatment. The defau
     </>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqProgress } from "@beeq/angular/standalone";
 
@@ -360,7 +360,7 @@ Use `border-shape="square"` when you want a straighter edge treatment. The defau
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqProgress } from "@beeq/vue";
     </script>
@@ -377,7 +377,7 @@ Use `border-shape="square"` when you want a straighter edge treatment. The defau
 
 Add `label` to display a persistent numeric percentage beside the bar.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       flex-direction: column !important;
@@ -403,7 +403,7 @@ Add `label` to display a persistent numeric percentage beside the bar.
     <bq-progress label value="100"></bq-progress>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqProgress } from "@beeq/react";
 
     <>
@@ -414,7 +414,7 @@ Add `label` to display a persistent numeric percentage beside the bar.
     </>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqProgress } from "@beeq/angular/standalone";
 
@@ -432,7 +432,7 @@ Add `label` to display a persistent numeric percentage beside the bar.
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqProgress } from "@beeq/vue";
     </script>
@@ -451,7 +451,7 @@ Add `label` to display a persistent numeric percentage beside the bar.
 
 Add `enable-tooltip` to show the current percentage at the indicator. In the current component implementation, the tooltip stays visible while the option is enabled.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       flex-direction: column !important;
@@ -486,7 +486,7 @@ Add `enable-tooltip` to show the current percentage at the indicator. In the cur
     </>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqProgress } from "@beeq/angular/standalone";
 
@@ -503,7 +503,7 @@ Add `enable-tooltip` to show the current percentage at the indicator. In the cur
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqProgress } from "@beeq/vue";
     </script>
@@ -525,7 +525,7 @@ Add `enable-tooltip` to show the current percentage at the indicator. In the cur
 
 Use `indeterminate` when the task is active but the exact completion point cannot be measured.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     bq-progress {
       width: 250px;
@@ -545,7 +545,7 @@ Use `indeterminate` when the task is active but the exact completion point canno
     <BqProgress indeterminate />
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqProgress } from "@beeq/angular/standalone";
 
@@ -677,7 +677,7 @@ Use `indeterminate` when the task is active but the exact completion point canno
 | `--bq-progress-bar--trackColor` | The track color | `var(--bq-ui--secondary)` |
 
 <Tip>
-  Learn more about [styling with shadow parts](/usage-guides/customizations/styles#component-shadow-dom-parts) and [CSS custom properties](/usage-guides/customizations/styles#global-css-custom-properties).
+  Learn more about [styling with shadow parts](/guides/styles#component-shadow-dom-parts) and [CSS custom properties](/guides/styles#global-css-custom-properties).
 </Tip>
 
 ## Resources

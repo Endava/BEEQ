@@ -109,7 +109,7 @@ Use toast messages carefully so they stay brief, noticeable, and easy to underst
 
 Use the built-in `type` values to communicate the nature of the message quickly. Keep the text concise and let the icon and color carry the status cue. `info` is the default type, while `success`, `alert`, `error`, and `loading` cover the most common toast states.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     bq-toast[open] {
       display: inline-block;
@@ -131,7 +131,7 @@ Use the built-in `type` values to communicate the nature of the message quickly.
     <bq-toast open type="loading">Uploading file...</bq-toast>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqToast } from "@beeq/react";
 
     <>
@@ -143,7 +143,7 @@ Use the built-in `type` values to communicate the nature of the message quickly.
     </>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqToast } from "@beeq/angular/standalone";
 
@@ -162,7 +162,7 @@ Use the built-in `type` values to communicate the nature of the message quickly.
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqToast } from "@beeq/vue";
     </script>
@@ -184,7 +184,7 @@ Use the built-in `type` values to communicate the nature of the message quickly.
 
 Use `type="custom"` when you need a branded or domain-specific status cue. Replace the default icon through the `icon` slot.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     bq-toast[open] {
       display: inline-block;
@@ -213,7 +213,7 @@ Use `type="custom"` when you need a branded or domain-specific status cue. Repla
     </BqToast>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqToast } from "@beeq/angular/standalone";
 
@@ -231,7 +231,7 @@ Use `type="custom"` when you need a branded or domain-specific status cue. Repla
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqIcon, BqToast } from "@beeq/vue";
     </script>
@@ -250,7 +250,7 @@ Use `type="custom"` when you need a branded or domain-specific status cue. Repla
 
 Use a dedicated toast container when you want the stacking behavior to be explicit in the markup. This example keeps the stack at the top center and appends each new toast into the same container, while keeping the visible documentation focused on the structure rather than the implementation details.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     [data-toast-container] {
       display: flex;
@@ -306,12 +306,6 @@ Use a dedicated toast container when you want the stacking behavior to be explic
   </script>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
-    <bq-button>Toggle toast</bq-button>
-
-    <div data-toast-container></div>
-    ```
-
     ```js JavaScript icon="js" expandable
     const TOAST_TYPE = ['info', 'success', 'alert', 'error', 'loading'];
 
@@ -343,6 +337,12 @@ Use a dedicated toast container when you want the stacking behavior to be explic
         }, 300);
       }, 4000);
     });
+    ```
+
+    ```html HTML icon="html5"
+    <bq-button>Toggle toast</bq-button>
+
+    <div data-toast-container></div>
     ```
 
     ```jsx React icon="react" expandable
@@ -469,7 +469,7 @@ Use a dedicated toast container when you want the stacking behavior to be explic
       </div>
     </template>
     ```
-  </CodeGroup>
+</CodeGroup>
 </CodeLivePreview>
 
 ## Best practices
@@ -615,7 +615,7 @@ Use a dedicated toast container when you want the stacking behavior to be explic
 </Expandable>
 
 <Tip>
-  Learn more about [styling with shadow parts](/usage-guides/customizations/styles#component-shadow-dom-parts) and [CSS custom properties](/usage-guides/customizations/styles#global-css-custom-properties).
+  Learn more about [styling with shadow parts](/guides/styles#component-shadow-dom-parts) and [CSS custom properties](/guides/styles#global-css-custom-properties).
 </Tip>
 
 ## Resources

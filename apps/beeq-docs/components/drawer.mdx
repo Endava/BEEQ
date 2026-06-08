@@ -120,7 +120,7 @@ While drawers can efficiently store additional information not included on the p
 
 The default state of the drawer component displays a standard drawer with a header, content area, and footer. It typically slides in from the end (right) edge of the screen. Use this for general purposes when you need a drawer to provide additional content or options without disrupting the main view.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <!--
     bq-drawer uses position: fixed, which is trapped inside the CodeLivePreview
     shadow root. The drawer and its <style data-drawer-styles> are teleported to
@@ -210,6 +210,12 @@ The default state of the drawer component displays a standard drawer with a head
     }
     ```
 
+    ```javascript JavaScript icon="js"
+    const btn = document.querySelector('bq-button');
+    const drawer = document.querySelector('bq-drawer');
+    btn.addEventListener('bqClick', () => drawer.show());
+    ```
+
     ```html HTML icon="html5" expandable
     <bq-button>Open Drawer</bq-button>
 
@@ -224,12 +230,6 @@ The default state of the drawer component displays a standard drawer with a head
         <bq-button appearance="link" block size="small">Button</bq-button>
       </div>
     </bq-drawer>
-    ```
-
-    ```javascript JavaScript icon="js" expandable
-    const btn = document.querySelector('bq-button');
-    const drawer = document.querySelector('bq-drawer');
-    btn.addEventListener('bqClick', () => drawer.show());
     ```
 
     ```jsx React icon="react" expandable
@@ -360,14 +360,14 @@ The default state of the drawer component displays a standard drawer with a head
       }
     </style>
     ```
-  </CodeGroup>
+</CodeGroup>
 </CodeLivePreview>
 
 ### No footer
 
 The no-footer variant removes the footer section, providing a cleaner interface without additional controls at the bottom. Use this when the drawer's primary purpose is to display content or options that do not require secondary actions.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <!--
     bq-drawer uses position: fixed, which is trapped inside the CodeLivePreview
     shadow root. The drawer and its <style data-drawer-styles> are teleported to
@@ -439,6 +439,12 @@ The no-footer variant removes the footer section, providing a cleaner interface 
     }
     ```
 
+    ```javascript JavaScript icon="js"
+    const btn = document.querySelector('bq-button');
+    const drawer = document.querySelector('bq-drawer');
+    btn.addEventListener('bqClick', () => drawer.show());
+    ```
+
     ```html HTML icon="html5" expandable
     <bq-button>Open Drawer</bq-button>
 
@@ -449,12 +455,6 @@ The no-footer variant removes the footer section, providing a cleaner interface 
       </div>
       <div class="drawer-description">Content</div>
     </bq-drawer>
-    ```
-
-    ```javascript JavaScript icon="js" expandable
-    const btn = document.querySelector('bq-button');
-    const drawer = document.querySelector('bq-drawer');
-    btn.addEventListener('bqClick', () => drawer.show());
     ```
 
     ```jsx React icon="react" expandable
@@ -559,14 +559,14 @@ The no-footer variant removes the footer section, providing a cleaner interface 
       }
     </style>
     ```
-  </CodeGroup>
+</CodeGroup>
 </CodeLivePreview>
 
 ### Start position
 
 The `position` prop allows you to specify the edge from which the drawer appears. Use `position="start"` to open from the left edge — ideal for primary navigation menus.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <!--
     bq-drawer uses position: fixed, which is trapped inside the CodeLivePreview
     shadow root. The drawer and its <style data-drawer-styles> are teleported to
@@ -656,6 +656,12 @@ The `position` prop allows you to specify the edge from which the drawer appears
     }
     ```
 
+    ```javascript JavaScript icon="js"
+    const btn = document.querySelector('bq-button');
+    const drawer = document.querySelector('bq-drawer');
+    btn.addEventListener('bqClick', () => drawer.show());
+    ```
+
     ```html HTML icon="html5" expandable
     <bq-button>Open Drawer</bq-button>
 
@@ -670,12 +676,6 @@ The `position` prop allows you to specify the edge from which the drawer appears
         <bq-button appearance="link" block size="small">Button</bq-button>
       </div>
     </bq-drawer>
-    ```
-
-    ```javascript JavaScript icon="js" expandable
-    const btn = document.querySelector('bq-button');
-    const drawer = document.querySelector('bq-drawer');
-    btn.addEventListener('bqClick', () => drawer.show());
     ```
 
     ```jsx React icon="react" expandable
@@ -806,7 +806,7 @@ The `position` prop allows you to specify the edge from which the drawer appears
       }
     </style>
     ```
-  </CodeGroup>
+</CodeGroup>
 </CodeLivePreview>
 
 ## Options
@@ -815,7 +815,7 @@ The `position` prop allows you to specify the edge from which the drawer appears
 
 The backdrop variant adds a semi-transparent overlay behind the drawer, helping to focus user attention on the drawer content while dimming the background. Enable this variant when you want to visually separate the drawer from the rest of the interface and provide a modal-like experience.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <!--
     bq-drawer uses position: fixed, which is trapped inside the CodeLivePreview
     shadow root. The drawer and its <style data-drawer-styles> are teleported to
@@ -905,6 +905,12 @@ The backdrop variant adds a semi-transparent overlay behind the drawer, helping 
     }
     ```
 
+    ```javascript JavaScript icon="js"
+    const btn = document.querySelector('bq-button');
+    const drawer = document.querySelector('bq-drawer');
+    btn.addEventListener('bqClick', () => drawer.show());
+    ```
+
     ```html HTML icon="html5" expandable
     <bq-button>Open Drawer</bq-button>
 
@@ -919,12 +925,6 @@ The backdrop variant adds a semi-transparent overlay behind the drawer, helping 
         <bq-button appearance="link" block size="small">Button</bq-button>
       </div>
     </bq-drawer>
-    ```
-
-    ```javascript JavaScript icon="js" expandable
-    const btn = document.querySelector('bq-button');
-    const drawer = document.querySelector('bq-drawer');
-    btn.addEventListener('bqClick', () => drawer.show());
     ```
 
     ```jsx React icon="react" expandable
@@ -1055,14 +1055,14 @@ The backdrop variant adds a semi-transparent overlay behind the drawer, helping 
       }
     </style>
     ```
-  </CodeGroup>
+</CodeGroup>
 </CodeLivePreview>
 
 ### Custom footer divider
 
 Replace the default footer divider by slotting a custom element into `slot="footer-divider"`. The example below uses `bq-divider` with a custom stroke.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <!--
     bq-drawer uses position: fixed, which is trapped inside the CodeLivePreview
     shadow root. The drawer and its <style data-drawer-styles> are teleported to
@@ -1163,6 +1163,12 @@ Replace the default footer divider by slotting a custom element into `slot="foot
     }
     ```
 
+    ```javascript JavaScript icon="js"
+    const btn = document.querySelector('bq-button');
+    const drawer = document.querySelector('bq-drawer');
+    btn.addEventListener('bqClick', () => drawer.show());
+    ```
+
     ```html HTML icon="html5" expandable
     <bq-button>Open Drawer</bq-button>
 
@@ -1178,12 +1184,6 @@ Replace the default footer divider by slotting a custom element into `slot="foot
         <bq-button appearance="link" block size="small">Button</bq-button>
       </div>
     </bq-drawer>
-    ```
-
-    ```javascript JavaScript icon="js" expandable
-    const btn = document.querySelector('bq-button');
-    const drawer = document.querySelector('bq-drawer');
-    btn.addEventListener('bqClick', () => drawer.show());
     ```
 
     ```jsx React icon="react" expandable
@@ -1327,14 +1327,14 @@ Replace the default footer divider by slotting a custom element into `slot="foot
       }
     </style>
     ```
-  </CodeGroup>
+</CodeGroup>
 </CodeLivePreview>
 
 ### Close behavior
 
 By default, clicking outside the panel or pressing `Esc` closes the drawer. Set `close-on-click-outside` or `close-on-esc` to prevent those interactions when the user must explicitly confirm before dismissing.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <!--
     bq-drawer uses position: fixed, which is trapped inside the CodeLivePreview
     shadow root. The drawer and its <style data-drawer-styles> are teleported to
@@ -1375,10 +1375,16 @@ By default, clicking outside the panel or pressing `Esc` closes the drawer. Set 
   </script>
 `}>
   <CodeGroup>
-    ```css styles.css icon="css" expandable
+    ```css styles.css icon="css"
     .drawer-content {
       padding: var(--bq-spacing-m) 0;
     }
+    ```
+
+    ```javascript JavaScript icon="js"
+    const btn = document.querySelector('bq-button');
+    const drawer = document.querySelector('bq-drawer');
+    btn.addEventListener('bqClick', () => drawer.show());
     ```
 
     ```html HTML icon="html5" expandable
@@ -1390,12 +1396,6 @@ By default, clicking outside the panel or pressing `Esc` closes the drawer. Set 
         <p>Use the close button to dismiss.</p>
       </div>
     </bq-drawer>
-    ```
-
-    ```javascript JavaScript icon="js" expandable
-    const btn = document.querySelector('bq-button');
-    const drawer = document.querySelector('bq-drawer');
-    btn.addEventListener('bqClick', () => drawer.show());
     ```
 
     ```jsx React icon="react" expandable
@@ -1473,7 +1473,7 @@ By default, clicking outside the panel or pressing `Esc` closes the drawer. Set 
       }
       </style>
     ```
-  </CodeGroup>
+</CodeGroup>
 </CodeLivePreview>
 
 ## Best practices
@@ -1642,7 +1642,7 @@ As a developer, you are responsible for:
 </Expandable>
 
 <Tip>
-  Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).
+  Learn more about [styling with shadow parts](/guides/styles) and [CSS custom properties](/theming/global-css-variables).
 </Tip>
 
 ## Resources

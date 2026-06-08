@@ -106,7 +106,7 @@ Follow this sequence when you define a page title:
 Use the default composition when the title alone provides enough context.
 
 <CodeLivePreview
-  code={`
+  mode="shadow" code={`
   <style>
     bq-page-title {
       inline-size: 100% !important;
@@ -118,13 +118,13 @@ Use the default composition when the title alone provides enough context.
   `}
 >
   <CodeGroup>
-    ```html HTML icon="html5" expandable
+    ```html HTML icon="html5"
     <bq-page-title>
       Title
     </bq-page-title>
     ```
 
-    ```jsx React icon="react" expandable
+    ```jsx React icon="react"
     import { BqPageTitle } from "@beeq/react";
 
     <BqPageTitle>
@@ -168,7 +168,7 @@ Use the default composition when the title alone provides enough context.
 Use a back action when the page is part of a flow or nested navigation path.
 
 <CodeLivePreview
-  code={`
+  mode="shadow" code={`
   <style>
     bq-page-title {
       inline-size: 100% !important;
@@ -183,7 +183,7 @@ Use a back action when the page is part of a flow or nested navigation path.
   `}
 >
   <CodeGroup>
-    ```html HTML icon="html5" expandable
+    ```html HTML icon="html5"
     <bq-page-title>
       <bq-button appearance="link" slot="back" only-icon>
         <bq-icon color="text--primary" name="arrow-left" weight="bold" title="Navigate back to the previous page"></bq-icon>
@@ -245,7 +245,7 @@ Use a back action when the page is part of a flow or nested navigation path.
 Add a subtitle when people need a little more context before acting.
 
 <CodeLivePreview
-  code={`
+  mode="shadow" code={`
   <style>
     bq-page-title {
       inline-size: 100% !important;
@@ -261,7 +261,7 @@ Add a subtitle when people need a little more context before acting.
   `}
 >
   <CodeGroup>
-    ```html HTML icon="html5" expandable
+    ```html HTML icon="html5"
     <bq-page-title>
       <bq-button appearance="link" slot="back" only-icon>
         <bq-icon color="text--primary" name="arrow-left" weight="bold" title="Navigate back to the previous page"></bq-icon>
@@ -329,7 +329,7 @@ Add a subtitle when people need a little more context before acting.
 Use the suffix slot for page-level actions when back navigation is not relevant — for example, a top-level list page with a primary action.
 
 <CodeLivePreview
-  code={`
+  mode="shadow" code={`
   <style>
     bq-page-title {
       inline-size: 100% !important;
@@ -428,7 +428,7 @@ Use the suffix slot for page-level actions when back navigation is not relevant 
 Use the suffix slot when the title area needs page-level actions such as edit or download.
 
 <CodeLivePreview
-  code={`
+  mode="shadow" code={`
   <style>
     bq-page-title {
       inline-size: 100% !important;
@@ -724,7 +724,7 @@ Use the suffix slot when the title area needs page-level actions such as edit or
 </Note>
 
 <Tip>
-  Learn more about [styling with shadow parts](/usage-guides/customizations/styles#component-shadow-dom-parts) and [CSS custom properties](/usage-guides/customizations/styles#global-css-custom-properties).
+  Learn more about [styling with shadow parts](/guides/styles#component-shadow-dom-parts) and [CSS custom properties](/guides/styles#global-css-custom-properties).
 </Tip>
 
 ## Resources

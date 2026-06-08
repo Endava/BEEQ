@@ -177,6 +177,42 @@ The current BEEQ spacing scale is exposed as CSS custom properties and Tailwind 
   </div>
 `}>
   <CodeGroup>
+    ```css CSS icon="css" expandable
+    .spacing-scale {
+      display: grid;
+      gap: var(--bq-spacing-m);
+      max-width: 42rem;
+    }
+
+    .spacing-bar--xs3 {
+      inline-size: var(--bq-spacing-xs3);
+    }
+
+    .spacing-bar--xs {
+      inline-size: var(--bq-spacing-xs);
+    }
+
+    .spacing-bar--m {
+      inline-size: var(--bq-spacing-m);
+    }
+
+    .spacing-bar--l {
+      inline-size: var(--bq-spacing-l);
+    }
+
+    .spacing-bar--xl {
+      inline-size: var(--bq-spacing-xl);
+    }
+
+    .spacing-bar--xxl2 {
+      inline-size: var(--bq-spacing-xxl2);
+    }
+
+    .spacing-bar--xxl4 {
+      inline-size: var(--bq-spacing-xxl4);
+    }
+    ```
+
     ```html HTML icon="html5" expandable
     <div class="spacing-scale" aria-label="Representative BEEQ spacing values">
       <div class="spacing-row">
@@ -216,43 +252,7 @@ The current BEEQ spacing scale is exposed as CSS custom properties and Tailwind 
       </div>
     </div>
     ```
-
-    ```css CSS icon="css" expandable
-    .spacing-scale {
-      display: grid;
-      gap: var(--bq-spacing-m);
-      max-width: 42rem;
-    }
-
-    .spacing-bar--xs3 {
-      inline-size: var(--bq-spacing-xs3);
-    }
-
-    .spacing-bar--xs {
-      inline-size: var(--bq-spacing-xs);
-    }
-
-    .spacing-bar--m {
-      inline-size: var(--bq-spacing-m);
-    }
-
-    .spacing-bar--l {
-      inline-size: var(--bq-spacing-l);
-    }
-
-    .spacing-bar--xl {
-      inline-size: var(--bq-spacing-xl);
-    }
-
-    .spacing-bar--xxl2 {
-      inline-size: var(--bq-spacing-xxl2);
-    }
-
-    .spacing-bar--xxl4 {
-      inline-size: var(--bq-spacing-xxl4);
-    }
-    ```
-  </CodeGroup>
+</CodeGroup>
 </CodeLivePreview>
 
 ---
@@ -306,6 +306,17 @@ Use logical utilities for layouts that need to adapt to writing direction or avo
   </bq-card>
 `}>
   <CodeGroup>
+    ```css CSS icon="css" expandable
+    .settings-panel {
+      max-width: 34rem;
+    }
+
+    .settings-panel__content {
+      display: grid;
+      gap: var(--bq-spacing-xs);
+    }
+    ```
+
     ```html HTML icon="html5" expandable
     <bq-card class="settings-panel">
       <div class="settings-panel__content">
@@ -317,18 +328,7 @@ Use logical utilities for layouts that need to adapt to writing direction or avo
       </div>
     </bq-card>
     ```
-
-    ```css CSS icon="css" expandable
-    .settings-panel {
-      max-width: 34rem;
-    }
-
-    .settings-panel__content {
-      display: grid;
-      gap: var(--bq-spacing-xs);
-    }
-    ```
-  </CodeGroup>
+</CodeGroup>
 </CodeLivePreview>
 
 ---
@@ -394,6 +394,20 @@ Component internals already use BEEQ spacing. When you build custom layouts, use
   </div>
 `}>
   <CodeGroup>
+    ```css CSS icon="css" expandable
+    .layout-example {
+      display: grid;
+      gap: var(--bq-spacing-xl);
+      max-width: 42rem;
+    }
+
+    .layout-card__content {
+      display: grid;
+      gap: var(--bq-spacing-xs);
+      padding: var(--bq-spacing-m);
+    }
+    ```
+
     ```html HTML icon="html5" expandable
     <div class="layout-example">
       <bq-card type="minimal">
@@ -410,21 +424,7 @@ Component internals already use BEEQ spacing. When you build custom layouts, use
       </bq-card>
     </div>
     ```
-
-    ```css CSS icon="css" expandable
-    .layout-example {
-      display: grid;
-      gap: var(--bq-spacing-xl);
-      max-width: 42rem;
-    }
-
-    .layout-card__content {
-      display: grid;
-      gap: var(--bq-spacing-xs);
-      padding: var(--bq-spacing-m);
-    }
-    ```
-  </CodeGroup>
+</CodeGroup>
 </CodeLivePreview>
 
 ---

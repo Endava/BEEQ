@@ -120,7 +120,7 @@ Place prefix icons when the list is long and icon-based scanning helps users fin
 
 A simple list of options inside a `bq-option-list`. Each option carries a `value` attribute used by the parent to identify which item the user selected.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-option-list>
     <bq-option value="profile">
       <span>User profile</span>
@@ -134,7 +134,7 @@ A simple list of options inside a `bq-option-list`. Each option carries a `value
   </bq-option-list>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-option-list>
       <bq-option value="profile">
         <span>User profile</span>
@@ -148,7 +148,7 @@ A simple list of options inside a `bq-option-list`. Each option carries a `value
     </bq-option-list>
     ```
 
-    ```tsx React icon="react"
+    ```tsx React icon="react" expandable
     import { BqOption, BqOptionList } from "@beeq/react";
 
     <BqOptionList>
@@ -164,7 +164,7 @@ A simple list of options inside a `bq-option-list`. Each option carries a `value
     </BqOptionList>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqOption, BqOptionList } from "@beeq/angular/standalone";
 
@@ -189,7 +189,7 @@ A simple list of options inside a `bq-option-list`. Each option carries a `value
     export class DefaultOptionComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqOption, BqOptionList } from "@beeq/vue";
     </script>
@@ -215,7 +215,7 @@ A simple list of options inside a `bq-option-list`. Each option carries a `value
 
 Add a `bq-icon` in the `prefix` slot to give each item a visual anchor. Icons make longer lists easier to scan and help users recognize options without reading every label.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-option-list>
     <bq-option value="profile">
       <bq-icon slot="prefix" name="user"></bq-icon>
@@ -232,7 +232,7 @@ Add a `bq-icon` in the `prefix` slot to give each item a visual anchor. Icons ma
   </bq-option-list>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-option-list>
       <bq-option value="profile">
         <bq-icon slot="prefix" name="user"></bq-icon>
@@ -249,7 +249,7 @@ Add a `bq-icon` in the `prefix` slot to give each item a visual anchor. Icons ma
     </bq-option-list>
     ```
 
-    ```tsx React icon="react"
+    ```tsx React icon="react" expandable
     import { BqIcon, BqOption, BqOptionList } from "@beeq/react";
 
     <BqOptionList>
@@ -268,7 +268,7 @@ Add a `bq-icon` in the `prefix` slot to give each item a visual anchor. Icons ma
     </BqOptionList>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqOption, BqOptionList } from "@beeq/angular/standalone";
 
@@ -296,7 +296,7 @@ Add a `bq-icon` in the `prefix` slot to give each item a visual anchor. Icons ma
     export class OptionWithPrefixIconComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqIcon, BqOption, BqOptionList } from "@beeq/vue";
     </script>
@@ -325,7 +325,7 @@ Add a `bq-icon` in the `prefix` slot to give each item a visual anchor. Icons ma
 
 Use the `suffix` slot for a right-aligned secondary indicator. Common uses include link-out arrows, keyboard shortcuts, or status icons.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-option-list>
     <bq-option value="profile">
       <span>User profile</span>
@@ -346,7 +346,7 @@ Use the `suffix` slot for a right-aligned secondary indicator. Common uses inclu
   </bq-option-list>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-option-list>
       <bq-option value="profile">
         <span>User profile</span>
@@ -367,7 +367,7 @@ Use the `suffix` slot for a right-aligned secondary indicator. Common uses inclu
     </bq-option-list>
     ```
 
-    ```tsx React icon="react"
+    ```tsx React icon="react" expandable
     import { BqIcon, BqOption, BqOptionList } from "@beeq/react";
 
     <BqOptionList>
@@ -390,7 +390,7 @@ Use the `suffix` slot for a right-aligned secondary indicator. Common uses inclu
     </BqOptionList>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqOption, BqOptionList } from "@beeq/angular/standalone";
 
@@ -422,7 +422,7 @@ Use the `suffix` slot for a right-aligned secondary indicator. Common uses inclu
     export class OptionWithSuffixIconComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqIcon, BqOption, BqOptionList } from "@beeq/vue";
     </script>
@@ -457,7 +457,7 @@ Use the `suffix` slot for a right-aligned secondary indicator. Common uses inclu
 
 Set `selected` on the option that reflects the current active value. The component applies the brand accent styling automatically.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-option-list>
     <bq-option selected value="profile">
       <bq-icon slot="prefix" name="user"></bq-icon>
@@ -474,7 +474,7 @@ Set `selected` on the option that reflects the current active value. The compone
   </bq-option-list>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-option-list>
       <bq-option selected value="profile">
         <bq-icon slot="prefix" name="user"></bq-icon>
@@ -491,7 +491,7 @@ Set `selected` on the option that reflects the current active value. The compone
     </bq-option-list>
     ```
 
-    ```tsx React icon="react"
+    ```tsx React icon="react" expandable
     import { BqIcon, BqOption, BqOptionList } from "@beeq/react";
 
     <BqOptionList>
@@ -510,7 +510,7 @@ Set `selected` on the option that reflects the current active value. The compone
     </BqOptionList>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqOption, BqOptionList } from "@beeq/angular/standalone";
 
@@ -538,7 +538,7 @@ Set `selected` on the option that reflects the current active value. The compone
     export class SelectedOptionComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqIcon, BqOption, BqOptionList } from "@beeq/vue";
     </script>
@@ -567,7 +567,7 @@ Set `selected` on the option that reflects the current active value. The compone
 
 Set `disabled` on individual options to mark them as contextually unavailable. Disabled options remain visible in the list but do not respond to clicks or keyboard events.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-option-list>
     <bq-option value="profile">
       <bq-icon slot="prefix" name="user"></bq-icon>
@@ -588,7 +588,7 @@ Set `disabled` on individual options to mark them as contextually unavailable. D
   </bq-option-list>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-option-list>
       <bq-option value="profile">
         <bq-icon slot="prefix" name="user"></bq-icon>
@@ -609,7 +609,7 @@ Set `disabled` on individual options to mark them as contextually unavailable. D
     </bq-option-list>
     ```
 
-    ```tsx React icon="react"
+    ```tsx React icon="react" expandable
     import { BqIcon, BqOption, BqOptionList } from "@beeq/react";
 
     <BqOptionList>
@@ -632,7 +632,7 @@ Set `disabled` on individual options to mark them as contextually unavailable. D
     </BqOptionList>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqOption, BqOptionList } from "@beeq/angular/standalone";
 
@@ -664,7 +664,7 @@ Set `disabled` on individual options to mark them as contextually unavailable. D
     export class DisabledOptionComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqIcon, BqOption, BqOptionList } from "@beeq/vue";
     </script>
@@ -697,7 +697,7 @@ Set `disabled` on individual options to mark them as contextually unavailable. D
 
 Set `hidden` on an option to remove it from the visible list and the accessibility tree while keeping it in the DOM. Unlike `disabled`, a hidden option is completely invisible — screen readers skip it and it cannot be focused. Use this for options that are programmatically toggled based on application state.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-option-list>
     <bq-option value="profile">
       <bq-icon slot="prefix" name="user"></bq-icon>
@@ -718,7 +718,7 @@ Set `hidden` on an option to remove it from the visible list and the accessibili
   </bq-option-list>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-option-list>
       <bq-option value="profile">
         <bq-icon slot="prefix" name="user"></bq-icon>
@@ -739,7 +739,7 @@ Set `hidden` on an option to remove it from the visible list and the accessibili
     </bq-option-list>
     ```
 
-    ```tsx React icon="react"
+    ```tsx React icon="react" expandable
     import { BqIcon, BqOption, BqOptionList } from "@beeq/react";
 
     <BqOptionList>
@@ -762,7 +762,7 @@ Set `hidden` on an option to remove it from the visible list and the accessibili
     </BqOptionList>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqOption, BqOptionList } from "@beeq/angular/standalone";
 
@@ -794,7 +794,7 @@ Set `hidden` on an option to remove it from the visible list and the accessibili
     export class HiddenOptionComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqIcon, BqOption, BqOptionList } from "@beeq/vue";
     </script>

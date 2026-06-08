@@ -109,7 +109,7 @@ Use tags with restraint so they help users scan and act without turning into vis
 
 Use the standard tag when you want a simple and clean representation.
 
-<CodeLivePreview code={`<bq-tag>Tag</bq-tag>`}>
+<CodeLivePreview mode="shadow" code={`<bq-tag>Tag</bq-tag>`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-tag>Tag</bq-tag>
@@ -121,7 +121,7 @@ Use the standard tag when you want a simple and clean representation.
     <BqTag>Tag</BqTag>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqTag } from "@beeq/angular/standalone";
 
@@ -152,7 +152,7 @@ Use the standard tag when you want a simple and clean representation.
 
 Adjust the `size` attribute to customize the tag's dimensions and support a clearer visual hierarchy.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-tag size="xsmall">Extra small</bq-tag>
   <bq-tag size="small">Small</bq-tag>
   <bq-tag size="medium">Medium</bq-tag>
@@ -174,7 +174,7 @@ Adjust the `size` attribute to customize the tag's dimensions and support a clea
     </>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqTag } from "@beeq/angular/standalone";
 
@@ -191,7 +191,7 @@ Adjust the `size` attribute to customize the tag's dimensions and support a clea
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqTag } from "@beeq/vue";
     </script>
@@ -209,7 +209,7 @@ Adjust the `size` attribute to customize the tag's dimensions and support a clea
 
 Apply the `clickable` attribute for interactive tags that can trigger actions or toggle selection.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-tag clickable>Tag</bq-tag>
   <bq-tag clickable selected>Tag</bq-tag>
 `}>
@@ -228,7 +228,7 @@ Apply the `clickable` attribute for interactive tags that can trigger actions or
     </>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqTag } from "@beeq/angular/standalone";
 
@@ -244,7 +244,7 @@ Apply the `clickable` attribute for interactive tags that can trigger actions or
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqTag } from "@beeq/vue";
     </script>
@@ -261,7 +261,7 @@ Apply the `clickable` attribute for interactive tags that can trigger actions or
 
 Apply `disabled` alongside `clickable` when a tag action is temporarily unavailable. The `disabled` attribute has no effect on informational or removable tags.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-tag clickable>Enabled</bq-tag>
   <bq-tag clickable disabled>Disabled</bq-tag>
 `}>
@@ -280,7 +280,7 @@ Apply `disabled` alongside `clickable` when a tag action is temporarily unavaila
     </>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqTag } from "@beeq/angular/standalone";
 
@@ -296,7 +296,7 @@ Apply `disabled` alongside `clickable` when a tag action is temporarily unavaila
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqTag } from "@beeq/vue";
     </script>
@@ -315,7 +315,7 @@ Apply `disabled` alongside `clickable` when a tag action is temporarily unavaila
 
 Use filled colored tags when you want a stronger visual distinction for categories or states.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-tag color="success">Success</bq-tag>
   <bq-tag color="info">Info</bq-tag>
   <bq-tag color="error">Error</bq-tag>
@@ -341,7 +341,7 @@ Use filled colored tags when you want a stronger visual distinction for categori
     <BqTag color="gray">Gray</BqTag>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqTag } from "@beeq/angular/standalone";
 
@@ -360,7 +360,7 @@ Use filled colored tags when you want a stronger visual distinction for categori
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqTag } from "@beeq/vue";
     </script>
@@ -380,7 +380,7 @@ Use filled colored tags when you want a stronger visual distinction for categori
 
 Use `variant="outline"` when you want a subtler visual distinction without a filled surface.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-tag color="success" variant="outline">Success</bq-tag>
   <bq-tag color="info" variant="outline">Info</bq-tag>
   <bq-tag color="error" variant="outline">Error</bq-tag>
@@ -406,7 +406,7 @@ Use `variant="outline"` when you want a subtler visual distinction without a fil
     <BqTag color="gray" variant="outline">Gray</BqTag>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqTag } from "@beeq/angular/standalone";
 
@@ -425,7 +425,7 @@ Use `variant="outline"` when you want a subtler visual distinction without a fil
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqTag } from "@beeq/vue";
     </script>
@@ -445,7 +445,7 @@ Use `variant="outline"` when you want a subtler visual distinction without a fil
 
 Enable `removable` when users need to clear selected items, applied filters, or entered values.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-tag removable>Default</bq-tag>
   <bq-tag removable color="success">Success</bq-tag>
   <bq-tag removable color="info">Info</bq-tag>
@@ -473,7 +473,7 @@ Enable `removable` when users need to clear selected items, applied filters, or 
     <bq-tag removable color="gray">Gray</bq-tag>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqTag } from "@beeq/react";
 
     <BqTag removable>Default</BqTag>
@@ -484,7 +484,7 @@ Enable `removable` when users need to clear selected items, applied filters, or 
     <BqTag removable color="gray">Gray</BqTag>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqTag } from "@beeq/angular/standalone";
 
@@ -504,7 +504,7 @@ Enable `removable` when users need to clear selected items, applied filters, or 
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqTag } from "@beeq/vue";
     </script>
@@ -525,7 +525,7 @@ Enable `removable` when users need to clear selected items, applied filters, or 
 
 Use `variant="outline"` with `removable` when you want the same close behavior with lower visual weight.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-tag removable variant="outline">Default</bq-tag>
   <bq-tag removable color="success" variant="outline">Success</bq-tag>
   <bq-tag removable color="info" variant="outline">Info</bq-tag>
@@ -552,7 +552,7 @@ Use `variant="outline"` with `removable` when you want the same close behavior w
     <bq-tag removable color="gray" variant="outline">Gray</bq-tag>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqTag } from "@beeq/react";
 
     <BqTag removable variant="outline">Default</BqTag>
@@ -563,7 +563,7 @@ Use `variant="outline"` with `removable` when you want the same close behavior w
     <BqTag removable color="gray" variant="outline">Gray</BqTag>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqTag } from "@beeq/angular/standalone";
 
@@ -583,7 +583,7 @@ Use `variant="outline"` with `removable` when you want the same close behavior w
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqTag } from "@beeq/vue";
     </script>
@@ -604,7 +604,7 @@ Use `variant="outline"` with `removable` when you want the same close behavior w
 
 Use the `prefix` slot to add an icon when extra context helps, while keeping the text label as the main content.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-tag>
     <bq-icon name="alarm" slot="prefix"></bq-icon>
     Default
@@ -631,7 +631,7 @@ Use the `prefix` slot to add an icon when extra context helps, while keeping the
   </bq-tag>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-tag>
       <bq-icon name="alarm" slot="prefix"></bq-icon>
       Default
@@ -658,7 +658,7 @@ Use the `prefix` slot to add an icon when extra context helps, while keeping the
     </bq-tag>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqIcon, BqTag } from "@beeq/react";
 
     <BqTag>
@@ -687,7 +687,7 @@ Use the `prefix` slot to add an icon when extra context helps, while keeping the
     </BqTag>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqTag, BqIcon } from "@beeq/angular/standalone";
 
@@ -725,7 +725,7 @@ Use the `prefix` slot to add an icon when extra context helps, while keeping the
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqIcon, BqTag } from "@beeq/vue";
     </script>
@@ -764,7 +764,7 @@ Use the `prefix` slot to add an icon when extra context helps, while keeping the
 
 Use the outline variant with a prefix icon when you want context with a lighter visual treatment.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-tag variant="outline">
     <bq-icon name="alarm" slot="prefix"></bq-icon>
     Default
@@ -791,7 +791,7 @@ Use the outline variant with a prefix icon when you want context with a lighter 
   </bq-tag>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-tag variant="outline">
       <bq-icon name="alarm" slot="prefix"></bq-icon>
       Default
@@ -818,7 +818,7 @@ Use the outline variant with a prefix icon when you want context with a lighter 
     </bq-tag>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqIcon, BqTag } from "@beeq/react";
 
     <BqTag variant="outline">
@@ -847,7 +847,7 @@ Use the outline variant with a prefix icon when you want context with a lighter 
     </BqTag>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqTag, BqIcon } from "@beeq/angular/standalone";
 
@@ -885,7 +885,7 @@ Use the outline variant with a prefix icon when you want context with a lighter 
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqIcon, BqTag } from "@beeq/vue";
     </script>
@@ -1085,7 +1085,7 @@ Use the outline variant with a prefix icon when you want context with a lighter 
 </Expandable>
 
 <Tip>
-  Learn more about [styling with shadow parts](/usage-guides/customizations/styles#component-shadow-dom-parts) and [CSS custom properties](/usage-guides/customizations/styles#global-css-custom-properties).
+  Learn more about [styling with shadow parts](/guides/styles#component-shadow-dom-parts) and [CSS custom properties](/guides/styles#global-css-custom-properties).
 </Tip>
 
 ## Resources

@@ -138,7 +138,7 @@ Use the `default` variant for general-purpose alerts. It lets you customize the 
   Set `open` to show the alert. Use `show()` and `hide()` when visibility is controlled programmatically.
 </Tip>
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       flex-direction: column !important;
@@ -186,7 +186,7 @@ Use the `default` variant for general-purpose alerts. It lets you customize the 
   </script>`
 }>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-alert open>
       <bq-icon name="star" slot="icon"></bq-icon>
       Title
@@ -215,7 +215,7 @@ Use the `default` variant for general-purpose alerts. It lets you customize the 
     </bq-alert>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqAlert, BqButton, BqIcon } from "@beeq/react";
 
     <>
@@ -248,7 +248,7 @@ Use the `default` variant for general-purpose alerts. It lets you customize the 
     </>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqAlert, BqIcon, BqButton } from "@beeq/angular/standalone";
 
@@ -288,7 +288,7 @@ Use the `default` variant for general-purpose alerts. It lets you customize the 
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqAlert, BqButton, BqIcon } from "@beeq/vue";
     </script>
@@ -333,7 +333,7 @@ Use the `default` variant for general-purpose alerts. It lets you customize the 
 
 Use the `info` variant when users need additional, non-critical information. It works well for context that helps users understand a state without requiring immediate action.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       flex-direction: column !important;
@@ -376,7 +376,7 @@ Use the `info` variant when users need additional, non-critical information. It 
   </script>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-alert open type="info">Title</bq-alert>
     <bq-alert open type="info">
       Title
@@ -399,7 +399,7 @@ Use the `info` variant when users need additional, non-critical information. It 
     </bq-alert>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqAlert, BqButton } from "@beeq/react";
 
     <>
@@ -427,7 +427,7 @@ Use the `info` variant when users need additional, non-critical information. It 
     </>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqAlert, BqButton } from "@beeq/angular/standalone";
 
@@ -462,7 +462,7 @@ Use the `info` variant when users need additional, non-critical information. It 
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqAlert, BqButton } from "@beeq/vue";
     </script>
@@ -498,7 +498,7 @@ Use the `info` variant when users need additional, non-critical information. It 
 
 Use the `success` variant to notify users about successful actions or positive outcomes. This type of alert is ideal for celebrating achievements, completed processes, or any operation that concludes successfully.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       flex-direction: column !important;
@@ -541,7 +541,7 @@ Use the `success` variant to notify users about successful actions or positive o
   </script>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-alert open type="success">Title</bq-alert>
     <bq-alert open type="success">
       Title
@@ -564,7 +564,7 @@ Use the `success` variant to notify users about successful actions or positive o
     </bq-alert>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqAlert, BqButton } from "@beeq/react";
 
     <>
@@ -592,7 +592,7 @@ Use the `success` variant to notify users about successful actions or positive o
     </>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqAlert, BqButton } from "@beeq/angular/standalone";
 
@@ -627,7 +627,7 @@ Use the `success` variant to notify users about successful actions or positive o
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqAlert, BqButton } from "@beeq/vue";
     </script>
@@ -663,7 +663,7 @@ Use the `success` variant to notify users about successful actions or positive o
 
 Use the `warning` variant to indicate potential issues or actions that users should approach with caution. This alert helps draw attention to situations that require careful consideration but may not be critical.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       flex-direction: column !important;
@@ -706,7 +706,7 @@ Use the `warning` variant to indicate potential issues or actions that users sho
   </script>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-alert open type="warning">Title</bq-alert>
     <bq-alert open type="warning">
       Title
@@ -729,7 +729,7 @@ Use the `warning` variant to indicate potential issues or actions that users sho
     </bq-alert>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqAlert, BqButton } from "@beeq/react";
 
     <>
@@ -757,7 +757,7 @@ Use the `warning` variant to indicate potential issues or actions that users sho
     </>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqAlert, BqButton } from "@beeq/angular/standalone";
 
@@ -792,7 +792,7 @@ Use the `warning` variant to indicate potential issues or actions that users sho
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqAlert, BqButton } from "@beeq/vue";
     </script>
@@ -828,7 +828,7 @@ Use the `warning` variant to indicate potential issues or actions that users sho
 
 Use the `error` variant for issues that require immediate attention. It works best for problems that block the task or prevent a successful outcome.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       flex-direction: column !important;
@@ -871,7 +871,7 @@ Use the `error` variant for issues that require immediate attention. It works be
   </script>
   `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-alert open type="error">Title</bq-alert>
     <bq-alert open type="error">
       Title
@@ -894,7 +894,7 @@ Use the `error` variant for issues that require immediate attention. It works be
     </bq-alert>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqAlert, BqButton } from "@beeq/react";
 
     <>
@@ -922,7 +922,7 @@ Use the `error` variant for issues that require immediate attention. It works be
     </>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqAlert, BqButton } from "@beeq/angular/standalone";
 
@@ -957,7 +957,7 @@ Use the `error` variant for issues that require immediate attention. It works be
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqAlert, BqButton } from "@beeq/vue";
     </script>
@@ -999,7 +999,7 @@ Use the `sticky` attribute for persistent alerts that remain visible until users
   Sticky alerts support every alert type: `default`, `success`, `error`, `warning`, and `info`.
 </Tip>
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       padding: 0 !important;
@@ -1051,7 +1051,7 @@ Use the `sticky` attribute for persistent alerts that remain visible until users
   </script>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <main>
       <h1>Dashboard</h1>
       <div></div>
@@ -1063,7 +1063,7 @@ Use the `sticky` attribute for persistent alerts that remain visible until users
     </main>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqAlert, BqButton } from "@beeq/react";
 
     <main>
@@ -1077,7 +1077,7 @@ Use the `sticky` attribute for persistent alerts that remain visible until users
     </main>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqAlert, BqButton } from "@beeq/angular/standalone";
 
@@ -1100,7 +1100,7 @@ Use the `sticky` attribute for persistent alerts that remain visible until users
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqAlert, BqButton } from "@beeq/vue";
     </script>
@@ -1132,7 +1132,7 @@ Set `auto-dismiss` to hide the alert automatically after a delay. Use `time` to 
   Do not use `auto-dismiss` for alerts that contain errors, required actions, or legal information.
 </Warning>
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       flex-direction: column !important;
@@ -1179,7 +1179,7 @@ Set `auto-dismiss` to hide the alert automatically after a delay. Use `time` to 
     </BqAlert>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqAlert } from "@beeq/angular/standalone";
 
@@ -1197,7 +1197,7 @@ Set `auto-dismiss` to hide the alert automatically after a delay. Use `time` to 
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqAlert } from "@beeq/vue";
     </script>
@@ -1380,7 +1380,7 @@ Set `auto-dismiss` to hide the alert automatically after a delay. Use `time` to 
 </Expandable>
 
 <Tip>
-  Learn more about [styling with shadow parts](/usage-guides/customizations/styles#component-shadow-dom-parts) and [CSS custom properties](/usage-guides/customizations/styles#global-css-custom-properties).
+  Learn more about [styling with shadow parts](/guides/styles#component-shadow-dom-parts) and [CSS custom properties](/guides/styles#global-css-custom-properties).
 </Tip>
 
 ## Resources

@@ -94,7 +94,7 @@ The `ariaLabel` prop (rendered as `aria-label` on the host element) names the li
 
 A simple list with no groups. Each `bq-option` carries a `value` so the parent can identify the selection via the `bqSelect` event.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-option-list>
     <bq-option value="profile">
       <bq-icon slot="prefix" name="user"></bq-icon>
@@ -115,7 +115,7 @@ A simple list with no groups. Each `bq-option` carries a `value` so the parent c
   </bq-option-list>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-option-list>
       <bq-option value="profile">
         <bq-icon slot="prefix" name="user"></bq-icon>
@@ -136,7 +136,7 @@ A simple list with no groups. Each `bq-option` carries a `value` so the parent c
     </bq-option-list>
     ```
 
-    ```tsx React icon="react"
+    ```tsx React icon="react" expandable
     import { BqIcon, BqOption, BqOptionList } from "@beeq/react";
 
     <BqOptionList>
@@ -159,7 +159,7 @@ A simple list with no groups. Each `bq-option` carries a `value` so the parent c
     </BqOptionList>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqOption, BqOptionList } from "@beeq/angular/standalone";
 
@@ -191,7 +191,7 @@ A simple list with no groups. Each `bq-option` carries a `value` so the parent c
     export class FlatOptionListComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqIcon, BqOption, BqOptionList } from "@beeq/vue";
     </script>
@@ -230,7 +230,7 @@ A simple list with no groups. Each `bq-option` carries a `value` so the parent c
 
 Override `aria-label` when the default `"Options"` is too generic for the context. A specific label helps screen reader users understand the purpose of the list before navigating into it.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-option-list aria-label="Navigation links">
     <bq-option value="home">
       <bq-icon slot="prefix" name="house"></bq-icon>
@@ -247,7 +247,7 @@ Override `aria-label` when the default `"Options"` is too generic for the contex
   </bq-option-list>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-option-list aria-label="Navigation links">
       <bq-option value="home">
         <bq-icon slot="prefix" name="house"></bq-icon>
@@ -264,7 +264,7 @@ Override `aria-label` when the default `"Options"` is too generic for the contex
     </bq-option-list>
     ```
 
-    ```tsx React icon="react"
+    ```tsx React icon="react" expandable
     import { BqIcon, BqOption, BqOptionList } from "@beeq/react";
 
     <BqOptionList ariaLabel="Navigation links">
@@ -283,7 +283,7 @@ Override `aria-label` when the default `"Options"` is too generic for the contex
     </BqOptionList>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqOption, BqOptionList } from "@beeq/angular/standalone";
 
@@ -311,7 +311,7 @@ Override `aria-label` when the default `"Options"` is too generic for the contex
     export class AccessibleOptionListComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqIcon, BqOption, BqOptionList } from "@beeq/vue";
     </script>

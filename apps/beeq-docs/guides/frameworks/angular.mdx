@@ -123,7 +123,7 @@ You can add BEEQ to an existing Angular project in a few steps.
     You can also copy the SVG files to your public folder or assets directory and point BEEQ to that folder.
 
     <CodeGroup>
-      ```json angular.json highlight={18-20}
+      ```json angular.json highlight={18-20} expandable
       {
         "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
         "version": 1,
@@ -161,7 +161,7 @@ You can add BEEQ to an existing Angular project in a few steps.
       }
       ```
 
-      ```ts src/main.ts highlight={2,6}
+      ```ts src/main.ts highlight={2,6} expandable
       import { bootstrapApplication } from '@angular/platform-browser';
       import { setBasePath } from '@beeq/core/dist/components';
       import { appConfig } from './app/app.config';
@@ -290,7 +290,7 @@ Value Accessor reference:
 Use `ReactiveFormsModule`, a `FormGroup`, and `formControlName`. Add `ngDefaultControl` on text-based BEEQ inputs so Angular treats them as `ControlValueAccessor`. For boolean controls like `bq-checkbox`, import `BooleanValueAccessor` instead.
 
 <CodeGroup>
-  ```ts profile-form.component.ts
+  ```ts profile-form.component.ts expandable
   import { Component } from "@angular/core";
   import {
     FormControl,
@@ -379,7 +379,7 @@ Use `ReactiveFormsModule`, a `FormGroup`, and `formControlName`. Add `ngDefaultC
 When using template-driven forms, import `FormsModule` and bind values with `[(ngModel)]`.
 
 <CodeGroup>
-  ```ts newsletter.component.ts
+  ```ts newsletter.component.ts expandable
   import { Component } from "@angular/core";
   import { FormsModule } from "@angular/forms";
   import {
@@ -457,7 +457,7 @@ When using template-driven forms, import `FormsModule` and bind values with `[(n
 Use signals for local UI state and `computed()` for derived labels or styles. For `bq-slider`, bind the value with `[value]` and update the signal in `(bqChange)` — do not use `[(ngModel)]` on a `WritableSignal`.
 
 <CodeGroup>
-  ```ts skill-level.component.ts
+  ```ts skill-level.component.ts expandable
   import { Component, computed, signal } from "@angular/core";
   import { BqCard, BqSlider, BqTag } from "@beeq/angular/standalone";
 
@@ -573,7 +573,7 @@ export class AppModule {}
   <Card title="Explore components" href="/components" icon="boxes-stacked" iconType="duotone">
     Start with a component page to see props, events, slots, and framework examples.
   </Card>
-  <Card title="Customize the theme" href="/theming" icon="palette" iconType="duotone">
+  <Card title="Customize the theme" href="/theming/themes-and-modes" icon="palette" iconType="duotone">
     Review theming options if your product needs brand customization.
   </Card>
   <Card title="Open Storybook" href="https://storybook.beeq.design" icon="book" iconType="duotone">

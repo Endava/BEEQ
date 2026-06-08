@@ -69,6 +69,11 @@ Tables organize information into rows and columns so people can compare values, 
 
 A table is built from standard HTML sectioning and cell elements. Each part has a defined role and styling responsibility.
 
+<Frame className="px-4 py-4" caption="Table anatomy">
+  <img className="block dark:hidden" src="/components/images/table/table-anatomy-light.svg" alt="BEEQ Table anatomy" />
+  <img className="hidden dark:block" src="/components/images/table/table-anatomy-dark.svg" alt="BEEQ Table anatomy" />
+</Frame>
+
 | Part | Element | Description |
 |---|---|---|
 | **1** | `<table class="bq-table">` | Root element that activates BEEQ table styles |
@@ -127,11 +132,10 @@ A table is built from standard HTML sectioning and cell elements. Each part has 
 
 The default table applies base typography, header and cell padding, and row separators. Add the `bq-table` class to any standard `<table>` element to activate the styles.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="iframe" height="14rem" removePadding code={`
   <style>
-    :host {
-      inline-size: 100% !important;
-      align-items: stretch !important;
+    body {
+      padding: var(--bq-spacing-m);
     }
   </style>
 
@@ -163,7 +167,7 @@ The default table applies base typography, header and cell padding, and row sepa
   </table>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <table class="bq-table">
       <thead>
         <tr>
@@ -192,7 +196,7 @@ The default table applies base typography, header and cell padding, and row sepa
     </table>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     <table className="bq-table">
       <thead>
         <tr>
@@ -221,7 +225,7 @@ The default table applies base typography, header and cell padding, and row sepa
     </table>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
 
     @Component({
@@ -260,7 +264,7 @@ The default table applies base typography, header and cell padding, and row sepa
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <template>
       <table class="bq-table">
         <thead>
@@ -299,11 +303,10 @@ The default table applies base typography, header and cell padding, and row sepa
 
 Add the `selected` class to a `<tr>` to highlight the active record. Use this when a row selection drives a side panel, detail view, or other contextual UI.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="iframe" height="16rem" removePadding code={`
   <style>
-    :host {
-      inline-size: 100% !important;
-      align-items: stretch !important;
+    body {
+      padding: var(--bq-spacing-m);
     }
   </style>
 
@@ -335,7 +338,7 @@ Add the `selected` class to a `<tr>` to highlight the active record. Use this wh
   </table>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <table class="bq-table">
       <thead>
         <tr>
@@ -364,7 +367,7 @@ Add the `selected` class to a `<tr>` to highlight the active record. Use this wh
     </table>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     <table className="bq-table">
       <thead>
         <tr>
@@ -393,7 +396,7 @@ Add the `selected` class to a `<tr>` to highlight the active record. Use this wh
     </table>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
 
     @Component({
@@ -432,7 +435,7 @@ Add the `selected` class to a `<tr>` to highlight the active record. Use this wh
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <template>
       <table class="bq-table">
         <thead>
@@ -469,11 +472,10 @@ Add the `selected` class to a `<tr>` to highlight the active record. Use this wh
 
 Add the `compact` class to the `<table>` to reduce cell and header padding. This is useful in dense, data-heavy interfaces where vertical space is at a premium.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="iframe" height="16rem" removePadding code={`
   <style>
-    :host {
-      inline-size: 100% !important;
-      align-items: stretch !important;
+    body {
+      padding: var(--bq-spacing-m);
     }
   </style>
 
@@ -505,7 +507,7 @@ Add the `compact` class to the `<table>` to reduce cell and header padding. This
   </table>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <table class="bq-table compact">
       <thead>
         <tr>
@@ -534,7 +536,7 @@ Add the `compact` class to the `<table>` to reduce cell and header padding. This
     </table>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     <table className="bq-table compact">
       <thead>
         <tr>
@@ -563,7 +565,7 @@ Add the `compact` class to the `<table>` to reduce cell and header padding. This
     </table>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
 
     @Component({
@@ -602,7 +604,7 @@ Add the `compact` class to the `<table>` to reduce cell and header padding. This
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <template>
       <table class="bq-table compact">
         <thead>
@@ -639,11 +641,10 @@ Add the `compact` class to the `<table>` to reduce cell and header padding. This
 
 Add the `bordered` class to draw explicit borders around each cell and the table itself. Use this when strong column delineation helps users parse the data.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="iframe" height="16rem" removePadding code={`
   <style>
-    :host {
-      inline-size: 100% !important;
-      align-items: stretch !important;
+    body {
+      padding: var(--bq-spacing-m);
     }
   </style>
 
@@ -675,7 +676,7 @@ Add the `bordered` class to draw explicit borders around each cell and the table
   </table>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <table class="bq-table bordered">
       <thead>
         <tr>
@@ -704,7 +705,7 @@ Add the `bordered` class to draw explicit borders around each cell and the table
     </table>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     <table className="bq-table bordered">
       <thead>
         <tr>
@@ -733,7 +734,7 @@ Add the `bordered` class to draw explicit borders around each cell and the table
     </table>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
 
     @Component({
@@ -772,7 +773,7 @@ Add the `bordered` class to draw explicit borders around each cell and the table
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <template>
       <table class="bq-table bordered">
         <thead>
@@ -916,7 +917,7 @@ The table pattern is CSS-only. There is no custom element. Apply these classes t
 </Expandable>
 
 <Tip>
-  Learn more about [styling with shadow parts](/usage-guides/customizations/styles#component-shadow-dom-parts) and [CSS custom properties](/usage-guides/customizations/styles#global-css-custom-properties).
+  Learn more about [styling with shadow parts](/guides/styles#component-shadow-dom-parts) and [CSS custom properties](/guides/styles#global-css-custom-properties).
 </Tip>
 
 ## Resources

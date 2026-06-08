@@ -106,7 +106,7 @@ Use the `header-prefix` slot to place a category icon next to the label. This he
 
 Two groups of options inside a single `bq-option-list`. Each group carries a `header-label` that names the category.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-option-list>
     <bq-option-group>
       <span slot="header-label">Sport</span>
@@ -141,7 +141,7 @@ Two groups of options inside a single `bq-option-list`. Each group carries a `he
   </bq-option-list>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-option-list>
       <bq-option-group>
         <span slot="header-label">Sport</span>
@@ -176,7 +176,7 @@ Two groups of options inside a single `bq-option-list`. Each group carries a `he
     </bq-option-list>
     ```
 
-    ```tsx React icon="react"
+    ```tsx React icon="react" expandable
     import { BqIcon, BqOption, BqOptionGroup, BqOptionList } from "@beeq/react";
 
     <BqOptionList>
@@ -213,7 +213,7 @@ Two groups of options inside a single `bq-option-list`. Each group carries a `he
     </BqOptionList>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqOption, BqOptionGroup, BqOptionList } from "@beeq/angular/standalone";
 
@@ -259,7 +259,7 @@ Two groups of options inside a single `bq-option-list`. Each group carries a `he
     export class BasicOptionGroupComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqIcon, BqOption, BqOptionGroup, BqOptionList } from "@beeq/vue";
     </script>
@@ -308,7 +308,7 @@ Two groups of options inside a single `bq-option-list`. Each group carries a `he
 
 Add a `bq-icon` in the `header-prefix` slot to give the group label a visual category marker. This is most useful when the list is dense and users need to scan groups without reading every label word-for-word.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-option-list>
     <bq-option-group>
       <bq-icon slot="header-prefix" name="sneaker-move"></bq-icon>
@@ -339,7 +339,7 @@ Add a `bq-icon` in the `header-prefix` slot to give the group label a visual cat
   </bq-option-list>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-option-list>
       <bq-option-group>
         <bq-icon slot="header-prefix" name="sneaker-move"></bq-icon>
@@ -370,7 +370,7 @@ Add a `bq-icon` in the `header-prefix` slot to give the group label a visual cat
     </bq-option-list>
     ```
 
-    ```tsx React icon="react"
+    ```tsx React icon="react" expandable
     import { BqIcon, BqOption, BqOptionGroup, BqOptionList } from "@beeq/react";
 
     <BqOptionList>
@@ -403,7 +403,7 @@ Add a `bq-icon` in the `header-prefix` slot to give the group label a visual cat
     </BqOptionList>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqOption, BqOptionGroup, BqOptionList } from "@beeq/angular/standalone";
 
@@ -445,7 +445,7 @@ Add a `bq-icon` in the `header-prefix` slot to give the group label a visual cat
     export class OptionGroupWithPrefixIconComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqIcon, BqOption, BqOptionGroup, BqOptionList } from "@beeq/vue";
     </script>
@@ -488,7 +488,7 @@ Add a `bq-icon` in the `header-prefix` slot to give the group label a visual cat
 
 Use the `header-suffix` slot to place a count badge, status chip, or secondary icon after the label. The suffix is right-aligned and does not interfere with the label truncation.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-option-list>
     <bq-option-group>
       <span slot="header-label">Sport</span>
@@ -525,7 +525,7 @@ Use the `header-suffix` slot to place a count badge, status chip, or secondary i
   </bq-option-list>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-option-list>
       <bq-option-group>
         <span slot="header-label">Sport</span>
@@ -562,7 +562,7 @@ Use the `header-suffix` slot to place a count badge, status chip, or secondary i
     </bq-option-list>
     ```
 
-    ```tsx React icon="react"
+    ```tsx React icon="react" expandable
     import { BqBadge, BqIcon, BqOption, BqOptionGroup, BqOptionList } from "@beeq/react";
 
     <BqOptionList>
@@ -601,7 +601,7 @@ Use the `header-suffix` slot to place a count badge, status chip, or secondary i
     </BqOptionList>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqBadge, BqIcon, BqOption, BqOptionGroup, BqOptionList } from "@beeq/angular/standalone";
 
@@ -649,7 +649,7 @@ Use the `header-suffix` slot to place a count badge, status chip, or secondary i
     export class OptionGroupWithSuffixBadgeComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqBadge, BqIcon, BqOption, BqOptionGroup, BqOptionList } from "@beeq/vue";
     </script>

@@ -66,8 +66,8 @@ The Card pattern can support multiple presentation styles depending on the conte
 Cards are flexible containers, so their anatomy can vary depending on the content. In most cases, a card includes a container, an optional visual element, a content area, and optional supporting actions.
 
 <Frame className="px-4 py-4" caption="Card component anatomy">
-  <img className="block dark:hidden" src="/components/images/card/card-overview-light.svg" alt="BEEQ Card component anatomy" />
-  <img className="hidden dark:block" src="/components/images/card/card-overview-dark.svg" alt="BEEQ Card component anatomy" />
+  <img className="block dark:hidden" src="/components/images/card/card-anatomy-light.svg" alt="BEEQ Card component anatomy" />
+  <img className="hidden dark:block" src="/components/images/card/card-anatomy-dark.svg" alt="BEEQ Card component anatomy" />
 </Frame>
 
 | Part | Element | Description |
@@ -131,7 +131,7 @@ The examples below show the most common card layouts, each with a live preview a
 
 A card with icon, title, description, and a call-to-action — use when users need context before deciding to act.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     .card--default {
       max-width: 24rem;
@@ -181,7 +181,7 @@ A card with icon, title, description, and a call-to-action — use when users ne
       }
 
       h6 {
-        font-size: var(--bq-font-size--m);
+        font-size: var(--bq-font-size--l);
         font-weight: var(--bq-font-weight--bold);
       }
 
@@ -329,7 +329,7 @@ A card with icon, title, description, and a call-to-action — use when users ne
 
 Use a card list when you have a collection of items that share the same structure — product catalogs, article feeds, team directories. The repeated layout helps users scan and compare entries quickly without having to re-learn the pattern on each card.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     .card--highlights {
       width: 100%;
@@ -590,7 +590,7 @@ Use a card list when you have a collection of items that share the same structur
 
 A KPI card combining an icon, headline value, and trend indicator — ideal for analytics dashboards and executive reports.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     .card--overview {
       width: 100%;
@@ -878,7 +878,7 @@ A KPI card combining an icon, headline value, and trend indicator — ideal for 
 
 A compact horizontal card using `type="minimal"` that removes built-in padding, letting you create visually distinct inner zones — like the branded left panel shown here.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     .card--mini {
       width: 100%;
@@ -1187,7 +1187,7 @@ A compact horizontal card using `type="minimal"` that removes built-in padding, 
   Reach for `type="minimal"` only when your design requires content to bleed to the card edge. For everything else, `default` keeps spacing consistent automatically.
 </Tip>
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     .card--types {
       display: grid;
@@ -1274,7 +1274,7 @@ A compact horizontal card using `type="minimal"` that removes built-in padding, 
 
 Use the `border` property to control the card corner radius.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     .card--borders {
       display: grid;
@@ -1523,7 +1523,7 @@ Use the `border` property to control the card corner radius.
 
 When a card represents a link destination (for example, an article or product), wrap it in a semantic `<a>` element. `bq-card` is a non-interactive container and does not handle click or keyboard events on its own.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     .card-link {
       border-radius: var(--bq-radius--m);
@@ -1841,7 +1841,7 @@ When a card represents a link destination (for example, an article or product), 
 </Expandable>
 
 <Tip>
-  Learn more about [styling with shadow parts](/usage-guides/customizations/styles#component-shadow-dom-parts) and [CSS custom properties](/usage-guides/customizations/styles#global-css-custom-properties).
+  Learn more about [styling with shadow parts](/guides/styles#component-shadow-dom-parts) and [CSS custom properties](/guides/styles#global-css-custom-properties).
 </Tip>
 
 ## Resources

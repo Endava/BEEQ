@@ -128,7 +128,7 @@ You can add BEEQ to an existing Vue project in a few steps:
     Then copy the SVG files and set the base path during app startup:
 
     <CodeGroup>
-      ```ts vite.config.ts highlight={2,14-21}
+      ```ts vite.config.ts highlight={2,14-21} expandable
       import vue from "@vitejs/plugin-vue";
       import { viteStaticCopy } from "vite-plugin-static-copy";
       import { defineConfig } from "vite";
@@ -154,7 +154,7 @@ You can add BEEQ to an existing Vue project in a few steps:
       });
       ```
 
-      ```ts src/main.ts highlight={2,6}
+      ```ts src/main.ts highlight={2,6} expandable
       import { createApp } from "vue";
       import { setBasePath } from "@beeq/core";
       import App from "./App.vue";
@@ -353,7 +353,7 @@ Create `.vscode/settings.json` in your project root and add:
   <Card title="Explore components" href="/components" icon="boxes-stacked" iconType="duotone">
     Start with a component page to see props, events, slots, and framework examples.
   </Card>
-  <Card title="Customize the theme" href="/theming" icon="palette" iconType="duotone">
+  <Card title="Customize the theme" href="/theming/themes-and-modes" icon="palette" iconType="duotone">
     Review theming options if your product needs brand customization.
   </Card>
   <Card title="Open Storybook" href="https://storybook.beeq.design" icon="book" iconType="duotone">

@@ -153,7 +153,7 @@ You can add BEEQ to a Next.js app in a few steps:
     The `isInitialized` flag then prevents children from rendering before the path is set, avoiding a race condition where BEEQ tries to load icons before initialization has completed.
 
     <CodeGroup>
-      ```tsx app/beeq.tsx
+      ```tsx app/beeq.tsx expandable
       "use client";
 
       import { useState, useEffect } from "react";
@@ -180,7 +180,7 @@ You can add BEEQ to a Next.js app in a few steps:
       }
       ```
 
-      ```tsx app/layout.tsx highlight={2,14}
+      ```tsx app/layout.tsx highlight={2,14} expandable
       import type { Metadata } from "next";
       import BeeqSetup from "./beeq";
       import "./globals.css";
@@ -345,7 +345,7 @@ See the [React guide TypeScript notes](/guides/frameworks/react#typescript-notes
   <Card title="Explore components" href="/components" icon="boxes-stacked" iconType="duotone">
     Start with a component page to see props, events, slots, and framework examples.
   </Card>
-  <Card title="Customize the theme" href="/theming" icon="palette" iconType="duotone">
+  <Card title="Customize the theme" href="/theming/themes-and-modes" icon="palette" iconType="duotone">
     Review theming options if your product needs brand customization.
   </Card>
   <Card title="Open Storybook" href="https://storybook.beeq.design" icon="book" iconType="duotone">

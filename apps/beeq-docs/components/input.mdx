@@ -130,7 +130,7 @@ Use this sequence when you define an input:
 
 Use the default type of input when you want to provide a simple, versatile field for gathering user input. You do not need to specify any additional property that already uses its default value.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       inline-size: 100% !important;
@@ -153,7 +153,7 @@ Use the default type of input when you want to provide a simple, versatile field
   </bq-input>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5" expandable
+    ```html HTML icon="html5"
     <bq-input name="bq-input" placeholder="Placeholder">
         <label class="flex flex-grow items-center" slot="label">Input label</label>
         <span slot="helper-text">
@@ -163,7 +163,7 @@ Use the default type of input when you want to provide a simple, versatile field
     </bq-input>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqIcon, BqInput } from "@beeq/react";
 
     <BqInput name="bq-input" placeholder="Placeholder">
@@ -218,7 +218,7 @@ Use the default type of input when you want to provide a simple, versatile field
 
 Use the `value` attribute to provide a convenient solution for scenarios where the initial input is predefined.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       inline-size: 100% !important;
@@ -241,7 +241,7 @@ Use the `value` attribute to provide a convenient solution for scenarios where t
   </bq-input>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5" expandable
+    ```html HTML icon="html5"
     <bq-input name="bq-input" placeholder="Placeholder" value="Hello World!">
         <label class="flex flex-grow items-center" slot="label">Input label</label>
         <span slot="helper-text">
@@ -251,7 +251,7 @@ Use the `value` attribute to provide a convenient solution for scenarios where t
     </bq-input>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqIcon, BqInput } from "@beeq/react";
 
     <BqInput name="bq-input" placeholder="Placeholder" value="Hello World!">
@@ -306,7 +306,7 @@ Use the `value` attribute to provide a convenient solution for scenarios where t
 
 Use the prefix slot when you want to place an icon before the input value to provide extra context.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       inline-size: 100% !important;
@@ -341,7 +341,7 @@ Use the prefix slot when you want to place an icon before the input value to pro
     </bq-input>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqIcon, BqInput } from "@beeq/react";
 
     <BqInput name="bq-input" placeholder="Placeholder">
@@ -399,7 +399,7 @@ Use the prefix slot when you want to place an icon before the input value to pro
 
 Use the suffix slot when you want to add an icon after the input field for extra context or feedback.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       inline-size: 100% !important;
@@ -434,7 +434,7 @@ Use the suffix slot when you want to add an icon after the input field for extra
     </bq-input>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqIcon, BqInput } from "@beeq/react";
 
     <BqInput name="bq-input" placeholder="Placeholder">
@@ -492,7 +492,7 @@ Use the suffix slot when you want to add an icon after the input field for extra
 
 This variant combines both prefix and suffix features within the same input.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       inline-size: 100% !important;
@@ -529,7 +529,7 @@ This variant combines both prefix and suffix features within the same input.
     </bq-input>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqIcon, BqInput } from "@beeq/react";
 
     <BqInput name="bq-input" placeholder="Placeholder">
@@ -590,7 +590,7 @@ This variant combines both prefix and suffix features within the same input.
 
 Use the `disabled` attribute when the input field should be visible but non-editable.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       inline-size: 100% !important;
@@ -627,7 +627,7 @@ Use the `disabled` attribute when the input field should be visible but non-edit
     </bq-input>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqIcon, BqInput } from "@beeq/react";
 
     <BqInput disabled name="bq-input" placeholder="Placeholder">
@@ -690,7 +690,7 @@ Use the `disabled` attribute when the input field should be visible but non-edit
 
 Use this variant for validation feedback by setting `validation-status` to `error`, `success`, `warning`, or `none`.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       inline-size: 100% !important;
@@ -768,7 +768,7 @@ Use this variant for validation feedback by setting `validation-status` to `erro
     </bq-input>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqIcon, BqInput } from "@beeq/react";
 
     <>
@@ -891,7 +891,7 @@ Use this variant for validation feedback by setting `validation-status` to `erro
 
 Use this style when you want to include an optional marker to provide additional context.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       inline-size: 100% !important;
@@ -968,7 +968,7 @@ Use this style when you want to include an optional marker to provide additional
     </bq-input>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqIcon, BqInput } from "@beeq/react";
     import "./styles.css";
 
@@ -1079,7 +1079,7 @@ Use this style when you want to include an optional marker to provide additional
 
 Use this style when you want to include an informational tooltip alongside the input label.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       inline-size: 100% !important;
@@ -1184,7 +1184,7 @@ Use this style when you want to include an informational tooltip alongside the i
     </bq-input>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqIcon, BqInput, BqTooltip } from "@beeq/react";
     import "./styles.css";
 
@@ -1329,7 +1329,7 @@ Use this style when you want to include an informational tooltip alongside the i
 
 Use this variant when the surrounding context already makes the field purpose clear and a visible label would be redundant.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       inline-size: 100% !important;
@@ -1364,7 +1364,7 @@ Use this variant when the surrounding context already makes the field purpose cl
     </bq-input>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqIcon, BqInput } from "@beeq/react";
 
     <BqInput name="bq-input" placeholder="Placeholder">
@@ -1422,7 +1422,7 @@ Use this variant when the surrounding context already makes the field purpose cl
 
 Use this variant when the field does not require supplementary guidance.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       inline-size: 100% !important;
@@ -1443,7 +1443,7 @@ Use this variant when the field does not require supplementary guidance.
   </bq-input>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5" expandable
+    ```html HTML icon="html5"
     <bq-input name="bq-input" placeholder="Placeholder">
         <label slot="label">Input label</label>
         <bq-icon name="user-circle" slot="prefix"></bq-icon>
@@ -1667,7 +1667,7 @@ Use this variant when the field does not require supplementary guidance.
 </Expandable>
 
 <Tip>
-  Learn more about [styling with shadow parts](/usage-guides/customizations/styles#component-shadow-dom-parts) and [CSS custom properties](/usage-guides/customizations/styles#global-css-custom-properties).
+  Learn more about [styling with shadow parts](/guides/styles#component-shadow-dom-parts) and [CSS custom properties](/guides/styles#global-css-custom-properties).
 </Tip>
 
 ## Resources

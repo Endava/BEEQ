@@ -96,7 +96,7 @@ Use icons deliberately so they reinforce meaning without becoming decoration for
 
 Use the default icon when you need a simple visual cue inside navigation, actions, messages, or supporting UI text.
 
-<CodeLivePreview code={`<bq-icon name="bell-ringing"></bq-icon>`}>
+<CodeLivePreview mode="shadow" code={`<bq-icon name="bell-ringing"></bq-icon>`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-icon name="bell-ringing"></bq-icon>
@@ -108,7 +108,7 @@ Use the default icon when you need a simple visual cue inside navigation, action
     <BqIcon name="bell-ringing" />
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon } from "@beeq/angular/standalone";
 
@@ -143,7 +143,7 @@ Use the default icon when you need a simple visual cue inside navigation, action
 
 Adjust `size` when the icon needs to match the surrounding text or visual emphasis more closely.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-icon name="bell-ringing" size="16"></bq-icon>
   <bq-icon name="bell-ringing"></bq-icon>
   <bq-icon name="bell-ringing" size="32"></bq-icon>
@@ -157,7 +157,7 @@ Adjust `size` when the icon needs to match the surrounding text or visual emphas
     <bq-icon name="bell-ringing" size="40"></bq-icon>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqIcon } from "@beeq/react";
 
     <>
@@ -168,7 +168,7 @@ Adjust `size` when the icon needs to match the surrounding text or visual emphas
     </>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon } from "@beeq/angular/standalone";
 
@@ -186,7 +186,7 @@ Adjust `size` when the icon needs to match the surrounding text or visual emphas
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqIcon } from "@beeq/vue";
     </script>
@@ -205,7 +205,7 @@ Adjust `size` when the icon needs to match the surrounding text or visual emphas
 
 An icon inherits color from its parent by default, but you can also assign a token value through the `color` prop.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-icon name="info"></bq-icon>
   <bq-icon name="star" color="text--success"></bq-icon>
   <bq-icon name="warning-circle" color="text--warning"></bq-icon>
@@ -219,7 +219,7 @@ An icon inherits color from its parent by default, but you can also assign a tok
     <bq-icon name="x-circle" color="text--danger"></bq-icon>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqIcon } from "@beeq/react";
 
     <>
@@ -230,7 +230,7 @@ An icon inherits color from its parent by default, but you can also assign a tok
     </>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon } from "@beeq/angular/standalone";
 
@@ -248,7 +248,7 @@ An icon inherits color from its parent by default, but you can also assign a tok
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqIcon } from "@beeq/vue";
     </script>
@@ -273,7 +273,7 @@ An icon inherits color from its parent by default, but you can also assign a tok
 
 Use icon-name suffixes like `-thin`, `-light`, `-bold`, `-duotone`, and `-fill` to select a style. This is the preferred approach over the deprecated `weight` prop.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-icon name="heart"></bq-icon>
   <bq-icon name="heart-thin"></bq-icon>
   <bq-icon name="heart-light"></bq-icon>
@@ -291,7 +291,7 @@ Use icon-name suffixes like `-thin`, `-light`, `-bold`, `-duotone`, and `-fill` 
     <bq-icon name="heart-fill"></bq-icon>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqIcon } from "@beeq/react";
 
     <>
@@ -304,7 +304,7 @@ Use icon-name suffixes like `-thin`, `-light`, `-bold`, `-duotone`, and `-fill` 
     </>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon } from "@beeq/angular/standalone";
 
@@ -324,7 +324,7 @@ Use icon-name suffixes like `-thin`, `-light`, `-bold`, `-duotone`, and `-fill` 
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqIcon } from "@beeq/vue";
     </script>
@@ -349,7 +349,7 @@ Use icon-name suffixes like `-thin`, `-light`, `-bold`, `-duotone`, and `-fill` 
 
 Use `src` when you want to load a custom icon from a local or CORS-enabled endpoint.
 
-<CodeLivePreview code={`<bq-icon
+<CodeLivePreview mode="shadow" code={`<bq-icon
   src="https://storybook.beeq.design/assets/wallet.svg"
   label="Wallet icon"
   size="256"
@@ -373,7 +373,7 @@ Use `src` when you want to load a custom icon from a local or CORS-enabled endpo
     />
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon } from "@beeq/angular/standalone";
 
@@ -392,7 +392,7 @@ Use `src` when you want to load a custom icon from a local or CORS-enabled endpo
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqIcon } from "@beeq/vue";
     </script>
@@ -416,7 +416,7 @@ Use `src` when you want to load a custom icon from a local or CORS-enabled endpo
 
 The Phosphor library gives you a broad icon set. The example below shows only a small sample of the available names.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       align-items: stretch !important;
@@ -627,7 +627,7 @@ This component has no public slots.
 | `--bq-icon--size` | Icon size | `24px` |
 
 <Tip>
-  Learn more about [styling with shadow parts](/usage-guides/customizations/styles#component-shadow-dom-parts) and [CSS custom properties](/usage-guides/customizations/styles#global-css-custom-properties).
+  Learn more about [styling with shadow parts](/guides/styles#component-shadow-dom-parts) and [CSS custom properties](/guides/styles#global-css-custom-properties).
 </Tip>
 
 ## Resources

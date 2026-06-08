@@ -101,7 +101,7 @@ Arrange options alphabetically or by a meaningful semantic order, such as freque
 
 The trigger can be any appropriate interactive element, but in most cases a `bq-button` with a `bq-icon` works well for navigation, selection, or action menus. Use the `open` attribute when you need to control the visible state.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     bq-dropdown::part(dropdown) {
       --bq-panel-z-index: 12;
@@ -142,7 +142,7 @@ The trigger can be any appropriate interactive element, but in most cases a `bq-
   </bq-dropdown>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-dropdown>
       <bq-button slot="trigger">
         Dropdown
@@ -178,7 +178,7 @@ The trigger can be any appropriate interactive element, but in most cases a `bq-
     </bq-dropdown>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqButton, BqDropdown, BqIcon, BqOption, BqOptionList } from "@beeq/react";
 
     <BqDropdown>
@@ -216,7 +216,7 @@ The trigger can be any appropriate interactive element, but in most cases a `bq-
     </BqDropdown>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqDropdown, BqButton, BqIcon, BqOptionList, BqOption } from "@beeq/angular/standalone";
 
@@ -263,7 +263,7 @@ The trigger can be any appropriate interactive element, but in most cases a `bq-
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqButton, BqDropdown, BqIcon, BqOption, BqOptionList } from "@beeq/vue";
     </script>
@@ -318,7 +318,7 @@ If the dropdown sits inside a scrollable area, scrolling that area will close th
 
 Use the `placement` attribute when you need fine-grained control over the panel position. `bottom-start` anchors the panel to the start side of the trigger, while `bottom-end` aligns it to the end side.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       justify-content: space-around !important;
@@ -571,7 +571,7 @@ Use the `placement` attribute when you need fine-grained control over the panel 
 
 Use a custom trigger when the dropdown needs a more specific visual entry point, such as an icon-only action menu or a profile avatar menu. The trigger must remain understandable and accessible.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       justify-content: space-around !important;
@@ -851,7 +851,7 @@ Use a custom trigger when the dropdown needs a more specific visual entry point,
 
 Use `keep-open-on-select` when the dropdown should stay open after a selection is made, enabling users to make multiple selections or navigate through related options without reopening the panel each time.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     bq-dropdown::part(dropdown) {
       --bq-panel-z-index: 12;
@@ -952,7 +952,7 @@ Use `keep-open-on-select` when the dropdown should stay open after a selection i
     </BqDropdown>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqDropdown, BqButton, BqIcon, BqOptionList, BqOption } from "@beeq/angular/standalone";
 
@@ -1037,7 +1037,7 @@ Use `keep-open-on-select` when the dropdown should stay open after a selection i
 
 Use option groups when you need to categorize and group options under specific headers. This gives users a clearer structure when the dropdown contains several related sets of choices.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     bq-dropdown::part(dropdown) {
       --bq-panel-z-index: 12;
@@ -1197,7 +1197,7 @@ Use option groups when you need to categorize and group options under specific h
 
 Use `same-width` when the panel should match the trigger width. Use `panel-height` to override the panel height when the option list needs a predictable scroll area.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     bq-dropdown::part(dropdown) {
       --bq-panel-z-index: 12;
@@ -1216,7 +1216,7 @@ Use `same-width` when the panel should match the trigger width. Use `panel-heigh
   </bq-dropdown>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-dropdown same-width panel-height="16rem">
       <bq-button slot="trigger">
         Choose a region
@@ -1230,7 +1230,7 @@ Use `same-width` when the panel should match the trigger width. Use `panel-heigh
     </bq-dropdown>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqButton, BqDropdown, BqIcon, BqOption, BqOptionList } from "@beeq/react";
 
     <BqDropdown sameWidth panelHeight="16rem">
@@ -1246,7 +1246,7 @@ Use `same-width` when the panel should match the trigger width. Use `panel-heigh
     </BqDropdown>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqDropdown, BqButton, BqIcon, BqOptionList, BqOption } from "@beeq/angular/standalone";
 
@@ -1271,7 +1271,7 @@ Use `same-width` when the panel should match the trigger width. Use `panel-heigh
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqButton, BqDropdown, BqIcon, BqOption, BqOptionList } from "@beeq/vue";
     </script>
@@ -1426,7 +1426,7 @@ Use `same-width` when the panel should match the trigger width. Use `panel-heigh
 </Expandable>
 
 <Tip>
-  Learn more about [styling with shadow parts](/usage-guides/customizations/styles#component-shadow-dom-parts) and [CSS custom properties](/usage-guides/customizations/styles#global-css-custom-properties).
+  Learn more about [styling with shadow parts](/guides/styles#component-shadow-dom-parts) and [CSS custom properties](/guides/styles#global-css-custom-properties).
 </Tip>
 
 ## Resources

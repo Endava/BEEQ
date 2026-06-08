@@ -120,7 +120,7 @@ Choose the notification treatment that matches the urgency of the message withou
 
 Use the default `info` notification for standard messages and updates.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       flex-direction: column !important;
@@ -174,7 +174,17 @@ Use the default `info` notification for standard messages and updates.
   </script>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```js JavaScript icon="js"
+    const notifications = previewRoot.querySelectorAll("bq-notification");
+
+    notifications.forEach((notification) => {
+      notification.addEventListener("bqHide", () => {
+        setTimeout(() => notification.show(), 1500);
+      });
+    });
+    ```
+
+    ```html HTML icon="html5" expandable
     <bq-notification open>Title</bq-notification>
 
     <bq-notification open>
@@ -198,17 +208,7 @@ Use the default `info` notification for standard messages and updates.
     </bq-notification>
     ```
 
-    ```js JavaScript icon="js"
-    const notifications = previewRoot.querySelectorAll("bq-notification");
-
-    notifications.forEach((notification) => {
-      notification.addEventListener("bqHide", () => {
-        setTimeout(() => notification.show(), 1500);
-      });
-    });
-    ```
-
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqButton, BqNotification } from "@beeq/react";
 
     const handleHide = (event) => {
@@ -244,7 +244,7 @@ Use the default `info` notification for standard messages and updates.
     }
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqButton, BqNotification } from "@beeq/angular/standalone";
 
@@ -283,7 +283,7 @@ Use the default `info` notification for standard messages and updates.
     }
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqButton, BqNotification } from "@beeq/vue";
 
@@ -316,7 +316,7 @@ Use the default `info` notification for standard messages and updates.
       </BqNotification>
     </template>
     ```
-  </CodeGroup>
+</CodeGroup>
 </CodeLivePreview>
 
 <Tip>
@@ -329,7 +329,7 @@ Use the default `info` notification for standard messages and updates.
 
 Use semantic `type` values to communicate severity and intent clearly.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       flex-direction: column !important;
@@ -361,13 +361,6 @@ Use semantic `type` values to communicate severity and intent clearly.
   </script>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
-    <bq-notification open type="error">Error</bq-notification>
-    <bq-notification open type="neutral">Neutral</bq-notification>
-    <bq-notification open type="success">Success</bq-notification>
-    <bq-notification open type="warning">Warning</bq-notification>
-    ```
-
     ```js JavaScript icon="js"
     const notifications = previewRoot.querySelectorAll("bq-notification");
 
@@ -378,7 +371,14 @@ Use semantic `type` values to communicate severity and intent clearly.
     });
     ```
 
-    ```jsx React icon="react"
+    ```html HTML icon="html5"
+    <bq-notification open type="error">Error</bq-notification>
+    <bq-notification open type="neutral">Neutral</bq-notification>
+    <bq-notification open type="success">Success</bq-notification>
+    <bq-notification open type="warning">Warning</bq-notification>
+    ```
+
+    ```jsx React icon="react" expandable
     import { BqNotification } from "@beeq/react";
 
     const handleHide = (event) => {
@@ -397,7 +397,7 @@ Use semantic `type` values to communicate severity and intent clearly.
     }
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqNotification } from "@beeq/angular/standalone";
 
@@ -419,7 +419,7 @@ Use semantic `type` values to communicate severity and intent clearly.
     }
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqNotification } from "@beeq/vue";
 
@@ -435,14 +435,14 @@ Use semantic `type` values to communicate severity and intent clearly.
       <BqNotification open type="warning" @bqHide="handleHide">Warning</BqNotification>
     </template>
     ```
-  </CodeGroup>
+</CodeGroup>
 </CodeLivePreview>
 
 ### Custom icon
 
 Use the `icon` slot to replace the default type icon with a custom `bq-icon`.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       flex-direction: column !important;
@@ -501,7 +501,17 @@ Use the `icon` slot to replace the default type icon with a custom `bq-icon`.
   </script>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```js JavaScript icon="js"
+    const notifications = previewRoot.querySelectorAll("bq-notification");
+
+    notifications.forEach((notification) => {
+      notification.addEventListener("bqHide", () => {
+        setTimeout(() => notification.show(), 1500);
+      });
+    });
+    ```
+
+    ```html HTML icon="html5" expandable
     <bq-notification open type="info">
       <bq-icon name="thumbs-up" slot="icon"></bq-icon>
       Title
@@ -530,17 +540,7 @@ Use the `icon` slot to replace the default type icon with a custom `bq-icon`.
     </bq-notification>
     ```
 
-    ```js JavaScript icon="js"
-    const notifications = previewRoot.querySelectorAll("bq-notification");
-
-    notifications.forEach((notification) => {
-      notification.addEventListener("bqHide", () => {
-        setTimeout(() => notification.show(), 1500);
-      });
-    });
-    ```
-
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqButton, BqIcon, BqNotification } from "@beeq/react";
 
     const handleHide = (event) => {
@@ -581,7 +581,7 @@ Use the `icon` slot to replace the default type icon with a custom `bq-icon`.
     }
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqButton, BqIcon, BqNotification } from "@beeq/angular/standalone";
 
@@ -625,7 +625,7 @@ Use the `icon` slot to replace the default type icon with a custom `bq-icon`.
     }
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqButton, BqIcon, BqNotification } from "@beeq/vue";
 
@@ -663,56 +663,30 @@ Use the `icon` slot to replace the default type icon with a custom `bq-icon`.
       </BqNotification>
     </template>
     ```
-  </CodeGroup>
+</CodeGroup>
 </CodeLivePreview>
 
-### Stacked toast
+### Stacked notifications
 
-Use the `toast()` method to render notifications in a fixed-position portal that stacks multiple notifications vertically outside the normal document flow.
+Use the `toast()` method to render notifications in a fixed-position portal that stacks multiple notifications vertically outside the normal document flow. The component creates and reuses a `.bq-notification-portal` element attached to `document.body`, and BEEQ global styles position that portal for you.
 
-<CodeLivePreview code={`
+In framework apps, prefer a framework-owned portal or stack when you want the notification lifecycle to stay declarative.
+
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       align-items: flex-start !important;
-    }
-
-    .notification--stacked {
-      display: flex;
-      flex-direction: column;
-      gap: var(--bq-spacing-s);
+      flex-direction: column !important;
+      gap: var(--bq-spacing-s) !important;
     }
   </style>
 
-  <div class="notification--stacked">
-    <p>The notification portal stacks multiple notifications vertically in a fixed position.</p>
-    <p>Only one portal exists at a time and it is added or removed from the DOM as needed.</p>
-    <bq-button id="notification-stacked-btn">Open notification</bq-button>
-  </div>
+  <p>The notification portal stacks multiple notifications vertically in a fixed position.</p>
+  <p>Only one portal exists at a time and it is added or removed from the DOM as needed.</p>
+  <bq-button id="notification-stacked-btn">Open notification</bq-button>
 
   <script>
     (() => {
-      const styleId = 'notification-stacked-portal-style';
-      if (!document.getElementById(styleId)) {
-        const style = document.createElement('style');
-        style.id = styleId;
-        style.textContent = [
-          '.bq-notification-portal {',
-          '  position: fixed;',
-          '  inset-inline-end: 0;',
-          '  top: var(--bq-spacing-xxl3);',
-          '  z-index: 9999;',
-          '  max-height: 100%;',
-          '  max-width: 100%;',
-          '}',
-          '',
-          '.bq-notification-portal bq-notification {',
-          '  margin: 16px;',
-          '  display: block;',
-          '}',
-        ].join('\\n');
-        document.head.append(style);
-      }
-
       const NOTIFICATION_TYPE = ['error', 'info', 'neutral', 'success', 'warning'];
       const getRandomType = () => NOTIFICATION_TYPE[Math.floor(Math.random() * NOTIFICATION_TYPE.length)];
 
@@ -744,13 +718,7 @@ Use the `toast()` method to render notifications in a fixed-position portal that
   </script>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
-    <p>The notification portal stacks multiple notifications vertically in a fixed position.</p>
-    <p>Only one portal exists at a time and it is added or removed from the DOM as needed.</p>
-    <bq-button id="notification-stacked-btn">Open notification</bq-button>
-    ```
-
-    ```js JavaScript icon="js"
+    ```js JavaScript icon="js" expandable
     const openBtn = previewRoot.querySelector("#notification-stacked-btn");
 
     const NOTIFICATION_TYPES = ["error", "info", "neutral", "success", "warning"];
@@ -777,32 +745,52 @@ Use the `toast()` method to render notifications in a fixed-position portal that
     });
     ```
 
-    ```jsx React icon="react"
-    import { useCallback } from "react";
-    import { BqButton } from "@beeq/react";
+    ```html HTML icon="html5"
+    <p>The notification portal stacks multiple notifications vertically in a fixed position.</p>
+    <p>Only one portal exists at a time and it is added or removed from the DOM as needed.</p>
+    <bq-button id="notification-stacked-btn">Open notification</bq-button>
+    ```
 
-    const NOTIFICATION_TYPES = ["error", "info", "neutral", "success", "warning"];
+    ```tsx React icon="react" expandable
+    import type { CSSProperties } from "react";
+    import { useCallback, useRef, useState } from "react";
+    import { createPortal } from "react-dom";
+    import { BqButton, BqNotification } from "@beeq/react";
+
+    const NOTIFICATION_TYPES = ["error", "info", "neutral", "success", "warning"] as const;
+    type NotificationType = (typeof NOTIFICATION_TYPES)[number];
+    type NotificationItem = { id: number; type: NotificationType };
+
+    const notificationPortalStyles: CSSProperties = {
+      position: "fixed",
+      insetInlineEnd: 0,
+      top: 0,
+      zIndex: 50,
+      maxBlockSize: "100%",
+      maxInlineSize: "100%",
+    };
+
+    const notificationStyles: CSSProperties = {
+      display: "block",
+      margin: "var(--bq-spacing-m)",
+    };
+
     const getRandomType = () => NOTIFICATION_TYPES[Math.floor(Math.random() * NOTIFICATION_TYPES.length)];
 
-    export function StackedToastNotification() {
-      const handleOpen = useCallback(async () => {
-        await customElements.whenDefined("bq-notification");
+    export function StackedNotifications() {
+      const [notifications, setNotifications] = useState<NotificationItem[]>([]);
+      const nextNotificationId = useRef(0);
+      const portalTarget = typeof document === "undefined" ? null : document.body;
 
-        const type = getRandomType();
-        const notification = Object.assign(document.createElement("bq-notification"), {
-          type,
-          autoDismiss: true,
-          innerHTML: `
-            Title
-            <span slot="body">
-              Here goes the description for the <strong>${type} notification</strong><br />
-              You can also add a <a class="bq-link" href="https://example.com">Link</a>
-            </span>
-          `,
-        });
+      const handleOpen = useCallback(() => {
+        setNotifications((current) => [
+          ...current,
+          { id: ++nextNotificationId.current, type: getRandomType() },
+        ]);
+      }, []);
 
-        document.body.append(notification);
-        await (notification as any).toast();
+      const handleAfterClose = useCallback((id: number) => {
+        setNotifications((current) => current.filter((notification) => notification.id !== id));
       }, []);
 
       return (
@@ -810,89 +798,171 @@ Use the `toast()` method to render notifications in a fixed-position portal that
           <p>The notification portal stacks multiple notifications vertically in a fixed position.</p>
           <p>Only one portal exists at a time and it is added or removed from the DOM as needed.</p>
           <BqButton onBqClick={handleOpen}>Open notification</BqButton>
+
+          {portalTarget &&
+            createPortal(
+              <div aria-label="Notifications" style={notificationPortalStyles}>
+                {notifications.map(({ id, type }) => (
+                  <BqNotification
+                    key={id}
+                    open
+                    autoDismiss
+                    type={type}
+                    onBqAfterClose={() => handleAfterClose(id)}
+                    style={notificationStyles}
+                  >
+                    Title
+                    <span slot="body">
+                      Here goes the description for the <strong>{type} notification</strong>
+                      <br />
+                      You can also add a <a className="bq-link" href="https://example.com">Link</a>
+                    </span>
+                  </BqNotification>
+                ))}
+              </div>,
+              portalTarget,
+            )}
         </>
       );
     }
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
-    import { BqButton } from "@beeq/angular/standalone";
+    import { BqButton, BqNotification } from "@beeq/angular/standalone";
 
-    const NOTIFICATION_TYPES = ["error", "info", "neutral", "success", "warning"];
+    type NotificationType = "error" | "info" | "neutral" | "success" | "warning";
+    interface NotificationItem { id: number; type: NotificationType; }
+
+    const NOTIFICATION_TYPES: NotificationType[] = ["error", "info", "neutral", "success", "warning"];
 
     @Component({
-      selector: "app-stacked-toast",
+      selector: "app-stacked-notifications",
       standalone: true,
-      imports: [BqButton],
+      imports: [BqButton, BqNotification],
       template: `
         <p>The notification portal stacks multiple notifications vertically in a fixed position.</p>
         <p>Only one portal exists at a time and it is added or removed from the DOM as needed.</p>
-        <bq-button (bqClick)="openToast()">Open notification</bq-button>
+        <bq-button (bqClick)="openNotification()">Open notification</bq-button>
+
+        <div class="notification-portal" aria-label="Notifications">
+          @for (notification of notifications; track notification.id) {
+            <bq-notification
+              open
+              auto-dismiss
+              [type]="notification.type"
+              (bqAfterClose)="removeNotification(notification.id)"
+            >
+              Title
+              <span slot="body">
+                Here goes the description for the <strong>{{ notification.type }} notification</strong><br />
+                You can also add a <a class="bq-link" href="https://example.com">Link</a>
+              </span>
+            </bq-notification>
+          }
+        </div>
       `,
+      styles: [`
+        .notification-portal {
+          position: fixed;
+          inset-inline-end: 0;
+          top: 0;
+          z-index: 50;
+          max-block-size: 100%;
+          max-inline-size: 100%;
+        }
+
+        .notification-portal bq-notification {
+          display: block;
+          margin: var(--bq-spacing-m);
+        }
+      `],
     })
-    export class StackedToastComponent {
-      private getRandomType(): string {
-        return NOTIFICATION_TYPES[Math.floor(Math.random() * NOTIFICATION_TYPES.length)];
+    export class StackedNotificationsComponent {
+      notifications: NotificationItem[] = [];
+      private nextNotificationId = 0;
+
+      openNotification(): void {
+        this.notifications = [
+          ...this.notifications,
+          { id: ++this.nextNotificationId, type: this.getRandomType() },
+        ];
       }
 
-      async openToast(): Promise<void> {
-        await customElements.whenDefined("bq-notification");
+      removeNotification(id: number): void {
+        this.notifications = this.notifications.filter((notification) => notification.id !== id);
+      }
 
-        const type = this.getRandomType();
-        const notification = Object.assign(document.createElement("bq-notification"), {
-          type,
-          autoDismiss: true,
-          innerHTML: `
-            Title
-            <span slot="body">
-              Here goes the description for the <strong>${type} notification</strong><br />
-              You can also add a <a class="bq-link" href="https://example.com">Link</a>
-            </span>
-          `,
-        });
-
-        document.body.append(notification);
-        await (notification as any).toast();
+      private getRandomType(): NotificationType {
+        return NOTIFICATION_TYPES[Math.floor(Math.random() * NOTIFICATION_TYPES.length)];
       }
     }
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
-    import { BqButton } from "@beeq/vue";
+    import { ref } from "vue";
+    import { BqButton, BqNotification } from "@beeq/vue";
 
-    const NOTIFICATION_TYPES = ["error", "info", "neutral", "success", "warning"];
+    const NOTIFICATION_TYPES = ["error", "info", "neutral", "success", "warning"] as const;
+    type NotificationType = (typeof NOTIFICATION_TYPES)[number];
+    interface NotificationItem { id: number; type: NotificationType; }
+
+    const notifications = ref<NotificationItem[]>([]);
+    let nextNotificationId = 0;
     const getRandomType = () => NOTIFICATION_TYPES[Math.floor(Math.random() * NOTIFICATION_TYPES.length)];
 
-    const openToast = async () => {
-      await customElements.whenDefined("bq-notification");
+    const openNotification = () => {
+      notifications.value.push({ id: ++nextNotificationId, type: getRandomType() });
+    };
 
-      const type = getRandomType();
-      const notification = Object.assign(document.createElement("bq-notification"), {
-        type,
-        autoDismiss: true,
-        innerHTML: `
-          Title
-          <span slot="body">
-            Here goes the description for the <strong>${type} notification</strong><br />
-            You can also add a <a class="bq-link" href="https://example.com">Link</a>
-          </span>
-        `,
-      });
-
-      document.body.append(notification);
-      await (notification as any).toast();
+    const removeNotification = (id: number) => {
+      notifications.value = notifications.value.filter((notification) => notification.id !== id);
     };
     </script>
 
     <template>
       <p>The notification portal stacks multiple notifications vertically in a fixed position.</p>
       <p>Only one portal exists at a time and it is added or removed from the DOM as needed.</p>
-      <BqButton @bqClick="openToast">Open notification</BqButton>
+      <BqButton @bqClick="openNotification">Open notification</BqButton>
+
+      <Teleport to="body">
+        <div class="notification-portal" aria-label="Notifications">
+          <BqNotification
+            v-for="notification in notifications"
+            :key="notification.id"
+            open
+            autoDismiss
+            :type="notification.type"
+            @bqAfterClose="removeNotification(notification.id)"
+          >
+            Title
+            <span slot="body">
+              Here goes the description for the <strong>{{ notification.type }} notification</strong><br />
+              You can also add a <a class="bq-link" href="https://example.com">Link</a>
+            </span>
+          </BqNotification>
+        </div>
+      </Teleport>
     </template>
+
+    <style>
+    .notification-portal {
+      position: fixed;
+      inset-inline-end: 0;
+      top: 0;
+      z-index: 50;
+      max-block-size: 100%;
+      max-inline-size: 100%;
+    }
+
+    .notification-portal bq-notification {
+      display: block;
+      margin: var(--bq-spacing-m);
+    }
+    </style>
     ```
-  </CodeGroup>
+</CodeGroup>
 </CodeLivePreview>
 
 ## Best practices
@@ -1051,7 +1121,7 @@ Use the `toast()` method to render notifications in a fixed-position portal that
 </Expandable>
 
 <Tip>
-  Learn more about [styling with shadow parts](/usage-guides/customizations/styles#component-shadow-dom-parts) and [CSS custom properties](/usage-guides/customizations/styles#global-css-custom-properties).
+  Learn more about [styling with shadow parts](/guides/styles#component-shadow-dom-parts) and [CSS custom properties](/guides/styles#global-css-custom-properties).
 </Tip>
 
 ## Resources

@@ -87,7 +87,7 @@ The slider fills its container's available width. Constrain the width of its par
 
 The default slider type. Drag the handle to select a single numeric value within the `min`–`max` range.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     bq-slider { width: 100%; max-width: 400px; }
   </style>
@@ -99,7 +99,7 @@ The default slider type. Drag the handle to select a single numeric value within
     <bq-slider value="30"></bq-slider>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqSlider } from "@beeq/react";
 
     export default function App() {
@@ -112,7 +112,7 @@ The default slider type. Drag the handle to select a single numeric value within
     }
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqSlider } from "@beeq/angular/standalone";
 
@@ -129,7 +129,7 @@ The default slider type. Drag the handle to select a single numeric value within
     }
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqSlider } from "@beeq/vue";
 
@@ -147,7 +147,7 @@ The default slider type. Drag the handle to select a single numeric value within
 
 Set `type="range"` and pass a two-element array as `value` to let users select both a minimum and maximum simultaneously.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     bq-slider { width: 100%; max-width: 400px; }
   </style>
@@ -159,7 +159,7 @@ Set `type="range"` and pass a two-element array as `value` to let users select b
     <bq-slider type="range" value="[20,70]"></bq-slider>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqSlider } from "@beeq/react";
 
     export default function App() {
@@ -173,7 +173,7 @@ Set `type="range"` and pass a two-element array as `value` to let users select b
     }
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqSlider } from "@beeq/angular/standalone";
 
@@ -190,7 +190,7 @@ Set `type="range"` and pass a two-element array as `value` to let users select b
     }
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqSlider } from "@beeq/vue";
 
@@ -210,7 +210,7 @@ Set `type="range"` and pass a two-element array as `value` to let users select b
 
 Add the `disabled` attribute to prevent interaction while still rendering the slider. Use this to display a preset or locked value that users cannot modify.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     bq-slider { width: 100%; max-width: 400px; }
   </style>
@@ -230,7 +230,7 @@ Add the `disabled` attribute to prevent interaction while still rendering the sl
     }
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqSlider } from "@beeq/angular/standalone";
 
@@ -259,7 +259,7 @@ Add the `disabled` attribute to prevent interaction while still rendering the sl
 
 Set `enable-value-indicator` to display the current numeric value as a label beside the track. For range sliders both the minimum and maximum labels are shown — useful when the exact number is meaningful to the user.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     bq-slider { width: 100%; max-width: 400px; }
   </style>
@@ -279,7 +279,7 @@ Set `enable-value-indicator` to display the current numeric value as a label bes
     }
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqSlider } from "@beeq/angular/standalone";
 
@@ -308,7 +308,7 @@ Set `enable-value-indicator` to display the current numeric value as a label bes
 
 Set `enable-tooltip` to show a tooltip above the active handle while dragging. The tooltip hides again once the user releases the handle.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     bq-slider { 
         width: 100%; 
@@ -332,7 +332,7 @@ Set `enable-tooltip` to show a tooltip above the active handle while dragging. T
     }
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqSlider } from "@beeq/angular/standalone";
 
@@ -361,7 +361,7 @@ Set `enable-tooltip` to show a tooltip above the active handle while dragging. T
 
 Add `tooltip-always-visible` to keep the tooltip permanently visible rather than only while dragging. This requires `enable-tooltip` to be set.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     bq-slider { 
         width: 100%; 
@@ -385,7 +385,7 @@ Add `tooltip-always-visible` to keep the tooltip permanently visible rather than
     }
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqSlider } from "@beeq/angular/standalone";
 
@@ -414,7 +414,7 @@ Add `tooltip-always-visible` to keep the tooltip permanently visible rather than
 
 Control the selectable range with `min` and `max` and the increment granularity with `step`. All selected values are rounded to the nearest multiple of `step`.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     bq-slider { width: 100%; max-width: 400px; }
   </style>
@@ -434,7 +434,7 @@ Control the selectable range with `min` and `max` and the increment granularity 
     }
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqSlider } from "@beeq/angular/standalone";
 
@@ -463,7 +463,7 @@ Control the selectable range with `min` and `max` and the increment granularity 
 
 Enable decimal increments by setting a fractional `step` value. This provides increased granularity for precise adjustments — useful when selecting specific percentages or fractional coefficients.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     bq-slider { width: 100%; max-width: 400px; }
   </style>
@@ -483,7 +483,7 @@ Enable decimal increments by setting a fractional `step` value. This provides in
     }
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqSlider } from "@beeq/angular/standalone";
 
@@ -512,7 +512,7 @@ Enable decimal increments by setting a fractional `step` value. This provides in
 
 Use `gap` to set the minimum distance the two handles must maintain between each other. This is useful when the selected range must span at least a minimum interval — for example, ensuring a time window covers at least one hour.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     bq-slider { width: 100%; max-width: 400px; }
   </style>
@@ -532,7 +532,7 @@ Use `gap` to set the minimum distance the two handles must maintain between each
     }
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqSlider } from "@beeq/angular/standalone";
 
@@ -696,7 +696,7 @@ As a developer you are responsible for:
 | `--bq-slider--trackarea-color` | Background color of the unfilled track area | `var(--bq-ui--secondary)` |
 
 <Tip>
-  Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).
+  Learn more about [styling with shadow parts](/guides/styles) and [CSS custom properties](/theming/global-css-variables).
 </Tip>
 
 ## Resources

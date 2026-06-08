@@ -7,7 +7,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 
 Each component provides its own CSS custom properties, scoped to that component. This lets you tweak colors, spacing, or other design tokens locally without breaking consistency across the theme. You can find the component CSS variables listed at the bottom of each component documentation page.
 
-For a practical overview of all three customization techniques — shadow DOM parts, global token overrides, and component variables — see [Styles](/usage-guides/customizations/styles).
+For a practical overview of all three customization techniques — shadow DOM parts, global token overrides, and component variables — see [Styles](/guides/styles).
 
 <Tip>
   For quick reference, you can also check these variables documented in each component's `scss/*.variables.scss` file on [GitHub](https://github.com/Endava/BEEQ/tree/main/packages/beeq/src/components).
@@ -75,7 +75,7 @@ The [Badge](/components/badge) component exposes the following CSS custom proper
 
 Applies the custom styles to every `bq-badge` in the application.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       flex-direction: row !important;
@@ -106,13 +106,13 @@ Applies the custom styles to every `bq-badge` in the application.
     }
     ```
 
-    ```html HTML icon="html5" expandable
+    ```html HTML icon="html5"
     <bq-badge size="small"></bq-badge>
     <bq-badge size="medium"></bq-badge>
     <bq-badge>99+</bq-badge>
     ```
 
-    ```jsx React icon="react" expandable
+    ```jsx React icon="react"
     import { BqBadge } from "@beeq/react";
     import "./styles.css";
     // Import the CSS override in your global stylesheet
@@ -179,7 +179,7 @@ Applies the custom styles to every `bq-badge` in the application.
 
 Only the `bq-badge` elements with the matching CSS class will have the overridden style.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       flex-direction: row !important;
@@ -212,7 +212,7 @@ Only the `bq-badge` elements with the matching CSS class will have the overridde
     }
     ```
 
-    ```html HTML icon="html5" expandable
+    ```html HTML icon="html5"
     <bq-badge size="small"></bq-badge>
     <bq-badge size="medium"></bq-badge>
     <bq-badge>99+</bq-badge>

@@ -116,7 +116,7 @@ A radio button consists of a circular icon and a text label. The icon changes ap
 
 Wrap `bq-radio` elements inside a `bq-radio-group`. Set a matching `value` on the group to pre-select one option. The group handles all state synchronization.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-radio-group name="group" value="option1">
     <span slot="label">Label</span>
     <bq-radio value="option1">Radio option 1</bq-radio>
@@ -134,7 +134,7 @@ Wrap `bq-radio` elements inside a `bq-radio-group`. Set a matching `value` on th
     </bq-radio-group>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqRadio, BqRadioGroup } from "@beeq/react";
 
     <BqRadioGroup name="group" value="option1">
@@ -145,7 +145,7 @@ Wrap `bq-radio` elements inside a `bq-radio-group`. Set a matching `value` on th
     </BqRadioGroup>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqRadio, BqRadioGroup } from "@beeq/angular/standalone";
 
@@ -165,7 +165,7 @@ Wrap `bq-radio` elements inside a `bq-radio-group`. Set a matching `value` on th
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <template>
       <BqRadioGroup name="group" value="option1">
         <span slot="label">Label</span>
@@ -188,7 +188,7 @@ Wrap `bq-radio` elements inside a `bq-radio-group`. Set a matching `value` on th
 
 Set `disabled` on the group to prevent all interaction. You can also disable individual `bq-radio` elements when only specific options are unavailable.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <style>
     :host {
       gap: var(--bq-spacing-l) !important;
@@ -208,7 +208,7 @@ Set `disabled` on the group to prevent all interaction. You can also disable ind
   </bq-radio-group>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <!-- Fully disabled group -->
     <bq-radio-group name="group-disabled" value="option1" disabled>
       <span slot="label">Label</span>
@@ -226,7 +226,7 @@ Set `disabled` on the group to prevent all interaction. You can also disable ind
     </bq-radio-group>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqRadio, BqRadioGroup } from "@beeq/react";
 
     {/* Fully disabled group */}
@@ -246,7 +246,7 @@ Set `disabled` on the group to prevent all interaction. You can also disable ind
     </BqRadioGroup>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqRadio, BqRadioGroup } from "@beeq/angular/standalone";
 
@@ -275,7 +275,7 @@ Set `disabled` on the group to prevent all interaction. You can also disable ind
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <template>
       <!-- Fully disabled group -->
       <BqRadioGroup name="group-disabled" value="option1" disabled>
@@ -305,7 +305,7 @@ Set `disabled` on the group to prevent all interaction. You can also disable ind
 
 Use `orientation="horizontal"` to arrange options side by side. Best for short labels and a small number of choices where vertical space is limited.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-radio-group name="group" value="option1" orientation="horizontal">
     <span slot="label">Label</span>
     <bq-radio value="option1">Radio option 1</bq-radio>
@@ -323,7 +323,7 @@ Use `orientation="horizontal"` to arrange options side by side. Best for short l
     </bq-radio-group>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqRadio, BqRadioGroup } from "@beeq/react";
 
     <BqRadioGroup name="group" value="option1" orientation="horizontal">
@@ -334,7 +334,7 @@ Use `orientation="horizontal"` to arrange options side by side. Best for short l
     </BqRadioGroup>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqRadio, BqRadioGroup } from "@beeq/angular/standalone";
 
@@ -354,7 +354,7 @@ Use `orientation="horizontal"` to arrange options side by side. Best for short l
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <template>
       <BqRadioGroup name="group" value="option1" orientation="horizontal">
         <span slot="label">Label</span>
@@ -375,7 +375,7 @@ Use `orientation="horizontal"` to arrange options side by side. Best for short l
 
 Add the `fieldset` attribute to render a visible border and legend around the group. Use this when the radio group is one of several distinct sections in a form that need visual separation.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-radio-group name="group" value="option1" fieldset>
     <span slot="label">Label</span>
     <bq-radio value="option1">Radio option 1</bq-radio>
@@ -393,7 +393,7 @@ Add the `fieldset` attribute to render a visible border and legend around the gr
     </bq-radio-group>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqRadio, BqRadioGroup } from "@beeq/react";
 
     <BqRadioGroup name="group" value="option1" fieldset>
@@ -404,7 +404,7 @@ Add the `fieldset` attribute to render a visible border and legend around the gr
     </BqRadioGroup>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqRadio, BqRadioGroup } from "@beeq/angular/standalone";
 
@@ -424,7 +424,7 @@ Add the `fieldset` attribute to render a visible border and legend around the gr
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <template>
       <BqRadioGroup name="group" value="option1" :fieldset="true">
         <span slot="label">Label</span>
@@ -445,7 +445,7 @@ Add the `fieldset` attribute to render a visible border and legend around the gr
 
 Set `background-on-hover` on the group (or on individual `bq-radio` elements) to show a filled highlight on the label row when the user hovers. This increases the perceived click area in spacious layouts.
 
-<CodeLivePreview code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-radio-group name="group" value="option1" background-on-hover>
     <span slot="label">Label</span>
     <bq-radio value="option1">Radio option 1</bq-radio>
@@ -463,7 +463,7 @@ Set `background-on-hover` on the group (or on individual `bq-radio` elements) to
     </bq-radio-group>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqRadio, BqRadioGroup } from "@beeq/react";
 
     <BqRadioGroup name="group" value="option1" backgroundOnHover>
@@ -474,7 +474,7 @@ Set `background-on-hover` on the group (or on individual `bq-radio` elements) to
     </BqRadioGroup>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqRadio, BqRadioGroup } from "@beeq/angular/standalone";
 
@@ -494,7 +494,7 @@ Set `background-on-hover` on the group (or on individual `bq-radio` elements) to
     export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <template>
       <BqRadioGroup name="group" value="option1" backgroundOnHover>
         <span slot="label">Label</span>
@@ -680,7 +680,7 @@ Set `background-on-hover` on the group (or on individual `bq-radio` elements) to
 | `--bq-radio--border-width` | Border width of the radio control ring | `var(--bq-stroke-m)` |
 
 <Tip>
-  Learn more about [styling with shadow parts](/usage-guides/customizations/styles#component-shadow-dom-parts) and [CSS custom properties](/usage-guides/customizations/styles#global-css-custom-properties).
+  Learn more about [styling with shadow parts](/guides/styles#component-shadow-dom-parts) and [CSS custom properties](/guides/styles#global-css-custom-properties).
 </Tip>
 
 ## Resources
