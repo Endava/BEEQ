@@ -106,6 +106,14 @@ describe('bq-notification', () => {
     expect(closeBtn).not.toBeNull();
   });
 
+  it('should keep the default close button padding', async () => {
+    const { root } = await render(<bq-notification open>Notification title</bq-notification>);
+
+    const closeBtn = root.shadowRoot?.querySelector('[part="btn-close"]');
+    expect(closeBtn).not.toBeNull();
+    expect(closeBtn).not.toHaveClass('[&::part(button)]:p-0');
+  });
+
   it('should hide the close button when `disable-close` is set', async () => {
     const { root } = await render(
       <bq-notification open disable-close>
