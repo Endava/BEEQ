@@ -162,6 +162,7 @@ Use the default progress bar for general task tracking when the process has a me
     import { BqProgress } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqProgress],
       template: `
@@ -171,7 +172,7 @@ Use the default progress bar for general task tracking when the process has a me
         <bq-progress value="100"></bq-progress>
       `
     })
-    export class DefaultProgressComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -231,6 +232,7 @@ Use `thickness="large"` to increase the visual weight of the progress bar in mor
     import { BqProgress } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqProgress],
       template: `
@@ -238,7 +240,7 @@ Use `thickness="large"` to increase the visual weight of the progress bar in mor
         <bq-progress thickness="large" value="30"></bq-progress>
       `
     })
-    export class LargeThicknessProgressComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -283,11 +285,12 @@ Use `type="error"` to communicate that a process failed or needs attention.
     import { BqProgress } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqProgress],
       template: `<bq-progress type="error" value="30"></bq-progress>`
     })
-    export class ErrorProgressComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -346,6 +349,7 @@ Use `border-shape="square"` when you want a straighter edge treatment. The defau
     import { BqProgress } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqProgress],
       template: `
@@ -353,7 +357,7 @@ Use `border-shape="square"` when you want a straighter edge treatment. The defau
         <bq-progress border-shape="square" value="80"></bq-progress>
       `
     })
-    export class BorderShapeProgressComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -415,6 +419,7 @@ Add `label` to display a persistent numeric percentage beside the bar.
     import { BqProgress } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqProgress],
       template: `
@@ -424,7 +429,7 @@ Add `label` to display a persistent numeric percentage beside the bar.
         <bq-progress label value="100"></bq-progress>
       `
     })
-    export class LabelProgressComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -486,6 +491,7 @@ Add `enable-tooltip` to show the current percentage at the indicator. In the cur
     import { BqProgress } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqProgress],
       template: `
@@ -494,7 +500,7 @@ Add `enable-tooltip` to show the current percentage at the indicator. In the cur
         <bq-progress enable-tooltip value="75"></bq-progress>
       `
     })
-    export class TooltipProgressComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -544,11 +550,12 @@ Use `indeterminate` when the task is active but the exact completion point canno
     import { BqProgress } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqProgress],
       template: `<bq-progress indeterminate></bq-progress>`
     })
-    export class IndeterminateProgressComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"

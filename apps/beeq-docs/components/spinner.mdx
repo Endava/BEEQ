@@ -142,11 +142,12 @@ Use the default spinner when the surrounding UI already makes the loading contex
     import { BqSpinner } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqSpinner],
       template: `<bq-spinner></bq-spinner>`
     })
-    export class DefaultSpinnerComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -190,11 +191,12 @@ Use the small spinner when space is limited and the loading state belongs to a c
     import { BqSpinner } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqSpinner],
       template: `<bq-spinner size="small"></bq-spinner>`
     })
-    export class SmallSpinnerComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -232,11 +234,12 @@ Use `size="large"` for prominent loading states such as page-level waits, major 
     import { BqSpinner } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqSpinner],
       template: `<bq-spinner size="large"></bq-spinner>`
     })
-    export class LargeSpinnerComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -291,6 +294,7 @@ Use `text-position` to control where the loading message appears relative to the
     import { BqSpinner } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqSpinner],
       template: `
@@ -300,7 +304,7 @@ Use `text-position` to control where the loading message appears relative to the
         <bq-spinner text-position="left">Processing...</bq-spinner>
       `
     })
-    export class LabelledSpinnerComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -347,6 +351,7 @@ Use the `icon` slot when you need a different spinner icon treatment. Make sure 
     import { BqIcon, BqSpinner } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqSpinner],
       template: `
@@ -355,7 +360,7 @@ Use the `icon` slot when you need a different spinner icon treatment. Make sure 
         </bq-spinner>
       `
     })
-    export class CustomIconSpinnerComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"

@@ -199,7 +199,7 @@ Use the default `info` notification for standard messages and updates.
     ```
 
     ```js JavaScript icon="js"
-    const notifications = document.querySelectorAll("bq-notification");
+    const notifications = previewRoot.querySelectorAll("bq-notification");
 
     notifications.forEach((notification) => {
       notification.addEventListener("bqHide", () => {
@@ -369,7 +369,7 @@ Use semantic `type` values to communicate severity and intent clearly.
     ```
 
     ```js JavaScript icon="js"
-    const notifications = document.querySelectorAll("bq-notification");
+    const notifications = previewRoot.querySelectorAll("bq-notification");
 
     notifications.forEach((notification) => {
       notification.addEventListener("bqHide", () => {
@@ -531,7 +531,7 @@ Use the `icon` slot to replace the default type icon with a custom `bq-icon`.
     ```
 
     ```js JavaScript icon="js"
-    const notifications = document.querySelectorAll("bq-notification");
+    const notifications = previewRoot.querySelectorAll("bq-notification");
 
     notifications.forEach((notification) => {
       notification.addEventListener("bqHide", () => {
@@ -751,7 +751,7 @@ Use the `toast()` method to render notifications in a fixed-position portal that
     ```
 
     ```js JavaScript icon="js"
-    const openBtn = document.querySelector("#notification-stacked-btn");
+    const openBtn = previewRoot.querySelector("#notification-stacked-btn");
 
     const NOTIFICATION_TYPES = ["error", "info", "neutral", "success", "warning"];
     const getRandomType = () => NOTIFICATION_TYPES[Math.floor(Math.random() * NOTIFICATION_TYPES.length)];

@@ -49,7 +49,7 @@ Style them using the `::part()` pseudo-element from your own stylesheet:
   </bq-button>
 `}>
   <CodeGroup>
-    ```css styles.css icon=css
+    ```css styles.css icon="css"
     .custom-button::part(label) {
       font-size: var(--bq-font-size--xl);
       font-weight: var(--bq-font-weight--semibold);
@@ -63,13 +63,13 @@ Style them using the `::part()` pseudo-element from your own stylesheet:
     }
     ```
 
-    ```html HTML icon=html5
+    ```html HTML icon="html5"
     <bq-button class="custom-button">
       Custom button
     </bq-button>
     ```
 
-    ```tsx React icon=react
+    ```tsx React icon="react"
     import { BqButton } from "@beeq/react";
     import "./styles.css";
 
@@ -78,7 +78,7 @@ Style them using the `::part()` pseudo-element from your own stylesheet:
     }
     ```
 
-    ```ts Angular icon=angular
+    ```ts Angular icon="angular"
     import { Component } from "@angular/core";
     import { BqButton } from "@beeq/angular/standalone";
 
@@ -91,7 +91,7 @@ Style them using the `::part()` pseudo-element from your own stylesheet:
           Custom button
         </bq-button>
       `,
-      style: `
+      styles: [`
         .custom-button::part(label) {
           font-size: var(--bq-font-size--xl);
           font-weight: var(--bq-font-weight--semibold);
@@ -103,12 +103,12 @@ Style them using the `::part()` pseudo-element from your own stylesheet:
           padding-block: var(--bq-spacing-xl);
           padding-inline: var(--bq-spacing-xxl);
         }
-      `
+      `],
     })
     export class ExampleComponent {}
     ```
 
-    ```vue Vue icon=vuejs
+    ```vue Vue icon="vuejs"
     <script setup lang="ts">
     import { BqButton } from "@beeq/vue";
     </script>
@@ -118,17 +118,17 @@ Style them using the `::part()` pseudo-element from your own stylesheet:
     </template>
 
     <style>
-    .custom-button::part(label) {
-      font-size: var(--bq-font-size--xl);
-      font-weight: var(--bq-font-weight--semibold);
-    }
+      .custom-button::part(label) {
+        font-size: var(--bq-font-size--xl);
+        font-weight: var(--bq-font-weight--semibold);
+      }
 
-    .custom-button::part(button) {
-      background-color: var(--bq-magenta-600);
-      border-radius: var(--bq-radius--full);
-      padding-block: var(--bq-spacing-xl);
-      padding-inline: var(--bq-spacing-xxl);
-    }
+      .custom-button::part(button) {
+        background-color: var(--bq-magenta-600);
+        border-radius: var(--bq-radius--full);
+        padding-block: var(--bq-spacing-xl);
+        padding-inline: var(--bq-spacing-xxl);
+      }
     </style>
     ```
   </CodeGroup>
@@ -165,19 +165,19 @@ BEEQ relies on CSS custom properties to maintain a consistent visual system acro
   </bq-button>
 `}>
   <CodeGroup>
-    ```css styles.css icon=css
+    ```css styles.css icon="css"
     :root {
       --bq-brand: var(--bq-orange-600);
     }
     ```
 
-    ```html HTML icon=html5
+    ```html HTML icon="html5"
     <bq-button appearance="primary">
       Primary button
     </bq-button>
     ```
 
-    ```tsx React icon=react
+    ```tsx React icon="react"
     import { BqButton } from "@beeq/react";
     import "./styles.css";
 
@@ -186,7 +186,7 @@ BEEQ relies on CSS custom properties to maintain a consistent visual system acro
     }
     ```
 
-    ```ts Angular icon=angular
+    ```ts Angular icon="angular"
     import { Component } from "@angular/core";
     import { BqButton } from "@beeq/angular/standalone";
 
@@ -199,16 +199,16 @@ BEEQ relies on CSS custom properties to maintain a consistent visual system acro
           Primary button
         </bq-button>
       `,
-      style: `
+      styles: [`
         :root {
           --bq-brand: var(--bq-orange-600);
         }
-      `
+      `],
     })
     export class ExampleComponent {}
     ```
 
-    ```vue Vue icon=vuejs
+    ```vue Vue icon="vuejs"
     <script setup lang="ts">
     import { BqButton } from "@beeq/vue";
     </script>
@@ -218,9 +218,9 @@ BEEQ relies on CSS custom properties to maintain a consistent visual system acro
     </template>
 
     <style>
-    :root {
-      --bq-brand: var(--bq-orange-600);
-    }
+      :root {
+        --bq-brand: var(--bq-orange-600);
+      }
     </style>
     ```
   </CodeGroup>
@@ -248,13 +248,13 @@ In the example below, the second button overrides one brand token locally while 
   </bq-button>
 `}>
   <CodeGroup>
-    ```css styles.css icon=css
+    ```css styles.css icon="css"
     .primary-magenta {
       --bq-ui--brand: var(--bq-magenta-600);
     }
     ```
 
-    ```html HTML icon=html5
+    ```html HTML icon="html5"
     <bq-button appearance="primary">
       Primary button
     </bq-button>
@@ -264,7 +264,7 @@ In the example below, the second button overrides one brand token locally while 
     </bq-button>
     ```
 
-    ```tsx React icon=react
+    ```tsx React icon="react"
     import { BqButton } from "@beeq/react";
     import "./styles.css";
 
@@ -280,7 +280,7 @@ In the example below, the second button overrides one brand token locally while 
     }
     ```
 
-    ```ts Angular icon=angular
+    ```ts Angular icon="angular"
     import { Component } from "@angular/core";
     import { BqButton } from "@beeq/angular/standalone";
 
@@ -297,16 +297,16 @@ In the example below, the second button overrides one brand token locally while 
           Primary custom
         </bq-button>
       `,
-      style: `
+      styles: [`
         .primary-magenta {
           --bq-ui--brand: var(--bq-magenta-600);
         }
-      `
+      `],
     })
     export class ExampleComponent {}
     ```
 
-    ```vue Vue icon=vuejs
+    ```vue Vue icon="vuejs"
     <script setup lang="ts">
     import { BqButton } from "@beeq/vue";
     </script>
@@ -319,9 +319,9 @@ In the example below, the second button overrides one brand token locally while 
     </template>
 
     <style>
-    .primary-magenta {
-      --bq-ui--brand: var(--bq-magenta-600);
-    }
+      .primary-magenta {
+        --bq-ui--brand: var(--bq-magenta-600);
+      }
     </style>
     ```
   </CodeGroup>
@@ -371,7 +371,7 @@ Combine component CSS variables and `::part()` selectors when token overrides al
   </bq-button>
 `}>
   <CodeGroup>
-    ```css styles.css icon=css
+    ```css styles.css icon="css"
     .larger-button {
       --bq-button--small-height: 42px;
       --bq-button--small-paddingY: 10px;
@@ -395,7 +395,7 @@ Combine component CSS variables and `::part()` selectors when token overrides al
     }
     ```
 
-    ```html HTML icon=html5
+    ```html HTML icon="html5"
     <bq-button class="larger-button" size="small">
       Button
     </bq-button>
@@ -409,7 +409,7 @@ Combine component CSS variables and `::part()` selectors when token overrides al
     </bq-button>
     ```
 
-    ```tsx React icon=react
+    ```tsx React icon="react"
     import { BqButton } from "@beeq/react";
     import "./styles.css";
 
@@ -430,7 +430,7 @@ Combine component CSS variables and `::part()` selectors when token overrides al
     }
     ```
 
-    ```ts Angular icon=angular
+    ```ts Angular icon="angular"
     import { Component } from "@angular/core";
     import { BqButton } from "@beeq/angular/standalone";
 
@@ -451,7 +451,7 @@ Combine component CSS variables and `::part()` selectors when token overrides al
           Button
         </bq-button>
       `,
-      style: `
+      styles: [`
         .larger-button {
           --bq-button--small-height: 42px;
           --bq-button--small-paddingY: 10px;
@@ -473,12 +473,12 @@ Combine component CSS variables and `::part()` selectors when token overrides al
         .larger-button::part(label) {
           font-size: var(--bq-font-size--l);
         }
-      `
+      `],
     })
     export class ExampleComponent {}
     ```
 
-    ```vue Vue icon=vuejs
+    ```vue Vue icon="vuejs"
     <script setup lang="ts">
     import { BqButton } from "@beeq/vue";
     </script>
@@ -490,27 +490,27 @@ Combine component CSS variables and `::part()` selectors when token overrides al
     </template>
 
     <style>
-    .larger-button {
-      --bq-button--small-height: 42px;
-      --bq-button--small-paddingY: 10px;
-      --bq-button--small-paddingX: var(--bq-spacing-l);
-      --bq-button--medium-height: 53px;
-      --bq-button--medium-paddingY: 14px;
-      --bq-button--medium-paddingX: var(--bq-spacing-xl);
-      --bq-button--large-height: 60px;
-      --bq-button--large-paddingY: 18px;
-      --bq-button--large-paddingX: var(--bq-spacing-xxl);
-      --bq-ui--brand: #192b37;
-      --bq-focus: #192b37;
-    }
+      .larger-button {
+        --bq-button--small-height: 42px;
+        --bq-button--small-paddingY: 10px;
+        --bq-button--small-paddingX: var(--bq-spacing-l);
+        --bq-button--medium-height: 53px;
+        --bq-button--medium-paddingY: 14px;
+        --bq-button--medium-paddingX: var(--bq-spacing-xl);
+        --bq-button--large-height: 60px;
+        --bq-button--large-paddingY: 18px;
+        --bq-button--large-paddingX: var(--bq-spacing-xxl);
+        --bq-ui--brand: #192b37;
+        --bq-focus: #192b37;
+      }
 
-    .larger-button::part(button) {
-      border-radius: var(--bq-radius--full);
-    }
+      .larger-button::part(button) {
+        border-radius: var(--bq-radius--full);
+      }
 
-    .larger-button::part(label) {
-      font-size: var(--bq-font-size--l);
-    }
+      .larger-button::part(label) {
+        font-size: var(--bq-font-size--l);
+      }
     </style>
     ```
   </CodeGroup>

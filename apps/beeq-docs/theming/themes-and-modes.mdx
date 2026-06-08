@@ -209,9 +209,7 @@ Here is a working example showing how to read the user's preferred color scheme 
   </script>
 `}>
   <CodeGroup>
-    ```css CSS icon="css" expandable
-    @import "@beeq/core/dist/beeq/beeq.css";
-
+    ```css styles.css icon="css" expandable
     .nav-bar {
       display: flex;
       justify-content: center;
@@ -359,9 +357,9 @@ Here is a working example showing how to read the user's preferred color scheme 
     import { BqIcon, BqSwitch } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqSwitch],
-      styleUrl: "./styles.css",
       template: `
         <header class="nav-bar">
           <div class="nav-bar__main">
@@ -377,6 +375,51 @@ Here is a working example showing how to read the user's preferred color scheme 
           <div class="content"></div>
         </main>
       `,
+      styles: [`
+        .nav-bar {
+          display: flex;
+          justify-content: center;
+          background-color: var(--bq-ui--primary);
+          border-bottom: 1px solid var(--bq-stroke--primary);
+        }
+
+        .nav-bar__main {
+          flex: 1;
+          display: flex;
+          align-items: center;
+          flex-direction: column;
+          justify-content: end;
+          gap: var(--bq-spacing-xl);
+          padding: var(--bq-spacing-m);
+          max-width: 1440px;
+
+          @media (min-width: 600px) {
+            flex-direction: row;
+          }
+        }
+
+        .nav-bar__mode {
+          display: flex;
+          align-items: center;
+          gap: var(--bq-spacing-xs);
+          color: var(--bq-text--primary);
+        }
+
+        .main {
+          padding: var(--bq-spacing-m);
+
+          h1 {
+            margin-block-end: var(--bq-spacing-l);
+          }
+        }
+
+        .content {
+          background: var(--bq-ui--alt);
+          border: 2px dashed var(--bq-stroke--primary);
+          height: 10rem;
+          width: 100%;
+        }
+      `],
     })
     export class AppComponent implements OnInit {
       private readonly document = inject(DOCUMENT);
@@ -435,6 +478,52 @@ Here is a working example showing how to read the user's preferred color scheme 
         <div class="content" />
       </main>
     </template>
+
+    <style>
+      .nav-bar {
+        display: flex;
+        justify-content: center;
+        background-color: var(--bq-ui--primary);
+        border-bottom: 1px solid var(--bq-stroke--primary);
+      }
+
+      .nav-bar__main {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: end;
+        gap: var(--bq-spacing-xl);
+        padding: var(--bq-spacing-m);
+        max-width: 1440px;
+
+        @media (min-width: 600px) {
+          flex-direction: row;
+        }
+      }
+
+      .nav-bar__mode {
+        display: flex;
+        align-items: center;
+        gap: var(--bq-spacing-xs);
+        color: var(--bq-text--primary);
+      }
+
+      .main {
+        padding: var(--bq-spacing-m);
+
+        h1 {
+          margin-block-end: var(--bq-spacing-l);
+        }
+      }
+
+      .content {
+        background: var(--bq-ui--alt);
+        border: 2px dashed var(--bq-stroke--primary);
+        height: 10rem;
+        width: 100%;
+      }
+    </style>
     ```
   </CodeGroup>
 </CodeLivePreview>

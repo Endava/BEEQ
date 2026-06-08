@@ -150,6 +150,7 @@ Wrap `bq-radio` elements inside a `bq-radio-group`. Set a matching `value` on th
     import { BqRadio, BqRadioGroup } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqRadio, BqRadioGroup],
       template: `
@@ -161,7 +162,7 @@ Wrap `bq-radio` elements inside a `bq-radio-group`. Set a matching `value` on th
         </bq-radio-group>
       `
     })
-    export class DefaultRadioGroupComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -250,6 +251,7 @@ Set `disabled` on the group to prevent all interaction. You can also disable ind
     import { BqRadio, BqRadioGroup } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqRadio, BqRadioGroup],
       template: `
@@ -270,7 +272,7 @@ Set `disabled` on the group to prevent all interaction. You can also disable ind
         </bq-radio-group>
       `
     })
-    export class DisabledRadioGroupComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -337,6 +339,7 @@ Use `orientation="horizontal"` to arrange options side by side. Best for short l
     import { BqRadio, BqRadioGroup } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqRadio, BqRadioGroup],
       template: `
@@ -348,7 +351,7 @@ Use `orientation="horizontal"` to arrange options side by side. Best for short l
         </bq-radio-group>
       `
     })
-    export class HorizontalRadioGroupComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -406,6 +409,7 @@ Add the `fieldset` attribute to render a visible border and legend around the gr
     import { BqRadio, BqRadioGroup } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqRadio, BqRadioGroup],
       template: `
@@ -417,7 +421,7 @@ Add the `fieldset` attribute to render a visible border and legend around the gr
         </bq-radio-group>
       `
     })
-    export class FieldsetRadioGroupComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -475,6 +479,7 @@ Set `background-on-hover` on the group (or on individual `bq-radio` elements) to
     import { BqRadio, BqRadioGroup } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqRadio, BqRadioGroup],
       template: `
@@ -486,7 +491,7 @@ Set `background-on-hover` on the group (or on individual `bq-radio` elements) to
         </bq-radio-group>
       `
     })
-    export class BackgroundOnHoverRadioGroupComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"

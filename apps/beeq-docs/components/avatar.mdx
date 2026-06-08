@@ -139,27 +139,35 @@ Use initials when no uploaded image is available or when the interface is intent
   ></bq-avatar>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-avatar initials="BQ" label="Avatar component label"></bq-avatar>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqAvatar } from "@beeq/react";
 
     <BqAvatar initials="BQ" label="Avatar component label" />
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqAvatar } from "@beeq/angular/standalone" -->
-    <!-- Modules: components are available after importing BeeQModule -->
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqAvatar } from "@beeq/angular/standalone";
 
-    <bq-avatar
-      initials="BQ"
-      label="Avatar component label"
-    ></bq-avatar>
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqAvatar],
+      template: `
+        <bq-avatar
+          initials="BQ"
+          label="Avatar component label"
+          ></bq-avatar>
+      `,
+    })
+    export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqAvatar } from "@beeq/vue";
     </script>
@@ -188,7 +196,7 @@ When a profile photo or logo is available, pass both `image` and `initials`. The
   ></bq-avatar>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-avatar
       alt-text="User profile"
       image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?auto=format&fit=crop&w=1000&q=80"
@@ -197,7 +205,7 @@ When a profile photo or logo is available, pass both `image` and `initials`. The
     ></bq-avatar>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqAvatar } from "@beeq/react";
 
     <BqAvatar
@@ -208,16 +216,27 @@ When a profile photo or logo is available, pass both `image` and `initials`. The
     />
     ```
 
-    ```html Angular icon="angular"
-    <bq-avatar
-      alt-text="User profile"
-      image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?auto=format&fit=crop&w=1000&q=80"
-      initials="BQ"
-      label="Avatar component label"
-    ></bq-avatar>
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqAvatar } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqAvatar],
+      template: `
+        <bq-avatar
+          alt-text="User profile"
+          image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?auto=format&fit=crop&w=1000&q=80"
+          initials="BQ"
+          label="Avatar component label"
+          ></bq-avatar>
+      `,
+    })
+    export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqAvatar } from "@beeq/vue";
     </script>
@@ -257,14 +276,14 @@ Avatar supports four sizes (`xsmall`, `small`, `medium`, `large`) and two shapes
   </div>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-avatar label="Extra small avatar" initials="B" size="xsmall"></bq-avatar>
     <bq-avatar label="Small avatar" initials="BQ" size="small"></bq-avatar>
     <bq-avatar label="Medium square avatar" initials="BQ" shape="square" size="medium"></bq-avatar>
     <bq-avatar label="Large square avatar" initials="BQ" shape="square" size="large"></bq-avatar>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqAvatar } from "@beeq/react";
 
     <BqAvatar label="Extra small avatar" initials="B" size="xsmall" />
@@ -273,14 +292,25 @@ Avatar supports four sizes (`xsmall`, `small`, `medium`, `large`) and two shapes
     <BqAvatar label="Large square avatar" initials="BQ" shape="square" size="large" />
     ```
 
-    ```html Angular icon="angular"
-    <bq-avatar label="Extra small avatar" initials="B" size="xsmall"></bq-avatar>
-    <bq-avatar label="Small avatar" initials="BQ" size="small"></bq-avatar>
-    <bq-avatar label="Medium square avatar" initials="BQ" shape="square" size="medium"></bq-avatar>
-    <bq-avatar label="Large square avatar" initials="BQ" shape="square" size="large"></bq-avatar>
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqAvatar } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqAvatar],
+      template: `
+        <bq-avatar label="Extra small avatar" initials="B" size="xsmall"></bq-avatar>
+        <bq-avatar label="Small avatar" initials="BQ" size="small"></bq-avatar>
+        <bq-avatar label="Medium square avatar" initials="BQ" shape="square" size="medium"></bq-avatar>
+        <bq-avatar label="Large square avatar" initials="BQ" shape="square" size="large"></bq-avatar>
+      `,
+    })
+    export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqAvatar } from "@beeq/vue";
     </script>
@@ -352,7 +382,7 @@ Use a grouped avatar pattern when you need to represent multiple participants in
   </div>
 `}>
   <CodeGroup>
-    ```css CSS icon="css"
+    ```css styles.css icon="css" expandable
     .avatar--group {
       display: flex;
       align-items: center;
@@ -377,7 +407,7 @@ Use a grouped avatar pattern when you need to represent multiple participants in
     }
     ```
 
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <div class="avatar--group">
       <bq-avatar
         alt-text="User profile"
@@ -395,8 +425,9 @@ Use a grouped avatar pattern when you need to represent multiple participants in
     </div>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqAvatar } from "@beeq/react";
+    import "./styles.css";
 
     <div className="avatar--group">
       <BqAvatar
@@ -415,25 +446,60 @@ Use a grouped avatar pattern when you need to represent multiple participants in
     </div>
     ```
 
-    ```html Angular icon="angular"
-    <div class="avatar--group">
-      <bq-avatar
-        alt-text="User profile"
-        image="https://i.pravatar.cc/500?img=12"
-        label="Olivia Bennett"
-        size="small"
-      ></bq-avatar>
-      <bq-avatar
-        alt-text="User profile"
-        image="https://i.pravatar.cc/500?img=32"
-        label="Liam Carter"
-        size="small"
-      ></bq-avatar>
-      <bq-avatar initials="BQ" label="BEEQ team" size="small"></bq-avatar>
-    </div>
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqAvatar } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqAvatar],
+      template: `
+        <div class="avatar--group">
+          <bq-avatar
+            alt-text="User profile"
+            image="https://i.pravatar.cc/500?img=12"
+            label="Olivia Bennett"
+            size="small"
+            ></bq-avatar>
+            <bq-avatar
+              alt-text="User profile"
+              image="https://i.pravatar.cc/500?img=32"
+              label="Liam Carter"
+              size="small"
+              ></bq-avatar>
+              <bq-avatar initials="BQ" label="BEEQ team" size="small"></bq-avatar>
+            </div>
+      `,
+      styles: [`
+        .avatar--group {
+          display: flex;
+          align-items: center;
+
+          & bq-avatar {
+            cursor: pointer;
+            margin-inline-start: calc(var(--bq-spacing-xs) * -1);
+
+            &::part(base) {
+              transition: scale 0.25s ease-in-out;
+            }
+
+            &::part(base):hover {
+              scale: 1.2;
+              z-index: 1;
+            }
+
+            &:first-child {
+              margin-inline-start: 0;
+            }
+          }
+        }
+      `],
+    })
+    export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqAvatar } from "@beeq/vue";
     </script>
@@ -455,6 +521,32 @@ Use a grouped avatar pattern when you need to represent multiple participants in
         <BqAvatar initials="BQ" label="BEEQ team" size="small" />
       </div>
     </template>
+
+
+    <style>
+      .avatar--group {
+        display: flex;
+        align-items: center;
+
+        & bq-avatar {
+          cursor: pointer;
+          margin-inline-start: calc(var(--bq-spacing-xs) * -1);
+
+          &::part(base) {
+            transition: scale 0.25s ease-in-out;
+          }
+
+          &::part(base):hover {
+            scale: 1.2;
+            z-index: 1;
+          }
+
+          &:first-child {
+            margin-inline-start: 0;
+          }
+        }
+      }
+    </style>
     ```
   </CodeGroup>
 </CodeLivePreview>
@@ -551,35 +643,46 @@ Use the `badge` slot when the avatar needs a compact status or count indicator. 
     </div>
     ```
 
-    ```html Angular icon="angular" expandable
-    <div class="avatar--with-badge">
-      <!-- Offline user -->
-      <bq-avatar
-        alt-text="User profile"
-        image="https://i.pravatar.cc/500"
-        label="Avatar component label"
-      >
-        <bq-badge slot="badge" size="medium" background-color="ui--tertiary"></bq-badge>
-      </bq-avatar>
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqAvatar, BqBadge } from "@beeq/angular/standalone";
 
-      <!-- Online user -->
-      <bq-avatar
-        alt-text="User profile"
-        image="https://i.pravatar.cc/500"
-        label="Avatar component label"
-      >
-        <bq-badge slot="badge" size="medium" background-color="ui--success"></bq-badge>
-      </bq-avatar>
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqAvatar, BqBadge],
+      template: `
+        <div class="avatar--with-badge">
+          <!-- Offline user -->
+          <bq-avatar
+            alt-text="User profile"
+            image="https://i.pravatar.cc/500"
+            label="Avatar component label"
+            >
+            <bq-badge slot="badge" size="medium" background-color="ui--tertiary"></bq-badge>
+          </bq-avatar>
 
-      <!-- Unread notifications -->
-      <bq-avatar
-        alt-text="User profile"
-        image="https://i.pravatar.cc/500"
-        label="Avatar component label"
-      >
-        <bq-badge slot="badge">16</bq-badge>
-      </bq-avatar>
-    </div>
+          <!-- Online user -->
+          <bq-avatar
+            alt-text="User profile"
+            image="https://i.pravatar.cc/500"
+            label="Avatar component label"
+            >
+            <bq-badge slot="badge" size="medium" background-color="ui--success"></bq-badge>
+          </bq-avatar>
+
+          <!-- Unread notifications -->
+          <bq-avatar
+            alt-text="User profile"
+            image="https://i.pravatar.cc/500"
+            label="Avatar component label"
+            >
+            <bq-badge slot="badge">16</bq-badge>
+          </bq-avatar>
+        </div>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs" expandable

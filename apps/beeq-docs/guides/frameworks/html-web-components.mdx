@@ -43,7 +43,7 @@ BEEQ components are standard custom elements (`<bq-button>`, `<bq-input>`, and s
 
     Link the BEEQ stylesheet and ESM bundle from a CDN. Components register automatically when the module loads.
 
-    ```html index.html icon=html5
+    ```html index.html icon="html5"
     <!doctype html>
     <html lang="en">
       <head>
@@ -69,15 +69,15 @@ BEEQ components are standard custom elements (`<bq-button>`, `<bq-input>`, and s
     Install `@beeq/core` with your package manager, then call `defineCustomElements()` at app startup:
 
     <CodeGroup>
-      ```bash npm icon=npm
+      ```bash npm icon="npm"
       npm install @beeq/core
       ```
 
-      ```bash pnpm icon=data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWlkWU1pZCBtZWV0IiB2aWV3Qm94PSI3Ni41ODk4NzI0NDg5Nzk1OCA0NCAxNjQuMDA3NzU1MTAyMDQwNjggMTY0IiB3aWR0aD0iMTYwLjAxIiBoZWlnaHQ9IjE2MCI+PGRlZnM+PHBhdGggZD0iTTIzNy42IDk1TDE4Ny42IDk1TDE4Ny42IDQ1TDIzNy42IDQ1TDIzNy42IDk1WiIgaWQ9ImI0NXZkVEQ4aHMiPjwvcGF0aD48cGF0aCBkPSJNMTgyLjU5IDk1TDEzMi41OSA5NUwxMzIuNTkgNDVMMTgyLjU5IDQ1TDE4Mi41OSA5NVoiIGlkPSJhNDBXdHhJbDhkIj48L3BhdGg+PHBhdGggZD0iTTEyNy41OSA5NUw3Ny41OSA5NUw3Ny41OSA0NUwxMjcuNTkgNDVMMTI3LjU5IDk1WiIgaWQ9ImgyQ045QUVFcGUiPjwvcGF0aD48cGF0aCBkPSJNMjM3LjYgMTUwTDE4Ny42IDE1MEwxODcuNiAxMDBMMjM3LjYgMTAwTDIzNy42IDE1MFoiIGlkPSJkcXY1MTMzRzgiPjwvcGF0aD48cGF0aCBkPSJNMTgyLjU5IDE1MEwxMzIuNTkgMTUwTDEzMi41OSAxMDBMMTgyLjU5IDEwMEwxODIuNTkgMTUwWiIgaWQ9ImIxTHY3OXlwdm0iPjwvcGF0aD48cGF0aCBkPSJNMTgyLjU5IDIwNUwxMzIuNTkgMjA1TDEzMi41OSAxNTVMMTgyLjU5IDE1NUwxODIuNTkgMjA1WiIgaWQ9Imh5MUlaV3dMWCI+PC9wYXRoPjxwYXRoIGQ9Ik0yMzcuNiAyMDVMMTg3LjYgMjA1TDE4Ny42IDE1NUwyMzcuNiAxNTVMMjM3LjYgMjA1WiIgaWQ9ImFrUWZqeFFlcyI+PC9wYXRoPjxwYXRoIGQ9Ik0xMjcuNTkgMjA1TDc3LjU5IDIwNUw3Ny41OSAxNTVMMTI3LjU5IDE1NUwxMjcuNTkgMjA1WiIgaWQ9ImJkU3J3RTVwayI+PC9wYXRoPjwvZGVmcz48Zz48Zz48dXNlIHhsaW5rOmhyZWY9IiNiNDV2ZFREOGhzIiBvcGFjaXR5PSIxIiBmaWxsPSIjZjlhZDAwIiBmaWxsLW9wYWNpdHk9IjEiPjwvdXNlPjwvZz48Zz48dXNlIHhsaW5rOmhyZWY9IiNhNDBXdHhJbDhkIiBvcGFjaXR5PSIxIiBmaWxsPSIjZjlhZDAwIiBmaWxsLW9wYWNpdHk9IjEiPjwvdXNlPjwvZz48Zz48dXNlIHhsaW5rOmhyZWY9IiNoMkNOOUFFRXBlIiBvcGFjaXR5PSIxIiBmaWxsPSIjZjlhZDAwIiBmaWxsLW9wYWNpdHk9IjEiPjwvdXNlPjwvZz48Zz48dXNlIHhsaW5rOmhyZWY9IiNkcXY1MTMzRzgiIG9wYWNpdHk9IjEiIGZpbGw9IiNmOWFkMDAiIGZpbGwtb3BhY2l0eT0iMSI+PC91c2U+PC9nPjxnPjx1c2UgeGxpbms6aHJlZj0iI2IxTHY3OXlwdm0iIG9wYWNpdHk9IjEiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMSI+PC91c2U+PC9nPjxnPjx1c2UgeGxpbms6aHJlZj0iI2h5MUlaV3dMWCIgb3BhY2l0eT0iMSIgZmlsbD0iI2ZmZmZmZiIgZmlsbC1vcGFjaXR5PSIxIj48L3VzZT48L2c+PGc+PHVzZSB4bGluazpocmVmPSIjYWtRZmp4UWVzIiBvcGFjaXR5PSIxIiBmaWxsPSIjZmZmZmZmIiBmaWxsLW9wYWNpdHk9IjEiPjwvdXNlPjwvZz48Zz48dXNlIHhsaW5rOmhyZWY9IiNiZFNyd0U1cGsiIG9wYWNpdHk9IjEiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMSI+PC91c2U+PC9nPjwvZz48L3N2Zz4=
+      ```bash pnpm icon="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWlkWU1pZCBtZWV0IiB2aWV3Qm94PSI3Ni41ODk4NzI0NDg5Nzk1OCA0NCAxNjQuMDA3NzU1MTAyMDQwNjggMTY0IiB3aWR0aD0iMTYwLjAxIiBoZWlnaHQ9IjE2MCI+PGRlZnM+PHBhdGggZD0iTTIzNy42IDk1TDE4Ny42IDk1TDE4Ny42IDQ1TDIzNy42IDQ1TDIzNy42IDk1WiIgaWQ9ImI0NXZkVEQ4aHMiPjwvcGF0aD48cGF0aCBkPSJNMTgyLjU5IDk1TDEzMi41OSA5NUwxMzIuNTkgNDVMMTgyLjU5IDQ1TDE4Mi41OSA5NVoiIGlkPSJhNDBXdHhJbDhkIj48L3BhdGg+PHBhdGggZD0iTTEyNy41OSA5NUw3Ny41OSA5NUw3Ny41OSA0NUwxMjcuNTkgNDVMMTI3LjU5IDk1WiIgaWQ9ImgyQ045QUVFcGUiPjwvcGF0aD48cGF0aCBkPSJNMjM3LjYgMTUwTDE4Ny42IDE1MEwxODcuNiAxMDBMMjM3LjYgMTAwTDIzNy42IDE1MFoiIGlkPSJkcXY1MTMzRzgiPjwvcGF0aD48cGF0aCBkPSJNMTgyLjU5IDE1MEwxMzIuNTkgMTUwTDEzMi41OSAxMDBMMTgyLjU5IDEwMEwxODIuNTkgMTUwWiIgaWQ9ImIxTHY3OXlwdm0iPjwvcGF0aD48cGF0aCBkPSJNMTgyLjU5IDIwNUwxMzIuNTkgMjA1TDEzMi41OSAxNTVMMTgyLjU5IDE1NUwxODIuNTkgMjA1WiIgaWQ9Imh5MUlaV3dMWCI+PC9wYXRoPjxwYXRoIGQ9Ik0yMzcuNiAyMDVMMTg3LjYgMjA1TDE4Ny42IDE1NUwyMzcuNiAxNTVMMjM3LjYgMjA1WiIgaWQ9ImFrUWZqeFFlcyI+PC9wYXRoPjxwYXRoIGQ9Ik0xMjcuNTkgMjA1TDc3LjU5IDIwNUw3Ny41OSAxNTVMMTI3LjU5IDE1NUwxMjcuNTkgMjA1WiIgaWQ9ImJkU3J3RTVwayI+PC9wYXRoPjwvZGVmcz48Zz48Zz48dXNlIHhsaW5rOmhyZWY9IiNiNDV2ZFREOGhzIiBvcGFjaXR5PSIxIiBmaWxsPSIjZjlhZDAwIiBmaWxsLW9wYWNpdHk9IjEiPjwvdXNlPjwvZz48Zz48dXNlIHhsaW5rOmhyZWY9IiNhNDBXdHhJbDhkIiBvcGFjaXR5PSIxIiBmaWxsPSIjZjlhZDAwIiBmaWxsLW9wYWNpdHk9IjEiPjwvdXNlPjwvZz48Zz48dXNlIHhsaW5rOmhyZWY9IiNoMkNOOUFFRXBlIiBvcGFjaXR5PSIxIiBmaWxsPSIjZjlhZDAwIiBmaWxsLW9wYWNpdHk9IjEiPjwvdXNlPjwvZz48Zz48dXNlIHhsaW5rOmhyZWY9IiNkcXY1MTMzRzgiIG9wYWNpdHk9IjEiIGZpbGw9IiNmOWFkMDAiIGZpbGwtb3BhY2l0eT0iMSI+PC91c2U+PC9nPjxnPjx1c2UgeGxpbms6aHJlZj0iI2IxTHY3OXlwdm0iIG9wYWNpdHk9IjEiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMSI+PC91c2U+PC9nPjxnPjx1c2UgeGxpbms6aHJlZj0iI2h5MUlaV3dMWCIgb3BhY2l0eT0iMSIgZmlsbD0iI2ZmZmZmZiIgZmlsbC1vcGFjaXR5PSIxIj48L3VzZT48L2c+PGc+PHVzZSB4bGluazpocmVmPSIjYWtRZmp4UWVzIiBvcGFjaXR5PSIxIiBmaWxsPSIjZmZmZmZmIiBmaWxsLW9wYWNpdHk9IjEiPjwvdXNlPjwvZz48Zz48dXNlIHhsaW5rOmhyZWY9IiNiZFNyd0U1cGsiIG9wYWNpdHk9IjEiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMSI+PC91c2U+PC9nPjwvZz48L3N2Zz4="
       pnpm add @beeq/core
       ```
 
-      ```bash yarn icon=yarn
+      ```bash yarn icon="yarn"
       yarn add @beeq/core
       ```
     </CodeGroup>
@@ -85,18 +85,18 @@ BEEQ components are standard custom elements (`<bq-button>`, `<bq-input>`, and s
     Import global styles once, register custom elements at startup, and load your entry script from HTML:
 
     <CodeGroup>
-      ```css src/style.css icon=css
+      ```css src/style.css icon="css"
       @import "@beeq/core/dist/beeq/beeq.css";
       ```
 
-      ```ts src/main.ts icon=ts
+      ```ts src/main.ts icon="ts"
       import { defineCustomElements } from "@beeq/core/dist/loader";
       import "./style.css";
 
       defineCustomElements();
       ```
 
-      ```html index.html icon=html5
+      ```html index.html icon="html5"
       <!doctype html>
       <html lang="en">
         <head>
@@ -134,7 +134,7 @@ BEEQ components are standard custom elements (`<bq-button>`, `<bq-input>`, and s
 
     Add the `data-beeq` attribute to the `<script type="module">` tag pointing at the directory or a CDN URL that contains the SVG files. BEEQ reads this automatically.
 
-    ```html index.html icon=html5 highlight={12}
+    ```html index.html icon="html5" highlight={12}
     <!doctype html>
     <html lang="en">
       <head>
@@ -164,21 +164,21 @@ BEEQ components are standard custom elements (`<bq-button>`, `<bq-input>`, and s
     Install the static copy plugin, copy SVGs into your build output, and call `setBasePath()` before rendering components that use icons:
 
     <CodeGroup>
-      ```bash npm icon=npm
+      ```bash npm icon="npm"
       npm install -D vite-plugin-static-copy
       ```
 
-      ```bash pnpm icon=data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWlkWU1pZCBtZWV0IiB2aWV3Qm94PSI3Ni41ODk4NzI0NDg5Nzk1OCA0NCAxNjQuMDA3NzU1MTAyMDQwNjggMTY0IiB3aWR0aD0iMTYwLjAxIiBoZWlnaHQ9IjE2MCI+PGRlZnM+PHBhdGggZD0iTTIzNy42IDk1TDE4Ny42IDk1TDE4Ny42IDQ1TDIzNy42IDQ1TDIzNy42IDk1WiIgaWQ9ImI0NXZkVEQ4aHMiPjwvcGF0aD48cGF0aCBkPSJNMTgyLjU5IDk1TDEzMi41OSA5NUwxMzIuNTkgNDVMMTgyLjU5IDQ1TDE4Mi41OSA5NVoiIGlkPSJhNDBXdHhJbDhkIj48L3BhdGg+PHBhdGggZD0iTTEyNy41OSA5NUw3Ny41OSA5NUw3Ny41OSA0NUwxMjcuNTkgNDVMMTI3LjU5IDk1WiIgaWQ9ImgyQ045QUVFcGUiPjwvcGF0aD48cGF0aCBkPSJNMjM3LjYgMTUwTDE4Ny42IDE1MEwxODcuNiAxMDBMMjM3LjYgMTAwTDIzNy42IDE1MFoiIGlkPSJkcXY1MTMzRzgiPjwvcGF0aD48cGF0aCBkPSJNMTgyLjU5IDE1MEwxMzIuNTkgMTUwTDEzMi41OSAxMDBMMTgyLjU5IDEwMEwxODIuNTkgMTUwWiIgaWQ9ImIxTHY3OXlwdm0iPjwvcGF0aD48cGF0aCBkPSJNMTgyLjU5IDIwNUwxMzIuNTkgMjA1TDEzMi41OSAxNTVMMTgyLjU5IDE1NUwxODIuNTkgMjA1WiIgaWQ9Imh5MUlaV3dMWCI+PC9wYXRoPjxwYXRoIGQ9Ik0yMzcuNiAyMDVMMTg3LjYgMjA1TDE4Ny42IDE1NUwyMzcuNiAxNTVMMjM3LjYgMjA1WiIgaWQ9ImFrUWZqeFFlcyI+PC9wYXRoPjxwYXRoIGQ9Ik0xMjcuNTkgMjA1TDc3LjU5IDIwNUw3Ny41OSAxNTVMMTI3LjU5IDE1NUwxMjcuNTkgMjA1WiIgaWQ9ImJkU3J3RTVwayI+PC9wYXRoPjwvZGVmcz48Zz48Zz48dXNlIHhsaW5rOmhyZWY9IiNiNDV2ZFREOGhzIiBvcGFjaXR5PSIxIiBmaWxsPSIjZjlhZDAwIiBmaWxsLW9wYWNpdHk9IjEiPjwvdXNlPjwvZz48Zz48dXNlIHhsaW5rOmhyZWY9IiNhNDBXdHhJbDhkIiBvcGFjaXR5PSIxIiBmaWxsPSIjZjlhZDAwIiBmaWxsLW9wYWNpdHk9IjEiPjwvdXNlPjwvZz48Zz48dXNlIHhsaW5rOmhyZWY9IiNoMkNOOUFFRXBlIiBvcGFjaXR5PSIxIiBmaWxsPSIjZjlhZDAwIiBmaWxsLW9wYWNpdHk9IjEiPjwvdXNlPjwvZz48Zz48dXNlIHhsaW5rOmhyZWY9IiNkcXY1MTMzRzgiIG9wYWNpdHk9IjEiIGZpbGw9IiNmOWFkMDAiIGZpbGwtb3BhY2l0eT0iMSI+PC91c2U+PC9nPjxnPjx1c2UgeGxpbms6aHJlZj0iI2IxTHY3OXlwdm0iIG9wYWNpdHk9IjEiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMSI+PC91c2U+PC9nPjxnPjx1c2UgeGxpbms6aHJlZj0iI2h5MUlaV3dMWCIgb3BhY2l0eT0iMSIgZmlsbD0iI2ZmZmZmZiIgZmlsbC1vcGFjaXR5PSIxIj48L3VzZT48L2c+PGc+PHVzZSB4bGluazpocmVmPSIjYWtRZmp4UWVzIiBvcGFjaXR5PSIxIiBmaWxsPSIjZmZmZmZmIiBmaWxsLW9wYWNpdHk9IjEiPjwvdXNlPjwvZz48Zz48dXNlIHhsaW5rOmhyZWY9IiNiZFNyd0U1cGsiIG9wYWNpdHk9IjEiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMSI+PC91c2U+PC9nPjwvZz48L3N2Zz4=
+      ```bash pnpm icon="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWlkWU1pZCBtZWV0IiB2aWV3Qm94PSI3Ni41ODk4NzI0NDg5Nzk1OCA0NCAxNjQuMDA3NzU1MTAyMDQwNjggMTY0IiB3aWR0aD0iMTYwLjAxIiBoZWlnaHQ9IjE2MCI+PGRlZnM+PHBhdGggZD0iTTIzNy42IDk1TDE4Ny42IDk1TDE4Ny42IDQ1TDIzNy42IDQ1TDIzNy42IDk1WiIgaWQ9ImI0NXZkVEQ4aHMiPjwvcGF0aD48cGF0aCBkPSJNMTgyLjU5IDk1TDEzMi41OSA5NUwxMzIuNTkgNDVMMTgyLjU5IDQ1TDE4Mi41OSA5NVoiIGlkPSJhNDBXdHhJbDhkIj48L3BhdGg+PHBhdGggZD0iTTEyNy41OSA5NUw3Ny41OSA5NUw3Ny41OSA0NUwxMjcuNTkgNDVMMTI3LjU5IDk1WiIgaWQ9ImgyQ045QUVFcGUiPjwvcGF0aD48cGF0aCBkPSJNMjM3LjYgMTUwTDE4Ny42IDE1MEwxODcuNiAxMDBMMjM3LjYgMTAwTDIzNy42IDE1MFoiIGlkPSJkcXY1MTMzRzgiPjwvcGF0aD48cGF0aCBkPSJNMTgyLjU5IDE1MEwxMzIuNTkgMTUwTDEzMi41OSAxMDBMMTgyLjU5IDEwMEwxODIuNTkgMTUwWiIgaWQ9ImIxTHY3OXlwdm0iPjwvcGF0aD48cGF0aCBkPSJNMTgyLjU5IDIwNUwxMzIuNTkgMjA1TDEzMi41OSAxNTVMMTgyLjU5IDE1NUwxODIuNTkgMjA1WiIgaWQ9Imh5MUlaV3dMWCI+PC9wYXRoPjxwYXRoIGQ9Ik0yMzcuNiAyMDVMMTg3LjYgMjA1TDE4Ny42IDE1NUwyMzcuNiAxNTVMMjM3LjYgMjA1WiIgaWQ9ImFrUWZqeFFlcyI+PC9wYXRoPjxwYXRoIGQ9Ik0xMjcuNTkgMjA1TDc3LjU5IDIwNUw3Ny41OSAxNTVMMTI3LjU5IDE1NUwxMjcuNTkgMjA1WiIgaWQ9ImJkU3J3RTVwayI+PC9wYXRoPjwvZGVmcz48Zz48Zz48dXNlIHhsaW5rOmhyZWY9IiNiNDV2ZFREOGhzIiBvcGFjaXR5PSIxIiBmaWxsPSIjZjlhZDAwIiBmaWxsLW9wYWNpdHk9IjEiPjwvdXNlPjwvZz48Zz48dXNlIHhsaW5rOmhyZWY9IiNhNDBXdHhJbDhkIiBvcGFjaXR5PSIxIiBmaWxsPSIjZjlhZDAwIiBmaWxsLW9wYWNpdHk9IjEiPjwvdXNlPjwvZz48Zz48dXNlIHhsaW5rOmhyZWY9IiNoMkNOOUFFRXBlIiBvcGFjaXR5PSIxIiBmaWxsPSIjZjlhZDAwIiBmaWxsLW9wYWNpdHk9IjEiPjwvdXNlPjwvZz48Zz48dXNlIHhsaW5rOmhyZWY9IiNkcXY1MTMzRzgiIG9wYWNpdHk9IjEiIGZpbGw9IiNmOWFkMDAiIGZpbGwtb3BhY2l0eT0iMSI+PC91c2U+PC9nPjxnPjx1c2UgeGxpbms6aHJlZj0iI2IxTHY3OXlwdm0iIG9wYWNpdHk9IjEiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMSI+PC91c2U+PC9nPjxnPjx1c2UgeGxpbms6aHJlZj0iI2h5MUlaV3dMWCIgb3BhY2l0eT0iMSIgZmlsbD0iI2ZmZmZmZiIgZmlsbC1vcGFjaXR5PSIxIj48L3VzZT48L2c+PGc+PHVzZSB4bGluazpocmVmPSIjYWtRZmp4UWVzIiBvcGFjaXR5PSIxIiBmaWxsPSIjZmZmZmZmIiBmaWxsLW9wYWNpdHk9IjEiPjwvdXNlPjwvZz48Zz48dXNlIHhsaW5rOmhyZWY9IiNiZFNyd0U1cGsiIG9wYWNpdHk9IjEiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMSI+PC91c2U+PC9nPjwvZz48L3N2Zz4="
       pnpm add -D vite-plugin-static-copy
       ```
 
-      ```bash yarn icon=yarn
+      ```bash yarn icon="yarn"
       yarn add -D vite-plugin-static-copy
       ```
     </CodeGroup>
 
     <CodeGroup>
-      ```ts vite.config.ts icon=ts
+      ```ts vite.config.ts icon="ts"
       import { defineConfig } from "vite";
       import { viteStaticCopy } from "vite-plugin-static-copy";
 
@@ -196,7 +196,7 @@ BEEQ components are standard custom elements (`<bq-button>`, `<bq-input>`, and s
       });
       ```
 
-      ```ts src/main.ts icon=ts highlight={2,6}
+      ```ts src/main.ts icon="ts" highlight={2,6}
       import { defineCustomElements } from "@beeq/core/dist/loader";
       import { setBasePath } from "@beeq/core";
       import "./style.css";

@@ -136,6 +136,7 @@ Use the default `single` type when users need to choose one date. This is the be
     import { BqDatePicker } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqDatePicker],
       template: `
@@ -144,7 +145,7 @@ Use the default `single` type when users need to choose one date. This is the be
         </bq-date-picker>
       `
     })
-    export class DefaultDatePickerComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -209,6 +210,7 @@ Use `type="range"` when users need a start and end date. Set `months="2"` so bot
     import { BqDatePicker } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqDatePicker],
       template: `
@@ -222,7 +224,7 @@ Use `type="range"` when users need a start and end date. Set `months="2"` so bot
         </bq-date-picker>
       `
     })
-    export class DateRangePickerComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -295,6 +297,7 @@ Use `type="multi"` when users need to pick several non-consecutive dates. Unlike
     import { BqDatePicker } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqDatePicker],
       template: `
@@ -309,7 +312,7 @@ Use `type="multi"` when users need to pick several non-consecutive dates. Unlike
         </bq-date-picker>
       `
     })
-    export class MultipleDatePickerComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -363,6 +366,7 @@ Use `disabled` when the date field should not be interactive, such as when acces
     import { BqDatePicker } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqDatePicker],
       template: `
@@ -371,7 +375,7 @@ Use `disabled` when the date field should not be interactive, such as when acces
         </bq-date-picker>
       `
     })
-    export class DisabledDatePickerComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -452,6 +456,7 @@ Use `validation-status` when the field should show immediate visual feedback aft
     import { BqDatePicker } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqDatePicker],
       template: `
@@ -468,7 +473,7 @@ Use `validation-status` when the field should show immediate visual feedback aft
         </bq-date-picker>
       `
     })
-    export class ValidationStatesDatePickerComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -550,6 +555,7 @@ Use an optional indicator when the date adds context but is not required to comp
     import { BqDatePicker } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqDatePicker],
       template: `
@@ -561,7 +567,7 @@ Use an optional indicator when the date adds context but is not required to comp
         </bq-date-picker>
       `
     })
-    export class LabelOptionalDatePickerComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -647,6 +653,7 @@ Combine the label slot with a tooltip when users may need a short explanation be
     import { BqDatePicker, BqIcon, BqTooltip } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqDatePicker, BqIcon, BqTooltip],
       template: `
@@ -662,7 +669,7 @@ Combine the label slot with a tooltip when users may need a short explanation be
         </bq-date-picker>
       `
     })
-    export class LabelTooltipDatePickerComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -718,13 +725,14 @@ Use a label-less date picker only when the surrounding context already makes the
     import { BqDatePicker } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqDatePicker],
       template: `
         <bq-date-picker name="date-no-label" placeholder="Select a date" value="2026-10-13"></bq-date-picker>
       `
     })
-    export class NoLabelDatePickerComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -805,6 +813,7 @@ Use `locale` to match date formatting and calendar conventions to regional expec
     import { BqDatePicker } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqDatePicker],
       template: `
@@ -821,7 +830,7 @@ Use `locale` to match date formatting and calendar conventions to regional expec
         </bq-date-picker>
       `
     })
-    export class LocaleDatePickerComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -896,6 +905,7 @@ Use `first-day-of-week` to align the calendar grid with regional or business exp
     import { BqDatePicker } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqDatePicker],
       template: `
@@ -908,7 +918,7 @@ Use `first-day-of-week` to align the calendar grid with regional or business exp
         </bq-date-picker>
       `
     })
-    export class FirstDayOfWeekDatePickerComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -968,6 +978,7 @@ By default, the calendar shows only the days of the displayed month. Enable `sho
     import { BqDatePicker } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqDatePicker],
       template: `
@@ -976,7 +987,7 @@ By default, the calendar shows only the days of the displayed month. Enable `sho
         </bq-date-picker>
       `
     })
-    export class OutsideDaysDatePickerComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -1038,7 +1049,7 @@ Use `isDateDisallowed` to make specific dates unavailable for selection. This is
     ```
 
     ```js JavaScript icon="js"
-    const datePickerElem = document.querySelector('bq-date-picker[name="disallowed-dates"]');
+    const datePickerElem = previewRoot.querySelector('bq-date-picker[name="disallowed-dates"]');
     const disallowedDates = ['2026-12-01', '2026-12-25', '2026-12-26'];
 
     datePickerElem.isDateDisallowed = (date) => {
@@ -1071,6 +1082,7 @@ Use `isDateDisallowed` to make specific dates unavailable for selection. This is
     import { BqDatePicker } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqDatePicker],
       template: `
@@ -1083,7 +1095,7 @@ Use `isDateDisallowed` to make specific dates unavailable for selection. This is
         </bq-date-picker>
       `
     })
-    export class DisallowedDatesComponent {
+    export class AppComponent {
       disallowedDates = ['2026-12-01', '2026-12-25', '2026-12-26'];
 
       isDateDisallowed = (date: Date): boolean => {
@@ -1168,7 +1180,7 @@ Use `formatOptions` when the selected date needs a more descriptive text format 
     ```
 
     ```js JavaScript icon="js"
-    const datePickerElem = document.querySelector('bq-date-picker[name="formatted-date"]');
+    const datePickerElem = previewRoot.querySelector('bq-date-picker[name="formatted-date"]');
 
     datePickerElem.formatOptions = {
       weekday: 'long',
@@ -1203,6 +1215,7 @@ Use `formatOptions` when the selected date needs a more descriptive text format 
     import { BqDatePicker } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqDatePicker],
       template: `
@@ -1216,7 +1229,7 @@ Use `formatOptions` when the selected date needs a more descriptive text format 
         </bq-date-picker>
       `
     })
-    export class CustomFormatDatePickerComponent {
+    export class AppComponent {
       formatOptions: Intl.DateTimeFormatOptions = {
         weekday: 'long',
         year: 'numeric',

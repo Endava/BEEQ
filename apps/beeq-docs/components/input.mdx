@@ -153,7 +153,7 @@ Use the default type of input when you want to provide a simple, versatile field
   </bq-input>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-input name="bq-input" placeholder="Placeholder">
         <label class="flex flex-grow items-center" slot="label">Input label</label>
         <span slot="helper-text">
@@ -175,11 +175,12 @@ Use the default type of input when you want to provide a simple, versatile field
     </BqInput>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqInput } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqInput],
       template: `
@@ -192,10 +193,10 @@ Use the default type of input when you want to provide a simple, versatile field
         </bq-input>
       `
     })
-    export class DefaultInputComponent {}
+    export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqIcon, BqInput } from "@beeq/vue";
     </script>
@@ -240,7 +241,7 @@ Use the `value` attribute to provide a convenient solution for scenarios where t
   </bq-input>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-input name="bq-input" placeholder="Placeholder" value="Hello World!">
         <label class="flex flex-grow items-center" slot="label">Input label</label>
         <span slot="helper-text">
@@ -262,11 +263,12 @@ Use the `value` attribute to provide a convenient solution for scenarios where t
     </BqInput>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqInput } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqInput],
       template: `
@@ -279,10 +281,10 @@ Use the `value` attribute to provide a convenient solution for scenarios where t
         </bq-input>
       `
     })
-    export class ValueInputComponent {}
+    export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqIcon, BqInput } from "@beeq/vue";
     </script>
@@ -328,7 +330,7 @@ Use the prefix slot when you want to place an icon before the input value to pro
   </bq-input>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-input name="bq-input" placeholder="Placeholder">
       <label class="flex flex-grow items-center" slot="label">Input label</label>
       <bq-icon name="user-circle" slot="prefix"></bq-icon>
@@ -352,11 +354,12 @@ Use the prefix slot when you want to place an icon before the input value to pro
     </BqInput>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqInput } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqInput],
       template: `
@@ -370,10 +373,10 @@ Use the prefix slot when you want to place an icon before the input value to pro
         </bq-input>
       `
     })
-    export class PrefixInputComponent {}
+    export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqIcon, BqInput } from "@beeq/vue";
     </script>
@@ -420,7 +423,7 @@ Use the suffix slot when you want to add an icon after the input field for extra
   </bq-input>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-input name="bq-input" placeholder="Placeholder">
         <label class="flex flex-grow items-center" slot="label">Input label</label>
         <bq-icon name="gear" slot="suffix"></bq-icon>
@@ -444,11 +447,12 @@ Use the suffix slot when you want to add an icon after the input field for extra
     </BqInput>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqInput } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqInput],
       template: `
@@ -462,10 +466,10 @@ Use the suffix slot when you want to add an icon after the input field for extra
         </bq-input>
       `
     })
-    export class SuffixInputComponent {}
+    export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqIcon, BqInput } from "@beeq/vue";
     </script>
@@ -513,7 +517,7 @@ This variant combines both prefix and suffix features within the same input.
   </bq-input>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-input name="bq-input" placeholder="Placeholder">
         <label class="flex flex-grow items-center" slot="label">Input label</label>
         <bq-icon name="user-circle" slot="prefix"></bq-icon>
@@ -539,11 +543,12 @@ This variant combines both prefix and suffix features within the same input.
     </BqInput>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqInput } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqInput],
       template: `
@@ -558,10 +563,10 @@ This variant combines both prefix and suffix features within the same input.
         </bq-input>
       `
     })
-    export class PrefixSuffixInputComponent {}
+    export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqIcon, BqInput } from "@beeq/vue";
     </script>
@@ -610,7 +615,7 @@ Use the `disabled` attribute when the input field should be visible but non-edit
   </bq-input>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-input disabled name="bq-input" placeholder="Placeholder">
       <label class="flex flex-grow items-center" slot="label">Input label</label>
       <bq-icon name="user-circle" slot="prefix"></bq-icon>
@@ -636,11 +641,12 @@ Use the `disabled` attribute when the input field should be visible but non-edit
     </BqInput>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqInput } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqInput],
       template: `
@@ -655,10 +661,10 @@ Use the `disabled` attribute when the input field should be visible but non-edit
         </bq-input>
       `
     })
-    export class DisabledInputComponent {}
+    export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqIcon, BqInput } from "@beeq/vue";
     </script>
@@ -730,7 +736,7 @@ Use this variant for validation feedback by setting `validation-status` to `erro
   </bq-input>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-input name="bq-input-error" placeholder="Placeholder" validation-status="error">
         <label class="flex flex-grow items-center" slot="label">Input label</label>
         <bq-icon name="user-circle" slot="prefix"></bq-icon>
@@ -798,11 +804,12 @@ Use this variant for validation feedback by setting `validation-status` to `erro
     </>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqInput } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqInput],
       template: `
@@ -837,10 +844,10 @@ Use this variant for validation feedback by setting `validation-status` to `erro
         </bq-input>
       `
     })
-    export class ValidationInputComponent {}
+    export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqIcon, BqInput } from "@beeq/vue";
     </script>
@@ -925,7 +932,7 @@ Use this style when you want to include an optional marker to provide additional
   </bq-input>
 `}>
   <CodeGroup>
-    ```css CSS icon="css"
+    ```css styles.css icon="css" expandable
     .label-row {
       display: flex;
       flex: 1 1 0%;
@@ -948,7 +955,7 @@ Use this style when you want to include an optional marker to provide additional
     }
     ```
 
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-input name="bq-input" placeholder="Placeholder">
         <div class="label-row" slot="label">
             <label>Input label</label>
@@ -963,6 +970,7 @@ Use this style when you want to include an optional marker to provide additional
 
     ```jsx React icon="react"
     import { BqIcon, BqInput } from "@beeq/react";
+    import "./styles.css";
 
     <BqInput name="bq-input" placeholder="Placeholder">
       <div className="label-row" slot="label">
@@ -976,11 +984,12 @@ Use this style when you want to include an optional marker to provide additional
     </BqInput>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqInput } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqInput],
       template: `
@@ -994,12 +1003,34 @@ Use this style when you want to include an optional marker to provide additional
             Helper text
           </span>
         </bq-input>
-      `
+      `,
+      styles: [`
+        .label-row {
+          display: flex;
+          flex: 1 1 0%;
+
+          & > label {
+            display: flex;
+            flex-grow: 1;
+            align-items: center;
+          }
+
+          & > span {
+            color: var(--bq-text--secondary);
+          }
+        }
+
+        bq-input span[slot="helper-text"] {
+          display: flex;
+          align-items: center;
+          gap: var(--bq-spacing-xs);
+        }
+      `],
     })
-    export class LabelOptionalInputComponent {}
+    export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqIcon, BqInput } from "@beeq/vue";
     </script>
@@ -1016,6 +1047,30 @@ Use this style when you want to include an optional marker to provide additional
         </span>
       </BqInput>
     </template>
+
+
+    <style>
+      .label-row {
+        display: flex;
+        flex: 1 1 0%;
+
+        & > label {
+          display: flex;
+          flex-grow: 1;
+          align-items: center;
+        }
+
+        & > span {
+          color: var(--bq-text--secondary);
+        }
+      }
+
+      bq-input span[slot="helper-text"] {
+        display: flex;
+        align-items: center;
+        gap: var(--bq-spacing-xs);
+      }
+    </style>
     ```
   </CodeGroup>
 </CodeLivePreview>
@@ -1079,7 +1134,7 @@ Use this style when you want to include an informational tooltip alongside the i
   </bq-input>
 `}>
   <CodeGroup>
-    ```css CSS icon="css"
+    ```css styles.css icon="css" expandable
     bq-tooltip {
       margin-inline-start: var(--bq-spacing-xs);
 
@@ -1110,7 +1165,7 @@ Use this style when you want to include an informational tooltip alongside the i
     }
     ```
 
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-input name="bq-input" placeholder="Placeholder">
         <div class="label-row" slot="label">
             <label>
@@ -1131,6 +1186,7 @@ Use this style when you want to include an informational tooltip alongside the i
 
     ```jsx React icon="react"
     import { BqIcon, BqInput, BqTooltip } from "@beeq/react";
+    import "./styles.css";
 
     <BqInput name="bq-input" placeholder="Placeholder">
       <div className="label-row" slot="label">
@@ -1150,11 +1206,12 @@ Use this style when you want to include an informational tooltip alongside the i
     </BqInput>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqInput, BqTooltip } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqInput, BqTooltip],
       template: `
@@ -1174,12 +1231,42 @@ Use this style when you want to include an informational tooltip alongside the i
             Helper text
           </span>
         </bq-input>
-      `
+      `,
+      styles: [`
+        bq-tooltip {
+          margin-inline-start: var(--bq-spacing-xs);
+
+          &::part(trigger) {
+            display: flex;
+          }
+        }
+
+        .label-row {
+          display: flex;
+          flex: 1 1 0%;
+
+          & > label {
+            display: flex;
+            flex-grow: 1;
+            align-items: center;
+          }
+
+          & > span {
+            color: var(--bq-text--secondary);
+          }
+        }
+
+        bq-input span[slot="helper-text"] {
+          display: flex;
+          align-items: center;
+          gap: var(--bq-spacing-xs);
+        }
+      `],
     })
-    export class LabelTooltipInputComponent {}
+    export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqIcon, BqInput, BqTooltip } from "@beeq/vue";
     </script>
@@ -1202,6 +1289,38 @@ Use this style when you want to include an informational tooltip alongside the i
         </span>
       </BqInput>
     </template>
+
+
+    <style>
+      bq-tooltip {
+        margin-inline-start: var(--bq-spacing-xs);
+
+        &::part(trigger) {
+          display: flex;
+        }
+      }
+
+      .label-row {
+        display: flex;
+        flex: 1 1 0%;
+
+        & > label {
+          display: flex;
+          flex-grow: 1;
+          align-items: center;
+        }
+
+        & > span {
+          color: var(--bq-text--secondary);
+        }
+      }
+
+      bq-input span[slot="helper-text"] {
+        display: flex;
+        align-items: center;
+        gap: var(--bq-spacing-xs);
+      }
+    </style>
     ```
   </CodeGroup>
 </CodeLivePreview>
@@ -1234,7 +1353,7 @@ Use this variant when the surrounding context already makes the field purpose cl
   </bq-input>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-input name="bq-input" placeholder="Placeholder">
         <bq-icon name="user-circle" slot="prefix"></bq-icon>
         <bq-icon name="gear" slot="suffix"></bq-icon>
@@ -1258,11 +1377,12 @@ Use this variant when the surrounding context already makes the field purpose cl
     </BqInput>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqInput } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqInput],
       template: `
@@ -1276,10 +1396,10 @@ Use this variant when the surrounding context already makes the field purpose cl
         </bq-input>
       `
     })
-    export class NoLabelInputComponent {}
+    export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqIcon, BqInput } from "@beeq/vue";
     </script>
@@ -1323,7 +1443,7 @@ Use this variant when the field does not require supplementary guidance.
   </bq-input>
 `}>
   <CodeGroup>
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <bq-input name="bq-input" placeholder="Placeholder">
         <label slot="label">Input label</label>
         <bq-icon name="user-circle" slot="prefix"></bq-icon>
@@ -1341,11 +1461,12 @@ Use this variant when the field does not require supplementary guidance.
     </BqInput>
     ```
 
-    ```ts Angular icon="angular"
+    ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
     import { BqIcon, BqInput } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqInput],
       template: `
@@ -1356,10 +1477,10 @@ Use this variant when the field does not require supplementary guidance.
         </bq-input>
       `
     })
-    export class NoHelperTextInputComponent {}
+    export class AppComponent {}
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqIcon, BqInput } from "@beeq/vue";
     </script>
