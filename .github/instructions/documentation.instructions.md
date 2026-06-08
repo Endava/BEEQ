@@ -351,17 +351,17 @@ Use this tab order:
 5. `Angular`
 6. `Vue`
 
-Every fenced code block used as a Mintlify tab must include `expandable` and the correct icon:
+Every fenced code block used as a Mintlify tab must include the correct icon. Add `expandable` only when the code block has **more than 7 lines** of code; short snippets should stay fully visible because Mintlify collapses expandable blocks too aggressively. Keep all `apps/beeq-docs/index.mdx` code tabs open, regardless of length.
 
 | Tab | Opening fence |
 |---|---|
-| CSS | `css styles.css icon="css" expandable` |
-| JavaScript | `javascript script.js icon="js" expandable` |
-| HTML | `html HTML icon="html5" expandable` |
-| React | `jsx React icon="react" expandable` |
-| React with TypeScript | `tsx React icon="react" expandable` |
-| Angular | `ts Angular icon="angular" expandable` |
-| Vue | `vue Vue icon="vuejs" expandable` |
+| CSS | `css styles.css icon="css"` |
+| JavaScript | `javascript script.js icon="js"` |
+| HTML | `html HTML icon="html5"` |
+| React | `jsx React icon="react"` |
+| React with TypeScript | `tsx React icon="react"` |
+| Angular | `ts Angular icon="angular"` |
+| Vue | `vue Vue icon="vuejs"` |
 
 Component pages must include HTML, React, Angular, and Vue tabs unless the page has a documented reason not to. Non-component pages may use focused tabs such as HTML and CSS when framework examples do not add value.
 

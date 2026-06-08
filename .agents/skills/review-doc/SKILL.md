@@ -144,7 +144,7 @@ If the target is a non-component page, read the source files that define the doc
 
 - [ ] Every `CodeLivePreview` is immediately followed by a `CodeGroup`
 - [ ] Tab order: `CSS` when needed → `JavaScript` when needed → `HTML` → `React` → `Angular` → `Vue`
-- [ ] Every fenced code block used as a Mintlify tab includes `expandable`
+- [ ] Fenced code blocks used as Mintlify tabs include `expandable` only when they have more than 7 lines; short snippets and all `apps/beeq-docs/index.mdx` code tabs stay open
 - [ ] Icons are correct: CSS `icon="css"`, JavaScript `icon="js"`, HTML `icon="html5"`, React `icon="react"`, Angular `icon="angular"`, Vue `icon="vuejs"`
 - [ ] One empty line separates each fenced code block inside a `CodeGroup`
 - [ ] Code tabs match the rendered `CodeLivePreview` structure, state, and behavior
