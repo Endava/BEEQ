@@ -344,7 +344,7 @@ export class BqNotification {
             <bq-button
               appearance="text"
               border="s"
-              class="absolute inset-ie-m [&::part(button)]:p-1"
+              class="absolute inset-ie-m [&::part(button)]:p-0"
               label="Close"
               onBqClick={() => this.hide()}
               onlyIcon
