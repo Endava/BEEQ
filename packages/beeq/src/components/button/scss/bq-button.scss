@@ -10,6 +10,8 @@
     @apply box-border flex cursor-[inherit] items-center justify-center font-medium leading-regular;
     @apply rounded-[--bq-button--border-radius] border-[length:--bq-button--border-width] border-[color:--bq-button--border-color];
     @apply transition-[background-color,border-color,color] duration-300 ease-in-out;
+    // Prevent text selection on click
+    @apply select-none;
     // `DISABLED` state
     @apply disabled:cursor-not-allowed disabled:opacity-60;
     // `FOCUS` state
@@ -46,7 +48,7 @@
 }
 
 .bq-button--primary.ghost {
-  @apply border-m border-solid border-brand bg-transparent text-brand;
+  @apply [--bq-button--border-color:var(--bq-stroke--brand)] bg-transparent text-brand;
   // Primary `HOVER` state
   @apply hover:enabled:bg-hover-ui-primary;
   // Primary `ACTIVE` state
@@ -70,7 +72,7 @@
 }
 
 .bq-button--secondary.ghost {
-  @apply border-m border-solid border-tertiary bg-transparent text-primary;
+  @apply [--bq-button--border-color:var(--bq-stroke--tertiary)] bg-transparent text-primary;
   // Secondary `HOVER` state
   @apply hover:enabled:bg-hover-ui-secondary;
   // Secondary `ACTIVE` state

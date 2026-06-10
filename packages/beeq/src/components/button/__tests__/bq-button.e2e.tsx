@@ -315,8 +315,42 @@ describe('bq-button', () => {
     const mediumStyle = computedStyle('bq-button[size="medium"] >>> [part="button"]', styleProps);
     const largeStyle = computedStyle('bq-button[size="large"] >>> [part="button"]', styleProps);
 
-    expect(smallStyle).toEqual({ height: '32px', padding: '4px 8px' });
-    expect(mediumStyle).toEqual({ height: '48px', padding: '12px 16px' });
-    expect(largeStyle).toEqual({ height: '56px', padding: '16px 24px' });
+    expect(smallStyle).toEqual({ height: '32px', padding: '2px 8px' });
+    expect(mediumStyle).toEqual({ height: '48px', padding: '10px 16px' });
+    expect(largeStyle).toEqual({ height: '56px', padding: '14px 24px' });
+  });
+
+  it('ghost buttons should be the same height as their non-ghost counterparts', async () => {
+    const { root } = await render(
+      <div>
+        <bq-button size="small">Button</bq-button>
+        <bq-button size="small" appearance="primary" variant="ghost">
+          Button
+        </bq-button>
+        <bq-button size="medium">Button</bq-button>
+        <bq-button size="medium" appearance="primary" variant="ghost">
+          Button
+        </bq-button>
+        <bq-button size="large">Button</bq-button>
+        <bq-button size="large" appearance="primary" variant="ghost">
+          Button
+        </bq-button>
+      </div>,
+    );
+
+    await waitForStable(root);
+
+    const styleProps = ['height'] as const;
+
+    const smallDefault = computedStyle('bq-button[size="small"]:not([variant]) >>> [part="button"]', styleProps);
+    const smallGhost = computedStyle('bq-button[size="small"][variant="ghost"] >>> [part="button"]', styleProps);
+    const mediumDefault = computedStyle('bq-button[size="medium"]:not([variant]) >>> [part="button"]', styleProps);
+    const mediumGhost = computedStyle('bq-button[size="medium"][variant="ghost"] >>> [part="button"]', styleProps);
+    const largeDefault = computedStyle('bq-button[size="large"]:not([variant]) >>> [part="button"]', styleProps);
+    const largeGhost = computedStyle('bq-button[size="large"][variant="ghost"] >>> [part="button"]', styleProps);
+
+    expect(smallGhost.height).toBe(smallDefault.height);
+    expect(mediumGhost.height).toBe(mediumDefault.height);
+    expect(largeGhost.height).toBe(largeDefault.height);
   });
 });
