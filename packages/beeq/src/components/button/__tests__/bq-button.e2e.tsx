@@ -342,11 +342,11 @@ describe('bq-button', () => {
 
     const styleProps = ['height'] as const;
 
-    const smallDefault = computedStyle('bq-button[size="small"]:not([variant]) >>> [part="button"]', styleProps);
+    const smallDefault = computedStyle('bq-button[size="small"][variant="standard"] >>> [part="button"]', styleProps);
     const smallGhost = computedStyle('bq-button[size="small"][variant="ghost"] >>> [part="button"]', styleProps);
-    const mediumDefault = computedStyle('bq-button[size="medium"]:not([variant]) >>> [part="button"]', styleProps);
+    const mediumDefault = computedStyle('bq-button[size="medium"][variant="standard"] >>> [part="button"]', styleProps);
     const mediumGhost = computedStyle('bq-button[size="medium"][variant="ghost"] >>> [part="button"]', styleProps);
-    const largeDefault = computedStyle('bq-button[size="large"]:not([variant]) >>> [part="button"]', styleProps);
+    const largeDefault = computedStyle('bq-button[size="large"][variant="standard"] >>> [part="button"]', styleProps);
     const largeGhost = computedStyle('bq-button[size="large"][variant="ghost"] >>> [part="button"]', styleProps);
 
     expect(smallGhost.height).toBe(smallDefault.height);
