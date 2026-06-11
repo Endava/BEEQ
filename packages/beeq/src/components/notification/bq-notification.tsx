@@ -351,7 +351,7 @@ export class BqNotification {
               part="btn-close"
               size="small"
             >
-              <slot name="btn-close">
+              <slot class="flex" name="btn-close">
                 <bq-icon aria-hidden="true" name="x" />
               </slot>
             </bq-button>
