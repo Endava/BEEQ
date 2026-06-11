@@ -81,7 +81,7 @@
 }
 
 .bq-button--link {
-  @apply bg-transparent text-brand no-underline;
+  @apply cursor-pointer bg-transparent text-brand no-underline;
   // Primary `HOVER` state
   @apply [&:not(.disabled)]:hover:bg-hover-ui-primary;
   // Primary `ACTIVE` state
