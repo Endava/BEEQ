@@ -8,7 +8,7 @@
   // Common button base style
   .bq-button {
     @apply box-border flex cursor-[inherit] items-center justify-center font-medium leading-regular;
-    @apply rounded-[--bq-button--border-radius] border-[length:--bq-button--border-width] border-[color:--bq-button--border-color];
+    @apply rounded-[--bq-button--border-radius] border-solid border-[length:--bq-button--border-width] border-[color:--bq-button--border-color];
     @apply transition-[background-color,border-color,color] duration-300 ease-in-out;
     // Prevent text selection on click
     @apply select-none;
@@ -16,7 +16,6 @@
     @apply disabled:cursor-not-allowed disabled:opacity-60;
     // `FOCUS` state
     @apply focus-visible:focus;
-    @apply border-solid;
     // Internal workaround to allow overriding icon color via CSS variables from slotted bq-buttons
     // @see: packages/beeq/src/components/side-menu/scss/bq-side-menu.scss
     @apply [&_::slotted(bq-icon)]:[--bq-icon--color:_var(--bq-button--icon-color,_currentColor)];
