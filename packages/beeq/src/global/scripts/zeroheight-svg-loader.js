@@ -16,7 +16,7 @@ const proxyFetch = {
   },
 };
 
-if (!window.proxied) {
-  window.proxied = true;
-  window.fetch = new Proxy(fetch, proxyFetch);
+if (!globalThis.proxied) {
+  globalThis.proxied = true;
+  globalThis.fetch = new Proxy(fetch, proxyFetch);
 }

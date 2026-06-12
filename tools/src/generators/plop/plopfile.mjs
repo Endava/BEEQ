@@ -1,4 +1,4 @@
-export default function (
+export default function plopfile(
   /** @type {import('plop').NodePlopAPI} */
   plop,
 ) {
