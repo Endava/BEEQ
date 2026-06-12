@@ -30,7 +30,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
         Enhancing Quality.
       </h1>
 
-      <p className="text-base lg:text-lg leading-relaxed mb-7 bq-home-section__copy bq-home-section__copy--46">
+      <p className="text-base lg:text-lg leading-relaxed mb-7 bq-home-section__copy">
         BEEQ is Endava's open-source design system — 37 production-ready web components that work
         across React, Angular, Vue, and plain HTML. No rewrites. No lock-in. No compromises.
       </p>
@@ -227,7 +227,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 ══════════════════════════════════════════════════════ */}
 
 <div className="px-6 py-14 bq-home-setup bq-home-band bq-home-band--tinted">
-  <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 items-start">
+  <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
 
     {/* Left: copy */}
     <div className="lg:pt-2">
@@ -237,10 +237,10 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
       <h2 className="text-3xl lg:text-4xl font-black tracking-tight leading-tight mb-4 bq-home-section__heading">
         Every framework.<br />Two lines.
       </h2>
-      <p className="text-base leading-relaxed mb-4 mt-0 bq-home-section__copy bq-home-section__copy--44">
+      <p className="text-base leading-relaxed mb-4 mt-0 bq-home-section__copy">
         BEEQ is built on standard HTML custom elements. The same component works in React, Angular, Vue, or a plain HTML file — with zero rewrites.
       </p>
-      <p className="text-base leading-relaxed mb-6 mt-0 bq-home-section__copy bq-home-section__copy--44">
+      <p className="text-base leading-relaxed mb-6 mt-0 bq-home-section__copy">
         Want typed props and native framework events? The optional `@beeq/react`, `@beeq/angular`, and `@beeq/vue` wrappers give you a first-class developer experience without locking you into a proprietary fork.
       </p>
       <a href="/getting-started/for-developers" className="bq-link inline-flex items-center gap-2 font-medium text-sm bq-home-section__link">
@@ -309,7 +309,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 ══════════════════════════════════════════════════════ */}
 
 <div className="px-6 py-14 bq-home-showcase">
-  <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 items-start">
+  <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
 
     <Tabs className="bq-home-showcase__tabs">
       <Tab title="Actions">
@@ -950,7 +950,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
       <h2 className="text-4xl lg:text-5xl font-black font-bold tracking-tight leading-tight bq-home-section__heading">
         See the code.<br />See it render.
       </h2>
-      <p className="text-base bq-home-section__copy bq-home-section__copy--52">
+      <p className="text-base bq-home-section__copy">
         The preview on the left runs live from the actual BEEQ package.
         Switch between component groups, interact with real components, and use the matching snippets as a starting point for your app.
       </p>
@@ -1012,64 +1012,69 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
       <Icon icon="circle-question" />
       <span>Why BEEQ</span>
     </p>
-    <h2 className="text-3xl lg:text-4xl font-black font-bold tracking-tight leading-tight mb-3 bq-home-section__heading">
-      One system.<br />Every product. Every team.
+    <h2 className="text-3xl lg:text-4xl font-black font-bold mb-3 bq-home-section__heading">
+      One system for consistent,<br />branded, accessible delivery.
     </h2>
-    <p className="text-base mb-12 bq-home-section__copy bq-home-section__copy--52">
-      BEEQ gives you the building blocks to ship great UIs faster — with consistency, accessibility,
-      and developer experience baked in from day one.
+    <p className="text-base mb-12 bq-home-section__copy">
+      BEEQ brings product, design, and engineering teams into one shared system — from foundations and tokens to production-ready components and framework integrations.
     </p>
 
-    <div
-      className="grid grid-cols-1 sm:grid-cols-2 rounded-2xl overflow-hidden border bq-home-stats__grid"
-    >
-      <div className="p-10 border-b border-r bq-home-stats__item">
-        <p className="text-xs font-bold uppercase tracking-widest mb-3 mt-0 flex items-center gap-1.5 bq-home-stats__eyebrow">
-          <Icon icon="layer-group" /> Consistency
-        </p>
-        <span className="block text-7xl font-black leading-none mb-3 bq-home-stats__value">ONE</span>
-        <p className="text-base font-bold mb-1 mt-0">Source of truth, every product</p>
-        <p className="text-sm mt-0 bq-home-section__copy">
-          Build once, use everywhere. Components encode your design decisions so every product
-          looks and behaves consistently — across every team and brand.
-        </p>
+    <div className="bq-home-stats__grid">
+
+      {/* ── Column 1: Design alignment ── */}
+      <div className="bq-home-stats__item">
+        <div className="bq-home-stats__tag-group">
+          <div className="bq-home-stats__tag-row">
+            <span className="bq-home-stats__tag bq-home-stats__tag--filled">Foundation</span>
+            <span className="bq-home-stats__tag bq-home-stats__tag--filled">Design tokens</span>
+          </div>
+          <div className="bq-home-stats__tag-row">
+            <span className="bq-home-stats__tag bq-home-stats__tag--filled">Figma library</span>
+            <span className="bq-home-stats__tag bq-home-stats__tag--filled">Component states</span>
+          </div>
+        </div>
+        <div className="bq-home-stats__content">
+          <h3 className="bq-home-stats__title">Design and code stay aligned</h3>
+          <p className="bq-home-stats__body">Shared foundations, design tokens, and Figma resources reduce the gap between mockups and implementation.</p>
+        </div>
       </div>
 
-      <div className="p-10 border-b bq-home-stats__item">
-        <p className="text-xs font-bold uppercase tracking-widest mb-3 mt-0 flex items-center gap-1.5 bq-home-stats__eyebrow">
-          <Icon icon="bolt" /> Efficiency
-        </p>
-        <span className="block text-7xl font-black leading-none mb-3 bq-home-stats__value bq-home-stats__value--blue">5min</span>
-        <p className="text-base font-bold mb-1 mt-0">From zero to your first component</p>
-        <p className="text-sm mt-0 bq-home-section__copy">
-          Add two CDN links to any HTML page and you're rendering real components. No bundler,
-          no CLI, no configuration required to get started.
-        </p>
+      {/* ── Column 2: Multi-brand ── */}
+      <div className="bq-home-stats__item">
+        <div className="bq-home-stats__tag-group">
+          <div className="bq-home-stats__tag-row">
+            <span className="bq-home-stats__tag bq-home-stats__tag--outlined-brand">Brand themes</span>
+            <span className="bq-home-stats__tag bq-home-stats__tag--outlined-brand">White-label</span>
+          </div>
+          <div className="bq-home-stats__tag-row">
+            <span className="bq-home-stats__tag bq-home-stats__tag--outlined-brand">CSS variables</span>
+            <span className="bq-home-stats__tag bq-home-stats__tag--outlined-brand">Customization</span>
+          </div>
+        </div>
+        <div className="bq-home-stats__content">
+          <h3 className="bq-home-stats__title">Adapt to many brands</h3>
+          <p className="bq-home-stats__body">Adapt shared components to different brands without forking or duplicating the UI layer.</p>
+        </div>
       </div>
 
-      <div className="p-10 border-r bq-home-stats__item">
-        <p className="text-xs font-bold uppercase tracking-widest mb-3 mt-0 flex items-center gap-1.5 bq-home-stats__eyebrow">
-          <Icon icon="palette" /> Scalability
-        </p>
-        <span className="block text-7xl font-black leading-none mb-3 bq-home-stats__value bq-home-stats__value--purple">∞</span>
-        <p className="text-base font-bold mb-1 mt-0">Infinite brands, one codebase</p>
-        <p className="text-sm mt-0 bq-home-section__copy">
-          CSS tokens and custom properties let any team go fully white-label — swap colors,
-          typography, and radius without ever forking or rebuilding components.
-        </p>
+      {/* ── Column 3: Accessibility ── */}
+      <div className="bq-home-stats__item">
+        <div className="bq-home-stats__tag-group">
+          <div className="bq-home-stats__tag-row">
+            <span className="bq-home-stats__tag bq-home-stats__tag--outlined-dark">WCAG AA</span>
+            <span className="bq-home-stats__tag bq-home-stats__tag--outlined-dark">Keyboard support</span>
+          </div>
+          <div className="bq-home-stats__tag-row">
+            <span className="bq-home-stats__tag bq-home-stats__tag--outlined-dark">Content guidelines</span>
+            <span className="bq-home-stats__tag bq-home-stats__tag--outlined-dark">Focus states</span>
+          </div>
+        </div>
+        <div className="bq-home-stats__content">
+          <h3 className="bq-home-stats__title">Build with accessibility in mind</h3>
+          <p className="bq-home-stats__body">Build with components designed around accessibility standards, predictable interactions, and inclusive usability patterns.</p>
+        </div>
       </div>
 
-      <div className="p-10">
-        <p className="text-xs font-bold uppercase tracking-widest mb-3 mt-0 flex items-center gap-1.5 bq-home-stats__eyebrow">
-          <Icon icon="universal-access" /> Accessibility
-        </p>
-        <span className="block text-7xl font-black leading-none mb-3 bq-home-stats__value bq-home-stats__value--green">AA</span>
-        <p className="text-base font-bold mb-1 mt-0">WCAG 2.1 AA by default</p>
-        <p className="text-sm mt-0 bq-home-section__copy">
-          Keyboard navigation, ARIA semantics, and screen reader support aren't add-ons —
-          they're baked into every component from day one.
-        </p>
-      </div>
     </div>
   </div>
 </div>
@@ -1087,7 +1092,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
     <h2 className="text-3xl lg:text-4xl font-black font-bold tracking-tight leading-tight mb-3 bq-home-section__heading">
       BEEQ is more than components
     </h2>
-    <p className="text-base mb-10 bq-home-section__copy bq-home-section__copy--52">
+    <p className="text-base mb-10 bq-home-section__copy">
       What you get out of the box compared to off-the-shelf component libraries.
     </p>
 
