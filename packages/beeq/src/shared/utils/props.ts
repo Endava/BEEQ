@@ -1,5 +1,5 @@
 export type TExtractProp<T> = T[keyof T] extends infer U ? U : never;
-export type TValidProperty<E, T> = Extract<TExtractProp<{ [K in keyof E]: E[K] extends T ? K : never }>, string>;
+export type TValidProperty<E, T> = TExtractProp<{ [K in keyof E]: E[K] extends T ? K : never }>;
 
 /**
  * Validate the element property value, if is one of the accepted values
@@ -16,13 +16,19 @@ export const validatePropValue = <T extends E[keyof E], E extends Element>(
   element: E,
   propertyName: TValidProperty<E, T>,
 ): void => {
-  const propertyValue = element[propertyName];
+  const propertyValue = element[propertyName as string];
+  const propertyLabel =
+    typeof propertyName === 'string'
+      ? propertyName
+      : typeof propertyName === 'number'
+        ? propertyName.toString()
+        : (JSON.stringify(propertyName) ?? 'unknown');
   // Early return if the property value is one of the accepted values
   if (ACCEPTED_VALUES.includes(propertyValue)) return;
   // Override property with fallback value
-  element[propertyName] = fallbackValue;
+  element[propertyName as string] = fallbackValue;
   // Notify developer in the browser console
   console.warn(
-    `[${element.tagName.toUpperCase()}] Please notice that "${propertyName}" should be one of ${ACCEPTED_VALUES.join('|')}`,
+    `[${element.tagName.toUpperCase()}] Please notice that "${propertyLabel}" should be one of ${ACCEPTED_VALUES.join('|')}`,
   );
 };
