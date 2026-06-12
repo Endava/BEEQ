@@ -8,12 +8,12 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 <Frame className="px-4 py-4" caption="BEEQ spacing overview">
   <img
     className="block dark:hidden"
-    src="/foundations/images/spacing/spacing-overview.png"
+    src="/foundations/images/spacing/spacing-overview-light.svg"
     alt="BEEQ spacing overview - light mode"
   />
   <img
     className="hidden dark:block"
-    src="/foundations/images/spacing/spacing-overview.png"
+    src="/foundations/images/spacing/spacing-overview-dark.svg"
     alt="BEEQ spacing overview - dark mode"
   />
 </Frame>
@@ -31,12 +31,12 @@ BEEQ spacing is built from a 4px grid. Most values are multiples of 4px, which c
 <Frame className="px-4 py-4" caption="BEEQ 4px spacing grid system">
   <img
     className="block dark:hidden"
-    src="/foundations/images/spacing/spacing-grid-system.png"
+    src="/foundations/images/spacing/spacing-grid-system-light.svg"
     alt="BEEQ 4px spacing grid system - light mode"
   />
   <img
     className="hidden dark:block"
-    src="/foundations/images/spacing/spacing-grid-system.png"
+    src="/foundations/images/spacing/spacing-grid-system-light.svg"
     alt="BEEQ 4px spacing grid system - dark mode"
   />
 </Frame>
@@ -46,12 +46,12 @@ The scale uses T-shirt naming from `xs3` through `xxl4`. Smaller values support 
 <Frame className="px-4 py-4" caption="BEEQ spacing tokens">
   <img
     className="block dark:hidden"
-    src="/foundations/images/spacing/spacing-tokens.png"
+    src="/foundations/images/spacing/spacing-tokens-light.svg"
     alt="BEEQ spacing tokens - light mode"
   />
   <img
     className="hidden dark:block"
-    src="/foundations/images/spacing/spacing-tokens.png"
+    src="/foundations/images/spacing/spacing-tokens-dark.svg"
     alt="BEEQ spacing tokens - dark mode"
   />
 </Frame>
@@ -60,23 +60,27 @@ The scale uses T-shirt naming from `xs3` through `xxl4`. Smaller values support 
 
 ## Spacing scale
 
-The current BEEQ spacing scale is exposed as CSS custom properties and Tailwind spacing keys. The same scale powers padding, margin, gap, and BEEQ logical spacing utilities.
+The current BEEQ spacing scale is exposed as CSS custom properties and Tailwind spacing keys.
+BEEQ defines spacing values in `rem` so layouts can scale with the root font size.
+Pixel values are shown as the default equivalent, based on a `16px` root font size.
 
 | Token | CSS variable | Tailwind key | Value |
 | --- | --- | --- | --- |
-| `xs3` | `--bq-spacing-xs3` | `xs3` | `2px` |
-| `xs2` | `--bq-spacing-xs2` | `xs2` | `4px` |
-| `xs` | `--bq-spacing-xs` | `xs` | `8px` |
-| `s` | `--bq-spacing-s` | `s` | `12px` |
-| `m` | `--bq-spacing-m` | `m` | `16px` |
-| `l` | `--bq-spacing-l` | `l` | `24px` |
-| `xl` | `--bq-spacing-xl` | `xl` | `32px` |
-| `xxl` | `--bq-spacing-xxl` | `xxl` | `40px` |
-| `xxl2` | `--bq-spacing-xxl2` | `xxl2` | `56px` |
-| `xxl3` | `--bq-spacing-xxl3` | `xxl3` | `64px` |
-| `xxl4` | `--bq-spacing-xxl4` | `xxl4` | `72px` |
+| `xs3` | `--bq-spacing-xs3` | `xs3` | `0.125rem` / `2px` |
+| `xs2` | `--bq-spacing-xs2` | `xs2` | `0.25rem` / `4px` |
+| `xs` | `--bq-spacing-xs` | `xs` | `0.5rem` / `8px` |
+| `s` | `--bq-spacing-s` | `s` | `0.75rem` / `12px` |
+| `m` | `--bq-spacing-m` | `m` | `1rem` / `16px` |
+| `l` | `--bq-spacing-l` | `l` | `1.5rem` / `24px` |
+| `xl` | `--bq-spacing-xl` | `xl` | `2rem` / `32px` |
+| `xxl` | `--bq-spacing-xxl` | `xxl` | `2.5rem` / `40px` |
+| `xxl2` | `--bq-spacing-xxl2` | `xxl2` | `3.5rem` / `56px` |
+| `xxl3` | `--bq-spacing-xxl3` | `xxl3` | `4rem` / `64px` |
+| `xxl4` | `--bq-spacing-xxl4` | `xxl4` | `4.5rem` / `72px` |
 
-<CodeLivePreview mode="iframe" height="28rem" removePadding code={`
+The example below shows a representative subset of the spacing scale. Use the table above as the complete reference for the tokens available in BEEQ.
+
+<CodeLivePreview mode="iframe" height="20rem" removePadding code={`
   <style>
     body {
       box-sizing: border-box;
@@ -93,7 +97,7 @@ The current BEEQ spacing scale is exposed as CSS custom properties and Tailwind 
 
     .spacing-row {
       display: grid;
-      grid-template-columns: 4rem 1fr 4rem;
+      grid-template-columns: 4rem 1fr 7.5rem;
       align-items: center;
       gap: var(--bq-spacing-m);
     }
@@ -135,6 +139,7 @@ The current BEEQ spacing scale is exposed as CSS custom properties and Tailwind 
     .spacing-value {
       color: var(--bq-text--secondary);
       font-size: var(--bq-font-size--s);
+      text-align: end;
     }
   </style>
 
@@ -142,37 +147,37 @@ The current BEEQ spacing scale is exposed as CSS custom properties and Tailwind 
     <div class="spacing-row">
       <strong>xs3</strong>
       <span class="spacing-bar spacing-bar--xs3"></span>
-      <span class="spacing-value">2px</span>
+      <span class="spacing-value">0.125rem / 2px</span>
     </div>
     <div class="spacing-row">
       <strong>xs</strong>
       <span class="spacing-bar spacing-bar--xs"></span>
-      <span class="spacing-value">8px</span>
+      <span class="spacing-value">0.5rem / 8px</span>
     </div>
     <div class="spacing-row">
       <strong>m</strong>
       <span class="spacing-bar spacing-bar--m"></span>
-      <span class="spacing-value">16px</span>
+      <span class="spacing-value">1rem / 16px</span>
     </div>
     <div class="spacing-row">
       <strong>l</strong>
       <span class="spacing-bar spacing-bar--l"></span>
-      <span class="spacing-value">24px</span>
+      <span class="spacing-value">1.5rem / 24px</span>
     </div>
     <div class="spacing-row">
       <strong>xl</strong>
       <span class="spacing-bar spacing-bar--xl"></span>
-      <span class="spacing-value">32px</span>
+      <span class="spacing-value">2rem / 32px</span>
     </div>
     <div class="spacing-row">
       <strong>xxl2</strong>
       <span class="spacing-bar spacing-bar--xxl2"></span>
-      <span class="spacing-value">56px</span>
+      <span class="spacing-value">3.5rem / 56px</span>
     </div>
     <div class="spacing-row">
       <strong>xxl4</strong>
       <span class="spacing-bar spacing-bar--xxl4"></span>
-      <span class="spacing-value">72px</span>
+      <span class="spacing-value">4.5rem / 72px</span>
     </div>
   </div>
 `}>
@@ -182,6 +187,17 @@ The current BEEQ spacing scale is exposed as CSS custom properties and Tailwind 
       display: grid;
       gap: var(--bq-spacing-m);
       max-width: 42rem;
+    }
+
+    .spacing-row {
+      display: grid;
+      grid-template-columns: 4rem 1fr 7.5rem;
+      align-items: center;
+      gap: var(--bq-spacing-m);
+    }
+
+    .spacing-value {
+      text-align: end;
     }
 
     .spacing-bar--xs3 {
@@ -218,37 +234,37 @@ The current BEEQ spacing scale is exposed as CSS custom properties and Tailwind 
       <div class="spacing-row">
         <strong>xs3</strong>
         <span class="spacing-bar spacing-bar--xs3"></span>
-        <span class="spacing-value">2px</span>
+        <span class="spacing-value">0.125rem / 2px</span>
       </div>
       <div class="spacing-row">
         <strong>xs</strong>
         <span class="spacing-bar spacing-bar--xs"></span>
-        <span class="spacing-value">8px</span>
+        <span class="spacing-value">0.5rem / 8px</span>
       </div>
       <div class="spacing-row">
         <strong>m</strong>
         <span class="spacing-bar spacing-bar--m"></span>
-        <span class="spacing-value">16px</span>
+        <span class="spacing-value">1rem / 16px</span>
       </div>
       <div class="spacing-row">
         <strong>l</strong>
         <span class="spacing-bar spacing-bar--l"></span>
-        <span class="spacing-value">24px</span>
+        <span class="spacing-value">1.5rem / 24px</span>
       </div>
       <div class="spacing-row">
         <strong>xl</strong>
         <span class="spacing-bar spacing-bar--xl"></span>
-        <span class="spacing-value">32px</span>
+        <span class="spacing-value">2rem / 32px</span>
       </div>
       <div class="spacing-row">
         <strong>xxl2</strong>
         <span class="spacing-bar spacing-bar--xxl2"></span>
-        <span class="spacing-value">56px</span>
+        <span class="spacing-value">3.5rem / 56px</span>
       </div>
       <div class="spacing-row">
         <strong>xxl4</strong>
         <span class="spacing-bar spacing-bar--xxl4"></span>
-        <span class="spacing-value">72px</span>
+        <span class="spacing-value">4.5rem / 72px</span>
       </div>
     </div>
     ```
@@ -272,7 +288,7 @@ BEEQ exposes one spacing scale. Gap utilities do not use separate gap tokens; th
 
 Use logical utilities for layouts that need to adapt to writing direction or avoid left/right assumptions. Use CSS custom properties when writing custom CSS outside Tailwind utility composition.
 
-<CodeLivePreview mode="iframe" height="24rem" removePadding code={`
+<CodeLivePreview mode="iframe" height="18rem" removePadding code={`
   <style>
     body {
       box-sizing: border-box;
@@ -342,12 +358,12 @@ Component internals already use BEEQ spacing. When you build custom layouts, use
 <Frame className="px-4 py-4" caption="Spacing inside and between components">
   <img
     className="block dark:hidden"
-    src="/foundations/images/spacing/spacing-usage-overview.png"
+    src="/foundations/images/spacing/spacing-usage-overview-light.svg"
     alt="Spacing inside and between components - light mode"
   />
   <img
     className="hidden dark:block"
-    src="/foundations/images/spacing/spacing-usage-overview.png"
+    src="/foundations/images/spacing/spacing-usage-overview-dark.svg"
     alt="Spacing inside and between components - dark mode"
   />
 </Frame>
