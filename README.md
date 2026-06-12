@@ -160,8 +160,7 @@ pnpm build
 BEEQ uses [Vitest](https://vitest.dev/) for unit tests and end-to-end tests.
 
 > [!IMPORTANT]
-> Puppeteer uses Chromium to run the tests. Make sure you have Chrome installed on your machine or set the `PUPPETEER_EXECUTABLE_PATH` environment variable to point to the path of your Chromium browser executable.
-> E.g., `export PUPPETEER_EXECUTABLE_PATH="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"`
+> BEEQ uses Stencil Vitest for end-to-end tests. The required Chromium browser is installed during `pnpm install` via the repository `postinstall` step.
 
 You can run all the tests once, by executing:
 
@@ -201,7 +200,7 @@ pnpm exec nx affected -t check --exclude='*,!tag:publishable' --parallel
 pnpm exec nx run beeq:check
 
 # Autofix supported issues
-pnpm exec nx run beeq:check --write
+pnpm exec nx run beeq:check -- --write
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
