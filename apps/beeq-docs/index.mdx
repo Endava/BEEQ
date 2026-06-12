@@ -12,43 +12,41 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
     HERO
 ══════════════════════════════════════════════════════ */}
 
-<div className="relative overflow-hidden px-6 bq-hero">
-  <div className="absolute inset-0 pointer-events-none bq-hero__glow" />
-  <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+<div className="relative overflow-hidden px-4 sm:px-6 bq-home-hero">
+  <div className="absolute inset-0 pointer-events-none bq-home-hero__glow" />
+  <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-16 items-center">
 
     {/* ── Left: copy ── */}
     <div>
       <a
         href="/releases/changelog"
-        className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold border mb-6 no-underline hover:opacity-80 bq-hero__version-badge"
+        className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold border mb-6 no-underline hover:opacity-80 bq-home-hero__version-badge"
       >
         <Icon icon="sparkles" size="12" /> v1.12.3 — What's new →
       </a>
-      <h1 className="text-5xl lg:text-6xl font-black font-bold tracking-tighter leading-none mb-5 bq-section__heading">
-        Building{" "}
-        <span className="bq-gradient-text">Excellence,</span>
+      <h1 className="text-5xl lg:text-6xl font-black font-bold tracking-tighter leading-none mb-5 bq-home-section__heading">
+        Building Excellence,
         <br />
-        Enhancing{" "}
-        <span className="bq-gradient-text">Quality.</span>
+        Enhancing Quality.
       </h1>
 
-      <p className="text-base lg:text-lg leading-relaxed mb-7 bq-section__body bq-section__body--46">
+      <p className="text-base lg:text-lg leading-relaxed mb-7 bq-home-section__copy bq-home-section__copy--46">
         BEEQ is Endava's open-source design system — 37 production-ready web components that work
         across React, Angular, Vue, and plain HTML. No rewrites. No lock-in. No compromises.
       </p>
 
       {/* Install block */}
-      <div className="rounded-xl px-4 py-3 mb-2 flex items-center gap-3 font-mono text-sm bq-install-block">
-        <Icon icon="terminal" className="bq-install-block__icon" />
-        <p className="bq-install-block__code">
+      <div className="rounded-xl px-4 py-3 mb-2 flex items-center gap-3 font-mono text-sm bq-home-install">
+        <Icon icon="terminal" className="bq-home-install__icon" />
+        <p className="bq-home-install__code">
           npm install @beeq/core
         </p>
       </div>
-      <p className="flex items-start md:items-center gap-1 text-xs mb-8 bq-hero__cdn-hint">
+      <p className="flex items-start md:items-center gap-1 text-xs mb-8 bq-home-hero__cdn-hint">
         <Icon icon="circle-info" size="12" className="mt-0.5" />
         <span className="space-x-1">
           Prefer a CDN? Add two lines to any HTML page — no build step needed.
-          <a href="/getting-started/for-developers" className="bq-link bq-section__link">
+          <a href="/getting-started/for-developers" className="bq-link bq-home-section__link">
             All setup options.
           </a>
         </span>
@@ -57,7 +55,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
       <div className="flex flex-wrap gap-3 items-center">
         <a
           href="/getting-started/introduction"
-          className="box-border inline-flex px-5 py-2.5 rounded-lg text-sm font-semibold text-white no-underline border border-transparent transition-opacity hover:opacity-90 bq-btn--primary w-full md:w-auto"
+          className="box-border inline-flex px-5 py-2.5 rounded-lg text-sm font-semibold text-white no-underline border border-transparent transition-opacity hover:opacity-90 bq-home-action bq-home-action--primary w-full md:w-auto"
         >
           <span className="flex grow items-center justify-center gap-2 md:justify-start">
             <Icon icon="rocket" color="var(--bq-icon--alt)" />
@@ -66,123 +64,130 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
         </a>
         <a
           href="/components"
-          className="box-border inline-flex px-5 py-2.5 rounded-lg text-sm font-semibold no-underline border border-transparent transition-colors bq-btn--secondary w-full md:w-auto"
+          className="box-border px-5 py-2.5 rounded-lg text-sm no-underline transition-colors bq-home-action bq-home-action--ghost w-full md:w-auto text-center md:text-start"
         >
           <span className="flex grow items-center justify-center gap-2 md:justify-start">
-            <Icon icon="cubes" color="var(--bq-icon--primary)" />
+            <Icon icon="binoculars" color="var(--bq-icon--brand)" />
             Browse components
           </span>
         </a>
         <a
           href="https://storybook.beeq.design"
           target="_blank"
-          className="box-border px-5 py-2.5 rounded-lg text-sm no-underline transition-colors bq-btn--ghost w-full md:w-auto text-center md:text-start"
+          className="box-border px-5 py-2.5 rounded-lg text-sm no-underline transition-colors bq-home-action bq-home-action--ghost w-full md:w-auto text-center md:text-start"
         >
-          Explore Storybook →
+          <span className="flex grow items-center justify-center gap-2 md:justify-start">
+            <Icon icon="book-bookmark" color="var(--bq-icon--brand)" />
+            Storybook
+          </span>
         </a>
       </div>
     </div>
 
     {/* ── Right: browser mockup with live components ── */}
-    <div className="w-full bq-hero__mockup-col">
-      <CodeLivePreview mode="shadow" code={`
-        <div style="width:100%;background:var(--bq-background--primary);border:1px solid var(--bq-stroke--primary);border-radius:14px;overflow:hidden;box-shadow:0 24px 64px var(--bq-background--secondary);font-family:system-ui,sans-serif">
+    <div className="w-full bq-home-code-panel">
+      <CodeLivePreview mode="iframe" height="40.75rem" removePadding code={`
+        <style>
+          body {
+            padding: var(--bq-spacing-l);
+          }
 
-          <!-- Title bar -->
-          <div style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--bq-background--tertiary);border-bottom:1px solid var(--bq-stroke--primary)">
-            <div style="display:flex;gap:6px;flex-shrink:0">
-              <div style="width:12px;height:12px;border-radius:50%;background:#ff5f57"></div>
-              <div style="width:12px;height:12px;border-radius:50%;background:#febc2e"></div>
-              <div style="width:12px;height:12px;border-radius:50%;background:#28c840"></div>
-            </div>
-            <div style="flex:1;text-align:center;font-size:11px;font-family:monospace;color:var(--bq-text--tertiary);background:var(--bq-background--secondary);border:1px solid var(--bq-stroke--primary);border-radius:6px;padding:3px 10px">
-              beeq / component-preview
-            </div>
+          .container-group {
+            display: flex;
+            gap: var(--bq-spacing-m);
+            flex-wrap: wrap;
+            align-items: center;
+          }
+
+          @media (width < 460px) {
+            body {
+              padding: var(--bq-spacing-s);
+            }
+
+            bq-step-item:nth-child(2) {
+              display: none;
+            }
+
+            bq-button:nth-child(4) {
+              display: none;
+            }
+
+            .container-group {
+              gap: var(--bq-spacing-xs);
+            }
+          }
+        </style>
+        <div style="display: flex; flex-direction: column; gap:var(--bq-spacing-xl);">
+          <bq-steps type="dot">
+            <bq-step-item status="completed">
+              <bq-icon aria-hidden="true" slot="prefix" name="check-circle"></bq-icon>
+              <span>Start</span>
+              <span slot="description">Text</span>
+            </bq-step-item>
+            <bq-step-item status="current">
+              <bq-icon aria-hidden="true" slot="prefix" name="circle"></bq-icon>
+              <span>Progress</span>
+              <span slot="description">Text</span>
+            </bq-step-item>
+            <bq-step-item>
+              <bq-icon aria-hidden="true" slot="prefix" name="circle"></bq-icon>
+              <span>Finished</span>
+              <span slot="description">Text</span>
+            </bq-step-item>
+          </bq-steps>
+          <div class="container-group">
+            <bq-button>Primary</bq-button>
+            <bq-button variant="ghost">Ghost</bq-button>
+            <bq-button appearance="secondary">Secondary</bq-button>
+            <bq-button appearance="text">Text</bq-button>
+            <bq-button appearance="text" only-icon>
+              <bq-icon name="arrow-right"></bq-icon>
+            </bq-button>
           </div>
-
-          <!-- Content -->
-          <div style="padding:1.25rem 1.5rem;display:flex;flex-direction:column;gap:1rem">
-
-            <!-- BUTTONS -->
-            <div>
-              <div style="font-size:.62rem;font-weight:600;letter-spacing:.05em;font-family:monospace;color:var(--bq-text--tertiary);margin-bottom:.55rem">// BUTTONS</div>
-              <div style="display:flex;gap:.5rem;flex-wrap:wrap;align-items:center">
-                <bq-button appearance="primary">Primary</bq-button>
-                <bq-button appearance="secondary">Secondary</bq-button>
-                <bq-button appearance="text">Text</bq-button>
-                <bq-button appearance="link">Link</bq-button>
-              </div>
+          <bq-notification open>
+            Are you sure you wan't to create this file?
+            <span slot="body">Description</span>
+            <div slot="footer">
+              <bq-button size="small">Confirm</bq-button>
+              <bq-button appearance="link" size="small">Cancel</bq-button>
             </div>
-
-            <bq-divider></bq-divider>
-
-            <!-- INPUT + BADGES -->
-            <div>
-              <div style="font-size:.62rem;font-weight:600;letter-spacing:.05em;font-family:monospace;color:var(--bq-text--tertiary);margin-bottom:.55rem">// INPUT + BADGES</div>
-              <bq-input placeholder="Search components&#x2026;"></bq-input>
-              <div style="display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-top:.55rem">
-                <bq-badge background-color="ui--success">stable</bq-badge>
-                <bq-badge background-color="ui--warning">beta</bq-badge>
-                <bq-badge background-color="ui--danger">deprecated</bq-badge>
-              </div>
-            </div>
-
-            <bq-divider></bq-divider>
-
-            <!-- CONTROLS -->
-            <div>
-              <div style="font-size:.62rem;font-weight:600;letter-spacing:.05em;font-family:monospace;color:var(--bq-text--tertiary);margin-bottom:.55rem">// CONTROLS</div>
-              <div style="display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap;margin-bottom:.65rem">
-                <bq-checkbox checked>Theming</bq-checkbox>
-                <bq-switch>Notifications</bq-switch>
-              </div>
-              <bq-slider value="70" style="width:100%"></bq-slider>
-            </div>
-
-            <bq-divider></bq-divider>
-
-            <!-- TAGS + STATUS -->
-            <div>
-              <div style="font-size:.62rem;font-weight:600;letter-spacing:.05em;font-family:monospace;color:var(--bq-text--tertiary);margin-bottom:.55rem">// TAGS + STATUS</div>
-              <div style="display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.5rem">
-                <bq-tag color="success" variant="outline" size="small">Web Components</bq-tag>
-                <bq-tag color="warning" variant="outline" size="small" removable>StencilJS</bq-tag>
-                <bq-tag color="gray" variant="outline" size="small" removable>TypeScript</bq-tag>
-              </div>
-              <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
-                <bq-status type="danger">Busy</bq-status>
-                <bq-status type="success">Online</bq-status>
-                <bq-status type="neutral">Offline</bq-status>
-              </div>
-            </div>
-
-            <bq-divider></bq-divider>
-
-            <!-- AVATARS -->
-            <div>
-              <div style="font-size:.62rem;font-weight:600;letter-spacing:.05em;font-family:monospace;color:var(--bq-text--tertiary);margin-bottom:.55rem">// AVATARS</div>
-              <div style="display:flex;align-items:center;gap:.4rem;flex-wrap:wrap">
-                <bq-avatar initials="EA" image="https://i.pravatar.cc/150?img=11"></bq-avatar>
-                <bq-avatar initials="MK" image="https://i.pravatar.cc/150?img=28"></bq-avatar>
-                <bq-avatar initials="RL" image="https://i.pravatar.cc/150?img=12"></bq-avatar>
-                <bq-avatar initials="NS" image="https://i.pravatar.cc/150?img=16"></bq-avatar>
-                <bq-avatar initials="+8" image="https://i.pravatar.cc/150?img=64"></bq-avatar>
-                <span style="font-size:.8rem;color:var(--bq-text--secondary);margin-left:.25rem">12 contributors</span>
-              </div>
-            </div>
-
+          </bq-notification>
+          <bq-select placeholder="Select one or more options" value='["1","3"]' placement="top" multiple>
+            <bq-option value="1">Option 1</bq-option>
+            <bq-option value="2">Option 2</bq-option>
+            <bq-option value="3">Option 3</bq-option>
+          </bq-select>
+          <bq-slider
+            type="range"
+            min="0"
+            max="400"
+            value="[80,300]"
+            enable-tooltip
+            enable-value-indicator
+          ></bq-slider>
+          <bq-tab-group value="1">
+            <bq-tab tab-id="1">Daily</bq-tab>
+            <bq-tab tab-id="2">Weekly</bq-tab>
+            <bq-tab tab-id="3">Monthly</bq-tab>
+          </bq-tab-group>
+          <div class="container-group">
+            <bq-avatar initials="EA" image="https://i.pravatar.cc/150?img=11"></bq-avatar>
+            <bq-avatar initials="MK" image="https://i.pravatar.cc/150?img=28"></bq-avatar>
+            <bq-avatar initials="RL" image="https://i.pravatar.cc/150?img=12"></bq-avatar>
+            <bq-status type="danger">Busy</bq-status>
+            <bq-status type="success">Online</bq-status>
+            <bq-status type="neutral">Offline</bq-status>
           </div>
         </div>
         <script>
           (() => {
-            const bqTags = previewRoot.querySelectorAll('bq-tag[removable]');
-            bqTags.forEach(tag => {
-              tag.addEventListener('bqClose', () => {
-                // Add back removable tags after a delay, just to show the event in action
-                setTimeout(() => {
-                  tag.show()
-                }, 2000);
-              });
+            const bqNotification = previewRoot.querySelector('bq-notification');
+            if (!bqNotification) return;
+
+            bqNotification.addEventListener('bqHide', () => {
+              setTimeout(() => {
+                bqNotification.show()
+              }, 2000);
             });
           })();
         </script>
@@ -196,21 +201,21 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
     FRAMEWORK TRUST STRIP
 ══════════════════════════════════════════════════════ */}
 
-<div className="px-6 py-7 border-y bq-trust-strip">
+<div className="px-6 py-7 border-y bq-home-trust">
   <div className="max-w-6xl mx-auto flex flex-wrap justify-center items-center gap-x-6 gap-y-3">
-    <div className="flex items-center gap-2 text-xs bq-trust-strip__stat">
+    <div className="flex items-center gap-2 text-xs bq-home-trust__item">
       <Icon icon="shield-halved" size="14" color="var(--bq-text--secondary)" />
       <span>WCAG 2.1 AA</span>
     </div>
-    <div className="flex items-center gap-2 text-xs bq-trust-strip__stat">
+    <div className="flex items-center gap-2 text-xs bq-home-trust__item">
       <Icon icon="cubes" size="14" color="var(--bq-text--secondary)" />
       <span>37 components</span>
     </div>
-    <div className="flex items-center gap-2 text-xs bq-trust-strip__stat">
+    <div className="flex items-center gap-2 text-xs bq-home-trust__item">
       <Icon icon="icons" size="14" color="var(--bq-text--secondary)" />
       <span>9k+ icons</span>
     </div>
-    <div className="flex items-center gap-2 text-xs bq-trust-strip__stat">
+    <div className="flex items-center gap-2 text-xs bq-home-trust__item">
       <Icon icon="scale-balanced" size="14" color="var(--bq-text--secondary)" />
       <span>Apache 2.0</span>
     </div>
@@ -218,86 +223,34 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 </div>
 
 {/* ══════════════════════════════════════════════════════
-    SPOTLIGHT 1 — Framework agnostic
+    SPOTLIGHT — Setup in minutes (CDN first)
 ══════════════════════════════════════════════════════ */}
 
-<div className="px-6 py-14 bq-spotlight--tinted">
-  <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
+<div className="px-6 py-14 bq-home-setup bq-home-band bq-home-band--tinted">
+  <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 items-start">
 
-    <div>
-      <p className="text-xs font-bold uppercase tracking-widest mb-3 mt-0 flex items-center gap-2 bq-section__label">
-        <Icon icon="globe" />
-        <span>Universal compatibility</span>
+    {/* Left: copy */}
+    <div className="lg:pt-2">
+      <p className="text-xs font-bold uppercase tracking-widest mb-3 mt-0 flex items-center gap-2 bq-home-section__eyebrow">
+        <Icon icon="bolt" /> One library
       </p>
-      <h2 className="text-3xl lg:text-4xl font-black font-bold tracking-tight leading-tight mb-4 bq-section__heading">
-        One library.<br />Every framework.
+      <h2 className="text-3xl lg:text-4xl font-black tracking-tight leading-tight mb-4 bq-home-section__heading">
+        Every framework.<br />Two lines.
       </h2>
-      <p className="text-base leading-relaxed mb-4 mt-0 bq-section__body bq-section__body--44">
-        BEEQ is built on standard HTML custom elements. The same component works in React, Angular,
-        Vue, or a plain HTML file — with zero rewrites.
+      <p className="text-base leading-relaxed mb-4 mt-0 bq-home-section__copy bq-home-section__copy--44">
+        BEEQ is built on standard HTML custom elements. The same component works in React, Angular, Vue, or a plain HTML file — with zero rewrites.
       </p>
-      <p className="text-base leading-relaxed mb-6 mt-0 bq-section__body bq-section__body--44">
-        Want typed props and native framework events? The optional <code className="bq-spotlight__code-inline">@beeq/react</code>,{" "}
-        <code className="bq-spotlight__code-inline">@beeq/angular</code>, and <code className="bq-spotlight__code-inline">@beeq/vue</code> wrappers
-        give you a first-class developer experience without locking you into a proprietary fork.
+      <p className="text-base leading-relaxed mb-6 mt-0 bq-home-section__copy bq-home-section__copy--44">
+        Want typed props and native framework events? The optional `@beeq/react`, `@beeq/angular`, and `@beeq/vue` wrappers give you a first-class developer experience without locking you into a proprietary fork.
       </p>
-      <div className="flex flex-wrap gap-2 mb-7">
-        <span className="px-3 py-1 rounded-full text-sm font-semibold border bq-framework-badge--html">HTML</span>
-        <span className="px-3 py-1 rounded-full text-sm font-semibold border bq-framework-badge--react">React</span>
-        <span className="px-3 py-1 rounded-full text-sm font-semibold border bq-framework-badge--angular">Angular</span>
-        <span className="px-3 py-1 rounded-full text-sm font-semibold border bq-framework-badge--vue">Vue</span>
-      </div>
-      <a href="/getting-started/for-developers" className="inline-flex items-center gap-2 text-sm font-medium bq-link bq-section__link">
-        <span>See all integration guides</span>
-        <Icon icon="arrow-right" size={12} color="var(--bq-icon--brand)" />
+      <a href="/getting-started/for-developers" className="bq-link inline-flex items-center gap-2 font-medium text-sm bq-home-section__link">
+        <span>See all integrations guides</span>
+        <Icon icon="circle-right" size={12} color="var(--bq-icon--brand)" />
       </a>
     </div>
 
-    <div className="flex items-center justify-center">
-      <div className="bq-spotlight__hub" dangerouslySetInnerHTML={{ __html: `
-        <svg viewBox="0 0 440 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">
-          <defs>
-            <linearGradient id="hub-g-landing" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#6366f1"/>
-              <stop offset="100%" stop-color="#a855f7"/>
-            </linearGradient>
-          </defs>
-          <line x1="94" y1="86" x2="196" y2="160" stroke="rgba(99,102,241,.4)" stroke-width="1.5" stroke-dasharray="5,4"/>
-          <line x1="346" y1="86" x2="244" y2="160" stroke="rgba(99,102,241,.4)" stroke-width="1.5" stroke-dasharray="5,4"/>
-          <line x1="94" y1="234" x2="196" y2="160" stroke="rgba(99,102,241,.4)" stroke-width="1.5" stroke-dasharray="5,4"/>
-          <line x1="346" y1="234" x2="244" y2="160" stroke="rgba(99,102,241,.4)" stroke-width="1.5" stroke-dasharray="5,4"/>
-          <circle cx="220" cy="160" r="40" fill="url(#hub-g-landing)" opacity=".9"/>
-          <circle cx="220" cy="160" r="48" fill="none" stroke="rgba(99,102,241,.3)" stroke-width="1.5"/>
-          <text x="220" y="155" text-anchor="middle" fill="white" font-size="12" font-weight="800">BEEQ</text>
-          <text x="220" y="173" text-anchor="middle" fill="rgba(255,255,255,.6)" font-size="10">Core</text>
-          <circle cx="94" cy="86" r="34" fill="rgba(97,218,251,.1)" stroke="rgba(97,218,251,.4)" stroke-width="1.5"/>
-          <text x="94" y="83" text-anchor="middle" fill="#61dafb" font-size="12" font-weight="700">React</text>
-          <text x="94" y="99" text-anchor="middle" fill="rgba(97,218,251,.6)" font-size="9">@beeq/react</text>
-          <circle cx="346" cy="86" r="34" fill="rgba(221,27,22,.1)" stroke="rgba(221,27,22,.4)" stroke-width="1.5"/>
-          <text x="346" y="83" text-anchor="middle" fill="#f87171" font-size="12" font-weight="700">Angular</text>
-          <text x="346" y="99" text-anchor="middle" fill="rgba(248,113,113,.6)" font-size="9">v17+</text>
-          <circle cx="94" cy="234" r="34" fill="rgba(66,184,131,.1)" stroke="rgba(66,184,131,.4)" stroke-width="1.5"/>
-          <text x="94" y="231" text-anchor="middle" fill="#42b883" font-size="12" font-weight="700">Vue</text>
-          <text x="94" y="247" text-anchor="middle" fill="rgba(66,184,131,.6)" font-size="9">@beeq/vue</text>
-          <circle cx="346" cy="234" r="34" fill="rgba(249,115,22,.1)" stroke="rgba(249,115,22,.4)" stroke-width="1.5"/>
-          <text x="346" y="231" text-anchor="middle" fill="#f97316" font-size="12" font-weight="700">HTML</text>
-          <text x="346" y="247" text-anchor="middle" fill="rgba(249,115,22,.6)" font-size="9">@beeq/core</text>
-        </svg>
-      ` }} />
-    </div>
-
-  </div>
-</div>
-
-{/* ══════════════════════════════════════════════════════
-    SPOTLIGHT 2 — Setup in minutes (CDN first)
-══════════════════════════════════════════════════════ */}
-
-<div className="px-6 py-14 bq-spotlight">
-  <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 items-start">
-
-    {/* Left: code */}
-    <div>
+    {/* Right: code */}
+    <div className="bq-home-code-panel">
       <CodeGroup>
         ```html HTML icon="html5"
         <!-- 1. Load styles -->
@@ -348,43 +301,6 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
         ```
       </CodeGroup>
     </div>
-
-    {/* Right: copy */}
-    <div className="lg:pt-2">
-      <p className="text-xs font-bold uppercase tracking-widest mb-3 mt-0 flex items-center gap-2 bq-section__label">
-        <Icon icon="bolt" /> Quick setup
-      </p>
-      <h2 className="text-3xl lg:text-4xl font-black tracking-tight leading-tight mb-4 bq-section__heading">
-        Two lines.<br />Real components.
-      </h2>
-      <p className="text-base leading-relaxed mb-4 mt-0 bq-section__body bq-section__body--44">
-        The fastest path is the CDN — link a stylesheet and a module script to any HTML page and
-        you're rendering production-quality components in under a minute. No bundler, no CLI, no config.
-      </p>
-      <p className="text-base leading-relaxed mb-6 mt-0 bq-section__body bq-section__body--44">
-        Building with a framework? Install the matching wrapper package for typed props, native event
-        bindings, and full IDE autocomplete — all wired up the way your framework expects.
-      </p>
-      <div className="flex flex-col gap-2 mb-6">
-        <div className="flex items-start gap-2 text-sm bq-section__body">
-          <Icon icon="circle-check" className="bq-section__check-icon" />
-          CSS custom properties for full theming control
-        </div>
-        <div className="flex items-start gap-2 text-sm bq-section__body">
-          <Icon icon="circle-check" className="bq-section__check-icon" />
-          Icons loaded on demand — no bundle bloat
-        </div>
-        <div className="flex items-start gap-2 text-sm bq-section__body">
-          <Icon icon="circle-check" className="bq-section__check-icon" />
-          Tree-shakeable when using npm
-        </div>
-      </div>
-      <a href="/getting-started/introduction" className="bq-link inline-flex items-center gap-2 font-medium text-sm bq-link bq-section__link">
-        <span>Full getting started guide</span>
-        <Icon icon="arrow-right" size={12} color="var(--bq-icon--brand)" />
-      </a>
-    </div>
-
   </div>
 </div>
 
@@ -392,142 +308,304 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
     LIVE COMPONENT SHOWCASE
 ══════════════════════════════════════════════════════ */}
 
-<div className="px-6 py-14 bq-showcase">
-  <div className="max-w-6xl mx-auto">
-    <p className="text-xs font-bold uppercase tracking-widest mb-2 mt-0 flex items-center gap-2 bq-section__label">
-      <Icon icon="eye" />
-      <span>Live Preview</span>
-    </p>
-    <h2 className="text-4xl lg:text-5xl font-black font-bold tracking-tight leading-tight mb-3 bq-section__heading">
-      See the code.<br />See it render.
-    </h2>
-    <p className="text-base mb-10 bq-section__body bq-section__body--52">
-      Every component below runs live from the actual BEEQ package.
-      Pick a tab and interact with them directly.
-    </p>
+<div className="px-6 py-14 bq-home-showcase">
+  <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 items-start">
 
-    <Tabs>
+    <Tabs className="bq-home-showcase__tabs">
       <Tab title="Actions">
-        <CodeLivePreview mode="shadow" code={`
-          <div style="display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;padding:.25rem 0">
-            <bq-button appearance="primary">Primary</bq-button>
-            <bq-button appearance="secondary">Secondary</bq-button>
-            <bq-button variant="ghost">Ghost</bq-button>
-            <bq-button variant="danger">Danger</bq-button>
-            <bq-button appearance="link">Link button</bq-button>
-            <bq-button loading>Loading</bq-button>
-            <bq-button disabled>Disabled</bq-button>
+        <CodeLivePreview mode="iframe" height="14rem" removePadding code={`
+          <style>
+            body { padding: var(--bq-spacing-xs); }
+
+            .showcase-actions {
+              display: grid;
+              gap: var(--bq-spacing-m);
+              inline-size: 100%;
+            }
+
+            .showcase-header,
+            .showcase-primary-actions,
+            .showcase-meta-row {
+              display: flex;
+              align-items: center;
+            }
+
+            .showcase-header {
+              margin-block-end: var(--bq-spacing-m);
+              justify-content: space-between;
+              gap: var(--bq-spacing-m);
+            }
+
+            .showcase-primary-actions,
+            .showcase-meta-row {
+              flex-wrap: wrap;
+              gap: var(--bq-spacing-s);
+            }
+
+            .showcase-meta-row {
+              justify-content: flex-end;
+            }
+
+            .showcase-summary {
+              min-inline-size: 0;
+            }
+
+            bq-dropdown::part(panel) {
+              width: max-content;
+            }
+
+            @media (width < 460px) {
+              .showcase-header {
+                align-items: flex-start;
+              }
+            }
+          </style>
+          <div class="showcase-actions">
+            <div class="showcase-header">
+              <div class="showcase-summary">
+                <h4>Component docs update</h4>
+                <p class="caption" style="margin:var(--bq-spacing-xs2) 0 0">5 files changed · Ready for design review</p>
+              </div>
+
+              <bq-dropdown placement="bottom-end" strategy="absolute">
+                <bq-button appearance="text" label="More actions" only-icon slot="trigger">
+                  <bq-icon name="dots-three-vertical" aria-hidden="true"></bq-icon>
+                </bq-button>
+                <bq-option-list>
+                  <bq-option value="duplicate">
+                    <bq-icon name="copy" slot="prefix"></bq-icon>
+                    Duplicate
+                  </bq-option>
+                  <bq-option value="archive">
+                    <bq-icon name="archive" slot="prefix"></bq-icon>
+                    Archive
+                  </bq-option>
+                  <bq-option value="share">
+                    <bq-icon name="trash" slot="prefix"></bq-icon>
+                    Remove
+                  </bq-option>
+                </bq-option-list>
+              </bq-dropdown>
+            </div>
+
+            <div class="showcase-primary-actions">
+              <bq-button>Approve</bq-button>
+              <bq-button appearance="secondary">Preview</bq-button>
+              <bq-button appearance="text">Comment</bq-button>
+            </div>
+
+            <div class="showcase-meta-row">
+              <bq-button appearance="link">
+                <bq-icon name="share-network" slot="prefix"></bq-icon>
+                Share feedback
+              </bq-button>
+            </div>
           </div>
         `}>
           <CodeGroup>
-            ```html HTML icon="html5"
-            <bq-button appearance="primary">Primary</bq-button>
-            <bq-button appearance="secondary">Secondary</bq-button>
-            <bq-button variant="ghost">Ghost</bq-button>
-            <bq-button variant="danger">Danger</bq-button>
-            <bq-button appearance="link">Link button</bq-button>
-            <bq-button loading>Loading</bq-button>
-            <bq-button disabled>Disabled</bq-button>
+            ```html HTML icon="html5" expandable
+            <bq-button>Approve</bq-button>
+            <bq-button appearance="secondary">Preview</bq-button>
+            <bq-button appearance="text">Comment</bq-button>
+
+            <bq-dropdown placement="bottom-end">
+              <bq-button appearance="text" label="More actions" only-icon slot="trigger">
+                <bq-icon name="dots-three-vertical" aria-hidden="true"></bq-icon>
+              </bq-button>
+              <bq-option-list>
+                <bq-option value="duplicate">Duplicate</bq-option>
+                <bq-option value="archive">Archive</bq-option>
+                <bq-option value="remove">Remove</bq-option>
+              </bq-option-list>
+            </bq-dropdown>
             ```
 
-            ```tsx React icon="react"
-            import { BqButton } from "@beeq/react";
+            ```tsx React icon="react" expandable
+            import { BqButton, BqDropdown, BqIcon, BqOption, BqOptionList } from "@beeq/react";
 
-            <BqButton appearance="primary">Primary</BqButton>
-            <BqButton appearance="secondary">Secondary</BqButton>
-            <BqButton variant="ghost">Ghost</BqButton>
-            <BqButton variant="danger">Danger</BqButton>
-            <BqButton loading>Loading</BqButton>
-            <BqButton disabled>Disabled</BqButton>
+            <BqButton>Approve</BqButton>
+            <BqButton appearance="secondary">Preview</BqButton>
+            <BqButton appearance="text">Comment</BqButton>
+
+            <BqDropdown placement="bottom-end">
+              <BqButton appearance="text" label="More actions" onlyIcon slot="trigger">
+                <BqIcon name="dots-three-vertical" aria-hidden="true" />
+              </BqButton>
+              <BqOptionList>
+                <BqOption value="duplicate">Duplicate</BqOption>
+                <BqOption value="archive">Archive</BqOption>
+              </BqOptionList>
+            </BqDropdown>
             ```
 
-            ```ts Angular icon="angular"
-            // import { BqButtonComponent } from "@beeq/angular/standalone";
+            ```typescript Angular icon="angular" expandable
+            import { BqButton, BqDropdown, BqIcon, BqOption, BqOptionList } from "@beeq/angular/standalone";
 
-            <bq-button appearance="primary">Primary</bq-button>
-            <bq-button appearance="secondary">Secondary</bq-button>
-            <bq-button variant="ghost">Ghost</bq-button>
-            <bq-button variant="danger">Danger</bq-button>
-            <bq-button [loading]="isLoading">Loading</bq-button>
-            <bq-button [disabled]="true">Disabled</bq-button>
+            @Component({
+              standalone: true,
+              imports: [BqButton, BqDropdown, BqIcon, BqOption, BqOptionList],
+              template: `
+                <bq-button>Approve</bq-button>
+                <bq-button appearance="secondary">Preview</bq-button>
+
+                <bq-dropdown placement="bottom-end">
+                  <bq-button appearance="text" label="More actions" only-icon slot="trigger">
+                    <bq-icon name="dots-three-vertical" aria-hidden="true"></bq-icon>
+                  </bq-button>
+                  <bq-option-list>
+                    <bq-option value="duplicate">Duplicate</bq-option>
+                    <bq-option value="archive">Archive</bq-option>
+                  </bq-option-list>
+                </bq-dropdown>
+              `
+            })
+            export class AppComponent {}
             ```
 
-            ```vue Vue icon="vuejs"
+            ```vue Vue icon="vuejs" expandable
             <script setup lang="ts">
-              import { BqButton } from "@beeq/vue";
+              import { BqButton, BqDropdown, BqIcon, BqOption, BqOptionList } from "@beeq/vue";
             </script>
 
             <template>
-              <BqButton appearance="primary">Primary</BqButton>
-              <BqButton appearance="secondary">Secondary</BqButton>
-              <BqButton variant="ghost">Ghost</BqButton>
-              <BqButton variant="danger">Danger</BqButton>
-              <BqButton :loading="true">Loading</BqButton>
+              <BqButton>Approve</BqButton>
+              <BqButton appearance="secondary">Preview</BqButton>
+              <BqDropdown placement="bottom-end">
+                <BqButton appearance="text" label="More actions" only-icon slot="trigger">
+                  <BqIcon name="dots-three-vertical" aria-hidden="true" />
+                </BqButton>
+                <BqOptionList>
+                  <BqOption value="duplicate">Duplicate</BqOption>
+                  <BqOption value="archive">Archive</BqOption>
+                </BqOptionList>
+              </BqDropdown>
             </template>
             ```
           </CodeGroup>
         </CodeLivePreview>
       </Tab>
 
-      <Tab title="Form">
-        <CodeLivePreview mode="shadow" code={`
-          <div style="display:flex;flex-direction:column;gap:1.25rem;max-width:440px;width:100%">
-            <bq-input placeholder="Enter your email" type="email">
-              <label slot="label">Email address</label>
-            </bq-input>
-            <bq-date-picker placeholder="Select a date">
-              <label slot="label">Select a date</label>
-            </bq-date-picker>
-            <div style="display:flex;gap:1.5rem;flex-wrap:wrap;align-items:center">
-              <bq-checkbox checked>Enable notifications</bq-checkbox>
-              <bq-checkbox>Remember me</bq-checkbox>
+      <Tab title="Data Display">
+        <CodeLivePreview mode="iframe" height="14rem" removePadding code={`
+          <style>
+            body { padding: var(--bq-spacing-xs); }
+
+            .showcase-display {
+              display: grid;
+              grid-template-columns: minmax(0, 1fr);
+              gap: var(--bq-spacing-m);
+              inline-size: 100%;
+            }
+
+            .showcase-row {
+              display: flex;
+              flex-wrap: wrap;
+              align-items: center;
+              gap: var(--bq-spacing-s);
+            }
+
+            .showcase-table {
+              border: var(--bq-stroke-s) solid var(--bq-stroke--primary);
+              border-radius: var(--bq-radius--m);
+              overflow: hidden;
+            }
+
+            bq-status {
+              display: inline-flex;
+            }
+          </style>
+          <div class="showcase-display">
+            <div class="showcase-row">
+              <bq-avatar image="https://i.pravatar.cc/150?img=11"></bq-avatar>
+              <bq-avatar initials="MS"></bq-avatar>
+              <bq-tag color="info">
+                <bq-icon name="sparkle" slot="prefix"></bq-icon>
+                Design system
+              </bq-tag>
+              <bq-badge background-color="ui--success">Live</bq-badge>
+              <bq-status type="success">Healthy</bq-status>
             </div>
-            <div style="display:flex;gap:1.5rem;flex-wrap:wrap;align-items:center">
-              <bq-switch checked>Dark mode</bq-switch>
-              <bq-switch>Auto-save</bq-switch>
+
+            <div class="showcase-table">
+              <table class="bq-table compact" aria-label="Component readiness">
+                <thead>
+                  <tr>
+                    <th scope="col">Component</th>
+                    <th scope="col">Group</th>
+                    <th scope="col">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Avatar</td>
+                    <td>Data Display</td>
+                    <td><bq-status type="success">Stable</bq-status></td>
+                  </tr>
+                  <tr>
+                    <td>Table</td>
+                    <td>Data Display</td>
+                    <td><bq-status type="info">CSS utility</bq-status></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         `}>
           <CodeGroup>
-            ```html HTML icon="html5"
-            <bq-input placeholder="Enter your email" type="email">
-              <label slot="label">Email address</label>
-            </bq-input>
-            <bq-checkbox checked>Enable notifications</bq-checkbox>
-            <bq-switch checked>Dark mode</bq-switch>
+            ```html HTML icon="html5" expandable
+            <bq-avatar initials="MS"></bq-avatar>
+            <bq-badge background-color="ui--success">Live</bq-badge>
+            <bq-status type="success">Healthy</bq-status>
+            <bq-tag color="info">
+              <bq-icon name="sparkle" slot="prefix"></bq-icon>
+              Design system
+            </bq-tag>
             ```
 
-            ```tsx React icon="react"
-            import { BqInput, BqCheckbox, BqSwitch } from "@beeq/react";
+            ```tsx React icon="react" expandable
+            import { BqAvatar, BqBadge, BqIcon, BqStatus, BqTag } from "@beeq/react";
 
-            <BqInput placeholder="Enter your email" type="email">
-              <label slot="label">Email address</label>
-            </BqInput>
-            <BqCheckbox checked>Enable notifications</BqCheckbox>
-            <BqSwitch checked>Dark mode</BqSwitch>
+            <BqAvatar initials="MS" />
+            <BqBadge backgroundColor="ui--success">Live</BqBadge>
+            <BqStatus type="success">Healthy</BqStatus>
+            <BqTag color="info">
+              <BqIcon name="sparkle" slot="prefix" />
+              Design system
+            </BqTag>
             ```
 
-            ```ts Angular icon="angular"
-            // import { BqInputComponent, BqCheckboxComponent, BqSwitchComponent } from "@beeq/angular/standalone";
+            ```typescript Angular icon="angular" expandable
+            import { BqAvatar, BqBadge, BqIcon, BqStatus, BqTag } from "@beeq/angular/standalone";
 
-            <bq-input placeholder="Enter your email" type="email">
-              <label slot="label">Email address</label>
-            </bq-input>
-            <bq-checkbox [checked]="true">Enable notifications</bq-checkbox>
-            <bq-switch [checked]="true">Dark mode</bq-switch>
+            @Component({
+              standalone: true,
+              imports: [BqAvatar, BqBadge, BqIcon, BqStatus, BqTag],
+              template: `
+                <bq-avatar initials="MS"></bq-avatar>
+                <bq-badge background-color="ui--success">Live</bq-badge>
+                <bq-status type="success">Healthy</bq-status>
+                <bq-tag color="info">
+                  <bq-icon name="sparkle" slot="prefix"></bq-icon>
+                  Design system
+                </bq-tag>
+              `
+            })
+            export class AppComponent {}
             ```
 
-            ```vue Vue icon="vuejs"
+            ```vue Vue icon="vuejs" expandable
             <script setup lang="ts">
-              import { BqInput, BqCheckbox, BqSwitch } from "@beeq/vue";
+              import { BqAvatar, BqBadge, BqIcon, BqStatus, BqTag } from "@beeq/vue";
             </script>
 
             <template>
-              <BqInput placeholder="Enter your email" type="email">
-                <label slot="label">Email address</label>
-              </BqInput>
-              <BqCheckbox checked>Enable notifications</BqCheckbox>
-              <BqSwitch checked>Dark mode</BqSwitch>
+              <BqAvatar initials="MS" />
+              <BqBadge background-color="ui--success">Live</BqBadge>
+              <BqStatus type="success">Healthy</BqStatus>
+              <BqTag color="info">
+                <BqIcon name="sparkle" slot="prefix" />
+                Design system
+              </BqTag>
             </template>
             ```
           </CodeGroup>
@@ -535,205 +613,392 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
       </Tab>
 
       <Tab title="Feedback">
-        <CodeLivePreview mode="shadow" code={`
-          <div style="display:flex;flex-direction:column;gap:1.5rem;align-items:flex-start;width:100%;max-width:520px">
-            <div style="display:flex;gap:.65rem;flex-wrap:wrap;align-items:center">
-              <bq-badge background-color="ui--tertiary">New</bq-badge>
-              <bq-badge background-color="ui--warning">Beta</bq-badge>
-              <bq-badge background-color="ui--success">Stable</bq-badge>
-              <bq-badge background-color="ui--danger">Deprecated</bq-badge>
-              <bq-badge background-color="ui--info">Info</bq-badge>
-            </div>
-            <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center">
-              <bq-status type="success">Online</bq-status>
-              <bq-status type="alert">Degraded</bq-status>
-              <bq-status type="danger">Offline</bq-status>
-              <bq-status type="info">Maintenance</bq-status>
-            </div>
-            <div style="display:flex;flex-direction:column;gap:.75rem;width:100%">
-              <div style="display:flex;align-items:center;gap:.75rem">
-                <span style="font-size:.8rem;width:80px;opacity:.7">Complete</span>
-                <bq-progress value="100" style="flex:1"></bq-progress>
+        <CodeLivePreview mode="iframe" height="14rem" removePadding code={`
+          <style>
+            body { padding: var(--bq-spacing-xs); }
+
+            .showcase-feedback {
+              display: grid;
+              gap: var(--bq-spacing-m);
+              inline-size: 100%;
+            }
+
+            .showcase-progress {
+              display: grid;
+              gap: var(--bq-spacing-xs);
+              padding: var(--bq-spacing-m);
+              border: var(--bq-stroke-s) solid var(--bq-stroke--primary);
+              border-radius: var(--bq-radius--m);
+            }
+          </style>
+          <div class="showcase-feedback">
+            <bq-alert open type="success">
+              Deployment completed
+              <span slot="body">The production environment is now running the latest release.</span>
+            </bq-alert>
+
+            <div class="showcase-progress">
+              <div class="showcase-inline">
+                <bq-spinner size="small"></bq-spinner>
+                <span class="body">Syncing component metadata</span>
               </div>
-              <div style="display:flex;align-items:center;gap:.75rem">
-                <span style="font-size:.8rem;width:80px;opacity:.7">In progress</span>
-                <bq-progress value="65" style="flex:1"></bq-progress>
-              </div>
-              <div style="display:flex;align-items:center;gap:.75rem">
-                <span style="font-size:.8rem;width:80px;opacity:.7">Failed</span>
-                <bq-progress value="30" type="error" style="flex:1"></bq-progress>
-              </div>
-            </div>
-            <div style="display:flex;gap:1.25rem;align-items:center">
-              <bq-spinner></bq-spinner>
-              <bq-spinner size="small"></bq-spinner>
-              <span style="font-size:.8rem;opacity:.6">Loading states</span>
+              <bq-progress value="72" enable-tooltip></bq-progress>
             </div>
           </div>
         `}>
           <CodeGroup>
-            ```html HTML icon="html5"
-            <bq-badge appearance="success">Stable</bq-badge>
-            <bq-status type="success">Online</bq-status>
-            <bq-progress value="65"></bq-progress>
-            <bq-progress value="30" type="error"></bq-progress>
-            <bq-spinner size="small"></bq-spinner>
+            ```html HTML icon="html5" expandable
+            <bq-alert open type="success">
+              Deployment completed
+              <span slot="body">The production environment is now running the latest release.</span>
+            </bq-alert>
+
+            <bq-progress value="72" enable-tooltip></bq-progress>
+
+            <bq-notification open type="info" disable-close>
+              New review comment
+              <span slot="body">A designer mentioned you in the Button documentation.</span>
+            </bq-notification>
             ```
 
-            ```tsx React icon="react"
-            import { BqBadge, BqStatus, BqProgress, BqSpinner } from "@beeq/react";
+            ```tsx React icon="react" expandable
+            import { BqAlert, BqNotification, BqProgress } from "@beeq/react";
 
-            <BqBadge appearance="success">Stable</BqBadge>
-            <BqStatus type="success">Online</BqStatus>
-            <BqProgress value={65} />
-            <BqProgress value={30} type="error" />
-            <BqSpinner size="small" />
+            <BqAlert open type="success">
+              Deployment completed
+              <span slot="body">The production environment is now running the latest release.</span>
+            </BqAlert>
+
+            <BqProgress value={72} enableTooltip />
+
+            <BqNotification open type="info" disableClose>
+              New review comment
+              <span slot="body">A designer mentioned you in the Button documentation.</span>
+            </BqNotification>
             ```
 
-            ```ts Angular icon="angular"
-            // import { BqBadgeComponent, BqStatusComponent, BqProgressComponent, BqSpinnerComponent } from "@beeq/angular/standalone";
+            ```typescript Angular icon="angular" expandable
+            import { BqAlert, BqNotification, BqProgress } from "@beeq/angular/standalone";
 
-            <bq-badge appearance="success">Stable</bq-badge>
-            <bq-status type="success">Online</bq-status>
-            <bq-progress [value]="65"></bq-progress>
-            <bq-progress [value]="30" type="error"></bq-progress>
-            <bq-spinner size="small"></bq-spinner>
+            @Component({
+              standalone: true,
+              imports: [BqAlert, BqNotification, BqProgress],
+              template: `
+                <bq-alert open type="success">
+                  Deployment completed
+                  <span slot="body">The production environment is now running the latest release.</span>
+                </bq-alert>
+
+                <bq-progress [value]="72" enable-tooltip></bq-progress>
+
+                <bq-notification open type="info" disable-close>
+                  New review comment
+                  <span slot="body">A designer mentioned you in the Button documentation.</span>
+                </bq-notification>
+              `
+            })
+            export class AppComponent {}
             ```
 
-            ```vue Vue icon="vuejs"
+            ```vue Vue icon="vuejs" expandable
             <script setup lang="ts">
-              import { BqBadge, BqStatus, BqProgress, BqSpinner } from "@beeq/vue";
+              import { BqAlert, BqNotification, BqProgress } from "@beeq/vue";
             </script>
 
             <template>
-              <BqBadge appearance="success">Stable</BqBadge>
-              <BqStatus type="success">Online</BqStatus>
-              <BqProgress :value="65" />
-              <BqProgress :value="30" type="error" />
-              <BqSpinner size="small" />
+              <BqAlert open type="success">
+                Deployment completed
+                <span slot="body">The production environment is now running the latest release.</span>
+              </BqAlert>
+
+              <BqProgress :value="72" enable-tooltip />
+
+              <BqNotification open type="info" disable-close>
+                New review comment
+                <span slot="body">A designer mentioned you in the Button documentation.</span>
+              </BqNotification>
             </template>
             ```
           </CodeGroup>
         </CodeLivePreview>
       </Tab>
 
-      <Tab title="Display">
-        <CodeLivePreview mode="shadow" code={`
-          <div style="display:flex;flex-direction:column;gap:1.5rem;align-items:flex-start;width:100%;max-width:520px">
-            <div style="display:flex;gap:.65rem;align-items:center;flex-wrap:wrap">
-              <bq-avatar image="https://i.pravatar.cc/150?img=11"></bq-avatar>
-              <bq-avatar image="https://i.pravatar.cc/150?img=12"></bq-avatar>
-              <bq-avatar image="https://i.pravatar.cc/150?img=16"></bq-avatar>
-              <bq-avatar size="small" initials="SP"></bq-avatar>
-              <bq-avatar size="xsmall" initials="JK"></bq-avatar>
+      <Tab title="Form Controls">
+        <CodeLivePreview mode="iframe" height="14rem" removePadding code={`
+          <style>
+            body { padding: var(--bq-spacing-xs); }
+
+            .showcase-form {
+              display: grid;
+              grid-template-columns: repeat(2, minmax(0, 1fr));
+              gap: var(--bq-spacing-m);
+              inline-size: 100%;
+            }
+
+            .showcase-form__wide {
+              grid-column: 1 / -1;
+            }
+
+            .showcase-form__cluster {
+              display: flex;
+              flex-wrap: wrap;
+              align-items: center;
+              gap: var(--bq-spacing-l);
+            }
+
+            @media (width < 420px) {
+              .showcase-form {
+                grid-template-columns: 1fr;
+              }
+            }
+          </style>
+          <form class="showcase-form">
+            <bq-input type="email" value="alex@endava.com">
+              <label slot="label">Email address</label>
+            </bq-input>
+
+            <bq-select value="design-system" placeholder="Choose team">
+              <label slot="label">Team</label>
+              <bq-option value="design-system">Design System</bq-option>
+              <bq-option value="product">Product</bq-option>
+              <bq-option value="platform">Platform</bq-option>
+            </bq-select>
+
+            <div class="showcase-form__wide showcase-form__cluster">
+              <bq-checkbox checked>Send summary</bq-checkbox>
+              <bq-radio-group name="digest" value="weekly">
+                <bq-radio name="digest" value="daily">Daily</bq-radio>
+                <bq-radio name="digest" value="weekly">Weekly</bq-radio>
+              </bq-radio-group>
+              <bq-switch checked>Auto-save</bq-switch>
             </div>
-            <div style="display:flex;gap:.5rem;flex-wrap:wrap">
-              <bq-tag color="info">
-                <bq-icon name="palette" slot="prefix"></bq-icon>
-                Design System
-              </bq-tag>
-              <bq-tag color="warning" removable>
-                <bq-icon name="code" slot="prefix"></bq-icon>
-                Web Components
-              </bq-tag>
-              <bq-tag color="success" removable>
-                <bq-icon name="file-tsx" slot="prefix"></bq-icon>
-                StencilJS
-              </bq-tag>
-              <bq-tag size="small" color="#f97316">
-                <bq-icon name="file-ts" slot="prefix"></bq-icon>
-                TypeScript
-              </bq-tag>
-              <bq-tag size="small" color="#a855f7" removable>
-                <bq-icon name="linux-logo" slot="prefix"></bq-icon>
-                Open Source
-              </bq-tag>
+
+            <div class="showcase-form__wide">
+              <bq-slider value="72" enable-tooltip></bq-slider>
             </div>
-            <div style="display:flex;gap:.75rem;flex-wrap:wrap;align-items:center">
-              <bq-icon name="heart" size="22" style="color:#f43f5e"></bq-icon>
-              <bq-icon name="star" size="22" style="color:#fbbf24"></bq-icon>
-              <bq-icon name="rocket-launch" size="22" style="color:#818cf8"></bq-icon>
-              <bq-icon name="github-logo" size="22"></bq-icon>
-              <bq-icon name="lightning" size="22" style="color:#f97316"></bq-icon>
-              <bq-icon name="shield-check" size="22" style="color:#10b981"></bq-icon>
-              <bq-icon name="sparkle" size="22" style="color:#a855f7"></bq-icon>
-            </div>
-            <bq-divider dashed></bq-divider>
-            <bq-slider value="[30, 70]" type="range" enable-tooltip></bq-slider>
-          </div>
-          <script>
-            (() => {
-              const bqTags = previewRoot.querySelectorAll('bq-tag[removable]');
-              bqTags.forEach(tag => {
-                tag.addEventListener('bqClose', () => {
-                  // Add back removable tags after a delay, just to show the event in action
-                  setTimeout(() => {
-                    tag.show()
-                  }, 2000);
-                });
-              });
-            })();
-          </script>
+          </form>
         `}>
           <CodeGroup>
-            ```html HTML icon="html5"
-            <bq-avatar image="https://i.pravatar.cc/150?img=11"></bq-avatar>
-            <bq-avatar initials="BQ"></bq-avatar>
-            <bq-tag color="info" removable>
-              <bq-icon name="code" slot="prefix"></bq-icon>
-              Web Components
-            </bq-tag>
-            <bq-icon name="heart" size="22"></bq-icon>
-            <bq-divider dashed></bq-divider>
-            <bq-slider value="[30, 70]" type="range" enable-tooltip></bq-slider>
+            ```html HTML icon="html5" expandable
+            <bq-input type="email" value="alex@endava.com">
+              <label slot="label">Email address</label>
+            </bq-input>
+
+            <bq-select value="design-system" placeholder="Choose team">
+              <label slot="label">Team</label>
+              <bq-option value="design-system">Design System</bq-option>
+              <bq-option value="product">Product</bq-option>
+            </bq-select>
+
+            <bq-checkbox checked>Send summary</bq-checkbox>
+            <bq-switch checked>Auto-save</bq-switch>
             ```
 
-            ```tsx React icon="react"
-            import { BqAvatar, BqTag, BqIcon, BqSlider, BqDivider } from "@beeq/react";
+            ```tsx React icon="react" expandable
+            import { BqCheckbox, BqInput, BqOption, BqSelect, BqSwitch } from "@beeq/react";
 
-            <BqAvatar image="https://i.pravatar.cc/150?img=11" />
-            <BqTag color="info" removable>
-              <BqIcon name="code" slot="prefix" />
-              Web Components
-            </BqTag>
-            <BqIcon name="heart" size="22" />
-            <BqDivider dashed />
-            <BqSlider value={[30, 70]} type="range" enableTooltip />
+            <BqInput type="email" value="alex@endava.com">
+              <label slot="label">Email address</label>
+            </BqInput>
+
+            <BqSelect value="design-system" placeholder="Choose team">
+              <label slot="label">Team</label>
+              <BqOption value="design-system">Design System</BqOption>
+              <BqOption value="product">Product</BqOption>
+            </BqSelect>
+
+            <BqCheckbox checked>Send summary</BqCheckbox>
+            <BqSwitch checked>Auto-save</BqSwitch>
             ```
 
-            ```ts Angular icon="angular"
-            // import { BqAvatarComponent, BqTagComponent, BqIconComponent, BqSliderComponent, BqDividerComponent } from "@beeq/angular/standalone";
+            ```typescript Angular icon="angular" expandable
+            import { BqCheckbox, BqInput, BqOption, BqSelect, BqSwitch } from "@beeq/angular/standalone";
 
-            <bq-avatar image="https://i.pravatar.cc/150?img=11"></bq-avatar>
-            <bq-tag color="info" [removable]="true">
-              <bq-icon name="code" slot="prefix"></bq-icon>
-              Web Components
-            </bq-tag>
-            <bq-icon name="heart" size="22"></bq-icon>
-            <bq-divider dashed></bq-divider>
-            <bq-slider type="range" [value]="[30, 70]" [enableTooltip]="true"></bq-slider>
+            @Component({
+              standalone: true,
+              imports: [BqCheckbox, BqInput, BqOption, BqSelect, BqSwitch],
+              template: `
+                <bq-input type="email" value="alex@endava.com">
+                  <label slot="label">Email address</label>
+                </bq-input>
+
+                <bq-select value="design-system" placeholder="Choose team">
+                  <label slot="label">Team</label>
+                  <bq-option value="design-system">Design System</bq-option>
+                  <bq-option value="product">Product</bq-option>
+                </bq-select>
+
+                <bq-checkbox checked>Send summary</bq-checkbox>
+                <bq-switch checked>Auto-save</bq-switch>
+              `
+            })
+            export class AppComponent {}
             ```
 
-            ```vue Vue icon="vuejs"
+            ```vue Vue icon="vuejs" expandable
             <script setup lang="ts">
-              import { BqAvatar, BqTag, BqIcon, BqSlider, BqDivider } from "@beeq/vue";
+              import { BqCheckbox, BqInput, BqOption, BqSelect, BqSwitch } from "@beeq/vue";
             </script>
 
             <template>
-              <BqAvatar image="https://i.pravatar.cc/150?img=11" />
-              <BqTag color="info" :removable="true">
-                <BqIcon name="code" slot="prefix" />
-                Web Components
-              </BqTag>
-              <BqIcon name="heart" size="22" />
+              <BqInput type="email" value="alex@endava.com">
+                <label slot="label">Email address</label>
+              </BqInput>
+
+              <BqSelect value="design-system" placeholder="Choose team">
+                <label slot="label">Team</label>
+                <BqOption value="design-system">Design System</BqOption>
+                <BqOption value="product">Product</BqOption>
+              </BqSelect>
+
+              <BqCheckbox checked>Send summary</BqCheckbox>
+              <BqSwitch checked>Auto-save</BqSwitch>
+            </template>
+            ```
+          </CodeGroup>
+        </CodeLivePreview>
+      </Tab>
+
+      <Tab title="Layout">
+        <CodeLivePreview mode="iframe" height="14rem" removePadding code={`
+          <style>
+            body { padding: var(--bq-spacing-xs); }
+
+            .showcase-layout bq-card::part(wrapper) {
+              background-color: var(--bq-ui--alt);
+            }
+
+            .showcase-layout bq-card > .card-body {
+              display: grid;
+              gap: var(--bq-spacing-xs);
+              padding: var(--bq-spacing-m);
+            }
+          </style>
+          <div class="showcase-layout">
+            <bq-card type="minimal" border="m">
+              <div class="card-body">
+                <h5>Quiet support content</h5>
+                <p class="caption">Choose calmer surfaces when the content should support the main workflow.</p>
+                <bq-divider dashed></bq-divider>
+                <bq-button appearance="link">Open details</bq-button>
+              </div>
+            </bq-card>
+          </div>
+        `}>
+          <CodeGroup>
+            ```html HTML icon="html5" expandable
+            <bq-card type="minimal" border="m">
+              <div class="card-body">
+                <h3>Quiet support content</h3>
+                <bq-divider dashed></bq-divider>
+                <bq-button appearance="link" size="small">Open details</bq-button>
+              </div>
+            </bq-card>
+            ```
+
+            ```tsx React icon="react" expandable
+            import { BqButton, BqCard, BqDivider } from "@beeq/react";
+
+            <BqCard type="minimal" border="m">
+              <h3>Quiet support content</h3>
               <BqDivider dashed />
-              <BqSlider :value="[30, 70]" :type="'range'" :enableTooltip="true" />
+              <BqButton appearance="link" size="small">Open details</BqButton>
+            </BqCard>
+            ```
+
+            ```typescript Angular icon="angular" expandable
+            import { BqButton, BqCard, BqDivider } from "@beeq/angular/standalone";
+
+            @Component({
+              standalone: true,
+              imports: [BqButton, BqCard, BqDivider],
+              template: `
+                <bq-card type="minimal" border="m">
+                  <h3>Quiet support content</h3>
+                  <bq-divider dashed></bq-divider>
+                  <bq-button appearance="link" size="small">Open details</bq-button>
+                </bq-card>
+              `
+            })
+            export class AppComponent {}
+            ```
+
+            ```vue Vue icon="vuejs" expandable
+            <script setup lang="ts">
+              import { BqButton, BqCard, BqDivider } from "@beeq/vue";
+            </script>
+
+            <template>
+              <BqCard type="minimal" border="m">
+                <h3>Quiet support content</h3>
+                <BqDivider dashed />
+                <BqButton appearance="link" size="small">Open details</BqButton>
+              </BqCard>
             </template>
             ```
           </CodeGroup>
         </CodeLivePreview>
       </Tab>
+
     </Tabs>
+
+    <div className="bq-home-showcase__copy">
+      <p className="text-xs font-bold uppercase tracking-widest mt-0 flex items-center gap-2 bq-home-section__eyebrow">
+        <Icon icon="eye" />
+        <span>Live Preview</span>
+      </p>
+      <h2 className="text-4xl lg:text-5xl font-black font-bold tracking-tight leading-tight bq-home-section__heading">
+        See the code.<br />See it render.
+      </h2>
+      <p className="text-base bq-home-section__copy bq-home-section__copy--52">
+        The preview on the left runs live from the actual BEEQ package.
+        Switch between component groups, interact with real components, and use the matching snippets as a starting point for your app.
+      </p>
+
+      <div className="bq-home-showcase__value-grid" aria-label="BEEQ component documentation highlights">
+        <div className="bq-home-showcase__value-item">
+          <Icon icon="cubes" className="bq-home-showcase__value-icon" />
+          <span>Production web components</span>
+        </div>
+
+        <div className="bq-home-showcase__value-item">
+          <Icon icon="terminal" className="bq-home-showcase__value-icon" />
+          <span>Framework-ready examples</span>
+        </div>
+
+        <div className="bq-home-showcase__value-item">
+          <Icon icon="github" className="bq-home-showcase__value-icon" />
+          <span>Source-backed API docs</span>
+        </div>
+
+        <div className="bq-home-showcase__value-item">
+          <Icon icon="palette" className="bq-home-showcase__value-icon" />
+          <span>Design tokens and themes</span>
+        </div>
+
+        <div className="bq-home-showcase__value-item">
+          <Icon icon="universal-access" className="bq-home-showcase__value-icon" />
+          <span>Accessibility guidance</span>
+        </div>
+
+        <div className="bq-home-showcase__value-item">
+          <Icon icon="layer-group" className="bq-home-showcase__value-icon" />
+          <span>CSS variables and parts</span>
+        </div>
+      </div>
+
+      <div className="bq-home-showcase__actions">
+        <a href="/components/overview" className="bq-home-showcase__button">
+          <Icon icon="binoculars" color="var(--bq-icon--alt)" />
+          <span>Browse all components</span>
+        </a>
+
+        <p className="bq-home-showcase__starter">
+          or start with <a href="/components/button" className="bq-home-section__link bq-link">Button</a>, <a href="/components/input" className="bq-home-section__link bq-link">Input</a>, or <a href="/components/select" className="bq-home-section__link bq-link">Select</a>
+        </p>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -741,66 +1006,66 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
     WHY BEEQ — STAT GRID
 ══════════════════════════════════════════════════════ */}
 
-<div className="px-6 py-14 bq-stats">
+<div className="px-6 py-14 bq-home-stats bq-home-band bq-home-band--tinted">
   <div className="max-w-6xl mx-auto">
-    <p className="text-xs font-bold uppercase tracking-widest mb-2 mt-0 flex items-center gap-2 bq-section__label">
+    <p className="text-xs font-bold uppercase tracking-widest mb-2 mt-0 flex items-center gap-2 bq-home-section__eyebrow">
       <Icon icon="circle-question" />
       <span>Why BEEQ</span>
     </p>
-    <h2 className="text-3xl lg:text-4xl font-black font-bold tracking-tight leading-tight mb-3 bq-section__heading">
+    <h2 className="text-3xl lg:text-4xl font-black font-bold tracking-tight leading-tight mb-3 bq-home-section__heading">
       One system.<br />Every product. Every team.
     </h2>
-    <p className="text-base mb-12 bq-section__body bq-section__body--52">
+    <p className="text-base mb-12 bq-home-section__copy bq-home-section__copy--52">
       BEEQ gives you the building blocks to ship great UIs faster — with consistency, accessibility,
       and developer experience baked in from day one.
     </p>
 
     <div
-      className="grid grid-cols-1 sm:grid-cols-2 rounded-2xl overflow-hidden border bq-stats__grid"
+      className="grid grid-cols-1 sm:grid-cols-2 rounded-2xl overflow-hidden border bq-home-stats__grid"
     >
-      <div className="p-10 border-b border-r bq-stats__cell">
-        <p className="text-xs font-bold uppercase tracking-widest mb-3 mt-0 flex items-center gap-1.5 bq-stats__cell-label">
+      <div className="p-10 border-b border-r bq-home-stats__item">
+        <p className="text-xs font-bold uppercase tracking-widest mb-3 mt-0 flex items-center gap-1.5 bq-home-stats__eyebrow">
           <Icon icon="layer-group" /> Consistency
         </p>
-        <span className="block text-7xl font-black leading-none mb-3 bq-gradient-text">ONE</span>
+        <span className="block text-7xl font-black leading-none mb-3 bq-home-stats__value">ONE</span>
         <p className="text-base font-bold mb-1 mt-0">Source of truth, every product</p>
-        <p className="text-sm mt-0 bq-section__body">
+        <p className="text-sm mt-0 bq-home-section__copy">
           Build once, use everywhere. Components encode your design decisions so every product
           looks and behaves consistently — across every team and brand.
         </p>
       </div>
 
-      <div className="p-10 border-b bq-stats__cell">
-        <p className="text-xs font-bold uppercase tracking-widest mb-3 mt-0 flex items-center gap-1.5 bq-stats__cell-label">
+      <div className="p-10 border-b bq-home-stats__item">
+        <p className="text-xs font-bold uppercase tracking-widest mb-3 mt-0 flex items-center gap-1.5 bq-home-stats__eyebrow">
           <Icon icon="bolt" /> Efficiency
         </p>
-        <span className="block text-7xl font-black leading-none mb-3 bq-gradient-text--blue">5min</span>
+        <span className="block text-7xl font-black leading-none mb-3 bq-home-stats__value bq-home-stats__value--blue">5min</span>
         <p className="text-base font-bold mb-1 mt-0">From zero to your first component</p>
-        <p className="text-sm mt-0 bq-section__body">
+        <p className="text-sm mt-0 bq-home-section__copy">
           Add two CDN links to any HTML page and you're rendering real components. No bundler,
           no CLI, no configuration required to get started.
         </p>
       </div>
 
-      <div className="p-10 border-r bq-stats__cell">
-        <p className="text-xs font-bold uppercase tracking-widest mb-3 mt-0 flex items-center gap-1.5 bq-stats__cell-label">
+      <div className="p-10 border-r bq-home-stats__item">
+        <p className="text-xs font-bold uppercase tracking-widest mb-3 mt-0 flex items-center gap-1.5 bq-home-stats__eyebrow">
           <Icon icon="palette" /> Scalability
         </p>
-        <span className="block text-7xl font-black leading-none mb-3 bq-gradient-text--purple">∞</span>
+        <span className="block text-7xl font-black leading-none mb-3 bq-home-stats__value bq-home-stats__value--purple">∞</span>
         <p className="text-base font-bold mb-1 mt-0">Infinite brands, one codebase</p>
-        <p className="text-sm mt-0 bq-section__body">
+        <p className="text-sm mt-0 bq-home-section__copy">
           CSS tokens and custom properties let any team go fully white-label — swap colors,
           typography, and radius without ever forking or rebuilding components.
         </p>
       </div>
 
       <div className="p-10">
-        <p className="text-xs font-bold uppercase tracking-widest mb-3 mt-0 flex items-center gap-1.5 bq-stats__cell-label">
+        <p className="text-xs font-bold uppercase tracking-widest mb-3 mt-0 flex items-center gap-1.5 bq-home-stats__eyebrow">
           <Icon icon="universal-access" /> Accessibility
         </p>
-        <span className="block text-7xl font-black leading-none mb-3 bq-gradient-text--green">AA</span>
+        <span className="block text-7xl font-black leading-none mb-3 bq-home-stats__value bq-home-stats__value--green">AA</span>
         <p className="text-base font-bold mb-1 mt-0">WCAG 2.1 AA by default</p>
-        <p className="text-sm mt-0 bq-section__body">
+        <p className="text-sm mt-0 bq-home-section__copy">
           Keyboard navigation, ARIA semantics, and screen reader support aren't add-ons —
           they're baked into every component from day one.
         </p>
@@ -813,42 +1078,36 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
     COMPARISON TABLE
 ══════════════════════════════════════════════════════ */}
 
-<div className="px-6 py-14 bq-comparison">
+<div className="px-6 py-14 bq-home-comparison">
   <div className="max-w-6xl mx-auto">
-    <p className="text-xs font-bold uppercase tracking-widest mb-2 mt-0 flex items-center gap-2 bq-section__label">
+    <p className="text-xs font-bold uppercase tracking-widest mb-2 mt-0 flex items-center gap-2 bq-home-section__eyebrow">
       <Icon icon="scale-balanced" />
       <span>Comparison</span>
     </p>
-    <h2 className="text-3xl lg:text-4xl font-black font-bold tracking-tight leading-tight mb-3 bq-section__heading">
-      BEEQ vs{" "}
-      <span className="bq-gradient-text">
-        typical
-      </span>{" "}
-      UI libraries.
+    <h2 className="text-3xl lg:text-4xl font-black font-bold tracking-tight leading-tight mb-3 bq-home-section__heading">
+      BEEQ is more than components
     </h2>
-    <p className="text-base mb-10 bq-section__body bq-section__body--52">
+    <p className="text-base mb-10 bq-home-section__copy bq-home-section__copy--52">
       What you get out of the box compared to off-the-shelf component libraries.
     </p>
 
-    <div className="rounded-2xl overflow-hidden border bq-comparison__table">
+    <div className="rounded-2xl overflow-hidden border bq-home-comparison__table">
       <div className="grid grid-cols-3">
-        <div className="p-4 text-xs font-bold uppercase tracking-widest bq-comparison__header--feature">Feature</div>
-        <div className="p-4 text-xs font-bold uppercase tracking-widest text-center bq-comparison__header--beeq">BEEQ</div>
-        <div className="p-4 text-xs font-bold uppercase tracking-widest text-center bq-comparison__header--other">Typical UI library</div>
+        <div className="bq-home-comparison__heading bq-home-comparison__heading--feature">Use case</div>
+        <div className="bq-home-comparison__heading bq-home-comparison__heading--beeq">BEEQ is a good fit when...</div>
+        <div className="bq-home-comparison__heading">A generic UI library may be good when...</div>
       </div>
       {[
-        ["Branding",               "White-label by default",    "Often opinionated"],
-        ["Framework support",      "Web components + wrappers", "Usually tied to one"],
-        ["Theming",                "Token-driven, CSS variables","Varies, often limited"],
-        ["Integrations",           "Tailored, low-level ready", "None"],
-        ["Community",              "Open source, welcoming",    "Varies"],
-        ["Enterprise scalability", "✓ Included",                "✗ Varies"],
-        ["Accessibility baked in", "✓ Included",                "✗ Varies"],
+        ["Multi-brand support",             "You need white-label themes and shared tokens",      "You only need one visual style"],
+        ["Cross-framework teams",           "Teams use React, Angular, Vue or HTML",              "Your product is locked to one framework"],
+        ["Design-dev alignment",            "You need Figma + code + docs aligned",               "You only need coded components"],
+        ["Long term product consistency",   "You want governance and shared standards",           "You need a quick prototype"],
+        ["Client work",                     "You need to adapt to client branding",               "You are building an internal tool"],
       ].map(([feature, beeq, other]) => (
-        <div key={feature} className="grid grid-cols-3 bq-comparison__row">
-          <div className="p-4 text-sm bq-comparison__cell--feature">{feature}</div>
-          <div className="p-4 text-sm font-medium text-center bq-comparison__cell--beeq">{beeq}</div>
-          <div className="p-4 text-sm text-center bq-comparison__cell--other">{other}</div>
+        <div key={feature} className="grid grid-cols-3 bq-home-comparison__row">
+          <div className="bq-home-comparison__cell bq-home-comparison__cell--feature">{feature}</div>
+          <div className="bq-home-comparison__cell bq-home-comparison__cell--beeq">{beeq}</div>
+          <div className="bq-home-comparison__cell">{other}</div>
         </div>
       ))}
     </div>
@@ -856,74 +1115,19 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 </div>
 
 {/* ══════════════════════════════════════════════════════
-    CTA
-══════════════════════════════════════════════════════ */}
-
-<div className="relative px-6 py-24 text-center overflow-hidden bq-cta">
-  <div className="absolute inset-0 pointer-events-none bq-cta__glow" />
-  <h2 className="text-4xl lg:text-5xl font-black font-bold tracking-tighter leading-none mb-4 bq-section__heading">
-    Start building<br />
-    <span className="bq-gradient-text">
-      today.
-    </span>
-  </h2>
-  <p className="text-base mb-6 mx-auto bq-section__body bq-section__body--44">
-    One install. A production-grade design system. Ready for your next project.
-  </p>
-
-  <div className="mx-auto w-full max-w-md text-start">
-    <CodeGroup>
-      ```bash npm icon=npm
-      npm install @beeq/core
-      ```
-
-      ```bash pnpm icon=data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWlkWU1pZCBtZWV0IiB2aWV3Qm94PSI3Ni41ODk4NzI0NDg5Nzk1OCA0NCAxNjQuMDA3NzU1MTAyMDQwNjggMTY0IiB3aWR0aD0iMTYwLjAxIiBoZWlnaHQ9IjE2MCI+PGRlZnM+PHBhdGggZD0iTTIzNy42IDk1TDE4Ny42IDk1TDE4Ny42IDQ1TDIzNy42IDQ1TDIzNy42IDk1WiIgaWQ9ImI0NXZkVEQ4aHMiPjwvcGF0aD48cGF0aCBkPSJNMTgyLjU5IDk1TDEzMi41OSA5NUwxMzIuNTkgNDVMMTgyLjU5IDQ1TDE4Mi41OSA5NVoiIGlkPSJhNDBXdHhJbDhkIj48L3BhdGg+PHBhdGggZD0iTTEyNy41OSA5NUw3Ny41OSA5NUw3Ny41OSA0NUwxMjcuNTkgNDVMMTI3LjU5IDk1WiIgaWQ9ImgyQ045QUVFcGUiPjwvcGF0aD48cGF0aCBkPSJNMjM3LjYgMTUwTDE4Ny42IDE1MEwxODcuNiAxMDBMMjM3LjYgMTAwTDIzNy42IDE1MFoiIGlkPSJkcXY1MTMzRzgiPjwvcGF0aD48cGF0aCBkPSJNMTgyLjU5IDE1MEwxMzIuNTkgMTUwTDEzMi41OSAxMDBMMTgyLjU5IDEwMEwxODIuNTkgMTUwWiIgaWQ9ImIxTHY3OXlwdm0iPjwvcGF0aD48cGF0aCBkPSJNMTgyLjU5IDIwNUwxMzIuNTkgMjA1TDEzMi41OSAxNTVMMTgyLjU5IDE1NUwxODIuNTkgMjA1WiIgaWQ9Imh5MUlaV3dMWCI+PC9wYXRoPjxwYXRoIGQ9Ik0yMzcuNiAyMDVMMTg3LjYgMjA1TDE4Ny42IDE1NUwyMzcuNiAxNTVMMjM3LjYgMjA1WiIgaWQ9ImFrUWZqeFFlcyI+PC9wYXRoPjxwYXRoIGQ9Ik0xMjcuNTkgMjA1TDc3LjU5IDIwNUw3Ny41OSAxNTVMMTI3LjU5IDE1NUwxMjcuNTkgMjA1WiIgaWQ9ImJkU3J3RTVwayI+PC9wYXRoPjwvZGVmcz48Zz48Zz48dXNlIHhsaW5rOmhyZWY9IiNiNDV2ZFREOGhzIiBvcGFjaXR5PSIxIiBmaWxsPSIjZjlhZDAwIiBmaWxsLW9wYWNpdHk9IjEiPjwvdXNlPjwvZz48Zz48dXNlIHhsaW5rOmhyZWY9IiNhNDBXdHhJbDhkIiBvcGFjaXR5PSIxIiBmaWxsPSIjZjlhZDAwIiBmaWxsLW9wYWNpdHk9IjEiPjwvdXNlPjwvZz48Zz48dXNlIHhsaW5rOmhyZWY9IiNoMkNOOUFFRXBlIiBvcGFjaXR5PSIxIiBmaWxsPSIjZjlhZDAwIiBmaWxsLW9wYWNpdHk9IjEiPjwvdXNlPjwvZz48Zz48dXNlIHhsaW5rOmhyZWY9IiNkcXY1MTMzRzgiIG9wYWNpdHk9IjEiIGZpbGw9IiNmOWFkMDAiIGZpbGwtb3BhY2l0eT0iMSI+PC91c2U+PC9nPjxnPjx1c2UgeGxpbms6aHJlZj0iI2IxTHY3OXlwdm0iIG9wYWNpdHk9IjEiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMSI+PC91c2U+PC9nPjxnPjx1c2UgeGxpbms6aHJlZj0iI2h5MUlaV3dMWCIgb3BhY2l0eT0iMSIgZmlsbD0iI2ZmZmZmZiIgZmlsbC1vcGFjaXR5PSIxIj48L3VzZT48L2c+PGc+PHVzZSB4bGluazpocmVmPSIjYWtRZmp4UWVzIiBvcGFjaXR5PSIxIiBmaWxsPSIjZmZmZmZmIiBmaWxsLW9wYWNpdHk9IjEiPjwvdXNlPjwvZz48Zz48dXNlIHhsaW5rOmhyZWY9IiNiZFNyd0U1cGsiIG9wYWNpdHk9IjEiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMSI+PC91c2U+PC9nPjwvZz48L3N2Zz4=
-      pnpm add @beeq/core
-      ```
-
-      ```bash yarn icon=yarn
-      yarn add @beeq/core
-      ```
-    </CodeGroup>
-  </div>
-
-  <div className="flex justify-center flex-wrap gap-3">
-    <a
-      href="/getting-started/introduction"
-      className="box-border inline-flex px-5 py-2.5 rounded-lg text-sm font-semibold text-white no-underline border border-transparent transition-opacity hover:opacity-90 bq-btn--primary w-full md:w-auto"
-    >
-      <span className="flex grow items-center justify-center gap-2 md:justify-start">
-        <Icon icon="rocket" color="var(--bq-icon--alt)" />
-        Get started
-      </span>
-    </a>
-    <a
-      href="https://github.com/Endava/BEEQ"
-      target="_blank"
-      className="box-border inline-flex px-5 py-2.5 rounded-lg text-sm font-semibold no-underline border border-transparent transition-colors bq-btn--secondary w-full md:w-auto"
-    >
-      <span className="flex grow items-center justify-center gap-2 md:justify-start">
-        <Icon icon="github" size={12} color="var(--bq-icon--primary)" />
-        Star on GitHub
-      </span>
-    </a>
-  </div>
-</div>
-
-{/* ══════════════════════════════════════════════════════
     RESOURCES
 ══════════════════════════════════════════════════════ */}
 
-<div className="px-6 py-14 bq-resources">
+<div className="px-6 py-14 bq-home-resources bq-home-band bq-home-band--tinted">
   <div className="max-w-6xl mx-auto">
-    <p className="text-xs font-bold uppercase tracking-widest mb-2 mt-0 flex items-center gap-2 bq-section__label">
+    <p className="text-xs font-bold uppercase tracking-widest mb-2 mt-0 flex items-center gap-2 bq-home-section__eyebrow">
       <Icon icon="compass" />
       <span>Resources</span>
     </p>
-    <h2 className="text-3xl lg:text-4xl font-black font-bold tracking-tight leading-tight mb-3 bq-section__heading">
+    <h2 className="text-3xl lg:text-4xl font-black font-bold tracking-tight leading-tight mb-3 bq-home-section__heading">
       Docs, tools,<br />and community.
     </h2>
-    <p className="text-base mb-10 bq-section__body">
+    <p className="text-base mb-10 bq-home-section__copy">
       Everything you need to ship, all in one place.
     </p>
     <CardGroup cols={3}>
