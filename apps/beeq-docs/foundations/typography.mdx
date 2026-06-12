@@ -8,12 +8,12 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 <Frame className="px-4 py-4" caption="BEEQ typography overview">
   <img
     className="block dark:hidden"
-    src="/foundations/images/typography/typography-overview.png"
+    src="/foundations/images/typography/typography-overview-light.svg"
     alt="BEEQ typography overview - light mode"
   />
   <img
     className="hidden dark:block"
-    src="/foundations/images/typography/typography-overview.png"
+    src="/foundations/images/typography/typography-overview-dark.svg"
     alt="BEEQ typography overview - dark mode"
   />
 </Frame>
@@ -155,86 +155,195 @@ BEEQ's type scale moves from large display text to compact supporting text. Larg
 
 Display text is the largest style in the system. Use it for short, high-impact messages, marketing moments, editorial layouts, or large numerals where the text needs strong visual presence.
 
-<Frame caption="Display text style">
-  <img
-    className="block dark:hidden"
-    src="/foundations/images/typography/typography-style-display.png"
-    alt="Display text style - light mode"
-  />
-  <img
-    className="hidden dark:block"
-    src="/foundations/images/typography/typography-style-display.png"
-    alt="Display text style - dark mode"
-  />
-</Frame>
+<CodeLivePreview mode="iframe" height="20rem" removePadding code={`
+  <style>
+    body {
+      padding: var(--bq-spacing-m);
+    }
+
+    section {
+      display: grid;
+      gap: var(--bq-spacing-m);
+    }
+  </style>
+
+  <section>
+    <h1 class="display bold">The importance of typography</h1>
+    <p>Typography is not choosing fonts or making fonts, it’s about shaping text for optimal reading experience.</p>
+    <bq-button>Button</bq-button>
+  </section>
+`}>
+</CodeLivePreview>
 
 ### Headings
 
 Headings create structure and help readers scan. Use native heading elements for document structure, and use visual heading classes when the visual size needs to differ from the semantic level.
 
-<Frame caption="Heading text styles">
-  <img
-    className="block dark:hidden"
-    src="/foundations/images/typography/typography-style-heading.png"
-    alt="Heading text styles - light mode"
-  />
-  <img
-    className="hidden dark:block"
-    src="/foundations/images/typography/typography-style-heading.png"
-    alt="Heading text styles - dark mode"
-  />
-</Frame>
+<CodeLivePreview mode="iframe" height="16rem" removePadding code={`
+  <style>
+    body {
+      padding: var(--bq-spacing-m);
+    }
+
+    .heading-sample {
+      display: grid;
+      gap: var(--bq-spacing-l);
+    }
+
+    ul {
+      display: grid;
+      gap: var(--bq-spacing-m);
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    ul li {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-m);
+    }
+  </style>
+
+  <section class="heading-sample">
+    <h4>Customers</h4>
+    <p>These companies have purchased in the last 12 months.</p>
+    <ul>
+      <li>
+        <bq-avatar initials="AI"></bq-avatar>
+        <p class="h5">Acme Inc.</p>
+      </li>
+      <li>
+        <bq-avatar initials="BI"></bq-avatar>
+        <p class="h5">Beta LLC</p>
+    </ul>
+  </section>
+`}>
+</CodeLivePreview>
 
 ### Body
 
 Body text is the default reading style. Use it for paragraphs, descriptions, helper copy, instructions, empty states, and most product content.
 
-<Frame caption="Body text style">
-  <img
-    className="block dark:hidden"
-    src="/foundations/images/typography/typography-style-body.png"
-    alt="Body text style - light mode"
-  />
-  <img
-    className="hidden dark:block"
-    src="/foundations/images/typography/typography-style-body.png"
-    alt="Body text style - dark mode"
-  />
-</Frame>
+<CodeLivePreview mode="iframe" height="20.5rem" removePadding code={`
+  <style>
+    body {
+      padding: var(--bq-spacing-m);
+    }
+
+    section {
+      display: grid;
+      gap: var(--bq-spacing-m);
+    }
+
+    .type-sample {
+      display: grid;
+      gap: var(--bq-spacing-xs);
+    }
+  </style>
+
+  <section>
+    <div class="type-sample">
+      <p class="h6 semibold">Logistics</p>
+      <p>
+        The management of products or other resources as they travel between a point of origin and a destination.
+      </p>
+    </div>
+    <bq-divider></bq-divider>
+    <div class="type-sample">
+      <p class="h6 semibold">Sole proprietorship</p>
+      <p>
+        A business structure where a single individual both owns and runs the company.
+      </p>
+    </div>
+    <bq-divider></bq-divider>
+    <div class="type-sample">
+      <p class="h6 semibold">Discount code</p>
+      <p>
+        A series of numbers and/or letters that an online shopper may enter at checkout to get a discount or special offer.
+      </p>
+    </div>
+  </section>
+`}>
+</CodeLivePreview>
 
 ### Caption
 
 Caption text supports nearby content. Use it for timestamps, metadata, image captions, short helper details, and lower-emphasis information.
 
-<Frame caption="Caption text style">
-  <img
-    className="block dark:hidden"
-    src="/foundations/images/typography/typography-style-caption.png"
-    alt="Caption text style - light mode"
-  />
-  <img
-    className="hidden dark:block"
-    src="/foundations/images/typography/typography-style-caption.png"
-    alt="Caption text style - dark mode"
-  />
-</Frame>
+<CodeLivePreview mode="iframe" height="18rem" removePadding code={`
+  <style>
+    body {
+      padding: var(--bq-spacing-m);
+    }
+
+    .caption-sample {
+      display: grid;
+      gap: var(--bq-spacing-l);
+    }
+
+    ul {
+      display: grid;
+      gap: var(--bq-spacing-m);
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    ul li {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-m);
+    }
+  </style>
+
+  <section class="caption-sample">
+    <h4>Customers</h4>
+    <p>These companies have purchased in the last 12 months.</p>
+    <ul>
+      <li>
+        <bq-avatar initials="AI"></bq-avatar>
+        <div>
+          <p class="h5">Acme Inc.</p>
+          <p class="caption">Purchased on June 4, 2026</p>
+        </div>
+      </li>
+      <li>
+        <bq-avatar initials="BI"></bq-avatar>
+        <div>
+          <p class="h5">Beta LLC</p>
+          <p class="caption">Purchased on May 12, 2026</p>
+        </div>
+    </ul>
+  </section>
+`}>
+</CodeLivePreview>
 
 ### Overline
 
 Overline text labels a section before the main heading. Use it for short category labels, context markers, or eyebrow text above a title.
 
-<Frame caption="Overline text style">
-  <img
-    className="block dark:hidden"
-    src="/foundations/images/typography/typography-style-overline.png"
-    alt="Overline text style - light mode"
-  />
-  <img
-    className="hidden dark:block"
-    src="/foundations/images/typography/typography-style-overline.png"
-    alt="Overline text style - dark mode"
-  />
-</Frame>
+<CodeLivePreview mode="iframe" height="14rem" removePadding code={`
+  <style>
+    body {
+      padding: var(--bq-spacing-m);
+    }
+
+    .overline-sample {
+      display: grid;
+      gap: var(--bq-spacing-m);
+    }
+  </style>
+
+  <section class="overline-sample">
+    <p class="overline">Release notes</p>
+    <h3 class="h4">v1.0.0</h3>
+    <p class="caption">June 4, 2026</p>
+    <p>
+      We’re excited to announce the release of version 1.0.0, which includes new features, performance improvements, and bug fixes to enhance your experience.
+    </p>
+  </section>
+`}></CodeLivePreview>
 
 ---
 
@@ -242,7 +351,7 @@ Overline text labels a section before the main heading. Use it for short categor
 
 BEEQ applies body typography globally through its base styles. For headings, use native heading tags when they match the document structure. Use BEEQ's visual classes when the visual hierarchy and semantic hierarchy need to be different.
 
-<CodeLivePreview mode="iframe" height="22rem" removePadding code={`
+<CodeLivePreview mode="iframe" height="20rem" removePadding code={`
   <style>
     body {
       padding: var(--bq-spacing-m);
@@ -251,7 +360,6 @@ BEEQ applies body typography globally through its base styles. For headings, use
     .article-preview {
       display: grid;
       gap: var(--bq-spacing-m);
-      max-width: 44rem;
     }
   </style>
 
@@ -280,7 +388,7 @@ BEEQ applies body typography globally through its base styles. For headings, use
 
 Weight modifiers can be applied to BEEQ's semantic text styles. The typography implementation intentionally supports `.semibold` and `.bold` on display, heading, caption, and overline styles.
 
-<CodeLivePreview mode="iframe" height="20rem" removePadding code={`
+<CodeLivePreview mode="iframe" height="18rem" removePadding code={`
   <style>
     body {
       padding: var(--bq-spacing-m);
@@ -289,7 +397,6 @@ Weight modifiers can be applied to BEEQ's semantic text styles. The typography i
     .weight-stack {
       display: grid;
       gap: var(--bq-spacing-m);
-      max-width: 36rem;
     }
   </style>
 
@@ -367,12 +474,12 @@ Typography creates hierarchy through size, weight, placement, and color. A large
 <Frame className="px-4 py-4" caption="Typography hierarchy">
   <img
     className="block dark:hidden"
-    src="/foundations/images/typography/typography-hierarchy.png"
+    src="/foundations/images/typography/typography-hierarchy-light.svg"
     alt="Typography hierarchy - light mode"
   />
   <img
     className="hidden dark:block"
-    src="/foundations/images/typography/typography-hierarchy.png"
+    src="/foundations/images/typography/typography-hierarchy-dark.svg"
     alt="Typography hierarchy - dark mode"
   />
 </Frame>
@@ -382,67 +489,27 @@ Line height keeps text legible. BEEQ uses `120%` for display and larger headings
 <Frame className="px-4 py-4" caption="Line height">
   <img
     className="block dark:hidden"
-    src="/foundations/images/typography/typography-line-height.png"
+    src="/foundations/images/typography/typography-line-height-light.svg"
     alt="Line height - light mode"
   />
   <img
     className="hidden dark:block"
-    src="/foundations/images/typography/typography-line-height.png"
+    src="/foundations/images/typography/typography-line-height-dark.svg"
     alt="Line height - dark mode"
   />
 </Frame>
 
 Line length affects how easily readers move from one line to the next. Aim for 50-90 characters per line for long-form text, including spaces.
 
-<CodeLivePreview mode="iframe" height="10rem" removePadding code={`
-  <style>
-    body {
-      padding: var(--bq-spacing-m);
-    }
-
-    .reading-width {
-      max-width: 68ch;
-    }
-
-    .reading-width h2 {
-      margin-block-end: var(--bq-spacing-m);
-    }
-  </style>
-
-  <article class="reading-width">
-    <h2>Comfortable reading width</h2>
-    <p>
-      Keep long paragraphs narrow enough for the eye to find the next line without effort. This improves comprehension and makes dense product content feel calmer.
-    </p>
-  </article>
-`}>
-  <CodeGroup>
-    ```css CSS icon="css"
-    .reading-width {
-      max-width: 68ch;
-    }
-    ```
-
-    ```html HTML icon="html5"
-    <article class="reading-width">
-      <h2>Comfortable reading width</h2>
-      <p>
-        Keep long paragraphs narrow enough for the eye to find the next line without effort. This improves comprehension and makes dense product content feel calmer.
-      </p>
-    </article>
-    ```
-  </CodeGroup>
-</CodeLivePreview>
-
 <Frame className="px-4 py-4" caption="Line length">
   <img
     className="block dark:hidden"
-    src="/foundations/images/typography/typography-line-length.png"
+    src="/foundations/images/typography/typography-line-length-light.svg"
     alt="Line length - light mode"
   />
   <img
     className="hidden dark:block"
-    src="/foundations/images/typography/typography-line-length.png"
+    src="/foundations/images/typography/typography-line-length-dark.svg"
     alt="Line length - dark mode"
   />
 </Frame>
