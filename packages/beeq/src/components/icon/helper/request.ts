@@ -36,7 +36,7 @@ const sanitizeSvgElement = (svg: SVGElement): void => {
  * @returns True if the element is valid, false otherwise
  */
 const validateElement = (element: Element): boolean => {
-  if (!element || element.nodeType !== Node.ELEMENT_NODE) return false;
+  if (element?.nodeType !== Node.ELEMENT_NODE) return false;
   if (element.nodeName.toLowerCase() === 'script') return false;
 
   // Check for malicious attributes using modern array methods
