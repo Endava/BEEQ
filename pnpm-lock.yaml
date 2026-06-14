@@ -201,8 +201,8 @@ importers:
         specifier: 0.0.9
         version: 0.0.9(@custom-elements-manifest/analyzer@0.11.0(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0))
       chromatic:
-        specifier: 16.6.0
-        version: 16.6.0
+        specifier: 17.4.1
+        version: 17.4.1
       core-js:
         specifier: 3.47.0
         version: 3.47.0
@@ -5905,8 +5905,9 @@ packages:
       '@chromatic-com/playwright':
         optional: true
 
-  chromatic@16.6.0:
-    resolution: {integrity: sha512-cxRHMa3HJYrQtuL1F3J2x6wuVvfP+d7frUzltS7SiCVE8HbUBQTejH6TzveTKAHzErgrMrXjxvjD37bOTi4Mhw==}
+  chromatic@17.4.1:
+    resolution: {integrity: sha512-qL1f0IhOBi0Z6kpQZGR62fJzzCOdjFJLHrJw3QL9YNktj2Kl3+adlU+6psqNGfZUycKF7+pizCSbhsUQNIS/uQ==}
+    engines: {node: '>=22.0.0'}
     hasBin: true
     peerDependencies:
       '@chromatic-com/cypress': ^0.*.* || ^1.0.0
@@ -18928,7 +18929,7 @@ snapshots:
 
   chromatic@13.3.4: {}
 
-  chromatic@16.6.0:
+  chromatic@17.4.1:
     dependencies:
       semver: 7.7.4
 
