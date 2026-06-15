@@ -160,7 +160,7 @@ pnpm build
 BEEQ uses [Vitest](https://vitest.dev/) for unit tests and end-to-end tests.
 
 > [!IMPORTANT]
-> BEEQ uses Stencil Vitest for end-to-end tests. The required Chromium browser is installed during `pnpm install` via the repository `postinstall` step.
+> The required Chromium browser is installed during `pnpm install` via the repository `postinstall` step.
 
 You can run all the tests once, by executing:
 
