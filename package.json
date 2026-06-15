@@ -137,25 +137,9 @@
     "node": ">=22.0.0",
     "pnpm": ">=10.0.0"
   },
-  "packageManager": "pnpm@10.33.0",
-  "pnpm": {
-    "overrides": {
-      "@angular-devkit/build-angular": "21.2.9",
-      "@angular-devkit/core": "21.2.9",
-      "@angular-devkit/schematics": "21.2.9",
-      "@custom-elements-manifest/analyzer": "0.11.0",
-      "@module-federation/enhanced": "0.22.0",
-      "@schematics/angular": "21.2.9",
-      "ng-packagr": "21.2.3",
-      "node-fetch": "3.3.2",
-      "nx": "22.7.5",
-      "postcss": "8.5.12",
-      "storybook": "10.4.3",
-      "vitest": "4.1.5"
-    }
-  },
+  "packageManager": "pnpm@11.6.0",
   "volta": {
     "node": "24.14.1",
-    "pnpm": "10.33.0"
+    "pnpm": "11.6.0"
   }
 }
