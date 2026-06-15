@@ -212,17 +212,7 @@ describe('bq-drawer', () => {
     const drawer = root as HTMLBqDrawerElement;
 
     const panel = getDrawerPanel(drawer);
-    vi.spyOn(panel, 'getBoundingClientRect').mockReturnValue({
-      top: 0,
-      right: 100,
-      bottom: 100,
-      left: 0,
-      width: 100,
-      height: 100,
-      x: 0,
-      y: 0,
-      toJSON: () => ({}),
-    } as DOMRect);
+    vi.spyOn(panel, 'getBoundingClientRect').mockReturnValue(new DOMRect(0, 0, 100, 100));
 
     window.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, button: 0, clientX: 200, clientY: 50 }));
     await waitForChanges();
