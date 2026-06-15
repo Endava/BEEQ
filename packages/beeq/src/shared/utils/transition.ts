@@ -73,7 +73,7 @@ const transition = async (direction: string, element: HTMLElement, animation: st
   // Replace start classes with end classes, then wait for the transition to finish
   removeClasses(element, startClasses);
   addClasses(element, endClasses);
-  await afterTransition(element as HTMLElementWithAnimations);
+  await afterTransition(element);
 
   // Remove end and genesis classes
   removeClasses(element, endClasses);
