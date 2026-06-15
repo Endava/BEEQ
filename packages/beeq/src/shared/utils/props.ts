@@ -16,15 +16,14 @@ export const validatePropValue = <T extends E[keyof E], E extends Element>(
   element: E,
   propertyName: TValidProperty<E, T>,
 ): void => {
-  const propertyValue = element[propertyName as string];
+  const propertyKey = propertyName as string;
+  const propertyValue = element[propertyKey];
   // Early return if the property value is one of the accepted values
   if (ACCEPTED_VALUES.includes(propertyValue)) return;
   // Override property with fallback value
-  element[propertyName as string] = fallbackValue;
+  element[propertyKey] = fallbackValue;
   // Notify developer in the browser console
   console.warn(
-    `[${element.tagName.toUpperCase()}] Please notice that "${String(
-      propertyName,
-    )}" should be one of ${ACCEPTED_VALUES.join('|')}`,
+    `[${element.tagName.toUpperCase()}] Please notice that "${propertyKey}" should be one of ${ACCEPTED_VALUES.join('|')}`,
   );
 };
