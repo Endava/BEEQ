@@ -110,7 +110,7 @@ commands:
 jobs:
   main:
     docker:
-      - image: cimg/node:22.15.0-browsers
+      - image: cimg/node:26.3.0-browsers
     resource_class: large
     environment: *env-vars
     steps:
@@ -156,7 +156,7 @@ jobs:
 
   chromatic:
     docker:
-      - image: cimg/node:22.15.0-browsers
+      - image: cimg/node:26.3.0-browsers
     environment: *env-vars
     steps:
       - checkout
