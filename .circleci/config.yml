@@ -4,7 +4,6 @@ version: 2.1
 
 orbs:
   nx: nrwl/nx@1.7.0
-  browser-tools: circleci/browser-tools@1.5.3
 
 # ---------------------------------------------------------------------------- #
 #                             Environment Variables                            #
@@ -13,8 +12,8 @@ orbs:
 env-vars: &env-vars
   NX_BRANCH: << pipeline.git.branch >>
   NX_VERBOSE_LOGGING: "true"
-  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: "true"
   NODE_OPTIONS: "--max-old-space-size=4096"
+  PLAYWRIGHT_BROWSERS_PATH: "/ms-playwright"
 
 # ---------------------------------------------------------------------------- #
 #                                Reusable steps                                #
@@ -52,7 +51,7 @@ commands:
       - restore_cache:
           name: 💫 Restore node_modules cache
           keys:
-            - node-modules-{{ arch }}-{{ checksum "pnpm-lock.yaml" }}
+            - node-modules-{{ arch }}-{{ checksum "package.json" }}-{{ checksum "pnpm-lock.yaml" }}
             - node-modules-{{ arch }}-
             - node-modules-
 
@@ -77,7 +76,7 @@ commands:
       # Save the node_modules cache
       - save_cache:
           name: 💾 Save node_modules cache
-          key: node-modules-{{ arch }}-{{ checksum "pnpm-lock.yaml" }}
+          key: node-modules-{{ arch }}-{{ checksum "package.json" }}-{{ checksum "pnpm-lock.yaml" }}
           paths:
             - ./node_modules
             - ./packages/beeq/node_modules
@@ -86,16 +85,14 @@ commands:
             - ./packages/beeq-vue/node_modules
             - ./packages/beeq-tailwindcss/node_modules
 
-  setup-browser-tools:
+  verify-playwright:
     steps:
-      - browser-tools/install-chrome
-      - browser-tools/install-chromedriver
       - run:
-          name: 🔍 Verify Chrome Installation
+          name: 🎭 Verify Playwright browsers
           command: |
-            google-chrome --version
-            chromedriver --version
-            echo "export PUPPETEER_EXECUTABLE_PATH=$(which google-chrome)" >> $BASH_ENV
+            pnpm exec playwright --version
+            test -d "$PLAYWRIGHT_BROWSERS_PATH"
+            ls -lah "$PLAYWRIGHT_BROWSERS_PATH"
 
 # ---------------------------------------------------------------------------- #
 #                                     Jobs                                     #
@@ -104,14 +101,14 @@ commands:
 jobs:
   main:
     docker:
-      - image: cimg/node:26.3.0-browsers
+      - image: mcr.microsoft.com/playwright:v1.59.1-noble
     resource_class: large
     environment: *env-vars
     steps:
       - checkout
       - setup-node
       - setup-deps
-      - setup-browser-tools
+      - verify-playwright
       # Start Nx Cloud and run all tasks
       - run:
           name: 🧾 NX report
@@ -132,7 +129,10 @@ jobs:
           command: pnpm exec nx affected -t build --exclude='*,!tag:publishable' --parallel=3 --base=$NX_BASE --head=$NX_HEAD --verbose
       - run:
           name: 🧪 Run E2E Tests
-          command: pnpm exec nx affected -t e2e --exclude='*,!tag:core' --parallel=3 --base=$NX_BASE --head=$NX_HEAD --verbose
+          # Browser e2e tests use the Playwright Docker image configured on this
+          # CircleCI job. Nx managed agents use separate launch templates, so keep
+          # this target on the coordinator unless the agents also install browsers.
+          command: pnpm exec nx affected -t e2e --exclude='*,!tag:core' --parallel=3 --base=$NX_BASE --head=$NX_HEAD --verbose --no-agents
       - run:
           name: 📚 Build Storybook
           command: pnpm exec nx run beeq:storybook-build --output-style=stream --verbose
