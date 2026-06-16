@@ -50,7 +50,7 @@ commands:
       - restore_cache:
           name: 💫 Restore node_modules cache
           keys:
-            - node-modules-{{ arch }}-{{ checksum "pnpm-lock.yaml" }}
+            - node-modules-{{ arch }}-{{ checksum "package.json" }}-{{ checksum "pnpm-lock.yaml" }}
             - node-modules-{{ arch }}-
             - node-modules-
 
@@ -75,7 +75,7 @@ commands:
       # Save the node_modules cache
       - save_cache:
           name: 💾 Save node_modules cache
-          key: node-modules-{{ arch }}-{{ checksum "pnpm-lock.yaml" }}
+          key: node-modules-{{ arch }}-{{ checksum "package.json" }}-{{ checksum "pnpm-lock.yaml" }}
           paths:
             - ./node_modules
             - ./packages/beeq/node_modules
@@ -84,12 +84,30 @@ commands:
             - ./packages/beeq-vue/node_modules
             - ./packages/beeq-tailwindcss/node_modules
 
-  setup-browser-tools:
+  setup-playwright:
     steps:
+      - restore_cache:
+          name: 💫 Restore Playwright browser cache
+          keys:
+            - playwright-browsers-{{ arch }}-{{ checksum "package.json" }}-{{ checksum "pnpm-lock.yaml" }}
+            - playwright-browsers-{{ arch }}-
+            - playwright-browsers-
+
       - run:
-          name: 🎭 Install Playwright browser
-          command: pnpm exec playwright install chromium --only-shell
-          no_output_timeout: 15m
+          name: 🎭 Install Playwright Chromium
+          command: |
+            node --version
+            pnpm exec playwright --version
+            pnpm exec playwright install chromium --only-shell
+            pnpm exec playwright install --list
+            ls -lah ~/.cache/ms-playwright || true
+          no_output_timeout: 20m
+
+      - save_cache:
+          name: 💾 Save Playwright browser cache
+          key: playwright-browsers-{{ arch }}-{{ checksum "package.json" }}-{{ checksum "pnpm-lock.yaml" }}
+          paths:
+            - ~/.cache/ms-playwright
 
 # ---------------------------------------------------------------------------- #
 #                                     Jobs                                     #
@@ -105,7 +123,7 @@ jobs:
       - checkout
       - setup-node
       - setup-deps
-      - setup-browser-tools
+      - setup-playwright
       # Start Nx Cloud and run all tasks
       - run:
           name: 🧾 NX report
