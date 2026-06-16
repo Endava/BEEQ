@@ -4,7 +4,6 @@ version: 2.1
 
 orbs:
   nx: nrwl/nx@1.7.0
-  browser-tools: circleci/browser-tools@1.5.3
 
 # ---------------------------------------------------------------------------- #
 #                             Environment Variables                            #
@@ -13,7 +12,6 @@ orbs:
 env-vars: &env-vars
   NX_BRANCH: << pipeline.git.branch >>
   NX_VERBOSE_LOGGING: "true"
-  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: "true"
   NODE_OPTIONS: "--max-old-space-size=4096"
 
 # ---------------------------------------------------------------------------- #
@@ -88,14 +86,10 @@ commands:
 
   setup-browser-tools:
     steps:
-      - browser-tools/install-chrome
-      - browser-tools/install-chromedriver
       - run:
-          name: 🔍 Verify Chrome Installation
-          command: |
-            google-chrome --version
-            chromedriver --version
-            echo "export PUPPETEER_EXECUTABLE_PATH=$(which google-chrome)" >> $BASH_ENV
+          name: 🎭 Install Playwright browser
+          command: pnpm exec playwright install chromium
+          no_output_timeout: 5m
 
 # ---------------------------------------------------------------------------- #
 #                                     Jobs                                     #
