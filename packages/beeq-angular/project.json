@@ -10,7 +10,7 @@
     "prebuild": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["tsx packages/beeq-angular/scripts/fix-value-accessor-path.ts"]
+        "commands": ["tsx packages/beeq-angular/scripts/patch-value-accessor-event-targets.ts"]
       },
       "dependsOn": [{ "dependencies": true, "target": "build" }]
     },

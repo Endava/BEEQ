@@ -1,3 +1,38 @@
+linkWorkspacePackages: true
+preferFrozenLockfile: true
+provenance: true
+saveExact: true
+
 packages:
   - 'apps/*'
   - 'packages/*'
+
+allowBuilds:
+  '@parcel/watcher': false
+  '@swc/core': true
+  'core-js': true
+  'esbuild': false
+  'less': false
+  'lmdb': false
+  'msgpackr-extract': false
+  'nx': true
+  'rs-module-lexer': false
+  'unrs-resolver': false
+
+overrides:
+  '@angular-devkit/core': '22.0.1'
+  '@angular-devkit/schematics': '22.0.1'
+  '@custom-elements-manifest/analyzer': '0.11.0'
+  '@module-federation/enhanced': '0.22.0'
+  '@schematics/angular': '22.0.1'
+  'ng-packagr': '22.0.0'
+  'node-fetch': '3.3.2'
+  'nx': '22.7.5'
+  'postcss': '8.5.12'
+  'storybook': '10.4.3'
+  'vite': '8.0.10'
+  'vitest': '4.1.5'
+
+minimumReleaseAgeExclude:
+  - '@stencil/vitest@1.13.2'
+  - vitest-environment-stencil@1.13.2
