@@ -13,6 +13,7 @@ env-vars: &env-vars
   NX_BRANCH: << pipeline.git.branch >>
   NX_VERBOSE_LOGGING: "true"
   NODE_OPTIONS: "--max-old-space-size=4096"
+  PLAYWRIGHT_BROWSERS_PATH: "/ms-playwright"
 
 # ---------------------------------------------------------------------------- #
 #                                Reusable steps                                #
@@ -84,30 +85,14 @@ commands:
             - ./packages/beeq-vue/node_modules
             - ./packages/beeq-tailwindcss/node_modules
 
-  setup-playwright:
+  verify-playwright:
     steps:
-      - restore_cache:
-          name: 💫 Restore Playwright browser cache
-          keys:
-            - playwright-browsers-{{ arch }}-{{ checksum "package.json" }}-{{ checksum "pnpm-lock.yaml" }}
-            - playwright-browsers-{{ arch }}-
-            - playwright-browsers-
-
       - run:
-          name: 🎭 Install Playwright Chromium
+          name: 🎭 Verify Playwright browsers
           command: |
-            node --version
             pnpm exec playwright --version
-            pnpm exec playwright install chromium --only-shell
-            pnpm exec playwright install --list
-            ls -lah ~/.cache/ms-playwright || true
-          no_output_timeout: 20m
-
-      - save_cache:
-          name: 💾 Save Playwright browser cache
-          key: playwright-browsers-{{ arch }}-{{ checksum "package.json" }}-{{ checksum "pnpm-lock.yaml" }}
-          paths:
-            - ~/.cache/ms-playwright
+            test -d "$PLAYWRIGHT_BROWSERS_PATH"
+            ls -lah "$PLAYWRIGHT_BROWSERS_PATH"
 
 # ---------------------------------------------------------------------------- #
 #                                     Jobs                                     #
@@ -116,14 +101,14 @@ commands:
 jobs:
   main:
     docker:
-      - image: cimg/node:26.3.0-browsers
+      - image: mcr.microsoft.com/playwright:v1.59.1-noble
     resource_class: large
     environment: *env-vars
     steps:
       - checkout
       - setup-node
       - setup-deps
-      - setup-playwright
+      - verify-playwright
       # Start Nx Cloud and run all tasks
       - run:
           name: 🧾 NX report
