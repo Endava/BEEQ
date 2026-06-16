@@ -2,7 +2,6 @@
   "compileOnSave": false,
   "compilerOptions": {
     "rootDir": ".",
-    "baseUrl": ".",
     "lib": ["dom", "esnext"],
     "target": "esnext",
     "module": "esnext",
@@ -24,13 +23,13 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "paths": {
-      "@beeq/angular": ["dist/beeq-angular"],
-      "@beeq/core": ["dist/beeq"],
-      "@beeq/core/*": ["dist/beeq/*"],
-      "@beeq/react": ["dist/beeq-react"],
-      "@beeq/tailwindcss": ["dist/beeq-tailwindcss"],
-      "@beeq/tools": ["tools/src/index.ts"],
-      "@beeq/vue": ["dist/beeq-vue"]
+      "@beeq/angular": ["./dist/beeq-angular"],
+      "@beeq/core": ["./dist/beeq"],
+      "@beeq/core/*": ["./dist/beeq/*"],
+      "@beeq/react": ["./dist/beeq-react"],
+      "@beeq/tailwindcss": ["./dist/beeq-tailwindcss"],
+      "@beeq/tools": ["./tools/src/index.ts"],
+      "@beeq/vue": ["./dist/beeq-vue"]
     }
   },
   "exclude": ["./node_modules", "./tmp"]
