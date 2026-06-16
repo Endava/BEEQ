@@ -129,7 +129,10 @@ jobs:
           command: pnpm exec nx affected -t build --exclude='*,!tag:publishable' --parallel=3 --base=$NX_BASE --head=$NX_HEAD --verbose
       - run:
           name: 🧪 Run E2E Tests
-          command: pnpm exec nx affected -t e2e --exclude='*,!tag:core' --parallel=3 --base=$NX_BASE --head=$NX_HEAD --verbose
+          # Browser e2e tests use the Playwright Docker image configured on this
+          # CircleCI job. Nx managed agents use separate launch templates, so keep
+          # this target on the coordinator unless the agents also install browsers.
+          command: pnpm exec nx affected -t e2e --exclude='*,!tag:core' --parallel=3 --base=$NX_BASE --head=$NX_HEAD --verbose --no-agents
       - run:
           name: 📚 Build Storybook
           command: pnpm exec nx run beeq:storybook-build --output-style=stream --verbose
