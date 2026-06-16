@@ -329,9 +329,7 @@ export class BqRadioGroup {
     }
 
     // Priority 3: First enabled radio (fallback)
-    if (!focusableRadio) {
-      focusableRadio = this.cachedRadioElements.find((radio) => !radio.disabled);
-    }
+    focusableRadio ??= this.cachedRadioElements.find((radio) => !radio.disabled);
 
     // Apply tabIndex to all radios
     this.cachedRadioElements.forEach((radio) => {
