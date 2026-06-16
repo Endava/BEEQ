@@ -88,8 +88,8 @@ commands:
     steps:
       - run:
           name: 🎭 Install Playwright browser
-          command: pnpm exec playwright install chromium
-          no_output_timeout: 5m
+          command: pnpm exec playwright install chromium --only-shell
+          no_output_timeout: 15m
 
 # ---------------------------------------------------------------------------- #
 #                                     Jobs                                     #
