@@ -48,7 +48,7 @@
   "editor.defaultFormatter": "biomejs.biome",
   "editor.formatOnSave": true,
   "files.associations": {
-    "*.json5": "json5"
+    "*.json5": "jsonc"
   },
   "github.copilot.chat.commitMessageGeneration.instructions": [
     {
@@ -70,6 +70,13 @@
   "html.customData": ["./packages/beeq/cem/beeq.html-custom-data.json"],
   "js/ts.tsdk.path": "node_modules/typescript/lib",
   "js/ts.tsdk.promptToUseWorkspaceVersion": true,
+  "json.schemas": [
+    {
+      "fileMatch": ["renovate.json", "renovate.json5"],
+      "url": "https://docs.renovatebot.com/renovate-schema.json"
+    }
+  ],
+  "json.schemaDownload.trustedDomains": { "*": true },
   "less.validate": false,
   "scss.validate": false,
   "sonarlint.connectedMode.project": {
