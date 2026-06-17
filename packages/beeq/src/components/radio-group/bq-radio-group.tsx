@@ -317,15 +317,12 @@ export class BqRadioGroup {
       return;
     }
 
-    // Find which radio should be focusable
-    let focusableRadio: HTMLBqRadioElement | undefined;
-
     // Priority 1: Currently checked radio
-    focusableRadio = this.cachedRadioElements.find((radio) => radio.checked);
+    let focusableRadio = this.cachedRadioElements.find((radio) => radio.checked);
 
     // Priority 2: Radio matching current value
-    if (!focusableRadio && this.value) {
-      focusableRadio = this.cachedRadioElements.find((radio) => radio.value === this.value);
+    if (!isNil(this.value)) {
+      focusableRadio ??= this.cachedRadioElements.find((radio) => radio.value === this.value);
     }
 
     // Priority 3: First enabled radio (fallback)
