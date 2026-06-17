@@ -17,6 +17,7 @@ argument-hint: 'Component name without the bq- prefix (e.g. "slider")'
 1. Read the instruction files for this task:
    - [StencilJS instructions](../../instructions/stenciljs.instructions.md)
    - [Styles instructions](../../instructions/styles.instructions.md)
+   - [Tailwind to native SCSS migration instructions](../../instructions/tailwind-to-native-scss.instructions.md)
    - [Accessibility instructions](../../instructions/accessibility.instructions.md)
 2. Pick a similar existing component as a reference:
    - Simple / display: `packages/beeq/src/components/badge/bq-badge.tsx`
@@ -99,9 +100,12 @@ Place above `@Component({})`. Every component **must** include:
 ### 5. Style the component (`scss/bq-<name>.scss`)
 
 - Import variables file: `@import './bq-<name>.variables'`
-- Use Tailwind `@apply` for abstracting long utility combinations
+- Use native SCSS/CSS. Do not add Tailwind `@apply`, `theme(...)`, or visual Tailwind utility classes in render output.
 - Define CSS custom properties (e.g. `--bq-name--border-radius`) in `bq-<name>.variables.scss`
-- Follow BEM for any extra class names
+- Use BEEQ semantic classes only where stable styling hooks are needed, e.g. `.bq-name` and `.bq-name__content`.
+- Use CSS logical properties for layout, sizing, spacing, positioning, borders, and radii.
+- Use shared SCSS mixins for repeated focus, hover, and active patterns.
+- Keep SCSS nesting depth at `2` or less.
 
 ## 6. After all files are created and implemented, ask the user:
 
