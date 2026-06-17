@@ -96,7 +96,8 @@
         "perf": { "changelog": { "title": "Performance ⌛️", "semverBump": "patch" } },
         "refactor": { "changelog": { "title": "Refactor 🛠️", "semverBump": "patch" } },
         "revert": { "changelog": { "title": "Revert 🔄", "semverBump": "patch" } },
-        "release": false
+        "release": false,
+        "ci": false
       }
     },
     "git": {
