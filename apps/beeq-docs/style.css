@@ -175,7 +175,12 @@ body,
 }
 
 [data-name="frame"] {
-  background-color: var(--bq-background--tertiary) !important;
+  background-color: var(--bq-background--primary) !important;
+}
+
+[data-name="frame"] div:first-child {
+  background-image: unset !important;
+  mask-image: unset !important;
 }
 
 /* ------------------------------ CodeLivePreview ------------------------------ */
