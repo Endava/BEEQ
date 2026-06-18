@@ -69,10 +69,10 @@ Tables organize information into rows and columns so people can compare values, 
 
 A table is built from standard HTML sectioning and cell elements. Each part has a defined role and styling responsibility.
 
-<Frame className="px-4 py-4" caption="Table anatomy">
+{/* <Frame className="px-4 py-4" caption="Table anatomy">
   <img className="block dark:hidden" src="/components/images/table/table-anatomy-light.svg" alt="BEEQ Table anatomy" />
   <img className="hidden dark:block" src="/components/images/table/table-anatomy-dark.svg" alt="BEEQ Table anatomy" />
-</Frame>
+</Frame> */}
 
 | Part | Element | Description |
 |---|---|---|
@@ -87,37 +87,21 @@ A table is built from standard HTML sectioning and cell elements. Each part has 
 ## Design guidelines
 
 <CardGroup cols={2}>
-  <CardTile
-    title="Default density"
-    imageLightSrc="/components/images/table/table-density-default-light.svg"
-    imageDarkSrc="/components/images/table/table-density-default-dark.svg"
-  >
+  <CardTile title="Default density">
     The default table uses generous cell padding to give content room to breathe. Use it in most contexts where the dataset fits comfortably on screen.
   </CardTile>
 
-  <CardTile
-    title="Compact density"
-    imageLightSrc="/components/images/table/table-density-compact-light.svg"
-    imageDarkSrc="/components/images/table/table-density-compact-dark.svg"
-  >
+  <CardTile title="Compact density">
     The `.compact` modifier reduces padding significantly. Reserve it for dashboards or administrative screens where showing more rows at once outweighs the reduced spacing.
   </CardTile>
 </CardGroup>
 
 <CardGroup cols={2}>
-  <CardTile
-    title="Default (divider) borders"
-    imageLightSrc="/components/images/table/table-borders-default-light.svg"
-    imageDarkSrc="/components/images/table/table-borders-default-dark.svg"
-  >
+  <CardTile title="Default (divider) borders">
     The default style separates rows with a single bottom border and uses subtle column dividers in the header only. This keeps the table light and easy to scan.
   </CardTile>
 
-  <CardTile
-    title="Bordered"
-    imageLightSrc="/components/images/table/table-borders-bordered-light.svg"
-    imageDarkSrc="/components/images/table/table-borders-bordered-dark.svg"
-  >
+  <CardTile title="Bordered">
     Adding `.bordered` draws a full border around every cell and the table itself. Use this when column delineation is critical for data clarity, such as financial or spreadsheet-style tables.
   </CardTile>
 </CardGroup>
@@ -132,7 +116,7 @@ A table is built from standard HTML sectioning and cell elements. Each part has 
 
 The default table applies base typography, header and cell padding, and row separators. Add the `bq-table` class to any standard `<table>` element to activate the styles.
 
-<CodeLivePreview mode="iframe" height="14rem" removePadding code={`
+<CodeLivePreview mode="iframe" height="16rem" removePadding code={`
   <style>
     body {
       padding: var(--bq-spacing-m);
