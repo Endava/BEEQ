@@ -1,4 +1,4 @@
-@import url("https://esm.sh/@beeq/core@beta/dist/beeq/beeq.css") layer(beeq);
+@import url("https://esm.sh/@beeq/core/dist/beeq/beeq.css") layer(beeq);
 @import url("./home.css");
 
 :root {

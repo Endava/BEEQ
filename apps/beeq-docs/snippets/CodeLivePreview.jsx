@@ -25,8 +25,8 @@ export const CodeLivePreview = ({ code, children, height, removePadding = false,
   const previewRef = useRef(null);
 
   // Constants are centralized so URLs and selectors are not duplicated.
-  const BEEQ_ESM_URL = 'https://esm.sh/@beeq/core@beta/dist/beeq/beeq.esm.js';
-  const BEEQ_CSS_URL = 'https://esm.sh/@beeq/core@beta/dist/beeq/beeq.css';
+  const BEEQ_ESM_URL = 'https://esm.sh/@beeq/core/dist/beeq/beeq.esm.js';
+  const BEEQ_CSS_URL = 'https://esm.sh/@beeq/core/dist/beeq/beeq.css';
   const BEEQ_ICONS_URL = 'https://esm.sh/@beeq/core/dist/beeq/svg';
 
   /**
