@@ -31,7 +31,15 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
       </h1>
 
       <p className="text-base lg:text-lg leading-relaxed mb-7 bq-home-section__copy">
-        BEEQ is Endava's open-source design system — 37 production-ready web components that work
+        BEEQ is
+        <Tooltip
+          tip="Endava is a global technology services company and a leading provider of next-generation digital transformation solutions.
+          It helps organisations design, build, modernise, and run digital products and platforms by combining innovative technology,
+          deep industry expertise, world-class engineering, and an AI-native approach."
+          cta="Learn more about Endava"
+          href="https://www.endava.com/"
+        >Endava</Tooltip>
+        's open-source design system — 37 production-ready web components that work
         across React, Angular, Vue, and plain HTML. No rewrites. No lock-in. No compromises.
       </p>
 
@@ -238,7 +246,13 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
         Every framework.<br />Two lines.
       </h2>
       <p className="text-base leading-relaxed mb-4 mt-0 bq-home-section__copy">
-        BEEQ is built on standard HTML custom elements. The same component works in React, Angular, Vue, or a plain HTML file — with zero rewrites.
+        BEEQ is built on standard
+        <Tooltip
+          tip="Web Components are a set of web platform APIs that allow you to create new custom, reusable, encapsulated HTML tags to use in web pages and web apps."
+          cta="Learn more about Web Components"
+          href="https://developer.mozilla.org/en-US/docs/Web/Web_Components"
+        >HTML custom elements</Tooltip>.
+        The same component works in React, Angular, Vue, or a plain HTML file — with zero rewrites.
       </p>
       <p className="text-base leading-relaxed mb-6 mt-0 bq-home-section__copy">
         Want typed props and native framework events? The optional `@beeq/react`, `@beeq/angular`, and `@beeq/vue` wrappers give you a first-class developer experience without locking you into a proprietary fork.
