@@ -55,7 +55,7 @@
 }
 
 .bq-step-item__prefix.numeric {
-  @apply flex items-center justify-center rounded-full;
+  @apply shrink-0 flex items-center justify-center rounded-full;
   @apply bg-[--bq-step-item--prefix-num-bg-color] bs-[--bq-step-item--prefix-num-size] is-[--bq-step-item--prefix-num-size];
   @apply text-m font-semibold leading-regular text-primary;
 
