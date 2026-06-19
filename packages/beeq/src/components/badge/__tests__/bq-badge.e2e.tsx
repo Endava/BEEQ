@@ -55,7 +55,7 @@ describe('bq-badge', () => {
 
     expect(badge).toHaveClass('digit');
     expect(getTextContent(numberSlot, { recurse: true })).toBe('2');
-    expect(badge).not.toHaveClass('p-i-xs2');
+    expect(badge).not.toHaveClass('is-multiple');
   });
 
   it('should apply inline CSS variables from color props', async () => {
@@ -90,6 +90,6 @@ describe('bq-badge', () => {
 
     expect(getTextContent(numberSlot, { recurse: true })).toBe('12');
     expect(badge).toHaveClass('digit');
-    expect(badge).toHaveClass('p-i-xs2');
+    expect(badge).toHaveClass('is-multiple');
   });
 });

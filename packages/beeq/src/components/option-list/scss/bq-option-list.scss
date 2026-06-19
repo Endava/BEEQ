@@ -5,5 +5,11 @@
 @import './bq-option-list.variables';
 
 :host {
-  @apply block;
+  display: block;
+}
+
+.bq-option__list {
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--bq-option-group--gapY-list);
 }

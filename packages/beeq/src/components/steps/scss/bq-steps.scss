@@ -5,9 +5,28 @@
 @import './bq-steps.variables';
 
 :host {
-  @apply box-border inline-flex;
+  box-sizing: border-box;
+  display: inline-flex;
 }
 
 :host([orientation='vertical']) {
-  @apply flex bs-full;
+  display: flex;
+  block-size: 100%;
+}
+
+.bq-steps {
+  position: relative;
+  display: inline-flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.bq-steps.orientation--horizontal {
+  flex-direction: row;
+  inline-size: 100%;
+}
+
+.bq-steps.orientation--vertical {
+  flex-direction: column;
+  block-size: 100%;
 }

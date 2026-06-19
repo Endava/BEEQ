@@ -188,7 +188,7 @@ export class BqDivider {
             'bq-divider': true,
             [`bq-divider--${this.orientation}`]: true,
             [`bq-divider--title__${this.titleAlignment}`]: true,
-            'gap-0': !this.hasTitle,
+            'is-gapless': !this.hasTitle,
           }}
           part="base"
           ref={(div) => {
@@ -199,7 +199,7 @@ export class BqDivider {
             aria-hidden="true"
             class={{
               'bq-divider--stroke start': true,
-              '!hidden': this.strokeBasis === 0 && this.titleAlignment === 'start',
+              'is-hidden': this.strokeBasis === 0 && this.titleAlignment === 'start',
             }}
             part="dash-start"
           >
@@ -210,7 +210,7 @@ export class BqDivider {
             aria-hidden="true"
             class={{
               'bq-divider--stroke end': true,
-              '!hidden': !this.hasTitle || (this.strokeBasis === 0 && this.titleAlignment === 'end'),
+              'is-hidden': !this.hasTitle || (this.strokeBasis === 0 && this.titleAlignment === 'end'),
             }}
             part="dash-end"
           >

@@ -26,26 +26,26 @@
   * @prop --bq-avatar--badge-left-circle: Badge left position shape circle
   */
 
-  --bq-avatar-background: theme(backgroundColor.ui.alt);
+  --bq-avatar-background: var(--bq-ui--alt);
 
-  --bq-avatar--border-color: theme(stroke.tertiary);
+  --bq-avatar--border-color: var(--bq-stroke--tertiary);
   --bq-avatar--border-style: solid;
-  --bq-avatar--border-width: theme(borderWidth.m);
+  --bq-avatar--border-width: var(--bq-stroke-m);
 
-  --bq-avatar--border-radius-circle: theme(borderRadius.full);
-  --bq-avatar--border-radius-squareXs: theme(borderRadius.xs);
-  --bq-avatar--border-radius-squareS: theme(borderRadius.s);
-  --bq-avatar--border-radius-squareM: theme(borderRadius.m);
+  --bq-avatar--border-radius-circle: var(--bq-radius--full);
+  --bq-avatar--border-radius-squareXs: var(--bq-radius--xs);
+  --bq-avatar--border-radius-squareS: var(--bq-radius--s);
+  --bq-avatar--border-radius-squareM: var(--bq-radius--m);
 
   --bq-avatar--size-xsmall: 24px;
   --bq-avatar--size-small: 32px;
   --bq-avatar--size-medium: 48px;
   --bq-avatar--size-large: 64px;
 
-  --bq-avatar--font-size-xsmall: theme(fontSize.xs);
-  --bq-avatar--font-size-small: theme(fontSize.xs);
-  --bq-avatar--font-size-medium: theme(fontSize.m);
-  --bq-avatar--font-size-large: theme(fontSize.m);
+  --bq-avatar--font-size-xsmall: var(--bq-font-size--xs);
+  --bq-avatar--font-size-small: var(--bq-font-size--xs);
+  --bq-avatar--font-size-medium: var(--bq-font-size--m);
+  --bq-avatar--font-size-large: var(--bq-font-size--m);
 
   --bq-avatar--badge-top-square: -5px;
   --bq-avatar--badge-left-square: 80%;

@@ -3,5 +3,10 @@
 /* -------------------------------------------------------------------------- */
 
 :host {
-  @apply relative inline-block;
+  position: relative;
+  display: inline-block;
+}
+
+.bq-dropdown__trigger {
+  display: block;
 }

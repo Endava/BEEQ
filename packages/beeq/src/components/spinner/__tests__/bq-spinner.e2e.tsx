@@ -56,21 +56,21 @@ describe('bq-spinner', () => {
     const spinnerEl = () => spinner.shadowRoot?.querySelector('.bq-spinner');
     const spinnerText = () => spinner.shadowRoot?.querySelector('.bq-spinner--text');
 
-    expect(spinnerEl()).toHaveClass('text-above');
+    expect(spinnerEl()).toHaveClass('position--above');
 
     await setProps({ textPosition: 'below' });
-    expect(spinnerEl()).toHaveClass('text-below');
+    expect(spinnerEl()).toHaveClass('position--below');
 
     await setProps({ textPosition: 'left' });
-    expect(spinnerEl()).toHaveClass('text-left');
+    expect(spinnerEl()).toHaveClass('position--left');
 
     await setProps({ textPosition: 'right' });
-    expect(spinnerEl()).toHaveClass('text-right');
+    expect(spinnerEl()).toHaveClass('position--right');
 
     await setProps({ textPosition: 'none' });
 
-    expect(spinnerText()).toHaveClass('!hidden');
-    expect(spinnerEl()).toHaveClass('text-none');
+    expect(spinnerText()).toHaveClass('is-hidden');
+    expect(spinnerEl()).toHaveClass('position--none');
   });
 
   it('should render icon slot element', async () => {
@@ -86,7 +86,7 @@ describe('bq-spinner', () => {
     const slotElement = root.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="icon"]');
     const iconSlotElements = slotElement.assignedElements({ flatten: true });
 
-    expect(spinnerIcon).not.toHaveClass('hidden');
+    expect(spinnerIcon).not.toHaveClass('is-hidden');
     expect(iconSlotElements).toHaveLength(1);
   });
 
@@ -141,15 +141,15 @@ describe('bq-spinner', () => {
     expect(mediumStyle).toEqual({ width: '48px', height: '48px' });
     expect(largeStyle).toEqual({ width: '56px', height: '56px' });
 
-    const textStyleExpected = {
-      fontSize: '16px',
+    const textStyleExpected = (fontSize: string) => ({
+      fontSize,
       fontWeight: '500',
-      lineHeight: getLineHeightValue(smallTextStyle.fontSize),
-    };
+      lineHeight: getLineHeightValue(fontSize),
+    });
 
-    expect(smallTextStyle).toEqual(textStyleExpected);
-    expect(mediumTextStyle).toEqual(textStyleExpected);
-    expect(largeTextStyle).toEqual(textStyleExpected);
+    expect(smallTextStyle).toEqual(textStyleExpected('12px'));
+    expect(mediumTextStyle).toEqual(textStyleExpected('14px'));
+    expect(largeTextStyle).toEqual(textStyleExpected('16px'));
   });
 
   it('should render default slot text content', async () => {
@@ -165,7 +165,7 @@ describe('bq-spinner', () => {
     const slot = textEl?.querySelector<HTMLSlotElement>('slot');
     const assigned = slot.assignedElements({ flatten: true });
 
-    expect(textEl).not.toHaveClass('!hidden');
+    expect(textEl).not.toHaveClass('is-hidden');
     expect(assigned).toHaveLength(1);
     expect(getTextContent(slot, { recurse: true })).toBe('Loading...');
   });

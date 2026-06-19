@@ -126,7 +126,7 @@ export class BqBreadcrumb {
       <Host>
         <nav
           aria-label={this.label}
-          class="flex items-center"
+          class="bq-breadcrumb__navigation"
           part="navigation"
           ref={(elem) => {
             this.navElem = elem;
@@ -143,7 +143,7 @@ export class BqBreadcrumb {
           }}
         >
           <slot name="separator">
-            <span class="is-3 flex items-center justify-center">/</span>
+            <span class="bq-breadcrumb__separator">/</span>
           </slot>
         </span>
       </Host>

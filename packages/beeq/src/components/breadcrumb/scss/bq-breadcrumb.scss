@@ -3,5 +3,17 @@
 /* -------------------------------------------------------------------------- */
 
 :host {
-  @apply block;
+  display: block;
+}
+
+.bq-breadcrumb__navigation {
+  display: flex;
+  align-items: center;
+}
+
+.bq-breadcrumb__separator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--bq-spacing-s);
 }

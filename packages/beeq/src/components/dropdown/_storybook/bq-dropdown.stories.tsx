@@ -40,7 +40,7 @@ const meta: Meta = {
     skidding: { control: 'number' },
     strategy: { control: 'select', options: ['fixed', 'absolute'] },
     // Event handlers
-    bqSelect: { action: 'bqSelect', table: { disable: true } },
+    bqOpen: { action: 'bqOpen', table: { disable: true } },
     // Not part of the public API, so we don't want to expose it in the
     trigger: { control: 'text', table: { disable: true } },
     enableOptionGroup: { control: 'boolean', table: { disable: true } },
@@ -111,7 +111,7 @@ const Template = (args: Args) => {
       ?same-width=${args['same-width']}
       skidding=${ifDefined(args.skidding)}
       strategy=${ifDefined(args.strategy)}
-      @bqSelect=${args.bqSelect}
+      @bqOpen=${args.bqOpen}
     >
       <!-- TRIGGER ELEMENT -->
       ${args.trigger}

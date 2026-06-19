@@ -14,14 +14,15 @@
    * @prop --title-textColor - Page title color for title
    * @prop --title-textSize - Page title text size for title
    */
-  /* stylelint-disable custom-property-pattern */
-  --paddingY: theme(spacing.xl);
-  --subtitle-borderBlockEnd: 1px solid theme(stroke.primary);
-  --subtitle-fontWeight: theme(fontWeight.medium);
-  --subtitle-textColor: theme(textColor.secondary);
-  --subtitle-textSize: theme(fontSize.l);
-  --title-fontWeight: theme(fontWeight.bold);
-  --title-lineHeight: theme(lineHeight.regular);
-  --title-textColor: theme(textColor.primary);
-  --title-textSize: theme(fontSize.xxl);
+  /* stylelint-disable custom-property-pattern -- legacy public component variables */
+  --paddingY: var(--bq-spacing-xl);
+  --subtitle-borderBlockEnd: 1px solid var(--bq-stroke--primary);
+  --subtitle-fontWeight: var(--bq-font-weight--medium);
+  --subtitle-textColor: var(--bq-text--secondary);
+  --subtitle-textSize: var(--bq-font-size--l);
+  --title-fontWeight: var(--bq-font-weight--bold);
+  --title-lineHeight: var(--bq-font-line-height--regular);
+  --title-textColor: var(--bq-text--primary);
+  --title-textSize: var(--bq-font-size--xxl);
+  /* stylelint-enable custom-property-pattern */
 }

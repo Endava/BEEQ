@@ -1,31 +1,49 @@
 @import './bq-status.variables';
 
+.bq-status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--bq-spacing-xs);
+}
+
 .bq-status__circle {
+  border-radius: var(--bq-radius--full);
+
   &::part(base) {
+    --bq-badge--border-radius: var(--bq-radius--full);
     --bq-badge--size-medium: var(--bq-status-circle--size);
   }
 
   &.success::part(base) {
-    --bq-badge--background-color: theme(backgroundColor.ui.success);
+    --bq-badge--background-color: var(--bq-ui--success);
   }
 
   &.danger::part(base) {
-    --bq-badge--background-color: theme(backgroundColor.ui.danger);
+    --bq-badge--background-color: var(--bq-ui--danger);
   }
 
   &.neutral::part(base) {
-    --bq-badge--background-color: theme(backgroundColor.ui.secondary);
+    --bq-badge--background-color: var(--bq-ui--secondary);
   }
 
   &.alert::part(base) {
-    --bq-badge--background-color: theme(backgroundColor.ui.warning);
+    --bq-badge--background-color: var(--bq-ui--warning);
   }
 
   &.info::part(base) {
-    --bq-badge--background-color: theme(backgroundColor.ui.brand);
+    --bq-badge--background-color: var(--bq-ui--brand);
   }
 }
 
+.bq-status__text,
 .bq-status__text ::slotted(*) {
-  @apply text-s font-medium leading-regular text-primary p-b-0 p-i-0 m-b-0 m-i-0;
+  max-block-size: 20px;
+  margin-block: 0;
+  margin-inline: 0;
+  padding-block: 0;
+  padding-inline: 0;
+  color: var(--bq-text--primary);
+  font-weight: var(--bq-font-weight--medium);
+  font-size: var(--bq-font-size--s);
+  line-height: var(--bq-font-line-height--regular);
 }

@@ -228,12 +228,7 @@ export class BqDropdown {
     return (
       <div class="bq-dropdown" part="base">
         {/* TRIGGER CONTAINER */}
-        <div
-          aria-controls={this.dropdownPanelId}
-          aria-haspopup="true"
-          class="bq-dropdown__trigger block"
-          part="trigger"
-        >
+        <div aria-controls={this.dropdownPanelId} aria-haspopup="true" class="bq-dropdown__trigger" part="trigger">
           <slot name="trigger" />
         </div>
         {/* PANEL */}

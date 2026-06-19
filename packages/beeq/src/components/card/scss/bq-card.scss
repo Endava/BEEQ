@@ -5,9 +5,20 @@
 @import './bq-card.variables';
 
 :host {
-  @apply block;
+  display: block;
 }
 
 .bq-card {
+  background: var(--bq-card--background);
+  border-color: var(--bq-card--borderColor);
+  border-radius: var(--bq-card--borderRadius);
   border-style: var(--bq-card--borderStyle);
+  border-width: var(--bq-card--borderWidth);
+  padding-block: var(--bq-card--padding);
+  padding-inline: var(--bq-card--padding);
+}
+
+:host([type='minimal']) .bq-card {
+  padding-block: 0;
+  padding-inline: 0;
 }

@@ -43,6 +43,9 @@ describe('bq-divider', () => {
     );
     const divider = root as HTMLBqDividerElement;
 
+    await waitForStable(root);
+    warnSpy.mockClear();
+
     await setProps({ orientation: 'invalid', titleAlignment: 'invalid', strokeLinecap: 'invalid' });
 
     expect({

@@ -71,7 +71,7 @@ export class BqSteps {
   @Prop({ reflect: true }) size: TStepsSize = 'medium';
 
   /** The type of prefix element to use on the step items */
-  @Prop({ reflect: true }) type: TStepsType;
+  @Prop({ reflect: true }) type: TStepsType = 'numeric';
 
   // Prop lifecycle events
   // =======================
@@ -159,9 +159,9 @@ export class BqSteps {
     return (
       <div
         class={{
-          'relative inline-flex items-start justify-between': true,
-          'is-full flex-row': this.orientation === 'horizontal',
-          'bs-full flex-col': this.orientation === 'vertical',
+          'bq-steps': true,
+          'orientation--horizontal': this.orientation === 'horizontal',
+          'orientation--vertical': this.orientation === 'vertical',
         }}
         part="container"
         role="list"

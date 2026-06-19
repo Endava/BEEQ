@@ -115,28 +115,16 @@ export class BqEmptyState {
 
   render() {
     return (
-      <div class="inline-flex flex-col items-center" part="wrapper">
-        <div
-          class={{
-            'm-be-m': this.size === 'small',
-            'm-be-xl': this.size === 'medium',
-            'm-be-xxl': this.size === 'large',
-          }}
-          part="thumbnail"
-        >
+      <div class="bq-empty-state" part="wrapper">
+        <div class="bq-empty-state__thumbnail" part="thumbnail">
           <slot name="thumbnail">
             <bq-icon exportparts="base,svg" name="database" part="icon" size={this.iconSize} />
           </slot>
         </div>
         <div
           class={{
-            'font-bold text-primary leading-regular': true,
-            'text-m': this.size === 'small',
-            'text-l': this.size === 'medium',
-            'text-xxl2': this.size === 'large',
-            'm-be-xs': this.size === 'small' && this.hasBody,
-            'm-be-m': this.size === 'medium' && this.hasBody,
-            'm-be-l': this.size === 'large' && this.hasBody,
+            'bq-empty-state__title': true,
+            'is-spaced': this.hasBody,
           }}
           part="title"
         >
@@ -144,13 +132,8 @@ export class BqEmptyState {
         </div>
         <div
           class={{
-            'font-normal leading-regular': true,
-            'text-s': this.size === 'small',
-            'text-m': this.size === 'medium',
-            'text-l': this.size === 'large',
-            'm-be-m': this.size === 'small' && this.hasFooter,
-            'm-be-l': this.size === 'medium' && this.hasFooter,
-            'm-be-xl': this.size === 'large' && this.hasFooter,
+            'bq-empty-state__body': true,
+            'is-spaced': this.hasFooter,
           }}
           part="body"
           ref={(div) => {
@@ -160,7 +143,7 @@ export class BqEmptyState {
           <slot name="body" onSlotchange={this.handleSlotChange} />
         </div>
         <div
-          class="flex items-start gap-xs"
+          class="bq-empty-state__footer"
           part="footer"
           ref={(div) => {
             this.footerElem = div;

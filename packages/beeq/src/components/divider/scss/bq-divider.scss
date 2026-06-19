@@ -5,42 +5,60 @@
 @import './bq-divider.variables';
 
 :host {
-  @apply inline-flex;
+  display: inline-flex;
 }
 
 :host([orientation='horizontal']) {
-  @apply is-full;
+  inline-size: 100%;
 }
 
 :host([orientation='vertical']) {
-  @apply flex bs-full;
+  display: flex;
+  block-size: 100%;
 }
 
 .bq-divider {
-  @apply flex items-center gap-[--bq-divider--title-marginX];
+  display: flex;
+  align-items: center;
+  gap: var(--bq-divider--title-marginX);
+}
+
+.bq-divider.is-gapless {
+  gap: 0;
 }
 
 .bq-divider--stroke {
-  @apply flex-grow stroke-[color:--bq-divider--stroke-color] bs-[--bq-divider--stroke-thickness] is-full;
+  flex-grow: 1;
+  stroke: var(--bq-divider--stroke-color);
+  block-size: var(--bq-divider--stroke-thickness);
+  inline-size: 100%;
 
   &.end {
-    @apply rotate-180;
+    transform: rotate(180deg);
   }
+}
+
+.bq-divider--stroke.is-hidden {
+  display: none;
 }
 
 .bq-divider--title__start .bq-divider--stroke.start,
 .bq-divider--title__end .bq-divider--stroke.end {
-  @apply flex-grow-0 basis-[--bq-divider--stroke-basis];
+  flex-grow: 0;
+  flex-basis: var(--bq-divider--stroke-basis);
 }
 
 .bq-divider--horizontal {
-  @apply flex-grow;
+  flex-grow: 1;
 }
 
 .bq-divider--vertical {
-  @apply bs-full flex-col items-center gap-[--bq-divider--title-marginX];
+  flex-direction: column;
+  align-items: center;
+  gap: var(--bq-divider--title-marginX);
+  block-size: 100%;
 
   .bq-divider--stroke {
-    @apply is-[--bq-divider--stroke-thickness];
+    inline-size: var(--bq-divider--stroke-thickness);
   }
 }

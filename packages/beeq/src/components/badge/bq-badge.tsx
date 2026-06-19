@@ -159,12 +159,12 @@ export class BqBadge {
             'bq-badge': true,
             [`size--${this.size}`]: this.contentLength === 0,
             digit: this.contentLength > 0,
-            'p-i-xs2': this.contentLength > 1,
+            'is-multiple': this.contentLength > 1,
           }}
           part="base"
         >
           <span
-            class="font-bold text-xs leading-small"
+            class="bq-badge__number"
             part="number"
             ref={(element) => {
               this.spanElement = element;

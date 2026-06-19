@@ -119,10 +119,10 @@ export class BqPageTitle {
 
   render() {
     return (
-      <div class="flex gap-xs p-b-[--paddingY] [border-block-end:--subtitle-borderBlockEnd]" part="base">
+      <div class="bq-page-title" part="base">
         {/* Back navigation button */}
         <div
-          class={{ flex: true, '!hidden': !this.haveBackNavigation }}
+          class={{ 'bq-page-title__back': true, 'is-hidden': !this.haveBackNavigation }}
           part="back"
           ref={(divElem) => {
             this.backNavigationElem = divElem;
@@ -130,18 +130,15 @@ export class BqPageTitle {
         >
           <slot name="back" onSlotchange={this.handleSlotChange} />
         </div>
-        <div class="flex flex-grow flex-col gap-xs" part="content">
-          <div class="flex items-center gap-xs" part="title-suffix">
+        <div class="bq-page-title__content" part="content">
+          <div class="bq-page-title__title-suffix" part="title-suffix">
             {/* Title */}
-            <h1
-              class="title-font font-[--title-fontWeight] text-[color:--title-textColor] text-[length:--title-textSize] leading-[--title-lineHeight]"
-              part="title"
-            >
+            <h1 class="bq-page-title__title" part="title">
               <slot />
             </h1>
             {/* Suffix */}
             <div
-              class={{ 'flex flex-grow gap-xs p-b-xs2 p-i-xs2': true, '!hidden': !this.hasSuffix }}
+              class={{ 'bq-page-title__suffix': true, 'is-hidden': !this.hasSuffix }}
               part="suffix"
               ref={(divElem) => {
                 this.suffixElem = divElem;
@@ -153,8 +150,8 @@ export class BqPageTitle {
           {/* Sub-title */}
           <div
             class={{
-              'title-font font-[--subtitle-fontWeight] text-[color:--subtitle-textColor] text-[length:--subtitle-textSize] leading-[--title-lineHeight]': true,
-              hidden: !this.hasSubTitle,
+              'bq-page-title__subtitle': true,
+              'is-hidden': !this.hasSubTitle,
             }}
             part="sub-title"
             ref={(divElem) => {

@@ -188,27 +188,20 @@ export class BqAvatar {
           class={{
             'bq-avatar': true,
             [`size--${this.size}`]: true,
-            'rounded-[--bq-avatar--border-radius-circle]': this.shape === 'circle',
-            'rounded-[--bq-avatar--border-radius-squareXs]': this.shape === 'square' && this.size === 'xsmall',
-            'rounded-[--bq-avatar--border-radius-squareS]': this.shape === 'square' && this.size === 'small',
-            'rounded-[--bq-avatar--border-radius-squareM]':
-              this.shape === 'square' && (this.size === 'medium' || this.size === 'large'),
+            [`shape--${this.shape}`]: true,
           }}
           part="base"
           role="img"
         >
           {this.initials && (
-            <span
-              class="bs-full is-full absolute inset-bs-0 start-0 inline-flex items-center justify-center font-bold text-primary"
-              part="text"
-            >
+            <span class="bq-avatar__text" part="text">
               {this.trimmedInitials}
             </span>
           )}
           {this.image && !this.hasError && (
             <img
               alt={this.altText ?? undefined}
-              class="bs-full is-full absolute inset-bs-0 start-0 object-cover"
+              class="bq-avatar__image"
               onError={this.onImageError}
               part="img"
               src={this.image}
@@ -217,9 +210,8 @@ export class BqAvatar {
         </div>
         <div
           class={{
-            'absolute flex items-center justify-center': true,
-            'inset-bs-[--bq-avatar--badge-top-square] start-[--bq-avatar--badge-left-square]': this.shape === 'square',
-            'inset-bs-[--bq-avatar--badge-top-circle] start-[--bq-avatar--badge-left-circle]': this.shape === 'circle',
+            'bq-avatar__badge': true,
+            [`shape--${this.shape}`]: true,
           }}
           part="badge"
         >

@@ -48,11 +48,11 @@ export class BqOptionList {
   // Public Property API
   // ========================
 
-  // Prop lifecycle events
-  // =======================
-
   /** Aria label for the list. */
   @Prop({ reflect: true }) ariaLabel: string = 'Options';
+
+  // Prop lifecycle events
+  // =======================
 
   // Events section
   // Requires JSDocs for public API documentation
@@ -99,7 +99,7 @@ export class BqOptionList {
 
   render() {
     return (
-      <div class="bq-option__list flex flex-col gap-y-[--bq-option-group--gapY-list]" part="base">
+      <div class="bq-option__list" part="base">
         <slot />
       </div>
     );
