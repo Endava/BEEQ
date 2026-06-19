@@ -4,6 +4,42 @@ description: New features, bug fixes, and improvements to the BEEQ Design System
 rss: true
 ---
 
+<Update label="v1.12.4" description="June 2026">
+  This release adds form-validation hooks to **Select** and customizable icon slots to **Switch**, plus a broad pass of form-control fixes across **Input**, **Textarea**, **Checkbox**, and **Radio Group** to make native form integration more reliable.
+
+  ### Features ⚡️
+
+  - **Select:** added form validation message attribute and handling ([aeab61e](https://github.com/Endava/BEEQ/commit/aeab61e)).
+  - **Switch:** added `icon-on` and `icon-off` named slots for custom icon content ([c73b563](https://github.com/Endava/BEEQ/commit/c73b563)).
+
+  ### Bug Fixes 🐞
+
+  - **Step Item:** keep the numeric prefix circular when titles wrap to multiple lines ([ef0bf42](https://github.com/Endava/BEEQ/commit/ef0bf42), [#1725](https://github.com/Endava/BEEQ/pull/1725)).
+  - **Button:** keep ghost button height consistent and prevent text selection ([0cc0b21](https://github.com/Endava/BEEQ/commit/0cc0b21), [#1694](https://github.com/Endava/BEEQ/pull/1694)).
+  - **Button:** remove the forced pointer cursor from the host element ([75aafe5](https://github.com/Endava/BEEQ/commit/75aafe5), [#1691](https://github.com/Endava/BEEQ/pull/1691)).
+  - **Notification:** wrap close icon slot content in a flex container for correct alignment ([553b373](https://github.com/Endava/BEEQ/commit/553b373), [#1690](https://github.com/Endava/BEEQ/pull/1690)).
+  - **Textarea:** set the form value and update form validity after value changes ([d0c3be2](https://github.com/Endava/BEEQ/commit/d0c3be2)).
+  - **Input:** update form validity handling for required fields ([6822de6](https://github.com/Endava/BEEQ/commit/6822de6)).
+  - **Radio Group:** ensure form validity is updated after reset ([45a300b](https://github.com/Endava/BEEQ/commit/45a300b)).
+  - **Checkbox:** emit `bqChange` correctly after user interaction ([2df07ac](https://github.com/Endava/BEEQ/commit/2df07ac)).
+  - **Switch:** emit `bqChange` on user interaction only and support `preventDefault()` ([f0de5a2](https://github.com/Endava/BEEQ/commit/f0de5a2)).
+  - **Accordion:** ensure full width in flex container parents ([0d5324a](https://github.com/Endava/BEEQ/commit/0d5324a)).
+  - **Tooltip:** change positioning strategy from `fixed` to `absolute` ([3401a9b](https://github.com/Endava/BEEQ/commit/3401a9b)).
+  - **Side Menu:** fix collapsed padding in side menu items and tooltip visibility ([c192e1a](https://github.com/Endava/BEEQ/commit/c192e1a)).
+  - **Icon:** simplify SVG validation guard with optional chaining ([9558392](https://github.com/Endava/BEEQ/commit/9558392), [#1698](https://github.com/Endava/BEEQ/pull/1698)).
+  - **Utils:** use explicit property key in `validatePropValue` warning ([6d3b438](https://github.com/Endava/BEEQ/commit/6d3b438), [#1699](https://github.com/Endava/BEEQ/pull/1699)).
+  - **Utils:** remove redundant cast assertion in `transition.ts` ([797aaa0](https://github.com/Endava/BEEQ/commit/797aaa0), [#1700](https://github.com/Endava/BEEQ/pull/1700)).
+
+  ### Refactor 🛠️
+
+  - **Radio Group, Toast:** use nullish assignment for clearer, more concise logic ([bb82e80](https://github.com/Endava/BEEQ/commit/bb82e80), [#1722](https://github.com/Endava/BEEQ/pull/1722)).
+
+  ### Chore ⚙️
+
+  - Major dependency bumps: Angular → v22, Node.js → v24.16, pnpm → v11, PostCSS → v11, Vite → v8.0.16 (security), Stencil and Storybook → v10.4.3, NX → v22.7.5, React → v19.2.7.
+  - Tooling updates: `chromatic` → v17, `@chromatic-com/storybook` → v5.2.1, `stylelint` → v17.13, `nx-stylelint` → v19, `lint-staged` → v17, `@types/node` → v25, `cimg/node` Docker tag → v26 ([#1704](https://github.com/Endava/BEEQ/pull/1704), [#1705](https://github.com/Endava/BEEQ/pull/1705), [#1707](https://github.com/Endava/BEEQ/pull/1707), [#1709](https://github.com/Endava/BEEQ/pull/1709), [#1712](https://github.com/Endava/BEEQ/pull/1712), [#1713](https://github.com/Endava/BEEQ/pull/1713), [#1714](https://github.com/Endava/BEEQ/pull/1714), [#1715](https://github.com/Endava/BEEQ/pull/1715), [#1718](https://github.com/Endava/BEEQ/pull/1718), [#1724](https://github.com/Endava/BEEQ/pull/1724)).
+</Update>
+
 <Update label="v1.12.3" description="February 2026">
   ### Documentation 📚
 
