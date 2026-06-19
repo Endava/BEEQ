@@ -716,6 +716,208 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
   Indeterminate is a visual summary state, not a third submitted form value. Keep the parent and child checkboxes synchronized through event handling.
 </Warning>
 
+### Form integration
+
+`bq-checkbox` participates in native forms. A checked checkbox submits `"on"` for its `name`; an unchecked checkbox is omitted from `FormData`. Use `required` for consent or confirmation choices that must be selected before submission.
+
+<CodeLivePreview mode="iframe" height="20rem" removePadding code={`
+  <style>
+    body {
+      padding: var(--bq-spacing-l);
+    }
+
+    .checkbox-form {
+      display: grid;
+      gap: var(--bq-spacing-m);
+    }
+
+    .checkbox-form__actions {
+      display: flex;
+      gap: var(--bq-spacing-s);
+      justify-content: flex-end;
+    }
+
+    .checkbox-form__output {
+      margin: 0;
+      padding: var(--bq-spacing-s);
+      border: var(--bq-stroke-s) solid var(--bq-stroke--tertiary);
+      border-radius: var(--bq-radius--s);
+      background: var(--bq-ui--secondary);
+      color: var(--bq-text--primary);
+      white-space: pre-wrap;
+    }
+  </style>
+
+  <form class="checkbox-form" id="checkbox-form">
+    <bq-checkbox
+      form-validation-message="Please accept the terms and conditions"
+      name="termsAccepted"
+      value="terms"
+      required
+    >
+      By clicking here, I state that I have read and understood the terms and conditions
+    </bq-checkbox>
+    <div class="checkbox-form__actions">
+      <bq-button appearance="secondary" type="reset">Cancel</bq-button>
+      <bq-button type="button">Submit</bq-button>
+    </div>
+    <pre class="checkbox-form__output" id="checkbox-output">{}</pre>
+  </form>
+
+  <script>
+    (() => {
+      const form = previewRoot.querySelector('#checkbox-form');
+      const output = previewRoot.querySelector('#checkbox-output');
+      const submitButton = form.querySelector('bq-button[type="button"]');
+
+      const showFormData = () => {
+        if (!form.reportValidity()) return;
+        output.textContent = JSON.stringify(Object.fromEntries(new FormData(form).entries()), null, 2);
+      };
+
+      submitButton?.addEventListener('bqClick', (event) => {
+        event.preventDefault();
+        showFormData();
+      });
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        showFormData();
+      });
+
+      form.addEventListener('reset', () => {
+        requestAnimationFrame(() => {
+          output.textContent = '{}';
+        });
+      });
+    })();
+  </script>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <form id="checkbox-form">
+      <bq-checkbox
+        form-validation-message="Accept the terms to continue"
+        name="termsAccepted"
+        required
+      >
+        By clicking here, I state that I have read and understood the terms and conditions
+      </bq-checkbox>
+      <bq-button appearance="secondary" type="reset">Reset</bq-button>
+      <bq-button type="submit">Submit</bq-button>
+      <pre id="checkbox-output">{}</pre>
+    </form>
+
+    <script>
+      const form = document.querySelector('#checkbox-form');
+      const output = document.querySelector('#checkbox-output');
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        output.textContent = JSON.stringify(Object.fromEntries(new FormData(form).entries()), null, 2);
+      });
+
+      form.addEventListener('reset', () => {
+        requestAnimationFrame(() => {
+          output.textContent = '{}';
+        });
+      });
+    </script>
+    ```
+
+    ```tsx React icon="react" expandable
+    import { useState } from "react";
+    import { BqButton, BqCheckbox } from "@beeq/react";
+
+    export default function CheckboxForm() {
+      const [data, setData] = useState("{}");
+
+      return (
+        <form
+          onReset={() => setData("{}")}
+          onSubmit={(event) => {
+            event.preventDefault();
+            setData(JSON.stringify(Object.fromEntries(new FormData(event.currentTarget).entries()), null, 2));
+          }}
+        >
+          <BqCheckbox
+            formValidationMessage="Accept the terms to continue"
+            name="termsAccepted"
+            required
+          >
+            By clicking here, I state that I have read and understood the terms and conditions
+          </BqCheckbox>
+          <BqButton appearance="secondary" type="reset">Reset</BqButton>
+          <BqButton type="submit">Submit</BqButton>
+          <pre>{data}</pre>
+        </form>
+      );
+    }
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqButton, BqCheckbox } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqButton, BqCheckbox],
+      template: `
+        <form (reset)="data = '{}'" (submit)="handleSubmit($event)">
+          <bq-checkbox
+            form-validation-message="Accept the terms to continue"
+            name="termsAccepted"
+            required
+          >
+            By clicking here, I state that I have read and understood the terms and conditions
+          </bq-checkbox>
+          <bq-button appearance="secondary" type="reset">Reset</bq-button>
+          <bq-button type="submit">Submit</bq-button>
+          <pre>{{ data }}</pre>
+        </form>
+      `,
+    })
+    export class CheckboxFormComponent {
+      data = "{}";
+
+      handleSubmit(event: SubmitEvent): void {
+        event.preventDefault();
+        this.data = JSON.stringify(Object.fromEntries(new FormData(event.target as HTMLFormElement).entries()), null, 2);
+      }
+    }
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { ref } from "vue";
+    import { BqButton, BqCheckbox } from "@beeq/vue";
+
+    const data = ref("{}");
+
+    function handleSubmit(event: Event) {
+      data.value = JSON.stringify(Object.fromEntries(new FormData(event.target as HTMLFormElement).entries()), null, 2);
+    }
+    </script>
+
+    <template>
+      <form @reset="data = '{}'" @submit.prevent="handleSubmit">
+        <BqCheckbox
+          formValidationMessage="Accept the terms to continue"
+          name="termsAccepted"
+          required
+        >
+          By clicking here, I state that I have read and understood the terms and conditions
+        </BqCheckbox>
+        <BqButton appearance="secondary" type="reset">Reset</BqButton>
+        <BqButton type="submit">Submit</BqButton>
+        <pre>{{ data }}</pre>
+      </form>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
 ## Best practices
 
 <CardGroup cols={2}>
@@ -800,7 +1002,7 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
 | `indeterminate` | `indeterminate` | A state that is neither checked nor unchecked | `boolean` | `false` |
 | `name` | `name` | Name of the HTML form control submitted with the form | `string` | `undefined` |
 | `required` | `required` | If `true`, the checkbox must be selected before form submission | `boolean` | `undefined` |
-| `value` | `value` | The submitted value for the checkbox | `string` | `undefined` |
+| `value` | `value` | Sets the underlying `<input>` value attribute. The current form submission value is the fixed string `'on'` when checked | `string` | `undefined` |
 
 ### Events
 

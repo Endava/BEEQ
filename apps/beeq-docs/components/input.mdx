@@ -1496,6 +1496,227 @@ Use this variant when the field does not require supplementary guidance.
   </CodeGroup>
 </CodeLivePreview>
 
+### Form integration
+
+`bq-input` submits its current string value with the form. Combine `name`, `required`, and `form-validation-message` when the field must pass native validation before submission.
+
+<CodeLivePreview mode="iframe" height="20.5rem" removePadding code={`
+  <style>
+    body {
+      padding: var(--bq-spacing-l);
+    }
+
+    .input-form {
+      display: grid;
+      gap: var(--bq-spacing-m);
+    }
+
+    .input-form__actions {
+      display: flex;
+      gap: var(--bq-spacing-s);
+      justify-content: flex-end;
+    }
+
+    .input-form__output {
+      margin: 0;
+      padding: var(--bq-spacing-s);
+      border: var(--bq-stroke-s) solid var(--bq-stroke--tertiary);
+      border-radius: var(--bq-radius--s);
+      background: var(--bq-ui--secondary);
+      color: var(--bq-text--primary);
+      white-space: pre-wrap;
+    }
+  </style>
+
+  <form class="input-form" id="input-form">
+    <bq-input
+      autocomplete="email"
+      form-validation-message="Enter your email address"
+      name="email"
+      required
+      type="email"
+      value="team@example.com"
+    >
+      <label slot="label">Email address</label>
+      <span slot="helper-text">Use the address where we should send updates.</span>
+    </bq-input>
+    <div class="input-form__actions">
+      <bq-button appearance="secondary" type="reset">Reset</bq-button>
+      <bq-button type="button">Submit</bq-button>
+    </div>
+    <pre class="input-form__output" id="input-output">{}</pre>
+  </form>
+
+  <script>
+    (() => {
+      const form = previewRoot.querySelector('#input-form');
+      const output = previewRoot.querySelector('#input-output');
+      const submitButton = form.querySelector('bq-button[type="button"]');
+
+      const showFormData = () => {
+        if (!form.reportValidity()) return;
+        output.textContent = JSON.stringify(Object.fromEntries(new FormData(form).entries()), null, 2);
+      };
+
+      submitButton?.addEventListener('bqClick', (event) => {
+        event.preventDefault();
+        showFormData();
+      });
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        showFormData();
+      });
+
+      form.addEventListener('reset', () => {
+        requestAnimationFrame(() => {
+          output.textContent = '{}';
+        });
+      });
+    })();
+  </script>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <form id="input-form">
+      <bq-input
+        autocomplete="email"
+        form-validation-message="Enter your email address"
+        name="email"
+        required
+        type="email"
+        value="team@example.com"
+      >
+        <label slot="label">Email address</label>
+        <span slot="helper-text">Use the address where we should send updates.</span>
+      </bq-input>
+      <bq-button appearance="secondary" type="reset">Reset</bq-button>
+      <bq-button type="submit">Submit</bq-button>
+      <pre id="input-output">{}</pre>
+    </form>
+
+    <script>
+      const form = document.querySelector('#input-form');
+      const output = document.querySelector('#input-output');
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        output.textContent = JSON.stringify(Object.fromEntries(new FormData(form).entries()), null, 2);
+      });
+
+      form.addEventListener('reset', () => {
+        requestAnimationFrame(() => {
+          output.textContent = '{}';
+        });
+      });
+    </script>
+    ```
+
+    ```tsx React icon="react" expandable
+    import { useState } from "react";
+    import { BqButton, BqInput } from "@beeq/react";
+
+    export default function InputForm() {
+      const [data, setData] = useState("{}");
+
+      return (
+        <form
+          onReset={() => setData("{}")}
+          onSubmit={(event) => {
+            event.preventDefault();
+            setData(JSON.stringify(Object.fromEntries(new FormData(event.currentTarget).entries()), null, 2));
+          }}
+        >
+          <BqInput
+            autocomplete="email"
+            formValidationMessage="Enter your email address"
+            name="email"
+            required
+            type="email"
+            value="team@example.com"
+          >
+            <label slot="label">Email address</label>
+            <span slot="helper-text">Use the address where we should send updates.</span>
+          </BqInput>
+          <BqButton appearance="secondary" type="reset">Reset</BqButton>
+          <BqButton type="submit">Submit</BqButton>
+          <pre>{data}</pre>
+        </form>
+      );
+    }
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqButton, BqInput } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqButton, BqInput],
+      template: `
+        <form (reset)="data = '{}'" (submit)="handleSubmit($event)">
+          <bq-input
+            autocomplete="email"
+            form-validation-message="Enter your email address"
+            name="email"
+            required
+            type="email"
+            value="team@example.com"
+          >
+            <label slot="label">Email address</label>
+            <span slot="helper-text">Use the address where we should send updates.</span>
+          </bq-input>
+          <bq-button appearance="secondary" type="reset">Reset</bq-button>
+          <bq-button type="submit">Submit</bq-button>
+          <pre>{{ data }}</pre>
+        </form>
+      `,
+    })
+    export class InputFormComponent {
+      data = "{}";
+
+      handleSubmit(event: SubmitEvent): void {
+        event.preventDefault();
+        this.data = JSON.stringify(Object.fromEntries(new FormData(event.target as HTMLFormElement).entries()), null, 2);
+      }
+    }
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { ref } from "vue";
+    import { BqButton, BqInput } from "@beeq/vue";
+
+    const data = ref("{}");
+
+    function handleSubmit(event: Event) {
+      data.value = JSON.stringify(Object.fromEntries(new FormData(event.target as HTMLFormElement).entries()), null, 2);
+    }
+    </script>
+
+    <template>
+      <form @reset="data = '{}'" @submit.prevent="handleSubmit">
+        <BqInput
+          autocomplete="email"
+          formValidationMessage="Enter your email address"
+          name="email"
+          required
+          type="email"
+          value="team@example.com"
+        >
+          <label slot="label">Email address</label>
+          <span slot="helper-text">Use the address where we should send updates.</span>
+        </BqInput>
+        <BqButton appearance="secondary" type="reset">Reset</BqButton>
+        <BqButton type="submit">Submit</BqButton>
+        <pre>{{ data }}</pre>
+      </form>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
 ## Best practices
 
 <CardGroup cols={2}>

@@ -6,8 +6,8 @@ description: Accordions let users show and hide sections of related content on a
 import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 
 <Frame className="px-4 py-4" caption="Accordion component overview">
-  <img className="block dark:hidden" src="/components/images/accordion/accordion-overview-light.svg" />
-  <img className="hidden dark:block" src="/components/images/accordion/accordion-overview-dark.svg" />
+  <img className="block dark:hidden" src="/components/images/accordion/accordion-overview-light.svg" alt="BEEQ Accordion component overview" />
+  <img className="hidden dark:block" src="/components/images/accordion/accordion-overview-dark.svg" alt="BEEQ Accordion component overview" />
 </Frame>
 
 Accordions organize related content into collapsible sections. Each section has a header that reveals or hides its panel content, helping people scan headings first and open only the information they need.
@@ -207,16 +207,14 @@ Two appearance values are available:
 </Tip>
 
 <CodeLivePreview mode="shadow" code={`
-  <div class="flex flex-col gap-4 w-full">
-    <bq-accordion expanded>
-      <span slot="header">Filled (default)</span>
-      <p>The header has a background color in the filled appearance.</p>
-    </bq-accordion>
-    <bq-accordion appearance="ghost" expanded>
-      <span slot="header">Ghost</span>
-      <p>The header has no background in the ghost appearance.</p>
-    </bq-accordion>
-  </div>
+  <bq-accordion expanded>
+    <span slot="header">Filled (default)</span>
+    <p>The header has a background color in the filled appearance.</p>
+  </bq-accordion>
+  <bq-accordion appearance="ghost" expanded>
+    <span slot="header">Ghost</span>
+    <p>The header has no background in the ghost appearance.</p>
+  </bq-accordion>
 `}>
   <CodeGroup>
     ```html HTML icon="html5" expandable
@@ -302,16 +300,14 @@ Accordions support two sizes: `medium` (default) and `small`.
 The `small` size uses more compact padding and a smaller border radius, giving it a tighter look.
 
 <CodeLivePreview mode="shadow" code={`
-  <div class="flex flex-col gap-4 w-full">
-    <bq-accordion size="medium" expanded>
-      <span slot="header">Medium accordion (default)</span>
-      <p>This is the medium size — more padding, suitable for most use cases.</p>
-    </bq-accordion>
-    <bq-accordion size="small" expanded>
-      <span slot="header">Small accordion</span>
-      <p>This is the small size — compact padding for dense layouts and using small border radius.</p>
-    </bq-accordion>
-  </div>
+  <bq-accordion size="medium" expanded>
+    <span slot="header">Medium accordion (default)</span>
+    <p>This is the medium size — more padding, suitable for most use cases.</p>
+  </bq-accordion>
+  <bq-accordion size="small" expanded>
+    <span slot="header">Small accordion</span>
+    <p>This is the small size — compact padding for dense layouts and using small border radius.</p>
+  </bq-accordion>
 `}>
   <CodeGroup>
     ```html HTML icon="html5" expandable
@@ -847,16 +843,14 @@ By default, accordions animate the panel open and closed with a smooth height tr
 Add the `no-animation` attribute to disable this and make the panel appear/disappear instantly.
 
 <CodeLivePreview mode="shadow" code={`
-  <div class="flex flex-col gap-4 w-full">
-    <bq-accordion expanded>
-      <span slot="header">With animation (default)</span>
-      <p>The panel slides open and closed smoothly.</p>
-    </bq-accordion>
-    <bq-accordion no-animation expanded>
-      <span slot="header">No animation</span>
-      <p>The panel appears and disappears instantly.</p>
-    </bq-accordion>
-  </div>
+  <bq-accordion expanded>
+    <span slot="header">With animation (default)</span>
+    <p>The panel slides open and closed smoothly.</p>
+  </bq-accordion>
+  <bq-accordion no-animation expanded>
+    <span slot="header">No animation</span>
+    <p>The panel appears and disappears instantly.</p>
+  </bq-accordion>
 `}>
   <CodeGroup>
     ```html HTML icon="html5" expandable
@@ -1062,7 +1056,7 @@ Alternatively, combine a single icon in the `expand` slot with the `rotate` prop
 
 Sometimes customizations are needed to meet some requirements.
 For example, having the collapse/expand indicator in front instead of at the end (current position).
-Developers can [rely on the exposed shadow DOM parts](https://www.beeq.design/3d466e231/p/6733bc) of the components to target elements inside it and tweak not only the look & feel but also the layout.
+Developers can [rely on the exposed shadow DOM parts](/guides/styles#component-shadow-dom-parts) of the components to target elements inside it and tweak not only the look & feel but also the layout.
 
 <Note>
  In the example below, we **define a custom CSS class** that targets the header part to reverse the order of the header content and the expand icon, and also applies flexbox styles to space out the header content.

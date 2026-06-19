@@ -260,6 +260,77 @@ Enhance user understanding by incorporating an inner label that provides context
   </CodeGroup>
 </CodeLivePreview>
 
+### Custom icons
+
+Use the `icon-on` and `icon-off` slots to replace the default check and X marks. The slots render inside the track when `inner-label="icon"` is enabled.
+
+<CodeLivePreview mode="shadow" code={`
+  <bq-switch checked inner-label="icon" name="theme-mode">
+    <bq-icon slot="icon-on" name="moon" size="16"></bq-icon>
+    <bq-icon slot="icon-off" name="sun" size="16"></bq-icon>
+    Dark mode
+  </bq-switch>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-switch checked inner-label="icon" name="theme-mode">
+      <bq-icon slot="icon-on" name="moon" size="16"></bq-icon>
+      <bq-icon slot="icon-off" name="sun" size="16"></bq-icon>
+      Dark mode
+    </bq-switch>
+    ```
+
+    ```tsx React icon="react" expandable
+    import { BqIcon, BqSwitch } from "@beeq/react";
+
+    export default () => (
+      <BqSwitch checked innerLabel="icon" name="theme-mode">
+        <BqIcon slot="icon-on" name="moon" size="16" />
+        <BqIcon slot="icon-off" name="sun" size="16" />
+        Dark mode
+      </BqSwitch>
+    );
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqIcon, BqSwitch } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqIcon, BqSwitch],
+      template: `
+        <bq-switch checked inner-label="icon" name="theme-mode">
+          <bq-icon slot="icon-on" name="moon" size="16"></bq-icon>
+          <bq-icon slot="icon-off" name="sun" size="16"></bq-icon>
+          Dark mode
+        </bq-switch>
+      `,
+    })
+    export class ThemeSwitchComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqIcon, BqSwitch } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqSwitch checked innerLabel="icon" name="theme-mode">
+        <BqIcon slot="icon-on" name="moon" size="16" />
+        <BqIcon slot="icon-off" name="sun" size="16" />
+        Dark mode
+      </BqSwitch>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Tip>
+  Mind the icon size. It should be consistent with the switch size.
+</Tip>
+
 ### Reverse order
 
 The reverse order switch alters the visual arrangement, placing the toggle on the opposite side for a customizable user interface by adding the `reverse-order` attribute.
@@ -308,10 +379,10 @@ Use `full-width` with `reverse-order` and `justify-content="space-between"` to b
 
 <CodeLivePreview mode="shadow" code={`
   <style>
-    :host { 
-      flex-direction: column !important; 
-      align-items: stretch !important; 
-      max-width: 28rem; 
+    :host {
+      flex-direction: column !important;
+      align-items: stretch !important;
+      max-width: 28rem;
     }
   </style>
 
@@ -569,6 +640,217 @@ Use `full-width` with `reverse-order` and `justify-content="space-between"` to b
 <Tip>
   Use a combination of `full-width`, `justify-content`, and `reverse-order`. Be creative!
 </Tip>
+
+### Form integration
+
+`bq-switch` participates in native forms through `ElementInternals`. A checked switch submits `"on"` for its `name`; an unchecked switch is omitted from `FormData`. Use `required` only when the form cannot continue unless the switch is ON.
+
+<CodeLivePreview mode="iframe" height="23rem" removePadding code={`
+  <style>
+    body {
+      padding: var(--bq-spacing-l);
+    }
+
+    .switch-form {
+      display: grid;
+      gap: var(--bq-spacing-m);
+    }
+
+    .switch-form__actions {
+      display: flex;
+      gap: var(--bq-spacing-s);
+      justify-content: flex-end;
+    }
+
+    .switch-form__output {
+      margin: 0;
+      padding: var(--bq-spacing-s);
+      border: var(--bq-stroke-s) solid var(--bq-stroke--tertiary);
+      border-radius: var(--bq-radius--s);
+      background: var(--bq-ui--secondary);
+      color: var(--bq-text--primary);
+      white-space: pre-wrap;
+    }
+  </style>
+
+  <form class="switch-form" id="switch-form">
+    <bq-switch
+      checked
+      form-validation-message="Enable release alerts to continue"
+      inner-label="icon"
+      name="releaseAlerts"
+      required
+    >
+      Release alerts
+    </bq-switch>
+    <div class="switch-form__actions">
+      <bq-button appearance="secondary" type="reset">Reset</bq-button>
+      <bq-button type="button">Save</bq-button>
+    </div>
+    <pre class="switch-form__output" id="switch-output">{}</pre>
+  </form>
+
+  <script>
+    (() => {
+      const form = previewRoot.querySelector('#switch-form');
+      const output = previewRoot.querySelector('#switch-output');
+      const submitButton = form.querySelector('bq-button[type="button"]');
+
+      const showFormData = () => {
+        if (!form.reportValidity()) return;
+        output.textContent = JSON.stringify(Object.fromEntries(new FormData(form).entries()), null, 2);
+      };
+
+      submitButton?.addEventListener('bqClick', (event) => {
+        event.preventDefault();
+        showFormData();
+      });
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        showFormData();
+      });
+
+      form.addEventListener('reset', () => {
+        requestAnimationFrame(() => {
+          output.textContent = '{}';
+        });
+      });
+    })();
+  </script>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <form id="switch-form">
+      <bq-switch
+        checked
+        form-validation-message="Enable release alerts to continue"
+        inner-label="icon"
+        name="releaseAlerts"
+        required
+      >
+        Release alerts
+      </bq-switch>
+      <bq-button appearance="secondary" type="reset">Reset</bq-button>
+      <bq-button type="submit">Save</bq-button>
+      <pre id="switch-output">{}</pre>
+    </form>
+
+    <script>
+      const form = document.querySelector('#switch-form');
+      const output = document.querySelector('#switch-output');
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        output.textContent = JSON.stringify(Object.fromEntries(new FormData(form).entries()), null, 2);
+      });
+
+      form.addEventListener('reset', () => {
+        requestAnimationFrame(() => {
+          output.textContent = '{}';
+        });
+      });
+    </script>
+    ```
+
+    ```tsx React icon="react" expandable
+    import { useState } from "react";
+    import { BqButton, BqSwitch } from "@beeq/react";
+
+    export default function SwitchForm() {
+      const [data, setData] = useState("{}");
+
+      return (
+        <form
+          onReset={() => setData("{}")}
+          onSubmit={(event) => {
+            event.preventDefault();
+            setData(JSON.stringify(Object.fromEntries(new FormData(event.currentTarget).entries()), null, 2));
+          }}
+        >
+          <BqSwitch
+            checked
+            formValidationMessage="Enable release alerts to continue"
+            innerLabel="icon"
+            name="releaseAlerts"
+            required
+          >
+            Release alerts
+          </BqSwitch>
+          <BqButton appearance="secondary" type="reset">Reset</BqButton>
+          <BqButton type="submit">Save</BqButton>
+          <pre>{data}</pre>
+        </form>
+      );
+    }
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqButton, BqSwitch } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqButton, BqSwitch],
+      template: `
+        <form (reset)="data = '{}'" (submit)="handleSubmit($event)">
+          <bq-switch
+            checked
+            form-validation-message="Enable release alerts to continue"
+            inner-label="icon"
+            name="releaseAlerts"
+            required
+          >
+            Release alerts
+          </bq-switch>
+          <bq-button appearance="secondary" type="reset">Reset</bq-button>
+          <bq-button type="submit">Save</bq-button>
+          <pre>{{ data }}</pre>
+        </form>
+      `,
+    })
+    export class SwitchFormComponent {
+      data = "{}";
+
+      handleSubmit(event: SubmitEvent): void {
+        event.preventDefault();
+        this.data = JSON.stringify(Object.fromEntries(new FormData(event.target as HTMLFormElement).entries()), null, 2);
+      }
+    }
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { ref } from "vue";
+    import { BqButton, BqSwitch } from "@beeq/vue";
+
+    const data = ref("{}");
+
+    function handleSubmit(event: Event) {
+      data.value = JSON.stringify(Object.fromEntries(new FormData(event.target as HTMLFormElement).entries()), null, 2);
+    }
+    </script>
+
+    <template>
+      <form @reset="data = '{}'" @submit.prevent="handleSubmit">
+        <BqSwitch
+          checked
+          formValidationMessage="Enable release alerts to continue"
+          innerLabel="icon"
+          name="releaseAlerts"
+          required
+        >
+          Release alerts
+        </BqSwitch>
+        <BqButton appearance="secondary" type="reset">Reset</BqButton>
+        <BqButton type="submit">Save</BqButton>
+        <pre>{{ data }}</pre>
+      </form>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
 
 ## Best practices
 
