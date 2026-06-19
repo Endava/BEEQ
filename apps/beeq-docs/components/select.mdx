@@ -2822,6 +2822,232 @@ Call `preventDefault()` on the `bqInput` event to take full control of option fi
   </CodeGroup>
 </CodeLivePreview>
 
+### Form integration
+
+`bq-select` is form-associated, so it participates in native submission, reset, and required validation. Use `name` for the submitted key, `required` for browser validation, and `form-validation-message` for a custom native validation message.
+
+<CodeLivePreview mode="iframe" height="27rem" removePadding code={`
+  <style>
+    body {
+      padding: var(--bq-spacing-l);
+    }
+
+    .select-form {
+      display: grid;
+      gap: var(--bq-spacing-m);
+    }
+
+    .select-form__actions {
+      display: flex;
+      gap: var(--bq-spacing-s);
+      justify-content: flex-end;
+    }
+
+    .select-form__output {
+      margin: 0;
+      padding: var(--bq-spacing-s);
+      border: var(--bq-stroke-s) solid var(--bq-stroke--tertiary);
+      border-radius: var(--bq-radius--s);
+      background: var(--bq-ui--secondary);
+      color: var(--bq-text--primary);
+      white-space: pre-wrap;
+    }
+  </style>
+
+  <form class="select-form" id="select-form">
+    <bq-select
+      form-validation-message="Choose a support plan"
+      name="supportPlan"
+      placeholder="Choose a plan"
+      required
+    >
+      <label slot="label">Support plan</label>
+      <span slot="helper-text">Choose the plan that matches your expected response time.</span>
+      <bq-option value="standard">Standard</bq-option>
+      <bq-option value="priority">Priority</bq-option>
+      <bq-option value="enterprise">Enterprise</bq-option>
+    </bq-select>
+    <div class="select-form__actions">
+      <bq-button appearance="secondary" type="reset">Reset</bq-button>
+      <bq-button type="button">Submit</bq-button>
+    </div>
+    <pre class="select-form__output" id="select-output">{}</pre>
+  </form>
+
+  <script>
+    (() => {
+      const form = previewRoot.querySelector('#select-form');
+      const output = previewRoot.querySelector('#select-output');
+      const submitButton = form.querySelector('bq-button[type="button"]');
+
+      const showFormData = () => {
+        if (!form.reportValidity()) return;
+        output.textContent = JSON.stringify(Object.fromEntries(new FormData(form).entries()), null, 2);
+      };
+
+      submitButton?.addEventListener('bqClick', (event) => {
+        event.preventDefault();
+        showFormData();
+      });
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        showFormData();
+      });
+
+      form.addEventListener('reset', () => {
+        requestAnimationFrame(() => {
+          output.textContent = '{}';
+        });
+      });
+    })();
+  </script>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <form id="select-form">
+      <bq-select
+        form-validation-message="Choose a support plan"
+        name="supportPlan"
+        placeholder="Choose a plan"
+        required
+      >
+        <label slot="label">Support plan</label>
+        <span slot="helper-text">Choose the plan that matches your expected response time.</span>
+        <bq-option value="standard">Standard</bq-option>
+        <bq-option value="priority">Priority</bq-option>
+        <bq-option value="enterprise">Enterprise</bq-option>
+      </bq-select>
+      <bq-button appearance="secondary" type="reset">Reset</bq-button>
+      <bq-button type="submit">Submit</bq-button>
+      <pre id="select-output">{}</pre>
+    </form>
+
+    <script>
+      const form = document.querySelector('#select-form');
+      const output = document.querySelector('#select-output');
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        output.textContent = JSON.stringify(Object.fromEntries(new FormData(form).entries()), null, 2);
+      });
+
+      form.addEventListener('reset', () => {
+        requestAnimationFrame(() => {
+          output.textContent = '{}';
+        });
+      });
+    </script>
+    ```
+
+    ```tsx React icon="react" expandable
+    import { useState } from "react";
+    import { BqButton, BqOption, BqSelect } from "@beeq/react";
+
+    export default function SelectForm() {
+      const [data, setData] = useState("{}");
+
+      return (
+        <form
+          onReset={() => setData("{}")}
+          onSubmit={(event) => {
+            event.preventDefault();
+            setData(JSON.stringify(Object.fromEntries(new FormData(event.currentTarget).entries()), null, 2));
+          }}
+        >
+          <BqSelect
+            formValidationMessage="Choose a support plan"
+            name="supportPlan"
+            placeholder="Choose a plan"
+            required
+          >
+            <label slot="label">Support plan</label>
+            <span slot="helper-text">Choose the plan that matches your expected response time.</span>
+            <BqOption value="standard">Standard</BqOption>
+            <BqOption value="priority">Priority</BqOption>
+            <BqOption value="enterprise">Enterprise</BqOption>
+          </BqSelect>
+          <BqButton appearance="secondary" type="reset">Reset</BqButton>
+          <BqButton type="submit">Submit</BqButton>
+          <pre>{data}</pre>
+        </form>
+      );
+    }
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqButton, BqOption, BqSelect } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqButton, BqOption, BqSelect],
+      template: `
+        <form (reset)="data = '{}'" (submit)="handleSubmit($event)">
+          <bq-select
+            form-validation-message="Choose a support plan"
+            name="supportPlan"
+            placeholder="Choose a plan"
+            required
+          >
+            <label slot="label">Support plan</label>
+            <span slot="helper-text">Choose the plan that matches your expected response time.</span>
+            <bq-option value="standard">Standard</bq-option>
+            <bq-option value="priority">Priority</bq-option>
+            <bq-option value="enterprise">Enterprise</bq-option>
+          </bq-select>
+          <bq-button appearance="secondary" type="reset">Reset</bq-button>
+          <bq-button type="submit">Submit</bq-button>
+          <pre>{{ data }}</pre>
+        </form>
+      `,
+    })
+    export class SelectFormComponent {
+      data = "{}";
+
+      handleSubmit(event: SubmitEvent): void {
+        event.preventDefault();
+        this.data = JSON.stringify(Object.fromEntries(new FormData(event.target as HTMLFormElement).entries()), null, 2);
+      }
+    }
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { ref } from "vue";
+    import { BqButton, BqOption, BqSelect } from "@beeq/vue";
+
+    const data = ref("{}");
+
+    function handleSubmit(event: Event) {
+      data.value = JSON.stringify(Object.fromEntries(new FormData(event.target as HTMLFormElement).entries()), null, 2);
+    }
+    </script>
+
+    <template>
+      <form @reset="data = '{}'" @submit.prevent="handleSubmit">
+        <BqSelect
+          formValidationMessage="Choose a support plan"
+          name="supportPlan"
+          placeholder="Choose a plan"
+          required
+        >
+          <label slot="label">Support plan</label>
+          <span slot="helper-text">Choose the plan that matches your expected response time.</span>
+          <BqOption value="standard">Standard</BqOption>
+          <BqOption value="priority">Priority</BqOption>
+          <BqOption value="enterprise">Enterprise</BqOption>
+        </BqSelect>
+        <BqButton appearance="secondary" type="reset">Reset</BqButton>
+        <BqButton type="submit">Submit</BqButton>
+        <pre>{{ data }}</pre>
+      </form>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
 ## Best practices
 
 <CardGroup cols={2}>
@@ -2915,6 +3141,7 @@ Call `preventDefault()` on the `bqInput` event to take full control of option fi
 | `disableScrollLock` | `disable-scroll-lock` | If `true`, the page body scroll will not be locked when the panel is open | `boolean` | `false` |
 | `distance` | `distance` | Gap in pixels between the panel and the input element | `number` | `8` |
 | `form` | `form` | The `id` of the `<form>` element this select belongs to | `string` | — |
+| `formValidationMessage` | `form-validation-message` | Native validation message used when `required` is set | `string` | — |
 | `keepOpenOnSelect` | `keep-open-on-select` | If `true`, the panel stays open after a selection | `boolean` | `false` |
 | `maxTagsVisible` | `max-tags-visible` | Maximum number of tags shown in multi-select mode before a `+N` tag appears | `number` | `2` |
 | `multiple` | `multiple` | If `true`, the select allows multiple selections | `boolean` | `false` |

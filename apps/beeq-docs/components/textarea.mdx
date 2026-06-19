@@ -956,6 +956,222 @@ Set `validation-status` to `error`, `warning`, or `success` to communicate the s
   Use validation feedback to provide context on the textarea's status based on user input.
 </Tip>
 
+### Form integration
+
+`bq-textarea` submits its current text value with the form. Use `required` and `form-validation-message` when users must provide multiline feedback before submitting.
+
+<CodeLivePreview mode="iframe" height="24rem" removePadding code={`
+  <style>
+    body {
+      padding: var(--bq-spacing-l);
+    }
+
+    .textarea-form {
+      display: grid;
+      gap: var(--bq-spacing-m);
+    }
+
+    .textarea-form__actions {
+      display: flex;
+      gap: var(--bq-spacing-s);
+      justify-content: flex-end;
+    }
+
+    .textarea-form__output {
+      margin: 0;
+      padding: var(--bq-spacing-s);
+      border: var(--bq-stroke-s) solid var(--bq-stroke--tertiary);
+      border-radius: var(--bq-radius--s);
+      background: var(--bq-ui--secondary);
+      color: var(--bq-text--primary);
+      white-space: pre-wrap;
+    }
+  </style>
+
+  <form class="textarea-form" id="textarea-form">
+    <bq-textarea
+      form-validation-message="Describe the issue before submitting"
+      name="issueDescription"
+      placeholder="Describe the issue"
+      required
+      value="The keyboard focus is hard to see on the settings page."
+    >
+      <label slot="label">Issue description</label>
+      <span slot="helper-text">Include the page, expected behavior, and what happened instead.</span>
+    </bq-textarea>
+    <div class="textarea-form__actions">
+      <bq-button appearance="secondary" type="reset">Reset</bq-button>
+      <bq-button type="button">Submit</bq-button>
+    </div>
+    <pre class="textarea-form__output" id="textarea-output">{}</pre>
+  </form>
+
+  <script>
+    (() => {
+      const form = previewRoot.querySelector('#textarea-form');
+      const output = previewRoot.querySelector('#textarea-output');
+      const submitButton = form.querySelector('bq-button[type="button"]');
+
+      const showFormData = () => {
+        if (!form.reportValidity()) return;
+        output.textContent = JSON.stringify(Object.fromEntries(new FormData(form).entries()), null, 2);
+      };
+
+      submitButton?.addEventListener('bqClick', (event) => {
+        event.preventDefault();
+        showFormData();
+      });
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        showFormData();
+      });
+
+      form.addEventListener('reset', () => {
+        requestAnimationFrame(() => {
+          output.textContent = '{}';
+        });
+      });
+    })();
+  </script>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <form id="textarea-form">
+      <bq-textarea
+        form-validation-message="Describe the issue before submitting"
+        name="issueDescription"
+        placeholder="Describe the issue"
+        required
+        value="The keyboard focus is hard to see on the settings page."
+      >
+        <label slot="label">Issue description</label>
+        <span slot="helper-text">Include the page, expected behavior, and what happened instead.</span>
+      </bq-textarea>
+      <bq-button appearance="secondary" type="reset">Reset</bq-button>
+      <bq-button type="submit">Submit</bq-button>
+      <pre id="textarea-output">{}</pre>
+    </form>
+
+    <script>
+      const form = document.querySelector('#textarea-form');
+      const output = document.querySelector('#textarea-output');
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        output.textContent = JSON.stringify(Object.fromEntries(new FormData(form).entries()), null, 2);
+      });
+
+      form.addEventListener('reset', () => {
+        requestAnimationFrame(() => {
+          output.textContent = '{}';
+        });
+      });
+    </script>
+    ```
+
+    ```tsx React icon="react" expandable
+    import { useState } from "react";
+    import { BqButton, BqTextarea } from "@beeq/react";
+
+    export default function TextareaForm() {
+      const [data, setData] = useState("{}");
+
+      return (
+        <form
+          onReset={() => setData("{}")}
+          onSubmit={(event) => {
+            event.preventDefault();
+            setData(JSON.stringify(Object.fromEntries(new FormData(event.currentTarget).entries()), null, 2));
+          }}
+        >
+          <BqTextarea
+            formValidationMessage="Describe the issue before submitting"
+            name="issueDescription"
+            placeholder="Describe the issue"
+            required
+            value="The keyboard focus is hard to see on the settings page."
+          >
+            <label slot="label">Issue description</label>
+            <span slot="helper-text">Include the page, expected behavior, and what happened instead.</span>
+          </BqTextarea>
+          <BqButton appearance="secondary" type="reset">Reset</BqButton>
+          <BqButton type="submit">Submit</BqButton>
+          <pre>{data}</pre>
+        </form>
+      );
+    }
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqButton, BqTextarea } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqButton, BqTextarea],
+      template: `
+        <form (reset)="data = '{}'" (submit)="handleSubmit($event)">
+          <bq-textarea
+            form-validation-message="Describe the issue before submitting"
+            name="issueDescription"
+            placeholder="Describe the issue"
+            required
+            value="The keyboard focus is hard to see on the settings page."
+          >
+            <label slot="label">Issue description</label>
+            <span slot="helper-text">Include the page, expected behavior, and what happened instead.</span>
+          </bq-textarea>
+          <bq-button appearance="secondary" type="reset">Reset</bq-button>
+          <bq-button type="submit">Submit</bq-button>
+          <pre>{{ data }}</pre>
+        </form>
+      `,
+    })
+    export class TextareaFormComponent {
+      data = "{}";
+
+      handleSubmit(event: SubmitEvent): void {
+        event.preventDefault();
+        this.data = JSON.stringify(Object.fromEntries(new FormData(event.target as HTMLFormElement).entries()), null, 2);
+      }
+    }
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { ref } from "vue";
+    import { BqButton, BqTextarea } from "@beeq/vue";
+
+    const data = ref("{}");
+
+    function handleSubmit(event: Event) {
+      data.value = JSON.stringify(Object.fromEntries(new FormData(event.target as HTMLFormElement).entries()), null, 2);
+    }
+    </script>
+
+    <template>
+      <form @reset="data = '{}'" @submit.prevent="handleSubmit">
+        <BqTextarea
+          formValidationMessage="Describe the issue before submitting"
+          name="issueDescription"
+          placeholder="Describe the issue"
+          required
+          value="The keyboard focus is hard to see on the settings page."
+        >
+          <label slot="label">Issue description</label>
+          <span slot="helper-text">Include the page, expected behavior, and what happened instead.</span>
+        </BqTextarea>
+        <BqButton appearance="secondary" type="reset">Reset</BqButton>
+        <BqButton type="submit">Submit</BqButton>
+        <pre>{{ data }}</pre>
+      </form>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
 ## Best practices
 
 <CardGroup cols={2}>

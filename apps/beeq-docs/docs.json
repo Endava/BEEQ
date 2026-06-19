@@ -205,10 +205,11 @@
   "contextual": {
     "options": [
       "copy",
+      "mcp",
       "chatgpt",
       "claude",
-      "mcp",
       "cursor",
+      "devin",
       "vscode"
     ]
   },

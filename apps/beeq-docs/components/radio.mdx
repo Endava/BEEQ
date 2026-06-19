@@ -511,6 +511,233 @@ Set `background-on-hover` on the group (or on individual `bq-radio` elements) to
   </CodeGroup>
 </CodeLivePreview>
 
+### Form integration
+
+`bq-radio-group` submits the selected radio value with the form. Use `required` and `required-validation-message` on the group when users must choose one option before submission.
+
+<CodeLivePreview mode="iframe" height="25rem" removePadding code={`
+  <style>
+    body {
+      padding: var(--bq-spacing-l);
+    }
+
+    .radio-form {
+      display: grid;
+      gap: var(--bq-spacing-m);
+    }
+
+    .radio-form__actions {
+      display: flex;
+      gap: var(--bq-spacing-s);
+      justify-content: flex-end;
+    }
+
+    .radio-form__output {
+      margin: 0;
+      padding: var(--bq-spacing-s);
+      border: var(--bq-stroke-s) solid var(--bq-stroke--tertiary);
+      border-radius: var(--bq-radius--s);
+      background: var(--bq-ui--secondary);
+      color: var(--bq-text--primary);
+      white-space: pre-wrap;
+    }
+
+    bq-radio-group::part(base) {
+      border-color: var(--bq-stroke--primary);
+      border-radius: var(--bq-radius--m);
+      border-width: var(--bq-stroke-s);
+    }
+  </style>
+
+  <form class="radio-form" id="radio-form">
+    <bq-radio-group
+      fieldset
+      name="contactMethod"
+      required
+      required-validation-message="Choose a contact method"
+    >
+      <span slot="label">Preferred contact method</span>
+      <bq-radio value="email">Email</bq-radio>
+      <bq-radio value="phone">Phone</bq-radio>
+      <bq-radio value="chat">Chat</bq-radio>
+    </bq-radio-group>
+    <div class="radio-form__actions">
+      <bq-button appearance="secondary" type="reset">Reset</bq-button>
+      <bq-button type="button">Submit</bq-button>
+    </div>
+    <pre class="radio-form__output" id="radio-output">{}</pre>
+  </form>
+
+  <script>
+    (() => {
+      const form = previewRoot.querySelector('#radio-form');
+      const output = previewRoot.querySelector('#radio-output');
+      const submitButton = form.querySelector('bq-button[type="button"]');
+
+      const showFormData = () => {
+        if (!form.reportValidity()) return;
+        output.textContent = JSON.stringify(Object.fromEntries(new FormData(form).entries()), null, 2);
+      };
+
+      submitButton?.addEventListener('bqClick', (event) => {
+        event.preventDefault();
+        showFormData();
+      });
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        showFormData();
+      });
+
+      form.addEventListener('reset', () => {
+        requestAnimationFrame(() => {
+          output.textContent = '{}';
+        });
+      });
+    })();
+  </script>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <form id="radio-form">
+      <bq-radio-group
+        fieldset
+        name="contactMethod"
+        required
+        required-validation-message="Choose a contact method"
+      >
+        <span slot="label">Preferred contact method</span>
+        <bq-radio value="email">Email</bq-radio>
+        <bq-radio value="phone">Phone</bq-radio>
+        <bq-radio value="chat">Chat</bq-radio>
+      </bq-radio-group>
+      <bq-button appearance="secondary" type="reset">Reset</bq-button>
+      <bq-button type="submit">Submit</bq-button>
+      <pre id="radio-output">{}</pre>
+    </form>
+
+    <script>
+      const form = document.querySelector('#radio-form');
+      const output = document.querySelector('#radio-output');
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        output.textContent = JSON.stringify(Object.fromEntries(new FormData(form).entries()), null, 2);
+      });
+
+      form.addEventListener('reset', () => {
+        requestAnimationFrame(() => {
+          output.textContent = '{}';
+        });
+      });
+    </script>
+    ```
+
+    ```tsx React icon="react" expandable
+    import { useState } from "react";
+    import { BqButton, BqRadio, BqRadioGroup } from "@beeq/react";
+
+    export default function RadioForm() {
+      const [data, setData] = useState("{}");
+
+      return (
+        <form
+          onReset={() => setData("{}")}
+          onSubmit={(event) => {
+            event.preventDefault();
+            setData(JSON.stringify(Object.fromEntries(new FormData(event.currentTarget).entries()), null, 2));
+          }}
+        >
+          <BqRadioGroup
+            fieldset
+            name="contactMethod"
+            required
+            requiredValidationMessage="Choose a contact method"
+          >
+            <span slot="label">Preferred contact method</span>
+            <BqRadio value="email">Email</BqRadio>
+            <BqRadio value="phone">Phone</BqRadio>
+            <BqRadio value="chat">Chat</BqRadio>
+          </BqRadioGroup>
+          <BqButton appearance="secondary" type="reset">Reset</BqButton>
+          <BqButton type="submit">Submit</BqButton>
+          <pre>{data}</pre>
+        </form>
+      );
+    }
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqButton, BqRadio, BqRadioGroup } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqButton, BqRadio, BqRadioGroup],
+      template: `
+        <form (reset)="data = '{}'" (submit)="handleSubmit($event)">
+          <bq-radio-group
+            fieldset
+            name="contactMethod"
+            required
+            required-validation-message="Choose a contact method"
+          >
+            <span slot="label">Preferred contact method</span>
+            <bq-radio value="email">Email</bq-radio>
+            <bq-radio value="phone">Phone</bq-radio>
+            <bq-radio value="chat">Chat</bq-radio>
+          </bq-radio-group>
+          <bq-button appearance="secondary" type="reset">Reset</bq-button>
+          <bq-button type="submit">Submit</bq-button>
+          <pre>{{ data }}</pre>
+        </form>
+      `,
+    })
+    export class RadioFormComponent {
+      data = "{}";
+
+      handleSubmit(event: SubmitEvent): void {
+        event.preventDefault();
+        this.data = JSON.stringify(Object.fromEntries(new FormData(event.target as HTMLFormElement).entries()), null, 2);
+      }
+    }
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { ref } from "vue";
+    import { BqButton, BqRadio, BqRadioGroup } from "@beeq/vue";
+
+    const data = ref("{}");
+
+    function handleSubmit(event: Event) {
+      data.value = JSON.stringify(Object.fromEntries(new FormData(event.target as HTMLFormElement).entries()), null, 2);
+    }
+    </script>
+
+    <template>
+      <form @reset="data = '{}'" @submit.prevent="handleSubmit">
+        <BqRadioGroup
+          fieldset
+          name="contactMethod"
+          required
+          requiredValidationMessage="Choose a contact method"
+        >
+          <span slot="label">Preferred contact method</span>
+          <BqRadio value="email">Email</BqRadio>
+          <BqRadio value="phone">Phone</BqRadio>
+          <BqRadio value="chat">Chat</BqRadio>
+        </BqRadioGroup>
+        <BqButton appearance="secondary" type="reset">Reset</BqButton>
+        <BqButton type="submit">Submit</BqButton>
+        <pre>{{ data }}</pre>
+      </form>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
 ## Best practices
 
 <CardGroup cols={2}>

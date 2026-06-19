@@ -310,9 +310,9 @@ Set `enable-tooltip` to show a tooltip above the active handle while dragging. T
 
 <CodeLivePreview mode="shadow" code={`
   <style>
-    bq-slider { 
-        width: 100%; 
-        max-width: 400px; 
+    bq-slider {
+        width: 100%;
+        max-width: 400px;
         padding: var(--bq-spacing-xl);
     }
   </style>
@@ -363,9 +363,9 @@ Add `tooltip-always-visible` to keep the tooltip permanently visible rather than
 
 <CodeLivePreview mode="shadow" code={`
   <style>
-    bq-slider { 
-        width: 100%; 
-        max-width: 400px; 
+    bq-slider {
+        width: 100%;
+        max-width: 400px;
         padding: var(--bq-spacing-xl);
     }
   </style>
@@ -552,6 +552,200 @@ Use `gap` to set the minimum distance the two handles must maintain between each
 
     <template>
       <BqSlider :enableValueIndicator="true" :gap="10" :step="5" type="range" :value="[30, 70]" />
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Form integration
+
+`bq-slider` is form-associated and submits its current value as form data. It does not expose `required`, so use it for adjustable values rather than mandatory completion checks.
+
+<CodeLivePreview mode="iframe" height="22rem" removePadding code={`
+  <style>
+    body {
+      padding: var(--bq-spacing-l);
+    }
+
+    .slider-form {
+      display: grid;
+      gap: var(--bq-spacing-m);
+    }
+
+    .slider-form__actions {
+      display: flex;
+      gap: var(--bq-spacing-s);
+      justify-content: flex-end;
+    }
+
+    .slider-form__output {
+      margin: 0;
+      padding: var(--bq-spacing-s);
+      border: var(--bq-stroke-s) solid var(--bq-stroke--tertiary);
+      border-radius: var(--bq-radius--s);
+      background: var(--bq-ui--secondary);
+      color: var(--bq-text--primary);
+      white-space: pre-wrap;
+    }
+  </style>
+
+  <form class="slider-form" id="slider-form">
+    <label for="notification-volume">Notification volume</label>
+    <bq-slider
+      enable-value-indicator
+      id="notification-volume"
+      max="100"
+      name="notificationVolume"
+      value="65"
+    ></bq-slider>
+    <div class="slider-form__actions">
+      <bq-button appearance="secondary" type="reset">Reset</bq-button>
+      <bq-button type="button">Submit</bq-button>
+    </div>
+    <pre class="slider-form__output" id="slider-output">{}</pre>
+  </form>
+
+  <script>
+    (() => {
+      const form = previewRoot.querySelector('#slider-form');
+      const output = previewRoot.querySelector('#slider-output');
+      const submitButton = form.querySelector('bq-button[type="button"]');
+
+      const showFormData = () => {
+        if (!form.reportValidity()) return;
+        output.textContent = JSON.stringify(Object.fromEntries(new FormData(form).entries()), null, 2);
+      };
+
+      submitButton?.addEventListener('bqClick', (event) => {
+        event.preventDefault();
+        showFormData();
+      });
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        showFormData();
+      });
+
+      form.addEventListener('reset', () => {
+        requestAnimationFrame(() => {
+          output.textContent = '{}';
+        });
+      });
+    })();
+  </script>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <form id="slider-form">
+      <label for="notification-volume">Notification volume</label>
+      <bq-slider
+        enable-value-indicator
+        id="notification-volume"
+        max="100"
+        name="notificationVolume"
+        value="65"
+      ></bq-slider>
+      <bq-button appearance="secondary" type="reset">Reset</bq-button>
+      <bq-button type="submit">Submit</bq-button>
+      <pre id="slider-output">{}</pre>
+    </form>
+
+    <script>
+      const form = document.querySelector('#slider-form');
+      const output = document.querySelector('#slider-output');
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        output.textContent = JSON.stringify(Object.fromEntries(new FormData(form).entries()), null, 2);
+      });
+
+      form.addEventListener('reset', () => {
+        requestAnimationFrame(() => {
+          output.textContent = '{}';
+        });
+      });
+    </script>
+    ```
+
+    ```tsx React icon="react" expandable
+    import { useState } from "react";
+    import { BqButton, BqSlider } from "@beeq/react";
+
+    export default function SliderForm() {
+      const [data, setData] = useState("{}");
+
+      return (
+        <form
+          onReset={() => setData("{}")}
+          onSubmit={(event) => {
+            event.preventDefault();
+            setData(JSON.stringify(Object.fromEntries(new FormData(event.currentTarget).entries()), null, 2));
+          }}
+        >
+          <label htmlFor="notification-volume">Notification volume</label>
+          <BqSlider enableValueIndicator id="notification-volume" max={100} name="notificationVolume" value={65} />
+          <BqButton appearance="secondary" type="reset">Reset</BqButton>
+          <BqButton type="submit">Submit</BqButton>
+          <pre>{data}</pre>
+        </form>
+      );
+    }
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqButton, BqSlider } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqButton, BqSlider],
+      template: `
+        <form (reset)="data = '{}'" (submit)="handleSubmit($event)">
+          <label for="notification-volume">Notification volume</label>
+          <bq-slider
+            enable-value-indicator
+            id="notification-volume"
+            max="100"
+            name="notificationVolume"
+            value="65"
+          ></bq-slider>
+          <bq-button appearance="secondary" type="reset">Reset</bq-button>
+          <bq-button type="submit">Submit</bq-button>
+          <pre>{{ data }}</pre>
+        </form>
+      `,
+    })
+    export class SliderFormComponent {
+      data = "{}";
+
+      handleSubmit(event: SubmitEvent): void {
+        event.preventDefault();
+        this.data = JSON.stringify(Object.fromEntries(new FormData(event.target as HTMLFormElement).entries()), null, 2);
+      }
+    }
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { ref } from "vue";
+    import { BqButton, BqSlider } from "@beeq/vue";
+
+    const data = ref("{}");
+
+    function handleSubmit(event: Event) {
+      data.value = JSON.stringify(Object.fromEntries(new FormData(event.target as HTMLFormElement).entries()), null, 2);
+    }
+    </script>
+
+    <template>
+      <form @reset="data = '{}'" @submit.prevent="handleSubmit">
+        <label for="notification-volume">Notification volume</label>
+        <BqSlider enableValueIndicator id="notification-volume" :max="100" name="notificationVolume" :value="65" />
+        <BqButton appearance="secondary" type="reset">Reset</BqButton>
+        <BqButton type="submit">Submit</BqButton>
+        <pre>{{ data }}</pre>
+      </form>
     </template>
     ```
   </CodeGroup>

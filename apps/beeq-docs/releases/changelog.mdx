@@ -4,6 +4,54 @@ description: New features, bug fixes, and improvements to the BEEQ Design System
 rss: true
 ---
 
+<Update label="v1.12.4" description="June 2026">
+  This release adds form-validation hooks to **Select** and customizable icon slots to **Switch**, plus a broad pass of form-control fixes across **Input**, **Textarea**, **Checkbox**, and **Radio Group** to make native form integration more reliable.
+
+  ### Features ⚡️
+
+  - **Select:** add form validation message attribute and handling ([aeab61e9](https://github.com/Endava/BEEQ/commit/aeab61e9)).
+  - **Switch:** add `icon-on` and `icon-off` named slots for custom icon content ([c73b5633](https://github.com/Endava/BEEQ/commit/c73b5633)).
+
+  ### Bug Fixes 🐞
+
+  - **Accordion:** ensure full width in flex container parents ([0d5324a5](https://github.com/Endava/BEEQ/commit/0d5324a5)).
+  - **Button:** remove forced pointer cursor from host element ([#1691](https://github.com/Endava/BEEQ/pull/1691)).
+  - **Button:** keep ghost button height consistent and prevent text selection ([#1694](https://github.com/Endava/BEEQ/pull/1694)).
+  - **Checkbox:** ensure `bqChange` is emitted correctly after user interaction ([2df07ac6](https://github.com/Endava/BEEQ/commit/2df07ac6)).
+  - **Icon:** simplify SVG validation guard with optional chaining ([#1698](https://github.com/Endava/BEEQ/pull/1698)).
+  - **Input:** update form validity handling for required fields ([6822de6b](https://github.com/Endava/BEEQ/commit/6822de6b)).
+  - **Notification:** wrap close icon slot content in flex container ([#1690](https://github.com/Endava/BEEQ/pull/1690)).
+  - **RadioGroup:** ensure form validity is updated after reset ([45a300b3](https://github.com/Endava/BEEQ/commit/45a300b3)).
+  - **Side Menu:** fix collapsed padding in side menu items and tooltip visibility ([c192e1a6](https://github.com/Endava/BEEQ/commit/c192e1a6)).
+  - **Step Item:** keep numeric prefix circular shape when titles wrap ([#1725](https://github.com/Endava/BEEQ/pull/1725)).
+  - **Switch:** emit `bqChange` on user interaction only and support `preventDefault()` ([f0de5a27](https://github.com/Endava/BEEQ/commit/f0de5a27)).
+  - **Textarea:** set form value and update form validity after value change ([d0c3be2d](https://github.com/Endava/BEEQ/commit/d0c3be2d)).
+  - **Tooltip:** change positioning strategy from fixed to absolute ([3401a9b1](https://github.com/Endava/BEEQ/commit/3401a9b1)).
+  - **Utils:** use explicit property key in `validatePropValue` warning ([#1699](https://github.com/Endava/BEEQ/pull/1699)).
+  - **Utils:** remove redundant cast assertion in `transition.ts` utility ([#1700](https://github.com/Endava/BEEQ/pull/1700)).
+
+  ### Refactor 🛠️
+
+  - **Radio Group, Toast:** use nullish assignment for clearer and concise logic ([#1722](https://github.com/Endava/BEEQ/pull/1722)).
+
+  ### Chore ⚙️
+
+  - Major dependency bumps: Angular → v22, Node.js → v24.16, pnpm → v11, PostCSS → v11, Vite → v8.0.16 (security), Stencil and Storybook → v10.4.3, NX → v22.7.5, React → v19.2.7.
+  - Tooling updates: `chromatic` → v17, `@chromatic-com/storybook` → v5.2.1, `stylelint` → v17.13, `nx-stylelint` → v19, `lint-staged` → v17, `@types/node` → v25, `cimg/node` Docker tag → v26 ([#1704](https://github.com/Endava/BEEQ/pull/1704), [#1705](https://github.com/Endava/BEEQ/pull/1705), [#1707](https://github.com/Endava/BEEQ/pull/1707), [#1709](https://github.com/Endava/BEEQ/pull/1709), [#1712](https://github.com/Endava/BEEQ/pull/1712), [#1713](https://github.com/Endava/BEEQ/pull/1713), [#1714](https://github.com/Endava/BEEQ/pull/1714), [#1715](https://github.com/Endava/BEEQ/pull/1715), [#1718](https://github.com/Endava/BEEQ/pull/1718), [#1724](https://github.com/Endava/BEEQ/pull/1724)).
+
+  ### Test 🧪
+
+  - Migrate unit and e2e tests to Stencil Vitest and remove Jest/Puppeteer ([#1652](https://github.com/Endava/BEEQ/pull/1652)).
+  - **Dialog, Drawer:** remove redundant `DOMRect` assertions in e2e tests ([#1696](https://github.com/Endava/BEEQ/pull/1696)).
+
+  ### ❤️ Thank You
+
+  - [Andrei Morosan](https://github.com/Morosan)
+  - [Dabiel Gonzalez-Ramos](https://github.com/dgonzalezr)
+  - [Rares Herta](https://github.com/raresherta)
+  - [Raul Rațiu](https://github.com/raulratiu9)
+</Update>
+
 <Update label="v1.12.3" description="February 2026">
   ### Documentation 📚
 
