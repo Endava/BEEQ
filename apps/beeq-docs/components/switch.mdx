@@ -1,0 +1,728 @@
+---
+title: Switch
+description: Switches are digital on/off toggles that give users immediate, visible control over a single binary setting without requiring form submission.
+---
+
+import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
+
+<Frame className="px-4 py-4" caption="Switch component overview">
+  <img className="block dark:hidden" src="/components/images/switch/switch-overview-light.svg" alt="BEEQ Switch component overview" />
+  <img className="hidden dark:block" src="/components/images/switch/switch-overview-dark.svg" alt="BEEQ Switch component overview" />
+</Frame>
+
+A switch is a binary control that immediately toggles a setting on or off. Unlike checkboxes, a switch should trigger an instant change — no submit button needed. Use it for toggling preferences, enabling features, or activating modes where the result is visible right away.
+
+<Note>
+  Use a [Checkbox](/components/checkbox) when the choice is part of a form that requires explicit submission, or when multiple items can be selected at once. Use a Switch when the action takes immediate effect.
+</Note>
+
+## When to use
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-up" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Use a switch when
+    </span>
+    - Toggling a single setting that takes effect immediately
+    - The on/off state directly controls a feature, mode, or preference
+    - The action does not require a separate confirmation or form submission
+    - You need a compact, recognizable binary control
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-down" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Do not use a switch when
+    </span>
+    - The setting only takes effect after the user clicks a Save or Submit button
+    - Multiple related options need to be selected together (use checkboxes)
+    - The action is irreversible and needs a confirmation step
+    - The label text does not clearly describe the result of toggling
+  </Card>
+</CardGroup>
+
+## Anatomy
+
+<Frame className="px-4 py-4" caption="Switch component anatomy">
+  <img className="block dark:hidden" src="/components/images/switch/switch-anatomy-light.svg" alt="BEEQ Switch component anatomy" />
+  <img className="hidden dark:block" src="/components/images/switch/switch-anatomy-dark.svg" alt="BEEQ Switch component anatomy" />
+</Frame>
+
+The switch is composed of a toggle control (track + dot) and an optional label. When `inner-label` is set to `icon`, check and X marks appear inside the track to reinforce the on/off state.
+
+| Part | Element | Description |
+|---|---|---|
+| **1** | Switch toggle | The rounded track and sliding dot that act as the toggle surface |
+| **2** | Icon | Optional icon inside the track to reinforce the on/off state (icon mode only) |
+| **3** | Label | Optional text describing what the switch controls |
+
+## Design guidelines
+
+### States
+
+A switch has four interactive states: **default** (off), **checked** (on), **focused**, and **disabled**. Hover adds a subtle background when `background-on-hover` is enabled. The disabled state prevents all interaction and dims the control to signal it is unavailable.
+
+<Note>
+  Always pair a switch with a visible text label unless the context makes the purpose unmistakably clear (for example, a dark-mode toggle adjacent to sun and moon icons). Unlabeled switches are inaccessible by default.
+</Note>
+
+### Inner label
+
+<Steps>
+  <Step title="Default (no inner label)">
+    The track contains only the sliding dot. This is the most compact presentation and works well in dense settings panels.
+  </Step>
+  <Step title="Icon inner label">
+    Set `inner-label="icon"` to show a check icon when ON and an X icon when OFF inside the track. This adds a secondary visual reinforcement of the state without relying on color alone.
+  </Step>
+  <Step title="Custom icon slots">
+    Replace the default icons by providing content to the `icon-on` and `icon-off` named slots alongside `inner-label="icon"`. Use this for domain-specific icons such as a moon/sun pair for a dark-mode toggle.
+  </Step>
+</Steps>
+
+### Label position
+
+By default, the label appears to the right of the control. Set `reverse-order` to move it to the left — useful in right-to-left layouts or when a consistent label-first alignment is required across a settings list.
+
+## Usage
+
+### Default
+
+The default switch provides a basic on/off toggle functionality, allowing users to control a binary state effortlessly.
+
+<CodeLivePreview mode="shadow" code={`
+  <bq-switch>Toggle me!</bq-switch>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-switch>Toggle me!</bq-switch>
+    ```
+    ```tsx React icon="react"
+    import { BqSwitch } from "@beeq/react";
+
+    export default () => (
+      <BqSwitch>Toggle me!</BqSwitch>
+    );
+    ```
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqSwitch } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqSwitch],
+      template: `<bq-switch>Toggle me!</bq-switch>`,
+    })
+    export class AppComponent {}
+    ```
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqSwitch } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqSwitch>Toggle me!</BqSwitch>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Tip>
+  You don't need to specify any additional property or attribute that uses its default value.
+</Tip>
+
+### Checked
+
+Use the `checked` attribute to set the initial state of the toggle as ON. This is ideal when you want the switch to start in an activated position.
+
+<CodeLivePreview mode="shadow" code={`
+  <bq-switch checked>Toggle me!</bq-switch>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-switch checked>Toggle me!</bq-switch>
+    ```
+    ```tsx React icon="react"
+    import { BqSwitch } from "@beeq/react";
+
+    export default () => (
+      <BqSwitch checked>Toggle me!</BqSwitch>
+    );
+    ```
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqSwitch } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqSwitch],
+      template: `<bq-switch checked>Toggle me!</bq-switch>`,
+    })
+    export class AppComponent {}
+    ```
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqSwitch } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqSwitch checked>Toggle me!</BqSwitch>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+## Options
+
+### Disabled
+
+The disabled switch prevents user interaction, making it visually clear that the toggle functionality is not currently available or applicable. Use the `disabled` attribute to enable this type of switch.
+
+<CodeLivePreview mode="shadow" code={`
+  <bq-switch disabled>Toggle me!</bq-switch>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-switch disabled>Toggle me!</bq-switch>
+    ```
+    ```tsx React icon="react"
+    import { BqSwitch } from "@beeq/react";
+
+    export default () => (
+      <BqSwitch disabled>Toggle me!</BqSwitch>
+    );
+    ```
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqSwitch } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqSwitch],
+      template: `<bq-switch disabled>Toggle me!</bq-switch>`,
+    })
+    export class AppComponent {}
+    ```
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqSwitch } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqSwitch disabled>Toggle me!</BqSwitch>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### With inner label
+
+Enhance user understanding by incorporating an inner label that provides context about the current state of the switch. Use the `inner-label="icon"` attribute to activate this variant.
+
+<CodeLivePreview mode="shadow" code={`
+  <bq-switch inner-label="icon">Toggle me!</bq-switch>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-switch inner-label="icon">Toggle me!</bq-switch>
+    ```
+    ```tsx React icon="react"
+    import { BqSwitch } from "@beeq/react";
+
+    export default () => (
+      <BqSwitch innerLabel="icon">Toggle me!</BqSwitch>
+    );
+    ```
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqSwitch } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqSwitch],
+      template: `<bq-switch inner-label="icon">Toggle me!</bq-switch>`,
+    })
+    export class AppComponent {}
+    ```
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqSwitch } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqSwitch innerLabel="icon">Toggle me!</BqSwitch>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Reverse order
+
+The reverse order switch alters the visual arrangement, placing the toggle on the opposite side for a customizable user interface by adding the `reverse-order` attribute.
+
+<CodeLivePreview mode="shadow" code={`
+  <bq-switch reverse-order>Toggle me!</bq-switch>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-switch reverse-order>Toggle me!</bq-switch>
+    ```
+    ```tsx React icon="react"
+    import { BqSwitch } from "@beeq/react";
+
+    export default () => (
+      <BqSwitch reverseOrder>Toggle me!</BqSwitch>
+    );
+    ```
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqSwitch } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqSwitch],
+      template: `<bq-switch reverse-order>Toggle me!</bq-switch>`,
+    })
+    export class AppComponent {}
+    ```
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqSwitch } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqSwitch reverseOrder>Toggle me!</BqSwitch>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Full width
+
+Use `full-width` with `reverse-order` and `justify-content="space-between"` to build standard settings-list rows where the label is on the left and the toggle sits flush to the right edge.
+
+<CodeLivePreview mode="shadow" code={`
+  <style>
+    :host { 
+      flex-direction: column !important; 
+      align-items: stretch !important; 
+      max-width: 28rem; 
+    }
+  </style>
+
+  <bq-switch
+    background-on-hover
+    full-width
+    justify-content="space-between"
+    name="bq-switch"
+    reverse-order
+    value="show-app-list"
+  >
+    Show app list in menu
+  </bq-switch>
+  <bq-switch
+    background-on-hover
+    checked
+    full-width
+    justify-content="space-between"
+    name="bq-switch"
+    reverse-order
+    value="show-recently-apps"
+  >
+    Show recently added apps
+  </bq-switch>
+  <bq-switch
+    background-on-hover
+    disabled
+    full-width
+    justify-content="space-between"
+    name="bq-switch"
+    reverse-order
+    value="show-used-apps"
+  >
+    Show most used apps
+  </bq-switch>
+  <bq-switch
+    background-on-hover
+    checked
+    full-width
+    justify-content="space-between"
+    name="bq-switch"
+    reverse-order
+    value="show-app-notifications"
+  >
+    Show app notifications
+  </bq-switch>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <bq-switch
+      background-on-hover
+      full-width
+      justify-content="space-between"
+      name="bq-switch"
+      reverse-order
+      value="show-app-list"
+    >
+      Show app list in menu
+    </bq-switch>
+    <bq-switch
+      background-on-hover
+      checked
+      full-width
+      justify-content="space-between"
+      name="bq-switch"
+      reverse-order
+      value="show-recently-apps"
+    >
+      Show recently added apps
+    </bq-switch>
+    <bq-switch
+      background-on-hover
+      disabled
+      full-width
+      justify-content="space-between"
+      name="bq-switch"
+      reverse-order
+      value="show-used-apps"
+    >
+      Show most used apps
+    </bq-switch>
+    <bq-switch
+      background-on-hover
+      checked
+      full-width
+      justify-content="space-between"
+      name="bq-switch"
+      reverse-order
+      value="show-app-notifications"
+    >
+      Show app notifications
+    </bq-switch>
+    ```
+    ```tsx React icon="react" expandable
+    import { BqSwitch } from "@beeq/react";
+
+    export default () => (
+      <>
+        <BqSwitch
+          backgroundOnHover
+          fullWidth
+          justifyContent="space-between"
+          name="bq-switch"
+          reverseOrder
+          value="show-app-list"
+        >
+          Show app list in menu
+        </BqSwitch>
+        <BqSwitch
+          backgroundOnHover
+          checked
+          fullWidth
+          justifyContent="space-between"
+          name="bq-switch"
+          reverseOrder
+          value="show-recently-apps"
+        >
+          Show recently added apps
+        </BqSwitch>
+        <BqSwitch
+          backgroundOnHover
+          disabled
+          fullWidth
+          justifyContent="space-between"
+          name="bq-switch"
+          reverseOrder
+          value="show-used-apps"
+        >
+          Show most used apps
+        </BqSwitch>
+        <BqSwitch
+          backgroundOnHover
+          checked
+          fullWidth
+          justifyContent="space-between"
+          name="bq-switch"
+          reverseOrder
+          value="show-app-notifications"
+        >
+          Show app notifications
+        </BqSwitch>
+      </>
+    );
+    ```
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqSwitch } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqSwitch],
+      template: `
+        <bq-switch
+          background-on-hover
+          full-width
+          justify-content="space-between"
+          name="bq-switch"
+          reverse-order
+          value="show-app-list"
+        >
+          Show app list in menu
+        </bq-switch>
+        <bq-switch
+          background-on-hover
+          checked
+          full-width
+          justify-content="space-between"
+          name="bq-switch"
+          reverse-order
+          value="show-recently-apps"
+        >
+          Show recently added apps
+        </bq-switch>
+        <bq-switch
+          background-on-hover
+          disabled
+          full-width
+          justify-content="space-between"
+          name="bq-switch"
+          reverse-order
+          value="show-used-apps"
+        >
+          Show most used apps
+        </bq-switch>
+        <bq-switch
+          background-on-hover
+          checked
+          full-width
+          justify-content="space-between"
+          name="bq-switch"
+          reverse-order
+          value="show-app-notifications"
+        >
+          Show app notifications
+        </bq-switch>
+      `,
+    })
+    export class AppComponent {}
+    ```
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqSwitch } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqSwitch
+        backgroundOnHover
+        fullWidth
+        justifyContent="space-between"
+        name="bq-switch"
+        reverseOrder
+        value="show-app-list"
+      >
+        Show app list in menu
+      </BqSwitch>
+      <BqSwitch
+        backgroundOnHover
+        checked
+        fullWidth
+        justifyContent="space-between"
+        name="bq-switch"
+        reverseOrder
+        value="show-recently-apps"
+      >
+        Show recently added apps
+      </BqSwitch>
+      <BqSwitch
+        backgroundOnHover
+        disabled
+        fullWidth
+        justifyContent="space-between"
+        name="bq-switch"
+        reverseOrder
+        value="show-used-apps"
+      >
+        Show most used apps
+      </BqSwitch>
+      <BqSwitch
+        backgroundOnHover
+        checked
+        fullWidth
+        justifyContent="space-between"
+        name="bq-switch"
+        reverseOrder
+        value="show-app-notifications"
+      >
+        Show app notifications
+      </BqSwitch>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Tip>
+  Use a combination of `full-width`, `justify-content`, and `reverse-order`. Be creative!
+</Tip>
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Use concise, present-tense labels that clearly describe the result of the switch being on. "Enable notifications" or "Dark mode" communicate the outcome at a glance.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Use vague labels like "Toggle" or "On/Off". Users should not need to think about what the switch controls — the label must describe the setting itself.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Apply the switch's effect immediately without requiring a submit action. Use this pattern for preferences that take effect in real time — dark mode, notifications, or feature flags.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Use a switch when the change only takes effect after the user clicks a Save button. If the state is not immediately applied, use a checkbox inside a form instead.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Use `inner-label="icon"` to supplement the color change with a shape cue (check / X). This improves the control for users with color vision deficiencies who cannot rely on brand color alone.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Rely solely on the track color to communicate the ON state. Always ensure that at least one additional cue — dot position or icon — distinguishes the two states.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Place the label directly adjacent to the switch and keep the pairing stable across the list. Consistent label position helps users scan a settings panel without searching for the control.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Change the label text based on state (for example, "Enabled" when on and "Disabled" when off). The label should always describe the setting — the control itself communicates the current state.
+  </Card>
+</CardGroup>
+
+## Accessibility
+
+`bq-switch` renders a native `<input type="checkbox" role="switch">` inside its shadow DOM, which ensures that assistive technologies correctly announce the control as a switch with an on/off state.
+
+### Keyboard interaction
+
+| Key | Action |
+|---|---|
+| `Tab` | Moves focus to the switch |
+| `Space` | Toggles the switch on or off |
+
+### Developer responsibilities
+
+- Always provide a visible text label via the default slot. The switch derives its accessible name from the `name` prop via `aria-label` on the native `<input>` — the visible slot text is not automatically wired to the control. If you want the visible label to serve as the accessible name, use `aria-labelledby` on the host element pointing to the associated label element.
+- Use the `name` attribute (required) to participate in form submissions and to give the control a machine-readable identifier.
+- When the switch is `disabled`, it is excluded from the tab order and will not respond to keyboard or pointer events. Make sure the reason for disabling is communicated through surrounding text.
+- The `bqChange` event is cancelable. Calling `event.preventDefault()` inside a `bqChange` handler prevents the switch from updating its visual state, which is useful when you need to confirm a change before applying it.
+- Use `vFocus()`, `vBlur()`, and `vClick()` instead of the global `element.focus()`, `element.blur()`, and `element.click()` to interact with the native input correctly across Shadow DOM boundaries.
+
+## API reference
+
+### Properties
+
+| Property | Attribute | Description | Type | Default |
+|---|---|---|---|---|
+| `backgroundOnHover` | `background-on-hover` | If `true`, a background is shown on hover | `boolean` | `false` |
+| `checked` | `checked` | If `true`, the switch starts in the ON state | `boolean` | `false` |
+| `disabled` | `disabled` | If `true`, the switch is disabled and non-interactive | `boolean` | `false` |
+| `formValidationMessage` | `form-validation-message` | Custom native form validation message | `string` | — |
+| `fullWidth` | `full-width` | If `true`, the switch expands to fill its container | `boolean` | `false` |
+| `innerLabel` | `inner-label` | How to display the on/off marks inside the control | `'default' \| 'icon'` | `'default'` |
+| `justifyContent` | `justify-content` | Space distribution between the control and label; accepts any `justify-content` value | `'start' \| 'end' \| 'center' \| 'flex-start' \| 'flex-end' \| 'left' \| 'right' \| 'space-between' \| 'space-around' \| 'space-evenly' \| 'stretch' \| 'normal' \| 'inherit' \| 'initial'` | `'start'` |
+| `name` | `name` | Form control name; submitted as part of a name/value pair | `string` | **required** |
+| `required` | `required` | If `true`, the switch must be ON before the form can be submitted | `boolean` | `false` |
+| `reverseOrder` | `reverse-order` | If `true`, the label appears before the control | `boolean` | `false` |
+| `value` | `value` | Sets the underlying `<input>` value attribute. Note: the form submission value is the fixed string `'on'` when checked (via ElementInternals), regardless of this prop | `string` | — |
+
+### Methods
+
+| Method | Description | Signature |
+|---|---|---|
+| `vBlur()` | Removes focus from the native `<input>` element | `Promise<void>` |
+| `vClick()` | Simulates a click on the native `<input>` element | `Promise<void>` |
+| `vFocus()` | Sets focus on the native `<input>` element | `Promise<void>` |
+
+### Events
+
+| Event | Description | Type |
+|---|---|---|
+| `bqBlur` | Emitted when the switch loses focus | `CustomEvent<HTMLBqSwitchElement>` |
+| `bqChange` | Emitted when the switch state changes; cancelable via `event.preventDefault()` | `CustomEvent<{ checked: boolean }>` |
+| `bqFocus` | Emitted when the switch gains focus | `CustomEvent<HTMLBqSwitchElement>` |
+
+### Slots
+
+| Slot | Description |
+|---|---|
+| *(default)* | The label text displayed next to the control |
+| `icon-on` | Custom icon shown inside the track when the switch is ON (requires `inner-label="icon"`) |
+| `icon-off` | Custom icon shown inside the track when the switch is OFF (requires `inner-label="icon"`) |
+
+### Shadow parts
+
+| Part | Description |
+|---|---|
+| `base` | The `<label>` root container element |
+| `control` | The `<div>` element that forms the toggle track |
+| `dot` | The `<div>` element that acts as the sliding indicator dot |
+| `icon-on` | The `<bq-icon>` element used as the ON mark (icon mode only) |
+| `icon-off` | The `<bq-icon>` element used as the OFF mark (icon mode only) |
+| `label` | The `<span>` element that holds the label text |
+
+### CSS custom properties
+
+| Variable | Description | Default |
+|---|---|---|
+| `--bq-switch--height` | Height of the switch track | `24px` |
+| `--bq-switch--width` | Width of the switch track | `44px` |
+| `--bq-switch--dot-size` | Diameter of the sliding dot | `calc(var(--bq-switch--height) - (var(--bq-spacing-xs2) * 2))` |
+| `--bq-switch--justify-content` | Space distribution between the control and label | `start` |
+
+<Tip>
+  Learn more about [styling with shadow parts](/guides/styles) and [CSS custom properties](/theming/global-css-variables).
+</Tip>
+
+## Resources
+
+<CardGroup cols={2}>
+  <Card horizontal title="Interactive playground" icon="code" href="https://storybook.beeq.design/?path=/story/components-switch--default">
+    Explore switch variants and states in Storybook
+  </Card>
+  <Card horizontal title="Source code" icon="github" href="https://github.com/Endava/BEEQ/tree/main/packages/beeq/src/components/switch">
+    View the component source on GitHub
+  </Card>
+</CardGroup>

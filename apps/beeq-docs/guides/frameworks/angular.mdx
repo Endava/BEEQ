@@ -1,0 +1,582 @@
+---
+title: Angular
+description: Integrate BEEQ in Angular with the official wrapper, standalone component imports, and support for reactive forms, template-driven forms, and signals.
+---
+
+BEEQ integrates with Angular through `@beeq/angular`, the official wrapper around BEEQ web components. It gives you familiar Angular syntax for properties, events, and forms — without needing `CUSTOM_ELEMENTS_SCHEMA` in your modules or manual element registration.
+
+For new Angular applications, we recommend the standalone setup with direct component imports from `@beeq/angular/standalone`. Keep the NgModule setup only for existing module-based apps.
+
+<Columns cols={3}>
+  <Card title="Angular-friendly outputs">
+    Listen to BEEQ events with Angular bindings such as `(bqClick)` and `(bqChange)`.
+  </Card>
+  <Card title="Forms support">
+    Use `formControlName`, `[(ngModel)]`, or signal-driven state with supported BEEQ form controls.
+  </Card>
+  <Card title="Standalone-first setup">
+    Import only the components you need per feature. NgModule support remains available for older apps.
+  </Card>
+</Columns>
+
+<Note>
+  Angular wrappers in `@beeq/angular` are detached from change detection, so BEEQ components do not trigger unnecessary Angular repaints. They work well with `ChangeDetectionStrategy.OnPush`.
+</Note>
+
+## Get started
+
+You can add BEEQ to an existing Angular project in a few steps.
+
+<Steps>
+  <Step title="Check your project setup" titleSize="h3">
+    Make sure your project has:
+
+    - Angular **14+** (BEEQ wrapper minimum)
+    - Node.js **18+**
+    - A working Angular app (Angular CLI or equivalent)
+
+    For **signals** and `computed()`, use Angular **16+**. Angular **17+** is recommended for new standalone apps.
+  </Step>
+
+  <Step title="Install the packages" titleSize="h3">
+    Install the core package and the Angular wrapper:
+
+    ```bash
+    npm install @beeq/core @beeq/angular
+    ```
+
+    What each package gives you:
+
+    - `@beeq/core` includes the web components, styles, icons, and shared types
+    - `@beeq/angular` provides Angular bindings, outputs, and value accessors
+
+    <Note>
+      You do not need to call `defineCustomElements()` or add `CUSTOM_ELEMENTS_SCHEMA` to your modules. The Angular wrapper handles component registration for you.
+    </Note>
+  </Step>
+
+  <Step title="Add the global styles" titleSize="h3">
+    Load the BEEQ stylesheet once for the whole application.
+
+    Add the stylesheet to your build options:
+
+    ```json angular.json highlight={9}
+    {
+      "projects": {
+        "my-app": {
+          "architect": {
+            "build": {
+              "options": {
+                "styles": [
+                  "src/styles.scss",
+                  "node_modules/@beeq/core/dist/beeq/beeq.css"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+    ```
+
+    or import it in your global stylesheet:
+
+    ```css src/styles.css
+    @import "@beeq/core/dist/beeq/beeq.css";
+    ```
+
+    <Tip>
+      Keep your application stylesheet loaded after the BEEQ stylesheet if you want your own project styles to override shared defaults.
+    </Tip>
+  </Step>
+
+  <Step title="Configure icons" titleSize="h3">
+    Many BEEQ components use SVG icons. Your app must serve the SVG files and tell BEEQ where to find them.
+
+    <Warning>
+      The full BEEQ icon set has **9,000+ SVG files**. Copying everything into your repo can slow local builds. Prefer the CDN option for quick starts, or copy only the icons you use.
+    </Warning>
+
+    The fastest option for development is a `<script>` tag in `index.html` with the `data-beeq` attribute. BEEQ reads this path automatically — you do not need `setBasePath()` in `main.ts`.
+
+    ```html src/index.html highlight={7-9}
+    <!doctype html>
+    <html lang="en">
+      <head>
+        <meta charset="utf-8" />
+        <title>My App</title>
+        <base href="/" />
+        <script
+          data-beeq="https://cdn.jsdelivr.net/npm/@beeq/core/dist/beeq/svg/"
+        ></script>
+      </head>
+      <body>
+        <app-root></app-root>
+      </body>
+    </html>
+    ```
+
+    <Tip>
+      The URL must point to the directory that contains BEEQ SVG files (file names such as `user.svg`, `envelope.svg`). You can use a CDN URL, a path your app serves locally, or even a different icon library — just make sure the icon `name` values you use in templates match the file names at that path.
+    </Tip>
+
+    You can also copy the SVG files to your public folder or assets directory and point BEEQ to that folder.
+
+    <CodeGroup>
+      ```json angular.json highlight={18-20} expandable
+      {
+        "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+        "version": 1,
+        "cli": {
+          "packageManager": "npm"
+        },
+        "newProjectRoot": "projects",
+        "projects": {
+          "beeq-angular": {
+            //...
+            "architect": {
+              "build": {
+                "builder": "@angular/build:application",
+                "options": {
+                  // ...
+                  "assets": [
+                    {
+                      "glob": "**/*",
+                      "input": "node_modules/@beeq/core/dist/beeq/svg",
+                      "output": "/icons/svg/"
+                    },
+                    {
+                      "glob": "**/*",
+                      "input": "public"
+                    }
+                  ],
+                  "styles": [ "src/styles.css" ]
+                  // ...
+                }
+              }
+              // ...
+            }
+          }
+        }
+      }
+      ```
+
+      ```ts src/main.ts highlight={2,6} expandable
+      import { bootstrapApplication } from '@angular/platform-browser';
+      import { setBasePath } from '@beeq/core/dist/components';
+      import { appConfig } from './app/app.config';
+      import { App } from './app/app';
+
+      setBasePath('/icons/svg/');
+
+      bootstrapApplication(App, appConfig)
+        .catch((err) => console.error(err));
+      ```
+    </CodeGroup>
+
+    <Note>
+      When you use `setBasePath()`, you do not need the `data-beeq` script tag unless you want a fallback.
+    </Note>
+
+    <Tip>
+      You can create a Vite plugin to copy only the SVG files you need.
+      See the ["Custom Build Pipeline"](https://angular.dev/ecosystem/custom-build-pipeline) section in the Angular documentation for guidance, and refer to the React setup [here](/guides/frameworks/react#copy-only-the-icons-you-need) for inspiration.
+    </Tip>
+  </Step>
+
+  <Step title="Import BEEQ components (standalone)" titleSize="h3">
+    Import the BEEQ components you use from `@beeq/angular/standalone` and list them in the component `imports` array:
+
+    ```ts app.component.ts
+    import { Component } from "@angular/core";
+    import { BqButton, BqIcon } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqButton, BqIcon],
+      template: `
+        <bq-button (bqClick)="save()">
+          Save changes
+          <bq-icon name="floppy-disk" slot="suffix"></bq-icon>
+        </bq-button>
+      `,
+    })
+    export class AppComponent {
+      save(): void {
+        console.log("Saved!");
+      }
+    }
+    ```
+
+    <Tip>
+      Every component you use in the template must appear in the `imports` array — including child components like `bq-icon` inside a `bq-button`.
+
+      When using form controls with `ngModel` or reactive forms, also import `FormsModule` or `ReactiveFormsModule` and the corresponding value accessor. See the [Template-driven forms](#template-driven-forms) section for details.
+    </Tip>
+  </Step>
+</Steps>
+
+## Angular usage patterns with BEEQ
+
+### Properties and events
+
+BEEQ components work as custom elements in Angular templates:
+
+```html
+<bq-button [disabled]="isSaving" (bqClick)="save()">
+  Save changes
+</bq-button>
+```
+
+| BEEQ event | Angular binding | When it fires |
+|---|---|---|
+| `bqClick` | `(bqClick)` | User activates the control |
+| `bqChange` | `(bqChange)` | Value confirmed (blur or selection) |
+| `bqInput` | `(bqInput)` | Value changes on each keystroke |
+| `bqFocus` | `(bqFocus)` | Control receives focus |
+| `bqBlur` | `(bqBlur)` | Control loses focus |
+| `bqClear` | `(bqClear)` | User clears the value |
+
+For non-form components such as `bq-slider`, read the value from the event: `(bqChange)="onSliderChange($event)"` and use `$event.detail.value`.
+
+### Value accessors for forms
+
+BEEQ components are custom elements, so Angular needs a small adapter to sync `[(ngModel)]` and `formControlName` with `bqChange` / `bqInput`. BEEQ ships those adapters as **value accessors** in `@beeq/angular/standalone`.
+In standalone components, every dependency must be explicitly imported.
+
+- Import `FormsModule` or `ReactiveFormsModule`
+- Add `ngDefaultControl` on each bound `bq-input` (and similar text controls)
+- Import the matching value accessor — for example, `BooleanValueAccessor` for `bq-checkbox`
+
+The example below shows a checkbox bound to a signal using `[ngModel]` for the initial value and `(ngModelChange)` to update the signal when the user interacts:
+
+```ts
+import { Component, signal } from "@angular/core";
+import { FormsModule } from "@angular/forms";
+import { BooleanValueAccessor, BqCheckbox } from "@beeq/angular/standalone";
+
+@Component({
+  standalone: true,
+  imports: [FormsModule, BooleanValueAccessor, BqCheckbox],
+  template: `
+    <bq-checkbox
+      [ngModel]="isChecked()"
+      (ngModelChange)="isChecked.set($event)"
+    >
+      <span slot="label">Checkbox</span>
+    </bq-checkbox>
+  `,
+})
+export class AppComponent {
+  isChecked = signal(false);
+}
+```
+
+Value Accessor reference:
+
+| Component | Value Accessor | Notes |
+|---|---|---|
+| bq-checkbox, bq-switch | BooleanValueAccessor | Reads/writes checked (boolean) |
+| bq-input (text) | — | Use `ngDefaultControl` to opt into Angular's built-in DefaultValueAccessor |
+| bq-input[type="number"] | NumericValueAccessor | Reads/writes value as a number |
+| bq-textarea | TextValueAccessor | Reads/writes value as a string |
+| bq-date-picker | TextValueAccessor | Reads/writes value as a string |
+| bq-select | SelectValueAccessor | Reads/writes value (single or multiple) |
+| bq-radio | RadioValueAccessor | Reads/writes value within a radio group |
+
+### Reactive forms
+
+Use `ReactiveFormsModule`, a `FormGroup`, and `formControlName`. Add `ngDefaultControl` on text-based BEEQ inputs so Angular treats them as `ControlValueAccessor`. For boolean controls like `bq-checkbox`, import `BooleanValueAccessor` instead.
+
+<CodeGroup>
+  ```ts profile-form.component.ts expandable
+  import { Component } from "@angular/core";
+  import {
+    FormControl,
+    FormGroup,
+    ReactiveFormsModule,
+    Validators,
+  } from "@angular/forms";
+  import {
+    BooleanValueAccessor,
+    BqButton,
+    BqCard,
+    BqCheckbox,
+    BqIcon,
+    BqInput,
+  } from "@beeq/angular/standalone";
+
+  @Component({
+    selector: "app-profile-form",
+    standalone: true,
+    imports: [
+      ReactiveFormsModule,
+      BooleanValueAccessor,
+      BqCard,
+      BqInput,
+      BqIcon,
+      BqCheckbox,
+      BqButton,
+    ],
+    template: `
+      <bq-card>
+        <h2>Reactive form</h2>
+        <form [formGroup]="userProfile" (ngSubmit)="onSubmit()">
+          <bq-input
+            name="name"
+            formControlName="name"
+            placeholder="Your name"
+            ngDefaultControl
+          >
+            <span slot="label">Name</span>
+            <bq-icon name="user" slot="prefix"></bq-icon>
+          </bq-input>
+
+          <bq-input
+            required
+            name="email"
+            formControlName="email"
+            placeholder="Your email"
+            ngDefaultControl
+          >
+            <span slot="label">Email</span>
+            <bq-icon name="envelope" slot="prefix"></bq-icon>
+          </bq-input>
+
+          <bq-checkbox
+            name="userTermsConditions"
+            formControlName="userTermsConditions"
+          >
+            Yes, I agree with the Terms &amp; Conditions
+          </bq-checkbox>
+
+          <bq-button type="submit">Subscribe</bq-button>
+        </form>
+      </bq-card>
+    `,
+  })
+  export class ProfileFormComponent {
+    userProfile = new FormGroup({
+      name: new FormControl(""),
+      email: new FormControl("", Validators.required),
+      userTermsConditions: new FormControl(false),
+    });
+
+    onSubmit(): void {
+      console.log(this.userProfile.value);
+    }
+  }
+  ```
+</CodeGroup>
+
+<Tip>
+  `ngDefaultControl` tells Angular that the web component implements `ControlValueAccessor`. Add it on text-based inputs (`bq-input`, `bq-textarea`). Do not add it on `bq-checkbox` or `bq-switch` when `BooleanValueAccessor` is already imported — that accessor takes precedence and `ngDefaultControl` would conflict.
+</Tip>
+
+### Template-driven forms
+
+When using template-driven forms, import `FormsModule` and bind values with `[(ngModel)]`.
+
+<CodeGroup>
+  ```ts newsletter.component.ts expandable
+  import { Component } from "@angular/core";
+  import { FormsModule } from "@angular/forms";
+  import {
+    BooleanValueAccessor,
+    BqButton,
+    BqCard,
+    BqCheckbox,
+    BqIcon,
+    BqInput,
+  } from "@beeq/angular/standalone";
+
+  @Component({
+    selector: "app-newsletter",
+    standalone: true,
+    imports: [
+      FormsModule,
+      BooleanValueAccessor,
+      BqCard,
+      BqInput,
+      BqIcon,
+      BqCheckbox,
+      BqButton,
+    ],
+    template: `
+      <bq-card>
+        <h2>Template-driven form</h2>
+        <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+          <bq-input
+            name="name"
+            [(ngModel)]="username"
+            placeholder="Your name"
+            ngDefaultControl
+          >
+            <span slot="label">Name</span>
+            <bq-icon name="user" slot="prefix"></bq-icon>
+          </bq-input>
+
+          <bq-input
+            required
+            name="email"
+            [(ngModel)]="email"
+            placeholder="Your email"
+            ngDefaultControl
+          >
+            <span slot="label">Email</span>
+            <bq-icon name="envelope" slot="prefix"></bq-icon>
+          </bq-input>
+
+          <bq-checkbox
+            name="userTermsConditions"
+            [(ngModel)]="termsConditions"
+          >
+            Yes, I agree with the Terms &amp; Conditions
+          </bq-checkbox>
+
+          <bq-button type="submit">Subscribe</bq-button>
+        </form>
+      </bq-card>
+    `,
+  })
+  export class NewsletterComponent {
+    username = "";
+    email = "";
+    termsConditions = false;
+
+    onSubmit(form: { value: unknown }): void {
+      console.log(form.value);
+    }
+  }
+  ```
+</CodeGroup>
+
+### Signals
+
+Use signals for local UI state and `computed()` for derived labels or styles. For `bq-slider`, bind the value with `[value]` and update the signal in `(bqChange)` — do not use `[(ngModel)]` on a `WritableSignal`.
+
+<CodeGroup>
+  ```ts skill-level.component.ts expandable
+  import { Component, computed, signal } from "@angular/core";
+  import { BqCard, BqSlider, BqTag } from "@beeq/angular/standalone";
+
+  @Component({
+    selector: "app-skill-level",
+    standalone: true,
+    imports: [BqCard, BqSlider, BqTag],
+    template: `
+      <bq-card>
+        <h2>
+          Skill level:
+          <bq-tag [color]="skillLevelColor()" size="small">
+            {{ skillLevelLabel() }}
+          </bq-tag>
+        </h2>
+        <bq-slider
+          [value]="skillLevel()"
+          [enableTooltip]="true"
+          [tooltipAlwaysVisible]="true"
+          (bqChange)="skillLevel.set(+$event.detail.value)"
+        ></bq-slider>
+      </bq-card>
+    `,
+  })
+  export class SkillLevelComponent {
+    skillLevel = signal(50);
+
+    skillLevelLabel = computed(() => {
+      const value = this.skillLevel();
+      if (value < 34) return "Beginner";
+      if (value < 67) return "Intermediate";
+      return "Expert";
+    });
+
+    skillLevelColor = computed(() => {
+      const value = this.skillLevel();
+      if (value < 34) return "gray";
+      if (value < 67) return "warning";
+      return "success";
+    });
+  }
+  ```
+</CodeGroup>
+
+<Tip>
+  You can combine reactive forms with signals using `toSignal()` from `@angular/core/rxjs-interop` (Angular 16+) to mirror `FormControl` value changes in the template.
+</Tip>
+
+## Example application
+
+A reference standalone app is available in the [BEEQ repository](https://github.com/Endava/BEEQ/tree/main/packages/beeq-angular) and demonstrates all of the patterns described on this page:
+
+- Icons via `data-beeq` in `index.html`
+- Global styles via `@import` in `styles.css`
+- Reactive form, template-driven form, and signal-driven slider in one `App` component
+
+## Angular Module integration (Legacy)
+
+If your application still uses `NgModule`, import `BeeQModule.forRoot()` in your root module.
+
+<Note>
+  Value accessor directives are included automatically when you import `BeeQModule`. You do not need to import them individually. However, `FormsModule` and `ReactiveFormsModule` must still be imported separately for `ngModel` and reactive forms to work.
+</Note>
+
+```ts app.module.ts highlight={4,10}
+import { NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
+import { FormsModule } from "@angular/forms";
+import { BeeQModule } from "@beeq/angular";
+
+import { AppComponent } from "./app.component";
+
+@NgModule({
+  declarations: [AppComponent],
+  imports: [BrowserModule, FormsModule, BeeQModule.forRoot()],
+  bootstrap: [AppComponent],
+})
+export class AppModule {}
+```
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Styles are missing">
+    Confirm `@beeq/core/dist/beeq/beeq.css` is loaded once globally (`angular.json` or your main stylesheet).
+  </Accordion>
+  <Accordion title="Icons are not rendering">
+    Check one of these setups:
+
+    - `data-beeq` in `index.html` points to a URL that serves BEEQ SVG files (correct file names)
+    - `setBasePath()` in `main.ts` matches the public path where your build serves copied SVGs
+    - Icon `name` values match SVG file names (without `.svg`)
+  </Accordion>
+  <Accordion title="Angular does not recognize BEEQ components">
+    In standalone apps, add each `Bq*` component to the `imports` array of the declaring component. In NgModule apps, import `BeeQModule.forRoot()`.
+  </Accordion>
+  <Accordion title="`ngModel` or `formControlName` does not work">
+    Import `FormsModule` or `ReactiveFormsModule`, add `ngDefaultControl` on BEEQ text inputs, and import `BooleanValueAccessor` for `bq-checkbox` and `bq-switch` in standalone apps.
+  </Accordion>
+  <Accordion title="Older Angular versions and build errors">
+    Some Angular 14–15 builds hit compiler issues with web-component value accessors. If you see `NG8001` or accessor-related errors:
+
+    1. Add `"skipLibCheck": true` to `tsconfig.json` `compilerOptions`.
+    2. In `angular.json`, set `"aot": false` and `"buildOptimizer": false` for affected configurations.
+
+    On Angular 16+ with current BEEQ releases, these workarounds are usually unnecessary.
+  </Accordion>
+</AccordionGroup>
+
+## Next steps
+
+<Columns cols={3}>
+  <Card title="Explore components" href="/components" icon="boxes-stacked" iconType="duotone">
+    Start with a component page to see props, events, slots, and framework examples.
+  </Card>
+  <Card title="Customize the theme" href="/theming/themes-and-modes" icon="palette" iconType="duotone">
+    Review theming options if your product needs brand customization.
+  </Card>
+  <Card title="Open Storybook" href="https://storybook.beeq.design" icon="book" iconType="duotone">
+    Explore component states and interactions in the live component library.
+  </Card>
+</Columns>

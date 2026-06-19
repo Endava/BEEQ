@@ -87,15 +87,15 @@
     },
     "conventionalCommits": {
       "types": {
-        "feat": { "changelog": { "title": "Features ⚡️" } },
+        "feat": { "changelog": { "title": "Features ⚡️", "semverBump": "minor" } },
         "fix": { "changelog": { "title": "Bug Fixes 🐞", "semverBump": "patch" } },
         "test": { "changelog": { "title": "Test 🧪" }, "semverBump": "patch" },
-        "docs": { "changelog": { "title": "Documentation 📚", "semverBump": "patch" } },
         "style": { "changelog": { "title": "Style 🎨", "semverBump": "patch" } },
         "chore": { "changelog": { "title": "Chore ⚙️", "semverBump": "patch" } },
         "perf": { "changelog": { "title": "Performance ⌛️", "semverBump": "patch" } },
         "refactor": { "changelog": { "title": "Refactor 🛠️", "semverBump": "patch" } },
         "revert": { "changelog": { "title": "Revert 🔄", "semverBump": "patch" } },
+        "docs": false,
         "release": false,
         "ci": false
       }

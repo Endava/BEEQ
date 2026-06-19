@@ -1,0 +1,222 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "BEEQ Design System",
+  "description": "BEEQ is a white-label open-source design system created at Endava that accelerates the building of digital products with the goal of providing a UI Library of components and guidelines to help designers and developers produce high-quality solutions.",
+  "favicon": "/favicon.svg",
+  "logo": {
+    "light": "/logo/beeq-light.svg",
+    "dark": "/logo/beeq-dark.svg"
+  },
+  "fonts": {
+    "heading": {
+      "family": "Outfit",
+      "weight": 700
+    },
+    "body": {
+      "family": "Outfit"
+    }
+  },
+  "icons": {
+    "library": "fontawesome"
+  },
+  "background": {
+    "color": {
+      "dark": "#0d0e11",
+      "light": "#ffffff"
+    }
+  },
+  "colors": {
+    "primary": "#4f46e5",
+    "light": "#4f46e5",
+    "dark": "#4f46e5"
+  },
+  "styling": {
+    "codeblocks": {
+      "theme": {
+        "dark": "night-owl",
+        "light": "one-light"
+      }
+    }
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Docs",
+        "groups": [
+          {
+            "group": "Get started",
+            "pages": [
+              "getting-started/introduction",
+              "getting-started/design-principles",
+              "getting-started/for-designers",
+              "getting-started/for-developers",
+              "getting-started/installation",
+              "getting-started/ai-tools"
+            ]
+          },
+          {
+            "group": "Frameworks",
+            "pages": [
+              "guides/frameworks/angular",
+              "guides/frameworks/react",
+              "guides/frameworks/next",
+              "guides/frameworks/vue",
+              "guides/frameworks/html-web-components"
+            ]
+          },
+          {
+            "group": "Foundations",
+            "pages": [
+              "foundations/colors",
+              "foundations/typography",
+              "foundations/spacing",
+              "foundations/grid",
+              "foundations/radius",
+              "foundations/stroke",
+              "foundations/shadows"
+            ]
+          },
+          {
+            "group": "Theming & customization",
+            "pages": [
+              "theming/themes-and-modes",
+              "theming/global-css-variables",
+              "theming/component-css-variables",
+              "theming/custom-theme"
+            ]
+          },
+          {
+            "group": "Guides",
+            "pages": [
+              "guides/styles"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Components",
+        "groups": [
+          {
+            "group": "Actions",
+            "pages": [
+              "components/button",
+              "components/dropdown"
+            ]
+          },
+          {
+            "group": "Data Display",
+            "pages": [
+              "components/accordion",
+              "components/avatar",
+              "components/badge",
+              "components/icon",
+              "components/status",
+              "components/table",
+              "components/tag"
+            ]
+          },
+          {
+            "group": "Feedback",
+            "pages": [
+              "components/alert",
+              "components/dialog",
+              "components/drawer",
+              "components/empty-state",
+              "components/notification",
+              "components/progress",
+              "components/spinner",
+              "components/toast",
+              "components/tooltip"
+            ]
+          },
+          {
+            "group": "Form Controls",
+            "pages": [
+              "components/checkbox",
+              "components/date-picker",
+              "components/input",
+              "components/option",
+              "components/option-group",
+              "components/option-list",
+              "components/radio",
+              "components/select",
+              "components/slider",
+              "components/switch",
+              "components/textarea"
+            ]
+          },
+          {
+            "group": "Layout",
+            "pages": [
+              "components/card",
+              "components/divider",
+              "components/page-title"
+            ]
+          },
+          {
+            "group": "Navigation",
+            "pages": [
+              "components/breadcrumb",
+              "components/side-menu",
+              "components/steps",
+              "components/tab"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Releases",
+        "pages": [
+          "releases/changelog"
+        ]
+      },
+      {
+        "tab": "About",
+        "pages": [
+          "about/overview"
+        ]
+      }
+    ],
+    "global": {
+      "anchors": []
+    }
+  },
+  "navbar": {
+    "links": [
+      {
+        "icon": "code",
+        "label": "Storybook",
+        "href": "https://storybook.beeq.design"
+      },
+      {
+        "icon": "github",
+        "label": "GitHub",
+        "href": "https://github.com/Endava/BEEQ"
+      }
+    ]
+  },
+  "redirects": [
+    {
+      "source": "/components",
+      "destination": "/components/overview"
+    }
+  ],
+  "contextual": {
+    "options": [
+      "copy",
+      "chatgpt",
+      "claude",
+      "mcp",
+      "cursor",
+      "vscode"
+    ]
+  },
+  "footer": {
+    "socials": {
+      "github": "https://github.com/Endava/BEEQ",
+      "linkedin": "https://www.linkedin.com/company/endava/",
+      "website": "https://www.endava.com"
+    }
+  }
+}

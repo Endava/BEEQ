@@ -1,0 +1,1397 @@
+---
+title: Alert
+description: "An alert conveys status, progress, or required next steps to the user in a clear, contextual message."
+---
+
+import { CardTile } from '/snippets/CardTile.jsx';
+import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
+
+<Frame className="px-4 py-4" caption="Alert component overview">
+  <img className="block dark:hidden" src="/components/images/alert/alert-overview-light.svg" alt="BEEQ Alert component overview" />
+  <img className="hidden dark:block" src="/components/images/alert/alert-overview-dark.svg" alt="BEEQ Alert component overview" />
+</Frame>
+
+Alert is a lightweight message surface for conveying status, progress, or required next steps in a clear and consistent way.
+
+## When to use
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-up" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Use alerts when
+    </span>
+    - You need to clearly and concisely convey important information
+    - A message applies to a page, card, section, or system-level state
+    - Users need feedback after submitting data, changing permissions, or completing an action
+    - Users need to know about errors, warnings, maintenance, upgrades, or time-sensitive tasks
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-down" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Do not use alerts when
+    </span>
+    - The alert would disrupt a critical task
+    - The message overlaps essential content or important interface controls
+    - Its presence could confuse users or compete with a more relevant inline message
+    - A toast, notification, or field-level validation message would be more precise
+  </Card>
+</CardGroup>
+
+## Patterns
+
+Alerts can be used at different scopes, depending on what the message affects.
+
+<CardGroup cols={2}>
+  <CardTile
+    title="Global alert"
+    imageLightSrc="/components/images/alert/alert-placement-global-light.svg"
+    imageDarkSrc="/components/images/alert/alert-placement-global-dark.svg"
+  >
+    Use a global alert for messages that affect the full experience. Place it directly below the navigation.
+  </CardTile>
+  <CardTile
+    title="Page alert"
+    imageLightSrc="/components/images/alert/alert-placement-page-light.svg"
+    imageDarkSrc="/components/images/alert/alert-placement-page-dark.svg"
+  >
+    Use a page alert when the message applies to the page as a whole, such as a loading failure or permission issue.
+  </CardTile>
+  <CardTile
+    title="Section or card alert"
+    imageLightSrc="/components/images/alert/alert-placement-card-light.svg"
+    imageDarkSrc="/components/images/alert/alert-placement-card-dark.svg"
+  >
+    Place alerts close to the affected section so users can connect the message with the content it describes.
+  </CardTile>
+  <CardTile
+    title="Custom alert"
+    imageLightSrc="/components/images/alert/alert-placement-custom-light.svg"
+    imageDarkSrc="/components/images/alert/alert-placement-custom-dark.svg"
+  >
+    Use custom icons and CSS variables when a message has no built-in severity, but keep color and icon choices consistent.
+  </CardTile>
+</CardGroup>
+
+## Anatomy
+
+<Frame className="px-4 py-4" caption="Alert component anatomy">
+  <img className="block dark:hidden" src="/components/images/alert/alert-anatomy-light.svg" alt="BEEQ Alert component anatomy" />
+  <img className="hidden dark:block" src="/components/images/alert/alert-anatomy-dark.svg" alt="BEEQ Alert component anatomy" />
+</Frame>
+
+| Part | Element | Description |
+|---|---|---|
+| **1** | Container | The alert surface that groups the message, icon, title, and actions |
+| **2** | Icon | Status icon, or a custom icon when the alert uses the `default` type |
+| **3** | Title | The alert title content in the default slot |
+| **4** | Close button | Dismisses the alert unless `disable-close` is set |
+| **5** | Description | Optional supporting content in the `body` slot |
+| **6** | CTA button | Optional action content in the `footer` slot |
+
+## Design guidelines
+
+### Types
+
+<CardGroup cols={2}>
+  <CardTile
+    title="Basic"
+    imageLightSrc="/components/images/alert/alert-type-basic-light.svg"
+    imageDarkSrc="/components/images/alert/alert-type-basic-dark.svg"
+  >
+    Use a basic alert when a short title gives users enough context to understand the message.
+  </CardTile>
+  <CardTile
+    title="With description"
+    imageLightSrc="/components/images/alert/alert-type-description-light.svg"
+    imageDarkSrc="/components/images/alert/alert-type-description-dark.svg"
+  >
+    Add a description when users need supporting detail, recovery guidance, or a link to the next step.
+  </CardTile>
+  <CardTile
+    title="With button"
+    imageLightSrc="/components/images/alert/alert-type-button-light.svg"
+    imageDarkSrc="/components/images/alert/alert-type-button-dark.svg"
+  >
+    Include an action when the alert asks users to resolve the message or view related details.
+  </CardTile>
+  <CardTile
+    title="With description and footer actions"
+    imageLightSrc="/components/images/alert/alert-type-footer-light.svg"
+    imageDarkSrc="/components/images/alert/alert-type-footer-dark.svg"
+  >
+    Place actions in the footer when users need to compare or choose between multiple next steps.
+  </CardTile>
+</CardGroup>
+
+<Note>
+  Set `border` to match the surface where the alert appears. Use the same radius scale as the surrounding layout.
+</Note>
+
+## Usage
+
+### Default
+
+Use the `default` variant for general-purpose alerts. It lets you customize the `bq-icon` for messages with no associated severity.
+
+<Tip>
+  Set `open` to show the alert. Use `show()` and `hide()` when visibility is controlled programmatically.
+</Tip>
+
+<CodeLivePreview mode="shadow" code={`
+  <style>
+    :host {
+      flex-direction: column !important;
+      gap: var(--bq-spacing-m) !important;
+    }
+  </style>
+  <bq-alert open>
+    <bq-icon name="star" slot="icon"></bq-icon>
+    Title
+  </bq-alert>
+
+  <bq-alert open>
+    <bq-icon name="star" slot="icon"></bq-icon>
+    Title
+    <span slot="body">
+      Description
+      <a class="bq-link" href="https://example.com">Link</a>
+    </span>
+  </bq-alert>
+
+  <bq-alert open>
+    <bq-icon name="star" slot="icon"></bq-icon>
+    Title
+    <span slot="body">
+      Description
+      <a class="bq-link" href="https://example.com">Link</a>
+    </span>
+    <div slot="footer">
+      <bq-button size="small">Button</bq-button>
+      <bq-button appearance="link" size="small">Button</bq-button>
+    </div>
+  </bq-alert>
+  <script>
+  (() => {
+    const alertElements = Array.from(previewRoot?.querySelectorAll("bq-alert") ?? []);
+
+    alertElements.forEach((alert) => {
+      alert.addEventListener("bqHide", () => {
+        setTimeout(() => {
+          alert.open = true;
+        }, 1500);
+      });
+    });
+  })();
+  </script>`
+}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <bq-alert open>
+      <bq-icon name="star" slot="icon"></bq-icon>
+      Title
+    </bq-alert>
+
+    <bq-alert open>
+      <bq-icon name="star" slot="icon"></bq-icon>
+      Title
+      <span slot="body">
+        Description
+        <a class="bq-link" href="https://example.com">Link</a>
+      </span>
+    </bq-alert>
+
+    <bq-alert open>
+      <bq-icon name="star" slot="icon"></bq-icon>
+      Title
+      <span slot="body">
+        Description
+        <a class="bq-link" href="https://example.com">Link</a>
+      </span>
+      <div slot="footer">
+        <bq-button size="small">Button</bq-button>
+        <bq-button appearance="link" size="small">Button</bq-button>
+      </div>
+    </bq-alert>
+    ```
+
+    ```jsx React icon="react" expandable
+    import { BqAlert, BqButton, BqIcon } from "@beeq/react";
+
+    <>
+      <BqAlert open>
+        <BqIcon name="star" slot="icon" />
+        Title
+      </BqAlert>
+
+      <BqAlert open>
+        <BqIcon name="star" slot="icon" />
+        Title
+        <span slot="body">
+          Description
+          <a className="bq-link" href="https://example.com">Link</a>
+        </span>
+      </BqAlert>
+
+      <BqAlert open>
+        <BqIcon name="star" slot="icon" />
+        Title
+        <span slot="body">
+          Description
+          <a className="bq-link" href="https://example.com">Link</a>
+        </span>
+        <div slot="footer">
+          <BqButton size="small">Button</BqButton>
+          <BqButton appearance="link" size="small">Button</BqButton>
+        </div>
+      </BqAlert>
+    </>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqAlert, BqIcon, BqButton } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqAlert, BqIcon, BqButton],
+      template: `
+        <bq-alert open>
+          <bq-icon name="star" slot="icon"></bq-icon>
+          Title
+        </bq-alert>
+
+        <bq-alert open>
+          <bq-icon name="star" slot="icon"></bq-icon>
+          Title
+          <span slot="body">
+            Description
+            <a class="bq-link" href="https://example.com">Link</a>
+          </span>
+        </bq-alert>
+
+        <bq-alert open>
+          <bq-icon name="star" slot="icon"></bq-icon>
+          Title
+          <span slot="body">
+            Description
+            <a class="bq-link" href="https://example.com">Link</a>
+          </span>
+          <div slot="footer">
+            <bq-button size="small">Button</bq-button>
+            <bq-button appearance="link" size="small">Button</bq-button>
+          </div>
+        </bq-alert>
+      `,
+    })
+    export class AppComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqAlert, BqButton, BqIcon } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqAlert open>
+        <BqIcon name="star" slot="icon" />
+        Title
+      </BqAlert>
+
+      <BqAlert open>
+        <BqIcon name="star" slot="icon" />
+        Title
+        <span slot="body">
+          Description
+          <a class="bq-link" href="https://example.com">Link</a>
+        </span>
+      </BqAlert>
+
+      <BqAlert open>
+        <BqIcon name="star" slot="icon" />
+        Title
+        <span slot="body">
+          Description
+          <a class="bq-link" href="https://example.com">Link</a>
+        </span>
+        <div slot="footer">
+          <BqButton size="small">Button</BqButton>
+          <BqButton appearance="link" size="small">Button</BqButton>
+        </div>
+      </BqAlert>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Warning>
+  Alert fills the width of its parent container.
+</Warning>
+
+### Info
+
+Use the `info` variant when users need additional, non-critical information. It works well for context that helps users understand a state without requiring immediate action.
+
+<CodeLivePreview mode="shadow" code={`
+  <style>
+    :host {
+      flex-direction: column !important;
+      gap: var(--bq-spacing-m) !important;
+    }
+  </style>
+  <bq-alert open type="info">Title</bq-alert>
+
+  <bq-alert open type="info">
+    Title
+    <span slot="body">
+      Description
+      <a class="bq-link" href="https://example.com">Link</a>
+    </span>
+  </bq-alert>
+
+  <bq-alert open type="info">
+    Title
+    <span slot="body">
+      Description
+      <a class="bq-link" href="https://example.com">Link</a>
+    </span>
+    <div slot="footer">
+      <bq-button size="small">Button</bq-button>
+      <bq-button appearance="link" size="small">Button</bq-button>
+    </div>
+  </bq-alert>
+  <script>
+    (() => {
+      const alertElements = Array.from(previewRoot?.querySelectorAll("bq-alert") ?? []);
+
+      alertElements.forEach((alert) => {
+        alert.addEventListener("bqHide", () => {
+          setTimeout(() => {
+            alert.open = true;
+          }, 1500);
+        });
+      });
+    })();
+  </script>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <bq-alert open type="info">Title</bq-alert>
+    <bq-alert open type="info">
+      Title
+      <span slot="body">
+        Description
+        <a class="bq-link" href="https://example.com">Link</a>
+      </span>
+    </bq-alert>
+
+    <bq-alert open type="info">
+      Title
+      <span slot="body">
+        Description
+        <a class="bq-link" href="https://example.com">Link</a>
+      </span>
+      <div slot="footer">
+        <bq-button size="small">Button</bq-button>
+        <bq-button appearance="link" size="small">Button</bq-button>
+      </div>
+    </bq-alert>
+    ```
+
+    ```jsx React icon="react" expandable
+    import { BqAlert, BqButton } from "@beeq/react";
+
+    <>
+      <BqAlert open type="info">Title</BqAlert>
+
+      <BqAlert open type="info">
+        Title
+        <span slot="body">
+          Description
+          <a className="bq-link" href="https://example.com">Link</a>
+        </span>
+      </BqAlert>
+
+      <BqAlert open type="info">
+        Title
+        <span slot="body">
+          Description
+          <a className="bq-link" href="https://example.com">Link</a>
+        </span>
+        <div slot="footer">
+          <BqButton size="small">Button</BqButton>
+          <BqButton appearance="link" size="small">Button</BqButton>
+        </div>
+      </BqAlert>
+    </>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqAlert, BqButton } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqAlert, BqButton],
+      template: `
+        <bq-alert open type="info">Title</bq-alert>
+
+        <bq-alert open type="info">
+          Title
+          <span slot="body">
+            Description
+            <a class="bq-link" href="https://example.com">Link</a>
+          </span>
+        </bq-alert>
+
+        <bq-alert open type="info">
+          Title
+          <span slot="body">
+            Description
+            <a class="bq-link" href="https://example.com">Link</a>
+          </span>
+          <div slot="footer">
+            <bq-button size="small">Button</bq-button>
+            <bq-button appearance="link" size="small">Button</bq-button>
+          </div>
+        </bq-alert>
+      `,
+    })
+    export class AppComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqAlert, BqButton } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqAlert open type="info">Title</BqAlert>
+
+      <BqAlert open type="info">
+        Title
+        <span slot="body">
+          Description
+          <a class="bq-link" href="https://example.com">Link</a>
+        </span>
+      </BqAlert>
+
+      <BqAlert open type="info">
+        Title
+        <span slot="body">
+          Description
+          <a class="bq-link" href="https://example.com">Link</a>
+        </span>
+        <div slot="footer">
+          <BqButton size="small">Button</BqButton>
+          <BqButton appearance="link" size="small">Button</BqButton>
+        </div>
+      </BqAlert>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Success
+
+Use the `success` variant to notify users about successful actions or positive outcomes. This type of alert is ideal for celebrating achievements, completed processes, or any operation that concludes successfully.
+
+<CodeLivePreview mode="shadow" code={`
+  <style>
+    :host {
+      flex-direction: column !important;
+      gap: var(--bq-spacing-m) !important;
+    }
+  </style>
+  <bq-alert open type="success">Title</bq-alert>
+
+  <bq-alert open type="success">
+    Title
+    <span slot="body">
+      Description
+      <a class="bq-link" href="https://example.com">Link</a>
+    </span>
+  </bq-alert>
+
+  <bq-alert open type="success">
+    Title
+    <span slot="body">
+      Description
+      <a class="bq-link" href="https://example.com">Link</a>
+    </span>
+    <div slot="footer">
+      <bq-button size="small">Button</bq-button>
+      <bq-button appearance="link" size="small">Button</bq-button>
+    </div>
+  </bq-alert>
+  <script>
+    (() => {
+      const alertElements = Array.from(previewRoot?.querySelectorAll("bq-alert") ?? []);
+
+      alertElements.forEach((alert) => {
+        alert.addEventListener("bqHide", () => {
+          setTimeout(() => {
+            alert.open = true;
+          }, 1500);
+        });
+      });
+    })();
+  </script>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <bq-alert open type="success">Title</bq-alert>
+    <bq-alert open type="success">
+      Title
+      <span slot="body">
+        Description
+        <a class="bq-link" href="https://example.com">Link</a>
+      </span>
+    </bq-alert>
+
+    <bq-alert open type="success">
+      Title
+      <span slot="body">
+        Description
+        <a class="bq-link" href="https://example.com">Link</a>
+      </span>
+      <div slot="footer">
+        <bq-button size="small">Button</bq-button>
+        <bq-button appearance="link" size="small">Button</bq-button>
+      </div>
+    </bq-alert>
+    ```
+
+    ```jsx React icon="react" expandable
+    import { BqAlert, BqButton } from "@beeq/react";
+
+    <>
+      <BqAlert open type="success">Title</BqAlert>
+
+      <BqAlert open type="success">
+        Title
+        <span slot="body">
+          Description
+          <a className="bq-link" href="https://example.com">Link</a>
+        </span>
+      </BqAlert>
+
+      <BqAlert open type="success">
+        Title
+        <span slot="body">
+          Description
+          <a className="bq-link" href="https://example.com">Link</a>
+        </span>
+        <div slot="footer">
+          <BqButton size="small">Button</BqButton>
+          <BqButton appearance="link" size="small">Button</BqButton>
+        </div>
+      </BqAlert>
+    </>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqAlert, BqButton } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqAlert, BqButton],
+      template: `
+        <bq-alert open type="success">Title</bq-alert>
+
+        <bq-alert open type="success">
+          Title
+          <span slot="body">
+            Description
+            <a class="bq-link" href="https://example.com">Link</a>
+          </span>
+        </bq-alert>
+
+        <bq-alert open type="success">
+          Title
+          <span slot="body">
+            Description
+            <a class="bq-link" href="https://example.com">Link</a>
+          </span>
+          <div slot="footer">
+            <bq-button size="small">Button</bq-button>
+            <bq-button appearance="link" size="small">Button</bq-button>
+          </div>
+        </bq-alert>
+      `,
+    })
+    export class AppComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqAlert, BqButton } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqAlert open type="success">Title</BqAlert>
+
+      <BqAlert open type="success">
+        Title
+        <span slot="body">
+          Description
+          <a class="bq-link" href="https://example.com">Link</a>
+        </span>
+      </BqAlert>
+
+      <BqAlert open type="success">
+        Title
+        <span slot="body">
+          Description
+          <a class="bq-link" href="https://example.com">Link</a>
+        </span>
+        <div slot="footer">
+          <BqButton size="small">Button</BqButton>
+          <BqButton appearance="link" size="small">Button</BqButton>
+        </div>
+      </BqAlert>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Warning
+
+Use the `warning` variant to indicate potential issues or actions that users should approach with caution. This alert helps draw attention to situations that require careful consideration but may not be critical.
+
+<CodeLivePreview mode="shadow" code={`
+  <style>
+    :host {
+      flex-direction: column !important;
+      gap: var(--bq-spacing-m) !important;
+    }
+  </style>
+  <bq-alert open type="warning">Title</bq-alert>
+
+  <bq-alert open type="warning">
+    Title
+    <span slot="body">
+      Description
+      <a class="bq-link" href="https://example.com">Link</a>
+    </span>
+  </bq-alert>
+
+  <bq-alert open type="warning">
+    Title
+    <span slot="body">
+      Description
+      <a class="bq-link" href="https://example.com">Link</a>
+    </span>
+    <div slot="footer">
+      <bq-button size="small">Button</bq-button>
+      <bq-button appearance="link" size="small">Button</bq-button>
+    </div>
+  </bq-alert>
+  <script>
+    (() => {
+      const alertElements = Array.from(previewRoot?.querySelectorAll("bq-alert") ?? []);
+
+      alertElements.forEach((alert) => {
+        alert.addEventListener("bqHide", () => {
+          setTimeout(() => {
+            alert.open = true;
+          }, 1500);
+        });
+      });
+    })();
+  </script>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <bq-alert open type="warning">Title</bq-alert>
+    <bq-alert open type="warning">
+      Title
+      <span slot="body">
+        Description
+        <a class="bq-link" href="https://example.com">Link</a>
+      </span>
+    </bq-alert>
+
+    <bq-alert open type="warning">
+      Title
+      <span slot="body">
+        Description
+        <a class="bq-link" href="https://example.com">Link</a>
+      </span>
+      <div slot="footer">
+        <bq-button size="small">Button</bq-button>
+        <bq-button appearance="link" size="small">Button</bq-button>
+      </div>
+    </bq-alert>
+    ```
+
+    ```jsx React icon="react" expandable
+    import { BqAlert, BqButton } from "@beeq/react";
+
+    <>
+      <BqAlert open type="warning">Title</BqAlert>
+
+      <BqAlert open type="warning">
+        Title
+        <span slot="body">
+          Description
+          <a className="bq-link" href="https://example.com">Link</a>
+        </span>
+      </BqAlert>
+
+      <BqAlert open type="warning">
+        Title
+        <span slot="body">
+          Description
+          <a className="bq-link" href="https://example.com">Link</a>
+        </span>
+        <div slot="footer">
+          <BqButton size="small">Button</BqButton>
+          <BqButton appearance="link" size="small">Button</BqButton>
+        </div>
+      </BqAlert>
+    </>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqAlert, BqButton } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqAlert, BqButton],
+      template: `
+        <bq-alert open type="warning">Title</bq-alert>
+
+        <bq-alert open type="warning">
+          Title
+          <span slot="body">
+            Description
+            <a class="bq-link" href="https://example.com">Link</a>
+          </span>
+        </bq-alert>
+
+        <bq-alert open type="warning">
+          Title
+          <span slot="body">
+            Description
+            <a class="bq-link" href="https://example.com">Link</a>
+          </span>
+          <div slot="footer">
+            <bq-button size="small">Button</bq-button>
+            <bq-button appearance="link" size="small">Button</bq-button>
+          </div>
+        </bq-alert>
+      `,
+    })
+    export class AppComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqAlert, BqButton } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqAlert open type="warning">Title</BqAlert>
+
+      <BqAlert open type="warning">
+        Title
+        <span slot="body">
+          Description
+          <a class="bq-link" href="https://example.com">Link</a>
+        </span>
+      </BqAlert>
+
+      <BqAlert open type="warning">
+        Title
+        <span slot="body">
+          Description
+          <a class="bq-link" href="https://example.com">Link</a>
+        </span>
+        <div slot="footer">
+          <BqButton size="small">Button</BqButton>
+          <BqButton appearance="link" size="small">Button</BqButton>
+        </div>
+      </BqAlert>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Error
+
+Use the `error` variant for issues that require immediate attention. It works best for problems that block the task or prevent a successful outcome.
+
+<CodeLivePreview mode="shadow" code={`
+  <style>
+    :host {
+      flex-direction: column !important;
+      gap: var(--bq-spacing-m) !important;
+    }
+  </style>
+  <bq-alert open type="error">Title</bq-alert>
+
+  <bq-alert open type="error">
+    Title
+    <span slot="body">
+      Description
+      <a class="bq-link" href="https://example.com">Link</a>
+    </span>
+  </bq-alert>
+
+  <bq-alert open type="error">
+    Title
+    <span slot="body">
+      Description
+      <a class="bq-link" href="https://example.com">Link</a>
+    </span>
+    <div slot="footer">
+      <bq-button size="small">Button</bq-button>
+      <bq-button appearance="link" size="small">Button</bq-button>
+    </div>
+  </bq-alert>
+  <script>
+    (() => {
+      const alertElements = Array.from(previewRoot?.querySelectorAll("bq-alert") ?? []);
+
+      alertElements.forEach((alert) => {
+        alert.addEventListener("bqHide", () => {
+          setTimeout(() => {
+            alert.open = true;
+          }, 1500);
+        });
+      });
+    })();
+  </script>
+  `}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <bq-alert open type="error">Title</bq-alert>
+    <bq-alert open type="error">
+      Title
+      <span slot="body">
+        Description
+        <a class="bq-link" href="https://example.com">Link</a>
+      </span>
+    </bq-alert>
+
+    <bq-alert open type="error">
+      Title
+      <span slot="body">
+        Description
+        <a class="bq-link" href="https://example.com">Link</a>
+      </span>
+      <div slot="footer">
+        <bq-button size="small">Button</bq-button>
+        <bq-button appearance="link" size="small">Button</bq-button>
+      </div>
+    </bq-alert>
+    ```
+
+    ```jsx React icon="react" expandable
+    import { BqAlert, BqButton } from "@beeq/react";
+
+    <>
+      <BqAlert open type="error">Title</BqAlert>
+
+      <BqAlert open type="error">
+        Title
+        <span slot="body">
+          Description
+          <a className="bq-link" href="https://example.com">Link</a>
+        </span>
+      </BqAlert>
+
+      <BqAlert open type="error">
+        Title
+        <span slot="body">
+          Description
+          <a className="bq-link" href="https://example.com">Link</a>
+        </span>
+        <div slot="footer">
+          <BqButton size="small">Button</BqButton>
+          <BqButton appearance="link" size="small">Button</BqButton>
+        </div>
+      </BqAlert>
+    </>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqAlert, BqButton } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqAlert, BqButton],
+      template: `
+        <bq-alert open type="error">Title</bq-alert>
+
+        <bq-alert open type="error">
+          Title
+          <span slot="body">
+            Description
+            <a class="bq-link" href="https://example.com">Link</a>
+          </span>
+        </bq-alert>
+
+        <bq-alert open type="error">
+          Title
+          <span slot="body">
+            Description
+            <a class="bq-link" href="https://example.com">Link</a>
+          </span>
+          <div slot="footer">
+            <bq-button size="small">Button</bq-button>
+            <bq-button appearance="link" size="small">Button</bq-button>
+          </div>
+        </bq-alert>
+      `,
+    })
+    export class AppComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqAlert, BqButton } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqAlert open type="error">Title</BqAlert>
+
+      <BqAlert open type="error">
+        Title
+        <span slot="body">
+          Description
+          <a class="bq-link" href="https://example.com">Link</a>
+        </span>
+      </BqAlert>
+
+      <BqAlert open type="error">
+        Title
+        <span slot="body">
+          Description
+          <a class="bq-link" href="https://example.com">Link</a>
+        </span>
+        <div slot="footer">
+          <BqButton size="small">Button</BqButton>
+          <BqButton appearance="link" size="small">Button</BqButton>
+        </div>
+      </BqAlert>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+## Options
+
+### Sticky
+
+Use the `sticky` attribute for persistent alerts that remain visible until users dismiss them. Sticky alerts work well for ongoing information that needs prolonged attention, such as system updates or maintenance notices.
+
+<Tip>
+  Sticky alerts support every alert type: `default`, `success`, `error`, `warning`, and `info`.
+</Tip>
+
+<CodeLivePreview mode="shadow" code={`
+  <style>
+    :host {
+      padding: 0 !important;
+      position: relative;
+      align-items: stretch !important;
+      flex-direction: column !important;
+    }
+
+    bq-alert.is-sticky {
+      position: absolute !important;
+    }
+
+    main {
+      min-height: 16rem;
+      padding: var(--bq-spacing-m);
+
+      & h1 {
+        margin-block-end: var(--bq-spacing-xl);
+      }
+
+      & div {
+        block-size: 10rem;
+        inline-size: 100%;
+        border: 1px dashed var(--bq-stroke--primary);
+        background-color: var(--bq-ui--alt);
+      }
+    }
+  </style>
+
+  <main>
+    <h1>Dashboard</h1>
+    <div></div>
+  </main>
+
+  <bq-alert sticky open type="error">
+    Title
+    <bq-button appearance="link" size="small">Button</bq-button>
+  </bq-alert>
+  <script>
+    (() => {
+      const stickyAlertElement = previewRoot?.querySelector("bq-alert");
+
+      stickyAlertElement?.addEventListener("bqHide", () => {
+        setTimeout(() => {
+          stickyAlertElement.open = true;
+        }, 1500);
+      });
+    })();
+  </script>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <main>
+      <h1>Dashboard</h1>
+      <div></div>
+
+      <bq-alert sticky open type="error">
+        Title
+        <bq-button appearance="link" size="small">Button</bq-button>
+      </bq-alert>
+    </main>
+    ```
+
+    ```jsx React icon="react" expandable
+    import { BqAlert, BqButton } from "@beeq/react";
+
+    <main>
+      <h1>Dashboard</h1>
+      <div></div>
+
+      <BqAlert sticky open type="error">
+        Title
+        <BqButton appearance="link" size="small">Button</BqButton>
+      </BqAlert>
+    </main>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqAlert, BqButton } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqAlert, BqButton],
+      template: `
+        <main>
+          <h1>Dashboard</h1>
+          <div></div>
+
+          <bq-alert sticky open type="error">
+            Title
+            <bq-button appearance="link" size="small">Button</bq-button>
+          </bq-alert>
+        </main>
+      `,
+    })
+    export class AppComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqAlert, BqButton } from "@beeq/vue";
+    </script>
+
+    <template>
+      <main>
+        <h1>Dashboard</h1>
+        <div></div>
+
+        <BqAlert sticky open type="error">
+          Title
+          <BqButton appearance="link" size="small">Button</BqButton>
+        </BqAlert>
+      </main>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Warning>
+  Sticky alerts use a preset layout with the alert text centered at the top of the screen.
+</Warning>
+
+### Auto-dismiss
+
+Set `auto-dismiss` to hide the alert automatically after a delay. Use `time` to override the default 3000 ms. Set a minimum of 8000 ms for alerts with meaningful content so users have enough time to read the message.
+
+<Warning>
+  Do not use `auto-dismiss` for alerts that contain errors, required actions, or legal information.
+</Warning>
+
+<CodeLivePreview mode="shadow" code={`
+  <style>
+    :host {
+      flex-direction: column !important;
+      gap: var(--bq-spacing-m) !important;
+    }
+  </style>
+  <bq-alert open time="5000" type="success">
+    Changes saved
+    <span slot="body">Your settings have been updated.</span>
+  </bq-alert>
+  <bq-switch>Enable auto-dismiss</bq-switch>
+  <script>
+    (() => {
+      let autoDismissEnabled = true;
+      const alert = previewRoot?.querySelector("bq-alert");
+      const switchElement = previewRoot?.querySelector("bq-switch");
+
+      switchElement?.addEventListener("bqChange", (event) => {
+        autoDismissEnabled = event.detail.checked;
+        alert.autoDismiss = autoDismissEnabled;
+      });
+
+      alert?.addEventListener("bqHide", () => {
+        if (!autoDismissEnabled) return;
+        setTimeout(() => { alert.open = true; }, 1000);
+      });
+    })();
+  </script>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-alert open auto-dismiss time="8000" type="success">
+      Changes saved
+      <span slot="body">Your settings have been updated.</span>
+    </bq-alert>
+    ```
+
+    ```jsx React icon="react"
+    import { BqAlert } from "@beeq/react";
+
+    <BqAlert open autoDismiss time={8000} type="success">
+      Changes saved
+      <span slot="body">Your settings have been updated.</span>
+    </BqAlert>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqAlert } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqAlert],
+      template: `
+        <bq-alert open auto-dismiss time="8000" type="success">
+          Changes saved
+          <span slot="body">Your settings have been updated.</span>
+        </bq-alert>
+      `,
+    })
+    export class AppComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqAlert } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqAlert open :autoDismiss="true" :time="8000" type="success">
+        Changes saved
+        <span slot="body">Your settings have been updated.</span>
+      </BqAlert>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Place alerts close to the content or workflow they affect.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not place alerts where they hide controls or interrupt a critical task.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Write a short title that explains the state, then add body text only when users need context.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not use long paragraphs or unrelated links inside an alert.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Give users enough time to read auto-dismiss alerts and keep important messages dismissible by intent.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not auto-dismiss alerts that contain errors, required actions, or legal information.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Match the alert type, icon, and action style to the severity of the message.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not mix severity colors or custom icons in ways that make the alert harder to scan.
+  </Card>
+</CardGroup>
+
+## Accessibility
+
+- The host uses `role="alert"` so assistive technologies announce the message when it appears.
+- The host sets `aria-hidden` from the `open` state, keeping hidden alerts out of the accessibility tree.
+- The default close button has the accessible label "Close alert."
+- `type` provides visual intent and a matching predefined status icon for `info`, `success`, `warning`, and `error`.
+- Provide a concise title in the default slot and supporting details in the `body` slot when users need more context.
+- The built-in type tokens (`info`, `success`, `warning`, `error`) meet WCAG AA color-contrast requirements in both light and dark themes. Verify contrast manually when using custom colors via CSS variables.
+- All interactive elements inside the alert — the close button, footer actions, and body links — must be reachable via `Tab` and have a visible focus indicator.
+- Set `time` to a minimum of 8000 ms for `auto-dismiss` alerts. Do not auto-dismiss while the user has keyboard focus or hover inside the alert.
+- When `sticky` is enabled, keep the page focus order logical so keyboard users can still reach the affected content.
+
+## API reference
+
+### Properties
+
+| Property | Attribute | Description | Type | Default |
+|---|---|---|---|---|
+| `autoDismiss` | `auto-dismiss` | If `true`, the alert will automatically hide after the specified amount of time | `boolean` | `false` |
+| `border` | `border` | The corner radius of the alert component | `'none'` \| `'xs2'` \| `'xs'` \| `'s'` \| `'m'` \| `'l'` \| `'full'` | `'s'` |
+| `disableClose` | `disable-close` | If `true`, the close button at the top right of the alert will not be shown | `boolean` | `false` |
+| `hideIcon` | `hide-icon` | If `true`, the alert icon will not be shown | `boolean` | `false` |
+| `open` | `open` | If `true`, the alert will be shown | `boolean` | `false` |
+| `sticky` | `sticky` | If `true`, the alert remains fixed at the top of the page, occupying the full viewport width | `boolean` | `false` |
+| `time` | `time` | The length of time, in milliseconds, after which the alert closes itself. Only valid when `auto-dismiss` is set | `number` | `3000` |
+| `type` | `type` | Type of alert | `'default'` \| `'error'` \| `'info'` \| `'success'` \| `'warning'` | `'default'` |
+
+### Events
+
+| Event | Description | Type |
+|---|---|---|
+| `bqHide` | Fires when the alert starts to hide | `CustomEvent<any>` |
+| `bqShow` | Fires when the alert starts to show | `CustomEvent<any>` |
+| `bqAfterHide` | Fires after the alert has been hidden | `CustomEvent<any>` |
+| `bqAfterShow` | Fires after the alert has been shown | `CustomEvent<any>` |
+
+<Note>
+  - In React, prefix events with `on`: `onBqShow`, `onBqHide`, `onBqAfterShow`, `onBqAfterHide`.
+  - In Angular, use the event binding syntax: `(bqShow)`, `(bqHide)`, `(bqAfterShow)`, `(bqAfterHide)`.
+  - In Vue, use the `@` shorthand: `@bqShow`, `@bqHide`, `@bqAfterShow`, `@bqAfterHide`.
+</Note>
+
+### Methods
+
+| Method | Description | Type |
+|---|---|---|
+| `show()` | Shows the alert component | `Promise<void>` |
+| `hide()` | Hides the alert component | `Promise<void>` |
+
+### Slots
+
+| Slot | Description |
+|---|---|
+| *(default)* | The alert title content |
+| `body` | The alert description content |
+| `footer` | The alert footer content |
+| `icon` | Custom icon content. Status types render predefined icons when this slot is empty |
+| `btn-close` | Custom close button content |
+
+### Shadow parts
+
+| Part | Description |
+|---|---|
+| `base` | The `<div>` container of the predefined `bq-icon` component |
+| `body` | The container `<div>` that wraps the alert description content |
+| `btn-close` | The native button of the `bq-button` used to close the alert |
+| `content` | The container `<div>` that wraps all alert content: title, description, and footer |
+| `footer` | The container `<div>` that wraps the alert footer content |
+| `icon` | The `<bq-icon>` element used to render a predefined icon based on the alert type |
+| `icon-outline` | The container `<div>` that wraps the icon element |
+| `main` | The container `<div>` that wraps the alert main content |
+| `svg` | The `<svg>` element of the predefined `bq-icon` component |
+| `title` | The container `<div>` that wraps the alert title content |
+| `wrapper` | The wrapper container `<div>` inside the shadow DOM |
+
+### CSS custom properties
+
+<Expandable title="CSS variables" defaultOpen={false}>
+  | Variable | Description | Default |
+  |---|---|---|
+  | `--bq-alert--background` | Alert background color | `var(--bq-ui--secondary)` |
+  | `--bq-alert--border-radius` | Alert border radius | `var(--bq-radius--s)` |
+  | `--bq-alert--content-footer-gap` | Gap between content and footer | `var(--bq-spacing-s)` |
+  | `--bq-alert--title-body-gap` | Gap between title and body | `var(--bq-spacing-s)` |
+  | `--bq-alert--background-info` | Background color for info alerts | `var(--bq-ui--brand-alt)` |
+  | `--bq-alert--background-success` | Background color for success alerts | `var(--bq-ui--success-alt)` |
+  | `--bq-alert--background-warning` | Background color for warning alerts | `var(--bq-ui--warning-alt)` |
+  | `--bq-alert--background-error` | Background color for error alerts | `var(--bq-ui--danger-alt)` |
+  | `--bq-alert--background-default` | Background color for default alerts | `var(--bq-ui--primary)` |
+  | `--bq-alert--border-info` | Border color for info alerts | `var(--bq-stroke--brand)` |
+  | `--bq-alert--border-success` | Border color for success alerts | `var(--bq-stroke--success)` |
+  | `--bq-alert--border-warning` | Border color for warning alerts | `var(--bq-stroke--warning)` |
+  | `--bq-alert--border-error` | Border color for error alerts | `var(--bq-stroke--danger)` |
+  | `--bq-alert--border-default` | Border color for default alerts | `var(--bq-stroke--secondary)` |
+  | `--bq-alert--border-color` | Alert border color | `undefined` |
+  | `--bq-alert--border-width` | Alert border width | `var(--bq-stroke-s)` |
+  | `--bq-alert--border-style` | Alert border style | `solid` |
+  | `--bq-alert--icon-color-info` | Icon color for info alerts | `var(--bq-icon--brand)` |
+  | `--bq-alert--icon-color-success` | Icon color for success alerts | `var(--bq-icon--success)` |
+  | `--bq-alert--icon-color-warning` | Icon color for warning alerts | `var(--bq-icon--warning)` |
+  | `--bq-alert--icon-color-error` | Icon color for error alerts | `var(--bq-icon--danger)` |
+  | `--bq-alert--icon-color-default` | Icon color for default alerts | `var(--bq-icon--primary)` |
+  | `--bq-alert--padding` | Alert padding | `var(--bq-spacing-s)` |
+  | `--bq-alert--min-width` | Alert minimum width | `320px` |
+</Expandable>
+
+<Tip>
+  Learn more about [styling with shadow parts](/guides/styles#component-shadow-dom-parts) and [CSS custom properties](/guides/styles#global-css-custom-properties).
+</Tip>
+
+## Resources
+
+Use Storybook to test behavior and states interactively, or review the source if you need implementation details.
+
+<CardGroup cols={2}>
+  <Card horizontal title="Interactive playground" icon="code" href="https://storybook.beeq.design/?path=/story/components-alert--default">
+    Explore all alert configurations in Storybook
+  </Card>
+  <Card horizontal title="Source code" icon="github" href="https://github.com/Endava/BEEQ/tree/main/packages/beeq/src/components/alert">
+    View the component source on GitHub
+  </Card>
+</CardGroup>

@@ -1,0 +1,330 @@
+---
+title: Global CSS Variables
+description: Find out about every global CSS variable that BEEQ offers and their uses.
+---
+
+Global CSS variables are the foundation of the BEEQ theme system. They cover brand colors, neutrals, typography, spacing, radius, shadows, and strokes. On top of these base variables, semantic tokens map each value to a specific role in the UI — backgrounds, text, borders, icons, UI elements, and interactive states — and automatically adapt to light and dark mode.
+
+<Note>
+  Base variables are the foundation of your theme and should be set at the root level for global consistency. See the [Custom Theme](/theming/custom-theme) page for details on overriding them.
+</Note>
+
+---
+
+## Base theme variables
+
+Base variables define the raw design values for your theme. They are set once at the root level and consumed by the declarative color variables above them.
+
+### Brand & accent colors
+
+Your primary brand identity and the secondary highlight color.
+
+```css
+--bq-brand-light:  /* Light variant of brand color */
+--bq-brand:        /* Main brand color */
+--bq-brand-dark:   /* Dark variant of brand color */
+
+--bq-accent-light: /* Light variant of accent color */
+--bq-accent:       /* Main accent color */
+--bq-accent-dark:  /* Dark variant of accent color */
+```
+
+### State colors
+
+Used to convey meaning in the UI for actions and states such as success, danger, warning, and info.
+
+```css
+/* Success — for positive actions and states */
+--bq-success-light: /* Light success color */
+--bq-success:       /* Main success color */
+--bq-success-dark:  /* Dark success color */
+
+/* Danger — for errors and destructive actions */
+--bq-danger-light:  /* Light danger color */
+--bq-danger:        /* Main danger color */
+--bq-danger-dark:   /* Dark danger color */
+
+/* Warning — for cautionary messages */
+--bq-warning-light: /* Light warning color */
+--bq-warning:       /* Main warning color */
+--bq-warning-dark:  /* Dark warning color */
+
+/* Info — for informational messages */
+--bq-info-light:    /* Light info color */
+--bq-info:          /* Main info color */
+--bq-info-dark:     /* Dark info color */
+
+/* Focus — for focus indicators */
+--bq-focus:         /* Focus ring color */
+```
+
+### Neutral colors
+
+The neutral color scale provides a range of grays for backgrounds, borders, and text.
+
+```css
+--bq-white: /* Pure white or near-white */
+--bq-black: /* Pure black or near-black */
+
+/* Neutral scale (50–1000) */
+--bq-neutral-50:    /* Lightest neutral */
+--bq-neutral-100:   /* Very light neutral */
+--bq-neutral-200:   /* Light neutral */
+--bq-neutral-300:   /* Light-medium neutral */
+--bq-neutral-400:   /* Medium-light neutral */
+--bq-neutral-500:   /* Medium neutral */
+--bq-neutral-600:   /* Medium-dark neutral */
+--bq-neutral-700:   /* Dark-medium neutral */
+--bq-neutral-800:   /* Dark neutral */
+--bq-neutral-900:   /* Very dark neutral */
+--bq-neutral-950:   /* Extra dark neutral */
+--bq-neutral-1000:  /* Darkest neutral */
+```
+
+<Tip>
+  BEEQ also provides an extensive primitive color palette — blue, coral, cyan, gold, green, indigo,
+  iris, lime, magenta, orange, purple, red, sky, teal, volcano, and yellow (each with 10 shades, 100–1000).
+  Use these when defining brand and accent tokens in a custom theme.
+
+  See the [Colors](/foundations/colors) page for the full palette and guidance on usage.
+</Tip>
+
+### Data visualization colors
+
+For charts and graphs — 12 distinct colors.
+
+```css
+--bq-data-01:  /* First data color */
+--bq-data-02:  /* Second data color */
+--bq-data-03:  /* Third data color */
+--bq-data-04:  /* Fourth data color */
+--bq-data-05:  /* Fifth data color */
+--bq-data-06:  /* Sixth data color */
+--bq-data-07:  /* Seventh data color */
+--bq-data-08:  /* Eighth data color */
+--bq-data-09:  /* Ninth data color */
+--bq-data-10:  /* Tenth data color */
+--bq-data-11:  /* Eleventh data color */
+--bq-data-12:  /* Twelfth data color */
+```
+
+### Typography
+
+Typography variables define font family, sizes, weights, and line heights.
+
+<Tip>
+  See also the [Typography](/foundations/typography) page for the full type system.
+</Tip>
+
+```css
+/* Font family */
+--bq-font-family: /* Main font stack, e.g., "'Outfit', sans-serif" */
+
+/* Font sizes */
+--bq-font-size--xs:   0.75rem;   /* 12px */
+--bq-font-size--s:    0.875rem;  /* 14px */
+--bq-font-size--m:    1rem;      /* 16px */
+--bq-font-size--l:    1.125rem;  /* 18px */
+--bq-font-size--xl:   1.5rem;    /* 24px */
+--bq-font-size--xxl:  2rem;      /* 32px */
+--bq-font-size--xxl2: 2.5rem;    /* 40px */
+--bq-font-size--xxl3: 3rem;      /* 48px */
+--bq-font-size--xxl4: 3.5rem;    /* 56px */
+--bq-font-size--xxl5: 4rem;      /* 64px */
+
+/* Font weights */
+--bq-font-weight--thin:     100;
+--bq-font-weight--light:    300;
+--bq-font-weight--regular:  400;
+--bq-font-weight--medium:   500;
+--bq-font-weight--semibold: 600;
+--bq-font-weight--bold:     700;
+--bq-font-weight--black:    900;
+
+/* Line heights */
+--bq-font-line-height--small:   1.2;
+--bq-font-line-height--regular: 1.5;
+--bq-font-line-height--large:   1.75;
+```
+
+### Spacing
+
+The spacing scale provides consistent spacing units for margins, paddings, and gaps. It is based on a 4px grid.
+
+<Tip>
+  See also the [Spacing](/foundations/spacing) page for the full spacing system.
+</Tip>
+
+```css
+--bq-spacing-xs3:  0.125rem;  /* 2px */
+--bq-spacing-xs2:  0.25rem;   /* 4px */
+--bq-spacing-xs:   0.5rem;    /* 8px */
+--bq-spacing-s:    0.75rem;   /* 12px */
+--bq-spacing-m:    1rem;      /* 16px */
+--bq-spacing-l:    1.5rem;    /* 24px */
+--bq-spacing-xl:   2rem;      /* 32px */
+--bq-spacing-xxl:  2.5rem;    /* 40px */
+--bq-spacing-xxl2: 3.5rem;    /* 56px */
+--bq-spacing-xxl3: 4rem;      /* 64px */
+--bq-spacing-xxl4: 4.5rem;    /* 72px */
+```
+
+### Border radius
+
+The border radius scale defines corner rounding for UI elements.
+
+<Tip>
+  See also the [Radius](/foundations/radius) page for full usage guidance.
+</Tip>
+
+```css
+--bq-radius--none: 0;
+--bq-radius--xs2:  0.125rem;  /* 2px */
+--bq-radius--xs:   0.25rem;   /* 4px */
+--bq-radius--s:    0.5rem;    /* 8px */
+--bq-radius--m:    0.75rem;   /* 12px */
+--bq-radius--l:    1.5rem;    /* 24px */
+--bq-radius--full: 9999px;
+```
+
+### Box shadow
+
+The box shadow scale provides elevation effects for UI elements.
+
+<Tip>
+  See also the [Shadows](/foundations/shadows) page for elevation guidance.
+</Tip>
+
+```css
+--bq-box-shadow--xs: 0 2px 0 rgba(0, 0, 0, 0.016);
+--bq-box-shadow--s:  0 8px 24px rgba(0, 0, 0, 0.04);
+--bq-box-shadow--m:  0 10px 48px -16px rgba(0, 0, 0, 0.12);
+--bq-box-shadow--l:  0 20px 58px -16px rgba(0, 0, 0, 0.16);
+```
+
+### Stroke
+
+The stroke width scale defines standard border widths.
+
+<Tip>
+  See also the [Stroke](/foundations/stroke) page for border usage guidance.
+</Tip>
+
+```css
+--bq-stroke-s: 1px;
+--bq-stroke-m: 2px;
+--bq-stroke-l: 3px;
+```
+
+---
+
+## Declarative color variables
+
+Semantic tokens are used throughout the components and change based on the theme mode (light/dark). Always prefer these over primitive values.
+
+### Background colors
+
+Used for various background surfaces such as pages, cards, and panels.
+
+```css
+--bq-background--primary:   /* Main background color */
+--bq-background--secondary: /* Secondary background (cards, panels) */
+--bq-background--tertiary:  /* Tertiary background (nested surfaces) */
+--bq-background--alt:       /* Alternative background */
+--bq-background--inverse:   /* Inverse background (tooltips, dark mode overlays) */
+--bq-background--brand:     /* Brand-colored backgrounds */
+--bq-background--overlay:   /* Overlay/backdrop color (with opacity) */
+```
+
+### Icon colors
+
+Used for SVG icons and graphical elements.
+
+```css
+--bq-icon--primary:   /* Primary icon color */
+--bq-icon--secondary: /* Secondary icon color */
+--bq-icon--inverse:   /* Inverse icon color */
+--bq-icon--brand:     /* Brand-colored icons */
+--bq-icon--alt:       /* Alternative icon color */
+--bq-icon--info:      /* Informational icons */
+--bq-icon--success:   /* Success state icons */
+--bq-icon--warning:   /* Warning state icons */
+--bq-icon--danger:    /* Error/danger icons */
+```
+
+### Border colors
+
+Used for borders and outlines around UI elements.
+
+```css
+--bq-stroke--primary:   /* Primary border color */
+--bq-stroke--secondary: /* Secondary border color */
+--bq-stroke--tertiary:  /* Tertiary border color */
+--bq-stroke--inverse:   /* Inverse border color */
+--bq-stroke--brand:     /* Brand-colored borders */
+--bq-stroke--alt:       /* Alternative border color */
+--bq-stroke--success:   /* Success state borders */
+--bq-stroke--warning:   /* Warning state borders */
+--bq-stroke--danger:    /* Error/danger borders */
+```
+
+### Text colors
+
+Used for typography and text elements.
+
+```css
+--bq-text--primary:   /* Primary text color */
+--bq-text--secondary: /* Secondary text color (muted) */
+--bq-text--inverse:   /* Inverse text color (on dark backgrounds) */
+--bq-text--brand:     /* Brand-colored text */
+--bq-text--alt:       /* Alternative text color */
+--bq-text--info:      /* Informational text */
+--bq-text--success:   /* Success state text */
+--bq-text--warning:   /* Warning state text */
+--bq-text--danger:    /* Error/danger text */
+```
+
+### UI colors
+
+Used for small UI elements like buttons, tags, and badges.
+
+```css
+--bq-ui--primary:      /* Primary UI element color */
+--bq-ui--secondary:    /* Secondary UI element color */
+--bq-ui--tertiary:     /* Tertiary UI element color */
+--bq-ui--inverse:      /* Inverse UI element color */
+--bq-ui--brand:        /* Brand-colored UI elements */
+--bq-ui--brand-alt:    /* Alternative brand UI color */
+--bq-ui--alt:          /* Alternative UI color */
+--bq-ui--success:      /* Success state UI color */
+--bq-ui--success-alt:  /* Alternative success UI color */
+--bq-ui--warning:      /* Warning state UI color */
+--bq-ui--warning-alt:  /* Alternative warning UI color */
+--bq-ui--danger:       /* Danger state UI color */
+--bq-ui--danger-alt:   /* Alternative danger UI color */
+```
+
+### State colors
+
+Used for interactive states like hover and active. They blend with a base color using the CSS [`color-mix()`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/color-mix) function for better visual feedback.
+
+```css
+/* Example usage */
+/* color-mix(in srgb, var(--bq-ui--primary) 80%, var(--bq-state--hover) 20%) */
+
+--bq-state--hover:  /* Hover state blend color */
+--bq-state--active: /* Active/pressed state blend color */
+```
+
+---
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card horizontal title="Component CSS variables" icon="palette" href="/theming/component-css-variables">
+    Explore the CSS variables exposed by each BEEQ component for targeted, scoped customization.
+  </Card>
+  <Card horizontal title="Custom Theme" icon="paintbrush" href="/theming/custom-theme">
+    Follow the step-by-step guide to create and apply a fully custom theme to your app.
+  </Card>
+</CardGroup>

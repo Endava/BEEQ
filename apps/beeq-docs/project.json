@@ -1,0 +1,31 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "beeq-docs",
+  "projectType": "application",
+  "sourceRoot": "apps/beeq-docs",
+  "tags": ["scope:docs", "type:app"],
+  "targets": {
+    "dev": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "pnpm dlx mintlify dev",
+        "cwd": "apps/beeq-docs"
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "pnpm dlx mintlify build",
+        "cwd": "apps/beeq-docs"
+      },
+      "outputs": ["{projectRoot}/.mintlify"]
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "pnpm dlx mintlify broken-links",
+        "cwd": "apps/beeq-docs"
+      }
+    }
+  }
+}

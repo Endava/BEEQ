@@ -1,0 +1,195 @@
+---
+title: For designers
+description: Get the Figma library, understand design foundations, and start creating consistent product experiences with BEEQ.
+---
+
+import { CardTile } from '/snippets/CardTile.jsx';
+
+BEEQ gives you a single Figma file with everything you need to design consistent, accessible interfaces — design tokens, components, icons, and assets, all in one place. This guide walks you through setup and points you toward the things that matter most after that.
+
+## Set up the Figma library
+
+Getting BEEQ into your Figma workspace takes three steps. Once it's done, all components and variables are available across your projects automatically.
+
+<Note>
+  BEEQ ships as a **single Figma file** that contains Design Tokens/Variables, Components, and Assets (icons, illustrations, flags, logos). Everything lives in one place as of v1.0.
+</Note>
+
+<Steps>
+  <Step title="Get access and duplicate">
+    Request access to the main BEEQ Design System file, then duplicate it to your Figma workspace.
+
+    <Frame>
+      <img src="/getting-started/images/for-designers-duplicate-figma-library.svg" alt="Screenshot of the Figma 'Duplicate to your Drafts' option on the BEEQ Design System file" />
+    </Frame>
+
+    <Card horizontal title="BEEQ Design System v1.0 on Figma" icon="figma" href="https://www.figma.com/file/2VS47PTSkQWJkr7H6DpAdR/BEEQ-Design-System-(v1.0)?type=design&t=mpqVKyqaArb0SyI3-6">
+      Open the main Figma file
+    </Card>
+  </Step>
+  <Step title="Publish as a library">
+    Open your duplicated file, rename it to something that makes sense for your team, then publish it as a Figma shared library via **Assets → Publish library**.
+
+    <Frame>
+      <img src="/getting-started/images/for-designers-publish-figma-library.svg" alt="Screenshot of the Figma 'Publish library' dialog on the BEEQ Design System file" />
+    </Frame>
+
+  </Step>
+  <Step title="Enable the library">
+    In any project where you want to use BEEQ, open the **Libraries** panel and enable the library you just published. That's it.
+
+    <Frame>
+      <img src="/getting-started/images/for-designers-enable-figma-library.svg" alt="Screenshot of the Figma Libraries panel with the BEEQ library toggled on" />
+    </Frame>
+  </Step>
+</Steps>
+
+You're all set. BEEQ components, tokens, and assets are now ready to use across your projects. Happy designing!
+
+---
+
+<Tip>
+  Curious about how BEEQ is structured and why? The **[Design principles](/getting-started/design-principles)** page covers the Atomic Design methodology and the values behind the system.
+</Tip>
+
+---
+
+## Theming and brand customization
+
+BEEQ is built to be white-labelled. In Figma, brand customization happens through **Figma Variables** — change a token in the Theme Collection and every component that references it updates automatically.
+
+### Figma Variables: three collections
+
+BEEQ color tokens use Figma's variable capability and are split into three linked collections. Knowing which one to edit — and which to leave alone — is the key to customising without breaking anything.
+
+| Collection | What it contains | Should you edit it? |
+|---|---|---|
+| **Primitives** | All raw color scales (e.g. `iris-600`, `neutral-200`). 17 default hue sets plus any brand-specific additions. Colors are named `[color-name]-xxx`, from lightest (100) to darkest (1000). | No — reference only |
+| **Theme** | Selects colors from Primitives and maps them to semantic slots: `brand`, `accent`, `neutrals`, `system`, and `data`. BEEQ ships with 5 built-in themes — BEEQ, Endava, and a ready-to-use **Custom Theme**. | **Yes — this is where you customise** |
+| **Modes** | Wires Theme colors to component usage tokens (UI, Text, Icon, Background, Stroke, States) for both light and dark mode. | No — do not change |
+
+<Frame className="px-4 py-4" caption="The three Figma Variable collections that make up BEEQ's color system">
+  <img src="/getting-started/images/for-designers-figma-variables.svg" alt="Screenshot of the Figma Variables panel showing the Primitives, Theme, and Modes collections" />
+</Frame>
+
+<Warning>
+  Edit the **Theme** collection only. The Modes collection is what components read at runtime — changing it directly will break light/dark mode behaviour.
+</Warning>
+
+### Building your color palette
+
+When using BEEQ on client projects, it's usually required to adhere to the client's brand guidelines. Those guidelines typically focus on the physical aspects of the brand — stationery, print materials — rather than digital. You'll need to expand them to cover all the semantic color slots BEEQ uses before you can customise the system.
+
+<Frame className="px-4 py-4" caption="Create a color palette for your brand">
+  <img
+    className="block dark:hidden"
+    src="/getting-started/images/for-designers-create-color-palette-light.svg"
+    alt="Create a color palette for your brand — light mode"
+  />
+  <img
+    className="hidden dark:block"
+    src="/getting-started/images/for-designers-create-color-palette-dark.svg"
+    alt="Create a color palette for your brand — dark mode"
+  />
+</Frame>
+
+<Steps>
+  <Step title="Create palettes for your theme">
+    Build each of the following scales before opening Figma Variables:
+
+    - **Brand palette** — a full light-to-dark scale for the primary brand color
+    - **Accent palette** (if needed) — the same light-to-dark scale for a secondary highlight color. In BEEQ's default theme the accent slot is unused
+    - **Neutral palette** — a custom grey scale, if the brand specifies its own neutrals. Leave this out to keep BEEQ's defaults
+    - **System colors** — shades for success, warning, error, and info
+    - **Data colors** — a set of distinct hues for charts and graphs
+  </Step>
+  <Step title="Apply to Figma Variables">
+    Substitute the default colors from the **Theme Variables**, or introduce a new **Mode** for multi-theme projects, using the **Local Variables Panel**. Then follow the [Changing brand colors](#changing-brand-colors) steps below to wire up the specific brand variables.
+  </Step>
+</Steps>
+
+<Tip>
+  There are many color generators available online to help you build palette scales. Tools like [Radix Colors](https://www.radix-ui.com/colors), [uicolors.app](https://uicolors.app), and [Huetone](https://huetone.ardov.me/) can produce perceptually uniform, accessible scales from a single brand hex.
+</Tip>
+
+### Changing brand colors
+
+There are three brand color variables you'll need to update for any client or product:
+
+| Variable | Purpose |
+|---|---|
+| `brand` | The main brand color. Used on primary buttons, active states, and highlights. |
+| `brand-light` | A lighter tint for hover states, muted backgrounds, and accents in light mode. |
+| `brand-dark` | Dark mode replacement for `brand-light` — usually a deeper shade. |
+
+To change them: open the **Theme Collection** in Figma Variables, find the brand variables, and update the value to a hex code or pick a swatch from the **Primitive Collection**.
+
+<Frame>
+  <img src="/getting-started/images/for-designers-theme-collection.svg" alt="Screenshot of the Figma Theme Collection panel with brand, brand-light, brand-dark highlighted" />
+</Frame>
+
+<Note>
+  Figma doesn't currently support Typography variables, so **color is the only way to theme BEEQ in Figma**. Typography customization is handled at the code level through CSS variables.
+</Note>
+
+### Going beyond colors
+
+If a project requires more than just color changes — say, a rounder button corner radius — you can add custom tokens to the Theme Collection. Create a token (e.g., `button-roundness`), assign different values per theme, then replace the default token on the component. The same pattern works for other properties like spacing and shadow.
+
+<Tip>
+  The **[Theming and Modes](/theming/themes-and-modes)** and **[Global CSS Variables](/theming/global-css-variables)** pages explain how the token system works across both Figma and code — useful reading if you're working closely with a developer on a custom theme.
+</Tip>
+
+---
+
+## Explore design foundations
+
+The BEEQ visual language — colors, type, spacing, and the rest — is documented in the Foundations section. These pages describe the token values, the rules for using them, and the reasoning behind the choices.
+
+<Columns cols={2}>
+  <CardTile
+    title="Colors"
+    imageLightSrc="/getting-started/images/for-designers-colors-light.svg"
+    imageDarkSrc="/getting-started/images/for-designers-colors-dark.svg"
+    href="/foundations/colors"
+  >
+    The color system, semantic tokens, and how light and dark mode work.
+  </CardTile>
+  <CardTile
+    title="Typography"
+    imageLightSrc="/getting-started/images/for-designers-typography-light.svg"
+    imageDarkSrc="/getting-started/images/for-designers-typography-dark.svg"
+    href="/foundations/typography"
+  >
+    Fonts, scale, line heights, and when to use each style.
+  </CardTile>
+  <CardTile
+    title="Spacing"
+    imageLightSrc="/getting-started/images/for-designers-spacing-light.svg"
+    imageDarkSrc="/getting-started/images/for-designers-spacing-dark.svg"
+    href="/foundations/spacing"
+  >
+    The spacing scale and how it maps to design tokens and component layout.
+  </CardTile>
+  <CardTile
+    title="Icons"
+    imageLightSrc="/getting-started/images/for-designers-icons-light.svg"
+    imageDarkSrc="/getting-started/images/for-designers-icons-dark.svg"
+    href="/components/icon"
+  >
+    The BEEQ icon library, sizes, and usage guidance.
+  </CardTile>
+</Columns>
+
+<Note>
+  The *why* behind BEEQ's visual decisions is covered on the **[Design principles](/getting-started/design-principles)** page.
+</Note>
+
+---
+
+## What to do next
+
+- Browse **[Components](/components)** to see all available building blocks, with interactive examples and usage guidelines.
+- Explore **[Theming](/theming/themes-and-modes)** to understand how customization works beyond the basics.
+- Review recent changes in the **[Changelog](/releases/changelog)** to stay up to date.
+- Reach out at [beeq@endava.com](mailto:beeq@endava.com) or open a discussion on [GitHub](https://github.com/Endava/BEEQ/issues) if you get stuck or have a question.

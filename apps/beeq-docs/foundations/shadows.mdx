@@ -1,0 +1,617 @@
+---
+title: Shadows
+description: BEEQ shadows define elevation, layering, and separation for surfaces that need to appear above the page.
+---
+
+import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
+
+Shadows help users understand which surfaces sit above others. In BEEQ, shadows are used for elevation, temporary layers, overlays, and subtle separation when a border alone would feel too flat.
+
+Use shadows with intention. A stronger shadow should usually mean a stronger layer relationship, not a stronger state by itself.
+
+---
+
+## What BEEQ provides
+
+BEEQ provides a four-step box-shadow scale. The values are exposed as CSS custom properties and mapped into the BEEQ Tailwind preset when the preset is installed.
+
+Components that need elevation expose component-level shadow variables. Prefer those component variables when the shadow belongs to a BEEQ component, and use global shadow tokens for custom surfaces.
+
+| BEEQ provides | Use it for |
+| --- | --- |
+| Box shadow variables | Custom surfaces, elevated panels, and product-specific layers. |
+| Tailwind preset mappings | Utility classes such as `shadow-xs`, `shadow-s`, `shadow-m`, and `shadow-l` when the preset is installed. |
+| Component CSS variables | Scoped shadow customization for components such as panel, dialog, toast, tooltip, and notification. |
+
+---
+
+## Shadow scale
+
+The shadow scale moves from subtle interaction lift to pronounced floating surfaces. Use the smallest shadow that communicates the layer relationship.
+
+| Token | CSS variable | Tailwind key | Value | Common use |
+| --- | --- | --- | --- | --- |
+| `xs` | `--bq-box-shadow--xs` | `shadow-xs` | `0 2px 0 rgba(0, 0, 0, 0.016)` | Subtle interactive lift on compact elements. |
+| `s` | `--bq-box-shadow--s` | `shadow-s` | `0 8px 24px rgba(0, 0, 0, 0.04)` | Cards and stable elevated surfaces. |
+| `m` | `--bq-box-shadow--m` | `shadow-m` | `0 10px 48px -16px rgba(0, 0, 0, 0.12)` | Panels, dropdowns, sticky bars, and raised containers. |
+| `l` | `--bq-box-shadow--l` | `shadow-l` | `0 20px 58px -16px rgba(0, 0, 0, 0.16)` | Dialogs, toasts, notifications, and floating attention surfaces. |
+
+<CodeLivePreview mode="iframe" height="26rem" removePadding code={`
+  <style>
+    body {
+      padding: var(--bq-spacing-m);
+    }
+
+    .shadow-scale {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+      gap: var(--bq-spacing-m);
+    }
+
+    .shadow-scale__tile {
+      display: grid;
+      align-content: space-between;
+      gap: var(--bq-spacing-s);
+      aspect-ratio: 1;
+      padding: var(--bq-spacing-m);
+      border: var(--bq-stroke-s) solid var(--bq-stroke--primary);
+      border-radius: var(--bq-radius--m);
+      background: var(--bq-background--secondary);
+    }
+
+    .shadow-scale__tile--xs {
+      box-shadow: var(--bq-box-shadow--xs);
+    }
+
+    .shadow-scale__tile--s {
+      box-shadow: var(--bq-box-shadow--s);
+    }
+
+    .shadow-scale__tile--m {
+      box-shadow: var(--bq-box-shadow--m);
+    }
+
+    .shadow-scale__tile--l {
+      box-shadow: var(--bq-box-shadow--l);
+    }
+
+    .shadow-scale__value {
+      color: var(--bq-text--secondary);
+      font-size: var(--bq-font-size--s);
+    }
+  </style>
+
+  <section class="shadow-scale" aria-label="BEEQ shadow scale">
+    <div class="shadow-scale__tile shadow-scale__tile--xs">
+      <strong>xs</strong>
+      <span class="shadow-scale__value">Subtle interaction lift</span>
+    </div>
+    <div class="shadow-scale__tile shadow-scale__tile--s">
+      <strong>s</strong>
+      <span class="shadow-scale__value">Stable surface elevation</span>
+    </div>
+    <div class="shadow-scale__tile shadow-scale__tile--m">
+      <strong>m</strong>
+      <span class="shadow-scale__value">Panel or dropdown layer</span>
+    </div>
+    <div class="shadow-scale__tile shadow-scale__tile--l">
+      <strong>l</strong>
+      <span class="shadow-scale__value">Floating attention layer</span>
+    </div>
+  </section>
+`}>
+  <CodeGroup>
+    ```css styles.css icon="css" expandable
+    .shadow-scale {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+      gap: var(--bq-spacing-m);
+    }
+
+    .shadow-scale__tile {
+      padding: var(--bq-spacing-m);
+      border: var(--bq-stroke-s) solid var(--bq-stroke--primary);
+      border-radius: var(--bq-radius--m);
+      background: var(--bq-background--secondary);
+    }
+
+    .shadow-scale__tile--xs {
+      box-shadow: var(--bq-box-shadow--xs);
+    }
+
+    .shadow-scale__tile--s {
+      box-shadow: var(--bq-box-shadow--s);
+    }
+
+    .shadow-scale__tile--m {
+      box-shadow: var(--bq-box-shadow--m);
+    }
+
+    .shadow-scale__tile--l {
+      box-shadow: var(--bq-box-shadow--l);
+    }
+    ```
+
+    ```html HTML icon="html5" expandable
+    <section class="shadow-scale" aria-label="BEEQ shadow scale">
+      <div class="shadow-scale__tile shadow-scale__tile--xs">
+        <strong>xs</strong>
+        <span class="shadow-scale__value">Subtle interaction lift</span>
+      </div>
+      <div class="shadow-scale__tile shadow-scale__tile--s">
+        <strong>s</strong>
+        <span class="shadow-scale__value">Stable surface elevation</span>
+      </div>
+      <div class="shadow-scale__tile shadow-scale__tile--m">
+        <strong>m</strong>
+        <span class="shadow-scale__value">Panel or dropdown layer</span>
+      </div>
+      <div class="shadow-scale__tile shadow-scale__tile--l">
+        <strong>l</strong>
+        <span class="shadow-scale__value">Floating attention layer</span>
+      </div>
+    </section>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+---
+
+## Elevation and layering
+
+Elevation should describe a surface relationship. A card can sit above the page. A panel can sit above the card. A dialog, toast, or notification can sit above the rest of the interface.
+
+Shadows should not be used as decoration. When every surface is elevated, users lose the visual hierarchy that elevation is meant to create.
+
+<CodeLivePreview mode="iframe" height="26rem" removePadding code={`
+  <style>
+    body {
+      padding: var(--bq-spacing-m);
+    }
+
+    .shadow-layers {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+      gap: var(--bq-spacing-m);
+    }
+
+    .shadow-layer {
+      display: grid;
+      gap: var(--bq-spacing-xs);
+      padding: var(--bq-spacing-l);
+      border: var(--bq-stroke-s) solid var(--bq-stroke--primary);
+      border-radius: var(--bq-radius--m);
+      background: var(--bq-background--secondary);
+    }
+
+    .shadow-layer--card {
+      box-shadow: var(--bq-box-shadow--s);
+    }
+
+    .shadow-layer--panel {
+      box-shadow: var(--bq-box-shadow--m);
+    }
+
+    .shadow-layer--floating {
+      box-shadow: var(--bq-box-shadow--l);
+    }
+
+    .shadow-layer p {
+      margin: 0;
+      color: var(--bq-text--secondary);
+    }
+  </style>
+
+  <section class="shadow-layers" aria-label="Shadow elevation layers">
+    <article class="shadow-layer shadow-layer--card">
+      <h4>Card</h4>
+      <p>Stable content lifted slightly from the page.</p>
+    </article>
+
+    <article class="shadow-layer shadow-layer--panel">
+      <h4>Panel</h4>
+      <p>Temporary content that sits above a surface.</p>
+    </article>
+
+    <article class="shadow-layer shadow-layer--floating">
+      <h4>Floating UI</h4>
+      <p>High-priority content that needs immediate attention.</p>
+    </article>
+  </section>
+`}>
+  <CodeGroup>
+    ```css styles.css icon="css" expandable
+    .shadow-layers {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+      gap: var(--bq-spacing-m);
+    }
+
+    .shadow-layer {
+      padding: var(--bq-spacing-l);
+      border: var(--bq-stroke-s) solid var(--bq-stroke--primary);
+      border-radius: var(--bq-radius--m);
+      background: var(--bq-background--secondary);
+    }
+
+    .shadow-layer--card {
+      box-shadow: var(--bq-box-shadow--s);
+    }
+
+    .shadow-layer--panel {
+      box-shadow: var(--bq-box-shadow--m);
+    }
+
+    .shadow-layer--floating {
+      box-shadow: var(--bq-box-shadow--l);
+    }
+    ```
+
+    ```html HTML icon="html5" expandable
+    <section class="shadow-layers" aria-label="Shadow elevation layers">
+      <article class="shadow-layer shadow-layer--card">
+        <h4>Card</h4>
+        <p>Stable content lifted slightly from the page.</p>
+      </article>
+
+      <article class="shadow-layer shadow-layer--panel">
+        <h4>Panel</h4>
+        <p>Temporary content that sits above a surface.</p>
+      </article>
+
+      <article class="shadow-layer shadow-layer--floating">
+        <h4>Floating UI</h4>
+        <p>High-priority content that needs immediate attention.</p>
+      </article>
+    </section>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+---
+
+## How shadows work in code
+
+Use CSS variables directly when you build custom UI. Use component CSS variables when the elevated surface belongs to a BEEQ component.
+
+If your project uses the BEEQ Tailwind preset, utilities such as `shadow-xs`, `shadow-s`, `shadow-m`, and `shadow-l` map to the same shadow variables.
+
+<CodeLivePreview mode="iframe" height="23rem" removePadding code={`
+  <style>
+    body {
+      padding: var(--bq-spacing-m);
+    }
+
+    .shadow-code {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+      gap: var(--bq-spacing-m);
+    }
+
+    .shadow-code__surface {
+      display: grid;
+      gap: var(--bq-spacing-xs);
+      padding: var(--bq-spacing-l);
+      border: var(--bq-stroke-s) solid var(--bq-stroke--primary);
+      border-radius: var(--bq-radius--l);
+      background: var(--bq-background--secondary);
+      box-shadow: var(--bq-box-shadow--m);
+    }
+
+    .shadow-code__surface p {
+      margin: 0;
+      color: var(--bq-text--secondary);
+    }
+  </style>
+
+  <section class="shadow-code" aria-label="Shadow implementation example">
+    <article class="shadow-code__surface">
+      <h4>Custom floating surface</h4>
+      <p>Use global shadow tokens when no BEEQ component owns the surface.</p>
+    </article>
+
+    <article class="shadow-code__surface">
+      <h4>Product panel</h4>
+      <p>Pair shadow with radius, stroke, and spacing tokens for a complete surface.</p>
+    </article>
+  </section>
+`}>
+  <CodeGroup>
+    ```css styles.css icon="css"
+    .shadow-code__surface {
+      padding: var(--bq-spacing-l);
+      border: var(--bq-stroke-s) solid var(--bq-stroke--primary);
+      border-radius: var(--bq-radius--l);
+      background: var(--bq-background--secondary);
+      box-shadow: var(--bq-box-shadow--m);
+    }
+    ```
+
+    ```html HTML icon="html5" expandable
+    <section class="shadow-code" aria-label="Shadow implementation example">
+      <article class="shadow-code__surface">
+        <h4>Custom floating surface</h4>
+        <p>Use global shadow tokens when no BEEQ component owns the surface.</p>
+      </article>
+
+      <article class="shadow-code__surface">
+        <h4>Product panel</h4>
+        <p>Pair shadow with radius, stroke, and spacing tokens for a complete surface.</p>
+      </article>
+    </section>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+---
+
+## Component shadow customization
+
+Components that own elevated surfaces expose CSS variables for their shadow. Use those variables instead of targeting internal classes.
+
+| Component | CSS variable | Default shadow | Typical role |
+| --- | --- | --- | --- |
+| `bq-panel` | `--bq-panel--box-shadow` | `var(--bq-box-shadow--m)` | Dropdowns, popovers, side panels, and temporary panels. |
+| `bq-dialog` | `--bq-dialog--box-shadow` | `var(--bq-box-shadow--l)` | Modal dialogs and blocking overlays. |
+| `bq-toast` | `--bq-toast--box-shadow` | `var(--bq-box-shadow--l)` | Time-based floating messages. |
+| `bq-notification` | `--bq-notification--box-shadow` | `var(--bq-box-shadow--l)` | Non-blocking notifications and alerts. |
+| `bq-tooltip` | `--bq-tooltip--box-shadow` | `var(--bq-box-shadow--m)` | Contextual helper text above the current surface. |
+
+<CodeLivePreview mode="iframe" height="24rem" removePadding code={`
+  <style>
+    body {
+      padding: var(--bq-spacing-m);
+    }
+
+    .shadow-components {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+      gap: var(--bq-spacing-m);
+    }
+
+    .shadow-components__panel {
+      --bq-panel--box-shadow: var(--bq-box-shadow--m);
+      --bq-panel--border-style: solid;
+      --bq-panel--border-width: var(--bq-stroke-s);
+      --bq-panel--border-color: var(--bq-stroke--primary);
+      --bq-panel--width: auto;
+      --bq-panel--height: auto;
+    }
+
+    .shadow-components__panel::part(panel) {
+      position: static;
+      display: grid;
+      gap: var(--bq-spacing-xs);
+      inline-size: auto;
+    }
+
+    .shadow-components__toast {
+      --bq-toast--box-shadow: var(--bq-box-shadow--l);
+      display: block;
+    }
+
+    .shadow-components__notification {
+      --bq-notification--box-shadow: var(--bq-box-shadow--l);
+      --bq-notification--min-width: 0;
+    }
+  </style>
+
+  <section class="shadow-components" aria-label="BEEQ component shadow customization">
+    <bq-panel class="shadow-components__panel" open disable-scroll-lock>
+      <h4>Panel</h4>
+      <p>Panel uses the medium shadow token for temporary layered content.</p>
+    </bq-panel>
+
+    <bq-notification class="shadow-components__notification" open disable-close type="info">
+      Notification
+      <span slot="body">Notifications use a stronger floating shadow.</span>
+    </bq-notification>
+
+    <bq-toast class="shadow-components__toast" open type="success">
+      Saved changes
+    </bq-toast>
+  </section>
+`}>
+  <CodeGroup>
+    ```css styles.css icon="css" expandable
+    .shadow-components__panel {
+      --bq-panel--box-shadow: var(--bq-box-shadow--m);
+      --bq-panel--border-style: solid;
+      --bq-panel--border-width: var(--bq-stroke-s);
+      --bq-panel--border-color: var(--bq-stroke--primary);
+      --bq-panel--width: auto;
+      --bq-panel--height: auto;
+    }
+
+    .shadow-components__panel::part(panel) {
+      position: static;
+      display: grid;
+      gap: var(--bq-spacing-xs);
+      inline-size: auto;
+    }
+
+    .shadow-components__toast {
+      --bq-toast--box-shadow: var(--bq-box-shadow--l);
+    }
+
+    .shadow-components__notification {
+      --bq-notification--box-shadow: var(--bq-box-shadow--l);
+      --bq-notification--min-width: 0;
+    }
+    ```
+
+    ```html HTML icon="html5" expandable
+    <section class="shadow-components" aria-label="BEEQ component shadow customization">
+      <bq-panel class="shadow-components__panel" open disable-scroll-lock>
+        <h4>Panel</h4>
+        <p>Panel uses the medium shadow token for temporary layered content.</p>
+      </bq-panel>
+
+      <bq-notification class="shadow-components__notification" open disable-close type="info">
+        Notification
+        <span slot="body">Notifications use a stronger floating shadow.</span>
+      </bq-notification>
+
+      <bq-toast class="shadow-components__toast" open type="success">
+        Saved changes
+      </bq-toast>
+    </section>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Components without shadow variables
+
+Some components do not expose a dedicated box-shadow variable. Use their documented shadow parts when a product-specific design needs elevation. Keep this restrained: a card or button shadow should support hierarchy or affordance, not make every action compete for attention.
+
+<CodeLivePreview mode="iframe" height="22rem" removePadding code={`
+  <style>
+    body {
+      padding: var(--bq-spacing-m);
+    }
+
+    .shadow-parts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+      gap: var(--bq-spacing-m);
+    }
+
+    .shadow-parts__card {
+      --bq-card--borderColor: var(--bq-stroke--primary);
+      --bq-card--borderWidth: var(--bq-stroke-s);
+    }
+
+    .shadow-parts__card::part(wrapper) {
+      display: grid;
+      gap: var(--bq-spacing-s);
+      box-shadow: var(--bq-box-shadow--s);
+    }
+
+    .shadow-parts__button::part(button) {
+      box-shadow: var(--bq-box-shadow--xs);
+    }
+  </style>
+
+  <section class="shadow-parts" aria-label="Shadow customization with component parts">
+    <bq-card class="shadow-parts__card" border="m">
+      <h4>Elevated card</h4>
+      <p>Use the wrapper part when a card needs product-specific elevation.</p>
+    </bq-card>
+
+    <bq-button class="shadow-parts__button">
+      Subtle lift
+    </bq-button>
+  </section>
+`}>
+  <CodeGroup>
+    ```css styles.css icon="css" expandable
+    .shadow-parts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+      gap: var(--bq-spacing-m);
+    }
+
+    .shadow-parts__card {
+      --bq-card--borderColor: var(--bq-stroke--primary);
+      --bq-card--borderWidth: var(--bq-stroke-s);
+    }
+
+    .shadow-parts__card::part(wrapper) {
+      display: grid;
+      gap: var(--bq-spacing-s);
+      box-shadow: var(--bq-box-shadow--s);
+    }
+
+    .shadow-parts__button::part(button) {
+      box-shadow: var(--bq-box-shadow--xs);
+    }
+    ```
+
+    ```html HTML icon="html5" expandable
+    <section class="shadow-parts" aria-label="Shadow customization with component parts">
+      <bq-card class="shadow-parts__card" border="m">
+        <h4>Elevated card</h4>
+        <p>Use the wrapper part when a card needs product-specific elevation.</p>
+      </bq-card>
+
+      <bq-button class="shadow-parts__button">
+        Subtle lift
+      </bq-button>
+    </section>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+---
+
+## Choosing shadow
+
+Choose shadow based on how far a surface sits from the page, not how important the content feels.
+
+| Use | Recommended shadow |
+| --- | --- |
+| Subtle hover or interactive lift | `var(--bq-box-shadow--xs)` |
+| Card or stable elevated surface | `var(--bq-box-shadow--s)` |
+| Dropdown, panel, sticky bar, or raised container | `var(--bq-box-shadow--m)` |
+| Dialog, toast, notification, or floating attention layer | `var(--bq-box-shadow--l)` |
+| Dense data, table rows, and flat page sections | No shadow; use stroke, spacing, or background instead. |
+
+---
+
+## Usage guidelines
+
+<AccordionGroup>
+  <Accordion title="Use BEEQ shadow tokens">
+    Use `--bq-box-shadow--*` values instead of custom shadow values. The scale keeps elevation consistent across components and custom surfaces.
+  </Accordion>
+  <Accordion title="Match elevation to layer depth">
+    Use stronger shadows only when the surface sits above another surface. Elevation should make the layer model easier to understand.
+  </Accordion>
+  <Accordion title="Use subtle shadows for stable surfaces">
+    Use `xs` or `s` for cards and low-emphasis surfaces. These shadows add separation without pulling attention away from content.
+  </Accordion>
+  <Accordion title="Use stronger shadows for floating UI">
+    Use `m` or `l` for panels, dropdowns, dialogs, toasts, notifications, and other temporary layers.
+  </Accordion>
+  <Accordion title="Do not use shadow as the only state cue">
+    Pair shadow changes with text, color, icon, stroke, or focus treatment when a state must be understood.
+  </Accordion>
+  <Accordion title="Combine shadow with spacing, stroke, and radius">
+    A shadow works best when the surface also has enough padding, a clear edge, and a radius that matches its size.
+  </Accordion>
+  <Accordion title="Avoid stacking heavy shadows">
+    Multiple large shadows in the same region create visual noise and weaken the hierarchy.
+  </Accordion>
+  <Accordion title="Keep shadows consistent across themes">
+    Use BEEQ tokens so shadows keep the intended weight in light and dark mode.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Accessibility and constraints
+
+Shadows are visual cues. They can support hierarchy, but they cannot carry meaning alone.
+
+- Do not rely on shadow alone to indicate focus, selection, error, success, or disabled states.
+- Keep focus indicators visible when an elevated surface contains interactive elements.
+- Avoid shadows that make text or controls harder to read against nearby surfaces.
+- Use overlays, aria patterns, and focus management for blocking layers such as dialogs; shadow does not define modality.
+- Check zoomed and narrow layouts. Large shadows can make dense UI feel crowded or clipped.
+- Avoid clipping shadows with `overflow: hidden` unless the clipped edge is intentional.
+
+---
+
+## Resources
+
+<CardGroup cols={3}>
+  <Card title="Global CSS variables" icon="code" href="/theming/global-css-variables">
+    Review the box-shadow variables used by BEEQ themes.
+  </Card>
+  <Card title="Tailwind preset source" icon="github" href="https://github.com/Endava/BEEQ/blob/main/packages/beeq-tailwindcss/src/index.ts">
+    See how BEEQ maps shadow tokens into Tailwind utilities.
+  </Card>
+  <Card title="Root token source" icon="github" href="https://github.com/Endava/BEEQ/blob/main/packages/beeq-tailwindcss/src/theme/default/root.ts">
+    See the source that defines the BEEQ shadow values.
+  </Card>
+</CardGroup>
