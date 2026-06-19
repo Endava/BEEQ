@@ -1269,6 +1269,217 @@ Use `formatOptions` when the selected date needs a more descriptive text format 
   Use `formatOptions` carefully with `range` and `multi`. Long formats such as `weekday: 'long'` can produce unwieldy display values when multiple dates appear in the input field.
 </Warning>
 
+### Form integration
+
+`bq-date-picker` submits its current date value with the form. Use `required` and `form-validation-message` when the date is mandatory.
+
+<CodeLivePreview mode="iframe" height="20rem" removePadding code={`
+  <style>
+    body {
+      padding: var(--bq-spacing-l);
+    }
+
+    .date-form {
+      display: grid;
+      gap: var(--bq-spacing-m);
+    }
+
+    .date-form__actions {
+      display: flex;
+      gap: var(--bq-spacing-s);
+      justify-content: flex-end;
+    }
+
+    .date-form__output {
+      margin: 0;
+      padding: var(--bq-spacing-s);
+      border: var(--bq-stroke-s) solid var(--bq-stroke--tertiary);
+      border-radius: var(--bq-radius--s);
+      background: var(--bq-ui--secondary);
+      color: var(--bq-text--primary);
+      white-space: pre-wrap;
+    }
+  </style>
+
+  <form class="date-form" id="date-form">
+    <bq-date-picker
+      form-validation-message="Choose a start date"
+      name="startDate"
+      placeholder="Select a date"
+      required
+      value="2026-06-25"
+    >
+      <label slot="label">Start date</label>
+    </bq-date-picker>
+    <div class="date-form__actions">
+      <bq-button appearance="secondary" type="reset">Reset</bq-button>
+      <bq-button type="button">Submit</bq-button>
+    </div>
+    <pre class="date-form__output" id="date-output">{}</pre>
+  </form>
+
+  <script>
+    (() => {
+      const form = previewRoot.querySelector('#date-form');
+      const output = previewRoot.querySelector('#date-output');
+      const submitButton = form.querySelector('bq-button[type="button"]');
+
+      const showFormData = () => {
+        if (!form.reportValidity()) return;
+        output.textContent = JSON.stringify(Object.fromEntries(new FormData(form).entries()), null, 2);
+      };
+
+      submitButton?.addEventListener('bqClick', (event) => {
+        event.preventDefault();
+        showFormData();
+      });
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        showFormData();
+      });
+
+      form.addEventListener('reset', () => {
+        requestAnimationFrame(() => {
+          output.textContent = '{}';
+        });
+      });
+    })();
+  </script>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <form id="date-form">
+      <bq-date-picker
+        form-validation-message="Choose a start date"
+        name="startDate"
+        placeholder="Select a date"
+        required
+        value="2026-06-25"
+      >
+        <label slot="label">Start date</label>
+      </bq-date-picker>
+      <bq-button appearance="secondary" type="reset">Reset</bq-button>
+      <bq-button type="submit">Submit</bq-button>
+      <pre id="date-output">{}</pre>
+    </form>
+
+    <script>
+      const form = document.querySelector('#date-form');
+      const output = document.querySelector('#date-output');
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        output.textContent = JSON.stringify(Object.fromEntries(new FormData(form).entries()), null, 2);
+      });
+
+      form.addEventListener('reset', () => {
+        requestAnimationFrame(() => {
+          output.textContent = '{}';
+        });
+      });
+    </script>
+    ```
+
+    ```tsx React icon="react" expandable
+    import { useState } from "react";
+    import { BqButton, BqDatePicker } from "@beeq/react";
+
+    export default function DatePickerForm() {
+      const [data, setData] = useState("{}");
+
+      return (
+        <form
+          onReset={() => setData("{}")}
+          onSubmit={(event) => {
+            event.preventDefault();
+            setData(JSON.stringify(Object.fromEntries(new FormData(event.currentTarget).entries()), null, 2));
+          }}
+        >
+          <BqDatePicker
+            formValidationMessage="Choose a start date"
+            name="startDate"
+            placeholder="Select a date"
+            required
+            value="2026-06-25"
+          >
+            <label slot="label">Start date</label>
+          </BqDatePicker>
+          <BqButton appearance="secondary" type="reset">Reset</BqButton>
+          <BqButton type="submit">Submit</BqButton>
+          <pre>{data}</pre>
+        </form>
+      );
+    }
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqButton, BqDatePicker } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqButton, BqDatePicker],
+      template: `
+        <form (reset)="data = '{}'" (submit)="handleSubmit($event)">
+          <bq-date-picker
+            form-validation-message="Choose a start date"
+            name="startDate"
+            placeholder="Select a date"
+            required
+            value="2026-06-25"
+          >
+            <label slot="label">Start date</label>
+          </bq-date-picker>
+          <bq-button appearance="secondary" type="reset">Reset</bq-button>
+          <bq-button type="submit">Submit</bq-button>
+          <pre>{{ data }}</pre>
+        </form>
+      `,
+    })
+    export class DatePickerFormComponent {
+      data = "{}";
+
+      handleSubmit(event: SubmitEvent): void {
+        event.preventDefault();
+        this.data = JSON.stringify(Object.fromEntries(new FormData(event.target as HTMLFormElement).entries()), null, 2);
+      }
+    }
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { ref } from "vue";
+    import { BqButton, BqDatePicker } from "@beeq/vue";
+
+    const data = ref("{}");
+
+    function handleSubmit(event: Event) {
+      data.value = JSON.stringify(Object.fromEntries(new FormData(event.target as HTMLFormElement).entries()), null, 2);
+    }
+    </script>
+
+    <template>
+      <form @reset="data = '{}'" @submit.prevent="handleSubmit">
+        <BqDatePicker
+          formValidationMessage="Choose a start date"
+          name="startDate"
+          placeholder="Select a date"
+          required
+          value="2026-06-25"
+        >
+          <label slot="label">Start date</label>
+        </BqDatePicker>
+        <BqButton appearance="secondary" type="reset">Reset</BqButton>
+        <BqButton type="submit">Submit</BqButton>
+        <pre>{{ data }}</pre>
+      </form>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
 ## Best practices
 
 <CardGroup cols={2}>

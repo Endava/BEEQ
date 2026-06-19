@@ -126,7 +126,11 @@ Primary also supports `ghost` and `danger` variants:
 - **Danger**: reserved for actions that may result in critical or irreversible consequences, such as deleting important data or confirming a high-risk operation.
 - **Ghost**: a more subtle style for for secondary or less prominent actions that don't require immediate attention.
 
-<CodeLivePreview mode="shadow" code={`<bq-button>Primary standard</bq-button>\n<bq-button variant="ghost">Primary ghost</bq-button>\n<bq-button variant="danger">Primary danger</bq-button>`}>
+<CodeLivePreview mode="shadow" code={`
+  <bq-button>Primary standard</bq-button>
+  <bq-button variant="ghost">Primary ghost</bq-button>
+  <bq-button variant="danger">Primary danger</bq-button>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-button>Primary standard</bq-button>
@@ -174,7 +178,10 @@ Primary also supports `ghost` and `danger` variants:
 
 Lower-emphasis actions. Can stand alone or pair with a primary button to perform secondary actions. Supports the `ghost` variant.
 
-<CodeLivePreview mode="shadow" code={`<bq-button appearance="secondary">Secondary</bq-button>\n<bq-button appearance="secondary" variant="ghost">Secondary ghost</bq-button>`}>
+<CodeLivePreview mode="shadow" code={`
+  <bq-button appearance="secondary">Secondary</bq-button>
+  <bq-button appearance="secondary" variant="ghost">Secondary ghost</bq-button>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-button appearance="secondary">Secondary</bq-button>
@@ -320,7 +327,11 @@ Choose the size that best matches the context. Medium is the default and preferr
 | **Medium** | Default — suitable for most interfaces |
 | **Large** | To increase the significance of an action; use sparingly |
 
-<CodeLivePreview mode="shadow" code={`<bq-button size="small">Small</bq-button>\n<bq-button size="medium">Medium</bq-button>\n<bq-button size="large">Large</bq-button>`}>
+<CodeLivePreview mode="shadow" code={`
+  <bq-button size="small">Small</bq-button>
+  <bq-button size="medium">Medium</bq-button>
+  <bq-button size="large">Large</bq-button>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-button size="small">Small</bq-button>
@@ -368,7 +379,9 @@ Choose the size that best matches the context. Medium is the default and preferr
 
 Use the `block` attribute to make the button stretch to its parent width.
 
-<CodeLivePreview mode="shadow" code={`<bq-button block>Full width button</bq-button>`}>
+<CodeLivePreview mode="shadow" code={`
+  <bq-button block>Full width button</bq-button>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-button block>Full width button</bq-button>
@@ -408,7 +421,12 @@ Use the `block` attribute to make the button stretch to its parent width.
 
 Use the `border` property to control the corner radius.
 
-<CodeLivePreview mode="shadow" code={`<bq-button border="full">Primary</bq-button>\n<bq-button variant="ghost" border="full">Ghost</bq-button>\n<bq-button variant="danger" border="full">Danger</bq-button>\n<bq-button appearance="secondary" border="full">Secondary</bq-button>`}>
+<CodeLivePreview mode="shadow" code={`
+  <bq-button border="full">Primary</bq-button>
+  <bq-button variant="ghost" border="full">Ghost</bq-button>
+  <bq-button variant="danger" border="full">Danger</bq-button>
+  <bq-button appearance="secondary" border="full">Secondary</bq-button>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-button border="full">Primary</bq-button>
@@ -469,7 +487,12 @@ For each button appearance and variant, there are five visual states: **enabled*
 
 The `disabled` attribute can be applied to any button variation. When disabled, no interaction is allowed and the `bqClick` event won't fire.
 
-<CodeLivePreview mode="shadow" code={`<bq-button disabled>Primary</bq-button>\n<bq-button variant="ghost" disabled>Ghost</bq-button>\n<bq-button variant="danger" disabled>Danger</bq-button>\n<bq-button appearance="secondary" disabled>Secondary</bq-button>`}>
+<CodeLivePreview mode="shadow" code={`
+  <bq-button disabled>Primary</bq-button>
+  <bq-button variant="ghost" disabled>Ghost</bq-button>
+  <bq-button variant="danger" disabled>Danger</bq-button>
+  <bq-button appearance="secondary" disabled>Secondary</bq-button>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-button disabled>Primary</bq-button>
@@ -525,7 +548,10 @@ The `disabled` attribute can be applied to any button variation. When disabled, 
 
 Use the `loading` attribute to indicate something is being processed. Pair with `disabled` to prevent duplicate actions.
 
-<CodeLivePreview mode="shadow" code={`<bq-button loading>Loading</bq-button>\n<bq-button loading disabled>Loading disabled</bq-button>`}>
+<CodeLivePreview mode="shadow" code={`
+  <bq-button loading>Loading</bq-button>
+  <bq-button loading disabled>Loading disabled</bq-button>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-button loading>Loading</bq-button>
@@ -571,7 +597,16 @@ Use the `loading` attribute to indicate something is being processed. Pair with 
 
 Use the `prefix` or `suffix` slot to add icons. Icons should reinforce the label — never use them for decoration only.
 
-<CodeLivePreview mode="shadow" code={`<bq-button>\n  <bq-icon name="arrow-circle-left" slot="prefix"></bq-icon>\n  Go back\n</bq-button>\n<bq-button>\n  Next step\n  <bq-icon name="arrow-circle-right" slot="suffix"></bq-icon>\n</bq-button>`}>
+<CodeLivePreview mode="shadow" code={`
+  <bq-button>
+    <bq-icon name="arrow-circle-left" slot="prefix"></bq-icon>
+    Go back
+  </bq-button>
+  <bq-button>
+    Next step
+    <bq-icon name="arrow-circle-right" slot="suffix"></bq-icon>
+  </bq-button>
+`}>
   <CodeGroup>
     ```html HTML icon="html5" expandable
     <bq-button>
@@ -646,7 +681,17 @@ Use the `prefix` or `suffix` slot to add icons. Icons should reinforce the label
 Use icon-only buttons only for common, easily recognized actions.
 Always provide a `label` so assistive technologies can announce the action correctly.
 
-<CodeLivePreview mode="shadow" code={`<bq-button only-icon label="Notifications">\n  <bq-icon name="bell-ringing"></bq-icon>\n</bq-button>\n<bq-button only-icon variant="ghost" label="Notifications">\n  <bq-icon name="bell-ringing"></bq-icon>\n</bq-button>\n<bq-button only-icon appearance="secondary" label="Notifications">\n  <bq-icon name="bell-ringing"></bq-icon>\n</bq-button>`}>
+<CodeLivePreview mode="shadow" code={`
+  <bq-button only-icon label="Notifications">
+    <bq-icon name="bell-ringing"></bq-icon>
+  </bq-button>
+  <bq-button only-icon variant="ghost" label="Notifications">
+    <bq-icon name="bell-ringing"></bq-icon>
+  </bq-button>
+  <bq-button only-icon appearance="secondary" label="Notifications">
+    <bq-icon name="bell-ringing"></bq-icon>
+  </bq-button>
+`}>
   <CodeGroup>
     ```html HTML icon="html5" expandable
     <bq-button only-icon label="Notifications">
