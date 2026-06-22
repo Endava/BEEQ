@@ -337,6 +337,7 @@ export namespace Components {
      * @attr {string} initials - The text to display on avatar.
      * @attr {"circle" | "square"} shape - The shape of the avatar.
      * @attr {"xsmall" | "small" | "medium" | "large"} size - The size of the avatar.
+     * @cssprop --bq-avatar-background - Deprecated, use --bq-avatar--background instead.
      * @cssprop --bq-avatar--background - Avatar background color
      * @cssprop --bq-avatar--border-color - Avatar border color
      * @cssprop --bq-avatar--border-style - Avatar border style
@@ -3541,6 +3542,7 @@ declare global {
      * @attr {string} initials - The text to display on avatar.
      * @attr {"circle" | "square"} shape - The shape of the avatar.
      * @attr {"xsmall" | "small" | "medium" | "large"} size - The size of the avatar.
+     * @cssprop --bq-avatar-background - Deprecated, use --bq-avatar--background instead.
      * @cssprop --bq-avatar--background - Avatar background color
      * @cssprop --bq-avatar--border-color - Avatar border color
      * @cssprop --bq-avatar--border-style - Avatar border style
@@ -5744,6 +5746,7 @@ declare namespace LocalJSX {
      * @attr {string} initials - The text to display on avatar.
      * @attr {"circle" | "square"} shape - The shape of the avatar.
      * @attr {"xsmall" | "small" | "medium" | "large"} size - The size of the avatar.
+     * @cssprop --bq-avatar-background - Deprecated, use --bq-avatar--background instead.
      * @cssprop --bq-avatar--background - Avatar background color
      * @cssprop --bq-avatar--border-color - Avatar border color
      * @cssprop --bq-avatar--border-style - Avatar border style
@@ -9454,6 +9457,7 @@ declare module "@stencil/core" {
              * @attr {string} initials - The text to display on avatar.
              * @attr {"circle" | "square"} shape - The shape of the avatar.
              * @attr {"xsmall" | "small" | "medium" | "large"} size - The size of the avatar.
+             * @cssprop --bq-avatar-background - Deprecated, use --bq-avatar--background instead.
              * @cssprop --bq-avatar--background - Avatar background color
              * @cssprop --bq-avatar--border-color - Avatar border color
              * @cssprop --bq-avatar--border-style - Avatar border style

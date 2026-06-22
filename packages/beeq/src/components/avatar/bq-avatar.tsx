@@ -38,6 +38,7 @@ import { AVATAR_SHAPE, AVATAR_SIZE } from './bq-avatar.types';
  * @part text - The `<span>` tag element that rendered the `Initials` text string.
  * @part badge - The container that wraps the badge slot element.
  *
+ * @cssprop --bq-avatar-background - Deprecated, use --bq-avatar--background instead.
  * @cssprop --bq-avatar--background - Avatar background color
  *
  * @cssprop --bq-avatar--border-color - Avatar border color
@@ -157,25 +158,18 @@ export class BqAvatar {
   };
 
   private trimInitialsBasedOnSize = (): void => {
-    const { initials } = this;
-    if (!initials) return;
-
-    AVATAR_SIZE.forEach((size: TAvatarSize) => {
-      if (this.size === size) {
-        this.trimmedInitials = initials.substring(0, this.getIndex(size));
-      }
-    });
+    const maxLength = this.getIndex[this.size] ?? this.getIndex.xsmall;
+    this.trimmedInitials = this.initials?.substring(0, maxLength);
   };
 
-  private getIndex = (size: TAvatarSize): number => {
-    const sizeIndexMap = {
+  private get getIndex(): { [Key in TAvatarSize]: number } {
+    return {
       xsmall: 1,
       small: 2,
       medium: 3,
       large: 4,
     };
-    return sizeIndexMap[size] ?? sizeIndexMap.xsmall;
-  };
+  }
 
   // render() function
   // Always the last one in the class.
