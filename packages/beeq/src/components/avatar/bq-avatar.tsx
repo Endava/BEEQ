@@ -68,7 +68,7 @@ export class BqAvatar {
   // Own Properties
   // ====================
 
-  trimmedInitials: string;
+  private trimmedInitials?: string;
 
   // Reference to host HTML element
   // ===================================
@@ -79,22 +79,22 @@ export class BqAvatar {
   // Inlined decorator, alphabetical order
   // =======================================
 
-  @State() hasError: boolean;
+  @State() hasError: boolean = false;
 
   // Public Property API
   // ========================
 
   /** Alternate text for the avatar image if the image cannot be displayed */
-  @Prop({ reflect: true }) altText: string;
+  @Prop({ reflect: true }) altText?: string;
 
   /** The image source to load on the avatar (this can be also a base64 encoded image) */
-  @Prop({ reflect: true }) image: string;
+  @Prop({ reflect: true }) image?: string;
 
   /** A text to use for describing the avatar on assistive devices */
-  @Prop({ reflect: true }) label: string;
+  @Prop({ reflect: true }) label?: string;
 
   /** The text to display on avatar */
-  @Prop({ reflect: true }) initials: string;
+  @Prop({ reflect: true }) initials?: string;
 
   /** The shape of the avatar */
   @Prop({ reflect: true }) shape: TAvatarShape = 'circle';
@@ -157,11 +157,12 @@ export class BqAvatar {
   };
 
   private trimInitialsBasedOnSize = (): void => {
-    if (!this.initials) return;
+    const { initials } = this;
+    if (!initials) return;
 
     AVATAR_SIZE.forEach((size: TAvatarSize) => {
       if (this.size === size) {
-        this.trimmedInitials = this.initials.substring(0, this.getIndex(size));
+        this.trimmedInitials = initials.substring(0, this.getIndex(size));
       }
     });
   };
@@ -183,38 +184,17 @@ export class BqAvatar {
   render() {
     return (
       <Host>
-        <div
-          aria-label={this.label}
-          class={{
-            'bq-avatar': true,
-            [`size--${this.size}`]: true,
-            [`shape--${this.shape}`]: true,
-          }}
-          part="base"
-          role="img"
-        >
+        <div class="bq-avatar" aria-label={this.label} part="base" role="img">
           {this.initials && (
             <span class="bq-avatar__text" part="text">
               {this.trimmedInitials}
             </span>
           )}
           {this.image && !this.hasError && (
-            <img
-              alt={this.altText ?? undefined}
-              class="bq-avatar__image"
-              onError={this.onImageError}
-              part="img"
-              src={this.image}
-            />
+            <img alt={this.altText} class="bq-avatar__image" onError={this.onImageError} part="img" src={this.image} />
           )}
         </div>
-        <div
-          class={{
-            'bq-avatar__badge': true,
-            [`shape--${this.shape}`]: true,
-          }}
-          part="badge"
-        >
+        <div class="bq-avatar__badge" part="badge">
           <slot name="badge"></slot>
         </div>
       </Host>
