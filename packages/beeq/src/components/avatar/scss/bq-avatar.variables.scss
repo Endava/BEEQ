@@ -5,6 +5,7 @@
 :host {
   /**
   * @prop --bq-avatar--background: Avatar background color
+  * @prop --bq-avatar-background: Deprecated, use --bq-avatar--background instead.
 
   * @prop --bq-avatar--border-color: Avatar border color
   * @prop --bq-avatar--border-style: Avatar border style
@@ -26,7 +27,9 @@
   * @prop --bq-avatar--badge-left-circle: Badge left position shape circle
   */
 
+  // !TO BE REMOVED: Deprecated, use `--bq-avatar--background` instead.
   --bq-avatar-background: var(--bq-ui--alt);
+  --bq-avatar--background: var(--bq-avatar-background);
 
   --bq-avatar--border-color: var(--bq-stroke--tertiary);
   --bq-avatar--border-style: solid;
