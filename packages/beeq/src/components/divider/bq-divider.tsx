@@ -15,7 +15,7 @@ import {
  * @example How to use it
  * ```html
  * <bq-divider orientation="horizontal" stroke-color="stroke--primary" title-alignment="middle">
- *   <span slot="title">Divider Title</span>
+ *   <span>Divider Title</span>
  * </bq-divider>
  * ```
  *
@@ -52,7 +52,7 @@ export class BqDivider {
   // Own Properties
   // ====================
 
-  private titleElem: HTMLDivElement;
+  private titleElem?: HTMLDivElement;
 
   // Reference to host HTML element
   // ===================================
@@ -63,7 +63,7 @@ export class BqDivider {
   // Inlined decorator, alphabetical order
   // =======================================
 
-  @State() private hasTitle: boolean;
+  @State() private hasTitle = false;
 
   // Public Property API
   // ========================
@@ -121,6 +121,7 @@ export class BqDivider {
 
   componentWillLoad() {
     this.checkPropValues();
+    this.hasTitle = Boolean(this.el.textContent?.trim()) || this.el.children.length > 0;
   }
 
   componentDidLoad() {
@@ -143,6 +144,8 @@ export class BqDivider {
   // =======================================================
 
   private handleSlotChange = () => {
+    if (!this.titleElem) return;
+
     this.hasTitle = hasSlotContent(this.titleElem) || !!getTextContent(this.titleElem.querySelector('slot'));
   };
 
@@ -176,7 +179,8 @@ export class BqDivider {
 
   render() {
     const styles = {
-      ...(this.strokeColor && { '--bq-divider--stroke-color': getColorCSSVariable(this.strokeColor) }),
+      ...(this.strokeColor &&
+        this.strokeColor !== 'stroke--primary' && { '--bq-divider--color': getColorCSSVariable(this.strokeColor) }),
       ...(this.strokeThickness && { '--bq-divider--stroke-thickness': `${this.strokeThickness}px` }),
       ...(!isNil(this.strokeBasis) && { '--bq-divider--stroke-basis': `${this.strokeBasis}px` }),
     };
@@ -191,14 +195,15 @@ export class BqDivider {
             'is-gapless': !this.hasTitle,
           }}
           part="base"
-          ref={(div) => {
+          ref={(div?: HTMLDivElement) => {
             this.titleElem = div;
           }}
         >
           <svg
             aria-hidden="true"
             class={{
-              'bq-divider--stroke start': true,
+              'bq-divider--stroke': true,
+              'is-start': true,
               'is-hidden': this.strokeBasis === 0 && this.titleAlignment === 'start',
             }}
             part="dash-start"
@@ -209,7 +214,8 @@ export class BqDivider {
           <svg
             aria-hidden="true"
             class={{
-              'bq-divider--stroke end': true,
+              'bq-divider--stroke': true,
+              'is-end': true,
               'is-hidden': !this.hasTitle || (this.strokeBasis === 0 && this.titleAlignment === 'end'),
             }}
             part="dash-end"

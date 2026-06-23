@@ -1,5 +1,5 @@
 /* -------------------------------------------------------------------------- */
-/*                                Button styles                               */
+/*                               Divider Styles                               */
 /* -------------------------------------------------------------------------- */
 
 @import './bq-divider.variables';
@@ -17,36 +17,15 @@
   block-size: 100%;
 }
 
+/* ---------------------------------- Base ---------------------------------- */
+
 .bq-divider {
   display: flex;
   align-items: center;
   gap: var(--bq-divider--title-marginX);
 }
 
-.bq-divider.is-gapless {
-  gap: 0;
-}
-
-.bq-divider--stroke {
-  flex-grow: 1;
-  stroke: var(--bq-divider--stroke-color);
-  block-size: var(--bq-divider--stroke-thickness);
-  inline-size: 100%;
-
-  &.end {
-    transform: rotate(180deg);
-  }
-}
-
-.bq-divider--stroke.is-hidden {
-  display: none;
-}
-
-.bq-divider--title__start .bq-divider--stroke.start,
-.bq-divider--title__end .bq-divider--stroke.end {
-  flex-grow: 0;
-  flex-basis: var(--bq-divider--stroke-basis);
-}
+/* ------------------------------- Orientation ------------------------------ */
 
 .bq-divider--horizontal {
   flex-grow: 1;
@@ -54,11 +33,40 @@
 
 .bq-divider--vertical {
   flex-direction: column;
-  align-items: center;
-  gap: var(--bq-divider--title-marginX);
   block-size: 100%;
+}
 
-  .bq-divider--stroke {
-    inline-size: var(--bq-divider--stroke-thickness);
+/* ------------------------------- Stroke ----------------------------------- */
+
+.bq-divider--stroke {
+  flex-grow: 1;
+  stroke: var(--bq-divider--color);
+  block-size: var(--bq-divider--stroke-thickness);
+  inline-size: 100%;
+
+  &.is-end {
+    transform: rotate(180deg);
   }
+}
+
+.bq-divider--vertical .bq-divider--stroke {
+  inline-size: var(--bq-divider--stroke-thickness);
+}
+
+/* --------------------------------- States --------------------------------- */
+
+.bq-divider.is-gapless {
+  gap: 0;
+}
+
+.bq-divider--stroke.is-hidden {
+  display: none;
+}
+
+/* ----------------------------- Title Alignment ---------------------------- */
+
+.bq-divider--title__start .bq-divider--stroke.is-start,
+.bq-divider--title__end .bq-divider--stroke.is-end {
+  flex-grow: 0;
+  flex-basis: var(--bq-divider--stroke-basis);
 }

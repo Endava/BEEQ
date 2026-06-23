@@ -1054,7 +1054,7 @@ export namespace Components {
      * @example How to use it
      * ```html
      * <bq-divider orientation="horizontal" stroke-color="stroke--primary" title-alignment="middle">
-     * <span slot="title">Divider Title</span>
+     * <span>Divider Title</span>
      * </bq-divider>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/53dfe6-divider
@@ -3993,7 +3993,7 @@ declare global {
      * @example How to use it
      * ```html
      * <bq-divider orientation="horizontal" stroke-color="stroke--primary" title-alignment="middle">
-     * <span slot="title">Divider Title</span>
+     * <span>Divider Title</span>
      * </bq-divider>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/53dfe6-divider
@@ -6519,7 +6519,7 @@ declare namespace LocalJSX {
      * @example How to use it
      * ```html
      * <bq-divider orientation="horizontal" stroke-color="stroke--primary" title-alignment="middle">
-     * <span slot="title">Divider Title</span>
+     * <span>Divider Title</span>
      * </bq-divider>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/53dfe6-divider
@@ -9796,7 +9796,7 @@ declare module "@stencil/core" {
              * @example How to use it
              * ```html
              * <bq-divider orientation="horizontal" stroke-color="stroke--primary" title-alignment="middle">
-             * <span slot="title">Divider Title</span>
+             * <span>Divider Title</span>
              * </bq-divider>
              * ```
              * @documentation https://www.beeq.design/3d466e231/p/53dfe6-divider
