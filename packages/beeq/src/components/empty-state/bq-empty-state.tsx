@@ -40,8 +40,8 @@ export class BqEmptyState {
   // Own Properties
   // ====================
 
-  private bodyElem: HTMLDivElement;
-  private footerElem: HTMLDivElement;
+  private bodyElem?: HTMLDivElement;
+  private footerElem?: HTMLDivElement;
 
   // Reference to host HTML element
   // ===================================
@@ -136,7 +136,7 @@ export class BqEmptyState {
             'is-spaced': this.hasFooter,
           }}
           part="body"
-          ref={(div) => {
+          ref={(div?: HTMLDivElement) => {
             this.bodyElem = div;
           }}
         >
@@ -145,7 +145,7 @@ export class BqEmptyState {
         <div
           class="bq-empty-state__footer"
           part="footer"
-          ref={(div) => {
+          ref={(div?: HTMLDivElement) => {
             this.footerElem = div;
           }}
         >
