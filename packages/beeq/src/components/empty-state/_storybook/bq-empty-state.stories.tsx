@@ -23,29 +23,13 @@ export default meta;
 
 type Story = StoryObj;
 
-const storyStyles = html`
-  <style>
-    .bq-empty-state-story__examples {
-      display: flex;
-      flex-direction: row;
-      gap: 5rem;
-    }
-
-    .bq-empty-state-story__footer {
-      display: flex;
-      gap: var(--bq-spacing-xs);
-    }
-  </style>
-`;
-
 export const Default: Story = {
   render: (args: Args) => html` <bq-empty-state size=${args.size}> Title </bq-empty-state> `,
 };
 
 export const WithBody: Story = {
   render: (args: Args) => html`
-    ${storyStyles}
-    <div class="bq-empty-state-story__examples">
+    <div class="flex flex-row gap-20">
       <bq-empty-state size=${args.size}>
         Title
         <span slot="body"> Description </span>
@@ -59,23 +43,22 @@ export const WithBody: Story = {
 
 export const WithCallToAction: Story = {
   render: (args: Args) => html`
-    ${storyStyles}
-    <div class="bq-empty-state-story__examples">
+    <div class="flex flex-row gap-20">
       <bq-empty-state size=${args.size}>
         Title <span slot="body"> Description <a class="bq-link" href="https://example.com">Link</a> </span>
-        <div class="bq-empty-state-story__footer" slot="footer">
+        <div class="flex gap-xs" slot="footer">
           <bq-button appearance="primary" size="small"> Button </bq-button>
         </div>
       </bq-empty-state>
       <bq-empty-state size=${args.size}>
         Title <span slot="body"> Description <a class="bq-link" href="https://example.com">Link</a> </span>
-        <div class="bq-empty-state-story__footer" slot="footer">
+        <div class="flex gap-xs" slot="footer">
           <bq-button size="small" variant="ghost"> Button </bq-button>
         </div>
       </bq-empty-state>
       <bq-empty-state size=${args.size}>
         Title <span slot="body"> Description <a class="bq-link" href="https://example.com">Link</a> </span>
-        <div class="bq-empty-state-story__footer" slot="footer">
+        <div class="flex gap-xs" slot="footer">
           <bq-button size="small" variant="ghost"> Button </bq-button>
           <bq-button appearance="primary" size="small"> Button </bq-button>
         </div>

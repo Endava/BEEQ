@@ -1,7 +1,6 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
-import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 
 import mdx from './bq-breadcrumb.mdx';
 
@@ -21,13 +20,13 @@ const meta: Meta = {
     bqFocus: { action: 'bqFocus', table: { disable: true } },
     // Not part of the public API, so we don't want to expose it in the docs
     text: { control: 'text', table: { disable: true } },
-    customSeparator: { control: 'text', table: { disable: true } },
+    htmlNode: { control: 'object', table: { disable: true } },
     useLinks: { control: 'boolean', table: { disable: true } },
   },
   args: {
     'aria-label': 'Breadcrumbs',
     text: 'text',
-    customSeparator: '',
+    htmlNode: '',
     useLinks: false,
   },
 };
@@ -37,7 +36,7 @@ type Story = StoryObj;
 
 const Template = (args: Args) => html`
   <bq-breadcrumb label=${args['aria-label']} @bqBlur=${args.bqBlur} @bqClick=${args.bqClick} @bqFocus=${args.bqFocus}>
-    ${unsafeHTML(args.customSeparator)}
+    ${args.htmlNode}
     <bq-breadcrumb-item
       href=${ifDefined(args.useLinks ? 'https://example.com/' : null)}
       target=${ifDefined(args.useLinks ? '_blank' : null)}
@@ -79,7 +78,7 @@ export const Default: Story = {
 export const CaretSeparator: Story = {
   render: Template,
   args: {
-    customSeparator: '<bq-icon name="caret-right" size="12" slot="separator" />',
+    htmlNode: Object.assign(document.createElement('bq-icon'), { name: 'caret-right', size: '12', slot: 'separator' }),
   },
 };
 

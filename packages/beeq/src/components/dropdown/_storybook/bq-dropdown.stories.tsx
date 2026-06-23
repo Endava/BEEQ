@@ -40,8 +40,9 @@ const meta: Meta = {
     skidding: { control: 'number' },
     strategy: { control: 'select', options: ['fixed', 'absolute'] },
     // Event handlers
-    bqOpen: { action: 'bqOpen', table: { disable: true } },
-    // Not part of the public API, so we don't want to expose it in the controls panel
+    bqSelect: { action: 'bqSelect', table: { disable: true } },
+    // Not part of the public API, so we don't want to expose it in the
+    trigger: { control: 'text', table: { disable: true } },
     enableOptionGroup: { control: 'boolean', table: { disable: true } },
   },
   args: {
@@ -61,46 +62,7 @@ export default meta;
 
 type Story = StoryObj;
 
-const storyStyles = html`
-  <style>
-    .bq-dropdown-story__layout {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: var(--bq-spacing-m);
-      place-items: center;
-      margin-block-start: var(--bq-spacing-xxl3);
-    }
-
-    .bq-dropdown-story__trigger-content {
-      display: flex;
-      align-items: center;
-      gap: var(--bq-spacing-xs2);
-    }
-
-    .bq-dropdown-story__note {
-      margin-block-end: var(--bq-spacing-l);
-      padding-block: var(--bq-spacing-m);
-      padding-inline: var(--bq-spacing-m);
-      background-color: var(--bq-ui--success-alt);
-      border: var(--bq-stroke-s) solid var(--bq-stroke--success);
-      border-radius: var(--bq-radius--m);
-    }
-
-    .bq-dropdown-story__note-title {
-      margin-block: 0 var(--bq-spacing-xs);
-      font-size: var(--bq-font-size--m);
-      font-weight: var(--bq-font-weight--bold);
-    }
-
-    @media (min-width: 640px) {
-      .bq-dropdown-story__layout {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-  </style>
-`;
-
-const Template = (args: Args, trigger: unknown) => {
+const Template = (args: Args) => {
   const optionItems = html`
     <bq-option value="users">
       <bq-icon name="users" slot="prefix"></bq-icon>
@@ -149,10 +111,10 @@ const Template = (args: Args, trigger: unknown) => {
       ?same-width=${args['same-width']}
       skidding=${ifDefined(args.skidding)}
       strategy=${ifDefined(args.strategy)}
-      @bqOpen=${args.bqOpen}
+      @bqSelect=${args.bqSelect}
     >
       <!-- TRIGGER ELEMENT -->
-      ${trigger}
+      ${args.trigger}
 
       <bq-option-list> ${options} </bq-option-list>
     </bq-dropdown>
@@ -161,15 +123,15 @@ const Template = (args: Args, trigger: unknown) => {
 
 export const Default: Story = {
   render: (args: Args) => html`
-    ${Template(
-      args,
-      html`
+    ${Template({
+      ...args,
+      trigger: html`
         <bq-button slot="trigger">
           Dropdown
           <bq-icon name="caret-down" slot="suffix"></bq-icon>
         </bq-button>
       `,
-    )}
+    })}
   `,
   args: {
     open: true,
@@ -178,28 +140,28 @@ export const Default: Story = {
 
 export const Placement: Story = {
   render: (args: Args) => html`
-    ${storyStyles}
-    <div class="bq-dropdown-story__layout">
+    <div class="grid grid-cols-1 place-items-center gap-m m-bs-xxl3 sm:grid-cols-2">
       <!-- Bottom end -->
-      ${Template(
-        args,
-        html`
+      ${Template({
+        ...args,
+        trigger: html`
           <bq-button slot="trigger">
             Dropdown
             <bq-icon name="caret-down" slot="suffix"></bq-icon>
           </bq-button>
         `,
-      )}
+      })}
       <!-- Bottom end -->
-      ${Template(
-        { ...args, placement: 'bottom-end' },
-        html`
+      ${Template({
+        ...args,
+        placement: 'bottom-end',
+        trigger: html`
           <bq-button slot="trigger">
             Dropdown
             <bq-icon name="caret-down" slot="suffix"></bq-icon>
           </bq-button>
         `,
-      )}
+      })}
     </div>
   `,
   args: {
@@ -209,23 +171,22 @@ export const Placement: Story = {
 
 export const CustomTrigger: Story = {
   render: (args: Args) => html`
-    ${storyStyles}
-    <div class="bq-dropdown-story__layout">
+    <div class="grid grid-cols-1 place-items-center gap-m m-bs-xxl3 sm:grid-cols-2">
       <!-- Button icon -->
-      ${Template(
-        args,
-        html`
+      ${Template({
+        ...args,
+        trigger: html`
           <bq-button appearance="secondary" size="medium" type="button" variant="standard" slot="trigger">
-            <span class="bq-dropdown-story__trigger-content">
+            <span class="flex items-center gap-1">
               <bq-icon name="dots-three-vertical"></bq-icon>
             </span>
           </bq-button>
         `,
-      )}
+      })}
       <!-- Avatar -->
-      ${Template(
-        args,
-        html`
+      ${Template({
+        ...args,
+        trigger: html`
           <bq-avatar
             alt-text="User profile"
             image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1000&amp;q=80"
@@ -233,7 +194,7 @@ export const CustomTrigger: Story = {
             slot="trigger"
           ></bq-avatar>
         `,
-      )}
+      })}
     </div>
   `,
   args: {
@@ -244,21 +205,20 @@ export const CustomTrigger: Story = {
 
 export const KeepOpen: Story = {
   render: (args: Args) => html`
-    ${storyStyles}
-    <div class="bq-dropdown-story__note">
-      <p class="bq-dropdown-story__note-title">💡 NOTE:</p>
-      If keepOpenOnSelect is set, the dropdown will remain open after
-      a selection is made.
+    <div class="rounded-m border-s border-solid border-success bg-ui-success-alt p-b-m p-i-m m-be-l">
+      <p class="text-m font-bold m-be-xs">💡 NOTE:</p>
+      If <code class="text-text-danger">keepOpenOnSelect</code> is set, the dropdown will remain open after a selection
+      is made.
     </div>
-    ${Template(
-      args,
-      html`
+    ${Template({
+      ...args,
+      trigger: html`
         <bq-button slot="trigger">
           Dropdown
           <bq-icon name="caret-down" slot="suffix"></bq-icon>
         </bq-button>
       `,
-    )}
+    })}
   `,
   args: {
     'keep-open-on-select': true,
@@ -268,15 +228,15 @@ export const KeepOpen: Story = {
 
 export const WithOptionGroup: Story = {
   render: (args: Args) => html`
-    ${Template(
-      args,
-      html`
+    ${Template({
+      ...args,
+      trigger: html`
         <bq-button slot="trigger">
           Dropdown
           <bq-icon name="caret-down" slot="suffix"></bq-icon>
         </bq-button>
       `,
-    )}
+    })}
   `,
   args: {
     open: true,
