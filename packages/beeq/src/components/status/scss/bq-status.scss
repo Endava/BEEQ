@@ -1,5 +1,25 @@
 @import './bq-status.variables';
 
+:host {
+  --_status-circle-background-color: var(--bq-ui--secondary);
+}
+
+:host([type='alert']) {
+  --_status-circle-background-color: var(--bq-ui--warning);
+}
+
+:host([type='danger']) {
+  --_status-circle-background-color: var(--bq-ui--danger);
+}
+
+:host([type='info']) {
+  --_status-circle-background-color: var(--bq-ui--brand);
+}
+
+:host([type='success']) {
+  --_status-circle-background-color: var(--bq-ui--success);
+}
+
 .bq-status {
   display: inline-flex;
   align-items: center;
@@ -10,28 +30,9 @@
   border-radius: var(--bq-radius--full);
 
   &::part(base) {
+    --bq-badge--background-color: var(--_status-circle-background-color);
     --bq-badge--border-radius: var(--bq-radius--full);
     --bq-badge--size-medium: var(--bq-status-circle--size);
-  }
-
-  &.success::part(base) {
-    --bq-badge--background-color: var(--bq-ui--success);
-  }
-
-  &.danger::part(base) {
-    --bq-badge--background-color: var(--bq-ui--danger);
-  }
-
-  &.neutral::part(base) {
-    --bq-badge--background-color: var(--bq-ui--secondary);
-  }
-
-  &.alert::part(base) {
-    --bq-badge--background-color: var(--bq-ui--warning);
-  }
-
-  &.info::part(base) {
-    --bq-badge--background-color: var(--bq-ui--brand);
   }
 }
 

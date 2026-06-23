@@ -88,7 +88,7 @@ export class BqStatus {
   render() {
     return (
       <div class="bq-status" part="base" role="status">
-        <bq-badge class={`bq-status__circle ${this.type}`} part="circle" size="medium" />
+        <bq-badge class="bq-status__circle" part="circle" size="medium" />
         <div class="bq-status__text" part="text">
           <slot />
         </div>

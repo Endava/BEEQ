@@ -34,7 +34,7 @@ describe('bq-status', () => {
     await setProps({ type: 'danger' });
 
     expect(status.type).toBe('danger');
-    expect(status.shadowRoot?.querySelector('[part="circle"]')).toHaveClass('danger');
+    expect(status).toEqualAttribute('type', 'danger');
   });
 
   it('should handle invalid status type', async () => {
@@ -45,7 +45,7 @@ describe('bq-status', () => {
     await setProps({ type: 'invalid-status' as HTMLBqStatusElement['type'] });
 
     expect(status.type).toBe('neutral');
-    expect(status.shadowRoot?.querySelector('[part="circle"]')).toHaveClass('neutral');
+    expect(status).toEqualAttribute('type', 'neutral');
     expect(warnSpy).toHaveBeenCalledTimes(1);
     expect(warnSpy).toHaveBeenCalledWith(
       `[BQ-STATUS] Please notice that "type" should be one of ${STATUS_TYPE.join('|')}`,
@@ -82,19 +82,17 @@ describe('bq-status', () => {
     expect(root.shadowRoot?.querySelector('[part="base"]')).toEqualAttribute('role', 'status');
   });
 
-  it('should apply classes for the supported status types', async () => {
+  it('should reflect the supported status types on the host', async () => {
     const { root, setProps } = await render(<bq-status>Neutral status</bq-status>);
     const status = root as HTMLBqStatusElement;
 
-    const circle = status.shadowRoot?.querySelector('[part="circle"]');
-
     await setProps({ type: 'alert' });
-    expect(circle).toHaveClass('alert');
+    expect(status).toEqualAttribute('type', 'alert');
 
     await setProps({ type: 'info' });
-    expect(circle).toHaveClass('info');
+    expect(status).toEqualAttribute('type', 'info');
 
     await setProps({ type: 'success' });
-    expect(circle).toHaveClass('success');
+    expect(status).toEqualAttribute('type', 'success');
   });
 });
