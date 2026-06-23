@@ -47,7 +47,7 @@ export class BqSteps {
   // Own Properties
   // ====================
 
-  private stepElem: HTMLElement;
+  private stepElem?: HTMLDivElement;
 
   // Reference to host HTML element
   // ===================================
@@ -129,12 +129,12 @@ export class BqSteps {
   // =======================================================
 
   private get bqSteps(): HTMLBqStepItemElement[] {
-    if (!this.stepElem) return [];
+    const slot = this.stepElem?.querySelector('slot');
+    if (!slot) return [];
 
-    const slot = this.stepElem.querySelector('slot');
-    return [...slot.assignedElements({ flatten: true })].filter(
-      (el: HTMLBqStepItemElement) => el.tagName.toLowerCase() === 'bq-step-item',
-    ) as [HTMLBqStepItemElement];
+    return Array.from(slot.assignedElements({ flatten: true })).filter(
+      (el: Element): el is HTMLBqStepItemElement => el.tagName.toLowerCase() === 'bq-step-item',
+    );
   }
 
   private setStepItemProps = () => {
@@ -158,14 +158,10 @@ export class BqSteps {
   render() {
     return (
       <div
-        class={{
-          'bq-steps': true,
-          'orientation--horizontal': this.orientation === 'horizontal',
-          'orientation--vertical': this.orientation === 'vertical',
-        }}
+        class="bq-steps"
         part="container"
         role="list"
-        ref={(div) => {
+        ref={(div?: HTMLDivElement) => {
           this.stepElem = div;
         }}
       >

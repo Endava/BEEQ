@@ -18,15 +18,12 @@
   position: relative;
   display: inline-flex;
   align-items: flex-start;
-  justify-content: space-between;
-}
-
-.bq-steps.orientation--horizontal {
   flex-direction: row;
+  justify-content: space-between;
   inline-size: 100%;
 }
 
-.bq-steps.orientation--vertical {
+:host([orientation='vertical']) .bq-steps {
   flex-direction: column;
   block-size: 100%;
 }
