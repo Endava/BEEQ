@@ -804,6 +804,7 @@ export namespace Components {
     interface BqDatePicker {
         /**
           * If `true`, the Date picker input will be focused on component render
+          * @default false
          */
         "autofocus": boolean;
         /**
@@ -815,27 +816,27 @@ export namespace Components {
           * The clear button aria label
           * @default 'Clear value'
          */
-        "clearButtonLabel"?: string;
+        "clearButtonLabel": string;
         /**
           * If `true`, the clear button won't be displayed
           * @default false
          */
-        "disableClear"?: boolean;
+        "disableClear": boolean;
         /**
           * Indicates whether the Date picker input is disabled or not. If `true`, the Date picker is disabled and cannot be interacted with.
           * @default false
          */
-        "disabled"?: boolean;
+        "disabled": boolean;
         /**
           * Represents the distance (gutter or margin) between the Date picker panel and the input element.
           * @default 8
          */
-        "distance"?: number;
+        "distance": number;
         /**
           * The first day of the week, where Sunday is 0, Monday is 1, etc
           * @default 1
          */
-        "firstDayOfWeek"?: DaysOfWeek;
+        "firstDayOfWeek": DaysOfWeek;
         /**
           * The ID of the form that the Date picker input belongs to.
          */
@@ -869,7 +870,7 @@ export namespace Components {
         /**
           * Number of months to show when range is `true`
          */
-        "months": number;
+        "months"?: number;
         /**
           * Specifies how the next/previous buttons should navigate the calendar. - single: The buttons will navigate by a single month at a time. - months: The buttons will navigate by the number of months displayed per view.
           * @default 'single'
@@ -911,7 +912,7 @@ export namespace Components {
           * Represents the skidding between the Date picker panel and the input element.
           * @default 0
          */
-        "skidding"?: number;
+        "skidding": number;
         /**
           * Defines the strategy to position the Date picker panel
           * @default 'fixed'
@@ -935,7 +936,7 @@ export namespace Components {
         /**
           * The select input value represents the currently selected date or range and can be used to reset the field to a previous value. All dates are expected in ISO-8601 format (YYYY-MM-DD).
          */
-        "value": string;
+        "value"?: string;
     }
     /**
      * The Dialog component is used to display additional content or prompt a user for action.
@@ -6249,6 +6250,7 @@ declare namespace LocalJSX {
     interface BqDatePicker {
         /**
           * If `true`, the Date picker input will be focused on component render
+          * @default false
          */
         "autofocus"?: boolean;
         /**

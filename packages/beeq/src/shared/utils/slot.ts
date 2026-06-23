@@ -102,7 +102,7 @@ export function hasSlot(el: HTMLElement, name: string): boolean {
  * @param {string} [name] - Optional slot name
  * @return {boolean} True or false if the slot have HTML children elements
  */
-export function hasSlotContent(el: HTMLElement, name?: string): boolean {
+export function hasSlotContent(el?: HTMLElement, name?: string): boolean {
   if (!el) return false;
 
   const slotSelector = name ? `[name='${name}']` : '';
