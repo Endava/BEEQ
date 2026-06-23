@@ -36,6 +36,88 @@ export default meta;
 
 type Story = StoryObj;
 
+const exploreIconsStyles = html`
+  <style>
+    bq-button::part(button) {
+      text-decoration: none;
+    }
+
+    .bq-icon-story__intro {
+      margin-block-end: var(--bq-spacing-xl);
+      color: var(--bq-text--primary);
+    }
+
+    .bq-icon-story__heading {
+      margin-block: 0;
+      font-size: var(--bq-font-size--xl);
+      font-weight: var(--bq-font-weight--bold);
+    }
+
+    .bq-icon-story__copy {
+      margin-block: var(--bq-spacing-xs) 0;
+    }
+
+    .bq-icon-story__hint {
+      color: var(--bq-text--secondary);
+      font-size: var(--bq-font-size--xs);
+      line-height: var(--bq-font-line-height--regular);
+    }
+
+    .bq-icon-story__cta {
+      margin-block-end: var(--bq-spacing-xxl);
+    }
+
+    .bq-icon-story__cta-icon {
+      margin-inline-start: var(--bq-spacing-m);
+    }
+
+    .bq-icon-story__notice {
+      margin-block-end: var(--bq-spacing-l);
+    }
+
+    .bq-icon-story__list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
+      gap: var(--bq-spacing-l) var(--bq-spacing-m);
+      max-block-size: auto;
+      max-inline-size: auto;
+    }
+
+    .bq-icon-story__item {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      text-align: center;
+      outline: 0;
+    }
+
+    .bq-icon-story__preview {
+      display: flex;
+      justify-content: center;
+      inline-size: 100%;
+      margin-block-end: var(--bq-spacing-s);
+      padding-block: var(--bq-spacing-m);
+      padding-inline: 0;
+      border: var(--bq-stroke-s) solid var(--bq-stroke--primary);
+      border-radius: var(--bq-radius--m);
+      transition-duration: 150ms;
+      transition-property: box-shadow, transform;
+      transition-timing-function: ease-in-out;
+    }
+
+    .bq-icon-story__item:hover .bq-icon-story__preview {
+      box-shadow: var(--bq-box-shadow--l);
+      transform: scale(1.25);
+    }
+
+    .bq-icon-story__name {
+      color: var(--bq-text--primary);
+      font-size: var(--bq-font-size--s);
+      line-height: var(--bq-font-line-height--regular);
+    }
+  </style>
+`;
+
 const Template = (args: Args) => html`
   <bq-icon
     color=${ifDefined(args.color)}
@@ -101,14 +183,10 @@ export const ExploreIcons: Story = {
     ];
 
     return html`
-      <style>
-        bq-button::part(button) {
-          text-decoration: none;
-        }
-      </style>
-      <div class="text-text-primary m-be-xl">
-        <h1 class="text-xl font-bold">We didn't reinvent the wheel</h1>
-        <p class="m-bs-xs">
+      ${exploreIconsStyles}
+      <div class="bq-icon-story__intro">
+        <h1 class="bq-icon-story__heading">We didn't reinvent the wheel</h1>
+        <p class="bq-icon-story__copy">
           BEEQ icons are based on
           <a
             class="bq-link"
@@ -122,17 +200,17 @@ export const ExploreIcons: Story = {
           , is a flexible icon family for interfaces, diagrams, presentations — whatever, really, is free and
           open-source, licensed under MIT.
         </p>
-        <span class="text-xs text-secondary">
+        <span class="bq-icon-story__hint">
           (Below, you're seeing only a few examples of the icons that the library provides)
         </span>
       </div>
-      <bq-button class="m-be-xxl" appearance="primary" href="https://phosphoricons.com/" target="_blank">
+      <bq-button class="bq-icon-story__cta" appearance="primary" href="https://phosphoricons.com/" target="_blank">
         <bq-icon name="binoculars-fill" slot="prefix"></bq-icon>
         Explore all the icons available
-        <bq-icon class="ms-m" name="caret-right" slot="suffix"></bq-icon>
+        <bq-icon class="bq-icon-story__cta-icon" name="caret-right" slot="suffix"></bq-icon>
       </bq-button>
       <!-- Warning block -->
-      <bq-alert class="m-be-l" type="warning" disable-close open>
+      <bq-alert class="bq-icon-story__notice" type="warning" disable-close open>
         <bq-icon name="warning-fill" slot="icon"></bq-icon>
         Please notice
         <span slot="body">
@@ -140,20 +218,16 @@ export const ExploreIcons: Story = {
         </span>
       </bq-alert>
       <!-- Icons -->
-      <div
-        class="icon-grid grid grid-cols-[repeat(auto-fill,_minmax(75px,_1fr))] gap-l gap-x-m max-bs-auto max-is-auto"
-      >
+      <div class="bq-icon-story__list">
         ${repeat(
           ICONS,
           (icon) => icon,
           (icon) => html`
-            <div class="group flex flex-col items-stretch text-center outline-0" role="button" tabindex="0">
-              <div
-                class="border flex w-full justify-center rounded-m border-s border-solid border-primary transition-[shadow,transform] p-b-m p-i-0 m-be-s group-hover:scale-125 group-hover:shadow-l"
-              >
+            <div class="bq-icon-story__item" role="button" tabindex="0">
+              <div class="bq-icon-story__preview">
                 ${Template({ ...args, name: icon })}
               </div>
-              <span class="text-s leading-regular text-primary">${icon}</span>
+              <span class="bq-icon-story__name">${icon}</span>
             </div>
           `,
         )}
