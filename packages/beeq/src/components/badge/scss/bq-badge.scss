@@ -5,6 +5,8 @@
 @import './bq-badge.variables';
 
 :host {
+  --_badge-size: var(--bq-badge--size-medium);
+
   display: inline-block;
 }
 
@@ -21,24 +23,33 @@
   box-shadow: var(--bq-badge--box-shadow);
 }
 
-.size--small {
-  block-size: var(--bq-badge--size-small);
-  inline-size: var(--bq-badge--size-small);
+.bq-badge.is-empty {
+  block-size: var(--_badge-size);
+  inline-size: var(--_badge-size);
 }
 
-.size--medium {
-  block-size: var(--bq-badge--size-medium);
-  inline-size: var(--bq-badge--size-medium);
+.bq-badge.is-populated {
+  --_badge-size: var(--bq-badge--size-large);
+
+  min-block-size: var(--_badge-size);
+  min-inline-size: var(--_badge-size);
 }
 
-.digit {
-  min-block-size: var(--bq-badge--size-large);
-  min-inline-size: var(--bq-badge--size-large);
-}
-
-.digit.is-multiple {
+.bq-badge.is-multiple {
   padding-inline: var(--bq-spacing-xs2);
 }
+
+/* ---------------------------------- Size ---------------------------------- */
+
+:host([size='small']) .bq-badge.is-empty {
+  --_badge-size: var(--bq-badge--size-small);
+}
+
+:host([size='medium']) .bq-badge.is-empty {
+  --_badge-size: var(--bq-badge--size-medium);
+}
+
+/* -------------------------------- Elements -------------------------------- */
 
 .bq-badge__number {
   font-weight: var(--bq-font-weight--bold);

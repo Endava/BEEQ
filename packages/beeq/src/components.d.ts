@@ -415,7 +415,7 @@ export namespace Components {
           * The size of the badge. Relevant if badge has no content.
           * @default 'small'
          */
-        "size"?: TBadgeSize;
+        "size": TBadgeSize;
         /**
           * Badge number color. The value should be a valid value of the palette color
          */

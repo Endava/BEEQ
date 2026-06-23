@@ -26,10 +26,8 @@ describe('bq-badge', () => {
 
     await waitForStable(root);
 
-    const badge = root.shadowRoot.querySelector('.bq-badge') as HTMLDivElement;
     const style = computedStyle('bq-badge >>> .bq-badge', ['height', 'width']);
 
-    expect(badge).toHaveClass('size--small');
     expect(style).toEqual({ height: '8px', width: '8px' });
   });
 
@@ -38,10 +36,8 @@ describe('bq-badge', () => {
 
     await waitForStable(root);
 
-    const badge = root.shadowRoot.querySelector('.bq-badge') as HTMLDivElement;
     const style = computedStyle('bq-badge >>> .bq-badge', ['height', 'width']);
 
-    expect(badge).toHaveClass('size--medium');
     expect(style).toEqual({ height: '12px', width: '12px' });
   });
 
@@ -50,10 +46,10 @@ describe('bq-badge', () => {
 
     await waitForStable(root);
 
-    const badge = root.shadowRoot.querySelector('.bq-badge') as HTMLDivElement;
+    const badge = root.shadowRoot?.querySelector('.bq-badge') as HTMLDivElement;
     const numberSlot = badge.querySelector('slot') as HTMLSlotElement;
 
-    expect(badge).toHaveClass('digit');
+    expect(badge).toHaveClass('is-populated');
     expect(getTextContent(numberSlot, { recurse: true })).toBe('2');
     expect(badge).not.toHaveClass('is-multiple');
   });
@@ -85,11 +81,11 @@ describe('bq-badge', () => {
 
     await waitForStable(root);
 
-    const badge = root.shadowRoot.querySelector('.bq-badge') as HTMLDivElement;
+    const badge = root.shadowRoot?.querySelector('.bq-badge') as HTMLDivElement;
     const numberSlot = badge.querySelector('slot') as HTMLSlotElement;
 
     expect(getTextContent(numberSlot, { recurse: true })).toBe('12');
-    expect(badge).toHaveClass('digit');
+    expect(badge).toHaveClass('is-populated');
     expect(badge).toHaveClass('is-multiple');
   });
 });
