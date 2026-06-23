@@ -25,52 +25,50 @@ describe('bq-spinner', () => {
     const { root, setProps } = await render(<bq-spinner animation />);
     const spinner = root as HTMLBqSpinnerElement;
 
-    const element = spinner.shadowRoot?.querySelector('.bq-spinner');
+    const loaderIcon = spinner.shadowRoot?.querySelector<SVGElement>('.bq-spinner__loader > svg');
 
-    expect(element).toHaveClass('is-animated');
+    expect(spinner).toHaveAttribute('animation');
+    expect(loaderIcon).not.toBeNull();
+    expect(getComputedStyle(loaderIcon as SVGElement).animationName).toBe('spin');
 
     await setProps({ animation: false });
 
-    expect(element).not.toHaveClass('is-animated');
+    expect(spinner).not.toHaveAttribute('animation');
+    expect(getComputedStyle(loaderIcon as SVGElement).animationName).toBe('none');
   });
 
   it('should handle `size` property', async () => {
     const { root, setProps } = await render(<bq-spinner />);
     const spinner = root as HTMLBqSpinnerElement;
 
-    const loader = () => spinner.shadowRoot?.querySelector('.bq-spinner--loader');
-
-    expect(loader()).toHaveClass('medium');
+    expect(spinner).toEqualAttribute('size', 'medium');
 
     await setProps({ size: 'large' });
-    expect(loader()).toHaveClass('large');
+    expect(spinner).toEqualAttribute('size', 'large');
 
     await setProps({ size: 'small' });
-    expect(loader()).toHaveClass('small');
+    expect(spinner).toEqualAttribute('size', 'small');
   });
 
   it('should handle `text-position` property', async () => {
     const { root, setProps } = await render(<bq-spinner textPosition="above" />);
     const spinner = root as HTMLBqSpinnerElement;
 
-    const spinnerEl = () => spinner.shadowRoot?.querySelector('.bq-spinner');
-    const spinnerText = () => spinner.shadowRoot?.querySelector('.bq-spinner--text');
-
-    expect(spinnerEl()).toHaveClass('position--above');
+    expect(spinner).toEqualAttribute('text-position', 'above');
 
     await setProps({ textPosition: 'below' });
-    expect(spinnerEl()).toHaveClass('position--below');
+    expect(spinner).toEqualAttribute('text-position', 'below');
 
     await setProps({ textPosition: 'left' });
-    expect(spinnerEl()).toHaveClass('position--left');
+    expect(spinner).toEqualAttribute('text-position', 'left');
 
     await setProps({ textPosition: 'right' });
-    expect(spinnerEl()).toHaveClass('position--right');
+    expect(spinner).toEqualAttribute('text-position', 'right');
 
     await setProps({ textPosition: 'none' });
 
-    expect(spinnerText()).toHaveClass('is-hidden');
-    expect(spinnerEl()).toHaveClass('position--none');
+    expect(spinner).toEqualAttribute('text-position', 'none');
+    expect(computedStyle('bq-spinner >>> .bq-spinner__text', ['display'])).toEqual({ display: 'none' });
   });
 
   it('should render icon slot element', async () => {
@@ -82,7 +80,7 @@ describe('bq-spinner', () => {
 
     await waitForStable(root);
 
-    const spinnerIcon = root.shadowRoot?.querySelector<HTMLSlotElement>('.bq-spinner--icon');
+    const spinnerIcon = root.shadowRoot?.querySelector<HTMLSlotElement>('.bq-spinner__icon');
     const slotElement = root.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="icon"]');
     const iconSlotElements = slotElement.assignedElements({ flatten: true });
 
@@ -127,15 +125,15 @@ describe('bq-spinner', () => {
 
     const sizeStyleProps = ['width', 'height'] as const;
 
-    const smallStyle = computedStyle('bq-spinner[size="small"] >>> .bq-spinner--loader', sizeStyleProps);
-    const mediumStyle = computedStyle('bq-spinner[size="medium"] >>> .bq-spinner--loader', sizeStyleProps);
-    const largeStyle = computedStyle('bq-spinner[size="large"] >>> .bq-spinner--loader', sizeStyleProps);
+    const smallStyle = computedStyle('bq-spinner[size="small"] >>> .bq-spinner__loader', sizeStyleProps);
+    const mediumStyle = computedStyle('bq-spinner[size="medium"] >>> .bq-spinner__loader', sizeStyleProps);
+    const largeStyle = computedStyle('bq-spinner[size="large"] >>> .bq-spinner__loader', sizeStyleProps);
 
     const textStyleProps = ['fontSize', 'fontWeight', 'lineHeight'] as const;
 
-    const smallTextStyle = computedStyle('bq-spinner[size="small"] >>> .bq-spinner--text', textStyleProps);
-    const mediumTextStyle = computedStyle('bq-spinner[size="medium"] >>> .bq-spinner--text', textStyleProps);
-    const largeTextStyle = computedStyle('bq-spinner[size="large"] >>> .bq-spinner--text', textStyleProps);
+    const smallTextStyle = computedStyle('bq-spinner[size="small"] >>> .bq-spinner__text', textStyleProps);
+    const mediumTextStyle = computedStyle('bq-spinner[size="medium"] >>> .bq-spinner__text', textStyleProps);
+    const largeTextStyle = computedStyle('bq-spinner[size="large"] >>> .bq-spinner__text', textStyleProps);
 
     expect(smallStyle).toEqual({ width: '32px', height: '32px' });
     expect(mediumStyle).toEqual({ width: '48px', height: '48px' });
@@ -165,7 +163,7 @@ describe('bq-spinner', () => {
     const slot = textEl?.querySelector<HTMLSlotElement>('slot');
     const assigned = slot.assignedElements({ flatten: true });
 
-    expect(textEl).not.toHaveClass('is-hidden');
+    expect(getComputedStyle(textEl as HTMLElement).display).not.toBe('none');
     expect(assigned).toHaveLength(1);
     expect(getTextContent(slot, { recurse: true })).toBe('Loading...');
   });

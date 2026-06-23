@@ -54,11 +54,11 @@ export class BqSpinner {
   // Own Properties
   // ====================
 
-  private iconSlotElem: HTMLElement;
-  private slotElem: HTMLElement;
+  private iconSlotElem?: HTMLElement;
+  private slotElem?: HTMLElement;
   private observer: MutationObserver = new MutationObserver((mutations) => {
     const [mutation] = mutations;
-    this.slotContentLength = mutation.target.textContent.length;
+    this.slotContentLength = mutation.target.textContent?.length ?? 0;
   });
 
   // Reference to host HTML element
@@ -171,10 +171,6 @@ export class BqSpinner {
     validatePropValue(SPINNER_SIZE, 'medium', this.el, 'size');
   };
 
-  private get isTextDisplayed(): boolean {
-    return this.textPosition !== 'none';
-  }
-
   private setIconSize(): void {
     if (!this.hasIconSlot || !this.bqIcon) return;
 
@@ -184,8 +180,8 @@ export class BqSpinner {
   private get bqIcon(): HTMLBqIconElement | null {
     if (!this.hasIconSlot) return null;
 
-    const slot = this.iconSlotElem.querySelector('slot');
-    return [...slot.assignedElements({ flatten: true })].filter((el: Element) => isHTMLElement(el, 'bq-icon'))[0];
+    const slot = this.iconSlotElem?.querySelector('slot');
+    return slot?.assignedElements({ flatten: true }).find((el) => isHTMLElement(el, 'bq-icon')) ?? null;
   }
 
   // render() function
@@ -196,14 +192,13 @@ export class BqSpinner {
     return (
       <div
         class={{
-          [`bq-spinner ${this.size} position--${this.textPosition}`]: true,
-          'is-animated': this.animation,
-          'has-text': !!this.slotContentLength,
+          'bq-spinner': true,
+          'is-populated': !!this.slotContentLength,
         }}
         part="base"
       >
         {!this.hasIconSlot && (
-          <div aria-label="Loading..." class={`bq-spinner--loader ${this.size}`} role="status">
+          <div aria-label="Loading..." class="bq-spinner__loader" role="status">
             <svg aria-hidden="true" fill="currentColor" viewBox="0 0 48 48">
               <path
                 d="M10.27 7.637c-.937-1.117-.798-2.796.415-3.605a24 24 0 0 1 37.09 23.249c-.2 1.444-1.65 2.301-3.064 1.944-1.414-.356-2.25-1.793-2.096-3.242A18.72 18.72 0 0 0 14.102 8.11c-1.237.77-2.895.643-3.832-.474Z"
@@ -218,7 +213,7 @@ export class BqSpinner {
           </div>
         )}
         <span
-          class={{ 'bq-spinner--icon': true, 'is-hidden': !this.hasIconSlot }}
+          class={{ 'bq-spinner__icon': true, 'is-hidden': !this.hasIconSlot }}
           part="custom-icon"
           ref={(spanElem) => {
             this.iconSlotElem = spanElem;
@@ -227,11 +222,7 @@ export class BqSpinner {
           <slot name="icon" onSlotchange={this.handleIconSlotChange} />
         </span>
         <span
-          class={{
-            'bq-spinner--text': true,
-            [this.size]: true,
-            'is-hidden': !this.isTextDisplayed,
-          }}
+          class="bq-spinner__text"
           part="text"
           ref={(spanElem) => {
             this.slotElem = spanElem;
