@@ -102,5 +102,6 @@
 /* --------------- Apply the right size to the bq-icon prefix --------------- */
 
 .bq-tag__prefix ::slotted(bq-icon) {
+  /* stylelint-disable-next-line declaration-no-important */
   --bq-icon--size: var(--bq-tag--icon-prefix-size) !important;
 }

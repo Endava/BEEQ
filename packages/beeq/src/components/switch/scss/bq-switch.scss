@@ -41,6 +41,7 @@
 }
 
 .bq-switch--control__icon {
+  /* stylelint-disable-next-line declaration-no-important */
   --bq-icon--size: var(--bq-switch--dot-size) !important;
 
   &::part(base) {

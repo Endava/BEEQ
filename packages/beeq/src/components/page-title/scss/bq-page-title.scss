@@ -11,9 +11,7 @@
 .bq-page-title {
   display: flex;
   gap: var(--bq-spacing-xs);
-  /* stylelint-disable-next-line custom-property-pattern -- legacy public component variable */
   padding-block: var(--paddingY);
-  /* stylelint-disable-next-line custom-property-pattern -- legacy public component variable */
   border-block-end: var(--subtitle-borderBlockEnd);
 }
 
@@ -37,16 +35,12 @@
 .bq-page-title__title,
 .bq-page-title__subtitle {
   font-family: var(--bq-font-family);
-  /* stylelint-disable-next-line custom-property-pattern -- legacy public component variable */
   line-height: var(--title-lineHeight);
 }
 
 .bq-page-title__title {
-  /* stylelint-disable-next-line custom-property-pattern -- legacy public component variable */
   color: var(--title-textColor);
-  /* stylelint-disable-next-line custom-property-pattern -- legacy public component variable */
   font-weight: var(--title-fontWeight);
-  /* stylelint-disable-next-line custom-property-pattern -- legacy public component variable */
   font-size: var(--title-textSize);
 }
 
@@ -59,11 +53,8 @@
 }
 
 .bq-page-title__subtitle {
-  /* stylelint-disable-next-line custom-property-pattern -- legacy public component variable */
   color: var(--subtitle-textColor);
-  /* stylelint-disable-next-line custom-property-pattern -- legacy public component variable */
   font-weight: var(--subtitle-fontWeight);
-  /* stylelint-disable-next-line custom-property-pattern -- legacy public component variable */
   font-size: var(--subtitle-textSize);
 }
 

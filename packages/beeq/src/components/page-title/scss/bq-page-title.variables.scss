@@ -14,7 +14,6 @@
    * @prop --title-textColor - Page title color for title
    * @prop --title-textSize - Page title text size for title
    */
-  /* stylelint-disable custom-property-pattern -- legacy public component variables */
   --paddingY: var(--bq-spacing-xl);
   --subtitle-borderBlockEnd: 1px solid var(--bq-stroke--primary);
   --subtitle-fontWeight: var(--bq-font-weight--medium);
@@ -24,5 +23,4 @@
   --title-lineHeight: var(--bq-font-line-height--regular);
   --title-textColor: var(--bq-text--primary);
   --title-textSize: var(--bq-font-size--xxl);
-  /* stylelint-enable custom-property-pattern */
 }
