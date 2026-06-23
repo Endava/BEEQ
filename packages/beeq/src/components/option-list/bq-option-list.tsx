@@ -99,7 +99,7 @@ export class BqOptionList {
 
   render() {
     return (
-      <div class="bq-option__list" part="base">
+      <div class="bq-option-list" part="base">
         <slot />
       </div>
     );
