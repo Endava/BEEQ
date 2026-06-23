@@ -11,8 +11,8 @@
 .bq-page-title {
   display: flex;
   gap: var(--bq-spacing-xs);
-  padding-block: var(--paddingY);
-  border-block-end: var(--subtitle-borderBlockEnd);
+  padding-block: var(--_padding-block);
+  border-block-end: var(--_subtitle-border-block-end);
 }
 
 .bq-page-title__back {
@@ -35,13 +35,13 @@
 .bq-page-title__title,
 .bq-page-title__subtitle {
   font-family: var(--bq-font-family);
-  line-height: var(--title-lineHeight);
+  line-height: var(--_title-line-height);
 }
 
 .bq-page-title__title {
-  color: var(--title-textColor);
-  font-weight: var(--title-fontWeight);
-  font-size: var(--title-textSize);
+  color: var(--_title-text-color);
+  font-weight: var(--_title-font-weight);
+  font-size: var(--_title-text-size);
 }
 
 .bq-page-title__suffix {
@@ -53,9 +53,9 @@
 }
 
 .bq-page-title__subtitle {
-  color: var(--subtitle-textColor);
-  font-weight: var(--subtitle-fontWeight);
-  font-size: var(--subtitle-textSize);
+  color: var(--_subtitle-text-color);
+  font-weight: var(--_subtitle-font-weight);
+  font-size: var(--_subtitle-text-size);
 }
 
 .is-hidden {

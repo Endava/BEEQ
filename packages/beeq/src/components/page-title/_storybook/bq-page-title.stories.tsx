@@ -26,10 +26,31 @@ export default meta;
 
 type Story = StoryObj;
 
+const storyStyles = html`
+  <style>
+    .bq-page-title-story__actions {
+      display: flex;
+    }
+
+    .bq-page-title-story__actions--end {
+      flex: 1 1 0;
+      justify-content: flex-end;
+    }
+
+    .bq-page-title-story__action {
+      padding-block: var(--bq-spacing-xs2);
+      padding-inline: var(--bq-spacing-xs2);
+    }
+  </style>
+`;
+
 const Template = (args: Args) => {
-  const actionsSlotClass = args['custom-style'] ? 'flex flex-grow justify-end' : 'flex';
+  const actionsSlotClass = args['custom-style']
+    ? 'bq-page-title-story__actions bq-page-title-story__actions--end'
+    : 'bq-page-title-story__actions';
 
   return html`
+    ${storyStyles}
     <bq-page-title>
       ${
         args['have-back-navigation']
@@ -86,8 +107,8 @@ export const TitleBackActions: Story = {
     title: 'Title',
     'sub-title': 'Sub-title',
     actions: `
-      <bq-icon class="p-b-xs2 p-i-xs2" color="text--brand" name="pencil-simple-bold"></bq-icon>
-      <bq-icon class="p-b-xs2 p-i-xs2" color="text--brand" name="download-simple-bold"></bq-icon>
+      <bq-icon color="text--brand" class="bq-page-title-story__action" name="pencil-simple-bold"></bq-icon>
+      <bq-icon color="text--brand" class="bq-page-title-story__action" name="download-simple-bold"></bq-icon>
     `,
     'custom-style': true,
   },
@@ -101,8 +122,8 @@ export const TitleBackActionsCustomDefault: Story = {
     title: 'Title',
     'sub-title': 'Sub-title',
     actions: `
-      <bq-icon class="p-b-xs2 p-i-xs2" color="text--brand" name="pencil-simple-bold"></bq-icon>
-      <bq-icon class="p-b-xs2 p-i-xs2" color="text--brand" name="download-simple-bold"></bq-icon>
+      <bq-icon color="text--brand" class="bq-page-title-story__action" name="pencil-simple-bold"></bq-icon>
+      <bq-icon color="text--brand" class="bq-page-title-story__action" name="download-simple-bold"></bq-icon>
     `,
   },
 };
@@ -116,8 +137,8 @@ export const TitleBackActionsCustom: Story = {
     title: 'Title',
     'sub-title': 'Sub-title',
     actions: `
-      <bq-icon class="p-b-xs2 p-i-xs2" color="text--brand" name="pencil-simple-bold"></bq-icon>
-      <bq-icon class="p-b-xs2 p-i-xs2" color="text--brand" name="download-simple-bold"></bq-icon>
+      <bq-icon color="text--brand" class="bq-page-title-story__action" name="pencil-simple-bold"></bq-icon>
+      <bq-icon color="text--brand" class="bq-page-title-story__action" name="download-simple-bold"></bq-icon>
     `,
     'custom-style': true,
   },

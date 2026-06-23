@@ -57,9 +57,9 @@ export class BqPageTitle {
   // Own Properties
   // ====================
 
-  private backNavigationElem: HTMLElement;
-  private suffixElem: HTMLElement;
-  private subTitleElem: HTMLElement;
+  private backNavigationElem?: HTMLElement;
+  private suffixElem?: HTMLElement;
+  private subTitleElem?: HTMLElement;
 
   // Reference to host HTML element
   // ===================================
@@ -124,7 +124,7 @@ export class BqPageTitle {
         <div
           class={{ 'bq-page-title__back': true, 'is-hidden': !this.haveBackNavigation }}
           part="back"
-          ref={(divElem) => {
+          ref={(divElem?: HTMLElement) => {
             this.backNavigationElem = divElem;
           }}
         >
@@ -140,7 +140,7 @@ export class BqPageTitle {
             <div
               class={{ 'bq-page-title__suffix': true, 'is-hidden': !this.hasSuffix }}
               part="suffix"
-              ref={(divElem) => {
+              ref={(divElem?: HTMLElement) => {
                 this.suffixElem = divElem;
               }}
             >
@@ -154,7 +154,7 @@ export class BqPageTitle {
               'is-hidden': !this.hasSubTitle,
             }}
             part="sub-title"
-            ref={(divElem) => {
+            ref={(divElem?: HTMLElement) => {
               this.subTitleElem = divElem;
             }}
           >
