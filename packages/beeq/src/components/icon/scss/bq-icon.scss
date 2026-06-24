@@ -1,12 +1,16 @@
 /* -------------------------------------------------------------------------- */
-/*                                 Icon styles                                */
+/*                                  Icon Styles                               */
 /* -------------------------------------------------------------------------- */
 
 @import './bq-icon.variables';
 
+/* ---------------------------------- Host ---------------------------------- */
+
 :host {
   display: inline-block;
 }
+
+/* ---------------------------------- Base ---------------------------------- */
 
 .bq-icon {
   display: flex;
@@ -14,6 +18,8 @@
   block-size: var(--bq-icon--size);
   inline-size: var(--bq-icon--size);
 }
+
+/* ------------------------------- Structure -------------------------------- */
 
 /**
  * This class is added on packages/beeq/src/components/icon/helper/request.ts
