@@ -190,8 +190,6 @@ export class BqDivider {
         <div
           class={{
             'bq-divider': true,
-            [`bq-divider--${this.orientation}`]: true,
-            [`bq-divider--title__${this.titleAlignment}`]: true,
             'is-gapless': !this.hasTitle,
           }}
           part="base"
@@ -202,7 +200,7 @@ export class BqDivider {
           <svg
             aria-hidden="true"
             class={{
-              'bq-divider--stroke': true,
+              'bq-divider__stroke': true,
               'is-start': true,
               'is-hidden': this.strokeBasis === 0 && this.titleAlignment === 'start',
             }}
@@ -214,7 +212,7 @@ export class BqDivider {
           <svg
             aria-hidden="true"
             class={{
-              'bq-divider--stroke': true,
+              'bq-divider__stroke': true,
               'is-end': true,
               'is-hidden': !this.hasTitle || (this.strokeBasis === 0 && this.titleAlignment === 'end'),
             }}
