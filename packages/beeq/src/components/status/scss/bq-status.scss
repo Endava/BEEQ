@@ -1,8 +1,42 @@
+/* -------------------------------------------------------------------------- */
+/*                                Status styles                               */
+/* -------------------------------------------------------------------------- */
+
 @import './bq-status.variables';
+
+/* ---------------------------------- Host ---------------------------------- */
 
 :host {
   --_status-circle-background-color: var(--bq-ui--secondary);
 }
+
+/* ---------------------------------- Base ---------------------------------- */
+
+.bq-status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--bq-spacing-xs);
+}
+
+/* ------------------------------- Structure -------------------------------- */
+
+.bq-status__circle {
+  border-radius: var(--bq-radius--full);
+}
+
+.bq-status__text {
+  max-block-size: 20px;
+  margin-block: 0;
+  margin-inline: 0;
+  padding-block: 0;
+  padding-inline: 0;
+  color: var(--bq-text--primary);
+  font-weight: var(--bq-font-weight--medium);
+  font-size: var(--bq-font-size--s);
+  line-height: var(--bq-font-line-height--regular);
+}
+
+/* -------------------------------- Variants -------------------------------- */
 
 :host([type='alert']) {
   --_status-circle-background-color: var(--bq-ui--warning);
@@ -20,23 +54,8 @@
   --_status-circle-background-color: var(--bq-ui--success);
 }
 
-.bq-status {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--bq-spacing-xs);
-}
+/* ---------------------------------- Slots --------------------------------- */
 
-.bq-status__circle {
-  border-radius: var(--bq-radius--full);
-
-  &::part(base) {
-    --bq-badge--background-color: var(--_status-circle-background-color);
-    --bq-badge--border-radius: var(--bq-radius--full);
-    --bq-badge--size-medium: var(--bq-status-circle--size);
-  }
-}
-
-.bq-status__text,
 .bq-status__text ::slotted(*) {
   max-block-size: 20px;
   margin-block: 0;
@@ -47,4 +66,12 @@
   font-weight: var(--bq-font-weight--medium);
   font-size: var(--bq-font-size--s);
   line-height: var(--bq-font-line-height--regular);
+}
+
+/* ---------------------------------- Parts --------------------------------- */
+
+.bq-status__circle::part(base) {
+  --bq-badge--background-color: var(--_status-circle-background-color);
+  --bq-badge--border-radius: var(--bq-radius--full);
+  --bq-badge--size-medium: var(--bq-status-circle--size);
 }
