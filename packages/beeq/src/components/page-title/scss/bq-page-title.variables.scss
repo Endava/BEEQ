@@ -1,5 +1,5 @@
 /* -------------------------------------------------------------------------- */
-/*                   Page title custom properties                  */
+/*                         Page Title Custom Properties                       */
 /* -------------------------------------------------------------------------- */
 
 :host {
@@ -14,6 +14,7 @@
    * @prop --title-textColor - Page title color for title
    * @prop --title-textSize - Page title text size for title
    */
+  /* stylelint-disable custom-property-pattern -- legacy public page-title custom properties preserve existing API */
   --paddingY: var(--bq-spacing-xl);
   --subtitle-borderBlockEnd: 1px solid var(--bq-stroke--primary);
   --subtitle-fontWeight: var(--bq-font-weight--medium);
@@ -33,4 +34,5 @@
   --_title-line-height: var(--title-lineHeight);
   --_title-text-color: var(--title-textColor);
   --_title-text-size: var(--title-textSize);
+  /* stylelint-enable custom-property-pattern */
 }

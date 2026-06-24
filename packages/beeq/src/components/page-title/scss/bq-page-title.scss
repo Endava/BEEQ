@@ -1,12 +1,16 @@
 /* -------------------------------------------------------------------------- */
-/*                        Page title styles                        */
+/*                              Page Title Styles                             */
 /* -------------------------------------------------------------------------- */
 
 @import './bq-page-title.variables';
 
+/* ---------------------------------- Host ---------------------------------- */
+
 :host {
   display: block;
 }
+
+/* ---------------------------------- Base ---------------------------------- */
 
 .bq-page-title {
   display: flex;
@@ -14,6 +18,8 @@
   padding-block: var(--_padding-block);
   border-block-end: var(--_subtitle-border-block-end);
 }
+
+/* ------------------------------- Structure -------------------------------- */
 
 .bq-page-title__back {
   display: flex;
@@ -57,6 +63,8 @@
   font-weight: var(--_subtitle-font-weight);
   font-size: var(--_subtitle-text-size);
 }
+
+/* --------------------------------- States --------------------------------- */
 
 .is-hidden {
   display: none;
