@@ -1,14 +1,18 @@
 /* -------------------------------------------------------------------------- */
-/*                                Badge styles                               */
+/*                                Badge Styles                                */
 /* -------------------------------------------------------------------------- */
 
 @import './bq-badge.variables';
 
+/* ---------------------------------- Host ---------------------------------- */
+
 :host {
-  --_badge-size: var(--bq-badge--size-medium);
+  --_badge-size: var(--bq-badge--size-small);
 
   display: inline-block;
 }
+
+/* ---------------------------------- Base ---------------------------------- */
 
 .bq-badge {
   display: flex;
@@ -23,36 +27,32 @@
   box-shadow: var(--bq-badge--box-shadow);
 }
 
+/* ------------------------------- Structure -------------------------------- */
+
+.bq-badge__number {
+  font-weight: var(--bq-font-weight--bold);
+  font-size: var(--bq-font-size--xs);
+  line-height: var(--bq-font-line-height--small);
+}
+
+/* -------------------------------- Variants -------------------------------- */
+
+:host([size='medium']) {
+  --_badge-size: var(--bq-badge--size-medium);
+}
+
+/* --------------------------------- States --------------------------------- */
+
 .bq-badge.is-empty {
   block-size: var(--_badge-size);
   inline-size: var(--_badge-size);
 }
 
 .bq-badge.is-populated {
-  --_badge-size: var(--bq-badge--size-large);
-
-  min-block-size: var(--_badge-size);
-  min-inline-size: var(--_badge-size);
+  min-block-size: var(--bq-badge--size-large);
+  min-inline-size: var(--bq-badge--size-large);
 }
 
 .bq-badge.is-multiple {
   padding-inline: var(--bq-spacing-xs2);
-}
-
-/* ---------------------------------- Size ---------------------------------- */
-
-:host([size='small']) .bq-badge.is-empty {
-  --_badge-size: var(--bq-badge--size-small);
-}
-
-:host([size='medium']) .bq-badge.is-empty {
-  --_badge-size: var(--bq-badge--size-medium);
-}
-
-/* -------------------------------- Elements -------------------------------- */
-
-.bq-badge__number {
-  font-weight: var(--bq-font-weight--bold);
-  font-size: var(--bq-font-size--xs);
-  line-height: var(--bq-font-line-height--small);
 }
