@@ -2,12 +2,10 @@
 /*                                 Tag styles                                 */
 /* -------------------------------------------------------------------------- */
 
+@import './bq-tag.variables';
+
 @layer bq.reset, bq.tokens, bq.themes, bq.base, bq.utilities, bq.overrides,
   bq-tag.tokens, bq-tag.base, bq-tag.structure, bq-tag.variants, bq-tag.states, bq-tag.parts;
-
-@layer bq-tag.tokens {
-  @import './bq-tag.variables';
-}
 
 /* ---------------------------------- Host ---------------------------------- */
 
