@@ -139,20 +139,12 @@ export class BqProgress {
   // ===================================
 
   render() {
-    const style = {
-      ...(this.thickness === 'large' && { '--bq-progress-bar--height': 'var(--bq-spacing-xs)' }),
-      ...(this.type === 'error' && { '--bq-progress-bar--indicatorColor': 'var(--bq-ui--danger)' }),
-    };
-
     return (
-      <Host style={style}>
-        <div class="flex items-center" part="wrapper">
-          <div class="is-full relative flex items-center" part="progress">
+      <Host border-shape={this.borderShape}>
+        <div class="bq-progress" part="wrapper">
+          <div class="bq-progress__track" part="progress">
             <progress
-              class={{
-                [`progress-bar progress-bar__${this.type} ${this.thickness}`]: true,
-                'progress-bar__border-shape rounded-full': this.borderShape === 'rounded',
-              }}
+              class="bq-progress__bar"
               max="100"
               part="progress-bar"
               value={this.indeterminate ? undefined : this.value}
@@ -160,35 +152,21 @@ export class BqProgress {
             {this.enableTooltip && !this.indeterminate && (
               <bq-tooltip
                 alwaysVisible={true}
-                class="absolute [&::part(panel)]:absolute"
+                class="bq-progress__tooltip"
                 distance={16}
                 exportparts="base,trigger,panel"
-                style={{ insetInlineStart: `${this.value}%`, fontVariant: 'tabular-nums' }}
+                style={{ insetInlineStart: `${this.value}%` }}
               >
-                <div class="bs-1 is-1 absolute" slot="trigger"></div>
+                <div class="bq-progress__tooltip-trigger" slot="trigger"></div>
                 {this.value}
               </bq-tooltip>
             )}
-            {this.indeterminate && (
-              <div
-                class={{
-                  'progress-bar__indeterminate bs-[--bq-progress-bar--height] is-[--bq-progress-bar--indeterminateWidth] absolute bg-[--bq-progress-bar--indicatorColor]': true,
-                  'rounded-full': this.borderShape === 'rounded',
-                }}
-                part="indeterminate"
-              />
-            )}
+            {this.indeterminate && <div class="bq-progress__indeterminate" part="indeterminate" />}
           </div>
           <div
             aria-hidden={!this.label || this.indeterminate ? 'true' : 'false'}
-            class={{
-              'ms-xs font-medium leading-regular': true,
-              'text-primary': this.type !== 'error',
-              'text-danger': this.type === 'error',
-              'is-0 invisible ms-0': !this.label || this.indeterminate,
-            }}
+            class="bq-progress__label"
             part="label"
-            style={{ fontVariant: 'tabular-nums' }}
           >
             <span>{this.value}%</span>
           </div>
