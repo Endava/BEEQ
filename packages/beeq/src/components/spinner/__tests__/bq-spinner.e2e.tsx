@@ -29,12 +29,12 @@ describe('bq-spinner', () => {
 
     expect(spinner).toHaveAttribute('animation');
     expect(loaderIcon).not.toBeNull();
-    expect(getComputedStyle(loaderIcon as SVGElement).animationName).toBe('spin');
+    expect(getComputedStyle(loaderIcon).animationName).toBe('spin');
 
     await setProps({ animation: false });
 
     expect(spinner).not.toHaveAttribute('animation');
-    expect(getComputedStyle(loaderIcon as SVGElement).animationName).toBe('none');
+    expect(getComputedStyle(loaderIcon).animationName).toBe('none');
   });
 
   it('should handle `size` property', async () => {
