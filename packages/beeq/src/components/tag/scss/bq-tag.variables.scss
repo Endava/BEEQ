@@ -1,5 +1,5 @@
 /* -------------------------------------------------------------------------- */
-/*                   Tag custom properties                  */
+/*                           Tag custom properties                            */
 /* -------------------------------------------------------------------------- */
 
 :host {
@@ -17,19 +17,19 @@
    * @prop --bq-tag--medium-padding-x - Tag medium padding horizontal
    * @prop --bq-tag--medium-padding-y - Tag medium padding vertical
    */
-  --bq-tag--background-color: theme(backgroundColor.ui.secondary);
+  --bq-tag--background-color: var(--bq-ui--secondary);
 
-  --bq-tag--border-color: theme(colors.transparent);
-  --bq-tag--border-radius: theme(borderRadius.s);
+  --bq-tag--border-color: transparent;
+  --bq-tag--border-radius: var(--bq-radius--s);
   --bq-tag--border-style: solid;
-  --bq-tag--border-width: theme(borderWidth.s);
+  --bq-tag--border-width: var(--bq-stroke-s);
 
-  --bq-tag--small-border-radius: theme(borderRadius.xs);
-  --bq-tag--small-gap: theme(spacing.xs2);
+  --bq-tag--small-border-radius: var(--bq-radius--xs);
+  --bq-tag--small-gap: var(--bq-spacing-xs2);
   --bq-tag--small-padding-x: calc(var(--bq-spacing-xs) - var(--bq-tag--border-width));
   --bq-tag--small-padding-y: calc(var(--bq-spacing-xs3) - var(--bq-tag--border-width));
 
-  --bq-tag--medium-gap: theme(spacing.xs);
+  --bq-tag--medium-gap: var(--bq-spacing-xs);
   --bq-tag--medium-padding-x: calc(var(--bq-spacing-s) - var(--bq-tag--border-width));
   --bq-tag--medium-padding-y: calc(var(--bq-spacing-xs2) - var(--bq-tag--border-width));
 }

@@ -40,6 +40,17 @@ argument-hint: 'Component or area to migrate, e.g. "button", "global utilities",
 10. Expand `before:*` and `after:*` utilities into `::before` and `::after` rules.
 11. Keep nesting depth at `2` or less and avoid Sass-only selector concatenation.
 12. Use component-local `@layer` only for components listed in the migration plan.
+13. Do not change component behavior while migrating styles. Preserve prop defaults, reflected attributes, events, slots, parts, CSS custom property names, generated docs behavior, and visual parity unless the user explicitly asks for a separate behavior change.
+14. Do not update tests to bless a new visual or behavioral result caused by the migration. If a real bug is discovered, call it out and split the fix or make the non-migration change explicit.
+
+## Component CSS Variables
+
+- Use public component variables directly when that keeps the CSS explicit and readable.
+- Preserve public `--bq-*` variables as the consumer override API. Do not rename them and do not mutate them internally to model private variant or state changes.
+- Use private `--_property` variables only as optional internal composition helpers.
+- Introduce private `--_` variables when they reduce meaningful declaration repetition, combine several public tokens into one internal value, or let variants/states update values while base selectors own the declarations.
+- Do not wrap every public component variable in a private variable by default.
+- Do not document private `--_` variables.
 
 ## Component Class Rules
 
@@ -47,6 +58,7 @@ argument-hint: 'Component or area to migrate, e.g. "button", "global utilities",
 - Add `.bq-<component>__<element>` only for stable internal styling hooks.
 - Use `.is-*` only for internal state that is not already reflected on the host.
 - Prefer host attributes for public variants and states.
+- For reflected public variants, prefer selectors such as `:host([size='small']) .bq-avatar` over render-time classes such as `.size--small`.
 - Do not add classes to every DOM node.
 - Do not create visual utility aliases such as `.row-center`, `.gap-small`, or `.text-primary`.
 - Do not treat internal classes as public API unless they are documented.
@@ -67,27 +79,48 @@ argument-hint: 'Component or area to migrate, e.g. "button", "global utilities",
 - Use the dedicated Sass styles build for token/reset/typography CSS entrypoints.
 - Use Stylelint built-in `property-layout-mappings`, not `stylelint-use-logical`.
 - Keep `packages/beeq-tailwindcss` functional but separate from the `@beeq/core` runtime styling path.
+- Keep `beeq:stylelint` migration-tolerant until the final strict flip.
+- `beeq:stylelint-strict` is the final full-workspace gate and is expected to fail while unmigrated files still contain Tailwind.
+- During component migration, run strict Stylelint scoped to each migrated component, one component at a time.
 
 ## Validation
 
-Run focused checks for the area you touched:
+Run focused checks for the area you touched. For every migrated component, run:
 
 ```bash
 rg "@apply|theme\\(" packages/beeq/src/components/<component>/scss
 rg "class=.*(flex|grid|gap-|items-|justify-|p-|m-|w-|h-|text-|bg-|border-|rounded-|absolute|relative)" packages/beeq/src/components/<component> --glob "*.tsx"
-pnpm exec nx run beeq:stylelint-strict
+cd packages/beeq
+pnpm exec stylelint "src/components/<component>/scss/**/*.{css,scss}" --config .stylelintrc.strict.json
 pnpm exec nx run beeq:build
 ```
+
+Run the scoped strict Stylelint command per component migrated. Do not use full `pnpm exec nx run beeq:stylelint-strict` as a component PR gate while other components still use legacy Tailwind styles.
 
 For global/build work, also run:
 
 ```bash
 rg "@tailwind|@apply|theme\\(" packages/beeq/src
 rg "stencil-tailwind-plugin|tailwindHMR|tailwind\\(" packages/beeq
+cd packages/beeq
+pnpm exec stylelint "src/global/styles/**/*.{css,scss}" --config .stylelintrc.strict.json
 pnpm exec nx run beeq:styles
 ```
 
+Run full strict Stylelint only for final migration cleanup:
+
+```bash
+pnpm exec nx run beeq:stylelint-strict
+```
+
 Run relevant tests and Storybook checks based on the component risk. Always include table E2E after migrating global table styles and dialog/drawer backdrop checks before changing `::backdrop` token coverage.
+
+## Final Review Before Handoff
+
+- Check `git diff` for accidental public API changes: prop defaults, reflected attributes, events, slots, parts, CSS custom properties, generated readmes, and generated typings.
+- Check test diffs for expectation changes that merely accept new behavior caused by the migration.
+- Check that public variants use host attributes where possible, and render classes are limited to stable internal structure or private state.
+- Mention any validation that could not run and why.
 
 ## Hard Rules
 

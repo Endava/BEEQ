@@ -3,46 +3,46 @@
 /* -------------------------------------------------------------------------- */
 
 .display {
-  @apply font-[inherit] text-xxl5 font-regular leading-small;
+  @apply text-xxl5 font-regular leading-small;
 }
 
 h1,
 .h1 {
-  @apply font-[inherit] text-xxl4 font-regular leading-small;
+  @apply text-xxl4 font-regular leading-small;
 }
 
 h2,
 .h2 {
-  @apply font-[inherit] text-xxl3 font-regular leading-small;
+  @apply text-xxl3 font-regular leading-small;
 }
 
 h3,
 .h3 {
-  @apply font-[inherit] text-xxl2 font-regular leading-small;
+  @apply text-xxl2 font-regular leading-small;
 }
 
 h4,
 .h4 {
-  @apply font-[inherit] text-xxl font-regular leading-small;
+  @apply text-xxl font-regular leading-small;
 }
 
 h5,
 .h5 {
-  @apply font-[inherit] text-xl font-regular leading-regular;
+  @apply text-xl font-regular leading-regular;
 }
 
 h6,
 .h6 {
-  @apply font-[inherit] text-l font-regular leading-regular;
+  @apply text-l font-regular leading-regular;
 }
 
 figcaption,
 .caption {
-  @apply font-[inherit] text-s font-regular leading-regular;
+  @apply text-s font-regular leading-regular;
 }
 
 .overline {
-  @apply font-[inherit] text-xs font-regular leading-regular;
+  @apply text-xs font-regular leading-regular;
 }
 
 .display,

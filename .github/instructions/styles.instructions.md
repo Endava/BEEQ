@@ -19,6 +19,7 @@ applyTo: packages/beeq/src/components/**/*.{tsx,scss}
 - Ensure accessibility: color contrast, focus styles, reduced motion, print/high contrast support.
 - Structure code for responsiveness: breakpoints, fluid typography, responsive images, container queries.
 - Use proper CSS custom properties.
+- Use public component CSS variables directly when that is clearest; use private `--_` variables only for internal composition, repeated derived values, or variant/state value switching.
 - Use CSS Grid/Flexbox, mobile-first, and dark mode support.
 - Use CSS logical properties for layout, sizing, spacing, positioning, borders, and radii.
 - Use BEEQ semantic classes only where stable styling hooks are needed. Do not adopt full BEM as a methodology or add classes to every DOM node.
@@ -26,3 +27,4 @@ applyTo: packages/beeq/src/components/**/*.{tsx,scss}
 - Use SCSS mixins for repeated patterns such as focus rings and hover/active color mixing.
 - Keep native-compatible nesting shallow: preferred depth `1`, maximum depth `2`.
 - Use global `@layer` and selective component-local `@layer` only as defined in the migration plan.
+- For migrated component PRs, run strict Stylelint scoped to each migrated component instead of the full `beeq:stylelint-strict` target until the workspace migration is complete.
