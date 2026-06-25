@@ -33,8 +33,8 @@ export class BqBreadcrumb {
   // Own Properties
   // ====================
 
-  private navElem: HTMLElement;
-  private spanElem: HTMLElement;
+  private navElem?: HTMLElement;
+  private spanElem?: HTMLElement;
 
   // Reference to host HTML element
   // ===================================
@@ -107,14 +107,13 @@ export class BqBreadcrumb {
 
   private get separatorFromSlot() {
     return this.spanElem
-      .querySelector<HTMLSlotElement>('slot[name="separator"]')
-      .assignedElements({ flatten: true })[0] as HTMLElement;
+      ?.querySelector<HTMLSlotElement>('slot[name="separator"]')
+      ?.assignedElements({ flatten: true })[0] as HTMLElement;
   }
 
   private get breadcrumbItems(): HTMLBqBreadcrumbItemElement[] {
-    return this.navElem
-      .querySelector<HTMLSlotElement>('slot')
-      .assignedElements({ flatten: true }) as HTMLBqBreadcrumbItemElement[];
+    return (this.navElem?.querySelector<HTMLSlotElement>('slot')?.assignedElements({ flatten: true }) ??
+      []) as HTMLBqBreadcrumbItemElement[];
   }
 
   // render() function
@@ -126,7 +125,7 @@ export class BqBreadcrumb {
       <Host>
         <nav
           aria-label={this.label}
-          class="flex items-center"
+          class="bq-breadcrumb__navigation"
           part="navigation"
           ref={(elem) => {
             this.navElem = elem;
@@ -143,7 +142,7 @@ export class BqBreadcrumb {
           }}
         >
           <slot name="separator">
-            <span class="is-3 flex items-center justify-center">/</span>
+            <span class="bq-breadcrumb__separator">/</span>
           </slot>
         </span>
       </Host>

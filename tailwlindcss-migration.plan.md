@@ -385,10 +385,14 @@ packages/beeq/src/components/button/scss/bq-button.scss
 Rules:
 
 - Public variables use existing `--bq-component--property` names.
+- Use public component variables directly when that is the clearest expression of the style.
 - Private variables use `--_property`.
+- Private `--_` variables are optional composition helpers, not a mandatory wrapper around every public component variable.
+- Introduce private `--_` variables only when they reduce meaningful repetition, combine multiple public tokens into one internal value, or keep variant/state selectors focused on value changes.
 - Do not document private `--_` variables.
 - Public variables remain the consumer override API.
 - Variants and states may update private variables, not public API variables.
+- Do not mutate public component variables internally to model private variant or state behavior.
 - Use logical declarations even when consuming legacy variable names.
 
 Example:

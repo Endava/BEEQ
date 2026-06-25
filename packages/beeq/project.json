@@ -176,6 +176,13 @@
         "ignorePath": ".gitignore"
       }
     },
+    "stylelint-strict": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "pnpm exec stylelint \"src/**/*.{css,scss}\" --config .stylelintrc.strict.json",
+        "cwd": "packages/beeq"
+      }
+    },
     "prepare-storybook": {
       "executor": "nx:run-commands",
       "outputs": ["{projectRoot}/src/_storybook/CHANGELOG.md"],

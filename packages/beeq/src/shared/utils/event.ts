@@ -4,7 +4,7 @@
  * @param hostElement - The host element to check against
  * @returns True if the event target is a child of the host element
  */
-export const isEventTargetChildOfElement = (event: Event, hostElement: HTMLElement): boolean => {
+export const isEventTargetChildOfElement = (event: Event, hostElement: EventTarget): boolean => {
   const path = event.composedPath();
 
   return path.includes(hostElement);

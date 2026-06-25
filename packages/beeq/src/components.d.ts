@@ -337,6 +337,7 @@ export namespace Components {
      * @attr {string} initials - The text to display on avatar.
      * @attr {"circle" | "square"} shape - The shape of the avatar.
      * @attr {"xsmall" | "small" | "medium" | "large"} size - The size of the avatar.
+     * @cssprop --bq-avatar-background - Deprecated, use --bq-avatar--background instead.
      * @cssprop --bq-avatar--background - Avatar background color
      * @cssprop --bq-avatar--border-color - Avatar border color
      * @cssprop --bq-avatar--border-style - Avatar border style
@@ -358,19 +359,19 @@ export namespace Components {
         /**
           * Alternate text for the avatar image if the image cannot be displayed
          */
-        "altText": string;
+        "altText"?: string;
         /**
           * The image source to load on the avatar (this can be also a base64 encoded image)
          */
-        "image": string;
+        "image"?: string;
         /**
           * The text to display on avatar
          */
-        "initials": string;
+        "initials"?: string;
         /**
           * A text to use for describing the avatar on assistive devices
          */
-        "label": string;
+        "label"?: string;
         /**
           * The shape of the avatar
           * @default 'circle'
@@ -414,7 +415,7 @@ export namespace Components {
           * The size of the badge. Relevant if badge has no content.
           * @default 'small'
          */
-        "size"?: TBadgeSize;
+        "size": TBadgeSize;
         /**
           * Badge number color. The value should be a valid value of the palette color
          */
@@ -607,10 +608,8 @@ export namespace Components {
      * @example How to use it
      * ```html
      * <bq-card type="default" border="m">
-     * <div class="p-m">
-     * <h3 class="text-xl font-bold">Card Title</h3>
-     * <p class="text-m">Card content goes here</p>
-     * </div>
+     * <h3>Card Title</h3>
+     * <p>Card content goes here</p>
      * </bq-card>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/522abb-card
@@ -805,6 +804,7 @@ export namespace Components {
     interface BqDatePicker {
         /**
           * If `true`, the Date picker input will be focused on component render
+          * @default false
          */
         "autofocus": boolean;
         /**
@@ -816,27 +816,27 @@ export namespace Components {
           * The clear button aria label
           * @default 'Clear value'
          */
-        "clearButtonLabel"?: string;
+        "clearButtonLabel": string;
         /**
           * If `true`, the clear button won't be displayed
           * @default false
          */
-        "disableClear"?: boolean;
+        "disableClear": boolean;
         /**
           * Indicates whether the Date picker input is disabled or not. If `true`, the Date picker is disabled and cannot be interacted with.
           * @default false
          */
-        "disabled"?: boolean;
+        "disabled": boolean;
         /**
           * Represents the distance (gutter or margin) between the Date picker panel and the input element.
           * @default 8
          */
-        "distance"?: number;
+        "distance": number;
         /**
           * The first day of the week, where Sunday is 0, Monday is 1, etc
           * @default 1
          */
-        "firstDayOfWeek"?: DaysOfWeek;
+        "firstDayOfWeek": DaysOfWeek;
         /**
           * The ID of the form that the Date picker input belongs to.
          */
@@ -870,7 +870,7 @@ export namespace Components {
         /**
           * Number of months to show when range is `true`
          */
-        "months": number;
+        "months"?: number;
         /**
           * Specifies how the next/previous buttons should navigate the calendar. - single: The buttons will navigate by a single month at a time. - months: The buttons will navigate by the number of months displayed per view.
           * @default 'single'
@@ -912,7 +912,7 @@ export namespace Components {
           * Represents the skidding between the Date picker panel and the input element.
           * @default 0
          */
-        "skidding"?: number;
+        "skidding": number;
         /**
           * Defines the strategy to position the Date picker panel
           * @default 'fixed'
@@ -936,7 +936,7 @@ export namespace Components {
         /**
           * The select input value represents the currently selected date or range and can be used to reset the field to a previous value. All dates are expected in ISO-8601 format (YYYY-MM-DD).
          */
-        "value": string;
+        "value"?: string;
     }
     /**
      * The Dialog component is used to display additional content or prompt a user for action.
@@ -1054,7 +1054,7 @@ export namespace Components {
      * @example How to use it
      * ```html
      * <bq-divider orientation="horizontal" stroke-color="stroke--primary" title-alignment="middle">
-     * <span slot="title">Divider Title</span>
+     * <span>Divider Title</span>
      * </bq-divider>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/53dfe6-divider
@@ -2459,7 +2459,7 @@ export namespace Components {
      * @status stable
      * @dependency bq-badge
      * @attr {"alert" | "danger" | "info" | "neutral" | "success"} type - It defines the type of status to display.
-     * @cssprop --bq-status-circ - Status circle size.
+     * @cssprop --bq-status-circle--size - Status circle size.
      */
     interface BqStatus {
         /**
@@ -2571,6 +2571,7 @@ export namespace Components {
         "size": TStepsSize;
         /**
           * The type of prefix element to use on the step items
+          * @default 'numeric'
          */
         "type": TStepsType;
     }
@@ -3542,6 +3543,7 @@ declare global {
      * @attr {string} initials - The text to display on avatar.
      * @attr {"circle" | "square"} shape - The shape of the avatar.
      * @attr {"xsmall" | "small" | "medium" | "large"} size - The size of the avatar.
+     * @cssprop --bq-avatar-background - Deprecated, use --bq-avatar--background instead.
      * @cssprop --bq-avatar--background - Avatar background color
      * @cssprop --bq-avatar--border-color - Avatar border color
      * @cssprop --bq-avatar--border-style - Avatar border style
@@ -3735,10 +3737,8 @@ declare global {
      * @example How to use it
      * ```html
      * <bq-card type="default" border="m">
-     * <div class="p-m">
-     * <h3 class="text-xl font-bold">Card Title</h3>
-     * <p class="text-m">Card content goes here</p>
-     * </div>
+     * <h3>Card Title</h3>
+     * <p>Card content goes here</p>
      * </bq-card>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/522abb-card
@@ -3993,7 +3993,7 @@ declare global {
      * @example How to use it
      * ```html
      * <bq-divider orientation="horizontal" stroke-color="stroke--primary" title-alignment="middle">
-     * <span slot="title">Divider Title</span>
+     * <span>Divider Title</span>
      * </bq-divider>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/53dfe6-divider
@@ -4912,7 +4912,7 @@ declare global {
      * @status stable
      * @dependency bq-badge
      * @attr {"alert" | "danger" | "info" | "neutral" | "success"} type - It defines the type of status to display.
-     * @cssprop --bq-status-circ - Status circle size.
+     * @cssprop --bq-status-circle--size - Status circle size.
      */
     interface HTMLBqStatusElement extends Components.BqStatus, HTMLStencilElement {
     }
@@ -5747,6 +5747,7 @@ declare namespace LocalJSX {
      * @attr {string} initials - The text to display on avatar.
      * @attr {"circle" | "square"} shape - The shape of the avatar.
      * @attr {"xsmall" | "small" | "medium" | "large"} size - The size of the avatar.
+     * @cssprop --bq-avatar-background - Deprecated, use --bq-avatar--background instead.
      * @cssprop --bq-avatar--background - Avatar background color
      * @cssprop --bq-avatar--border-color - Avatar border color
      * @cssprop --bq-avatar--border-style - Avatar border style
@@ -6049,10 +6050,8 @@ declare namespace LocalJSX {
      * @example How to use it
      * ```html
      * <bq-card type="default" border="m">
-     * <div class="p-m">
-     * <h3 class="text-xl font-bold">Card Title</h3>
-     * <p class="text-m">Card content goes here</p>
-     * </div>
+     * <h3>Card Title</h3>
+     * <p>Card content goes here</p>
      * </bq-card>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/522abb-card
@@ -6251,6 +6250,7 @@ declare namespace LocalJSX {
     interface BqDatePicker {
         /**
           * If `true`, the Date picker input will be focused on component render
+          * @default false
          */
         "autofocus"?: boolean;
         /**
@@ -6519,7 +6519,7 @@ declare namespace LocalJSX {
      * @example How to use it
      * ```html
      * <bq-divider orientation="horizontal" stroke-color="stroke--primary" title-alignment="middle">
-     * <span slot="title">Divider Title</span>
+     * <span>Divider Title</span>
      * </bq-divider>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/53dfe6-divider
@@ -8035,7 +8035,7 @@ declare namespace LocalJSX {
      * @status stable
      * @dependency bq-badge
      * @attr {"alert" | "danger" | "info" | "neutral" | "success"} type - It defines the type of status to display.
-     * @cssprop --bq-status-circ - Status circle size.
+     * @cssprop --bq-status-circle--size - Status circle size.
      */
     interface BqStatus {
         /**
@@ -8154,6 +8154,7 @@ declare namespace LocalJSX {
         "size"?: TStepsSize;
         /**
           * The type of prefix element to use on the step items
+          * @default 'numeric'
          */
         "type"?: TStepsType;
     }
@@ -9458,6 +9459,7 @@ declare module "@stencil/core" {
              * @attr {string} initials - The text to display on avatar.
              * @attr {"circle" | "square"} shape - The shape of the avatar.
              * @attr {"xsmall" | "small" | "medium" | "large"} size - The size of the avatar.
+             * @cssprop --bq-avatar-background - Deprecated, use --bq-avatar--background instead.
              * @cssprop --bq-avatar--background - Avatar background color
              * @cssprop --bq-avatar--border-color - Avatar border color
              * @cssprop --bq-avatar--border-style - Avatar border style
@@ -9600,10 +9602,8 @@ declare module "@stencil/core" {
              * @example How to use it
              * ```html
              * <bq-card type="default" border="m">
-             * <div class="p-m">
-             * <h3 class="text-xl font-bold">Card Title</h3>
-             * <p class="text-m">Card content goes here</p>
-             * </div>
+             * <h3>Card Title</h3>
+             * <p>Card content goes here</p>
              * </bq-card>
              * ```
              * @documentation https://www.beeq.design/3d466e231/p/522abb-card
@@ -9796,7 +9796,7 @@ declare module "@stencil/core" {
              * @example How to use it
              * ```html
              * <bq-divider orientation="horizontal" stroke-color="stroke--primary" title-alignment="middle">
-             * <span slot="title">Divider Title</span>
+             * <span>Divider Title</span>
              * </bq-divider>
              * ```
              * @documentation https://www.beeq.design/3d466e231/p/53dfe6-divider
@@ -10446,7 +10446,7 @@ declare module "@stencil/core" {
              * @status stable
              * @dependency bq-badge
              * @attr {"alert" | "danger" | "info" | "neutral" | "success"} type - It defines the type of status to display.
-             * @cssprop --bq-status-circ - Status circle size.
+             * @cssprop --bq-status-circle--size - Status circle size.
              */
             "bq-status": LocalJSX.IntrinsicElements["bq-status"] & JSXBase.HTMLAttributes<HTMLBqStatusElement>;
             /**

@@ -49,13 +49,13 @@ export class BqBadge {
 
   private observer: MutationObserver = new MutationObserver((mutations) => {
     const [mutation] = mutations;
-    this.contentLength = mutation.target.textContent.length;
+    this.contentLength = mutation.target.textContent?.length ?? 0;
   });
 
   // Reference to host HTML element
   // ===================================
 
-  @Element() el: HTMLBqBadgeElement;
+  @Element() el!: HTMLBqBadgeElement;
 
   // State() variables
   // Inlined decorator, alphabetical order
@@ -73,7 +73,7 @@ export class BqBadge {
   @Prop({ mutable: true, reflect: true }) textColor?: string;
 
   /** The size of the badge. Relevant if badge has no content. */
-  @Prop({ reflect: true, mutable: true }) size?: TBadgeSize = 'small';
+  @Prop({ reflect: true, mutable: true }) size: TBadgeSize = 'small';
 
   // Prop lifecycle events
   // =======================
@@ -157,14 +157,14 @@ export class BqBadge {
         <div
           class={{
             'bq-badge': true,
-            [`size--${this.size}`]: this.contentLength === 0,
-            digit: this.contentLength > 0,
-            'p-i-xs2': this.contentLength > 1,
+            'is-empty': this.contentLength === 0,
+            'is-populated': this.contentLength > 0,
+            'is-multiple': this.contentLength > 1,
           }}
           part="base"
         >
           <span
-            class="font-bold text-xs leading-small"
+            class="bq-badge__number"
             part="number"
             ref={(element) => {
               this.spanElement = element;

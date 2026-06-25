@@ -1,17 +1,30 @@
 /* -------------------------------------------------------------------------- */
-/*                                 Icon styles                                */
+/*                                  Icon Styles                               */
 /* -------------------------------------------------------------------------- */
 
 @import './bq-icon.variables';
 
+/* ---------------------------------- Host ---------------------------------- */
+
 :host {
-  @apply inline-block;
+  display: inline-block;
 }
+
+/* ---------------------------------- Base ---------------------------------- */
+
+.bq-icon {
+  display: flex;
+  color: var(--bq-icon--color);
+  block-size: var(--bq-icon--size);
+  inline-size: var(--bq-icon--size);
+}
+
+/* ------------------------------- Structure -------------------------------- */
 
 /**
  * This class is added on packages/beeq/src/components/icon/helper/request.ts
  * See lines 42 and 58 for details.
  */
 .bq-icon__svg {
-  @apply scale-x-[--bq-icon--direction];
+  transform: scaleX(var(--bq-icon--direction));
 }
