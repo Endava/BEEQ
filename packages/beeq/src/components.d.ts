@@ -2459,7 +2459,7 @@ export namespace Components {
      * @status stable
      * @dependency bq-badge
      * @attr {"alert" | "danger" | "info" | "neutral" | "success"} type - It defines the type of status to display.
-     * @cssprop --bq-status-circ - Status circle size.
+     * @cssprop --bq-status-circle--size - Status circle size.
      */
     interface BqStatus {
         /**
@@ -4912,7 +4912,7 @@ declare global {
      * @status stable
      * @dependency bq-badge
      * @attr {"alert" | "danger" | "info" | "neutral" | "success"} type - It defines the type of status to display.
-     * @cssprop --bq-status-circ - Status circle size.
+     * @cssprop --bq-status-circle--size - Status circle size.
      */
     interface HTMLBqStatusElement extends Components.BqStatus, HTMLStencilElement {
     }
@@ -8035,7 +8035,7 @@ declare namespace LocalJSX {
      * @status stable
      * @dependency bq-badge
      * @attr {"alert" | "danger" | "info" | "neutral" | "success"} type - It defines the type of status to display.
-     * @cssprop --bq-status-circ - Status circle size.
+     * @cssprop --bq-status-circle--size - Status circle size.
      */
     interface BqStatus {
         /**
@@ -10446,7 +10446,7 @@ declare module "@stencil/core" {
              * @status stable
              * @dependency bq-badge
              * @attr {"alert" | "danger" | "info" | "neutral" | "success"} type - It defines the type of status to display.
-             * @cssprop --bq-status-circ - Status circle size.
+             * @cssprop --bq-status-circle--size - Status circle size.
              */
             "bq-status": LocalJSX.IntrinsicElements["bq-status"] & JSXBase.HTMLAttributes<HTMLBqStatusElement>;
             /**

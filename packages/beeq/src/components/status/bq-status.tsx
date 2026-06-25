@@ -25,7 +25,7 @@ import { STATUS_TYPE } from './bq-status.types';
  * @part circle - The colored circle that marks the status type.
  * @part text - The `<div>` container that holds the text label of the status component.
  *
- * @cssprop --bq-status-circ - Status circle size.
+ * @cssprop --bq-status-circle--size - Status circle size.
  */
 @Component({
   tag: 'bq-status',
