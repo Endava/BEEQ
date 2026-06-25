@@ -1,27 +1,57 @@
 /* -------------------------------------------------------------------------- */
-/*                                Option group styles                */
+/*                              Option group styles                           */
 /* -------------------------------------------------------------------------- */
 
 @import './bq-option-group.variables';
 
+/* ---------------------------------- Host ---------------------------------- */
+
 :host {
-  @apply block;
+  display: block;
 }
 
-.bq-option-group {
-  @apply flex overflow-hidden overflow-ellipsis;
-  @apply bg-[--bq-option-group--background] text-[length:--bq-option-group--font-size] leading-[--bq-option-group--line-height];
-  @apply pe-[--bq-option-group--label-padding-end] ps-[--bq-option-group--label-padding-start] p-b-[--bq-option-group--label-paddingY] p-i-[--bq-option-group--label-paddingY];
+/* ---------------------------------- Base ---------------------------------- */
 
-  &__child {
-    @apply flex items-center;
-  }
+.bq-option-group {
+  background-color: var(--bq-ui--primary);
+}
+
+/* ------------------------------- Structure -------------------------------- */
+
+.bq-option-group__header {
+  display: flex;
+  overflow: hidden;
+  margin-block-end: var(--bq-option-group--gapY-list);
+  padding-block: var(--bq-option-group--label-paddingY);
+  padding-inline: var(--bq-option-group--label-paddingY);
+  font-size: var(--bq-option-group--font-size);
+  line-height: var(--bq-option-group--line-height);
+  text-overflow: ellipsis;
+  background-color: var(--bq-option-group--background);
+}
+
+.bq-option-group__prefix {
+  display: flex;
+  align-items: center;
 }
 
 .bq-option-group__label {
-  @apply pe-[--bq-option-group--label-text-padding-end] ps-[--bq-option-group--label-text-padding-start];
+  display: inline-block;
+  overflow: hidden;
+  inline-size: auto;
+  padding-inline: var(--bq-option-group--label-text-padding-start) var(--bq-option-group--label-text-padding-end);
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
+.bq-option-group__container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bq-option-group--gapY-list);
+}
+
+/* ---------------------------------- Slots --------------------------------- */
+
 .bq-option-group__container ::slotted(bq-option) {
-  @apply ps-[--bq-option-group--container-padding-start];
+  padding-inline-start: var(--bq-option-group--container-padding-start);
 }
