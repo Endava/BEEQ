@@ -1,5 +1,5 @@
 /* -------------------------------------------------------------------------- */
-/*                          Toast custom properties           */
+/*                          Toast custom properties                           */
 /* -------------------------------------------------------------------------- */
 
 :host {
@@ -21,22 +21,22 @@
    * @prop --bq-toast--icon-color-custom - Toast icon color when type is 'custom'
    */
 
-  --bq-toast--background: theme(backgroundColor.ui.primary);
-  --bq-toast--box-shadow: theme(boxShadow.l);
+  --bq-toast--background: var(--bq-ui--primary);
+  --bq-toast--box-shadow: var(--bq-box-shadow--l);
 
-  --bq-toast--padding-y: theme(spacing.s);
-  --bq-toast--padding-x: theme(spacing.m);
-  --bq-toast--gap: theme(spacing.xs);
+  --bq-toast--padding-y: var(--bq-spacing-s);
+  --bq-toast--padding-x: var(--bq-spacing-m);
+  --bq-toast--gap: var(--bq-spacing-xs);
 
-  --bq-toast--border-radius: theme(borderRadius.s);
+  --bq-toast--border-radius: var(--bq-radius--s);
   --bq-toast--border-width: unset;
   --bq-toast--border-style: none;
-  --bq-toast--border-color: theme(colors.transparent);
+  --bq-toast--border-color: transparent;
 
-  --bq-toast--icon-color-info: theme(fill.brand);
-  --bq-toast--icon-color-success: theme(fill.success);
-  --bq-toast--icon-color-alert: theme(fill.warning);
-  --bq-toast--icon-color-error: theme(fill.danger);
-  --bq-toast--icon-color-loading: theme(fill.brand);
-  --bq-toast--icon-color-custom: theme(fill.primary);
+  --bq-toast--icon-color-info: var(--bq-icon--brand);
+  --bq-toast--icon-color-success: var(--bq-icon--success);
+  --bq-toast--icon-color-alert: var(--bq-icon--warning);
+  --bq-toast--icon-color-error: var(--bq-icon--danger);
+  --bq-toast--icon-color-loading: var(--bq-icon--brand);
+  --bq-toast--icon-color-custom: var(--bq-icon--primary);
 }

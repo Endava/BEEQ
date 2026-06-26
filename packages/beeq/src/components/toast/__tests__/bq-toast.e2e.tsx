@@ -20,28 +20,28 @@ describe('bq-toast', () => {
     const { root } = await render(<bq-toast />);
 
     expect(root).toHaveAttribute('aria-hidden');
-    expect(root).toHaveClass('is-hidden');
+    expect(root).toEqualAttribute('hidden', 'true');
   });
 
   it('should render as hidden with `open="false"`', async () => {
     const { root } = await render(<bq-toast open={false} />);
 
     expect(root).toEqualAttribute('aria-hidden', 'true');
-    expect(root).toHaveClass('is-hidden');
+    expect(root).toEqualAttribute('hidden', 'true');
   });
 
   it('should render as open', async () => {
     const { root } = await render(<bq-toast open />);
 
     expect(root).toEqualAttribute('aria-hidden', 'false');
-    expect(root).not.toHaveClass('is-hidden');
+    expect(root).toEqualAttribute('hidden', 'false');
   });
 
   it('should render as open with `open="true"`', async () => {
     const { root } = await render(<bq-toast open={true} />);
 
     expect(root).toEqualAttribute('aria-hidden', 'false');
-    expect(root).not.toHaveClass('is-hidden');
+    expect(root).toEqualAttribute('hidden', 'false');
   });
 
   it('should display text', async () => {
@@ -93,10 +93,14 @@ describe('bq-toast', () => {
   });
 
   it('should hide the icon when `hide-icon` is set', async () => {
-    const { root } = await render(<bq-toast hide-icon>Text</bq-toast>);
+    await render(
+      <bq-toast hide-icon open>
+        Text
+      </bq-toast>,
+    );
 
-    const iconHolder = root.shadowRoot.querySelector('[part="icon"]');
-    expect(iconHolder).toHaveClass('!hidden');
+    const style = computedStyle('bq-toast >>> [part="icon"]', ['display']);
+    expect(style).toEqual({ display: 'none' });
   });
 
   it('should emit bqShow event when shown', async () => {
