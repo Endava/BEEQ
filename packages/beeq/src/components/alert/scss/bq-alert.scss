@@ -2,10 +2,12 @@
 /*                        Alert styles                        */
 /* -------------------------------------------------------------------------- */
 
-@import './bq-alert.variables';
+@use 'sass:meta';
+@layer bq.reset, bq.tokens, bq.themes, bq.base, bq.utilities, bq.overrides,
+  bq-alert.tokens, bq-alert.base, bq-alert.structure, bq-alert.variants, bq-alert.states;
 
-:host {
-  @apply block;
+@layer bq-alert.tokens {
+  @include meta.load-css('./bq-alert.variables');
 }
 
 :host(.is-hidden) {
