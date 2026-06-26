@@ -219,14 +219,14 @@ describe('bq-alert', () => {
 
   it('should hide the icon when hideIcon is true', async () => {
     const { root } = await render(
-      <bq-alert type="info" hide-icon>
+      <bq-alert open type="info" hide-icon>
         Alert title
       </bq-alert>,
     );
 
-    const iconOutline = root.shadowRoot.querySelector('[part="icon-outline"]');
+    const iconOutline = root.shadowRoot.querySelector<HTMLElement>('[part="icon-outline"]');
     expect(iconOutline).not.toBeNull();
-    expect(iconOutline).toHaveClass('!hidden');
+    expect(getComputedStyle(iconOutline).display).toBe('none');
   });
 
   it('should close when the close button is clicked', async () => {

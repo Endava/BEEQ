@@ -1,77 +1,182 @@
 /* -------------------------------------------------------------------------- */
-/*                        Alert styles                        */
+/*                                Alert styles                                */
 /* -------------------------------------------------------------------------- */
 
-@import './bq-alert.variables';
+@layer bq.reset, bq.tokens, bq.themes, bq.base, bq.utilities, bq.overrides,
+  bq-alert.tokens, bq-alert.base, bq-alert.structure, bq-alert.variants, bq-alert.states;
 
-:host {
-  @apply block;
+@layer bq-alert.tokens {
+  @import './bq-alert.variables';
 }
 
-:host(.is-hidden) {
-  @apply hidden;
+/* ---------------------------------- Host ---------------------------------- */
+
+@layer bq-alert.base {
+  :host {
+    --_alert-background: var(--bq-alert--background-default);
+    --_alert-border-color: var(--bq-alert--border-default);
+    --_alert-icon-color: var(--bq-alert--icon-color-default);
+
+    display: block;
+  }
+
+  :host(.is-hidden) {
+    display: none;
+  }
 }
 
-:host(.is-sticky) {
-  @apply fixed inset-0 z-[var(--bq-alert--z-index)] is-full inset-bs-0;
+@layer bq-alert.variants {
+  :host([sticky]) {
+    position: fixed;
+    inset-block: 0;
+    inset-inline: 0;
+    inline-size: 100%;
+    z-index: var(--bq-alert--z-index);
+  }
+}
 
+/* ---------------------------------- Base ---------------------------------- */
+
+@layer bq-alert.base {
   .bq-alert {
-    @apply items-center justify-center rounded-none;
+    position: relative;
+    display: flex;
+    min-inline-size: var(--bq-alert--min-width);
+    padding-block: var(--bq-alert--padding);
+    padding-inline: var(--bq-alert--padding);
+    background-color: var(--_alert-background);
+    border-color: var(--_alert-border-color);
+    border-radius: var(--bq-alert--border-radius);
+    border-style: var(--bq-alert--border-style);
+    border-width: var(--bq-alert--border-width);
+    transition-duration: 150ms;
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
 
-.bq-alert {
-  @apply relative flex transition-all min-is-[--bq-alert--min-width] p-b-[--bq-alert--padding] p-i-[--bq-alert--padding];
-  @apply rounded-[var(--bq-alert--border-radius)] border-[length:--bq-alert--border-width];
+/* ------------------------------- Structure -------------------------------- */
 
-  border-style: var(--bq-alert--border-style);
-}
-
-/**
- * Set the alert background and border color based on the type value selected
- */
-
-.bq-alert__default {
-  @apply border-[color:--bq-alert--border-default] bg-[color:--bq-alert--background-default];
-}
-
-.bq-alert__error {
-  @apply border-[color:--bq-alert--border-error] bg-[color:--bq-alert--background-error];
-}
-
-.bq-alert__info {
-  @apply border-[color:--bq-alert--border-info] bg-[color:--bq-alert--background-info];
-}
-
-.bq-alert__success {
-  @apply border-[color:--bq-alert--border-success] bg-[color:--bq-alert--background-success];
-}
-
-.bq-alert__warning {
-  @apply border-[color:--bq-alert--border-warning] bg-[color:--bq-alert--background-warning];
-}
-
-/**
- * Set the alert icon color based on the type value selected
- */
-.bq-alert__icon {
-  &--default {
-    @apply text-[color:--bq-alert--icon-color-default];
+@layer bq-alert.structure {
+  .bq-alert__close-button {
+    position: absolute;
+    inset-inline-end: var(--bq-spacing-s);
   }
 
-  &--error {
-    @apply text-[color:--bq-alert--icon-color-error];
+  .bq-alert__close-button::part(label) {
+    display: inline-flex;
   }
 
-  &--info {
-    @apply text-[color:--bq-alert--icon-color-info];
+  .bq-alert__icon {
+    display: flex;
+    margin-inline-end: var(--bq-spacing-s);
+    color: var(--_alert-icon-color);
+    text-align: left;
+    vertical-align: top;
   }
 
-  &--success {
-    @apply text-[color:--bq-alert--icon-color-success];
+  .bq-alert__main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--bq-alert--content-footer-gap);
+    align-items: flex-start;
   }
 
-  &--warning {
-    @apply text-[color:--bq-alert--icon-color-warning];
+  .bq-alert__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--bq-alert--title-body-gap);
+  }
+
+  .bq-alert__title {
+    color: var(--bq-text--primary);
+    font-weight: var(--bq-font-weight--semibold);
+    line-height: var(--bq-font-line-height--regular);
+  }
+
+  .bq-alert__body {
+    color: var(--bq-text--primary);
+    font-size: var(--bq-font-size--s);
+    line-height: var(--bq-font-line-height--regular);
+  }
+
+  .bq-alert__footer {
+    display: flex;
+    gap: var(--bq-spacing-xs);
+    align-items: flex-start;
+  }
+}
+
+/* -------------------------------- Variants -------------------------------- */
+
+@layer bq-alert.variants {
+  :host([type='error']) {
+    --_alert-background: var(--bq-alert--background-error);
+    --_alert-border-color: var(--bq-alert--border-error);
+    --_alert-icon-color: var(--bq-alert--icon-color-error);
+  }
+
+  :host([type='info']) {
+    --_alert-background: var(--bq-alert--background-info);
+    --_alert-border-color: var(--bq-alert--border-info);
+    --_alert-icon-color: var(--bq-alert--icon-color-info);
+  }
+
+  :host([type='success']) {
+    --_alert-background: var(--bq-alert--background-success);
+    --_alert-border-color: var(--bq-alert--border-success);
+    --_alert-icon-color: var(--bq-alert--icon-color-success);
+  }
+
+  :host([type='warning']) {
+    --_alert-background: var(--bq-alert--background-warning);
+    --_alert-border-color: var(--bq-alert--border-warning);
+    --_alert-icon-color: var(--bq-alert--icon-color-warning);
+  }
+
+  :host([sticky]) .bq-alert {
+    align-items: center;
+    justify-content: center;
+    border-radius: 0;
+  }
+
+  :host([sticky]) .bq-alert__title {
+    display: flex;
+    align-items: center;
+  }
+}
+
+/* --------------------------------- States --------------------------------- */
+
+@layer bq-alert.states {
+  :host([hide-icon]) .bq-alert__icon,
+  .bq-alert__body.is-empty,
+  .bq-alert__footer.is-empty {
+    display: none;
+  }
+
+  .bq-alert.is-entering,
+  .bq-alert.is-leaving {
+    transition-property: opacity;
+  }
+
+  .bq-alert.is-entering {
+    transition-duration: 300ms;
+    transition-timing-function: ease-out;
+  }
+
+  .bq-alert.is-leaving {
+    transition-duration: 200ms;
+    transition-timing-function: ease-in;
+  }
+
+  .bq-alert.is-enter-start,
+  .bq-alert.is-leave-end {
+    opacity: 0;
+  }
+
+  .bq-alert.is-enter-end,
+  .bq-alert.is-leave-start {
+    opacity: 1;
   }
 }
