@@ -1,49 +1,78 @@
 /* -------------------------------------------------------------------------- */
-/*                                Tab styles                               */
+/*                              Tab group styles                              */
 /* -------------------------------------------------------------------------- */
 
+/* ---------------------------------- Host ---------------------------------- */
+
 :host {
-  @apply block;
+  display: block;
 }
+
+/* ---------------------------------- Base ---------------------------------- */
 
 .bq-tab-group {
-  @apply relative;
-
-  &::after {
-    @apply absolute flex border-0 border-solid border-primary content-empty;
-  }
-
-  &--horizontal-start,
-  &--horizontal-end {
-    &::after {
-      @apply is-full inset-be-0 [border-block-end-width:--bq-stroke-s];
-    }
-  }
-
-  &--horizontal-start {
-    @apply justify-start;
-  }
-
-  &--horizontal-end {
-    @apply justify-end;
-  }
-
-  &--vertical-start::after {
-    @apply end-0 bs-full is-0 [border-block-end-width:0px] [border-inline-end-width:--bq-stroke-s];
-  }
-
-  &--vertical-end::after {
-    @apply start-0 bs-full is-0 [border-block-end-width:0px] [border-inline-start-width:--bq-stroke-s];
-  }
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  inline-size: 100%;
 }
 
-.bq-tab-group.no-divider {
-  &::after {
-    @apply content-none;
-  }
+.bq-tab-group::after {
+  position: absolute;
+  inset-block-end: 0;
+  display: flex;
+  inline-size: 100%;
+  content: '';
+  border-color: var(--bq-stroke--primary);
+  border-style: solid;
+  border-width: 0;
+  border-block-end-width: var(--bq-stroke-s);
 }
 
-.bq-tab-group--container {
+/* ------------------------------- Structure -------------------------------- */
+
+.bq-tab-group__tabs {
   @include hide-scrollbar;
-  @apply gap-xs2 p-xs2; // This will avoid cutting the outline focus style
+
+  display: flex;
+  gap: var(--bq-spacing-xs2);
+  overflow-inline: auto;
+  padding-block: var(--bq-spacing-xs2);
+  padding-inline: var(--bq-spacing-xs2);
+}
+
+/* -------------------------------- Variants -------------------------------- */
+
+:host([orientation='vertical']) {
+  display: inline-block;
+}
+
+:host([orientation='horizontal'][placement='end']) .bq-tab-group {
+  justify-content: flex-end;
+}
+
+:host([orientation='vertical']) .bq-tab-group__tabs {
+  flex-direction: column;
+}
+
+:host([orientation='vertical'][placement='start']) .bq-tab-group::after {
+  inset-inline-end: 0;
+  block-size: 100%;
+  inline-size: 0;
+  border-block-end-width: 0;
+  border-inline-end-width: var(--bq-stroke-s);
+}
+
+:host([orientation='vertical'][placement='end']) .bq-tab-group::after {
+  inset-inline-start: 0;
+  block-size: 100%;
+  inline-size: 0;
+  border-block-end-width: 0;
+  border-inline-start-width: var(--bq-stroke-s);
+}
+
+/* --------------------------------- States --------------------------------- */
+
+:host([disable-divider]) .bq-tab-group::after {
+  content: none;
 }

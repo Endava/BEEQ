@@ -166,18 +166,20 @@ describe('bq-tab-group', () => {
     expect((root as HTMLBqTabGroupElement).value).toBe('2');
   });
 
-  it('should apply `no-divider` class when `disable-divider` is set', async () => {
+  it('should hide the divider when `disable-divider` is set', async () => {
     const { root } = await render(mkGroup('1', { disableDivider: true }));
 
-    const base = root.shadowRoot.querySelector('[part="base"]');
+    const base = root.shadowRoot.querySelector<HTMLElement>('[part="base"]');
 
-    expect(base).toHaveClass('no-divider');
+    expect(root).toHaveAttribute('disable-divider');
+    expect(window.getComputedStyle(base, '::after').content).toBe('none');
   });
 
   it('should render with vertical orientation', async () => {
     const { root } = await render(mkGroup('1', { orientation: 'vertical' }));
-    const base = root.shadowRoot.querySelector('[part="base"]');
+    const tabs = root.shadowRoot.querySelector<HTMLElement>('[part="tabs"]');
 
-    expect(base.className).toContain('bq-tab-group--vertical');
+    expect(root).toEqualAttribute('orientation', 'vertical');
+    expect(window.getComputedStyle(tabs).flexDirection).toBe('column');
   });
 });
