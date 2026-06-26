@@ -91,27 +91,19 @@ export class BqOptionGroup {
 
   render() {
     return (
-      <div class="bg-ui-primary">
-        <legend class="bq-option-group m-be-[--bq-option-group--gapY-list]" part="label">
-          <span class="option-group__prefix flex items-center" part="prefix">
+      <div class="bq-option-group">
+        <legend class="bq-option-group__header" part="label">
+          <span class="bq-option-group__prefix" part="prefix">
             <slot name="header-prefix" />
           </span>
-          <span
-            class="bq-option-group__label is-auto inline-block overflow-hidden text-ellipsis whitespace-nowrap"
-            part="label"
-          >
+          <span class="bq-option-group__label" part="label">
             <slot name="header-label" />
           </span>
           <span class="bq-option-group__suffix" part="suffix">
             <slot name="header-suffix" />
           </span>
         </legend>
-        <div
-          aria-label="Options"
-          class="bq-option-group__container flex flex-col gap-[--bq-option-group--gapY-list]"
-          part="group"
-          role="group"
-        >
+        <div aria-label="Options" class="bq-option-group__container" part="group" role="group">
           <slot />
         </div>
       </div>
