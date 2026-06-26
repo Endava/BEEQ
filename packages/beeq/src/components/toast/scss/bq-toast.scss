@@ -2,50 +2,111 @@
 /*                                Toast styles                                */
 /* -------------------------------------------------------------------------- */
 
-@import './bq-toast.variables';
+@use 'sass:meta';
+@layer bq.reset, bq.tokens, bq.themes, bq.base, bq.utilities, bq.overrides,
+  bq-toast.tokens, bq-toast.base, bq-toast.structure, bq-toast.variants, bq-toast.states;
 
-:host {
-  @apply inline-block;
+@layer bq-toast.tokens {
+  @include meta.load-css('bq-toast.variables');
 }
 
-:host(.is-hidden) {
-  @apply hidden;
+/* ---------------------------------- Host ---------------------------------- */
+
+@layer bq-toast.base {
+  :host {
+    --_toast-border-radius: var(--bq-toast--border-radius);
+    --_toast-icon-color: var(--bq-toast--icon-color-info);
+
+    display: inline-block;
+  }
 }
 
-.bq-toast {
-  @include animation-slide-in;
-  @apply flex items-center gap-[--bq-toast--gap] p-b-[--bq-toast--padding-y] p-i-[--bq-toast--padding-x];
-  @apply rounded-[--bq-toast--border-radius] bg-[--bq-toast--background] shadow-[shadow:--bq-toast--box-shadow];
-  @apply border-[length:--bq-toast--border-width] border-[color:--bq-toast--border-color];
+/* ---------------------------------- Base ---------------------------------- */
 
-  border-style: var(--bq-toast--border-style);
+@layer bq-toast.base {
+  .bq-toast {
+    @include animation-slide-in;
+
+    display: flex;
+    gap: var(--bq-toast--gap);
+    align-items: center;
+    padding-block: var(--bq-toast--padding-y);
+    padding-inline: var(--bq-toast--padding-x);
+    background-color: var(--bq-toast--background);
+    border-color: var(--bq-toast--border-color);
+    border-radius: var(--_toast-border-radius);
+    border-style: var(--bq-toast--border-style);
+    border-width: var(--bq-toast--border-width);
+    box-shadow: var(--bq-toast--box-shadow);
+  }
 }
 
-.bq-toast--icon {
-  @apply flex;
+/* ------------------------------- Structure -------------------------------- */
 
-  &.info {
-    @apply text-[--bq-toast--icon-color-info];
+@layer bq-toast.structure {
+  .bq-toast__icon {
+    display: flex;
+    color: var(--_toast-icon-color);
+  }
+}
+
+/* -------------------------------- Variants -------------------------------- */
+
+@layer bq-toast.variants {
+  :host([border='none']) {
+    --_toast-border-radius: var(--bq-radius--none);
   }
 
-  &.success {
-    @apply text-[--bq-toast--icon-color-success];
+  :host([border='xs2']) {
+    --_toast-border-radius: var(--bq-radius--xs2);
   }
 
-  &.alert {
-    @apply text-[--bq-toast--icon-color-alert];
+  :host([border='xs']) {
+    --_toast-border-radius: var(--bq-radius--xs);
   }
 
-  &.error {
-    @apply text-[--bq-toast--icon-color-error];
+  :host([border='m']) {
+    --_toast-border-radius: var(--bq-radius--m);
   }
 
-  &.loading {
+  :host([border='l']) {
+    --_toast-border-radius: var(--bq-radius--l);
+  }
+
+  :host([border='full']) {
+    --_toast-border-radius: var(--bq-radius--full);
+  }
+
+  :host([type='success']) {
+    --_toast-icon-color: var(--bq-toast--icon-color-success);
+  }
+
+  :host([type='alert']) {
+    --_toast-icon-color: var(--bq-toast--icon-color-alert);
+  }
+
+  :host([type='error']) {
+    --_toast-icon-color: var(--bq-toast--icon-color-error);
+  }
+
+  :host([type='loading']) {
+    --_toast-icon-color: var(--bq-toast--icon-color-loading);
+  }
+
+  :host([type='loading']) .bq-toast__icon {
     @include animation-spin;
-    @apply text-[--bq-toast--icon-color-loading];
   }
 
-  &.custom {
-    @apply text-[--bq-toast--icon-color-custom];
+  :host([type='custom']) {
+    --_toast-icon-color: var(--bq-toast--icon-color-custom);
+  }
+}
+
+/* --------------------------------- States --------------------------------- */
+
+@layer bq-toast.states {
+  :host(:not([open])),
+  :host([hide-icon]) .bq-toast__icon {
+    display: none;
   }
 }
