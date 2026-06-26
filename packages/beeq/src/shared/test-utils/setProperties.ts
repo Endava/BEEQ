@@ -8,7 +8,7 @@ export type BqHTMLTagNameMap = keyof {
 
 /**
  * Enhances page to set and retrieve properties based on attributes parameter. It typed against bq web components
- * @param {E2EPage} page - stencil instance of puppeteer page
+ * @param {E2EPage} page - Stencil E2E page instance
  * @param {String} element - element selector
  * @param {Object} attributes - attributes that will be set on element instance
  * @returns {Object} attributes that were set on element instance
