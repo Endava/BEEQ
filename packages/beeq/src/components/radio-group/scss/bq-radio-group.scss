@@ -1,23 +1,35 @@
 /* -------------------------------------------------------------------------- */
-/*                                Radio group styles                               */
+/*                              Radio group styles                             */
 /* -------------------------------------------------------------------------- */
 
+/* ---------------------------------- Host ---------------------------------- */
+
 :host {
-  @apply inline-block;
+  display: inline-block;
 }
 
+/* ---------------------------------- Base ---------------------------------- */
+
 .bq-radio-group {
-  @apply m-b-0 m-i-0;
+  margin-block: 0;
+  margin-inline: 0;
+}
 
-  &:not(.has-fieldset) {
-    @apply border-0 m-b-0 m-i-0 p-b-0 p-i-0;
-  }
+/* ------------------------------- Structure -------------------------------- */
 
-  &--horizontal {
-    @apply flex;
-  }
+[part='group'] {
+  display: flex;
+  flex-direction: column;
+}
 
-  &--vertical {
-    @apply flex flex-col;
-  }
+/* -------------------------------- Variants -------------------------------- */
+
+:host(:not([fieldset])) .bq-radio-group {
+  padding-block: 0;
+  padding-inline: 0;
+  border: 0;
+}
+
+:host([orientation='horizontal']) [part='group'] {
+  flex-direction: row;
 }
