@@ -91,14 +91,13 @@ foundations/
 fonts/
   _outfit.scss
   _poppins.scss
-  index.scss
 
-utilities/
-  _focus.scss
+public/
+  _defaults.scss
   _link.scss
-  _portal.scss
-  _scroll-lock.scss
-  _table.scss
+  _body.scss
+  _portals.scss
+  _table.scss      # later, when table styles are migrated
   index.scss
 
 mixins/
@@ -125,7 +124,11 @@ Responsibilities:
 | `_theme-endava.scss` | Endava theme root aliases |
 | `_modes.scss` | Light/dark semantic tokens |
 | `_interaction.scss` | Focus, hover, active, disabled, state-mix tokens |
-| `utilities/_focus.scss` | Optional light DOM `.bq-focus-ring` utility class |
+| `public/_defaults.scss` | Public root defaults needed by BEEQ classes and components |
+| `public/_link.scss` | Public `.bq-link` class |
+| `public/_body.scss` | Library-managed public body state classes |
+| `public/_portals.scss` | Public notification/toast portal classes |
+| `public/_table.scss` | Public `.bq-table` classes, once table is migrated |
 | `mixins/_focus-ring.scss` | `@mixin bq-focus-ring` only |
 | `mixins/_color-mix.scss` | Hover/active color, background, and border mixins |
 | `mixins/_scrollbar.scss` | Native scrollbar mixins; no `@apply` |
@@ -192,7 +195,7 @@ Do not remove `::backdrop` until dialog/drawer top-layer smoke tests prove it is
 Global layer order:
 
 ```scss
-@layer bq.reset, bq.tokens, bq.themes, bq.base, bq.utilities, bq.overrides;
+@layer bq.reset, bq.tokens, bq.themes, bq.base, bq.public, bq.overrides;
 ```
 
 Every global partial must place emitted declarations inside a layer. Avoid unlayered declarations in global styles because unlayered author styles override layered styles.
@@ -206,13 +209,13 @@ Global placement:
 | Theme aliases | `bq.themes` |
 | Mode semantic tokens | `bq.themes` |
 | Typography foundations | `bq.base` |
-| `.bq-link`, portals, scroll lock, `.bq-table` | `bq.utilities` |
+| Public global classes: `.bq-link`, body states, portals, `.bq-table` | `bq.public` |
 | Intentional consumer-facing escape hatches | `bq.overrides` |
 
 For complex components, declare the full shadow-root order at the top of the component stylesheet:
 
 ```scss
-@layer bq.reset, bq.tokens, bq.themes, bq.base, bq.utilities, bq.overrides,
+@layer bq.reset, bq.tokens, bq.themes, bq.base, bq.public, bq.overrides,
   bq-button.tokens, bq-button.base, bq-button.structure, bq-button.variants,
   bq-button.states, bq-button.parts;
 ```
@@ -700,6 +703,7 @@ Update `packages/beeq/stencil.config.ts`:
 - Keep `sass(...)`.
 - Keep `globalStyle: './src/global/styles/default.scss'`.
 - Keep `injectGlobalPaths` pointing at `src/global/styles/mixins/index.scss`; add new mixins through that index.
+- Keep component/global SCSS partials free of local mixin imports when they rely on shared BEEQ mixins; Stencil injects `mixins/index.scss`.
 
 Stencil only handles one `globalStyle`, so add a dedicated styles build.
 
@@ -726,6 +730,8 @@ packages/beeq/src/global/styles/typography.scss
 packages/beeq/src/global/styles/default.scss
   -> packages/beeq/.storybook/assets/css/stories.css
 ```
+
+For the Storybook/default.scss path, `build-styles.mjs` must mirror Stencil's `injectGlobalPaths` behavior by prepending `src/global/styles/mixins/index.scss` before compiling. The standalone token/reset/typography entrypoints should not receive that mixin prelude unless they start using mixins.
 
 Stencil remains responsible for:
 
@@ -865,23 +871,24 @@ Acceptance:
 - `node packages/beeq/scripts/build-styles.mjs` produces extra CSS entrypoints.
 - `_scrollbar.scss` contains no `@apply`.
 
-### Phase 2 — Global Utilities, Mixins, And Table
+### Phase 2 — Public Global Classes, Mixins, And Table
 
 Rewrite without Tailwind:
 
 ```text
-packages/beeq/src/global/styles/_components.scss
 packages/beeq/src/global/styles/_table.scss
-packages/beeq/src/global/styles/utils/_utility.scss
-packages/beeq/src/global/styles/utils/_typography.scss
+packages/beeq/src/global/styles/public/_defaults.scss
+packages/beeq/src/global/styles/public/_link.scss
+packages/beeq/src/global/styles/public/_body.scss
+packages/beeq/src/global/styles/public/_portals.scss
 packages/beeq/src/global/styles/mixins/_scrollbar.scss
 ```
 
 Tasks:
 
 - Keep `.bq-table` and `.bq-table--container` API stable.
-- Keep `.bq-link`, portals, scroll lock, and typography utility APIs stable.
-- Place emitted utility declarations in `bq.utilities`.
+- Keep `.bq-link`, library-managed body state classes, portals, scroll lock, and typography APIs stable.
+- Place emitted public class declarations in `bq.public`.
 - Keep mixins layer-free unless emitted at include sites.
 - Run table stories/E2E after `_table.scss` migration.
 
@@ -1046,7 +1053,7 @@ PR guidance:
 - One PR for agent guardrails and migration instructions.
 - One PR for global token/style infrastructure.
 - One PR for Stylelint config and migration guardrails.
-- One PR for global utilities, table, and scrollbar mixin.
+- One PR for public global classes, table, and scrollbar mixin.
 - One pilot PR for `button` or `input`.
 - One PR per complex component.
 - One PR per small group of simple components.

@@ -1,7 +1,7 @@
 ---
 name: migrate-tailwind-to-scss
-description: 'Migrate BEEQ @beeq/core styles from Tailwind CSS to native SCSS/CSS. Use for: removing @apply, replacing Tailwind theme(...) calls, moving visual Tailwind class strings out of Stencil render() output, migrating global styles/mixins/table utilities, applying logical CSS properties, adding selective @layer usage, validating Stylelint/build checks, and following the Tailwind migration plan.'
-argument-hint: 'Component or area to migrate, e.g. "button", "global utilities", "stylelint", "build cleanup"'
+description: 'Migrate BEEQ @beeq/core styles from Tailwind CSS to native SCSS/CSS. Use for: removing @apply, replacing Tailwind theme(...) calls, moving visual Tailwind class strings out of Stencil render() output, migrating public global classes/mixins/table styles, applying logical CSS properties, adding selective @layer usage, validating Stylelint/build checks, and following the Tailwind migration plan.'
+argument-hint: 'Component or area to migrate, e.g. "button", "public global classes", "stylelint", "build cleanup"'
 ---
 
 # Migrate Tailwind To Native SCSS
@@ -21,7 +21,7 @@ argument-hint: 'Component or area to migrate, e.g. "button", "global utilities",
 
 - For a component, migrate `bq-<name>.tsx`, `scss/bq-<name>.scss`, `scss/bq-<name>.variables.scss`, stories, and tests as one unit.
 - For global foundations, migrate tokens, reset, typography, fonts, and interaction/mixin structure according to the plan.
-- For global utilities, migrate `.bq-table`, `.bq-link`, portals, scroll lock, typography utilities, and scrollbar mixins while preserving public class APIs.
+- For public global classes, migrate `.bq-table`, `.bq-link`, portals, body state classes, root defaults, typography classes, and scrollbar mixins while preserving public class APIs.
 - For build cleanup, remove Tailwind from the `packages/beeq` Stencil/Storybook/PostCSS path only after component/global styles no longer depend on it.
 - For Stylelint, keep migration-tolerant config until the final strict flip.
 - For review-only requests, report remaining Tailwind usage, public API risks, and missing validation.
@@ -68,7 +68,7 @@ argument-hint: 'Component or area to migrate, e.g. "button", "global utilities",
 1. Keep the global style structure from the migration plan.
 2. Keep primitive tokens on `:root, ::backdrop` until dialog/drawer top-layer QA proves otherwise.
 3. Place emitted global declarations inside the documented global cascade layers.
-4. Keep `.bq-table`, `.bq-table--container`, `.bq-link`, portal, scroll-lock, and typography utility APIs stable.
+4. Keep `.bq-table`, `.bq-table--container`, `.bq-link`, portal, scroll-lock, and typography public APIs stable.
 5. Remove `@apply` from globally injected mixins before removing Tailwind from the build.
 6. Keep mixins runtime-layer-free unless their declarations are emitted at include sites.
 
@@ -77,6 +77,8 @@ argument-hint: 'Component or area to migrate, e.g. "button", "global utilities",
 - Do not add `stencil-tailwind-plugin`, Tailwind CLI, or Tailwind PostCSS usage back into `packages/beeq`.
 - Use Stencil `autoprefixCss: true` for Stencil-built CSS after Tailwind/PostCSS removal.
 - Use the dedicated Sass styles build for token/reset/typography CSS entrypoints.
+- Keep shared BEEQ mixins available through `mixins/index.scss` injection; do not add local mixin imports to individual SCSS partials unless the file is compiled outside the BEEQ style pipeline.
+- Ensure standalone Sass paths, especially Storybook `default.scss` compilation, mirror Stencil's mixin injection.
 - Use Stylelint built-in `property-layout-mappings`, not `stylelint-use-logical`.
 - Keep `packages/beeq-tailwindcss` functional but separate from the `@beeq/core` runtime styling path.
 - Keep `beeq:stylelint` migration-tolerant until the final strict flip.
