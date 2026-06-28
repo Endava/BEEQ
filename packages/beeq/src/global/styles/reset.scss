@@ -1,0 +1,5 @@
+// Public build entrypoint for dist/beeq/dist/beeq/reset.css.
+// The reset declarations live in foundations/ because default.scss imports the
+// same reset for the full beeq.css bundle.
+@import './foundations/layers';
+@import './foundations/reset';
