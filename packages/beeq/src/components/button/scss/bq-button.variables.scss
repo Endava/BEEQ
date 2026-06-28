@@ -18,20 +18,20 @@
    * @prop --bq-button--large-paddingY - Button large padding inline (left and right)
    * @prop --bq-button--large-font-size - Button large font size
    */
-  --bq-button--border-color: theme(borderColor.transparent);
-  --bq-button--border-radius: theme(borderRadius.m);
+  --bq-button--border-color: transparent;
+  --bq-button--border-radius: var(--bq-radius--m);
   --bq-button--border-style: solid;
-  --bq-button--border-width: theme(borderWidth.m);
+  --bq-button--border-width: var(--bq-stroke-m);
 
-  --bq-button--small-paddingX: theme(spacing.xs);
-  --bq-button--small-paddingY: calc(theme(spacing.xs2) - var(--bq-button--border-width));
-  --bq-button--small-font-size: theme(fontSize.m);
+  --bq-button--small-paddingX: var(--bq-spacing-xs);
+  --bq-button--small-paddingY: calc(var(--bq-spacing-xs2) - var(--bq-button--border-width));
+  --bq-button--small-font-size: var(--bq-font-size--m);
 
-  --bq-button--medium-paddingX: theme(spacing.m);
-  --bq-button--medium-paddingY: calc(theme(spacing.s) - var(--bq-button--border-width));
-  --bq-button--medium-font-size: theme(fontSize.m);
+  --bq-button--medium-paddingX: var(--bq-spacing-m);
+  --bq-button--medium-paddingY: calc(var(--bq-spacing-s) - var(--bq-button--border-width));
+  --bq-button--medium-font-size: var(--bq-font-size--m);
 
-  --bq-button--large-paddingX: theme(spacing.l);
-  --bq-button--large-paddingY: calc(theme(spacing.m) - var(--bq-button--border-width));
-  --bq-button--large-font-size: theme(fontSize.m);
+  --bq-button--large-paddingX: var(--bq-spacing-l);
+  --bq-button--large-paddingY: calc(var(--bq-spacing-m) - var(--bq-button--border-width));
+  --bq-button--large-font-size: var(--bq-font-size--m);
 }
