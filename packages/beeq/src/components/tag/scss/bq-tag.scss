@@ -2,9 +2,13 @@
 /*                                 Tag styles                                 */
 /* -------------------------------------------------------------------------- */
 
-@import './bq-tag.variables';
+@use 'sass:meta';
 @layer bq.reset, bq.tokens, bq.themes, bq.base, bq.utilities, bq.overrides,
   bq-tag.tokens, bq-tag.base, bq-tag.structure, bq-tag.variants, bq-tag.states, bq-tag.parts;
+
+@layer bq-tag.tokens {
+  @include meta.load-css('./bq-tag.variables');
+}
 
 /* ---------------------------------- Host ---------------------------------- */
 
