@@ -97,7 +97,7 @@ public/
   _link.scss
   _body.scss
   _portals.scss
-  _table.scss      # later, when table styles are migrated
+  _table.scss
   index.scss
 
 mixins/
@@ -128,7 +128,7 @@ Responsibilities:
 | `public/_link.scss` | Public `.bq-link` class |
 | `public/_body.scss` | Library-managed public body state classes |
 | `public/_portals.scss` | Public notification/toast portal classes |
-| `public/_table.scss` | Public `.bq-table` classes, once table is migrated |
+| `public/_table.scss` | Public `.bq-table` and `.bq-table--container` classes |
 | `mixins/_focus-ring.scss` | `@mixin bq-focus-ring` only |
 | `mixins/_color-mix.scss` | Hover/active color, background, and border mixins |
 | `mixins/_scrollbar.scss` | Native scrollbar mixins; no `@apply` |
@@ -876,11 +876,11 @@ Acceptance:
 Rewrite without Tailwind:
 
 ```text
-packages/beeq/src/global/styles/_table.scss
 packages/beeq/src/global/styles/public/_defaults.scss
 packages/beeq/src/global/styles/public/_link.scss
 packages/beeq/src/global/styles/public/_body.scss
 packages/beeq/src/global/styles/public/_portals.scss
+packages/beeq/src/global/styles/public/_table.scss
 packages/beeq/src/global/styles/mixins/_scrollbar.scss
 ```
 
@@ -890,7 +890,7 @@ Tasks:
 - Keep `.bq-link`, library-managed body state classes, portals, scroll lock, and typography APIs stable.
 - Place emitted public class declarations in `bq.public`.
 - Keep mixins layer-free unless emitted at include sites.
-- Run table stories/E2E after `_table.scss` migration.
+- Run table stories/E2E after `public/_table.scss` migration.
 
 Acceptance:
 
