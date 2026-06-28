@@ -70,7 +70,7 @@ export class BqDropdown {
   // ====================
 
   private dropdownPanelId = `bq-dropdown-panel-${++id}`;
-  private triggerElem: HTMLElement;
+  private triggerElem?: HTMLElement;
 
   // Reference to host HTML element
   // ===================================
@@ -146,7 +146,7 @@ export class BqDropdown {
   // =====================================
 
   componentDidLoad() {
-    this.triggerElem = this.el.querySelector('[slot="trigger"]');
+    this.triggerElem = this.el.querySelector<HTMLElement>('[slot="trigger"]') ?? undefined;
     this.triggerElem?.addEventListener('click', this.togglePanel);
 
     this.handleDisabledChange();
@@ -228,12 +228,7 @@ export class BqDropdown {
     return (
       <div class="bq-dropdown" part="base">
         {/* TRIGGER CONTAINER */}
-        <div
-          aria-controls={this.dropdownPanelId}
-          aria-haspopup="true"
-          class="bq-dropdown__trigger block"
-          part="trigger"
-        >
+        <div aria-controls={this.dropdownPanelId} aria-haspopup="true" class="bq-dropdown__trigger" part="trigger">
           <slot name="trigger" />
         </div>
         {/* PANEL */}

@@ -21,6 +21,7 @@ argument-hint: 'Path to the component tsx file (e.g. packages/beeq/src/component
 Read these before evaluating:
 - [StencilJS instructions](../../instructions/stenciljs.instructions.md)
 - [Styles instructions](../../instructions/styles.instructions.md)
+- [Tailwind to native SCSS migration instructions](../../instructions/tailwind-to-native-scss.instructions.md)
 - [Accessibility instructions](../../instructions/accessibility.instructions.md)
 - [Testing instructions](../../instructions/testing.instructions.md)
 
@@ -58,7 +59,7 @@ For each category below, mark ✅ pass, ⚠️ needs improvement, or ❌ fail, a
 - [ ] Private methods use arrow functions with the `private` keyword
 - [ ] All public methods are `async`
 - [ ] Type parameters are prefixed with `T` (e.g. `TButtonSize`)
-- [ ] SCSS class names follow BEM
+- [ ] SCSS class names use BEEQ semantic hooks only where needed, not full BEM everywhere
 
 #### C. JSDoc Completeness
 - [ ] Component-level JSDoc block present above `@Component({})`
@@ -93,12 +94,18 @@ For each category below, mark ✅ pass, ⚠️ needs improvement, or ❌ fail, a
 #### F. Styling
 - [ ] Styles are in `scss/` subdirectory, not the component root
 - [ ] `styleUrl` in the decorator references `./scss/bq-<name>.scss`
-- [ ] Tailwind `@apply` used for abstracting long utility combinations
+- [ ] No Tailwind `@apply`
+- [ ] No Tailwind `theme(...)`
+- [ ] No visual Tailwind utility strings in Shadow DOM render output
+- [ ] CSS logical properties are used for layout, sizing, spacing, positioning, borders, and radii
 - [ ] No `!important` unless absolutely required
 - [ ] CSS custom properties defined in `bq-<name>.variables.scss`
+- [ ] Public `--bq-*` custom property names are preserved
 - [ ] SCSS file imports the variables file first
 - [ ] No global styles; all styles are component-scoped
-- [ ] BEM naming for extra CSS classes
+- [ ] BEEQ semantic class hooks are used only where needed
+- [ ] SCSS nesting depth is `2` or less
+- [ ] Shared mixins/tokens are used for repeated focus, hover, and active patterns
 - [ ] Focus styles are visible and meet contrast requirements
 - [ ] `prefers-reduced-motion` considered for animations
 

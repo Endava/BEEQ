@@ -12,7 +12,6 @@ export const reset: CSSRuleObject | CSSRuleObject[] = {
   /* Remove default margin and inherit font styles */
   '*': {
     margin: '0',
-    font: 'inherit',
   },
   /* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
   'ul[role="list"], ol[role="list"]': {

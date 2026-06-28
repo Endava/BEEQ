@@ -1,0 +1,6 @@
+@mixin bq-text-style($size, $line-height: regular, $weight: regular, $family: inherit) {
+  font-family: $family;
+  font-size: var(--bq-font-size--#{$size});
+  font-weight: var(--bq-font-weight--#{$weight});
+  line-height: var(--bq-font-line-height--#{$line-height});
+}

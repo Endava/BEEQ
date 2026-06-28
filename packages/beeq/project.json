@@ -56,6 +56,22 @@
       "continuous": true
     },
     "build": {
+      "dependsOn": [{ "target": "build-stencil" }],
+      "executor": "nx:run-commands",
+      "outputs": [
+        "{workspaceRoot}/dist/beeq",
+        "{projectRoot}/.storybook/custom-elements.json",
+        "{workspaceRoot}/packages/beeq-angular/src/directives",
+        "{workspaceRoot}/packages/beeq-angular/standalone/src/directives",
+        "{workspaceRoot}/packages/beeq-react/src/components.ts",
+        "{workspaceRoot}/packages/beeq-vue/src/components.ts",
+        "{workspaceRoot}/packages/beeq-vue/src/vue-component-lib"
+      ],
+      "options": {
+        "command": "node packages/beeq/scripts/build-styles.mjs"
+      }
+    },
+    "build-stencil": {
       "dependsOn": [{ "target": "icons" }, { "target": "build", "projects": "beeq-tailwindcss" }, { "target": "cem" }],
       "executor": "@nxext/stencil:build",
       "outputs": [
@@ -100,7 +116,7 @@
       "executor": "nx:run-commands",
       "outputs": ["{projectRoot}/.storybook/assets/css"],
       "options": {
-        "command": "pnpm exec tailwindcss -i packages/beeq/src/global/styles/default.scss -o packages/beeq/.storybook/assets/css/stories.css --postcss ./postcss.config.js --watch"
+        "command": "node packages/beeq/scripts/build-styles.mjs --storybook --watch"
       },
       "continuous": true
     },
@@ -108,7 +124,18 @@
       "executor": "nx:run-commands",
       "outputs": ["{projectRoot}/.storybook/assets/css"],
       "options": {
-        "command": "pnpm exec tailwindcss -i packages/beeq/src/global/styles/default.scss -o packages/beeq/.storybook/assets/css/stories.css --postcss ./postcss.config.js --minify"
+        "command": "node packages/beeq/scripts/build-styles.mjs --storybook --minify"
+      }
+    },
+    "styles": {
+      "executor": "nx:run-commands",
+      "outputs": [
+        "{workspaceRoot}/dist/beeq/dist/beeq/tokens.css",
+        "{workspaceRoot}/dist/beeq/dist/beeq/reset.css",
+        "{workspaceRoot}/dist/beeq/dist/beeq/typography.css"
+      ],
+      "options": {
+        "command": "node packages/beeq/scripts/build-styles.mjs"
       }
     },
     "cem": {
@@ -174,6 +201,13 @@
         "lintFilePatterns": ["{projectRoot}/**/*.css", "{projectRoot}/**/*.scss"],
         "configFile": "packages/beeq/.stylelintrc.json",
         "ignorePath": ".gitignore"
+      }
+    },
+    "stylelint-strict": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "pnpm exec stylelint \"src/**/*.{css,scss}\" --config .stylelintrc.strict.json",
+        "cwd": "packages/beeq"
       }
     },
     "prepare-storybook": {

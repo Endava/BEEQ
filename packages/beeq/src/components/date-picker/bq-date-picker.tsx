@@ -174,16 +174,16 @@ export class BqDatePicker {
   // Reference to host HTML element
   // ===================================
 
-  @AttachInternals() internals: ElementInternals;
   @Element() el!: HTMLBqDatePickerElement;
+  @AttachInternals() internals!: ElementInternals;
 
   // State() variables
   // Inlined decorator, alphabetical order
   // =======================================
 
   @State() isCallyLoaded = false;
-  @State() focusedDate: string;
-  @State() displayDate: string;
+  @State() focusedDate?: string;
+  @State() displayDate?: string;
   @State() hasLabel = false;
   @State() hasPrefix = false;
   @State() hasRangeEnd = false;
@@ -194,25 +194,25 @@ export class BqDatePicker {
   // ========================
 
   /** If `true`, the Date picker input will be focused on component render */
-  @Prop({ reflect: true }) autofocus: boolean;
+  @Prop({ reflect: true }) autofocus: boolean = false;
 
   /** The clear button aria label */
-  @Prop({ reflect: true }) clearButtonLabel? = 'Clear value';
+  @Prop({ reflect: true }) clearButtonLabel: string = 'Clear value';
 
   /** If `true`, the clear button won't be displayed */
-  @Prop({ reflect: true }) disableClear? = false;
+  @Prop({ reflect: true }) disableClear: boolean = false;
 
   /**
    * Indicates whether the Date picker input is disabled or not.
    * If `true`, the Date picker is disabled and cannot be interacted with.
    */
-  @Prop({ mutable: true }) disabled?: boolean = false;
+  @Prop({ mutable: true }) disabled: boolean = false;
 
   /** Represents the distance (gutter or margin) between the Date picker panel and the input element. */
-  @Prop({ reflect: true }) distance?: number = 8;
+  @Prop({ reflect: true }) distance: number = 8;
 
   /** The first day of the week, where Sunday is 0, Monday is 1, etc */
-  @Prop({ reflect: true }) firstDayOfWeek?: DaysOfWeek = 1;
+  @Prop({ reflect: true }) firstDayOfWeek: DaysOfWeek = 1;
 
   /** The options to use when formatting the displayed value.
    * Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat#using_options
@@ -244,7 +244,7 @@ export class BqDatePicker {
   @Prop({ reflect: true }) min?: string;
 
   /** Number of months to show when range is `true` */
-  @Prop({ reflect: true }) months: number;
+  @Prop({ reflect: true }) months?: number;
 
   /**
    * Specifies how the next/previous buttons should navigate the calendar.
@@ -272,7 +272,7 @@ export class BqDatePicker {
   @Prop({ reflect: true }) required?: boolean;
 
   /** Represents the skidding between the Date picker panel and the input element. */
-  @Prop({ reflect: true }) skidding?: number = 0;
+  @Prop({ reflect: true }) skidding: number = 0;
 
   /** Whether to show days outside the month */
   @Prop({ reflect: true }) showOutsideDays: boolean = false;
@@ -300,7 +300,7 @@ export class BqDatePicker {
 
   /** The select input value represents the currently selected date or range and can be used to reset the field to a previous value.
    * All dates are expected in ISO-8601 format (YYYY-MM-DD). */
-  @Prop({ reflect: true, mutable: true }) value: string;
+  @Prop({ reflect: true, mutable: true }) value?: string;
 
   // Prop lifecycle events
   // =======================
@@ -312,7 +312,7 @@ export class BqDatePicker {
     const { formatOptions, internals, isCallyLoaded, locale, type } = this;
     if (!isCallyLoaded) return;
 
-    internals.setFormValue(!isNil(newValue) ? `${newValue}` : undefined);
+    internals?.setFormValue(!isNil(newValue) ? `${newValue}` : null);
     this.updateFormValidity();
 
     this.hasValue = isDefined(newValue);
@@ -362,7 +362,7 @@ export class BqDatePicker {
 
   componentDidLoad() {
     this.handleSlotChange();
-    this.handleValueChange(this.value, undefined);
+    this.handleValueChange(this.value ?? '', '');
   }
 
   componentDidRender() {
@@ -420,7 +420,7 @@ export class BqDatePicker {
     if (this.disabled) return;
 
     this.value = undefined;
-    this.internals.setFormValue(undefined);
+    this.internals.setFormValue(null);
     this.bqClear.emit(this.el);
   }
 
@@ -458,7 +458,7 @@ export class BqDatePicker {
     const { callyElem, isCallyLoaded, value } = this;
     if (!callyElem || !isCallyLoaded) return;
 
-    const nextFocused = value ? extractFocusedDate(value) : getTodayISO();
+    const nextFocused = (value ? extractFocusedDate(value) : undefined) ?? getTodayISO();
     if (this.focusedDate === nextFocused) return;
 
     this.focusedDate = nextFocused;
@@ -481,7 +481,7 @@ export class BqDatePicker {
     const inputValue = ev.target.value.trim();
     if (!inputValue) {
       this.clearValue();
-      this.bqChange.emit({ value: this.value, el: this.el });
+      this.bqChange.emit({ value: this.value ?? '', el: this.el });
       return;
     }
 
@@ -489,7 +489,7 @@ export class BqDatePicker {
     const dateValue = parseDateInput(inputValue, this.locale);
     if (!dateValue) {
       // Invalid date: don't update component value to avoid side effects
-      this.internals.setFormValue(undefined);
+      this.internals.setFormValue(null);
       this.updateFormValidity();
       this.bqChange.emit({ value: inputValue, el: this.el });
       return;
@@ -497,7 +497,7 @@ export class BqDatePicker {
 
     // Check if date is disallowed
     if (this.isDateDisallowed?.(dateValue)) {
-      this.internals.setFormValue(undefined);
+      this.internals.setFormValue(null);
       this.updateFormValidity();
       this.bqChange.emit({ value: inputValue, el: this.el });
       return;
@@ -521,7 +521,7 @@ export class BqDatePicker {
    * @returns {void}
    */
   private handleCalendarChange = (ev: Event): void => {
-    if (this.isInternalUpdate) return;
+    if (this.isInternalUpdate || !this.inputElem) return;
 
     const shouldStayOpen = this.type === 'multi';
     const value = (ev.target as unknown as { value: string }).value;
@@ -534,7 +534,7 @@ export class BqDatePicker {
     this.isInternalUpdate = true;
 
     this.value = value;
-    this.displayDate = formatDisplayValue(value, this.type, this.locale, this.formatOptions);
+    this.displayDate = formatDisplayValue(value, this.type, this.locale, this.formatOptions) ?? '';
     this.inputElem.value = this.displayDate;
     this.inputElem.focus();
 
@@ -568,14 +568,14 @@ export class BqDatePicker {
    * @returns {void}
    */
   private handleClearClick = (ev: CustomEvent): void => {
-    if (this.disabled) return;
+    if (this.disabled || !this.inputElem) return;
 
     this.inputElem.value = '';
     this.clearValue();
     this.hasRangeEnd = false;
 
     this.bqClear.emit(this.el);
-    this.bqChange.emit({ value: this.value, el: this.el });
+    this.bqChange.emit({ value: this.value ?? '', el: this.el });
     this.inputElem.focus();
 
     ev.stopPropagation();
@@ -588,7 +588,7 @@ export class BqDatePicker {
   private clearValue = (): void => {
     this.value = undefined;
     this.displayDate = undefined;
-    this.internals.setFormValue(undefined);
+    this.internals.setFormValue(null);
   };
 
   /**
@@ -607,11 +607,9 @@ export class BqDatePicker {
    * @param {string} className - The class name of the calendar month.
    * @returns {JSX.Element | null} The calendar month element.
    */
-  private generateCalendarMonth = (offset?: number, className: string = ''): JSX.Element | null => {
-    if (!this.isCallyLoaded) return null;
-
-    return <calendar-month class={className} exportparts={CALENDAR_MONTH_EXPORT_PARTS} offset={offset} />;
-  };
+  private generateCalendarMonth = (offset?: number, className = ''): JSX.Element => (
+    <calendar-month class={className} exportparts={CALENDAR_MONTH_EXPORT_PARTS} offset={offset} />
+  );
 
   /**
    * Generates an array of Elements representing the calendar months.
@@ -629,15 +627,14 @@ export class BqDatePicker {
   private generateCalendarMonths = (): JSX.Element[] => {
     if (!this.isCallyLoaded) return [];
 
-    if (this.type === 'range' || (this.type === 'multi' && this.months)) {
-      return Array.from({ length: this.months }, (_, i) => {
-        const offset = i > 0 ? i : undefined;
-        const className = offset ? 'hidden sm:block' : '';
-        return this.generateCalendarMonth(offset, className);
-      });
-    }
+    const monthCount = this.type === 'range' || this.type === 'multi' ? Math.max(1, this.months ?? 1) : 1;
 
-    return [this.generateCalendarMonth()];
+    return Array.from({ length: monthCount }, (_, i) => {
+      const offset = i > 0 ? i : undefined;
+      const className = offset ? 'hidden sm:block' : '';
+
+      return this.generateCalendarMonth(offset, className);
+    });
   };
 
   /**
@@ -683,7 +680,7 @@ export class BqDatePicker {
           class={{ 'bq-date-picker__label': true, '!hidden': !this.hasLabel }}
           htmlFor={this.name || DEFAULT_INPUT_ID}
           part="label"
-          ref={(labelElem: HTMLSpanElement) => {
+          ref={(labelElem?: HTMLSpanElement) => {
             this.labelElem = labelElem;
           }}
         >
@@ -715,7 +712,7 @@ export class BqDatePicker {
             <span
               class={{ 'bq-date-picker__control--prefix': true, '!hidden': !this.hasPrefix }}
               part="prefix"
-              ref={(spanElem: HTMLSpanElement) => {
+              ref={(spanElem?: HTMLSpanElement) => {
                 this.prefixElem = spanElem;
               }}
             >
@@ -741,7 +738,7 @@ export class BqDatePicker {
               part="input"
               placeholder={this.placeholder}
               readonly={this.type !== 'single'}
-              ref={(inputElem: HTMLInputElement) => {
+              ref={(inputElem?: HTMLInputElement) => {
                 this.inputElem = inputElem;
               }}
               required={this.required}
@@ -773,7 +770,7 @@ export class BqDatePicker {
             <span
               class="bq-date-picker__control--suffix"
               part="suffix"
-              ref={(spanElem: HTMLSpanElement) => {
+              ref={(spanElem?: HTMLSpanElement) => {
                 this.suffixElem = spanElem;
               }}
             >
@@ -797,7 +794,7 @@ export class BqDatePicker {
               onRangeend={this.handleCalendarRangeEnd}
               onRangestart={this.handleCalendarRangeStart}
               pageBy={this.monthsPerView}
-              ref={(elem: TCalendarDate) => {
+              ref={(elem?: TCalendarDate) => {
                 this.callyElem = elem;
               }}
               role="dialog"

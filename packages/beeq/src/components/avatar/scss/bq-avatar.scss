@@ -4,31 +4,94 @@
 
 @import './bq-avatar.variables';
 
+/* ---------------------------------- Host ---------------------------------- */
+
 :host {
-  @apply relative inline-block;
+  --_avatar-size: var(--bq-avatar--size-medium);
+  --_avatar-font-size: var(--bq-avatar--font-size-medium);
+  --_avatar-border-radius: var(--bq-avatar--border-radius-circle);
+  --_avatar-badge-inset-block-start: var(--bq-avatar--badge-top-circle);
+  --_avatar-badge-inset-inline-start: var(--bq-avatar--badge-left-circle);
+
+  position: relative;
+  display: inline-block;
 }
+
+/* ---------------------------------- Base ---------------------------------- */
 
 .bq-avatar {
-  @apply relative overflow-hidden bg-[var(--bq-avatar-background)];
-  @apply border-[length:var(--bq-avatar--border-width)] border-[color:var(--bq-avatar--border-color)];
-
+  position: relative;
+  overflow: hidden;
+  block-size: var(--_avatar-size);
+  inline-size: var(--_avatar-size);
+  color: var(--bq-text--primary);
+  font-size: var(--_avatar-font-size);
+  background-color: var(--bq-avatar--background);
+  border-color: var(--bq-avatar--border-color);
+  border-radius: var(--_avatar-border-radius);
   border-style: var(--bq-avatar--border-style);
+  border-width: var(--bq-avatar--border-width);
 }
 
-.size {
-  &--xsmall {
-    @apply text-[length:var(--bq-avatar--font-size-xsmall)] bs-[--bq-avatar--size-xsmall] is-[--bq-avatar--size-xsmall];
-  }
+/* ------------------------------- Structure -------------------------------- */
 
-  &--small {
-    @apply text-[length:var(--bq-avatar--font-size-small)] bs-[--bq-avatar--size-small] is-[--bq-avatar--size-small];
-  }
+.bq-avatar__text {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  block-size: 100%;
+  inline-size: 100%;
+  font-weight: var(--bq-font-weight--bold);
+}
 
-  &--medium {
-    @apply text-[length:var(--bq-avatar--font-size-medium)] bs-[--bq-avatar--size-medium] is-[--bq-avatar--size-medium];
-  }
+.bq-avatar__image {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  block-size: 100%;
+  inline-size: 100%;
+  object-fit: cover;
+}
 
-  &--large {
-    @apply text-[length:var(--bq-avatar--font-size-large)] bs-[--bq-avatar--size-large] is-[--bq-avatar--size-large];
-  }
+.bq-avatar__badge {
+  position: absolute;
+  inset-block-start: var(--_avatar-badge-inset-block-start);
+  inset-inline-start: var(--_avatar-badge-inset-inline-start);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* -------------------------------- Variants -------------------------------- */
+
+:host([size='xsmall']) {
+  --_avatar-size: var(--bq-avatar--size-xsmall);
+  --_avatar-font-size: var(--bq-avatar--font-size-xsmall);
+}
+
+:host([size='small']) {
+  --_avatar-size: var(--bq-avatar--size-small);
+  --_avatar-font-size: var(--bq-avatar--font-size-small);
+}
+
+:host([size='large']) {
+  --_avatar-size: var(--bq-avatar--size-large);
+  --_avatar-font-size: var(--bq-avatar--font-size-large);
+}
+
+:host([shape='square']) {
+  --_avatar-border-radius: var(--bq-avatar--border-radius-squareM);
+  --_avatar-badge-inset-block-start: var(--bq-avatar--badge-top-square);
+  --_avatar-badge-inset-inline-start: var(--bq-avatar--badge-left-square);
+}
+
+:host([shape='square'][size='xsmall']) {
+  --_avatar-border-radius: var(--bq-avatar--border-radius-squareXs);
+}
+
+:host([shape='square'][size='small']) {
+  --_avatar-border-radius: var(--bq-avatar--border-radius-squareS);
 }

@@ -151,7 +151,6 @@ calendar-multi {
 }
 
 calendar-month {
-  /* stylelint-disable-next-line custom-property-pattern */
   --color-accent: var(--bq-ui--brand);
 
   &::part(button) {

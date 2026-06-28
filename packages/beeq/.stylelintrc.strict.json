@@ -1,0 +1,42 @@
+{
+  "extends": ["./.stylelintrc.json"],
+  "overrides": [
+    {
+      "files": ["src/**/*.{css,scss}"],
+      "rules": {
+        "@beeq/tailwindcss-no-quotes-in-theme-function": null,
+        "property-layout-mappings": "flow-relative",
+        "at-rule-disallowed-list": [
+          "tailwind",
+          "apply",
+          "screen",
+          "responsive",
+          "variants",
+          "config",
+          "plugin",
+          "theme",
+          "utility",
+          "variant",
+          "source",
+          "custom-variant"
+        ],
+        "function-disallowed-list": ["theme"],
+        "layer-name-pattern": "^(bq\\.[a-z0-9-]+|bq-[a-z0-9-]+\\.(tokens|base|structure|variants|validation|placement|states|parts|native|pseudo|vendor-parts|overrides))$",
+        "custom-property-pattern": "^(?:bq(?:(?:-{1,2})[a-zA-Z0-9]+)+|_[a-z][a-z0-9]*(?:-[a-z0-9]+)*)$",
+        "max-nesting-depth": [
+          2,
+          {
+            "ignore": ["blockless-at-rules"],
+            "ignoreAtRules": ["layer", "media", "supports", "container"]
+          }
+        ],
+        "scss/at-rule-no-unknown": [
+          true,
+          {
+            "ignoreAtRules": ["include", "mixin", "use", "forward"]
+          }
+        ]
+      }
+    }
+  ]
+}

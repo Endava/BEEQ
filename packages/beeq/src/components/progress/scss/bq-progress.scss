@@ -1,54 +1,140 @@
 /* -------------------------------------------------------------------------- */
-/*                        Progress styles                        */
+/*                               Progress styles                              */
 /* -------------------------------------------------------------------------- */
 
 @import './bq-progress.variables';
 
-@layer component {
-  @keyframes move-indeterminate {
-    0% {
-      inset-inline-start: 0;
-    }
-
-    100% {
-      inset-inline-start: calc(100% - var(--bq-progress-bar--indeterminateWidth));
-    }
+@keyframes move-indeterminate {
+  0% {
+    inset-inline-start: 0;
   }
 
-  .animate-indeterminate {
-    animation: move-indeterminate 1s linear 0s infinite alternate-reverse;
+  100% {
+    inset-inline-start: calc(100% - var(--bq-progress-bar--indeterminateWidth));
   }
 }
 
-.progress-bar {
-  @apply relative appearance-none bs-[--bq-progress-bar--height] is-full;
+/* ---------------------------------- Host ---------------------------------- */
+
+:host {
+  --_progress-bar-height: var(--bq-progress-bar--height);
+  --_progress-bar-indicator-color: var(--bq-progress-bar--indicatorColor);
+  --_progress-label-color: var(--bq-text--primary);
 }
 
-.progress-bar::-webkit-progress-bar {
-  @apply bg-[--bq-progress-bar--trackColor];
+/* ---------------------------------- Base ---------------------------------- */
+
+.bq-progress {
+  display: flex;
+  align-items: center;
 }
 
-.progress-bar::-webkit-progress-value {
-  @apply bg-[--bq-progress-bar--indicatorColor];
+/* ------------------------------- Structure -------------------------------- */
+
+.bq-progress__track {
+  position: relative;
+  display: flex;
+  align-items: center;
+  inline-size: 100%;
 }
 
-.progress-bar::-moz-progress-bar {
-  @apply animate-indeterminate bg-[--bq-progress-bar--indicatorColor];
+.bq-progress__bar {
+  position: relative;
+  appearance: none;
+  block-size: var(--_progress-bar-height);
+  inline-size: 100%;
+  border-radius: var(--bq-radius--full);
 }
 
-.progress-bar:indeterminate::-moz-progress-bar {
-  @apply bg-[--bq-progress-bar--trackColor];
+.bq-progress__tooltip {
+  position: absolute;
+  font-variant: tabular-nums;
 }
 
-.progress-bar.progress-bar__border-shape::-webkit-progress-value,
-.progress-bar.progress-bar__border-shape::-webkit-progress-bar {
-  @apply rounded-full;
+.bq-progress__tooltip-trigger {
+  position: absolute;
+  block-size: var(--bq-spacing-xs2);
+  inline-size: var(--bq-spacing-xs2);
 }
 
-.progress-bar__indeterminate {
-  @apply animate-indeterminate;
+.bq-progress__label {
+  visibility: hidden;
+  overflow: hidden;
+  inline-size: 0;
+  margin-inline-start: 0;
+  color: var(--_progress-label-color);
+  font-weight: var(--bq-font-weight--medium);
+  line-height: var(--bq-font-line-height--regular);
+  font-variant: tabular-nums;
 }
 
-.progress-bar.progress-bar__border-shape::-moz-progress-bar {
-  @apply animate-indeterminate rounded-full;
+/* -------------------------------- Variants -------------------------------- */
+
+:host([thickness='large']) {
+  --_progress-bar-height: var(--bq-spacing-xs);
+}
+
+:host([type='error']) {
+  --_progress-bar-indicator-color: var(--bq-ui--danger);
+  --_progress-label-color: var(--bq-text--danger);
+}
+
+:host([border-shape='square']) .bq-progress__bar,
+:host([border-shape='square']) .bq-progress__indeterminate {
+  border-radius: 0;
+}
+
+:host([border-shape='square']) .bq-progress__bar::-webkit-progress-value,
+:host([border-shape='square']) .bq-progress__bar::-webkit-progress-bar {
+  border-radius: 0;
+}
+
+:host([border-shape='square']) .bq-progress__bar::-moz-progress-bar {
+  border-radius: 0;
+}
+
+/* --------------------------------- States --------------------------------- */
+
+:host([label]:not([indeterminate])) .bq-progress__label {
+  visibility: visible;
+  overflow: visible;
+  inline-size: auto;
+  margin-inline-start: var(--bq-spacing-xs);
+}
+
+.bq-progress__indeterminate {
+  position: absolute;
+  block-size: var(--_progress-bar-height);
+  inline-size: var(--bq-progress-bar--indeterminateWidth);
+  background-color: var(--_progress-bar-indicator-color);
+  border-radius: var(--bq-radius--full);
+  animation: move-indeterminate 1s linear 0s infinite alternate-reverse;
+}
+
+/* ---------------------------------- Parts --------------------------------- */
+
+.bq-progress__tooltip::part(panel) {
+  position: absolute;
+}
+
+/* ----------------------------- Native / vendor ---------------------------- */
+
+.bq-progress__bar::-webkit-progress-bar {
+  background-color: var(--bq-progress-bar--trackColor);
+  border-radius: var(--bq-radius--full);
+}
+
+.bq-progress__bar::-webkit-progress-value {
+  background-color: var(--_progress-bar-indicator-color);
+  border-radius: var(--bq-radius--full);
+}
+
+.bq-progress__bar::-moz-progress-bar {
+  background-color: var(--_progress-bar-indicator-color);
+  border-radius: var(--bq-radius--full);
+  animation: move-indeterminate 1s linear 0s infinite alternate-reverse;
+}
+
+.bq-progress__bar:indeterminate::-moz-progress-bar {
+  background-color: var(--bq-progress-bar--trackColor);
 }
