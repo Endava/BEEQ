@@ -63,6 +63,7 @@ Buttons are designed for users to take action on a page or a screen.
 
  - [bq-alert](../alert)
  - [bq-date-picker](../date-picker)
+ - [bq-date-picker2](../date-picker2)
  - [bq-dialog](../dialog)
  - [bq-drawer](../drawer)
  - [bq-input](../input)
@@ -80,6 +81,7 @@ graph TD;
   bq-button --> bq-icon
   bq-alert --> bq-button
   bq-date-picker --> bq-button
+  bq-date-picker2 --> bq-button
   bq-dialog --> bq-button
   bq-drawer --> bq-button
   bq-input --> bq-button

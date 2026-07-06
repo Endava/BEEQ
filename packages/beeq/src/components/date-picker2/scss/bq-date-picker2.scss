@@ -1,0 +1,537 @@
+/* -------------------------------------------------------------------------- */
+/*                        Date picker v2 styles                               */
+/*                    Native SCSS — no Tailwind utilities.                    */
+/* -------------------------------------------------------------------------- */
+
+@import './bq-date-picker2.variables';
+
+:host {
+  display: block;
+  inline-size: 100%;
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Hide the label / prefix / suffix wrappers when their slots have no
+   content. Scoped rules keep specificity high enough to win over the
+   base `display: flex` declarations without needing `!important`. */
+.bq-date-picker2__label.is-hidden,
+.bq-date-picker2__prefix.is-hidden,
+.bq-date-picker2__suffix.is-hidden {
+  display: none;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                    Label                                   */
+/* -------------------------------------------------------------------------- */
+
+.bq-date-picker2__label {
+  display: flex;
+  align-items: center;
+  gap: var(--bq-date-picker2--gap);
+  margin-block-end: var(--bq-date-picker2--label-margin-bottom);
+  color: var(--bq-date-picker2--label-text-color);
+  font-size: var(--bq-date-picker2--label-text-size);
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                Dropdown                                    */
+/* -------------------------------------------------------------------------- */
+
+.bq-date-picker2__dropdown {
+  display: block;
+  inline-size: 100%;
+
+  &::part(panel) {
+    --bq-panel--width: max-content;
+
+    inline-size: max-content;
+    max-inline-size: min(calc(100vw - 2rem), 100vw);
+    padding: 1rem;
+    block-size: auto;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/*                         Input control                                      */
+/* -------------------------------------------------------------------------- */
+
+.bq-date-picker2__control {
+  display: flex;
+  align-items: center;
+  inline-size: 100%;
+  padding-block: var(--bq-date-picker2--paddingY);
+  padding-inline: var(--bq-date-picker2--padding-start) var(--bq-date-picker2--padding-end);
+  border: var(--bq-date-picker2--border-width) var(--bq-date-picker2--border-style)
+    var(--bq-date-picker2--border-color);
+  border-radius: var(--bq-date-picker2--border-radius);
+  background-color: var(--bq-date-picker2--background-color);
+  color: var(--bq-date-picker2--text-color);
+  font-size: var(--bq-date-picker2--text-size);
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+  user-select: none;
+
+  // Hover (only when not disabled and not focused). Uses the same
+  // `border-hover-brand` blend as v1 by mixing the base stroke with the
+  // theme's hover base color.
+  &:not(.is-disabled, :focus-within, .is-open):hover {
+    border-color: color-mix(
+      in srgb,
+      var(--bq-date-picker2--border-color-focus),
+      var(--bq-hover) 20%
+    );
+  }
+
+  // Focus. Border becomes the solid focus color; the ring is drawn via
+  // outline so it respects the focus token.
+  &:not(.is-disabled):is(:focus-within, .is-open) {
+    --bq-ring-width: 1px;
+    --bq-ring-offset-width: 0;
+    --bq-ring-color-focus: var(--bq-focus);
+
+    border-color: var(--bq-focus);
+    outline: var(--bq-ring-width, 2px) solid var(--bq-ring-color-focus, var(--bq-focus));
+    outline-offset: var(--bq-ring-offset-width, 1px);
+  }
+
+  &.is-disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    --bq-date-picker2--border-color: var(--bq-date-picker2--border-color-disabled);
+  }
+}
+
+/* ------------------------------- Validation ------------------------------- */
+
+// Validation states mirror v1's tailwind rules:
+// - Idle:     border = stroke-{state}
+// - Hover:    border = color-mix(stroke-{state}, hover 20%)   → border-hover-{state}
+// - Focus:    border = color-mix(stroke-{state}, active 20%)  → border-active-{state}
+//             ring   = stroke-{state}
+%dp2-validation-state {
+  --bq-date-picker2--border-color: var(--bq-date-picker2--validation-color);
+
+  &:not(.is-disabled, :focus-within, .is-open):hover {
+    border-color: color-mix(in srgb, var(--bq-date-picker2--validation-color), var(--bq-hover) 20%);
+  }
+
+  &:not(.is-disabled):is(:focus-within, .is-open) {
+    --bq-ring-color-focus: var(--bq-date-picker2--validation-color);
+
+    border-color: color-mix(in srgb, var(--bq-date-picker2--validation-color), var(--bq-active) 20%);
+  }
+}
+
+.bq-date-picker2__control.validation-error {
+  --bq-date-picker2--validation-color: var(--bq-stroke--danger);
+
+  @extend %dp2-validation-state;
+}
+
+.bq-date-picker2__control.validation-success {
+  --bq-date-picker2--validation-color: var(--bq-stroke--success);
+
+  @extend %dp2-validation-state;
+}
+
+.bq-date-picker2__control.validation-warning {
+  --bq-date-picker2--validation-color: var(--bq-stroke--warning);
+
+  @extend %dp2-validation-state;
+}
+
+/* -------------------------------- Input ---------------------------------- */
+
+.bq-date-picker2__input {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: inherit;
+
+  &::placeholder {
+    color: var(--bq-date-picker2--text-placeholder-color);
+  }
+
+  &:focus,
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+/* -------------------------- Prefix / Suffix ------------------------------ */
+
+.bq-date-picker2__prefix,
+.bq-date-picker2__suffix {
+  display: inline-flex;
+  align-items: center;
+  color: var(--bq-date-picker2--text-color);
+  pointer-events: none;
+
+  bq-icon {
+    display: inline-flex;
+    font-size: var(--bq-date-picker2--icon-size);
+  }
+}
+
+.bq-date-picker2__prefix {
+  margin-inline-end: var(--bq-date-picker2--gap);
+}
+
+.bq-date-picker2__suffix {
+  margin-inline-start: var(--bq-date-picker2--gap);
+}
+
+/* --------------------------- Clear button -------------------------------- */
+
+// The clear button is only rendered when the picker has a value, but we also
+// mirror v1's behavior: it stays hidden until the control is hovered, focused,
+// or the calendar popup is open.
+.bq-date-picker2__clear {
+  display: none;
+  margin-inline-start: var(--bq-date-picker2--gap);
+
+  &::part(button) {
+    // Reset the inherited focus ring styles inside the input group.
+    --bq-ring-width: initial;
+    --bq-ring-offset-width: initial;
+    --bq-ring-color-focus: initial;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    padding: 0;
+  }
+
+  // Avoid the inline-baseline gap that inline elements (like bq-icon)
+  // introduce inside the button. v1 relied on Tailwind's `class="flex"` on
+  // the icon; we do it here so it survives the Tailwind removal.
+  bq-icon {
+    display: flex;
+  }
+}
+
+.bq-date-picker2__control:is(:hover, :focus-within, .is-open):not(.is-disabled)
+  .bq-date-picker2__clear {
+  display: inline-flex;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                Calendar                                    */
+/* -------------------------------------------------------------------------- */
+
+.bq-date-picker2__calendar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-inline-size: 17.5rem;
+  color: var(--bq-date-picker2--text-color);
+  background-color: var(--bq-date-picker2--background-color);
+}
+
+/* ------------------------------ Header ----------------------------------- */
+
+.bq-date-picker2__header {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.bq-date-picker2__nav-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--bq-date-picker2--nav-button-size);
+  block-size: var(--bq-date-picker2--nav-button-size);
+  padding: 0;
+  border: none;
+  border-radius: var(--bq-date-picker2--view-cell-radius);
+  background: transparent;
+  color: var(--bq-date-picker2--header-title-color);
+  cursor: pointer;
+  transition: background-color 150ms ease;
+
+  &:hover:not(:disabled) {
+    background-color: var(--bq-date-picker2--view-cell-background-hover);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--bq-date-picker2--border-color-focus);
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+  }
+}
+
+.bq-date-picker2__nav-icon {
+  display: inline-flex;
+}
+
+// Mirror the caret icons in RTL contexts.
+:host-context([dir='rtl']) .bq-date-picker2__nav-icon,
+:host([dir='rtl']) .bq-date-picker2__nav-icon {
+  transform: scaleX(-1);
+}
+
+.bq-date-picker2__heading {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding-block: 0.25rem;
+  padding-inline: 0.5rem;
+  border: none;
+  border-radius: var(--bq-date-picker2--view-cell-radius);
+  background: transparent;
+  color: var(--bq-date-picker2--header-title-color);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 150ms ease;
+
+  &:hover:not(.bq-date-picker2__heading--static) {
+    background-color: var(--bq-date-picker2--view-cell-background-hover);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--bq-date-picker2--border-color-focus);
+    outline-offset: 2px;
+  }
+
+  &--static {
+    cursor: default;
+  }
+}
+
+/* ------------------------------- Panels ---------------------------------- */
+
+.bq-date-picker2__panels {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 1rem;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.bq-date-picker2__panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 0 0 auto;
+}
+
+.bq-date-picker2__month-label {
+  text-align: center;
+  font-weight: 600;
+  color: var(--bq-date-picker2--header-title-color);
+}
+
+// Multi-month panels stack vertically on narrow viewports.
+@media (width <= 40rem) {
+  .bq-date-picker2__panels {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* ------------------------------- Day grid -------------------------------- */
+
+.bq-date-picker2__table {
+  inline-size: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: inherit;
+}
+
+.bq-date-picker2__th {
+  padding-block: 0.25rem;
+  color: var(--bq-date-picker2--text-placeholder-color);
+  font-weight: 500;
+  font-size: 0.75rem;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.bq-date-picker2__td {
+  padding: 0;
+  text-align: center;
+}
+
+.bq-date-picker2__day {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--bq-date-picker2--day-size);
+  block-size: var(--bq-date-picker2--day-size);
+  padding: 0;
+  border: none;
+  border-radius: var(--bq-date-picker2--view-cell-radius);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  transition: background-color 150ms ease, color 150ms ease;
+
+  &:hover:not([aria-disabled="true"], .is-selected) {
+    background-color: var(--bq-date-picker2--view-cell-background-hover);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--bq-date-picker2--border-color-focus);
+    outline-offset: -2px;
+  }
+
+  &[aria-disabled="true"],
+  &.is-out-of-bounds,
+  &.is-disallowed {
+    cursor: not-allowed;
+    opacity: 0.35;
+  }
+
+  &.is-outside {
+    color: var(--bq-date-picker2--text-placeholder-color);
+  }
+
+  &.is-hidden {
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  &.is-today:not(.is-selected) {
+    border: var(--bq-date-picker2--currentDate-border-width) var(--bq-date-picker2--border-style)
+      var(--bq-date-picker2--currentDate-border-color);
+  }
+
+  &.is-selected {
+    background-color: var(--bq-date-picker2--view-cell-background-selected);
+    color: var(--bq-date-picker2--view-cell-text-selected);
+
+    &:hover:not([aria-disabled="true"]) {
+      background-color: var(--bq-date-picker2--view-cell-background-selected);
+    }
+  }
+
+  // Range highlighting
+  &.is-range-inner {
+    border-radius: 0;
+    background-color: var(--bq-date-picker2--range-inner-background-color);
+    color: var(--bq-date-picker2--text-color);
+  }
+
+  &.is-range-start {
+    border-start-end-radius: 0;
+    border-end-end-radius: 0;
+    background-color: var(--bq-date-picker2--range-background-color);
+    color: var(--bq-date-picker2--view-cell-text-selected);
+  }
+
+  &.is-range-end {
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
+    background-color: var(--bq-date-picker2--range-background-color);
+    color: var(--bq-date-picker2--view-cell-text-selected);
+  }
+
+  &.is-range-start.is-range-end {
+    border-radius: var(--bq-date-picker2--view-cell-radius);
+  }
+}
+
+/* ------------------------- Month / Year grids ---------------------------- */
+
+.bq-date-picker2__view {
+  min-inline-size:
+    calc(var(--bq-date-picker2--panel-count, 1) * (var(--bq-date-picker2--day-size) * 7) + max(0, var(--bq-date-picker2--panel-count, 1) - 1) * 1rem);
+}
+
+.bq-date-picker2__months,
+.bq-date-picker2__years {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  padding-block: 0.5rem;
+}
+
+// When rendering multiple day panels, expand the months/years grids to keep
+// the popover width stable across view transitions.
+.bq-date-picker2__calendar[style*='--bq-date-picker2--panel-count: 2'] {
+  .bq-date-picker2__months,
+  .bq-date-picker2__years {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+// On narrow viewports panels stack, so shrink back to the intrinsic width.
+@media (width <= 40rem) {
+  .bq-date-picker2__view {
+    min-inline-size: auto;
+  }
+}
+
+.bq-date-picker2__month-cell,
+.bq-date-picker2__year-cell {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  block-size: var(--bq-date-picker2--view-cell-height);
+  padding-block: 0.5rem;
+  padding-inline: 0.5rem;
+  border: none;
+  border-radius: var(--bq-date-picker2--view-cell-radius);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  transition: background-color 150ms ease, color 150ms ease;
+
+  &:hover:not(:disabled, .is-selected) {
+    background-color: var(--bq-date-picker2--view-cell-background-hover);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--bq-date-picker2--border-color-focus);
+    outline-offset: 1px;
+  }
+
+  &.is-selected {
+    background-color: var(--bq-date-picker2--view-cell-background-selected);
+    color: var(--bq-date-picker2--view-cell-text-selected);
+  }
+
+  &:disabled,
+  &.is-out-of-bounds {
+    cursor: not-allowed;
+    opacity: 0.35;
+  }
+}
+
+/* ------------------------- RTL day grid ordering ------------------------- */
+
+:host-context([dir='rtl']) .bq-date-picker2__table,
+:host([dir='rtl']) .bq-date-picker2__table {
+  direction: rtl;
+}
+
+/* ---------------------- Reduced motion preference ------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  .bq-date-picker2__control,
+  .bq-date-picker2__day,
+  .bq-date-picker2__month,
+  .bq-date-picker2__year {
+    transition: none;
+  }
+}
