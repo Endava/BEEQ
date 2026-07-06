@@ -6,10 +6,8 @@ import type { Placement } from '../../services/interfaces';
 import {
   clampDateToRange,
   extractFocusedDate,
-  formatDisplayValue,
   getTodayISO,
   hasSlotContent,
-  isDefined,
   isEventTargetChildOfElement,
   isHTMLElement,
   isNil,
@@ -57,6 +55,7 @@ import { formatMonth } from './helper/intl';
 import { getHeaderLabel, getHeaderTitleLabel, getNextLabel, getPreviousLabel } from './helper/labels';
 import { advanceFocusedMonth, advanceFocusedYear, getGridColumns } from './helper/navigation';
 import { applySelection, buildTentativeRange, parseValue, serializeValue } from './helper/selection';
+import { computeDisplayDate, computeHasValue, normalizeValue } from './helper/value';
 
 /**
  * The Date Picker (v2) is a pure-Stencil calendar input.
@@ -365,10 +364,9 @@ export class BqDatePicker2 {
     // consumers can't submit an invalid wire value while the display shows
     // nothing. If normalization rewrote the value, reflect it back on the
     // prop and let the follow-up watcher tick handle the normalized string.
-    const normalized = serializeValue(parseValue(newValue, this.type), this.type);
-    const normalizedValue = normalized === '' ? undefined : normalized;
-    if (normalizedValue !== newValue) {
-      this.value = normalizedValue;
+    const normalized = normalizeValue(newValue, this.type);
+    if (normalized !== newValue) {
+      this.value = normalized;
       return;
     }
 
@@ -385,17 +383,16 @@ export class BqDatePicker2 {
     const current = this.value;
     this.internals.setFormValue(!isNil(current) ? `${current}` : null);
     this.updateFormValidity();
-
-    this.hasValue = isDefined(current) && `${current}`.length > 0;
-    this.displayDate = formatDisplayValue(current ?? '', this.type, this.locale, this.formatOptions);
+    this.hasValue = computeHasValue(current);
+    this.displayDate = computeDisplayDate(current, this.type, this.locale, this.formatOptions);
   };
 
   @Watch('formatOptions')
   @Watch('locale')
   handleFormattingChange() {
     // Re-format the display without re-parsing the wire value.
-    this.hasValue = isDefined(this.value) && `${this.value}`.length > 0;
-    this.displayDate = formatDisplayValue(this.value ?? '', this.type, this.locale, this.formatOptions);
+    this.hasValue = computeHasValue(this.value);
+    this.displayDate = computeDisplayDate(this.value, this.type, this.locale, this.formatOptions);
   }
 
   @Watch('type')
@@ -404,10 +401,9 @@ export class BqDatePicker2 {
     // Re-normalize the current value against the new type; if that rewrites
     // the value, the `value` watcher takes over. Otherwise refresh derived
     // state and re-sync the visible calendar range.
-    const normalized = serializeValue(parseValue(this.value, this.type), this.type);
-    const normalizedValue = normalized === '' ? undefined : normalized;
-    if (normalizedValue !== this.value) {
-      this.value = normalizedValue;
+    const normalized = normalizeValue(this.value, this.type);
+    if (normalized !== this.value) {
+      this.value = normalized;
       return;
     }
     this.syncDerivedFromValue();
