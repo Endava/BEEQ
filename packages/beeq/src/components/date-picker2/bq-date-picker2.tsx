@@ -506,6 +506,10 @@ export class BqDatePicker2 {
 
   componentWillLoad() {
     this.initialValue = this.value;
+    // `initialView` selects the view the panel opens on. When the picker is
+    // rendered with `open` already true, `handleOpen` never fires — apply the
+    // preference here so the initial paint respects it.
+    this.view = this.initialView;
     this.checkPropValues();
     this.handleMonthsChange();
     this.syncViewToValue();
