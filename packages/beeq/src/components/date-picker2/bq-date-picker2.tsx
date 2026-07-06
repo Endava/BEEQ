@@ -52,14 +52,9 @@ import {
   startOfMonth,
   toISO,
 } from './helper/calendar';
-import {
-  CALENDAR_PARTS,
-  DECADE_GRID_SIZE,
-  DEFAULT_ARIA_LABELS,
-  DEFAULT_INPUT_ID,
-  MAX_MONTHS_PER_VIEW,
-} from './helper/constants';
-import { formatMonth, formatYear } from './helper/intl';
+import { CALENDAR_PARTS, DECADE_GRID_SIZE, DEFAULT_INPUT_ID, MAX_MONTHS_PER_VIEW } from './helper/constants';
+import { formatMonth } from './helper/intl';
+import { getHeaderLabel, getHeaderTitleLabel, getNextLabel, getPreviousLabel } from './helper/labels';
 import { applySelection, buildTentativeRange, parseValue, serializeValue } from './helper/selection';
 
 /**
@@ -994,41 +989,26 @@ export class BqDatePicker2 {
   }
 
   private getHeaderLabel(): string {
-    if (this.view === 'days') {
-      const count = this.getMonthCount();
-      if (count > 1) {
-        const first = startOfMonth(this.viewDate);
-        const last = startOfMonth(addMonths(this.viewDate, count - 1));
-        const startYear = formatYear(first, this.locale);
-        const endYear = formatYear(last, this.locale);
-        return startYear === endYear ? startYear : `${startYear} – ${endYear}`;
-      }
-      return formatMonth(this.viewDate, this.locale, 'long', true);
-    }
-    if (this.view === 'months') {
-      return formatYear(new Date(this.focusedYear, 0, 1), this.locale);
-    }
-    const start = this.decadeStart;
-    const end = start + DECADE_GRID_SIZE - 1;
-    return `${start} – ${end}`;
+    return getHeaderLabel({
+      view: this.view,
+      viewDate: this.viewDate,
+      focusedYear: this.focusedYear,
+      decadeStart: this.decadeStart,
+      monthCount: this.getMonthCount(),
+      locale: this.locale,
+    });
   }
 
   private getHeaderTitleLabel(): string {
-    if (this.view === 'days') return DEFAULT_ARIA_LABELS.chooseMonth;
-    if (this.view === 'months') return DEFAULT_ARIA_LABELS.chooseYear;
-    return DEFAULT_ARIA_LABELS.chooseYear;
+    return getHeaderTitleLabel(this.view);
   }
 
   private getPreviousLabel(): string {
-    if (this.view === 'days') return DEFAULT_ARIA_LABELS.previousMonth;
-    if (this.view === 'months') return DEFAULT_ARIA_LABELS.previousYear;
-    return DEFAULT_ARIA_LABELS.previousDecade;
+    return getPreviousLabel(this.view);
   }
 
   private getNextLabel(): string {
-    if (this.view === 'days') return DEFAULT_ARIA_LABELS.nextMonth;
-    if (this.view === 'months') return DEFAULT_ARIA_LABELS.nextYear;
-    return DEFAULT_ARIA_LABELS.nextDecade;
+    return getNextLabel(this.view);
   }
 
   /* ------------------------------- Render -------------------------------- */
