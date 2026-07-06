@@ -373,13 +373,61 @@ export class BqDatePicker2 {
       return;
     }
 
-    this.internals.setFormValue(!isNil(normalizedValue) ? `${normalizedValue}` : null);
+    this.syncDerivedFromValue();
+    this.syncViewToValue();
+  }
+
+  /**
+   * Recompute all state derived from the public `value` (form value,
+   * `hasValue`, formatted display). Called from `value` and any prop that
+   * affects display formatting (`type`, `locale`, `formatOptions`).
+   */
+  private syncDerivedFromValue = (): void => {
+    const current = this.value;
+    this.internals.setFormValue(!isNil(current) ? `${current}` : null);
     this.updateFormValidity();
 
-    this.hasValue = isDefined(normalizedValue) && `${normalizedValue}`.length > 0;
-    this.displayDate = formatDisplayValue(normalizedValue ?? '', this.type, this.locale, this.formatOptions);
+    this.hasValue = isDefined(current) && `${current}`.length > 0;
+    this.displayDate = formatDisplayValue(current ?? '', this.type, this.locale, this.formatOptions);
+  };
 
+  @Watch('formatOptions')
+  @Watch('locale')
+  handleFormattingChange() {
+    // Re-format the display without re-parsing the wire value.
+    this.hasValue = isDefined(this.value) && `${this.value}`.length > 0;
+    this.displayDate = formatDisplayValue(this.value ?? '', this.type, this.locale, this.formatOptions);
+  }
+
+  @Watch('type')
+  handleTypeChange() {
+    // `type` affects wire-format parsing, display formatting, and validity.
+    // Re-normalize the current value against the new type; if that rewrites
+    // the value, the `value` watcher takes over. Otherwise refresh derived
+    // state and re-sync the visible calendar range.
+    const normalized = serializeValue(parseValue(this.value, this.type), this.type);
+    const normalizedValue = normalized === '' ? undefined : normalized;
+    if (normalizedValue !== this.value) {
+      this.value = normalizedValue;
+      return;
+    }
+    this.syncDerivedFromValue();
     this.syncViewToValue();
+  }
+
+  @Watch('max')
+  @Watch('min')
+  handleBoundsChange() {
+    // A tighter range can invalidate the current selection or push the
+    // focused day out of bounds. Re-run form validity and re-clamp the
+    // internal focus/viewDate cursors.
+    this.updateFormValidity();
+    this.syncViewToValue();
+  }
+
+  @Watch('required')
+  handleRequiredChange() {
+    this.updateFormValidity();
   }
 
   @Watch('firstDayOfWeek')
