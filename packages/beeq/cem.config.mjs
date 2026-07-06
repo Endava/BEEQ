@@ -11,7 +11,7 @@
  */
 
 import { jsDocTagsPlugin } from '@wc-toolkit/jsdoc-tags';
-import { getTsProgram, typeParserPlugin } from '@wc-toolkit/type-parser';
+// import { getTsProgram, typeParserPlugin } from '@wc-toolkit/type-parser';
 import { jsdocExamplePlugin } from 'cem-plugin-jsdoc-example';
 import { customElementVsCodePlugin } from 'custom-element-vs-code-integration';
 
@@ -71,13 +71,13 @@ export default {
   /** Enable special handling for Stencil.js compiler */
   stencil: true,
   /** Overrides default module creation: */
-  overrideModuleCreation: ({ ts, globs }) => {
-    const program = getTsProgram(ts, globs, 'packages/beeq/tsconfig.lib.json');
-    return program.getSourceFiles().filter((sf) => globs.find((glob) => sf.fileName.includes(glob)));
-  },
+  // overrideModuleCreation: ({ ts, globs }) => {
+  //   const program = getTsProgram(ts, globs, 'packages/beeq/tsconfig.lib.json');
+  //   return program.getSourceFiles().filter((sf) => globs.find((glob) => sf.fileName.includes(glob)));
+  // },
   /** Custom plugins to run */
   plugins: [
-    typeParserPlugin(),
+    // typeParserPlugin(),
     jsdocExamplePlugin(),
     jsDocTagsPlugin({
       tags: {
