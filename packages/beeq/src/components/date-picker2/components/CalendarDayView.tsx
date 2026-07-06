@@ -3,7 +3,7 @@ import { type FunctionalComponent, h } from '@stencil/core';
 import type { TDatePickerType, TSelection } from '../bq-date-picker2.types';
 import { buildMonthMatrix, isSameDay, isWithinBounds, type TCalendarCell } from '../helper/calendar';
 import { CALENDAR_PARTS } from '../helper/constants';
-import { getWeekdayNames } from '../helper/intl';
+import { formatMonth, getWeekdayNames } from '../helper/intl';
 import { isRangeEnd, isRangeInner, isRangeStart, isSelected } from '../helper/selection';
 
 type TCellState = {
@@ -130,10 +130,6 @@ export type TCalendarDayViewProps = {
   maxISO?: string;
   /** Optional guard for disallowed days. */
   isDateDisallowed?: (date: Date) => boolean;
-  /** Optional heading (only rendered when `showHeading` is `true`). */
-  monthLabel?: string;
-  /** Whether to render the small heading above the table (multi-month layout). */
-  showHeading?: boolean;
   /** Callback fired when a day is picked. */
   onDaySelect: (iso: string, ev: MouseEvent | KeyboardEvent) => void;
   /** Callback fired when the pointer hovers a day (used for range preview). */
@@ -164,8 +160,6 @@ export const CalendarDayView: FunctionalComponent<TCalendarDayViewProps> = (prop
     minISO,
     maxISO,
     isDateDisallowed,
-    monthLabel,
-    showHeading = false,
     onDaySelect,
     onDayHover,
     onDayFocus,
@@ -176,19 +170,19 @@ export const CalendarDayView: FunctionalComponent<TCalendarDayViewProps> = (prop
   const rows = buildMonthMatrix(viewDate, firstDayOfWeek);
   const today = new Date();
 
+  // Localized "Month Year" label used to name the grid for screen readers,
+  // e.g. "July 2026". Always computed so the grid is named even when the
+  // visible heading is rendered outside this component.
+  const gridLabel = formatMonth(viewDate, locale, 'long', true);
+
   // The effective selection includes the tentative range so hover states
   // preview correctly during range selection.
   const effectiveSelection: TSelection = type === 'range' && tentativeRange.length === 2 ? tentativeRange : selection;
 
   return (
     <div class="bq-date-picker2__day-view">
-      {showHeading && monthLabel && (
-        <div class="bq-date-picker2__month-label" part={CALENDAR_PARTS.heading}>
-          {monthLabel}
-        </div>
-      )}
       <table
-        aria-labelledby={undefined}
+        aria-label={gridLabel}
         class="bq-date-picker2__table"
         onKeyDown={onGridKeyDown}
         part={CALENDAR_PARTS.table}
