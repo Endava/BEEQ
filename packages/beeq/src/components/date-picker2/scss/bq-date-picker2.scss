@@ -529,9 +529,11 @@
 
 @media (prefers-reduced-motion: reduce) {
   .bq-date-picker2__control,
+  .bq-date-picker2__nav-button,
+  .bq-date-picker2__heading,
   .bq-date-picker2__day,
-  .bq-date-picker2__month,
-  .bq-date-picker2__year {
+  .bq-date-picker2__month-cell,
+  .bq-date-picker2__year-cell {
     transition: none;
   }
 }
