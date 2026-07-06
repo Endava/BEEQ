@@ -228,6 +228,9 @@ export class BqDatePicker2 {
    * re-invoke or disconnect to avoid stray focus after teardown. */
   private pendingFocusRAF?: number;
 
+  /** Initial `value` captured at load time, restored on form reset. */
+  private initialValue?: string;
+
   // Reference to host HTML element
   // ===================================
 
@@ -510,6 +513,7 @@ export class BqDatePicker2 {
   // =====================================
 
   componentWillLoad() {
+    this.initialValue = this.value;
     this.checkPropValues();
     this.handleMonthsChange();
     this.syncViewToValue();
@@ -535,8 +539,11 @@ export class BqDatePicker2 {
   }
 
   formResetCallback() {
-    if (isNil(this.value)) return;
-    this.clear();
+    // Native form reset should restore the value the field had when the form
+    // was first parsed, not blank it. The `value` watcher takes care of
+    // syncing derived state, form value, and validity.
+    if (this.value === this.initialValue) return;
+    this.value = this.initialValue;
   }
 
   // Listeners
