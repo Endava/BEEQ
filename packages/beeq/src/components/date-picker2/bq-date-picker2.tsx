@@ -522,6 +522,7 @@ export class BqDatePicker2 {
   componentDidLoad() {
     this.handleSlotChange();
     this.handleValueChange(this.value, undefined);
+    if (this.autofocus) this.inputElem?.focus();
     // `@Watch('open')` doesn't run for the initial prop value, so pickers
     // rendered with `open` never move focus into the calendar. Do it here.
     if (this.open) this.focusActiveCell();
