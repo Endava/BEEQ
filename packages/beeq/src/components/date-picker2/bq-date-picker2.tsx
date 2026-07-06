@@ -362,11 +362,22 @@ export class BqDatePicker2 {
   handleValueChange(newValue: string | undefined, oldValue: string | undefined) {
     if (newValue === oldValue) return;
 
-    this.internals.setFormValue(!isNil(newValue) ? `${newValue}` : null);
+    // Normalize invalid tokens before propagating to the form or the UI so
+    // consumers can't submit an invalid wire value while the display shows
+    // nothing. If normalization rewrote the value, reflect it back on the
+    // prop and let the follow-up watcher tick handle the normalized string.
+    const normalized = serializeValue(parseValue(newValue, this.type), this.type);
+    const normalizedValue = normalized === '' ? undefined : normalized;
+    if (normalizedValue !== newValue) {
+      this.value = normalizedValue;
+      return;
+    }
+
+    this.internals.setFormValue(!isNil(normalizedValue) ? `${normalizedValue}` : null);
     this.updateFormValidity();
 
-    this.hasValue = isDefined(newValue) && `${newValue}`.length > 0;
-    this.displayDate = formatDisplayValue(newValue ?? '', this.type, this.locale, this.formatOptions);
+    this.hasValue = isDefined(normalizedValue) && `${normalizedValue}`.length > 0;
+    this.displayDate = formatDisplayValue(normalizedValue ?? '', this.type, this.locale, this.formatOptions);
 
     this.syncViewToValue();
   }
