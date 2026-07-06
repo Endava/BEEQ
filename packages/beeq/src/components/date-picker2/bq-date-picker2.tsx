@@ -55,6 +55,7 @@ import {
 import { CALENDAR_PARTS, DECADE_GRID_SIZE, DEFAULT_INPUT_ID, MAX_MONTHS_PER_VIEW } from './helper/constants';
 import { formatMonth } from './helper/intl';
 import { getHeaderLabel, getHeaderTitleLabel, getNextLabel, getPreviousLabel } from './helper/labels';
+import { advanceFocusedMonth, advanceFocusedYear, getGridColumns } from './helper/navigation';
 import { applySelection, buildTentativeRange, parseValue, serializeValue } from './helper/selection';
 
 /**
@@ -860,26 +861,17 @@ export class BqDatePicker2 {
     // Months/years grids visually expand from 3 to 4 columns in multi-panel
     // mode. Keep arrow-key stride in sync so vertical navigation still lands
     // on the row directly above/below the current cell.
-    return this.getMonthCount() > 1 ? 4 : 3;
+    return getGridColumns(this.getMonthCount());
   }
 
   private handleMonthGridKeyDown = (ev: KeyboardEvent): void => {
     const rtl = this.getRTLDirection();
     const stride = this.getGridColumns();
     const move = (delta: number) => {
-      let next = this.focusedMonth + delta;
-      let year = this.focusedYear;
-      while (next < 0) {
-        next += 12;
-        year -= 1;
-      }
-      while (next > 11) {
-        next -= 12;
-        year += 1;
-      }
-      this.focusedMonth = next;
+      const { month, year } = advanceFocusedMonth(this.focusedMonth, this.focusedYear, delta);
+      this.focusedMonth = month;
       this.focusedYear = year;
-      this.focusButton(`[data-month="${next}"]`);
+      this.focusButton(`[data-month="${month}"]`);
     };
 
     switch (ev.key) {
@@ -914,14 +906,10 @@ export class BqDatePicker2 {
     const rtl = this.getRTLDirection();
     const stride = this.getGridColumns();
     const move = (delta: number) => {
-      const nextYear = this.focusedYear + delta;
-      this.focusedYear = nextYear;
-      if (nextYear < this.decadeStart) {
-        this.decadeStart = this.decadeStart - DECADE_GRID_SIZE;
-      } else if (nextYear > this.decadeStart + DECADE_GRID_SIZE - 1) {
-        this.decadeStart = this.decadeStart + DECADE_GRID_SIZE;
-      }
-      this.focusButton(`[data-year="${nextYear}"]`);
+      const { year, decadeStart } = advanceFocusedYear(this.focusedYear, this.decadeStart, delta);
+      this.focusedYear = year;
+      this.decadeStart = decadeStart;
+      this.focusButton(`[data-year="${year}"]`);
     };
 
     switch (ev.key) {
