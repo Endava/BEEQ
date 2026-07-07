@@ -697,4 +697,127 @@ describe('bq-date-picker2', () => {
     await waitForStable(root);
     expect(getDayButton(datePicker, '2026-04-27')).not.toHaveClass('is-hidden');
   });
+
+  /* --------------------------------- Precision ---------------------------------- */
+
+  it('opens on the months view and commits YYYY-MM on month click when precision="month"', async () => {
+    const { root, spyOnEvent, waitForChanges } = await render(
+      <bq-date-picker2 name="date-picker" precision="month" open value="2026-05" />,
+    );
+    const datePicker = root as HTMLBqDatePicker2Element;
+    const bqChange = spyOnEvent('bqChange');
+    await waitForStable(root);
+
+    // Months view is active from the start (no days grid).
+    expect(getMonthButton(datePicker, 4)).not.toBeNull();
+    expect(getDayButton(datePicker, '2026-05-15')).toBeNull();
+
+    getMonthButton(datePicker, 7)?.click();
+    await waitForChanges();
+
+    expect(datePicker.value).toBe('2026-08');
+    expect(bqChange).toHaveReceivedEventTimes(1);
+    expect(datePicker.open).toBe(false);
+  });
+
+  it('opens on the years view and commits YYYY on year click when precision="year"', async () => {
+    const { root, spyOnEvent, waitForChanges } = await render(
+      <bq-date-picker2 name="date-picker" precision="year" open value="2026" />,
+    );
+    const datePicker = root as HTMLBqDatePicker2Element;
+    const bqChange = spyOnEvent('bqChange');
+    await waitForStable(root);
+
+    expect(getYearButton(datePicker, 2026)).not.toBeNull();
+    expect(getMonthButton(datePicker, 0)).toBeNull();
+
+    getYearButton(datePicker, 2028)?.click();
+    await waitForChanges();
+
+    expect(datePicker.value).toBe('2028');
+    expect(bqChange).toHaveReceivedEventTimes(1);
+    expect(datePicker.open).toBe(false);
+  });
+
+  it('normalizes a full YYYY-MM-DD value to YYYY-MM when precision="month"', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-date-picker2 name="date-picker" precision="month" value="2026-05-30" />,
+    );
+    const datePicker = root as HTMLBqDatePicker2Element;
+    await waitForChanges();
+
+    // 2026-05-30 does not match the YYYY-MM shape and is dropped.
+    expect(datePicker.value).toBeUndefined();
+  });
+
+  it('supports YYYY-MM ranges', async () => {
+    const { root, spyOnEvent, waitForChanges } = await render(
+      <bq-date-picker2 name="date-picker" precision="month" type="range" open value="2026-05/2026-05" />,
+    );
+    const datePicker = root as HTMLBqDatePicker2Element;
+    const bqChange = spyOnEvent('bqChange');
+    await waitForStable(root);
+
+    // First click starts a new range anchor at Feb (month index 1).
+    getMonthButton(datePicker, 1)?.click();
+    await waitForChanges();
+    // Second click completes the range at Aug (month index 7).
+    getMonthButton(datePicker, 7)?.click();
+    await waitForChanges();
+
+    expect(datePicker.value).toBe('2026-02/2026-08');
+    expect(bqChange).toHaveReceivedEventTimes(2);
+  });
+
+  it('supports YYYY multi selection', async () => {
+    const { root, spyOnEvent, waitForChanges } = await render(
+      <bq-date-picker2 name="date-picker" precision="year" type="multi" open />,
+    );
+    const datePicker = root as HTMLBqDatePicker2Element;
+    const bqChange = spyOnEvent('bqChange');
+    await waitForStable(root);
+
+    getYearButton(datePicker, 2026)?.click();
+    await waitForChanges();
+    getYearButton(datePicker, 2028)?.click();
+    await waitForChanges();
+
+    expect(datePicker.value).toBe('2026 2028');
+    expect(bqChange).toHaveReceivedEventTimes(2);
+    // Multi keeps the panel open.
+    expect(datePicker.open).toBe(true);
+  });
+
+  it('auto-swaps default formatOptions per precision when not provided', async () => {
+    // Month precision → default is { month: 'long', year: 'numeric' } — no day number.
+    const { root, waitForChanges } = await render(
+      <bq-date-picker2 name="date-picker" precision="month" value="2026-05" locale="en-GB" />,
+    );
+    const datePicker = root as HTMLBqDatePicker2Element;
+    await waitForChanges();
+
+    const input = getInput(datePicker);
+    expect(input?.value).toMatch(/May/);
+    expect(input?.value).toMatch(/2026/);
+    // Should NOT contain the day number.
+    expect(input?.value).not.toMatch(/\b(1|01)\b/);
+  });
+
+  it('respects consumer-provided formatOptions over the precision default', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-date-picker2
+        name="date-picker"
+        precision="month"
+        value="2026-05"
+        locale="en-GB"
+        formatOptions={{ month: '2-digit', year: 'numeric' }}
+      />,
+    );
+    const datePicker = root as HTMLBqDatePicker2Element;
+    await waitForChanges();
+
+    const input = getInput(datePicker);
+    expect(input?.value).toMatch(/05/);
+    expect(input?.value).not.toMatch(/May/);
+  });
 });
