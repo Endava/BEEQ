@@ -82,11 +82,9 @@ const meta: Meta = {
     'first-day-of-week': 1,
     form: undefined,
     'form-validation-message': undefined,
-    formatOptions: {
-      day: 'numeric',
-      month: 'short',
-      year: 'numeric',
-    },
+    // Left undefined so the component can pick its precision-appropriate default.
+    // Stories that need a specific format pass it explicitly (see `FormatOptions`).
+    formatOptions: undefined,
     'initial-view': 'days',
     locale: 'en-GB',
     max: undefined,
@@ -342,6 +340,32 @@ export const MonthPrecisionRange: Story = {
     value: '2026-03/2026-08',
     formatOptions: undefined,
     placeholder: 'Select month range',
+  },
+};
+
+export const MonthPrecisionMulti: Story = {
+  name: 'Precision: month + multi',
+  render: Template,
+  args: {
+    open: true,
+    precision: 'month',
+    type: 'multi',
+    value: '2026-01 2026-03 2026-05 2026-07 2026-10 2026-12',
+    formatOptions: undefined,
+    placeholder: 'Select months',
+  },
+};
+
+export const YearPrecisionMulti: Story = {
+  name: 'Precision: year + multi',
+  render: Template,
+  args: {
+    open: true,
+    precision: 'year',
+    type: 'multi',
+    value: '2020 2022 2025 2027 2030',
+    formatOptions: undefined,
+    placeholder: 'Select years',
   },
 };
 
