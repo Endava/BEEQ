@@ -1,0 +1,10 @@
+@mixin bq-focus-ring {
+  outline: var(--bq-ring-width, 2px) solid var(--bq-ring-color-focus, var(--bq-focus));
+  outline-offset: var(--bq-ring-offset-width, 1px);
+}
+
+@mixin bq-focus-visible {
+  &:focus-visible {
+    @include bq-focus-ring;
+  }
+}
