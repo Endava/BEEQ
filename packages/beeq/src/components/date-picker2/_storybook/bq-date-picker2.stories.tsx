@@ -212,6 +212,8 @@ export const Open: Story = {
   args: { open: true },
 };
 
+/* ------------------------------ Selection types ---------------------------- */
+
 export const SingleDate: Story = {
   render: Template,
   args: { open: true, type: 'single', value: '2026-05-15' },
@@ -263,15 +265,12 @@ export const InitialValue: Story = {
   `,
 };
 
+/* ------------------------------- Constraints ------------------------------- */
+
 export const MinMax: Story = {
   name: 'Min and Max allowed dates',
   render: Template,
   args: { open: true, min: '2026-05-01', max: '2026-05-31', value: '2026-05-15' },
-};
-
-export const Disabled: Story = {
-  render: Template,
-  args: { disabled: true, value: '2026-06-20' },
 };
 
 export const DisallowedDates: Story = {
@@ -284,6 +283,13 @@ export const DisallowedDates: Story = {
   },
 };
 
+export const Disabled: Story = {
+  render: Template,
+  args: { disabled: true, value: '2026-06-20' },
+};
+
+/* ---------------------------------- Views ---------------------------------- */
+
 export const InitialMonthView: Story = {
   name: 'Initial view: months',
   render: Template,
@@ -295,6 +301,8 @@ export const InitialYearView: Story = {
   render: Template,
   args: { open: true, 'initial-view': 'years' },
 };
+
+/* ------------------------- Localization & formatting ----------------------- */
 
 export const Localized: Story = {
   render: (args) => html`
@@ -315,10 +323,81 @@ export const Localized: Story = {
   `,
 };
 
+export const FormatOptions: Story = {
+  name: 'Custom display format',
+  render: (args) => html`
+    <div class="grid grid-cols-1 gap-m sm:grid-cols-2">
+      <div class="flex flex-col gap-2">
+        <p>Numeric &mdash; <code>{ day: '2-digit', month: '2-digit', year: 'numeric' }</code></p>
+        ${Template({
+          ...args,
+          value: '2026-05-15',
+          name: 'bq-date-picker2-fmt-numeric',
+          formatOptions: { day: '2-digit', month: '2-digit', year: 'numeric' },
+          noLabel: true,
+        })}
+      </div>
+      <div class="flex flex-col gap-2">
+        <p>Long month &mdash; <code>{ day: 'numeric', month: 'long', year: 'numeric' }</code></p>
+        ${Template({
+          ...args,
+          value: '2026-05-15',
+          name: 'bq-date-picker2-fmt-long',
+          formatOptions: { day: 'numeric', month: 'long', year: 'numeric' },
+          noLabel: true,
+        })}
+      </div>
+      <div class="flex flex-col gap-2">
+        <p>Full date style &mdash; <code>{ dateStyle: 'full' }</code></p>
+        ${Template({
+          ...args,
+          value: '2026-05-15',
+          name: 'bq-date-picker2-fmt-full',
+          formatOptions: { dateStyle: 'full' },
+          noLabel: true,
+        })}
+      </div>
+      <div class="flex flex-col gap-2">
+        <p>Weekday + short month &mdash; <code>{ weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }</code></p>
+        ${Template({
+          ...args,
+          value: '2026-05-15',
+          name: 'bq-date-picker2-fmt-weekday',
+          formatOptions: { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' },
+          noLabel: true,
+        })}
+      </div>
+    </div>
+  `,
+};
+
 export const RTL: Story = {
   render: (args) => html`<div dir="rtl">${Template(args)}</div>`,
   args: { open: true, locale: 'ar-EG', value: '2026-05-15' },
 };
+
+/* ------------------------------ Label variants ----------------------------- */
+
+export const Optional: Story = {
+  name: 'Label with "Optional"',
+  render: Template,
+  args: { optionalLabel: true, value: '2026-10-10' },
+};
+
+export const Tooltip: Story = {
+  name: 'Label with "Info tooltip"',
+  render: Template,
+  args: { hasLabelTooltip: true, value: '2026-09-11' },
+  parameters: { layout: 'centered' },
+};
+
+export const NoLabel: Story = {
+  name: 'With no label',
+  render: Template,
+  args: { noLabel: true, value: '2026-10-13' },
+};
+
+/* -------------------------------- Validation ------------------------------- */
 
 export const ValidationStatus: Story = {
   name: 'Validation',
@@ -358,24 +437,7 @@ export const ValidationStatus: Story = {
   `,
 };
 
-export const Optional: Story = {
-  name: 'Label with "Optional"',
-  render: Template,
-  args: { optionalLabel: true, value: '2026-10-10' },
-};
-
-export const Tooltip: Story = {
-  name: 'Label with "Info tooltip"',
-  render: Template,
-  args: { hasLabelTooltip: true, value: '2026-09-11' },
-  parameters: { layout: 'centered' },
-};
-
-export const NoLabel: Story = {
-  name: 'With no label',
-  render: Template,
-  args: { noLabel: true, value: '2026-10-13' },
-};
+/* ---------------------------- Form integration ----------------------------- */
 
 export const WithForm: Story = {
   name: 'Form integration',
