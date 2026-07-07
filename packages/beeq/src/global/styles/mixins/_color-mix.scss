@@ -1,0 +1,28 @@
+@function bq-color-mix-value($color, $state-or-color: hover, $amount: null, $space: srgb) {
+  $base: $state-or-color;
+  $mix-amount: $amount;
+
+  @if $state-or-color == hover {
+    $base: var(--bq-hover);
+
+    @if not $mix-amount {
+      $mix-amount: var(--bq-state-mix-hover);
+    }
+  } @else if $state-or-color == active {
+    $base: var(--bq-active);
+
+    @if not $mix-amount {
+      $mix-amount: var(--bq-state-mix-active);
+    }
+  } @else if not $mix-amount {
+    $mix-amount: var(--bq-state-mix-hover);
+  }
+
+  @return color-mix(in #{$space}, #{$color}, #{$base} #{$mix-amount});
+}
+
+@mixin bq-color-mix($properties, $color, $state-or-color: hover, $amount: null, $space: srgb) {
+  @each $property in $properties {
+    #{$property}: bq-color-mix-value($color, $state-or-color, $amount, $space);
+  }
+}
