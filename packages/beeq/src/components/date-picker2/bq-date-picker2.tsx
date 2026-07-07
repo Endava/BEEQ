@@ -5,7 +5,6 @@ import type { JSX } from '@stencil/core/internal';
 import type { Placement } from '../../services/interfaces';
 import {
   clampDateToRange,
-  extractFocusedDate,
   getTodayISO,
   hasSlotContent,
   isEventTargetChildOfElement,
@@ -250,6 +249,14 @@ export class BqDatePicker2 {
   @State() decadeStart: number = getDecadeStart(new Date().getFullYear());
   @State() tentativeHover?: string;
 
+  /**
+   * Set while `commitSelection` is writing back to `this.value`. Prevents the
+   * value watcher from re-syncing the view — the commit has already placed
+   * focus on the clicked cell and we don't want to jump the calendar to the
+   * first entry of a (possibly multi / range) selection or to today.
+   */
+  private isCommittingSelection = false;
+
   @State() displayDate?: string;
   @State() hasLabel = false;
   @State() hasPrefix = false;
@@ -393,6 +400,7 @@ export class BqDatePicker2 {
     }
 
     this.syncDerivedFromValue();
+    if (this.isCommittingSelection) return;
     this.syncViewToValue();
   }
 
@@ -689,11 +697,19 @@ export class BqDatePicker2 {
 
   /**
    * Align the internal `viewDate` / `focused*` state with the current value.
-   * Called on value change and whenever the panel opens so that the user
-   * always lands on the right month / year.
+   * Called when the panel opens and whenever an *external* prop change
+   * invalidates the current view (value, type, precision, min/max). Internal
+   * commits skip this via `isCommittingSelection` so the user's navigated
+   * year isn't clobbered by a subsequent multi/range selection.
+   *
+   * Uses `parseValue` (precision-aware, always returns full ISO dates) rather
+   * than a raw `YYYY-MM-DD` regex so that month/year wire values like
+   * `"2025-05"` or `"2025"` land on the right cell instead of falling back
+   * to today.
    */
   private syncViewToValue = (): void => {
-    const focusISO = extractFocusedDate(this.value ?? '') ?? getTodayISO();
+    const parsed = parseValue(this.value, this.type, this.precision);
+    const focusISO = parsed[0] ?? getTodayISO();
     const focus = parseISO(focusISO) ?? new Date();
     const bounded = clampDate(focus, this.min, this.max);
 
@@ -701,6 +717,7 @@ export class BqDatePicker2 {
     this.viewDate = startOfMonth(bounded);
     this.focusedMonth = bounded.getMonth();
     this.focusedYear = bounded.getFullYear();
+    this.decadeStart = getDecadeStart(bounded.getFullYear());
   };
 
   private get selection(): TSelection {
@@ -871,9 +888,21 @@ export class BqDatePicker2 {
     const next = applySelection(iso, this.selection, this.type);
     const shouldStayOpen = this.type === 'multi' || (this.type === 'range' && next.length === 1);
 
+    // Guard so `handleValueChange` doesn't re-sync the view back to `parsed[0]`
+    // (would jump multi/range pickers to the earliest selected date) or to
+    // today (when precision truncation leaves no full ISO to extract).
+    this.isCommittingSelection = true;
     this.value = serializeValue(next, this.type, this.precision);
+    this.isCommittingSelection = false;
+
     this.focusedISO = iso;
-    this.viewDate = startOfMonth(parseISO(iso) ?? this.viewDate);
+    const parsedIso = parseISO(iso);
+    if (parsedIso) {
+      this.viewDate = startOfMonth(parsedIso);
+      this.focusedMonth = parsedIso.getMonth();
+      this.focusedYear = parsedIso.getFullYear();
+      this.decadeStart = getDecadeStart(parsedIso.getFullYear());
+    }
     this.tentativeHover = this.type === 'range' && next.length === 1 ? iso : undefined;
 
     this.bqChange.emit({ value: this.value, el: this.el });
