@@ -112,6 +112,7 @@
     "postcss-preset-env": "11.3.0",
     "postcss-url": "10.1.3",
     "react-syntax-highlighter": "15.6.1",
+    "sass": "1.101.0",
     "stencil-tailwind-plugin": "1.8.0",
     "storybook": "10.4.3",
     "stylelint": "17.13.0",

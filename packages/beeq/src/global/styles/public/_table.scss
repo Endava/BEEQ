@@ -1,0 +1,150 @@
+@layer bq.public {
+  /**
+   * Global styles for public `.bq-table` HTML tables.
+   *
+   * @prop --bq-table--border-color: Table border color
+   * @prop --bq-table--border-style: Table border style
+   * @prop --bq-table--border-width: Table border width
+   * @prop --bq-table--border-radius: Table border radius
+   * @prop --bq-table--cell-padding-block: Table cell padding block
+   * @prop --bq-table--cell-padding-inline: Table cell padding inline
+   * @prop --bq-table--header-divider-inset: Table header divider inset
+   * @prop --bq-table--header-height: Table header height
+   * @prop --bq-table--header-padding-block: Header padding block
+   * @prop --bq-table--header-padding-inline: Header padding inline
+   * @prop --bq-table--row-selected-bg: Row selected background
+   * @prop --bq-table--row-selected-border: Row selected border
+   */
+  .bq-table {
+    --bq-table--border-color: var(--bq-stroke--primary);
+    --bq-table--border-style: solid;
+    --bq-table--border-width: var(--bq-stroke-s);
+    --bq-table--border-radius: var(--bq-radius--m);
+    --bq-table--cell-padding-block: var(--bq-spacing-m);
+    --bq-table--cell-padding-inline: var(--bq-spacing-m);
+    --bq-table--header-divider-inset: 25%;
+    --bq-table--header-height: 3.25rem;
+    --bq-table--header-padding-block: var(--bq-spacing-xs);
+    --bq-table--header-padding-inline: var(--bq-spacing-m);
+    --bq-table--row-selected-bg: var(--bq-ui--brand-alt);
+    --bq-table--row-selected-border: var(--bq-stroke--brand);
+
+    overflow: hidden;
+    inline-size: 100%;
+    font-size: var(--bq-font-size--s);
+  }
+
+  .bq-table:not(.bordered) {
+    border-collapse: collapse;
+  }
+
+  .bq-table:not(.bordered) th::after {
+    position: absolute;
+    inset-block-start: var(--bq-table--header-divider-inset);
+    inset-inline-end: 0;
+    display: block;
+    inline-size: var(--bq-table--border-width);
+    block-size: 50%;
+    background-color: var(--bq-table--border-color);
+    content: '';
+  }
+
+  .bq-table:not(.bordered) tr.selected {
+    border-radius: var(--bq-table--border-radius);
+    outline-offset: -1px;
+  }
+
+  .bq-table:not(.bordered) tr.selected td:first-child {
+    border-start-start-radius: var(--bq-table--border-radius);
+    border-end-start-radius: var(--bq-table--border-radius);
+  }
+
+  .bq-table:not(.bordered) tr.selected td:last-child {
+    border-start-end-radius: var(--bq-table--border-radius);
+    border-end-end-radius: var(--bq-table--border-radius);
+  }
+
+  .bq-table thead {
+    block-size: var(--bq-table--header-height);
+    border-width: 0;
+    border-block-end-width: var(--bq-table--border-width);
+    border-style: var(--bq-table--border-style);
+    border-color: var(--bq-table--border-color);
+  }
+
+  .bq-table th {
+    position: relative;
+    padding-block: var(--bq-table--header-padding-block);
+    padding-inline: var(--bq-table--header-padding-inline);
+    color: var(--bq-text--primary);
+    font-weight: var(--bq-font-weight--semibold);
+    text-align: start;
+  }
+
+  .bq-table tbody tr {
+    position: relative;
+    border-width: 0;
+    border-block-end-width: var(--bq-table--border-width);
+    border-style: var(--bq-table--border-style);
+    border-color: var(--bq-table--border-color);
+  }
+
+  .bq-table td {
+    position: relative;
+    padding-block: var(--bq-table--cell-padding-block);
+    padding-inline: var(--bq-table--cell-padding-inline);
+    color: var(--bq-text--primary);
+    text-align: start;
+  }
+
+  .bq-table tr.selected {
+    border-block-end-width: 0;
+    background-color: var(--bq-table--row-selected-bg);
+    outline: var(--bq-table--border-width) solid var(--bq-table--row-selected-border);
+    outline-offset: -2px;
+  }
+
+  .bq-table.compact {
+    --bq-table--cell-padding-block: var(--bq-spacing-xs2);
+    --bq-table--cell-padding-inline: var(--bq-spacing-xs2);
+    --bq-table--header-height: 2rem;
+    --bq-table--header-padding-block: var(--bq-spacing-xs2);
+    --bq-table--header-padding-inline: var(--bq-spacing-xs2);
+  }
+
+  .bq-table.bordered {
+    border-collapse: separate;
+    border-spacing: 0;
+    border-width: var(--bq-table--border-width);
+    border-style: var(--bq-table--border-style);
+    border-color: var(--bq-table--border-color);
+  }
+
+  .bq-table.bordered th,
+  .bq-table.bordered td {
+    border-width: var(--bq-table--border-width);
+    border-style: var(--bq-table--border-style);
+    border-color: var(--bq-table--border-color);
+  }
+
+  .bq-table.bordered thead th:first-child {
+    border-start-start-radius: var(--bq-table--border-radius);
+  }
+
+  .bq-table.bordered thead th:last-child {
+    border-start-end-radius: var(--bq-table--border-radius);
+  }
+
+  .bq-table.bordered tbody tr:last-child td:first-child {
+    border-end-start-radius: var(--bq-table--border-radius);
+  }
+
+  .bq-table.bordered tbody tr:last-child td:last-child {
+    border-end-end-radius: var(--bq-table--border-radius);
+  }
+
+  .bq-table--container {
+    overflow-inline: auto;
+    block-size: 100%;
+  }
+}
