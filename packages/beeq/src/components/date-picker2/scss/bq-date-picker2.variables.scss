@@ -26,6 +26,7 @@
    * @prop --bq-date-picker2--paddingY - Input vertical padding
    * @prop --bq-date-picker2--range-background-color - Range endpoint background
    * @prop --bq-date-picker2--range-inner-background-color - Range inner background
+   * @prop --bq-date-picker2--row-gap - Vertical space between day-grid rows
    * @prop --bq-date-picker2--text-color - Input text color
    * @prop --bq-date-picker2--text-placeholder-color - Placeholder text color
    * @prop --bq-date-picker2--text-size - Input text size
@@ -63,6 +64,7 @@
 
   --bq-date-picker2--range-background-color: var(--bq-ui--brand, #1570ef);
   --bq-date-picker2--range-inner-background-color: var(--bq-ui--brand-alt, #d1e9ff);
+  --bq-date-picker2--row-gap: 0.125rem;         // 2px — matches v1
 
   --bq-date-picker2--text-color: var(--bq-text--primary, #0f1728);
   --bq-date-picker2--text-placeholder-color: var(--bq-text--secondary, #667085);

@@ -367,6 +367,10 @@
 
 .bq-date-picker2__td {
   padding: 0;
+  // Small vertical breathing room between rows (matches v1). The range
+  // highlight lives on the `.bq-date-picker2__day` background, so this only
+  // adds an *inter-row* gap — it does not break the horizontal range track.
+  padding-block: var(--bq-date-picker2--row-gap);
   text-align: center;
 }
 
