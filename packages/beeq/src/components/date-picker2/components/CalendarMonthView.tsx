@@ -1,14 +1,14 @@
 import { type FunctionalComponent, h } from '@stencil/core';
 
+import type { TDatePickerType, TSelection } from '../bq-date-picker2.types';
 import { getISOYearMonth } from '../helper/calendar';
 import { CALENDAR_PARTS } from '../helper/constants';
 import { getMonthNames } from '../helper/intl';
+import { isRangeEnd, isRangeInner, isRangeStart, isSelected } from '../helper/selection';
 
 export type TCalendarMonthViewProps = {
   /** Year currently shown in the header. */
   year: number;
-  /** Currently selected month (0-based). Optional. */
-  selectedMonth?: number;
   /** Focused month (0-based), used for the roving tabindex. */
   focusedMonth: number;
   /** Locale used for localized month names. */
@@ -17,6 +17,10 @@ export type TCalendarMonthViewProps = {
   minISO?: string;
   /** Max year/month to keep enabled. */
   maxISO?: string;
+  /** Current selection (as stored internally: array of YYYY-MM-DD). */
+  selection: TSelection;
+  /** Selection type — drives multi / range highlighting. */
+  type: TDatePickerType;
   /** Callback fired when the user picks a month. */
   onMonthSelect: (month: number, ev: MouseEvent | KeyboardEvent) => void;
   /** Callback fired when a month button receives focus. */
@@ -25,16 +29,20 @@ export type TCalendarMonthViewProps = {
   onGridKeyDown: (ev: KeyboardEvent) => void;
 };
 
+/** ISO used to compare a month cell against the internal selection. */
+const monthCellISO = (year: number, month: number): string => `${year}-${String(month + 1).padStart(2, '0')}-01`;
+
 /**
  * Month picker — 12 buttons in a 3×4 grid.
  */
 export const CalendarMonthView: FunctionalComponent<TCalendarMonthViewProps> = ({
   year,
-  selectedMonth,
   focusedMonth,
   locale,
   minISO,
   maxISO,
+  selection,
+  type,
   onMonthSelect,
   onMonthFocus,
   onGridKeyDown,
@@ -63,11 +71,18 @@ export const CalendarMonthView: FunctionalComponent<TCalendarMonthViewProps> = (
     >
       {months.map((name, month) => {
         const disabled = isMonthDisabled(month);
-        const selected = selectedMonth === month;
+        const iso = monthCellISO(year, month);
+        const selected = isSelected(iso, selection, type);
+        const rangeStart = isRangeStart(iso, selection, type);
+        const rangeEnd = isRangeEnd(iso, selection, type);
+        const rangeInner = isRangeInner(iso, selection, type);
         const isFocused = focusedMonth === month;
 
         const parts: string[] = [CALENDAR_PARTS.month];
         if (selected) parts.push(CALENDAR_PARTS.monthSelected);
+        if (rangeStart) parts.push(CALENDAR_PARTS.rangeStart);
+        if (rangeEnd) parts.push(CALENDAR_PARTS.rangeEnd);
+        if (rangeInner) parts.push(CALENDAR_PARTS.rangeInner);
         if (disabled) parts.push(CALENDAR_PARTS.disabled);
 
         return (
@@ -78,6 +93,9 @@ export const CalendarMonthView: FunctionalComponent<TCalendarMonthViewProps> = (
             class={{
               'bq-date-picker2__month-cell': true,
               'is-selected': selected,
+              'is-range-start': rangeStart,
+              'is-range-end': rangeEnd,
+              'is-range-inner': rangeInner,
               'is-out-of-bounds': disabled,
             }}
             data-month={month}

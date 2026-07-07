@@ -1149,18 +1149,15 @@ export class BqDatePicker2 {
   }
 
   private renderMonthsView(): JSX.Element {
-    const firstSelected = this.selection[0];
-    const parsedFirst = firstSelected ? parseISO(firstSelected) : null;
-    const selectedMonth = parsedFirst?.getFullYear() === this.focusedYear ? parsedFirst.getMonth() : undefined;
-
     return (
       <CalendarMonthView
         year={this.focusedYear}
-        selectedMonth={selectedMonth}
         focusedMonth={this.focusedMonth}
         locale={this.locale}
         minISO={this.min}
         maxISO={this.max}
+        selection={this.selection}
+        type={this.type}
         onMonthSelect={(month) => this.handleMonthSelect(month)}
         onMonthFocus={(month) => {
           this.focusedMonth = month;
@@ -1174,7 +1171,6 @@ export class BqDatePicker2 {
     const start = this.decadeStart;
     const end = start + DECADE_GRID_SIZE - 1;
     const years = Array.from({ length: DECADE_GRID_SIZE }, (_, i) => start + i);
-    const selectedYear = this.selection[0] ? parseISO(this.selection[0])?.getFullYear() : undefined;
     const minYear = getISOYearMonth(this.min)?.year;
     const maxYear = getISOYearMonth(this.max)?.year;
     const effectiveFocused = this.focusedYear >= start && this.focusedYear <= end ? this.focusedYear : start;
@@ -1182,10 +1178,11 @@ export class BqDatePicker2 {
     return (
       <CalendarYearView
         years={years}
-        selectedYear={selectedYear}
         focusedYear={effectiveFocused}
         minYear={minYear}
         maxYear={maxYear}
+        selection={this.selection}
+        type={this.type}
         onYearSelect={(year) => this.handleYearSelect(year)}
         onYearFocus={(year) => {
           this.focusedYear = year;

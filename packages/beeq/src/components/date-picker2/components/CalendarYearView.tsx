@@ -1,18 +1,22 @@
 import { type FunctionalComponent, h } from '@stencil/core';
 
+import type { TDatePickerType, TSelection } from '../bq-date-picker2.types';
 import { CALENDAR_PARTS } from '../helper/constants';
+import { isRangeEnd, isRangeInner, isRangeStart, isSelected } from '../helper/selection';
 
 export type TCalendarYearViewProps = {
   /** Years to render (typically 12). */
   years: number[];
-  /** Currently selected year (optional). */
-  selectedYear?: number;
   /** Focused year (roving tabindex target). */
   focusedYear: number;
   /** Optional min year. */
   minYear?: number;
   /** Optional max year. */
   maxYear?: number;
+  /** Current selection (as stored internally: array of YYYY-MM-DD). */
+  selection: TSelection;
+  /** Selection type — drives multi / range highlighting. */
+  type: TDatePickerType;
   /** Callback fired when the user picks a year. */
   onYearSelect: (year: number, ev: MouseEvent | KeyboardEvent) => void;
   /** Callback fired when a year button receives focus. */
@@ -21,15 +25,19 @@ export type TCalendarYearViewProps = {
   onGridKeyDown: (ev: KeyboardEvent) => void;
 };
 
+/** ISO used to compare a year cell against the internal selection. */
+const yearCellISO = (year: number): string => `${year}-01-01`;
+
 /**
  * Year picker — 12 buttons for a decade grid.
  */
 export const CalendarYearView: FunctionalComponent<TCalendarYearViewProps> = ({
   years,
-  selectedYear,
   focusedYear,
   minYear,
   maxYear,
+  selection,
+  type,
   onYearSelect,
   onYearFocus,
   onGridKeyDown,
@@ -37,11 +45,18 @@ export const CalendarYearView: FunctionalComponent<TCalendarYearViewProps> = ({
   <div class="bq-date-picker2__years" onKeyDown={onGridKeyDown} part={CALENDAR_PARTS.years} role="grid" tabIndex={-1}>
     {years.map((year) => {
       const disabled = (minYear !== undefined && year < minYear) || (maxYear !== undefined && year > maxYear);
-      const selected = selectedYear === year;
+      const iso = yearCellISO(year);
+      const selected = isSelected(iso, selection, type);
+      const rangeStart = isRangeStart(iso, selection, type);
+      const rangeEnd = isRangeEnd(iso, selection, type);
+      const rangeInner = isRangeInner(iso, selection, type);
       const isFocused = focusedYear === year;
 
       const parts: string[] = [CALENDAR_PARTS.year];
       if (selected) parts.push(CALENDAR_PARTS.yearSelected);
+      if (rangeStart) parts.push(CALENDAR_PARTS.rangeStart);
+      if (rangeEnd) parts.push(CALENDAR_PARTS.rangeEnd);
+      if (rangeInner) parts.push(CALENDAR_PARTS.rangeInner);
       if (disabled) parts.push(CALENDAR_PARTS.disabled);
 
       return (
@@ -52,6 +67,9 @@ export const CalendarYearView: FunctionalComponent<TCalendarYearViewProps> = ({
           class={{
             'bq-date-picker2__year-cell': true,
             'is-selected': selected,
+            'is-range-start': rangeStart,
+            'is-range-end': rangeEnd,
+            'is-range-inner': rangeInner,
             'is-out-of-bounds': disabled,
           }}
           data-year={year}
