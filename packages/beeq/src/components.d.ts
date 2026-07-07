@@ -14,7 +14,7 @@ import { TCardBorderRadius, TCardType } from "./components/card/bq-card.types";
 import { DaysOfWeek, TDatePickerType } from "./components/date-picker/bq-date-picker.types";
 import { Placement } from "./services/interfaces";
 import { TInputType, TInputValidation, TInputValue } from "./components/input/bq-input.types";
-import { DaysOfWeek as DaysOfWeek1, TCalendarView, TDatePickerType as TDatePickerType1, TFloatingStrategy, TMonthsPerView } from "./components/date-picker2/bq-date-picker2.types";
+import { DaysOfWeek as DaysOfWeek1, TCalendarView, TDatePickerType as TDatePickerType1, TDatePrecision, TFloatingStrategy, TMonthsPerView } from "./components/date-picker2/bq-date-picker2.types";
 import { TDialogBorderRadius, TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
 import { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 import { TDrawerPlacement, TDrawerPosition } from "./components/drawer/bq-drawer.types";
@@ -44,7 +44,7 @@ export { TCardBorderRadius, TCardType } from "./components/card/bq-card.types";
 export { DaysOfWeek, TDatePickerType } from "./components/date-picker/bq-date-picker.types";
 export { Placement } from "./services/interfaces";
 export { TInputType, TInputValidation, TInputValue } from "./components/input/bq-input.types";
-export { DaysOfWeek as DaysOfWeek1, TCalendarView, TDatePickerType as TDatePickerType1, TFloatingStrategy, TMonthsPerView } from "./components/date-picker2/bq-date-picker2.types";
+export { DaysOfWeek as DaysOfWeek1, TCalendarView, TDatePickerType as TDatePickerType1, TDatePrecision, TFloatingStrategy, TMonthsPerView } from "./components/date-picker2/bq-date-picker2.types";
 export { TDialogBorderRadius, TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
 export { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 export { TDrawerPlacement, TDrawerPosition } from "./components/drawer/bq-drawer.types";
@@ -1073,10 +1073,9 @@ export namespace Components {
          */
         "formValidationMessage"?: string;
         /**
-          * Options used when formatting the displayed value.
-          * @default {     day: 'numeric',     month: 'short',     year: 'numeric',   }
+          * Options used when formatting the displayed value.  When omitted, sensible defaults are picked based on `precision`: - `day`   → `{ day: 'numeric', month: 'short', year: 'numeric' }` - `month` → `{ month: 'long', year: 'numeric' }` - `year`  → `{ year: 'numeric' }`
          */
-        "formatOptions": Intl.DateTimeFormatOptions;
+        "formatOptions"?: Intl.DateTimeFormatOptions;
         /**
           * The view opened first when the panel becomes visible.
           * @default 'days'
@@ -1132,6 +1131,11 @@ export namespace Components {
           * @default 'bottom-end'
          */
         "placement": Placement;
+        /**
+          * Precision of the value produced by the picker.  - `day`   → `YYYY-MM-DD` (default). Standard drill-down. - `month` → `YYYY-MM`. Selection commits on the months view; no days view. - `year`  → `YYYY`. Selection commits on the years view; no months/days view.  When precision is coarser than day, `initialView` is forced to match and the header title stops behaving as a "drill up" affordance.
+          * @default 'day'
+         */
+        "precision": TDatePrecision;
         /**
           * Whether a value must be selected before submitting the form.
           * @default false
@@ -6868,8 +6872,7 @@ declare namespace LocalJSX {
          */
         "formValidationMessage"?: string;
         /**
-          * Options used when formatting the displayed value.
-          * @default {     day: 'numeric',     month: 'short',     year: 'numeric',   }
+          * Options used when formatting the displayed value.  When omitted, sensible defaults are picked based on `precision`: - `day`   → `{ day: 'numeric', month: 'short', year: 'numeric' }` - `month` → `{ month: 'long', year: 'numeric' }` - `year`  → `{ year: 'numeric' }`
          */
         "formatOptions"?: Intl.DateTimeFormatOptions;
         /**
@@ -6947,6 +6950,11 @@ declare namespace LocalJSX {
           * @default 'bottom-end'
          */
         "placement"?: Placement;
+        /**
+          * Precision of the value produced by the picker.  - `day`   → `YYYY-MM-DD` (default). Standard drill-down. - `month` → `YYYY-MM`. Selection commits on the months view; no days view. - `year`  → `YYYY`. Selection commits on the years view; no months/days view.  When precision is coarser than day, `initialView` is forced to match and the header title stops behaving as a "drill up" affordance.
+          * @default 'day'
+         */
+        "precision"?: TDatePrecision;
         /**
           * Whether a value must be selected before submitting the form.
           * @default false
@@ -9556,6 +9564,7 @@ declare namespace LocalJSX {
         "panelHeight": string;
         "placeholder": string;
         "placement": Placement;
+        "precision": TDatePrecision;
         "required": boolean;
         "skidding": number;
         "showOutsideDays": boolean;

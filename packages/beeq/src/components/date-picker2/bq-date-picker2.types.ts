@@ -38,6 +38,15 @@ export const MONTHS_PER_VIEW = ['single', 'months'] as const;
 export type TMonthsPerView = (typeof MONTHS_PER_VIEW)[number];
 
 /**
+ * The precision of the value produced by the date picker.
+ * - `day`   → `YYYY-MM-DD` (default; drill-down to days)
+ * - `month` → `YYYY-MM`    (selection commits on the months view)
+ * - `year`  → `YYYY`       (selection commits on the years view)
+ */
+export const DATE_PRECISION = ['day', 'month', 'year'] as const;
+export type TDatePrecision = (typeof DATE_PRECISION)[number];
+
+/**
  * Internal representation of a selection.
  * Always an array of ISO 8601 date strings (YYYY-MM-DD).
  * - single → 0 or 1 entry

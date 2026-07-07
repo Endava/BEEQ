@@ -1,4 +1,4 @@
-import type { TDatePickerType, TSelection } from '../bq-date-picker2.types';
+import type { TDatePickerType, TDatePrecision, TSelection } from '../bq-date-picker2.types';
 import { compareISO, isValidISO, sortRange } from './calendar';
 
 /* -------------------------------------------------------------------------- */
@@ -6,24 +6,69 @@ import { compareISO, isValidISO, sortRange } from './calendar';
 /* -------------------------------------------------------------------------- */
 
 /**
+ * Regex matching the wire-format ISO shape for each precision.
+ * The internal selection is always `YYYY-MM-DD`; these only apply at the
+ * public value boundary.
+ */
+const PRECISION_ISO_REGEX: Record<TDatePrecision, RegExp> = {
+  day: /^\d{4}-\d{2}-\d{2}$/,
+  month: /^\d{4}-\d{2}$/,
+  year: /^\d{4}$/,
+};
+
+/** Expand a wire-format token to a full `YYYY-MM-DD` ISO date. */
+const expandToken = (token: string, precision: TDatePrecision): string => {
+  if (precision === 'month') return `${token}-01`;
+  if (precision === 'year') return `${token}-01-01`;
+  return token;
+};
+
+/** Truncate a full `YYYY-MM-DD` ISO date to the wire-format for the precision. */
+const truncateISO = (iso: string, precision: TDatePrecision): string => {
+  if (precision === 'month') return iso.slice(0, 7);
+  if (precision === 'year') return iso.slice(0, 4);
+  return iso;
+};
+
+/**
+ * Whether the token matches the precision-specific shape *and* is a real date.
+ * For month/year we still expand to a full ISO date so `2026-13` / `2026-02-30`
+ * style errors are caught by `isValidISO`.
+ */
+const isValidToken = (token: string, precision: TDatePrecision): boolean => {
+  if (!PRECISION_ISO_REGEX[precision].test(token)) return false;
+  return isValidISO(expandToken(token, precision));
+};
+
+/**
  * Parse a raw `value` string into an internal `TSelection` array.
  *
  * Wire format (compatible with the v1 Cally-based picker):
- * - single: `YYYY-MM-DD`
- * - multi:  `YYYY-MM-DD YYYY-MM-DD ...` (space-separated)
- * - range:  `YYYY-MM-DD/YYYY-MM-DD`
+ * - single: `YYYY-MM-DD` (or `YYYY-MM` / `YYYY` at coarser precision)
+ * - multi:  space-separated tokens
+ * - range:  `<start>/<end>`
+ *
+ * Internally the selection is always stored as full `YYYY-MM-DD` — month
+ * precision expands to the first day of the month; year precision to Jan 1st.
  *
  * Invalid tokens (malformed strings, impossible dates like `2026-99-99`,
  * non-ISO input) are silently discarded — the returned selection is
  * guaranteed to contain only valid ISO-8601 dates.
  */
-export const parseValue = (value: string | undefined | null, type: TDatePickerType): TSelection => {
+export const parseValue = (
+  value: string | undefined | null,
+  type: TDatePickerType,
+  precision: TDatePrecision = 'day',
+): TSelection => {
   if (!value) return [];
   const trimmed = value.trim();
   if (!trimmed) return [];
 
   if (type === 'range') {
-    const parts = trimmed.split('/').filter(isValidISO);
+    const parts = trimmed
+      .split('/')
+      .filter((token) => isValidToken(token, precision))
+      .map((token) => expandToken(token, precision));
     if (parts.length === 0) return [];
     if (parts.length === 1) return [parts[0]];
     const [start, end] = sortRange(parts[0], parts[1]);
@@ -31,30 +76,41 @@ export const parseValue = (value: string | undefined | null, type: TDatePickerTy
   }
 
   if (type === 'multi') {
-    const valid = trimmed.split(/\s+/).filter(isValidISO);
+    const valid = trimmed
+      .split(/\s+/)
+      .filter((token) => isValidToken(token, precision))
+      .map((token) => expandToken(token, precision));
     return Array.from(new Set(valid)).sort(compareISO);
   }
 
-  return isValidISO(trimmed) ? [trimmed] : [];
+  return isValidToken(trimmed, precision) ? [expandToken(trimmed, precision)] : [];
 };
 
 /**
  * Serialize an internal `TSelection` array back to the wire format.
+ * Truncates each entry to the precision's ISO shape.
  */
-export const serializeValue = (selection: TSelection, type: TDatePickerType): string => {
+export const serializeValue = (
+  selection: TSelection,
+  type: TDatePickerType,
+  precision: TDatePrecision = 'day',
+): string => {
   if (!selection.length) return '';
+  const format = (iso: string) => truncateISO(iso, precision);
 
   if (type === 'range') {
-    if (selection.length < 2) return selection[0] ?? '';
+    if (selection.length < 2) return format(selection[0] ?? '');
     const [start, end] = sortRange(selection[0], selection[1]);
-    return `${start}/${end}`;
+    return `${format(start)}/${format(end)}`;
   }
 
   if (type === 'multi') {
-    return Array.from(new Set(selection)).sort(compareISO).join(' ');
+    return Array.from(new Set(selection.map(format)))
+      .sort(compareISO)
+      .join(' ');
   }
 
-  return selection[0];
+  return format(selection[0]);
 };
 
 /* -------------------------------------------------------------------------- */

@@ -21,6 +21,7 @@ import type {
   DaysOfWeek,
   TCalendarView,
   TDatePickerType,
+  TDatePrecision,
   TFloatingStrategy,
   TMonthsPerView,
   TSelection,
@@ -28,6 +29,7 @@ import type {
 import {
   CALENDAR_VIEW,
   DATE_PICKER_TYPE,
+  DATE_PRECISION,
   DAYS_OF_WEEK,
   FLOATING_PLACEMENT,
   FLOATING_STRATEGY,
@@ -55,7 +57,12 @@ import { formatMonth } from './helper/intl';
 import { getHeaderLabel, getHeaderTitleLabel, getNextLabel, getPreviousLabel } from './helper/labels';
 import { advanceFocusedMonth, advanceFocusedYear, getGridColumns } from './helper/navigation';
 import { applySelection, buildTentativeRange, parseValue, serializeValue } from './helper/selection';
-import { computeDisplayDate, computeHasValue, normalizeValue } from './helper/value';
+import {
+  computeDisplayDate,
+  computeHasValue,
+  DEFAULT_FORMAT_OPTIONS_BY_PRECISION,
+  normalizeValue,
+} from './helper/value';
 
 /**
  * The Date Picker (v2) is a pure-Stencil calendar input.
@@ -270,12 +277,15 @@ export class BqDatePicker2 {
   /** The first day of the week, where Sunday is 0, Monday is 1, etc. */
   @Prop({ reflect: true }) firstDayOfWeek: DaysOfWeek = 1;
 
-  /** Options used when formatting the displayed value. */
-  @Prop() formatOptions: Intl.DateTimeFormatOptions = {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-  };
+  /**
+   * Options used when formatting the displayed value.
+   *
+   * When omitted, sensible defaults are picked based on `precision`:
+   * - `day`   → `{ day: 'numeric', month: 'short', year: 'numeric' }`
+   * - `month` → `{ month: 'long', year: 'numeric' }`
+   * - `year`  → `{ year: 'numeric' }`
+   */
+  @Prop() formatOptions?: Intl.DateTimeFormatOptions;
 
   /** The ID of the form the input belongs to. */
   @Prop({ reflect: true }) form?: string;
@@ -327,6 +337,18 @@ export class BqDatePicker2 {
   /** Position of the Date picker panel. */
   @Prop({ reflect: true }) placement: Placement = 'bottom-end';
 
+  /**
+   * Precision of the value produced by the picker.
+   *
+   * - `day`   → `YYYY-MM-DD` (default). Standard drill-down.
+   * - `month` → `YYYY-MM`. Selection commits on the months view; no days view.
+   * - `year`  → `YYYY`. Selection commits on the years view; no months/days view.
+   *
+   * When precision is coarser than day, `initialView` is forced to match and
+   * the header title stops behaving as a "drill up" affordance.
+   */
+  @Prop({ reflect: true }) precision: TDatePrecision = 'day';
+
   /** Whether a value must be selected before submitting the form. */
   @Prop({ reflect: true }) required: boolean = false;
 
@@ -364,7 +386,7 @@ export class BqDatePicker2 {
     // consumers can't submit an invalid wire value while the display shows
     // nothing. If normalization rewrote the value, reflect it back on the
     // prop and let the follow-up watcher tick handle the normalized string.
-    const normalized = normalizeValue(newValue, this.type);
+    const normalized = normalizeValue(newValue, this.type, this.precision);
     if (normalized !== newValue) {
       this.value = normalized;
       return;
@@ -384,7 +406,7 @@ export class BqDatePicker2 {
     this.internals.setFormValue(!isNil(current) ? `${current}` : null);
     this.updateFormValidity();
     this.hasValue = computeHasValue(current);
-    this.displayDate = computeDisplayDate(current, this.type, this.locale, this.formatOptions);
+    this.displayDate = computeDisplayDate(current, this.type, this.locale, this.effectiveFormatOptions, this.precision);
   };
 
   @Watch('formatOptions')
@@ -392,7 +414,13 @@ export class BqDatePicker2 {
   handleFormattingChange() {
     // Re-format the display without re-parsing the wire value.
     this.hasValue = computeHasValue(this.value);
-    this.displayDate = computeDisplayDate(this.value, this.type, this.locale, this.formatOptions);
+    this.displayDate = computeDisplayDate(
+      this.value,
+      this.type,
+      this.locale,
+      this.effectiveFormatOptions,
+      this.precision,
+    );
   }
 
   @Watch('type')
@@ -401,7 +429,23 @@ export class BqDatePicker2 {
     // Re-normalize the current value against the new type; if that rewrites
     // the value, the `value` watcher takes over. Otherwise refresh derived
     // state and re-sync the visible calendar range.
-    const normalized = normalizeValue(this.value, this.type);
+    const normalized = normalizeValue(this.value, this.type, this.precision);
+    if (normalized !== this.value) {
+      this.value = normalized;
+      return;
+    }
+    this.syncDerivedFromValue();
+    this.syncViewToValue();
+  }
+
+  @Watch('precision')
+  handlePrecisionChange() {
+    validatePropValue(DATE_PRECISION, 'day', this.el, 'precision');
+    // Precision affects both wire format and default view. Force the calendar
+    // to open on the matching view and re-normalize the current value so
+    // trailing day/month segments are dropped or padded consistently.
+    this.view = this.precisionToView(this.precision);
+    const normalized = normalizeValue(this.value, this.type, this.precision);
     if (normalized !== this.value) {
       this.value = normalized;
       return;
@@ -429,12 +473,14 @@ export class BqDatePicker2 {
   @Watch('initialView')
   @Watch('monthsPerView')
   @Watch('placement')
+  @Watch('precision')
   @Watch('strategy')
   @Watch('type')
   @Watch('validationStatus')
   checkPropValues() {
     validatePropValue(DATE_PICKER_TYPE, 'single', this.el, 'type');
     validatePropValue(CALENDAR_VIEW, 'days', this.el, 'initialView');
+    validatePropValue(DATE_PRECISION, 'day', this.el, 'precision');
     validatePropValue(MONTHS_PER_VIEW, 'single', this.el, 'monthsPerView');
     validatePropValue(FLOATING_STRATEGY, 'fixed', this.el, 'strategy');
     validatePropValue(FLOATING_PLACEMENT, 'bottom-end', this.el, 'placement');
@@ -464,7 +510,8 @@ export class BqDatePicker2 {
       this.tentativeHover = undefined;
       return;
     }
-    this.view = this.initialView;
+    // Precision locks the initial view; otherwise honor the consumer-provided one.
+    this.view = this.precision === 'day' ? this.initialView : this.precisionToView(this.precision);
     this.syncViewToValue();
     // Move keyboard focus into the calendar so screen-reader / keyboard users
     // land on the focused day (or the equivalent focused cell for
@@ -506,10 +553,10 @@ export class BqDatePicker2 {
 
   componentWillLoad() {
     this.initialValue = this.value;
-    // `initialView` selects the view the panel opens on. When the picker is
-    // rendered with `open` already true, `handleOpen` never fires — apply the
-    // preference here so the initial paint respects it.
-    this.view = this.initialView;
+    // Precision locks the initial view when set. Otherwise honor `initialView`.
+    // When the picker is rendered with `open` already true, `handleOpen` never
+    // fires — apply the preference here so the initial paint respects it.
+    this.view = this.precision === 'day' ? this.initialView : this.precisionToView(this.precision);
     this.checkPropValues();
     this.handleMonthsChange();
     this.syncViewToValue();
@@ -657,12 +704,29 @@ export class BqDatePicker2 {
   };
 
   private get selection(): TSelection {
-    const key = `${this.type}|${this.value ?? ''}`;
+    const key = `${this.type}|${this.precision}|${this.value ?? ''}`;
     if (this.cachedSelection?.key === key) return this.cachedSelection.value;
-    const parsed = parseValue(this.value, this.type);
+    const parsed = parseValue(this.value, this.type, this.precision);
     this.cachedSelection = { key, value: parsed };
     return parsed;
   }
+
+  /**
+   * Effective `Intl.DateTimeFormatOptions` — user-provided when set, otherwise
+   * the precision-appropriate default. Prevents a `month` picker from
+   * accidentally rendering "1 May 2026" when the consumer just sets
+   * `precision="month"` without overriding `formatOptions`.
+   */
+  private get effectiveFormatOptions(): Intl.DateTimeFormatOptions {
+    return this.formatOptions ?? DEFAULT_FORMAT_OPTIONS_BY_PRECISION[this.precision];
+  }
+
+  /** Map a precision value to the calendar view that commits selections. */
+  private precisionToView = (precision: TDatePrecision): TCalendarView => {
+    if (precision === 'month') return 'months';
+    if (precision === 'year') return 'years';
+    return 'days';
+  };
 
   private get tentativeRange(): TSelection {
     if (this.type !== 'range') return [];
@@ -695,6 +759,18 @@ export class BqDatePicker2 {
   };
 
   private handleHeaderTitleClick = (): void => {
+    // Precision locks the view: drilling up above the "commit" view has no
+    // meaning (e.g. year precision has no month/day fallback).
+    if (this.precision === 'year') return;
+    if (this.precision === 'month' && this.view === 'months') {
+      // Allow drilling months → years so users can still change year quickly.
+      const ref = this.getViewFocusReference();
+      this.focusedYear = ref.getFullYear();
+      this.decadeStart = getDecadeStart(ref.getFullYear());
+      this.view = 'years';
+      this.focusActiveCell();
+      return;
+    }
     if (this.view === 'days') {
       const ref = this.getViewFocusReference();
       this.focusedMonth = ref.getMonth();
@@ -737,6 +813,15 @@ export class BqDatePicker2 {
   };
 
   private handleMonthSelect = (month: number): void => {
+    // When precision is `month`, selecting a month commits the value instead
+    // of drilling to the days view.
+    if (this.precision === 'month') {
+      this.focusedMonth = month;
+      this.viewDate = new Date(this.focusedYear, month, 1);
+      this.commitSelection(toISO(new Date(this.focusedYear, month, 1)));
+      return;
+    }
+
     this.viewDate = new Date(this.focusedYear, month, 1);
     this.focusedMonth = month;
     // Preserve day-of-month from the current focus (value or today), clamped
@@ -756,6 +841,15 @@ export class BqDatePicker2 {
   };
 
   private handleYearSelect = (year: number): void => {
+    // When precision is `year`, selecting a year commits the value instead
+    // of drilling to the months view.
+    if (this.precision === 'year') {
+      this.focusedYear = year;
+      this.viewDate = new Date(year, 0, 1);
+      this.commitSelection(toISO(new Date(year, 0, 1)));
+      return;
+    }
+
     this.focusedYear = year;
     this.viewDate = new Date(year, this.focusedMonth, 1);
     this.view = 'months';
@@ -765,10 +859,19 @@ export class BqDatePicker2 {
   /* ---------------------------- Day selection ---------------------------- */
 
   private handleDaySelect = (iso: string): void => {
+    this.commitSelection(iso);
+  };
+
+  /**
+   * Shared commit path used by day / month / year selection. Keeps the
+   * selection logic (single/multi/range) and post-commit behaviour (event,
+   * open state, tentative hover, view sync) identical across precisions.
+   */
+  private commitSelection = (iso: string): void => {
     const next = applySelection(iso, this.selection, this.type);
     const shouldStayOpen = this.type === 'multi' || (this.type === 'range' && next.length === 1);
 
-    this.value = serializeValue(next, this.type);
+    this.value = serializeValue(next, this.type, this.precision);
     this.focusedISO = iso;
     this.viewDate = startOfMonth(parseISO(iso) ?? this.viewDate);
     this.tentativeHover = this.type === 'range' && next.length === 1 ? iso : undefined;
