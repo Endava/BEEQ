@@ -1,6 +1,6 @@
 import { type FunctionalComponent, h } from '@stencil/core';
 
-import type { TDatePickerType, TSelection } from '../bq-date-picker2.types';
+import type { TDatePickerType, TSelection } from '../bq-date-picker.types';
 import { getISOYearMonth } from '../helper/calendar';
 import { CALENDAR_PARTS } from '../helper/constants';
 import { getMonthNames } from '../helper/intl';
@@ -63,7 +63,7 @@ export const CalendarMonthView: FunctionalComponent<TCalendarMonthViewProps> = (
 
   return (
     <div
-      class="bq-date-picker2__months"
+      class="bq-date-picker__months"
       onKeyDown={onGridKeyDown}
       part={CALENDAR_PARTS.months}
       role="grid"
@@ -91,7 +91,7 @@ export const CalendarMonthView: FunctionalComponent<TCalendarMonthViewProps> = (
             aria-disabled={disabled ? 'true' : undefined}
             aria-selected={selected ? 'true' : undefined}
             class={{
-              'bq-date-picker2__month-cell': true,
+              'bq-date-picker__month-cell': true,
               'is-selected': selected,
               'is-range-start': rangeStart,
               'is-range-end': rangeEnd,

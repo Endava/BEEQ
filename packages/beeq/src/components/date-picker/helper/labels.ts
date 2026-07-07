@@ -1,4 +1,4 @@
-import type { TCalendarView } from '../bq-date-picker2.types';
+import type { TCalendarView } from '../bq-date-picker.types';
 import { addMonths, startOfMonth } from './calendar';
 import { DECADE_GRID_SIZE, DEFAULT_ARIA_LABELS } from './constants';
 import { formatMonth, formatYear } from './intl';

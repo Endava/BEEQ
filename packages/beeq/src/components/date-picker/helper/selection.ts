@@ -1,4 +1,4 @@
-import type { TDatePickerType, TDatePrecision, TSelection } from '../bq-date-picker2.types';
+import type { TDatePickerType, TDatePrecision, TSelection } from '../bq-date-picker.types';
 import { compareISO, isValidISO, sortRange } from './calendar';
 
 /* -------------------------------------------------------------------------- */

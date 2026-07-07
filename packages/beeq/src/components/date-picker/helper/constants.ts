@@ -1,36 +1,66 @@
-import { ISO_DATE_LOCALE } from '../../../shared/utils/date';
-
 /** Default fallback input ID */
-const DEFAULT_INPUT_ID = 'date-picker';
+export const DEFAULT_INPUT_ID = 'date-picker';
 
-/** Calendar month shadow DOM parts for common elements */
-const CALENDAR_COMMON_EXPORT_PARTS =
-  'calendar__heading,calendar__table,calendar__tr,calendar__head,calendar__week,calendar__th,calendar__td';
-
-/** Calendar month shadow DOM parts for button elements */
-const CALENDAR_BUTTON_EXPORT_PARTS =
-  'calendar__button,calendar__day,calendar__selected,calendar__today,calendar__disallowed,calendar__outside,calendar__range-start,calendar__range-end,calendar__range-inner';
-
-/** Combined export parts for calendar-month component */
-const CALENDAR_MONTH_EXPORT_PARTS = `${CALENDAR_COMMON_EXPORT_PARTS},${CALENDAR_BUTTON_EXPORT_PARTS}`;
-
-/** Export parts for the calendar container component (calendar-date, calendar-range, calendar-multi) */
-const CALENDAR_CONTAINER_EXPORT_PARTS =
-  'container:calendar__container,header:calendar__header,button:calendar__button,previous:calendar__previous,next:calendar__next,disabled:calendar__disabled,heading:calendar__heading';
-
-/** Maps picker type to Cally component tag name */
-const CALENDAR_TYPE_MAP = {
-  single: 'calendar-date',
-  multi: 'calendar-multi',
-  range: 'calendar-range',
+/** Default aria labels used by the calendar navigation */
+export const DEFAULT_ARIA_LABELS = {
+  previousMonth: 'Previous month',
+  nextMonth: 'Next month',
+  previousYear: 'Previous year',
+  nextYear: 'Next year',
+  previousDecade: 'Previous decade',
+  nextDecade: 'Next decade',
+  chooseMonth: 'Choose month',
+  chooseYear: 'Choose year',
 } as const;
 
-export {
-  CALENDAR_BUTTON_EXPORT_PARTS,
-  CALENDAR_COMMON_EXPORT_PARTS,
-  CALENDAR_CONTAINER_EXPORT_PARTS,
-  CALENDAR_MONTH_EXPORT_PARTS,
-  CALENDAR_TYPE_MAP,
-  DEFAULT_INPUT_ID,
-  ISO_DATE_LOCALE,
-};
+/**
+ * Shadow DOM parts exposed by the component.
+ * Kept as a single list so it is easy to audit against the JSDoc @part list.
+ */
+export const CALENDAR_PARTS = {
+  base: 'base',
+  label: 'label',
+  control: 'control',
+  prefix: 'prefix',
+  suffix: 'suffix',
+  input: 'input',
+  clearBtn: 'clear-btn',
+  button: 'button',
+  panel: 'panel',
+  container: 'calendar__container',
+  header: 'calendar__header',
+  heading: 'calendar__heading',
+  previous: 'calendar__previous',
+  next: 'calendar__next',
+  table: 'calendar__table',
+  head: 'calendar__head',
+  tr: 'calendar__tr',
+  th: 'calendar__th',
+  week: 'calendar__week',
+  td: 'calendar__td',
+  day: 'calendar__day',
+  today: 'calendar__today',
+  selected: 'calendar__selected',
+  outside: 'calendar__outside',
+  disallowed: 'calendar__disallowed',
+  disabled: 'calendar__disabled',
+  rangeStart: 'calendar__range-start',
+  rangeEnd: 'calendar__range-end',
+  rangeInner: 'calendar__range-inner',
+  months: 'calendar__months',
+  month: 'calendar__month',
+  monthSelected: 'calendar__month-selected',
+  years: 'calendar__years',
+  year: 'calendar__year',
+  yearSelected: 'calendar__year-selected',
+} as const;
+
+/** Number of years shown in the decade view grid. Uses 12 to fill a 3x4 grid. */
+export const DECADE_GRID_SIZE = 12;
+
+/**
+ * Maximum number of month panels rendered side-by-side. Range pickers only
+ * benefit from up to 2 panels — beyond that the popover overflows most
+ * viewports and roving keyboard navigation becomes confusing.
+ */
+export const MAX_MONTHS_PER_VIEW = 2;

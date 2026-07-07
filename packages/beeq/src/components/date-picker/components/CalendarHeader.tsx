@@ -1,6 +1,6 @@
 import { type FunctionalComponent, h } from '@stencil/core';
 
-import type { TCalendarView } from '../bq-date-picker2.types';
+import type { TCalendarView } from '../bq-date-picker.types';
 import { CALENDAR_PARTS } from '../helper/constants';
 
 export type TCalendarHeaderProps = {
@@ -48,24 +48,24 @@ export const CalendarHeader: FunctionalComponent<TCalendarHeaderProps> = ({
   onNext,
   onTitleClick,
 }) => (
-  <div class="bq-date-picker2__header" part={CALENDAR_PARTS.header}>
+  <div class="bq-date-picker__header" part={CALENDAR_PARTS.header}>
     <button
       aria-label={previousLabel}
-      class="bq-date-picker2__nav-button"
+      class="bq-date-picker__nav-button"
       disabled={previousDisabled}
       onClick={onPrevious}
       part={`${CALENDAR_PARTS.button} ${CALENDAR_PARTS.previous}`}
       type="button"
     >
-      <bq-icon aria-hidden="true" class="bq-date-picker2__nav-icon" name="caret-left" size="20" />
+      <bq-icon aria-hidden="true" class="bq-date-picker__nav-icon" name="caret-left" size="20" />
     </button>
 
     <button
       aria-label={titleLabel}
       aria-live="polite"
       class={{
-        'bq-date-picker2__heading': true,
-        'bq-date-picker2__heading--static': !titleInteractive,
+        'bq-date-picker__heading': true,
+        'bq-date-picker__heading--static': !titleInteractive,
       }}
       disabled={!titleInteractive}
       data-view={view}
@@ -78,13 +78,13 @@ export const CalendarHeader: FunctionalComponent<TCalendarHeaderProps> = ({
 
     <button
       aria-label={nextLabel}
-      class="bq-date-picker2__nav-button"
+      class="bq-date-picker__nav-button"
       disabled={nextDisabled}
       onClick={onNext}
       part={`${CALENDAR_PARTS.button} ${CALENDAR_PARTS.next}`}
       type="button"
     >
-      <bq-icon aria-hidden="true" class="bq-date-picker2__nav-icon" name="caret-right" size="20" />
+      <bq-icon aria-hidden="true" class="bq-date-picker__nav-icon" name="caret-right" size="20" />
     </button>
   </div>
 );

@@ -1,6 +1,6 @@
 import { type FunctionalComponent, h } from '@stencil/core';
 
-import type { TDatePickerType, TSelection } from '../bq-date-picker2.types';
+import type { TDatePickerType, TSelection } from '../bq-date-picker.types';
 import { buildMonthMatrix, isSameDay, isWithinBounds, type TCalendarCell } from '../helper/calendar';
 import { CALENDAR_PARTS } from '../helper/constants';
 import { formatMonth, getWeekdayNames } from '../helper/intl';
@@ -72,7 +72,7 @@ const renderCell = (cell: TCalendarCell, state: TCellState, cb: TCellCallbacks) 
   <td
     key={cell.iso}
     aria-selected={state.selected ? 'true' : undefined}
-    class="bq-date-picker2__td"
+    class="bq-date-picker__td"
     part={CALENDAR_PARTS.td}
     // biome-ignore lint/a11y/noNoninteractiveElementToInteractiveRole: WAI-ARIA date-picker grid pattern.
     role="gridcell"
@@ -82,7 +82,7 @@ const renderCell = (cell: TCalendarCell, state: TCellState, cb: TCellCallbacks) 
       aria-current={state.isToday ? 'date' : undefined}
       aria-disabled={state.disabled ? 'true' : undefined}
       class={{
-        'bq-date-picker2__day': true,
+        'bq-date-picker__day': true,
         'is-selected': state.selected,
         'is-today': state.isToday,
         'is-outside': state.outside,
@@ -180,10 +180,10 @@ export const CalendarDayView: FunctionalComponent<TCalendarDayViewProps> = (prop
   const effectiveSelection: TSelection = type === 'range' && tentativeRange.length === 2 ? tentativeRange : selection;
 
   return (
-    <div class="bq-date-picker2__day-view">
+    <div class="bq-date-picker__day-view">
       <table
         aria-label={gridLabel}
-        class="bq-date-picker2__table"
+        class="bq-date-picker__table"
         onKeyDown={onGridKeyDown}
         part={CALENDAR_PARTS.table}
         // biome-ignore lint/a11y/noNoninteractiveElementToInteractiveRole: WAI-ARIA date-picker grid pattern.
@@ -192,7 +192,7 @@ export const CalendarDayView: FunctionalComponent<TCalendarDayViewProps> = (prop
         <thead part={CALENDAR_PARTS.head}>
           <tr part={CALENDAR_PARTS.tr}>
             {weekdays.map((wd) => (
-              <th key={wd.long} abbr={wd.long} class="bq-date-picker2__th" part={CALENDAR_PARTS.th} scope="col">
+              <th key={wd.long} abbr={wd.long} class="bq-date-picker__th" part={CALENDAR_PARTS.th} scope="col">
                 {wd.short}
               </th>
             ))}
@@ -200,7 +200,7 @@ export const CalendarDayView: FunctionalComponent<TCalendarDayViewProps> = (prop
         </thead>
         <tbody>
           {rows.map((row) => (
-            <tr key={row[0].iso} class="bq-date-picker2__week" part={`${CALENDAR_PARTS.tr} ${CALENDAR_PARTS.week}`}>
+            <tr key={row[0].iso} class="bq-date-picker__week" part={`${CALENDAR_PARTS.tr} ${CALENDAR_PARTS.week}`}>
               {row.map((cell) => {
                 const state = computeCellState(cell, {
                   effectiveSelection,

@@ -43,7 +43,6 @@ It is a small graphical element that is used to enhance the user interface and i
  - [bq-alert](../alert)
  - [bq-button](../button)
  - [bq-date-picker](../date-picker)
- - [bq-date-picker2](../date-picker2)
  - [bq-dialog](../dialog)
  - [bq-drawer](../drawer)
  - [bq-empty-state](../empty-state)
@@ -61,7 +60,6 @@ graph TD;
   bq-alert --> bq-icon
   bq-button --> bq-icon
   bq-date-picker --> bq-icon
-  bq-date-picker2 --> bq-icon
   bq-dialog --> bq-icon
   bq-drawer --> bq-icon
   bq-empty-state --> bq-icon

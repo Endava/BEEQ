@@ -1,6 +1,6 @@
 import { type FunctionalComponent, h } from '@stencil/core';
 
-import type { TDatePickerType, TSelection } from '../bq-date-picker2.types';
+import type { TDatePickerType, TSelection } from '../bq-date-picker.types';
 import { CALENDAR_PARTS } from '../helper/constants';
 import { isRangeEnd, isRangeInner, isRangeStart, isSelected } from '../helper/selection';
 
@@ -42,7 +42,7 @@ export const CalendarYearView: FunctionalComponent<TCalendarYearViewProps> = ({
   onYearFocus,
   onGridKeyDown,
 }) => (
-  <div class="bq-date-picker2__years" onKeyDown={onGridKeyDown} part={CALENDAR_PARTS.years} role="grid" tabIndex={-1}>
+  <div class="bq-date-picker__years" onKeyDown={onGridKeyDown} part={CALENDAR_PARTS.years} role="grid" tabIndex={-1}>
     {years.map((year) => {
       const disabled = (minYear !== undefined && year < minYear) || (maxYear !== undefined && year > maxYear);
       const iso = yearCellISO(year);
@@ -65,7 +65,7 @@ export const CalendarYearView: FunctionalComponent<TCalendarYearViewProps> = ({
           aria-disabled={disabled ? 'true' : undefined}
           aria-selected={selected ? 'true' : undefined}
           class={{
-            'bq-date-picker2__year-cell': true,
+            'bq-date-picker__year-cell': true,
             'is-selected': selected,
             'is-range-start': rangeStart,
             'is-range-end': rangeEnd,

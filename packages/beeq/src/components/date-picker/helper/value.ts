@@ -1,5 +1,5 @@
 import { formatDisplayValue, isDefined } from '../../../shared/utils';
-import type { TDatePickerType, TDatePrecision } from '../bq-date-picker2.types';
+import type { TDatePickerType, TDatePrecision } from '../bq-date-picker.types';
 import { parseValue, serializeValue } from './selection';
 
 /**
