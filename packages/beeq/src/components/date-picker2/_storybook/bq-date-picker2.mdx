@@ -12,6 +12,18 @@ import { ArgTypes, Title, Subtitle } from '@storybook/addon-docs/blocks';
     - `multi`:  `YYYY-MM-DD YYYY-MM-DD ...` (space separated)
     - `range`:  `YYYY-MM-DD/YYYY-MM-DD`
 
+    <Subtitle>Precision</Subtitle>
+
+    Use the `precision` prop to change the granularity of the value:
+
+    - `day` (default): wire format is `YYYY-MM-DD`.
+    - `month`: wire format is `YYYY-MM`. The panel opens on the months view and clicking a month commits the value.
+    - `year`: wire format is `YYYY`. The panel opens on the years view and clicking a year commits the value.
+
+    All selection types (`single`, `multi`, `range`) work at every precision, e.g. a month range value looks like `YYYY-MM/YYYY-MM`.
+
+    When `formatOptions` is not provided, a sensible default is applied per precision (long month + year for `month`, year only for `year`). Consumer-provided `formatOptions` always take precedence.
+
     <Title>Properties</Title>
 
     <ArgTypes of="bq-date-picker2" />

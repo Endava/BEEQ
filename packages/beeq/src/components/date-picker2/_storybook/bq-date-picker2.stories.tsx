@@ -3,7 +3,7 @@ import { html, nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 import { INPUT_VALIDATION } from '../../input/bq-input.types';
-import { CALENDAR_VIEW, DATE_PICKER_TYPE } from '../bq-date-picker2.types';
+import { CALENDAR_VIEW, DATE_PICKER_TYPE, DATE_PRECISION } from '../bq-date-picker2.types';
 import mdx from './bq-date-picker2.mdx';
 
 const meta: Meta = {
@@ -34,6 +34,7 @@ const meta: Meta = {
     open: { control: 'boolean' },
     'panel-height': { control: 'text' },
     placeholder: { control: 'text' },
+    precision: { control: 'select', options: [...DATE_PRECISION] },
     placement: {
       control: 'select',
       options: [
@@ -97,6 +98,7 @@ const meta: Meta = {
     'panel-height': 'auto',
     placeholder: 'Enter your date',
     placement: 'bottom-end',
+    precision: 'day',
     required: false,
     'show-outside-days': false,
     skidding: 0,
@@ -183,6 +185,7 @@ const Template = (args: Args) => {
       panel-height=${ifDefined(args['panel-height'])}
       placeholder=${ifDefined(args.placeholder)}
       placement=${ifDefined(args.placement)}
+      precision=${ifDefined(args.precision)}
       ?required=${args.required}
       ?show-outside-days=${args['show-outside-days']}
       skidding=${ifDefined(args.skidding)}
@@ -300,6 +303,46 @@ export const InitialYearView: Story = {
   name: 'Initial view: years',
   render: Template,
   args: { open: true, 'initial-view': 'years' },
+};
+
+/* --------------------------------- Precision -------------------------------- */
+
+export const MonthPrecision: Story = {
+  name: 'Precision: month',
+  render: Template,
+  args: {
+    open: true,
+    precision: 'month',
+    value: '2026-05',
+    // Let the component pick its precision default ({ month: 'long', year: 'numeric' })
+    formatOptions: undefined,
+    placeholder: 'Select month',
+  },
+};
+
+export const YearPrecision: Story = {
+  name: 'Precision: year',
+  render: Template,
+  args: {
+    open: true,
+    precision: 'year',
+    value: '2026',
+    formatOptions: undefined,
+    placeholder: 'Select year',
+  },
+};
+
+export const MonthPrecisionRange: Story = {
+  name: 'Precision: month + range',
+  render: Template,
+  args: {
+    open: true,
+    precision: 'month',
+    type: 'range',
+    value: '2026-03/2026-08',
+    formatOptions: undefined,
+    placeholder: 'Select month range',
+  },
 };
 
 /* ------------------------- Localization & formatting ----------------------- */
