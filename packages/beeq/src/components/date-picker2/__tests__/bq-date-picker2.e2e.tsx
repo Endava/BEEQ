@@ -820,4 +820,75 @@ describe('bq-date-picker2', () => {
     expect(input?.value).toMatch(/05/);
     expect(input?.value).not.toMatch(/May/);
   });
+
+  it('formats a multi value without day numbers when precision is month', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-date-picker2
+        name="date-picker"
+        precision="month"
+        type="multi"
+        value="2026-01 2026-03 2026-05"
+        locale="en-GB"
+      />,
+    );
+    const datePicker = root as HTMLBqDatePicker2Element;
+    await waitForChanges();
+
+    const input = getInput(datePicker);
+    // Precision default is { month: 'long', year: 'numeric' } — no day number.
+    expect(input?.value).toMatch(/January/);
+    expect(input?.value).toMatch(/March/);
+    expect(input?.value).toMatch(/May/);
+    expect(input?.value).not.toMatch(/\b1 Jan\b/);
+    expect(input?.value).not.toMatch(/\b01\b/);
+  });
+
+  it('formats a multi value with only the year when precision is year', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-date-picker2 name="date-picker" precision="year" type="multi" value="2020 2022 2025" locale="en-GB" />,
+    );
+    const datePicker = root as HTMLBqDatePicker2Element;
+    await waitForChanges();
+
+    const input = getInput(datePicker);
+    expect(input?.value).toMatch(/2020/);
+    expect(input?.value).toMatch(/2022/);
+    expect(input?.value).toMatch(/2025/);
+    // No month name, no day.
+    expect(input?.value).not.toMatch(/Jan|January/);
+  });
+
+  it('applies is-selected to a new month anchor after a completed range', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-date-picker2 name="date-picker" precision="month" type="range" open value="2026-03/2026-08" />,
+    );
+    const datePicker = root as HTMLBqDatePicker2Element;
+    await waitForStable(root);
+
+    // Click November (month index 10) — not part of the current range.
+    getMonthButton(datePicker, 10)?.click();
+    await waitForChanges();
+
+    const novBtn = getMonthButton(datePicker, 10);
+    expect(novBtn).toHaveClass('is-selected');
+    expect(datePicker.value).toBe('2026-11');
+  });
+
+  it('marks inner months as is-range-inner in a month-precision range', async () => {
+    const { root } = await render(
+      <bq-date-picker2 name="date-picker" precision="month" type="range" open value="2026-03/2026-08" />,
+    );
+    const datePicker = root as HTMLBqDatePicker2Element;
+    await waitForStable(root);
+
+    // March (start) and August (end) are selected endpoints.
+    expect(getMonthButton(datePicker, 2)).toHaveClass('is-range-start');
+    expect(getMonthButton(datePicker, 7)).toHaveClass('is-range-end');
+    // April–July are inner cells.
+    expect(getMonthButton(datePicker, 3)).toHaveClass('is-range-inner');
+    expect(getMonthButton(datePicker, 6)).toHaveClass('is-range-inner');
+    // Feb and Sept are outside the range.
+    expect(getMonthButton(datePicker, 1)).not.toHaveClass('is-selected');
+    expect(getMonthButton(datePicker, 8)).not.toHaveClass('is-selected');
+  });
 });
