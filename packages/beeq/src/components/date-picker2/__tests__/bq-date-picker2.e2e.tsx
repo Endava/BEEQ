@@ -891,4 +891,54 @@ describe('bq-date-picker2', () => {
     expect(getMonthButton(datePicker, 1)).not.toHaveClass('is-selected');
     expect(getMonthButton(datePicker, 8)).not.toHaveClass('is-selected');
   });
+
+  it('multi + month: committing a selection preserves the currently navigated year', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-date-picker2 name="date-picker" precision="month" type="multi" open />,
+    );
+    const datePicker = root as HTMLBqDatePicker2Element;
+    await waitForStable(root);
+
+    const initialYear = Number(getHeaderTitle(datePicker)?.textContent);
+    // Step one year back.
+    getPrevButton(datePicker)?.click();
+    await waitForChanges();
+    const targetYear = initialYear - 1;
+    expect(getHeaderTitle(datePicker)?.textContent).toContain(String(targetYear));
+
+    // Commit a month — the header must stay on the year the user navigated to.
+    getMonthButton(datePicker, 0)?.click();
+    await waitForChanges();
+
+    expect(getHeaderTitle(datePicker)?.textContent).toContain(String(targetYear));
+    expect(datePicker.value).toBe(`${targetYear}-01`);
+  });
+
+  it('single + month: opens on the value year, not on today', async () => {
+    const { root, waitForChanges, setProps } = await render(
+      <bq-date-picker2 name="date-picker" precision="month" value="2020-05" />,
+    );
+    const datePicker = root as HTMLBqDatePicker2Element;
+    await waitForChanges();
+
+    await setProps({ open: true });
+    await waitForStable(root);
+
+    expect(getHeaderTitle(datePicker)?.textContent).toContain('2020');
+    expect(getMonthButton(datePicker, 4)).toHaveClass('is-selected');
+  });
+
+  it('single + year: opens on the value decade, not on today', async () => {
+    const { root, waitForChanges, setProps } = await render(
+      <bq-date-picker2 name="date-picker" precision="year" value="2018" />,
+    );
+    const datePicker = root as HTMLBqDatePicker2Element;
+    await waitForChanges();
+
+    await setProps({ open: true });
+    await waitForStable(root);
+
+    expect(getYearButton(datePicker, 2018)).not.toBeNull();
+    expect(getYearButton(datePicker, 2018)).toHaveClass('is-selected');
+  });
 });
