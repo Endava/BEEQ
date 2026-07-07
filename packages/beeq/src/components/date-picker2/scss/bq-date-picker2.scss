@@ -511,6 +511,15 @@
     color: var(--bq-date-picker2--view-cell-text-selected);
   }
 
+  // Range highlighting — month / year grids have a visible gap between cells,
+  // so we keep the pill shape and only differentiate inner cells with a lighter
+  // tint. Endpoints already carry `.is-selected`, so they inherit the full
+  // selected pill treatment above.
+  &.is-range-inner {
+    background-color: var(--bq-date-picker2--range-inner-background-color);
+    color: var(--bq-date-picker2--text-color);
+  }
+
   &:disabled,
   &.is-out-of-bounds {
     cursor: not-allowed;
