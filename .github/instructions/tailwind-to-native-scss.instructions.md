@@ -76,10 +76,11 @@ width: 100%;
 - Use global layers for global styles:
 
 ```scss
-@layer bq.reset, bq.tokens, bq.themes, bq.base, bq.utilities, bq.overrides;
+@layer bq.reset, bq.tokens, bq.themes, bq.base, bq.public, bq.overrides;
 ```
 
 - Place emitted global declarations inside a layer.
+- Put public global CSS classes such as `.bq-link`, body state classes, and portal classes in `bq.public`.
 - Avoid unlayered global declarations because they override layered component declarations.
 - Use component-local layers only for components listed in the migration plan.
 - Layered component stylesheets must declare the full layer order, with global layers first and component layers after them.
@@ -92,6 +93,7 @@ width: 100%;
 - Use `color-mix()` for parity with the current Tailwind plugin.
 - Do not use relative color syntax such as `oklch(from ...)` during the parity migration.
 - Keep the focus-ring utility class separate from the focus-ring mixin.
+- Do not import shared BEEQ mixins from individual SCSS partials; Stencil injects `mixins/index.scss`, and the standalone Storybook Sass build must mirror that injection.
 
 ## Stylelint
 
