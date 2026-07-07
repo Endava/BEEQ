@@ -64,4 +64,45 @@ describe('computeDisplayDate', () => {
     expect(output).toMatch(/2026/);
     expect(output).toMatch(/30/);
   });
+
+  it('formats a month-precision value using the provided format options', () => {
+    const output = computeDisplayDate('2026-05', 'single', 'en-GB', { month: 'long', year: 'numeric' }, 'month');
+    expect(output).toMatch(/May/);
+    expect(output).toMatch(/2026/);
+  });
+
+  it('formats a year-precision value using the provided format options', () => {
+    const output = computeDisplayDate('2026', 'single', 'en-GB', { year: 'numeric' }, 'year');
+    expect(output).toBe('2026');
+  });
+});
+
+describe('normalizeValue — precision', () => {
+  it('accepts a YYYY-MM single value at month precision', () => {
+    expect(normalizeValue('2026-05', 'single', 'month')).toBe('2026-05');
+  });
+
+  it('accepts a YYYY single value at year precision', () => {
+    expect(normalizeValue('2026', 'single', 'year')).toBe('2026');
+  });
+
+  it('drops YYYY-MM-DD tokens when precision is month (fails shape check)', () => {
+    expect(normalizeValue('2026-05-30', 'single', 'month')).toBeUndefined();
+  });
+
+  it('drops YYYY-MM tokens when precision is year (fails shape check)', () => {
+    expect(normalizeValue('2026-05', 'single', 'year')).toBeUndefined();
+  });
+
+  it('parses a YYYY-MM range', () => {
+    expect(normalizeValue('2026-05/2026-08', 'range', 'month')).toBe('2026-05/2026-08');
+  });
+
+  it('parses a YYYY multi selection', () => {
+    expect(normalizeValue('2026 2028 2027', 'multi', 'year')).toBe('2026 2027 2028');
+  });
+
+  it('rejects impossible month tokens like 2026-13', () => {
+    expect(normalizeValue('2026-13', 'single', 'month')).toBeUndefined();
+  });
 });
