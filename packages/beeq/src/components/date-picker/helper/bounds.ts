@@ -5,9 +5,9 @@
  * or `YYYY-MM-DD`), while the internal representation of every clicked cell
  * is always a full `YYYY-MM-DD` string. These helpers normalize both sides
  * so the same predicate can be shared between the mouse (view components)
- * and keyboard (host) commit paths — GPT-5.5's review flagged the keyboard
- * path as bypassing the click-path bounds check, and centralizing here is
- * how we make that impossible.
+ * and keyboard (host) commit paths — centralising the check here is what
+ * makes it impossible for one path to accept an out-of-bounds cell that
+ * the other rejects.
  *
  * All predicates are pure: no `Date` mutation, no locale, no time zone —
  * bound strings are compared lexicographically (which is safe because ISO

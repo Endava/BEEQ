@@ -23,14 +23,18 @@ export type TParsedInput = {
 /**
  * Precision-aware, bounds-aware parser for the trigger input field.
  *
- * `handleInputChange` used to (1) always assume `YYYY-MM-DD` semantics, and
- * (2) emit the raw typed string when parsing failed. Both violated the
- * precision contract that GPT-5.5's review flagged: `precision="month"`
- * picker committed `YYYY-MM-DD` values through this path, and a garbage
- * typed string was emitted as-is via `bqChange`.
+ * Guarantees the picker's wire contract when the user types into the input:
+ *   • Parsed values are always emitted at the configured `precision` (so a
+ *     `precision="month"` picker never emits a `YYYY-MM-DD` string).
+ *   • Values that fall outside `min`/`max` are clamped against the
+ *     precision-padded bounds — the same padding used by day / month / year
+ *     cells so validation and rendering always agree.
+ *   • Parse failures signal `{ invalid: true }`; the host is expected to
+ *     emit `undefined` (never a raw typed string) so consumers can rely on
+ *     `bqChange.detail.value` being either a valid wire value or `undefined`.
  *
- * This helper centralises the whole path so the host stays thin and can
- * be covered by pure unit tests instead of e2e input simulation.
+ * Extracted from the host so the whole path can be covered by pure unit
+ * tests instead of end-to-end input simulation.
  */
 export const parseTypedInput = (
   text: string,

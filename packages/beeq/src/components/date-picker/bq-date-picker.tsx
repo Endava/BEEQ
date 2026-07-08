@@ -35,6 +35,7 @@ import { CalendarDayView } from './components/CalendarDayView';
 import { CalendarHeader } from './components/CalendarHeader';
 import { CalendarMonthView } from './components/CalendarMonthView';
 import { CalendarYearView } from './components/CalendarYearView';
+import { isMonthWithinBounds, isYearWithinBounds, padBound } from './helper/bounds';
 import {
   addDays,
   addMonths,
@@ -47,9 +48,8 @@ import {
   startOfMonth,
   toISO,
 } from './helper/calendar';
-import { isMonthWithinBounds, isYearWithinBounds, padBound } from './helper/bounds';
-import { parseTypedInput } from './helper/input';
 import { CALENDAR_PARTS, DECADE_GRID_SIZE, DEFAULT_INPUT_ID, MAX_MONTHS_PER_VIEW } from './helper/constants';
+import { parseTypedInput } from './helper/input';
 import { formatMonth } from './helper/intl';
 import { getHeaderLabel, getHeaderTitleLabel, getNextLabel, getPreviousLabel } from './helper/labels';
 import { advanceFocusedMonth, advanceFocusedYear, getGridColumns } from './helper/navigation';
@@ -193,6 +193,7 @@ import {
  * @cssprop --bq-date-picker--paddingY - Input vertical padding.
  * @cssprop --bq-date-picker--range-background-color - Background color for range start/end days.
  * @cssprop --bq-date-picker--range-inner-background-color - Background color for inner range days.
+ * @cssprop --bq-date-picker--row-gap - Vertical space between day-grid rows.
  * @cssprop --bq-date-picker--text-color - Input text color.
  * @cssprop --bq-date-picker--text-placeholder-color - Placeholder text color.
  * @cssprop --bq-date-picker--text-size - Input text size.
@@ -232,6 +233,13 @@ export class BqDatePicker {
 
   /** Initial `value` captured at load time, restored on form reset. */
   private initialValue?: string;
+
+  /**
+   * Sticky flag set when the user types text that cannot be parsed as a date.
+   * `syncValidity` overlays `badInput: true` while this is set and clears it
+   * on the next successful commit or on `clear()`.
+   */
+  private hasBadInput: boolean = false;
 
   // Reference to host HTML element
   // ===================================
@@ -380,8 +388,17 @@ export class BqDatePicker {
   /** Validation state applied to the input. */
   @Prop({ reflect: true }) validationStatus: TInputValidation = 'none';
 
-  /** The select input value represents the currently selected date or range and can be used to reset the field to a previous value.
-   * All dates are expected in ISO-8601 format (YYYY-MM-DD). */
+  /**
+   * Currently selected value, in the precision-aware wire format:
+   * - `precision="day"`   → tokens are `YYYY-MM-DD`
+   * - `precision="month"` → tokens are `YYYY-MM`
+   * - `precision="year"`  → tokens are `YYYY`
+   *
+   * How multiple tokens are combined depends on `type`:
+   * - `single` → a single token (e.g. `"2025-05-15"`, `"2025-05"`, `"2025"`)
+   * - `range`  → `"start/end"` — two tokens joined with `/`
+   * - `multi`  → space-separated tokens (e.g. `"2025-05-15 2025-05-20"`)
+   */
   @Prop({ reflect: true, mutable: true }) value: string | undefined;
 
   // Prop lifecycle events
@@ -414,26 +431,63 @@ export class BqDatePicker {
   private syncDerivedFromValue = (): void => {
     const current = this.value;
     this.internals.setFormValue(!isNil(current) ? `${current}` : null);
-    this.updateFormValidity();
-    this.checkBoundsValidity();
+    this.syncValidity();
     this.hasValue = computeHasValue(current);
     this.displayDate = computeDisplayDate(current, this.type, this.locale, this.effectiveFormatOptions, this.precision);
   };
 
   /**
-   * Overlay range-based validity on top of `updateFormValidity`, which only
-   * knows about `required`. Runs after every value/min/max change so a value
-   * that is now out of bounds is reflected in the constraint validation API
-   * (`rangeUnderflow` / `rangeOverflow`) without being silently dropped.
+   * Run the full form-validity pipeline in a single, consistent order.
+   * Called from every path that mutates a validity-affecting input: `value`,
+   * `min`, `max`, `required`, and the trigger's typed-input handler.
    *
-   * All selection shapes (single, range, multi) are checked entry-by-entry
-   * against the precision-padded bounds — the same padding rule the calendar
-   * grid uses for disabled cells, so validity always agrees with the UI.
+   * The order matters:
+   *   1. `updateFormValidity()` seeds the base state (checks `required`, sets
+   *      `valueMissing` when applicable, otherwise clears `setValidity({})`).
+   *   2. `applyBoundsValidity()` overlays `rangeUnderflow` / `rangeOverflow`
+   *      when the current value falls outside the precision-padded bounds.
+   *   3. `applyBadInputValidity()` overlays `badInput` when the last typed
+   *      text failed to parse. This flag is sticky (see `hasBadInput`) so a
+   *      subsequent `required` toggle doesn't silently clear it.
+   *
+   * If both bounds and bad-input flags apply the union is set in one
+   * `setValidity` call — the API accepts multiple flags simultaneously and
+   * we want the constraints panel to reflect all failing constraints.
    */
-  private checkBoundsValidity = (): void => {
-    if (!this.internals || (!this.min && !this.max)) return;
+  private syncValidity = (): void => {
+    if (!this.internals) return;
+    this.updateFormValidity();
+
+    const boundsFlags = this.computeBoundsValidityFlags();
+    const flags: ValidityStateFlags = { ...boundsFlags };
+    if (this.hasBadInput) flags.badInput = true;
+
+    if (Object.keys(flags).length === 0) return;
+
+    const message =
+      this.formValidationMessage ??
+      (flags.badInput
+        ? 'Please, input or select a valid date'
+        : flags.rangeUnderflow && flags.rangeOverflow
+          ? 'Selected value is outside the allowed range'
+          : flags.rangeUnderflow
+            ? 'Selected value is before the minimum'
+            : 'Selected value is after the maximum');
+
+    this.internals.states.delete('valid');
+    this.internals.states.add('invalid');
+    this.internals.setValidity(flags, message, this.inputElem);
+  };
+
+  /**
+   * Pure predicate that returns the `rangeUnderflow` / `rangeOverflow` flags
+   * for the current selection. Extracted so `syncValidity` can union it with
+   * `badInput` in a single `setValidity` call.
+   */
+  private computeBoundsValidityFlags = (): ValidityStateFlags => {
+    if (!this.min && !this.max) return {};
     const selection = parseValue(this.value, this.type, this.precision);
-    if (selection.length === 0) return;
+    if (selection.length === 0) return {};
 
     const paddedMin = padBound(this.min, 'min');
     const paddedMax = padBound(this.max, 'max');
@@ -445,19 +499,8 @@ export class BqDatePicker {
       if (paddedMax && iso > paddedMax) rangeOverflow = true;
     }
 
-    if (!rangeUnderflow && !rangeOverflow) return;
-
-    const message =
-      this.formValidationMessage ??
-      (rangeUnderflow && rangeOverflow
-        ? 'Selected value is outside the allowed range'
-        : rangeUnderflow
-          ? 'Selected value is before the minimum'
-          : 'Selected value is after the maximum');
-
-    this.internals.states.delete('valid');
-    this.internals.states.add('invalid');
-    this.internals.setValidity({ rangeUnderflow, rangeOverflow }, message, this.inputElem);
+    if (!rangeUnderflow && !rangeOverflow) return {};
+    return { rangeUnderflow, rangeOverflow };
   };
 
   @Watch('formatOptions')
@@ -509,19 +552,21 @@ export class BqDatePicker {
   @Watch('min')
   handleBoundsChange() {
     // A tighter range can invalidate the current selection or push the
-    // focused day out of bounds. Re-run form validity (which also checks
-    // bounds — see `checkBoundsValidity`) and re-clamp the internal
+    // focused day out of bounds. Re-run the full validity pipeline (which
+    // preserves any sticky `badInput` state) and re-clamp the internal
     // focus/viewDate cursors. We deliberately *preserve* the value: this
     // matches native `<input type="date">` behavior, where changing `min`
     // marks the form invalid but does not silently drop the user's data.
-    this.updateFormValidity();
-    this.checkBoundsValidity();
+    this.syncValidity();
     this.syncViewToValue();
   }
 
   @Watch('required')
   handleRequiredChange() {
-    this.updateFormValidity();
+    // Full pipeline (not just `updateFormValidity`) so a value that's
+    // already `rangeUnderflow` doesn't get silently marked valid when the
+    // required flag flips.
+    this.syncValidity();
   }
 
   @Watch('firstDayOfWeek')
@@ -634,7 +679,7 @@ export class BqDatePicker {
   }
 
   formAssociatedCallback() {
-    this.updateFormValidity();
+    this.syncValidity();
   }
 
   formResetCallback() {
@@ -660,7 +705,10 @@ export class BqDatePicker {
   // ===============================================
 
   /**
-   * Clears the selected value.
+   * Clears the selected value and any pending validation state (bad input,
+   * bounds overflow). Emits `bqClear`. No-op when the component is disabled.
+   *
+   * @returns A promise that resolves once the value has been cleared.
    */
   @Method()
   async clear(): Promise<void> {
@@ -687,6 +735,7 @@ export class BqDatePicker {
 
     const inputValue = ev.target.value.trim();
     if (!inputValue) {
+      this.hasBadInput = false;
       this.clearValue();
       this.bqChange.emit({ value: this.value, el: this.el });
       return;
@@ -695,16 +744,21 @@ export class BqDatePicker {
     const parsed = parseTypedInput(inputValue, this.locale, this.precision, this.min, this.max, this.isDateDisallowed);
     if (parsed.invalid || parsed.value == null) {
       // Never emit the raw typed string — it would violate the precision-aware
-      // wire contract that all other commit paths honor. Signal invalidity
-      // through form validation and leave `value` untouched.
+      // wire contract that all other commit paths honor. Flag the input as
+      // `badInput` through the constraint validation API and leave `value`
+      // untouched so the consumer can inspect what the user typed via the DOM
+      // input while the picker reports `checkValidity() === false`.
+      this.hasBadInput = true;
       this.internals.setFormValue(null);
-      this.updateFormValidity();
+      this.syncValidity();
       this.bqChange.emit({ value: undefined, el: this.el });
       return;
     }
 
-    // `@Watch('value')` runs synchronously, so by the time we emit below the
-    // value has already been normalized (view sync, form validity, etc).
+    // Successful parse — clear the sticky bad-input flag. `@Watch('value')`
+    // runs synchronously, so by the time we emit below the value has
+    // already been normalized (view sync, form validity, etc).
+    this.hasBadInput = false;
     this.value = parsed.value;
     this.bqChange.emit({ value: this.value, el: this.el });
   };
@@ -723,6 +777,7 @@ export class BqDatePicker {
   private clearValue = (): void => {
     this.value = undefined;
     this.displayDate = undefined;
+    this.hasBadInput = false;
     this.internals.setFormValue(null);
     this.tentativeHover = undefined;
   };

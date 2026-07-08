@@ -803,6 +803,7 @@ export namespace Components {
      * @cssprop --bq-date-picker--paddingY - Input vertical padding.
      * @cssprop --bq-date-picker--range-background-color - Background color for range start/end days.
      * @cssprop --bq-date-picker--range-inner-background-color - Background color for inner range days.
+     * @cssprop --bq-date-picker--row-gap - Vertical space between day-grid rows.
      * @cssprop --bq-date-picker--text-color - Input text color.
      * @cssprop --bq-date-picker--text-placeholder-color - Placeholder text color.
      * @cssprop --bq-date-picker--text-size - Input text size.
@@ -819,7 +820,8 @@ export namespace Components {
          */
         "autofocus": boolean;
         /**
-          * Clears the selected value.
+          * Clears the selected value and any pending validation state (bad input, bounds overflow). Emits `bqClear`. No-op when the component is disabled.
+          * @returns A promise that resolves once the value has been cleared.
          */
         "clear": () => Promise<void>;
         /**
@@ -950,7 +952,7 @@ export namespace Components {
          */
         "validationStatus": TInputValidation;
         /**
-          * The select input value represents the currently selected date or range and can be used to reset the field to a previous value. All dates are expected in ISO-8601 format (YYYY-MM-DD).
+          * Currently selected value, in the precision-aware wire format: - `precision="day"`   → tokens are `YYYY-MM-DD` - `precision="month"` → tokens are `YYYY-MM` - `precision="year"`  → tokens are `YYYY`  How multiple tokens are combined depends on `type`: - `single` → a single token (e.g. `"2025-05-15"`, `"2025-05"`, `"2025"`) - `range`  → `"start/end"` — two tokens joined with `/` - `multi`  → space-separated tokens (e.g. `"2025-05-15 2025-05-20"`)
          */
         "value": string | undefined;
     }
@@ -3914,6 +3916,7 @@ declare global {
      * @cssprop --bq-date-picker--paddingY - Input vertical padding.
      * @cssprop --bq-date-picker--range-background-color - Background color for range start/end days.
      * @cssprop --bq-date-picker--range-inner-background-color - Background color for inner range days.
+     * @cssprop --bq-date-picker--row-gap - Vertical space between day-grid rows.
      * @cssprop --bq-date-picker--text-color - Input text color.
      * @cssprop --bq-date-picker--text-placeholder-color - Placeholder text color.
      * @cssprop --bq-date-picker--text-size - Input text size.
@@ -6276,6 +6279,7 @@ declare namespace LocalJSX {
      * @cssprop --bq-date-picker--paddingY - Input vertical padding.
      * @cssprop --bq-date-picker--range-background-color - Background color for range start/end days.
      * @cssprop --bq-date-picker--range-inner-background-color - Background color for inner range days.
+     * @cssprop --bq-date-picker--row-gap - Vertical space between day-grid rows.
      * @cssprop --bq-date-picker--text-color - Input text color.
      * @cssprop --bq-date-picker--text-placeholder-color - Placeholder text color.
      * @cssprop --bq-date-picker--text-size - Input text size.
@@ -6439,7 +6443,7 @@ declare namespace LocalJSX {
          */
         "validationStatus"?: TInputValidation;
         /**
-          * The select input value represents the currently selected date or range and can be used to reset the field to a previous value. All dates are expected in ISO-8601 format (YYYY-MM-DD).
+          * Currently selected value, in the precision-aware wire format: - `precision="day"`   → tokens are `YYYY-MM-DD` - `precision="month"` → tokens are `YYYY-MM` - `precision="year"`  → tokens are `YYYY`  How multiple tokens are combined depends on `type`: - `single` → a single token (e.g. `"2025-05-15"`, `"2025-05"`, `"2025"`) - `range`  → `"start/end"` — two tokens joined with `/` - `multi`  → space-separated tokens (e.g. `"2025-05-15 2025-05-20"`)
          */
         "value"?: string | undefined;
     }
@@ -9782,6 +9786,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-date-picker--paddingY - Input vertical padding.
              * @cssprop --bq-date-picker--range-background-color - Background color for range start/end days.
              * @cssprop --bq-date-picker--range-inner-background-color - Background color for inner range days.
+             * @cssprop --bq-date-picker--row-gap - Vertical space between day-grid rows.
              * @cssprop --bq-date-picker--text-color - Input text color.
              * @cssprop --bq-date-picker--text-placeholder-color - Placeholder text color.
              * @cssprop --bq-date-picker--text-size - Input text size.

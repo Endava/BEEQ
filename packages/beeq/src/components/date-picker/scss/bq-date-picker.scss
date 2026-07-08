@@ -111,7 +111,7 @@
 // - Hover:    border = color-mix(stroke-{state}, hover 20%)   → border-hover-{state}
 // - Focus:    border = color-mix(stroke-{state}, active 20%)  → border-active-{state}
 //             ring   = stroke-{state}
-%dp2-validation-state {
+%dp-validation-state {
   --bq-date-picker--border-color: var(--bq-date-picker--validation-color);
 
   &:not(.is-disabled, :focus-within, .is-open):hover {
@@ -128,19 +128,19 @@
 .bq-date-picker__control.validation-error {
   --bq-date-picker--validation-color: var(--bq-stroke--danger);
 
-  @extend %dp2-validation-state;
+  @extend %dp-validation-state;
 }
 
 .bq-date-picker__control.validation-success {
   --bq-date-picker--validation-color: var(--bq-stroke--success);
 
-  @extend %dp2-validation-state;
+  @extend %dp-validation-state;
 }
 
 .bq-date-picker__control.validation-warning {
   --bq-date-picker--validation-color: var(--bq-stroke--warning);
 
-  @extend %dp2-validation-state;
+  @extend %dp-validation-state;
 }
 
 /* -------------------------------- Input ---------------------------------- */

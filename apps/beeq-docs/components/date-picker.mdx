@@ -109,6 +109,9 @@ Use the default `single` type when users need to choose one date. This is the be
   - ISO format: `2024-05-30`
   - Text format: `30 May 2024`, `May 30, 2024`, `30 January 2024`, `January 1, 1970` (locale-aware)
   - Numeric format: `30/05/2024`, `05-30-2024`, `30.05.2024`, `05.30.2024` (with day/month heuristics)
+
+  The wire format of the `value` attribute — and of `min`/`max` — depends on `precision`:
+  `day` uses `YYYY-MM-DD`, `month` uses `YYYY-MM`, and `year` uses `YYYY`. For `type="range"` two tokens are joined with `/` (`start/end`); for `type="multi"` tokens are space-separated.
 </Note>
 
 <CodeLivePreview mode="shadow" code={`

@@ -1116,4 +1116,68 @@ describe('bq-date-picker', () => {
     expect(datePicker.value).toBe('2026-12-31');
     expect(datePicker.matches(':state(invalid)')).toBe(true);
   });
+
+  it('should treat coarse `max="YYYY-MM"` as end-of-month in day mode', async () => {
+    // Regression: pre-fix, `clampDateToRange` did a raw string compare, so
+    // `2026-05-15 > "2026-05"` lexically and the value looked over-max.
+    const { root, waitForChanges } = await render(
+      <bq-date-picker max="2026-05" name="date-picker" type="single" value="2026-05-15" />,
+    );
+    const datePicker = root as HTMLBqDatePickerElement;
+    await waitForChanges();
+
+    expect(datePicker.matches(':state(invalid)')).toBe(false);
+  });
+
+  it('should mark validity as `badInput` when typed text cannot be parsed', async () => {
+    const { root, waitForChanges } = await render(<bq-date-picker name="date-picker" type="single" />);
+    const datePicker = root as HTMLBqDatePickerElement;
+    const input = getInput(datePicker);
+
+    await userEvent.clear(input);
+    await userEvent.type(input, 'not-a-date');
+    await userEvent.tab();
+    await waitForChanges();
+
+    expect(datePicker.matches(':state(invalid)')).toBe(true);
+  });
+
+  it('should clear the `badInput` flag on the next valid typed input', async () => {
+    const { root, waitForChanges } = await render(<bq-date-picker name="date-picker" type="single" />);
+    const datePicker = root as HTMLBqDatePickerElement;
+    const input = getInput(datePicker);
+
+    await userEvent.clear(input);
+    await userEvent.type(input, 'not-a-date');
+    await userEvent.tab();
+    await waitForChanges();
+    expect(datePicker.matches(':state(invalid)')).toBe(true);
+
+    await userEvent.clear(input);
+    await userEvent.type(input, '15/06/2026');
+    await userEvent.tab();
+    await waitForChanges();
+
+    expect(datePicker.value).toBe('2026-06-15');
+    expect(datePicker.matches(':state(invalid)')).toBe(false);
+  });
+
+  it('should keep `rangeUnderflow` when `required` is toggled after a bad value is set', async () => {
+    const { root, setProps, waitForChanges } = await render(
+      <bq-date-picker min="2026-06-01" name="date-picker" type="single" value="2026-01-15" />,
+    );
+    const datePicker = root as HTMLBqDatePickerElement;
+    await waitForChanges();
+    expect(datePicker.matches(':state(invalid)')).toBe(true);
+
+    // Flipping `required` used to route through `updateFormValidity()` alone,
+    // which cleared the `rangeUnderflow` overlay. `syncValidity` preserves it.
+    await setProps({ required: true });
+    await waitForChanges();
+    expect(datePicker.matches(':state(invalid)')).toBe(true);
+
+    await setProps({ required: false });
+    await waitForChanges();
+    expect(datePicker.matches(':state(invalid)')).toBe(true);
+  });
 });
