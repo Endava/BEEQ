@@ -2,6 +2,8 @@ import { h } from '@stencil/core';
 import { afterEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
 import { userEvent } from 'vitest/browser';
 
+import { getTextContent } from '../../../shared/utils/slot';
+
 const getInput = (datePicker: HTMLBqDatePickerElement) =>
   datePicker.shadowRoot?.querySelector<HTMLInputElement>('[part="input"]');
 
@@ -544,9 +546,11 @@ describe('bq-date-picker', () => {
 
     await waitForStable(root);
     const label = datePicker.shadowRoot?.querySelector<HTMLElement>('[part="label"]');
+    const labelSlot = label?.querySelector<HTMLSlotElement>('slot[name="label"]');
 
     expect(label).not.toHaveClass('is-hidden');
-    expect(datePicker.textContent).toContain('Pick a date');
+    expect(labelSlot).not.toBeNull();
+    expect(getTextContent(labelSlot!, { recurse: true })).toBe('Pick a date');
   });
 
   it('should reveal the prefix wrapper when the `prefix` slot has content', async () => {
@@ -1316,6 +1320,26 @@ describe('bq-date-picker', () => {
 
     expect(datePicker.matches(':state(invalid)')).toBe(true);
     expect(getInput(datePicker)).toEqualAttribute('aria-invalid', 'true');
+  });
+
+  it('should expose the custom `formValidationMessage` for bounds errors', async () => {
+    const setValiditySpy = vi.spyOn(ElementInternals.prototype, 'setValidity');
+    const { root, waitForChanges } = await render(
+      <bq-date-picker
+        formValidationMessage="Choose a date on or after 1 June 2026"
+        min="2026-06-01"
+        name="date-picker"
+        type="single"
+        value="2026-01-15"
+      />,
+    );
+    const datePicker = root as HTMLBqDatePickerElement;
+
+    await waitForChanges();
+
+    expect(datePicker.matches(':state(invalid)')).toBe(true);
+    expect(setValiditySpy).toHaveBeenCalled();
+    expect(setValiditySpy.mock.calls.at(-1)?.[1]).toBe('Choose a date on or after 1 June 2026');
   });
 
   it('should clear the `badInput` flag on the next valid typed input', async () => {
