@@ -76,9 +76,7 @@
   transition: border-color 150ms ease, box-shadow 150ms ease;
   user-select: none;
 
-  // Hover (only when not disabled and not focused). Uses the same
-  // `border-hover-brand` blend as v1 by mixing the base stroke with the
-  // theme's hover base color.
+  // Hover (only when not disabled and not focused)
   &:not(.is-disabled, :focus-within, .is-open):hover {
     border-color: color-mix(
       in srgb,
@@ -95,8 +93,8 @@
     --bq-ring-color-focus: var(--bq-focus);
 
     border-color: var(--bq-focus);
-    outline: var(--bq-ring-width, 2px) solid var(--bq-ring-color-focus, var(--bq-focus));
-    outline-offset: var(--bq-ring-offset-width, 1px);
+    outline: var(--bq-ring-width) solid var(--bq-ring-color-focus);
+    outline-offset: var(--bq-ring-offset-width);
   }
 
   &.is-disabled {
@@ -108,7 +106,7 @@
 
 /* ------------------------------- Validation ------------------------------- */
 
-// Validation states mirror v1's tailwind rules:
+// Validation states rules:
 // - Idle:     border = stroke-{state}
 // - Hover:    border = color-mix(stroke-{state}, hover 20%)   → border-hover-{state}
 // - Focus:    border = color-mix(stroke-{state}, active 20%)  → border-active-{state}
@@ -193,8 +191,8 @@
 
 /* --------------------------- Clear button -------------------------------- */
 
-// The clear button is only rendered when the picker has a value, but we also
-// mirror v1's behavior: it stays hidden until the control is hovered, focused,
+// The clear button is only rendered when the picker has a value:
+// it stays hidden until the control is hovered, focused,
 // or the calendar popup is open.
 .bq-date-picker__clear {
   display: none;
@@ -213,9 +211,7 @@
     padding: 0;
   }
 
-  // Avoid the inline-baseline gap that inline elements (like bq-icon)
-  // introduce inside the button. v1 relied on Tailwind's `class="flex"` on
-  // the icon; we do it here so it survives the Tailwind removal.
+  // Avoid the inline-baseline gap that inline elements (like bq-icon) introduce inside the button.
   bq-icon {
     display: flex;
   }
@@ -367,9 +363,6 @@
 
 .bq-date-picker__td {
   padding: 0;
-  // Small vertical breathing room between rows (matches v1). The range
-  // highlight lives on the `.bq-date-picker__day` background, so this only
-  // adds an *inter-row* gap — it does not break the horizontal range track.
   padding-block: var(--bq-date-picker--row-gap);
   text-align: center;
 }

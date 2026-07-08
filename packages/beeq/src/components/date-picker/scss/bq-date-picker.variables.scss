@@ -36,43 +36,43 @@
    * @prop --bq-date-picker--view-cell-radius - Border radius of day/month/year cells
    * @prop --bq-date-picker--view-cell-text-selected - Selected text color for day/month/year cells
    */
-  --bq-date-picker--background-color: var(--bq-ui--primary, #fff);
-  --bq-date-picker--border-color: var(--bq-stroke--tertiary, #1c1d23);
-  --bq-date-picker--border-color-disabled: var(--bq-stroke--secondary, #eaecf0);
-  --bq-date-picker--border-color-focus: var(--bq-stroke--brand, #1570ef);
-  --bq-date-picker--border-radius: var(--bq-radius--s, 0.5rem);
+  --bq-date-picker--background-color: var(--bq-ui--primary);
+  --bq-date-picker--border-color: var(--bq-stroke--tertiary);
+  --bq-date-picker--border-color-disabled: var(--bq-stroke--secondary);
+  --bq-date-picker--border-color-focus: var(--bq-stroke--brand);
+  --bq-date-picker--border-radius: var(--bq-radius--s);
   --bq-date-picker--border-style: solid;
   --bq-date-picker--border-width: 1px;
 
-  --bq-date-picker--currentDate-border-color: var(--bq-stroke--brand, #1570ef);
+  --bq-date-picker--currentDate-border-color: var(--bq-stroke--brand);
   --bq-date-picker--currentDate-border-width: 2px;
 
-  --bq-date-picker--day-size: 2.25rem;         // 36px
-  --bq-date-picker--gap: var(--bq-spacing-xs, 0.5rem);         // 8px
-  --bq-date-picker--header-title-color: var(--bq-text--primary, #0f1728);
-  --bq-date-picker--icon-size: 1.5rem;         // 24px
+  --bq-date-picker--day-size: 2.25rem;
+  --bq-date-picker--gap: var(--bq-spacing-xs);
+  --bq-date-picker--header-title-color: var(--bq-text--primary);
+  --bq-date-picker--icon-size: 1.5rem;
 
-  --bq-date-picker--label-margin-bottom: var(--bq-spacing-xs, 0.5rem);
-  --bq-date-picker--label-text-color: var(--bq-text--primary, #0f1728);
+  --bq-date-picker--label-margin-bottom: var(--bq-spacing-xs);
+  --bq-date-picker--label-text-color: var(--bq-text--primary);
   --bq-date-picker--label-text-size: 0.875rem;
 
   --bq-date-picker--nav-button-size: 2rem;
 
-  --bq-date-picker--padding-end: var(--bq-spacing-m, 1rem);
-  --bq-date-picker--padding-start: var(--bq-spacing-m, 1rem);
-  --bq-date-picker--paddingY: var(--bq-spacing-s, 0.75rem);
+  --bq-date-picker--padding-end: var(--bq-spacing-m);
+  --bq-date-picker--padding-start: var(--bq-spacing-m);
+  --bq-date-picker--paddingY: var(--bq-spacing-s);
 
-  --bq-date-picker--range-background-color: var(--bq-ui--brand, #1570ef);
-  --bq-date-picker--range-inner-background-color: var(--bq-ui--brand-alt, #d1e9ff);
-  --bq-date-picker--row-gap: 0.125rem;         // 2px — matches v1
+  --bq-date-picker--range-background-color: var(--bq-ui--brand);
+  --bq-date-picker--range-inner-background-color: var(--bq-ui--brand-alt);
+  --bq-date-picker--row-gap: 0.125rem;
 
-  --bq-date-picker--text-color: var(--bq-text--primary, #0f1728);
-  --bq-date-picker--text-placeholder-color: var(--bq-text--secondary, #667085);
+  --bq-date-picker--text-color: var(--bq-text--primary);
+  --bq-date-picker--text-placeholder-color: var(--bq-text--secondary);
   --bq-date-picker--text-size: 1rem;
 
-  --bq-date-picker--view-cell-background-hover: var(--bq-ui--secondary-hover, #f2f4f7);
-  --bq-date-picker--view-cell-background-selected: var(--bq-ui--brand, #1570ef);
+  --bq-date-picker--view-cell-background-hover: var(--bq-ui--secondary-hover);
+  --bq-date-picker--view-cell-background-selected: var(--bq-ui--brand);
   --bq-date-picker--view-cell-height: 2.75rem;
   --bq-date-picker--view-cell-radius: 0.5rem;
-  --bq-date-picker--view-cell-text-selected: var(--bq-text--alt, #fff);
+  --bq-date-picker--view-cell-text-selected: var(--bq-text--alt);
 }
