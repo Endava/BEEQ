@@ -962,6 +962,34 @@ describe('bq-date-picker', () => {
     expect(getYearButton(datePicker, 2029)).toHaveClass('is-range-inner');
   });
 
+  it('year + range: selecting the first visible year keeps the current decade in view', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-date-picker name="date-picker" precision="year" type="range" open value="2026" />,
+    );
+    const datePicker = root as HTMLBqDatePickerElement;
+    await waitForStable(root);
+
+    const initialHeader = getHeaderTitle(datePicker)?.textContent;
+    getYearButton(datePicker, 2019)?.click();
+    await waitForChanges();
+
+    expect(getHeaderTitle(datePicker)?.textContent).toBe(initialHeader);
+  });
+
+  it('year + range: selecting the last visible year keeps the current decade in view', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-date-picker name="date-picker" precision="year" type="range" open value="2026" />,
+    );
+    const datePicker = root as HTMLBqDatePickerElement;
+    await waitForStable(root);
+
+    const initialHeader = getHeaderTitle(datePicker)?.textContent;
+    getYearButton(datePicker, 2030)?.click();
+    await waitForChanges();
+
+    expect(getHeaderTitle(datePicker)?.textContent).toBe(initialHeader);
+  });
+
   it('multi + month: committing a selection preserves the currently navigated year', async () => {
     const { root, waitForChanges } = await render(
       <bq-date-picker name="date-picker" precision="month" type="multi" open />,

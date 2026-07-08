@@ -967,7 +967,9 @@ export class BqDatePicker {
       this.viewDate = startOfMonth(parsedIso);
       this.focusedMonth = parsedIso.getMonth();
       this.focusedYear = parsedIso.getFullYear();
-      this.decadeStart = getDecadeStart(parsedIso.getFullYear());
+      if (this.precision !== 'year') {
+        this.decadeStart = getDecadeStart(parsedIso.getFullYear());
+      }
     }
     this.tentativeHover = this.type === 'range' && next.length === 1 ? iso : undefined;
 
