@@ -25,6 +25,15 @@ const meta: Meta = {
     'form-validation-message': { control: 'text' },
     formatOptions: { control: 'object' },
     'initial-view': { control: 'select', options: [...CALENDAR_VIEW] },
+    isDateDisallowed: {
+      control: false,
+      description: 'Predicate that marks specific dates as unselectable.',
+      table: {
+        type: {
+          summary: '(date: Date) => boolean',
+        },
+      },
+    },
     locale: { control: 'text' },
     max: { control: 'text' },
     min: { control: 'text' },
@@ -86,6 +95,7 @@ const meta: Meta = {
     // Stories that need a specific format pass it explicitly (see `FormatOptions`).
     formatOptions: undefined,
     'initial-view': 'days',
+    isDateDisallowed: undefined,
     locale: 'en-GB',
     max: undefined,
     min: undefined,
@@ -148,6 +158,8 @@ const Template = (args: Args) => {
     return args.customDisallowedDate.replace(/\s+/g, '').split(',').includes(dateString);
   };
 
+  const isDateDisallowed = args.isDateDisallowed ?? dateDisallowed;
+
   const style = args.hasLabelTooltip
     ? html`
         <style>
@@ -172,7 +184,7 @@ const Template = (args: Args) => {
       form-validation-message=${ifDefined(args['form-validation-message'])}
       .formatOptions=${args.formatOptions}
       initial-view=${ifDefined(args['initial-view'])}
-      .isDateDisallowed=${dateDisallowed}
+      .isDateDisallowed=${isDateDisallowed}
       locale=${ifDefined(args.locale)}
       max=${ifDefined(args.max)}
       min=${ifDefined(args.min)}
@@ -279,7 +291,10 @@ export const DisallowedDates: Story = {
   render: Template,
   args: {
     open: true,
-    customDisallowedDate: '2026-05-05, 2026-05-06, 2026-05-15, 2026-05-16',
+    isDateDisallowed: (date: Date) => {
+      const dateString = date.toLocaleDateString('fr-CA');
+      return ['2026-05-05', '2026-05-06', '2026-05-15', '2026-05-16'].includes(dateString);
+    },
     value: '2026-05-10',
   },
 };
@@ -513,7 +528,6 @@ export const WithForm: Story = {
       ev.preventDefault();
       const form = ev.target as HTMLFormElement;
       const formData = new FormData(form);
-      // @ts-expect-error - FormData is not iterable
       const formValues = Object.fromEntries(formData.entries());
 
       const codeElement = document.getElementById('form-data-2');

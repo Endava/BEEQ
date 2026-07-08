@@ -81,6 +81,14 @@ describe('bq-date-picker', () => {
     expect(getInput(datePicker)).toEqualAttribute('aria-expanded', 'true');
   });
 
+  it('should reflect `disabled` to the host attribute', async () => {
+    const { root } = await render(<bq-date-picker disabled name="date-picker" />);
+
+    await waitForStable(root);
+
+    expect(root).toHaveAttribute('disabled');
+  });
+
   it('should reflect configured public props to host attributes', async () => {
     const { root } = await render(
       <bq-date-picker
@@ -632,7 +640,7 @@ describe('bq-date-picker', () => {
     const datePicker = root as HTMLBqDatePickerElement;
 
     await waitForStable(root);
-    getGrid(datePicker)?.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
+    await userEvent.keyboard('{ArrowRight}');
     await waitForChanges();
 
     expect(datePicker.shadowRoot?.querySelector('[data-iso="2026-05-16"][tabindex="0"]')).not.toBeNull();
@@ -643,7 +651,7 @@ describe('bq-date-picker', () => {
     const datePicker = root as HTMLBqDatePickerElement;
 
     await waitForStable(root);
-    getGrid(datePicker)?.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
+    await userEvent.keyboard('{ArrowDown}');
     await waitForChanges();
 
     expect(datePicker.shadowRoot?.querySelector('[data-iso="2026-05-22"][tabindex="0"]')).not.toBeNull();
@@ -657,9 +665,9 @@ describe('bq-date-picker', () => {
     const bqChange = spyOnEvent('bqChange');
 
     await waitForStable(root);
-    getGrid(datePicker)?.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
+    await userEvent.keyboard('{ArrowRight}');
     await waitForChanges();
-    getGrid(datePicker)?.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    await userEvent.keyboard('{Enter}');
     await waitForChanges();
 
     expect(datePicker.value).toBe('2026-05-16');
@@ -671,7 +679,7 @@ describe('bq-date-picker', () => {
     const datePicker = root as HTMLBqDatePickerElement;
 
     await waitForStable(root);
-    getGrid(datePicker)?.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    await userEvent.keyboard('{Escape}');
     await waitForChanges();
 
     expect(datePicker.open).toBe(false);
@@ -1145,12 +1153,12 @@ describe('bq-date-picker', () => {
     await waitForStable(root);
 
     // Arrow to March 2026 (month=2) — out of bounds (min is 2026-04).
-    getGrid(datePicker)?.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
+    await userEvent.keyboard('{ArrowLeft}');
     await waitForChanges();
-    getGrid(datePicker)?.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
+    await userEvent.keyboard('{ArrowLeft}');
     await waitForChanges();
     // Attempt to commit via keyboard Enter.
-    getGrid(datePicker)?.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    await userEvent.keyboard('{Enter}');
     await waitForChanges();
 
     expect(bqChange).toHaveReceivedEventTimes(0);
@@ -1166,11 +1174,11 @@ describe('bq-date-picker', () => {
     await waitForStable(root);
 
     // Arrow to 2024 — out of bounds (min is 2025).
-    getGrid(datePicker)?.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
+    await userEvent.keyboard('{ArrowLeft}');
     await waitForChanges();
-    getGrid(datePicker)?.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
+    await userEvent.keyboard('{ArrowLeft}');
     await waitForChanges();
-    getGrid(datePicker)?.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    await userEvent.keyboard('{Enter}');
     await waitForChanges();
 
     expect(bqChange).toHaveReceivedEventTimes(0);

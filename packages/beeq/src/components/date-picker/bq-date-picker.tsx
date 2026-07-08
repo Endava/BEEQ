@@ -287,7 +287,7 @@ export class BqDatePicker {
   @Prop({ reflect: true }) disableClear: boolean = false;
 
   /** Indicates whether the Date picker input is disabled or not. */
-  @Prop({ mutable: true }) disabled: boolean = false;
+  @Prop({ reflect: true, mutable: true }) disabled: boolean = false;
 
   /** Distance (gutter) between the Date picker panel and the input element. */
   @Prop({ reflect: true }) distance: number = 8;
@@ -534,6 +534,7 @@ export class BqDatePicker {
   }
 
   // Events section
+  // Requires JSDocs for public API documentation
   // ==============================================
 
   /** Callback handler emitted when the input loses focus. */
@@ -557,6 +558,7 @@ export class BqDatePicker {
   @Event() bqViewChange!: EventEmitter<{ view: TCalendarView; el: HTMLBqDatePickerElement }>;
 
   // Component lifecycle events
+  // Ordered by their natural call order
   // =====================================
 
   componentWillLoad() {
@@ -610,6 +612,10 @@ export class BqDatePicker {
   }
 
   // Public methods API
+  // These methods are exposed on the host element.
+  // Always use two lines.
+  // Public Methods must be async.
+  // Requires JSDocs for public API documentation.
   // ===============================================
 
   /**
@@ -626,6 +632,8 @@ export class BqDatePicker {
   }
 
   // Local methods
+  // Internal business logic.
+  // These methods cannot be called from the host element.
   // =======================================================
 
   private handleBlur = (): void => {
