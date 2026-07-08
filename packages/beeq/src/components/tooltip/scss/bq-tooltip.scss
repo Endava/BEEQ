@@ -1,25 +1,51 @@
 /* -------------------------------------------------------------------------- */
-/*                               Tooltip styles                               */
+/*                               Tooltip Styles                               */
 /* -------------------------------------------------------------------------- */
 
 @import './bq-tooltip.variables';
 
-.bq-tooltip--panel {
-  @include animation-fade-in;
-  @apply pointer-events-none fixed z-[--bq-tooltip--z-index] box-border bg-[--bq-tooltip--background-color];
-  @apply is-[--bq-tooltip--width] max-is-[--bq-tooltip--max-width] p-b-[--bq-tooltip--paddingY] p-i-[--bq-tooltip--paddingX];
-  @apply text-[length:--bq-tooltip--font-size] leading-[--bq-tooltip--line-height] text-[color:--bq-tooltip--text-color];
-  @apply rounded-[--bq-tooltip--border-radius] border-[length:--bq-tooltip--border-width] border-[color:--bq-tooltip--border-color];
-  @apply shadow-[shadow:--bq-tooltip--box-shadow];
+/* ---------------------------------- Base ---------------------------------- */
+
+.bq-tooltip {
+  position: relative;
 }
 
-.bq-tooltip--arrow {
-  &,
-  &::before {
-    @apply absolute -z-[1] bs-2 is-2;
-  }
+/* ------------------------------- Structure -------------------------------- */
 
-  &::before {
-    @apply start-0 rotate-45 bg-[--bq-tooltip--background-color] content-empty inset-bs-0;
-  }
+.bq-tooltip__panel {
+  @include animation-fade-in;
+
+  position: fixed;
+  z-index: var(--bq-tooltip--z-index);
+  box-sizing: border-box;
+  inline-size: var(--bq-tooltip--width);
+  max-inline-size: var(--bq-tooltip--max-width);
+  padding-block: var(--bq-tooltip--paddingY);
+  padding-inline: var(--bq-tooltip--paddingX);
+  color: var(--bq-tooltip--text-color);
+  font-size: var(--bq-tooltip--font-size);
+  line-height: var(--bq-tooltip--line-height);
+  pointer-events: none;
+  background-color: var(--bq-tooltip--background-color);
+  border-color: var(--bq-tooltip--border-color);
+  border-radius: var(--bq-tooltip--border-radius);
+  border-style: var(--bq-tooltip--border-style);
+  border-width: var(--bq-tooltip--border-width);
+  box-shadow: var(--bq-tooltip--box-shadow);
+}
+
+.bq-tooltip__arrow,
+.bq-tooltip__arrow::before {
+  position: absolute;
+  z-index: -1;
+  block-size: 0.5rem;
+  inline-size: 0.5rem;
+}
+
+.bq-tooltip__arrow::before {
+  inset-block: 0;
+  inset-inline-start: 0;
+  background-color: var(--bq-tooltip--background-color);
+  content: '';
+  transform: rotate(45deg);
 }

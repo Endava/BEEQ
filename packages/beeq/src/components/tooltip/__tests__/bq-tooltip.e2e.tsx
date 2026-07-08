@@ -285,7 +285,7 @@ describe('bq-tooltip', () => {
       </div>,
     );
     unmountFn = unmount;
-    const arrow = root.querySelector('bq-tooltip').shadowRoot.querySelector('.bq-tooltip--arrow');
+    const arrow = root.querySelector('bq-tooltip').shadowRoot.querySelector('.bq-tooltip__arrow');
     expect(arrow).toBeNull();
   });
 

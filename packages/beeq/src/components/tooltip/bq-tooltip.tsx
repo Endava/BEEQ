@@ -286,7 +286,7 @@ export class BqTooltip {
 
   render() {
     return (
-      <div class="bq-tooltip relative" part="base">
+      <div class="bq-tooltip" part="base">
         {/* TRIGGER */}
         {/**
          * NOTE: We could use a native HTML button as trigger container, but it causes issues with
@@ -297,7 +297,7 @@ export class BqTooltip {
         {/** biome-ignore lint/a11y/noStaticElementInteractions: bypass the "Static Elements should not be interactive." rule */}
         {/** biome-ignore lint/a11y/useKeyWithClickEvents: bypass the "Enforce to have the onClick mouse event with the onKeyUp, the onKeyDown, or the onKeyPress keyboard event." rule */}
         <div
-          class="bq-tooltip--trigger"
+          class="bq-tooltip__trigger"
           onClick={this.handleTriggerOnClick}
           onFocusin={this.handleTriggerFocusin}
           onFocusout={this.handleTriggerFocusout}
@@ -313,7 +313,7 @@ export class BqTooltip {
         {/* PANEL */}
         <div
           aria-hidden={this.isHidden}
-          class="bq-tooltip--panel"
+          class="bq-tooltip__panel"
           hidden={this.isHidden}
           part="panel"
           ref={(el: HTMLDivElement) => {
@@ -323,7 +323,7 @@ export class BqTooltip {
         >
           {!this.hideArrow && (
             <div
-              class="bq-tooltip--arrow"
+              class="bq-tooltip__arrow"
               ref={(el: HTMLDivElement) => {
                 this.arrow = el;
               }}
