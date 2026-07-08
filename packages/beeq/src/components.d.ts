@@ -901,7 +901,7 @@ export namespace Components {
           * If `true`, the panel is visible.
           * @default false
          */
-        "open"?: boolean;
+        "open": boolean;
         /**
           * Overrides the height of the Date picker panel.
           * @default 'auto'

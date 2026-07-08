@@ -257,6 +257,7 @@ export class BqDatePicker {
   @Element() el!: HTMLBqDatePickerElement;
 
   // State() variables
+  // Inlined decorator, alphabetical order
   // =======================================
 
   @State() decadeStart: number = getDecadeStart(new Date().getFullYear());
@@ -343,7 +344,7 @@ export class BqDatePicker {
   @Prop({ reflect: true }) name!: string;
 
   /** If `true`, the panel is visible. */
-  @Prop({ reflect: true, mutable: true }) open?: boolean = false;
+  @Prop({ reflect: true, mutable: true }) open: boolean = false;
 
   /** Overrides the height of the Date picker panel. */
   @Prop({ reflect: true, mutable: true }) panelHeight?: string = 'auto';
@@ -1205,10 +1206,6 @@ export class BqDatePicker {
     return getNextLabel(this.view);
   };
 
-  // render() function
-  // Always the last one in the class.
-  // ===================================
-
   private renderDayPanels = (): JSX.Element => {
     const panels: JSX.Element[] = [];
     const monthCount = this.getMonthCount();
@@ -1304,6 +1301,10 @@ export class BqDatePicker {
     if (this.view === 'years') return this.renderYearsView();
     return this.renderDayPanels();
   };
+
+  // render() function
+  // Always the last one in the class.
+  // ===================================
 
   render() {
     const labelId = `bq-date-picker__label-${this.name || DEFAULT_INPUT_ID}`;

@@ -81,6 +81,66 @@ describe('bq-date-picker', () => {
     expect(getInput(datePicker)).toEqualAttribute('aria-expanded', 'true');
   });
 
+  it('should reflect configured public props to host attributes', async () => {
+    const { root } = await render(
+      <bq-date-picker
+        autofocus
+        clearButtonLabel="Reset date"
+        disableClear
+        distance={12}
+        firstDayOfWeek={0}
+        form="booking-form"
+        initialView="months"
+        locale="pt-PT"
+        max="2026-12-31"
+        min="2026-01-01"
+        months={2}
+        monthsPerView="months"
+        name="date-picker"
+        open
+        panelHeight="24rem"
+        placeholder="DD/MM/YYYY"
+        placement="bottom-start"
+        precision="month"
+        required
+        showOutsideDays
+        skidding={4}
+        strategy="absolute"
+        type="range"
+        validationStatus="warning"
+        value="2026-05/2026-06"
+      />,
+    );
+
+    await waitForStable(root);
+
+    expect(root).toHaveAttribute('autofocus');
+    expect(root).toEqualAttribute('clear-button-label', 'Reset date');
+    expect(root).toHaveAttribute('disable-clear');
+    expect(root).toEqualAttribute('distance', '12');
+    expect(root).toEqualAttribute('first-day-of-week', '0');
+    expect(root).toEqualAttribute('form', 'booking-form');
+    expect(root).toEqualAttribute('initial-view', 'months');
+    expect(root).toEqualAttribute('locale', 'pt-PT');
+    expect(root).toEqualAttribute('max', '2026-12-31');
+    expect(root).toEqualAttribute('min', '2026-01-01');
+    expect(root).toEqualAttribute('months', '2');
+    expect(root).toEqualAttribute('months-per-view', 'months');
+    expect(root).toEqualAttribute('name', 'date-picker');
+    expect(root).toHaveAttribute('open');
+    expect(root).toEqualAttribute('panel-height', '24rem');
+    expect(root).toEqualAttribute('placeholder', 'DD/MM/YYYY');
+    expect(root).toEqualAttribute('placement', 'bottom-start');
+    expect(root).toEqualAttribute('precision', 'month');
+    expect(root).toHaveAttribute('required');
+    expect(root).toHaveAttribute('show-outside-days');
+    expect(root).toEqualAttribute('skidding', '4');
+    expect(root).toEqualAttribute('strategy', 'absolute');
+    expect(root).toEqualAttribute('type', 'range');
+    expect(root).toEqualAttribute('validation-status', 'warning');
+    expect(root).toEqualAttribute('value', '2026-05/2026-06');
+  });
+
   it('should reflect a single ISO value into the display input', async () => {
     const { root } = await render(<bq-date-picker name="date-picker" type="single" value="2026-05-30" />);
     const datePicker = root as HTMLBqDatePickerElement;
