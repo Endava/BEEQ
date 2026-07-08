@@ -1,6 +1,5 @@
 import { parseDateInput, toISODateString } from '../../../shared/utils/date/dateParsing';
 import type { TDatePrecision } from '../bq-date-picker.types';
-
 import { padBound } from './bounds';
 import { serializeValue } from './selection';
 

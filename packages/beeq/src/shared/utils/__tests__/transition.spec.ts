@@ -43,9 +43,9 @@ describe('transition', () => {
     });
 
     it('should use dataset transition classes when provided', async () => {
-      element.dataset['transitionEnter'] = 'custom-enter';
-      element.dataset['transitionEnterStart'] = 'custom-enter-start';
-      element.dataset['transitionEnterEnd'] = 'custom-enter-end';
+      element.dataset.transitionEnter = 'custom-enter';
+      element.dataset.transitionEnterStart = 'custom-enter-start';
+      element.dataset.transitionEnterEnd = 'custom-enter-end';
 
       await enter(element);
 

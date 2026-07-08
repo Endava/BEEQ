@@ -334,7 +334,7 @@ describe('bq-date-picker', () => {
   });
 
   it('should open on the `initialView` when the panel becomes visible', async () => {
-    const { root } = await render(<bq-date-picker name="date-picker" initialView="months" open value="2026-07-15" />);
+    const { root } = await render(<bq-date-picker initialView="months" name="date-picker" open value="2026-07-15" />);
     const datePicker = root as HTMLBqDatePickerElement;
 
     await waitForStable(root);
@@ -360,7 +360,7 @@ describe('bq-date-picker', () => {
 
   it('should switch to the years view from the months view', async () => {
     const { root, waitForChanges } = await render(
-      <bq-date-picker name="date-picker" initialView="months" open value="2026-05-15" />,
+      <bq-date-picker initialView="months" name="date-picker" open value="2026-05-15" />,
     );
     const datePicker = root as HTMLBqDatePickerElement;
 
@@ -373,7 +373,7 @@ describe('bq-date-picker', () => {
 
   it('should cycle back from the years view to the days view (day precision)', async () => {
     const { root, waitForChanges } = await render(
-      <bq-date-picker name="date-picker" initialView="years" open value="2026-05-15" />,
+      <bq-date-picker initialView="years" name="date-picker" open value="2026-05-15" />,
     );
     const datePicker = root as HTMLBqDatePickerElement;
 
@@ -386,7 +386,7 @@ describe('bq-date-picker', () => {
 
   it('should cycle back from the years view to the months view (month precision)', async () => {
     const { root, waitForChanges } = await render(
-      <bq-date-picker name="date-picker" precision="month" open value="2026-05" />,
+      <bq-date-picker precision="month" name="date-picker" open value="2026-05" />,
     );
     const datePicker = root as HTMLBqDatePickerElement;
     await waitForStable(root);
@@ -689,7 +689,7 @@ describe('bq-date-picker', () => {
 
   it('should walk years -> months -> days when selecting through each view', async () => {
     const { root, waitForChanges } = await render(
-      <bq-date-picker name="date-picker" initialView="years" open value="2026-05-15" />,
+      <bq-date-picker initialView="years" name="date-picker" open value="2026-05-15" />,
     );
     const datePicker = root as HTMLBqDatePickerElement;
 
@@ -820,7 +820,7 @@ describe('bq-date-picker', () => {
 
   it('opens on the months view and commits YYYY-MM on month click when precision="month"', async () => {
     const { root, spyOnEvent, waitForChanges } = await render(
-      <bq-date-picker name="date-picker" precision="month" open value="2026-05" />,
+      <bq-date-picker precision="month" name="date-picker" open value="2026-05" />,
     );
     const datePicker = root as HTMLBqDatePickerElement;
     const bqChange = spyOnEvent('bqChange');
@@ -840,7 +840,7 @@ describe('bq-date-picker', () => {
 
   it('opens on the years view and commits YYYY on year click when precision="year"', async () => {
     const { root, spyOnEvent, waitForChanges } = await render(
-      <bq-date-picker name="date-picker" precision="year" open value="2026" />,
+      <bq-date-picker precision="year" name="date-picker" open value="2026" />,
     );
     const datePicker = root as HTMLBqDatePickerElement;
     const bqChange = spyOnEvent('bqChange');
@@ -859,7 +859,7 @@ describe('bq-date-picker', () => {
 
   it('normalizes a full YYYY-MM-DD value to YYYY-MM when precision="month"', async () => {
     const { root, waitForChanges } = await render(
-      <bq-date-picker name="date-picker" precision="month" value="2026-05-30" />,
+      <bq-date-picker precision="month" name="date-picker" value="2026-05-30" />,
     );
     const datePicker = root as HTMLBqDatePickerElement;
     await waitForChanges();
@@ -870,7 +870,7 @@ describe('bq-date-picker', () => {
 
   it('supports YYYY-MM ranges', async () => {
     const { root, spyOnEvent, waitForChanges } = await render(
-      <bq-date-picker name="date-picker" precision="month" type="range" open value="2026-05/2026-05" />,
+      <bq-date-picker precision="month" name="date-picker" type="range" open value="2026-05/2026-05" />,
     );
     const datePicker = root as HTMLBqDatePickerElement;
     const bqChange = spyOnEvent('bqChange');
@@ -889,7 +889,7 @@ describe('bq-date-picker', () => {
 
   it('supports YYYY multi selection', async () => {
     const { root, spyOnEvent, waitForChanges } = await render(
-      <bq-date-picker name="date-picker" precision="year" type="multi" open />,
+      <bq-date-picker precision="year" name="date-picker" type="multi" open />,
     );
     const datePicker = root as HTMLBqDatePickerElement;
     const bqChange = spyOnEvent('bqChange');
@@ -909,7 +909,7 @@ describe('bq-date-picker', () => {
   it('auto-swaps default formatOptions per precision when not provided', async () => {
     // Month precision → default is { month: 'long', year: 'numeric' } — no day number.
     const { root, waitForChanges } = await render(
-      <bq-date-picker name="date-picker" precision="month" value="2026-05" locale="en-GB" />,
+      <bq-date-picker precision="month" name="date-picker" value="2026-05" locale="en-GB" />,
     );
     const datePicker = root as HTMLBqDatePickerElement;
     await waitForChanges();
@@ -963,7 +963,7 @@ describe('bq-date-picker', () => {
 
   it('formats a multi value with only the year when precision is year', async () => {
     const { root, waitForChanges } = await render(
-      <bq-date-picker name="date-picker" precision="year" type="multi" value="2020 2022 2025" locale="en-GB" />,
+      <bq-date-picker precision="year" name="date-picker" type="multi" value="2020 2022 2025" locale="en-GB" />,
     );
     const datePicker = root as HTMLBqDatePickerElement;
     await waitForChanges();
@@ -978,7 +978,7 @@ describe('bq-date-picker', () => {
 
   it('applies is-selected to a new month anchor after a completed range', async () => {
     const { root, waitForChanges } = await render(
-      <bq-date-picker name="date-picker" precision="month" type="range" open value="2026-03/2026-08" />,
+      <bq-date-picker precision="month" name="date-picker" type="range" open value="2026-03/2026-08" />,
     );
     const datePicker = root as HTMLBqDatePickerElement;
     await waitForStable(root);
@@ -994,7 +994,7 @@ describe('bq-date-picker', () => {
 
   it('marks inner months as is-range-inner in a month-precision range', async () => {
     const { root } = await render(
-      <bq-date-picker name="date-picker" precision="month" type="range" open value="2026-03/2026-08" />,
+      <bq-date-picker precision="month" name="date-picker" type="range" open value="2026-03/2026-08" />,
     );
     const datePicker = root as HTMLBqDatePickerElement;
     await waitForStable(root);
@@ -1012,7 +1012,7 @@ describe('bq-date-picker', () => {
 
   it('previews month range while hovering the second endpoint (precision="month")', async () => {
     const { root, waitForChanges } = await render(
-      <bq-date-picker name="date-picker" precision="month" type="range" open value="2026-04" />,
+      <bq-date-picker precision="month" name="date-picker" type="range" open value="2026-04" />,
     );
     const datePicker = root as HTMLBqDatePickerElement;
     await waitForStable(root);
@@ -1029,7 +1029,7 @@ describe('bq-date-picker', () => {
 
   it('previews year range while hovering the second endpoint (precision="year")', async () => {
     const { root, waitForChanges } = await render(
-      <bq-date-picker name="date-picker" precision="year" type="range" open value="2026" />,
+      <bq-date-picker precision="year" name="date-picker" type="range" open value="2026" />,
     );
     const datePicker = root as HTMLBqDatePickerElement;
     await waitForStable(root);
@@ -1046,7 +1046,7 @@ describe('bq-date-picker', () => {
 
   it('year + range: selecting the first visible year keeps the current decade in view', async () => {
     const { root, waitForChanges } = await render(
-      <bq-date-picker name="date-picker" precision="year" type="range" open value="2026" />,
+      <bq-date-picker precision="year" name="date-picker" type="range" open value="2026" />,
     );
     const datePicker = root as HTMLBqDatePickerElement;
     await waitForStable(root);
@@ -1060,7 +1060,7 @@ describe('bq-date-picker', () => {
 
   it('year + range: selecting the last visible year keeps the current decade in view', async () => {
     const { root, waitForChanges } = await render(
-      <bq-date-picker name="date-picker" precision="year" type="range" open value="2026" />,
+      <bq-date-picker precision="year" name="date-picker" type="range" open value="2026" />,
     );
     const datePicker = root as HTMLBqDatePickerElement;
     await waitForStable(root);
@@ -1074,7 +1074,7 @@ describe('bq-date-picker', () => {
 
   it('multi + month: committing a selection preserves the currently navigated year', async () => {
     const { root, waitForChanges } = await render(
-      <bq-date-picker name="date-picker" precision="month" type="multi" open />,
+      <bq-date-picker precision="month" name="date-picker" type="multi" open />,
     );
     const datePicker = root as HTMLBqDatePickerElement;
     await waitForStable(root);
@@ -1096,12 +1096,12 @@ describe('bq-date-picker', () => {
 
   it('single + month: opens on the value year, not on today', async () => {
     const { root, waitForChanges, setProps } = await render(
-      <bq-date-picker name="date-picker" precision="month" value="2020-05" />,
+      <bq-date-picker precision="month" name="date-picker" value="2020-05" />,
     );
     const datePicker = root as HTMLBqDatePickerElement;
     await waitForChanges();
 
-    await setProps({ open: true });
+    await setProps({ name: 'date-picker', open: true });
     await waitForStable(root);
 
     expect(getHeaderTitle(datePicker)?.textContent).toContain('2020');
@@ -1110,7 +1110,7 @@ describe('bq-date-picker', () => {
 
   it('single + year: opens on the value decade, not on today', async () => {
     const { root, waitForChanges, setProps } = await render(
-      <bq-date-picker name="date-picker" precision="year" value="2018" />,
+      <bq-date-picker precision="year" name="date-picker" value="2018" />,
     );
     const datePicker = root as HTMLBqDatePickerElement;
     await waitForChanges();
@@ -1126,7 +1126,7 @@ describe('bq-date-picker', () => {
 
   it('renders out-of-bounds month cells as disabled and ignores click commits (precision="month")', async () => {
     const { root, spyOnEvent, waitForChanges } = await render(
-      <bq-date-picker name="date-picker" precision="month" open value="2026-05" min="2026-04" max="2026-07" />,
+      <bq-date-picker precision="month" name="date-picker" open value="2026-05" min="2026-04" max="2026-07" />,
     );
     const datePicker = root as HTMLBqDatePickerElement;
     const bqChange = spyOnEvent('bqChange');
@@ -1146,7 +1146,7 @@ describe('bq-date-picker', () => {
 
   it('does not commit an out-of-bounds month via Enter (precision="month")', async () => {
     const { root, spyOnEvent, waitForChanges } = await render(
-      <bq-date-picker name="date-picker" precision="month" open value="2026-05" min="2026-04" max="2026-07" />,
+      <bq-date-picker precision="month" name="date-picker" open value="2026-05" min="2026-04" max="2026-07" />,
     );
     const datePicker = root as HTMLBqDatePickerElement;
     const bqChange = spyOnEvent('bqChange');
@@ -1167,7 +1167,7 @@ describe('bq-date-picker', () => {
 
   it('does not commit an out-of-bounds year via Enter (precision="year")', async () => {
     const { root, spyOnEvent, waitForChanges } = await render(
-      <bq-date-picker name="date-picker" precision="year" open value="2026" min="2025" max="2027" />,
+      <bq-date-picker precision="year" name="date-picker" open value="2026" min="2025" max="2027" />,
     );
     const datePicker = root as HTMLBqDatePickerElement;
     const bqChange = spyOnEvent('bqChange');
@@ -1190,7 +1190,7 @@ describe('bq-date-picker', () => {
     // its days are before the bound. Confirms bounds helpers ignore the day
     // component when checking month cells.
     const { root, waitForChanges } = await render(
-      <bq-date-picker name="date-picker" precision="month" open value="2026-05" min="2026-04-15" />,
+      <bq-date-picker precision="month" name="date-picker" open value="2026-05" min="2026-04-15" />,
     );
     const datePicker = root as HTMLBqDatePickerElement;
     await waitForChanges();
@@ -1205,7 +1205,7 @@ describe('bq-date-picker', () => {
 
   it('should emit month-precision value when typing at precision="month"', async () => {
     const { root, spyOnEvent, waitForChanges } = await render(
-      <bq-date-picker name="date-picker" precision="month" type="single" />,
+      <bq-date-picker precision="month" name="date-picker" type="single" />,
     );
     const datePicker = root as HTMLBqDatePickerElement;
     const bqChange = spyOnEvent('bqChange');
@@ -1222,7 +1222,7 @@ describe('bq-date-picker', () => {
 
   it('should emit year-precision value when typing at precision="year"', async () => {
     const { root, spyOnEvent, waitForChanges } = await render(
-      <bq-date-picker name="date-picker" precision="year" type="single" />,
+      <bq-date-picker precision="year" name="date-picker" type="single" />,
     );
     const datePicker = root as HTMLBqDatePickerElement;
     const bqChange = spyOnEvent('bqChange');
@@ -1276,7 +1276,7 @@ describe('bq-date-picker', () => {
     expect(datePicker.matches(':state(invalid)')).toBe(true);
 
     // Precision-truncated min (`2026-06`) should treat June 2026 as in-bounds.
-    await setProps({ value: '2026-06-20' });
+    await setProps({ name: 'date-picker', value: '2026-06-20' });
     await waitForChanges();
     expect(datePicker.matches(':state(invalid)')).toBe(false);
   });
