@@ -36,6 +36,85 @@ export type TCalendarMonthViewProps = {
 /** ISO used to compare a month cell against the internal selection. */
 const monthCellISO = (year: number, month: number): string => `${year}-${String(month + 1).padStart(2, '0')}-01`;
 
+type TMonthCellState = {
+  iso: string;
+  disabled: boolean;
+  selected: boolean;
+  rangeStart: boolean;
+  rangeEnd: boolean;
+  rangeInner: boolean;
+  isFocused: boolean;
+};
+
+const buildMonthParts = (state: TMonthCellState): string => {
+  const parts: string[] = [CALENDAR_PARTS.month];
+  if (state.selected) parts.push(CALENDAR_PARTS.monthSelected);
+  if (state.rangeStart) parts.push(CALENDAR_PARTS.rangeStart);
+  if (state.rangeEnd) parts.push(CALENDAR_PARTS.rangeEnd);
+  if (state.rangeInner) parts.push(CALENDAR_PARTS.rangeInner);
+  if (state.disabled) parts.push(CALENDAR_PARTS.disabled);
+  return parts.join(' ');
+};
+
+const buildMonthCellState = (
+  year: number,
+  month: number,
+  focusedMonth: number,
+  minISO: string | undefined,
+  maxISO: string | undefined,
+  selection: TSelection,
+  type: TDatePickerType,
+): TMonthCellState => {
+  const iso = monthCellISO(year, month);
+  const disabled = !isMonthWithinBounds(year, month, minISO, maxISO);
+  return {
+    iso,
+    disabled,
+    selected: isSelected(iso, selection, type),
+    rangeStart: isRangeStart(iso, selection, type),
+    rangeEnd: isRangeEnd(iso, selection, type),
+    rangeInner: isRangeInner(iso, selection, type),
+    isFocused: focusedMonth === month,
+  };
+};
+
+type TRenderMonthCellArgs = {
+  month: number;
+  name: string;
+  state: TMonthCellState;
+  onMonthSelect: (month: number, ev: MouseEvent | KeyboardEvent) => void;
+  onMonthFocus: (month: number) => void;
+  onMonthHover: (iso: string | undefined) => void;
+};
+
+const renderMonthCell = ({ month, name, state, onMonthSelect, onMonthFocus, onMonthHover }: TRenderMonthCellArgs) => (
+  <button
+    key={month}
+    aria-disabled={state.disabled ? 'true' : undefined}
+    aria-selected={state.selected ? 'true' : undefined}
+    class={{
+      'bq-date-picker__month-cell': true,
+      'is-selected': state.selected,
+      'is-range-start': state.rangeStart,
+      'is-range-end': state.rangeEnd,
+      'is-range-inner': state.rangeInner,
+      'is-out-of-bounds': state.disabled,
+    }}
+    data-month={month}
+    disabled={state.disabled}
+    onClick={(ev) => !state.disabled && onMonthSelect(month, ev)}
+    onFocus={() => onMonthFocus(month)}
+    onMouseEnter={() => onMonthHover(state.iso)}
+    onMouseLeave={() => onMonthHover(undefined)}
+    part={`${CALENDAR_PARTS.button} ${buildMonthParts(state)}`}
+    role="gridcell"
+    tabIndex={state.isFocused ? 0 : -1}
+    type="button"
+  >
+    {name}
+  </button>
+);
+
 /**
  * Month picker — 12 buttons in a 3×4 grid.
  */
@@ -56,8 +135,6 @@ export const CalendarMonthView: FunctionalComponent<TCalendarMonthViewProps> = (
   const months = getMonthNames(locale, 'short');
   const effectiveSelection: TSelection = type === 'range' && tentativeRange.length === 2 ? tentativeRange : selection;
 
-  const isMonthDisabled = (month: number): boolean => !isMonthWithinBounds(year, month, minISO, maxISO);
-
   return (
     <div
       class="bq-date-picker__months"
@@ -67,48 +144,8 @@ export const CalendarMonthView: FunctionalComponent<TCalendarMonthViewProps> = (
       tabIndex={-1}
     >
       {months.map((name, month) => {
-        const disabled = isMonthDisabled(month);
-        const iso = monthCellISO(year, month);
-        const selected = isSelected(iso, effectiveSelection, type);
-        const rangeStart = isRangeStart(iso, effectiveSelection, type);
-        const rangeEnd = isRangeEnd(iso, effectiveSelection, type);
-        const rangeInner = isRangeInner(iso, effectiveSelection, type);
-        const isFocused = focusedMonth === month;
-
-        const parts: string[] = [CALENDAR_PARTS.month];
-        if (selected) parts.push(CALENDAR_PARTS.monthSelected);
-        if (rangeStart) parts.push(CALENDAR_PARTS.rangeStart);
-        if (rangeEnd) parts.push(CALENDAR_PARTS.rangeEnd);
-        if (rangeInner) parts.push(CALENDAR_PARTS.rangeInner);
-        if (disabled) parts.push(CALENDAR_PARTS.disabled);
-
-        return (
-          <button
-            key={month}
-            aria-disabled={disabled ? 'true' : undefined}
-            aria-selected={selected ? 'true' : undefined}
-            class={{
-              'bq-date-picker__month-cell': true,
-              'is-selected': selected,
-              'is-range-start': rangeStart,
-              'is-range-end': rangeEnd,
-              'is-range-inner': rangeInner,
-              'is-out-of-bounds': disabled,
-            }}
-            data-month={month}
-            disabled={disabled}
-            onClick={(ev) => !disabled && onMonthSelect(month, ev)}
-            onFocus={() => onMonthFocus(month)}
-            onMouseEnter={() => onMonthHover(iso)}
-            onMouseLeave={() => onMonthHover(undefined)}
-            part={`${CALENDAR_PARTS.button} ${parts.join(' ')}`}
-            role="gridcell"
-            tabIndex={isFocused ? 0 : -1}
-            type="button"
-          >
-            {name}
-          </button>
-        );
+        const state = buildMonthCellState(year, month, focusedMonth, minISO, maxISO, effectiveSelection, type);
+        return renderMonthCell({ month, name, state, onMonthSelect, onMonthFocus, onMonthHover });
       })}
     </div>
   );

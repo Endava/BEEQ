@@ -33,6 +33,83 @@ export type TCalendarYearViewProps = {
 /** ISO used to compare a year cell against the internal selection. */
 const yearCellISO = (year: number): string => `${year}-01-01`;
 
+type TYearCellState = {
+  iso: string;
+  disabled: boolean;
+  selected: boolean;
+  rangeStart: boolean;
+  rangeEnd: boolean;
+  rangeInner: boolean;
+  isFocused: boolean;
+};
+
+const buildYearParts = (state: TYearCellState): string => {
+  const parts: string[] = [CALENDAR_PARTS.year];
+  if (state.selected) parts.push(CALENDAR_PARTS.yearSelected);
+  if (state.rangeStart) parts.push(CALENDAR_PARTS.rangeStart);
+  if (state.rangeEnd) parts.push(CALENDAR_PARTS.rangeEnd);
+  if (state.rangeInner) parts.push(CALENDAR_PARTS.rangeInner);
+  if (state.disabled) parts.push(CALENDAR_PARTS.disabled);
+  return parts.join(' ');
+};
+
+const buildYearCellState = (
+  year: number,
+  focusedYear: number,
+  minISO: string | undefined,
+  maxISO: string | undefined,
+  selection: TSelection,
+  type: TDatePickerType,
+): TYearCellState => {
+  const iso = yearCellISO(year);
+  const disabled = !isYearWithinBounds(year, minISO, maxISO);
+  return {
+    iso,
+    disabled,
+    selected: isSelected(iso, selection, type),
+    rangeStart: isRangeStart(iso, selection, type),
+    rangeEnd: isRangeEnd(iso, selection, type),
+    rangeInner: isRangeInner(iso, selection, type),
+    isFocused: focusedYear === year,
+  };
+};
+
+type TRenderYearCellArgs = {
+  year: number;
+  state: TYearCellState;
+  onYearSelect: (year: number, ev: MouseEvent | KeyboardEvent) => void;
+  onYearFocus: (year: number) => void;
+  onYearHover: (iso: string | undefined) => void;
+};
+
+const renderYearCell = ({ year, state, onYearSelect, onYearFocus, onYearHover }: TRenderYearCellArgs) => (
+  <button
+    key={year}
+    aria-disabled={state.disabled ? 'true' : undefined}
+    aria-selected={state.selected ? 'true' : undefined}
+    class={{
+      'bq-date-picker__year-cell': true,
+      'is-selected': state.selected,
+      'is-range-start': state.rangeStart,
+      'is-range-end': state.rangeEnd,
+      'is-range-inner': state.rangeInner,
+      'is-out-of-bounds': state.disabled,
+    }}
+    data-year={year}
+    disabled={state.disabled}
+    onClick={(ev) => !state.disabled && onYearSelect(year, ev)}
+    onFocus={() => onYearFocus(year)}
+    onMouseEnter={() => onYearHover(state.iso)}
+    onMouseLeave={() => onYearHover(undefined)}
+    part={`${CALENDAR_PARTS.button} ${buildYearParts(state)}`}
+    role="gridcell"
+    tabIndex={state.isFocused ? 0 : -1}
+    type="button"
+  >
+    {year}
+  </button>
+);
+
 /**
  * Year picker — 12 buttons for a decade grid.
  */
@@ -54,48 +131,8 @@ export const CalendarYearView: FunctionalComponent<TCalendarYearViewProps> = ({
   return (
     <div class="bq-date-picker__years" onKeyDown={onGridKeyDown} part={CALENDAR_PARTS.years} role="grid" tabIndex={-1}>
       {years.map((year) => {
-        const disabled = !isYearWithinBounds(year, minISO, maxISO);
-        const iso = yearCellISO(year);
-        const selected = isSelected(iso, effectiveSelection, type);
-        const rangeStart = isRangeStart(iso, effectiveSelection, type);
-        const rangeEnd = isRangeEnd(iso, effectiveSelection, type);
-        const rangeInner = isRangeInner(iso, effectiveSelection, type);
-        const isFocused = focusedYear === year;
-
-        const parts: string[] = [CALENDAR_PARTS.year];
-        if (selected) parts.push(CALENDAR_PARTS.yearSelected);
-        if (rangeStart) parts.push(CALENDAR_PARTS.rangeStart);
-        if (rangeEnd) parts.push(CALENDAR_PARTS.rangeEnd);
-        if (rangeInner) parts.push(CALENDAR_PARTS.rangeInner);
-        if (disabled) parts.push(CALENDAR_PARTS.disabled);
-
-        return (
-          <button
-            key={year}
-            aria-disabled={disabled ? 'true' : undefined}
-            aria-selected={selected ? 'true' : undefined}
-            class={{
-              'bq-date-picker__year-cell': true,
-              'is-selected': selected,
-              'is-range-start': rangeStart,
-              'is-range-end': rangeEnd,
-              'is-range-inner': rangeInner,
-              'is-out-of-bounds': disabled,
-            }}
-            data-year={year}
-            disabled={disabled}
-            onClick={(ev) => !disabled && onYearSelect(year, ev)}
-            onFocus={() => onYearFocus(year)}
-            onMouseEnter={() => onYearHover(iso)}
-            onMouseLeave={() => onYearHover(undefined)}
-            part={`${CALENDAR_PARTS.button} ${parts.join(' ')}`}
-            role="gridcell"
-            tabIndex={isFocused ? 0 : -1}
-            type="button"
-          >
-            {year}
-          </button>
-        );
+        const state = buildYearCellState(year, focusedYear, minISO, maxISO, effectiveSelection, type);
+        return renderYearCell({ year, state, onYearSelect, onYearFocus, onYearHover });
       })}
     </div>
   );
