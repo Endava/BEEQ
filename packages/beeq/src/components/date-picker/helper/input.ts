@@ -5,15 +5,10 @@ import { padBound } from './bounds';
 import { serializeValue } from './selection';
 
 /**
- * Result of parsing user-typed input against the current picker configuration.
- *
- * - `value` present when parsing succeeded and produced a wire value at the
- *   configured precision. May differ from the typed string (locale format
- *   normalized, out-of-range dates clamped to `min`/`max`, precision-truncated).
- * - `invalid: true` when the string could not be parsed as a date at all,
- *   or when `isDateDisallowed` explicitly rejected the parsed date. The
- *   caller should surface this as a validation error rather than commit
- *   the raw typed string (which would violate the wire contract).
+ * Result of parsing user-typed input.
+ * - `value` is set when parsing succeeded — always at the configured precision.
+ * - `invalid: true` when the string could not be parsed or `isDateDisallowed`
+ *   rejected the result.
  */
 export type TParsedInput = {
   value?: string;
@@ -22,19 +17,8 @@ export type TParsedInput = {
 
 /**
  * Precision-aware, bounds-aware parser for the trigger input field.
- *
- * Guarantees the picker's wire contract when the user types into the input:
- *   • Parsed values are always emitted at the configured `precision` (so a
- *     `precision="month"` picker never emits a `YYYY-MM-DD` string).
- *   • Values that fall outside `min`/`max` are clamped against the
- *     precision-padded bounds — the same padding used by day / month / year
- *     cells so validation and rendering always agree.
- *   • Parse failures signal `{ invalid: true }`; the host is expected to
- *     emit `undefined` (never a raw typed string) so consumers can rely on
- *     `bqChange.detail.value` being either a valid wire value or `undefined`.
- *
- * Extracted from the host so the whole path can be covered by pure unit
- * tests instead of end-to-end input simulation.
+ * Returns the parsed date as a wire-format string at the configured
+ * precision, clamped against `min`/`max`, or `{ invalid: true }` on failure.
  */
 export const parseTypedInput = (
   text: string,
@@ -50,22 +34,14 @@ export const parseTypedInput = (
   const parsed = parseDateInput(trimmed, locale);
   if (!parsed || isDateDisallowed?.(parsed)) return { invalid: true };
 
-  // 1. Clamp against the effective (precision-padded) bounds — reuse the
-  //    same padding logic month/year cells use so a `min="2025-06"` bound
-  //    matches the day picker's understanding of "anywhere in June 2025".
   const iso = clampISO(toISODateString(parsed), min, max);
-
-  // 2. Truncate to the wire precision through the same serializer the
-  //    click path uses. Guarantees that all commit paths agree on the
-  //    format of the value they publish.
   return { value: serializeValue([iso], 'single', precision) };
 };
 
 /**
  * Lexically clamp a full `YYYY-MM-DD` ISO date to precision-padded bounds.
- * When bounds are absent or already full ISO, this behaves like the shared
- * `clampDateToRange` utility. When bounds are `YYYY` / `YYYY-MM`, they are
- * padded to the widest matching day so the comparison is meaningful.
+ * Coarser bounds (`YYYY`, `YYYY-MM`) are padded to the widest matching day
+ * before comparing.
  */
 export const clampISO = (iso: string, min?: string, max?: string): string => {
   const paddedMin = padBound(min, 'min');

@@ -965,8 +965,6 @@ describe('bq-date-picker', () => {
   });
 
   it('does not commit an out-of-bounds month via Enter (precision="month")', async () => {
-    // Regression: keyboard Enter used to bypass the click-path disabled guard
-    // and commit whatever month the focus cursor was on, ignoring min/max.
     const { root, spyOnEvent, waitForChanges } = await render(
       <bq-date-picker name="date-picker" precision="month" open value="2026-05" min="2026-04" max="2026-07" />,
     );
@@ -988,7 +986,6 @@ describe('bq-date-picker', () => {
   });
 
   it('does not commit an out-of-bounds year via Enter (precision="year")', async () => {
-    // Regression: same as above for the years view.
     const { root, spyOnEvent, waitForChanges } = await render(
       <bq-date-picker name="date-picker" precision="year" open value="2026" min="2025" max="2027" />,
     );
@@ -1084,8 +1081,7 @@ describe('bq-date-picker', () => {
     await setProps({ min: '2026-06-01' });
     await waitForChanges();
 
-    // Value is preserved (native input semantics), but the custom `:state(invalid)`
-    // flag added by `checkBoundsValidity` marks the element as invalid.
+    // Value is preserved; the picker exposes invalidity via the `:state(invalid)` flag.
     expect(datePicker.value).toBe('2026-01-15');
     expect(datePicker.matches(':state(invalid)')).toBe(true);
   });
@@ -1118,8 +1114,6 @@ describe('bq-date-picker', () => {
   });
 
   it('should treat coarse `max="YYYY-MM"` as end-of-month in day mode', async () => {
-    // Regression: pre-fix, `clampDateToRange` did a raw string compare, so
-    // `2026-05-15 > "2026-05"` lexically and the value looked over-max.
     const { root, waitForChanges } = await render(
       <bq-date-picker max="2026-05" name="date-picker" type="single" value="2026-05-15" />,
     );
@@ -1170,8 +1164,7 @@ describe('bq-date-picker', () => {
     await waitForChanges();
     expect(datePicker.matches(':state(invalid)')).toBe(true);
 
-    // Flipping `required` used to route through `updateFormValidity()` alone,
-    // which cleared the `rangeUnderflow` overlay. `syncValidity` preserves it.
+    // Toggling `required` must not clear existing bounds-based invalidity.
     await setProps({ required: true });
     await waitForChanges();
     expect(datePicker.matches(':state(invalid)')).toBe(true);

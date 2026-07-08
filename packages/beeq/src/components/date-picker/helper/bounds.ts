@@ -1,17 +1,10 @@
 /**
  * Bounds predicates for the calendar.
  *
- * `min` and `max` may be supplied at any wire precision (`YYYY`, `YYYY-MM`,
- * or `YYYY-MM-DD`), while the internal representation of every clicked cell
- * is always a full `YYYY-MM-DD` string. These helpers normalize both sides
- * so the same predicate can be shared between the mouse (view components)
- * and keyboard (host) commit paths — centralising the check here is what
- * makes it impossible for one path to accept an out-of-bounds cell that
- * the other rejects.
- *
- * All predicates are pure: no `Date` mutation, no locale, no time zone —
- * bound strings are compared lexicographically (which is safe because ISO
- * 8601 is designed for that).
+ * `min` and `max` may be at any wire precision (`YYYY`, `YYYY-MM`, or
+ * `YYYY-MM-DD`); internal cell values are always full `YYYY-MM-DD` strings.
+ * All predicates are pure and rely on lexicographic comparison, which is
+ * safe for ISO 8601 dates.
  */
 
 /**

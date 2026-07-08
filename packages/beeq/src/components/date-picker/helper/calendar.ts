@@ -157,11 +157,9 @@ export const buildDecade = (anchor: Date): { start: number; end: number; years: 
 import { padBound } from './bounds';
 
 /**
- * Clamp a `Date` between an optional min and max (both ISO strings, at any
- * wire precision — `YYYY`, `YYYY-MM`, or `YYYY-MM-DD`). Coarse bounds are
- * padded to their widest matching day (`min` → first day; `max` → last day)
- * so that `min="2026-05"` really means "not before 2026-05-01" and
- * `max="2026-05"` really means "not after 2026-05-31".
+ * Clamp a `Date` between an optional min and max. Bounds may be at any
+ * ISO precision (`YYYY`, `YYYY-MM`, `YYYY-MM-DD`) and are padded to the
+ * widest matching day before comparing (`min` → first day, `max` → last day).
  */
 export const clampDate = (date: Date, minISO?: string, maxISO?: string): Date => {
   const min = parseISO(padBound(minISO, 'min'));
@@ -171,10 +169,7 @@ export const clampDate = (date: Date, minISO?: string, maxISO?: string): Date =>
   return date;
 };
 
-/**
- * Whether the given `Date` is within `[min, max]` ISO bounds (inclusive).
- * Bounds may be supplied at any precision — see `clampDate` above.
- */
+/** Whether the given `Date` is within `[min, max]` ISO bounds (inclusive). */
 export const isWithinBounds = (date: Date, minISO?: string, maxISO?: string): boolean => {
   const iso = toISO(date);
   const minPadded = padBound(minISO, 'min');
