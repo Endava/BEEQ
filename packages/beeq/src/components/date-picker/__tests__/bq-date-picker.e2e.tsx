@@ -550,7 +550,8 @@ describe('bq-date-picker', () => {
 
     expect(label).not.toHaveClass('is-hidden');
     expect(labelSlot).not.toBeNull();
-    expect(getTextContent(labelSlot!, { recurse: true })).toBe('Pick a date');
+    if (!labelSlot) throw new Error('Expected label slot to exist');
+    expect(getTextContent(labelSlot, { recurse: true })).toBe('Pick a date');
   });
 
   it('should reveal the prefix wrapper when the `prefix` slot has content', async () => {
