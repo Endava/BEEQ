@@ -941,4 +941,86 @@ describe('bq-date-picker', () => {
     expect(getYearButton(datePicker, 2018)).not.toBeNull();
     expect(getYearButton(datePicker, 2018)).toHaveClass('is-selected');
   });
+
+  /* ------------------------------- Bounds ------------------------------- */
+
+  it('renders out-of-bounds month cells as disabled and ignores click commits (precision="month")', async () => {
+    const { root, spyOnEvent, waitForChanges } = await render(
+      <bq-date-picker name="date-picker" precision="month" open value="2026-05" min="2026-04" max="2026-07" />,
+    );
+    const datePicker = root as HTMLBqDatePickerElement;
+    const bqChange = spyOnEvent('bqChange');
+    await waitForStable(root);
+
+    // January 2026 (month=0) is before min → disabled.
+    const jan = getMonthButton(datePicker, 0);
+    expect(jan).toHaveAttribute('disabled');
+    expect(jan).toHaveClass('is-out-of-bounds');
+
+    jan?.click();
+    await waitForChanges();
+
+    expect(bqChange).toHaveReceivedEventTimes(0);
+    expect(datePicker.value).toBe('2026-05');
+  });
+
+  it('does not commit an out-of-bounds month via Enter (precision="month")', async () => {
+    // Regression: keyboard Enter used to bypass the click-path disabled guard
+    // and commit whatever month the focus cursor was on, ignoring min/max.
+    const { root, spyOnEvent, waitForChanges } = await render(
+      <bq-date-picker name="date-picker" precision="month" open value="2026-05" min="2026-04" max="2026-07" />,
+    );
+    const datePicker = root as HTMLBqDatePickerElement;
+    const bqChange = spyOnEvent('bqChange');
+    await waitForStable(root);
+
+    // Arrow to March 2026 (month=2) — out of bounds (min is 2026-04).
+    getGrid(datePicker)?.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
+    await waitForChanges();
+    getGrid(datePicker)?.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
+    await waitForChanges();
+    // Attempt to commit via keyboard Enter.
+    getGrid(datePicker)?.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    await waitForChanges();
+
+    expect(bqChange).toHaveReceivedEventTimes(0);
+    expect(datePicker.value).toBe('2026-05');
+  });
+
+  it('does not commit an out-of-bounds year via Enter (precision="year")', async () => {
+    // Regression: same as above for the years view.
+    const { root, spyOnEvent, waitForChanges } = await render(
+      <bq-date-picker name="date-picker" precision="year" open value="2026" min="2025" max="2027" />,
+    );
+    const datePicker = root as HTMLBqDatePickerElement;
+    const bqChange = spyOnEvent('bqChange');
+    await waitForStable(root);
+
+    // Arrow to 2024 — out of bounds (min is 2025).
+    getGrid(datePicker)?.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
+    await waitForChanges();
+    getGrid(datePicker)?.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
+    await waitForChanges();
+    getGrid(datePicker)?.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    await waitForChanges();
+
+    expect(bqChange).toHaveReceivedEventTimes(0);
+    expect(datePicker.value).toBe('2026');
+  });
+
+  it('treats a day-precision bound as fully inclusive for month/year cells', async () => {
+    // min="2026-04-15" — April 2026 must remain selectable even though half
+    // its days are before the bound. Confirms bounds helpers ignore the day
+    // component when checking month cells.
+    const { root, waitForChanges } = await render(
+      <bq-date-picker name="date-picker" precision="month" open value="2026-05" min="2026-04-15" />,
+    );
+    const datePicker = root as HTMLBqDatePickerElement;
+    await waitForChanges();
+    await waitForStable(root);
+
+    const april = getMonthButton(datePicker, 3);
+    expect(april).not.toBeNull();
+    expect(april).not.toHaveAttribute('disabled');
+  });
 });

@@ -1,7 +1,7 @@
 import { type FunctionalComponent, h } from '@stencil/core';
 
 import type { TDatePickerType, TSelection } from '../bq-date-picker.types';
-import { getISOYearMonth } from '../helper/calendar';
+import { isMonthWithinBounds } from '../helper/bounds';
 import { CALENDAR_PARTS } from '../helper/constants';
 import { getMonthNames } from '../helper/intl';
 import { isRangeEnd, isRangeInner, isRangeStart, isSelected } from '../helper/selection';
@@ -48,18 +48,8 @@ export const CalendarMonthView: FunctionalComponent<TCalendarMonthViewProps> = (
   onGridKeyDown,
 }) => {
   const months = getMonthNames(locale, 'short');
-  const minBound = getISOYearMonth(minISO);
-  const maxBound = getISOYearMonth(maxISO);
 
-  const isMonthDisabled = (month: number): boolean => {
-    if (minBound && (year < minBound.year || (year === minBound.year && month < minBound.month))) {
-      return true;
-    }
-    if (maxBound && (year > maxBound.year || (year === maxBound.year && month > maxBound.month))) {
-      return true;
-    }
-    return false;
-  };
+  const isMonthDisabled = (month: number): boolean => !isMonthWithinBounds(year, month, minISO, maxISO);
 
   return (
     <div

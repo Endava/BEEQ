@@ -45,12 +45,12 @@ import {
   clampDate,
   endOfMonth,
   getDecadeStart,
-  getISOYearMonth,
   isWithinBounds,
   parseISO,
   startOfMonth,
   toISO,
 } from './helper/calendar';
+import { isMonthWithinBounds, isYearWithinBounds } from './helper/bounds';
 import { CALENDAR_PARTS, DECADE_GRID_SIZE, DEFAULT_INPUT_ID, MAX_MONTHS_PER_VIEW } from './helper/constants';
 import { formatMonth } from './helper/intl';
 import { getHeaderLabel, getHeaderTitleLabel, getNextLabel, getPreviousLabel } from './helper/labels';
@@ -830,8 +830,10 @@ export class BqDatePicker {
 
   private handleMonthSelect = (month: number): void => {
     // When precision is `month`, selecting a month commits the value instead
-    // of drilling to the days view.
+    // of drilling to the days view. Gate the commit on bounds so keyboard
+    // Enter/Space cannot bypass the click-path disabled check.
     if (this.precision === 'month') {
+      if (!isMonthWithinBounds(this.focusedYear, month, this.min, this.max)) return;
       this.focusedMonth = month;
       this.viewDate = new Date(this.focusedYear, month, 1);
       this.commitSelection(toISO(new Date(this.focusedYear, month, 1)));
@@ -858,8 +860,10 @@ export class BqDatePicker {
 
   private handleYearSelect = (year: number): void => {
     // When precision is `year`, selecting a year commits the value instead
-    // of drilling to the months view.
+    // of drilling to the months view. Gate the commit on bounds so keyboard
+    // Enter/Space cannot bypass the click-path disabled check.
     if (this.precision === 'year') {
+      if (!isYearWithinBounds(year, this.min, this.max)) return;
       this.focusedYear = year;
       this.viewDate = new Date(year, 0, 1);
       this.commitSelection(toISO(new Date(year, 0, 1)));
@@ -1199,16 +1203,14 @@ export class BqDatePicker {
     const start = this.decadeStart;
     const end = start + DECADE_GRID_SIZE - 1;
     const years = Array.from({ length: DECADE_GRID_SIZE }, (_, i) => start + i);
-    const minYear = getISOYearMonth(this.min)?.year;
-    const maxYear = getISOYearMonth(this.max)?.year;
     const effectiveFocused = this.focusedYear >= start && this.focusedYear <= end ? this.focusedYear : start;
 
     return (
       <CalendarYearView
         years={years}
         focusedYear={effectiveFocused}
-        minYear={minYear}
-        maxYear={maxYear}
+        minISO={this.min}
+        maxISO={this.max}
         selection={this.selection}
         type={this.type}
         onYearSelect={(year) => this.handleYearSelect(year)}
