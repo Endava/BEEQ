@@ -928,6 +928,40 @@ describe('bq-date-picker', () => {
     expect(getMonthButton(datePicker, 8)).not.toHaveClass('is-selected');
   });
 
+  it('previews month range while hovering the second endpoint (precision="month")', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-date-picker name="date-picker" precision="month" type="range" open value="2026-04" />,
+    );
+    const datePicker = root as HTMLBqDatePickerElement;
+    await waitForStable(root);
+
+    const september = getMonthButton(datePicker, 8);
+    september?.dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
+    await waitForChanges();
+
+    expect(getMonthButton(datePicker, 3)).toHaveClass('is-range-start');
+    expect(getMonthButton(datePicker, 8)).toHaveClass('is-range-end');
+    expect(getMonthButton(datePicker, 4)).toHaveClass('is-range-inner');
+    expect(getMonthButton(datePicker, 7)).toHaveClass('is-range-inner');
+  });
+
+  it('previews year range while hovering the second endpoint (precision="year")', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-date-picker name="date-picker" precision="year" type="range" open value="2026" />,
+    );
+    const datePicker = root as HTMLBqDatePickerElement;
+    await waitForStable(root);
+
+    const year2030 = getYearButton(datePicker, 2030);
+    year2030?.dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
+    await waitForChanges();
+
+    expect(getYearButton(datePicker, 2026)).toHaveClass('is-range-start');
+    expect(getYearButton(datePicker, 2030)).toHaveClass('is-range-end');
+    expect(getYearButton(datePicker, 2027)).toHaveClass('is-range-inner');
+    expect(getYearButton(datePicker, 2029)).toHaveClass('is-range-inner');
+  });
+
   it('multi + month: committing a selection preserves the currently navigated year', async () => {
     const { root, waitForChanges } = await render(
       <bq-date-picker name="date-picker" precision="month" type="multi" open />,

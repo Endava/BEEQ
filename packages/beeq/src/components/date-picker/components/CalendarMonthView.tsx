@@ -19,12 +19,16 @@ export type TCalendarMonthViewProps = {
   maxISO?: string;
   /** Current selection (as stored internally: array of YYYY-MM-DD). */
   selection: TSelection;
+  /** In-progress range preview while hovering a second endpoint. */
+  tentativeRange: TSelection;
   /** Selection type — drives multi / range highlighting. */
   type: TDatePickerType;
   /** Callback fired when the user picks a month. */
   onMonthSelect: (month: number, ev: MouseEvent | KeyboardEvent) => void;
   /** Callback fired when a month button receives focus. */
   onMonthFocus: (month: number) => void;
+  /** Callback fired when hovering a month cell (range preview). */
+  onMonthHover: (iso: string | undefined) => void;
   /** Optional keydown handler for the grid (roving tabindex management). */
   onGridKeyDown: (ev: KeyboardEvent) => void;
 };
@@ -42,12 +46,15 @@ export const CalendarMonthView: FunctionalComponent<TCalendarMonthViewProps> = (
   minISO,
   maxISO,
   selection,
+  tentativeRange,
   type,
   onMonthSelect,
   onMonthFocus,
+  onMonthHover,
   onGridKeyDown,
 }) => {
   const months = getMonthNames(locale, 'short');
+  const effectiveSelection: TSelection = type === 'range' && tentativeRange.length === 2 ? tentativeRange : selection;
 
   const isMonthDisabled = (month: number): boolean => !isMonthWithinBounds(year, month, minISO, maxISO);
 
@@ -62,10 +69,10 @@ export const CalendarMonthView: FunctionalComponent<TCalendarMonthViewProps> = (
       {months.map((name, month) => {
         const disabled = isMonthDisabled(month);
         const iso = monthCellISO(year, month);
-        const selected = isSelected(iso, selection, type);
-        const rangeStart = isRangeStart(iso, selection, type);
-        const rangeEnd = isRangeEnd(iso, selection, type);
-        const rangeInner = isRangeInner(iso, selection, type);
+        const selected = isSelected(iso, effectiveSelection, type);
+        const rangeStart = isRangeStart(iso, effectiveSelection, type);
+        const rangeEnd = isRangeEnd(iso, effectiveSelection, type);
+        const rangeInner = isRangeInner(iso, effectiveSelection, type);
         const isFocused = focusedMonth === month;
 
         const parts: string[] = [CALENDAR_PARTS.month];
@@ -92,6 +99,8 @@ export const CalendarMonthView: FunctionalComponent<TCalendarMonthViewProps> = (
             disabled={disabled}
             onClick={(ev) => !disabled && onMonthSelect(month, ev)}
             onFocus={() => onMonthFocus(month)}
+            onMouseEnter={() => onMonthHover(iso)}
+            onMouseLeave={() => onMonthHover(undefined)}
             part={`${CALENDAR_PARTS.button} ${parts.join(' ')}`}
             role="gridcell"
             tabIndex={isFocused ? 0 : -1}

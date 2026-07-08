@@ -1252,8 +1252,10 @@ export class BqDatePicker {
         minISO={this.min}
         maxISO={this.max}
         selection={this.selection}
+        tentativeRange={this.tentativeRange}
         type={this.type}
         onMonthSelect={(month) => this.handleMonthSelect(month)}
+        onMonthHover={(iso) => this.handleDayHover(iso)}
         onMonthFocus={(month) => {
           this.focusedMonth = month;
         }}
@@ -1275,8 +1277,10 @@ export class BqDatePicker {
         minISO={this.min}
         maxISO={this.max}
         selection={this.selection}
+        tentativeRange={this.tentativeRange}
         type={this.type}
         onYearSelect={(year) => this.handleYearSelect(year)}
+        onYearHover={(iso) => this.handleDayHover(iso)}
         onYearFocus={(year) => {
           this.focusedYear = year;
         }}
