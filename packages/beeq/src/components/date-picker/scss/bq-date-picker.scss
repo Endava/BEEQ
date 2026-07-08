@@ -244,72 +244,22 @@
   gap: 0.25rem;
 }
 
-.bq-date-picker__nav-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  inline-size: var(--bq-date-picker--nav-button-size);
-  block-size: var(--bq-date-picker--nav-button-size);
-  padding: 0;
-  border: none;
-  border-radius: var(--bq-date-picker--view-cell-radius);
-  background: transparent;
-  color: var(--bq-date-picker--header-title-color);
-  cursor: pointer;
-  transition: background-color 150ms ease;
-
-  &:hover:not(:disabled) {
-    background-color: var(--bq-date-picker--view-cell-background-hover);
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--bq-date-picker--border-color-focus);
-    outline-offset: 2px;
-  }
-
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.4;
-  }
+.bq-date-picker__nav-button::part(button) {
+  inline-size: 2rem;
+  block-size: 2rem;
 }
 
-.bq-date-picker__nav-icon {
-  display: inline-flex;
-}
-
-// Mirror the caret icons in RTL contexts.
 :host-context([dir='rtl']) .bq-date-picker__nav-icon,
 :host([dir='rtl']) .bq-date-picker__nav-icon {
   transform: scaleX(-1);
 }
 
-.bq-date-picker__heading {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding-block: 0.25rem;
-  padding-inline: 0.5rem;
-  border: none;
-  border-radius: var(--bq-date-picker--view-cell-radius);
-  background: transparent;
-  color: var(--bq-date-picker--header-title-color);
-  font-size: 1rem;
+.bq-date-picker__heading::part(button) {
   font-weight: 600;
-  cursor: pointer;
-  transition: background-color 150ms ease;
+}
 
-  &:hover:not(.bq-date-picker__heading--static) {
-    background-color: var(--bq-date-picker--view-cell-background-hover);
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--bq-date-picker--border-color-focus);
-    outline-offset: 2px;
-  }
-
-  &--static {
-    cursor: default;
-  }
+.bq-date-picker__heading--static {
+  pointer-events: none;
 }
 
 /* ------------------------------- Panels ---------------------------------- */
@@ -535,8 +485,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .bq-date-picker__control,
-  .bq-date-picker__nav-button,
-  .bq-date-picker__heading,
   .bq-date-picker__day,
   .bq-date-picker__month-cell,
   .bq-date-picker__year-cell {

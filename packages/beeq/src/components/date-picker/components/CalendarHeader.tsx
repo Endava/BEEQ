@@ -21,11 +21,11 @@ export type TCalendarHeaderProps = {
   /** Whether the title button is interactive. `false` when already on the years view. */
   titleInteractive?: boolean;
   /** Callback fired when the previous button is activated. */
-  onPrevious: (ev: MouseEvent) => void;
+  onPrevious: (ev: Event) => void;
   /** Callback fired when the next button is activated. */
-  onNext: (ev: MouseEvent) => void;
+  onNext: (ev: Event) => void;
   /** Callback fired when the title button is activated. */
-  onTitleClick: (ev: MouseEvent) => void;
+  onTitleClick: (ev: Event) => void;
 };
 
 /**
@@ -49,42 +49,54 @@ export const CalendarHeader: FunctionalComponent<TCalendarHeaderProps> = ({
   onTitleClick,
 }) => (
   <div class="bq-date-picker__header" part={CALENDAR_PARTS.header}>
-    <button
-      aria-label={previousLabel}
+    <bq-button
+      appearance="text"
+      border="s"
       class="bq-date-picker__nav-button"
       disabled={previousDisabled}
-      onClick={onPrevious}
+      label={previousLabel}
+      onlyIcon
+      onBqClick={onPrevious}
       part={`${CALENDAR_PARTS.button} ${CALENDAR_PARTS.previous}`}
+      size="small"
       type="button"
     >
-      <bq-icon aria-hidden="true" class="bq-date-picker__nav-icon" name="caret-left" size="20" />
-    </button>
+      <bq-icon aria-hidden="true" class="bq-date-picker__nav-icon" name="caret-left" />
+    </bq-button>
 
-    <button
-      aria-label={titleLabel}
+    <bq-button
+      appearance="text"
       aria-live="polite"
+      border="s"
       class={{
         'bq-date-picker__heading': true,
         'bq-date-picker__heading--static': !titleInteractive,
       }}
-      disabled={!titleInteractive}
       data-view={view}
-      onClick={onTitleClick}
+      disabled={!titleInteractive}
+      label={titleLabel}
+      onBqClick={onTitleClick}
       part={CALENDAR_PARTS.heading}
+      size="small"
       type="button"
+      block
     >
       {label}
-    </button>
+    </bq-button>
 
-    <button
-      aria-label={nextLabel}
+    <bq-button
+      appearance="text"
+      border="s"
       class="bq-date-picker__nav-button"
       disabled={nextDisabled}
-      onClick={onNext}
+      label={nextLabel}
+      onlyIcon
+      onBqClick={onNext}
       part={`${CALENDAR_PARTS.button} ${CALENDAR_PARTS.next}`}
+      size="small"
       type="button"
     >
-      <bq-icon aria-hidden="true" class="bq-date-picker__nav-icon" name="caret-right" size="20" />
-    </button>
+      <bq-icon aria-hidden="true" class="bq-date-picker__nav-icon" name="caret-right" />
+    </bq-button>
   </div>
 );

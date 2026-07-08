@@ -792,12 +792,11 @@ export namespace Components {
      * @cssprop --bq-date-picker--currentDate-border-width - Border width for today's date.
      * @cssprop --bq-date-picker--day-size - Size of a day cell in the calendar.
      * @cssprop --bq-date-picker--gap - Gap between the input content and prefix/suffix.
-     * @cssprop --bq-date-picker--header-title-color - Color of the header title button.
+     * @cssprop --bq-date-picker--header-title-color - Color of the per-panel month label in multi-panel view.
      * @cssprop --bq-date-picker--icon-size - Size of the icons used in prefix/suffix/clear.
      * @cssprop --bq-date-picker--label-margin-bottom - Space below the label.
      * @cssprop --bq-date-picker--label-text-color - Label text color.
      * @cssprop --bq-date-picker--label-text-size - Label text size.
-     * @cssprop --bq-date-picker--nav-button-size - Size of the header prev/next buttons.
      * @cssprop --bq-date-picker--padding-end - Input padding end.
      * @cssprop --bq-date-picker--padding-start - Input padding start.
      * @cssprop --bq-date-picker--paddingY - Input vertical padding.
@@ -3905,12 +3904,11 @@ declare global {
      * @cssprop --bq-date-picker--currentDate-border-width - Border width for today's date.
      * @cssprop --bq-date-picker--day-size - Size of a day cell in the calendar.
      * @cssprop --bq-date-picker--gap - Gap between the input content and prefix/suffix.
-     * @cssprop --bq-date-picker--header-title-color - Color of the header title button.
+     * @cssprop --bq-date-picker--header-title-color - Color of the per-panel month label in multi-panel view.
      * @cssprop --bq-date-picker--icon-size - Size of the icons used in prefix/suffix/clear.
      * @cssprop --bq-date-picker--label-margin-bottom - Space below the label.
      * @cssprop --bq-date-picker--label-text-color - Label text color.
      * @cssprop --bq-date-picker--label-text-size - Label text size.
-     * @cssprop --bq-date-picker--nav-button-size - Size of the header prev/next buttons.
      * @cssprop --bq-date-picker--padding-end - Input padding end.
      * @cssprop --bq-date-picker--padding-start - Input padding start.
      * @cssprop --bq-date-picker--paddingY - Input vertical padding.
@@ -6268,12 +6266,11 @@ declare namespace LocalJSX {
      * @cssprop --bq-date-picker--currentDate-border-width - Border width for today's date.
      * @cssprop --bq-date-picker--day-size - Size of a day cell in the calendar.
      * @cssprop --bq-date-picker--gap - Gap between the input content and prefix/suffix.
-     * @cssprop --bq-date-picker--header-title-color - Color of the header title button.
+     * @cssprop --bq-date-picker--header-title-color - Color of the per-panel month label in multi-panel view.
      * @cssprop --bq-date-picker--icon-size - Size of the icons used in prefix/suffix/clear.
      * @cssprop --bq-date-picker--label-margin-bottom - Space below the label.
      * @cssprop --bq-date-picker--label-text-color - Label text color.
      * @cssprop --bq-date-picker--label-text-size - Label text size.
-     * @cssprop --bq-date-picker--nav-button-size - Size of the header prev/next buttons.
      * @cssprop --bq-date-picker--padding-end - Input padding end.
      * @cssprop --bq-date-picker--padding-start - Input padding start.
      * @cssprop --bq-date-picker--paddingY - Input vertical padding.
@@ -9775,12 +9772,11 @@ declare module "@stencil/core" {
              * @cssprop --bq-date-picker--currentDate-border-width - Border width for today's date.
              * @cssprop --bq-date-picker--day-size - Size of a day cell in the calendar.
              * @cssprop --bq-date-picker--gap - Gap between the input content and prefix/suffix.
-             * @cssprop --bq-date-picker--header-title-color - Color of the header title button.
+             * @cssprop --bq-date-picker--header-title-color - Color of the per-panel month label in multi-panel view.
              * @cssprop --bq-date-picker--icon-size - Size of the icons used in prefix/suffix/clear.
              * @cssprop --bq-date-picker--label-margin-bottom - Space below the label.
              * @cssprop --bq-date-picker--label-text-color - Label text color.
              * @cssprop --bq-date-picker--label-text-size - Label text size.
-             * @cssprop --bq-date-picker--nav-button-size - Size of the header prev/next buttons.
              * @cssprop --bq-date-picker--padding-end - Input padding end.
              * @cssprop --bq-date-picker--padding-start - Input padding start.
              * @cssprop --bq-date-picker--paddingY - Input vertical padding.

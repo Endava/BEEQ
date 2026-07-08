@@ -14,13 +14,20 @@ const getClearButton = (datePicker: HTMLBqDatePickerElement) =>
   datePicker.shadowRoot?.querySelector<HTMLBqButtonElement | null>('[part="clear-btn"]');
 
 const getHeaderTitle = (datePicker: HTMLBqDatePickerElement) =>
-  datePicker.shadowRoot?.querySelector<HTMLButtonElement>('[part~="calendar__heading"]');
+  datePicker.shadowRoot?.querySelector<HTMLBqButtonElement>('[part~="calendar__heading"]');
+
+const getHeaderTitleInnerButton = (datePicker: HTMLBqDatePickerElement) =>
+  getHeaderTitle(datePicker)?.shadowRoot?.querySelector<HTMLButtonElement>('button');
 
 const getPrevButton = (datePicker: HTMLBqDatePickerElement) =>
-  datePicker.shadowRoot?.querySelector<HTMLButtonElement>('[part~="calendar__previous"]');
+  datePicker.shadowRoot
+    ?.querySelector<HTMLBqButtonElement>('[part~="calendar__previous"]')
+    ?.shadowRoot?.querySelector<HTMLButtonElement>('button');
 
 const getNextButton = (datePicker: HTMLBqDatePickerElement) =>
-  datePicker.shadowRoot?.querySelector<HTMLButtonElement>('[part~="calendar__next"]');
+  datePicker.shadowRoot
+    ?.querySelector<HTMLBqButtonElement>('[part~="calendar__next"]')
+    ?.shadowRoot?.querySelector<HTMLButtonElement>('button');
 
 const getDayButton = (datePicker: HTMLBqDatePickerElement, iso: string) =>
   datePicker.shadowRoot?.querySelector<HTMLButtonElement>(`[data-iso="${iso}"]`);
@@ -261,7 +268,7 @@ describe('bq-date-picker', () => {
     const bqViewChange = spyOnEvent('bqViewChange');
 
     await waitForStable(root);
-    getHeaderTitle(datePicker)?.click();
+    getHeaderTitleInnerButton(datePicker)?.click();
     await waitForChanges();
 
     expect(getMonthButton(datePicker, 4)).not.toBeNull();
@@ -276,7 +283,7 @@ describe('bq-date-picker', () => {
     const datePicker = root as HTMLBqDatePickerElement;
 
     await waitForStable(root);
-    getHeaderTitle(datePicker)?.click();
+    getHeaderTitleInnerButton(datePicker)?.click();
     await waitForChanges();
 
     expect(getYearButton(datePicker, 2026)).not.toBeNull();

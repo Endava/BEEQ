@@ -15,12 +15,11 @@
    * @prop --bq-date-picker--currentDate-border-width - Border width for today's date
    * @prop --bq-date-picker--day-size - Size of a day cell
    * @prop --bq-date-picker--gap - Gap between input content and prefix/suffix
-   * @prop --bq-date-picker--header-title-color - Header title text color
+   * @prop --bq-date-picker--header-title-color - Color of the per-panel month label in multi-panel view
    * @prop --bq-date-picker--icon-size - Prefix/suffix/clear icon size
    * @prop --bq-date-picker--label-margin-bottom - Space below the label
    * @prop --bq-date-picker--label-text-color - Label text color
    * @prop --bq-date-picker--label-text-size - Label text size
-   * @prop --bq-date-picker--nav-button-size - Header nav button size
    * @prop --bq-date-picker--padding-end - Input padding end
    * @prop --bq-date-picker--padding-start - Input padding start
    * @prop --bq-date-picker--paddingY - Input vertical padding
@@ -56,8 +55,6 @@
   --bq-date-picker--label-text-color: var(--bq-text--primary);
   --bq-date-picker--label-text-size: 0.875rem;
 
-  --bq-date-picker--nav-button-size: 2rem;
-
   --bq-date-picker--padding-end: var(--bq-spacing-m);
   --bq-date-picker--padding-start: var(--bq-spacing-m);
   --bq-date-picker--paddingY: var(--bq-spacing-s);
@@ -70,7 +67,7 @@
   --bq-date-picker--text-placeholder-color: var(--bq-text--secondary);
   --bq-date-picker--text-size: 1rem;
 
-  --bq-date-picker--view-cell-background-hover: var(--bq-ui--secondary-hover);
+  --bq-date-picker--view-cell-background-hover: var(--bq-ui--secondary);
   --bq-date-picker--view-cell-background-selected: var(--bq-ui--brand);
   --bq-date-picker--view-cell-height: 2.75rem;
   --bq-date-picker--view-cell-radius: 0.5rem;
