@@ -52,6 +52,10 @@ Follow the **exact section order** — do not reorder:
 11. render()               (always last)
 ```
 
+When defining boolean props, match the type to the intended API shape:
+- Use `prop: boolean = false` when the prop is conceptually required in the component API and strict TypeScript initialization should guarantee a boolean value internally.
+- Use `prop?: boolean` when `undefined` is meaningful in the public API; in that case, do not also assign `= false`.
+
 ### 3. Create the types file (`bq-<name>.types.ts`)
 
 Export type aliases and `const` arrays so both the component and Storybook can use them:
@@ -134,6 +138,7 @@ pnpm exec nx run beeq:build
 | Private | `private` keyword — never `#` (not supported by Stencil) |
 | Local methods | Must be private arrow functions |
 | Public methods | Must be `async` |
+| Boolean props | Use `prop: boolean = false` for required booleans; use `prop?: boolean` only when `undefined` is part of the API, and do not combine it with `= false` |
 | Prop validation | Use `validatePropValue()` from `../../shared/utils` + `@Watch()` |
 | Form components | Use `@AttachInternals()` + `formAssociated: true` |
 | Focus delegation | Use `shadow: { delegatesFocus: true }` for interactive elements |
