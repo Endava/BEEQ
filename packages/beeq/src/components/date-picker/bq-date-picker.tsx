@@ -117,7 +117,7 @@ import {
  * @attr {"fixed" | "absolute"} strategy - Positioning strategy for the panel.
  * @attr {"single" | "multi" | "range"} type - Selection mode.
  * @attr {"error" | "none" | "success" | "warning"} validation-status - Validation state.
- * @attr {string} value - Selected value(s) as a wire-format string.
+ * @attr {string} value - The select input value represents the currently selected date or range and can be used to reset the field to a previous value. All dates are expected in ISO-8601 format (YYYY-MM-DD).
  *
  * @method clear - Clears the selected value.
  *
@@ -377,7 +377,8 @@ export class BqDatePicker {
   /** Validation state applied to the input. */
   @Prop({ reflect: true }) validationStatus: TInputValidation = 'none';
 
-  /** Selected value(s). Wire format matches the v1 picker. */
+  /** The select input value represents the currently selected date or range and can be used to reset the field to a previous value.
+   * All dates are expected in ISO-8601 format (YYYY-MM-DD). */
   @Prop({ reflect: true, mutable: true }) value: string | undefined;
 
   // Prop lifecycle events

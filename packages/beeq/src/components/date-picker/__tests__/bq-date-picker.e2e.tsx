@@ -633,7 +633,7 @@ describe('bq-date-picker', () => {
 
   it('should clamp `months` to the maximum panel count', async () => {
     const { root, waitForChanges } = await render(
-      <bq-date-picker name="date-picker" months={5} monthsPerView="multiple" type="range" />,
+      <bq-date-picker name="date-picker" months={5} monthsPerView="months" type="range" />,
     );
     const datePicker = root as HTMLBqDatePickerElement;
 

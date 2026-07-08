@@ -43,7 +43,7 @@ const isValidToken = (token: string, precision: TDatePrecision): boolean => {
 /**
  * Parse a raw `value` string into an internal `TSelection` array.
  *
- * Wire format (compatible with the v1 Cally-based picker):
+ * Wire format:
  * - single: `YYYY-MM-DD` (or `YYYY-MM` / `YYYY` at coarser precision)
  * - multi:  space-separated tokens
  * - range:  `<start>/<end>`

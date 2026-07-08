@@ -769,7 +769,7 @@ export namespace Components {
      * @attr {"fixed" | "absolute"} strategy - Positioning strategy for the panel.
      * @attr {"single" | "multi" | "range"} type - Selection mode.
      * @attr {"error" | "none" | "success" | "warning"} validation-status - Validation state.
-     * @attr {string} value - Selected value(s) as a wire-format string.
+     * @attr {string} value - The select input value represents the currently selected date or range and can be used to reset the field to a previous value. All dates are expected in ISO-8601 format (YYYY-MM-DD).
      * @method clear - Clears the selected value.
      * @event bqBlur - Emitted when the input loses focus.
      * @event bqChange - Emitted when the value changes.
@@ -945,7 +945,7 @@ export namespace Components {
          */
         "validationStatus": TInputValidation;
         /**
-          * Selected value(s). Wire format matches the v1 picker.
+          * The select input value represents the currently selected date or range and can be used to reset the field to a previous value. All dates are expected in ISO-8601 format (YYYY-MM-DD).
          */
         "value": string | undefined;
     }
@@ -3875,7 +3875,7 @@ declare global {
      * @attr {"fixed" | "absolute"} strategy - Positioning strategy for the panel.
      * @attr {"single" | "multi" | "range"} type - Selection mode.
      * @attr {"error" | "none" | "success" | "warning"} validation-status - Validation state.
-     * @attr {string} value - Selected value(s) as a wire-format string.
+     * @attr {string} value - The select input value represents the currently selected date or range and can be used to reset the field to a previous value. All dates are expected in ISO-8601 format (YYYY-MM-DD).
      * @method clear - Clears the selected value.
      * @event bqBlur - Emitted when the input loses focus.
      * @event bqChange - Emitted when the value changes.
@@ -6232,7 +6232,7 @@ declare namespace LocalJSX {
      * @attr {"fixed" | "absolute"} strategy - Positioning strategy for the panel.
      * @attr {"single" | "multi" | "range"} type - Selection mode.
      * @attr {"error" | "none" | "success" | "warning"} validation-status - Validation state.
-     * @attr {string} value - Selected value(s) as a wire-format string.
+     * @attr {string} value - The select input value represents the currently selected date or range and can be used to reset the field to a previous value. All dates are expected in ISO-8601 format (YYYY-MM-DD).
      * @method clear - Clears the selected value.
      * @event bqBlur - Emitted when the input loses focus.
      * @event bqChange - Emitted when the value changes.
@@ -6424,7 +6424,7 @@ declare namespace LocalJSX {
          */
         "validationStatus"?: TInputValidation;
         /**
-          * Selected value(s). Wire format matches the v1 picker.
+          * The select input value represents the currently selected date or range and can be used to reset the field to a previous value. All dates are expected in ISO-8601 format (YYYY-MM-DD).
          */
         "value"?: string | undefined;
     }
@@ -9733,7 +9733,7 @@ declare module "@stencil/core" {
              * @attr {"fixed" | "absolute"} strategy - Positioning strategy for the panel.
              * @attr {"single" | "multi" | "range"} type - Selection mode.
              * @attr {"error" | "none" | "success" | "warning"} validation-status - Validation state.
-             * @attr {string} value - Selected value(s) as a wire-format string.
+             * @attr {string} value - The select input value represents the currently selected date or range and can be used to reset the field to a previous value. All dates are expected in ISO-8601 format (YYYY-MM-DD).
              * @method clear - Clears the selected value.
              * @event bqBlur - Emitted when the input loses focus.
              * @event bqChange - Emitted when the value changes.
