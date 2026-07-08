@@ -4,14 +4,11 @@ import type { JSX } from '@stencil/core/internal';
 
 import type { Placement } from '../../services/interfaces';
 import {
-  clampDateToRange,
   getTodayISO,
   hasSlotContent,
   isEventTargetChildOfElement,
   isHTMLElement,
   isNil,
-  parseDateInput,
-  toISODateString,
   updateFormValidity,
   validatePropValue,
 } from '../../shared/utils';
@@ -50,7 +47,8 @@ import {
   startOfMonth,
   toISO,
 } from './helper/calendar';
-import { isMonthWithinBounds, isYearWithinBounds } from './helper/bounds';
+import { isMonthWithinBounds, isYearWithinBounds, padBound } from './helper/bounds';
+import { parseTypedInput } from './helper/input';
 import { CALENDAR_PARTS, DECADE_GRID_SIZE, DEFAULT_INPUT_ID, MAX_MONTHS_PER_VIEW } from './helper/constants';
 import { formatMonth } from './helper/intl';
 import { getHeaderLabel, getHeaderTitleLabel, getNextLabel, getPreviousLabel } from './helper/labels';
@@ -117,7 +115,12 @@ import {
  * @attr {"fixed" | "absolute"} strategy - Positioning strategy for the panel.
  * @attr {"single" | "multi" | "range"} type - Selection mode.
  * @attr {"error" | "none" | "success" | "warning"} validation-status - Validation state.
- * @attr {string} value - The select input value represents the currently selected date or range and can be used to reset the field to a previous value. All dates are expected in ISO-8601 format (YYYY-MM-DD).
+ * @attr {string} value - The current selection, as a wire-format string. Shape depends on `type` and `precision`:
+ *   • **single**: a single ISO token — `YYYY-MM-DD` (precision `day`), `YYYY-MM` (precision `month`), `YYYY` (precision `year`).
+ *   • **range**: `start/end` (two tokens joined with `/`) at the same precision.
+ *   • **multi**: space-separated tokens at the same precision.
+ *   Bounds (`min`/`max`) may be supplied at any of these precisions and are honoured accordingly.
+ * @attr {"day" | "month" | "year"} precision - Granularity of the value and of the calendar's initial view. Also drives which cells are selectable (day cells at `day`, month cells at `month`, year cells at `year`). Defaults to `"day"`.
  *
  * @method clear - Clears the selected value.
  *
@@ -412,8 +415,49 @@ export class BqDatePicker {
     const current = this.value;
     this.internals.setFormValue(!isNil(current) ? `${current}` : null);
     this.updateFormValidity();
+    this.checkBoundsValidity();
     this.hasValue = computeHasValue(current);
     this.displayDate = computeDisplayDate(current, this.type, this.locale, this.effectiveFormatOptions, this.precision);
+  };
+
+  /**
+   * Overlay range-based validity on top of `updateFormValidity`, which only
+   * knows about `required`. Runs after every value/min/max change so a value
+   * that is now out of bounds is reflected in the constraint validation API
+   * (`rangeUnderflow` / `rangeOverflow`) without being silently dropped.
+   *
+   * All selection shapes (single, range, multi) are checked entry-by-entry
+   * against the precision-padded bounds — the same padding rule the calendar
+   * grid uses for disabled cells, so validity always agrees with the UI.
+   */
+  private checkBoundsValidity = (): void => {
+    if (!this.internals || (!this.min && !this.max)) return;
+    const selection = parseValue(this.value, this.type, this.precision);
+    if (selection.length === 0) return;
+
+    const paddedMin = padBound(this.min, 'min');
+    const paddedMax = padBound(this.max, 'max');
+    let rangeUnderflow = false;
+    let rangeOverflow = false;
+
+    for (const iso of selection) {
+      if (paddedMin && iso < paddedMin) rangeUnderflow = true;
+      if (paddedMax && iso > paddedMax) rangeOverflow = true;
+    }
+
+    if (!rangeUnderflow && !rangeOverflow) return;
+
+    const message =
+      this.formValidationMessage ??
+      (rangeUnderflow && rangeOverflow
+        ? 'Selected value is outside the allowed range'
+        : rangeUnderflow
+          ? 'Selected value is before the minimum'
+          : 'Selected value is after the maximum');
+
+    this.internals.states.delete('valid');
+    this.internals.states.add('invalid');
+    this.internals.setValidity({ rangeUnderflow, rangeOverflow }, message, this.inputElem);
   };
 
   @Watch('formatOptions')
@@ -465,9 +509,13 @@ export class BqDatePicker {
   @Watch('min')
   handleBoundsChange() {
     // A tighter range can invalidate the current selection or push the
-    // focused day out of bounds. Re-run form validity and re-clamp the
-    // internal focus/viewDate cursors.
+    // focused day out of bounds. Re-run form validity (which also checks
+    // bounds — see `checkBoundsValidity`) and re-clamp the internal
+    // focus/viewDate cursors. We deliberately *preserve* the value: this
+    // matches native `<input type="date">` behavior, where changing `min`
+    // marks the form invalid but does not silently drop the user's data.
     this.updateFormValidity();
+    this.checkBoundsValidity();
     this.syncViewToValue();
   }
 
@@ -644,18 +692,20 @@ export class BqDatePicker {
       return;
     }
 
-    const dateValue = parseDateInput(inputValue, this.locale);
-    if (!dateValue || this.isDateDisallowed?.(dateValue)) {
+    const parsed = parseTypedInput(inputValue, this.locale, this.precision, this.min, this.max, this.isDateDisallowed);
+    if (parsed.invalid || parsed.value == null) {
+      // Never emit the raw typed string — it would violate the precision-aware
+      // wire contract that all other commit paths honor. Signal invalidity
+      // through form validation and leave `value` untouched.
       this.internals.setFormValue(null);
       this.updateFormValidity();
-      this.bqChange.emit({ value: inputValue, el: this.el });
+      this.bqChange.emit({ value: undefined, el: this.el });
       return;
     }
 
-    let isoDate = toISODateString(dateValue);
-    isoDate = clampDateToRange(isoDate, this.min, this.max);
-
-    this.value = isoDate;
+    // `@Watch('value')` runs synchronously, so by the time we emit below the
+    // value has already been normalized (view sync, form validity, etc).
+    this.value = parsed.value;
     this.bqChange.emit({ value: this.value, el: this.el });
   };
 

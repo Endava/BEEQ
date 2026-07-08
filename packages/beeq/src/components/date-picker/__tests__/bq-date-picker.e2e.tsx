@@ -1023,4 +1023,97 @@ describe('bq-date-picker', () => {
     expect(april).not.toBeNull();
     expect(april).not.toHaveAttribute('disabled');
   });
+
+  /* Precision-aware typed input */
+
+  it('should emit month-precision value when typing at precision="month"', async () => {
+    const { root, spyOnEvent, waitForChanges } = await render(
+      <bq-date-picker name="date-picker" precision="month" type="single" />,
+    );
+    const datePicker = root as HTMLBqDatePickerElement;
+    const bqChange = spyOnEvent('bqChange');
+    const input = getInput(datePicker);
+
+    await userEvent.clear(input);
+    await userEvent.type(input, '2026-05-21');
+    await userEvent.tab();
+    await waitForChanges();
+
+    expect(datePicker.value).toBe('2026-05');
+    expect(bqChange.events.at(-1)?.detail.value).toBe('2026-05');
+  });
+
+  it('should emit year-precision value when typing at precision="year"', async () => {
+    const { root, spyOnEvent, waitForChanges } = await render(
+      <bq-date-picker name="date-picker" precision="year" type="single" />,
+    );
+    const datePicker = root as HTMLBqDatePickerElement;
+    const bqChange = spyOnEvent('bqChange');
+    const input = getInput(datePicker);
+
+    await userEvent.clear(input);
+    await userEvent.type(input, '2026-05-21');
+    await userEvent.tab();
+    await waitForChanges();
+
+    expect(datePicker.value).toBe('2026');
+    expect(bqChange.events.at(-1)?.detail.value).toBe('2026');
+  });
+
+  it('should emit undefined (not the raw typed string) when input is unparseable', async () => {
+    const { root, spyOnEvent, waitForChanges } = await render(<bq-date-picker name="date-picker" type="single" />);
+    const datePicker = root as HTMLBqDatePickerElement;
+    const bqChange = spyOnEvent('bqChange');
+    const input = getInput(datePicker);
+
+    await userEvent.clear(input);
+    await userEvent.type(input, 'not-a-date');
+    await userEvent.tab();
+    await waitForChanges();
+
+    expect(datePicker.value).toBeUndefined();
+    expect(bqChange.events.at(-1)?.detail.value).toBeUndefined();
+  });
+
+  it('should mark validity as rangeUnderflow when value is below a new min', async () => {
+    const { root, setProps, waitForChanges } = await render(
+      <bq-date-picker name="date-picker" type="single" value="2026-01-15" />,
+    );
+    const datePicker = root as HTMLBqDatePickerElement;
+
+    await setProps({ min: '2026-06-01' });
+    await waitForChanges();
+
+    // Value is preserved (native input semantics), but the custom `:state(invalid)`
+    // flag added by `checkBoundsValidity` marks the element as invalid.
+    expect(datePicker.value).toBe('2026-01-15');
+    expect(datePicker.matches(':state(invalid)')).toBe(true);
+  });
+
+  it('should not stay invalid once value is brought back within bounds', async () => {
+    const { root, setProps, waitForChanges } = await render(
+      <bq-date-picker min="2026-06" name="date-picker" type="single" value="2026-01-15" />,
+    );
+    const datePicker = root as HTMLBqDatePickerElement;
+    await waitForChanges();
+    expect(datePicker.matches(':state(invalid)')).toBe(true);
+
+    // Precision-truncated min (`2026-06`) should treat June 2026 as in-bounds.
+    await setProps({ value: '2026-06-20' });
+    await waitForChanges();
+    expect(datePicker.matches(':state(invalid)')).toBe(false);
+  });
+
+  it('should mark validity as rangeOverflow when value is above a new max', async () => {
+    const { root, setProps, waitForChanges } = await render(
+      <bq-date-picker name="date-picker" type="single" value="2026-12-31" />,
+    );
+    const datePicker = root as HTMLBqDatePickerElement;
+
+    await setProps({ max: '2026-06-30' });
+    await waitForChanges();
+
+    expect(datePicker.value).toBe('2026-12-31');
+    expect(datePicker.matches(':state(invalid)')).toBe(true);
+  });
 });

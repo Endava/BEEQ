@@ -52,29 +52,32 @@ export const isYearWithinBounds = (year: number, min?: string | null, max?: stri
 };
 
 /**
+ * Whether a `(year, month)` pair sits at-or-after the given lower bound.
+ * A `null`/`undefined` bound is treated as "no lower bound".
+ */
+const monthAtOrAfter = (year: number, month: number, bound: string | undefined | null): boolean => {
+  const ym = boundYearMonth(bound);
+  if (ym) return year > ym.year || (year === ym.year && month >= ym.month);
+  const y = boundYear(bound);
+  return y === null || year >= y;
+};
+
+/** Whether a `(year, month)` pair sits at-or-before the given upper bound. */
+const monthAtOrBefore = (year: number, month: number, bound: string | undefined | null): boolean => {
+  const ym = boundYearMonth(bound);
+  if (ym) return year < ym.year || (year === ym.year && month <= ym.month);
+  const y = boundYear(bound);
+  return y === null || year <= y;
+};
+
+/**
  * Whether a given `(year, month)` pair is within the (inclusive) `min`/`max`
  * range. A month cell is considered in-range when any day inside that month
  * would still satisfy the bounds — we compare on the year-month prefix and
  * ignore the day component of `min` / `max`.
  */
-export const isMonthWithinBounds = (year: number, month: number, min?: string | null, max?: string | null): boolean => {
-  const minYM = boundYearMonth(min);
-  if (minYM) {
-    if (year < minYM.year || (year === minYM.year && month < minYM.month)) return false;
-  } else {
-    // Year-only bound — fall back to comparing the year prefix.
-    const minY = boundYear(min);
-    if (minY !== null && year < minY) return false;
-  }
-  const maxYM = boundYearMonth(max);
-  if (maxYM) {
-    if (year > maxYM.year || (year === maxYM.year && month > maxYM.month)) return false;
-  } else {
-    const maxY = boundYear(max);
-    if (maxY !== null && year > maxY) return false;
-  }
-  return true;
-};
+export const isMonthWithinBounds = (year: number, month: number, min?: string | null, max?: string | null): boolean =>
+  monthAtOrAfter(year, month, min) && monthAtOrBefore(year, month, max);
 
 /**
  * Whether a full `YYYY-MM-DD` iso date is within the (inclusive) `min`/`max`

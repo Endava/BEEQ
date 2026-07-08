@@ -769,7 +769,12 @@ export namespace Components {
      * @attr {"fixed" | "absolute"} strategy - Positioning strategy for the panel.
      * @attr {"single" | "multi" | "range"} type - Selection mode.
      * @attr {"error" | "none" | "success" | "warning"} validation-status - Validation state.
-     * @attr {string} value - The select input value represents the currently selected date or range and can be used to reset the field to a previous value. All dates are expected in ISO-8601 format (YYYY-MM-DD).
+     * @attr {string} value - The current selection, as a wire-format string. Shape depends on `type` and `precision`:
+     * • **single**: a single ISO token — `YYYY-MM-DD` (precision `day`), `YYYY-MM` (precision `month`), `YYYY` (precision `year`).
+     * • **range**: `start/end` (two tokens joined with `/`) at the same precision.
+     * • **multi**: space-separated tokens at the same precision.
+     * Bounds (`min`/`max`) may be supplied at any of these precisions and are honoured accordingly.
+     * @attr {"day" | "month" | "year"} precision - Granularity of the value and of the calendar's initial view. Also drives which cells are selectable (day cells at `day`, month cells at `month`, year cells at `year`). Defaults to `"day"`.
      * @method clear - Clears the selected value.
      * @event bqBlur - Emitted when the input loses focus.
      * @event bqChange - Emitted when the value changes.
@@ -3875,7 +3880,12 @@ declare global {
      * @attr {"fixed" | "absolute"} strategy - Positioning strategy for the panel.
      * @attr {"single" | "multi" | "range"} type - Selection mode.
      * @attr {"error" | "none" | "success" | "warning"} validation-status - Validation state.
-     * @attr {string} value - The select input value represents the currently selected date or range and can be used to reset the field to a previous value. All dates are expected in ISO-8601 format (YYYY-MM-DD).
+     * @attr {string} value - The current selection, as a wire-format string. Shape depends on `type` and `precision`:
+     * • **single**: a single ISO token — `YYYY-MM-DD` (precision `day`), `YYYY-MM` (precision `month`), `YYYY` (precision `year`).
+     * • **range**: `start/end` (two tokens joined with `/`) at the same precision.
+     * • **multi**: space-separated tokens at the same precision.
+     * Bounds (`min`/`max`) may be supplied at any of these precisions and are honoured accordingly.
+     * @attr {"day" | "month" | "year"} precision - Granularity of the value and of the calendar's initial view. Also drives which cells are selectable (day cells at `day`, month cells at `month`, year cells at `year`). Defaults to `"day"`.
      * @method clear - Clears the selected value.
      * @event bqBlur - Emitted when the input loses focus.
      * @event bqChange - Emitted when the value changes.
@@ -6232,7 +6242,12 @@ declare namespace LocalJSX {
      * @attr {"fixed" | "absolute"} strategy - Positioning strategy for the panel.
      * @attr {"single" | "multi" | "range"} type - Selection mode.
      * @attr {"error" | "none" | "success" | "warning"} validation-status - Validation state.
-     * @attr {string} value - The select input value represents the currently selected date or range and can be used to reset the field to a previous value. All dates are expected in ISO-8601 format (YYYY-MM-DD).
+     * @attr {string} value - The current selection, as a wire-format string. Shape depends on `type` and `precision`:
+     * • **single**: a single ISO token — `YYYY-MM-DD` (precision `day`), `YYYY-MM` (precision `month`), `YYYY` (precision `year`).
+     * • **range**: `start/end` (two tokens joined with `/`) at the same precision.
+     * • **multi**: space-separated tokens at the same precision.
+     * Bounds (`min`/`max`) may be supplied at any of these precisions and are honoured accordingly.
+     * @attr {"day" | "month" | "year"} precision - Granularity of the value and of the calendar's initial view. Also drives which cells are selectable (day cells at `day`, month cells at `month`, year cells at `year`). Defaults to `"day"`.
      * @method clear - Clears the selected value.
      * @event bqBlur - Emitted when the input loses focus.
      * @event bqChange - Emitted when the value changes.
@@ -9733,7 +9748,12 @@ declare module "@stencil/core" {
              * @attr {"fixed" | "absolute"} strategy - Positioning strategy for the panel.
              * @attr {"single" | "multi" | "range"} type - Selection mode.
              * @attr {"error" | "none" | "success" | "warning"} validation-status - Validation state.
-             * @attr {string} value - The select input value represents the currently selected date or range and can be used to reset the field to a previous value. All dates are expected in ISO-8601 format (YYYY-MM-DD).
+             * @attr {string} value - The current selection, as a wire-format string. Shape depends on `type` and `precision`:
+             * • **single**: a single ISO token — `YYYY-MM-DD` (precision `day`), `YYYY-MM` (precision `month`), `YYYY` (precision `year`).
+             * • **range**: `start/end` (two tokens joined with `/`) at the same precision.
+             * • **multi**: space-separated tokens at the same precision.
+             * Bounds (`min`/`max`) may be supplied at any of these precisions and are honoured accordingly.
+             * @attr {"day" | "month" | "year"} precision - Granularity of the value and of the calendar's initial view. Also drives which cells are selectable (day cells at `day`, month cells at `month`, year cells at `year`). Defaults to `"day"`.
              * @method clear - Clears the selected value.
              * @event bqBlur - Emitted when the input loses focus.
              * @event bqChange - Emitted when the value changes.
