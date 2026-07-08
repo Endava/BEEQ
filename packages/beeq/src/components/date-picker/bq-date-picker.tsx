@@ -844,18 +844,8 @@ export class BqDatePicker {
   };
 
   private handleHeaderTitleClick = (): void => {
-    // Precision locks the view: drilling up above the "commit" view has no
-    // meaning (e.g. year precision has no month/day fallback).
     if (this.precision === 'year') return;
-    if (this.precision === 'month' && this.view === 'months') {
-      // Allow drilling months → years so users can still change year quickly.
-      const ref = this.getViewFocusReference();
-      this.focusedYear = ref.getFullYear();
-      this.decadeStart = getDecadeStart(ref.getFullYear());
-      this.view = 'years';
-      this.focusActiveCell();
-      return;
-    }
+
     if (this.view === 'days') {
       const ref = this.getViewFocusReference();
       this.focusedMonth = ref.getMonth();
@@ -870,7 +860,11 @@ export class BqDatePicker {
       this.decadeStart = getDecadeStart(ref.getFullYear());
       this.view = 'years';
       this.focusActiveCell();
+      return;
     }
+    // years view → cycle back to the base view for the current precision
+    this.view = this.precisionToView(this.precision);
+    this.focusActiveCell();
   };
 
   private handleHeaderPrev = (): void => {
@@ -1192,7 +1186,7 @@ export class BqDatePicker {
   }
 
   private getHeaderTitleLabel(): string {
-    return getHeaderTitleLabel(this.view);
+    return getHeaderTitleLabel(this.view, this.precision);
   }
 
   private getPreviousLabel(): string {
@@ -1419,7 +1413,7 @@ export class BqDatePicker {
               previousLabel={this.getPreviousLabel()}
               nextLabel={this.getNextLabel()}
               titleLabel={this.getHeaderTitleLabel()}
-              titleInteractive={this.view !== 'years'}
+              titleInteractive={this.precision !== 'year'}
               onPrevious={() => this.handleHeaderPrev()}
               onNext={() => this.handleHeaderNext()}
               onTitleClick={() => this.handleHeaderTitleClick()}

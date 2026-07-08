@@ -289,6 +289,35 @@ describe('bq-date-picker', () => {
     expect(getYearButton(datePicker, 2026)).not.toBeNull();
   });
 
+  it('should cycle back from the years view to the days view (day precision)', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-date-picker name="date-picker" initialView="years" open value="2026-05-15" />,
+    );
+    const datePicker = root as HTMLBqDatePickerElement;
+
+    await waitForStable(root);
+    getHeaderTitleInnerButton(datePicker)?.click();
+    await waitForChanges();
+
+    expect(getDayButton(datePicker, '2026-05-15')).not.toBeNull();
+  });
+
+  it('should cycle back from the years view to the months view (month precision)', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-date-picker name="date-picker" precision="month" open value="2026-05" />,
+    );
+    const datePicker = root as HTMLBqDatePickerElement;
+    await waitForStable(root);
+    // months → years
+    getHeaderTitleInnerButton(datePicker)?.click();
+    await waitForChanges();
+    expect(getYearButton(datePicker, 2026)).not.toBeNull();
+    // years → months (cycle)
+    getHeaderTitleInnerButton(datePicker)?.click();
+    await waitForChanges();
+    expect(getMonthButton(datePicker, 4)).not.toBeNull();
+  });
+
   it('should select a date when a day cell is clicked', async () => {
     const { root, spyOnEvent, waitForChanges } = await render(
       <bq-date-picker name="date-picker" open value="2026-05-15" />,

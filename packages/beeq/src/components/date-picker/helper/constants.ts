@@ -11,6 +11,7 @@ export const DEFAULT_ARIA_LABELS = {
   nextDecade: 'Next decade',
   chooseMonth: 'Choose month',
   chooseYear: 'Choose year',
+  chooseDate: 'Choose date',
 } as const;
 
 /**

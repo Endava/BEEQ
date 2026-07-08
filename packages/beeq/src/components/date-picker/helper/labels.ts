@@ -1,4 +1,4 @@
-import type { TCalendarView } from '../bq-date-picker.types';
+import type { TCalendarView, TDatePrecision } from '../bq-date-picker.types';
 import { addMonths, startOfMonth } from './calendar';
 import { DECADE_GRID_SIZE, DEFAULT_ARIA_LABELS } from './constants';
 import { formatMonth, formatYear } from './intl';
@@ -45,10 +45,15 @@ export const getHeaderLabel = ({
   return `${decadeStart} – ${end}`;
 };
 
-/** Aria label announcing what clicking the title switches to. */
-export const getHeaderTitleLabel = (view: TCalendarView): string => {
+/**
+ * Aria label announcing what clicking the title switches to.
+ * Views cycle days → months → years → back to the base view (days for
+ * `precision="day"`, months for `precision="month"`).
+ */
+export const getHeaderTitleLabel = (view: TCalendarView, precision: TDatePrecision = 'day'): string => {
   if (view === 'days') return DEFAULT_ARIA_LABELS.chooseMonth;
-  return DEFAULT_ARIA_LABELS.chooseYear;
+  if (view === 'months') return DEFAULT_ARIA_LABELS.chooseYear;
+  return precision === 'month' ? DEFAULT_ARIA_LABELS.chooseMonth : DEFAULT_ARIA_LABELS.chooseDate;
 };
 
 /** Aria label for the "previous" navigation button, per view. */

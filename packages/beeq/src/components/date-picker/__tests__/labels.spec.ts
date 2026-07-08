@@ -73,8 +73,12 @@ describe('getHeaderTitleLabel', () => {
     expect(getHeaderTitleLabel('months')).toBe('Choose year');
   });
 
-  it('announces year selection from the years view', () => {
-    expect(getHeaderTitleLabel('years')).toBe('Choose year');
+  it('announces the cycle back to days from the years view (day precision)', () => {
+    expect(getHeaderTitleLabel('years', 'day')).toBe('Choose date');
+  });
+
+  it('announces the cycle back to months from the years view (month precision)', () => {
+    expect(getHeaderTitleLabel('years', 'month')).toBe('Choose month');
   });
 });
 
