@@ -90,6 +90,8 @@ const defaultValidityMessage = (flags: ValidityStateFlags): string => {
  * </bq-date-picker>
  * ```
  *
+ * @documentation https://storybook.beeq.design/?path=/docs/components-date-picker--docs
+ *
  * @status experimental
  *
  * @dependency bq-button
@@ -222,11 +224,6 @@ export class BqDatePicker {
   // Own Properties
   // ====================
 
-  private inputElem?: HTMLInputElement;
-  private labelElem?: HTMLElement;
-  private prefixElem?: HTMLElement;
-  private suffixElem?: HTMLElement;
-
   /**
    * Memoized parsed selection. Key encodes both `value` and `type` so cache
    * misses invalidate correctly. Value derives from `value`; not promoted to
@@ -234,15 +231,24 @@ export class BqDatePicker {
    */
   private cachedSelection?: { key: string; value: TSelection };
 
-  /** Pending requestAnimationFrame id used by `focusButton`. Cancelled on
-   * re-invoke or disconnect to avoid stray focus after teardown. */
-  private pendingFocusRAF?: number;
+  /** Sticky flag: last typed input couldn't be parsed. Cleared on next successful commit or `clear()`. */
+  private hasBadInput: boolean = false;
 
   /** Initial `value` captured at load time, restored on form reset. */
   private initialValue?: string;
 
-  /** Sticky flag: last typed input couldn't be parsed. Cleared on next successful commit or `clear()`. */
-  private hasBadInput: boolean = false;
+  private inputElem?: HTMLInputElement;
+
+  /** Set while `commitSelection` writes back to `this.value`. */
+  private isCommittingSelection = false;
+
+  private labelElem?: HTMLElement;
+
+  /** Pending requestAnimationFrame id used by `focusButton`. */
+  private pendingFocusRAF?: number;
+
+  private prefixElem?: HTMLElement;
+  private suffixElem?: HTMLElement;
 
   // Reference to host HTML element
   // ===================================
@@ -253,27 +259,19 @@ export class BqDatePicker {
   // State() variables
   // =======================================
 
-  @State() view: TCalendarView = 'days';
-  @State() viewDate: Date = new Date();
+  @State() decadeStart: number = getDecadeStart(new Date().getFullYear());
+  @State() displayDate?: string;
   @State() focusedISO: string = getTodayISO();
   @State() focusedMonth: number = new Date().getMonth();
   @State() focusedYear: number = new Date().getFullYear();
-  @State() decadeStart: number = getDecadeStart(new Date().getFullYear());
-  @State() tentativeHover?: string;
-
-  /**
-   * Set while `commitSelection` is writing back to `this.value`. Prevents the
-   * value watcher from re-syncing the view — the commit has already placed
-   * focus on the clicked cell and we don't want to jump the calendar to the
-   * first entry of a (possibly multi / range) selection or to today.
-   */
-  private isCommittingSelection = false;
-
-  @State() displayDate?: string;
+  @State() hasConstraintError = false;
   @State() hasLabel = false;
   @State() hasPrefix = false;
   @State() hasSuffix = false;
   @State() hasValue = false;
+  @State() tentativeHover?: string;
+  @State() view: TCalendarView = 'days';
+  @State() viewDate: Date = new Date();
 
   // Public Property API
   // ========================
@@ -364,7 +362,7 @@ export class BqDatePicker {
    * - `year`  → `YYYY`. Selection commits on the years view; no months/days view.
    *
    * When precision is coarser than day, `initialView` is forced to match and
-   * the header title stops behaving as a "drill up" affordance.
+   * the header title cycles through the views available for that precision.
    */
   @Prop({ reflect: true }) precision: TDatePrecision = 'day';
 
@@ -421,66 +419,11 @@ export class BqDatePicker {
       return;
     }
 
+    this.hasBadInput = false;
     this.syncDerivedFromValue();
     if (this.isCommittingSelection) return;
     this.syncViewToValue();
   }
-
-  /**
-   * Recompute all state derived from the public `value` (form value,
-   * `hasValue`, formatted display). Called from `value` and any prop that
-   * affects display formatting (`type`, `locale`, `formatOptions`).
-   */
-  private syncDerivedFromValue = (): void => {
-    const current = this.value;
-    this.internals.setFormValue(!isNil(current) ? `${current}` : null);
-    this.syncValidity();
-    this.hasValue = computeHasValue(current);
-    this.displayDate = computeDisplayDate(current, this.type, this.locale, this.effectiveFormatOptions, this.precision);
-  };
-
-  /**
-   * Runs the full form-validity pipeline in a consistent order: `required`
-   * → bounds → `badInput`. Multiple failing constraints are unioned into a
-   * single `setValidity` call. Called from every path that mutates a
-   * validity-affecting input (`value`, `min`, `max`, `required`, typed input).
-   */
-  private syncValidity = (): void => {
-    if (!this.internals) return;
-    this.updateFormValidity();
-
-    const boundsFlags = this.computeBoundsValidityFlags();
-    const flags: ValidityStateFlags = { ...boundsFlags };
-    if (this.hasBadInput) flags.badInput = true;
-
-    if (Object.keys(flags).length === 0) return;
-
-    const message = this.formValidationMessage ?? defaultValidityMessage(flags);
-
-    this.internals.states.delete('valid');
-    this.internals.states.add('invalid');
-    this.internals.setValidity(flags, message, this.inputElem);
-  };
-
-  /** Returns `rangeUnderflow` / `rangeOverflow` flags for the current selection. */
-  private computeBoundsValidityFlags = (): ValidityStateFlags => {
-    if (!this.min && !this.max) return {};
-    const selection = parseValue(this.value, this.type, this.precision);
-    if (selection.length === 0) return {};
-
-    const paddedMin = padBound(this.min, 'min');
-    const paddedMax = padBound(this.max, 'max');
-    let rangeUnderflow = false;
-    let rangeOverflow = false;
-
-    for (const iso of selection) {
-      if (paddedMin && iso < paddedMin) rangeUnderflow = true;
-      if (paddedMax && iso > paddedMax) rangeOverflow = true;
-    }
-
-    if (!rangeUnderflow && !rangeOverflow) return {};
-    return { rangeUnderflow, rangeOverflow };
-  };
 
   @Watch('formatOptions')
   @Watch('locale')
@@ -566,12 +509,6 @@ export class BqDatePicker {
     // reflected value predictable.
     const clamped = this.clampMonths(this.months);
     if (clamped !== this.months) this.months = clamped;
-  }
-
-  private clampMonths(value: number): number {
-    const rounded = Math.floor(Number(value));
-    if (!Number.isFinite(rounded) || rounded < 1) return 1;
-    return Math.min(rounded, MAX_MONTHS_PER_VIEW);
   }
 
   @Watch('open')
@@ -761,6 +698,73 @@ export class BqDatePicker {
       validationMessage: this.formValidationMessage,
       defaultMessage: 'Please, input or select a valid date',
     });
+  };
+
+  /**
+   * Recompute all state derived from the public `value` (form value,
+   * `hasValue`, formatted display). Called from `value` and any prop that
+   * affects display formatting (`type`, `locale`, `formatOptions`).
+   */
+  private syncDerivedFromValue = (): void => {
+    const current = this.value;
+    this.internals.setFormValue(!isNil(current) ? `${current}` : null);
+    this.syncValidity();
+    this.hasValue = computeHasValue(current);
+    this.displayDate = computeDisplayDate(current, this.type, this.locale, this.effectiveFormatOptions, this.precision);
+  };
+
+  /**
+   * Runs the full form-validity pipeline in a consistent order: `required`
+   * → bounds → `badInput`. Multiple failing constraints are unioned into a
+   * single `setValidity` call.
+   */
+  private syncValidity = (): void => {
+    if (!this.internals) return;
+
+    this.updateFormValidity();
+
+    const boundsFlags = this.computeBoundsValidityFlags();
+    const flags: ValidityStateFlags = { ...boundsFlags };
+    if (this.hasBadInput) flags.badInput = true;
+
+    const hasCustomConstraintError = Object.keys(flags).length > 0;
+    if (!hasCustomConstraintError) {
+      this.hasConstraintError = !this.internals.validity.valid;
+      return;
+    }
+
+    const message = this.formValidationMessage ?? defaultValidityMessage(flags);
+
+    this.internals.states.delete('valid');
+    this.internals.states.add('invalid');
+    this.internals.setValidity(flags, message, this.inputElem);
+    this.hasConstraintError = true;
+  };
+
+  /** Returns `rangeUnderflow` / `rangeOverflow` flags for the current selection. */
+  private computeBoundsValidityFlags = (): ValidityStateFlags => {
+    if (!this.min && !this.max) return {};
+    const selection = parseValue(this.value, this.type, this.precision);
+    if (selection.length === 0) return {};
+
+    const paddedMin = padBound(this.min, 'min');
+    const paddedMax = padBound(this.max, 'max');
+    let rangeUnderflow = false;
+    let rangeOverflow = false;
+
+    for (const iso of selection) {
+      if (paddedMin && iso < paddedMin) rangeUnderflow = true;
+      if (paddedMax && iso > paddedMax) rangeOverflow = true;
+    }
+
+    if (!rangeUnderflow && !rangeOverflow) return {};
+    return { rangeUnderflow, rangeOverflow };
+  };
+
+  private clampMonths = (value: number): number => {
+    const rounded = Math.floor(Number(value));
+    if (!Number.isFinite(rounded) || rounded < 1) return 1;
+    return Math.min(rounded, MAX_MONTHS_PER_VIEW);
   };
 
   /**
@@ -954,6 +958,8 @@ export class BqDatePicker {
     const next = applySelection(iso, this.selection, this.type);
     const shouldStayOpen = this.type === 'multi' || (this.type === 'range' && next.length === 1);
 
+    this.hasBadInput = false;
+
     // Guard so `handleValueChange` doesn't re-sync the view back to `parsed[0]`
     // (would jump multi/range pickers to the earliest selected date) or to
     // today (when precision truncation leaves no full ISO to extract).
@@ -989,10 +995,10 @@ export class BqDatePicker {
 
   /* ------------------------- Grid keyboard nav --------------------------- */
 
-  private getRTLDirection(): 1 | -1 {
+  private getRTLDirection = (): 1 | -1 => {
     const dir = this.el.ownerDocument?.dir || getComputedStyle(this.el).direction;
     return dir === 'rtl' ? -1 : 1;
-  }
+  };
 
   private moveFocusedDay = (deltaDays: number): void => {
     const current = parseISO(this.focusedISO) ?? new Date();
@@ -1057,12 +1063,12 @@ export class BqDatePicker {
     }
   };
 
-  private getGridColumns(): number {
+  private getGridColumns = (): number => {
     // Months/years grids visually expand from 3 to 4 columns in multi-panel
     // mode. Keep arrow-key stride in sync so vertical navigation still lands
     // on the row directly above/below the current cell.
     return getGridColumns(this.getMonthCount());
-  }
+  };
 
   private handleMonthGridKeyDown = (ev: KeyboardEvent): void => {
     const rtl = this.getRTLDirection();
@@ -1140,7 +1146,7 @@ export class BqDatePicker {
     }
   };
 
-  private focusButton(selector: string): void {
+  private focusButton = (selector: string): void => {
     // Cancel any prior pending focus request so rapid state changes don't
     // race — only the latest target should win.
     if (this.pendingFocusRAF !== undefined) cancelAnimationFrame(this.pendingFocusRAF);
@@ -1149,13 +1155,13 @@ export class BqDatePicker {
       const button = this.el.shadowRoot?.querySelector<HTMLButtonElement>(selector);
       button?.focus();
     });
-  }
+  };
 
   /**
    * Focus the currently active cell for the visible view. Called after the
    * popup opens so keyboard users don't have to tab into the calendar.
    */
-  private focusActiveCell(): void {
+  private focusActiveCell = (): void => {
     if (this.view === 'months') {
       this.focusButton(`[data-month="${this.focusedMonth}"]`);
       return;
@@ -1165,18 +1171,18 @@ export class BqDatePicker {
       return;
     }
     this.focusButton(`[data-iso="${this.focusedISO}"]`);
-  }
+  };
 
   /* -------------------------- Header labels ------------------------------ */
 
-  private getMonthCount(): number {
+  private getMonthCount = (): number => {
     if (this.type === 'single') return 1;
     // `handleMonthsChange` clamps the prop on write, so here we just guard
     // against the initial value before the first watcher tick.
     return this.clampMonths(this.months);
-  }
+  };
 
-  private getHeaderLabel(): string {
+  private getHeaderLabel = (): string => {
     return getHeaderLabel({
       view: this.view,
       viewDate: this.viewDate,
@@ -1185,23 +1191,25 @@ export class BqDatePicker {
       monthCount: this.getMonthCount(),
       locale: this.locale,
     });
-  }
+  };
 
-  private getHeaderTitleLabel(): string {
+  private getHeaderTitleLabel = (): string => {
     return getHeaderTitleLabel(this.view, this.precision);
-  }
+  };
 
-  private getPreviousLabel(): string {
+  private getPreviousLabel = (): string => {
     return getPreviousLabel(this.view);
-  }
+  };
 
-  private getNextLabel(): string {
+  private getNextLabel = (): string => {
     return getNextLabel(this.view);
-  }
+  };
 
-  /* ------------------------------- Render -------------------------------- */
+  // render() function
+  // Always the last one in the class.
+  // ===================================
 
-  private renderDayPanels(): JSX.Element {
+  private renderDayPanels = (): JSX.Element => {
     const panels: JSX.Element[] = [];
     const monthCount = this.getMonthCount();
 
@@ -1243,9 +1251,9 @@ export class BqDatePicker {
     }
 
     return <div class="bq-date-picker__panels">{panels}</div>;
-  }
+  };
 
-  private renderMonthsView(): JSX.Element {
+  private renderMonthsView = (): JSX.Element => {
     return (
       <CalendarMonthView
         year={this.focusedYear}
@@ -1264,9 +1272,9 @@ export class BqDatePicker {
         onGridKeyDown={this.handleMonthGridKeyDown}
       />
     );
-  }
+  };
 
-  private renderYearsView(): JSX.Element {
+  private renderYearsView = (): JSX.Element => {
     const start = this.decadeStart;
     const end = start + DECADE_GRID_SIZE - 1;
     const years = Array.from({ length: DECADE_GRID_SIZE }, (_, i) => start + i);
@@ -1289,13 +1297,13 @@ export class BqDatePicker {
         onGridKeyDown={this.handleYearGridKeyDown}
       />
     );
-  }
+  };
 
-  private renderView(): JSX.Element {
+  private renderView = (): JSX.Element => {
     if (this.view === 'months') return this.renderMonthsView();
     if (this.view === 'years') return this.renderYearsView();
     return this.renderDayPanels();
-  }
+  };
 
   render() {
     const labelId = `bq-date-picker__label-${this.name || DEFAULT_INPUT_ID}`;
@@ -1348,8 +1356,9 @@ export class BqDatePicker {
             <input
               aria-controls={popupId}
               aria-disabled={this.disabled ? 'true' : 'false'}
+              aria-expanded={this.open ? 'true' : 'false'}
               aria-haspopup="dialog"
-              aria-invalid={this.validationStatus === 'error' ? 'true' : 'false'}
+              aria-invalid={this.validationStatus === 'error' || this.hasConstraintError ? 'true' : 'false'}
               aria-labelledby={this.hasLabel ? labelId : undefined}
               autoCapitalize="off"
               autoComplete="off"
@@ -1368,6 +1377,7 @@ export class BqDatePicker {
                 this.inputElem = el;
               }}
               required={this.required}
+              role="combobox"
               spellcheck={false}
               type="text"
               value={this.displayDate}

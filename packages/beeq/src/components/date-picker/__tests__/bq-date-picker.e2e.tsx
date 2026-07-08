@@ -65,6 +65,20 @@ describe('bq-date-picker', () => {
     await waitForStable(root);
 
     expect(getDropdownPanel(datePicker)).toHaveAttribute('open');
+    expect(getInput(datePicker)).toEqualAttribute('aria-expanded', 'true');
+  });
+
+  it('should reflect popup state through `aria-expanded`', async () => {
+    const { root, setProps, waitForChanges } = await render(<bq-date-picker name="date-picker" />);
+    const datePicker = root as HTMLBqDatePickerElement;
+
+    expect(getInput(datePicker)).toEqualAttribute('aria-expanded', 'false');
+
+    await setProps({ open: true });
+    await waitForChanges();
+    await waitForStable(root);
+
+    expect(getInput(datePicker)).toEqualAttribute('aria-expanded', 'true');
   });
 
   it('should reflect a single ISO value into the display input', async () => {
@@ -1182,6 +1196,7 @@ describe('bq-date-picker', () => {
     // Value is preserved; the picker exposes invalidity via the `:state(invalid)` flag.
     expect(datePicker.value).toBe('2026-01-15');
     expect(datePicker.matches(':state(invalid)')).toBe(true);
+    expect(getInput(datePicker)).toEqualAttribute('aria-invalid', 'true');
   });
 
   it('should not stay invalid once value is brought back within bounds', async () => {
@@ -1232,6 +1247,7 @@ describe('bq-date-picker', () => {
     await waitForChanges();
 
     expect(datePicker.matches(':state(invalid)')).toBe(true);
+    expect(getInput(datePicker)).toEqualAttribute('aria-invalid', 'true');
   });
 
   it('should clear the `badInput` flag on the next valid typed input', async () => {
@@ -1252,6 +1268,46 @@ describe('bq-date-picker', () => {
 
     expect(datePicker.value).toBe('2026-06-15');
     expect(datePicker.matches(':state(invalid)')).toBe(false);
+    expect(getInput(datePicker)).toEqualAttribute('aria-invalid', 'false');
+  });
+
+  it('should clear the `badInput` flag after selecting a valid date from the calendar', async () => {
+    const { root, waitForChanges } = await render(<bq-date-picker name="date-picker" open value="2026-05-15" />);
+    const datePicker = root as HTMLBqDatePickerElement;
+    const input = getInput(datePicker);
+
+    await waitForStable(root);
+    await userEvent.clear(input);
+    await userEvent.type(input, 'not-a-date');
+    await userEvent.tab();
+    await waitForChanges();
+    expect(datePicker.matches(':state(invalid)')).toBe(true);
+
+    getDayButton(datePicker, '2026-05-20')?.click();
+    await waitForChanges();
+
+    expect(datePicker.value).toBe('2026-05-20');
+    expect(datePicker.matches(':state(invalid)')).toBe(false);
+    expect(getInput(datePicker)).toEqualAttribute('aria-invalid', 'false');
+  });
+
+  it('should clear the `badInput` flag after an external valid value update', async () => {
+    const { root, setProps, waitForChanges } = await render(<bq-date-picker name="date-picker" type="single" />);
+    const datePicker = root as HTMLBqDatePickerElement;
+    const input = getInput(datePicker);
+
+    await userEvent.clear(input);
+    await userEvent.type(input, 'not-a-date');
+    await userEvent.tab();
+    await waitForChanges();
+    expect(datePicker.matches(':state(invalid)')).toBe(true);
+
+    await setProps({ value: '2026-06-15' });
+    await waitForChanges();
+
+    expect(datePicker.value).toBe('2026-06-15');
+    expect(datePicker.matches(':state(invalid)')).toBe(false);
+    expect(getInput(datePicker)).toEqualAttribute('aria-invalid', 'false');
   });
 
   it('should keep `rangeUnderflow` when `required` is toggled after a bad value is set', async () => {

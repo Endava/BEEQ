@@ -738,6 +738,7 @@ export namespace Components {
      * <label slot="label">Date picker label</label>
      * </bq-date-picker>
      * ```
+     * @documentation https://storybook.beeq.design/?path=/docs/components-date-picker--docs
      * @status experimental
      * @dependency bq-button
      * @dependency bq-dropdown
@@ -916,7 +917,7 @@ export namespace Components {
          */
         "placement": Placement;
         /**
-          * Precision of the value produced by the picker.  - `day`   → `YYYY-MM-DD` (default). Standard drill-down. - `month` → `YYYY-MM`. Selection commits on the months view; no days view. - `year`  → `YYYY`. Selection commits on the years view; no months/days view.  When precision is coarser than day, `initialView` is forced to match and the header title stops behaving as a "drill up" affordance.
+          * Precision of the value produced by the picker.  - `day`   → `YYYY-MM-DD` (default). Standard drill-down. - `month` → `YYYY-MM`. Selection commits on the months view; no days view. - `year`  → `YYYY`. Selection commits on the years view; no months/days view.  When precision is coarser than day, `initialView` is forced to match and the header title cycles through the views available for that precision.
           * @default 'day'
          */
         "precision": TDatePrecision;
@@ -3850,6 +3851,7 @@ declare global {
      * <label slot="label">Date picker label</label>
      * </bq-date-picker>
      * ```
+     * @documentation https://storybook.beeq.design/?path=/docs/components-date-picker--docs
      * @status experimental
      * @dependency bq-button
      * @dependency bq-dropdown
@@ -6212,6 +6214,7 @@ declare namespace LocalJSX {
      * <label slot="label">Date picker label</label>
      * </bq-date-picker>
      * ```
+     * @documentation https://storybook.beeq.design/?path=/docs/components-date-picker--docs
      * @status experimental
      * @dependency bq-button
      * @dependency bq-dropdown
@@ -6405,7 +6408,7 @@ declare namespace LocalJSX {
          */
         "placement"?: Placement;
         /**
-          * Precision of the value produced by the picker.  - `day`   → `YYYY-MM-DD` (default). Standard drill-down. - `month` → `YYYY-MM`. Selection commits on the months view; no days view. - `year`  → `YYYY`. Selection commits on the years view; no months/days view.  When precision is coarser than day, `initialView` is forced to match and the header title stops behaving as a "drill up" affordance.
+          * Precision of the value produced by the picker.  - `day`   → `YYYY-MM-DD` (default). Standard drill-down. - `month` → `YYYY-MM`. Selection commits on the months view; no days view. - `year`  → `YYYY`. Selection commits on the years view; no months/days view.  When precision is coarser than day, `initialView` is forced to match and the header title cycles through the views available for that precision.
           * @default 'day'
          */
         "precision"?: TDatePrecision;
@@ -9718,6 +9721,7 @@ declare module "@stencil/core" {
              * <label slot="label">Date picker label</label>
              * </bq-date-picker>
              * ```
+             * @documentation https://storybook.beeq.design/?path=/docs/components-date-picker--docs
              * @status experimental
              * @dependency bq-button
              * @dependency bq-dropdown

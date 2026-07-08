@@ -8,19 +8,23 @@ import { ArgTypes, Title, Subtitle } from '@storybook/addon-docs/blocks';
 
     <Subtitle>Wire format</Subtitle>
 
-    - `single`: `YYYY-MM-DD`
-    - `multi`:  `YYYY-MM-DD YYYY-MM-DD ...` (space separated)
-    - `range`:  `YYYY-MM-DD/YYYY-MM-DD`
+    The shape of `value` depends on `precision` first, then on `type`:
 
-    <Subtitle>Precision</Subtitle>
+    - `precision="day"` (default): tokens use `YYYY-MM-DD`
+    - `precision="month"`: tokens use `YYYY-MM`
+    - `precision="year"`: tokens use `YYYY`
 
-    Use the `precision` prop to change the granularity of the value:
+    Those tokens are combined by `type`:
 
-    - `day` (default): wire format is `YYYY-MM-DD`.
-    - `month`: wire format is `YYYY-MM`. The panel opens on the months view and clicking a month commits the value.
-    - `year`: wire format is `YYYY`. The panel opens on the years view and clicking a year commits the value.
+    - `single`: one token
+    - `multi`: space-separated tokens
+    - `range`: `start/end`
 
-    All selection types (`single`, `multi`, `range`) work at every precision, e.g. a month range value looks like `YYYY-MM/YYYY-MM`.
+    Example values:
+
+    - `day` range: `2026-05-15/2026-05-30`
+    - `month` range: `2026-05/2026-08`
+    - `year` multi: `2024 2026 2028`
 
     When `formatOptions` is not provided, a sensible default is applied per precision (long month + year for `month`, year only for `year`). Consumer-provided `formatOptions` always take precedence.
 
