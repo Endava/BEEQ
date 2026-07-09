@@ -406,19 +406,27 @@
 
 .bq-date-picker__months,
 .bq-date-picker__years {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  flex-direction: column;
   gap: 0.5rem;
   padding-block: 0.5rem;
 }
 
-// When rendering multiple day panels, expand the months/years grids to keep
-// the popover width stable across view transitions.
-.bq-date-picker__calendar[style*='--bq-date-picker--panel-count: 2'] {
-  .bq-date-picker__months,
-  .bq-date-picker__years {
-    grid-template-columns: repeat(4, 1fr);
-  }
+.bq-date-picker__month-row,
+.bq-date-picker__year-row {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.bq-date-picker__months[data-grid-columns='4'] .bq-date-picker__month-row,
+.bq-date-picker__years[data-grid-columns='4'] .bq-date-picker__year-row {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.bq-date-picker__month-gridcell,
+.bq-date-picker__year-gridcell {
+  min-inline-size: 0;
 }
 
 // On narrow viewports panels stack, so shrink back to the intrinsic width.
@@ -433,6 +441,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  inline-size: 100%;
   block-size: var(--bq-date-picker--view-cell-height);
   padding-block: 0.5rem;
   padding-inline: 0.5rem;

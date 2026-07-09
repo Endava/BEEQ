@@ -31,6 +31,8 @@ export type TCalendarMonthViewProps = {
   onMonthHover: (iso: string | undefined) => void;
   /** Optional keydown handler for the grid (roving tabindex management). */
   onGridKeyDown: (ev: KeyboardEvent) => void;
+  /** Number of columns rendered by the month grid. */
+  gridColumns: number;
 };
 
 /** ISO used to compare a month cell against the internal selection. */
@@ -87,32 +89,39 @@ type TRenderMonthCellArgs = {
   onMonthHover: (iso: string | undefined) => void;
 };
 
+const chunkMonths = (months: string[], columns: number): Array<Array<{ month: number; name: string }>> => {
+  const rows: Array<Array<{ month: number; name: string }>> = [];
+  for (let month = 0; month < months.length; month += columns) {
+    rows.push(months.slice(month, month + columns).map((name, offset) => ({ month: month + offset, name })));
+  }
+  return rows;
+};
+
 const renderMonthCell = ({ month, name, state, onMonthSelect, onMonthFocus, onMonthHover }: TRenderMonthCellArgs) => (
-  <button
-    key={month}
-    aria-disabled={state.disabled ? 'true' : undefined}
-    aria-selected={state.selected ? 'true' : undefined}
-    class={{
-      'bq-date-picker__month-cell': true,
-      'is-selected': state.selected,
-      'is-range-start': state.rangeStart,
-      'is-range-end': state.rangeEnd,
-      'is-range-inner': state.rangeInner,
-      'is-out-of-bounds': state.disabled,
-    }}
-    data-month={month}
-    disabled={state.disabled}
-    onClick={(ev) => !state.disabled && onMonthSelect(month, ev)}
-    onFocus={() => onMonthFocus(month)}
-    onMouseEnter={() => onMonthHover(state.iso)}
-    onMouseLeave={() => onMonthHover(undefined)}
-    part={`${CALENDAR_PARTS.button} ${buildMonthParts(state)}`}
-    role="gridcell"
-    tabIndex={state.isFocused ? 0 : -1}
-    type="button"
-  >
-    {name}
-  </button>
+  <div aria-selected={state.selected ? 'true' : undefined} class="bq-date-picker__month-gridcell" role="gridcell" key={month}>
+    <button
+      aria-disabled={state.disabled ? 'true' : undefined}
+      class={{
+        'bq-date-picker__month-cell': true,
+        'is-selected': state.selected,
+        'is-range-start': state.rangeStart,
+        'is-range-end': state.rangeEnd,
+        'is-range-inner': state.rangeInner,
+        'is-out-of-bounds': state.disabled,
+      }}
+      data-month={month}
+      disabled={state.disabled}
+      onClick={(ev) => !state.disabled && onMonthSelect(month, ev)}
+      onFocus={() => onMonthFocus(month)}
+      onMouseEnter={() => onMonthHover(state.iso)}
+      onMouseLeave={() => onMonthHover(undefined)}
+      part={`${CALENDAR_PARTS.button} ${buildMonthParts(state)}`}
+      tabIndex={state.isFocused ? 0 : -1}
+      type="button"
+    >
+      {name}
+    </button>
+  </div>
 );
 
 /**
@@ -131,22 +140,29 @@ export const CalendarMonthView: FunctionalComponent<TCalendarMonthViewProps> = (
   onMonthFocus,
   onMonthHover,
   onGridKeyDown,
+  gridColumns,
 }) => {
   const months = getMonthNames(locale, 'short');
   const effectiveSelection: TSelection = type === 'range' && tentativeRange.length === 2 ? tentativeRange : selection;
+  const rows = chunkMonths(months, gridColumns);
 
   return (
     <div
       class="bq-date-picker__months"
+      data-grid-columns={String(gridColumns)}
       onKeyDown={onGridKeyDown}
       part={CALENDAR_PARTS.months}
       role="grid"
       tabIndex={-1}
     >
-      {months.map((name, month) => {
-        const state = buildMonthCellState(year, month, focusedMonth, minISO, maxISO, effectiveSelection, type);
-        return renderMonthCell({ month, name, state, onMonthSelect, onMonthFocus, onMonthHover });
-      })}
+      {rows.map((row, rowIndex) => (
+        <div class="bq-date-picker__month-row" role="row" key={`month-row-${rowIndex}`}>
+          {row.map(({ month, name }) => {
+            const state = buildMonthCellState(year, month, focusedMonth, minISO, maxISO, effectiveSelection, type);
+            return renderMonthCell({ month, name, state, onMonthSelect, onMonthFocus, onMonthHover });
+          })}
+        </div>
+      ))}
     </div>
   );
 };

@@ -1259,10 +1259,12 @@ export class BqDatePicker {
   };
 
   private renderMonthsView = (): JSX.Element => {
+    const gridColumns = this.getGridColumns();
     return (
       <CalendarMonthView
         year={this.focusedYear}
         focusedMonth={this.focusedMonth}
+        gridColumns={gridColumns}
         locale={this.locale}
         minISO={this.min}
         maxISO={this.max}
@@ -1284,11 +1286,13 @@ export class BqDatePicker {
     const end = start + DECADE_GRID_SIZE - 1;
     const years = Array.from({ length: DECADE_GRID_SIZE }, (_, i) => start + i);
     const effectiveFocused = this.focusedYear >= start && this.focusedYear <= end ? this.focusedYear : start;
+    const gridColumns = this.getGridColumns();
 
     return (
       <CalendarYearView
         years={years}
         focusedYear={effectiveFocused}
+        gridColumns={gridColumns}
         minISO={this.min}
         maxISO={this.max}
         selection={this.selection}

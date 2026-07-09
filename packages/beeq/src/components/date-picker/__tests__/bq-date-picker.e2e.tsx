@@ -43,6 +43,12 @@ const getYearButton = (datePicker: HTMLBqDatePickerElement, year: number) =>
 const getGrid = (datePicker: HTMLBqDatePickerElement) =>
   datePicker.shadowRoot?.querySelector<HTMLElement>('[role="grid"]');
 
+const getMonthGrid = (datePicker: HTMLBqDatePickerElement) =>
+  datePicker.shadowRoot?.querySelector<HTMLElement>('.bq-date-picker__months[role="grid"]');
+
+const getYearGrid = (datePicker: HTMLBqDatePickerElement) =>
+  datePicker.shadowRoot?.querySelector<HTMLElement>('.bq-date-picker__years[role="grid"]');
+
 afterEach(() => {
   vi.restoreAllMocks();
 });
@@ -371,6 +377,35 @@ describe('bq-date-picker', () => {
     await waitForChanges();
 
     expect(getYearButton(datePicker, 2026)).not.toBeNull();
+  });
+
+  it('should render months view with the required grid > row > gridcell structure', async () => {
+    const { root } = await render(<bq-date-picker initialView="months" name="date-picker" open value="2026-05-15" />);
+    const datePicker = root as HTMLBqDatePickerElement;
+
+    await waitForStable(root);
+
+    const monthGrid = getMonthGrid(datePicker);
+
+    expect(monthGrid?.querySelectorAll('[role="row"]')).toHaveLength(4);
+    expect(monthGrid?.querySelectorAll('[role="gridcell"]')).toHaveLength(12);
+  });
+
+  it('should render years view with the required grid > row > gridcell structure', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-date-picker initialView="months" name="date-picker" open value="2026-05-15" />,
+    );
+    const datePicker = root as HTMLBqDatePickerElement;
+
+    await waitForStable(root);
+    getHeaderTitleInnerButton(datePicker)?.click();
+    await waitForChanges();
+    await waitForStable(root);
+
+    const yearGrid = getYearGrid(datePicker);
+
+    expect(yearGrid?.querySelectorAll('[role="row"]')).toHaveLength(4);
+    expect(yearGrid?.querySelectorAll('[role="gridcell"]')).toHaveLength(12);
   });
 
   it('should cycle back from the years view to the days view (day precision)', async () => {

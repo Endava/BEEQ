@@ -28,6 +28,8 @@ export type TCalendarYearViewProps = {
   onYearHover: (iso: string | undefined) => void;
   /** Optional keydown handler for the grid (roving tabindex management). */
   onGridKeyDown: (ev: KeyboardEvent) => void;
+  /** Number of columns rendered by the year grid. */
+  gridColumns: number;
 };
 
 /** ISO used to compare a year cell against the internal selection. */
@@ -82,32 +84,39 @@ type TRenderYearCellArgs = {
   onYearHover: (iso: string | undefined) => void;
 };
 
+const chunkYears = (years: number[], columns: number): number[][] => {
+  const rows: number[][] = [];
+  for (let index = 0; index < years.length; index += columns) {
+    rows.push(years.slice(index, index + columns));
+  }
+  return rows;
+};
+
 const renderYearCell = ({ year, state, onYearSelect, onYearFocus, onYearHover }: TRenderYearCellArgs) => (
-  <button
-    key={year}
-    aria-disabled={state.disabled ? 'true' : undefined}
-    aria-selected={state.selected ? 'true' : undefined}
-    class={{
-      'bq-date-picker__year-cell': true,
-      'is-selected': state.selected,
-      'is-range-start': state.rangeStart,
-      'is-range-end': state.rangeEnd,
-      'is-range-inner': state.rangeInner,
-      'is-out-of-bounds': state.disabled,
-    }}
-    data-year={year}
-    disabled={state.disabled}
-    onClick={(ev) => !state.disabled && onYearSelect(year, ev)}
-    onFocus={() => onYearFocus(year)}
-    onMouseEnter={() => onYearHover(state.iso)}
-    onMouseLeave={() => onYearHover(undefined)}
-    part={`${CALENDAR_PARTS.button} ${buildYearParts(state)}`}
-    role="gridcell"
-    tabIndex={state.isFocused ? 0 : -1}
-    type="button"
-  >
-    {year}
-  </button>
+  <div aria-selected={state.selected ? 'true' : undefined} class="bq-date-picker__year-gridcell" key={year} role="gridcell">
+    <button
+      aria-disabled={state.disabled ? 'true' : undefined}
+      class={{
+        'bq-date-picker__year-cell': true,
+        'is-selected': state.selected,
+        'is-range-start': state.rangeStart,
+        'is-range-end': state.rangeEnd,
+        'is-range-inner': state.rangeInner,
+        'is-out-of-bounds': state.disabled,
+      }}
+      data-year={year}
+      disabled={state.disabled}
+      onClick={(ev) => !state.disabled && onYearSelect(year, ev)}
+      onFocus={() => onYearFocus(year)}
+      onMouseEnter={() => onYearHover(state.iso)}
+      onMouseLeave={() => onYearHover(undefined)}
+      part={`${CALENDAR_PARTS.button} ${buildYearParts(state)}`}
+      tabIndex={state.isFocused ? 0 : -1}
+      type="button"
+    >
+      {year}
+    </button>
+  </div>
 );
 
 /**
@@ -125,15 +134,28 @@ export const CalendarYearView: FunctionalComponent<TCalendarYearViewProps> = ({
   onYearFocus,
   onYearHover,
   onGridKeyDown,
+  gridColumns,
 }) => {
   const effectiveSelection: TSelection = type === 'range' && tentativeRange.length === 2 ? tentativeRange : selection;
+  const rows = chunkYears(years, gridColumns);
 
   return (
-    <div class="bq-date-picker__years" onKeyDown={onGridKeyDown} part={CALENDAR_PARTS.years} role="grid" tabIndex={-1}>
-      {years.map((year) => {
-        const state = buildYearCellState(year, focusedYear, minISO, maxISO, effectiveSelection, type);
-        return renderYearCell({ year, state, onYearSelect, onYearFocus, onYearHover });
-      })}
+    <div
+      class="bq-date-picker__years"
+      data-grid-columns={String(gridColumns)}
+      onKeyDown={onGridKeyDown}
+      part={CALENDAR_PARTS.years}
+      role="grid"
+      tabIndex={-1}
+    >
+      {rows.map((row, rowIndex) => (
+        <div class="bq-date-picker__year-row" key={`year-row-${rowIndex}`} role="row">
+          {row.map((year) => {
+            const state = buildYearCellState(year, focusedYear, minISO, maxISO, effectiveSelection, type);
+            return renderYearCell({ year, state, onYearSelect, onYearFocus, onYearHover });
+          })}
+        </div>
+      ))}
     </div>
   );
 };
