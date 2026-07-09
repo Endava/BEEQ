@@ -25,7 +25,6 @@ const toFingerprint = (options: NormalizedOptions): FingerprintInput => ({
   sourceRefType: options.sourceRefType,
   sourceUrl: options.sourceUrl,
   svgFolder: options.svgFolder,
-  weight: options.weight,
 });
 
 const cleanupDownload = async (options: NormalizedOptions): Promise<void> => {
@@ -75,23 +74,22 @@ const runExecutor: PromiseExecutor<IconsExecutorSchema> = async (rawOptions, con
     });
     log.success(`Downloaded ${options.fileName} (${checksum.slice(0, 15)}…)`);
 
-    log.start(`Extracting "${options.weight}" icons into BeeQ assets`);
+    log.start('Extracting Phosphor icons (all weights) into BeeQ assets');
     const { count, fileNames } = await extractIcons({
       archiveFilePath: options.archiveFilePath,
       assetsFolder: options.assetsFolder,
       extractToPath: options.absoluteExtractToPath,
       svgFolder: options.svgFolder,
-      weight: options.weight,
     });
 
     if (count < options.minSvgCount) {
       throw new IconsExecutorError(
         'extract',
-        `Extracted ${count} icon(s) but at least ${options.minSvgCount} were required. Check "svgFolder", "assetsFolder", and "weight".`,
-        { context: { count, minSvgCount: options.minSvgCount, weight: options.weight } },
+        `Extracted ${count} icon(s) but at least ${options.minSvgCount} were required. Check "svgFolder" and "assetsFolder".`,
+        { context: { count, minSvgCount: options.minSvgCount } },
       );
     }
-    log.success(`Extracted ${count} SVG icon(s)`);
+    log.success(`Extracted ${count} SVG icon(s) across all weights`);
 
     log.start('Writing icons metadata fingerprint');
     const iconsHash = await computeIconsHash(options.absoluteExtractToPath, fileNames);

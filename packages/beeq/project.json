@@ -155,8 +155,7 @@
         "sourceUrl": "https://github.com/phosphor-icons/core",
         "sourceChecksum": "sha256-e108846ce4e8235e6327451769c16cea1f2d15d4ee9b739d6434444ce6f712b4",
         "sourceRef": "2b75f3ad12b420c9504ef05df8d2564a28f8500e",
-        "sourceRefType": "commit",
-        "weight": "regular"
+        "sourceRefType": "commit"
       }
     },
     "test": {

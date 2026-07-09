@@ -2,17 +2,8 @@ import { isAbsolute, join, resolve } from 'node:path';
 
 import type { ExecutorContext } from '@nx/devkit';
 
-import type { IconsExecutorSchema, PhosphorWeight, SourceRefType } from '../schema';
+import type { IconsExecutorSchema, SourceRefType } from '../schema';
 import { IconsExecutorError } from './errors';
-
-export const PHOSPHOR_WEIGHTS: readonly PhosphorWeight[] = [
-  'thin',
-  'light',
-  'regular',
-  'bold',
-  'fill',
-  'duotone',
-] as const;
 
 export const SOURCE_REF_TYPES: readonly SourceRefType[] = ['commit', 'tag', 'branch'] as const;
 
@@ -23,7 +14,6 @@ export const DEFAULTS = {
   minSvgCount: 1,
   skipIfUpToDate: true,
   sourceRefType: 'commit' as SourceRefType,
-  weight: 'regular' as PhosphorWeight,
 } as const;
 
 const SHORT_SHA_LENGTH = 12;
@@ -46,7 +36,6 @@ export interface NormalizedOptions {
   sourceRefType: SourceRefType;
   sourceUrl: string;
   svgFolder: string;
-  weight: PhosphorWeight;
 }
 
 const resolveWithinRoot = (root: string, value: string): string => (isAbsolute(value) ? value : resolve(root, value));
@@ -56,17 +45,6 @@ const assertNonEmpty = (name: keyof IconsExecutorSchema, value: unknown): string
     throw new IconsExecutorError('options', `Option "${String(name)}" is required and must be a non-empty string.`);
   }
   return value;
-};
-
-const assertWeight = (value: IconsExecutorSchema['weight']): PhosphorWeight => {
-  const weight = value ?? DEFAULTS.weight;
-  if (!PHOSPHOR_WEIGHTS.includes(weight)) {
-    throw new IconsExecutorError(
-      'options',
-      `Option "weight" must be one of ${PHOSPHOR_WEIGHTS.join(', ')}. Received "${weight}".`,
-    );
-  }
-  return weight;
 };
 
 const assertRefType = (value: IconsExecutorSchema['sourceRefType']): SourceRefType => {
@@ -172,7 +150,6 @@ export const normalizeOptions = (
   if (sourceRefType === 'commit') assertCommitShaShape(sourceRef);
 
   const metadataFile = options.metadataFile ?? DEFAULTS.metadataFile;
-  const weight = assertWeight(options.weight);
   const sourceChecksum = assertChecksum(options.sourceChecksum);
   const minSvgCount = assertMinSvgCount(options.minSvgCount);
 
@@ -205,6 +182,5 @@ export const normalizeOptions = (
     sourceRefType,
     sourceUrl,
     svgFolder,
-    weight,
   };
 };

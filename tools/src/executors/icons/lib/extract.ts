@@ -4,14 +4,12 @@ import * as decompress from 'decompress';
 import { emptyDir, ensureDir, writeFile } from 'fs-extra';
 
 import { IconsExecutorError, asIconsError } from './errors';
-import type { PhosphorWeight } from '../schema';
 
 export interface ExtractOptions {
   archiveFilePath: string;
   assetsFolder: string;
   extractToPath: string;
   svgFolder: string;
-  weight: PhosphorWeight;
 }
 
 export interface ExtractResult {
@@ -53,9 +51,8 @@ export const extractIcons = async ({
   assetsFolder,
   extractToPath,
   svgFolder,
-  weight,
 }: ExtractOptions): Promise<ExtractResult> => {
-  const matchPrefix = posix.join(svgFolder, assetsFolder, weight);
+  const matchPrefix = posix.join(svgFolder, assetsFolder);
 
   let entries: decompress.File[];
   try {

@@ -8,7 +8,6 @@ import {
   buildArchiveUrl,
   buildFingerprintKey,
   computeIconsHash,
-  DEFAULTS,
   deriveFileName,
   isTargetIconEntry,
   isUpToDate,
@@ -110,7 +109,6 @@ describe('normalizeOptions()', () => {
     expect(result.fileName).toBe(`${COMMIT_SHA.slice(0, 12)}.zip`);
     expect(result.svgFolder).toBe(`core-${COMMIT_SHA}`);
     expect(result.sourceRefType).toBe('commit');
-    expect(result.weight).toBe(DEFAULTS.weight);
   });
 
   it('derives archiveUrl and svgFolder for tag refs and strips leading v', () => {
@@ -159,12 +157,6 @@ describe('normalizeOptions()', () => {
     ).toThrow(/sourceRefType/);
   });
 
-  it('rejects invalid weight', () => {
-    expect(() => normalizeOptions({ ...baseCommitOptions, weight: 'ultra' as never }, makeContext('/w'))).toThrow(
-      /weight/,
-    );
-  });
-
   it('rejects invalid checksum pattern', () => {
     expect(() =>
       normalizeOptions({ ...baseCommitOptions, sourceChecksum: 'not-a-checksum' }, makeContext('/w')),
@@ -199,26 +191,30 @@ describe('toPosix()', () => {
 // -------------------------------------------------------------------------- //
 
 describe('isTargetIconEntry()', () => {
-  const prefix = `core-${COMMIT_SHA}/assets/regular`;
+  const prefix = `core-${COMMIT_SHA}/assets`;
 
-  it('accepts matching svg file in target weight folder', () => {
-    expect(isTargetIconEntry(`${prefix}/check.svg`, 'file', prefix)).toBe(true);
+  it('accepts svg files under any weight subfolder', () => {
+    expect(isTargetIconEntry(`${prefix}/regular/check.svg`, 'file', prefix)).toBe(true);
+    expect(isTargetIconEntry(`${prefix}/thin/check-thin.svg`, 'file', prefix)).toBe(true);
+    expect(isTargetIconEntry(`${prefix}/bold/check-bold.svg`, 'file', prefix)).toBe(true);
+    expect(isTargetIconEntry(`${prefix}/duotone/check-duotone.svg`, 'file', prefix)).toBe(true);
   });
 
   it('accepts windows-style paths', () => {
-    expect(isTargetIconEntry(prefix.replace(/\//g, '\\') + '\\check.svg', 'file', prefix)).toBe(true);
+    expect(isTargetIconEntry(prefix.replace(/\//g, '\\') + '\\regular\\check.svg', 'file', prefix)).toBe(true);
   });
 
-  it('rejects wrong weight folder', () => {
-    expect(isTargetIconEntry(`core-${COMMIT_SHA}/assets/bold/check.svg`, 'file', prefix)).toBe(false);
+  it('rejects paths outside the assets folder', () => {
+    expect(isTargetIconEntry(`core-${COMMIT_SHA}/README.md`, 'file', prefix)).toBe(false);
+    expect(isTargetIconEntry(`core-${COMMIT_SHA}/src/index.ts`, 'file', prefix)).toBe(false);
   });
 
   it('rejects directories', () => {
-    expect(isTargetIconEntry(`${prefix}/`, 'directory', prefix)).toBe(false);
+    expect(isTargetIconEntry(`${prefix}/regular/`, 'directory', prefix)).toBe(false);
   });
 
-  it('rejects non-svg files', () => {
-    expect(isTargetIconEntry(`${prefix}/readme.md`, 'file', prefix)).toBe(false);
+  it('rejects non-svg files under assets', () => {
+    expect(isTargetIconEntry(`${prefix}/regular/readme.md`, 'file', prefix)).toBe(false);
   });
 });
 
@@ -234,13 +230,11 @@ describe('buildFingerprintKey()', () => {
     sourceRefType: 'commit' as const,
     sourceUrl: 'https://x',
     svgFolder: `core-${COMMIT_SHA}`,
-    weight: 'regular' as const,
   };
 
   it('is stable regardless of property order', () => {
     const a = buildFingerprintKey(fp);
     const b = buildFingerprintKey({
-      weight: fp.weight,
       svgFolder: fp.svgFolder,
       sourceUrl: fp.sourceUrl,
       sourceRefType: fp.sourceRefType,
@@ -292,7 +286,6 @@ describe('isUpToDate() with real filesystem', () => {
     sourceRefType: 'commit' as const,
     sourceUrl: 'https://github.com/phosphor-icons/core',
     svgFolder: `core-${COMMIT_SHA}`,
-    weight: 'regular' as const,
   };
 
   const seedMetadata = async (dir: string, iconsHash: string, iconCount: number, checksum = 'sha256-abc') => {
@@ -442,7 +435,6 @@ describe('runExecutor() orchestration', () => {
       sourceRefType: 'commit',
       sourceUrl: 'https://github.com/phosphor-icons/core',
       svgFolder: `core-${COMMIT_SHA}`,
-      weight: 'regular',
       iconCount: files.length,
       iconsHash,
       generatedAt: new Date().toISOString(),

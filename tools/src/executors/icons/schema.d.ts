@@ -2,8 +2,6 @@
 /*                       BEEQ icons executor properties                       */
 /* -------------------------------------------------------------------------- */
 
-export type PhosphorWeight = 'thin' | 'light' | 'regular' | 'bold' | 'fill' | 'duotone';
-
 export type SourceRefType = 'commit' | 'tag' | 'branch';
 
 export interface IconsExecutorSchema {
@@ -42,5 +40,4 @@ export interface IconsExecutorSchema {
    * ref with `/` replaced by `-` for branches.
    */
   svgFolder?: string;
-  weight?: PhosphorWeight;
 }

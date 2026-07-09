@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/schema",
   "version": 2,
   "title": "Icons executor",
-  "description": "Downloads a pinned Phosphor icon archive, extracts a single weight into the BeeQ icon assets folder, and stores a fingerprint marker for idempotent runs.",
+  "description": "Downloads a pinned Phosphor icon archive, flattens every weight (thin, light, regular, bold, fill, duotone) into the BeeQ icon assets folder, and stores a fingerprint marker for idempotent runs.",
   "type": "object",
   "properties": {
     "assetsFolder": {
@@ -51,12 +51,6 @@
       "type": "string",
       "minLength": 1,
       "description": "Optional archive root folder name containing icon assets. Derived from `sourceUrl` + `sourceRef` when omitted."
-    },
-    "weight": {
-      "type": "string",
-      "enum": ["thin", "light", "regular", "bold", "fill", "duotone"],
-      "default": "regular",
-      "description": "Phosphor icon weight to extract."
     },
     "metadataFile": {
       "type": "string",

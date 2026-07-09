@@ -1,13 +1,13 @@
 # BEEQ Icons: Custom Nx executor
 
-The `icons` local executor downloads a **pinned** [Phosphor icons](https://phosphoricons.com/) archive from GitHub, extracts a single weight into the BeeQ icon assets folder, and stores a **fingerprint marker** so subsequent runs short-circuit when nothing has changed.
+The `icons` local executor downloads a **pinned** [Phosphor icons](https://phosphoricons.com/) archive from GitHub, flattens **every weight** (thin, light, regular, bold, fill, duotone) into the BeeQ icon assets folder, and stores a **fingerprint marker** so subsequent runs short-circuit when nothing has changed.
 
 ## Design goals
 
 - **Pinned & reproducible** — the source tuple (`sourceUrl` + `sourceRef` + `sourceRefType`) participates in the cache fingerprint.
 - **Fresh & immutable** — pin to a commit SHA to get the latest icons on `main` without relying on upstream tag cadence (Phosphor's last tag is often months behind `main`).
 - **Idempotent** — a metadata marker (`.icons-meta.json`) plus a strong `iconsHash` (sha256 of sorted per-file digests) lets the executor skip work when the destination already matches the expected state.
-- **Deterministic selection** — extracts exactly one Phosphor weight (default `regular`) with basename-collision detection.
+- **Complete icon set** — extracts every Phosphor weight (thin, light, regular, bold, fill, duotone) into a flat folder. Consumers pick a weight by full filename (e.g. `bell.svg`, `bell-thin.svg`, `bell-bold.svg`).
 - **CI-safe** — uses `@nx/devkit`'s `logger` and resolves paths against `context.root`; TTY-only spinner locally.
 - **Integrity** — optional `sourceChecksum` verifies the downloaded archive against a pinned sha256; observed checksum is always captured in metadata for easy pinning.
 
@@ -53,7 +53,6 @@ sourceRef: string;      // Commit SHA (default), tag, or branch name — part of
 
 // Optional
 sourceRefType?:  'commit' | 'tag' | 'branch';                              // default: 'commit'
-weight?:         'thin' | 'light' | 'regular' | 'bold' | 'fill' | 'duotone'; // default: 'regular'
 fileName?:       string;   // Derived from sourceRef when omitted (e.g. "<shortSha>.zip")
 svgFolder?:      string;   // Derived from sourceUrl + sourceRef when omitted (e.g. "core-<ref>")
 sourceChecksum?: string;   // Optional expected archive sha256, format: sha256-<64 hex chars>
@@ -89,8 +88,7 @@ After a successful run, `.icons-meta.json` is written under `extractToPath`:
   "sourceRefType": "commit",
   "sourceUrl": "https://github.com/phosphor-icons/core",
   "svgFolder": "core-2b75f3ad12b420c9504ef05df8d2564a28f8500e",
-  "weight": "regular",
-  "iconCount": 1512,
+  "iconCount": 9072,
   "iconsHash": "sha256-…",
   "generatedAt": "2026-07-09T00:00:00.000Z",
   "observedChecksum": "sha256-…",
@@ -100,7 +98,7 @@ After a successful run, `.icons-meta.json` is written under `extractToPath`:
 
 A run is considered **up to date** when:
 
-1. Metadata exists and matches the expected fingerprint (`sourceUrl`, `sourceRef`, `sourceRefType`, `fileName`, `svgFolder`, `assetsFolder`, `weight`, and — when provided — `sourceChecksum`).
+1. Metadata exists and matches the expected fingerprint (`sourceUrl`, `sourceRef`, `sourceRefType`, `fileName`, `svgFolder`, `assetsFolder`, and — when provided — `sourceChecksum`).
 2. On-disk SVG count matches `iconCount` and is `>= minSvgCount`.
 3. A freshly computed `iconsHash` of the on-disk files matches the stored one.
 
@@ -134,11 +132,23 @@ Set in [`packages/beeq/project.json`](../packages/beeq/project.json):
     "extractToPath": "packages/beeq/src/components/icon/svg",
     "sourceUrl": "https://github.com/phosphor-icons/core",
     "sourceRef": "2b75f3ad12b420c9504ef05df8d2564a28f8500e",
-    "sourceRefType": "commit",
-    "weight": "regular"
+    "sourceRefType": "commit"
   }
 }
 ```
+
+The extracted folder contains **all weights flattened** (~9072 files for the pinned SHA). Filenames follow Phosphor's own convention:
+
+| Weight    | Filename example    |
+|-----------|---------------------|
+| `regular` | `bell.svg`          |
+| `thin`    | `bell-thin.svg`     |
+| `light`   | `bell-light.svg`    |
+| `bold`    | `bell-bold.svg`     |
+| `fill`    | `bell-fill.svg`     |
+| `duotone` | `bell-duotone.svg`  |
+
+Consumers of `<bq-icon>` pass the full filename (without `.svg`) to select the desired weight.
 
 ## Bumping the pinned SHA
 

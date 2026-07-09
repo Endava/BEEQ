@@ -4,7 +4,7 @@ import { join } from 'node:path';
 
 import { pathExists, readJson, writeJson } from 'fs-extra';
 
-import type { PhosphorWeight, SourceRefType } from '../schema';
+import type { SourceRefType } from '../schema';
 import { asIconsError } from './errors';
 
 export interface FingerprintInput {
@@ -15,7 +15,6 @@ export interface FingerprintInput {
   sourceRefType: SourceRefType;
   sourceUrl: string;
   svgFolder: string;
-  weight: PhosphorWeight;
 }
 
 export interface IconsMetadata extends FingerprintInput {
@@ -43,7 +42,6 @@ export const buildFingerprintKey = (input: FingerprintInput): string =>
     sourceRefType: input.sourceRefType,
     sourceUrl: input.sourceUrl,
     svgFolder: input.svgFolder,
-    weight: input.weight,
   });
 
 export const listSvgFiles = async (extractToPath: string): Promise<string[]> => {
