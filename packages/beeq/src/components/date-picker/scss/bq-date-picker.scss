@@ -67,6 +67,7 @@
   border: var(--bq-date-picker--border-width) var(--bq-date-picker--border-style)
     var(--bq-date-picker--border-color);
   border-radius: var(--bq-date-picker--border-radius);
+  overflow: hidden;
   background-color: var(--bq-date-picker--background-color);
   color: var(--bq-date-picker--text-color);
   font-size: var(--bq-date-picker--text-size);
