@@ -56,32 +56,6 @@
       "continuous": true
     },
     "build": {
-      "dependsOn": [{ "target": "build", "projects": "beeq-tailwindcss" }, { "target": "cem" }],
-      "executor": "@nxext/stencil:build",
-      "outputs": [
-        "{options.outputPath}",
-        "{projectRoot}/.storybook/custom-elements.json",
-        "{workspaceRoot}/packages/beeq-angular/src/directives",
-        "{workspaceRoot}/packages/beeq-angular/standalone/src/directives",
-        "{workspaceRoot}/packages/beeq-react/src/components.ts",
-        "{workspaceRoot}/packages/beeq-vue/src/components.ts",
-        "{workspaceRoot}/packages/beeq-vue/src/vue-component-lib"
-      ],
-      "options": {
-        "projectType": "library",
-        "tsConfig": "packages/beeq/tsconfig.lib.json",
-        "configPath": "packages/beeq/stencil.config.ts",
-        "outputPath": "dist/beeq",
-        "ci": true
-      },
-      "configurations": {
-        "production": {
-          "dev": false,
-          "prod": true
-        }
-      }
-    },
-    "build-ci": {
       "dependsOn": [{ "target": "icons" }, { "target": "build", "projects": "beeq-tailwindcss" }, { "target": "cem" }],
       "executor": "@nxext/stencil:build",
       "outputs": [
@@ -168,14 +142,6 @@
     },
     "e2e": {
       "executor": "nx:run-commands",
-      "options": {
-        "command": "pnpm exec vitest run --project e2e",
-        "cwd": "packages/beeq"
-      }
-    },
-    "e2e-ci": {
-      "executor": "nx:run-commands",
-      "dependsOn": [{ "target": "build-ci" }],
       "options": {
         "command": "pnpm exec vitest run --project e2e",
         "cwd": "packages/beeq"

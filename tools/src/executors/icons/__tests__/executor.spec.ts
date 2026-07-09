@@ -483,4 +483,54 @@ describe('runExecutor() orchestration', () => {
     expect(metadata.pinnedChecksumHint).toBe(PINNED_CHECKSUM_HINT);
     expect(metadata.sourceChecksum).toBeUndefined();
   });
+
+  describe('BEEQ_SKIP_ICONS escape hatch', () => {
+    const originalValue = process.env.BEEQ_SKIP_ICONS;
+
+    afterEach(() => {
+      if (originalValue === undefined) {
+        delete process.env.BEEQ_SKIP_ICONS;
+      } else {
+        process.env.BEEQ_SKIP_ICONS = originalValue;
+      }
+    });
+
+    for (const value of ['1', 'true', 'TRUE', 'True']) {
+      it(`short-circuits before options validation when BEEQ_SKIP_ICONS="${value}"`, async () => {
+        process.env.BEEQ_SKIP_ICONS = value;
+
+        vi.doMock('../lib/download', () => ({
+          downloadArchive: vi.fn(() => {
+            throw new Error('downloadArchive should not be called when skipped');
+          }),
+        }));
+        vi.doMock('../lib/extract', async () => {
+          const actual = await vi.importActual<typeof import('../lib/extract')>('../lib/extract');
+          return {
+            ...actual,
+            extractIcons: vi.fn(() => {
+              throw new Error('extractIcons should not be called when skipped');
+            }),
+          };
+        });
+
+        const runExecutor = (await import('../executor')).default;
+        // Pass invalid options on purpose: the skip must fire BEFORE
+        // normalization, so returning success proves the short-circuit.
+        const result = await runExecutor({ ...runOptions(), sourceRef: '' }, makeContext(workDir) as never);
+        expect(result).toEqual({ success: true });
+      });
+    }
+
+    for (const value of ['0', 'false', '', 'yes', 'no', 'anything-else']) {
+      it(`does NOT short-circuit when BEEQ_SKIP_ICONS="${value}"`, async () => {
+        process.env.BEEQ_SKIP_ICONS = value;
+
+        const runExecutor = (await import('../executor')).default;
+        // Invalid options must fail normally when the skip is not honored.
+        const result = await runExecutor({ ...runOptions(), sourceRef: '' }, makeContext(workDir) as never);
+        expect(result).toEqual({ success: false });
+      });
+    }
+  });
 });

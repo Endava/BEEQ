@@ -19,6 +19,33 @@ import {
 import type { IconsExecutorSchema } from './schema';
 
 /**
+ * Environment variable that lets a developer skip the icons executor
+ * entirely for a given invocation (e.g. `BEEQ_SKIP_ICONS=1 pnpm start`).
+ *
+ * When set to `"1"` or `"true"`, {@link runExecutor} returns success
+ * immediately without touching the filesystem or the network. Whatever
+ * SVGs are already on disk (if any) are reused as-is.
+ *
+ * Intended for local dev loops where the SVG folder is already populated
+ * and the developer doesn't want to pay even the sub-second fingerprint
+ * check on every downstream build/start/e2e. Never set this in CI.
+ */
+const SKIP_ENV_VAR = 'BEEQ_SKIP_ICONS';
+
+/**
+ * Return `true` when {@link SKIP_ENV_VAR} is set to a recognized truthy
+ * value (`"1"` or `"true"`, case-insensitive).
+ *
+ * @returns `true` when the caller has opted out of the icons pipeline.
+ */
+const isSkipRequested = (): boolean => {
+  const raw = process.env[SKIP_ENV_VAR];
+  if (!raw) return false;
+  const normalized = raw.trim().toLowerCase();
+  return normalized === '1' || normalized === 'true';
+};
+
+/**
  * Project a {@link NormalizedOptions} onto the {@link FingerprintInput}
  * subset used by both the cache-lookup and metadata-write paths, so both
  * sites always see the same fields in the same shape.
@@ -182,9 +209,10 @@ const refreshIcons = async (
  * that resolves to this executor) is executed.
  *
  * Reads as a thin pipeline:
- * 1. Normalize + validate options ({@link safeNormalize}).
- * 2. Short-circuit on cache hit ({@link isCacheHit}).
- * 3. Otherwise, refresh from source ({@link refreshIcons}).
+ * 1. Honor the {@link SKIP_ENV_VAR} escape hatch (developer opt-out).
+ * 2. Normalize + validate options ({@link safeNormalize}).
+ * 3. Short-circuit on cache hit ({@link isCacheHit}).
+ * 4. Otherwise, refresh from source ({@link refreshIcons}).
  *
  * Errors are converted to `{ success: false }` with a `[<phase>] ...`
  * log line; the finally block guarantees the logger is torn down cleanly.
@@ -195,6 +223,15 @@ const refreshIcons = async (
  */
 const runExecutor: PromiseExecutor<IconsExecutorSchema> = async (rawOptions, context: ExecutorContext) => {
   const log = createIconsLogger();
+
+  if (isSkipRequested()) {
+    log.warn(
+      `Skipped via ${SKIP_ENV_VAR}. Existing SVGs (if any) under the extract path will be used as-is. Never set ${SKIP_ENV_VAR} in CI.`,
+    );
+    log.stop();
+    return { success: true };
+  }
+
   const options = safeNormalize(rawOptions, context, log);
   if (!options) return { success: false };
 
