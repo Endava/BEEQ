@@ -4,6 +4,56 @@
   "title": "Icons executor",
   "description": "",
   "type": "object",
-  "properties": {},
-  "required": []
+  "properties": {
+    "assetsFolder": {
+      "type": "string",
+      "description": "Assets directory inside the downloaded archive root"
+    },
+    "downloadPath": {
+      "type": "string",
+      "description": "Directory where the archive is downloaded"
+    },
+    "extractToPath": {
+      "type": "string",
+      "description": "Destination directory for flattened SVG files"
+    },
+    "fileName": {
+      "type": "string",
+      "description": "Archive file name to download"
+    },
+    "sourceUrl": {
+      "type": "string",
+      "description": "Base URL used to fetch the archive"
+    },
+    "sourceRef": {
+      "type": "string",
+      "description": "Pinned immutable source ref (tag or commit SHA)"
+    },
+    "svgFolder": {
+      "type": "string",
+      "description": "Archive root folder name containing icon assets"
+    },
+    "metadataFile": {
+      "type": "string",
+      "description": "Metadata marker file written inside extractToPath",
+      "default": ".icons-meta.json"
+    },
+    "force": {
+      "type": "boolean",
+      "description": "Always refresh icons even when metadata matches",
+      "default": false
+    },
+    "skipIfUpToDate": {
+      "type": "boolean",
+      "description": "Skip download/extract when existing icons and metadata match",
+      "default": true
+    },
+    "minSvgCount": {
+      "type": "number",
+      "description": "Minimum SVG files required for a valid extraction",
+      "default": 1
+    }
+  },
+  "required": ["assetsFolder", "downloadPath", "extractToPath", "fileName", "sourceRef", "sourceUrl", "svgFolder"],
+  "additionalProperties": false
 }
