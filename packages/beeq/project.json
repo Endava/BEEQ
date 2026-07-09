@@ -56,7 +56,7 @@
       "continuous": true
     },
     "build": {
-      "dependsOn": [{ "target": "build", "projects": "beeq-tailwindcss" }],
+      "dependsOn": [{ "target": "icons" }, { "target": "build", "projects": "beeq-tailwindcss" }],
       "executor": "@nxext/stencil:build",
       "outputs": [
         "{options.outputPath}",

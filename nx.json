@@ -25,6 +25,7 @@
     ]
   },
   "targetDefaults": {
+    "icons": { "cache": true },
     "stylelint": { "cache": true },
     "prepare-storybook": { "cache": true },
     "prebuild": { "cache": true },
