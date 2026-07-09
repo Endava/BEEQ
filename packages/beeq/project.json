@@ -155,7 +155,8 @@
         "fileName": "v2.1.0.zip",
         "sourceRef": "v2.1.0",
         "svgFolder": "core-2.1.0",
-        "sourceUrl": "https://github.com/phosphor-icons/core/archive/refs/tags"
+        "sourceUrl": "https://github.com/phosphor-icons/core/archive/refs/tags",
+        "weight": "regular"
       }
     },
     "test": {

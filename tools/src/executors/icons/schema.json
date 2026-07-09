@@ -2,55 +2,80 @@
   "$schema": "http://json-schema.org/schema",
   "version": 2,
   "title": "Icons executor",
-  "description": "",
+  "description": "Downloads a pinned Phosphor icon archive, extracts a single weight into the BeeQ icon assets folder, and stores a fingerprint marker for idempotent runs.",
   "type": "object",
   "properties": {
     "assetsFolder": {
       "type": "string",
-      "description": "Assets directory inside the downloaded archive root"
+      "minLength": 1,
+      "description": "Assets directory inside the downloaded archive root."
     },
     "downloadPath": {
       "type": "string",
-      "description": "Directory where the archive is downloaded"
+      "minLength": 1,
+      "description": "Directory (relative to workspace root) where the archive is downloaded."
     },
     "extractToPath": {
       "type": "string",
-      "description": "Destination directory for flattened SVG files"
+      "minLength": 1,
+      "description": "Destination directory (relative to workspace root) for flattened SVG files."
     },
     "fileName": {
       "type": "string",
-      "description": "Archive file name to download"
+      "minLength": 1,
+      "description": "Archive file name to download."
     },
     "sourceUrl": {
       "type": "string",
-      "description": "Base URL used to fetch the archive"
+      "minLength": 1,
+      "description": "Base URL used to fetch the archive."
     },
     "sourceRef": {
       "type": "string",
-      "description": "Pinned immutable source ref (tag or commit SHA)"
+      "minLength": 1,
+      "description": "Pinned immutable source ref (tag or commit SHA) — participates in the cache fingerprint."
+    },
+    "sourceChecksum": {
+      "type": "string",
+      "pattern": "^sha256-[a-fA-F0-9]{64}$",
+      "description": "Optional expected sha256 checksum of the archive (format: sha256-<64 hex chars>)."
     },
     "svgFolder": {
       "type": "string",
-      "description": "Archive root folder name containing icon assets"
+      "minLength": 1,
+      "description": "Archive root folder name containing icon assets."
+    },
+    "weight": {
+      "type": "string",
+      "enum": ["thin", "light", "regular", "bold", "fill", "duotone"],
+      "default": "regular",
+      "description": "Phosphor icon weight to extract."
     },
     "metadataFile": {
       "type": "string",
-      "description": "Metadata marker file written inside extractToPath",
+      "minLength": 1,
+      "description": "Metadata marker file written inside extractToPath.",
       "default": ".icons-meta.json"
     },
     "force": {
       "type": "boolean",
-      "description": "Always refresh icons even when metadata matches",
+      "description": "Always refresh icons even when metadata matches.",
       "default": false
     },
     "skipIfUpToDate": {
       "type": "boolean",
-      "description": "Skip download/extract when existing icons and metadata match",
+      "description": "Skip download/extract when existing icons and metadata match the expected fingerprint.",
       "default": true
     },
+    "keepDownload": {
+      "type": "boolean",
+      "description": "Keep the downloaded archive after successful extraction.",
+      "default": false
+    },
     "minSvgCount": {
-      "type": "number",
-      "description": "Minimum SVG files required for a valid extraction",
+      "type": "integer",
+      "minimum": 1,
+      "description": "Minimum SVG files required for a valid extraction.",
       "default": 1
     }
   },

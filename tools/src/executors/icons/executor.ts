@@ -1,124 +1,124 @@
-import { join } from 'node:path';
+import { remove } from 'fs-extra';
 
-import { createSpinner } from 'nanospinner';
-import { pathExists, readJson, readdir, writeJson } from 'fs-extra';
+import type { ExecutorContext, PromiseExecutor } from '@nx/devkit';
 
-import { downloadIcons, extractIcons } from './helpers';
+import {
+  IconsExecutorError,
+  computeIconsHash,
+  createIconsLogger,
+  downloadArchive,
+  extractIcons,
+  isUpToDate,
+  normalizeOptions,
+  writeMetadata,
+  type FingerprintInput,
+  type IconsMetadata,
+  type NormalizedOptions,
+} from './lib';
 import type { IconsExecutorSchema } from './schema';
 
-interface IIconsMetadata {
-  assetsFolder: string;
-  fileName: string;
-  minSvgCount: number;
-  sourceRef: string;
-  sourceUrl: string;
-  svgFolder: string;
-}
-
-const DEFAULT_METADATA_FILE = '.icons-meta.json';
-const DEFAULT_MIN_SVG_COUNT = 1;
-
-const buildExpectedMetadata = ({
-  assetsFolder,
-  fileName,
-  minSvgCount,
-  sourceRef,
-  sourceUrl,
-  svgFolder,
-}: IIconsMetadata): IIconsMetadata => ({
-  assetsFolder,
-  fileName,
-  minSvgCount,
-  sourceRef,
-  sourceUrl,
-  svgFolder,
+const toFingerprint = (options: NormalizedOptions): FingerprintInput => ({
+  assetsFolder: options.assetsFolder,
+  fileName: options.fileName,
+  sourceChecksum: options.sourceChecksum,
+  sourceRef: options.sourceRef,
+  sourceUrl: options.sourceUrl,
+  svgFolder: options.svgFolder,
+  weight: options.weight,
 });
 
-const getSvgCount = async (extractToPath: string) => {
-  if (!(await pathExists(extractToPath))) return 0;
-
-  const files = await readdir(extractToPath);
-  return files.filter((fileName) => fileName.endsWith('.svg')).length;
-};
-
-const isUpToDate = async ({
-  extractToPath,
-  expectedMetadata,
-  metadataFilePath,
-}: {
-  expectedMetadata: IIconsMetadata;
-  extractToPath: string;
-  metadataFilePath: string;
-}) => {
-  if (!(await pathExists(metadataFilePath))) return false;
-
-  const svgCount = await getSvgCount(extractToPath);
-  if (svgCount < expectedMetadata.minSvgCount) return false;
-
-  const currentMetadata = await readJson(metadataFilePath);
-  if (!currentMetadata || typeof currentMetadata !== 'object') return false;
-
-  return Object.entries(expectedMetadata).every(([key, value]) => currentMetadata[key] === value);
-};
-
-export default async function runExecutor({
-  assetsFolder,
-  downloadPath,
-  extractToPath,
-  fileName,
-  force = false,
-  metadataFile = DEFAULT_METADATA_FILE,
-  minSvgCount = DEFAULT_MIN_SVG_COUNT,
-  skipIfUpToDate = true,
-  sourceRef,
-  sourceUrl,
-  svgFolder,
-}: IconsExecutorSchema) {
-  let success = true;
-  const expectedMetadata = buildExpectedMetadata({
-    assetsFolder,
-    fileName,
-    minSvgCount,
-    sourceRef,
-    sourceUrl,
-    svgFolder,
-  });
-  const metadataFilePath = join(extractToPath, metadataFile);
-  const logSpinner = createSpinner('Preparing BeeQ SVG icon files').start();
-
+const cleanupDownload = async (options: NormalizedOptions): Promise<void> => {
+  if (options.keepDownload) return;
   try {
-    if (!force && skipIfUpToDate && (await isUpToDate({ expectedMetadata, extractToPath, metadataFilePath }))) {
-      logSpinner.success({ text: 'BeeQ SVG icon files are already up to date. Skipping download and extraction.' });
-      return { success };
-    }
+    await remove(options.archiveFilePath);
+  } catch {
+    /* best-effort cleanup */
+  }
+};
 
-    // First step will download the Phosphor-icon library from Github
-    logSpinner.start({ text: 'Downloading the Phosphor icon package from GitHub' });
-    await downloadIcons({ downloadPath, fileName, sourceUrl });
-    logSpinner.success();
+const runExecutor: PromiseExecutor<IconsExecutorSchema> = async (
+  rawOptions,
+  context: ExecutorContext,
+) => {
+  const log = createIconsLogger();
 
-    // Once downloaded, it will extract the content of the .zip file and copy the SVG folder
-    // into the `svg` assets of bee-q icon folder
-    logSpinner.start({ text: 'Extracting and copying SVG icon files to BeeQ icon assets' });
-    const copiedIcons = await extractIcons({ assetsFolder, downloadPath, extractToPath, fileName, svgFolder });
-    if (copiedIcons < minSvgCount) {
-      throw new Error(`Expected at least ${minSvgCount} SVG files, but extracted ${copiedIcons}`);
-    }
-
-    await writeJson(
-      metadataFilePath,
-      {
-        ...expectedMetadata,
-        generatedAt: new Date().toISOString(),
-      },
-      { spaces: 2 },
-    );
-    logSpinner.success();
+  let options: NormalizedOptions;
+  try {
+    options = normalizeOptions(rawOptions, context);
   } catch (error) {
-    success = false;
     const message = error instanceof Error ? error.message : String(error);
-    logSpinner.error({ text: `Could not generate BeeQ SVG icon files. ${message}` });
+    log.fail(`[options] ${message}`);
+    return { success: false };
   }
 
-  return { success };
-}
+  try {
+    log.start('Preparing BeeQ SVG icon files');
+
+    const expected = toFingerprint(options);
+
+    if (!options.force && options.skipIfUpToDate) {
+      const cached = await isUpToDate({
+        expected,
+        extractToPath: options.absoluteExtractToPath,
+        metadataFilePath: options.metadataFilePath,
+        minSvgCount: options.minSvgCount,
+      });
+      if (cached) {
+        log.success('BeeQ SVG icon files are already up to date. Skipping download and extraction.');
+        return { success: true };
+      }
+    }
+
+    log.start(`Downloading Phosphor icon archive (${options.sourceRef})`);
+    const { checksum } = await downloadArchive({
+      archiveFilePath: options.archiveFilePath,
+      expectedChecksum: options.sourceChecksum,
+      fileName: options.fileName,
+      sourceUrl: options.sourceUrl,
+    });
+    log.success(`Downloaded ${options.fileName} (${checksum.slice(0, 15)}…)`);
+
+    log.start(`Extracting "${options.weight}" icons into BeeQ assets`);
+    const { count, fileNames } = await extractIcons({
+      archiveFilePath: options.archiveFilePath,
+      assetsFolder: options.assetsFolder,
+      extractToPath: options.absoluteExtractToPath,
+      svgFolder: options.svgFolder,
+      weight: options.weight,
+    });
+
+    if (count < options.minSvgCount) {
+      throw new IconsExecutorError(
+        'extract',
+        `Extracted ${count} icon(s) but at least ${options.minSvgCount} were required. Check "svgFolder", "assetsFolder", and "weight".`,
+        { context: { count, minSvgCount: options.minSvgCount, weight: options.weight } },
+      );
+    }
+    log.success(`Extracted ${count} SVG icon(s)`);
+
+    log.start('Writing icons metadata fingerprint');
+    const iconsHash = await computeIconsHash(options.absoluteExtractToPath, fileNames);
+    const metadata: IconsMetadata = {
+      ...expected,
+      sourceChecksum: options.sourceChecksum ?? checksum,
+      iconCount: count,
+      iconsHash,
+      generatedAt: new Date().toISOString(),
+    };
+
+    await writeMetadata(options.metadataFilePath, metadata);
+    log.success('Metadata fingerprint written');
+
+    await cleanupDownload(options);
+    return { success: true };
+  } catch (error) {
+    const phase = error instanceof IconsExecutorError ? error.phase : 'extract';
+    const message = error instanceof Error ? error.message : String(error);
+    log.fail(`[${phase}] ${message}`);
+    return { success: false };
+  } finally {
+    log.stop();
+  }
+};
+
+export default runExecutor;
