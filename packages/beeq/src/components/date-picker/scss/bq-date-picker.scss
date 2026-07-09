@@ -17,12 +17,9 @@
   box-sizing: border-box;
 }
 
-/* Hide the label / prefix / suffix wrappers when their slots have no
-   content. Scoped rules keep specificity high enough to win over the
-   base `display: flex` declarations without needing `!important`. */
+/* Hide the label / prefix wrappers when their slots have no content. */
 .bq-date-picker__label.is-hidden,
-.bq-date-picker__prefix.is-hidden,
-.bq-date-picker__suffix.is-hidden {
+.bq-date-picker__prefix.is-hidden {
   display: none;
 }
 
@@ -166,27 +163,19 @@
   }
 }
 
-/* -------------------------- Prefix / Suffix ------------------------------ */
+/* -------------------------- Prefix --------------------------------------- */
 
-.bq-date-picker__prefix,
-.bq-date-picker__suffix {
+.bq-date-picker__prefix {
   display: inline-flex;
   align-items: center;
   color: var(--bq-date-picker--text-color);
   pointer-events: none;
+  margin-inline-end: var(--bq-date-picker--gap);
 
   bq-icon {
     display: inline-flex;
     font-size: var(--bq-date-picker--icon-size);
   }
-}
-
-.bq-date-picker__prefix {
-  margin-inline-end: var(--bq-date-picker--gap);
-}
-
-.bq-date-picker__suffix {
-  margin-inline-start: var(--bq-date-picker--gap);
 }
 
 /* --------------------------- Clear button -------------------------------- */
@@ -220,6 +209,30 @@
 .bq-date-picker__control:is(:hover, :focus-within, .is-open):not(.is-disabled)
   .bq-date-picker__clear {
   display: inline-flex;
+}
+
+/* ------------------------- Calendar trigger button ----------------------- */
+
+.bq-date-picker__calendar-trigger {
+  margin-inline-start: var(--bq-date-picker--gap);
+
+  &::part(button) {
+    // Reset inherited focus ring from the parent control group.
+    --bq-ring-width: initial;
+    --bq-ring-offset-width: initial;
+    --bq-ring-color-focus: initial;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    padding: 0;
+  }
+
+  bq-icon {
+    display: flex;
+    font-size: var(--bq-date-picker--icon-size);
+  }
 }
 
 /* -------------------------------------------------------------------------- */

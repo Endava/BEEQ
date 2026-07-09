@@ -100,6 +100,7 @@ const defaultValidityMessage = (flags: ValidityStateFlags): string => {
  *
  * @attr {boolean} autofocus - If `true`, the Date picker input will be focused on component render.
  * @attr {string} clear-button-label - The clear button aria label.
+ * @attr {string} calendar-button-label - The aria-label for the calendar trigger button.
  * @attr {boolean} disable-clear - If `true`, the clear button won't be displayed.
  * @attr {boolean} disabled - Indicates whether the Date picker input is disabled or not.
  * @attr {number} distance - Represents the distance between the panel and the input.
@@ -142,7 +143,7 @@ const defaultValidityMessage = (flags: ValidityStateFlags): string => {
  *
  * @slot label - The label displayed above the input.
  * @slot prefix - Content rendered before the input value.
- * @slot suffix - Content rendered after the input value (defaults to a calendar icon).
+ * @slot suffix - Icon rendered inside the calendar trigger button (defaults to a calendar icon).
  * @slot clear-icon - Icon used inside the clear button.
  *
  * @part base - The component's base wrapper.
@@ -152,6 +153,7 @@ const defaultValidityMessage = (flags: ValidityStateFlags): string => {
  * @part suffix - The suffix slot container.
  * @part input - The native input element.
  * @part clear-btn - The clear button.
+ * @part calendar-trigger - The calendar icon trigger button.
  * @part button - Any button rendered inside the calendar (nav or day/month/year cell).
  * @part panel - The dropdown panel container.
  * @part calendar__container - The calendar panels wrapper.
@@ -248,7 +250,7 @@ export class BqDatePicker {
   private pendingFocusRAF?: number;
 
   private prefixElem?: HTMLElement;
-  private suffixElem?: HTMLElement;
+  private triggerBtnElem?: HTMLBqButtonElement;
 
   // Reference to host HTML element
   // ===================================
@@ -268,7 +270,6 @@ export class BqDatePicker {
   @State() hasConstraintError = false;
   @State() hasLabel = false;
   @State() hasPrefix = false;
-  @State() hasSuffix = false;
   @State() hasValue = false;
   @State() tentativeHover?: string;
   @State() view: TCalendarView = 'days';
@@ -282,6 +283,9 @@ export class BqDatePicker {
 
   /** The clear button aria label. */
   @Prop({ reflect: true }) clearButtonLabel: string = 'Clear value';
+
+  /** The aria-label for the calendar trigger button. */
+  @Prop({ reflect: true }) calendarButtonLabel: string = 'Open calendar';
 
   /** If `true`, the clear button won't be displayed. */
   @Prop({ reflect: true }) disableClear: boolean = false;
@@ -516,6 +520,9 @@ export class BqDatePicker {
   handleOpen(open: boolean) {
     if (!open) {
       this.tentativeHover = undefined;
+      // Return focus to the calendar trigger button after closing the panel,
+      // so keyboard users don't lose their position in the document.
+      requestAnimationFrame(() => this.triggerBtnElem?.shadowRoot?.querySelector<HTMLButtonElement>('button')?.focus());
       return;
     }
     // Precision locks the initial view; otherwise honor the consumer-provided one.
@@ -684,6 +691,41 @@ export class BqDatePicker {
     ev.stopPropagation();
   };
 
+  /**
+   * Toggles the calendar panel open/closed when the trigger button is activated.
+   * Stops event propagation so the parent `bq-dropdown` doesn't also react.
+   */
+  private handleTriggerClick = (ev: CustomEvent): void => {
+    if (this.disabled) return;
+    this.open = !this.open;
+    ev.stopPropagation();
+  };
+
+  /**
+   * Prevents the `bq-dropdown` from auto-opening on any click inside the
+   * control. Only the explicit trigger button (or keyboard shortcuts) should
+   * open the calendar panel.
+   */
+  private handleControlClick = (ev: MouseEvent): void => {
+    ev.stopPropagation();
+  };
+
+  /**
+   * Handles keyboard shortcuts on the text input.
+   * - `ArrowDown` / `Alt+ArrowDown` → open panel and focus active cell.
+   * - `Escape` → close panel (focus stays on input).
+   */
+  private handleInputKeyDown = (ev: KeyboardEvent): void => {
+    if (this.disabled) return;
+    if (ev.key === 'ArrowDown') {
+      ev.preventDefault();
+      if (!this.open) this.open = true;
+    } else if (ev.key === 'Escape' && this.open) {
+      ev.preventDefault();
+      this.open = false;
+    }
+  };
+
   private clearValue = (): void => {
     this.value = undefined;
     this.displayDate = undefined;
@@ -695,7 +737,6 @@ export class BqDatePicker {
   private handleSlotChange = (): void => {
     this.hasLabel = this.labelElem ? hasSlotContent(this.labelElem) : false;
     this.hasPrefix = this.prefixElem ? hasSlotContent(this.prefixElem) : false;
-    this.hasSuffix = this.suffixElem ? hasSlotContent(this.suffixElem) : false;
   };
 
   private updateFormValidity = (): void => {
@@ -1353,6 +1394,7 @@ export class BqDatePicker {
               'is-disabled': !!this.disabled,
               'is-open': !!this.open,
             }}
+            onClick={this.handleControlClick}
             part={CALENDAR_PARTS.control}
             slot="trigger"
           >
@@ -1383,6 +1425,7 @@ export class BqDatePicker {
               onBlur={this.handleBlur}
               onChange={this.handleInputChange}
               onFocus={this.handleFocus}
+              onKeyDown={this.handleInputKeyDown}
               part={CALENDAR_PARTS.input}
               placeholder={this.placeholder}
               readonly={this.type !== 'single'}
@@ -1414,17 +1457,28 @@ export class BqDatePicker {
               </bq-button>
             )}
 
-            <span
-              class="bq-date-picker__suffix"
-              part={CALENDAR_PARTS.suffix}
+            <bq-button
+              appearance="text"
+              aria-controls={popupId}
+              aria-expanded={this.open ? 'true' : 'false'}
+              aria-haspopup="dialog"
+              border="s"
+              class="bq-date-picker__calendar-trigger"
+              disabled={this.disabled}
+              exportparts="button"
+              label={this.calendarButtonLabel}
+              onBqClick={this.handleTriggerClick}
+              onlyIcon
+              part={`${CALENDAR_PARTS.button} ${CALENDAR_PARTS.suffix} ${CALENDAR_PARTS.calendarTrigger}`}
               ref={(el) => {
-                this.suffixElem = el;
+                this.triggerBtnElem = el as HTMLBqButtonElement;
               }}
+              size="small"
             >
               <slot name="suffix" onSlotchange={this.handleSlotChange}>
-                <bq-icon name="calendar-blank" />
+                <bq-icon aria-hidden="true" name="calendar-blank" />
               </slot>
-            </span>
+            </bq-button>
           </div>
 
           <div

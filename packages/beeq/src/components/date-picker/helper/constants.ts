@@ -54,6 +54,7 @@ export const CALENDAR_PARTS = {
   years: 'calendar__years',
   year: 'calendar__year',
   yearSelected: 'calendar__year-selected',
+  calendarTrigger: 'calendar-trigger',
 } as const;
 
 /** Number of years shown in the decade view grid. Uses 12 to fill a 3x4 grid. */
