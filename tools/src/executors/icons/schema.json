@@ -23,27 +23,34 @@
     "fileName": {
       "type": "string",
       "minLength": 1,
-      "description": "Archive file name to download."
+      "description": "Optional archive file name. Derived from `sourceRef` when omitted."
     },
     "sourceUrl": {
       "type": "string",
       "minLength": 1,
-      "description": "Base URL used to fetch the archive."
+      "format": "uri",
+      "description": "Repository root URL (e.g. `https://github.com/phosphor-icons/core`). The `archive/...` path is appended automatically based on `sourceRefType`."
     },
     "sourceRef": {
       "type": "string",
       "minLength": 1,
-      "description": "Pinned immutable source ref (tag or commit SHA) — participates in the cache fingerprint."
+      "description": "Pinned immutable source ref (commit SHA, tag, or branch name) — participates in the cache fingerprint."
+    },
+    "sourceRefType": {
+      "type": "string",
+      "enum": ["commit", "tag", "branch"],
+      "default": "commit",
+      "description": "Kind of `sourceRef`. `commit` (recommended) builds `/archive/<sha>.zip`, `tag` builds `/archive/refs/tags/<ref>.zip`, `branch` builds `/archive/refs/heads/<ref>.zip`."
     },
     "sourceChecksum": {
       "type": "string",
       "pattern": "^sha256-[a-fA-F0-9]{64}$",
-      "description": "Optional expected sha256 checksum of the archive (format: sha256-<64 hex chars>)."
+      "description": "Optional expected sha256 checksum of the archive (format: sha256-<64 hex chars>). When absent, the observed checksum is captured in metadata for later pinning."
     },
     "svgFolder": {
       "type": "string",
       "minLength": 1,
-      "description": "Archive root folder name containing icon assets."
+      "description": "Optional archive root folder name containing icon assets. Derived from `sourceUrl` + `sourceRef` when omitted."
     },
     "weight": {
       "type": "string",
@@ -79,6 +86,6 @@
       "default": 1
     }
   },
-  "required": ["assetsFolder", "downloadPath", "extractToPath", "fileName", "sourceRef", "sourceUrl", "svgFolder"],
+  "required": ["assetsFolder", "downloadPath", "extractToPath", "sourceRef", "sourceUrl"],
   "additionalProperties": false
 }

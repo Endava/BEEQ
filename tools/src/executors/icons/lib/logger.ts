@@ -5,6 +5,7 @@ const PREFIX = '[icons]';
 
 export interface IconsLogger {
   start(text: string): void;
+  info(text: string): void;
   success(text?: string): void;
   warn(text: string): void;
   fail(text: string): void;
@@ -24,6 +25,16 @@ class SpinnerLogger implements IconsLogger {
       return;
     }
     this.spinner = createSpinner(text).start();
+  }
+
+  info(text: string): void {
+    if (this.spinner) {
+      this.spinner.clear();
+    }
+    logger.info(`${PREFIX} ℹ ${text}`);
+    if (this.spinner) {
+      this.spinner.start();
+    }
   }
 
   success(text?: string): void {
@@ -64,6 +75,9 @@ class SpinnerLogger implements IconsLogger {
 
 class PlainLogger implements IconsLogger {
   start(text: string): void {
+    logger.info(`${PREFIX} ${text}`);
+  }
+  info(text: string): void {
     logger.info(`${PREFIX} ${text}`);
   }
   success(text?: string): void {

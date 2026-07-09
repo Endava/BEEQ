@@ -13,9 +13,8 @@ export interface DownloadResult {
 
 export interface DownloadOptions {
   archiveFilePath: string;
+  archiveUrl: string;
   expectedChecksum?: string;
-  sourceUrl: string;
-  fileName: string;
 }
 
 const sha256 = (buffer: Buffer): string => `sha256-${createHash('sha256').update(buffer).digest('hex')}`;
@@ -31,24 +30,21 @@ const readResponse = async (body: ReadableStream<Uint8Array>): Promise<Buffer> =
 
 export const downloadArchive = async ({
   archiveFilePath,
+  archiveUrl,
   expectedChecksum,
-  fileName,
-  sourceUrl,
 }: DownloadOptions): Promise<DownloadResult> => {
-  const downloadUrl = `${sourceUrl.replace(/\/+$/, '')}/${fileName}`;
-
   let response: Response;
   try {
-    response = await fetch(downloadUrl);
+    response = await fetch(archiveUrl, { redirect: 'follow' });
   } catch (error) {
-    throw asIconsError('download', `Network request failed for "${downloadUrl}"`, error, { downloadUrl });
+    throw asIconsError('download', `Network request failed for "${archiveUrl}"`, error, { archiveUrl });
   }
 
   if (!response.ok || !response.body) {
     throw new IconsExecutorError(
       'download',
-      `Request failed with status ${response.status} for "${downloadUrl}": ${response.statusText || 'no body'}`,
-      { context: { downloadUrl, status: response.status } },
+      `Request failed with status ${response.status} for "${archiveUrl}": ${response.statusText || 'no body'}`,
+      { context: { archiveUrl, status: response.status } },
     );
   }
 
@@ -56,7 +52,7 @@ export const downloadArchive = async ({
   try {
     buffer = await readResponse(response.body);
   } catch (error) {
-    throw asIconsError('download', `Failed to read archive response body`, error, { downloadUrl });
+    throw asIconsError('download', `Failed to read archive response body`, error, { archiveUrl });
   }
 
   const checksum = sha256(buffer);
@@ -65,7 +61,7 @@ export const downloadArchive = async ({
     throw new IconsExecutorError(
       'checksum',
       `Archive checksum mismatch. Expected "${expectedChecksum}" but got "${checksum}".`,
-      { context: { downloadUrl, expectedChecksum, actualChecksum: checksum } },
+      { context: { archiveUrl, expectedChecksum, actualChecksum: checksum } },
     );
   }
 

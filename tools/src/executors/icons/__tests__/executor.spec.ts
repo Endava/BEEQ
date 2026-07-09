@@ -1,18 +1,22 @@
-import { mkdtemp, rm, writeFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import {
-  DEFAULTS,
-  IconsExecutorError,
+  buildArchiveUrl,
   buildFingerprintKey,
   computeIconsHash,
+  DEFAULTS,
+  deriveFileName,
   isTargetIconEntry,
   isUpToDate,
   listSvgFiles,
   normalizeOptions,
+  normalizeRefForFolder,
+  PINNED_CHECKSUM_HINT,
+  repoNameFromUrl,
   toPosix,
   writeMetadata,
 } from '../lib';
@@ -22,61 +26,153 @@ import type { IconsExecutorSchema } from '../schema';
 //                                   Fixtures                                 //
 // -------------------------------------------------------------------------- //
 
-const baseOptions: IconsExecutorSchema = {
+const COMMIT_SHA = '2b75f3ad12b420c9504ef05df8d2564a28f8500e';
+
+const baseCommitOptions: IconsExecutorSchema = {
   assetsFolder: 'assets',
   downloadPath: 'tmp',
   extractToPath: 'svg-out',
-  fileName: 'v2.1.0.zip',
-  sourceRef: 'v2.1.0',
-  sourceUrl: 'https://example.com/tags',
-  svgFolder: 'core-2.1.0',
+  sourceRef: COMMIT_SHA,
+  sourceRefType: 'commit',
+  sourceUrl: 'https://github.com/phosphor-icons/core',
 };
 
 const makeContext = (root: string) => ({ root });
+
+// -------------------------------------------------------------------------- //
+//                            URL / ref derivation                            //
+// -------------------------------------------------------------------------- //
+
+describe('repoNameFromUrl()', () => {
+  it('extracts the last non-empty path segment', () => {
+    expect(repoNameFromUrl('https://github.com/phosphor-icons/core')).toBe('core');
+    expect(repoNameFromUrl('https://github.com/phosphor-icons/core/')).toBe('core');
+  });
+
+  it('strips the .git suffix', () => {
+    expect(repoNameFromUrl('git@github.com:phosphor-icons/core.git')).toBe('core');
+  });
+
+  it('returns the host label when only a host is given', () => {
+    expect(repoNameFromUrl('https://github.com')).toBe('github.com');
+  });
+});
+
+describe('normalizeRefForFolder()', () => {
+  it('strips a leading v for tags', () => {
+    expect(normalizeRefForFolder('v2.0.8', 'tag')).toBe('2.0.8');
+    expect(normalizeRefForFolder('2.0.8', 'tag')).toBe('2.0.8');
+  });
+
+  it('replaces slashes with dashes for branches', () => {
+    expect(normalizeRefForFolder('release/1.x', 'branch')).toBe('release-1.x');
+  });
+
+  it('lowercases commit SHAs', () => {
+    expect(normalizeRefForFolder('ABCDEF1234', 'commit')).toBe('abcdef1234');
+  });
+});
+
+describe('buildArchiveUrl()', () => {
+  const url = 'https://github.com/phosphor-icons/core';
+  it('builds a commit archive URL', () => {
+    expect(buildArchiveUrl(url, COMMIT_SHA, 'commit')).toBe(`${url}/archive/${COMMIT_SHA}.zip`);
+  });
+  it('builds a tag archive URL', () => {
+    expect(buildArchiveUrl(url, 'v2.0.8', 'tag')).toBe(`${url}/archive/refs/tags/v2.0.8.zip`);
+  });
+  it('builds a branch archive URL', () => {
+    expect(buildArchiveUrl(url, 'main', 'branch')).toBe(`${url}/archive/refs/heads/main.zip`);
+  });
+  it('strips trailing slashes on the base URL', () => {
+    expect(buildArchiveUrl(`${url}///`, 'main', 'branch')).toBe(`${url}/archive/refs/heads/main.zip`);
+  });
+});
+
+describe('deriveFileName()', () => {
+  it('uses a short SHA for commits', () => {
+    expect(deriveFileName(COMMIT_SHA, 'commit')).toBe(`${COMMIT_SHA.slice(0, 12)}.zip`);
+  });
+  it('sanitizes ref characters', () => {
+    expect(deriveFileName('release/1.x', 'branch')).toBe('release-1.x.zip');
+    expect(deriveFileName('v2.0.8', 'tag')).toBe('v2.0.8.zip');
+  });
+});
 
 // -------------------------------------------------------------------------- //
 //                             normalizeOptions()                             //
 // -------------------------------------------------------------------------- //
 
 describe('normalizeOptions()', () => {
-  it('applies defaults and resolves paths against context.root', () => {
-    const context = makeContext('/workspace');
-    const result = normalizeOptions(baseOptions, context);
-
+  it('derives archiveUrl, fileName and svgFolder for commit refs', () => {
+    const result = normalizeOptions(baseCommitOptions, makeContext('/workspace'));
+    expect(result.archiveUrl).toBe(`https://github.com/phosphor-icons/core/archive/${COMMIT_SHA}.zip`);
+    expect(result.fileName).toBe(`${COMMIT_SHA.slice(0, 12)}.zip`);
+    expect(result.svgFolder).toBe(`core-${COMMIT_SHA}`);
+    expect(result.sourceRefType).toBe('commit');
     expect(result.weight).toBe(DEFAULTS.weight);
-    expect(result.metadataFile).toBe(DEFAULTS.metadataFile);
-    expect(result.force).toBe(DEFAULTS.force);
-    expect(result.skipIfUpToDate).toBe(DEFAULTS.skipIfUpToDate);
-    expect(result.keepDownload).toBe(DEFAULTS.keepDownload);
-    expect(result.minSvgCount).toBe(DEFAULTS.minSvgCount);
-    expect(result.absoluteDownloadPath.endsWith('/workspace/tmp')).toBe(true);
-    expect(result.absoluteExtractToPath.endsWith('/workspace/svg-out')).toBe(true);
-    expect(result.archiveFilePath.endsWith('/workspace/tmp/v2.1.0.zip')).toBe(true);
-    expect(result.metadataFilePath.endsWith(`/workspace/svg-out/${DEFAULTS.metadataFile}`)).toBe(true);
+  });
+
+  it('derives archiveUrl and svgFolder for tag refs and strips leading v', () => {
+    const result = normalizeOptions(
+      { ...baseCommitOptions, sourceRef: 'v2.0.8', sourceRefType: 'tag' },
+      makeContext('/w'),
+    );
+    expect(result.archiveUrl).toBe('https://github.com/phosphor-icons/core/archive/refs/tags/v2.0.8.zip');
+    expect(result.svgFolder).toBe('core-2.0.8');
+    expect(result.fileName).toBe('v2.0.8.zip');
+  });
+
+  it('derives archiveUrl for branch refs', () => {
+    const result = normalizeOptions(
+      { ...baseCommitOptions, sourceRef: 'main', sourceRefType: 'branch' },
+      makeContext('/w'),
+    );
+    expect(result.archiveUrl).toBe('https://github.com/phosphor-icons/core/archive/refs/heads/main.zip');
+    expect(result.svgFolder).toBe('core-main');
+  });
+
+  it('honors explicit fileName and svgFolder overrides', () => {
+    const result = normalizeOptions(
+      { ...baseCommitOptions, fileName: 'custom.zip', svgFolder: 'custom-root' },
+      makeContext('/w'),
+    );
+    expect(result.fileName).toBe('custom.zip');
+    expect(result.svgFolder).toBe('custom-root');
+  });
+
+  it('rejects invalid commit SHA shape', () => {
+    expect(() => normalizeOptions({ ...baseCommitOptions, sourceRef: 'not-a-sha' }, makeContext('/w'))).toThrow(
+      /sourceRef/,
+    );
+  });
+
+  it('accepts non-SHA refs when sourceRefType is tag or branch', () => {
+    expect(() =>
+      normalizeOptions({ ...baseCommitOptions, sourceRef: 'v2.0.8', sourceRefType: 'tag' }, makeContext('/w')),
+    ).not.toThrow();
+  });
+
+  it('rejects invalid sourceRefType', () => {
+    expect(() =>
+      normalizeOptions({ ...baseCommitOptions, sourceRefType: 'bogus' as never }, makeContext('/w')),
+    ).toThrow(/sourceRefType/);
   });
 
   it('rejects invalid weight', () => {
-    expect(() =>
-      normalizeOptions({ ...baseOptions, weight: 'ultra' as never }, makeContext('/w')),
-    ).toThrow(IconsExecutorError);
+    expect(() => normalizeOptions({ ...baseCommitOptions, weight: 'ultra' as never }, makeContext('/w'))).toThrow(
+      /weight/,
+    );
   });
 
   it('rejects invalid checksum pattern', () => {
     expect(() =>
-      normalizeOptions({ ...baseOptions, sourceChecksum: 'not-a-checksum' }, makeContext('/w')),
+      normalizeOptions({ ...baseCommitOptions, sourceChecksum: 'not-a-checksum' }, makeContext('/w')),
     ).toThrow(/sourceChecksum/);
   });
 
   it('rejects minSvgCount < 1', () => {
-    expect(() =>
-      normalizeOptions({ ...baseOptions, minSvgCount: 0 }, makeContext('/w')),
-    ).toThrow(/minSvgCount/);
-  });
-
-  it('rejects empty required string', () => {
-    expect(() =>
-      normalizeOptions({ ...baseOptions, sourceRef: '' }, makeContext('/w')),
-    ).toThrow(/sourceRef/);
+    expect(() => normalizeOptions({ ...baseCommitOptions, minSvgCount: 0 }, makeContext('/w'))).toThrow(/minSvgCount/);
   });
 });
 
@@ -103,26 +199,26 @@ describe('toPosix()', () => {
 // -------------------------------------------------------------------------- //
 
 describe('isTargetIconEntry()', () => {
-  const prefix = 'core-2.1.0/assets/regular';
+  const prefix = `core-${COMMIT_SHA}/assets/regular`;
 
   it('accepts matching svg file in target weight folder', () => {
-    expect(isTargetIconEntry('core-2.1.0/assets/regular/check.svg', 'file', prefix)).toBe(true);
+    expect(isTargetIconEntry(`${prefix}/check.svg`, 'file', prefix)).toBe(true);
   });
 
   it('accepts windows-style paths', () => {
-    expect(isTargetIconEntry('core-2.1.0\\assets\\regular\\check.svg', 'file', prefix)).toBe(true);
+    expect(isTargetIconEntry(prefix.replace(/\//g, '\\') + '\\check.svg', 'file', prefix)).toBe(true);
   });
 
   it('rejects wrong weight folder', () => {
-    expect(isTargetIconEntry('core-2.1.0/assets/bold/check.svg', 'file', prefix)).toBe(false);
+    expect(isTargetIconEntry(`core-${COMMIT_SHA}/assets/bold/check.svg`, 'file', prefix)).toBe(false);
   });
 
   it('rejects directories', () => {
-    expect(isTargetIconEntry('core-2.1.0/assets/regular/', 'directory', prefix)).toBe(false);
+    expect(isTargetIconEntry(`${prefix}/`, 'directory', prefix)).toBe(false);
   });
 
   it('rejects non-svg files', () => {
-    expect(isTargetIconEntry('core-2.1.0/assets/regular/readme.md', 'file', prefix)).toBe(false);
+    expect(isTargetIconEntry(`${prefix}/readme.md`, 'file', prefix)).toBe(false);
   });
 });
 
@@ -131,44 +227,40 @@ describe('isTargetIconEntry()', () => {
 // -------------------------------------------------------------------------- //
 
 describe('buildFingerprintKey()', () => {
+  const fp = {
+    assetsFolder: 'assets',
+    fileName: 'v.zip',
+    sourceRef: COMMIT_SHA,
+    sourceRefType: 'commit' as const,
+    sourceUrl: 'https://x',
+    svgFolder: `core-${COMMIT_SHA}`,
+    weight: 'regular' as const,
+  };
+
   it('is stable regardless of property order', () => {
-    const a = buildFingerprintKey({
-      assetsFolder: 'assets',
-      fileName: 'v.zip',
-      sourceRef: 'v1',
-      sourceUrl: 'https://x',
-      svgFolder: 'core',
-      weight: 'regular',
-    });
+    const a = buildFingerprintKey(fp);
     const b = buildFingerprintKey({
-      weight: 'regular',
-      svgFolder: 'core',
-      sourceUrl: 'https://x',
-      sourceRef: 'v1',
-      fileName: 'v.zip',
-      assetsFolder: 'assets',
+      weight: fp.weight,
+      svgFolder: fp.svgFolder,
+      sourceUrl: fp.sourceUrl,
+      sourceRefType: fp.sourceRefType,
+      sourceRef: fp.sourceRef,
+      fileName: fp.fileName,
+      assetsFolder: fp.assetsFolder,
     });
     expect(a).toBe(b);
   });
 
-  it('changes when any tuple field changes', () => {
-    const base = buildFingerprintKey({
-      assetsFolder: 'assets',
-      fileName: 'v.zip',
-      sourceRef: 'v1',
-      sourceUrl: 'https://x',
-      svgFolder: 'core',
-      weight: 'regular',
-    });
-    const withRef = buildFingerprintKey({
-      assetsFolder: 'assets',
-      fileName: 'v.zip',
-      sourceRef: 'v2',
-      sourceUrl: 'https://x',
-      svgFolder: 'core',
-      weight: 'regular',
-    });
-    expect(base).not.toBe(withRef);
+  it('changes when sourceRef changes', () => {
+    const base = buildFingerprintKey(fp);
+    const bumped = buildFingerprintKey({ ...fp, sourceRef: 'abcdef1234567890abcdef1234567890abcdef12' });
+    expect(base).not.toBe(bumped);
+  });
+
+  it('changes when sourceRefType changes', () => {
+    const base = buildFingerprintKey(fp);
+    const withTag = buildFingerprintKey({ ...fp, sourceRefType: 'tag' });
+    expect(base).not.toBe(withTag);
   });
 });
 
@@ -195,30 +287,36 @@ describe('isUpToDate() with real filesystem', () => {
 
   const expected = {
     assetsFolder: 'assets',
-    fileName: 'v2.1.0.zip',
-    sourceRef: 'v2.1.0',
-    sourceUrl: 'https://example.com/tags',
-    svgFolder: 'core-2.1.0',
+    fileName: `${COMMIT_SHA.slice(0, 12)}.zip`,
+    sourceRef: COMMIT_SHA,
+    sourceRefType: 'commit' as const,
+    sourceUrl: 'https://github.com/phosphor-icons/core',
+    svgFolder: `core-${COMMIT_SHA}`,
     weight: 'regular' as const,
   };
 
-  it('returns true when metadata + files match', async () => {
-    await seedIcons(workDir, {
-      'check.svg': '<svg />',
-      'close.svg': '<svg />',
-    });
-    const files = await listSvgFiles(workDir);
-    const iconsHash = await computeIconsHash(workDir, files);
-    const metadataFilePath = join(workDir, '.icons-meta.json');
-    await writeMetadata(metadataFilePath, {
+  const seedMetadata = async (dir: string, iconsHash: string, iconCount: number, checksum = 'sha256-abc') => {
+    await writeMetadata(join(dir, '.icons-meta.json'), {
       ...expected,
-      iconCount: files.length,
+      iconCount,
       iconsHash,
       generatedAt: new Date().toISOString(),
+      observedChecksum: checksum,
     });
+  };
 
+  it('returns true when metadata + files match', async () => {
+    await seedIcons(workDir, { 'check.svg': '<svg />', 'close.svg': '<svg />' });
+    const files = await listSvgFiles(workDir);
+    const iconsHash = await computeIconsHash(workDir, files);
+    await seedMetadata(workDir, iconsHash, files.length);
     await expect(
-      isUpToDate({ expected, extractToPath: workDir, metadataFilePath, minSvgCount: 1 }),
+      isUpToDate({
+        expected,
+        extractToPath: workDir,
+        metadataFilePath: join(workDir, '.icons-meta.json'),
+        minSvgCount: 1,
+      }),
     ).resolves.toBe(true);
   });
 
@@ -238,38 +336,43 @@ describe('isUpToDate() with real filesystem', () => {
     await seedIcons(workDir, { 'check.svg': '<svg />' });
     const files = await listSvgFiles(workDir);
     const iconsHash = await computeIconsHash(workDir, files);
-    const metadataFilePath = join(workDir, '.icons-meta.json');
-    await writeMetadata(metadataFilePath, {
-      ...expected,
-      iconCount: files.length,
-      iconsHash,
-      generatedAt: new Date().toISOString(),
-    });
-
+    await seedMetadata(workDir, iconsHash, files.length);
     await writeFile(join(workDir, 'check.svg'), '<svg data-tampered />', 'utf8');
-
     await expect(
-      isUpToDate({ expected, extractToPath: workDir, metadataFilePath, minSvgCount: 1 }),
+      isUpToDate({
+        expected,
+        extractToPath: workDir,
+        metadataFilePath: join(workDir, '.icons-meta.json'),
+        minSvgCount: 1,
+      }),
     ).resolves.toBe(false);
   });
 
-  it('returns false when source ref changed', async () => {
+  it('returns false when source ref changes', async () => {
     await seedIcons(workDir, { 'check.svg': '<svg />' });
     const files = await listSvgFiles(workDir);
     const iconsHash = await computeIconsHash(workDir, files);
-    const metadataFilePath = join(workDir, '.icons-meta.json');
-    await writeMetadata(metadataFilePath, {
-      ...expected,
-      iconCount: files.length,
-      iconsHash,
-      generatedAt: new Date().toISOString(),
-    });
-
+    await seedMetadata(workDir, iconsHash, files.length);
     await expect(
       isUpToDate({
-        expected: { ...expected, sourceRef: 'v2.2.0' },
+        expected: { ...expected, sourceRef: 'abcdef1234567890abcdef1234567890abcdef12' },
         extractToPath: workDir,
-        metadataFilePath,
+        metadataFilePath: join(workDir, '.icons-meta.json'),
+        minSvgCount: 1,
+      }),
+    ).resolves.toBe(false);
+  });
+
+  it('returns false when sourceRefType changes even with same ref', async () => {
+    await seedIcons(workDir, { 'check.svg': '<svg />' });
+    const files = await listSvgFiles(workDir);
+    const iconsHash = await computeIconsHash(workDir, files);
+    await seedMetadata(workDir, iconsHash, files.length);
+    await expect(
+      isUpToDate({
+        expected: { ...expected, sourceRefType: 'tag' },
+        extractToPath: workDir,
+        metadataFilePath: join(workDir, '.icons-meta.json'),
         minSvgCount: 1,
       }),
     ).resolves.toBe(false);
@@ -279,16 +382,14 @@ describe('isUpToDate() with real filesystem', () => {
     await seedIcons(workDir, { 'check.svg': '<svg />' });
     const files = await listSvgFiles(workDir);
     const iconsHash = await computeIconsHash(workDir, files);
-    const metadataFilePath = join(workDir, '.icons-meta.json');
-    await writeMetadata(metadataFilePath, {
-      ...expected,
-      iconCount: files.length,
-      iconsHash,
-      generatedAt: new Date().toISOString(),
-    });
-
+    await seedMetadata(workDir, iconsHash, files.length);
     await expect(
-      isUpToDate({ expected, extractToPath: workDir, metadataFilePath, minSvgCount: 10 }),
+      isUpToDate({
+        expected,
+        extractToPath: workDir,
+        metadataFilePath: join(workDir, '.icons-meta.json'),
+        minSvgCount: 10,
+      }),
     ).resolves.toBe(false);
   });
 });
@@ -310,15 +411,7 @@ describe('runExecutor() orchestration', () => {
     vi.restoreAllMocks();
   });
 
-  const runOptions = (): IconsExecutorSchema => ({
-    assetsFolder: 'assets',
-    downloadPath: 'tmp',
-    extractToPath: 'svg-out',
-    fileName: 'v2.1.0.zip',
-    sourceRef: 'v2.1.0',
-    sourceUrl: 'https://example.com/tags',
-    svgFolder: 'core-2.1.0',
-  });
+  const runOptions = (): IconsExecutorSchema => ({ ...baseCommitOptions });
 
   it('short-circuits when cache is valid', async () => {
     vi.doMock('../lib/download', () => ({
@@ -336,22 +429,24 @@ describe('runExecutor() orchestration', () => {
       };
     });
 
-    // Seed valid cache
     const { computeIconsHash: hash, listSvgFiles: list, writeMetadata: write } = await import('../lib/metadata');
     const outDir = join(workDir, 'svg-out');
-    await writeFile(join(await ensure(outDir), 'check.svg'), '<svg />', 'utf8');
+    await mkdir(outDir, { recursive: true });
+    await writeFile(join(outDir, 'check.svg'), '<svg />', 'utf8');
     const files = await list(outDir);
     const iconsHash = await hash(outDir, files);
     await write(join(outDir, '.icons-meta.json'), {
       assetsFolder: 'assets',
-      fileName: 'v2.1.0.zip',
-      sourceRef: 'v2.1.0',
-      sourceUrl: 'https://example.com/tags',
-      svgFolder: 'core-2.1.0',
+      fileName: `${COMMIT_SHA.slice(0, 12)}.zip`,
+      sourceRef: COMMIT_SHA,
+      sourceRefType: 'commit',
+      sourceUrl: 'https://github.com/phosphor-icons/core',
+      svgFolder: `core-${COMMIT_SHA}`,
       weight: 'regular',
       iconCount: files.length,
       iconsHash,
       generatedAt: new Date().toISOString(),
+      observedChecksum: 'sha256-abc',
     });
 
     const runExecutor = (await import('../executor')).default;
@@ -361,17 +456,39 @@ describe('runExecutor() orchestration', () => {
 
   it('returns { success: false } on normalization error', async () => {
     const runExecutor = (await import('../executor')).default;
-    const result = await runExecutor(
-      { ...runOptions(), sourceRef: '' },
-      makeContext(workDir) as never,
-    );
+    const result = await runExecutor({ ...runOptions(), sourceRef: '' }, makeContext(workDir) as never);
     expect(result).toEqual({ success: false });
   });
-});
 
-// Helper used above — ensures a dir exists and returns it.
-async function ensure(dir: string): Promise<string> {
-  const { mkdir } = await import('node:fs/promises');
-  await mkdir(dir, { recursive: true });
-  return dir;
-}
+  it('captures observedChecksum + hint in metadata when no sourceChecksum pinned', async () => {
+    const fakeZip = Buffer.from('fake-zip-payload');
+    vi.doMock('../lib/download', () => ({
+      downloadArchive: vi.fn(async ({ archiveFilePath }: { archiveFilePath: string }) => {
+        await mkdir(join(archiveFilePath, '..'), { recursive: true });
+        await writeFile(archiveFilePath, fakeZip);
+        return { buffer: fakeZip, checksum: `sha256-${'a'.repeat(64)}` };
+      }),
+    }));
+    vi.doMock('../lib/extract', async () => {
+      const actual = await vi.importActual<typeof import('../lib/extract')>('../lib/extract');
+      return {
+        ...actual,
+        extractIcons: vi.fn(async ({ extractToPath }: { extractToPath: string }) => {
+          await mkdir(extractToPath, { recursive: true });
+          await writeFile(join(extractToPath, 'check.svg'), '<svg />', 'utf8');
+          return { count: 1, fileNames: ['check.svg'] };
+        }),
+      };
+    });
+
+    const runExecutor = (await import('../executor')).default;
+    const result = await runExecutor(runOptions(), makeContext(workDir) as never);
+    expect(result).toEqual({ success: true });
+
+    const metadataRaw = await readFile(join(workDir, 'svg-out', '.icons-meta.json'), 'utf8');
+    const metadata = JSON.parse(metadataRaw) as Record<string, unknown>;
+    expect(metadata.observedChecksum).toBe(`sha256-${'a'.repeat(64)}`);
+    expect(metadata.pinnedChecksumHint).toBe(PINNED_CHECKSUM_HINT);
+    expect(metadata.sourceChecksum).toBeUndefined();
+  });
+});

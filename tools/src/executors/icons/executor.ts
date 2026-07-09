@@ -1,19 +1,19 @@
+import type { ExecutorContext, PromiseExecutor } from '@nx/devkit';
 import { remove } from 'fs-extra';
 
-import type { ExecutorContext, PromiseExecutor } from '@nx/devkit';
-
 import {
-  IconsExecutorError,
   computeIconsHash,
   createIconsLogger,
   downloadArchive,
   extractIcons,
-  isUpToDate,
-  normalizeOptions,
-  writeMetadata,
   type FingerprintInput,
+  IconsExecutorError,
   type IconsMetadata,
+  isUpToDate,
   type NormalizedOptions,
+  normalizeOptions,
+  PINNED_CHECKSUM_HINT,
+  writeMetadata,
 } from './lib';
 import type { IconsExecutorSchema } from './schema';
 
@@ -22,6 +22,7 @@ const toFingerprint = (options: NormalizedOptions): FingerprintInput => ({
   fileName: options.fileName,
   sourceChecksum: options.sourceChecksum,
   sourceRef: options.sourceRef,
+  sourceRefType: options.sourceRefType,
   sourceUrl: options.sourceUrl,
   svgFolder: options.svgFolder,
   weight: options.weight,
@@ -36,10 +37,7 @@ const cleanupDownload = async (options: NormalizedOptions): Promise<void> => {
   }
 };
 
-const runExecutor: PromiseExecutor<IconsExecutorSchema> = async (
-  rawOptions,
-  context: ExecutorContext,
-) => {
+const runExecutor: PromiseExecutor<IconsExecutorSchema> = async (rawOptions, context: ExecutorContext) => {
   const log = createIconsLogger();
 
   let options: NormalizedOptions;
@@ -69,12 +67,11 @@ const runExecutor: PromiseExecutor<IconsExecutorSchema> = async (
       }
     }
 
-    log.start(`Downloading Phosphor icon archive (${options.sourceRef})`);
+    log.start(`Downloading Phosphor icon archive (${options.sourceRefType}: ${options.sourceRef})`);
     const { checksum } = await downloadArchive({
       archiveFilePath: options.archiveFilePath,
+      archiveUrl: options.archiveUrl,
       expectedChecksum: options.sourceChecksum,
-      fileName: options.fileName,
-      sourceUrl: options.sourceUrl,
     });
     log.success(`Downloaded ${options.fileName} (${checksum.slice(0, 15)}…)`);
 
@@ -100,14 +97,19 @@ const runExecutor: PromiseExecutor<IconsExecutorSchema> = async (
     const iconsHash = await computeIconsHash(options.absoluteExtractToPath, fileNames);
     const metadata: IconsMetadata = {
       ...expected,
-      sourceChecksum: options.sourceChecksum ?? checksum,
       iconCount: count,
       iconsHash,
       generatedAt: new Date().toISOString(),
+      observedChecksum: checksum,
+      ...(options.sourceChecksum ? {} : { pinnedChecksumHint: PINNED_CHECKSUM_HINT }),
     };
 
     await writeMetadata(options.metadataFilePath, metadata);
     log.success('Metadata fingerprint written');
+
+    if (!options.sourceChecksum) {
+      log.info(`No "sourceChecksum" pinned. Observed: ${checksum}. ${PINNED_CHECKSUM_HINT}`);
+    }
 
     await cleanupDownload(options);
     return { success: true };

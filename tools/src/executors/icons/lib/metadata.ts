@@ -1,17 +1,18 @@
 import { createHash } from 'node:crypto';
-import { readFile, readdir } from 'node:fs/promises';
+import { readdir, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
 import { pathExists, readJson, writeJson } from 'fs-extra';
 
+import type { PhosphorWeight, SourceRefType } from '../schema';
 import { asIconsError } from './errors';
-import type { PhosphorWeight } from '../schema';
 
 export interface FingerprintInput {
   assetsFolder: string;
   fileName: string;
   sourceChecksum?: string;
   sourceRef: string;
+  sourceRefType: SourceRefType;
   sourceUrl: string;
   svgFolder: string;
   weight: PhosphorWeight;
@@ -21,10 +22,17 @@ export interface IconsMetadata extends FingerprintInput {
   iconCount: number;
   iconsHash: string;
   generatedAt: string;
+  /** Actual sha256 of the downloaded archive, always captured. */
+  observedChecksum: string;
+  /** Human-readable hint written only when `sourceChecksum` is not pinned. */
+  pinnedChecksumHint?: string;
 }
 
 const sha256Buffer = (buffer: Buffer): string => `sha256-${createHash('sha256').update(buffer).digest('hex')}`;
 const sha256String = (value: string): string => `sha256-${createHash('sha256').update(value).digest('hex')}`;
+
+export const PINNED_CHECKSUM_HINT =
+  'To make future runs fail-fast on upstream drift, copy `observedChecksum` above into your project.json under `sourceChecksum`.';
 
 export const buildFingerprintKey = (input: FingerprintInput): string =>
   JSON.stringify({
@@ -32,6 +40,7 @@ export const buildFingerprintKey = (input: FingerprintInput): string =>
     fileName: input.fileName,
     sourceChecksum: input.sourceChecksum ?? null,
     sourceRef: input.sourceRef,
+    sourceRefType: input.sourceRefType,
     sourceUrl: input.sourceUrl,
     svgFolder: input.svgFolder,
     weight: input.weight,
