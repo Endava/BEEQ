@@ -43,6 +43,10 @@ jobs:
       - name: 💫 Load and cache dependencies
         uses: ./.github/actions/cache-deps
 
+      - name: 🎨 Prepare BEEQ icon assets
+        run: pnpm exec nx run beeq:icons --output-style=stream
+        shell: bash
+
       - name: ⏳ Build
         run: pnpm build
         shell: bash

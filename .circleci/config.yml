@@ -135,7 +135,13 @@ jobs:
           command: pnpm exec nx affected -t e2e-ci --exclude='*,!tag:core' --parallel=3 --base=$NX_BASE --head=$NX_HEAD --verbose --no-agents
       - run:
           name: 📚 Build Storybook
-          command: pnpm exec nx run beeq:storybook-build --output-style=stream --verbose
+          # Storybook consumes the flattened SVG assets under
+          # packages/beeq/src/components/icon/svg/, so ensure they are
+          # extracted before building. `storybook-build` does not gate on
+          # icons to keep local `pnpm storybook` fast.
+          command: |
+            pnpm exec nx run beeq:icons --output-style=stream
+            pnpm exec nx run beeq:storybook-build --output-style=stream --verbose
       # Stop Nx Cloud agents
       - run:
           name: ⏹️ Stop Nx Cloud Agents
