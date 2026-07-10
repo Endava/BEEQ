@@ -1033,7 +1033,9 @@ export class BqDatePicker {
   /* ------------------------- Grid keyboard nav --------------------------- */
 
   private getRTLDirection = (): 1 | -1 => {
-    const dir = this.el.ownerDocument?.dir || getComputedStyle(this.el).direction;
+    // Walk up through the composed tree so that dir="rtl" set on <html> or
+    // any ancestor is picked up, not just a direct attribute on the host.
+    const dir = (this.el.closest('[dir]') as HTMLElement)?.dir ?? getComputedStyle(this.el).direction;
     return dir === 'rtl' ? -1 : 1;
   };
 
