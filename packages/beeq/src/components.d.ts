@@ -745,6 +745,7 @@ export namespace Components {
      * @dependency bq-icon
      * @attr {boolean} autofocus - If `true`, the Date picker input will be focused on component render.
      * @attr {string} clear-button-label - The clear button aria label.
+     * @attr {string} calendar-button-label - The aria-label for the calendar trigger button.
      * @attr {boolean} disable-clear - If `true`, the clear button won't be displayed.
      * @attr {boolean} disabled - Indicates whether the Date picker input is disabled or not.
      * @attr {number} distance - Represents the distance between the panel and the input.
@@ -819,6 +820,11 @@ export namespace Components {
           * @default false
          */
         "autofocus": boolean;
+        /**
+          * The aria-label for the calendar trigger button.
+          * @default 'Open calendar'
+         */
+        "calendarButtonLabel": string;
         /**
           * Clears the selected value and any pending validation state (bad input, bounds overflow). Emits `bqClear`. No-op when the component is disabled.
           * @returns A promise that resolves once the value has been cleared.
@@ -3858,6 +3864,7 @@ declare global {
      * @dependency bq-icon
      * @attr {boolean} autofocus - If `true`, the Date picker input will be focused on component render.
      * @attr {string} clear-button-label - The clear button aria label.
+     * @attr {string} calendar-button-label - The aria-label for the calendar trigger button.
      * @attr {boolean} disable-clear - If `true`, the clear button won't be displayed.
      * @attr {boolean} disabled - Indicates whether the Date picker input is disabled or not.
      * @attr {number} distance - Represents the distance between the panel and the input.
@@ -6221,6 +6228,7 @@ declare namespace LocalJSX {
      * @dependency bq-icon
      * @attr {boolean} autofocus - If `true`, the Date picker input will be focused on component render.
      * @attr {string} clear-button-label - The clear button aria label.
+     * @attr {string} calendar-button-label - The aria-label for the calendar trigger button.
      * @attr {boolean} disable-clear - If `true`, the clear button won't be displayed.
      * @attr {boolean} disabled - Indicates whether the Date picker input is disabled or not.
      * @attr {number} distance - Represents the distance between the panel and the input.
@@ -6295,6 +6303,11 @@ declare namespace LocalJSX {
           * @default false
          */
         "autofocus"?: boolean;
+        /**
+          * The aria-label for the calendar trigger button.
+          * @default 'Open calendar'
+         */
+        "calendarButtonLabel"?: string;
         /**
           * The clear button aria label.
           * @default 'Clear value'
@@ -8976,6 +8989,7 @@ declare namespace LocalJSX {
     interface BqDatePickerAttributes {
         "autofocus": boolean;
         "clearButtonLabel": string;
+        "calendarButtonLabel": string;
         "disableClear": boolean;
         "disabled": boolean;
         "distance": number;
@@ -9728,6 +9742,7 @@ declare module "@stencil/core" {
              * @dependency bq-icon
              * @attr {boolean} autofocus - If `true`, the Date picker input will be focused on component render.
              * @attr {string} clear-button-label - The clear button aria label.
+             * @attr {string} calendar-button-label - The aria-label for the calendar trigger button.
              * @attr {boolean} disable-clear - If `true`, the clear button won't be displayed.
              * @attr {boolean} disabled - Indicates whether the Date picker input is disabled or not.
              * @attr {number} distance - Represents the distance between the panel and the input.

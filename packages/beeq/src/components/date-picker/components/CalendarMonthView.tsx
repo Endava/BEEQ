@@ -98,7 +98,13 @@ const chunkMonths = (months: string[], columns: number): Array<Array<{ month: nu
 };
 
 const renderMonthCell = ({ month, name, state, onMonthSelect, onMonthFocus, onMonthHover }: TRenderMonthCellArgs) => (
-  <div aria-selected={state.selected ? 'true' : undefined} class="bq-date-picker__month-gridcell" role="gridcell" key={month}>
+  // biome-ignore lint/a11y/useFocusableInteractive: gridcell is a structural ARIA container; focus is managed by the child <button> via roving tabindex
+  <div
+    aria-selected={state.selected ? 'true' : undefined}
+    class="bq-date-picker__month-gridcell"
+    role="gridcell"
+    key={month}
+  >
     <button
       aria-disabled={state.disabled ? 'true' : undefined}
       class={{
@@ -156,6 +162,7 @@ export const CalendarMonthView: FunctionalComponent<TCalendarMonthViewProps> = (
       tabIndex={-1}
     >
       {rows.map((row, rowIndex) => (
+        // biome-ignore lint/a11y/useFocusableInteractive: gridcell is a structural ARIA container; focus is managed by the child <button> via roving tabindex
         <div class="bq-date-picker__month-row" role="row" key={`month-row-${rowIndex}`}>
           {row.map(({ month, name }) => {
             const state = buildMonthCellState(year, month, focusedMonth, minISO, maxISO, effectiveSelection, type);

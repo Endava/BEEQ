@@ -93,7 +93,13 @@ const chunkYears = (years: number[], columns: number): number[][] => {
 };
 
 const renderYearCell = ({ year, state, onYearSelect, onYearFocus, onYearHover }: TRenderYearCellArgs) => (
-  <div aria-selected={state.selected ? 'true' : undefined} class="bq-date-picker__year-gridcell" key={year} role="gridcell">
+  // biome-ignore lint/a11y/useFocusableInteractive: gridcell is a structural ARIA container; focus is managed by the child <button> via roving tabindex
+  <div
+    aria-selected={state.selected ? 'true' : undefined}
+    class="bq-date-picker__year-gridcell"
+    key={year}
+    role="gridcell"
+  >
     <button
       aria-disabled={state.disabled ? 'true' : undefined}
       class={{
@@ -149,6 +155,7 @@ export const CalendarYearView: FunctionalComponent<TCalendarYearViewProps> = ({
       tabIndex={-1}
     >
       {rows.map((row, rowIndex) => (
+        // biome-ignore lint/a11y/useFocusableInteractive: gridcell is a structural ARIA container; focus is managed by the child <button> via roving tabindex
         <div class="bq-date-picker__year-row" key={`year-row-${rowIndex}`} role="row">
           {row.map((year) => {
             const state = buildYearCellState(year, focusedYear, minISO, maxISO, effectiveSelection, type);

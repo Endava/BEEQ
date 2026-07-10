@@ -67,7 +67,6 @@
   border: var(--bq-date-picker--border-width) var(--bq-date-picker--border-style)
     var(--bq-date-picker--border-color);
   border-radius: var(--bq-date-picker--border-radius);
-  overflow: hidden;
   background-color: var(--bq-date-picker--background-color);
   color: var(--bq-date-picker--text-color);
   font-size: var(--bq-date-picker--text-size);
@@ -179,32 +178,36 @@
   }
 }
 
+/* -------------------------------------------------------------------------- */
+/*                                   Actions                                  */
+/* -------------------------------------------------------------------------- */
+
+// Shared styles for the clear and calendar trigger buttons.
+// These buttons are rendered inside the control, so they need to be styled
+// to match the control's height and padding, and to remove their own borders.
+%dp-action-button {
+  margin-inline-start: var(--bq-date-picker--gap);
+
+  &::part(button) {
+    --bq-ring-width: initial;
+    --bq-ring-offset-width: initial;
+
+    border: none;
+    padding: 0;
+  }
+
+  bq-icon { display: flex; }
+}
+
 /* --------------------------- Clear button -------------------------------- */
 
 // The clear button is only rendered when the picker has a value:
 // it stays hidden until the control is hovered, focused,
 // or the calendar popup is open.
 .bq-date-picker__clear {
+  @extend %dp-action-button;
+
   display: none;
-  margin-inline-start: var(--bq-date-picker--gap);
-
-  &::part(button) {
-    // Reset the inherited focus ring styles inside the input group.
-    --bq-ring-width: initial;
-    --bq-ring-offset-width: initial;
-    --bq-ring-color-focus: initial;
-
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    padding: 0;
-  }
-
-  // Avoid the inline-baseline gap that inline elements (like bq-icon) introduce inside the button.
-  bq-icon {
-    display: flex;
-  }
 }
 
 .bq-date-picker__control:is(:hover, :focus-within, .is-open):not(.is-disabled)
@@ -214,26 +217,11 @@
 
 /* ------------------------- Calendar trigger button ----------------------- */
 
+// The calendar trigger button is always rendered, but it is disabled when the picker is disabled.
 .bq-date-picker__calendar-trigger {
-  margin-inline-start: var(--bq-date-picker--gap);
+  @extend %dp-action-button;
 
-  &::part(button) {
-    // Reset inherited focus ring from the parent control group.
-    --bq-ring-width: initial;
-    --bq-ring-offset-width: initial;
-    --bq-ring-color-focus: initial;
-
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    padding: 0;
-  }
-
-  bq-icon {
-    display: flex;
-    font-size: var(--bq-date-picker--icon-size);
-  }
+  display: inline-flex;
 }
 
 /* -------------------------------------------------------------------------- */
