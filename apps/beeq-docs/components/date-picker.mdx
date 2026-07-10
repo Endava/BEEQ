@@ -625,14 +625,13 @@ Combine the label slot with a tooltip when users may need a short explanation be
   <CodeGroup>
     ```html HTML icon="html5" expandable
     <bq-date-picker name="arrival-date-tooltip" value="2026-09-11">
-      <div slot="label">
-        <label>Arrival date</label>
+      <label slot="label">
+        Arrival date
         <bq-tooltip>
           You can provide more context detail by adding a tooltip to the label.
           <bq-icon name="info" slot="trigger"></bq-icon>
         </bq-tooltip>
-        <span>Optional</span>
-      </div>
+      </label>
     </bq-date-picker>
     ```
 
@@ -640,14 +639,13 @@ Combine the label slot with a tooltip when users may need a short explanation be
     import { BqDatePicker, BqIcon, BqTooltip } from "@beeq/react";
 
     <BqDatePicker name="arrival-date-tooltip" value="2026-09-11">
-      <div slot="label">
-        <label>Arrival date</label>
+      <label slot="label">
+        Arrival date
         <BqTooltip>
           You can provide more context detail by adding a tooltip to the label.
           <BqIcon name="info" slot="trigger" />
         </BqTooltip>
-        <span>Optional</span>
-      </div>
+      </label>
     </BqDatePicker>
     ```
 
@@ -661,14 +659,13 @@ Combine the label slot with a tooltip when users may need a short explanation be
       imports: [BqDatePicker, BqIcon, BqTooltip],
       template: `
         <bq-date-picker name="arrival-date-tooltip" value="2026-09-11">
-          <div slot="label">
-            <label>Arrival date</label>
+          <label slot="label">
+            Arrival date
             <bq-tooltip>
               You can provide more context detail by adding a tooltip to the label.
               <bq-icon name="info" slot="trigger"></bq-icon>
             </bq-tooltip>
-            <span>Optional</span>
-          </div>
+          </label>
         </bq-date-picker>
       `
     })
@@ -682,14 +679,13 @@ Combine the label slot with a tooltip when users may need a short explanation be
 
     <template>
       <BqDatePicker name="arrival-date-tooltip" value="2026-09-11">
-        <div slot="label">
-          <label>Arrival date</label>
+        <label slot="label">
+          Arrival date
           <BqTooltip>
             You can provide more context detail by adding a tooltip to the label.
             <BqIcon name="info" slot="trigger" />
           </BqTooltip>
-          <span>Optional</span>
-        </div>
+        </label>
       </BqDatePicker>
     </template>
     ```
@@ -1562,7 +1558,8 @@ Use `formatOptions` when the selected date needs a more descriptive text format 
 
 | Property | Attribute | Description | Type | Default |
 |---|---|---|---|---|
-| `autofocus` | `autofocus` | If `true`, the input is focused on component render | `boolean` | `undefined` |
+| `autofocus` | `autofocus` | If `true`, the input is focused on component render | `boolean` | `false` |
+| `calendarButtonLabel` | `calendar-button-label` | Accessible label for the calendar trigger button | `string` | `"Open calendar"` |
 | `clearButtonLabel` | `clear-button-label` | Accessible label for the clear button | `string` | `"Clear value"` |
 | `disableClear` | `disable-clear` | If `true`, the clear button is hidden | `boolean` | `false` |
 | `disabled` | `disabled` | Disables the date picker | `boolean` | `false` |
@@ -1628,74 +1625,77 @@ Use `formatOptions` when the selected date needs a more descriptive text format 
 | Part | Description |
 |---|---|
 | `base` | Base wrapper for the component |
-| `button` | Native HTML `<button>` element used inside the clear button |
-| `control` | Input control wrapper |
-| `input` | Native text input used under the hood |
 | `label` | Label slot container |
+| `control` | Input control wrapper |
 | `prefix` | Prefix slot container |
 | `suffix` | Suffix slot container |
+| `input` | Native input element |
 | `clear-btn` | Clear button |
-| `panel` | Date picker panel container |
-| `calendar__button` | Calendar navigation and day buttons |
-| `calendar__container` | Calendar container |
-| `calendar__day` | Day cells in the calendar grid |
-| `calendar__disabled` | Disabled day buttons |
-| `calendar__disallowed` | Days disabled via `isDateDisallowed` |
-| `calendar__head` | Table header row |
-| `calendar__header` | Calendar header wrapper |
-| `calendar__heading` | Calendar month heading |
-| `calendar__next` | Next month button |
-| `calendar__outside` | Outside-month day cells |
-| `calendar__previous` | Previous month button |
-| `calendar__range-end` | Range end date |
-| `calendar__range-inner` | Dates inside a selected range |
-| `calendar__range-start` | Range start date |
-| `calendar__selected` | Selected day cells |
-| `calendar__table` | Calendar table element |
-| `calendar__td` | Calendar body cells |
-| `calendar__th` | Calendar header cells |
-| `calendar__today` | Today's date cell |
-| `calendar__tr` | Calendar rows |
-| `calendar__week` | Week rows in the calendar body |
+| `calendar-trigger` | Calendar icon trigger button |
+| `button` | Any button rendered inside the calendar (nav or day/month/year cell) |
+| `panel` | Dropdown panel container |
+| `calendar__container` | Calendar panels wrapper |
+| `calendar__header` | Header row (previous / title / next) |
+| `calendar__heading` | Header title button (or month label above a panel) |
+| `calendar__previous` | Previous navigation button |
+| `calendar__next` | Next navigation button |
+| `calendar__table` | Day-view `<table>` element |
+| `calendar__head` | Day-view table header row wrapper |
+| `calendar__tr` | Any row within the day-view table |
+| `calendar__th` | Day-view weekday header cells |
+| `calendar__week` | Body rows in the day-view table |
+| `calendar__td` | Body cells in the day-view table |
+| `calendar__day` | Any day button in the day view |
+| `calendar__today` | Button representing today's date |
+| `calendar__selected` | Any selected day |
+| `calendar__outside` | Any day outside the visible month |
+| `calendar__disallowed` | Any day rejected by `isDateDisallowed` |
+| `calendar__disabled` | Any button disabled by min/max |
+| `calendar__range-start` | First day of a range selection |
+| `calendar__range-end` | Last day of a range selection |
+| `calendar__range-inner` | Days between the start and end of a range |
+| `calendar__months` | Month-view grid |
+| `calendar__month` | Any month button |
+| `calendar__month-selected` | Currently selected month |
+| `calendar__years` | Year-view grid |
+| `calendar__year` | Any year button |
+| `calendar__year-selected` | Currently selected year |
 
 ### CSS custom properties
 
 <Expandable title="CSS variables" defaultOpen={false}>
   | Variable | Description | Default |
   |---|---|---|
-  | `--bq-date-picker--background-color` | Background color | `var(--bq-ui--primary)` |
-  | `--bq-date-picker--border-color` | Border color | `var(--bq-stroke--tertiary)` |
-  | `--bq-date-picker--border-color-disabled` | Border color when disabled | Inherits `--bq-date-picker--border-color`; the control applies `opacity-60` |
+  | `--bq-date-picker--background-color` | Input background color | `var(--bq-ui--primary)` |
+  | `--bq-date-picker--border-color` | Input border color | `var(--bq-stroke--tertiary)` |
+  | `--bq-date-picker--border-color-disabled` | Border color when disabled | `var(--bq-stroke--secondary)` |
   | `--bq-date-picker--border-color-focus` | Border color on focus | `var(--bq-stroke--brand)` |
-  | `--bq-date-picker--border-radius` | Border radius | `var(--bq-radius--s)` |
+  | `--bq-date-picker--border-radius` | Input border radius | `var(--bq-radius--s)` |
   | `--bq-date-picker--border-style` | Border style | `solid` |
-  | `--bq-date-picker--border-width` | Border width | `var(--bq-stroke-s)` |
-  | `--bq-date-picker--currentDate-border-color` | Border color for today | `var(--bq-stroke--brand)` |
-  | `--bq-date-picker--currentDate-border-width` | Border width for today | `var(--bq-stroke-m)` |
-  | `--bq-date-picker--day-size` | Day cell size | `2.25rem` |
-  | `--bq-date-picker--gap` | Gap between content and prefix/suffix | `var(--bq-spacing-xs)` |
-  | `--bq-date-picker--icon-size` | Icon size for suffix/prefix and clear button | `24px` |
-  | `--bq-date-picker--label-margin-bottom` | Label margin bottom | `var(--bq-spacing-xs)` |
+  | `--bq-date-picker--border-width` | Border width | `1px` |
+  | `--bq-date-picker--currentDate-border-color` | Border color for today's date | `var(--bq-stroke--brand)` |
+  | `--bq-date-picker--currentDate-border-width` | Border width for today's date | `2px` |
+  | `--bq-date-picker--day-size` | Size of a day cell in the calendar | `2.25rem` |
+  | `--bq-date-picker--gap` | Gap between the input content and prefix/suffix | `var(--bq-spacing-xs)` |
+  | `--bq-date-picker--header-title-color` | Color of the per-panel month label in multi-panel view | `var(--bq-text--primary)` |
+  | `--bq-date-picker--icon-size` | Size of the icons used in prefix/suffix/clear | `1.5rem` |
+  | `--bq-date-picker--label-margin-bottom` | Space below the label | `var(--bq-spacing-xs)` |
   | `--bq-date-picker--label-text-color` | Label text color | `var(--bq-text--primary)` |
-  | `--bq-date-picker--label-text-size` | Label text size | `var(--bq-font-size--s)` |
-  | `--bq-date-picker--padding-end` | End padding | `var(--bq-spacing-m)` |
-  | `--bq-date-picker--padding-start` | Start padding | `var(--bq-spacing-m)` |
-  | `--bq-date-picker--paddingY` | Vertical padding | `var(--bq-spacing-s)` |
-  | `--bq-date-picker--range-background-color` | Selected range background | `var(--bq-ui--brand)` |
-  | `--bq-date-picker--range-inner-background-color` | Inner range background | `var(--bq-ui--brand-alt)` |
-  | `--bq-date-picker--text-color` | Text color | `var(--bq-text--primary)` |
+  | `--bq-date-picker--label-text-size` | Label text size | `0.875rem` |
+  | `--bq-date-picker--padding-end` | Input padding end | `var(--bq-spacing-m)` |
+  | `--bq-date-picker--padding-start` | Input padding start | `var(--bq-spacing-m)` |
+  | `--bq-date-picker--paddingY` | Input vertical padding | `var(--bq-spacing-s)` |
+  | `--bq-date-picker--range-background-color` | Background color for range start/end days | `var(--bq-ui--brand)` |
+  | `--bq-date-picker--range-inner-background-color` | Background color for inner range days | `var(--bq-ui--brand-alt)` |
+  | `--bq-date-picker--row-gap` | Vertical space between day-grid rows | `0.125rem` |
+  | `--bq-date-picker--text-color` | Input text color | `var(--bq-text--primary)` |
   | `--bq-date-picker--text-placeholder-color` | Placeholder text color | `var(--bq-text--secondary)` |
-  | `--bq-date-picker--text-size` | Input text size | `var(--bq-font-size--m)` |
-  | `--bq-date-picker--header-title-color` | Header title text color (month/year navigation button) | `var(--bq-text--primary)` |
-  | `--bq-date-picker--nav-button-size` | Size of the previous/next navigation buttons | `2rem` |
-  | `--bq-date-picker--panel-count` | Number of month panels rendered per row (set inline by the component from `months`) | `1` |
-  | `--bq-date-picker--row-gap` | Vertical gap between calendar grid rows | `0.125rem` |
-  | `--bq-date-picker--validation-color` | Border color when a validation status is set | `var(--bq-stroke--danger)` (switches to `success`/`warning` when set) |
-  | `--bq-date-picker--view-cell-background-hover` | Hover background for day/month/year cells | `var(--bq-ui--secondary-hover)` |
+  | `--bq-date-picker--text-size` | Input text size | `1rem` |
+  | `--bq-date-picker--view-cell-background-hover` | Hover background for day/month/year cells | `var(--bq-ui--secondary)` |
   | `--bq-date-picker--view-cell-background-selected` | Selected background for day/month/year cells | `var(--bq-ui--brand)` |
   | `--bq-date-picker--view-cell-height` | Height of month/year cells | `2.75rem` |
   | `--bq-date-picker--view-cell-radius` | Border radius of day/month/year cells | `0.5rem` |
-  | `--bq-date-picker--view-cell-text-selected` | Selected text color for day/month/year cells | `var(--bq-text--alt)` |
+  | `--bq-date-picker--view-cell-text-selected` | Text color for selected day/month/year cells | `var(--bq-text--alt)` |
 </Expandable>
 
 <Tip>
