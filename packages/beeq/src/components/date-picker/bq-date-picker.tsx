@@ -691,23 +691,10 @@ export class BqDatePicker {
     ev.stopPropagation();
   };
 
-  /**
-   * Toggles the calendar panel open/closed when the trigger button is activated.
-   * Stops event propagation so the parent `bq-dropdown` doesn't also react.
-   */
-  private handleTriggerClick = (ev: CustomEvent): void => {
+  /** Toggles the calendar panel open/closed when the trigger button is activated. */
+  private handleTriggerClick = (): void => {
     if (this.disabled) return;
     this.open = !this.open;
-    ev.stopPropagation();
-  };
-
-  /**
-   * Prevents the `bq-dropdown` from auto-opening on any click inside the
-   * control. Only the explicit trigger button (or keyboard shortcuts) should
-   * open the calendar panel.
-   */
-  private handleControlClick = (ev: MouseEvent): void => {
-    ev.stopPropagation();
   };
 
   /**
@@ -1394,7 +1381,6 @@ export class BqDatePicker {
               'is-disabled': !!this.disabled,
               'is-open': !!this.open,
             }}
-            onClick={this.handleControlClick}
             part={CALENDAR_PARTS.control}
             slot="trigger"
           >
@@ -1442,7 +1428,7 @@ export class BqDatePicker {
             {this.hasValue && !this.disabled && !this.disableClear && (
               <bq-button
                 appearance="text"
-                border="s"
+                border="xs"
                 class="bq-date-picker__clear"
                 exportparts="button"
                 label={this.clearButtonLabel}
@@ -1457,21 +1443,20 @@ export class BqDatePicker {
               </bq-button>
             )}
 
+            {/* biome-ignore lint/a11y/noStaticElementInteractions: bq-button renders a native <button> in its shadow DOM */}
             <bq-button
               appearance="text"
-              aria-controls={popupId}
-              aria-expanded={this.open ? 'true' : 'false'}
-              aria-haspopup="dialog"
-              border="s"
+              border="xs"
               class="bq-date-picker__calendar-trigger"
               disabled={this.disabled}
               exportparts="button"
               label={this.calendarButtonLabel}
+              onClick={(ev: MouseEvent) => ev.stopPropagation()}
               onBqClick={this.handleTriggerClick}
               onlyIcon
               part={`${CALENDAR_PARTS.button} ${CALENDAR_PARTS.suffix} ${CALENDAR_PARTS.calendarTrigger}`}
               ref={(el) => {
-                this.triggerBtnElem = el as HTMLBqButtonElement;
+                this.triggerBtnElem = el;
               }}
               size="small"
             >
