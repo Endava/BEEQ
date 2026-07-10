@@ -105,6 +105,9 @@ Use the default `single` type when users need to choose one date. This is the be
 <Note>
   Users can also enter a date manually. After pressing <kbd>Tab</kbd>, the component formats the value and reflects it in the calendar view.
 
+  The wire format of the `value` attribute — and of `min`/`max` — depends on `precision`:
+  `day` uses `YYYY-MM-DD`, `month` uses `YYYY-MM`, and `year` uses `YYYY`. For `type="range"` two tokens are joined with `/` (`start/end`); for `type="multi"` tokens are space-separated.
+
   Supported input formats include:
   - ISO format: `2024-05-30`
   - Text format: `30 May 2024`, `May 30, 2024`, `30 January 2024`, `January 1, 1970` (locale-aware)
@@ -1567,40 +1570,42 @@ Use `formatOptions` when the selected date needs a more descriptive text format 
 | `firstDayOfWeek` | `first-day-of-week` | First day of the week where Sunday is `0` | `0 \| 1 \| 2 \| 3 \| 4 \| 5 \| 6` | `1` |
 | `form` | `form` | ID of the form the input belongs to | `string` | `undefined` |
 | `formValidationMessage` | `form-validation-message` | Native validation message used when `required` is set | `string` | `undefined` |
-| `formatOptions` | *(property only)* | `Intl.DateTimeFormat` options used for the displayed value | `DateTimeFormatOptions` | `{ day: 'numeric', month: 'short', year: 'numeric' }` |
+| `formatOptions` | *(property only)* | `Intl.DateTimeFormat` options used for the displayed value. When omitted, defaults are derived from `precision` (`day` → `{ day, month, year }`, `month` → `{ month, year }`, `year` → `{ year }`) | `DateTimeFormatOptions` | `undefined` |
+| `initialView` | `initial-view` | Calendar view shown when the panel opens | `"days" \| "months" \| "years"` | `"days"` |
 | `isDateDisallowed` | *(property only)* | Function used to disable specific dates | `(date: Date) => boolean` | `undefined` |
 | `locale` | `locale` | Locale used to format and parse dates | `Intl.LocalesArgument` | `"en-GB"` |
 | `max` | `max` | Latest selectable date | `string` | `undefined` |
 | `min` | `min` | Earliest selectable date | `string` | `undefined` |
-| `months` | `months` | Number of months displayed for `range` and optionally `multi` | `number` | `undefined` |
+| `months` | `months` | Number of months displayed for `range` and optionally `multi` | `number` | `1` |
 | `monthsPerView` | `months-per-view` | How navigation moves through months: one month or the full visible view | `"single" \| "months"` | `"single"` |
 | `name` | `name` | Name of the underlying input | `string` | `undefined` |
 | `open` | `open` | If `true`, the calendar panel is visible | `boolean` | `false` |
 | `panelHeight` | `panel-height` | Overrides the panel height | `string` | `"auto"` |
 | `placeholder` | `placeholder` | Placeholder text | `string` | `undefined` |
 | `placement` | `placement` | Position of the calendar panel | `"top" \| "top-start" \| "top-end" \| "right" \| "right-start" \| "right-end" \| "bottom" \| "bottom-start" \| "bottom-end" \| "left" \| "left-start" \| "left-end"` | `"bottom-end"` |
-| `required` | `required` | Marks the date picker as required | `boolean` | `undefined` |
+| `precision` | `precision` | Granularity of the committed value (`day` → `YYYY-MM-DD`, `month` → `YYYY-MM`, `year` → `YYYY`) | `"day" \| "month" \| "year"` | `"day"` |
+| `required` | `required` | Marks the date picker as required | `boolean` | `false` |
 | `showOutsideDays` | `show-outside-days` | Shows days outside the current month | `boolean` | `false` |
 | `skidding` | `skidding` | Horizontal offset between panel and trigger | `number` | `0` |
 | `strategy` | `strategy` | Positioning strategy for the panel | `"fixed" \| "absolute"` | `"fixed"` |
-| `tentative` | `tentative` | Tentative date used during range selection | `string` | `undefined` |
 | `type` | `type` | Selection mode | `"single" \| "range" \| "multi"` | `"single"` |
 | `validationStatus` | `validation-status` | Validation state of the control | `"none" \| "error" \| "warning" \| "success"` | `"none"` |
-| `value` | `value` | Selected value in ISO-8601 format; range uses `start/end`, multi uses space-separated dates | `string` | `undefined` |
+| `value` | `value` | Selected value in the wire format matching `precision`; `range` uses `start/end`, `multi` uses space-separated dates | `string` | `undefined` |
 
 ### Events
 
 | Event | Description | Type |
 |---|---|---|
 | `bqBlur` | Fired when the input loses focus | `CustomEvent<HTMLBqDatePickerElement>` |
-| `bqChange` | Fired when the input value changes after typing, pasting, or selecting a date | `CustomEvent<{ value: string; el: HTMLBqDatePickerElement }>` |
+| `bqChange` | Fired when the input value changes after typing, pasting, or selecting a date | `CustomEvent<{ value: string \| undefined; el: HTMLBqDatePickerElement }>` |
 | `bqClear` | Fired when the value is cleared | `CustomEvent<HTMLBqDatePickerElement>` |
 | `bqFocus` | Fired when the input receives focus | `CustomEvent<HTMLBqDatePickerElement>` |
+| `bqViewChange` | Fired when the calendar view switches between days/months/years | `CustomEvent<{ view: "days" \| "months" \| "years"; el: HTMLBqDatePickerElement }>` |
 
 <Note>
-  - In React, prefix events with `on`: `onBqBlur`, `onBqChange`, `onBqClear`, `onBqFocus`.
-  - In Angular, use the event binding syntax: `(bqBlur)`, `(bqChange)`, `(bqClear)`, `(bqFocus)`.
-  - In Vue, use the `@` shorthand: `@bqBlur`, `@bqChange`, `@bqClear`, `@bqFocus`.
+  - In React, prefix events with `on`: `onBqBlur`, `onBqChange`, `onBqClear`, `onBqFocus`, `onBqViewChange`.
+  - In Angular, use the event binding syntax: `(bqBlur)`, `(bqChange)`, `(bqClear)`, `(bqFocus)`, `(bqViewChange)`.
+  - In Vue, use the `@` shorthand: `@bqBlur`, `@bqChange`, `@bqClear`, `@bqFocus`, `@bqViewChange`.
 </Note>
 
 ### Methods
@@ -1681,6 +1686,16 @@ Use `formatOptions` when the selected date needs a more descriptive text format 
   | `--bq-date-picker--text-color` | Text color | `var(--bq-text--primary)` |
   | `--bq-date-picker--text-placeholder-color` | Placeholder text color | `var(--bq-text--secondary)` |
   | `--bq-date-picker--text-size` | Input text size | `var(--bq-font-size--m)` |
+  | `--bq-date-picker--header-title-color` | Header title text color (month/year navigation button) | `var(--bq-text--primary)` |
+  | `--bq-date-picker--nav-button-size` | Size of the previous/next navigation buttons | `2rem` |
+  | `--bq-date-picker--panel-count` | Number of month panels rendered per row (set inline by the component from `months`) | `1` |
+  | `--bq-date-picker--row-gap` | Vertical gap between calendar grid rows | `0.125rem` |
+  | `--bq-date-picker--validation-color` | Border color when a validation status is set | `var(--bq-stroke--danger)` (switches to `success`/`warning` when set) |
+  | `--bq-date-picker--view-cell-background-hover` | Hover background for day/month/year cells | `var(--bq-ui--secondary-hover)` |
+  | `--bq-date-picker--view-cell-background-selected` | Selected background for day/month/year cells | `var(--bq-ui--brand)` |
+  | `--bq-date-picker--view-cell-height` | Height of month/year cells | `2.75rem` |
+  | `--bq-date-picker--view-cell-radius` | Border radius of day/month/year cells | `0.5rem` |
+  | `--bq-date-picker--view-cell-text-selected` | Selected text color for day/month/year cells | `var(--bq-text--alt)` |
 </Expandable>
 
 <Tip>

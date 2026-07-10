@@ -11,7 +11,7 @@ import { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
 import { TBadgeSize } from "./components/badge/bq-badge.types";
 import { TButtonAppearance, TButtonBorderRadius, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
 import { TCardBorderRadius, TCardType } from "./components/card/bq-card.types";
-import { DaysOfWeek, TDatePickerType } from "./components/date-picker/bq-date-picker.types";
+import { DaysOfWeek, TCalendarView, TDatePickerType, TDatePrecision, TFloatingStrategy, TMonthsPerView } from "./components/date-picker/bq-date-picker.types";
 import { Placement } from "./services/interfaces";
 import { TInputType, TInputValidation, TInputValue } from "./components/input/bq-input.types";
 import { TDialogBorderRadius, TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
@@ -40,7 +40,7 @@ export { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
 export { TBadgeSize } from "./components/badge/bq-badge.types";
 export { TButtonAppearance, TButtonBorderRadius, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
 export { TCardBorderRadius, TCardType } from "./components/card/bq-card.types";
-export { DaysOfWeek, TDatePickerType } from "./components/date-picker/bq-date-picker.types";
+export { DaysOfWeek, TCalendarView, TDatePickerType, TDatePrecision, TFloatingStrategy, TMonthsPerView } from "./components/date-picker/bq-date-picker.types";
 export { Placement } from "./services/interfaces";
 export { TInputType, TInputValidation, TInputValue } from "./components/input/bq-input.types";
 export { TDialogBorderRadius, TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
@@ -721,222 +721,246 @@ export namespace Components {
         "value": string;
     }
     /**
-     * The Date Picker is a intuitive UI element component allows users to select dates from a visual calendar interface, providing an intuitive way to input date information.
+     * The Date Picker is a pure-Stencil calendar input.
+     * It supports single, multi, and range selection, three navigation views
+     * (days → months → years), full localization via `Intl.DateTimeFormat`,
+     * multi-month side-by-side rendering, and RTL layouts.
      * @example How to use it
      * ```html
      * <bq-date-picker
      * first-day-of-week="1"
      * locale="en-GB"
-     * months-per-view="single"
-     * months="2"
      * name="bq-date-picker"
      * placeholder="Enter your date"
-     * placement="bottom-end"
-     * show-outside-days="false"
-     * type="range"
-     * validation-status="none"
-     * value="2024-05-25"
+     * type="single"
+     * value="2026-07-15"
      * >
-     * <label class="flex flex-grow items-center" slot="label">
-     * Date picker label
-     * </label>
+     * <label slot="label">Date picker label</label>
      * </bq-date-picker>
      * ```
-     * @documentation https://www.beeq.design/3d466e231/p/5793a9-date-picker
-     * @status stable
+     * @documentation https://storybook.beeq.design/?path=/docs/components-date-picker--docs
+     * @status experimental
      * @dependency bq-button
      * @dependency bq-dropdown
      * @dependency bq-icon
      * @attr {boolean} autofocus - If `true`, the Date picker input will be focused on component render.
      * @attr {string} clear-button-label - The clear button aria label.
+     * @attr {string} calendar-button-label - The aria-label for the calendar trigger button.
      * @attr {boolean} disable-clear - If `true`, the clear button won't be displayed.
      * @attr {boolean} disabled - Indicates whether the Date picker input is disabled or not.
-     * @attr {number} distance - Represents the distance (gutter or margin) between the Date picker panel and the input element.
-     * @attr {0 | 1 | 2 | 3 | 4 | 5 | 6} first-day-of-week - The first day of the week, where Sunday is 0, Monday is 1, etc.
-     * @attr {Intl.DateTimeFormatOptions} format-options - The options to use when formatting the displayed value. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat#using_options
-     * @attr {string} form - The ID of the form that the Date picker input belongs to.
-     * @attr {string} form-validation-message - The native form validation message (mandatory if `required` is set).
-     * @attr {function} is-date-disallowed - A function that takes a date and returns true if the date should not be selectable.
-     * @attr {Intl.LocalesArgument} locale - The locale for formatting dates. If not set, will use the browser's locale. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#locales_argument
-     * @attr {string} max - The latest date that can be selected.
-     * @attr {string} min - The earliest date that can be selected.
-     * @attr {number} months - Number of months to show when range is `true`.
-     * @attr {string} name - The Date picker input name.
-     * @attr {boolean} open - If `true`, the Date picker panel will be visible.
-     * @attr {string} panel-height - When set, it will override the height of the Date picker panel.
-     * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Position of the Date picker panel.
-     * @attr {boolean} required - Indicates whether or not the Date picker input is required to be filled out before submitting the form.
-     * @attr {number} skidding - Represents the skidding between the Date picker panel and the input element.
-     * @attr {boolean} show-outside-days - Whether to show days outside the month.
-     * @attr {string} strategy - Defines the strategy to position the Date picker panel.
-     * @attr {string} tentative - The date that is tentatively selected, e.g. the start of a range selection.
-     * @attr {"single" | "multi" | "range"} type - It defines how the calendar will behave, allowing single date selection, range selection, or multiple date selection.
-     * @attr {"error" | "none" | "success" | "warning"} validation-status - The validation status of the Select input.
-     * @attr {string} value - The select input value represents the currently selected date or range and can be used to reset the field to a previous value.
+     * @attr {number} distance - Represents the distance between the panel and the input.
+     * @attr {0 | 1 | 2 | 3 | 4 | 5 | 6} first-day-of-week - The first day of the week (0 = Sunday).
+     * @attr {Intl.DateTimeFormatOptions} format-options - Display formatting options.
+     * @attr {string} form - The form ID the input belongs to.
+     * @attr {string} form-validation-message - Custom native form validation message.
+     * @attr {"days" | "months" | "years"} initial-view - The view to open when the panel first opens.
+     * @attr {function} is-date-disallowed - Predicate that marks specific dates as unselectable.
+     * @attr {Intl.LocalesArgument} locale - Locale used for formatting.
+     * @attr {string} max - Latest selectable date (ISO).
+     * @attr {string} min - Earliest selectable date (ISO).
+     * @attr {number} months - Number of month panels to render side by side (range/multi). Capped at 2.
+     * @attr {"single" | "months"} months-per-view - Prev/Next step size when multi-month is enabled.
+     * @attr {string} name - Input name.
+     * @attr {boolean} open - If `true`, the panel is visible.
+     * @attr {string} panel-height - Overrides the height of the panel.
+     * @attr {string} placeholder - Input placeholder text.
+     * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Placement of the panel.
+     * @attr {boolean} required - Whether a value must be selected before submitting the form.
+     * @attr {boolean} show-outside-days - Whether to render days that belong to adjacent months.
+     * @attr {number} skidding - Skidding between the panel and the trigger.
+     * @attr {"fixed" | "absolute"} strategy - Positioning strategy for the panel.
+     * @attr {"single" | "multi" | "range"} type - Selection mode.
+     * @attr {"error" | "none" | "success" | "warning"} validation-status - Validation state.
+     * @attr {string} value - The current selection, as a wire-format string. Shape depends on `type` and `precision`:
+     * • **single**: a single ISO token — `YYYY-MM-DD` (precision `day`), `YYYY-MM` (precision `month`), `YYYY` (precision `year`).
+     * • **range**: `start/end` (two tokens joined with `/`) at the same precision.
+     * • **multi**: space-separated tokens at the same precision.
+     * Bounds (`min`/`max`) may be supplied at any of these precisions and are honoured accordingly.
+     * @attr {"day" | "month" | "year"} precision - Granularity of the value and of the calendar's initial view. Also drives which cells are selectable (day cells at `day`, month cells at `month`, year cells at `year`). Defaults to `"day"`.
      * @method clear - Clears the selected value.
-     * @event bqBlur - Callback handler emitted when the input loses focus.
-     * @event bqChange - Callback handler emitted when the input value has changed and the input loses focus.
-     * @event bqClear - Callback handler emitted when the input value has been cleared.
-     * @event bqFocus - Callback handler emitted when the input has received focus.
-     * @cssprop --bq-date-picker--background-color - Date picker background color.
-     * @cssprop --bq-date-picker--border-color - Date picker border color.
-     * @cssprop --bq-date-picker--border-color-disabled - Date picker border color when disabled.
-     * @cssprop --bq-date-picker--border-color-focus - Date picker border color on focus.
-     * @cssprop --bq-date-picker--border-radius - Date picker border radius.
-     * @cssprop --bq-date-picker--border-style - Date picker border style.
-     * @cssprop --bq-date-picker--border-width - Date picker border width.
-     * @cssprop --bq-date-picker--currentDate-border-color - Date picker border color for current date.
-     * @cssprop --bq-date-picker--currentDate-border-width - Date picker border width for current date.
-     * @cssprop --bq-date-picker--day-size - Date picker button day size.
-     * @cssprop --bq-date-picker--gap - Gap between Date picker content and prefix/suffix.
-     * @cssprop --bq-date-picker--icon-size - Icon size to use in prefix/suffix and clear button.
-     * @cssprop --bq-date-picker--label-margin-bottom - Date picker label margin bottom.
-     * @cssprop --bq-date-picker--label-text-color - Date picker label text color.
-     * @cssprop --bq-date-picker--label-text-size - Date picker label text size.
-     * @cssprop --bq-date-picker--padding-end - Date picker padding end.
-     * @cssprop --bq-date-picker--padding-start - Date picker padding start.
-     * @cssprop --bq-date-picker--paddingY - Date picker padding top and bottom.
-     * @cssprop --bq-date-picker--range-background-color - Background color for the selected date range in the date picker.
-     * @cssprop --bq-date-picker--range-inner-background-color - Background color for the selected dates inside the date range in the date picker.
-     * @cssprop --bq-date-picker--text-color - Date picker text color.
-     * @cssprop --bq-date-picker--text-placeholder-color - Date picker placeholder text color.
-     * @cssprop --bq-date-picker--text-size - Date picker text size.
+     * @event bqBlur - Emitted when the input loses focus.
+     * @event bqChange - Emitted when the value changes.
+     * @event bqClear - Emitted when the value is cleared.
+     * @event bqFocus - Emitted when the input receives focus.
+     * @event bqViewChange - Emitted when the internal calendar view changes (days ↔ months ↔ years).
+     * @cssprop --bq-date-picker--background-color - Input background color.
+     * @cssprop --bq-date-picker--border-color - Input border color.
+     * @cssprop --bq-date-picker--border-color-disabled - Border color when disabled.
+     * @cssprop --bq-date-picker--border-color-focus - Border color on focus.
+     * @cssprop --bq-date-picker--border-radius - Input border radius.
+     * @cssprop --bq-date-picker--border-style - Border style.
+     * @cssprop --bq-date-picker--border-width - Border width.
+     * @cssprop --bq-date-picker--currentDate-border-color - Border color for today's date.
+     * @cssprop --bq-date-picker--currentDate-border-width - Border width for today's date.
+     * @cssprop --bq-date-picker--day-size - Size of a day cell in the calendar.
+     * @cssprop --bq-date-picker--gap - Gap between the input content and prefix/suffix.
+     * @cssprop --bq-date-picker--header-title-color - Color of the per-panel month label in multi-panel view.
+     * @cssprop --bq-date-picker--icon-size - Size of the icons used in prefix/suffix/clear.
+     * @cssprop --bq-date-picker--label-margin-bottom - Space below the label.
+     * @cssprop --bq-date-picker--label-text-color - Label text color.
+     * @cssprop --bq-date-picker--label-text-size - Label text size.
+     * @cssprop --bq-date-picker--padding-end - Input padding end.
+     * @cssprop --bq-date-picker--padding-start - Input padding start.
+     * @cssprop --bq-date-picker--paddingY - Input vertical padding.
+     * @cssprop --bq-date-picker--range-background-color - Background color for range start/end days.
+     * @cssprop --bq-date-picker--range-inner-background-color - Background color for inner range days.
+     * @cssprop --bq-date-picker--row-gap - Vertical space between day-grid rows.
+     * @cssprop --bq-date-picker--text-color - Input text color.
+     * @cssprop --bq-date-picker--text-placeholder-color - Placeholder text color.
+     * @cssprop --bq-date-picker--text-size - Input text size.
+     * @cssprop --bq-date-picker--view-cell-background-hover - Hover background for day/month/year cells.
+     * @cssprop --bq-date-picker--view-cell-background-selected - Selected background for day/month/year cells.
+     * @cssprop --bq-date-picker--view-cell-height - Height of month/year cells.
+     * @cssprop --bq-date-picker--view-cell-radius - Border radius of day/month/year cells.
+     * @cssprop --bq-date-picker--view-cell-text-selected - Text color for selected day/month/year cells.
      */
     interface BqDatePicker {
         /**
-          * If `true`, the Date picker input will be focused on component render
+          * If `true`, the Date picker input will be focused on component render.
+          * @default false
          */
         "autofocus": boolean;
         /**
-          * Clears the selected value.
-          * @returns
+          * The aria-label for the calendar trigger button.
+          * @default 'Open calendar'
+         */
+        "calendarButtonLabel": string;
+        /**
+          * Clears the selected value and any pending validation state (bad input, bounds overflow). Emits `bqClear`. No-op when the component is disabled.
+          * @returns A promise that resolves once the value has been cleared.
          */
         "clear": () => Promise<void>;
         /**
-          * The clear button aria label
+          * The clear button aria label.
           * @default 'Clear value'
          */
-        "clearButtonLabel"?: string;
+        "clearButtonLabel": string;
         /**
-          * If `true`, the clear button won't be displayed
+          * If `true`, the clear button won't be displayed.
           * @default false
          */
-        "disableClear"?: boolean;
+        "disableClear": boolean;
         /**
-          * Indicates whether the Date picker input is disabled or not. If `true`, the Date picker is disabled and cannot be interacted with.
+          * Indicates whether the Date picker input is disabled or not.
           * @default false
          */
-        "disabled"?: boolean;
+        "disabled": boolean;
         /**
-          * Represents the distance (gutter or margin) between the Date picker panel and the input element.
+          * Distance (gutter) between the Date picker panel and the input element.
           * @default 8
          */
-        "distance"?: number;
+        "distance": number;
         /**
-          * The first day of the week, where Sunday is 0, Monday is 1, etc
+          * The first day of the week, where Sunday is 0, Monday is 1, etc.
           * @default 1
          */
-        "firstDayOfWeek"?: DaysOfWeek;
+        "firstDayOfWeek": DaysOfWeek;
         /**
-          * The ID of the form that the Date picker input belongs to.
+          * The ID of the form the input belongs to.
          */
         "form"?: string;
         /**
-          * The native form validation message (mandatory if `required` is set)
+          * Native form validation message (mandatory if `required` is set).
          */
         "formValidationMessage"?: string;
         /**
-          * The options to use when formatting the displayed value. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat#using_options
-          * @default {     day: 'numeric',     month: 'short',     year: 'numeric',   }
+          * Options used when formatting the displayed value.  When omitted, sensible defaults are picked based on `precision`: - `day`   → `{ day: 'numeric', month: 'short', year: 'numeric' }` - `month` → `{ month: 'long', year: 'numeric' }` - `year`  → `{ year: 'numeric' }`
          */
-        "formatOptions": Intl.DateTimeFormatOptions;
+        "formatOptions"?: Intl.DateTimeFormatOptions;
         /**
-          * A function that takes a date and returns true if the date should not be selectable
+          * The view opened first when the panel becomes visible.
+          * @default 'days'
+         */
+        "initialView": TCalendarView;
+        /**
+          * Predicate that marks specific dates as unselectable.
          */
         "isDateDisallowed"?: (date: Date) => boolean;
         /**
-          * The locale for formatting dates. If not set, will use the browser's locale. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#locales_argument
+          * Locale used for formatting dates.
           * @default 'en-GB'
          */
         "locale": Intl.LocalesArgument;
         /**
-          * The latest date that can be selected
+          * Latest date that can be selected (ISO).
          */
         "max"?: string;
         /**
-          * The earliest date that can be selected
+          * Earliest date that can be selected (ISO).
          */
         "min"?: string;
         /**
-          * Number of months to show when range is `true`
+          * Number of months to show side by side (range / multi). Capped at 2. Larger values are silently clamped to keep the popover from overflowing the viewport and to preserve keyboard navigation semantics.
+          * @default 1
          */
         "months": number;
         /**
-          * Specifies how the next/previous buttons should navigate the calendar. - single: The buttons will navigate by a single month at a time. - months: The buttons will navigate by the number of months displayed per view.
+          * How the next/previous buttons should navigate the calendar. - single: navigate one month at a time. - months: navigate by the number of months displayed.
           * @default 'single'
          */
-        "monthsPerView": 'single' | 'months';
+        "monthsPerView": TMonthsPerView;
         /**
           * The Date picker input name.
          */
         "name": string;
         /**
-          * If `true`, the Date picker panel will be visible.
+          * If `true`, the panel is visible.
           * @default false
          */
-        "open"?: boolean;
+        "open": boolean;
         /**
-          * When set, it will override the height of the Date picker panel.
+          * Overrides the height of the Date picker panel.
           * @default 'auto'
          */
         "panelHeight"?: string;
         /**
-          * The Date picker input placeholder text value
+          * Placeholder text shown when no value is selected.
          */
         "placeholder"?: string;
         /**
-          * Position of the Date picker panel
+          * Position of the Date picker panel.
           * @default 'bottom-end'
          */
-        "placement"?: Placement;
+        "placement": Placement;
         /**
-          * Indicates whether or not the Date picker input is required to be filled out before submitting the form.
+          * Precision of the value produced by the picker.  - `day`   → `YYYY-MM-DD` (default). Standard drill-down. - `month` → `YYYY-MM`. Selection commits on the months view; no days view. - `year`  → `YYYY`. Selection commits on the years view; no months/days view.  When precision is coarser than day, `initialView` is forced to match and the header title cycles through the views available for that precision.
+          * @default 'day'
          */
-        "required"?: boolean;
+        "precision": TDatePrecision;
         /**
-          * Whether to show days outside the month
+          * Whether a value must be selected before submitting the form.
+          * @default false
+         */
+        "required": boolean;
+        /**
+          * Whether to render days outside the current month.
           * @default false
          */
         "showOutsideDays": boolean;
         /**
-          * Represents the skidding between the Date picker panel and the input element.
+          * Skidding between the panel and the input element.
           * @default 0
          */
-        "skidding"?: number;
+        "skidding": number;
         /**
-          * Defines the strategy to position the Date picker panel
+          * Positioning strategy for the panel.
           * @default 'fixed'
          */
-        "strategy"?: 'fixed' | 'absolute';
+        "strategy": TFloatingStrategy;
         /**
-          * The date that is tentatively selected e.g. the start of a range selection
-         */
-        "tentative"?: string;
-        /**
-          * It defines how the calendar will behave, allowing single date selection, range selection, or multiple date selection
+          * Selection type. - `single`: single date. - `multi`: multiple discrete dates. - `range`: contiguous range.
           * @default 'single'
          */
         "type": TDatePickerType;
         /**
-          * The validation status of the Select input.
-          * @remarks This property is used to indicate the validation status of the select input. It can be set to one of the following values: - `'none'`: No validation status is set. - `'error'`: The input has a validation error. - `'warning'`: The input has a validation warning. - `'success'`: The input has passed validation.
+          * Validation state applied to the input.
           * @default 'none'
          */
         "validationStatus": TInputValidation;
         /**
-          * The select input value represents the currently selected date or range and can be used to reset the field to a previous value. All dates are expected in ISO-8601 format (YYYY-MM-DD).
+          * Currently selected value, in the precision-aware wire format: - `precision="day"`   → tokens are `YYYY-MM-DD` - `precision="month"` → tokens are `YYYY-MM` - `precision="year"`  → tokens are `YYYY`  How multiple tokens are combined depends on `type`: - `single` → a single token (e.g. `"2025-05-15"`, `"2025-05"`, `"2025"`) - `range`  → `"start/end"` — two tokens joined with `/` - `multi`  → space-separated tokens (e.g. `"2025-05-15 2025-05-20"`)
          */
-        "value": string;
+        "value": string | undefined;
     }
     /**
      * The Dialog component is used to display additional content or prompt a user for action.
@@ -3810,91 +3834,104 @@ declare global {
     };
     interface HTMLBqDatePickerElementEventMap {
         "bqBlur": HTMLBqDatePickerElement;
-        "bqChange": { value: string; el: HTMLBqDatePickerElement };
+        "bqChange": { value: string | undefined; el: HTMLBqDatePickerElement };
         "bqClear": HTMLBqDatePickerElement;
         "bqFocus": HTMLBqDatePickerElement;
+        "bqViewChange": { view: TCalendarView; el: HTMLBqDatePickerElement };
     }
     /**
-     * The Date Picker is a intuitive UI element component allows users to select dates from a visual calendar interface, providing an intuitive way to input date information.
+     * The Date Picker is a pure-Stencil calendar input.
+     * It supports single, multi, and range selection, three navigation views
+     * (days → months → years), full localization via `Intl.DateTimeFormat`,
+     * multi-month side-by-side rendering, and RTL layouts.
      * @example How to use it
      * ```html
      * <bq-date-picker
      * first-day-of-week="1"
      * locale="en-GB"
-     * months-per-view="single"
-     * months="2"
      * name="bq-date-picker"
      * placeholder="Enter your date"
-     * placement="bottom-end"
-     * show-outside-days="false"
-     * type="range"
-     * validation-status="none"
-     * value="2024-05-25"
+     * type="single"
+     * value="2026-07-15"
      * >
-     * <label class="flex flex-grow items-center" slot="label">
-     * Date picker label
-     * </label>
+     * <label slot="label">Date picker label</label>
      * </bq-date-picker>
      * ```
-     * @documentation https://www.beeq.design/3d466e231/p/5793a9-date-picker
-     * @status stable
+     * @documentation https://storybook.beeq.design/?path=/docs/components-date-picker--docs
+     * @status experimental
      * @dependency bq-button
      * @dependency bq-dropdown
      * @dependency bq-icon
      * @attr {boolean} autofocus - If `true`, the Date picker input will be focused on component render.
      * @attr {string} clear-button-label - The clear button aria label.
+     * @attr {string} calendar-button-label - The aria-label for the calendar trigger button.
      * @attr {boolean} disable-clear - If `true`, the clear button won't be displayed.
      * @attr {boolean} disabled - Indicates whether the Date picker input is disabled or not.
-     * @attr {number} distance - Represents the distance (gutter or margin) between the Date picker panel and the input element.
-     * @attr {0 | 1 | 2 | 3 | 4 | 5 | 6} first-day-of-week - The first day of the week, where Sunday is 0, Monday is 1, etc.
-     * @attr {Intl.DateTimeFormatOptions} format-options - The options to use when formatting the displayed value. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat#using_options
-     * @attr {string} form - The ID of the form that the Date picker input belongs to.
-     * @attr {string} form-validation-message - The native form validation message (mandatory if `required` is set).
-     * @attr {function} is-date-disallowed - A function that takes a date and returns true if the date should not be selectable.
-     * @attr {Intl.LocalesArgument} locale - The locale for formatting dates. If not set, will use the browser's locale. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#locales_argument
-     * @attr {string} max - The latest date that can be selected.
-     * @attr {string} min - The earliest date that can be selected.
-     * @attr {number} months - Number of months to show when range is `true`.
-     * @attr {string} name - The Date picker input name.
-     * @attr {boolean} open - If `true`, the Date picker panel will be visible.
-     * @attr {string} panel-height - When set, it will override the height of the Date picker panel.
-     * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Position of the Date picker panel.
-     * @attr {boolean} required - Indicates whether or not the Date picker input is required to be filled out before submitting the form.
-     * @attr {number} skidding - Represents the skidding between the Date picker panel and the input element.
-     * @attr {boolean} show-outside-days - Whether to show days outside the month.
-     * @attr {string} strategy - Defines the strategy to position the Date picker panel.
-     * @attr {string} tentative - The date that is tentatively selected, e.g. the start of a range selection.
-     * @attr {"single" | "multi" | "range"} type - It defines how the calendar will behave, allowing single date selection, range selection, or multiple date selection.
-     * @attr {"error" | "none" | "success" | "warning"} validation-status - The validation status of the Select input.
-     * @attr {string} value - The select input value represents the currently selected date or range and can be used to reset the field to a previous value.
+     * @attr {number} distance - Represents the distance between the panel and the input.
+     * @attr {0 | 1 | 2 | 3 | 4 | 5 | 6} first-day-of-week - The first day of the week (0 = Sunday).
+     * @attr {Intl.DateTimeFormatOptions} format-options - Display formatting options.
+     * @attr {string} form - The form ID the input belongs to.
+     * @attr {string} form-validation-message - Custom native form validation message.
+     * @attr {"days" | "months" | "years"} initial-view - The view to open when the panel first opens.
+     * @attr {function} is-date-disallowed - Predicate that marks specific dates as unselectable.
+     * @attr {Intl.LocalesArgument} locale - Locale used for formatting.
+     * @attr {string} max - Latest selectable date (ISO).
+     * @attr {string} min - Earliest selectable date (ISO).
+     * @attr {number} months - Number of month panels to render side by side (range/multi). Capped at 2.
+     * @attr {"single" | "months"} months-per-view - Prev/Next step size when multi-month is enabled.
+     * @attr {string} name - Input name.
+     * @attr {boolean} open - If `true`, the panel is visible.
+     * @attr {string} panel-height - Overrides the height of the panel.
+     * @attr {string} placeholder - Input placeholder text.
+     * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Placement of the panel.
+     * @attr {boolean} required - Whether a value must be selected before submitting the form.
+     * @attr {boolean} show-outside-days - Whether to render days that belong to adjacent months.
+     * @attr {number} skidding - Skidding between the panel and the trigger.
+     * @attr {"fixed" | "absolute"} strategy - Positioning strategy for the panel.
+     * @attr {"single" | "multi" | "range"} type - Selection mode.
+     * @attr {"error" | "none" | "success" | "warning"} validation-status - Validation state.
+     * @attr {string} value - The current selection, as a wire-format string. Shape depends on `type` and `precision`:
+     * • **single**: a single ISO token — `YYYY-MM-DD` (precision `day`), `YYYY-MM` (precision `month`), `YYYY` (precision `year`).
+     * • **range**: `start/end` (two tokens joined with `/`) at the same precision.
+     * • **multi**: space-separated tokens at the same precision.
+     * Bounds (`min`/`max`) may be supplied at any of these precisions and are honoured accordingly.
+     * @attr {"day" | "month" | "year"} precision - Granularity of the value and of the calendar's initial view. Also drives which cells are selectable (day cells at `day`, month cells at `month`, year cells at `year`). Defaults to `"day"`.
      * @method clear - Clears the selected value.
-     * @event bqBlur - Callback handler emitted when the input loses focus.
-     * @event bqChange - Callback handler emitted when the input value has changed and the input loses focus.
-     * @event bqClear - Callback handler emitted when the input value has been cleared.
-     * @event bqFocus - Callback handler emitted when the input has received focus.
-     * @cssprop --bq-date-picker--background-color - Date picker background color.
-     * @cssprop --bq-date-picker--border-color - Date picker border color.
-     * @cssprop --bq-date-picker--border-color-disabled - Date picker border color when disabled.
-     * @cssprop --bq-date-picker--border-color-focus - Date picker border color on focus.
-     * @cssprop --bq-date-picker--border-radius - Date picker border radius.
-     * @cssprop --bq-date-picker--border-style - Date picker border style.
-     * @cssprop --bq-date-picker--border-width - Date picker border width.
-     * @cssprop --bq-date-picker--currentDate-border-color - Date picker border color for current date.
-     * @cssprop --bq-date-picker--currentDate-border-width - Date picker border width for current date.
-     * @cssprop --bq-date-picker--day-size - Date picker button day size.
-     * @cssprop --bq-date-picker--gap - Gap between Date picker content and prefix/suffix.
-     * @cssprop --bq-date-picker--icon-size - Icon size to use in prefix/suffix and clear button.
-     * @cssprop --bq-date-picker--label-margin-bottom - Date picker label margin bottom.
-     * @cssprop --bq-date-picker--label-text-color - Date picker label text color.
-     * @cssprop --bq-date-picker--label-text-size - Date picker label text size.
-     * @cssprop --bq-date-picker--padding-end - Date picker padding end.
-     * @cssprop --bq-date-picker--padding-start - Date picker padding start.
-     * @cssprop --bq-date-picker--paddingY - Date picker padding top and bottom.
-     * @cssprop --bq-date-picker--range-background-color - Background color for the selected date range in the date picker.
-     * @cssprop --bq-date-picker--range-inner-background-color - Background color for the selected dates inside the date range in the date picker.
-     * @cssprop --bq-date-picker--text-color - Date picker text color.
-     * @cssprop --bq-date-picker--text-placeholder-color - Date picker placeholder text color.
-     * @cssprop --bq-date-picker--text-size - Date picker text size.
+     * @event bqBlur - Emitted when the input loses focus.
+     * @event bqChange - Emitted when the value changes.
+     * @event bqClear - Emitted when the value is cleared.
+     * @event bqFocus - Emitted when the input receives focus.
+     * @event bqViewChange - Emitted when the internal calendar view changes (days ↔ months ↔ years).
+     * @cssprop --bq-date-picker--background-color - Input background color.
+     * @cssprop --bq-date-picker--border-color - Input border color.
+     * @cssprop --bq-date-picker--border-color-disabled - Border color when disabled.
+     * @cssprop --bq-date-picker--border-color-focus - Border color on focus.
+     * @cssprop --bq-date-picker--border-radius - Input border radius.
+     * @cssprop --bq-date-picker--border-style - Border style.
+     * @cssprop --bq-date-picker--border-width - Border width.
+     * @cssprop --bq-date-picker--currentDate-border-color - Border color for today's date.
+     * @cssprop --bq-date-picker--currentDate-border-width - Border width for today's date.
+     * @cssprop --bq-date-picker--day-size - Size of a day cell in the calendar.
+     * @cssprop --bq-date-picker--gap - Gap between the input content and prefix/suffix.
+     * @cssprop --bq-date-picker--header-title-color - Color of the per-panel month label in multi-panel view.
+     * @cssprop --bq-date-picker--icon-size - Size of the icons used in prefix/suffix/clear.
+     * @cssprop --bq-date-picker--label-margin-bottom - Space below the label.
+     * @cssprop --bq-date-picker--label-text-color - Label text color.
+     * @cssprop --bq-date-picker--label-text-size - Label text size.
+     * @cssprop --bq-date-picker--padding-end - Input padding end.
+     * @cssprop --bq-date-picker--padding-start - Input padding start.
+     * @cssprop --bq-date-picker--paddingY - Input vertical padding.
+     * @cssprop --bq-date-picker--range-background-color - Background color for range start/end days.
+     * @cssprop --bq-date-picker--range-inner-background-color - Background color for inner range days.
+     * @cssprop --bq-date-picker--row-gap - Vertical space between day-grid rows.
+     * @cssprop --bq-date-picker--text-color - Input text color.
+     * @cssprop --bq-date-picker--text-placeholder-color - Placeholder text color.
+     * @cssprop --bq-date-picker--text-size - Input text size.
+     * @cssprop --bq-date-picker--view-cell-background-hover - Hover background for day/month/year cells.
+     * @cssprop --bq-date-picker--view-cell-background-selected - Selected background for day/month/year cells.
+     * @cssprop --bq-date-picker--view-cell-height - Height of month/year cells.
+     * @cssprop --bq-date-picker--view-cell-radius - Border radius of day/month/year cells.
+     * @cssprop --bq-date-picker--view-cell-text-selected - Text color for selected day/month/year cells.
      */
     interface HTMLBqDatePickerElement extends Components.BqDatePicker, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqDatePickerElementEventMap>(type: K, listener: (this: HTMLBqDatePickerElement, ev: BqDatePickerCustomEvent<HTMLBqDatePickerElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -6167,233 +6204,261 @@ declare namespace LocalJSX {
         "value": string;
     }
     /**
-     * The Date Picker is a intuitive UI element component allows users to select dates from a visual calendar interface, providing an intuitive way to input date information.
+     * The Date Picker is a pure-Stencil calendar input.
+     * It supports single, multi, and range selection, three navigation views
+     * (days → months → years), full localization via `Intl.DateTimeFormat`,
+     * multi-month side-by-side rendering, and RTL layouts.
      * @example How to use it
      * ```html
      * <bq-date-picker
      * first-day-of-week="1"
      * locale="en-GB"
-     * months-per-view="single"
-     * months="2"
      * name="bq-date-picker"
      * placeholder="Enter your date"
-     * placement="bottom-end"
-     * show-outside-days="false"
-     * type="range"
-     * validation-status="none"
-     * value="2024-05-25"
+     * type="single"
+     * value="2026-07-15"
      * >
-     * <label class="flex flex-grow items-center" slot="label">
-     * Date picker label
-     * </label>
+     * <label slot="label">Date picker label</label>
      * </bq-date-picker>
      * ```
-     * @documentation https://www.beeq.design/3d466e231/p/5793a9-date-picker
-     * @status stable
+     * @documentation https://storybook.beeq.design/?path=/docs/components-date-picker--docs
+     * @status experimental
      * @dependency bq-button
      * @dependency bq-dropdown
      * @dependency bq-icon
      * @attr {boolean} autofocus - If `true`, the Date picker input will be focused on component render.
      * @attr {string} clear-button-label - The clear button aria label.
+     * @attr {string} calendar-button-label - The aria-label for the calendar trigger button.
      * @attr {boolean} disable-clear - If `true`, the clear button won't be displayed.
      * @attr {boolean} disabled - Indicates whether the Date picker input is disabled or not.
-     * @attr {number} distance - Represents the distance (gutter or margin) between the Date picker panel and the input element.
-     * @attr {0 | 1 | 2 | 3 | 4 | 5 | 6} first-day-of-week - The first day of the week, where Sunday is 0, Monday is 1, etc.
-     * @attr {Intl.DateTimeFormatOptions} format-options - The options to use when formatting the displayed value. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat#using_options
-     * @attr {string} form - The ID of the form that the Date picker input belongs to.
-     * @attr {string} form-validation-message - The native form validation message (mandatory if `required` is set).
-     * @attr {function} is-date-disallowed - A function that takes a date and returns true if the date should not be selectable.
-     * @attr {Intl.LocalesArgument} locale - The locale for formatting dates. If not set, will use the browser's locale. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#locales_argument
-     * @attr {string} max - The latest date that can be selected.
-     * @attr {string} min - The earliest date that can be selected.
-     * @attr {number} months - Number of months to show when range is `true`.
-     * @attr {string} name - The Date picker input name.
-     * @attr {boolean} open - If `true`, the Date picker panel will be visible.
-     * @attr {string} panel-height - When set, it will override the height of the Date picker panel.
-     * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Position of the Date picker panel.
-     * @attr {boolean} required - Indicates whether or not the Date picker input is required to be filled out before submitting the form.
-     * @attr {number} skidding - Represents the skidding between the Date picker panel and the input element.
-     * @attr {boolean} show-outside-days - Whether to show days outside the month.
-     * @attr {string} strategy - Defines the strategy to position the Date picker panel.
-     * @attr {string} tentative - The date that is tentatively selected, e.g. the start of a range selection.
-     * @attr {"single" | "multi" | "range"} type - It defines how the calendar will behave, allowing single date selection, range selection, or multiple date selection.
-     * @attr {"error" | "none" | "success" | "warning"} validation-status - The validation status of the Select input.
-     * @attr {string} value - The select input value represents the currently selected date or range and can be used to reset the field to a previous value.
+     * @attr {number} distance - Represents the distance between the panel and the input.
+     * @attr {0 | 1 | 2 | 3 | 4 | 5 | 6} first-day-of-week - The first day of the week (0 = Sunday).
+     * @attr {Intl.DateTimeFormatOptions} format-options - Display formatting options.
+     * @attr {string} form - The form ID the input belongs to.
+     * @attr {string} form-validation-message - Custom native form validation message.
+     * @attr {"days" | "months" | "years"} initial-view - The view to open when the panel first opens.
+     * @attr {function} is-date-disallowed - Predicate that marks specific dates as unselectable.
+     * @attr {Intl.LocalesArgument} locale - Locale used for formatting.
+     * @attr {string} max - Latest selectable date (ISO).
+     * @attr {string} min - Earliest selectable date (ISO).
+     * @attr {number} months - Number of month panels to render side by side (range/multi). Capped at 2.
+     * @attr {"single" | "months"} months-per-view - Prev/Next step size when multi-month is enabled.
+     * @attr {string} name - Input name.
+     * @attr {boolean} open - If `true`, the panel is visible.
+     * @attr {string} panel-height - Overrides the height of the panel.
+     * @attr {string} placeholder - Input placeholder text.
+     * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Placement of the panel.
+     * @attr {boolean} required - Whether a value must be selected before submitting the form.
+     * @attr {boolean} show-outside-days - Whether to render days that belong to adjacent months.
+     * @attr {number} skidding - Skidding between the panel and the trigger.
+     * @attr {"fixed" | "absolute"} strategy - Positioning strategy for the panel.
+     * @attr {"single" | "multi" | "range"} type - Selection mode.
+     * @attr {"error" | "none" | "success" | "warning"} validation-status - Validation state.
+     * @attr {string} value - The current selection, as a wire-format string. Shape depends on `type` and `precision`:
+     * • **single**: a single ISO token — `YYYY-MM-DD` (precision `day`), `YYYY-MM` (precision `month`), `YYYY` (precision `year`).
+     * • **range**: `start/end` (two tokens joined with `/`) at the same precision.
+     * • **multi**: space-separated tokens at the same precision.
+     * Bounds (`min`/`max`) may be supplied at any of these precisions and are honoured accordingly.
+     * @attr {"day" | "month" | "year"} precision - Granularity of the value and of the calendar's initial view. Also drives which cells are selectable (day cells at `day`, month cells at `month`, year cells at `year`). Defaults to `"day"`.
      * @method clear - Clears the selected value.
-     * @event bqBlur - Callback handler emitted when the input loses focus.
-     * @event bqChange - Callback handler emitted when the input value has changed and the input loses focus.
-     * @event bqClear - Callback handler emitted when the input value has been cleared.
-     * @event bqFocus - Callback handler emitted when the input has received focus.
-     * @cssprop --bq-date-picker--background-color - Date picker background color.
-     * @cssprop --bq-date-picker--border-color - Date picker border color.
-     * @cssprop --bq-date-picker--border-color-disabled - Date picker border color when disabled.
-     * @cssprop --bq-date-picker--border-color-focus - Date picker border color on focus.
-     * @cssprop --bq-date-picker--border-radius - Date picker border radius.
-     * @cssprop --bq-date-picker--border-style - Date picker border style.
-     * @cssprop --bq-date-picker--border-width - Date picker border width.
-     * @cssprop --bq-date-picker--currentDate-border-color - Date picker border color for current date.
-     * @cssprop --bq-date-picker--currentDate-border-width - Date picker border width for current date.
-     * @cssprop --bq-date-picker--day-size - Date picker button day size.
-     * @cssprop --bq-date-picker--gap - Gap between Date picker content and prefix/suffix.
-     * @cssprop --bq-date-picker--icon-size - Icon size to use in prefix/suffix and clear button.
-     * @cssprop --bq-date-picker--label-margin-bottom - Date picker label margin bottom.
-     * @cssprop --bq-date-picker--label-text-color - Date picker label text color.
-     * @cssprop --bq-date-picker--label-text-size - Date picker label text size.
-     * @cssprop --bq-date-picker--padding-end - Date picker padding end.
-     * @cssprop --bq-date-picker--padding-start - Date picker padding start.
-     * @cssprop --bq-date-picker--paddingY - Date picker padding top and bottom.
-     * @cssprop --bq-date-picker--range-background-color - Background color for the selected date range in the date picker.
-     * @cssprop --bq-date-picker--range-inner-background-color - Background color for the selected dates inside the date range in the date picker.
-     * @cssprop --bq-date-picker--text-color - Date picker text color.
-     * @cssprop --bq-date-picker--text-placeholder-color - Date picker placeholder text color.
-     * @cssprop --bq-date-picker--text-size - Date picker text size.
+     * @event bqBlur - Emitted when the input loses focus.
+     * @event bqChange - Emitted when the value changes.
+     * @event bqClear - Emitted when the value is cleared.
+     * @event bqFocus - Emitted when the input receives focus.
+     * @event bqViewChange - Emitted when the internal calendar view changes (days ↔ months ↔ years).
+     * @cssprop --bq-date-picker--background-color - Input background color.
+     * @cssprop --bq-date-picker--border-color - Input border color.
+     * @cssprop --bq-date-picker--border-color-disabled - Border color when disabled.
+     * @cssprop --bq-date-picker--border-color-focus - Border color on focus.
+     * @cssprop --bq-date-picker--border-radius - Input border radius.
+     * @cssprop --bq-date-picker--border-style - Border style.
+     * @cssprop --bq-date-picker--border-width - Border width.
+     * @cssprop --bq-date-picker--currentDate-border-color - Border color for today's date.
+     * @cssprop --bq-date-picker--currentDate-border-width - Border width for today's date.
+     * @cssprop --bq-date-picker--day-size - Size of a day cell in the calendar.
+     * @cssprop --bq-date-picker--gap - Gap between the input content and prefix/suffix.
+     * @cssprop --bq-date-picker--header-title-color - Color of the per-panel month label in multi-panel view.
+     * @cssprop --bq-date-picker--icon-size - Size of the icons used in prefix/suffix/clear.
+     * @cssprop --bq-date-picker--label-margin-bottom - Space below the label.
+     * @cssprop --bq-date-picker--label-text-color - Label text color.
+     * @cssprop --bq-date-picker--label-text-size - Label text size.
+     * @cssprop --bq-date-picker--padding-end - Input padding end.
+     * @cssprop --bq-date-picker--padding-start - Input padding start.
+     * @cssprop --bq-date-picker--paddingY - Input vertical padding.
+     * @cssprop --bq-date-picker--range-background-color - Background color for range start/end days.
+     * @cssprop --bq-date-picker--range-inner-background-color - Background color for inner range days.
+     * @cssprop --bq-date-picker--row-gap - Vertical space between day-grid rows.
+     * @cssprop --bq-date-picker--text-color - Input text color.
+     * @cssprop --bq-date-picker--text-placeholder-color - Placeholder text color.
+     * @cssprop --bq-date-picker--text-size - Input text size.
+     * @cssprop --bq-date-picker--view-cell-background-hover - Hover background for day/month/year cells.
+     * @cssprop --bq-date-picker--view-cell-background-selected - Selected background for day/month/year cells.
+     * @cssprop --bq-date-picker--view-cell-height - Height of month/year cells.
+     * @cssprop --bq-date-picker--view-cell-radius - Border radius of day/month/year cells.
+     * @cssprop --bq-date-picker--view-cell-text-selected - Text color for selected day/month/year cells.
      */
     interface BqDatePicker {
         /**
-          * If `true`, the Date picker input will be focused on component render
+          * If `true`, the Date picker input will be focused on component render.
+          * @default false
          */
         "autofocus"?: boolean;
         /**
-          * The clear button aria label
+          * The aria-label for the calendar trigger button.
+          * @default 'Open calendar'
+         */
+        "calendarButtonLabel"?: string;
+        /**
+          * The clear button aria label.
           * @default 'Clear value'
          */
         "clearButtonLabel"?: string;
         /**
-          * If `true`, the clear button won't be displayed
+          * If `true`, the clear button won't be displayed.
           * @default false
          */
         "disableClear"?: boolean;
         /**
-          * Indicates whether the Date picker input is disabled or not. If `true`, the Date picker is disabled and cannot be interacted with.
+          * Indicates whether the Date picker input is disabled or not.
           * @default false
          */
         "disabled"?: boolean;
         /**
-          * Represents the distance (gutter or margin) between the Date picker panel and the input element.
+          * Distance (gutter) between the Date picker panel and the input element.
           * @default 8
          */
         "distance"?: number;
         /**
-          * The first day of the week, where Sunday is 0, Monday is 1, etc
+          * The first day of the week, where Sunday is 0, Monday is 1, etc.
           * @default 1
          */
         "firstDayOfWeek"?: DaysOfWeek;
         /**
-          * The ID of the form that the Date picker input belongs to.
+          * The ID of the form the input belongs to.
          */
         "form"?: string;
         /**
-          * The native form validation message (mandatory if `required` is set)
+          * Native form validation message (mandatory if `required` is set).
          */
         "formValidationMessage"?: string;
         /**
-          * The options to use when formatting the displayed value. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat#using_options
-          * @default {     day: 'numeric',     month: 'short',     year: 'numeric',   }
+          * Options used when formatting the displayed value.  When omitted, sensible defaults are picked based on `precision`: - `day`   → `{ day: 'numeric', month: 'short', year: 'numeric' }` - `month` → `{ month: 'long', year: 'numeric' }` - `year`  → `{ year: 'numeric' }`
          */
         "formatOptions"?: Intl.DateTimeFormatOptions;
         /**
-          * A function that takes a date and returns true if the date should not be selectable
+          * The view opened first when the panel becomes visible.
+          * @default 'days'
+         */
+        "initialView"?: TCalendarView;
+        /**
+          * Predicate that marks specific dates as unselectable.
          */
         "isDateDisallowed"?: (date: Date) => boolean;
         /**
-          * The locale for formatting dates. If not set, will use the browser's locale. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#locales_argument
+          * Locale used for formatting dates.
           * @default 'en-GB'
          */
         "locale"?: Intl.LocalesArgument;
         /**
-          * The latest date that can be selected
+          * Latest date that can be selected (ISO).
          */
         "max"?: string;
         /**
-          * The earliest date that can be selected
+          * Earliest date that can be selected (ISO).
          */
         "min"?: string;
         /**
-          * Number of months to show when range is `true`
+          * Number of months to show side by side (range / multi). Capped at 2. Larger values are silently clamped to keep the popover from overflowing the viewport and to preserve keyboard navigation semantics.
+          * @default 1
          */
         "months"?: number;
         /**
-          * Specifies how the next/previous buttons should navigate the calendar. - single: The buttons will navigate by a single month at a time. - months: The buttons will navigate by the number of months displayed per view.
+          * How the next/previous buttons should navigate the calendar. - single: navigate one month at a time. - months: navigate by the number of months displayed.
           * @default 'single'
          */
-        "monthsPerView"?: 'single' | 'months';
+        "monthsPerView"?: TMonthsPerView;
         /**
           * The Date picker input name.
          */
         "name": string;
         /**
-          * Callback handler emitted when the input loses focus
+          * Callback handler emitted when the input loses focus.
          */
         "onBqBlur"?: (event: BqDatePickerCustomEvent<HTMLBqDatePickerElement>) => void;
         /**
-          * Callback handler emitted when the input value has changed and the input loses focus. This handler is called whenever the user finishes typing or pasting text into the input field and then clicks outside of the input field.
+          * Callback handler emitted when the input value changes.
          */
-        "onBqChange"?: (event: BqDatePickerCustomEvent<{ value: string; el: HTMLBqDatePickerElement }>) => void;
+        "onBqChange"?: (event: BqDatePickerCustomEvent<{ value: string | undefined; el: HTMLBqDatePickerElement }>) => void;
         /**
-          * Callback handler emitted when the input value has been cleared
+          * Callback handler emitted when the value is cleared.
          */
         "onBqClear"?: (event: BqDatePickerCustomEvent<HTMLBqDatePickerElement>) => void;
         /**
-          * Callback handler emitted when the input has received focus
+          * Callback handler emitted when the input receives focus.
          */
         "onBqFocus"?: (event: BqDatePickerCustomEvent<HTMLBqDatePickerElement>) => void;
         /**
-          * If `true`, the Date picker panel will be visible.
+          * Callback handler emitted when the internal calendar view changes (e.g. from `days` to `months`, or from `years` back to `days`).
+         */
+        "onBqViewChange"?: (event: BqDatePickerCustomEvent<{ view: TCalendarView; el: HTMLBqDatePickerElement }>) => void;
+        /**
+          * If `true`, the panel is visible.
           * @default false
          */
         "open"?: boolean;
         /**
-          * When set, it will override the height of the Date picker panel.
+          * Overrides the height of the Date picker panel.
           * @default 'auto'
          */
         "panelHeight"?: string;
         /**
-          * The Date picker input placeholder text value
+          * Placeholder text shown when no value is selected.
          */
         "placeholder"?: string;
         /**
-          * Position of the Date picker panel
+          * Position of the Date picker panel.
           * @default 'bottom-end'
          */
         "placement"?: Placement;
         /**
-          * Indicates whether or not the Date picker input is required to be filled out before submitting the form.
+          * Precision of the value produced by the picker.  - `day`   → `YYYY-MM-DD` (default). Standard drill-down. - `month` → `YYYY-MM`. Selection commits on the months view; no days view. - `year`  → `YYYY`. Selection commits on the years view; no months/days view.  When precision is coarser than day, `initialView` is forced to match and the header title cycles through the views available for that precision.
+          * @default 'day'
+         */
+        "precision"?: TDatePrecision;
+        /**
+          * Whether a value must be selected before submitting the form.
+          * @default false
          */
         "required"?: boolean;
         /**
-          * Whether to show days outside the month
+          * Whether to render days outside the current month.
           * @default false
          */
         "showOutsideDays"?: boolean;
         /**
-          * Represents the skidding between the Date picker panel and the input element.
+          * Skidding between the panel and the input element.
           * @default 0
          */
         "skidding"?: number;
         /**
-          * Defines the strategy to position the Date picker panel
+          * Positioning strategy for the panel.
           * @default 'fixed'
          */
-        "strategy"?: 'fixed' | 'absolute';
+        "strategy"?: TFloatingStrategy;
         /**
-          * The date that is tentatively selected e.g. the start of a range selection
-         */
-        "tentative"?: string;
-        /**
-          * It defines how the calendar will behave, allowing single date selection, range selection, or multiple date selection
+          * Selection type. - `single`: single date. - `multi`: multiple discrete dates. - `range`: contiguous range.
           * @default 'single'
          */
         "type"?: TDatePickerType;
         /**
-          * The validation status of the Select input.
-          * @remarks This property is used to indicate the validation status of the select input. It can be set to one of the following values: - `'none'`: No validation status is set. - `'error'`: The input has a validation error. - `'warning'`: The input has a validation warning. - `'success'`: The input has passed validation.
+          * Validation state applied to the input.
           * @default 'none'
          */
         "validationStatus"?: TInputValidation;
         /**
-          * The select input value represents the currently selected date or range and can be used to reset the field to a previous value. All dates are expected in ISO-8601 format (YYYY-MM-DD).
+          * Currently selected value, in the precision-aware wire format: - `precision="day"`   → tokens are `YYYY-MM-DD` - `precision="month"` → tokens are `YYYY-MM` - `precision="year"`  → tokens are `YYYY`  How multiple tokens are combined depends on `type`: - `single` → a single token (e.g. `"2025-05-15"`, `"2025-05"`, `"2025"`) - `range`  → `"start/end"` — two tokens joined with `/` - `multi`  → space-separated tokens (e.g. `"2025-05-15 2025-05-20"`)
          */
-        "value"?: string;
+        "value"?: string | undefined;
     }
     /**
      * The Dialog component is used to display additional content or prompt a user for action.
@@ -8924,30 +8989,32 @@ declare namespace LocalJSX {
     interface BqDatePickerAttributes {
         "autofocus": boolean;
         "clearButtonLabel": string;
+        "calendarButtonLabel": string;
         "disableClear": boolean;
         "disabled": boolean;
         "distance": number;
         "firstDayOfWeek": DaysOfWeek;
         "form": string;
         "formValidationMessage": string;
+        "initialView": TCalendarView;
         "locale": Intl.LocalesArgument;
         "max": string;
         "min": string;
         "months": number;
-        "monthsPerView": 'single' | 'months';
+        "monthsPerView": TMonthsPerView;
         "name": string;
         "open": boolean;
         "panelHeight": string;
         "placeholder": string;
         "placement": Placement;
+        "precision": TDatePrecision;
         "required": boolean;
         "skidding": number;
         "showOutsideDays": boolean;
-        "strategy": 'fixed' | 'absolute';
-        "tentative": string;
+        "strategy": TFloatingStrategy;
         "type": TDatePickerType;
         "validationStatus": TInputValidation;
-        "value": string;
+        "value": string | undefined;
     }
     interface BqDialogAttributes {
         "border": TDialogBorderRadius;
@@ -9651,86 +9718,98 @@ declare module "@stencil/core" {
              */
             "bq-checkbox": LocalJSX.IntrinsicElements["bq-checkbox"] & JSXBase.HTMLAttributes<HTMLBqCheckboxElement>;
             /**
-             * The Date Picker is a intuitive UI element component allows users to select dates from a visual calendar interface, providing an intuitive way to input date information.
+             * The Date Picker is a pure-Stencil calendar input.
+             * It supports single, multi, and range selection, three navigation views
+             * (days → months → years), full localization via `Intl.DateTimeFormat`,
+             * multi-month side-by-side rendering, and RTL layouts.
              * @example How to use it
              * ```html
              * <bq-date-picker
              * first-day-of-week="1"
              * locale="en-GB"
-             * months-per-view="single"
-             * months="2"
              * name="bq-date-picker"
              * placeholder="Enter your date"
-             * placement="bottom-end"
-             * show-outside-days="false"
-             * type="range"
-             * validation-status="none"
-             * value="2024-05-25"
+             * type="single"
+             * value="2026-07-15"
              * >
-             * <label class="flex flex-grow items-center" slot="label">
-             * Date picker label
-             * </label>
+             * <label slot="label">Date picker label</label>
              * </bq-date-picker>
              * ```
-             * @documentation https://www.beeq.design/3d466e231/p/5793a9-date-picker
-             * @status stable
+             * @documentation https://storybook.beeq.design/?path=/docs/components-date-picker--docs
+             * @status experimental
              * @dependency bq-button
              * @dependency bq-dropdown
              * @dependency bq-icon
              * @attr {boolean} autofocus - If `true`, the Date picker input will be focused on component render.
              * @attr {string} clear-button-label - The clear button aria label.
+             * @attr {string} calendar-button-label - The aria-label for the calendar trigger button.
              * @attr {boolean} disable-clear - If `true`, the clear button won't be displayed.
              * @attr {boolean} disabled - Indicates whether the Date picker input is disabled or not.
-             * @attr {number} distance - Represents the distance (gutter or margin) between the Date picker panel and the input element.
-             * @attr {0 | 1 | 2 | 3 | 4 | 5 | 6} first-day-of-week - The first day of the week, where Sunday is 0, Monday is 1, etc.
-             * @attr {Intl.DateTimeFormatOptions} format-options - The options to use when formatting the displayed value. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat#using_options
-             * @attr {string} form - The ID of the form that the Date picker input belongs to.
-             * @attr {string} form-validation-message - The native form validation message (mandatory if `required` is set).
-             * @attr {function} is-date-disallowed - A function that takes a date and returns true if the date should not be selectable.
-             * @attr {Intl.LocalesArgument} locale - The locale for formatting dates. If not set, will use the browser's locale. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#locales_argument
-             * @attr {string} max - The latest date that can be selected.
-             * @attr {string} min - The earliest date that can be selected.
-             * @attr {number} months - Number of months to show when range is `true`.
-             * @attr {string} name - The Date picker input name.
-             * @attr {boolean} open - If `true`, the Date picker panel will be visible.
-             * @attr {string} panel-height - When set, it will override the height of the Date picker panel.
-             * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Position of the Date picker panel.
-             * @attr {boolean} required - Indicates whether or not the Date picker input is required to be filled out before submitting the form.
-             * @attr {number} skidding - Represents the skidding between the Date picker panel and the input element.
-             * @attr {boolean} show-outside-days - Whether to show days outside the month.
-             * @attr {string} strategy - Defines the strategy to position the Date picker panel.
-             * @attr {string} tentative - The date that is tentatively selected, e.g. the start of a range selection.
-             * @attr {"single" | "multi" | "range"} type - It defines how the calendar will behave, allowing single date selection, range selection, or multiple date selection.
-             * @attr {"error" | "none" | "success" | "warning"} validation-status - The validation status of the Select input.
-             * @attr {string} value - The select input value represents the currently selected date or range and can be used to reset the field to a previous value.
+             * @attr {number} distance - Represents the distance between the panel and the input.
+             * @attr {0 | 1 | 2 | 3 | 4 | 5 | 6} first-day-of-week - The first day of the week (0 = Sunday).
+             * @attr {Intl.DateTimeFormatOptions} format-options - Display formatting options.
+             * @attr {string} form - The form ID the input belongs to.
+             * @attr {string} form-validation-message - Custom native form validation message.
+             * @attr {"days" | "months" | "years"} initial-view - The view to open when the panel first opens.
+             * @attr {function} is-date-disallowed - Predicate that marks specific dates as unselectable.
+             * @attr {Intl.LocalesArgument} locale - Locale used for formatting.
+             * @attr {string} max - Latest selectable date (ISO).
+             * @attr {string} min - Earliest selectable date (ISO).
+             * @attr {number} months - Number of month panels to render side by side (range/multi). Capped at 2.
+             * @attr {"single" | "months"} months-per-view - Prev/Next step size when multi-month is enabled.
+             * @attr {string} name - Input name.
+             * @attr {boolean} open - If `true`, the panel is visible.
+             * @attr {string} panel-height - Overrides the height of the panel.
+             * @attr {string} placeholder - Input placeholder text.
+             * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Placement of the panel.
+             * @attr {boolean} required - Whether a value must be selected before submitting the form.
+             * @attr {boolean} show-outside-days - Whether to render days that belong to adjacent months.
+             * @attr {number} skidding - Skidding between the panel and the trigger.
+             * @attr {"fixed" | "absolute"} strategy - Positioning strategy for the panel.
+             * @attr {"single" | "multi" | "range"} type - Selection mode.
+             * @attr {"error" | "none" | "success" | "warning"} validation-status - Validation state.
+             * @attr {string} value - The current selection, as a wire-format string. Shape depends on `type` and `precision`:
+             * • **single**: a single ISO token — `YYYY-MM-DD` (precision `day`), `YYYY-MM` (precision `month`), `YYYY` (precision `year`).
+             * • **range**: `start/end` (two tokens joined with `/`) at the same precision.
+             * • **multi**: space-separated tokens at the same precision.
+             * Bounds (`min`/`max`) may be supplied at any of these precisions and are honoured accordingly.
+             * @attr {"day" | "month" | "year"} precision - Granularity of the value and of the calendar's initial view. Also drives which cells are selectable (day cells at `day`, month cells at `month`, year cells at `year`). Defaults to `"day"`.
              * @method clear - Clears the selected value.
-             * @event bqBlur - Callback handler emitted when the input loses focus.
-             * @event bqChange - Callback handler emitted when the input value has changed and the input loses focus.
-             * @event bqClear - Callback handler emitted when the input value has been cleared.
-             * @event bqFocus - Callback handler emitted when the input has received focus.
-             * @cssprop --bq-date-picker--background-color - Date picker background color.
-             * @cssprop --bq-date-picker--border-color - Date picker border color.
-             * @cssprop --bq-date-picker--border-color-disabled - Date picker border color when disabled.
-             * @cssprop --bq-date-picker--border-color-focus - Date picker border color on focus.
-             * @cssprop --bq-date-picker--border-radius - Date picker border radius.
-             * @cssprop --bq-date-picker--border-style - Date picker border style.
-             * @cssprop --bq-date-picker--border-width - Date picker border width.
-             * @cssprop --bq-date-picker--currentDate-border-color - Date picker border color for current date.
-             * @cssprop --bq-date-picker--currentDate-border-width - Date picker border width for current date.
-             * @cssprop --bq-date-picker--day-size - Date picker button day size.
-             * @cssprop --bq-date-picker--gap - Gap between Date picker content and prefix/suffix.
-             * @cssprop --bq-date-picker--icon-size - Icon size to use in prefix/suffix and clear button.
-             * @cssprop --bq-date-picker--label-margin-bottom - Date picker label margin bottom.
-             * @cssprop --bq-date-picker--label-text-color - Date picker label text color.
-             * @cssprop --bq-date-picker--label-text-size - Date picker label text size.
-             * @cssprop --bq-date-picker--padding-end - Date picker padding end.
-             * @cssprop --bq-date-picker--padding-start - Date picker padding start.
-             * @cssprop --bq-date-picker--paddingY - Date picker padding top and bottom.
-             * @cssprop --bq-date-picker--range-background-color - Background color for the selected date range in the date picker.
-             * @cssprop --bq-date-picker--range-inner-background-color - Background color for the selected dates inside the date range in the date picker.
-             * @cssprop --bq-date-picker--text-color - Date picker text color.
-             * @cssprop --bq-date-picker--text-placeholder-color - Date picker placeholder text color.
-             * @cssprop --bq-date-picker--text-size - Date picker text size.
+             * @event bqBlur - Emitted when the input loses focus.
+             * @event bqChange - Emitted when the value changes.
+             * @event bqClear - Emitted when the value is cleared.
+             * @event bqFocus - Emitted when the input receives focus.
+             * @event bqViewChange - Emitted when the internal calendar view changes (days ↔ months ↔ years).
+             * @cssprop --bq-date-picker--background-color - Input background color.
+             * @cssprop --bq-date-picker--border-color - Input border color.
+             * @cssprop --bq-date-picker--border-color-disabled - Border color when disabled.
+             * @cssprop --bq-date-picker--border-color-focus - Border color on focus.
+             * @cssprop --bq-date-picker--border-radius - Input border radius.
+             * @cssprop --bq-date-picker--border-style - Border style.
+             * @cssprop --bq-date-picker--border-width - Border width.
+             * @cssprop --bq-date-picker--currentDate-border-color - Border color for today's date.
+             * @cssprop --bq-date-picker--currentDate-border-width - Border width for today's date.
+             * @cssprop --bq-date-picker--day-size - Size of a day cell in the calendar.
+             * @cssprop --bq-date-picker--gap - Gap between the input content and prefix/suffix.
+             * @cssprop --bq-date-picker--header-title-color - Color of the per-panel month label in multi-panel view.
+             * @cssprop --bq-date-picker--icon-size - Size of the icons used in prefix/suffix/clear.
+             * @cssprop --bq-date-picker--label-margin-bottom - Space below the label.
+             * @cssprop --bq-date-picker--label-text-color - Label text color.
+             * @cssprop --bq-date-picker--label-text-size - Label text size.
+             * @cssprop --bq-date-picker--padding-end - Input padding end.
+             * @cssprop --bq-date-picker--padding-start - Input padding start.
+             * @cssprop --bq-date-picker--paddingY - Input vertical padding.
+             * @cssprop --bq-date-picker--range-background-color - Background color for range start/end days.
+             * @cssprop --bq-date-picker--range-inner-background-color - Background color for inner range days.
+             * @cssprop --bq-date-picker--row-gap - Vertical space between day-grid rows.
+             * @cssprop --bq-date-picker--text-color - Input text color.
+             * @cssprop --bq-date-picker--text-placeholder-color - Placeholder text color.
+             * @cssprop --bq-date-picker--text-size - Input text size.
+             * @cssprop --bq-date-picker--view-cell-background-hover - Hover background for day/month/year cells.
+             * @cssprop --bq-date-picker--view-cell-background-selected - Selected background for day/month/year cells.
+             * @cssprop --bq-date-picker--view-cell-height - Height of month/year cells.
+             * @cssprop --bq-date-picker--view-cell-radius - Border radius of day/month/year cells.
+             * @cssprop --bq-date-picker--view-cell-text-selected - Text color for selected day/month/year cells.
              */
             "bq-date-picker": LocalJSX.IntrinsicElements["bq-date-picker"] & JSXBase.HTMLAttributes<HTMLBqDatePickerElement>;
             /**

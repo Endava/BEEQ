@@ -6,5 +6,6 @@
     "jsxFactory": "h",
     "jsxFragmentFactory": "h.Fragment",
     "moduleResolution": "bundler"
-  }
+  },
+  "exclude": ["dist", "**/dist/**"]
 }
