@@ -82,7 +82,7 @@ pnpm exec nx affected -t check --exclude='*,!tag:publishable' --parallel
 pnpm exec nx run beeq:check
 
 # Autofix supported issues
-pnpm exec nx run beeq:check --write
+pnpm exec nx run beeq:check -- --write
 ```
 
 ### <a name="branching-strategy"></a> Branching strategy
