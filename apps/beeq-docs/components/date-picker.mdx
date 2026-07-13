@@ -349,7 +349,7 @@ Use `type="multi"` when users need to pick several non-consecutive dates. Unlike
 
 Use `precision="month"` when the task needs a month rather than a specific day, such as choosing a billing cycle. Month precision stores values as `YYYY-MM` and opens directly in the month view.
 
-<CodeLivePreview mode="iframe" height="30rem" code={`
+<CodeLivePreview mode="iframe" height="30rem" removePadding code={`
   <style>
     body {
       padding: var(--bq-spacing-l);
@@ -409,7 +409,7 @@ Use `precision="month"` when the task needs a month rather than a specific day, 
 
 Use `precision="year"` when users choose a whole year, such as a graduation year. Year precision stores values as `YYYY` and opens directly in the year view.
 
-<CodeLivePreview mode="iframe" height="30rem" code={`
+<CodeLivePreview mode="iframe" height="30rem" removePadding code={`
   <style>
     body {
       padding: var(--bq-spacing-l);
@@ -469,7 +469,7 @@ Use `precision="year"` when users choose a whole year, such as a graduation year
 
 Use `initial-view` with day precision when people need to start their search from months or years. The picker still stores a full `YYYY-MM-DD` value after users complete the selection.
 
-<CodeLivePreview mode="iframe" height="30rem" code={`
+<CodeLivePreview mode="iframe" height="30rem" removePadding code={`
   <style>
     body {
       padding: var(--bq-spacing-l);
@@ -1069,7 +1069,7 @@ Use `first-day-of-week` to align the calendar grid with regional or business exp
 
 By default, the calendar shows only the days of the displayed month. Enable `show-outside-days` when the additional context is helpful.
 
-<CodeLivePreview mode="iframe" height="30rem" code={`
+<CodeLivePreview mode="iframe" height="30rem" removePadding code={`
   <style>
     body {
       padding: var(--bq-spacing-l);
@@ -1134,7 +1134,7 @@ By default, the calendar shows only the days of the displayed month. Enable `sho
 
 Use `isDateDisallowed` to make specific dates unavailable for selection. This is useful for holidays, sold-out inventory, blackout periods, or policy restrictions.
 
-<CodeLivePreview mode="iframe" height="30rem" code={`
+<CodeLivePreview mode="iframe" height="30rem" removePadding code={`
   <style>
     body {
       padding: var(--bq-spacing-l);
@@ -1252,7 +1252,7 @@ Use `isDateDisallowed` to make specific dates unavailable for selection. This is
 
 Use `formatOptions` to customize the display format of the selected date in the input field. This does not affect the underlying value, which is always stored as `YYYY-MM-DD`.
 
-<CodeLivePreview mode="iframe" height="30rem" code={`
+<CodeLivePreview mode="iframe" height="30rem" removePadding code={`
   <style>
     body {
       padding: var(--bq-spacing-l);
