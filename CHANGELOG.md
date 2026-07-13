@@ -1,3 +1,102 @@
+## 1.12.4 (2026-06-18)
+
+### Features ⚡️
+
+- **Select:** add form validation message attribute and handling ([aeab61e9](https://github.com/Endava/BEEQ/commit/aeab61e9))
+- **Switch:** add icon-on and icon-off named slots for custom icon content ([c73b5633](https://github.com/Endava/BEEQ/commit/c73b5633))
+
+### Bug Fixes 🐞
+
+- **Accordion:** ensure full width in flex container parents ([0d5324a5](https://github.com/Endava/BEEQ/commit/0d5324a5))
+- **Button:** remove forced pointer cursor from host element ([#1691](https://github.com/Endava/BEEQ/pull/1691))
+- **Button:** keep ghost button height consistent and prevent text selection ([#1694](https://github.com/Endava/BEEQ/pull/1694))
+- **Checkbox:** ensure bqChange is emitted correctly after user interaction ([2df07ac6](https://github.com/Endava/BEEQ/commit/2df07ac6))
+- **Icon:** simplify SVG validation guard with optional chaining ([#1698](https://github.com/Endava/BEEQ/pull/1698))
+- **Input:** update form validity handling for required fields ([6822de6b](https://github.com/Endava/BEEQ/commit/6822de6b))
+- **Notification:** wrap close icon slot content in flex container ([#1690](https://github.com/Endava/BEEQ/pull/1690))
+- **RadioGroup:** ensure form validity is updated after reset ([45a300b3](https://github.com/Endava/BEEQ/commit/45a300b3))
+- **Side Menu:** fix collapsed padding in side menu items and tooltip visibility ([c192e1a6](https://github.com/Endava/BEEQ/commit/c192e1a6))
+- **Step Item:** keep numeric prefix circular shape when titles wrap ([#1725](https://github.com/Endava/BEEQ/pull/1725))
+- **Switch:** emit bqChange on user interaction only and support preventDefault() ([f0de5a27](https://github.com/Endava/BEEQ/commit/f0de5a27))
+- **Textarea:** set form value and update form validity after value change ([d0c3be2d](https://github.com/Endava/BEEQ/commit/d0c3be2d))
+- **Tooltip:** change positioning strategy from fixed to absolute ([3401a9b1](https://github.com/Endava/BEEQ/commit/3401a9b1))
+- **Utils:** use explicit property key in `validatePropValue` warning ([#1699](https://github.com/Endava/BEEQ/pull/1699))
+- **Utils:** remove redundant cast assertion in `transition.ts` utility ([#1700](https://github.com/Endava/BEEQ/pull/1700))
+
+### Refactor 🛠️
+
+- **Radio Group, Toast:** use nullish assignment for clearer and concise logic ([#1722](https://github.com/Endava/BEEQ/pull/1722))
+
+### Chore ⚙️
+
+- **Component generator:** default exports should be named ([#1701](https://github.com/Endava/BEEQ/pull/1701))
+- **PostCSS Config:** prefer `node:path` over `path` ([#1697](https://github.com/Endava/BEEQ/pull/1697))
+- **Renovate:** update configuration with proper JSON formatting and new settings ([51c76a32](https://github.com/Endava/BEEQ/commit/51c76a32))
+- **deps:** update stencil core and output targets ([#1625](https://github.com/Endava/BEEQ/pull/1625))
+- **deps:** update nx to v22.5.3 ([#1624](https://github.com/Endava/BEEQ/pull/1624))
+- **deps:** update storybook to v10.2.13 ([#1626](https://github.com/Endava/BEEQ/pull/1626))
+- **deps:** update angular to v21.2.0 ([#1627](https://github.com/Endava/BEEQ/pull/1627))
+- **deps:** update storybook to v10.2.14 ([#1628](https://github.com/Endava/BEEQ/pull/1628))
+- **deps:** update nx to v22.6.3 ([#1630](https://github.com/Endava/BEEQ/pull/1630))
+- **deps:** update angular ([#1629](https://github.com/Endava/BEEQ/pull/1629))
+- **deps:** update storybook to v10.3.4 ([#1631](https://github.com/Endava/BEEQ/pull/1631))
+- **deps:** update node.js to v24.14.1 ([#1635](https://github.com/Endava/BEEQ/pull/1635))
+- **deps:** update dependency @stencil/core to v4.43.3 ([#1632](https://github.com/Endava/BEEQ/pull/1632))
+- **deps:** update pnpm to v10.33.0 ([#1636](https://github.com/Endava/BEEQ/pull/1636))
+- **deps:** update nx to v22.6.4 ([#1634](https://github.com/Endava/BEEQ/pull/1634))
+- **deps:** update dependency vue to v3.5.32 ([#1633](https://github.com/Endava/BEEQ/pull/1633))
+- **deps:** update nx to v22.6.5 ([#1641](https://github.com/Endava/BEEQ/pull/1641))
+- **deps:** update storybook to v10.3.5 ([#1639](https://github.com/Endava/BEEQ/pull/1639))
+- **deps:** update angular ([#1637](https://github.com/Endava/BEEQ/pull/1637))
+- **deps:** update stencil ([#1638](https://github.com/Endava/BEEQ/pull/1638))
+- **deps:** update dependency @biomejs/biome to v2.4.11 ([#1642](https://github.com/Endava/BEEQ/pull/1642))
+- **deps:** disable pinning `package.json` engine dependencies ([#1640](https://github.com/Endava/BEEQ/pull/1640))
+- **deps:** update nx to v22.7.0 ([#1653](https://github.com/Endava/BEEQ/pull/1653))
+- **deps:** update dependency vite to v8 ([#1654](https://github.com/Endava/BEEQ/pull/1654))
+- **deps:** update volta-cli/action action to v5 ([#1655](https://github.com/Endava/BEEQ/pull/1655))
+- **deps:** update stylelint (major) ([#1656](https://github.com/Endava/BEEQ/pull/1656))
+- **deps:** update angular ([#1657](https://github.com/Endava/BEEQ/pull/1657))
+- **deps:** update dependency stylelint to v17.9.1 ([#1658](https://github.com/Endava/BEEQ/pull/1658))
+- **deps:** update dependency vue to v3.5.33 ([#1659](https://github.com/Endava/BEEQ/pull/1659))
+- **deps:** update stencil ([#1662](https://github.com/Endava/BEEQ/pull/1662))
+- **deps:** update nx to v22.7.1 ([#1660](https://github.com/Endava/BEEQ/pull/1660))
+- **deps:** update react to v19.2.5 ([#1661](https://github.com/Endava/BEEQ/pull/1661))
+- **deps:** update swc ([#1663](https://github.com/Endava/BEEQ/pull/1663))
+- **deps:** update dependency chromatic to v16 ([#1667](https://github.com/Endava/BEEQ/pull/1667))
+- **deps:** update angular ([#1664](https://github.com/Endava/BEEQ/pull/1664))
+- **deps:** update dependency @stencil/react-output-target to v1.5.2 ([#1665](https://github.com/Endava/BEEQ/pull/1665))
+- **deps:** update storybook to v10.3.6 ([#1666](https://github.com/Endava/BEEQ/pull/1666))
+- **deps:** update stencil ([#1702](https://github.com/Endava/BEEQ/pull/1702))
+- **deps:** update nx to v22.7.5 ([#1705](https://github.com/Endava/BEEQ/pull/1705))
+- **deps:** update storybook to v10.4.3 ([#1704](https://github.com/Endava/BEEQ/pull/1704))
+- **deps:** update react to v19.2.7 ([#1706](https://github.com/Endava/BEEQ/pull/1706))
+- **deps:** update types react to v19.2.17 ([#1708](https://github.com/Endava/BEEQ/pull/1708))
+- **deps:** update cimg/node docker tag to v26 ([#1710](https://github.com/Endava/BEEQ/pull/1710))
+- **deps:** update dependency @types/node to v25 ([#1711](https://github.com/Endava/BEEQ/pull/1711))
+- **deps:** update dependency chromatic to v17 ([#1712](https://github.com/Endava/BEEQ/pull/1712))
+- **deps:** update dependency nx-stylelint to v19 ([#1714](https://github.com/Endava/BEEQ/pull/1714))
+- **deps:** update dependency lint-staged to v17 ([#1713](https://github.com/Endava/BEEQ/pull/1713))
+- **deps:** update postcss to v11 ([#1715](https://github.com/Endava/BEEQ/pull/1715))
+- **deps:** update pnpm to v11 ([#1703](https://github.com/Endava/BEEQ/pull/1703))
+- **deps:** update angular to v22 ([#1707](https://github.com/Endava/BEEQ/pull/1707))
+- **deps:** update node.js to v24.16.0 ([#1709](https://github.com/Endava/BEEQ/pull/1709))
+- **deps:** update stylelint to v17.13.0 ([#1718](https://github.com/Endava/BEEQ/pull/1718))
+- **deps:** update dependency vite to v8.0.16 [security] ([#1724](https://github.com/Endava/BEEQ/pull/1724))
+- **deps:** update dependency @chromatic-com/storybook to v5.2.1 ([#1716](https://github.com/Endava/BEEQ/pull/1716))
+- **github:** add contributing instructions, pr-checklist prompt, and skills [ci skip] ([cca1b23f](https://github.com/Endava/BEEQ/commit/cca1b23f))
+
+### Test 🧪
+
+- migrate unit tests and e2e tests to Stencil Vitest and remove Jest/Puppeteer ([#1652](https://github.com/Endava/BEEQ/pull/1652))
+- **Dialog, Drawer:** remove redundant DOMRect assertions in e2e tests ([#1696](https://github.com/Endava/BEEQ/pull/1696))
+
+### ❤️ Thank You
+
+- Andrei Morosan
+- Copilot
+- Dabiel Gonzalez-Ramos @dgonzalezr
+- Raul Rațiu @raulratiu9
+
 ## 1.12.3 (2026-02-10)
 
 ### Documentation 📚

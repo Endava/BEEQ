@@ -23,7 +23,7 @@
   "targets": {
     "start": {
       "executor": "@nxext/stencil:serve",
-      "dependsOn": ["cem-dev", "storybook", { "projects": "beeq-tailwindcss", "target": "build" }],
+      "dependsOn": ["storybook", { "projects": "beeq-tailwindcss", "target": "build" }],
       "outputs": ["{options.outputPath}"],
       "options": {
         "projectType": "library",
@@ -56,7 +56,7 @@
       "continuous": true
     },
     "build": {
-      "dependsOn": [{ "target": "icons" }, { "target": "build", "projects": "beeq-tailwindcss" }, { "target": "cem" }],
+      "dependsOn": [{ "target": "icons" }, { "target": "build", "projects": "beeq-tailwindcss" }],
       "executor": "@nxext/stencil:build",
       "outputs": [
         "{options.outputPath}",
@@ -111,24 +111,17 @@
         "command": "pnpm exec tailwindcss -i packages/beeq/src/global/styles/default.scss -o packages/beeq/.storybook/assets/css/stories.css --postcss ./postcss.config.js --minify"
       }
     },
-    "cem": {
-      "command": "pnpm exec cem analyze --config {projectRoot}/cem.config.mjs",
-      "outputs": ["{projectRoot}/custom-elements.json"]
-    },
-    "cem-dev": {
-      "command": "pnpm exec cem analyze --config {projectRoot}/cem.config.mjs --watch",
-      "continuous": true
-    },
     "icons": {
       "executor": "../../tools:icons",
-      "outputs": ["{options.downloadPath}", "{options.extractToPath}"],
+      "outputs": ["{options.extractToPath}"],
       "options": {
         "assetsFolder": "assets",
         "downloadPath": "tmp",
         "extractToPath": "packages/beeq/src/components/icon/svg",
-        "fileName": "main.zip",
-        "svgFolder": "core-main",
-        "sourceUrl": "https://github.com/phosphor-icons/core/archive/refs/heads"
+        "sourceUrl": "https://github.com/phosphor-icons/core",
+        "sourceChecksum": "sha256-e108846ce4e8235e6327451769c16cea1f2d15d4ee9b739d6434444ce6f712b4",
+        "sourceRef": "2b75f3ad12b420c9504ef05df8d2564a28f8500e",
+        "sourceRefType": "commit"
       }
     },
     "test": {

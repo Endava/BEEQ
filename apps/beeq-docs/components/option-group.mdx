@@ -1,0 +1,828 @@
+---
+title: Option Group
+description: Option Group is a labelled container that organizes related options into named sections inside a list or dropdown.
+---
+
+import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
+
+<Frame className="px-4 py-4" caption="Option Group component overview">
+  <img className="block dark:hidden" src="/components/images/option-group/option-group-overview-light.svg" alt="BEEQ Option Group component overview" />
+  <img className="hidden dark:block" src="/components/images/option-group/option-group-overview-dark.svg" alt="BEEQ Option Group component overview" />
+</Frame>
+
+`bq-option-group` wraps a set of `bq-option` items under a shared label, creating a named section within a longer list. Use it to reduce cognitive load when a menu contains many choices that naturally fall into categories.
+
+<Note>
+  `bq-option-group` must be placed inside a `bq-option-list`. The group renders a `role="group"` container, which assistive technologies expect to find within a `role="listbox"` ancestor — provided by `bq-option-list`.
+</Note>
+
+## When to use
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-up" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Use option groups when
+    </span>
+
+    * A list contains many options that share a common category — grouping reduces scanning effort
+    * The menu mixes conceptually different types of choices that would be confusing in a flat list
+    * You want to communicate hierarchy or context within a dropdown or select component
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-down" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Do not use option groups when
+    </span>
+
+    * The list has only a handful of options — adding group headers adds visual weight without benefit
+    * All options belong to the same category — a single unlabelled list communicates this more cleanly
+    * The groups would each contain only one option, which implies the grouping is artificial
+  </Card>
+</CardGroup>
+
+## Option Group patterns
+
+<CardGroup cols={3}>
+  <Card title="Category grouping">
+    Group options by domain category — for example, splitting a sports/food selection into named sections. The label names the category; the options beneath it list the choices.
+  </Card>
+  <Card title="Role or permission tier">
+    In access-control menus, group options by permission level (Admin, Editor, Viewer) so users can see which actions belong to which role at a glance.
+  </Card>
+  <Card title="Recent vs. all">
+    Separate a "Recently used" group from a full list of options. Users who revisit common choices find them faster without searching the entire list.
+  </Card>
+</CardGroup>
+
+## Anatomy
+
+<Frame className="px-4 py-4" caption="Option Group component anatomy">
+  <img className="block dark:hidden" src="/components/images/option-group/option-group-anatomy-light.svg" alt="BEEQ Option Group component anatomy" />
+  <img className="hidden dark:block" src="/components/images/option-group/option-group-anatomy-dark.svg" alt="BEEQ Option Group component anatomy" />
+</Frame>
+
+Each option group has a header row containing an optional prefix, the required label text, and an optional suffix. Below the header sits the container holding the slotted `bq-option` items.
+
+| Part | Element | Description |
+|---|---|---|
+| **1** | Prefix | Optional slot rendered before the group label — typically a `bq-icon` |
+| **2** | Label | The text that names the group, placed in the `header-label` slot |
+| **3** | Suffix | Optional slot rendered after the group label — typically a `bq-icon` or badge |
+| **4** | Group container | The `div` that holds all slotted option items |
+
+## Design guidelines
+
+### Label clarity
+
+The group label exists to help users understand why these options are grouped together. Write it as a short noun phrase — a category name, not an instruction.
+
+<Steps>
+  <Step title="Name the category">
+    Use a noun or short noun phrase: "Sport", "Food", "Recent", "Admin actions". The label names the group, not the action.
+  </Step>
+  <Step title="Keep it short">
+    The label is displayed in a constrained space and truncates on overflow. Aim for one to three words.
+  </Step>
+  <Step title="Use consistent casing">
+    Apply title case or sentence case consistently across all groups in the same list. Mixing styles creates visual noise.
+  </Step>
+</Steps>
+
+### Nesting and depth
+
+<Note>
+  Option groups are flat by design — they do not support nesting. Each group sits at the same level inside `bq-option-list`. If you find yourself needing nested groups, reconsider the information architecture: a deeper hierarchy usually belongs in a separate navigation component rather than a dropdown.
+</Note>
+
+### Prefix and suffix icons
+
+Use the `header-prefix` slot to place a category icon next to the label. This helps users identify the group at a glance in long lists. Use the `header-suffix` slot sparingly — a count badge or status indicator can add value, but too many suffix elements make the header feel cluttered.
+
+## Usage
+
+### Basic grouping
+
+Two groups of options inside a single `bq-option-list`. Each group carries a `header-label` that names the category.
+
+<CodeLivePreview mode="shadow" code={`
+  <bq-option-list>
+    <bq-option-group>
+      <span slot="header-label">Sport</span>
+      <bq-option value="running">
+        <bq-icon slot="prefix" name="sneaker-move"></bq-icon>
+        <span>Running</span>
+      </bq-option>
+      <bq-option value="hiking">
+        <bq-icon slot="prefix" name="boot"></bq-icon>
+        <span>Hiking</span>
+      </bq-option>
+      <bq-option value="biking">
+        <bq-icon slot="prefix" name="person-simple-bike"></bq-icon>
+        <span>Biking</span>
+      </bq-option>
+    </bq-option-group>
+    <bq-option-group>
+      <span slot="header-label">Food</span>
+      <bq-option value="pizza">
+        <bq-icon slot="prefix" name="pizza"></bq-icon>
+        <span>Pizza</span>
+      </bq-option>
+      <bq-option value="hamburger">
+        <bq-icon slot="prefix" name="hamburger"></bq-icon>
+        <span>Hamburger</span>
+      </bq-option>
+      <bq-option value="cookie">
+        <bq-icon slot="prefix" name="cookie"></bq-icon>
+        <span>Cookie</span>
+      </bq-option>
+    </bq-option-group>
+  </bq-option-list>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <bq-option-list>
+      <bq-option-group>
+        <span slot="header-label">Sport</span>
+        <bq-option value="running">
+          <bq-icon slot="prefix" name="sneaker-move"></bq-icon>
+          <span>Running</span>
+        </bq-option>
+        <bq-option value="hiking">
+          <bq-icon slot="prefix" name="boot"></bq-icon>
+          <span>Hiking</span>
+        </bq-option>
+        <bq-option value="biking">
+          <bq-icon slot="prefix" name="person-simple-bike"></bq-icon>
+          <span>Biking</span>
+        </bq-option>
+      </bq-option-group>
+      <bq-option-group>
+        <span slot="header-label">Food</span>
+        <bq-option value="pizza">
+          <bq-icon slot="prefix" name="pizza"></bq-icon>
+          <span>Pizza</span>
+        </bq-option>
+        <bq-option value="hamburger">
+          <bq-icon slot="prefix" name="hamburger"></bq-icon>
+          <span>Hamburger</span>
+        </bq-option>
+        <bq-option value="cookie">
+          <bq-icon slot="prefix" name="cookie"></bq-icon>
+          <span>Cookie</span>
+        </bq-option>
+      </bq-option-group>
+    </bq-option-list>
+    ```
+
+    ```tsx React icon="react" expandable
+    import { BqIcon, BqOption, BqOptionGroup, BqOptionList } from "@beeq/react";
+
+    <BqOptionList>
+      <BqOptionGroup>
+        <span slot="header-label">Sport</span>
+        <BqOption value="running">
+          <BqIcon slot="prefix" name="sneaker-move" />
+          <span>Running</span>
+        </BqOption>
+        <BqOption value="hiking">
+          <BqIcon slot="prefix" name="boot" />
+          <span>Hiking</span>
+        </BqOption>
+        <BqOption value="biking">
+          <BqIcon slot="prefix" name="person-simple-bike" />
+          <span>Biking</span>
+        </BqOption>
+      </BqOptionGroup>
+      <BqOptionGroup>
+        <span slot="header-label">Food</span>
+        <BqOption value="pizza">
+          <BqIcon slot="prefix" name="pizza" />
+          <span>Pizza</span>
+        </BqOption>
+        <BqOption value="hamburger">
+          <BqIcon slot="prefix" name="hamburger" />
+          <span>Hamburger</span>
+        </BqOption>
+        <BqOption value="cookie">
+          <BqIcon slot="prefix" name="cookie" />
+          <span>Cookie</span>
+        </BqOption>
+      </BqOptionGroup>
+    </BqOptionList>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqIcon, BqOption, BqOptionGroup, BqOptionList } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqIcon, BqOption, BqOptionGroup, BqOptionList],
+      template: `
+        <bq-option-list>
+          <bq-option-group>
+            <span slot="header-label">Sport</span>
+            <bq-option value="running">
+              <bq-icon slot="prefix" name="sneaker-move"></bq-icon>
+              <span>Running</span>
+            </bq-option>
+            <bq-option value="hiking">
+              <bq-icon slot="prefix" name="boot"></bq-icon>
+              <span>Hiking</span>
+            </bq-option>
+            <bq-option value="biking">
+              <bq-icon slot="prefix" name="person-simple-bike"></bq-icon>
+              <span>Biking</span>
+            </bq-option>
+          </bq-option-group>
+          <bq-option-group>
+            <span slot="header-label">Food</span>
+            <bq-option value="pizza">
+              <bq-icon slot="prefix" name="pizza"></bq-icon>
+              <span>Pizza</span>
+            </bq-option>
+            <bq-option value="hamburger">
+              <bq-icon slot="prefix" name="hamburger"></bq-icon>
+              <span>Hamburger</span>
+            </bq-option>
+            <bq-option value="cookie">
+              <bq-icon slot="prefix" name="cookie"></bq-icon>
+              <span>Cookie</span>
+            </bq-option>
+          </bq-option-group>
+        </bq-option-list>
+      `,
+    })
+    export class BasicOptionGroupComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqIcon, BqOption, BqOptionGroup, BqOptionList } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqOptionList>
+        <BqOptionGroup>
+          <span slot="header-label">Sport</span>
+          <BqOption value="running">
+            <BqIcon slot="prefix" name="sneaker-move" />
+            <span>Running</span>
+          </BqOption>
+          <BqOption value="hiking">
+            <BqIcon slot="prefix" name="boot" />
+            <span>Hiking</span>
+          </BqOption>
+          <BqOption value="biking">
+            <BqIcon slot="prefix" name="person-simple-bike" />
+            <span>Biking</span>
+          </BqOption>
+        </BqOptionGroup>
+        <BqOptionGroup>
+          <span slot="header-label">Food</span>
+          <BqOption value="pizza">
+            <BqIcon slot="prefix" name="pizza" />
+            <span>Pizza</span>
+          </BqOption>
+          <BqOption value="hamburger">
+            <BqIcon slot="prefix" name="hamburger" />
+            <span>Hamburger</span>
+          </BqOption>
+          <BqOption value="cookie">
+            <BqIcon slot="prefix" name="cookie" />
+            <span>Cookie</span>
+          </BqOption>
+        </BqOptionGroup>
+      </BqOptionList>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+## Options
+
+### With prefix icon on the group header
+
+Add a `bq-icon` in the `header-prefix` slot to give the group label a visual category marker. This is most useful when the list is dense and users need to scan groups without reading every label word-for-word.
+
+<CodeLivePreview mode="shadow" code={`
+  <bq-option-list>
+    <bq-option-group>
+      <bq-icon slot="header-prefix" name="sneaker-move"></bq-icon>
+      <span slot="header-label">Sport</span>
+      <bq-option value="running">
+        <span>Running</span>
+      </bq-option>
+      <bq-option value="hiking">
+        <span>Hiking</span>
+      </bq-option>
+      <bq-option value="biking">
+        <span>Biking</span>
+      </bq-option>
+    </bq-option-group>
+    <bq-option-group>
+      <bq-icon slot="header-prefix" name="pizza"></bq-icon>
+      <span slot="header-label">Food</span>
+      <bq-option value="pizza">
+        <span>Pizza</span>
+      </bq-option>
+      <bq-option value="hamburger">
+        <span>Hamburger</span>
+      </bq-option>
+      <bq-option value="cookie">
+        <span>Cookie</span>
+      </bq-option>
+    </bq-option-group>
+  </bq-option-list>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <bq-option-list>
+      <bq-option-group>
+        <bq-icon slot="header-prefix" name="sneaker-move"></bq-icon>
+        <span slot="header-label">Sport</span>
+        <bq-option value="running">
+          <span>Running</span>
+        </bq-option>
+        <bq-option value="hiking">
+          <span>Hiking</span>
+        </bq-option>
+        <bq-option value="biking">
+          <span>Biking</span>
+        </bq-option>
+      </bq-option-group>
+      <bq-option-group>
+        <bq-icon slot="header-prefix" name="pizza"></bq-icon>
+        <span slot="header-label">Food</span>
+        <bq-option value="pizza">
+          <span>Pizza</span>
+        </bq-option>
+        <bq-option value="hamburger">
+          <span>Hamburger</span>
+        </bq-option>
+        <bq-option value="cookie">
+          <span>Cookie</span>
+        </bq-option>
+      </bq-option-group>
+    </bq-option-list>
+    ```
+
+    ```tsx React icon="react" expandable
+    import { BqIcon, BqOption, BqOptionGroup, BqOptionList } from "@beeq/react";
+
+    <BqOptionList>
+      <BqOptionGroup>
+        <BqIcon slot="header-prefix" name="sneaker-move" />
+        <span slot="header-label">Sport</span>
+        <BqOption value="running">
+          <span>Running</span>
+        </BqOption>
+        <BqOption value="hiking">
+          <span>Hiking</span>
+        </BqOption>
+        <BqOption value="biking">
+          <span>Biking</span>
+        </BqOption>
+      </BqOptionGroup>
+      <BqOptionGroup>
+        <BqIcon slot="header-prefix" name="pizza" />
+        <span slot="header-label">Food</span>
+        <BqOption value="pizza">
+          <span>Pizza</span>
+        </BqOption>
+        <BqOption value="hamburger">
+          <span>Hamburger</span>
+        </BqOption>
+        <BqOption value="cookie">
+          <span>Cookie</span>
+        </BqOption>
+      </BqOptionGroup>
+    </BqOptionList>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqIcon, BqOption, BqOptionGroup, BqOptionList } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqIcon, BqOption, BqOptionGroup, BqOptionList],
+      template: `
+        <bq-option-list>
+          <bq-option-group>
+            <bq-icon slot="header-prefix" name="sneaker-move"></bq-icon>
+            <span slot="header-label">Sport</span>
+            <bq-option value="running">
+              <span>Running</span>
+            </bq-option>
+            <bq-option value="hiking">
+              <span>Hiking</span>
+            </bq-option>
+            <bq-option value="biking">
+              <span>Biking</span>
+            </bq-option>
+          </bq-option-group>
+          <bq-option-group>
+            <bq-icon slot="header-prefix" name="pizza"></bq-icon>
+            <span slot="header-label">Food</span>
+            <bq-option value="pizza">
+              <span>Pizza</span>
+            </bq-option>
+            <bq-option value="hamburger">
+              <span>Hamburger</span>
+            </bq-option>
+            <bq-option value="cookie">
+              <span>Cookie</span>
+            </bq-option>
+          </bq-option-group>
+        </bq-option-list>
+      `,
+    })
+    export class OptionGroupWithPrefixIconComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqIcon, BqOption, BqOptionGroup, BqOptionList } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqOptionList>
+        <BqOptionGroup>
+          <BqIcon slot="header-prefix" name="sneaker-move" />
+          <span slot="header-label">Sport</span>
+          <BqOption value="running">
+            <span>Running</span>
+          </BqOption>
+          <BqOption value="hiking">
+            <span>Hiking</span>
+          </BqOption>
+          <BqOption value="biking">
+            <span>Biking</span>
+          </BqOption>
+        </BqOptionGroup>
+        <BqOptionGroup>
+          <BqIcon slot="header-prefix" name="pizza" />
+          <span slot="header-label">Food</span>
+          <BqOption value="pizza">
+            <span>Pizza</span>
+          </BqOption>
+          <BqOption value="hamburger">
+            <span>Hamburger</span>
+          </BqOption>
+          <BqOption value="cookie">
+            <span>Cookie</span>
+          </BqOption>
+        </BqOptionGroup>
+      </BqOptionList>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### With suffix on the group header
+
+Use the `header-suffix` slot to place a count badge, status chip, or secondary icon after the label. The suffix is right-aligned and does not interfere with the label truncation.
+
+<CodeLivePreview mode="shadow" code={`
+  <bq-option-list>
+    <bq-option-group>
+      <span slot="header-label">Sport</span>
+      <bq-badge slot="header-suffix" type="info">3</bq-badge>
+      <bq-option value="running">
+        <bq-icon slot="prefix" name="sneaker-move"></bq-icon>
+        <span>Running</span>
+      </bq-option>
+      <bq-option value="hiking">
+        <bq-icon slot="prefix" name="boot"></bq-icon>
+        <span>Hiking</span>
+      </bq-option>
+      <bq-option value="biking">
+        <bq-icon slot="prefix" name="person-simple-bike"></bq-icon>
+        <span>Biking</span>
+      </bq-option>
+    </bq-option-group>
+    <bq-option-group>
+      <span slot="header-label">Food</span>
+      <bq-badge slot="header-suffix" type="info">3</bq-badge>
+      <bq-option value="pizza">
+        <bq-icon slot="prefix" name="pizza"></bq-icon>
+        <span>Pizza</span>
+      </bq-option>
+      <bq-option value="hamburger">
+        <bq-icon slot="prefix" name="hamburger"></bq-icon>
+        <span>Hamburger</span>
+      </bq-option>
+      <bq-option value="cookie">
+        <bq-icon slot="prefix" name="cookie"></bq-icon>
+        <span>Cookie</span>
+      </bq-option>
+    </bq-option-group>
+  </bq-option-list>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <bq-option-list>
+      <bq-option-group>
+        <span slot="header-label">Sport</span>
+        <bq-badge slot="header-suffix" type="info">3</bq-badge>
+        <bq-option value="running">
+          <bq-icon slot="prefix" name="sneaker-move"></bq-icon>
+          <span>Running</span>
+        </bq-option>
+        <bq-option value="hiking">
+          <bq-icon slot="prefix" name="boot"></bq-icon>
+          <span>Hiking</span>
+        </bq-option>
+        <bq-option value="biking">
+          <bq-icon slot="prefix" name="person-simple-bike"></bq-icon>
+          <span>Biking</span>
+        </bq-option>
+      </bq-option-group>
+      <bq-option-group>
+        <span slot="header-label">Food</span>
+        <bq-badge slot="header-suffix" type="info">3</bq-badge>
+        <bq-option value="pizza">
+          <bq-icon slot="prefix" name="pizza"></bq-icon>
+          <span>Pizza</span>
+        </bq-option>
+        <bq-option value="hamburger">
+          <bq-icon slot="prefix" name="hamburger"></bq-icon>
+          <span>Hamburger</span>
+        </bq-option>
+        <bq-option value="cookie">
+          <bq-icon slot="prefix" name="cookie"></bq-icon>
+          <span>Cookie</span>
+        </bq-option>
+      </bq-option-group>
+    </bq-option-list>
+    ```
+
+    ```tsx React icon="react" expandable
+    import { BqBadge, BqIcon, BqOption, BqOptionGroup, BqOptionList } from "@beeq/react";
+
+    <BqOptionList>
+      <BqOptionGroup>
+        <span slot="header-label">Sport</span>
+        <BqBadge slot="header-suffix" type="info">3</BqBadge>
+        <BqOption value="running">
+          <BqIcon slot="prefix" name="sneaker-move" />
+          <span>Running</span>
+        </BqOption>
+        <BqOption value="hiking">
+          <BqIcon slot="prefix" name="boot" />
+          <span>Hiking</span>
+        </BqOption>
+        <BqOption value="biking">
+          <BqIcon slot="prefix" name="person-simple-bike" />
+          <span>Biking</span>
+        </BqOption>
+      </BqOptionGroup>
+      <BqOptionGroup>
+        <span slot="header-label">Food</span>
+        <BqBadge slot="header-suffix" type="info">3</BqBadge>
+        <BqOption value="pizza">
+          <BqIcon slot="prefix" name="pizza" />
+          <span>Pizza</span>
+        </BqOption>
+        <BqOption value="hamburger">
+          <BqIcon slot="prefix" name="hamburger" />
+          <span>Hamburger</span>
+        </BqOption>
+        <BqOption value="cookie">
+          <BqIcon slot="prefix" name="cookie" />
+          <span>Cookie</span>
+        </BqOption>
+      </BqOptionGroup>
+    </BqOptionList>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqBadge, BqIcon, BqOption, BqOptionGroup, BqOptionList } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqBadge, BqIcon, BqOption, BqOptionGroup, BqOptionList],
+      template: `
+        <bq-option-list>
+          <bq-option-group>
+            <span slot="header-label">Sport</span>
+            <bq-badge slot="header-suffix" type="info">3</bq-badge>
+            <bq-option value="running">
+              <bq-icon slot="prefix" name="sneaker-move"></bq-icon>
+              <span>Running</span>
+            </bq-option>
+            <bq-option value="hiking">
+              <bq-icon slot="prefix" name="boot"></bq-icon>
+              <span>Hiking</span>
+            </bq-option>
+            <bq-option value="biking">
+              <bq-icon slot="prefix" name="person-simple-bike"></bq-icon>
+              <span>Biking</span>
+            </bq-option>
+          </bq-option-group>
+          <bq-option-group>
+            <span slot="header-label">Food</span>
+            <bq-badge slot="header-suffix" type="info">3</bq-badge>
+            <bq-option value="pizza">
+              <bq-icon slot="prefix" name="pizza"></bq-icon>
+              <span>Pizza</span>
+            </bq-option>
+            <bq-option value="hamburger">
+              <bq-icon slot="prefix" name="hamburger"></bq-icon>
+              <span>Hamburger</span>
+            </bq-option>
+            <bq-option value="cookie">
+              <bq-icon slot="prefix" name="cookie"></bq-icon>
+              <span>Cookie</span>
+            </bq-option>
+          </bq-option-group>
+        </bq-option-list>
+      `,
+    })
+    export class OptionGroupWithSuffixBadgeComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqBadge, BqIcon, BqOption, BqOptionGroup, BqOptionList } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqOptionList>
+        <BqOptionGroup>
+          <span slot="header-label">Sport</span>
+          <BqBadge slot="header-suffix" type="info">3</BqBadge>
+          <BqOption value="running">
+            <BqIcon slot="prefix" name="sneaker-move" />
+            <span>Running</span>
+          </BqOption>
+          <BqOption value="hiking">
+            <BqIcon slot="prefix" name="boot" />
+            <span>Hiking</span>
+          </BqOption>
+          <BqOption value="biking">
+            <BqIcon slot="prefix" name="person-simple-bike" />
+            <span>Biking</span>
+          </BqOption>
+        </BqOptionGroup>
+        <BqOptionGroup>
+          <span slot="header-label">Food</span>
+          <BqBadge slot="header-suffix" type="info">3</BqBadge>
+          <BqOption value="pizza">
+            <BqIcon slot="prefix" name="pizza" />
+            <span>Pizza</span>
+          </BqOption>
+          <BqOption value="hamburger">
+            <BqIcon slot="prefix" name="hamburger" />
+            <span>Hamburger</span>
+          </BqOption>
+          <BqOption value="cookie">
+            <BqIcon slot="prefix" name="cookie" />
+            <span>Cookie</span>
+          </BqOption>
+        </BqOptionGroup>
+      </BqOptionList>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Always provide content in the `header-label` slot so screen readers and sighted users both know what the group represents.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Render a group without a label — an unnamed group header creates visual ambiguity and an unnamed `role="group"` gives screen readers nothing useful to announce.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Include at least two options in each group — a group containing a single item implies the grouping is arbitrary.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Create groups where every group contains only one option. If no meaningful category exists, use a flat `bq-option-list` instead.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Keep group labels short — one to three words. The label is displayed in a constrained header row and truncates when it overflows.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Write full sentences as group labels. Long text truncates silently and makes the header unreadable in narrow containers.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Use groups consistently — if one group has a prefix icon, give all groups a prefix icon so the header row stays visually aligned.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Mix groups with and without prefix icons in the same list. The inconsistent indentation makes the list harder to scan.
+  </Card>
+</CardGroup>
+
+## Accessibility
+
+`bq-option-group` renders a `role="group"` container div that holds the slotted option items. The internal container carries `aria-label="Options"` as a hardcoded fallback — this is not configurable via a prop. Screen readers use the text in the `header-label` slot to identify the group; the hardcoded `aria-label` is only a structural safety net for the container element itself.
+
+As a developer, you are responsible for:
+
+- **Always providing `header-label` content** — the text in this slot is what sighted users and screen reader users rely on to understand what the group is about. Without it, the group boundary is invisible to assistive technologies.
+- **Placing the component inside `bq-option-list`** — `bq-option-group` provides `role="group"`, which must be a descendant of `role="listbox"` (supplied by `bq-option-list`). Rendering option groups outside this context breaks the expected ARIA tree structure.
+- **Keeping groups non-empty** — a group with no options creates an orphaned header with no associated list items, which confuses both sighted users and screen readers.
+
+## API reference
+
+### Properties
+
+`bq-option-group` has no configurable properties. Its behaviour is entirely controlled through slots.
+
+### Slots
+
+| Slot | Description |
+|---|---|
+| *(default)* | The `bq-option` items belonging to this group |
+| `header-label` | The text label that names the group |
+| `header-prefix` | Content rendered before the label — typically a `bq-icon` |
+| `header-suffix` | Content rendered after the label — typically a `bq-icon` or badge |
+
+### Shadow parts
+
+| Part | Description |
+|---|---|
+| `label` | The `<legend>` element that acts as the group header container |
+| `prefix` | The `<span>` wrapping the `header-prefix` slot content |
+| `suffix` | The `<span>` wrapping the `header-suffix` slot content |
+| `group` | The `<div>` that holds the slotted option items |
+
+### CSS custom properties
+
+<Expandable title="CSS variables" defaultOpen={true}>
+  | Variable | Description | Default |
+  |---|---|---|
+  | `--bq-option-group--background` | Group background color | `var(--bq-ui--primary)` |
+  | `--bq-option-group--font-size` | Group label font size | `var(--bq-font-size--s)` |
+  | `--bq-option-group--line-height` | Group label line height | `var(--bq-font-line-height--regular)` |
+  | `--bq-option-group--label-padding-start` | Inline-start padding of the group header | `var(--bq-spacing-s)` |
+  | `--bq-option-group--label-padding-end` | Inline-end padding of the group header | `var(--bq-spacing-s)` |
+  | `--bq-option-group--label-paddingY` | Block padding of the group header | `var(--bq-spacing-xs)` |
+  | `--bq-option-group--label-text-padding-start` | Inline-start padding of the label text within the header | `var(--bq-spacing-s)` |
+  | `--bq-option-group--label-text-padding-end` | Inline-end padding of the label text within the header | `var(--bq-spacing-s)` |
+  | `--bq-option-group--container-padding-start` | Inline-start padding of the options container | `var(--bq-spacing-xxl)` |
+</Expandable>
+
+<Tip>
+  Learn more about [styling with shadow parts](/guides/styles) and [CSS custom properties](/theming/global-css-variables).
+</Tip>
+
+## Resources
+
+<CardGroup cols={2}>
+  <Card horizontal title="Interactive playground" icon="code" href="https://storybook.beeq.design/?path=/story/components-option--with-option-group">
+    Explore option group variants and states in Storybook
+  </Card>
+  <Card horizontal title="Source code" icon="github" href="https://github.com/Endava/BEEQ/tree/main/packages/beeq/src/components/option-group">
+    View the component source on GitHub
+  </Card>
+</CardGroup>

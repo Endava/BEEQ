@@ -1,0 +1,479 @@
+/* ============================================================
+   apps/beeq-docs/home.css
+   Landing page styles — page-scoped BEM prefix: bq-home-
+
+   Handles custom styles that cannot be expressed as Tailwind
+   utilities: BEEQ token values, gradients, and brand colours.
+   Imported by style.css.
+
+   Uses modern CSS: logical properties, :is(), CSS custom
+   properties. No CSS nesting — postcss-nesting is not in the
+   pipeline; native nesting is stripped by the PostCSS build.
+
+   Note: color-mix() is intentionally NOT used for rgba
+   transparency effects — color-mix(in srgb, color X%, transparent)
+   mixes toward transparent-black (#00000000), which shifts RGB
+   channels toward 0, producing a hue-shifted result.
+   rgba() is the correct tool for alpha transparency.
+
+   Excluded from this file:
+   - Tailwind utility classes (those stay in className="")
+   - Inline styles inside CodeLivePreview template literals
+     (they render inside preview sandboxes and are unreachable)
+   ============================================================ */
+
+/* ── Mintlify landing-page overrides ──────────────────────── */
+
+/* Prevent scrolling while the page-load guard overlay is active.
+   Scoped to :has(#bq-page-guard) so this lock ONLY engages on the
+   landing page (index.mdx), where the guard div is rendered.
+   On any other page navigated to directly, #bq-page-guard is absent
+   and :has() never matches, so overflow is never blocked. */
+html:not(.bq-loaded):has(#bq-page-guard) {
+  overflow: hidden;
+}
+
+/* Landing page: no nav tab should appear active.
+   Mintlify defaults to activating the first tab when the current page
+   does not belong to any tab group (the case for index.mdx).
+   .bq-home-hero is only rendered on the landing page, so :has(.bq-home-hero)
+   scopes these overrides exclusively to index.mdx.
+   Mintlify marks the active tab with text/text-shadow classes, data-active="true"
+   on the <a>, and a child <div> that renders the coloured underline bar. */
+:root:has(.bq-home-hero) a.nav-tabs-item {
+  text-shadow: none !important;
+  color: rgb(75 85 99) !important;    /* Tailwind gray-600 — inactive tab colour */
+}
+
+html.dark:has(.bq-home-hero) a.nav-tabs-item {
+  color: rgb(156 163 175) !important; /* Tailwind gray-400 — inactive tab colour (dark) */
+}
+
+:root:has(.bq-home-hero) a.nav-tabs-item[data-active='true'] > div {
+  display: none !important;             /* hide the coloured underline bar */
+}
+
+/* ── Shared landing primitives ────────────────────────────── */
+
+.bq-home-section__eyebrow {
+  color: var(--bq-text--brand);
+}
+
+.bq-home-section__heading {
+  color: var(--bq-text--primary);
+}
+
+.bq-home-section__copy {
+  color: var(--bq-text--secondary);
+}
+
+.bq-home-section__link {
+  color: var(--bq-text--brand);
+}
+
+.bq-home-section__link::after {
+  content: '' !important;
+  --tw-scale-x: 0 !important;
+}
+
+.bq-home-section__link:hover::after {
+  --tw-scale-x: 1 !important;
+}
+
+.bq-home-action {
+  text-decoration: none;
+}
+
+.bq-home-action--primary {
+  background: var(--bq-ui--brand);
+}
+
+.bq-home-action--ghost {
+  color: var(--bq-text--brand);
+}
+
+.bq-home-action--ghost:hover {
+  background-color: color-mix(in srgb, var(--bq-ui--primary), var(--bq-hover) 20%);
+}
+
+.bq-home-code-panel > :where(.code-live-preview, .code-group) {
+  box-shadow: var(--bq-box-shadow--l);
+}
+
+.bq-home-code-panel .code-group {
+  margin: 0;
+}
+
+.bq-home-band {
+  border-block-end: 1px solid var(--bq-stroke--primary);
+}
+
+.bq-home-band--tinted {
+  background: var(--bq-background--secondary);
+}
+
+/* ─────────────────── HERO ─────────────────────────────────── */
+
+.bq-home-hero {
+  padding-block: 5rem;
+}
+
+.bq-home-install {
+  background: var(--bq-background--secondary);
+  border: 1px solid var(--bq-stroke--primary);
+}
+
+.bq-home-install__icon {
+  flex-shrink: 0;
+}
+
+.bq-home-install__code {
+  color: var(--bq-text--primary);
+  background: none;
+  padding: 0;
+}
+
+.bq-home-hero__glow {
+  background: radial-gradient(ellipse 70% 55% at 65% -5%, rgb(99 102 241 / 20%) 0%, transparent 55%);
+}
+
+.bq-home-hero__version-badge {
+  border-color: var(--bq-stroke--primary);
+  color: var(--bq-text--primary);
+}
+
+.bq-home-hero__cdn-hint {
+  color: var(--bq-text--tertiary);
+}
+
+/* ─────────────────── TRUST STRIP ──────────────────────────── */
+
+.bq-home-trust {
+  border-color: var(--bq-stroke--primary);
+}
+
+.bq-home-trust__item {
+  color: var(--bq-text--secondary);
+}
+
+/* ─────────────────── SETUP ────────────────────────────────── */
+
+/* Setup-specific layout is handled with Tailwind utilities in index.mdx. */
+
+/* ─────────────────── LIVE COMPONENT SHOWCASE ──────────────── */
+
+.bq-home-showcase {
+  border-block-end: 1px solid var(--bq-stroke--primary);
+}
+
+.bq-home-showcase .tabs.tab-container:has(.bq-home-showcase__tabs) {
+  background-color: var(--bq-background--primary);
+  padding: var(--bq-spacing-l);
+  box-shadow: var(--bq-box-shadow--l);
+  border: 1px solid var(--bq-stroke--primary);
+  border-radius: var(--bq-radius--l);
+  min-block-size: 32rem;
+}
+
+.bq-home-showcase .tabs.tab-container:has(.bq-home-showcase__tabs) .code-live-preview {
+  margin: 0;
+  border: none;
+  border-radius: unset;
+}
+
+.bq-home-showcase .tabs.tab-container:has(.bq-home-showcase__tabs) .code-live-preview .preview {
+  overflow: hidden;
+}
+
+.bq-home-showcase__copy {
+  align-self: start;
+  display: grid;
+  gap: var(--bq-spacing-m);
+}
+
+.bq-home-showcase__copy > :is(p, h2) {
+  margin-block: 0;
+}
+
+.bq-home-showcase__value-grid {
+  border-block: 1px solid var(--bq-stroke--primary);
+  display: grid;
+  gap: var(--bq-spacing-m) var(--bq-spacing-l);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-block: var(--bq-spacing-xs) var(--bq-spacing-xs2);
+  padding-block: var(--bq-spacing-m);
+}
+
+.bq-home-showcase__value-item {
+  align-items: center;
+  color: var(--bq-text--primary);
+  display: grid;
+  font-size: var(--bq-font-size--s);
+  font-weight: var(--bq-font-weight--medium);
+  gap: var(--bq-spacing-s);
+  grid-template-columns: auto minmax(0, 1fr);
+  line-height: var(--bq-font-line-height--regular);
+}
+
+.bq-home-showcase__value-icon {
+  color: var(--bq-icon--brand);
+}
+
+.bq-home-showcase__actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bq-spacing-s) var(--bq-spacing-m);
+}
+
+.bq-home-showcase__button {
+  align-items: center;
+  background: var(--bq-ui--brand);
+  border-radius: var(--bq-radius--m);
+  color: var(--bq-text--alt);
+  display: inline-flex;
+  font-size: var(--bq-font-size--s);
+  font-weight: var(--bq-font-weight--bold);
+  gap: var(--bq-spacing-xs);
+  justify-content: center;
+  line-height: var(--bq-font-line-height--regular);
+  min-block-size: 2.75rem;
+  padding-block: var(--bq-spacing-xs);
+  padding-inline: var(--bq-spacing-m);
+  text-decoration: none;
+}
+
+.bq-home-showcase__button svg {
+  color: var(--bq-icon--alt);
+}
+
+.bq-home-showcase__button:hover {
+  background: color-mix(in srgb, var(--bq-ui--brand), var(--bq-hover) 18%);
+}
+
+.bq-home-showcase__starter {
+  color: var(--bq-text--secondary);
+  font-size: var(--bq-font-size--s);
+  line-height: var(--bq-font-line-height--regular);
+  margin: 0;
+}
+
+@media (width < 640px) {
+  .bq-home-showcase__value-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ─────────────────── STATS ────────────────────────────────── */
+
+.bq-home-stats__grid {
+  display: flex;
+  gap: var(--bq-spacing-l);
+  align-items: flex-start;
+}
+
+.bq-home-stats__item {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 0;
+  gap: var(--bq-spacing-l);
+  min-inline-size: 0;
+}
+
+.bq-home-stats__tag-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bq-spacing-xs);
+}
+
+.bq-home-stats__tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bq-spacing-xs);
+}
+
+.bq-home-stats__tag {
+  border: 1px solid transparent;
+  border-radius: var(--bq-radius--s);
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--bq-font-size--m);
+  font-weight: var(--bq-font-weight--medium);
+  line-height: var(--bq-font-line-height--regular);
+  padding-block: var(--bq-spacing-xs2);
+  padding-inline: var(--bq-spacing-s);
+  white-space: nowrap;
+}
+
+.bq-home-stats__tag--filled {
+  background: var(--bq-ui--brand);
+  color: var(--bq-text--alt);
+}
+
+.bq-home-stats__tag--outlined-brand {
+  background: var(--bq-ui--brand-alt);
+  border-color: var(--bq-stroke--brand);
+  color: var(--bq-text--brand);
+}
+
+.bq-home-stats__tag--outlined-dark {
+  background: var(--bq-background--primary);
+  border-color: var(--bq-stroke--secondary);
+  color: var(--bq-text--primary);
+}
+
+.bq-home-stats__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bq-spacing-xs);
+}
+
+.bq-home-stats__title {
+  color: var(--bq-text--primary);
+  font-size: var(--bq-font-size--xl);
+  font-weight: var(--bq-font-weight--bold);
+  line-height: var(--bq-font-line-height--regular);
+  margin-block: 0;
+}
+
+.bq-home-stats__body {
+  color: var(--bq-text--secondary);
+  font-size: var(--bq-font-size--m);
+  font-weight: var(--bq-font-weight--regular);
+  line-height: var(--bq-font-line-height--regular);
+  margin-block: 0;
+}
+
+@media (width < 768px) {
+  .bq-home-stats__grid {
+    flex-direction: column;
+  }
+
+  .bq-home-stats__item {
+    flex: none;
+    inline-size: 100%;
+  }
+}
+
+/* ─────────────────── COMPARISON TABLE ─────────────────────── */
+
+.bq-home-comparison {
+  border-block-end: 1px solid var(--bq-stroke--primary);
+}
+
+.bq-home-comparison__table {
+  background: var(--bq-background--primary);
+  border-color: var(--bq-stroke--primary);
+  box-shadow: var(--bq-box-shadow--l);
+}
+
+.bq-home-comparison__heading {
+  color: var(--bq-text--primary);
+  font-size: var(--bq-font-size--m);
+  font-weight: var(--bq-font-weight--bold);
+  line-height: var(--bq-font-line-height--regular);
+  padding-block: var(--bq-spacing-s);
+  padding-inline: var(--bq-spacing-l);
+  position: relative;
+}
+
+.bq-home-comparison__heading--feature {
+  color: var(--bq-text--primary);
+}
+
+.bq-home-comparison__heading--beeq {
+  color: var(--bq-brand);
+  background: var(--bq-background--secondary);
+}
+
+.bq-home-comparison__heading::after {
+  content: '';
+  border-block-end: 1px solid var(--bq-stroke--primary);
+  inset-block-end: 0;
+  inset-inline: var(--bq-spacing-l);
+  position: absolute;
+}
+
+.bq-home-comparison__cell {
+  color: var(--bq-text--secondary);
+  font-size: var(--bq-font-size--s);
+  font-weight: var(--bq-font-weight--regular);
+  line-height: var(--bq-font-line-height--regular);
+  padding-block: var(--bq-spacing-s);
+  padding-inline: var(--bq-spacing-l);
+  position: relative;
+}
+
+.bq-home-comparison__row:not(:last-child) .bq-home-comparison__cell::after {
+  content: '';
+  border-block-end: 1px solid var(--bq-stroke--primary);
+  inset-block-end: 0;
+  inset-inline: var(--bq-spacing-l);
+  position: absolute;
+}
+
+.bq-home-comparison__cell--feature {
+  color: var(--bq-text--secondary);
+}
+
+.bq-home-comparison__cell--beeq {
+  color: var(--bq-text--primary);
+  background: var(--bq-background--secondary);
+}
+
+.dark :where(.bq-home-comparison__heading--beeq, .bq-home-comparison__cell--beeq) {
+  color: var(--bq-text--primary);
+}
+
+/* ─────────────────── RESOURCES ────────────────────────────── */
+
+.bq-home-resources {
+  border-block-end: 1px solid var(--bq-stroke--primary);
+}
+
+/* ─────────────────── PAGE-LOAD GUARD ──────────────────────── */
+/* A plain <div id="bq-page-guard"> in index.mdx, SSR-rendered so it
+   exists from the very first byte. bq-mode-sync.js fades it out once
+   BEEQ web components are registered, then adds `bq-loaded` to <html>
+   so any future instance (client-side navigation) is suppressed by CSS. */
+
+#bq-page-guard {
+  display: grid;
+  place-items: center;
+  position: absolute;
+  block-size: 100dvh;
+  inset: 0;
+  z-index: 9999;
+  background-color: rgb(255 255 255);
+  transition: opacity 0.4s ease;
+  pointer-events: all;
+}
+
+.dark #bq-page-guard {
+  background-color: rgb(13 14 17);
+}
+
+/* Spinner centered in the overlay */
+#bq-page-guard::after {
+  content: '';
+  width: 2rem;
+  height: 2rem;
+  margin-inline-start: -1rem;
+  border: 2px solid rgb(79 70 229 / 25%);
+  border-block-start-color: rgb(79 70 229);
+  border-radius: 50%;
+  animation: bq-page-guard-spin 0.7s linear infinite;
+}
+
+#bq-page-guard.bq-page-guard--out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Once BEEQ is registered, <html> gets .bq-loaded. Any future #bq-page-guard
+   rendered by client-side navigation is instantly suppressed by CSS. */
+.bq-loaded #bq-page-guard { display: none; }
+
+@keyframes bq-page-guard-spin {
+  to { transform: rotate(360deg); }
+}

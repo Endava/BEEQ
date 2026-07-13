@@ -1,0 +1,642 @@
+---
+title: Icon
+description: Icons provide compact visual cues that help people recognize actions, statuses, navigation, and meaning across an interface.
+---
+
+import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
+
+<Frame className="px-4 py-4" caption="Icon component overview">
+  <img className="block dark:hidden" src="/components/images/icon/icon-overview-light.svg" alt="BEEQ Icon component overview" />
+  <img className="hidden dark:block" src="/components/images/icon/icon-overview-dark.svg" alt="BEEQ Icon component overview" />
+</Frame>
+
+Icons help people scan and understand an interface faster. Use them to support actions, labels, and status cues, but keep them purposeful so they clarify meaning instead of adding noise.
+
+<Note>
+  Named BEEQ icons are loaded from SVG files. Before using them in an app, make sure those assets are publicly available and that you configure `setBasePath()` to point to that directory.
+
+  Icon setup depends on your stack and build tool. See the **Configure icons** step in your framework guide ([For developers](/getting-started/for-developers) lists all paths).
+</Note>
+
+## When to use
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-up" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Use icons when
+    </span>
+    - A familiar visual cue helps users recognize an action, concept, or state faster
+    - The icon supports visible text, navigation, or status information
+    - Consistent iconography improves scanning across repeated UI patterns
+    - You need a compact visual element inside buttons, inputs, lists, or messages
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-down" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Do not use icons when
+    </span>
+    - The meaning is unclear without extra explanation
+    - Several icon styles would be mixed in the same interface
+    - The icon would become the only way to understand important information
+    - Extra icons would add clutter without improving comprehension
+  </Card>
+</CardGroup>
+
+## Patterns
+
+The icon guidance distinguishes between two common visual styles.
+
+<CardGroup cols={2}>
+  <Card title="Outlined">
+    Outlined icons work well for general-purpose UI because they feel lighter and reduce visual noise.
+  </Card>
+  <Card title="Filled">
+    Filled icons add emphasis and are useful for selected states, favorites, ratings, and other moments that need stronger visual weight.
+  </Card>
+</CardGroup>
+
+## Anatomy
+
+<Frame className="px-4 py-4" caption="Icon component anatomy">
+  <img className="block dark:hidden" src="/components/images/icon/icon-anatomy-light.svg" alt="BEEQ Icon component anatomy" />
+  <img className="hidden dark:block" src="/components/images/icon/icon-anatomy-dark.svg" alt="BEEQ Icon component anatomy" />
+</Frame>
+
+`bq-icon` keeps its structure intentionally small so it can be reused inside many higher-level components. The host controls the icon name, size, color, and accessible label, while the shadow DOM renders the loaded SVG inside a single wrapper.
+
+| Part | Element | Description |
+|---|---|---|
+| **1** | SVG | The SVG element that contains the icon graphic |
+| **2** | Bounding area | The area that surrounds the icon and defines its size and clickable area |
+
+## Design guidelines
+
+Use icons deliberately so they reinforce meaning without becoming decoration for its own sake.
+
+<Steps>
+  <Step title="Start with meaning">
+    Choose an icon only when the metaphor is widely recognizable. If the symbol is ambiguous, pair it with visible text.
+  </Step>
+  <Step title="Match size to context">
+    Smaller icons work for supporting cues, while medium icons are the standard choice for most interface controls. Larger icons should be reserved for moments like empty states or strong emphasis.
+  </Step>
+  <Step title="Keep alignment and color consistent">
+    Center icons visually with nearby text and use colors that match the meaning already established across the product.
+  </Step>
+</Steps>
+
+<Note>
+  Do not use small icons as the only interactive target. If the icon triggers an action, make sure the clickable area is comfortably large, or use an icon button pattern instead.
+</Note>
+
+## Usage
+
+### Default
+
+Use the default icon when you need a simple visual cue inside navigation, actions, messages, or supporting UI text.
+
+<CodeLivePreview mode="shadow" code={`<bq-icon name="bell-ringing"></bq-icon>`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-icon name="bell-ringing"></bq-icon>
+    ```
+
+    ```jsx React icon="react"
+    import { BqIcon } from "@beeq/react";
+
+    <BqIcon name="bell-ringing" />
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqIcon } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqIcon],
+      template: `
+        <bq-icon name="bell-ringing"></bq-icon>
+      `,
+    })
+    export class AppComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqIcon } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqIcon name="bell-ringing" />
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Tip>
+  The default icon size is `24px`, which works well as the standard medium size in most interface contexts.
+</Tip>
+
+### Size
+
+Adjust `size` when the icon needs to match the surrounding text or visual emphasis more closely.
+
+<CodeLivePreview mode="shadow" code={`
+  <bq-icon name="bell-ringing" size="16"></bq-icon>
+  <bq-icon name="bell-ringing"></bq-icon>
+  <bq-icon name="bell-ringing" size="32"></bq-icon>
+  <bq-icon name="bell-ringing" size="40"></bq-icon>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-icon name="bell-ringing" size="16"></bq-icon>
+    <bq-icon name="bell-ringing"></bq-icon>
+    <bq-icon name="bell-ringing" size="32"></bq-icon>
+    <bq-icon name="bell-ringing" size="40"></bq-icon>
+    ```
+
+    ```jsx React icon="react" expandable
+    import { BqIcon } from "@beeq/react";
+
+    <>
+      <BqIcon name="bell-ringing" size={16} />
+      <BqIcon name="bell-ringing" />
+      <BqIcon name="bell-ringing" size={32} />
+      <BqIcon name="bell-ringing" size={40} />
+    </>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqIcon } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqIcon],
+      template: `
+        <bq-icon name="bell-ringing" size="16"></bq-icon>
+        <bq-icon name="bell-ringing"></bq-icon>
+        <bq-icon name="bell-ringing" size="32"></bq-icon>
+        <bq-icon name="bell-ringing" size="40"></bq-icon>
+      `,
+    })
+    export class AppComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqIcon } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqIcon name="bell-ringing" :size="16" />
+      <BqIcon name="bell-ringing" />
+      <BqIcon name="bell-ringing" :size="32" />
+      <BqIcon name="bell-ringing" :size="40" />
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Color
+
+An icon inherits color from its parent by default, but you can also assign a token value through the `color` prop.
+
+<CodeLivePreview mode="shadow" code={`
+  <bq-icon name="info"></bq-icon>
+  <bq-icon name="star" color="text--success"></bq-icon>
+  <bq-icon name="warning-circle" color="text--warning"></bq-icon>
+  <bq-icon name="x-circle" color="text--danger"></bq-icon>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-icon name="info"></bq-icon>
+    <bq-icon name="star" color="text--success"></bq-icon>
+    <bq-icon name="warning-circle" color="text--warning"></bq-icon>
+    <bq-icon name="x-circle" color="text--danger"></bq-icon>
+    ```
+
+    ```jsx React icon="react" expandable
+    import { BqIcon } from "@beeq/react";
+
+    <>
+      <BqIcon name="info" />
+      <BqIcon name="star" color="text--success" />
+      <BqIcon name="warning-circle" color="text--warning" />
+      <BqIcon name="x-circle" color="text--danger" />
+    </>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqIcon } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqIcon],
+      template: `
+        <bq-icon name="info"></bq-icon>
+        <bq-icon name="star" color="text--success"></bq-icon>
+        <bq-icon name="warning-circle" color="text--warning"></bq-icon>
+        <bq-icon name="x-circle" color="text--danger"></bq-icon>
+      `,
+    })
+    export class AppComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqIcon } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqIcon name="info" />
+      <BqIcon name="star" color="text--success" />
+      <BqIcon name="warning-circle" color="text--warning" />
+      <BqIcon name="x-circle" color="text--danger" />
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Warning>
+  The `color` value must be a valid BEEQ token. Do not rely on color alone to communicate status or intent.
+</Warning>
+
+## Options
+
+### Styles
+
+Use icon-name suffixes like `-thin`, `-light`, `-bold`, `-duotone`, and `-fill` to select a style. This is the preferred approach over the deprecated `weight` prop.
+
+<CodeLivePreview mode="shadow" code={`
+  <bq-icon name="heart"></bq-icon>
+  <bq-icon name="heart-thin"></bq-icon>
+  <bq-icon name="heart-light"></bq-icon>
+  <bq-icon name="heart-bold"></bq-icon>
+  <bq-icon name="heart-duotone"></bq-icon>
+  <bq-icon name="heart-fill"></bq-icon>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-icon name="heart"></bq-icon>
+    <bq-icon name="heart-thin"></bq-icon>
+    <bq-icon name="heart-light"></bq-icon>
+    <bq-icon name="heart-bold"></bq-icon>
+    <bq-icon name="heart-duotone"></bq-icon>
+    <bq-icon name="heart-fill"></bq-icon>
+    ```
+
+    ```jsx React icon="react" expandable
+    import { BqIcon } from "@beeq/react";
+
+    <>
+      <BqIcon name="heart" />
+      <BqIcon name="heart-thin" />
+      <BqIcon name="heart-light" />
+      <BqIcon name="heart-bold" />
+      <BqIcon name="heart-duotone" />
+      <BqIcon name="heart-fill" />
+    </>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqIcon } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqIcon],
+      template: `
+        <bq-icon name="heart"></bq-icon>
+        <bq-icon name="heart-thin"></bq-icon>
+        <bq-icon name="heart-light"></bq-icon>
+        <bq-icon name="heart-bold"></bq-icon>
+        <bq-icon name="heart-duotone"></bq-icon>
+        <bq-icon name="heart-fill"></bq-icon>
+      `,
+    })
+    export class AppComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqIcon } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqIcon name="heart" />
+      <BqIcon name="heart-thin" />
+      <BqIcon name="heart-light" />
+      <BqIcon name="heart-bold" />
+      <BqIcon name="heart-duotone" />
+      <BqIcon name="heart-fill" />
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Warning>
+  The `weight` prop is deprecated. Prefer putting the style directly into the icon name, such as `heart-fill`.
+</Warning>
+
+### Custom SVG source
+
+Use `src` when you want to load a custom icon from a local or CORS-enabled endpoint.
+
+<CodeLivePreview mode="shadow" code={`<bq-icon
+  src="https://storybook.beeq.design/assets/wallet.svg"
+  label="Wallet icon"
+  size="256"
+></bq-icon>`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-icon
+      src="https://storybook.beeq.design/assets/wallet.svg"
+      label="Wallet icon"
+      size="256"
+    ></bq-icon>
+    ```
+
+    ```jsx React icon="react"
+    import { BqIcon } from "@beeq/react";
+
+    <BqIcon
+      src="https://storybook.beeq.design/assets/wallet.svg"
+      label="Wallet icon"
+      size={256}
+    />
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqIcon } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqIcon],
+      template: `
+        <bq-icon
+          src="https://storybook.beeq.design/assets/wallet.svg"
+          label="Wallet icon"
+          size="256"
+          ></bq-icon>
+      `,
+    })
+    export class AppComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqIcon } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqIcon
+        src="https://storybook.beeq.design/assets/wallet.svg"
+        label="Wallet icon"
+        :size="256"
+      />
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Tip>
+  When you use `src`, always provide `label`. Unlike named icons, a custom SVG source does not give the component a useful fallback name.
+</Tip>
+
+### Explore icons
+
+The Phosphor library gives you a broad icon set. The example below shows only a small sample of the available names.
+
+<CodeLivePreview mode="shadow" code={`
+  <style>
+    :host {
+      align-items: stretch !important;
+    }
+
+    .icon {
+      inline-size: 100%;
+    }
+
+    .icon-link {
+      display: inline-block;
+      margin-block-end: var(--bq-spacing-xl);
+    }
+
+    .icon-link::part(button) {
+      text-decoration: none;
+    }
+
+    .icon-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+      gap: 1rem;
+    }
+
+    .icon-grid .group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: var(--bq-spacing-xs2);
+      font-size: var(--bq-font-size--s);
+      color: var(--bq-text--secondary);
+    }
+
+    .icon-grid .group > div {
+      display: flex;
+      justify-content: center;
+      inline-size: 100%;
+      border: 1px solid var(--bq-stroke--primary);
+      border-radius: var(--bq-radius--m);
+      padding-block: var(--bq-spacing-m);
+      transition: transform 0.3s ease;
+    }
+
+    .icon-grid .group > div:hover {
+      transform: scale(1.1);
+    }
+  </style>
+  <div class="icon">
+    <bq-button class="icon-link" href="https://phosphoricons.com/" target="_blank">
+      <bq-icon name="binoculars-fill" slot="prefix"></bq-icon>
+      Explore all the icons available
+      <bq-icon class="ms-m" name="caret-right" slot="suffix"></bq-icon>
+    </bq-button>
+    <div class="icon-grid">
+      <div class="group"><div><bq-icon name="map-trifold"></bq-icon></div><span>map-trifold</span></div>
+      <div class="group"><div><bq-icon name="codesandbox-logo"></bq-icon></div><span>codesandbox-logo</span></div>
+      <div class="group"><div><bq-icon name="user-list"></bq-icon></div><span>user-list</span></div>
+      <div class="group"><div><bq-icon name="user-square"></bq-icon></div><span>user-square</span></div>
+      <div class="group"><div><bq-icon name="map-pin-line"></bq-icon></div><span>map-pin-line</span></div>
+      <div class="group"><div><bq-icon name="briefcase-metal"></bq-icon></div><span>briefcase-metal</span></div>
+      <div class="group"><div><bq-icon name="arrow-bend-double-up-left"></bq-icon></div><span>arrow-bend-double-up-left</span></div>
+      <div class="group"><div><bq-icon name="heart-half"></bq-icon></div><span>heart-half</span></div>
+      <div class="group"><div><bq-icon name="arrow-elbow-down-right"></bq-icon></div><span>arrow-elbow-down-right</span></div>
+      <div class="group"><div><bq-icon name="user-focus"></bq-icon></div><span>user-focus</span></div>
+      <div class="group"><div><bq-icon name="pen"></bq-icon></div><span>pen</span></div>
+      <div class="group"><div><bq-icon name="windows-logo"></bq-icon></div><span>windows-logo</span></div>
+      <div class="group"><div><bq-icon name="church"></bq-icon></div><span>church</span></div>
+      <div class="group"><div><bq-icon name="twitter-logo"></bq-icon></div><span>twitter-logo</span></div>
+      <div class="group"><div><bq-icon name="hourglass-medium"></bq-icon></div><span>hourglass-medium</span></div>
+      <div class="group"><div><bq-icon name="eye"></bq-icon></div><span>eye</span></div>
+      <div class="group"><div><bq-icon name="chart-donut"></bq-icon></div><span>chart-donut</span></div>
+      <div class="group"><div><bq-icon name="clipboard-text"></bq-icon></div><span>clipboard-text</span></div>
+      <div class="group"><div><bq-icon name="pencil-simple-slash"></bq-icon></div><span>pencil-simple-slash</span></div>
+      <div class="group"><div><bq-icon name="chart-line-down"></bq-icon></div><span>chart-line-down</span></div>
+      <div class="group"><div><bq-icon name="file-lock"></bq-icon></div><span>file-lock</span></div>
+      <div class="group"><div><bq-icon name="selection-background"></bq-icon></div><span>selection-background</span></div>
+      <div class="group"><div><bq-icon name="twitch-logo"></bq-icon></div><span>twitch-logo</span></div>
+      <div class="group"><div><bq-icon name="gradient"></bq-icon></div><span>gradient</span></div>
+      <div class="group"><div><bq-icon name="archive"></bq-icon></div><span>archive</span></div>
+      <div class="group"><div><bq-icon name="bowl-food"></bq-icon></div><span>bowl-food</span></div>
+      <div class="group"><div><bq-icon name="image-square"></bq-icon></div><span>image-square</span></div>
+      <div class="group"><div><bq-icon name="skip-forward"></bq-icon></div><span>skip-forward</span></div>
+      <div class="group"><div><bq-icon name="number-circle-four"></bq-icon></div><span>number-circle-four</span></div>
+      <div class="group"><div><bq-icon name="person-arms-spread"></bq-icon></div><span>person-arms-spread</span></div>
+      <div class="group"><div><bq-icon name="parallelogram"></bq-icon></div><span>parallelogram</span></div>
+      <div class="group"><div><bq-icon name="confetti"></bq-icon></div><span>confetti</span></div>
+      <div class="group"><div><bq-icon name="check-fat"></bq-icon></div><span>check-fat</span></div>
+      <div class="group"><div><bq-icon name="coins"></bq-icon></div><span>coins</span></div>
+      <div class="group"><div><bq-icon name="bezier-curve"></bq-icon></div><span>bezier-curve</span></div>
+      <div class="group"><div><bq-icon name="medium-logo"></bq-icon></div><span>medium-logo</span></div>
+    </div>
+  </div>
+`} />
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Use one clear icon per concept so the meaning stays easy to recognize.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not use multiple icon variations for the same concept in one product.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Pair icons with text when the action or meaning may not be obvious on its own.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not rely on a symbol alone when users might have to guess what it means.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Keep icons aligned with nearby text and controls so the layout feels balanced.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not mix unrelated icon sizes and styles without a clear visual reason.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Use color to reinforce meaning only after the icon choice itself is already understandable.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not use decorative or inconsistent colors that suggest the wrong status or action.
+  </Card>
+</CardGroup>
+
+## Accessibility
+
+- `bq-icon` renders with `role="img"` and applies an `aria-label` automatically.
+- If you provide `label`, that value becomes the accessible name.
+- For named icons without a `label`, the component falls back to `"[name] icon"`, such as `"bell-ringing icon"`.
+- For custom SVG icons loaded through `src`, add `label` explicitly so assistive technologies get a meaningful name.
+- When an icon is ambiguous, pair it with visible text instead of expecting the symbol alone to carry the meaning.
+- For icon-only interactive patterns, add a `bq-tooltip` so keyboard and pointer users get a visible label. Keep in mind that tooltips are not reliably discoverable on touch devices, so a visible text label is preferred where possible.
+- Choose icons with widely recognized metaphors: a magnifying glass for search, a heart for favorites, a plus for add actions.
+
+## API reference
+
+### Properties
+
+| Property | Attribute | Description | Type | Default |
+|---|---|---|---|---|
+| `color` | `color` | Sets the stroke color of the SVG using a BEEQ token value | `string` | `undefined` |
+| `label` | `label` | Accessible label for the icon | `string` | `undefined` |
+| `name` | `name` | Icon name to load from the configured SVG base path | `string` | `undefined` |
+| `size` | `size` | Sets the rendered icon size | `number \| string` | `24` |
+| `src` | `src` | Loads a custom SVG source and overrides `name` when set | `string` | `undefined` |
+| ~~`weight`~~ | ~~`weight`~~ | <strong className="text-red-500">Deprecated!</strong> Legacy icon weight/style prop | `'thin'` \| `'light'` \| `'regular'` \| `'bold'` \| `'fill'` \| `'duotone'` | `undefined` |
+
+### Slots
+
+This component has no public slots.
+
+### Events
+
+| Event | Description | Type |
+|---|---|---|
+| `svgLoaded` | Fires when the SVG content has loaded successfully | `CustomEvent<string>` |
+
+<Note>
+  - In React, prefix events with `on`: `onSvgLoaded`.
+  - In Angular, use the event binding syntax: `(svgLoaded)`.
+  - In Vue, use the `@` shorthand: `@svgLoaded`.
+</Note>
+
+### Shadow parts
+
+| Part | Description |
+|---|---|
+| `base` | The internal wrapper that holds the icon SVG content |
+| `svg` | The rendered `<svg>` element inside the component |
+
+### CSS custom properties
+
+| Variable | Description | Default |
+|---|---|---|
+| `--bq-icon--color` | Icon color | `currentColor` |
+| `--bq-icon--size` | Icon size | `24px` |
+
+<Tip>
+  Learn more about [styling with shadow parts](/guides/styles#component-shadow-dom-parts) and [CSS custom properties](/guides/styles#global-css-custom-properties).
+</Tip>
+
+## Resources
+
+<CardGroup cols={2}>
+  <Card horizontal title="Interactive playground" icon="code" href="https://storybook.beeq.design/?path=/story/components-icon--default">
+    Explore icon examples in Storybook
+  </Card>
+  <Card horizontal title="Source code" icon="github" href="https://github.com/Endava/BEEQ/tree/main/packages/beeq/src/components/icon">
+    View the component source on GitHub
+  </Card>
+</CardGroup>

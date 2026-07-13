@@ -3,7 +3,7 @@ import { html, nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 import { INPUT_VALIDATION } from '../../input/bq-input.types';
-import { DATE_PICKER_TYPE } from '../bq-date-picker.types';
+import { CALENDAR_VIEW, DATE_PICKER_TYPE, DATE_PRECISION } from '../bq-date-picker.types';
 import mdx from './bq-date-picker.mdx';
 
 const meta: Meta = {
@@ -18,11 +18,22 @@ const meta: Meta = {
     autofocus: { control: 'boolean' },
     'clear-button-label': { control: 'text' },
     'disable-clear': { control: 'boolean' },
-    distance: { control: 'number' },
     disabled: { control: 'boolean' },
+    distance: { control: 'number' },
     'first-day-of-week': { control: 'number' },
-    formatOptions: { control: 'object' },
     form: { control: 'text' },
+    'form-validation-message': { control: 'text' },
+    formatOptions: { control: 'object' },
+    'initial-view': { control: 'select', options: [...CALENDAR_VIEW] },
+    isDateDisallowed: {
+      control: false,
+      description: 'Predicate that marks specific dates as unselectable.',
+      table: {
+        type: {
+          summary: '(date: Date) => boolean',
+        },
+      },
+    },
     locale: { control: 'text' },
     max: { control: 'text' },
     min: { control: 'text' },
@@ -31,6 +42,8 @@ const meta: Meta = {
     name: { control: 'text' },
     open: { control: 'boolean' },
     'panel-height': { control: 'text' },
+    placeholder: { control: 'text' },
+    precision: { control: 'select', options: [...DATE_PRECISION] },
     placement: {
       control: 'select',
       options: [
@@ -48,12 +61,10 @@ const meta: Meta = {
         'left-end',
       ],
     },
-    placeholder: { control: 'text' },
     required: { control: 'boolean' },
     'show-outside-days': { control: 'boolean' },
     skidding: { control: 'number' },
     strategy: { control: 'select', options: ['fixed', 'absolute'] },
-    tentative: { control: 'text' },
     type: { control: 'select', options: [...DATE_PICKER_TYPE] },
     'validation-status': { control: 'select', options: [...INPUT_VALIDATION] },
     value: { control: 'text' },
@@ -62,9 +73,12 @@ const meta: Meta = {
     bqChange: { action: 'bqChange' },
     bqClear: { action: 'bqClear' },
     bqFocus: { action: 'bqFocus' },
-    // Not part of the public API, so we don't want to expose it in the docs
-    noLabel: { control: 'boolean', table: { disable: true } },
+    bqViewChange: { action: 'bqViewChange' },
+    // Not part of the public API — hidden from docs table
+    customDisallowedDate: { control: 'text', table: { disable: true } },
     hasLabelTooltip: { control: 'boolean', table: { disable: true } },
+    noLabel: { control: 'boolean', table: { disable: true } },
+    optionalLabel: { control: 'boolean', table: { disable: true } },
     prefix: { control: 'boolean', table: { disable: true } },
     suffix: { control: 'boolean', table: { disable: true } },
   },
@@ -72,17 +86,17 @@ const meta: Meta = {
     autofocus: false,
     'clear-button-label': 'Clear value',
     'disable-clear': false,
-    distance: 8,
     disabled: false,
+    distance: 8,
     'first-day-of-week': 1,
-    formatOptions: {
-      day: 'numeric',
-      month: 'short',
-      year: 'numeric',
-    },
     form: undefined,
+    'form-validation-message': undefined,
+    // Left undefined so the component can pick its precision-appropriate default.
+    // Stories that need a specific format pass it explicitly (see `FormatOptions`).
+    formatOptions: undefined,
+    'initial-view': 'days',
     isDateDisallowed: undefined,
-    locale: undefined,
+    locale: 'en-GB',
     max: undefined,
     min: undefined,
     months: 1,
@@ -90,16 +104,22 @@ const meta: Meta = {
     name: 'bq-date-picker',
     open: false,
     'panel-height': 'auto',
-    placement: 'bottom-end',
     placeholder: 'Enter your date',
+    placement: 'bottom-end',
+    precision: 'day',
     required: false,
     'show-outside-days': false,
     skidding: 0,
     strategy: 'absolute',
-    tentative: undefined,
     type: 'single',
     'validation-status': 'none',
     value: undefined,
+    customDisallowedDate: undefined,
+    hasLabelTooltip: false,
+    noLabel: false,
+    optionalLabel: false,
+    prefix: false,
+    suffix: false,
   },
 };
 export default meta;
@@ -115,11 +135,13 @@ const Template = (args: Args) => {
         </bq-tooltip>
       `
     : nothing;
+
   const labelTemplate = html`
     <label class="flex flex-grow items-center" slot=${ifDefined(!args.optionalLabel ? 'label' : null)}>
       Date picker label ${tooltipTemplate}
     </label>
   `;
+
   const label = !args.optionalLabel
     ? labelTemplate
     : html`
@@ -128,19 +150,15 @@ const Template = (args: Args) => {
           <span class="text-text-secondary">Optional</span>
         </div>
       `;
-  /**
-   * * Converts a Date object to an ISO 8601 string representation.
-   * This function is used only for demonstration purposes in Storybook.
-   */
 
   const dateDisallowed = (date: Date): boolean => {
     if (!args.customDisallowedDate) return false;
-
     // Format the date value to YYYY-MM-DD
     const dateString = date.toLocaleDateString('fr-CA');
-    // Check if the date is in the disallowed dates list
     return args.customDisallowedDate.replace(/\s+/g, '').split(',').includes(dateString);
   };
+
+  const isDateDisallowed = args.isDateDisallowed ?? dateDisallowed;
 
   const style = args.hasLabelTooltip
     ? html`
@@ -158,13 +176,15 @@ const Template = (args: Args) => {
     <bq-date-picker
       ?autofocus=${args.autofocus}
       clear-button-label=${ifDefined(args['clear-button-label'])}
-      distance=${ifDefined(args.distance)}
       ?disable-clear=${args['disable-clear']}
       ?disabled=${args.disabled}
+      distance=${ifDefined(args.distance)}
       first-day-of-week=${ifDefined(args['first-day-of-week'])}
       form=${ifDefined(args.form)}
+      form-validation-message=${ifDefined(args['form-validation-message'])}
       .formatOptions=${args.formatOptions}
-      .isDateDisallowed=${dateDisallowed}
+      initial-view=${ifDefined(args['initial-view'])}
+      .isDateDisallowed=${isDateDisallowed}
       locale=${ifDefined(args.locale)}
       max=${ifDefined(args.max)}
       min=${ifDefined(args.min)}
@@ -175,11 +195,11 @@ const Template = (args: Args) => {
       panel-height=${ifDefined(args['panel-height'])}
       placeholder=${ifDefined(args.placeholder)}
       placement=${ifDefined(args.placement)}
+      precision=${ifDefined(args.precision)}
       ?required=${args.required}
       ?show-outside-days=${args['show-outside-days']}
       skidding=${ifDefined(args.skidding)}
       strategy=${ifDefined(args.strategy)}
-      tentative=${ifDefined(args.tentative)}
       type=${ifDefined(args.type)}
       validation-status=${ifDefined(args['validation-status'])}
       value=${ifDefined(args.value)}
@@ -187,6 +207,7 @@ const Template = (args: Args) => {
       @bqChange=${args.bqChange}
       @bqClear=${args.bqClear}
       @bqFocus=${args.bqFocus}
+      @bqViewChange=${args.bqViewChange}
     >
       ${!args.noLabel ? label : nothing}
       ${args.prefix ? html`<bq-icon name="user-circle" slot="prefix"></bq-icon>` : nothing}
@@ -199,171 +220,318 @@ export const Default: Story = {
   render: Template,
 };
 
+export const Open: Story = {
+  render: Template,
+  args: { open: true },
+};
+
+/* ------------------------------ Selection types ---------------------------- */
+
+export const SingleDate: Story = {
+  render: Template,
+  args: { open: true, type: 'single', value: '2026-05-15' },
+};
+
 export const Range: Story = {
   render: Template,
-  args: {
-    type: 'range',
-    months: 2,
-  },
+  args: { open: true, type: 'range', months: 2, value: '2026-05-15/2026-06-10' },
 };
 
 export const Multi: Story = {
   render: Template,
-  args: {
-    type: 'multi',
-    months: 2,
-  },
+  args: { open: true, type: 'multi', months: 2, value: '2026-05-05 2026-05-15 2026-05-25 2026-06-08' },
 };
 
 export const InitialValue: Story = {
   render: (args) => html`
     <div class="grid grid-cols-1 gap-m sm:grid-cols-3">
-      <!-- Default date picker -->
+      <!-- Default (single) -->
       <div class="flex flex-col gap-2">
         <p>Default date picker</p>
-        ${Template({ ...args, value: '2024-05-25', name: 'bq-date-picker-default', noLabel: 'true' })}
+        ${Template({ ...args, value: '2026-05-25', name: 'bq-date-picker-default', noLabel: true })}
       </div>
-      <!-- Range date picker -->
+      <!-- Range -->
       <div class="flex flex-col gap-2">
         <p>Range date picker</p>
         ${Template({
           ...args,
-          value: '2024-12-20/2025-01-10',
+          value: '2026-12-20/2027-01-10',
           name: 'bq-date-picker-range',
           type: 'range',
           months: 2,
-          noLabel: 'true',
+          noLabel: true,
         })}
       </div>
-      <!-- Multi date picker -->
+      <!-- Multi -->
       <div class="flex flex-col gap-2">
         <p>Multi date picker</p>
         ${Template({
           ...args,
-          value: '2024-05-08 2024-05-22 2024-06-04 2024-06-18 2024-05-16 2024-05-30 2024-06-12 2024-06-26',
+          value: '2026-05-08 2026-05-22 2026-06-04 2026-06-18 2026-05-16 2026-05-30 2026-06-12 2026-06-26',
           name: 'bq-date-picker-multi',
           type: 'multi',
           months: 2,
-          noLabel: 'true',
+          noLabel: true,
         })}
       </div>
     </div>
   `,
 };
 
-export const MixMax: Story = {
+/* ------------------------------- Constraints ------------------------------- */
+
+export const MinMax: Story = {
   name: 'Min and Max allowed dates',
   render: Template,
-  args: {
-    min: '2024-06-05',
-    max: '2024-06-15',
-    value: '2024-06-10',
-  },
-};
-
-export const Disabled: Story = {
-  render: Template,
-  args: {
-    disabled: true,
-    value: '2024-06-20',
-  },
+  args: { open: true, min: '2026-05-01', max: '2026-05-31', value: '2026-05-15' },
 };
 
 export const DisallowedDates: Story = {
   name: 'Disallowed dates',
   render: Template,
-  argTypes: {
-    customDisallowedDate: { control: 'text' },
-  },
   args: {
-    customDisallowedDate: '2024-12-01, 2024-12-25, 2024-12-26',
-    value: '2024-12-12',
+    open: true,
+    isDateDisallowed: (date: Date) => {
+      const dateString = date.toLocaleDateString('fr-CA');
+      return ['2026-05-05', '2026-05-06', '2026-05-15', '2026-05-16'].includes(dateString);
+    },
+    value: '2026-05-10',
   },
 };
 
-export const ValidationStatus: Story = {
-  name: 'Validation',
+export const Disabled: Story = {
+  render: Template,
+  args: { disabled: true, value: '2026-06-20' },
+};
+
+/* ---------------------------------- Views ---------------------------------- */
+
+export const InitialMonthView: Story = {
+  name: 'Initial view: months',
+  render: Template,
+  args: { open: true, 'initial-view': 'months' },
+};
+
+export const InitialYearView: Story = {
+  name: 'Initial view: years',
+  render: Template,
+  args: { open: true, 'initial-view': 'years' },
+};
+
+/* --------------------------------- Precision -------------------------------- */
+
+export const MonthPrecision: Story = {
+  name: 'Precision: month',
+  render: Template,
+  args: {
+    open: true,
+    precision: 'month',
+    value: '2026-05',
+    // Let the component pick its precision default ({ month: 'long', year: 'numeric' })
+    formatOptions: undefined,
+    placeholder: 'Select month',
+  },
+};
+
+export const YearPrecision: Story = {
+  name: 'Precision: year',
+  render: Template,
+  args: {
+    open: true,
+    precision: 'year',
+    value: '2026',
+    formatOptions: undefined,
+    placeholder: 'Select year',
+  },
+};
+
+export const MonthPrecisionRange: Story = {
+  name: 'Precision: month + range',
+  render: Template,
+  args: {
+    open: true,
+    precision: 'month',
+    type: 'range',
+    value: '2026-03/2026-08',
+    formatOptions: undefined,
+    placeholder: 'Select month range',
+  },
+};
+
+export const MonthPrecisionMulti: Story = {
+  name: 'Precision: month + multi',
+  render: Template,
+  args: {
+    open: true,
+    precision: 'month',
+    type: 'multi',
+    value: '2026-01 2026-03 2026-05 2026-07 2026-10 2026-12',
+    formatOptions: undefined,
+    placeholder: 'Select months',
+  },
+};
+
+export const YearPrecisionMulti: Story = {
+  name: 'Precision: year + multi',
+  render: Template,
+  args: {
+    open: true,
+    precision: 'year',
+    type: 'multi',
+    value: '2020 2022 2025 2027 2030',
+    formatOptions: undefined,
+    placeholder: 'Select years',
+  },
+};
+
+/* ------------------------- Localization & formatting ----------------------- */
+
+export const Localized: Story = {
   render: (args) => html`
     <div class="grid grid-cols-1 gap-m sm:grid-cols-3">
-      <!-- Error -->
       <div class="flex flex-col gap-2">
-        <p>Error date picker</p>
+        <p>German (de-DE)</p>
+        ${Template({ ...args, locale: 'de-DE', 'first-day-of-week': 1, value: '2026-05-15', noLabel: true })}
+      </div>
+      <div class="flex flex-col gap-2">
+        <p>Japanese (ja-JP)</p>
+        ${Template({ ...args, locale: 'ja-JP', 'first-day-of-week': 0, value: '2026-05-15', noLabel: true })}
+      </div>
+      <div class="flex flex-col gap-2">
+        <p>French (fr-FR)</p>
+        ${Template({ ...args, locale: 'fr-FR', 'first-day-of-week': 1, value: '2026-05-15', noLabel: true })}
+      </div>
+    </div>
+  `,
+};
+
+export const FormatOptions: Story = {
+  name: 'Custom display format',
+  render: (args) => html`
+    <div class="grid grid-cols-1 gap-m sm:grid-cols-2">
+      <div class="flex flex-col gap-2">
+        <p>Numeric &mdash; <code>{ day: '2-digit', month: '2-digit', year: 'numeric' }</code></p>
         ${Template({
           ...args,
-          value: '2024-05-25',
-          name: 'bq-date-picker-error',
-          'validation-status': 'error',
-          noLabel: 'true',
+          value: '2026-05-15',
+          name: 'bq-date-picker-fmt-numeric',
+          formatOptions: { day: '2-digit', month: '2-digit', year: 'numeric' },
+          noLabel: true,
         })}
       </div>
-      <!-- Success -->
       <div class="flex flex-col gap-2">
-        <p>Success date picker</p>
+        <p>Long month &mdash; <code>{ day: 'numeric', month: 'long', year: 'numeric' }</code></p>
         ${Template({
           ...args,
-          value: '2024-06-25',
-          name: 'bq-date-picker-success',
-          'validation-status': 'success',
-          noLabel: 'true',
+          value: '2026-05-15',
+          name: 'bq-date-picker-fmt-long',
+          formatOptions: { day: 'numeric', month: 'long', year: 'numeric' },
+          noLabel: true,
         })}
       </div>
-      <!-- Warning -->
       <div class="flex flex-col gap-2">
-        <p>Warning date picker</p>
+        <p>Full date style &mdash; <code>{ dateStyle: 'full' }</code></p>
         ${Template({
           ...args,
-          value: '2024-07-25',
-          name: 'bq-date-picker-warning',
-          'validation-status': 'warning',
-          noLabel: 'true',
+          value: '2026-05-15',
+          name: 'bq-date-picker-fmt-full',
+          formatOptions: { dateStyle: 'full' },
+          noLabel: true,
+        })}
+      </div>
+      <div class="flex flex-col gap-2">
+        <p>Weekday + short month &mdash; <code>{ weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }</code></p>
+        ${Template({
+          ...args,
+          value: '2026-05-15',
+          name: 'bq-date-picker-fmt-weekday',
+          formatOptions: { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' },
+          noLabel: true,
         })}
       </div>
     </div>
   `,
 };
 
+export const RTL: Story = {
+  render: (args) => html`<div dir="rtl">${Template(args)}</div>`,
+  args: { open: true, locale: 'ar-EG', value: '2026-05-15' },
+};
+
+/* ------------------------------ Label variants ----------------------------- */
+
 export const Optional: Story = {
   name: 'Label with "Optional"',
   render: Template,
-  args: {
-    optionalLabel: true,
-    value: '2024-10-10',
-  },
+  args: { optionalLabel: true, value: '2026-10-10' },
 };
 
 export const Tooltip: Story = {
   name: 'Label with "Info tooltip"',
   render: Template,
-  args: {
-    hasLabelTooltip: true,
-    value: '2024-09-11',
-  },
-  parameters: {
-    layout: 'centered',
-  },
+  args: { hasLabelTooltip: true, value: '2026-09-11' },
+  parameters: { layout: 'centered' },
 };
 
 export const NoLabel: Story = {
-  name: 'With no Label',
+  name: 'With no label',
   render: Template,
-  args: {
-    noLabel: true,
-    value: '2024-10-13',
-  },
+  args: { noLabel: true, value: '2026-10-13' },
 };
 
+/* -------------------------------- Validation ------------------------------- */
+
+export const ValidationStatus: Story = {
+  name: 'Validation',
+  render: (args) => html`
+    <div class="grid grid-cols-1 gap-m sm:grid-cols-3">
+      <div class="flex flex-col gap-2">
+        <p>Error</p>
+        ${Template({
+          ...args,
+          value: '2026-05-25',
+          name: 'bq-date-picker-error',
+          'validation-status': 'error',
+          noLabel: true,
+        })}
+      </div>
+      <div class="flex flex-col gap-2">
+        <p>Success</p>
+        ${Template({
+          ...args,
+          value: '2026-06-25',
+          name: 'bq-date-picker-success',
+          'validation-status': 'success',
+          noLabel: true,
+        })}
+      </div>
+      <div class="flex flex-col gap-2">
+        <p>Warning</p>
+        ${Template({
+          ...args,
+          value: '2026-07-25',
+          name: 'bq-date-picker-warning',
+          'validation-status': 'warning',
+          noLabel: true,
+        })}
+      </div>
+    </div>
+  `,
+};
+
+/* ---------------------------- Form integration ----------------------------- */
+
 export const WithForm: Story = {
+  name: 'Form integration',
   render: () => {
     const handleFormSubmit = (ev: Event) => {
       ev.preventDefault();
       const form = ev.target as HTMLFormElement;
       const formData = new FormData(form);
-      // @ts-expect-error - FormData is not iterable
       const formValues = Object.fromEntries(formData.entries());
 
-      const codeElement = document.getElementById('form-data');
+      const codeElement = document.getElementById('form-data-2');
       if (!codeElement) return;
-
       codeElement.textContent = JSON.stringify(formValues, null, 2);
     };
 
@@ -389,19 +557,19 @@ export const WithForm: Story = {
                 type="single"
                 required
               >
-                <label class="flex flex-grow items-center" slot="label"> Expiration date </label>
+                <label class="flex flex-grow items-center" slot="label">Expiration date</label>
               </bq-date-picker>
             </div>
             <bq-date-picker
               name="tripDate"
               placeholder="Select a start and end date for your travel"
               form-validation-message="Please, tell us when you are planning to travel"
-              value="2024-12-25/2025-01-10"
+              value="2026-12-25/2027-01-10"
               type="range"
               months="2"
               required
             >
-              <label class="flex flex-grow items-center" slot="label"> Travel dates </label>
+              <label class="flex flex-grow items-center" slot="label">Travel dates</label>
             </bq-date-picker>
             <div class="flex justify-end gap-x-s">
               <bq-button appearance="secondary" type="reset">Cancel</bq-button>
@@ -418,7 +586,7 @@ export const WithForm: Story = {
             const formValues = Object.fromEntries(formData.entries());
           </div>
           <pre>
-            <code id="form-data" class="rounded-s">
+            <code id="form-data-2" class="rounded-s">
               { // submit the form to see the data here }
             </code>
           </pre>

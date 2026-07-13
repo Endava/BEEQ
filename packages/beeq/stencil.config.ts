@@ -5,6 +5,7 @@ import type { Config } from '@stencil/core';
 import { reactOutputTarget as react } from '@stencil/react-output-target';
 import { sass } from '@stencil/sass';
 import { vueOutputTarget as vue } from '@stencil/vue-output-target';
+import { cemAnalyzerPlugin } from '@wc-toolkit/cem-analyzer-plugin/vite';
 import tailwind, { type PluginConfigOpts, tailwindHMR } from 'stencil-tailwind-plugin';
 
 import tailwindConf from '../../tailwind.config';
@@ -31,6 +32,11 @@ export const config: Config = {
   tsconfig: resolvePath('./tsconfig.lib.json'),
   globalStyle: resolvePath('./src/global/styles/default.scss'),
   plugins: [
+    cemAnalyzerPlugin({
+      globs: [resolvePath('./src/components/**/*.tsx')],
+      config: resolvePath('./cem.config.mjs'),
+      stencil: true,
+    }),
     sass({
       includePaths: [resolvePath('../../node_modules'), resolvePath('src/global/styles')],
       injectGlobalPaths: [resolvePath('src/global/styles/mixins/index.scss')],

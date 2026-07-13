@@ -1,0 +1,630 @@
+---
+title: Toast
+description: "Toasts provide short, time-based feedback about an action or system state without interrupting the current task."
+---
+
+import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
+
+<Frame className="px-4 py-4" caption="Toast component overview">
+  <img className="block dark:hidden" src="/components/images/toast/toast-overview-light.svg" alt="BEEQ Toast component overview" />
+  <img className="hidden dark:block" src="/components/images/toast/toast-overview-dark.svg" alt="BEEQ Toast component overview" />
+</Frame>
+
+Toasts are brief, non-blocking status messages that appear temporarily to confirm an action, report a lightweight issue, or indicate background progress. They keep people informed without pulling them out of their current flow.
+
+<Note>
+  Use a toast for lightweight feedback that does not require a response. If the message is longer, needs actions, or must remain visible until dismissed, prefer a [notification](/components/notification) or [dialog](/components/dialog).
+</Note>
+
+## When to use
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-up" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Use toasts when
+    </span>
+    - Confirming that a user-triggered action completed successfully
+    - Reporting a lightweight issue that does not block the current task
+    - Indicating short-lived background activity such as syncing or loading
+    - Keeping feedback close to the moment of interaction without interrupting the page
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-down" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Do not use toasts when
+    </span>
+    - The message is critical and must not be missed
+    - The user needs to choose an action before continuing
+    - The content is too long to scan in a few seconds
+    - Multiple concurrent messages would compete for attention
+  </Card>
+</CardGroup>
+
+## Patterns
+
+<CardGroup cols={2}>
+  <Card title="Informational toast">
+    Informational toasts provide users with relevant information or guidance about a particular action or feature.
+  </Card>
+  <Card title="Error toast">
+    Error toasts inform the user about issues that occur during user interaction and provide guidance on how to resolve them.
+  </Card>
+  <Card title="Loading toast">
+    Loading toasts indicate to users that a process is underway, such as data retrieval or content loading.
+  </Card>
+  <Card title="Success toast">
+    Success toasts confirm to users that an action has been completed successfully.
+  </Card>
+  <Card title="Warning toast">
+    Warning toasts warn users about potential risks or issues that require attention.
+  </Card>
+  <Card title="Custom toast">
+    Custom toasts are personalized messages tailored to specific user interactions or application contexts.
+  </Card>
+</CardGroup>
+
+## Anatomy
+
+<Frame className="px-4 py-4" caption="Toast component anatomy">
+  <img className="block dark:hidden" src="/components/images/toast/toast-anatomy-light.svg" alt="BEEQ Toast component anatomy" />
+  <img className="hidden dark:block" src="/components/images/toast/toast-anatomy-dark.svg" alt="BEEQ Toast component anatomy" />
+</Frame>
+
+Each toast contains a compact message and, by default, a semantic icon that helps users understand the status instantly. Toasts should always include a clear label, and that label should be paired with the icon that best matches the message meaning.
+
+| Part | Element | Description |
+|---|---|---|
+| **1** | Container | The surface that groups the feedback message into one compact unit |
+| **2** | Icon | A semantic icon that reinforces the toast type at a glance |
+| **3** | Label | The short message describing what happened or what is happening |
+
+<Note>
+  Toasts use a standard size intended to work across most interfaces. Prefer the default sizing and spacing so messages stay compact, readable, and visually consistent.
+</Note>
+
+## Design guidelines
+
+Use toast messages carefully so they stay brief, noticeable, and easy to understand without interrupting the current task.
+
+<Steps>
+  <Step title="Be concise">
+    Keep the message short and direct. Limit the content to one or two brief sentences.
+  </Step>
+  <Step title="Provide context">
+    Include enough context for users to understand why the toast appeared and what happened.
+  </Step>
+  <Step title="Use sentence case">
+    Write toast text in sentence case instead of using capitalization to force emphasis.
+  </Step>
+</Steps>
+
+<Note>
+  Show one toast at a time when possible. If several events happen close together, prefer a controlled queue or a tightly managed stack so messages remain readable and do not overlap bottom navigation, floating action buttons, or other critical controls.
+</Note>
+
+## Usage
+
+### Default
+
+Use the built-in `type` values to communicate the nature of the message quickly. Keep the text concise and let the icon and color carry the status cue. `info` is the default type, while `success`, `alert`, `error`, and `loading` cover the most common toast states.
+
+<CodeLivePreview mode="shadow" code={`
+  <style>
+    bq-toast[open] {
+      display: inline-block;
+    }
+  </style>
+
+  <bq-toast open time="600000">This is an informational message.</bq-toast>
+  <bq-toast open type="success" time="600000">Your profile was updated.</bq-toast>
+  <bq-toast open type="alert" time="600000">Your session will expire soon.</bq-toast>
+  <bq-toast open type="error" time="600000">We couldn't complete the request.</bq-toast>
+  <bq-toast open type="loading" time="600000">Uploading file...</bq-toast>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-toast open>This is an informational message.</bq-toast>
+    <bq-toast open type="success">Your profile was updated.</bq-toast>
+    <bq-toast open type="alert">Your session will expire soon.</bq-toast>
+    <bq-toast open type="error">We couldn't complete the request.</bq-toast>
+    <bq-toast open type="loading">Uploading file...</bq-toast>
+    ```
+
+    ```jsx React icon="react" expandable
+    import { BqToast } from "@beeq/react";
+
+    <>
+      <BqToast open>This is an informational message.</BqToast>
+      <BqToast open type="success">Your profile was updated.</BqToast>
+      <BqToast open type="alert">Your session will expire soon.</BqToast>
+      <BqToast open type="error">We couldn't complete the request.</BqToast>
+      <BqToast open type="loading">Uploading file...</BqToast>
+    </>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqToast } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqToast],
+      template: `
+        <bq-toast open>This is an informational message.</bq-toast>
+        <bq-toast open type="success">Your profile was updated.</bq-toast>
+        <bq-toast open type="alert">Your session will expire soon.</bq-toast>
+        <bq-toast open type="error">We couldn't complete the request.</bq-toast>
+        <bq-toast open type="loading">Uploading file...</bq-toast>
+      `
+    })
+    export class AppComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqToast } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqToast open>This is an informational message.</BqToast>
+      <BqToast open type="success">Your profile was updated.</BqToast>
+      <BqToast open type="alert">Your session will expire soon.</BqToast>
+      <BqToast open type="error">We couldn't complete the request.</BqToast>
+      <BqToast open type="loading">Uploading file...</BqToast>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+## Options
+
+### Custom icon
+
+Use `type="custom"` when you need a branded or domain-specific status cue. Replace the default icon through the `icon` slot.
+
+<CodeLivePreview mode="shadow" code={`
+  <style>
+    bq-toast[open] {
+      display: inline-block;
+    }
+  </style>
+
+  <bq-toast open type="custom" time="600000">
+    <bq-icon slot="icon" name="star-bold"></bq-icon>
+    New feature added to your workspace.
+  </bq-toast>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-toast open type="custom">
+      <bq-icon slot="icon" name="star-bold"></bq-icon>
+      New feature added to your workspace.
+    </bq-toast>
+    ```
+
+    ```jsx React icon="react"
+    import { BqIcon, BqToast } from "@beeq/react";
+
+    <BqToast open type="custom">
+      <BqIcon slot="icon" name="star-bold" />
+      New feature added to your workspace.
+    </BqToast>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqIcon, BqToast } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqIcon, BqToast],
+      template: `
+        <bq-toast open type="custom">
+          <bq-icon slot="icon" name="star-bold"></bq-icon>
+          New feature added to your workspace.
+        </bq-toast>
+      `
+    })
+    export class AppComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqIcon, BqToast } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqToast open type="custom">
+        <BqIcon slot="icon" name="star-bold" />
+        New feature added to your workspace.
+      </BqToast>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Portal placement and stacking
+
+Use a dedicated toast container when you want the stacking behavior to be explicit in the markup. This example keeps the stack at the top center and appends each new toast into the same container, while keeping the visible documentation focused on the structure rather than the implementation details.
+
+<CodeLivePreview mode="shadow" code={`
+  <style>
+    [data-toast-container] {
+      display: flex;
+      position: fixed;
+      z-index: 9999;
+      flex-direction: column;
+      gap: var(--bq-spacing-xs);
+      pointer-events: none;
+      inset-block-start: 10rem;
+      inset-inline-start: 50%;
+      transform: translateX(-50%);
+      align-items: center;
+    }
+  </style>
+
+  <bq-button>Toggle toast</bq-button>
+  <div data-toast-container></div>
+
+  <script>
+    (() => {
+      const TOAST_TYPE = ['info', 'success', 'alert', 'error', 'loading'];
+
+      const button = previewRoot.querySelector('bq-button');
+      const toastContainer = previewRoot.querySelector('[data-toast-container]');
+      if (!button || !toastContainer) return;
+
+      const getRandomType = () => TOAST_TYPE[Math.floor(Math.random() * TOAST_TYPE.length)];
+      const createToast = (type, message) => {
+        const toast = document.createElement('bq-toast');
+        toast.setAttribute('type', type);
+        toast.setAttribute('time', '4000');
+        toast.textContent = message;
+        return toast;
+      };
+
+      button.addEventListener('bqClick', async () => {
+        await customElements.whenDefined('bq-toast');
+
+        const type = getRandomType();
+        const toast = createToast(type, 'This is a message');
+
+        toastContainer.appendChild(toast);
+        toast.open = true;
+
+        window.setTimeout(() => {
+          toast.open = false;
+          window.setTimeout(() => {
+            toast.remove();
+          }, 300);
+        }, 4000);
+      });
+    })();
+  </script>
+`}>
+  <CodeGroup>
+    ```js JavaScript icon="js" expandable
+    const TOAST_TYPE = ['info', 'success', 'alert', 'error', 'loading'];
+
+    const button = previewRoot.querySelector('bq-button');
+    const toastContainer = previewRoot.querySelector('[data-toast-container]');
+
+    const getRandomType = () => TOAST_TYPE[Math.floor(Math.random() * TOAST_TYPE.length)];
+    const createToast = (type, message) => {
+      const toast = document.createElement('bq-toast');
+      toast.setAttribute('type', type);
+      toast.setAttribute('time', '4000');
+      toast.textContent = message;
+      return toast;
+    };
+
+    button.addEventListener('bqClick', async () => {
+      await customElements.whenDefined('bq-toast');
+
+      const type = getRandomType();
+      const toast = createToast(type, 'This is a message');
+
+      toastContainer.appendChild(toast);
+      toast.open = true;
+
+      window.setTimeout(() => {
+        toast.open = false;
+        window.setTimeout(() => {
+          toast.remove();
+        }, 300);
+      }, 4000);
+    });
+    ```
+
+    ```html HTML icon="html5"
+    <bq-button>Toggle toast</bq-button>
+
+    <div data-toast-container></div>
+    ```
+
+    ```jsx React icon="react" expandable
+    import { useEffect, useRef, useState } from "react";
+    import { createPortal } from "react-dom";
+    import { BqButton, BqToast } from "@beeq/react";
+
+    const TOAST_TYPES = ['info', 'success', 'alert', 'error', 'loading'];
+
+    export function ToastStackExample() {
+      const [toasts, setToasts] = useState([]);
+      const timerIds = useRef(new Set());
+
+      useEffect(() => () => timerIds.current.forEach(clearTimeout), []);
+
+      const handleClick = () => {
+        const id = Date.now();
+        const type = TOAST_TYPES[Math.floor(Math.random() * TOAST_TYPES.length)];
+        setToasts((prev) => [...prev, { id, type }]);
+
+        const timer = window.setTimeout(() => {
+          setToasts((prev) => prev.filter((t) => t.id !== id));
+          timerIds.current.delete(timer);
+        }, 4000);
+        timerIds.current.add(timer);
+      };
+
+      return (
+        <>
+          <BqButton onBqClick={handleClick}>Toggle toast</BqButton>
+          {createPortal(
+            <div data-toast-container>
+              {toasts.map(({ id, type }) => (
+                <BqToast key={id} open type={type} time={4000}>
+                  This is a message
+                </BqToast>
+              ))}
+            </div>,
+            document.body
+          )}
+        </>
+      );
+    }
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component, DestroyRef, inject } from "@angular/core";
+    import { BqButton, BqToast } from "@beeq/angular/standalone";
+
+    interface ToastItem { id: number; type: string; }
+
+    const TOAST_TYPES = ['info', 'success', 'alert', 'error', 'loading'];
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqButton, BqToast],
+      template: `
+        <bq-button (bqClick)="handleClick()">Toggle toast</bq-button>
+        <div data-toast-container>
+          @for (toast of toasts; track toast.id) {
+            <bq-toast open [attr.type]="toast.type" time="4000">
+              This is a message
+            </bq-toast>
+          }
+        </div>
+      `,
+    })
+    export class AppComponent {
+      toasts: ToastItem[] = [];
+      private readonly timerIds = new Set<ReturnType<typeof setTimeout>>();
+      private readonly destroyRef = inject(DestroyRef);
+
+      constructor() {
+        this.destroyRef.onDestroy(() => this.timerIds.forEach(clearTimeout));
+      }
+
+      handleClick() {
+        const id = Date.now();
+        const type = TOAST_TYPES[Math.floor(Math.random() * TOAST_TYPES.length)];
+        this.toasts = [...this.toasts, { id, type }];
+
+        const timer = window.setTimeout(() => {
+          this.toasts = this.toasts.filter((t) => t.id !== id);
+          this.timerIds.delete(timer);
+        }, 4000);
+        this.timerIds.add(timer);
+      }
+    }
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { onUnmounted, ref } from "vue";
+    import { BqButton, BqToast } from "@beeq/vue";
+
+    interface ToastItem { id: number; type: string; }
+
+    const TOAST_TYPES = ['info', 'success', 'alert', 'error', 'loading'];
+    const toasts = ref<ToastItem[]>([]);
+    const timerIds = new Set<ReturnType<typeof setTimeout>>();
+
+    onUnmounted(() => timerIds.forEach(clearTimeout));
+
+    function handleClick() {
+      const id = Date.now();
+      const type = TOAST_TYPES[Math.floor(Math.random() * TOAST_TYPES.length)];
+      toasts.value.push({ id, type });
+
+      const timer = window.setTimeout(() => {
+        toasts.value = toasts.value.filter((t) => t.id !== id);
+        timerIds.delete(timer);
+      }, 4000);
+      timerIds.add(timer);
+    }
+    </script>
+
+    <template>
+      <BqButton @bqClick="handleClick">Toggle toast</BqButton>
+      <div data-toast-container>
+        <BqToast v-for="toast in toasts" :key="toast.id" open :type="toast.type" :time="4000">
+          This is a message
+        </BqToast>
+      </div>
+    </template>
+    ```
+</CodeGroup>
+</CodeLivePreview>
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Keep toast copy short, direct, and written in sentence case.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Don't use a toast for long explanations, multi-step guidance, or anything users may need to revisit later.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Use the correct semantic `type` so icon and color reinforce the meaning immediately.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Don't flood the interface with many simultaneous toasts. If several events occur, queue or stack them in a controlled order.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Place viewport toasts where they do not cover bottom navigation, floating actions, or other critical controls.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Don't rely on a toast alone for critical errors or irreversible outcomes that require acknowledgment.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Set a long enough `time` for users who may need more seconds to read the message, especially if it contains an error explanation.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not auto-dismiss a toast that users may need to act on or reference. Use a notification or dialog for persistent messages instead.
+  </Card>
+</CardGroup>
+
+## Accessibility
+
+- **Announced as status** - the component uses `role="status"`, so the message should make sense when read aloud without surrounding visual context.
+- **Not color-only** - do not rely on icon color alone to communicate meaning. The message text itself should state what happened clearly.
+- **Allow enough reading time** - increase `time` for longer messages, and avoid auto-dismissing content people may need more than a few seconds to read.
+- **Do not steal focus** - toasts are non-modal status messages and should not interrupt the current keyboard focus or workflow.
+- **Use a stronger pattern when needed** - if the message requires action, contains links, or must remain available, use a persistent notification or dialog instead.
+
+## API reference
+
+### Properties
+
+| Property | Attribute | Description | Type | Default |
+|---|---|---|---|---|
+| `border` | `border` | Border radius of the toast component | `"none" \| "xs2" \| "xs" \| "s" \| "m" \| "l" \| "full"` | `"s"` |
+| `hideIcon` | `hide-icon` | If `true`, the semantic icon is hidden | `boolean` | `false` |
+| `open` | `open` | If `true`, the toast is visible | `boolean` | `undefined` |
+| `placement` | `placement` | Placement used by the fixed-position toast portal | `"top-left" \| "top-center" \| "top-right" \| "bottom-left" \| "bottom-center" \| "bottom-right"` | `"bottom-center"` |
+| `time` | `time` | Duration in milliseconds before the toast closes itself | `number` | `3000` |
+| `type` | `type` | Semantic type of the toast | `"info" \| "success" \| "alert" \| "error" \| "loading" \| "custom"` | `"info"` |
+
+### Events
+
+| Event | Description | Type |
+|---|---|---|
+| `bqHide` | Fired when the toast is about to hide | `CustomEvent<HTMLBqToastElement>` |
+| `bqShow` | Fired when the toast is about to show | `CustomEvent<HTMLBqToastElement>` |
+
+<Note>
+  - In React, prefix events with `on`: `onBqHide`, `onBqShow`.
+  - In Angular, use the event binding syntax: `(bqHide)`, `(bqShow)`.
+  - In Vue, use the `@` shorthand: `@bqHide`, `@bqShow`.
+  - **`preventDefault()` is supported** on both events. Calling it cancels the default show or hide behavior while still letting your event handler run.
+</Note>
+
+### Methods
+
+| Method | Description | Signature |
+|---|---|---|
+| `show()` | Shows the toast programmatically | `show() => Promise<void>` |
+| `hide()` | Hides the toast programmatically | `hide() => Promise<void>` |
+| `toast()` | Renders the toast in the fixed-position stacking portal | `toast() => Promise<void>` |
+
+### Slots
+
+| Slot | Description |
+|---|---|
+| *(default)* | The toast message content |
+| `icon` | Replaces the default icon with a custom `bq-icon` |
+
+### Shadow parts
+
+| Part | Description |
+|---|---|
+| `wrapper` | The internal wrapper that contains the icon and message |
+| `icon-info` | The `<div>` container that holds the icon component |
+| `base` | The root element of the internal default `bq-icon` |
+| `svg` | The `<svg>` element of the internal default `bq-icon` |
+
+### CSS custom properties
+
+<Expandable title="CSS variables" defaultOpen={true}>
+  | Variable | Description | Default |
+  |---|---|---|
+  | `--bq-toast--background` | Toast background color | `var(--bq-ui--primary)` |
+  | `--bq-toast--box-shadow` | Toast shadow | `var(--bq-box-shadow--l)` |
+  | `--bq-toast--padding-y` | Vertical padding | `var(--bq-spacing-s)` |
+  | `--bq-toast--padding-x` | Horizontal padding | `var(--bq-spacing-m)` |
+  | `--bq-toast--gap` | Gap between icon and text | `var(--bq-spacing-xs)` |
+  | `--bq-toast--border-radius` | Border radius | `var(--bq-radius--s)` |
+  | `--bq-toast--border-width` | Border width | `unset` |
+  | `--bq-toast--border-style` | Border style | `none` |
+  | `--bq-toast--border-color` | Border color | `transparent` |
+  | `--bq-toast--icon-color-info` | Icon color for `info` toasts | `var(--bq-icon--brand)` |
+  | `--bq-toast--icon-color-success` | Icon color for `success` toasts | `var(--bq-icon--success)` |
+  | `--bq-toast--icon-color-alert` | Icon color for `alert` toasts | `var(--bq-icon--warning)` |
+  | `--bq-toast--icon-color-error` | Icon color for `error` toasts | `var(--bq-icon--danger)` |
+  | `--bq-toast--icon-color-loading` | Icon color for `loading` toasts | `var(--bq-icon--brand)` |
+  | `--bq-toast--icon-color-custom` | Icon color for `custom` toasts | `var(--bq-icon--primary)` |
+</Expandable>
+
+<Tip>
+  Learn more about [styling with shadow parts](/guides/styles#component-shadow-dom-parts) and [CSS custom properties](/guides/styles#global-css-custom-properties).
+</Tip>
+
+## Resources
+
+<CardGroup cols={2}>
+  <Card horizontal title="Interactive playground" icon="code" href="https://storybook.beeq.design/?path=/story/components-toast--default">
+    Explore toast types, placement, and stacking behavior in Storybook.
+  </Card>
+  <Card horizontal title="Source code" icon="github" href="https://github.com/Endava/BEEQ/tree/main/packages/beeq/src/components/toast">
+    Browse the component implementation, styles, and tests on GitHub.
+  </Card>
+</CardGroup>

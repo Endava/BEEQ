@@ -37,6 +37,13 @@
         ]
       }
     },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "pnpm exec vitest run",
+        "cwd": "tools"
+      }
+    },
     "lint": {
       "executor": "nx:run-commands",
       "options": {

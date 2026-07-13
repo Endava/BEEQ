@@ -1,45 +1,56 @@
 /** The first day of the week, where Sunday is 0, Monday is 1, etc. */
 export type DaysOfWeek = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+export const DAYS_OF_WEEK: readonly DaysOfWeek[] = [0, 1, 2, 3, 4, 5, 6] as const;
 
 /** The type of the date picker */
 export const DATE_PICKER_TYPE = ['single', 'multi', 'range'] as const;
 /** The type of the date picker */
 export type TDatePickerType = (typeof DATE_PICKER_TYPE)[number];
 
-export type TCalendarDate = {
-  /** The first day of the week */
-  firstDayOfWeek?: number;
-  /** The focused date */
-  focusedDate: string;
-  /** The locale */
-  locale?: string;
-  /** The maximum date */
-  max?: string;
-  /** The minimum date */
-  min?: string;
-  /** The number of months to show */
-  months?: number;
-  /** How to navigate through the calendar, by single month or by the number of months */
-  pageBy?: 'single' | 'months';
-  /** Whether to show days outside the current month */
-  showOutsideDays?: boolean;
-  /** The tentative selected date, e.g. the start of a date range */
-  tentative?: string;
-  /** The selected date, in ISO-8601 format (YYYY-MM-DD) */
-  value: string;
-  /**
-   * Focuses the <calendar-month> containing the currently focused date.
-   * `option.target` controls which part of the component gets focused.
-   */
-  focus: ({ target }: { target: 'previous' | 'next' | 'day' }) => void;
-  /** Checks if the date is not allowed to be selected */
-  isDateDisallowed?: (date: Date) => boolean;
-  /** Handles the change event, when the user selects a date or a date range */
-  onChange?: (ev: Event) => void;
-  /** Handles the focus date event. E.g. when the user navigates back/forward in the calendar */
-  onFocusDate?: (ev: CustomEvent) => void;
-  /** Handles the date range start event. E.g. when the user starts selecting a date range */
-  onRangestart?: (ev: CustomEvent) => void;
-  /** Handles the date range end event. E.g. when the user finishes selecting a date range */
-  onRangeend?: (ev: CustomEvent) => void;
-};
+/** The calendar view */
+export const CALENDAR_VIEW = ['days', 'months', 'years'] as const;
+/** The calendar view */
+export type TCalendarView = (typeof CALENDAR_VIEW)[number];
+
+/** Positioning strategy for the panel. */
+export const FLOATING_STRATEGY = ['fixed', 'absolute'] as const;
+export type TFloatingStrategy = (typeof FLOATING_STRATEGY)[number];
+
+/** Placement of the panel — mirrors `@floating-ui/dom` placements. */
+export const FLOATING_PLACEMENT = [
+  'top',
+  'top-start',
+  'top-end',
+  'right',
+  'right-start',
+  'right-end',
+  'bottom',
+  'bottom-start',
+  'bottom-end',
+  'left',
+  'left-start',
+  'left-end',
+] as const;
+export type TFloatingPlacement = (typeof FLOATING_PLACEMENT)[number];
+
+/** How the next/previous buttons should step through months. */
+export const MONTHS_PER_VIEW = ['single', 'months'] as const;
+export type TMonthsPerView = (typeof MONTHS_PER_VIEW)[number];
+
+/**
+ * The precision of the value produced by the date picker.
+ * - `day`   → `YYYY-MM-DD` (default; drill-down to days)
+ * - `month` → `YYYY-MM`    (selection commits on the months view)
+ * - `year`  → `YYYY`       (selection commits on the years view)
+ */
+export const DATE_PRECISION = ['day', 'month', 'year'] as const;
+export type TDatePrecision = (typeof DATE_PRECISION)[number];
+
+/**
+ * Internal representation of a selection.
+ * Always an array of ISO 8601 date strings (YYYY-MM-DD).
+ * - single → 0 or 1 entry
+ * - multi  → N entries
+ * - range  → 0 or 2 entries [startISO, endISO]
+ */
+export type TSelection = string[];

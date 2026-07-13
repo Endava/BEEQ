@@ -1,0 +1,440 @@
+---
+title: Status
+description: Statuses communicate the state or condition of an item, task, or process using a compact visual indicator and label.
+---
+
+import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
+
+<Frame className="px-4 py-4" caption="Status component overview">
+  <img className="block dark:hidden" src="/components/images/status/status-overview-light.svg" alt="BEEQ Status component overview" />
+  <img className="hidden dark:block" src="/components/images/status/status-overview-dark.svg" alt="BEEQ Status component overview" />
+</Frame>
+
+Statuses help people understand the current state of an item at a glance. Use them when a short label plus a small visual cue makes lists, cards, and workflows easier to scan.
+
+<Note>
+  `bq-status` implements the dot-and-label pattern. If you need a status with an icon, build that as a separate composition instead of expecting it from this component.
+</Note>
+
+## When to use
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-up" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Use statuses when
+    </span>
+    - You need to communicate the state of an item, task, or process
+    - A short label and visual marker help users scan dense interfaces faster
+    - Status meaning should stay visible in lists, tables, cards, or detail views
+    - The state helps users decide what to do next
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-down" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Do not use statuses when
+    </span>
+    - The state is already obvious without an extra indicator
+    - The component would repeat nearby text without adding meaning
+    - Screen space is too limited for a readable label
+    - The UI would become noisy from too many competing statuses
+  </Card>
+</CardGroup>
+
+## Patterns
+
+There are two common status patterns, even though the shipped component focuses on one of them.
+
+<CardGroup cols={2}>
+  <Card title="Dot status">
+    A dot status pairs a colored circular indicator with a short text label. This is the pattern implemented by `bq-status`.
+  </Card>
+  <Card title="Icon status">
+    An icon status uses a symbol instead of a plain dot when the message needs stronger visual emphasis or a more specific cue.
+  </Card>
+</CardGroup>
+
+## Anatomy
+
+<Frame className="px-4 py-4" caption="Status component anatomy">
+  <img className="block dark:hidden" src="/components/images/status/status-anatomy-light.svg" alt="BEEQ Status component anatomy" />
+  <img className="hidden dark:block" src="/components/images/status/status-anatomy-dark.svg" alt="BEEQ Status component anatomy" />
+</Frame>
+
+The structure is intentionally small: one indicator plus one label. That keeps the component readable inside compact layouts.
+
+| Part | Element | Description |
+|---|---|---|
+| **1** | Icon | The visual status marker that signals the selected status type |
+| **2** | Label | The text that describes the status meaning in more detail |
+
+## Design guidelines
+
+Use statuses consistently so people can recognize state changes without pausing to decode the UI.
+
+<Steps>
+  <Step title="Write the label first">
+    Start with the text. The label should still make sense on its own, because the indicator is only a supporting cue.
+  </Step>
+  <Step title="Keep the indicator supportive">
+    Treat the indicator as a quick visual signal, not the whole message. If you need a more specific symbol, build an icon status as a separate composition.
+  </Step>
+  <Step title="Keep spacing compact and consistent">
+    Place the status close to the row, card, or object it describes, and preserve enough spacing around it so the label and indicator remain easy to scan.
+  </Step>
+</Steps>
+
+<Note>
+  Status labels work best when they are short and stable. Reuse the same wording and color meaning across the product so states remain predictable.
+</Note>
+
+## Usage
+
+Use the default neutral status when the message should stay present without strong emphasis.
+
+<CodeLivePreview mode="shadow" code={`<bq-status>Neutral status</bq-status>`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-status>Neutral status</bq-status>
+    ```
+
+    ```jsx React icon="react"
+    import { BqStatus } from "@beeq/react";
+
+    <BqStatus>Neutral status</BqStatus>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqStatus } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqStatus],
+      template: `
+        <bq-status>Neutral status</bq-status>
+      `,
+    })
+    export class AppComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqStatus } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqStatus>Neutral status</BqStatus>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Tip>
+  Use this for standard states that do not need positive, negative, or urgent emphasis.
+</Tip>
+
+## Options
+
+Use the `type` prop to communicate the nature of the status message. Each value maps to a distinct color so states are recognizable at a glance.
+
+### Alert
+
+Use `type="alert"` when the message needs immediate attention.
+
+<CodeLivePreview mode="shadow" code={`<bq-status type="alert">Alert status</bq-status>`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-status type="alert">Alert status</bq-status>
+    ```
+
+    ```jsx React icon="react"
+    import { BqStatus } from "@beeq/react";
+
+    <BqStatus type="alert">Alert status</BqStatus>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqStatus } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqStatus],
+      template: `
+        <bq-status type="alert">Alert status</bq-status>
+      `,
+    })
+    export class AppComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqStatus } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqStatus type="alert">Alert status</BqStatus>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Tip>
+  Use this for urgent situations such as service incidents, failed payments, or actions that need immediate attention.
+</Tip>
+
+### Danger
+
+Use `type="danger"` when the state signals risk, failure, or a blocked condition.
+
+<CodeLivePreview mode="shadow" code={`<bq-status type="danger">Danger status</bq-status>`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-status type="danger">Danger status</bq-status>
+    ```
+
+    ```jsx React icon="react"
+    import { BqStatus } from "@beeq/react";
+
+    <BqStatus type="danger">Danger status</BqStatus>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqStatus } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqStatus],
+      template: `
+        <bq-status type="danger">Danger status</bq-status>
+      `,
+    })
+    export class AppComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqStatus } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqStatus type="danger">Danger status</BqStatus>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Tip>
+  Use this for states such as blocked, overdue, failed, or unavailable.
+</Tip>
+
+### Info
+
+Use `type="info"` when the status provides neutral or supporting context.
+
+<CodeLivePreview mode="shadow" code={`<bq-status type="info">Information status</bq-status>`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-status type="info">Information status</bq-status>
+    ```
+
+    ```jsx React icon="react"
+    import { BqStatus } from "@beeq/react";
+
+    <BqStatus type="info">Information status</BqStatus>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqStatus } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqStatus],
+      template: `
+        <bq-status type="info">Information status</bq-status>
+      `,
+    })
+    export class AppComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqStatus } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqStatus type="info">Information status</BqStatus>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Tip>
+  Use this for progress updates, supporting details, or states that should inform rather than warn.
+</Tip>
+
+### Success
+
+Use `type="success"` when the state confirms a positive outcome.
+
+<CodeLivePreview mode="shadow" code={`<bq-status type="success">Success status</bq-status>`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-status type="success">Success status</bq-status>
+    ```
+
+    ```jsx React icon="react"
+    import { BqStatus } from "@beeq/react";
+
+    <BqStatus type="success">Success status</BqStatus>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqStatus } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqStatus],
+      template: `
+        <bq-status type="success">Success status</bq-status>
+      `,
+    })
+    export class AppComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqStatus } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqStatus type="success">Success status</BqStatus>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Tip>
+  Use this for completed, approved, delivered, or otherwise successful states.
+</Tip>
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Use clear labels so the meaning stays understandable even without color.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not rely on the colored dot alone to communicate the state.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Keep status wording and color meaning consistent across the product.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not assign different meanings to the same status type in different screens.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Use one status per item when possible so the message stays easy to scan.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not stack multiple competing statuses around the same piece of content.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Place the status close to the item it describes so the relationship is obvious.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not separate the status so far from the content that users have to infer what it belongs to.
+  </Card>
+</CardGroup>
+
+## Accessibility
+
+- `bq-status` unconditionally renders with `role="status"` on its wrapper element, so assistive technologies always treat it as a live status message regardless of the `type` prop.
+- The text label is required for meaning. The colored dot is supportive, not sufficient on its own.
+- Keep labels short and specific so status changes remain easy to understand when announced.
+- This component is informational, not interactive. If users need to act on the message, pair it with a separate button or link.
+- Check contrast and surrounding layout so the label remains readable in tables, cards, and dense data views.
+
+## API reference
+
+### Properties
+
+| Property | Attribute | Description | Type | Default |
+|---|---|---|---|---|
+| `type` | `type` | Defines the type of status to display | `'alert'` \| `'danger'` \| `'info'` \| `'neutral'` \| `'success'` | `'neutral'` |
+
+### Slots
+
+| Slot | Description |
+|---|---|
+| *(default)* | The text label content of the status component |
+
+### Shadow parts
+
+| Part | Description |
+|---|---|
+| `base` | The internal wrapper of the status component |
+| `circle` | The colored circle that marks the status type |
+| `text` | The container that holds the text label |
+
+### CSS custom properties
+
+| Variable | Description | Default |
+|---|---|---|
+| `--bq-status-circle--size` | Status circle size | `12px` |
+
+<Tip>
+  Learn more about [styling with shadow parts](/guides/styles#component-shadow-dom-parts) and [CSS custom properties](/guides/styles#global-css-custom-properties).
+</Tip>
+
+## Resources
+
+<CardGroup cols={2}>
+  <Card horizontal title="Interactive playground" icon="code" href="https://storybook.beeq.design/?path=/story/components-status--neutral">
+    Explore all status variants in Storybook
+  </Card>
+  <Card horizontal title="Source code" icon="github" href="https://github.com/Endava/BEEQ/tree/main/packages/beeq/src/components/status">
+    View the component source on GitHub
+  </Card>
+</CardGroup>

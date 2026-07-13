@@ -1,0 +1,917 @@
+---
+title: Table
+description: Tables organize structured data in rows and columns so people can scan records, compare values, sort, and identify patterns across a dataset.
+---
+
+import { CardTile } from '/snippets/CardTile.jsx';
+import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
+
+<Frame className="px-4 py-4" caption="Table component overview">
+  <img className="block dark:hidden" src="/components/images/table/table-overview-light.svg" alt="BEEQ Table component overview" />
+  <img className="hidden dark:block" src="/components/images/table/table-overview-dark.svg" alt="BEEQ Table component overview" />
+</Frame>
+
+Tables organize information into rows and columns so people can compare values, find records, and take action on individual items. BEEQ styles the native HTML `<table>` element with CSS utility classes instead of shipping a custom web component.
+
+<Note>
+  Because the table is a CSS-only pattern, you own the correct HTML structure: `<table>`, `<thead>`, `<tbody>`, `<tr>`, `<th>`, and `<td>`. BEEQ styles apply only when the `bq-table` class is present on the `<table>` element.
+</Note>
+
+## When to use
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-up" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Use tables when
+    </span>
+
+    - You need to display multiple attributes of multiple items simultaneously
+    - Users need to scan, compare, or sort across rows
+    - Data has a natural row-and-column structure, such as transactions, records, or reports
+    - Inline actions such as editing or deleting a row belong next to each record
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-down" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Do not use tables when
+    </span>
+
+    - You only need to display a single attribute per item — a list is simpler
+    - The data is non-comparative prose or narrative content
+    - You need a layout grid — use CSS Grid or Flexbox instead
+    - The number of columns is very large and the content would be better served by a detail page
+  </Card>
+</CardGroup>
+
+## Patterns
+
+<CardGroup cols={2}>
+  <Card title="Data grid with actions">
+    Add a trailing actions column containing a dropdown or icon buttons to let users edit, delete, or navigate to a detail view for each row.
+  </Card>
+
+  <Card title="Selected row highlight">
+    Apply `.selected` to a `<tr>` to visually indicate the active or focused record, for example when a row drives a side panel or detail pane.
+  </Card>
+
+  <Card title="Compact density">
+    Use the `.compact` modifier in dense dashboards or administrative interfaces where vertical space matters more than breathing room.
+  </Card>
+
+  <Card title="Bordered layout">
+    Use `.bordered` when each cell needs an explicit boundary, such as in financial or spreadsheet-style tables where column delineation helps readability.
+  </Card>
+</CardGroup>
+
+## Anatomy
+
+A table is built from standard HTML sectioning and cell elements. Each part has a defined role and styling responsibility.
+
+{/* <Frame className="px-4 py-4" caption="Table anatomy">
+  <img className="block dark:hidden" src="/components/images/table/table-anatomy-light.svg" alt="BEEQ Table anatomy" />
+  <img className="hidden dark:block" src="/components/images/table/table-anatomy-dark.svg" alt="BEEQ Table anatomy" />
+</Frame> */}
+
+| Part | Element | Description |
+|---|---|---|
+| **1** | `<table class="bq-table">` | Root element that activates BEEQ table styles |
+| **2** | `<thead>` | Header section containing column labels |
+| **3** | `<th>` | Header cell for a single column |
+| **4** | `<tbody>` | Body section containing data rows |
+| **5** | `<tr>` | A single data row; add `.selected` for the active state |
+| **6** | `<td>` | A single data cell |
+| **7** | `.bq-table--container` | Optional responsive wrapper that enables horizontal scrolling |
+
+## Design guidelines
+
+<CardGroup cols={2}>
+  <CardTile title="Default density">
+    The default table uses generous cell padding to give content room to breathe. Use it in most contexts where the dataset fits comfortably on screen.
+  </CardTile>
+
+  <CardTile title="Compact density">
+    The `.compact` modifier reduces padding significantly. Reserve it for dashboards or administrative screens where showing more rows at once outweighs the reduced spacing.
+  </CardTile>
+</CardGroup>
+
+<CardGroup cols={2}>
+  <CardTile title="Default (divider) borders">
+    The default style separates rows with a single bottom border and uses subtle column dividers in the header only. This keeps the table light and easy to scan.
+  </CardTile>
+
+  <CardTile title="Bordered">
+    Adding `.bordered` draws a full border around every cell and the table itself. Use this when column delineation is critical for data clarity, such as financial or spreadsheet-style tables.
+  </CardTile>
+</CardGroup>
+
+<Note>
+  Wrap the table in `.bq-table--container` to enable horizontal scrolling on smaller screens. Without this wrapper, wide tables may overflow their parent container.
+</Note>
+
+## Usage
+
+### Default
+
+The default table applies base typography, header and cell padding, and row separators. Add the `bq-table` class to any standard `<table>` element to activate the styles.
+
+<CodeLivePreview mode="iframe" height="16rem" removePadding code={`
+  <style>
+    body {
+      padding: var(--bq-spacing-m);
+    }
+  </style>
+
+  <table class="bq-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>John Doe</td>
+        <td>Active</td>
+        <td>−2,343 €</td>
+      </tr>
+      <tr>
+        <td>Alice Smith</td>
+        <td>Pending</td>
+        <td>+95,453 €</td>
+      </tr>
+      <tr>
+        <td>Robert Johnson</td>
+        <td>Inactive</td>
+        <td>−2,343 €</td>
+      </tr>
+    </tbody>
+  </table>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <table class="bq-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Status</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>John Doe</td>
+          <td>Active</td>
+          <td>−2,343 €</td>
+        </tr>
+        <tr>
+          <td>Alice Smith</td>
+          <td>Pending</td>
+          <td>+95,453 €</td>
+        </tr>
+        <tr>
+          <td>Robert Johnson</td>
+          <td>Inactive</td>
+          <td>−2,343 €</td>
+        </tr>
+      </tbody>
+    </table>
+    ```
+
+    ```jsx React icon="react" expandable
+    <table className="bq-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Status</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>John Doe</td>
+          <td>Active</td>
+          <td>−2,343 €</td>
+        </tr>
+        <tr>
+          <td>Alice Smith</td>
+          <td>Pending</td>
+          <td>+95,453 €</td>
+        </tr>
+        <tr>
+          <td>Robert Johnson</td>
+          <td>Inactive</td>
+          <td>−2,343 €</td>
+        </tr>
+      </tbody>
+    </table>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [],
+      template: `
+        <table class="bq-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Status</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>John Doe</td>
+              <td>Active</td>
+              <td>−2,343 €</td>
+            </tr>
+            <tr>
+              <td>Alice Smith</td>
+              <td>Pending</td>
+              <td>+95,453 €</td>
+            </tr>
+            <tr>
+              <td>Robert Johnson</td>
+              <td>Inactive</td>
+              <td>−2,343 €</td>
+            </tr>
+          </tbody>
+        </table>
+      `,
+    })
+    export class AppComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <template>
+      <table class="bq-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>John Doe</td>
+            <td>Active</td>
+            <td>−2,343 €</td>
+          </tr>
+          <tr>
+            <td>Alice Smith</td>
+            <td>Pending</td>
+            <td>+95,453 €</td>
+          </tr>
+          <tr>
+            <td>Robert Johnson</td>
+            <td>Inactive</td>
+            <td>−2,343 €</td>
+          </tr>
+        </tbody>
+      </table>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+## Options
+
+### Selected row
+
+Add the `selected` class to a `<tr>` to highlight the active record. Use this when a row selection drives a side panel, detail view, or other contextual UI.
+
+<CodeLivePreview mode="iframe" height="16rem" removePadding code={`
+  <style>
+    body {
+      padding: var(--bq-spacing-m);
+    }
+  </style>
+
+  <table class="bq-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>John Doe</td>
+        <td>Active</td>
+        <td>-2,343 €</td>
+      </tr>
+      <tr class="selected">
+        <td>Alice Smith</td>
+        <td>Pending</td>
+        <td>+95,453 €</td>
+      </tr>
+      <tr>
+        <td>Robert Johnson</td>
+        <td>Inactive</td>
+        <td>-2,343 €</td>
+      </tr>
+    </tbody>
+  </table>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <table class="bq-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Status</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>John Doe</td>
+          <td>Active</td>
+          <td>−2,343 €</td>
+        </tr>
+        <tr class="selected">
+          <td>Alice Smith</td>
+          <td>Pending</td>
+          <td>+95,453 €</td>
+        </tr>
+        <tr>
+          <td>Robert Johnson</td>
+          <td>Inactive</td>
+          <td>−2,343 €</td>
+        </tr>
+      </tbody>
+    </table>
+    ```
+
+    ```jsx React icon="react" expandable
+    <table className="bq-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Status</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>John Doe</td>
+          <td>Active</td>
+          <td>−2,343 €</td>
+        </tr>
+        <tr className="selected">
+          <td>Alice Smith</td>
+          <td>Pending</td>
+          <td>+95,453 €</td>
+        </tr>
+        <tr>
+          <td>Robert Johnson</td>
+          <td>Inactive</td>
+          <td>−2,343 €</td>
+        </tr>
+      </tbody>
+    </table>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [],
+      template: `
+        <table class="bq-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Status</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>John Doe</td>
+              <td>Active</td>
+              <td>−2,343 €</td>
+            </tr>
+            <tr class="selected">
+              <td>Alice Smith</td>
+              <td>Pending</td>
+              <td>+95,453 €</td>
+            </tr>
+            <tr>
+              <td>Robert Johnson</td>
+              <td>Inactive</td>
+              <td>−2,343 €</td>
+            </tr>
+          </tbody>
+        </table>
+      `,
+    })
+    export class AppComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <template>
+      <table class="bq-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>John Doe</td>
+            <td>Active</td>
+            <td>−2,343 €</td>
+          </tr>
+          <tr class="selected">
+            <td>Alice Smith</td>
+            <td>Pending</td>
+            <td>+95,453 €</td>
+          </tr>
+          <tr>
+            <td>Robert Johnson</td>
+            <td>Inactive</td>
+            <td>−2,343 €</td>
+          </tr>
+        </tbody>
+      </table>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Compact
+
+Add the `compact` class to the `<table>` to reduce cell and header padding. This is useful in dense, data-heavy interfaces where vertical space is at a premium.
+
+<CodeLivePreview mode="iframe" height="16rem" removePadding code={`
+  <style>
+    body {
+      padding: var(--bq-spacing-m);
+    }
+  </style>
+
+  <table class="bq-table compact">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>John Doe</td>
+        <td>Active</td>
+        <td>−2,343 €</td>
+      </tr>
+      <tr class="selected">
+        <td>Alice Smith</td>
+        <td>Pending</td>
+        <td>+95,453 €</td>
+      </tr>
+      <tr>
+        <td>Robert Johnson</td>
+        <td>Inactive</td>
+        <td>−2,343 €</td>
+      </tr>
+    </tbody>
+  </table>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <table class="bq-table compact">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Status</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>John Doe</td>
+          <td>Active</td>
+          <td>−2,343 €</td>
+        </tr>
+        <tr class="selected">
+          <td>Alice Smith</td>
+          <td>Pending</td>
+          <td>+95,453 €</td>
+        </tr>
+        <tr>
+          <td>Robert Johnson</td>
+          <td>Inactive</td>
+          <td>−2,343 €</td>
+        </tr>
+      </tbody>
+    </table>
+    ```
+
+    ```jsx React icon="react" expandable
+    <table className="bq-table compact">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Status</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>John Doe</td>
+          <td>Active</td>
+          <td>−2,343 €</td>
+        </tr>
+        <tr className="selected">
+          <td>Alice Smith</td>
+          <td>Pending</td>
+          <td>+95,453 €</td>
+        </tr>
+        <tr>
+          <td>Robert Johnson</td>
+          <td>Inactive</td>
+          <td>−2,343 €</td>
+        </tr>
+      </tbody>
+    </table>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [],
+      template: `
+        <table class="bq-table compact">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Status</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>John Doe</td>
+              <td>Active</td>
+              <td>−2,343 €</td>
+            </tr>
+            <tr class="selected">
+              <td>Alice Smith</td>
+              <td>Pending</td>
+              <td>+95,453 €</td>
+            </tr>
+            <tr>
+              <td>Robert Johnson</td>
+              <td>Inactive</td>
+              <td>−2,343 €</td>
+            </tr>
+          </tbody>
+        </table>
+      `,
+    })
+    export class AppComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <template>
+      <table class="bq-table compact">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>John Doe</td>
+            <td>Active</td>
+            <td>−2,343 €</td>
+          </tr>
+          <tr class="selected">
+            <td>Alice Smith</td>
+            <td>Pending</td>
+            <td>+95,453 €</td>
+          </tr>
+          <tr>
+            <td>Robert Johnson</td>
+            <td>Inactive</td>
+            <td>−2,343 €</td>
+          </tr>
+        </tbody>
+      </table>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Bordered
+
+Add the `bordered` class to draw explicit borders around each cell and the table itself. Use this when strong column delineation helps users parse the data.
+
+<CodeLivePreview mode="iframe" height="16rem" removePadding code={`
+  <style>
+    body {
+      padding: var(--bq-spacing-m);
+    }
+  </style>
+
+  <table class="bq-table bordered">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>John Doe</td>
+        <td>Active</td>
+        <td>−2,343 €</td>
+      </tr>
+      <tr class="selected">
+        <td>Alice Smith</td>
+        <td>Pending</td>
+        <td>+95,453 €</td>
+      </tr>
+      <tr>
+        <td>Robert Johnson</td>
+        <td>Inactive</td>
+        <td>−2,343 €</td>
+      </tr>
+    </tbody>
+  </table>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <table class="bq-table bordered">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Status</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>John Doe</td>
+          <td>Active</td>
+          <td>−2,343 €</td>
+        </tr>
+        <tr class="selected">
+          <td>Alice Smith</td>
+          <td>Pending</td>
+          <td>+95,453 €</td>
+        </tr>
+        <tr>
+          <td>Robert Johnson</td>
+          <td>Inactive</td>
+          <td>−2,343 €</td>
+        </tr>
+      </tbody>
+    </table>
+    ```
+
+    ```jsx React icon="react" expandable
+    <table className="bq-table bordered">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Status</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>John Doe</td>
+          <td>Active</td>
+          <td>−2,343 €</td>
+        </tr>
+        <tr className="selected">
+          <td>Alice Smith</td>
+          <td>Pending</td>
+          <td>+95,453 €</td>
+        </tr>
+        <tr>
+          <td>Robert Johnson</td>
+          <td>Inactive</td>
+          <td>−2,343 €</td>
+        </tr>
+      </tbody>
+    </table>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [],
+      template: `
+        <table class="bq-table bordered">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Status</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>John Doe</td>
+              <td>Active</td>
+              <td>−2,343 €</td>
+            </tr>
+            <tr class="selected">
+              <td>Alice Smith</td>
+              <td>Pending</td>
+              <td>+95,453 €</td>
+            </tr>
+            <tr>
+              <td>Robert Johnson</td>
+              <td>Inactive</td>
+              <td>−2,343 €</td>
+            </tr>
+          </tbody>
+        </table>
+      `,
+    })
+    export class AppComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <template>
+      <table class="bq-table bordered">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>John Doe</td>
+            <td>Active</td>
+            <td>−2,343 €</td>
+          </tr>
+          <tr class="selected">
+            <td>Alice Smith</td>
+            <td>Pending</td>
+            <td>+95,453 €</td>
+          </tr>
+          <tr>
+            <td>Robert Johnson</td>
+            <td>Inactive</td>
+            <td>−2,343 €</td>
+          </tr>
+        </tbody>
+      </table>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Always wrap the table in `.bq-table--container` so it scrolls horizontally on small screens instead of overflowing.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Let a wide table overflow its parent without a scroll container — this breaks the page layout on narrow viewports.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Keep column headers short and descriptive so users understand each column without reading the data first.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Use abbreviations or internal codes in headers without a tooltip or legend to explain them.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Align numeric values to the trailing edge of the cell so decimal points and magnitudes line up across rows.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Mix left-aligned and center-aligned numeric columns in the same table — inconsistent alignment makes comparison harder.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Choose the density that matches the user's task — default for reading and reviewing, compact for monitoring and bulk operations.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Apply the compact modifier to fit more rows when it makes the content harder to read or interact with.
+  </Card>
+</CardGroup>
+
+## Accessibility
+
+- You must: provide a `<caption>` or `aria-label` on the `<table>` element so screen readers announce the table's purpose before reading the data.
+- You must: use `<th>` elements with the correct `scope` attribute (`scope="col"` for column headers, `scope="row"` for row headers) so assistive technologies can map each cell to its headers.
+- You must: keep the table structure semantic — do not use a `<table>` for layout purposes.
+- You must: ensure inline action elements inside cells (buttons, dropdowns) have accessible labels, especially icon-only controls.
+- You must: when a row selection changes UI state (such as opening a side panel), communicate that change programmatically — for example by managing focus or using a live region.
+- Built in: the `.selected` row styling uses `outline` rather than `border` so the selection indicator does not affect layout. There is no automatic ARIA state applied; add `aria-selected="true"` to the `<tr>` when the row is interactively selectable.
+
+## API reference
+
+### CSS classes
+
+The table pattern is CSS-only. There is no custom element. Apply these classes to standard HTML elements:
+
+| Class | Element | Description |
+|---|---|---|
+| `bq-table` | `<table>` | **Required.** Activates all BEEQ table styles |
+| `compact` | `<table>` | Reduces cell and header padding for dense layouts |
+| `bordered` | `<table>` | Draws explicit borders around every cell and the table |
+| `selected` | `<tr>` | Highlights the row as the active or selected record |
+| `bq-table--container` | `<div>` | Responsive wrapper that enables horizontal scrolling |
+
+### CSS custom properties
+
+<Expandable title="CSS variables" defaultOpen={false}>
+  | Variable | Description | Default |
+  |---|---|---|
+  | `--bq-table--border-color` | Border color for dividers and cell borders | `var(--bq-stroke--primary)` |
+  | `--bq-table--border-style` | Border style for dividers and cell borders | `solid` |
+  | `--bq-table--border-width` | Border width for dividers and cell borders | `var(--bq-stroke-s)` |
+  | `--bq-table--border-radius` | Border radius for bordered table corners and selected row | `var(--bq-radius--m)` |
+  | `--bq-table--cell-padding-block` | Block (vertical) padding for data cells | `var(--bq-spacing-m)` |
+  | `--bq-table--cell-padding-inline` | Inline (horizontal) padding for data cells | `var(--bq-spacing-m)` |
+  | `--bq-table--header-divider-inset` | Vertical inset for the column divider line in `<th>` | `25%` |
+  | `--bq-table--header-height` | Height of the `<thead>` row | `3.25rem` |
+  | `--bq-table--header-padding-block` | Block (vertical) padding for header cells | `var(--bq-spacing-xs)` |
+  | `--bq-table--header-padding-inline` | Inline (horizontal) padding for header cells | `var(--bq-spacing-m)` |
+  | `--bq-table--row-selected-bg` | Background color of a selected row | `var(--bq-ui--brand-alt)` |
+  | `--bq-table--row-selected-border` | Outline color of a selected row | `var(--bq-stroke--brand)` |
+</Expandable>
+
+<Tip>
+  Learn more about [styling with shadow parts](/guides/styles#component-shadow-dom-parts) and [CSS custom properties](/guides/styles#global-css-custom-properties).
+</Tip>
+
+## Resources
+
+<CardGroup cols={2}>
+  <Card horizontal title="Interactive playground" icon="code" href="https://storybook.beeq.design/?path=/story/components-table--default">
+    Explore table variants and states in Storybook.
+  </Card>
+
+  <Card horizontal title="Source code" icon="github" href="https://github.com/Endava/BEEQ/blob/main/packages/beeq/src/global/styles/_table.scss">
+    View the table styles source on GitHub.
+  </Card>
+</CardGroup>
