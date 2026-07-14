@@ -663,9 +663,10 @@ export namespace Components {
      * @event bqChange - Handler to be called when the checkbox state changes
      * @event bqFocus - Handler to be called when the checkbox gets focus
      * @event bqBlur - Handler to be called when the checkbox loses focus
-     * @cssprop --bq-checkbox--size - Checkbox size
+     * @cssprop --bq-checkbox--background-color - Checkbox background color
      * @cssprop --bq-checkbox--border-radius - Checkbox border radius
      * @cssprop --bq-checkbox--border-width - Checkbox border width
+     * @cssprop --bq-checkbox--size - Checkbox size
      */
     interface BqCheckbox {
         /**
@@ -3814,9 +3815,10 @@ declare global {
      * @event bqChange - Handler to be called when the checkbox state changes
      * @event bqFocus - Handler to be called when the checkbox gets focus
      * @event bqBlur - Handler to be called when the checkbox loses focus
-     * @cssprop --bq-checkbox--size - Checkbox size
+     * @cssprop --bq-checkbox--background-color - Checkbox background color
      * @cssprop --bq-checkbox--border-radius - Checkbox border radius
      * @cssprop --bq-checkbox--border-width - Checkbox border width
+     * @cssprop --bq-checkbox--size - Checkbox size
      */
     interface HTMLBqCheckboxElement extends Components.BqCheckbox, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqCheckboxElementEventMap>(type: K, listener: (this: HTMLBqCheckboxElement, ev: BqCheckboxCustomEvent<HTMLBqCheckboxElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -6142,9 +6144,10 @@ declare namespace LocalJSX {
      * @event bqChange - Handler to be called when the checkbox state changes
      * @event bqFocus - Handler to be called when the checkbox gets focus
      * @event bqBlur - Handler to be called when the checkbox loses focus
-     * @cssprop --bq-checkbox--size - Checkbox size
+     * @cssprop --bq-checkbox--background-color - Checkbox background color
      * @cssprop --bq-checkbox--border-radius - Checkbox border radius
      * @cssprop --bq-checkbox--border-width - Checkbox border width
+     * @cssprop --bq-checkbox--size - Checkbox size
      */
     interface BqCheckbox {
         /**
@@ -9712,9 +9715,10 @@ declare module "@stencil/core" {
              * @event bqChange - Handler to be called when the checkbox state changes
              * @event bqFocus - Handler to be called when the checkbox gets focus
              * @event bqBlur - Handler to be called when the checkbox loses focus
-             * @cssprop --bq-checkbox--size - Checkbox size
+             * @cssprop --bq-checkbox--background-color - Checkbox background color
              * @cssprop --bq-checkbox--border-radius - Checkbox border radius
              * @cssprop --bq-checkbox--border-width - Checkbox border width
+             * @cssprop --bq-checkbox--size - Checkbox size
              */
             "bq-checkbox": LocalJSX.IntrinsicElements["bq-checkbox"] & JSXBase.HTMLAttributes<HTMLBqCheckboxElement>;
             /**
