@@ -193,6 +193,41 @@ export class BqTooltip {
     this.hide();
   }
 
+  @Listen('click')
+  handleClick(event: MouseEvent) {
+    if (!this.isEventFromTrigger(event)) return;
+
+    this.handleTriggerOnClick();
+  }
+
+  @Listen('focusin')
+  handleFocusin(event: FocusEvent) {
+    if (!this.isEventFromTrigger(event)) return;
+
+    this.handleTriggerFocusin();
+  }
+
+  @Listen('focusout')
+  handleFocusout(event: FocusEvent) {
+    if (!this.isEventFromTrigger(event)) return;
+
+    this.handleTriggerFocusout();
+  }
+
+  @Listen('mouseover')
+  handleMouseOver(event: MouseEvent) {
+    if (!this.isEventFromTrigger(event) || this.isTargetInsideTrigger(event.relatedTarget)) return;
+
+    this.handleTriggerMouseOver();
+  }
+
+  @Listen('mouseout')
+  handleMouseOut(event: MouseEvent) {
+    if (!this.isEventFromTrigger(event) || this.isTargetInsideTrigger(event.relatedTarget)) return;
+
+    this.handleTriggerMouseLeave();
+  }
+
   // Public methods API
   // These methods are exposed on the host element.
   // Always use two lines.
@@ -276,6 +311,28 @@ export class BqTooltip {
     this.visible = false;
   };
 
+  private isEventFromTrigger = (event: Event) => {
+    return !!this.trigger && isEventTargetChildOfElement(event, this.trigger);
+  };
+
+  private isTargetInsideTrigger = (target: EventTarget | null) => {
+    if (!this.trigger || !(target instanceof Node)) return false;
+    if (this.trigger.contains(target)) return true;
+
+    const assignedTriggerElements = Array.from(
+      this.trigger.querySelector<HTMLSlotElement>('slot[name="trigger"]')?.assignedElements({ flatten: true }) ?? [],
+    );
+    const targetRoot = target.getRootNode();
+
+    return assignedTriggerElements.some((element) => {
+      return (
+        element === target ||
+        element.contains(target) ||
+        (targetRoot instanceof ShadowRoot && element === targetRoot.host)
+      );
+    });
+  };
+
   private get isHidden() {
     return !this.visible && !this.alwaysVisible;
   }
@@ -294,15 +351,8 @@ export class BqTooltip {
          * This is because nested interactive elements are not allowed inside a button.
          * Also, that will force the user to focus twice to reach the inner interactive element.
          */}
-        {/** biome-ignore lint/a11y/noStaticElementInteractions: bypass the "Static Elements should not be interactive." rule */}
-        {/** biome-ignore lint/a11y/useKeyWithClickEvents: bypass the "Enforce to have the onClick mouse event with the onKeyUp, the onKeyDown, or the onKeyPress keyboard event." rule */}
         <div
           class="bq-tooltip--trigger"
-          onClick={this.handleTriggerOnClick}
-          onFocusin={this.handleTriggerFocusin}
-          onFocusout={this.handleTriggerFocusout}
-          onMouseEnter={this.handleTriggerMouseOver}
-          onMouseLeave={this.handleTriggerMouseLeave}
           part="trigger"
           ref={(el: HTMLDivElement) => {
             this.trigger = el;
