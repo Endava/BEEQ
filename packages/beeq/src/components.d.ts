@@ -1919,8 +1919,9 @@ export namespace Components {
      * @event bqClick - Handler to be called when the radio state changes
      * @event bqFocus - Handler to be called when the radio gets focused
      * @event bqKeyDown - The handler is to be called when the radio key is pressed
-     * @cssprop --bq-radio--size - Radio size
+     * @cssprop --bq-radio--background-color - Radio background color
      * @cssprop --bq-radio--border-width - Radio border width
+     * @cssprop --bq-radio--size - Radio size
      */
     interface BqRadio {
         /**
@@ -4610,8 +4611,9 @@ declare global {
      * @event bqClick - Handler to be called when the radio state changes
      * @event bqFocus - Handler to be called when the radio gets focused
      * @event bqKeyDown - The handler is to be called when the radio key is pressed
-     * @cssprop --bq-radio--size - Radio size
+     * @cssprop --bq-radio--background-color - Radio background color
      * @cssprop --bq-radio--border-width - Radio border width
+     * @cssprop --bq-radio--size - Radio size
      */
     interface HTMLBqRadioElement extends Components.BqRadio, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqRadioElementEventMap>(type: K, listener: (this: HTMLBqRadioElement, ev: BqRadioCustomEvent<HTMLBqRadioElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -7487,8 +7489,9 @@ declare namespace LocalJSX {
      * @event bqClick - Handler to be called when the radio state changes
      * @event bqFocus - Handler to be called when the radio gets focused
      * @event bqKeyDown - The handler is to be called when the radio key is pressed
-     * @cssprop --bq-radio--size - Radio size
+     * @cssprop --bq-radio--background-color - Radio background color
      * @cssprop --bq-radio--border-width - Radio border width
+     * @cssprop --bq-radio--size - Radio size
      */
     interface BqRadio {
         /**
@@ -10296,8 +10299,9 @@ declare module "@stencil/core" {
              * @event bqClick - Handler to be called when the radio state changes
              * @event bqFocus - Handler to be called when the radio gets focused
              * @event bqKeyDown - The handler is to be called when the radio key is pressed
-             * @cssprop --bq-radio--size - Radio size
+             * @cssprop --bq-radio--background-color - Radio background color
              * @cssprop --bq-radio--border-width - Radio border width
+             * @cssprop --bq-radio--size - Radio size
              */
             "bq-radio": LocalJSX.IntrinsicElements["bq-radio"] & JSXBase.HTMLAttributes<HTMLBqRadioElement>;
             /**

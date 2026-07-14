@@ -37,8 +37,9 @@ import { Component, Element, Event, Host, h, Method, Prop } from '@stencil/core'
  * @part radio - The component's internal wrapper of the radio component.
  * @part label - The `<span>` element that holds the text content.
  *
- * @cssprop --bq-radio--size - Radio size
+ * @cssprop --bq-radio--background-color - Radio background color
  * @cssprop --bq-radio--border-width - Radio border width
+ * @cssprop --bq-radio--size - Radio size
  */
 @Component({
   tag: 'bq-radio',
