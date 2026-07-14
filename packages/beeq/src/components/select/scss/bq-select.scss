@@ -50,7 +50,7 @@
 }
 
 .bq-select__control {
-  @apply flex items-center transition-[border-color,box-shadow] is-full;
+  @apply flex items-center bg-[--bq-select--background-color] transition-[border-color,box-shadow] is-full;
   // Border
   @apply rounded-[--bq-select--border-radius] border-[length:--bq-select--border-width] border-[color:--bq-select--border-color];
   // Padding
