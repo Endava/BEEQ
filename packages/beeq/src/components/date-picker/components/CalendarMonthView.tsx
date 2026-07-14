@@ -161,9 +161,9 @@ export const CalendarMonthView: FunctionalComponent<TCalendarMonthViewProps> = (
       role="grid"
       tabIndex={-1}
     >
-      {rows.map((row, rowIndex) => (
+      {rows.map((row) => (
         // biome-ignore lint/a11y/useFocusableInteractive: gridcell is a structural ARIA container; focus is managed by the child <button> via roving tabindex
-        <div class="bq-date-picker__month-row" role="row" key={`month-row-${rowIndex}`}>
+        <div class="bq-date-picker__month-row" role="row" key={`month-row-${row.map(({ month }) => month).join('-')}`}>
           {row.map(({ month, name }) => {
             const state = buildMonthCellState(year, month, focusedMonth, minISO, maxISO, effectiveSelection, type);
             return renderMonthCell({ month, name, state, onMonthSelect, onMonthFocus, onMonthHover });
