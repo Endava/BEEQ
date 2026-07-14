@@ -85,27 +85,34 @@
       }
     },
     "conventionalCommits": {
+      "useCommitScope": false,
       "types": {
-        "feat": { "changelog": { "title": "Features ⚡️", "semverBump": "minor" } },
-        "fix": { "changelog": { "title": "Bug Fixes 🐞", "semverBump": "patch" } },
-        "test": { "changelog": { "title": "Test 🧪" }, "semverBump": "patch" },
-        "style": { "changelog": { "title": "Style 🎨", "semverBump": "patch" } },
-        "chore": { "changelog": { "title": "Chore ⚙️", "semverBump": "patch" } },
-        "perf": { "changelog": { "title": "Performance ⌛️", "semverBump": "patch" } },
-        "refactor": { "changelog": { "title": "Refactor 🛠️", "semverBump": "patch" } },
-        "revert": { "changelog": { "title": "Revert 🔄", "semverBump": "patch" } },
+        "feat": { "semverBump": "minor", "changelog": { "title": "Features ⚡️" } },
+        "fix": { "semverBump": "patch", "changelog": { "title": "Bug Fixes 🐞" } },
+        "test": { "semverBump": "patch", "changelog": { "title": "Test 🧪" } },
+        "style": { "semverBump": "patch", "changelog": { "title": "Style 🎨" } },
+        "chore": { "semverBump": "patch", "changelog": { "title": "Chore ⚙️" } },
+        "perf": { "semverBump": "patch", "changelog": { "title": "Performance ⌛️" } },
+        "refactor": { "semverBump": "patch", "changelog": { "title": "Refactor 🛠️" } },
+        "revert": { "semverBump": "patch", "changelog": { "title": "Revert 🔄" } },
         "docs": false,
         "release": false,
         "ci": false
       }
     },
+    "projects": [
+      "packages/beeq",
+      "packages/beeq-angular",
+      "packages/beeq-react",
+      "packages/beeq-vue",
+      "packages/beeq-tailwindcss"
+    ],
     "git": {
       "commit": true,
       "commitMessage": "release: {version} [skip ci]",
       "stageChanges": true,
       "tag": true
     },
-    "projects": ["packages/*"],
     "releaseTagPattern": "v{version}",
     "version": {
       "conventionalCommits": true,
