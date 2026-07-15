@@ -154,9 +154,9 @@ export const CalendarYearView: FunctionalComponent<TCalendarYearViewProps> = ({
       role="grid"
       tabIndex={-1}
     >
-      {rows.map((row, rowIndex) => (
+      {rows.map((row) => (
         // biome-ignore lint/a11y/useFocusableInteractive: gridcell is a structural ARIA container; focus is managed by the child <button> via roving tabindex
-        <div class="bq-date-picker__year-row" key={`year-row-${rowIndex}`} role="row">
+        <div class="bq-date-picker__year-row" key={`year-row-${row.join('-')}`} role="row">
           {row.map((year) => {
             const state = buildYearCellState(year, focusedYear, minISO, maxISO, effectiveSelection, type);
             return renderYearCell({ year, state, onYearSelect, onYearFocus, onYearHover });

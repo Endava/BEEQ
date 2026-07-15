@@ -1,5 +1,5 @@
-@import url("https://esm.sh/@beeq/core/dist/beeq/beeq.css") layer(beeq);
-@import url("./home.css");
+@import url("/beeq-mintlify.css");
+@import url("/home.css");
 
 :root {
   --bq-transition-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -161,17 +161,28 @@ body,
   color: var(--bq-text--primary);
 }
 
-.card-tile.link,
+.card-tile {
+  background-color: var(--bq-background--primary);
+  border: var(--bq-stroke-s) solid var(--bq-stroke--primary);
+}
+
+.card-tile[href],
 .card[role="link"] {
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, transform;
   transition-timing-function: var(--bq-transition-function);
   transition-duration: var(--bq-transition-duration);
+  border-color: var(--bq-stroke--primary);
 
   &:hover,
   &:focus-visible {
     background-color: var(--bq-ui--brand-alt);
-    transform: scale(1.05);
+    border-color: var(--bq-stroke--brand);
   }
+}
+
+.card[role="link"]:hover,
+.card[role="link"]:focus-visible {
+  transform: scale(1.05);
 }
 
 [data-name="frame"] {

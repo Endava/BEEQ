@@ -38,7 +38,7 @@
 /* -------------------------------------------------------------------------- */
 
 .bq-input--control {
-  @apply flex items-center transition-[border-color,box-shadow] is-full;
+  @apply flex items-center bg-[--bq-input--background-color] transition-[border-color,box-shadow] is-full;
   // Border
   @apply rounded-[--bq-input--border-radius] border-[length:--bq-input--border-width] border-[color:--bq-input--border-color];
   // Padding

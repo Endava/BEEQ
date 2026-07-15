@@ -43,9 +43,10 @@ import { isNil } from '../../shared/utils';
  * @part checkbox - The `<span>` element that renders the custom checked/indeterminate state.
  * @part label - The `<span>` element that holds the text content.
  *
- * @cssprop --bq-checkbox--size - Checkbox size
+ * @cssprop --bq-checkbox--background-color - Checkbox background color
  * @cssprop --bq-checkbox--border-radius - Checkbox border radius
  * @cssprop --bq-checkbox--border-width - Checkbox border width
+ * @cssprop --bq-checkbox--size - Checkbox size
  */
 @Component({
   tag: 'bq-checkbox',
