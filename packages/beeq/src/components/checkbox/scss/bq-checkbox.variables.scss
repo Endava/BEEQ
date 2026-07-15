@@ -4,11 +4,13 @@
 
 :host {
   /**
-   * @prop --bq-checkbox--size - Checkbox size
+   * @prop --bq-checkbox--background-color - Checkbox background color
    * @prop --bq-checkbox--border-radius - Checkbox border radius
    * @prop --bq-checkbox--border-width - Checkbox border width
+   * @prop --bq-checkbox--size - Checkbox size
    */
-  --bq-checkbox--size: 24px;
+  --bq-checkbox--background-color: theme(backgroundColor.ui.primary);
   --bq-checkbox--border-radius: theme(borderRadius.xs);
   --bq-checkbox--border-width: theme(borderWidth.m);
+  --bq-checkbox--size: 24px;
 }

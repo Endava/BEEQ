@@ -4,9 +4,11 @@
 
 :host {
   /**
-   * @prop --bq-radio--size - Radio size
+   * @prop --bq-radio--background-color - Radio background color
    * @prop --bq-radio--border-width - Radio border width
+   * @prop --bq-radio--size - Radio size
    */
-  --bq-radio--size: 24px;
+  --bq-radio--background-color: theme(backgroundColor.ui.primary);
   --bq-radio--border-width: theme(borderWidth.m);
+  --bq-radio--size: 24px;
 }

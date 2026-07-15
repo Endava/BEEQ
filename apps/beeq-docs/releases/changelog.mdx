@@ -4,6 +4,32 @@ description: New features, bug fixes, and improvements to the BEEQ Design System
 rss: true
 ---
 
+<Update label="v1.13.0" description="July 2026">
+  This release upgrades the **Datepicker** with built-in month and year selection (no more Cally.js dependency), adds background-color CSS properties to **Checkbox** and **Radio**, and ships several fixes to form-control theming and calendar rendering.
+
+  ### Features ⚡️
+
+  - **Checkbox:** add CSS property for background color ([33b966761](https://github.com/Endava/BEEQ/commit/33b966761)).
+  - **Datepicker:** support month and year selection and remove the Cally.js dependency ([#1747](https://github.com/Endava/BEEQ/pull/1747)).
+  - **Radio:** add CSS property for background color ([d56e824eb](https://github.com/Endava/BEEQ/commit/d56e824eb)).
+
+  ### Bug Fixes 🐞
+
+  - **Datepicker:** use stable keys for calendar rows ([#1752](https://github.com/Endava/BEEQ/pull/1752)).
+  - **Input:** add missing background color to input control ([5a4f67a84](https://github.com/Endava/BEEQ/commit/5a4f67a84)).
+  - **Select:** add missing background color to select control ([0c0fcccf5](https://github.com/Endava/BEEQ/commit/0c0fcccf5)).
+  - **Release:** align Nx release semver detection ([53d012525](https://github.com/Endava/BEEQ/commit/53d012525)).
+
+  ### Refactor 🛠️
+
+  - **Datepicker:** make ISO comparison logic more readable ([#1753](https://github.com/Endava/BEEQ/pull/1753)).
+
+  ### ❤️ Thank You
+
+  - [Andrei Morosan](https://github.com/Morosan)
+  - [Dabiel Gonzalez-Ramos](https://github.com/dgonzalezr)
+</Update>
+
 <Update label="v1.12.4" description="June 2026">
   This release adds form-validation hooks to **Select** and customizable icon slots to **Switch**, plus a broad pass of form-control fixes across **Input**, **Textarea**, **Checkbox**, and **Radio Group** to make native form integration more reliable.
 

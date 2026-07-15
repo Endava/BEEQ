@@ -663,9 +663,10 @@ export namespace Components {
      * @event bqChange - Handler to be called when the checkbox state changes
      * @event bqFocus - Handler to be called when the checkbox gets focus
      * @event bqBlur - Handler to be called when the checkbox loses focus
-     * @cssprop --bq-checkbox--size - Checkbox size
+     * @cssprop --bq-checkbox--background-color - Checkbox background color
      * @cssprop --bq-checkbox--border-radius - Checkbox border radius
      * @cssprop --bq-checkbox--border-width - Checkbox border width
+     * @cssprop --bq-checkbox--size - Checkbox size
      */
     interface BqCheckbox {
         /**
@@ -1918,8 +1919,9 @@ export namespace Components {
      * @event bqClick - Handler to be called when the radio state changes
      * @event bqFocus - Handler to be called when the radio gets focused
      * @event bqKeyDown - The handler is to be called when the radio key is pressed
-     * @cssprop --bq-radio--size - Radio size
+     * @cssprop --bq-radio--background-color - Radio background color
      * @cssprop --bq-radio--border-width - Radio border width
+     * @cssprop --bq-radio--size - Radio size
      */
     interface BqRadio {
         /**
@@ -3814,9 +3816,10 @@ declare global {
      * @event bqChange - Handler to be called when the checkbox state changes
      * @event bqFocus - Handler to be called when the checkbox gets focus
      * @event bqBlur - Handler to be called when the checkbox loses focus
-     * @cssprop --bq-checkbox--size - Checkbox size
+     * @cssprop --bq-checkbox--background-color - Checkbox background color
      * @cssprop --bq-checkbox--border-radius - Checkbox border radius
      * @cssprop --bq-checkbox--border-width - Checkbox border width
+     * @cssprop --bq-checkbox--size - Checkbox size
      */
     interface HTMLBqCheckboxElement extends Components.BqCheckbox, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqCheckboxElementEventMap>(type: K, listener: (this: HTMLBqCheckboxElement, ev: BqCheckboxCustomEvent<HTMLBqCheckboxElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -4608,8 +4611,9 @@ declare global {
      * @event bqClick - Handler to be called when the radio state changes
      * @event bqFocus - Handler to be called when the radio gets focused
      * @event bqKeyDown - The handler is to be called when the radio key is pressed
-     * @cssprop --bq-radio--size - Radio size
+     * @cssprop --bq-radio--background-color - Radio background color
      * @cssprop --bq-radio--border-width - Radio border width
+     * @cssprop --bq-radio--size - Radio size
      */
     interface HTMLBqRadioElement extends Components.BqRadio, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqRadioElementEventMap>(type: K, listener: (this: HTMLBqRadioElement, ev: BqRadioCustomEvent<HTMLBqRadioElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -6142,9 +6146,10 @@ declare namespace LocalJSX {
      * @event bqChange - Handler to be called when the checkbox state changes
      * @event bqFocus - Handler to be called when the checkbox gets focus
      * @event bqBlur - Handler to be called when the checkbox loses focus
-     * @cssprop --bq-checkbox--size - Checkbox size
+     * @cssprop --bq-checkbox--background-color - Checkbox background color
      * @cssprop --bq-checkbox--border-radius - Checkbox border radius
      * @cssprop --bq-checkbox--border-width - Checkbox border width
+     * @cssprop --bq-checkbox--size - Checkbox size
      */
     interface BqCheckbox {
         /**
@@ -7484,8 +7489,9 @@ declare namespace LocalJSX {
      * @event bqClick - Handler to be called when the radio state changes
      * @event bqFocus - Handler to be called when the radio gets focused
      * @event bqKeyDown - The handler is to be called when the radio key is pressed
-     * @cssprop --bq-radio--size - Radio size
+     * @cssprop --bq-radio--background-color - Radio background color
      * @cssprop --bq-radio--border-width - Radio border width
+     * @cssprop --bq-radio--size - Radio size
      */
     interface BqRadio {
         /**
@@ -9712,9 +9718,10 @@ declare module "@stencil/core" {
              * @event bqChange - Handler to be called when the checkbox state changes
              * @event bqFocus - Handler to be called when the checkbox gets focus
              * @event bqBlur - Handler to be called when the checkbox loses focus
-             * @cssprop --bq-checkbox--size - Checkbox size
+             * @cssprop --bq-checkbox--background-color - Checkbox background color
              * @cssprop --bq-checkbox--border-radius - Checkbox border radius
              * @cssprop --bq-checkbox--border-width - Checkbox border width
+             * @cssprop --bq-checkbox--size - Checkbox size
              */
             "bq-checkbox": LocalJSX.IntrinsicElements["bq-checkbox"] & JSXBase.HTMLAttributes<HTMLBqCheckboxElement>;
             /**
@@ -10292,8 +10299,9 @@ declare module "@stencil/core" {
              * @event bqClick - Handler to be called when the radio state changes
              * @event bqFocus - Handler to be called when the radio gets focused
              * @event bqKeyDown - The handler is to be called when the radio key is pressed
-             * @cssprop --bq-radio--size - Radio size
+             * @cssprop --bq-radio--background-color - Radio background color
              * @cssprop --bq-radio--border-width - Radio border width
+             * @cssprop --bq-radio--size - Radio size
              */
             "bq-radio": LocalJSX.IntrinsicElements["bq-radio"] & JSXBase.HTMLAttributes<HTMLBqRadioElement>;
             /**
