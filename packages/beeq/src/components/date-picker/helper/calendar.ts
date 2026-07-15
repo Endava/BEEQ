@@ -83,7 +83,10 @@ export const isSameYear = (a: Date | null, b: Date | null): boolean =>
   !!a && !!b && a.getFullYear() === b.getFullYear();
 
 /** ISO-string based comparison; safe for `YYYY-MM-DD`. */
-export const compareISO = (a: string, b: string): number => (a === b ? 0 : a < b ? -1 : 1);
+export const compareISO = (a: string, b: string): number => {
+  if (a === b) return 0;
+  return a < b ? -1 : 1;
+};
 
 /* -------------------------------------------------------------------------- */
 /*                                Month matrix                                */

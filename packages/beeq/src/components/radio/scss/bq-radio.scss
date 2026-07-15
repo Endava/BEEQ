@@ -65,7 +65,7 @@
 }
 
 .bq-radio__circle {
-  @apply relative box-border flex items-center justify-center rounded-full border-[length:--bq-radio--border-width] border-solid border-hover-icon-primary bs-full is-full p-b-[3px] p-i-[3px];
+  @apply relative box-border flex items-center justify-center bg-[--bq-radio--background-color] rounded-full border-[length:--bq-radio--border-width] border-solid border-hover-icon-primary bs-full is-full p-b-[3px] p-i-[3px];
 }
 
 .bq-radio__checked {

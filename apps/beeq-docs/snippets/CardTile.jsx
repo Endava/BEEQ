@@ -1,7 +1,7 @@
 export const CardTile = ({ title, href, imageLightSrc, imageDarkSrc, children, enableImgZoom }) => {
   if (!href) {
     return (
-      <div className="card-tile block font-normal group relative my-2 ring-2 ring-transparent rounded-2xl bg-white dark:bg-background-dark border border-gray-950/10 dark:border-white/10 overflow-hidden w-full">
+      <div className="card-tile block font-normal group relative my-2 ring-2 ring-transparent rounded-2xl overflow-hidden w-full">
         {imageLightSrc && (
           <img
             className="w-full m-0 block dark:hidden"
@@ -27,7 +27,7 @@ export const CardTile = ({ title, href, imageLightSrc, imageDarkSrc, children, e
   return (
     <a
       href={href}
-      className="card-tile block font-normal group relative my-2 ring-2 ring-transparent rounded-2xl bg-white dark:bg-background-dark border border-gray-950/10 dark:border-white/10 overflow-hidden w-full cursor-pointer hover:!border-primary dark:hover:!border-primary-light"
+      className="card-tile block font-normal group relative my-2 ring-2 ring-transparent rounded-2xl overflow-hidden w-full cursor-pointer"
     >
       {imageLightSrc && <img className="w-full m-0 block dark:hidden" src={imageLightSrc} alt={title} noZoom />}
       {imageDarkSrc && <img className="w-full m-0 hidden dark:block" src={imageDarkSrc} alt={title} noZoom />}
