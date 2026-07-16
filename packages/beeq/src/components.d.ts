@@ -337,6 +337,7 @@ export namespace Components {
      * @attr {string} initials - The text to display on avatar.
      * @attr {"circle" | "square"} shape - The shape of the avatar.
      * @attr {"xsmall" | "small" | "medium" | "large"} size - The size of the avatar.
+     * @cssprop --bq-avatar-background - Deprecated, use --bq-avatar--background instead.
      * @cssprop --bq-avatar--background - Avatar background color
      * @cssprop --bq-avatar--border-color - Avatar border color
      * @cssprop --bq-avatar--border-style - Avatar border style
@@ -358,19 +359,19 @@ export namespace Components {
         /**
           * Alternate text for the avatar image if the image cannot be displayed
          */
-        "altText": string;
+        "altText"?: string;
         /**
           * The image source to load on the avatar (this can be also a base64 encoded image)
          */
-        "image": string;
+        "image"?: string;
         /**
           * The text to display on avatar
          */
-        "initials": string;
+        "initials"?: string;
         /**
           * A text to use for describing the avatar on assistive devices
          */
-        "label": string;
+        "label"?: string;
         /**
           * The shape of the avatar
           * @default 'circle'
@@ -414,7 +415,7 @@ export namespace Components {
           * The size of the badge. Relevant if badge has no content.
           * @default 'small'
          */
-        "size"?: TBadgeSize;
+        "size": TBadgeSize;
         /**
           * Badge number color. The value should be a valid value of the palette color
          */
@@ -607,10 +608,8 @@ export namespace Components {
      * @example How to use it
      * ```html
      * <bq-card type="default" border="m">
-     * <div class="p-m">
-     * <h3 class="text-xl font-bold">Card Title</h3>
-     * <p class="text-m">Card content goes here</p>
-     * </div>
+     * <h3>Card Title</h3>
+     * <p>Card content goes here</p>
      * </bq-card>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/522abb-card
@@ -1079,7 +1078,7 @@ export namespace Components {
      * @example How to use it
      * ```html
      * <bq-divider orientation="horizontal" stroke-color="stroke--primary" title-alignment="middle">
-     * <span slot="title">Divider Title</span>
+     * <span>Divider Title</span>
      * </bq-divider>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/53dfe6-divider
@@ -2485,7 +2484,7 @@ export namespace Components {
      * @status stable
      * @dependency bq-badge
      * @attr {"alert" | "danger" | "info" | "neutral" | "success"} type - It defines the type of status to display.
-     * @cssprop --bq-status-circ - Status circle size.
+     * @cssprop --bq-status-circle--size - Status circle size.
      */
     interface BqStatus {
         /**
@@ -2597,6 +2596,7 @@ export namespace Components {
         "size": TStepsSize;
         /**
           * The type of prefix element to use on the step items
+          * @default 'numeric'
          */
         "type": TStepsType;
     }
@@ -3568,6 +3568,7 @@ declare global {
      * @attr {string} initials - The text to display on avatar.
      * @attr {"circle" | "square"} shape - The shape of the avatar.
      * @attr {"xsmall" | "small" | "medium" | "large"} size - The size of the avatar.
+     * @cssprop --bq-avatar-background - Deprecated, use --bq-avatar--background instead.
      * @cssprop --bq-avatar--background - Avatar background color
      * @cssprop --bq-avatar--border-color - Avatar border color
      * @cssprop --bq-avatar--border-style - Avatar border style
@@ -3761,10 +3762,8 @@ declare global {
      * @example How to use it
      * ```html
      * <bq-card type="default" border="m">
-     * <div class="p-m">
-     * <h3 class="text-xl font-bold">Card Title</h3>
-     * <p class="text-m">Card content goes here</p>
-     * </div>
+     * <h3>Card Title</h3>
+     * <p>Card content goes here</p>
      * </bq-card>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/522abb-card
@@ -4033,7 +4032,7 @@ declare global {
      * @example How to use it
      * ```html
      * <bq-divider orientation="horizontal" stroke-color="stroke--primary" title-alignment="middle">
-     * <span slot="title">Divider Title</span>
+     * <span>Divider Title</span>
      * </bq-divider>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/53dfe6-divider
@@ -4953,7 +4952,7 @@ declare global {
      * @status stable
      * @dependency bq-badge
      * @attr {"alert" | "danger" | "info" | "neutral" | "success"} type - It defines the type of status to display.
-     * @cssprop --bq-status-circ - Status circle size.
+     * @cssprop --bq-status-circle--size - Status circle size.
      */
     interface HTMLBqStatusElement extends Components.BqStatus, HTMLStencilElement {
     }
@@ -5788,6 +5787,7 @@ declare namespace LocalJSX {
      * @attr {string} initials - The text to display on avatar.
      * @attr {"circle" | "square"} shape - The shape of the avatar.
      * @attr {"xsmall" | "small" | "medium" | "large"} size - The size of the avatar.
+     * @cssprop --bq-avatar-background - Deprecated, use --bq-avatar--background instead.
      * @cssprop --bq-avatar--background - Avatar background color
      * @cssprop --bq-avatar--border-color - Avatar border color
      * @cssprop --bq-avatar--border-style - Avatar border style
@@ -6090,10 +6090,8 @@ declare namespace LocalJSX {
      * @example How to use it
      * ```html
      * <bq-card type="default" border="m">
-     * <div class="p-m">
-     * <h3 class="text-xl font-bold">Card Title</h3>
-     * <p class="text-m">Card content goes here</p>
-     * </div>
+     * <h3>Card Title</h3>
+     * <p>Card content goes here</p>
      * </bq-card>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/522abb-card
@@ -6589,7 +6587,7 @@ declare namespace LocalJSX {
      * @example How to use it
      * ```html
      * <bq-divider orientation="horizontal" stroke-color="stroke--primary" title-alignment="middle">
-     * <span slot="title">Divider Title</span>
+     * <span>Divider Title</span>
      * </bq-divider>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/53dfe6-divider
@@ -8106,7 +8104,7 @@ declare namespace LocalJSX {
      * @status stable
      * @dependency bq-badge
      * @attr {"alert" | "danger" | "info" | "neutral" | "success"} type - It defines the type of status to display.
-     * @cssprop --bq-status-circ - Status circle size.
+     * @cssprop --bq-status-circle--size - Status circle size.
      */
     interface BqStatus {
         /**
@@ -8225,6 +8223,7 @@ declare namespace LocalJSX {
         "size"?: TStepsSize;
         /**
           * The type of prefix element to use on the step items
+          * @default 'numeric'
          */
         "type"?: TStepsType;
     }
@@ -9531,6 +9530,7 @@ declare module "@stencil/core" {
              * @attr {string} initials - The text to display on avatar.
              * @attr {"circle" | "square"} shape - The shape of the avatar.
              * @attr {"xsmall" | "small" | "medium" | "large"} size - The size of the avatar.
+             * @cssprop --bq-avatar-background - Deprecated, use --bq-avatar--background instead.
              * @cssprop --bq-avatar--background - Avatar background color
              * @cssprop --bq-avatar--border-color - Avatar border color
              * @cssprop --bq-avatar--border-style - Avatar border style
@@ -9673,10 +9673,8 @@ declare module "@stencil/core" {
              * @example How to use it
              * ```html
              * <bq-card type="default" border="m">
-             * <div class="p-m">
-             * <h3 class="text-xl font-bold">Card Title</h3>
-             * <p class="text-m">Card content goes here</p>
-             * </div>
+             * <h3>Card Title</h3>
+             * <p>Card content goes here</p>
              * </bq-card>
              * ```
              * @documentation https://www.beeq.design/3d466e231/p/522abb-card
@@ -9882,7 +9880,7 @@ declare module "@stencil/core" {
              * @example How to use it
              * ```html
              * <bq-divider orientation="horizontal" stroke-color="stroke--primary" title-alignment="middle">
-             * <span slot="title">Divider Title</span>
+             * <span>Divider Title</span>
              * </bq-divider>
              * ```
              * @documentation https://www.beeq.design/3d466e231/p/53dfe6-divider
@@ -10533,7 +10531,7 @@ declare module "@stencil/core" {
              * @status stable
              * @dependency bq-badge
              * @attr {"alert" | "danger" | "info" | "neutral" | "success"} type - It defines the type of status to display.
-             * @cssprop --bq-status-circ - Status circle size.
+             * @cssprop --bq-status-circle--size - Status circle size.
              */
             "bq-status": LocalJSX.IntrinsicElements["bq-status"] & JSXBase.HTMLAttributes<HTMLBqStatusElement>;
             /**
