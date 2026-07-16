@@ -12,6 +12,7 @@ const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const workspaceRoot = resolve(projectRoot, '../..');
 const sourceRoot = resolve(projectRoot, 'src/global/styles');
 const outputRoot = resolve(workspaceRoot, 'dist/beeq/dist/beeq');
+const optionalCssOutputRoot = resolve(outputRoot, 'css');
 const injectedMixins = resolve(sourceRoot, 'mixins/index.scss');
 const args = new Set(process.argv.slice(2));
 
@@ -45,7 +46,7 @@ const compileSass = (source, { injectMixins = false } = {}) => {
 const compileEntrypoints = () => {
   for (const [sourceFile, outputFile] of entries) {
     const source = resolve(sourceRoot, sourceFile);
-    const output = resolve(outputRoot, outputFile);
+    const output = resolve(optionalCssOutputRoot, outputFile);
     const css = compileSass(source);
 
     mkdirSync(dirname(output), { recursive: true });

@@ -106,7 +106,7 @@ rg "@tailwind|@apply|theme\\(" packages/beeq/src
 rg "stencil-tailwind-plugin|tailwindHMR|tailwind\\(" packages/beeq
 cd packages/beeq
 pnpm exec stylelint "src/global/styles/**/*.{css,scss}" --config .stylelintrc.strict.json
-pnpm exec nx run beeq:styles
+pnpm exec nx run beeq:build-styles
 ```
 
 Run full strict Stylelint only for final migration cleanup:
