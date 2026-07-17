@@ -58,7 +58,7 @@
     "build": {
       "dependsOn": [{ "target": "build-stencil" }],
       "executor": "nx:run-commands",
-      "cache": false,
+      "outputs": ["{workspaceRoot}/dist/beeq"],
       "options": {
         "command": "node packages/beeq/scripts/build-styles.mjs"
       }

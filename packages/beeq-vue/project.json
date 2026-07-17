@@ -16,7 +16,7 @@
         "tsConfig": "packages/beeq-vue/tsconfig.lib.json",
         "assets": ["packages/beeq-vue/README.md"]
       },
-      "dependsOn": [{ "dependencies": true, "target": "build" }]
+      "dependsOn": [{ "projects": "beeq", "target": "build-stencil" }]
     },
     "check": {
       "executor": "nx:run-commands",
