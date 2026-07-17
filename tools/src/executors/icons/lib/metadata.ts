@@ -4,8 +4,8 @@ import { join } from 'node:path';
 
 import { pathExists, readJson, writeJson } from 'fs-extra';
 
-import type { SourceRefType } from '../schema';
-import { asIconsError } from './errors';
+import type { SourceRefType } from '../schema.d.ts';
+import { asIconsError } from './errors.ts';
 
 /**
  * Stable subset of {@link IconsMetadata} that fully identifies a source

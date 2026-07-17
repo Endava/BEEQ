@@ -15,8 +15,8 @@ import {
   normalizeOptions,
   PINNED_CHECKSUM_HINT,
   writeMetadata,
-} from './lib';
-import type { IconsExecutorSchema } from './schema';
+} from './lib/index.ts';
+import type { IconsExecutorSchema } from './schema.d.ts';
 
 /**
  * Environment variable that lets a developer skip the icons executor

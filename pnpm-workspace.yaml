@@ -27,7 +27,7 @@ overrides:
   '@schematics/angular': '22.0.1'
   'ng-packagr': '22.0.0'
   'node-fetch': '3.3.2'
-  'nx': '22.7.5'
+  'nx': '23.1.0'
   'postcss': '8.5.12'
   'storybook': '10.4.3'
   'vite': '8.0.16'

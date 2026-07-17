@@ -4,7 +4,7 @@ import { Readable } from 'node:stream';
 
 import { ensureDir, writeFile } from 'fs-extra';
 
-import { asIconsError, IconsExecutorError } from './errors';
+import { asIconsError, IconsExecutorError } from './errors.ts';
 
 /** Result of a successful archive download. */
 type DownloadResult = {

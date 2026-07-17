@@ -3,7 +3,7 @@ import { basename, join, posix } from 'node:path';
 import * as decompress from 'decompress';
 import { emptyDir, ensureDir, writeFile } from 'fs-extra';
 
-import { asIconsError, IconsExecutorError } from './errors';
+import { asIconsError, IconsExecutorError } from './errors.ts';
 
 /** Inputs for {@link extractIcons}. */
 type ExtractOptions = {

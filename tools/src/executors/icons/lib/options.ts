@@ -2,8 +2,8 @@ import { isAbsolute, join, resolve } from 'node:path';
 
 import type { ExecutorContext } from '@nx/devkit';
 
-import type { IconsExecutorSchema, SourceRefType } from '../schema';
-import { IconsExecutorError } from './errors';
+import type { IconsExecutorSchema, SourceRefType } from '../schema.d.ts';
+import { IconsExecutorError } from './errors.ts';
 
 /** All valid values of {@link SourceRefType}, in the order surfaced to users. */
 const SOURCE_REF_TYPES: readonly SourceRefType[] = ['commit', 'tag', 'branch'] as const;

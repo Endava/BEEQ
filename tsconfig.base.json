@@ -5,7 +5,6 @@
     "lib": ["dom", "esnext"],
     "target": "esnext",
     "module": "esnext",
-    "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "allowUnreachableCode": false,
     "declaration": false,
@@ -31,7 +30,8 @@
       "@beeq/tailwindcss": ["./dist/beeq-tailwindcss"],
       "@beeq/tools": ["./tools/src/index.ts"],
       "@beeq/vue": ["./dist/beeq-vue"]
-    }
+    },
+    "types": [ "*"]
   },
   "exclude": ["./node_modules", "./tmp"]
 }
