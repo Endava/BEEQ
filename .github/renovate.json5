@@ -148,16 +148,16 @@
   /**
    * Controls when Renovate recreates a PR
    */
-  "recreateWhen": "never",
+  "recreateWhen": "auto",
   /**
    * Controls when Renovate rebases an existing branch
    */
   "rebaseWhen": "conflicted",
   /**
-   * Run on the 1st day of the month
+   * Run “At every minute past every hour from 2 through 6 on Monday.”
    * {@see https://crontab.guru} for debugging cron schedules
    */
-  "schedule": ["* 0 1 * *"],
+  "schedule": ["* 2-6 * * 1"],
   /**
    * Enable Semantic Commit prefixes for commits and PR titles
    */
