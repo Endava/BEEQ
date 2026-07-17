@@ -9,9 +9,17 @@
    */
   "baseBranchPatterns": ["main"],
   /**
+    * Controls how many branches Renovate can create concurrently
+    */
+  "branchConcurrentLimit": 3,
+  /**
    * Prefix to use for all branch names made by Renovate
    */
   "branchPrefix": "chore/",
+  /**
+    * Controls how many commits Renovate can create per hour
+    */
+  "commitHourlyLimit": 1,
   /**
    * Configuring dependencyDashboard to true will lead
    * to the creation of a "Dependency Dashboard" issue within the repository
@@ -140,6 +148,14 @@
       "matchDepTypes": ["engines"]
     }
   ],
+  /**
+    * Controls how many PRs Renovate can create concurrently
+    */
+  "prConcurrentLimit": 3,
+  /**
+    * Controls how many PRs Renovate can create per hour
+    */
+  "prHourlyLimit": 1,
   /**
    * Determines how to modify or update existing ranges.
    * pin = convert ranges to exact versions, e.g. ^1.0.0 -> 1.1.0
