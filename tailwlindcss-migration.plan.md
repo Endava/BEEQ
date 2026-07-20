@@ -59,9 +59,9 @@ Add these built CSS entrypoints:
 
 ```text
 @beeq/core/dist/beeq/beeq.css          full global stylesheet
-@beeq/core/dist/beeq/tokens.css        primitives + themes + modes + interaction tokens
-@beeq/core/dist/beeq/reset.css         reset only
-@beeq/core/dist/beeq/typography.css    typography only
+@beeq/core/dist/beeq/css/tokens.css        primitives + themes + modes + interaction tokens
+@beeq/core/dist/beeq/css/reset.css         reset only
+@beeq/core/dist/beeq/css/typography.css    typography only
 ```
 
 Do not add a new `package.json` `exports` map unless every existing import path is mapped, to avoid accidental consumer breakage.
@@ -719,13 +719,13 @@ The script compiles:
 
 ```text
 packages/beeq/src/global/styles/tokens.scss
-  -> dist/beeq/dist/beeq/tokens.css
+  -> dist/beeq/dist/beeq/css/tokens.css
 
 packages/beeq/src/global/styles/reset.scss
-  -> dist/beeq/dist/beeq/reset.css
+  -> dist/beeq/dist/beeq/css/reset.css
 
 packages/beeq/src/global/styles/typography.scss
-  -> dist/beeq/dist/beeq/typography.css
+  -> dist/beeq/dist/beeq/css/typography.css
 
 packages/beeq/src/global/styles/default.scss
   -> packages/beeq/.storybook/assets/css/stories.css
@@ -756,14 +756,15 @@ Preferred Nx target strategy:
 - Rename current Stencil `build` target to `build-stencil`.
 - Add new `build` target that runs:
   - `pnpm exec nx run beeq:build-stencil`
-  - `pnpm exec nx run beeq:styles`
+  - `pnpm exec nx run beeq:build-styles`
+- Add `build-styles` as the CSS entrypoint target for optional `css/tokens.css`, `css/reset.css`, and `css/typography.css`.
 - Keep output paths compatible with current package publishing.
 
 Alternative if target renaming creates too much churn:
 
 - Keep current `build`.
-- Add `styles`.
-- Make CI/release run both `beeq:build` and `beeq:styles`.
+- Add `build-styles`.
+- Make CI/release run both `beeq:build` and `beeq:build-styles`.
 
 Replace Storybook Tailwind CSS commands with `build-styles.mjs`.
 
@@ -1020,7 +1021,7 @@ Run:
 pnpm exec nx run beeq:stylelint
 pnpm exec nx run beeq:stylelint-strict
 pnpm exec nx run beeq:build
-pnpm exec nx run beeq:styles
+pnpm exec nx run beeq:build-styles
 pnpm exec nx run beeq:test
 pnpm exec nx run beeq:e2e
 pnpm exec nx run beeq:storybook-build
@@ -1070,7 +1071,7 @@ PR guidance:
 Update docs/CHANGELOG:
 
 - Full component usage should import `@beeq/core/dist/beeq/beeq.css`.
-- Token-only consumers can import `@beeq/core/dist/beeq/tokens.css`.
+- Token-only consumers can import `@beeq/core/dist/beeq/css/tokens.css`.
 - Wrapper consumers still need the core CSS import unless their framework integration already includes it.
 - Tailwind is no longer required for components to render correctly.
 - `@beeq/tailwindcss` remains optional for Tailwind consumers.

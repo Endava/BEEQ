@@ -58,21 +58,13 @@
     "build": {
       "dependsOn": [{ "target": "build-stencil" }],
       "executor": "nx:run-commands",
-      "outputs": [
-        "{workspaceRoot}/dist/beeq",
-        "{projectRoot}/.storybook/custom-elements.json",
-        "{workspaceRoot}/packages/beeq-angular/src/directives",
-        "{workspaceRoot}/packages/beeq-angular/standalone/src/directives",
-        "{workspaceRoot}/packages/beeq-react/src/components.ts",
-        "{workspaceRoot}/packages/beeq-vue/src/components.ts",
-        "{workspaceRoot}/packages/beeq-vue/src/vue-component-lib"
-      ],
+      "outputs": ["{workspaceRoot}/dist/beeq"],
       "options": {
         "command": "node packages/beeq/scripts/build-styles.mjs"
       }
     },
     "build-stencil": {
-      "dependsOn": [{ "target": "icons" }, { "target": "build", "projects": "beeq-tailwindcss" }, { "target": "cem" }],
+      "dependsOn": [{ "target": "icons" }, { "projects": "beeq-tailwindcss", "target": "build" }, { "target": "cem" }],
       "executor": "@nxext/stencil:build",
       "outputs": [
         "{options.outputPath}",
@@ -95,6 +87,17 @@
           "dev": false,
           "prod": true
         }
+      }
+    },
+    "build-styles": {
+      "executor": "nx:run-commands",
+      "outputs": [
+        "{workspaceRoot}/dist/beeq/dist/beeq/css/tokens.css",
+        "{workspaceRoot}/dist/beeq/dist/beeq/css/reset.css",
+        "{workspaceRoot}/dist/beeq/dist/beeq/css/typography.css"
+      ],
+      "options": {
+        "command": "node packages/beeq/scripts/build-styles.mjs"
       }
     },
     "storybook-build": {
@@ -125,17 +128,6 @@
       "outputs": ["{projectRoot}/.storybook/assets/css"],
       "options": {
         "command": "node packages/beeq/scripts/build-styles.mjs --storybook --minify"
-      }
-    },
-    "styles": {
-      "executor": "nx:run-commands",
-      "outputs": [
-        "{workspaceRoot}/dist/beeq/dist/beeq/tokens.css",
-        "{workspaceRoot}/dist/beeq/dist/beeq/reset.css",
-        "{workspaceRoot}/dist/beeq/dist/beeq/typography.css"
-      ],
-      "options": {
-        "command": "node packages/beeq/scripts/build-styles.mjs"
       }
     },
     "icons": {
