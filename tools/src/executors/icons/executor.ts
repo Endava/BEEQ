@@ -1,5 +1,5 @@
 import type { ExecutorContext, PromiseExecutor } from '@nx/devkit';
-import { remove } from 'fs-extra';
+import fsExtra from 'fs-extra';
 
 import {
   computeIconsHash,
@@ -73,7 +73,7 @@ const toFingerprint = (options: NormalizedOptions): FingerprintInput => ({
 const cleanupDownload = async (options: NormalizedOptions): Promise<void> => {
   if (options.keepDownload) return;
   try {
-    await remove(options.archiveFilePath);
+    await fsExtra.remove(options.archiveFilePath);
   } catch {
     /* best-effort cleanup */
   }

@@ -1,7 +1,7 @@
 import { basename, join, posix } from 'node:path';
 
 import * as decompress from 'decompress';
-import { emptyDir, ensureDir, writeFile } from 'fs-extra';
+import fsExtra from 'fs-extra';
 
 import { asIconsError, IconsExecutorError } from './errors.ts';
 
@@ -141,15 +141,15 @@ const extractIcons = async ({
   }
 
   try {
-    await ensureDir(extractToPath);
-    await emptyDir(extractToPath);
+    await fsExtra.ensureDir(extractToPath);
+    await fsExtra.emptyDir(extractToPath);
   } catch (error) {
     throw asIconsError('extract', `Failed to prepare destination "${extractToPath}"`, error, { extractToPath });
   }
 
   const writes = sortedEntries.map((entry) => async () => {
     const name = basename(entry.path);
-    await writeFile(join(extractToPath, name), entry.data);
+    await fsExtra.writeFile(join(extractToPath, name), entry.data);
   });
 
   try {

@@ -2,7 +2,7 @@ import { createHash } from 'node:crypto';
 import { dirname } from 'node:path';
 import { Readable } from 'node:stream';
 
-import { ensureDir, writeFile } from 'fs-extra';
+import fsExtra from 'fs-extra';
 
 import { asIconsError, IconsExecutorError } from './errors.ts';
 
@@ -110,8 +110,8 @@ const downloadArchive = async ({
   }
 
   try {
-    await ensureDir(dirname(archiveFilePath));
-    await writeFile(archiveFilePath, buffer);
+    await fsExtra.ensureDir(dirname(archiveFilePath));
+    await fsExtra.writeFile(archiveFilePath, buffer);
   } catch (error) {
     throw asIconsError('download', `Failed to persist archive to "${archiveFilePath}"`, error, { archiveFilePath });
   }
