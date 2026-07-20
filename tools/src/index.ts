@@ -1,1 +1,1 @@
-export { default as iconsExecutor } from './executors/icons/executor';
+export { default as iconsExecutor } from './executors/icons/executor.ts';

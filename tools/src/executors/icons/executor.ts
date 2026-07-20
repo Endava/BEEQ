@@ -1,5 +1,5 @@
 import type { ExecutorContext, PromiseExecutor } from '@nx/devkit';
-import { remove } from 'fs-extra';
+import fsExtra from 'fs-extra';
 
 import {
   computeIconsHash,
@@ -15,8 +15,8 @@ import {
   normalizeOptions,
   PINNED_CHECKSUM_HINT,
   writeMetadata,
-} from './lib';
-import type { IconsExecutorSchema } from './schema';
+} from './lib/index.ts';
+import type { IconsExecutorSchema } from './schema.d.ts';
 
 /**
  * Environment variable that lets a developer skip the icons executor
@@ -73,7 +73,7 @@ const toFingerprint = (options: NormalizedOptions): FingerprintInput => ({
 const cleanupDownload = async (options: NormalizedOptions): Promise<void> => {
   if (options.keepDownload) return;
   try {
-    await remove(options.archiveFilePath);
+    await fsExtra.remove(options.archiveFilePath);
   } catch {
     /* best-effort cleanup */
   }
