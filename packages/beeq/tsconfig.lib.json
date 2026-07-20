@@ -8,6 +8,8 @@
     "types": []
   },
   "exclude": [
+    "dist",
+    "**/dist/**",
     "**/*.spec.ts",
     "**/*.spec.tsx",
     "**/*.e2e.ts",

@@ -74,7 +74,7 @@ For each category below, mark ✅ pass, ⚠️ needs improvement, or ❌ fail, a
 
 #### D. Props & Events
 - [ ] Props with fixed allowed values use `validatePropValue()` + `@Watch()`
-- [ ] Boolean props should not have default values, default is `false`, so their purpose should be clear on what they control when `true`
+- [ ] Optional boolean props (`prop?: boolean`) should not also declare `= false`; use either an optional boolean or a required boolean with an explicit `false` default, depending on the intended API shape
 - [ ] String props should not default to `undefined` if they are required.
 - [ ] Styling-related props use `reflect: true`
 - [ ] No prop defaults that contradict the type (e.g. `undefined` typed as `string`)

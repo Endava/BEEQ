@@ -1,3 +1,27 @@
+## 1.13.0 (2026-07-15)
+
+### Features ⚡️
+
+- **Checkbox:** add CSS property for background color ([33b966761](https://github.com/Endava/BEEQ/commit/33b966761))
+- **Datepicker:** support month and year selection and remove the Cally.js dependency ([#1747](https://github.com/Endava/BEEQ/pull/1747))
+- **Radio:** add CSS property for background color ([d56e824eb](https://github.com/Endava/BEEQ/commit/d56e824eb))
+
+### Bug Fixes 🐞
+
+- **Datepicker:** use stable keys for calendar rows ([#1752](https://github.com/Endava/BEEQ/pull/1752))
+- **Input:** missing background color to input control ([5a4f67a84](https://github.com/Endava/BEEQ/commit/5a4f67a84))
+- **Select:** missing background color to select control ([0c0fcccf5](https://github.com/Endava/BEEQ/commit/0c0fcccf5))
+- **release:** align Nx release semver detection ([53d012525](https://github.com/Endava/BEEQ/commit/53d012525))
+
+### Refactor 🛠️
+
+- **Datepicker:** make ISO comparison logic more readable ([#1753](https://github.com/Endava/BEEQ/pull/1753))
+
+### ❤️ Thank You
+
+- Andrei Morosan
+- Dabiel Gonzalez-Ramos @dgonzalezr
+
 ## 1.12.4 (2026-06-18)
 
 ### Features ⚡️

@@ -4,58 +4,95 @@ import type { JSX } from '@stencil/core/internal';
 
 import type { Placement } from '../../services/interfaces';
 import {
-  clampDateToRange,
-  extractFocusedDate,
-  formatDisplayValue,
   getTodayISO,
   hasSlotContent,
-  isClient,
-  isDefined,
   isEventTargetChildOfElement,
   isHTMLElement,
   isNil,
-  parseDateInput,
-  toISODateString,
   updateFormValidity,
   validatePropValue,
 } from '../../shared/utils';
-import type { TInputValidation } from '../input/bq-input.types';
-import type { DaysOfWeek, TCalendarDate, TDatePickerType } from './bq-date-picker.types';
-import { DATE_PICKER_TYPE } from './bq-date-picker.types';
+import { INPUT_VALIDATION, type TInputValidation } from '../input/bq-input.types';
+import type {
+  DaysOfWeek,
+  TCalendarView,
+  TDatePickerType,
+  TDatePrecision,
+  TFloatingStrategy,
+  TMonthsPerView,
+  TSelection,
+} from './bq-date-picker.types';
 import {
-  CALENDAR_CONTAINER_EXPORT_PARTS,
-  CALENDAR_MONTH_EXPORT_PARTS,
-  CALENDAR_TYPE_MAP,
-  DEFAULT_INPUT_ID,
-} from './helper/constants';
-import { isCallyLibraryLoaded, loadCallyLibrary } from './libs/callyLibrary';
+  CALENDAR_VIEW,
+  DATE_PICKER_TYPE,
+  DATE_PRECISION,
+  DAYS_OF_WEEK,
+  FLOATING_PLACEMENT,
+  FLOATING_STRATEGY,
+  MONTHS_PER_VIEW,
+} from './bq-date-picker.types';
+import { CalendarDayView } from './components/CalendarDayView';
+import { CalendarHeader } from './components/CalendarHeader';
+import { CalendarMonthView } from './components/CalendarMonthView';
+import { CalendarYearView } from './components/CalendarYearView';
+import { isMonthWithinBounds, isYearWithinBounds, padBound } from './helper/bounds';
+import {
+  addDays,
+  addMonths,
+  addYears,
+  clampDate,
+  endOfMonth,
+  getDecadeStart,
+  isWithinBounds,
+  parseISO,
+  startOfMonth,
+  toISO,
+} from './helper/calendar';
+import { CALENDAR_PARTS, DECADE_GRID_SIZE, DEFAULT_INPUT_ID, MAX_MONTHS_PER_VIEW } from './helper/constants';
+import { parseTypedInput } from './helper/input';
+import { formatMonth } from './helper/intl';
+import { getHeaderLabel, getHeaderTitleLabel, getNextLabel, getPreviousLabel } from './helper/labels';
+import { advanceFocusedMonth, advanceFocusedYear, getGridColumns } from './helper/navigation';
+import { applySelection, buildTentativeRange, parseValue, serializeValue } from './helper/selection';
+import {
+  computeDisplayDate,
+  computeHasValue,
+  DEFAULT_FORMAT_OPTIONS_BY_PRECISION,
+  normalizeValue,
+} from './helper/value';
+
+/** Compose the default constraint-validation message for a set of flags. */
+const defaultValidityMessage = (flags: ValidityStateFlags): string => {
+  if (flags.badInput) return 'Please, input or select a valid date';
+  if (flags.rangeUnderflow && flags.rangeOverflow) return 'Selected value is outside the allowed range';
+  if (flags.rangeUnderflow) return 'Selected value is before the minimum';
+  return 'Selected value is after the maximum';
+};
 
 /**
- * The Date Picker is a intuitive UI element component allows users to select dates from a visual calendar interface, providing an intuitive way to input date information.
+ * The Date Picker is a pure-Stencil calendar input.
+ *
+ * It supports single, multi, and range selection, three navigation views
+ * (days → months → years), full localization via `Intl.DateTimeFormat`,
+ * multi-month side-by-side rendering, and RTL layouts.
  *
  * @example How to use it
  * ```html
  * <bq-date-picker
  *   first-day-of-week="1"
  *   locale="en-GB"
- *   months-per-view="single"
- *   months="2"
  *   name="bq-date-picker"
  *   placeholder="Enter your date"
- *   placement="bottom-end"
- *   show-outside-days="false"
- *   type="range"
- *   validation-status="none"
- *   value="2024-05-25"
+ *   type="single"
+ *   value="2026-07-15"
  * >
- *   <label class="flex flex-grow items-center" slot="label">
- *     Date picker label
- *   </label>
+ *   <label slot="label">Date picker label</label>
  * </bq-date-picker>
  * ```
  *
- * @documentation https://www.beeq.design/3d466e231/p/5793a9-date-picker
- * @status stable
+ * @documentation https://storybook.beeq.design/?path=/docs/components-date-picker--docs
+ *
+ * @status experimental
  *
  * @dependency bq-button
  * @dependency bq-dropdown
@@ -63,94 +100,119 @@ import { isCallyLibraryLoaded, loadCallyLibrary } from './libs/callyLibrary';
  *
  * @attr {boolean} autofocus - If `true`, the Date picker input will be focused on component render.
  * @attr {string} clear-button-label - The clear button aria label.
+ * @attr {string} calendar-button-label - The aria-label for the calendar trigger button.
  * @attr {boolean} disable-clear - If `true`, the clear button won't be displayed.
  * @attr {boolean} disabled - Indicates whether the Date picker input is disabled or not.
- * @attr {number} distance - Represents the distance (gutter or margin) between the Date picker panel and the input element.
- * @attr {0 | 1 | 2 | 3 | 4 | 5 | 6} first-day-of-week - The first day of the week, where Sunday is 0, Monday is 1, etc.
- * @attr {Intl.DateTimeFormatOptions} format-options - The options to use when formatting the displayed value. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat#using_options
- * @attr {string} form - The ID of the form that the Date picker input belongs to.
- * @attr {string} form-validation-message - The native form validation message (mandatory if `required` is set).
- * @attr {function} is-date-disallowed - A function that takes a date and returns true if the date should not be selectable.
- * @attr {Intl.LocalesArgument} locale - The locale for formatting dates. If not set, will use the browser's locale. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#locales_argument
- * @attr {string} max - The latest date that can be selected.
- * @attr {string} min - The earliest date that can be selected.
- * @attr {number} months - Number of months to show when range is `true`.
- * @attr {string} name - The Date picker input name.
- * @attr {boolean} open - If `true`, the Date picker panel will be visible.
- * @attr {string} panel-height - When set, it will override the height of the Date picker panel.
- * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Position of the Date picker panel.
- * @attr {boolean} required - Indicates whether or not the Date picker input is required to be filled out before submitting the form.
- * @attr {number} skidding - Represents the skidding between the Date picker panel and the input element.
- * @attr {boolean} show-outside-days - Whether to show days outside the month.
- * @attr {string} strategy - Defines the strategy to position the Date picker panel.
- * @attr {string} tentative - The date that is tentatively selected, e.g. the start of a range selection.
- * @attr {"single" | "multi" | "range"} type - It defines how the calendar will behave, allowing single date selection, range selection, or multiple date selection.
- * @attr {"error" | "none" | "success" | "warning"} validation-status - The validation status of the Select input.
- * @attr {string} value - The select input value represents the currently selected date or range and can be used to reset the field to a previous value.
+ * @attr {number} distance - Represents the distance between the panel and the input.
+ * @attr {0 | 1 | 2 | 3 | 4 | 5 | 6} first-day-of-week - The first day of the week (0 = Sunday).
+ * @attr {Intl.DateTimeFormatOptions} format-options - Display formatting options.
+ * @attr {string} form - The form ID the input belongs to.
+ * @attr {string} form-validation-message - Custom native form validation message.
+ * @attr {"days" | "months" | "years"} initial-view - The view to open when the panel first opens.
+ * @attr {function} is-date-disallowed - Predicate that marks specific dates as unselectable.
+ * @attr {Intl.LocalesArgument} locale - Locale used for formatting.
+ * @attr {string} max - Latest selectable date (ISO).
+ * @attr {string} min - Earliest selectable date (ISO).
+ * @attr {number} months - Number of month panels to render side by side (range/multi). Capped at 2.
+ * @attr {"single" | "months"} months-per-view - Prev/Next step size when multi-month is enabled.
+ * @attr {string} name - Input name.
+ * @attr {boolean} open - If `true`, the panel is visible.
+ * @attr {string} panel-height - Overrides the height of the panel.
+ * @attr {string} placeholder - Input placeholder text.
+ * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Placement of the panel.
+ * @attr {boolean} required - Whether a value must be selected before submitting the form.
+ * @attr {boolean} show-outside-days - Whether to render days that belong to adjacent months.
+ * @attr {number} skidding - Skidding between the panel and the trigger.
+ * @attr {"fixed" | "absolute"} strategy - Positioning strategy for the panel.
+ * @attr {"single" | "multi" | "range"} type - Selection mode.
+ * @attr {"error" | "none" | "success" | "warning"} validation-status - Validation state.
+ * @attr {string} value - The current selection, as a wire-format string. Shape depends on `type` and `precision`:
+ *   • **single**: a single ISO token — `YYYY-MM-DD` (precision `day`), `YYYY-MM` (precision `month`), `YYYY` (precision `year`).
+ *   • **range**: `start/end` (two tokens joined with `/`) at the same precision.
+ *   • **multi**: space-separated tokens at the same precision.
+ *   Bounds (`min`/`max`) may be supplied at any of these precisions and are honoured accordingly.
+ * @attr {"day" | "month" | "year"} precision - Granularity of the value and of the calendar's initial view. Also drives which cells are selectable (day cells at `day`, month cells at `month`, year cells at `year`). Defaults to `"day"`.
  *
  * @method clear - Clears the selected value.
  *
- * @event bqBlur - Callback handler emitted when the input loses focus.
- * @event bqChange - Callback handler emitted when the input value has changed and the input loses focus.
- * @event bqClear - Callback handler emitted when the input value has been cleared.
- * @event bqFocus - Callback handler emitted when the input has received focus.
+ * @event bqBlur - Emitted when the input loses focus.
+ * @event bqChange - Emitted when the value changes.
+ * @event bqClear - Emitted when the value is cleared.
+ * @event bqFocus - Emitted when the input receives focus.
+ * @event bqViewChange - Emitted when the internal calendar view changes (days ↔ months ↔ years).
+ *
+ * @slot label - The label displayed above the input.
+ * @slot prefix - Content rendered before the input value.
+ * @slot suffix - Icon rendered inside the calendar trigger button (defaults to a calendar icon).
+ * @slot clear-icon - Icon used inside the clear button.
  *
  * @part base - The component's base wrapper.
- * @part button - The native HTML button used under the hood in the clear button.
- * @part calendar__button - Any button used in the calendar-month component.
- * @part calendar__button - Any button within the calendar-range component.
- * @part calendar__container - The calendar-range container for the entire component.
- * @part calendar__day - The buttons corresponding to each day in the calendar-month grid.
- * @part calendar__disabled - A button that is disabled due to min/max on the calendar-range component.
- * @part calendar__disallowed - Any day that has been disallowed via isDateDisallowed.
- * @part calendar__head - The calendar-month table's header row.
- * @part calendar__header - The calendar-range container for the heading and buttons.
- * @part calendar__heading - The calendar-month heading container that labels the month.
- * @part calendar__heading - The calendar-range heading containing the month and year.
- * @part calendar__next - The next page button on the calendar-range component.
- * @part calendar__outside - Any days which are outside the current month.
- * @part calendar__previous - The previous page button on the calendar-range component.
- * @part calendar__range-end - The day at the end of a date range.
- * @part calendar__range-inner - Any days between the start and end of a date range.
- * @part calendar__range-start - The day at the start of a date range.
- * @part calendar__selected - Any days which are selected.
- * @part calendar__table - The calendar-month <table> element.
- * @part calendar__td - The calendar-month table's body cells.
- * @part calendar__th - The calendar-month table's header cells.
- * @part calendar__today - The Today's day.
- * @part calendar__tr - Any row within the table on the calendar-month component.
- * @part calendar__week - The calendar-month table's body rows.
- * @part clear-btn - The clear button.
- * @part control - The input control wrapper.
- * @part input - The native HTML input element used under the hood.
  * @part label - The label slot container.
- * @part panel - The date picker panel container
+ * @part control - The input control wrapper.
  * @part prefix - The prefix slot container.
  * @part suffix - The suffix slot container.
+ * @part input - The native input element.
+ * @part clear-btn - The clear button.
+ * @part calendar-trigger - The calendar icon trigger button.
+ * @part button - Any button rendered inside the calendar (nav or day/month/year cell).
+ * @part panel - The dropdown panel container.
+ * @part calendar__container - The calendar panels wrapper.
+ * @part calendar__header - The header row (prev / title / next).
+ * @part calendar__heading - The header title button (or month label above a panel).
+ * @part calendar__previous - The previous navigation button.
+ * @part calendar__next - The next navigation button.
+ * @part calendar__table - The day-view `<table>` element.
+ * @part calendar__head - The day-view table header row wrapper.
+ * @part calendar__tr - Any row within the day-view table.
+ * @part calendar__th - The day-view weekday header cells.
+ * @part calendar__week - Body rows in the day-view table.
+ * @part calendar__td - Body cells in the day-view table.
+ * @part calendar__day - Any day button in the day view.
+ * @part calendar__today - The button representing today's date.
+ * @part calendar__selected - Any selected day.
+ * @part calendar__outside - Any day outside the visible month.
+ * @part calendar__disallowed - Any day rejected by `isDateDisallowed`.
+ * @part calendar__disabled - Any button disabled by min/max.
+ * @part calendar__range-start - The first day of a range selection.
+ * @part calendar__range-end - The last day of a range selection.
+ * @part calendar__range-inner - Days between the start and end of a range.
+ * @part calendar__months - The month-view grid.
+ * @part calendar__month - Any month button.
+ * @part calendar__month-selected - The currently selected month.
+ * @part calendar__years - The year-view grid.
+ * @part calendar__year - Any year button.
+ * @part calendar__year-selected - The currently selected year.
  *
- * @cssprop --bq-date-picker--background-color - Date picker background color.
- * @cssprop --bq-date-picker--border-color - Date picker border color.
- * @cssprop --bq-date-picker--border-color-disabled - Date picker border color when disabled.
- * @cssprop --bq-date-picker--border-color-focus - Date picker border color on focus.
- * @cssprop --bq-date-picker--border-radius - Date picker border radius.
- * @cssprop --bq-date-picker--border-style - Date picker border style.
- * @cssprop --bq-date-picker--border-width - Date picker border width.
- * @cssprop --bq-date-picker--currentDate-border-color - Date picker border color for current date.
- * @cssprop --bq-date-picker--currentDate-border-width - Date picker border width for current date.
- * @cssprop --bq-date-picker--day-size - Date picker button day size.
- * @cssprop --bq-date-picker--gap - Gap between Date picker content and prefix/suffix.
- * @cssprop --bq-date-picker--icon-size - Icon size to use in prefix/suffix and clear button.
- * @cssprop --bq-date-picker--label-margin-bottom - Date picker label margin bottom.
- * @cssprop --bq-date-picker--label-text-color - Date picker label text color.
- * @cssprop --bq-date-picker--label-text-size - Date picker label text size.
- * @cssprop --bq-date-picker--padding-end - Date picker padding end.
- * @cssprop --bq-date-picker--padding-start - Date picker padding start.
- * @cssprop --bq-date-picker--paddingY - Date picker padding top and bottom.
- * @cssprop --bq-date-picker--range-background-color - Background color for the selected date range in the date picker.
- * @cssprop --bq-date-picker--range-inner-background-color - Background color for the selected dates inside the date range in the date picker.
- * @cssprop --bq-date-picker--text-color - Date picker text color.
- * @cssprop --bq-date-picker--text-placeholder-color - Date picker placeholder text color.
- * @cssprop --bq-date-picker--text-size - Date picker text size.
+ * @cssprop --bq-date-picker--background-color - Input background color.
+ * @cssprop --bq-date-picker--border-color - Input border color.
+ * @cssprop --bq-date-picker--border-color-disabled - Border color when disabled.
+ * @cssprop --bq-date-picker--border-color-focus - Border color on focus.
+ * @cssprop --bq-date-picker--border-radius - Input border radius.
+ * @cssprop --bq-date-picker--border-style - Border style.
+ * @cssprop --bq-date-picker--border-width - Border width.
+ * @cssprop --bq-date-picker--currentDate-border-color - Border color for today's date.
+ * @cssprop --bq-date-picker--currentDate-border-width - Border width for today's date.
+ * @cssprop --bq-date-picker--day-size - Size of a day cell in the calendar.
+ * @cssprop --bq-date-picker--gap - Gap between the input content and prefix/suffix.
+ * @cssprop --bq-date-picker--header-title-color - Color of the per-panel month label in multi-panel view.
+ * @cssprop --bq-date-picker--icon-size - Size of the icons used in prefix/suffix/clear.
+ * @cssprop --bq-date-picker--label-margin-bottom - Space below the label.
+ * @cssprop --bq-date-picker--label-text-color - Label text color.
+ * @cssprop --bq-date-picker--label-text-size - Label text size.
+ * @cssprop --bq-date-picker--padding-end - Input padding end.
+ * @cssprop --bq-date-picker--padding-start - Input padding start.
+ * @cssprop --bq-date-picker--paddingY - Input vertical padding.
+ * @cssprop --bq-date-picker--range-background-color - Background color for range start/end days.
+ * @cssprop --bq-date-picker--range-inner-background-color - Background color for inner range days.
+ * @cssprop --bq-date-picker--row-gap - Vertical space between day-grid rows.
+ * @cssprop --bq-date-picker--text-color - Input text color.
+ * @cssprop --bq-date-picker--text-placeholder-color - Placeholder text color.
+ * @cssprop --bq-date-picker--text-size - Input text size.
+ * @cssprop --bq-date-picker--view-cell-background-hover - Hover background for day/month/year cells.
+ * @cssprop --bq-date-picker--view-cell-background-selected - Selected background for day/month/year cells.
+ * @cssprop --bq-date-picker--view-cell-height - Height of month/year cells.
+ * @cssprop --bq-date-picker--view-cell-radius - Border radius of day/month/year cells.
+ * @cssprop --bq-date-picker--view-cell-text-selected - Text color for selected day/month/year cells.
  */
 @Component({
   tag: 'bq-date-picker',
@@ -164,221 +226,385 @@ export class BqDatePicker {
   // Own Properties
   // ====================
 
-  private callyElem?: TCalendarDate;
+  /**
+   * Memoized parsed selection. Key encodes both `value` and `type` so cache
+   * misses invalidate correctly. Value derives from `value`; not promoted to
+   * `@State()` to preserve a single source of truth.
+   */
+  private cachedSelection?: { key: string; value: TSelection };
+
+  /** Sticky flag: last typed input couldn't be parsed. Cleared on next successful commit or `clear()`. */
+  private hasBadInput: boolean = false;
+
+  /** Initial `value` captured at load time, restored on form reset. */
+  private initialValue?: string;
+
   private inputElem?: HTMLInputElement;
-  private isInternalUpdate = false;
+
+  /** Set while `commitSelection` writes back to `this.value`. */
+  private isCommittingSelection = false;
+
   private labelElem?: HTMLElement;
+
+  /** Pending requestAnimationFrame id used by `focusButton`. */
+  private pendingFocusRAF?: number;
+
   private prefixElem?: HTMLElement;
-  private suffixElem?: HTMLElement;
+  private triggerBtnElem?: HTMLBqButtonElement;
 
   // Reference to host HTML element
   // ===================================
 
-  @Element() el!: HTMLBqDatePickerElement;
   @AttachInternals() internals!: ElementInternals;
+  @Element() el!: HTMLBqDatePickerElement;
 
   // State() variables
   // Inlined decorator, alphabetical order
   // =======================================
 
-  @State() isCallyLoaded = false;
-  @State() focusedDate?: string;
+  @State() decadeStart: number = getDecadeStart(new Date().getFullYear());
   @State() displayDate?: string;
+  @State() focusedISO: string = getTodayISO();
+  @State() focusedMonth: number = new Date().getMonth();
+  @State() focusedYear: number = new Date().getFullYear();
+  @State() hasConstraintError = false;
   @State() hasLabel = false;
   @State() hasPrefix = false;
-  @State() hasRangeEnd = false;
-  @State() hasSuffix = false;
   @State() hasValue = false;
+  @State() tentativeHover?: string;
+  @State() view: TCalendarView = 'days';
+  @State() viewDate: Date = new Date();
 
   // Public Property API
   // ========================
 
-  /** If `true`, the Date picker input will be focused on component render */
+  /** If `true`, the Date picker input will be focused on component render. */
   @Prop({ reflect: true }) autofocus: boolean = false;
 
-  /** The clear button aria label */
+  /** The clear button aria label. */
   @Prop({ reflect: true }) clearButtonLabel: string = 'Clear value';
 
-  /** If `true`, the clear button won't be displayed */
+  /** The aria-label for the calendar trigger button. */
+  @Prop({ reflect: true }) calendarButtonLabel: string = 'Open calendar';
+
+  /** If `true`, the clear button won't be displayed. */
   @Prop({ reflect: true }) disableClear: boolean = false;
 
-  /**
-   * Indicates whether the Date picker input is disabled or not.
-   * If `true`, the Date picker is disabled and cannot be interacted with.
-   */
-  @Prop({ mutable: true }) disabled: boolean = false;
+  /** Indicates whether the Date picker input is disabled or not. */
+  @Prop({ reflect: true, mutable: true }) disabled: boolean = false;
 
-  /** Represents the distance (gutter or margin) between the Date picker panel and the input element. */
+  /** Distance (gutter) between the Date picker panel and the input element. */
   @Prop({ reflect: true }) distance: number = 8;
 
-  /** The first day of the week, where Sunday is 0, Monday is 1, etc */
+  /** The first day of the week, where Sunday is 0, Monday is 1, etc. */
   @Prop({ reflect: true }) firstDayOfWeek: DaysOfWeek = 1;
 
-  /** The options to use when formatting the displayed value.
-   * Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat#using_options
+  /**
+   * Options used when formatting the displayed value.
+   *
+   * When omitted, sensible defaults are picked based on `precision`:
+   * - `day`   → `{ day: 'numeric', month: 'short', year: 'numeric' }`
+   * - `month` → `{ month: 'long', year: 'numeric' }`
+   * - `year`  → `{ year: 'numeric' }`
    */
-  @Prop() formatOptions: Intl.DateTimeFormatOptions = {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-  };
+  @Prop() formatOptions?: Intl.DateTimeFormatOptions;
 
-  /** The ID of the form that the Date picker input belongs to. */
+  /** The ID of the form the input belongs to. */
   @Prop({ reflect: true }) form?: string;
 
-  /** The native form validation message (mandatory if `required` is set) */
+  /** Native form validation message (mandatory if `required` is set). */
   @Prop({ mutable: true }) formValidationMessage?: string;
 
-  /** A function that takes a date and returns true if the date should not be selectable */
-  @Prop({ reflect: true }) isDateDisallowed?: (date: Date) => boolean;
+  /** The view opened first when the panel becomes visible. */
+  @Prop({ reflect: true }) initialView: TCalendarView = 'days';
 
-  /** The locale for formatting dates. If not set, will use the browser's locale.
-   * Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#locales_argument
-   */
+  /** Predicate that marks specific dates as unselectable. */
+  @Prop() isDateDisallowed?: (date: Date) => boolean;
+
+  /** Locale used for formatting dates. */
   @Prop({ reflect: true }) locale: Intl.LocalesArgument = 'en-GB';
 
-  /** The latest date that can be selected */
+  /** Latest date that can be selected (ISO). */
   @Prop({ reflect: true }) max?: string;
 
-  /** The earliest date that can be selected */
+  /** Earliest date that can be selected (ISO). */
   @Prop({ reflect: true }) min?: string;
 
-  /** Number of months to show when range is `true` */
-  @Prop({ reflect: true }) months?: number;
+  /**
+   * Number of months to show side by side (range / multi). Capped at 2.
+   * Larger values are silently clamped to keep the popover from overflowing
+   * the viewport and to preserve keyboard navigation semantics.
+   */
+  @Prop({ reflect: true, mutable: true }) months: number = 1;
 
   /**
-   * Specifies how the next/previous buttons should navigate the calendar.
-   * - single: The buttons will navigate by a single month at a time.
-   * - months: The buttons will navigate by the number of months displayed per view.
+   * How the next/previous buttons should navigate the calendar.
+   * - single: navigate one month at a time.
+   * - months: navigate by the number of months displayed.
    */
-  @Prop({ reflect: true }) monthsPerView: 'single' | 'months' = 'single';
+  @Prop({ reflect: true }) monthsPerView: TMonthsPerView = 'single';
 
   /** The Date picker input name. */
   @Prop({ reflect: true }) name!: string;
 
-  /** If `true`, the Date picker panel will be visible. */
-  @Prop({ reflect: true, mutable: true }) open?: boolean = false;
+  /** If `true`, the panel is visible. */
+  @Prop({ reflect: true, mutable: true }) open: boolean = false;
 
-  /** When set, it will override the height of the Date picker panel. */
+  /** Overrides the height of the Date picker panel. */
   @Prop({ reflect: true, mutable: true }) panelHeight?: string = 'auto';
 
-  /** The Date picker input placeholder text value */
+  /** Placeholder text shown when no value is selected. */
   @Prop({ reflect: true }) placeholder?: string;
 
-  /** Position of the Date picker panel */
-  @Prop({ reflect: true }) placement?: Placement = 'bottom-end';
-
-  /** Indicates whether or not the Date picker input is required to be filled out before submitting the form. */
-  @Prop({ reflect: true }) required?: boolean;
-
-  /** Represents the skidding between the Date picker panel and the input element. */
-  @Prop({ reflect: true }) skidding: number = 0;
-
-  /** Whether to show days outside the month */
-  @Prop({ reflect: true }) showOutsideDays: boolean = false;
-
-  /** Defines the strategy to position the Date picker panel */
-  @Prop({ reflect: true }) strategy?: 'fixed' | 'absolute' = 'fixed';
-
-  /** The date that is tentatively selected e.g. the start of a range selection  */
-  @Prop({ reflect: true, mutable: true }) tentative?: string;
-
-  /** It defines how the calendar will behave, allowing single date selection, range selection, or multiple date selection */
-  @Prop({ reflect: true }) type: TDatePickerType = 'single';
+  /** Position of the Date picker panel. */
+  @Prop({ reflect: true }) placement: Placement = 'bottom-end';
 
   /**
-   * The validation status of the Select input.
+   * Precision of the value produced by the picker.
    *
-   * @remarks
-   * This property is used to indicate the validation status of the select input. It can be set to one of the following values:
-   * - `'none'`: No validation status is set.
-   * - `'error'`: The input has a validation error.
-   * - `'warning'`: The input has a validation warning.
-   * - `'success'`: The input has passed validation.
+   * - `day`   → `YYYY-MM-DD` (default). Standard drill-down.
+   * - `month` → `YYYY-MM`. Selection commits on the months view; no days view.
+   * - `year`  → `YYYY`. Selection commits on the years view; no months/days view.
+   *
+   * When precision is coarser than day, `initialView` is forced to match and
+   * the header title cycles through the views available for that precision.
    */
+  @Prop({ reflect: true }) precision: TDatePrecision = 'day';
+
+  /** Whether a value must be selected before submitting the form. */
+  @Prop({ reflect: true }) required: boolean = false;
+
+  /** Skidding between the panel and the input element. */
+  @Prop({ reflect: true }) skidding: number = 0;
+
+  /** Whether to render days outside the current month. */
+  @Prop({ reflect: true }) showOutsideDays: boolean = false;
+
+  /** Positioning strategy for the panel. */
+  @Prop({ reflect: true }) strategy: TFloatingStrategy = 'fixed';
+
+  /**
+   * Selection type.
+   * - `single`: single date.
+   * - `multi`: multiple discrete dates.
+   * - `range`: contiguous range.
+   */
+  @Prop({ reflect: true }) type: TDatePickerType = 'single';
+
+  /** Validation state applied to the input. */
   @Prop({ reflect: true }) validationStatus: TInputValidation = 'none';
 
-  /** The select input value represents the currently selected date or range and can be used to reset the field to a previous value.
-   * All dates are expected in ISO-8601 format (YYYY-MM-DD). */
-  @Prop({ reflect: true, mutable: true }) value?: string;
+  /**
+   * Currently selected value, in the precision-aware wire format:
+   * - `precision="day"`   → tokens are `YYYY-MM-DD`
+   * - `precision="month"` → tokens are `YYYY-MM`
+   * - `precision="year"`  → tokens are `YYYY`
+   *
+   * How multiple tokens are combined depends on `type`:
+   * - `single` → a single token (e.g. `"2025-05-15"`, `"2025-05"`, `"2025"`)
+   * - `range`  → `"start/end"` — two tokens joined with `/`
+   * - `multi`  → space-separated tokens (e.g. `"2025-05-15 2025-05-20"`)
+   */
+  @Prop({ reflect: true, mutable: true }) value: string | undefined;
 
   // Prop lifecycle events
   // =======================
 
   @Watch('value')
-  handleValueChange(newValue: string, oldValue: string) {
+  handleValueChange(newValue: string | undefined, oldValue: string | undefined) {
     if (newValue === oldValue) return;
 
-    const { formatOptions, internals, isCallyLoaded, locale, type } = this;
-    if (!isCallyLoaded) return;
+    // Normalize invalid tokens before propagating to the form or the UI so
+    // consumers can't submit an invalid wire value while the display shows
+    // nothing. If normalization rewrote the value, reflect it back on the
+    // prop and let the follow-up watcher tick handle the normalized string.
+    const normalized = normalizeValue(newValue, this.type, this.precision);
+    if (normalized !== newValue) {
+      this.value = normalized;
+      return;
+    }
 
-    internals?.setFormValue(!isNil(newValue) ? `${newValue}` : null);
-    this.updateFormValidity();
+    this.hasBadInput = false;
+    this.syncDerivedFromValue();
+    if (this.isCommittingSelection) return;
+    this.syncViewToValue();
+  }
 
-    this.hasValue = isDefined(newValue);
-    this.displayDate = formatDisplayValue(newValue, type, locale, formatOptions);
-
-    this.setFocusedDate();
+  @Watch('formatOptions')
+  @Watch('locale')
+  handleFormattingChange() {
+    // Re-format the display without re-parsing the wire value.
+    this.hasValue = computeHasValue(this.value);
+    this.displayDate = computeDisplayDate(
+      this.value,
+      this.type,
+      this.locale,
+      this.effectiveFormatOptions,
+      this.precision,
+    );
   }
 
   @Watch('type')
+  handleTypeChange() {
+    // `type` affects wire-format parsing, display formatting, and validity.
+    // Re-normalize the current value against the new type; if that rewrites
+    // the value, the `value` watcher takes over. Otherwise refresh derived
+    // state and re-sync the visible calendar range.
+    const normalized = normalizeValue(this.value, this.type, this.precision);
+    if (normalized !== this.value) {
+      this.value = normalized;
+      return;
+    }
+    this.syncDerivedFromValue();
+    this.syncViewToValue();
+  }
+
+  @Watch('precision')
+  handlePrecisionChange() {
+    validatePropValue(DATE_PRECISION, 'day', this.el, 'precision');
+    // Precision affects both wire format and default view. Force the calendar
+    // to open on the matching view and re-normalize the current value so
+    // trailing day/month segments are dropped or padded consistently.
+    this.view = this.precisionToView(this.precision);
+    const normalized = normalizeValue(this.value, this.type, this.precision);
+    if (normalized !== this.value) {
+      this.value = normalized;
+      return;
+    }
+    this.syncDerivedFromValue();
+    this.syncViewToValue();
+  }
+
+  @Watch('max')
+  @Watch('min')
+  handleBoundsChange() {
+    this.syncValidity();
+    this.syncViewToValue();
+  }
+
+  @Watch('required')
+  handleRequiredChange() {
+    this.syncValidity();
+  }
+
+  @Watch('firstDayOfWeek')
+  @Watch('initialView')
+  @Watch('monthsPerView')
+  @Watch('placement')
+  @Watch('precision')
+  @Watch('strategy')
+  @Watch('type')
+  @Watch('validationStatus')
   checkPropValues() {
     validatePropValue(DATE_PICKER_TYPE, 'single', this.el, 'type');
+    validatePropValue(CALENDAR_VIEW, 'days', this.el, 'initialView');
+    validatePropValue(DATE_PRECISION, 'day', this.el, 'precision');
+    validatePropValue(MONTHS_PER_VIEW, 'single', this.el, 'monthsPerView');
+    validatePropValue(FLOATING_STRATEGY, 'fixed', this.el, 'strategy');
+    validatePropValue(FLOATING_PLACEMENT, 'bottom-end', this.el, 'placement');
+    validatePropValue(INPUT_VALIDATION, 'none', this.el, 'validationStatus');
+    validatePropValue(DAYS_OF_WEEK, 1, this.el, 'firstDayOfWeek');
+  }
+
+  @Watch('months')
+  handleMonthsChange() {
+    // Clamp `months` to an integer in [1, MAX_MONTHS_PER_VIEW]. Non-single
+    // pickers may show 1..MAX side-by-side; single pickers ignore the value
+    // in `getMonthCount()`, so we still clamp defensively to keep the prop
+    // reflected value predictable.
+    const clamped = this.clampMonths(this.months);
+    if (clamped !== this.months) this.months = clamped;
+  }
+
+  @Watch('open')
+  handleOpen(open: boolean) {
+    if (!open) {
+      this.tentativeHover = undefined;
+      // Return focus to the calendar trigger button after closing the panel,
+      // so keyboard users don't lose their position in the document.
+      requestAnimationFrame(() => this.triggerBtnElem?.shadowRoot?.querySelector<HTMLButtonElement>('button')?.focus());
+      return;
+    }
+    // Precision locks the initial view; otherwise honor the consumer-provided one.
+    this.view = this.precision === 'day' ? this.initialView : this.precisionToView(this.precision);
+    this.syncViewToValue();
+    // Move keyboard focus into the calendar so screen-reader / keyboard users
+    // land on the focused day (or the equivalent focused cell for
+    // months/years views). Non-modal popup: focus is *moved*, not trapped.
+    this.focusActiveCell();
+  }
+
+  @Watch('view')
+  handleViewChange(next: TCalendarView, prev: TCalendarView) {
+    if (next === prev) return;
+    this.bqViewChange.emit({ view: next, el: this.el });
   }
 
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
 
-  /** Callback handler emitted when the input loses focus */
+  /** Callback handler emitted when the input loses focus. */
   @Event() bqBlur!: EventEmitter<HTMLBqDatePickerElement>;
 
   /**
-   * Callback handler emitted when the input value has changed and the input loses focus.
-   * This handler is called whenever the user finishes typing or pasting text into the input field and then clicks outside of the input field.
+   * Callback handler emitted when the input value changes.
    */
-  @Event() bqChange!: EventEmitter<{ value: string; el: HTMLBqDatePickerElement }>;
+  @Event() bqChange!: EventEmitter<{ value: string | undefined; el: HTMLBqDatePickerElement }>;
 
-  /** Callback handler emitted when the input value has been cleared */
+  /** Callback handler emitted when the value is cleared. */
   @Event() bqClear!: EventEmitter<HTMLBqDatePickerElement>;
 
-  /** Callback handler emitted when the input has received focus */
+  /** Callback handler emitted when the input receives focus. */
   @Event() bqFocus!: EventEmitter<HTMLBqDatePickerElement>;
+
+  /**
+   * Callback handler emitted when the internal calendar view changes
+   * (e.g. from `days` to `months`, or from `years` back to `days`).
+   */
+  @Event() bqViewChange!: EventEmitter<{ view: TCalendarView; el: HTMLBqDatePickerElement }>;
 
   // Component lifecycle events
   // Ordered by their natural call order
   // =====================================
 
-  async componentWillLoad() {
-    if (!isClient() || this.isCallyLoaded) return;
-
-    try {
-      await loadCallyLibrary();
-      this.isCallyLoaded = isCallyLibraryLoaded();
-    } catch (error) {
-      console.error(error);
-    }
+  componentWillLoad() {
+    this.initialValue = this.value;
+    // Precision locks the initial view when set. Otherwise honor `initialView`.
+    // When the picker is rendered with `open` already true, `handleOpen` never
+    // fires — apply the preference here so the initial paint respects it.
+    this.view = this.precision === 'day' ? this.initialView : this.precisionToView(this.precision);
+    this.checkPropValues();
+    this.handleMonthsChange();
+    this.syncViewToValue();
   }
 
   componentDidLoad() {
     this.handleSlotChange();
-    this.handleValueChange(this.value ?? '', '');
+    this.handleValueChange(this.value, undefined);
+    if (this.autofocus) this.inputElem?.focus();
+    // `@Watch('open')` doesn't run for the initial prop value, so pickers
+    // rendered with `open` never move focus into the calendar. Do it here.
+    if (this.open) this.focusActiveCell();
   }
 
-  componentDidRender() {
-    if (this.isInternalUpdate) {
-      this.isInternalUpdate = false;
+  disconnectedCallback() {
+    if (this.pendingFocusRAF !== undefined) {
+      cancelAnimationFrame(this.pendingFocusRAF);
+      this.pendingFocusRAF = undefined;
     }
   }
 
   formAssociatedCallback() {
-    this.updateFormValidity();
+    this.syncValidity();
   }
 
   formResetCallback() {
-    if (isNil(this.value)) return;
-
-    this.clear();
+    // Native form reset should restore the value the field had when the form
+    // was first parsed, not blank it. The `value` watcher takes care of
+    // syncing derived state, form value, and validity.
+    if (this.value === this.initialValue) return;
+    this.value = this.initialValue;
   }
 
   // Listeners
@@ -387,21 +613,9 @@ export class BqDatePicker {
   @Listen('bqOpen', { capture: true })
   handleOpenChange(ev: CustomEvent<{ open: boolean }>) {
     if (!isEventTargetChildOfElement(ev, this.el)) return;
-
     const { open } = ev.detail;
     if (this.open === open) return;
-
     this.open = open;
-  }
-
-  @Listen('click', { target: 'body', capture: true })
-  handleClickOutside(ev: MouseEvent) {
-    const { open, type, hasRangeEnd } = this;
-    if (!open || type !== 'range' || ev.button !== 0) return;
-    if (isEventTargetChildOfElement(ev, this.el) || hasRangeEnd) return;
-
-    this.tentative = undefined;
-    this.hasRangeEnd = false;
   }
 
   // Public methods API
@@ -412,15 +626,15 @@ export class BqDatePicker {
   // ===============================================
 
   /**
-   * Clears the selected value.
-   * @returns {Promise<void>}
+   * Clears the selected value and any pending validation state (bad input,
+   * bounds overflow). Emits `bqClear`. No-op when the component is disabled.
+   *
+   * @returns A promise that resolves once the value has been cleared.
    */
   @Method()
   async clear(): Promise<void> {
     if (this.disabled) return;
-
-    this.value = undefined;
-    this.internals.setFormValue(null);
+    this.clearValue();
     this.bqClear.emit(this.el);
   }
 
@@ -429,266 +643,730 @@ export class BqDatePicker {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  /**
-   * Handles the blur event for the date picker input.
-   * @returns {void}
-   */
   private handleBlur = (): void => {
     if (this.disabled) return;
-
     this.bqBlur.emit(this.el);
   };
 
-  /**
-   * Handles the focus event for the date picker input.
-   * @returns {void}
-   */
   private handleFocus = (): void => {
     if (this.disabled) return;
-
     this.bqFocus.emit(this.el);
   };
 
-  /**
-   * Updates the focused date in the calendar component.
-   * Falls back to today's date if no value is set.
-   * @returns {void}
-   */
-  private setFocusedDate = (): void => {
-    const { callyElem, isCallyLoaded, value } = this;
-    if (!callyElem || !isCallyLoaded) return;
-
-    const nextFocused = (value ? extractFocusedDate(value) : undefined) ?? getTodayISO();
-    if (this.focusedDate === nextFocused) return;
-
-    this.focusedDate = nextFocused;
-    if (callyElem.focusedDate !== this.focusedDate) {
-      // We need to set the focused date in the calendar component via a ref
-      // because it doesn't work when passed as a prop (the Cally element does not re-render)
-      callyElem.focusedDate = this.focusedDate;
-    }
-  };
-
-  /**
-   * Handles user input changes with locale-aware date parsing.
-   * Validates against disallowed dates and min/max constraints.
-   * @param {Event} ev - The change event.
-   * @returns {void}
-   */
-  private handleChange = (ev: Event): void => {
+  private handleInputChange = (ev: Event): void => {
     if (this.disabled || !isHTMLElement(ev.target, 'input')) return;
 
     const inputValue = ev.target.value.trim();
     if (!inputValue) {
+      this.hasBadInput = false;
       this.clearValue();
-      this.bqChange.emit({ value: this.value ?? '', el: this.el });
+      this.bqChange.emit({ value: this.value, el: this.el });
       return;
     }
 
-    // Try to parse as date with locale awareness
-    const dateValue = parseDateInput(inputValue, this.locale);
-    if (!dateValue) {
-      // Invalid date: don't update component value to avoid side effects
+    const parsed = parseTypedInput(inputValue, this.locale, this.precision, this.min, this.max, this.isDateDisallowed);
+    if (parsed.invalid || parsed.value == null) {
+      // Flag as `badInput` and emit `undefined` — never propagate the raw
+      // typed string, which would break the precision-aware wire contract.
+      this.hasBadInput = true;
       this.internals.setFormValue(null);
-      this.updateFormValidity();
-      this.bqChange.emit({ value: inputValue, el: this.el });
+      this.syncValidity();
+      this.bqChange.emit({ value: undefined, el: this.el });
       return;
     }
 
-    // Check if date is disallowed
-    if (this.isDateDisallowed?.(dateValue)) {
-      this.internals.setFormValue(null);
-      this.updateFormValidity();
-      this.bqChange.emit({ value: inputValue, el: this.el });
-      return;
-    }
-
-    // Valid date: normalize to ISO format and clamp to range if needed
-    // Note: clamping is done based on string comparison of ISO dates and only when min/max are set
-    let isoDate = toISODateString(dateValue);
-    isoDate = clampDateToRange(isoDate, this.min, this.max);
-
-    this.value = isoDate;
-    this.displayDate = formatDisplayValue(isoDate, this.type, this.locale, this.formatOptions);
-    this.internals.setFormValue(isoDate);
-    this.updateFormValidity();
+    this.hasBadInput = false;
+    this.value = parsed.value;
     this.bqChange.emit({ value: this.value, el: this.el });
   };
 
-  /**
-   * Handles the change event when the user selects a date in the calendar component.
-   * @param {Event} ev - The change event.
-   * @returns {void}
-   */
-  private handleCalendarChange = (ev: Event): void => {
-    if (this.isInternalUpdate || !this.inputElem) return;
-
-    const shouldStayOpen = this.type === 'multi';
-    const value = (ev.target as unknown as { value: string }).value;
-
-    if (this.value === value) {
-      this.open = shouldStayOpen;
-      return;
-    }
-
-    this.isInternalUpdate = true;
-
-    this.value = value;
-    this.displayDate = formatDisplayValue(value, this.type, this.locale, this.formatOptions) ?? '';
-    this.inputElem.value = this.displayDate;
-    this.inputElem.focus();
-
-    this.internals.setFormValue(value);
-    this.bqChange.emit({ value: this.value, el: this.el });
-
-    this.open = shouldStayOpen;
-  };
-
-  /**
-   * Handles the range start event when the user starts selecting a date range
-   * @param {CustomEvent} ev - The range start event.
-   * @returns {void}
-   */
-  private handleCalendarRangeStart = (ev: CustomEvent): void => {
-    this.hasRangeEnd = false;
-    this.tentative = ev.detail;
-  };
-
-  /**
-   * Handles the range end event when the user finishes selecting a date range
-   * @returns {void}
-   */
-  private handleCalendarRangeEnd = (): void => {
-    this.hasRangeEnd = true;
-  };
-
-  /**
-   * Handles the clear click event when the user clicks the clear button
-   * @param {CustomEvent} ev - The clear click event.
-   * @returns {void}
-   */
   private handleClearClick = (ev: CustomEvent): void => {
-    if (this.disabled || !this.inputElem) return;
+    if (this.disabled) return;
+    if (this.inputElem) this.inputElem.value = '';
 
-    this.inputElem.value = '';
     this.clearValue();
-    this.hasRangeEnd = false;
-
     this.bqClear.emit(this.el);
-    this.bqChange.emit({ value: this.value ?? '', el: this.el });
-    this.inputElem.focus();
-
+    this.bqChange.emit({ value: this.value, el: this.el });
+    this.inputElem?.focus();
     ev.stopPropagation();
   };
 
+  /** Toggles the calendar panel open/closed when the trigger button is activated. */
+  private handleTriggerClick = (): void => {
+    if (this.disabled) return;
+    this.open = !this.open;
+  };
+
   /**
-   * Clears the value of the date picker input.
-   * @returns {void}
+   * Handles keyboard shortcuts on the text input.
+   * - `ArrowDown` / `Alt+ArrowDown` → open panel and focus active cell.
+   * - `Escape` → close panel (focus stays on input).
    */
+  private handleInputKeyDown = (ev: KeyboardEvent): void => {
+    if (this.disabled) return;
+    if (ev.key === 'ArrowDown') {
+      ev.preventDefault();
+      if (!this.open) this.open = true;
+    } else if (ev.key === 'Escape' && this.open) {
+      ev.preventDefault();
+      this.open = false;
+    }
+  };
+
   private clearValue = (): void => {
     this.value = undefined;
     this.displayDate = undefined;
+    this.hasBadInput = false;
     this.internals.setFormValue(null);
+    this.tentativeHover = undefined;
   };
 
-  /**
-   * Handles the slot change event when the slots content changes
-   * @returns {void}
-   */
   private handleSlotChange = (): void => {
-    this.hasLabel = hasSlotContent(this.labelElem);
-    this.hasPrefix = hasSlotContent(this.prefixElem);
-    this.hasSuffix = hasSlotContent(this.suffixElem);
+    this.hasLabel = this.labelElem ? hasSlotContent(this.labelElem) : false;
+    this.hasPrefix = this.prefixElem ? hasSlotContent(this.prefixElem) : false;
   };
 
-  /**
-   * Generates a calendar month element
-   * @param {number} offset - The offset of the calendar month.
-   * @param {string} className - The class name of the calendar month.
-   * @returns {JSX.Element | null} The calendar month element.
-   */
-  private generateCalendarMonth = (offset?: number, className = ''): JSX.Element => (
-    <calendar-month class={className} exportparts={CALENDAR_MONTH_EXPORT_PARTS} offset={offset} />
-  );
-
-  /**
-   * Generates an array of Elements representing the calendar months.
-   *
-   * If the type of the date picker is 'range' or 'multi' and the number of months is specified,
-   * it generates an array of calendar months with the specified length. Each month will have an offset
-   * and a class name based on its position in the array. The offset is used to determine the month to display,
-   * and the class name is used for responsive design.
-   *
-   * If the type of the date picker is not 'range' or 'multi', or if the number of months is not specified,
-   * it generates an array with a single calendar month.
-   *
-   * @returns {JSX.Element[]} An array of elements representing the calendar months.
-   */
-  private generateCalendarMonths = (): JSX.Element[] => {
-    if (!this.isCallyLoaded) return [];
-
-    const monthCount = this.type === 'range' || this.type === 'multi' ? Math.max(1, this.months ?? 1) : 1;
-
-    return Array.from({ length: monthCount }, (_, i) => {
-      const offset = i > 0 ? i : undefined;
-      const className = offset ? 'hidden sm:block' : '';
-
-      return this.generateCalendarMonth(offset, className);
-    });
-  };
-
-  /**
-   * Updates the form validity of the date picker input.
-   * @returns {void}
-   */
   private updateFormValidity = (): void => {
-    const { formValidationMessage, internals, required, value, inputElem } = this;
-
     updateFormValidity({
-      internals,
-      required,
-      value,
-      inputElem,
-      validationMessage: formValidationMessage,
+      internals: this.internals,
+      required: this.required,
+      value: this.value,
+      inputElem: this.inputElem,
+      validationMessage: this.formValidationMessage,
       defaultMessage: 'Please, input or select a valid date',
     });
   };
 
   /**
-   * Returns the Cally calendar component tag name based on the picker type.
-   * Maps 'single' → 'calendar-date', 'multi' → 'calendar-multi', 'range' → 'calendar-range'
-   *
-   * @returns The Cally calendar component tag name.
+   * Recompute all state derived from the public `value` (form value,
+   * `hasValue`, formatted display). Called from `value` and any prop that
+   * affects display formatting (`type`, `locale`, `formatOptions`).
    */
-  private get calendarType(): (typeof CALENDAR_TYPE_MAP)[TDatePickerType] {
-    return CALENDAR_TYPE_MAP[this.type] ?? CALENDAR_TYPE_MAP.single;
+  private syncDerivedFromValue = (): void => {
+    const current = this.value;
+    this.internals.setFormValue(!isNil(current) ? `${current}` : null);
+    this.syncValidity();
+    this.hasValue = computeHasValue(current);
+    this.displayDate = computeDisplayDate(current, this.type, this.locale, this.effectiveFormatOptions, this.precision);
+  };
+
+  /**
+   * Runs the full form-validity pipeline in a consistent order: `required`
+   * → bounds → `badInput`. Multiple failing constraints are unioned into a
+   * single `setValidity` call.
+   */
+  private syncValidity = (): void => {
+    if (!this.internals) return;
+
+    this.updateFormValidity();
+
+    const boundsFlags = this.computeBoundsValidityFlags();
+    const flags: ValidityStateFlags = { ...boundsFlags };
+    if (this.hasBadInput) flags.badInput = true;
+
+    const hasCustomConstraintError = Object.keys(flags).length > 0;
+    if (!hasCustomConstraintError) {
+      this.hasConstraintError = !this.internals.validity.valid;
+      return;
+    }
+
+    const message = this.formValidationMessage ?? defaultValidityMessage(flags);
+
+    this.internals.states.delete('valid');
+    this.internals.states.add('invalid');
+    this.internals.setValidity(flags, message, this.inputElem);
+    this.hasConstraintError = true;
+  };
+
+  /** Returns `rangeUnderflow` / `rangeOverflow` flags for the current selection. */
+  private computeBoundsValidityFlags = (): ValidityStateFlags => {
+    if (!this.min && !this.max) return {};
+    const selection = parseValue(this.value, this.type, this.precision);
+    if (selection.length === 0) return {};
+
+    const paddedMin = padBound(this.min, 'min');
+    const paddedMax = padBound(this.max, 'max');
+    let rangeUnderflow = false;
+    let rangeOverflow = false;
+
+    for (const iso of selection) {
+      if (paddedMin && iso < paddedMin) rangeUnderflow = true;
+      if (paddedMax && iso > paddedMax) rangeOverflow = true;
+    }
+
+    if (!rangeUnderflow && !rangeOverflow) return {};
+    return { rangeUnderflow, rangeOverflow };
+  };
+
+  private clampMonths = (value: number): number => {
+    const rounded = Math.floor(Number(value));
+    if (!Number.isFinite(rounded) || rounded < 1) return 1;
+    return Math.min(rounded, MAX_MONTHS_PER_VIEW);
+  };
+
+  /**
+   * Align the internal `viewDate` / `focused*` state with the current value.
+   * Called when the panel opens and whenever an *external* prop change
+   * invalidates the current view (value, type, precision, min/max). Internal
+   * commits skip this via `isCommittingSelection` so the user's navigated
+   * year isn't clobbered by a subsequent multi/range selection.
+   *
+   * Uses `parseValue` (precision-aware, always returns full ISO dates) rather
+   * than a raw `YYYY-MM-DD` regex so that month/year wire values like
+   * `"2025-05"` or `"2025"` land on the right cell instead of falling back
+   * to today.
+   */
+  private syncViewToValue = (): void => {
+    const parsed = parseValue(this.value, this.type, this.precision);
+    const focusISO = parsed[0] ?? getTodayISO();
+    const focus = parseISO(focusISO) ?? new Date();
+    const bounded = clampDate(focus, this.min, this.max);
+
+    this.focusedISO = toISO(bounded);
+    this.viewDate = startOfMonth(bounded);
+    this.focusedMonth = bounded.getMonth();
+    this.focusedYear = bounded.getFullYear();
+    this.decadeStart = getDecadeStart(bounded.getFullYear());
+  };
+
+  private get selection(): TSelection {
+    const key = `${this.type}|${this.precision}|${this.value ?? ''}`;
+    if (this.cachedSelection?.key === key) return this.cachedSelection.value;
+    const parsed = parseValue(this.value, this.type, this.precision);
+    this.cachedSelection = { key, value: parsed };
+    return parsed;
   }
+
+  /**
+   * Effective `Intl.DateTimeFormatOptions` — user-provided when set, otherwise
+   * the precision-appropriate default. Prevents a `month` picker from
+   * accidentally rendering "1 May 2026" when the consumer just sets
+   * `precision="month"` without overriding `formatOptions`.
+   */
+  private get effectiveFormatOptions(): Intl.DateTimeFormatOptions {
+    return this.formatOptions ?? DEFAULT_FORMAT_OPTIONS_BY_PRECISION[this.precision];
+  }
+
+  /** Map a precision value to the calendar view that commits selections. */
+  private precisionToView = (precision: TDatePrecision): TCalendarView => {
+    if (precision === 'month') return 'months';
+    if (precision === 'year') return 'years';
+    return 'days';
+  };
+
+  private get tentativeRange(): TSelection {
+    if (this.type !== 'range') return [];
+    const parsed = this.selection;
+    // While the user is completing a range (one endpoint chosen) show the
+    // hover preview between that endpoint and the current hovered day.
+    if (parsed.length === 1) return buildTentativeRange(parsed[0], this.tentativeHover);
+    return [];
+  }
+
+  /* --------------------------- View transitions -------------------------- */
+
+  /**
+   * Return the date that view transitions (days ⇄ months ⇄ years) should
+   * center the focus on.
+   *
+   * Priority:
+   * 1. First entry of the current selection — for `range` this is the start
+   *    date (selection is sorted on parse), for `multi` it is the earliest.
+   * 2. Otherwise the currently displayed `viewDate` (i.e. the month/year the
+   *    user has navigated to with prev/next).
+   */
+  private getViewFocusReference = (): Date => {
+    const [first] = this.selection;
+    if (first) {
+      const parsed = parseISO(first);
+      if (parsed) return parsed;
+    }
+    return this.viewDate;
+  };
+
+  private handleHeaderTitleClick = (): void => {
+    if (this.precision === 'year') return;
+
+    if (this.view === 'days') {
+      const ref = this.getViewFocusReference();
+      this.focusedMonth = ref.getMonth();
+      this.focusedYear = ref.getFullYear();
+      this.view = 'months';
+      this.focusActiveCell();
+      return;
+    }
+    if (this.view === 'months') {
+      const ref = this.getViewFocusReference();
+      this.focusedYear = ref.getFullYear();
+      this.decadeStart = getDecadeStart(ref.getFullYear());
+      this.view = 'years';
+      this.focusActiveCell();
+      return;
+    }
+    // years view → cycle back to the base view for the current precision
+    this.view = this.precisionToView(this.precision);
+    this.focusActiveCell();
+  };
+
+  private handleHeaderPrev = (): void => {
+    if (this.view === 'days') {
+      const step = this.monthsPerView === 'months' ? Math.max(1, this.months) : 1;
+      this.viewDate = addMonths(this.viewDate, -step);
+      this.focusedISO = toISO(clampDate(startOfMonth(this.viewDate), this.min, this.max));
+    } else if (this.view === 'months') {
+      this.focusedYear = this.focusedYear - 1;
+    } else {
+      this.decadeStart = this.decadeStart - DECADE_GRID_SIZE;
+    }
+  };
+
+  private handleHeaderNext = (): void => {
+    if (this.view === 'days') {
+      const step = this.monthsPerView === 'months' ? Math.max(1, this.months) : 1;
+      this.viewDate = addMonths(this.viewDate, step);
+      this.focusedISO = toISO(clampDate(startOfMonth(this.viewDate), this.min, this.max));
+    } else if (this.view === 'months') {
+      this.focusedYear = this.focusedYear + 1;
+    } else {
+      this.decadeStart = this.decadeStart + DECADE_GRID_SIZE;
+    }
+  };
+
+  private handleMonthSelect = (month: number): void => {
+    // When precision is `month`, selecting a month commits the value instead
+    // of drilling to the days view. Gate the commit on bounds so keyboard
+    // Enter/Space cannot bypass the click-path disabled check.
+    if (this.precision === 'month') {
+      if (!isMonthWithinBounds(this.focusedYear, month, this.min, this.max)) return;
+      this.focusedMonth = month;
+      this.viewDate = new Date(this.focusedYear, month, 1);
+      this.commitSelection(toISO(new Date(this.focusedYear, month, 1)));
+      return;
+    }
+
+    this.viewDate = new Date(this.focusedYear, month, 1);
+    this.focusedMonth = month;
+    // Preserve day-of-month from the current focus (value or today), clamped
+    // to the last day of the destination month and to min/max bounds.
+    const nextFocus = clampDate(
+      new Date(
+        this.focusedYear,
+        month,
+        Math.min(new Date(this.focusedISO).getDate() || 1, endOfMonth(this.viewDate).getDate()),
+      ),
+      this.min,
+      this.max,
+    );
+    this.focusedISO = toISO(nextFocus);
+    this.view = 'days';
+    this.focusActiveCell();
+  };
+
+  private handleYearSelect = (year: number): void => {
+    // When precision is `year`, selecting a year commits the value instead
+    // of drilling to the months view. Gate the commit on bounds so keyboard
+    // Enter/Space cannot bypass the click-path disabled check.
+    if (this.precision === 'year') {
+      if (!isYearWithinBounds(year, this.min, this.max)) return;
+      this.focusedYear = year;
+      this.viewDate = new Date(year, 0, 1);
+      this.commitSelection(toISO(new Date(year, 0, 1)));
+      return;
+    }
+
+    this.focusedYear = year;
+    this.viewDate = new Date(year, this.focusedMonth, 1);
+    this.view = 'months';
+    this.focusActiveCell();
+  };
+
+  /* ---------------------------- Day selection ---------------------------- */
+
+  private handleDaySelect = (iso: string): void => {
+    this.commitSelection(iso);
+  };
+
+  /**
+   * Shared commit path used by day / month / year selection. Keeps the
+   * selection logic (single/multi/range) and post-commit behaviour (event,
+   * open state, tentative hover, view sync) identical across precisions.
+   */
+  private commitSelection = (iso: string): void => {
+    const next = applySelection(iso, this.selection, this.type);
+    const shouldStayOpen = this.type === 'multi' || (this.type === 'range' && next.length === 1);
+
+    this.hasBadInput = false;
+
+    // Guard so `handleValueChange` doesn't re-sync the view back to `parsed[0]`
+    // (would jump multi/range pickers to the earliest selected date) or to
+    // today (when precision truncation leaves no full ISO to extract).
+    this.isCommittingSelection = true;
+    this.value = serializeValue(next, this.type, this.precision);
+    this.isCommittingSelection = false;
+
+    this.focusedISO = iso;
+    const parsedIso = parseISO(iso);
+    if (parsedIso) {
+      this.viewDate = startOfMonth(parsedIso);
+      this.focusedMonth = parsedIso.getMonth();
+      this.focusedYear = parsedIso.getFullYear();
+      if (this.precision !== 'year') {
+        this.decadeStart = getDecadeStart(parsedIso.getFullYear());
+      }
+    }
+    this.tentativeHover = this.type === 'range' && next.length === 1 ? iso : undefined;
+
+    this.bqChange.emit({ value: this.value, el: this.el });
+    this.open = shouldStayOpen;
+  };
+
+  private handleDayHover = (iso: string | undefined): void => {
+    if (this.type !== 'range') return;
+    this.tentativeHover = iso;
+  };
+
+  private handleDayFocus = (iso: string): void => {
+    if (this.focusedISO === iso) return;
+    this.focusedISO = iso;
+  };
+
+  /* ------------------------- Grid keyboard nav --------------------------- */
+
+  private getRTLDirection = (): 1 | -1 => {
+    // Walk up through the composed tree so that dir="rtl" set on <html> or
+    // any ancestor is picked up, not just a direct attribute on the host.
+    const dir = (this.el.closest('[dir]') as HTMLElement)?.dir ?? getComputedStyle(this.el).direction;
+    return dir === 'rtl' ? -1 : 1;
+  };
+
+  private moveFocusedDay = (deltaDays: number): void => {
+    const current = parseISO(this.focusedISO) ?? new Date();
+    const next = clampDate(addDays(current, deltaDays), this.min, this.max);
+    this.focusedISO = toISO(next);
+    if (next.getMonth() !== this.viewDate.getMonth() || next.getFullYear() !== this.viewDate.getFullYear()) {
+      this.viewDate = startOfMonth(next);
+    }
+    this.focusButton(`[data-iso="${this.focusedISO}"]`);
+  };
+
+  private moveFocusedDayHome = (): void => {
+    const first = this.firstDayOfWeek ?? 1;
+    const dayOfWeek = parseISO(this.focusedISO)?.getDay() ?? 0;
+    this.moveFocusedDay(-((dayOfWeek - first + 7) % 7));
+  };
+
+  private moveFocusedDayEnd = (): void => {
+    const first = this.firstDayOfWeek ?? 1;
+    const focus = parseISO(this.focusedISO) ?? new Date();
+    const rowIndex = (focus.getDay() - first + 7) % 7;
+    this.moveFocusedDay(6 - rowIndex);
+  };
+
+  private pageFocusedMonth = (direction: -1 | 1, byYear: boolean): void => {
+    this.viewDate = byYear ? addYears(this.viewDate, direction) : addMonths(this.viewDate, direction);
+    this.focusedISO = toISO(clampDate(startOfMonth(this.viewDate), this.min, this.max));
+  };
+
+  private selectFocusedDay = (): void => {
+    const iso = this.focusedISO;
+    const parsed = parseISO(iso);
+    if (parsed && isWithinBounds(parsed, this.min, this.max) && !this.isDateDisallowed?.(parsed)) {
+      this.handleDaySelect(iso);
+    }
+  };
+
+  private handleDayGridKeyDown = (ev: KeyboardEvent): void => {
+    const rtl = this.getRTLDirection();
+
+    const handlers: Record<string, () => void> = {
+      ArrowLeft: () => this.moveFocusedDay(-1 * rtl),
+      ArrowRight: () => this.moveFocusedDay(1 * rtl),
+      ArrowUp: () => this.moveFocusedDay(-7),
+      ArrowDown: () => this.moveFocusedDay(7),
+      Home: () => this.moveFocusedDayHome(),
+      End: () => this.moveFocusedDayEnd(),
+      PageUp: () => this.pageFocusedMonth(-1, ev.shiftKey),
+      PageDown: () => this.pageFocusedMonth(1, ev.shiftKey),
+      Escape: () => {
+        this.open = false;
+        this.inputElem?.focus();
+      },
+      Enter: () => this.selectFocusedDay(),
+      ' ': () => this.selectFocusedDay(),
+    };
+
+    const handler = handlers[ev.key];
+    if (handler) {
+      ev.preventDefault();
+      handler();
+    }
+  };
+
+  private getGridColumns = (): number => {
+    // Months/years grids visually expand from 3 to 4 columns in multi-panel
+    // mode. Keep arrow-key stride in sync so vertical navigation still lands
+    // on the row directly above/below the current cell.
+    return getGridColumns(this.getMonthCount());
+  };
+
+  private handleMonthGridKeyDown = (ev: KeyboardEvent): void => {
+    const rtl = this.getRTLDirection();
+    const stride = this.getGridColumns();
+    const move = (delta: number) => {
+      const { month, year } = advanceFocusedMonth(this.focusedMonth, this.focusedYear, delta);
+      this.focusedMonth = month;
+      this.focusedYear = year;
+      this.focusButton(`[data-month="${month}"]`);
+    };
+
+    switch (ev.key) {
+      case 'ArrowLeft':
+        ev.preventDefault();
+        move(-1 * rtl);
+        return;
+      case 'ArrowRight':
+        ev.preventDefault();
+        move(1 * rtl);
+        return;
+      case 'ArrowUp':
+        ev.preventDefault();
+        move(-stride);
+        return;
+      case 'ArrowDown':
+        ev.preventDefault();
+        move(stride);
+        return;
+      case 'Enter':
+      case ' ':
+        ev.preventDefault();
+        this.handleMonthSelect(this.focusedMonth);
+        return;
+      case 'Escape':
+        ev.preventDefault();
+        this.view = 'days';
+    }
+  };
+
+  private handleYearGridKeyDown = (ev: KeyboardEvent): void => {
+    const rtl = this.getRTLDirection();
+    const stride = this.getGridColumns();
+    const move = (delta: number) => {
+      const { year, decadeStart } = advanceFocusedYear(this.focusedYear, this.decadeStart, delta);
+      this.focusedYear = year;
+      this.decadeStart = decadeStart;
+      this.focusButton(`[data-year="${year}"]`);
+    };
+
+    switch (ev.key) {
+      case 'ArrowLeft':
+        ev.preventDefault();
+        move(-1 * rtl);
+        return;
+      case 'ArrowRight':
+        ev.preventDefault();
+        move(1 * rtl);
+        return;
+      case 'ArrowUp':
+        ev.preventDefault();
+        move(-stride);
+        return;
+      case 'ArrowDown':
+        ev.preventDefault();
+        move(stride);
+        return;
+      case 'Enter':
+      case ' ':
+        ev.preventDefault();
+        this.handleYearSelect(this.focusedYear);
+        return;
+      case 'Escape':
+        ev.preventDefault();
+        this.view = 'months';
+    }
+  };
+
+  private focusButton = (selector: string): void => {
+    // Cancel any prior pending focus request so rapid state changes don't
+    // race — only the latest target should win.
+    if (this.pendingFocusRAF !== undefined) cancelAnimationFrame(this.pendingFocusRAF);
+    this.pendingFocusRAF = requestAnimationFrame(() => {
+      this.pendingFocusRAF = undefined;
+      const button = this.el.shadowRoot?.querySelector<HTMLButtonElement>(selector);
+      button?.focus();
+    });
+  };
+
+  /**
+   * Focus the currently active cell for the visible view. Called after the
+   * popup opens so keyboard users don't have to tab into the calendar.
+   */
+  private focusActiveCell = (): void => {
+    if (this.view === 'months') {
+      this.focusButton(`[data-month="${this.focusedMonth}"]`);
+      return;
+    }
+    if (this.view === 'years') {
+      this.focusButton(`[data-year="${this.focusedYear}"]`);
+      return;
+    }
+    this.focusButton(`[data-iso="${this.focusedISO}"]`);
+  };
+
+  /* -------------------------- Header labels ------------------------------ */
+
+  private getMonthCount = (): number => {
+    if (this.type === 'single') return 1;
+    // `handleMonthsChange` clamps the prop on write, so here we just guard
+    // against the initial value before the first watcher tick.
+    return this.clampMonths(this.months);
+  };
+
+  private getHeaderLabel = (): string => {
+    return getHeaderLabel({
+      view: this.view,
+      viewDate: this.viewDate,
+      focusedYear: this.focusedYear,
+      decadeStart: this.decadeStart,
+      monthCount: this.getMonthCount(),
+      locale: this.locale,
+    });
+  };
+
+  private getHeaderTitleLabel = (): string => {
+    return getHeaderTitleLabel(this.view, this.precision);
+  };
+
+  private getPreviousLabel = (): string => {
+    return getPreviousLabel(this.view);
+  };
+
+  private getNextLabel = (): string => {
+    return getNextLabel(this.view);
+  };
+
+  private renderDayPanels = (): JSX.Element => {
+    const panels: JSX.Element[] = [];
+    const monthCount = this.getMonthCount();
+
+    for (let i = 0; i < monthCount; i++) {
+      const anchor = addMonths(this.viewDate, i);
+      const anchorKey = toISO(startOfMonth(anchor));
+      panels.push(
+        <div
+          key={anchorKey}
+          class={{
+            'bq-date-picker__panel': true,
+            'bq-date-picker__panel--extra': i > 0,
+          }}
+        >
+          {monthCount > 1 && (
+            <div class="bq-date-picker__month-label" part={CALENDAR_PARTS.heading}>
+              {formatMonth(anchor, this.locale, 'long', true)}
+            </div>
+          )}
+          <CalendarDayView
+            viewDate={anchor}
+            selection={this.selection}
+            tentativeRange={this.tentativeRange}
+            focusedISO={this.focusedISO}
+            type={this.type}
+            locale={this.locale}
+            firstDayOfWeek={this.firstDayOfWeek ?? 1}
+            showOutsideDays={this.showOutsideDays}
+            minISO={this.min}
+            maxISO={this.max}
+            isDateDisallowed={this.isDateDisallowed}
+            onDaySelect={(iso) => this.handleDaySelect(iso)}
+            onDayHover={(iso) => this.handleDayHover(iso)}
+            onDayFocus={(iso) => this.handleDayFocus(iso)}
+            onGridKeyDown={this.handleDayGridKeyDown}
+          />
+        </div>,
+      );
+    }
+
+    return <div class="bq-date-picker__panels">{panels}</div>;
+  };
+
+  private renderMonthsView = (): JSX.Element => {
+    const gridColumns = this.getGridColumns();
+    return (
+      <CalendarMonthView
+        year={this.focusedYear}
+        focusedMonth={this.focusedMonth}
+        gridColumns={gridColumns}
+        locale={this.locale}
+        minISO={this.min}
+        maxISO={this.max}
+        selection={this.selection}
+        tentativeRange={this.tentativeRange}
+        type={this.type}
+        onMonthSelect={(month) => this.handleMonthSelect(month)}
+        onMonthHover={(iso) => this.handleDayHover(iso)}
+        onMonthFocus={(month) => {
+          this.focusedMonth = month;
+        }}
+        onGridKeyDown={this.handleMonthGridKeyDown}
+      />
+    );
+  };
+
+  private renderYearsView = (): JSX.Element => {
+    const start = this.decadeStart;
+    const end = start + DECADE_GRID_SIZE - 1;
+    const years = Array.from({ length: DECADE_GRID_SIZE }, (_, i) => start + i);
+    const effectiveFocused = this.focusedYear >= start && this.focusedYear <= end ? this.focusedYear : start;
+    const gridColumns = this.getGridColumns();
+
+    return (
+      <CalendarYearView
+        years={years}
+        focusedYear={effectiveFocused}
+        gridColumns={gridColumns}
+        minISO={this.min}
+        maxISO={this.max}
+        selection={this.selection}
+        tentativeRange={this.tentativeRange}
+        type={this.type}
+        onYearSelect={(year) => this.handleYearSelect(year)}
+        onYearHover={(iso) => this.handleDayHover(iso)}
+        onYearFocus={(year) => {
+          this.focusedYear = year;
+        }}
+        onGridKeyDown={this.handleYearGridKeyDown}
+      />
+    );
+  };
+
+  private renderView = (): JSX.Element => {
+    if (this.view === 'months') return this.renderMonthsView();
+    if (this.view === 'years') return this.renderYearsView();
+    return this.renderDayPanels();
+  };
 
   // render() function
   // Always the last one in the class.
   // ===================================
 
   render() {
-    const CallyCalendar = this.calendarType;
     const labelId = `bq-date-picker__label-${this.name || DEFAULT_INPUT_ID}`;
+    const popupId = `bq-date-picker__popup-${this.name || DEFAULT_INPUT_ID}`;
 
     return (
-      <div class="bq-date-picker" part="base">
-        {/* Label */}
+      <div class="bq-date-picker" part={CALENDAR_PARTS.base}>
         <label
-          aria-labelledby={labelId}
-          class={{ 'bq-date-picker__label': true, '!hidden': !this.hasLabel }}
+          class={{ 'bq-date-picker__label': true, 'is-hidden': !this.hasLabel }}
           htmlFor={this.name || DEFAULT_INPUT_ID}
-          part="label"
-          ref={(labelElem?: HTMLSpanElement) => {
+          part={CALENDAR_PARTS.label}
+          ref={(labelElem) => {
             this.labelElem = labelElem;
           }}
         >
           <slot id={labelId} name="label" onSlotchange={this.handleSlotChange} />
         </label>
-        {/* Select date picker dropdown */}
+
         <bq-dropdown
-          class="bq-date-picker__dropdown is-full [&::part(panel)]:is-auto [&::part(panel)]:p-m"
+          class="bq-date-picker__dropdown"
           disabled={this.disabled}
           distance={this.distance}
           exportparts="panel"
@@ -698,116 +1376,120 @@ export class BqDatePicker {
           skidding={this.skidding}
           strategy={this.strategy}
         >
-          {/* Input control group */}
           <div
             class={{
               'bq-date-picker__control': true,
               [`validation-${this.validationStatus}`]: true,
-              disabled: this.disabled,
+              'is-disabled': !!this.disabled,
+              'is-open': !!this.open,
             }}
-            part="control"
+            part={CALENDAR_PARTS.control}
             slot="trigger"
           >
-            {/* Prefix */}
             <span
-              class={{ 'bq-date-picker__control--prefix': true, '!hidden': !this.hasPrefix }}
-              part="prefix"
-              ref={(spanElem?: HTMLSpanElement) => {
-                this.prefixElem = spanElem;
+              class={{ 'bq-date-picker__prefix': true, 'is-hidden': !this.hasPrefix }}
+              part={CALENDAR_PARTS.prefix}
+              ref={(el) => {
+                this.prefixElem = el;
               }}
             >
               <slot name="prefix" onSlotchange={this.handleSlotChange} />
             </span>
-            {/* HTML Input */}
+
             <input
-              aria-controls={`${this.name}`}
-              aria-describedby={this.hasLabel ? labelId : null}
+              aria-controls={popupId}
               aria-disabled={this.disabled ? 'true' : 'false'}
-              aria-invalid={this.validationStatus === 'error' ? 'true' : 'false'}
+              aria-expanded={this.open ? 'true' : 'false'}
               aria-haspopup="dialog"
+              aria-invalid={this.validationStatus === 'error' || this.hasConstraintError ? 'true' : 'false'}
+              aria-labelledby={this.hasLabel ? labelId : undefined}
               autoCapitalize="off"
               autoComplete="off"
-              class="bq-date-picker__control--input"
+              class="bq-date-picker__input"
               disabled={this.disabled}
               form={this.form}
               id={this.name || DEFAULT_INPUT_ID}
               name={this.name}
               onBlur={this.handleBlur}
-              onChange={this.handleChange}
+              onChange={this.handleInputChange}
               onFocus={this.handleFocus}
-              part="input"
+              onKeyDown={this.handleInputKeyDown}
+              part={CALENDAR_PARTS.input}
               placeholder={this.placeholder}
               readonly={this.type !== 'single'}
-              ref={(inputElem?: HTMLInputElement) => {
-                this.inputElem = inputElem;
+              ref={(el) => {
+                this.inputElem = el;
               }}
               required={this.required}
+              role="combobox"
               spellcheck={false}
               type="text"
               value={this.displayDate}
             />
-            {/* Clear Button */}
+
             {this.hasValue && !this.disabled && !this.disableClear && (
-              // The clear button will be visible as long as the input has a value
-              // and the parent group is hovered or has focus-within
               <bq-button
                 appearance="text"
-                border="s"
-                class="bq-date-picker__control--clear ms-[--bq-date-picker--gap] hidden [&::part(button)]:border-none [&::part(button)]:p-0"
+                border="xs"
+                class="bq-date-picker__clear"
                 exportparts="button"
                 label={this.clearButtonLabel}
                 onBqClick={this.handleClearClick}
                 onlyIcon
-                part="clear-btn"
+                part={CALENDAR_PARTS.clearBtn}
                 size="small"
               >
                 <slot name="clear-icon">
-                  <bq-icon aria-hidden="true" class="flex" name="x-circle" />
+                  <bq-icon aria-hidden="true" name="x-circle" />
                 </slot>
               </bq-button>
             )}
-            {/* Suffix */}
-            <span
-              class="bq-date-picker__control--suffix"
-              part="suffix"
-              ref={(spanElem?: HTMLSpanElement) => {
-                this.suffixElem = spanElem;
+
+            {/* biome-ignore lint/a11y/noStaticElementInteractions: bq-button renders a native <button> in its shadow DOM */}
+            <bq-button
+              appearance="text"
+              border="xs"
+              class="bq-date-picker__calendar-trigger"
+              disabled={this.disabled}
+              exportparts="button"
+              label={this.calendarButtonLabel}
+              onClick={(ev: MouseEvent) => ev.stopPropagation()}
+              onBqClick={this.handleTriggerClick}
+              onlyIcon
+              part={`${CALENDAR_PARTS.button} ${CALENDAR_PARTS.suffix} ${CALENDAR_PARTS.calendarTrigger}`}
+              ref={(el) => {
+                this.triggerBtnElem = el;
               }}
+              size="small"
             >
               <slot name="suffix" onSlotchange={this.handleSlotChange}>
-                <bq-icon class="flex" name="calendar-blank" />
+                <bq-icon aria-hidden="true" name="calendar-blank" />
               </slot>
-            </span>
+            </bq-button>
           </div>
-          {this.isCallyLoaded && (
-            <CallyCalendar
-              aria-labelledby={labelId}
-              aria-modal="true"
-              exportparts={CALENDAR_CONTAINER_EXPORT_PARTS}
-              firstDayOfWeek={this.firstDayOfWeek}
-              isDateDisallowed={this.isDateDisallowed}
-              locale={this.locale as string}
-              max={this.max}
-              min={this.min}
-              months={this.months}
-              onChange={this.handleCalendarChange}
-              onRangeend={this.handleCalendarRangeEnd}
-              onRangestart={this.handleCalendarRangeStart}
-              pageBy={this.monthsPerView}
-              ref={(elem?: TCalendarDate) => {
-                this.callyElem = elem;
-              }}
-              role="dialog"
-              showOutsideDays={this.showOutsideDays}
-              tentative={this.tentative}
-              value={this.value}
-            >
-              <bq-icon color="text--primary" label="Previous" name="caret-left" slot="previous" />
-              <bq-icon color="text--primary" label="Next" name="caret-right" slot="next" />
 
-              <div class="flex flex-wrap justify-center gap-[--bq-spacing-m]">{this.generateCalendarMonths()}</div>
-            </CallyCalendar>
-          )}
+          <div
+            aria-label={this.hasLabel ? undefined : 'Date picker'}
+            aria-labelledby={this.hasLabel ? labelId : undefined}
+            class="bq-date-picker__calendar"
+            id={popupId}
+            part={CALENDAR_PARTS.container}
+            role="dialog"
+            style={{ '--bq-date-picker--panel-count': `${this.getMonthCount()}` }}
+          >
+            <CalendarHeader
+              view={this.view}
+              label={this.getHeaderLabel()}
+              previousLabel={this.getPreviousLabel()}
+              nextLabel={this.getNextLabel()}
+              titleLabel={this.getHeaderTitleLabel()}
+              titleInteractive={this.precision !== 'year'}
+              onPrevious={() => this.handleHeaderPrev()}
+              onNext={() => this.handleHeaderNext()}
+              onTitleClick={() => this.handleHeaderTitleClick()}
+            />
+            <div class="bq-date-picker__view">{this.renderView()}</div>
+          </div>
         </bq-dropdown>
       </div>
     );

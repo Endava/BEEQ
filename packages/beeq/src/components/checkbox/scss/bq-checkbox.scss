@@ -67,7 +67,7 @@
 
 // Checkbox square icon `DEFAULT` state (not checked/indeterminate, not hover, not disabled)
 .bq-checkbox__checkbox {
-  @apply rounded-[--bq-checkbox--border-radius] border-[length:--bq-checkbox--border-width] border-solid border-[color:--bq-icon--primary];
+  @apply bg-[--bq-checkbox--background-color] rounded-[--bq-checkbox--border-radius] border-[length:--bq-checkbox--border-width] border-solid border-[color:--bq-icon--primary];
 }
 
 .bq-checkbox__checkbox,
