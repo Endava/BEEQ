@@ -113,10 +113,12 @@
       "stageChanges": true,
       "tag": true
     },
-    "releaseTagPattern": "v{version}",
     "version": {
       "conventionalCommits": true,
       "versionPrefix": "^"
+    },
+    "releaseTag": {
+      "pattern": "v{version}"
     }
   },
   "generators": {
@@ -147,5 +149,6 @@
       "analyzeSourceFiles": true
     }
   },
-  "analytics": false
+  "analytics": false,
+  "migrate": { "agentic": false }
 }
