@@ -1,6 +1,6 @@
 import { basename, join, posix } from 'node:path';
 
-import * as decompress from 'decompress';
+import decompress, { type File as DecompressFile } from 'decompress';
 import fsExtra from 'fs-extra';
 
 import { asIconsError, IconsExecutorError } from './errors.ts';
@@ -108,10 +108,10 @@ const extractIcons = async ({
 }: ExtractOptions): Promise<ExtractResult> => {
   const matchPrefix = posix.join(svgFolder, assetsFolder);
 
-  let entries: decompress.File[];
+  let entries: DecompressFile[];
   try {
     entries = await decompress(archiveFilePath, {
-      filter: (entry: decompress.File) => isTargetIconEntry(entry.path, entry.type, matchPrefix),
+      filter: (entry: DecompressFile) => isTargetIconEntry(entry.path, entry.type, matchPrefix),
     });
   } catch (error) {
     throw asIconsError('extract', `Failed to read archive "${archiveFilePath}"`, error, { archiveFilePath });
