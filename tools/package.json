@@ -3,6 +3,7 @@
   "private": true,
   "version": "1.7.0",
   "main": "./src/index.js",
+  "type": "module",
   "typings": "./src/index.d.ts",
   "executors": "./executors.json",
   "dependencies": {

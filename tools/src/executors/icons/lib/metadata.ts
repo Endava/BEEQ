@@ -2,10 +2,10 @@ import { createHash } from 'node:crypto';
 import { readdir, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
-import { pathExists, readJson, writeJson } from 'fs-extra';
+import fsExtra from 'fs-extra';
 
-import type { SourceRefType } from '../schema';
-import { asIconsError } from './errors';
+import type { SourceRefType } from '../schema.d.ts';
+import { asIconsError } from './errors.ts';
 
 /**
  * Stable subset of {@link IconsMetadata} that fully identifies a source
@@ -97,7 +97,7 @@ const buildFingerprintKey = (input: FingerprintInput): string =>
  * @returns Sorted `.svg` basenames, or `[]` when the directory is missing.
  */
 const listSvgFiles = async (extractToPath: string): Promise<string[]> => {
-  if (!(await pathExists(extractToPath))) return [];
+  if (!(await fsExtra.pathExists(extractToPath))) return [];
   const entries = await readdir(extractToPath);
   return entries.filter((name) => name.toLowerCase().endsWith('.svg')).sort((a, b) => a.localeCompare(b));
 };
@@ -136,9 +136,9 @@ const computeIconsHash = async (extractToPath: string, fileNames: string[]): Pro
  * @throws {IconsExecutorError} When the file exists but cannot be parsed.
  */
 const readMetadata = async (metadataFilePath: string): Promise<IconsMetadata | null> => {
-  if (!(await pathExists(metadataFilePath))) return null;
+  if (!(await fsExtra.pathExists(metadataFilePath))) return null;
   try {
-    const data = (await readJson(metadataFilePath)) as unknown;
+    const data = (await fsExtra.readJson(metadataFilePath)) as unknown;
     if (!data || typeof data !== 'object') return null;
     return data as IconsMetadata;
   } catch (error) {
@@ -155,7 +155,7 @@ const readMetadata = async (metadataFilePath: string): Promise<IconsMetadata | n
  */
 const writeMetadata = async (metadataFilePath: string, metadata: IconsMetadata): Promise<void> => {
   try {
-    await writeJson(metadataFilePath, metadata, { spaces: 2 });
+    await fsExtra.writeJson(metadataFilePath, metadata, { spaces: 2 });
   } catch (error) {
     throw asIconsError('metadata', `Failed to write metadata "${metadataFilePath}"`, error, { metadataFilePath });
   }
