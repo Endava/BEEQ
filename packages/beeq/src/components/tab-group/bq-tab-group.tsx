@@ -254,22 +254,9 @@ export class BqTabGroup {
 
   render() {
     return (
-      <Host class={{ 'inline-block': this.orientation === 'vertical' }}>
-        <div
-          class={{
-            [`bq-tab-group bq-tab-group--${this.orientation}-${this.placement} is-full flex`]: true,
-            'no-divider': this.disableDivider,
-          }}
-          part="base"
-        >
-          <div
-            class={{
-              'bq-tab-group--container flex overflow-x-auto': true,
-              'flex-col': this.orientation !== 'horizontal',
-            }}
-            part="tabs"
-            role="tablist"
-          >
+      <Host>
+        <div class="bq-tab-group" part="base">
+          <div class="bq-tab-group__tabs" part="tabs" role="tablist">
             <slot />
           </div>
         </div>
