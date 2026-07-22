@@ -11,22 +11,25 @@
 /* ---------------------------------- Base ---------------------------------- */
 
 .bq-tab-group {
+  /* Divider defaults: horizontal orientation, block-end edge */
+  --_divider-block-size: var(--bq-stroke-s);
+  --_divider-inline-size: 100%;
+  --_divider-inset-block: auto 0;
+  --_divider-inset-inline: 0;
+
   position: relative;
   display: flex;
-  justify-content: flex-start;
   inline-size: 100%;
 }
 
 .bq-tab-group::after {
-  position: absolute;
-  inset-block-end: 0;
-  display: flex;
-  inline-size: 100%;
   content: '';
-  border-color: var(--bq-stroke--primary);
-  border-style: solid;
-  border-width: 0;
-  border-block-end-width: var(--bq-stroke-s);
+  position: absolute;
+  inset-block: var(--_divider-inset-block);
+  inset-inline: var(--_divider-inset-inline);
+  block-size: var(--_divider-block-size);
+  inline-size: var(--_divider-inline-size);
+  background-color: var(--bq-stroke--primary);
 }
 
 /* ------------------------------- Structure -------------------------------- */
@@ -36,9 +39,9 @@
 
   display: flex;
   gap: var(--bq-spacing-xs2);
-  overflow-inline: auto;
-  padding-block: var(--bq-spacing-xs2);
-  padding-inline: var(--bq-spacing-xs2);
+  // Padding prevents the tab focus outline from being clipped by the container overflow.
+  padding: var(--bq-spacing-xs2);
+  overflow: auto hidden;
 }
 
 /* -------------------------------- Variants -------------------------------- */
@@ -53,22 +56,21 @@
 
 :host([orientation='vertical']) .bq-tab-group__tabs {
   flex-direction: column;
+  overflow: hidden auto;
 }
 
-:host([orientation='vertical'][placement='start']) .bq-tab-group::after {
-  inset-inline-end: 0;
-  block-size: 100%;
-  inline-size: 0;
-  border-block-end-width: 0;
-  border-inline-end-width: var(--bq-stroke-s);
+:host([orientation='vertical'][placement='start']) .bq-tab-group {
+  --_divider-block-size: 100%;
+  --_divider-inline-size: var(--bq-stroke-s);
+  --_divider-inset-block: 0;
+  --_divider-inset-inline: auto 0;
 }
 
-:host([orientation='vertical'][placement='end']) .bq-tab-group::after {
-  inset-inline-start: 0;
-  block-size: 100%;
-  inline-size: 0;
-  border-block-end-width: 0;
-  border-inline-start-width: var(--bq-stroke-s);
+:host([orientation='vertical'][placement='end']) .bq-tab-group {
+  --_divider-block-size: 100%;
+  --_divider-inline-size: var(--bq-stroke-s);
+  --_divider-inset-block: 0;
+  --_divider-inset-inline: 0 auto;
 }
 
 /* --------------------------------- States --------------------------------- */
