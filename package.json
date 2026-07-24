@@ -73,7 +73,7 @@
     "@stencil/angular-output-target": "1.4.1",
     "@stencil/core": "4.43.5",
     "@stencil/react-output-target": "1.6.1",
-    "@stencil/sass": "3.3.1",
+    "@stencil/sass": "3.3.2",
     "@stencil/vitest": "1.14.0",
     "@stencil/vue-output-target": "0.14.1",
     "@storybook/addon-a11y": "10.4.3",
