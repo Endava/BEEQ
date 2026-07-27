@@ -57,5 +57,5 @@ jobs:
         with:
           build_command: pnpm build:storybook
           checkout: false
-          install_command: pnpm install --frozen-lockfile
+          install_command: pnpm install --frozen-lockfile --ignore-scripts --prefer-offline
           path: ./dist/storybook/beeq
