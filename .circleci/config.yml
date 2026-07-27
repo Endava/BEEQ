@@ -63,7 +63,7 @@ commands:
             mkdir -p /home/circleci/.pnpm-store
 
             # Install with network access but prefer cached packages
-            pnpm install --frozen-lockfile --prefer-offline --store-dir /home/circleci/.pnpm-store --network-concurrency 8
+            pnpm install --frozen-lockfile --ignore-scripts --prefer-offline --store-dir /home/circleci/.pnpm-store --network-concurrency 8
           no_output_timeout: 5m
 
       # Save the pnpm store cache

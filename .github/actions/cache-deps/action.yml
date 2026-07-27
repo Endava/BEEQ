@@ -18,5 +18,5 @@ runs:
         path: node_modules
         key: ${{ runner.os }}-node-modules-${{ hashFiles('pnpm-lock.yaml') }}
     - name: 📦 Install dependencies
-      run: pnpm install --frozen-lockfile
+      run: pnpm install --frozen-lockfile --ignore-scripts --prefer-offline
       shell: bash
