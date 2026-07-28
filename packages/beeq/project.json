@@ -4,11 +4,6 @@
   "sourceRoot": "packages/beeq/src",
   "projectType": "library",
   "tags": ["components", "core", "publishable"],
-  "generators": {
-    "@nxext/stencil:component": {
-      "style": "scss"
-    }
-  },
   "namedInputs": {
     "production": [
       "default",
@@ -22,19 +17,11 @@
   },
   "targets": {
     "start": {
-      "executor": "@nxext/stencil:serve",
+      "executor": "nx:run-commands",
       "dependsOn": ["storybook", { "projects": "beeq-tailwindcss", "target": "build" }],
-      "outputs": ["{options.outputPath}"],
+      "outputs": ["{workspaceRoot}/dist/beeq"],
       "options": {
-        "projectType": "library",
-        "tsConfig": "packages/beeq/tsconfig.lib.json",
-        "configPath": "packages/beeq/stencil.config.ts",
-        "outputPath": "dist/beeq",
-        "noOpen": true,
-        "watch": true,
-        "docsReadme": true,
-        "docs": true,
-        "dev": true
+        "command": "node tools/scripts/stencil-build.mjs --dev --watch --serve --no-open --docs"
       },
       "continuous": true
     },
@@ -57,9 +44,9 @@
     },
     "build": {
       "dependsOn": [{ "target": "icons" }, { "target": "build", "projects": "beeq-tailwindcss" }],
-      "executor": "@nxext/stencil:build",
+      "executor": "nx:run-commands",
       "outputs": [
-        "{options.outputPath}",
+        "{workspaceRoot}/dist/beeq",
         "{projectRoot}/.storybook/custom-elements.json",
         "{workspaceRoot}/packages/beeq-angular/src/directives",
         "{workspaceRoot}/packages/beeq-angular/standalone/src/directives",
@@ -68,16 +55,11 @@
         "{workspaceRoot}/packages/beeq-vue/src/vue-component-lib"
       ],
       "options": {
-        "projectType": "library",
-        "tsConfig": "packages/beeq/tsconfig.lib.json",
-        "configPath": "packages/beeq/stencil.config.ts",
-        "outputPath": "dist/beeq",
-        "ci": true
+        "command": "node tools/scripts/stencil-build.mjs --docs"
       },
       "configurations": {
         "production": {
-          "dev": false,
-          "prod": true
+          "command": "node tools/scripts/stencil-build.mjs --prod --docs"
         }
       }
     },
