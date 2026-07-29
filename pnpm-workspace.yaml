@@ -29,7 +29,7 @@ overrides:
   'node-fetch': '3.3.2'
   'nx': '23.1.0'
   'postcss': '8.5.18'
-  'storybook': '10.4.3'
+  'storybook': '10.5.4'
   'vite': '8.0.16'
   'vitest': '4.1.5'
 
