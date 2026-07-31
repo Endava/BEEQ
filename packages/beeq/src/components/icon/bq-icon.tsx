@@ -185,13 +185,7 @@ export class BqIcon {
 
     return (
       <Host style={styles}>
-        <div
-          aria-label={label ?? `${name} icon`}
-          class="bs-[--bq-icon--size] is-[--bq-icon--size] flex text-[--bq-icon--color]"
-          innerHTML={this.svgContent}
-          part="base"
-          role="img"
-        />
+        <div aria-label={label ?? `${name} icon`} class="bq-icon" innerHTML={this.svgContent} part="base" role="img" />
       </Host>
     );
   }

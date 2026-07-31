@@ -1,0 +1,30 @@
+@mixin bq-size($inline-size, $block-size: $inline-size) {
+  inline-size: $inline-size;
+  block-size: $block-size;
+}
+
+@mixin bq-min-size($inline-size: null, $block-size: null) {
+  @if $inline-size {
+    min-inline-size: $inline-size;
+  }
+
+  @if $block-size {
+    min-block-size: $block-size;
+  }
+}
+
+@mixin bq-max-size($inline-size: null, $block-size: null) {
+  @if $inline-size {
+    max-inline-size: $inline-size;
+  }
+
+  @if $block-size {
+    max-block-size: $block-size;
+  }
+}
+
+@mixin bq-absolute-fill {
+  position: absolute;
+  inset-block: 0;
+  inset-inline: 0;
+}

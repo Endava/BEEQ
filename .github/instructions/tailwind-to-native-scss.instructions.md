@@ -1,0 +1,158 @@
+---
+description: Guides the Tailwind CSS to native SCSS/CSS migration for @beeq/core, including tokens, cascade layers, logical properties, component class naming, Stylelint, and validation rules.
+applyTo: packages/beeq/src/**/*.{scss,tsx},packages/beeq/stencil.config.ts,packages/beeq/project.json,tailwlindcss-migration.plan.md
+---
+
+# Tailwind To Native SCSS Migration
+
+Use [tailwlindcss-migration.plan.md](../../tailwlindcss-migration.plan.md) as the source of truth for the full migration plan, phases, mapping tables, and acceptance checks.
+
+## Core Rules
+
+- `packages/beeq` is migrating away from Tailwind CSS for runtime component styles.
+- Do not add `@tailwind`, `@apply`, Tailwind `theme(...)`, or Tailwind utility class strings in Stencil render output.
+- Keep SCSS as the authoring language and native CSS as the runtime output.
+- Preserve public CSS custom properties, theme/mode selectors, host attributes, slots, and documented parts.
+- Keep `packages/beeq-tailwindcss` separate and functional; do not use it as the runtime style source for `@beeq/core`.
+
+## Tokens And Themes
+
+- Use the cascade `primitive values -> theme root aliases -> mode semantic tokens -> component variables`.
+- Source raw primitive values from `packages/beeq-tailwindcss/src/theme/colors/base.ts`.
+- Treat `colors/primitive.ts` and `colors/declarative.ts` as Tailwind-facing adapter/reference maps.
+- Components should consume semantic tokens or component variables, not raw primitive colors, unless defining a documented exception.
+- Keep default behavior: no theme/mode means BEEQ light.
+- Keep existing selectors for `bq-theme`, `bq-mode`, `.beeq`, `.endava`, `.light`, and `.dark`.
+- Keep primitive token coverage on `:root, ::backdrop` until dialog/drawer top-layer QA proves it can be removed.
+
+## CSS Custom Properties
+
+- Do not rename existing public `--bq-*` variables during migration.
+- Public component variables remain the consumer override API.
+- Use public component variables directly in component CSS when that is the clearest expression of the style.
+- Private implementation variables use `--_property`.
+- Private `--_` variables are optional composition helpers, not a mandatory wrapper around every public component variable.
+- Introduce private `--_` variables only when they reduce meaningful repetition, combine multiple public tokens into one internal value, or keep variant/state selectors focused on value changes.
+- Do not mutate public component variables internally to model private variant or state changes.
+- Do not document private `--_` variables.
+- Variants and states may change private variables, not public API variables.
+
+## Logical CSS
+
+- Use logical properties for layout, sizing, spacing, positioning, borders, and radii.
+- Prefer `inline-size`/`block-size` over `width`/`height`.
+- Prefer `padding-inline`/`padding-block` and `margin-inline`/`margin-block`.
+- Prefer logical insets and logical border/radius properties.
+- Physical properties are allowed only for public variable names, SVG styling, transforms, vendor pseudo-elements, third-party APIs, or documented browser exceptions.
+- Use this exception format:
+
+```scss
+/* stylelint-disable-next-line property-layout-mappings -- vendor pseudo-element requires physical width */
+width: 100%;
+```
+
+## Classes And Render Output
+
+- Do not adopt full BEM as a methodology.
+- Use BEEQ semantic classes only where a stable styling hook is needed.
+- Use `.bq-<component>` for root styling hooks.
+- Use `.bq-<component>__<element>` only for meaningful internal elements.
+- Use `.is-*` only for internal state not already reflected on the host.
+- Prefer host attributes for public variants and states.
+- For reflected public variants, prefer selectors such as `:host([size='small']) .bq-avatar` over render-time classes such as `.size--small`.
+- Do not create visual helper classes such as `.row-center`, `.gap-small`, or `.text-primary`.
+- Do not add classes to every DOM node.
+
+## Nesting
+
+- Keep nesting native-compatible.
+- Preferred nesting depth is `1`; maximum depth is `2`.
+- Flatten depth `3+`.
+- Nest states, pseudo-elements, and tightly coupled child selectors only.
+- Do not use Sass-only selector concatenation such as `&__label`.
+
+## Cascade Layers
+
+- Use global layers for global styles:
+
+```scss
+@layer bq.reset, bq.tokens, bq.themes, bq.base, bq.public, bq.overrides;
+```
+
+- Place emitted global declarations inside a layer.
+- Put public global CSS classes such as `.bq-link`, body state classes, and portal classes in `bq.public`.
+- Avoid unlayered global declarations because they override layered component declarations.
+- Use component-local layers only for components listed in the migration plan.
+- Layered component stylesheets must declare the full layer order, with global layers first and component layers after them.
+- Do not mix layered and unlayered declarations in the same complex component unless the unlayered declaration is an annotated escape hatch.
+
+## Mixins And Interactions
+
+- Replace Tailwind focus utilities with `@include bq-focus-ring`.
+- Replace Tailwind hover/active color-mix utilities with shared SCSS mixins.
+- Use `color-mix()` for parity with the current Tailwind plugin.
+- Do not use relative color syntax such as `oklch(from ...)` during the parity migration.
+- Keep the focus-ring utility class separate from the focus-ring mixin.
+- Do not import shared BEEQ mixins from individual SCSS partials; Stencil injects `mixins/index.scss`, and the standalone Storybook Sass build must mirror that injection.
+
+## Stylelint
+
+- Use Stylelint built-in `property-layout-mappings: "flow-relative"` for logical-property enforcement.
+- Do not add `stylelint-use-logical`.
+- Keep migration-tolerant Stylelint config until the final strict flip.
+- `packages/beeq/.stylelintrc.json` is migration-tolerant while legacy Tailwind styles still exist.
+- `packages/beeq/.stylelintrc.strict.json` is the migration contract for migrated files.
+- Full `pnpm exec nx run beeq:stylelint-strict` is the final whole-workspace gate and is expected to fail until all legacy Tailwind styles are migrated.
+- During component PRs, run strict Stylelint scoped to each migrated component, one component at a time:
+
+```bash
+cd packages/beeq
+pnpm exec stylelint "src/components/<component>/scss/**/*.{css,scss}" --config .stylelintrc.strict.json
+```
+
+- During global style PRs, run strict Stylelint scoped to the migrated global area:
+
+```bash
+cd packages/beeq
+pnpm exec stylelint "src/global/styles/**/*.{css,scss}" --config .stylelintrc.strict.json
+```
+
+- Strict `packages/beeq` Stylelint must reject `@tailwind`, `@apply`, `theme(...)`, invalid BEEQ layer names, invalid custom property names, excess nesting, and physical properties without documented exceptions.
+
+## Parity And Public API
+
+- Treat prop defaults, reflected attributes, events, slots, parts, and public CSS custom properties as public API.
+- Do not change public API or visual behavior during a style migration unless the user explicitly asks for a separate behavior change.
+- Do not update tests to bless a new visual or behavioral result caused by the migration.
+- If the migration reveals an existing bug, call it out and split the fix or clearly mark it as non-migration work.
+- Check generated readmes and `components.d.ts` for accidental public API drift.
+
+## Migration Review Rules
+
+- Review only the files affected by the migration PR unless the task asks for a whole-workspace audit.
+- Do not fail a component PR because untouched files elsewhere still contain legacy Tailwind.
+- Treat remaining `@apply`, `theme(...)`, visual Tailwind render classes, physical-property drift, and failed scoped strict Stylelint as migration issues for touched files.
+- Treat Storybook Tailwind utilities as follow-up unless the PR includes Storybook/build cleanup or claims Storybook is migrated.
+- Report public API drift and parity drift as review findings before style preferences.
+
+## Validation
+
+For migrated component styles:
+
+```bash
+rg "@apply|theme\\(" packages/beeq/src/components/<component>/scss
+rg "class=.*(flex|grid|gap-|items-|justify-|p-|m-|w-|h-|text-|bg-|border-|rounded-|absolute|relative)" packages/beeq/src/components/<component> --glob "*.tsx"
+cd packages/beeq
+pnpm exec stylelint "src/components/<component>/scss/**/*.{css,scss}" --config .stylelintrc.strict.json
+```
+
+For global/build cleanup:
+
+```bash
+rg "@tailwind|@apply|theme\\(" packages/beeq/src
+rg "stencil-tailwind-plugin|tailwindHMR|tailwind\\(" packages/beeq
+cd packages/beeq
+pnpm exec stylelint "src/global/styles/**/*.{css,scss}" --config .stylelintrc.strict.json
+```
+
+Run the relevant Nx targets from the plan for the area being migrated.

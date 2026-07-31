@@ -50,6 +50,18 @@ describe('bq-tag', () => {
     expect(closeIcon).not.toBeNull();
   });
 
+  it('should render the close icon with alt text color for custom color removable tags', async () => {
+    const customColor = '#ff5733' as HTMLBqTagElement['color'];
+    const { root } = await render(
+      <bq-tag color={customColor} removable>
+        Tag
+      </bq-tag>,
+    );
+    const closeIcon = root.shadowRoot.querySelector('bq-icon[name="x-circle"]');
+
+    expect(closeIcon).toEqualAttribute('color', 'text--alt');
+  });
+
   it('should render a basic tag without icon', async () => {
     const { root } = await render(<bq-tag>Tag</bq-tag>);
     const slot = root.shadowRoot.querySelector('slot:not([name])');
@@ -134,17 +146,17 @@ describe('bq-tag', () => {
     const tag = root as HTMLBqTagElement;
     const wrapper = root.shadowRoot.querySelector('[part="wrapper"]');
 
-    expect(wrapper).not.toHaveClass('active');
+    expect(tag).not.toHaveAttribute('selected');
 
     await userEvent.click(wrapper);
     await waitForChanges();
     expect(tag.selected).toBe(true);
-    expect(wrapper).toHaveClass('active');
+    expect(tag).toHaveAttribute('selected');
 
     await userEvent.click(wrapper);
     await waitForChanges();
     expect(tag.selected).toBe(false);
-    expect(wrapper).not.toHaveClass('active');
+    expect(tag).not.toHaveAttribute('selected');
   });
 
   it('should emit bqClick when clickable tag is clicked', async () => {

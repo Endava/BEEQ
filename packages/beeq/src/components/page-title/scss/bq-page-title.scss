@@ -1,9 +1,71 @@
 /* -------------------------------------------------------------------------- */
-/*                        Page title styles                        */
+/*                              Page Title Styles                             */
 /* -------------------------------------------------------------------------- */
 
 @import './bq-page-title.variables';
 
+/* ---------------------------------- Host ---------------------------------- */
+
 :host {
-  @apply block;
+  display: block;
+}
+
+/* ---------------------------------- Base ---------------------------------- */
+
+.bq-page-title {
+  display: flex;
+  gap: var(--bq-spacing-xs);
+  padding-block: var(--paddingY);
+  border-block-end: var(--subtitle-borderBlockEnd);
+}
+
+/* ------------------------------- Structure -------------------------------- */
+
+.bq-page-title__back {
+  display: flex;
+}
+
+.bq-page-title__content {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  gap: var(--bq-spacing-xs);
+}
+
+.bq-page-title__title-suffix {
+  display: flex;
+  align-items: center;
+  gap: var(--bq-spacing-xs);
+}
+
+.bq-page-title__title,
+.bq-page-title__subtitle {
+  font-family: var(--bq-font-family);
+  line-height: var(--title-lineHeight);
+}
+
+.bq-page-title__title {
+  color: var(--title-textColor);
+  font-weight: var(--title-fontWeight);
+  font-size: var(--title-textSize);
+}
+
+.bq-page-title__suffix {
+  display: flex;
+  flex: 1 1 0;
+  gap: var(--bq-spacing-xs);
+  padding-block: var(--bq-spacing-xs2);
+  padding-inline: var(--bq-spacing-xs2);
+}
+
+.bq-page-title__subtitle {
+  color: var(--subtitle-textColor);
+  font-weight: var(--subtitle-fontWeight);
+  font-size: var(--subtitle-textSize);
+}
+
+/* --------------------------------- States --------------------------------- */
+
+.is-hidden {
+  display: none;
 }

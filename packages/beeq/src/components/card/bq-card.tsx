@@ -11,10 +11,8 @@ import { CARD_TYPE } from './bq-card.types';
  * @example How to use it
  * ```html
  * <bq-card type="default" border="m">
- *   <div class="p-m">
- *     <h3 class="text-xl font-bold">Card Title</h3>
- *     <p class="text-m">Card content goes here</p>
- *   </div>
+ *   <h3>Card Title</h3>
+ *   <p>Card content goes here</p>
  * </bq-card>
  * ```
  *
@@ -109,15 +107,7 @@ export class BqCard {
     };
     return (
       <Host style={style}>
-        <div
-          class={{
-            'bq-card rounded-[--bq-card--borderRadius] border-[color:--bq-card--borderColor] border-[length:--bq-card--borderWidth] bg-[--bq-card--background]': true,
-            'p-b-[--bq-card--padding] p-i-[--bq-card--padding]': this.type === 'default',
-            // Remove padding for minimal card type
-            'p-b-0 p-i-0': this.type === 'minimal',
-          }}
-          part="wrapper"
-        >
+        <div class="bq-card" part="wrapper">
           <slot />
         </div>
       </Host>

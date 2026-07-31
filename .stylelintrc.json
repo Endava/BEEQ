@@ -1,19 +1,24 @@
 {
+  "extends": ["stylelint-config-standard-scss"],
   "ignoreFiles": ["**/*.{js,json,ts,tsx}", "./dist/**/*", "./node_modules/**/*"],
-  "overrides": [
-    {
-      "files": ["**/*.css"],
-      "extends": ["stylelint-config-standard"],
-      "rules": {}
-    },
-    {
-      "files": ["**/*.scss"],
-      "extends": ["stylelint-config-standard-scss"],
-      "rules": {}
+  "languageOptions": {
+    "directionality": {
+      "block": "top-to-bottom",
+      "inline": "left-to-right"
     }
-  ],
+  },
+  "reportInvalidScopeDisables": true,
+  "reportNeedlessDisables": true,
   "rules": {
-    "max-nesting-depth": 2,
-    "selector-class-pattern": null
+    "max-nesting-depth": [
+      2,
+      {
+        "ignore": ["blockless-at-rules"],
+        "ignoreAtRules": ["layer", "media", "supports", "container"]
+      }
+    ],
+    "declaration-no-important": true,
+    "selector-class-pattern": null,
+    "no-descending-specificity": null
   }
 }
