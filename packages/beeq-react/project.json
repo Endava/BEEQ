@@ -15,8 +15,7 @@
         "outputPath": "dist/beeq-react",
         "project": "packages/beeq-react/package.json",
         "tsConfig": "packages/beeq-react/tsconfig.lib.json"
-      },
-      "dependsOn": [{ "dependencies": true, "target": "build" }]
+      }
     },
     "check": {
       "executor": "nx:run-commands",

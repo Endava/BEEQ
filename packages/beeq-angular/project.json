@@ -11,8 +11,7 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": ["tsx packages/beeq-angular/scripts/patch-value-accessor-event-targets.ts"]
-      },
-      "dependsOn": [{ "dependencies": true, "target": "build" }]
+      }
     },
     "build": {
       "executor": "@nx/angular:package",
@@ -29,8 +28,7 @@
           "tsConfig": "{projectRoot}/tsconfig.lib.json"
         }
       },
-      "defaultConfiguration": "production",
-      "dependsOn": [{ "target": "prebuild" }]
+      "defaultConfiguration": "production"
     },
     "check": {
       "executor": "nx:run-commands",

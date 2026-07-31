@@ -4,6 +4,7 @@
   "sourceRoot": "packages/beeq/src",
   "projectType": "library",
   "tags": ["components", "core", "publishable"],
+  "implicitDependencies": ["beeq-tailwindcss"],
   "namedInputs": {
     "production": [
       "default",
@@ -43,7 +44,7 @@
       "continuous": true
     },
     "build": {
-      "dependsOn": [{ "target": "icons" }, { "target": "build", "projects": "beeq-tailwindcss" }],
+      "dependsOn": [{ "target": "icons" }],
       "executor": "nx:run-commands",
       "outputs": [
         "{workspaceRoot}/dist/beeq",
@@ -82,7 +83,7 @@
       "executor": "nx:run-commands",
       "outputs": ["{projectRoot}/.storybook/assets/css"],
       "options": {
-        "command": "pnpm exec tailwindcss -i packages/beeq/src/global/styles/default.scss -o packages/beeq/.storybook/assets/css/stories.css --postcss ./postcss.config.js --watch"
+        "command": "node packages/beeq/scripts/build-styles.mjs --storybook --watch"
       },
       "continuous": true
     },
@@ -90,7 +91,7 @@
       "executor": "nx:run-commands",
       "outputs": ["{projectRoot}/.storybook/assets/css"],
       "options": {
-        "command": "pnpm exec tailwindcss -i packages/beeq/src/global/styles/default.scss -o packages/beeq/.storybook/assets/css/stories.css --postcss ./postcss.config.js --minify"
+        "command": "node packages/beeq/scripts/build-styles.mjs --storybook --minify"
       }
     },
     "icons": {

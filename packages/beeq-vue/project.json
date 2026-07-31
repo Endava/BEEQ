@@ -15,8 +15,7 @@
         "main": "packages/beeq-vue/src/index.ts",
         "tsConfig": "packages/beeq-vue/tsconfig.lib.json",
         "assets": ["packages/beeq-vue/README.md"]
-      },
-      "dependsOn": [{ "dependencies": true, "target": "build" }]
+      }
     },
     "check": {
       "executor": "nx:run-commands",

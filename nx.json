@@ -28,7 +28,6 @@
     "icons": { "cache": true },
     "stylelint": { "cache": true },
     "prepare-storybook": { "cache": true },
-    "prebuild": { "cache": true },
     "check": {
       "cache": true,
       "inputs": [
@@ -43,6 +42,11 @@
     "test": {
       "cache": true,
       "inputs": ["default", "^default", "{workspaceRoot}/jest.preset.js"]
+    },
+    "prebuild": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
     },
     "build": {
       "cache": true,
