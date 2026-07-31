@@ -262,20 +262,10 @@ export class BqToast {
   // ===================================
 
   render() {
-    const style = {
-      ...(this.border && { '--bq-toast--border-radius': `var(--bq-radius--${this.border})` }),
-    };
-
     return (
-      <Host
-        aria-hidden={!this.open ? 'true' : 'false'}
-        class={{ 'is-hidden': !this.open }}
-        hidden={!this.open ? 'true' : 'false'}
-        role="status"
-        style={style}
-      >
+      <Host aria-hidden={!this.open ? 'true' : 'false'} hidden={!this.open ? 'true' : 'false'} role="status">
         <output class="bq-toast" part="wrapper">
-          <div class={{ [`bq-toast--icon ${this.type}`]: true, '!hidden': this.hideIcon }} part="icon">
+          <div class="bq-toast__icon" part="icon">
             <slot name="icon">
               <bq-icon exportparts="base,svg" name={this.iconName} size="24" slot="icon" />
             </slot>
