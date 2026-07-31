@@ -53,10 +53,11 @@ describe('bq-radio-group', () => {
       </bq-radio-group>,
     );
     const bqRadioGroup = root as HTMLBqRadioGroupElement;
+    const group = bqRadioGroup.shadowRoot?.querySelector<HTMLElement>('[part="group"]') as HTMLElement;
 
-    expect(bqRadioGroup.shadowRoot?.querySelector('[part="base"]')).toHaveClass('has-fieldset');
     expect(getTextContent(getLabelSlot(bqRadioGroup), { recurse: true })).toBe('Radio group label');
-    expect(bqRadioGroup.shadowRoot?.querySelector('[part="group"]')).toHaveClass('bq-radio-group--horizontal');
+    expect(bqRadioGroup).toHaveAttribute('fieldset');
+    expect(getComputedStyle(group).flexDirection).toBe('row');
   });
 
   it('should become valid only after one option is selected when required', async () => {
@@ -323,10 +324,13 @@ describe('bq-radio-group', () => {
     const bqRadioGroup = root as HTMLBqRadioGroupElement;
 
     await setProps({ orientation: 'invalid' });
+    const group = bqRadioGroup.shadowRoot?.querySelector<HTMLElement>('[part="group"]') as HTMLElement;
 
     expect(bqRadioGroup.orientation).toBe('vertical');
-    expect(bqRadioGroup.shadowRoot?.querySelector('[part="group"]')).toHaveClass('bq-radio-group--vertical');
-    expect(warn).toHaveBeenCalledTimes(1);
+    expect(warn).toHaveBeenCalledWith(
+      '[BQ-RADIO-GROUP] Please notice that "orientation" should be one of horizontal|vertical',
+    );
+    expect(getComputedStyle(group).flexDirection).toBe('column');
 
     warn.mockRestore();
   });
