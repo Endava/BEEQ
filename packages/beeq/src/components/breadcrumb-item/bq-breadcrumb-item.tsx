@@ -135,9 +135,9 @@ export class BqBreadcrumbItem {
     const TagElem = isLink ? 'a' : 'button';
 
     return (
-      <div class="flex items-center" part="base">
+      <div class="bq-breadcrumb-item" part="base">
         <TagElem
-          class="breadcrumb-item"
+          class="bq-breadcrumb-item__control"
           href={isLink ? this.href : undefined}
           onBlur={this.onBlur}
           onClick={this.onClick}
@@ -146,12 +146,12 @@ export class BqBreadcrumbItem {
           rel={isLink && this.target ? 'noreferrer noopener' : undefined}
           target={isLink ? this.target : undefined}
         >
-          <span class="flex items-center gap-xs2" part="content">
+          <span class="bq-breadcrumb-item__content" part="content">
             <slot></slot>
           </span>
         </TagElem>
         {/* @internal use only */}
-        <span class="breadcrumb-separator" part="separator">
+        <span class="bq-breadcrumb-item__separator" part="separator">
           <slot name="separator"></slot>
         </span>
       </div>

@@ -30,7 +30,7 @@ describe('bq-breadcrumb-item', () => {
   it('should render `button` tag', async () => {
     const { root } = await render(<bq-breadcrumb-item>Home</bq-breadcrumb-item>);
 
-    const element = root.shadowRoot.querySelector('.breadcrumb-item');
+    const element = root.shadowRoot.querySelector('[part="item"]');
 
     expect(element?.tagName.toLowerCase()).toBe('button');
   });
@@ -38,7 +38,7 @@ describe('bq-breadcrumb-item', () => {
   it('should render `a` tag', async () => {
     const { root } = await render(<bq-breadcrumb-item href="https://example.com/">Home</bq-breadcrumb-item>);
 
-    const element = root.shadowRoot.querySelector('.breadcrumb-item');
+    const element = root.shadowRoot.querySelector('[part="item"]');
 
     expect(element?.tagName.toLowerCase()).toBe('a');
   });
@@ -50,7 +50,7 @@ describe('bq-breadcrumb-item', () => {
       </bq-breadcrumb-item>,
     );
 
-    const element = root.shadowRoot?.querySelector<HTMLAnchorElement>('.breadcrumb-item');
+    const element = root.shadowRoot?.querySelector<HTMLAnchorElement>('[part="item"]');
 
     expect(element.target).toBe('_blank');
     expect(element.rel).toBe('noreferrer noopener');
@@ -58,7 +58,7 @@ describe('bq-breadcrumb-item', () => {
 
   it('should emit focus, click, and blur events', async () => {
     const { root, spyOnEvent } = await render(<bq-breadcrumb-item>Home</bq-breadcrumb-item>);
-    const element = root.shadowRoot?.querySelector<HTMLButtonElement>('.breadcrumb-item');
+    const element = root.shadowRoot?.querySelector<HTMLButtonElement>('[part="item"]');
 
     const bqFocus = spyOnEvent('bqFocus');
     const bqClick = spyOnEvent('bqClick');
