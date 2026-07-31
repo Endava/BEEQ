@@ -86,7 +86,7 @@ describe('bq-textarea', () => {
     // Type one character at a time and wait for changes between each keystroke.
     // debounceTime defaults to 0ms — rapid typing cancels the previous debounce before
     // it fires. Waiting after each character lets the 0ms setTimeout resolve, matching
-    // the { delay: 100 } behavior from the original Puppeteer test.
+    // the per-keystroke timing expected by this interaction test.
     for (const char of value) {
       await userEvent.type(nativeTextarea, char);
       await waitForChanges();
