@@ -4,6 +4,7 @@
   "sourceRoot": "packages/beeq/src",
   "projectType": "library",
   "tags": ["components", "core", "publishable"],
+  "implicitDependencies": ["beeq-tailwindcss"],
   "namedInputs": {
     "production": [
       "default",
@@ -43,7 +44,7 @@
       "continuous": true
     },
     "build": {
-      "dependsOn": [{ "target": "icons" }, { "target": "build", "projects": "beeq-tailwindcss" }],
+      "dependsOn": [{ "target": "icons" }],
       "executor": "nx:run-commands",
       "outputs": [
         "{workspaceRoot}/dist/beeq",
