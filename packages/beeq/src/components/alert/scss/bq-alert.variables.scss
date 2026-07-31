@@ -32,34 +32,34 @@
    * @prop --bq-alert--min-width: The alert min width
    */
 
-  --bq-alert--background: theme(colors.ui.secondary);
+  --bq-alert--background: var(--bq-ui--secondary);
 
-  --bq-alert--border-radius: theme(borderRadius.s);
+  --bq-alert--border-radius: var(--bq-radius--s);
 
-  --bq-alert--content-footer-gap: theme(spacing.s);
-  --bq-alert--title-body-gap: theme(spacing.s);
+  --bq-alert--content-footer-gap: var(--bq-spacing-s);
+  --bq-alert--title-body-gap: var(--bq-spacing-s);
 
-  --bq-alert--background-info: theme(backgroundColor.ui.brand-alt);
-  --bq-alert--background-success: theme(backgroundColor.ui.success-alt);
-  --bq-alert--background-warning: theme(backgroundColor.ui.warning-alt);
-  --bq-alert--background-error: theme(backgroundColor.ui.danger-alt);
-  --bq-alert--background-default: theme(backgroundColor.ui.primary);
+  --bq-alert--background-info: var(--bq-ui--brand-alt);
+  --bq-alert--background-success: var(--bq-ui--success-alt);
+  --bq-alert--background-warning: var(--bq-ui--warning-alt);
+  --bq-alert--background-error: var(--bq-ui--danger-alt);
+  --bq-alert--background-default: var(--bq-ui--primary);
 
-  --bq-alert--border-info: theme(borderColor.brand);
-  --bq-alert--border-success: theme(borderColor.success);
-  --bq-alert--border-warning: theme(borderColor.warning);
-  --bq-alert--border-error: theme(borderColor.danger);
-  --bq-alert--border-default: theme(borderColor.secondary);
-  --bq-alert--border-width: theme(borderWidth.s);
+  --bq-alert--border-info: var(--bq-stroke--brand);
+  --bq-alert--border-success: var(--bq-stroke--success);
+  --bq-alert--border-warning: var(--bq-stroke--warning);
+  --bq-alert--border-error: var(--bq-stroke--danger);
+  --bq-alert--border-default: var(--bq-stroke--secondary);
+  --bq-alert--border-width: var(--bq-stroke-s);
   --bq-alert--border-style: solid;
 
-  --bq-alert--icon-color-info: theme(fill.brand);
-  --bq-alert--icon-color-success: theme(fill.success);
-  --bq-alert--icon-color-warning: theme(fill.warning);
-  --bq-alert--icon-color-error: theme(fill.danger);
-  --bq-alert--icon-color-default: theme(fill.primary);
+  --bq-alert--icon-color-info: var(--bq-icon--brand);
+  --bq-alert--icon-color-success: var(--bq-icon--success);
+  --bq-alert--icon-color-warning: var(--bq-icon--warning);
+  --bq-alert--icon-color-error: var(--bq-icon--danger);
+  --bq-alert--icon-color-default: var(--bq-icon--primary);
 
-  --bq-alert--padding: theme(padding.s);
+  --bq-alert--padding: var(--bq-spacing-s);
 
   --bq-alert--min-width: 320px;
 }
