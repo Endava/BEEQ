@@ -117,10 +117,12 @@ export class BqTooltip {
   @Watch('sameWidth')
   handleFloatingUIOptionsChange() {
     this.floatingUI.init({
+      ...(!this.hideArrow && { arrow: this.arrow }),
       placement: this.placement,
       distance: this.distance,
       sameWidth: this.sameWidth,
       strategy: 'fixed',
+      skidding: 0,
     });
   }
 
@@ -153,7 +155,7 @@ export class BqTooltip {
       placement: this.placement,
       distance: this.distance,
       sameWidth: this.sameWidth,
-      strategy: 'absolute',
+      strategy: 'fixed',
       skidding: 0,
     });
   }
