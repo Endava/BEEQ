@@ -385,7 +385,7 @@ export class BqTooltip {
          * visibility behaviour.
          */}
         <div
-           aria-hidden={String(this.isHidden)}
+          aria-hidden={String(this.isHidden)}
           class="bq-tooltip--panel"
           hidden={this.supportsPopover ? undefined : this.isHidden}
           part="panel"

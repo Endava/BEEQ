@@ -113,7 +113,7 @@ export class FloatingUI {
       platform: {
         ...platform,
         // The default offsetParent lookup does not cross shadow roots.
-        getOffsetParent: (element: Element) => platform.getOffsetParent!(element, offsetParent),
+        getOffsetParent: (element: Element) => platform.getOffsetParent?.(element, offsetParent) ?? null,
       },
     });
 

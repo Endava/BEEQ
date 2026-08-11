@@ -20,7 +20,7 @@ const mkTooltip = () => (
 // Vitest exposes no API to move the cursor to arbitrary coords, so we use CDP directly.
 const moveOff = () => cdp().send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: 0, y: 0 });
 const expectPanelVisibility = (panel: Element, visible: boolean) => {
-  expect(panel).toHaveAttribute('aria-hidden', String(!visible));
+  expect(panel.getAttribute('aria-hidden')).toBe(String(!visible));
   expect(panel.matches(':popover-open')).toBe(visible);
 };
 const getArrowOffset = (arrow: HTMLElement) =>
@@ -258,7 +258,7 @@ describe('bq-tooltip', () => {
 
     const panel = root.querySelector('bq-tooltip').shadowRoot.querySelector('[part="panel"]');
     expectPanelVisibility(panel, true);
-    expect(panel).toHaveAttribute('popover', 'manual');
+    expect(panel.getAttribute('popover')).toBe('manual');
     expect(getComputedStyle(panel).position).toBe('absolute');
   });
 
@@ -285,7 +285,7 @@ describe('bq-tooltip', () => {
       await tooltip.show();
       await result.waitForChanges();
       expect(panel).not.toHaveAttribute('hidden');
-      expect(panel).toHaveAttribute('aria-hidden', 'false');
+      expect(panel.getAttribute('aria-hidden')).toBe('false');
     } finally {
       unmount?.();
       if (showPopover) Object.defineProperty(prototype, 'showPopover', showPopover);
