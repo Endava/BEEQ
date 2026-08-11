@@ -10,11 +10,14 @@
   "collection:main": "./dist/collection/index.js",
   "customElements": "./custom-elements.json",
   "unpkg": "./dist/beeq/beeq.esm.js",
-  "files": ["dist/"],
+  "files": [
+    "dist/"
+  ],
   "dependencies": {
     "@floating-ui/core": "^1.7.4",
     "@floating-ui/dom": "^1.7.5",
-    "@stencil/core": "^4.41.3"
+    "@stencil/core": "^4.41.3",
+    "composed-offset-position": "0.0.6"
   },
   "repository": {
     "type": "git",

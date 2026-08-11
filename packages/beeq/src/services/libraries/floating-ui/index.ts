@@ -6,10 +6,12 @@ import {
   hide,
   type MiddlewareData,
   offset,
+  platform,
   type ReferenceElement,
   shift,
   size,
 } from '@floating-ui/dom';
+import { offsetParent } from 'composed-offset-position';
 
 import type { FloatingUIOptions } from '../../interfaces';
 
@@ -108,6 +110,19 @@ export class FloatingUI {
           this.positionChange(),
           hide(),
         ],
+        platform: {
+          ...platform,
+          // Floating UI's default `getOffsetParent` walks the ancestor tree
+          // with the current `offsetParent` spec, which does not cross shadow
+          // roots. `composed-offset-position` provides a ponyfill that walks
+          // the composed tree, giving correct results when the trigger and
+          // panel live in different shadow roots (or when either is a
+          // descendant of a shadow root).
+          //
+          // Floating UI only calls `getOffsetParent` for `strategy: 'absolute'`;
+          // it is a no-op for `strategy: 'fixed'`.
+          getOffsetParent: (element: Element) => platform.getOffsetParent!(element, offsetParent),
+        },
       });
 
       this.applyPanelPosition(x, y);
