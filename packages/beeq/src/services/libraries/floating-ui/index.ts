@@ -17,7 +17,7 @@ export class FloatingUI {
   panel: HTMLElement;
   trigger: ReferenceElement;
   options: FloatingUIOptions;
-  cleanUp: () => void;
+  cleanUp: (() => void) | undefined;
 
   constructor(trigger: ReferenceElement, panel: HTMLElement, options?: FloatingUIOptions) {
     this.trigger = trigger;
@@ -34,6 +34,7 @@ export class FloatingUI {
 
   init(options: FloatingUIOptions) {
     this.options = Object.assign(this.options, options);
+    this.destroy();
     this.update();
   }
 
@@ -72,6 +73,7 @@ export class FloatingUI {
   destroy() {
     if (!this.cleanUp) return;
     this.cleanUp();
+    this.cleanUp = undefined;
   }
 
   positionChange() {
