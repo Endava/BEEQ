@@ -16,13 +16,18 @@
   /*  Popover API overrides                                                     */
   /* -------------------------------------------------------------------------- */
   /*  The [popover] user-agent stylesheet applies `inset: 0`, `margin: auto`,   */
-  /*  and `overflow: auto` to center and clip the popover in the viewport.      */
-  /*  Floating UI positions the panel imperatively via `transform: translate`,  */
-  /*  so we neutralise those UA defaults to avoid double-positioning while      */
-  /*  keeping the browser's top-layer promotion behaviour intact.               */
+  /*  `overflow: auto`, `border: solid`, `background-color: Canvas` and         */
+  /*  `color: CanvasText`. Floating UI positions the panel imperatively via     */
+  /*  `transform: translate`, so we neutralise those UA defaults to avoid       */
+  /*  double-positioning and, critically, we reset `border-style` — the base    */
+  /*  class only sets `border-color`/`border-width`, so an unset `border-style` */
+  /*  would fall back to the UA's `solid` value with the browser default        */
+  /*  `medium` width (~3px). That invisible border widens the panel and pulls   */
+  /*  the arrow's `bottom: -4px` anchor inside the border-box, hiding most of   */
+  /*  the arrow tip. Explicitly clearing the border restores the visual         */
+  /*  parity with the non-popover fallback path.                                */
   &[popover] {
-    @apply m-0 p-b-[--bq-tooltip--paddingY] p-i-[--bq-tooltip--paddingX];
-    @apply overflow-visible;
+    @apply m-0 border-none overflow-visible;
     inset: unset;
   }
 }
