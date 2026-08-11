@@ -208,6 +208,18 @@ export class BqTooltip {
     // Wire ARIA on the currently slotted trigger element. Further changes
     // are handled by the `slotchange` listener on the trigger slot.
     this.syncTriggerAriaLabelledBy();
+
+    // Honour the initial `visible` / `always-visible` props. Stencil's
+    // `@Watch('visible')` does not fire for the initial value, so components
+    // rendered with `visible` already true (or `always-visible`) would
+    // otherwise stay hidden — in the Popover path because `showPopover()`
+    // is only called from `show()`, and in the fallback path because the
+    // panel's `hidden` attribute reflects the state at first render but
+    // Floating UI would not have run a first positioning pass. Calling
+    // `showTooltip()` here guarantees a consistent first paint.
+    if (this.visible || this.alwaysVisible) {
+      this.showTooltip();
+    }
   }
 
   disconnectedCallback() {
