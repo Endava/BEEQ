@@ -106,7 +106,7 @@ export class BqPanel {
   onPropChange() {
     if (!isClient()) return;
 
-    this.floatingUI?.init({ ...this.options });
+    this.floatingUI?.configure({ ...this.options });
   }
 
   // Events section
@@ -137,7 +137,7 @@ export class BqPanel {
   disconnectedCallback() {
     if (!isClient()) return;
 
-    this.floatingUI?.destroy();
+    this.floatingUI?.stop();
 
     // Ensure scroll lock is removed if the component is disconnected while the panel is open.
     if (this.open && !this.disableScrollLock) {
@@ -163,7 +163,7 @@ export class BqPanel {
   private showPanel() {
     if (!isClient()) return;
 
-    this.floatingUI?.update();
+    this.floatingUI?.reposition();
 
     // Lock the body scroll if the disableScrollLock prop is not true.
     if (!this.disableScrollLock) {

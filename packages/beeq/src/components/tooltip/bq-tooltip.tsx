@@ -116,7 +116,7 @@ export class BqTooltip {
   @Watch('placement')
   @Watch('sameWidth')
   handleFloatingUIOptionsChange() {
-    this.floatingUI.init({
+    this.floatingUI?.configure({
       ...(!this.hideArrow && { arrow: this.arrow }),
       placement: this.placement,
       distance: this.distance,
@@ -161,7 +161,7 @@ export class BqTooltip {
   }
 
   disconnectedCallback() {
-    this.floatingUI?.destroy();
+    this.floatingUI?.stop();
   }
 
   // Listeners
@@ -270,7 +270,7 @@ export class BqTooltip {
 
   private showTooltip = () => {
     if (!this.panel) return;
-    this.floatingUI?.update();
+    this.floatingUI?.reposition();
   };
 
   private hideTooltip = () => {
