@@ -134,6 +134,11 @@ export class BqPanel {
     this.handleOpenChange();
   }
 
+  connectedCallback() {
+    if (!this.floatingUI || !this.open) return;
+    this.showPanel();
+  }
+
   disconnectedCallback() {
     if (!isClient()) return;
 
@@ -163,7 +168,7 @@ export class BqPanel {
   private showPanel() {
     if (!isClient()) return;
 
-    this.floatingUI?.reposition();
+    this.floatingUI?.start();
 
     // Lock the body scroll if the disableScrollLock prop is not true.
     if (!this.disableScrollLock) {
@@ -173,6 +178,7 @@ export class BqPanel {
 
   private async hidePanel() {
     this.open = false;
+    this.floatingUI?.stop();
 
     // Unlock the body scroll if the disableScrollLock prop is not true.
     if (isClient() && !this.disableScrollLock) {

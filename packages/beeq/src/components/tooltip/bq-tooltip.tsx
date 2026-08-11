@@ -121,8 +121,16 @@ export class BqTooltip {
     await this.show();
   }
 
+  @Watch('alwaysVisible')
+  handleAlwaysVisibleChange() {
+    if (this.alwaysVisible || this.visible) {
+      this.showTooltip();
+      return;
+    }
+    this.hideTooltip();
+  }
+
   @Watch('distance')
-  @Watch('hideArrow')
   @Watch('placement')
   @Watch('sameWidth')
   handleFloatingUIOptionsChange() {
@@ -191,6 +199,17 @@ export class BqTooltip {
     if (this.visible || this.alwaysVisible) {
       this.showTooltip();
     }
+  }
+
+  componentDidRender() {
+    const arrow = this.hideArrow ? null : this.arrow;
+    if (!this.floatingUI || this.floatingUI.options.arrow === arrow) return;
+    this.floatingUI.configure({ arrow });
+  }
+
+  connectedCallback() {
+    if (!this.floatingUI || (!this.visible && !this.alwaysVisible)) return;
+    this.showTooltip();
   }
 
   disconnectedCallback() {
@@ -303,16 +322,15 @@ export class BqTooltip {
 
   private showTooltip = () => {
     if (!this.panel) return;
-    // Promote the panel into the top layer before repositioning so
-    // `getBoundingClientRect()` reads the correct box for Floating UI.
     if (this.supportsPopover && !this.panel.matches(':popover-open')) {
       this.panel.showPopover();
     }
-    this.floatingUI?.reposition();
+    this.floatingUI?.start();
   };
 
   private hideTooltip = () => {
     if (!this.panel) return;
+    this.floatingUI?.stop();
     if (this.supportsPopover && this.panel.matches(':popover-open')) {
       this.panel.hidePopover();
     }
@@ -320,12 +338,6 @@ export class BqTooltip {
   };
 
   private get floatingStrategy(): 'absolute' | 'fixed' {
-    // When the panel is in the top layer, its offset parent is the top-layer
-    // container (the initial containing block), so Floating UI must compute
-    // coordinates in `absolute` (offset-parent-relative) space and the
-    // shadow-DOM-aware `getOffsetParent` polyfill will resolve correctly.
-    // In the fallback path the panel is a regular `position: fixed` element
-    // and Floating UI must compute in viewport space.
     return this.supportsPopover ? 'absolute' : 'fixed';
   }
 

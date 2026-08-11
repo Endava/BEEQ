@@ -39,6 +39,7 @@ export class FloatingUI {
   trigger: ReferenceElement;
   options: FloatingUIOptions;
   private cleanUp: (() => void) | undefined;
+  private repositionId = 0;
 
   constructor(trigger: ReferenceElement, panel: HTMLElement, options?: FloatingUIOptions) {
     this.trigger = trigger;
@@ -50,18 +51,20 @@ export class FloatingUI {
       sameWidth: false,
       ...options,
     };
-    this.start();
   }
 
   /**
-   * Merges new options into the current configuration and repositions the
-   * panel once, without recreating the `autoUpdate` subscription. Use this
-   * when only Floating UI middleware inputs change (placement, distance,
-   * arrow, etc.).
+   * Merges new options into the current configuration. Active instances
+   * reposition without recreating their `autoUpdate` subscription; stopped
+   * instances apply the options the next time they start.
    */
-  configure(options: FloatingUIOptions) {
+  configure(options: Partial<FloatingUIOptions>) {
     this.options = Object.assign(this.options, options);
-    this.reposition();
+    if (options.sameWidth === false) {
+      this.panel.style.width = '';
+    }
+    if (!this.cleanUp) return;
+    void this.reposition();
   }
 
   /**
@@ -71,7 +74,7 @@ export class FloatingUI {
    */
   start() {
     if (this.cleanUp) return;
-    this.cleanUp = autoUpdate(this.trigger, this.panel, () => this.reposition());
+    this.cleanUp = autoUpdate(this.trigger, this.panel, () => void this.reposition());
   }
 
   /**
@@ -79,6 +82,7 @@ export class FloatingUI {
    * multiple times, and before the first `start()`.
    */
   stop() {
+    this.repositionId += 1;
     if (!this.cleanUp) return;
     this.cleanUp();
     this.cleanUp = undefined;
@@ -88,47 +92,36 @@ export class FloatingUI {
    * Runs a single Floating UI `computePosition` pass and applies the
    * resulting styles to the panel (and the arrow, if configured).
    */
-  reposition() {
-    (async () => {
-      const { x, y, placement, middlewareData } = await computePosition(this.trigger, this.panel, {
-        placement: this.options.placement,
-        strategy: this.options.strategy,
-        middleware: [
-          offset({ mainAxis: this.options.distance, crossAxis: this.options.skidding }),
-          flip(),
-          shift(),
-          size(
-            this.options.sameWidth && {
-              apply({ rects, elements }) {
-                Object.assign(elements.floating.style, {
-                  width: `${rects.reference.width}px`,
-                });
-              },
-            },
-          ),
-          arrow({ element: this.options.arrow || null }),
-          this.positionChange(),
-          hide(),
-        ],
-        platform: {
-          ...platform,
-          // Floating UI's default `getOffsetParent` walks the ancestor tree
-          // with the current `offsetParent` spec, which does not cross shadow
-          // roots. `composed-offset-position` provides a ponyfill that walks
-          // the composed tree, giving correct results when the trigger and
-          // panel live in different shadow roots (or when either is a
-          // descendant of a shadow root).
-          //
-          // Floating UI only calls `getOffsetParent` for `strategy: 'absolute'`;
-          // it is a no-op for `strategy: 'fixed'`.
-          getOffsetParent: (element: Element) => platform.getOffsetParent!(element, offsetParent),
-        },
-      });
+  async reposition() {
+    const repositionId = ++this.repositionId;
+    const { x, y, placement, middlewareData } = await computePosition(this.trigger, this.panel, {
+      placement: this.options.placement,
+      strategy: this.options.strategy,
+      middleware: [
+        offset({ mainAxis: this.options.distance, crossAxis: this.options.skidding }),
+        flip(),
+        shift(),
+        size({
+          apply: ({ rects, elements }) => {
+            elements.floating.style.width = this.options.sameWidth ? `${rects.reference.width}px` : '';
+          },
+        }),
+        arrow({ element: this.options.arrow || null }),
+        this.positionChange(),
+        hide(),
+      ],
+      platform: {
+        ...platform,
+        // The default offsetParent lookup does not cross shadow roots.
+        getOffsetParent: (element: Element) => platform.getOffsetParent!(element, offsetParent),
+      },
+    });
 
-      this.applyPanelPosition(x, y);
-      this.applyArrowPosition(placement, middlewareData);
-      this.applyVisibility(middlewareData);
-    })();
+    if (repositionId !== this.repositionId || !this.panel.isConnected) return;
+
+    this.applyPanelPosition(x, y);
+    this.applyArrowPosition(placement, middlewareData);
+    this.applyVisibility(middlewareData);
   }
 
   /**
@@ -148,8 +141,11 @@ export class FloatingUI {
    * subscription is running and then repositions.
    */
   update() {
-    this.start();
-    this.reposition();
+    if (!this.cleanUp) {
+      this.start();
+      return;
+    }
+    void this.reposition();
   }
 
   /**
