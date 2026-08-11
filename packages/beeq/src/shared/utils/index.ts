@@ -12,6 +12,7 @@ export * from './isDefined';
 export * from './isEmpty';
 export * from './isHTMLElement';
 export * from './isNil';
+export * from './isPopoverSupported';
 export * from './isString';
 export * from './props';
 export * from './scrollLock';

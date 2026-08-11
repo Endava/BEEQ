@@ -11,6 +11,20 @@
   @apply text-[length:--bq-tooltip--font-size] leading-[--bq-tooltip--line-height] text-[color:--bq-tooltip--text-color];
   @apply rounded-[--bq-tooltip--border-radius] border-[length:--bq-tooltip--border-width] border-[color:--bq-tooltip--border-color];
   @apply shadow-[shadow:--bq-tooltip--box-shadow];
+
+  /* -------------------------------------------------------------------------- */
+  /*  Popover API overrides                                                     */
+  /* -------------------------------------------------------------------------- */
+  /*  The [popover] user-agent stylesheet applies `inset: 0`, `margin: auto`,   */
+  /*  and `overflow: auto` to center and clip the popover in the viewport.      */
+  /*  Floating UI positions the panel imperatively via `transform: translate`,  */
+  /*  so we neutralise those UA defaults to avoid double-positioning while      */
+  /*  keeping the browser's top-layer promotion behaviour intact.               */
+  &[popover] {
+    @apply m-0 p-b-[--bq-tooltip--paddingY] p-i-[--bq-tooltip--paddingX];
+    @apply overflow-visible;
+    inset: unset;
+  }
 }
 
 .bq-tooltip--arrow {

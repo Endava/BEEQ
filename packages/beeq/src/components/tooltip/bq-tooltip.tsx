@@ -3,7 +3,7 @@ import { Component, Element, Event, h, Listen, Method, Prop, Watch } from '@sten
 
 import type { Placement } from '../../services/interfaces';
 import { FloatingUI } from '../../services/libraries';
-import { isEventTargetChildOfElement } from '../../shared/utils';
+import { isEventTargetChildOfElement, isPopoverSupported } from '../../shared/utils';
 
 /**
  * The Tooltip component is a small pop-up box that appears when a user hovers over or clicks on an element, providing additional information or context.
@@ -62,6 +62,16 @@ export class BqTooltip {
   private panel: HTMLElement;
   private arrow: HTMLElement;
   private floatingUI: FloatingUI;
+  /**
+   * Whether the runtime supports the HTML Popover API. When `true`, the
+   * panel is promoted to the browser top layer via `showPopover()`, which
+   * bypasses containing blocks created by ancestor `transform`, `filter`,
+   * `contain`, `will-change`, etc. When `false`, the panel remains a
+   * regular `position: fixed` element in the shadow root, which still
+   * covers the common case but is subject to those containing-block
+   * quirks.
+   */
+  private readonly supportsPopover = isPopoverSupported();
 
   // Reference to host HTML element
   // ===================================
@@ -121,7 +131,7 @@ export class BqTooltip {
       placement: this.placement,
       distance: this.distance,
       sameWidth: this.sameWidth,
-      strategy: 'fixed',
+      strategy: this.floatingStrategy,
       skidding: 0,
     });
   }
@@ -150,12 +160,23 @@ export class BqTooltip {
   // =====================================
 
   componentDidLoad() {
+    // Promote the panel to the top layer when the Popover API is available.
+    // This escapes containing blocks created by ancestor `transform`,
+    // `filter`, `contain`, `will-change`, etc., which is the root cause of
+    // scroll-related tooltip drift inside virtualised or transformed
+    // containers (e.g. tall tables, dialogs). We use `manual` mode so BEEQ
+    // keeps full control of show/hide semantics (delegated close, focus,
+    // Escape) instead of the browser's `auto` light-dismiss behaviour.
+    if (this.supportsPopover) {
+      this.panel.popover = 'manual';
+    }
+
     this.floatingUI = new FloatingUI(this.trigger, this.panel, {
       ...(!this.hideArrow && { arrow: this.arrow }),
       placement: this.placement,
       distance: this.distance,
       sameWidth: this.sameWidth,
-      strategy: 'fixed',
+      strategy: this.floatingStrategy,
       skidding: 0,
     });
   }
@@ -270,13 +291,31 @@ export class BqTooltip {
 
   private showTooltip = () => {
     if (!this.panel) return;
+    // Promote the panel into the top layer before repositioning so
+    // `getBoundingClientRect()` reads the correct box for Floating UI.
+    if (this.supportsPopover && !this.panel.matches(':popover-open')) {
+      this.panel.showPopover();
+    }
     this.floatingUI?.reposition();
   };
 
   private hideTooltip = () => {
     if (!this.panel) return;
+    if (this.supportsPopover && this.panel.matches(':popover-open')) {
+      this.panel.hidePopover();
+    }
     this.visible = false;
   };
+
+  private get floatingStrategy(): 'absolute' | 'fixed' {
+    // When the panel is in the top layer, its offset parent is the top-layer
+    // container (the initial containing block), so Floating UI must compute
+    // coordinates in `absolute` (offset-parent-relative) space and the
+    // shadow-DOM-aware `getOffsetParent` polyfill will resolve correctly.
+    // In the fallback path the panel is a regular `position: fixed` element
+    // and Floating UI must compute in viewport space.
+    return this.supportsPopover ? 'absolute' : 'fixed';
+  }
 
   private get isHidden() {
     return !this.visible && !this.alwaysVisible;
@@ -313,10 +352,18 @@ export class BqTooltip {
           <slot name="trigger" />
         </div>
         {/* PANEL */}
+        {/*
+         * When the Popover API is supported, visibility is driven imperatively
+         * via `showPopover()` / `hidePopover()`. Setting `hidden={true}` in that
+         * mode would force `display: none`, which makes `showPopover()` throw
+         * an `InvalidStateError`. In the fallback path we keep the `hidden`
+         * attribute so consumers without the Popover API keep the original
+         * visibility behaviour.
+         */}
         <div
           aria-hidden={this.isHidden}
           class="bq-tooltip--panel"
-          hidden={this.isHidden}
+          hidden={this.supportsPopover ? undefined : this.isHidden}
           part="panel"
           ref={(el: HTMLDivElement) => {
             this.panel = el;
