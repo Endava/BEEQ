@@ -58,10 +58,25 @@ import { isEventTargetChildOfElement, isPopoverSupported } from '../../shared/ut
 export class BqTooltip {
   // Own Properties
   // ====================
+  private static nextId = 0;
+
   private trigger: HTMLElement;
   private panel: HTMLElement;
   private arrow: HTMLElement;
   private floatingUI: FloatingUI;
+  /**
+   * The slotted element currently acting as the tooltip trigger. Tracked so
+   * we can add/remove the tooltip's ID from its `aria-labelledby` list
+   * whenever the slot content changes, and clean it up on disconnect.
+   */
+  private assignedTrigger: HTMLElement | null = null;
+  /**
+   * Stable ID that assistive technologies use to associate the trigger with
+   * the tooltip content. When the consumer sets an `id` on `<bq-tooltip>`
+   * we honour it, otherwise we auto-generate one so `aria-labelledby`
+   * wiring always has a target.
+   */
+  private hostId!: string;
   /**
    * Whether the runtime supports the HTML Popover API. When `true`, the
    * panel is promoted to the browser top layer via `showPopover()`, which
@@ -159,6 +174,16 @@ export class BqTooltip {
   // Ordered by their natural call order
   // =====================================
 
+  componentWillLoad() {
+    // Ensure the host has an ID so slotted triggers can point to it via
+    // `aria-labelledby`. Consumers can override by setting `id` themselves.
+    if (!this.el.id) {
+      BqTooltip.nextId += 1;
+      this.el.id = `bq-tooltip-${BqTooltip.nextId}`;
+    }
+    this.hostId = this.el.id;
+  }
+
   componentDidLoad() {
     // Promote the panel to the top layer when the Popover API is available.
     // This escapes containing blocks created by ancestor `transform`,
@@ -179,10 +204,18 @@ export class BqTooltip {
       strategy: this.floatingStrategy,
       skidding: 0,
     });
+
+    // Wire ARIA on the currently slotted trigger element. Further changes
+    // are handled by the `slotchange` listener on the trigger slot.
+    this.syncTriggerAriaLabelledBy();
   }
 
   disconnectedCallback() {
     this.floatingUI?.stop();
+    if (this.assignedTrigger) {
+      this.removeFromAriaLabelledBy(this.assignedTrigger, this.hostId);
+      this.assignedTrigger = null;
+    }
   }
 
   // Listeners
@@ -321,6 +354,57 @@ export class BqTooltip {
     return !this.visible && !this.alwaysVisible;
   }
 
+  /**
+   * Re-reads the slotted trigger element and updates its `aria-labelledby`
+   * to include the tooltip's host ID. Called on initial load and whenever
+   * the `slotchange` event fires on the trigger slot.
+   */
+  private syncTriggerAriaLabelledBy = () => {
+    const slot = this.el.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="trigger"]');
+    const next = (slot?.assignedElements({ flatten: true })[0] as HTMLElement | undefined) ?? null;
+    if (this.assignedTrigger === next) return;
+
+    if (this.assignedTrigger) {
+      this.removeFromAriaLabelledBy(this.assignedTrigger, this.hostId);
+    }
+    this.assignedTrigger = next;
+    if (this.assignedTrigger) {
+      this.addToAriaLabelledBy(this.assignedTrigger, this.hostId);
+    }
+  };
+
+  private handleTriggerSlotChange = () => {
+    this.syncTriggerAriaLabelledBy();
+  };
+
+  /**
+   * Adds `id` to the space-separated `aria-labelledby` token list on
+   * `element`, preserving any existing IDs and avoiding duplicates.
+   */
+  private addToAriaLabelledBy = (element: HTMLElement, id: string) => {
+    const current = element.getAttribute('aria-labelledby');
+    const tokens = current ? current.split(/\s+/).filter(Boolean) : [];
+    if (tokens.includes(id)) return;
+    tokens.push(id);
+    element.setAttribute('aria-labelledby', tokens.join(' '));
+  };
+
+  /**
+   * Removes `id` from the space-separated `aria-labelledby` token list on
+   * `element`. When no tokens remain the attribute is removed entirely so
+   * we do not leave an empty `aria-labelledby=""` behind.
+   */
+  private removeFromAriaLabelledBy = (element: HTMLElement, id: string) => {
+    const current = element.getAttribute('aria-labelledby');
+    if (!current) return;
+    const tokens = current.split(/\s+/).filter((token) => token && token !== id);
+    if (tokens.length === 0) {
+      element.removeAttribute('aria-labelledby');
+      return;
+    }
+    element.setAttribute('aria-labelledby', tokens.join(' '));
+  };
+
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -349,7 +433,7 @@ export class BqTooltip {
             this.trigger = el;
           }}
         >
-          <slot name="trigger" />
+          <slot name="trigger" onSlotchange={this.handleTriggerSlotChange} />
         </div>
         {/* PANEL */}
         {/*
