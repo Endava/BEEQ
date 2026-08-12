@@ -6,12 +6,10 @@ import {
   hide,
   type MiddlewareData,
   offset,
-  platform,
   type ReferenceElement,
   shift,
   size,
 } from '@floating-ui/dom';
-import { offsetParent } from 'composed-offset-position';
 
 import type { FloatingUIOptions } from '../../interfaces';
 
@@ -110,11 +108,6 @@ export class FloatingUI {
         this.positionChange(),
         hide(),
       ],
-      platform: {
-        ...platform,
-        // The default offsetParent lookup does not cross shadow roots.
-        getOffsetParent: (element: Element) => platform.getOffsetParent?.(element, offsetParent) ?? null,
-      },
     });
 
     if (repositionId !== this.repositionId || !this.panel.isConnected) return;

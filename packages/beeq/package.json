@@ -14,8 +14,7 @@
   "dependencies": {
     "@floating-ui/core": "^1.7.4",
     "@floating-ui/dom": "^1.7.5",
-    "@stencil/core": "^4.41.3",
-    "composed-offset-position": "0.0.6"
+    "@stencil/core": "^4.41.3"
   },
   "repository": {
     "type": "git",
