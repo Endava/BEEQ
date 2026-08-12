@@ -14,23 +14,14 @@ import {
 import type { FloatingUIOptions } from '../../interfaces';
 
 /**
- * Thin wrapper around Floating UI that owns:
- * - the middleware pipeline used by BEEQ floating components (offset, flip,
- *   shift, size, arrow, hide),
- * - a single `autoUpdate` subscription per instance, so scroll/resize
- *   listeners cannot silently stack when consumers reconfigure at runtime.
+ * Thin wrapper around Floating UI that owns the shared middleware pipeline
+ * and ensures each instance has at most one `autoUpdate` subscription.
  *
  * Lifecycle:
- * - `start()`   opens (or reuses) the `autoUpdate` subscription and runs a
- *                first `reposition()` pass.
- * - `stop()`    tears the subscription down; idempotent.
- * - `reposition()` computes the current position once; safe to call whether
- *                or not the subscription is running.
- * - `configure(options)` merges new options and re-runs `reposition()`,
- *                without touching the subscription.
- *
- * The legacy `init` / `update` / `destroy` methods are preserved as
- * aliases so existing consumers keep working while we migrate them.
+ * - `start()` starts position tracking and performs an initial reposition.
+ * - `stop()` stops tracking and invalidates pending positioning results.
+ * - `reposition()` computes and applies the position once.
+ * - `configure(options)` updates options and repositions only when active.
  */
 export class FloatingUI {
   panel: HTMLElement;
@@ -115,37 +106,6 @@ export class FloatingUI {
     this.applyPanelPosition(x, y);
     this.applyArrowPosition(placement, middlewareData);
     this.applyVisibility(middlewareData);
-  }
-
-  /**
-   * @deprecated Prefer `configure()` when only options change or `start()`
-   * to (re)open the subscription. Kept for backward compatibility: reruns
-   * the subscription with the merged options.
-   */
-  init(options: FloatingUIOptions) {
-    this.options = Object.assign(this.options, options);
-    this.stop();
-    this.start();
-  }
-
-  /**
-   * @deprecated Prefer `reposition()` for a one-off recompute or `start()`
-   * to open the subscription. Kept for backward compatibility: ensures the
-   * subscription is running and then repositions.
-   */
-  update() {
-    if (!this.cleanUp) {
-      this.start();
-      return;
-    }
-    void this.reposition();
-  }
-
-  /**
-   * @deprecated Alias for `stop()`. Kept for backward compatibility.
-   */
-  destroy() {
-    this.stop();
   }
 
   positionChange() {

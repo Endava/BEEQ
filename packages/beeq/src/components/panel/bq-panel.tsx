@@ -136,6 +136,7 @@ export class BqPanel {
 
   connectedCallback() {
     if (!this.floatingUI || !this.open) return;
+
     this.showPanel();
   }
 

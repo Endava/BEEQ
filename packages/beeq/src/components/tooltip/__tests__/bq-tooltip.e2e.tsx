@@ -19,12 +19,15 @@ const mkTooltip = () => (
 // userEvent.unhover() doesn't help — it targets document.body center, same coordinates.
 // Vitest exposes no API to move the cursor to arbitrary coords, so we use CDP directly.
 const moveOff = () => cdp().send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: 0, y: 0 });
+
+const getArrowOffset = (arrow: HTMLElement) =>
+  [arrow.style.top, arrow.style.right, arrow.style.bottom, arrow.style.left].find((value) => value === '-4px');
+
 const expectPanelVisibility = (panel: Element, visible: boolean) => {
   expect(panel.getAttribute('aria-hidden')).toBe(String(!visible));
   expect(panel.matches(':popover-open')).toBe(visible);
 };
-const getArrowOffset = (arrow: HTMLElement) =>
-  [arrow.style.top, arrow.style.right, arrow.style.bottom, arrow.style.left].find((value) => value === '-4px');
+
 let unmountFn: (() => void) | undefined;
 
 afterEach(async () => {
