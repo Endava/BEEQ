@@ -12,8 +12,8 @@
   "unpkg": "./dist/beeq/beeq.esm.js",
   "files": ["dist/"],
   "dependencies": {
-    "@floating-ui/core": "^1.7.4",
-    "@floating-ui/dom": "^1.7.5",
+    "@floating-ui/core": "^1.8.0",
+    "@floating-ui/dom": "^1.8.0",
     "@stencil/core": "^4.41.3"
   },
   "repository": {

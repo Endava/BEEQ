@@ -6,6 +6,7 @@ import {
   hide,
   type MiddlewareData,
   offset,
+  type Placement,
   type ReferenceElement,
   shift,
   size,
@@ -13,11 +14,29 @@ import {
 
 import type { FloatingUIOptions } from '../../interfaces';
 
+const STATIC_SIDE_BY_PLACEMENT = {
+  top: 'bottom',
+  right: 'left',
+  bottom: 'top',
+  left: 'right',
+} as const;
+
+/**
+ * Thin wrapper around Floating UI that owns the shared middleware pipeline
+ * and ensures each instance has at most one `autoUpdate` subscription.
+ *
+ * Lifecycle:
+ * - `start()` starts position tracking and performs an initial reposition.
+ * - `stop()` stops tracking and invalidates pending positioning results.
+ * - `reposition()` computes and applies the position once.
+ * - `configure(options)` updates options and repositions only when active.
+ */
 export class FloatingUI {
-  panel: HTMLElement;
-  trigger: ReferenceElement;
-  options: FloatingUIOptions;
-  cleanUp: () => void;
+  readonly panel: HTMLElement;
+  readonly trigger: ReferenceElement;
+  readonly options: FloatingUIOptions;
+  private cleanup: (() => void) | undefined;
+  private repositionId = 0;
 
   constructor(trigger: ReferenceElement, panel: HTMLElement, options?: FloatingUIOptions) {
     this.trigger = trigger;
@@ -29,82 +48,114 @@ export class FloatingUI {
       sameWidth: false,
       ...options,
     };
-    this.init(options);
   }
 
-  init(options: FloatingUIOptions) {
-    this.options = Object.assign(this.options, options);
-    this.update();
+  /**
+   * Merges new options into the current configuration. Active instances
+   * reposition without recreating their `autoUpdate` subscription; stopped
+   * instances apply the options the next time they start.
+   */
+  configure(options: Partial<FloatingUIOptions>): void {
+    Object.assign(this.options, options);
+    this.repositionId += 1;
+
+    if (options.sameWidth === false) {
+      this.panel.style.width = '';
+    }
+    if (!this.cleanup) return;
+
+    void this.reposition();
   }
 
-  update() {
-    this.cleanUp = autoUpdate(this.trigger, this.panel, () => {
-      (async () => {
-        const { x, y, placement, middlewareData } = await computePosition(this.trigger, this.panel, {
-          placement: this.options.placement,
-          strategy: this.options.strategy,
-          middleware: [
-            offset({ mainAxis: this.options.distance, crossAxis: this.options.skidding }),
-            flip(),
-            shift(),
-            size(
-              this.options.sameWidth && {
-                apply({ rects, elements }) {
-                  Object.assign(elements.floating.style, {
-                    width: `${rects.reference.width}px`,
-                  });
-                },
-              },
-            ),
-            arrow({ element: this.options.arrow || null }),
-            this.positionChange(),
-            hide(),
-          ],
-        });
+  /**
+   * Opens the `autoUpdate` subscription so the panel keeps tracking the
+   * trigger through scroll, resize, layout and ancestor changes. No-op if
+   * the subscription is already running.
+   */
+  start(): void {
+    if (this.cleanup) return;
 
-        this.applyPanelPosition(x, y);
-        this.applyArrowPosition(placement, middlewareData);
-        this.applyVisibility(middlewareData);
-      })();
+    this.cleanup = autoUpdate(this.trigger, this.panel, () => void this.reposition());
+  }
+
+  /**
+   * Tears down the `autoUpdate` subscription. Idempotent — safe to call
+   * multiple times, and before the first `start()`.
+   */
+  stop(): void {
+    this.repositionId += 1;
+    if (!this.cleanup) return;
+
+    this.cleanup();
+    this.cleanup = undefined;
+  }
+
+  /**
+   * Runs a single Floating UI `computePosition` pass and applies the
+   * resulting styles to the panel (and the arrow, if configured).
+   */
+  async reposition(): Promise<void> {
+    const repositionId = ++this.repositionId;
+    const {
+      arrow: arrowElement,
+      distance,
+      onPositionChange,
+      placement: configuredPlacement,
+      sameWidth,
+      skidding,
+      strategy,
+    } = this.options;
+    const { x, y, placement, middlewareData } = await computePosition(this.trigger, this.panel, {
+      placement: configuredPlacement,
+      strategy,
+      middleware: [
+        offset({ mainAxis: distance, crossAxis: skidding }),
+        flip(),
+        shift(),
+        size({
+          apply: ({ rects, elements }) => {
+            if (repositionId !== this.repositionId || !elements.floating.isConnected) return;
+            elements.floating.style.width = sameWidth ? `${rects.reference.width}px` : '';
+          },
+        }),
+        ...(arrowElement ? [arrow({ element: arrowElement })] : []),
+        hide(),
+      ],
     });
+
+    if (repositionId !== this.repositionId || !this.panel.isConnected) return;
+
+    this.applyPanelPosition(x, y);
+    this.applyArrowPosition(arrowElement, placement, middlewareData);
+    this.applyVisibility(middlewareData);
+
+    onPositionChange?.(placement);
   }
 
-  destroy() {
-    if (!this.cleanUp) return;
-    this.cleanUp();
-  }
+  private applyPanelPosition(x: number, y: number): void {
+    const dpr = window.devicePixelRatio || 1;
+    const roundedX = Math.round(x * dpr) / dpr;
+    const roundedY = Math.round(y * dpr) / dpr;
 
-  positionChange() {
-    return {
-      name: 'positionChange',
-      fn: ({ placement: position }) => {
-        if (typeof this.options.onPositionChange !== 'function') return {};
-        this.options.onPositionChange(position);
-        return {};
-      },
-    };
-  }
-
-  private applyPanelPosition(x: number, y: number) {
     Object.assign(this.panel.style, {
       top: '0',
       left: '0',
-      transform: `translate(${this.roundByDPR(x)}px,${this.roundByDPR(y)}px)`,
+      transform: `translate(${roundedX}px, ${roundedY}px)`,
     });
   }
 
-  private applyArrowPosition(placement: string, middlewareData: MiddlewareData) {
-    if (!this.options.arrow) return;
+  private applyArrowPosition(
+    arrowElement: HTMLElement | null | undefined,
+    placement: Placement,
+    middlewareData: MiddlewareData,
+  ): void {
+    if (!arrowElement) return;
 
-    const { x: arrowX, y: arrowY } = middlewareData.arrow;
-    const staticSide = {
-      top: 'bottom',
-      right: 'left',
-      bottom: 'top',
-      left: 'right',
-    }[placement.split('-')[0]];
+    const { x: arrowX, y: arrowY } = middlewareData.arrow ?? {};
+    const basePlacement = placement.split('-')[0] as keyof typeof STATIC_SIDE_BY_PLACEMENT;
+    const staticSide = STATIC_SIDE_BY_PLACEMENT[basePlacement];
 
-    Object.assign(this.options.arrow.style, {
+    Object.assign(arrowElement.style, {
       left: arrowX != null ? `${arrowX}px` : '',
       top: arrowY != null ? `${arrowY}px` : '',
       right: '',
@@ -113,15 +164,8 @@ export class FloatingUI {
     });
   }
 
-  private applyVisibility(middlewareData: MiddlewareData) {
-    const { referenceHidden } = middlewareData.hide;
-    Object.assign(this.panel.style, {
-      visibility: referenceHidden ? 'hidden' : 'visible',
-    });
-  }
-
-  private roundByDPR(value: number) {
-    const dpr = window.devicePixelRatio || 1;
-    return Math.round(value * dpr) / dpr;
+  private applyVisibility(middlewareData: MiddlewareData): void {
+    const referenceHidden = middlewareData.hide?.referenceHidden;
+    this.panel.style.visibility = referenceHidden ? 'hidden' : 'visible';
   }
 }
