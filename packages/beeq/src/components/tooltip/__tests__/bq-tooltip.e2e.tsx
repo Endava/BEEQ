@@ -28,6 +28,7 @@ const getArrowOffset = (arrow: HTMLElement) =>
 let unmountFn: (() => void) | undefined;
 
 afterEach(async () => {
+  window.scrollTo({ top: 0 });
   await moveOff();
   unmountFn?.();
   unmountFn = undefined;
@@ -423,6 +424,36 @@ describe('bq-tooltip', () => {
     await expect
       .poll(() => trigger.getBoundingClientRect().top - panel.getBoundingClientRect().bottom)
       .toBeCloseTo(initialOffset, 0);
+  });
+
+  it('should keep top placement inside nested overflow-hidden ancestors', async () => {
+    const { root, unmount } = await render(
+      <div style={{ minHeight: '1200px', paddingTop: '500px' }}>
+        <div style={{ height: '44px', overflow: 'hidden' }}>
+          <div style={{ height: '44px', overflow: 'hidden' }}>
+            <bq-tooltip always-visible distance={10} placement="top">
+              Yuhu! A tooltip!
+              <bq-button slot="trigger">Hover me!</bq-button>
+            </bq-tooltip>
+          </div>
+        </div>
+      </div>,
+    );
+    unmountFn = unmount;
+
+    const tooltip = root.querySelector('bq-tooltip');
+    const panel = tooltip.shadowRoot.querySelector<HTMLElement>('[part="panel"]');
+    const trigger = tooltip.shadowRoot.querySelector<HTMLElement>('[part="trigger"]');
+    const getTopOffset = () => trigger.getBoundingClientRect().top - panel.getBoundingClientRect().bottom;
+
+    await expect.poll(getTopOffset).toBeCloseTo(10, 0);
+    expect(panel.getBoundingClientRect().bottom).toBeLessThan(trigger.getBoundingClientRect().top);
+
+    window.scrollTo({ top: 200 });
+    window.dispatchEvent(new Event('scroll'));
+
+    await expect.poll(getTopOffset).toBeCloseTo(10, 0);
+    expect(panel.getBoundingClientRect().bottom).toBeLessThan(trigger.getBoundingClientRect().top);
   });
 
   it('should resume positioning after reconnection', async () => {
