@@ -4,6 +4,31 @@ description: New features, bug fixes, and improvements to the BEEQ Design System
 rss: true
 ---
 
+<Update label="v1.13.1" description="August 2026">
+  This patch release fixes a **Tooltip** positioning drift inside scrollable containers and repairs the icon SVG generator, plus rolls up dependency and tooling updates across Stencil, Storybook, Angular, and Nx.
+
+  ### Bug Fixes 🐞
+
+  - **Icons:** import `decompress` as a callable default in the SVG generator ([#1761](https://github.com/Endava/BEEQ/pull/1761)).
+  - **Tooltip:** prevent positioning drift in scrollable containers ([#1776](https://github.com/Endava/BEEQ/pull/1776)).
+
+  ### Refactor 🛠️
+
+  - **Icons executor:** replace `fs-extra` method imports with a namespace import ([a6dfc8f3](https://github.com/Endava/BEEQ/commit/a6dfc8f3)).
+
+  ### Chore ⚙️
+
+  - **Renovate:** update branch and PR limits ([0d1d364f](https://github.com/Endava/BEEQ/commit/0d1d364f)).
+  - **deps:** remove `@nxext/stencil` and replace executors with a local Stencil build runner ([#1771](https://github.com/Endava/BEEQ/pull/1771)).
+  - **deps:** security update for `postcss` to v8.5.18 and v8.5.23 ([#1768](https://github.com/Endava/BEEQ/pull/1768), [#1775](https://github.com/Endava/BEEQ/pull/1775)).
+  - Dependency bumps: Stencil ([#1758](https://github.com/Endava/BEEQ/pull/1758)), Storybook → v10.5.4 ([#1773](https://github.com/Endava/BEEQ/pull/1773)), Angular → v22.0.8 ([#1774](https://github.com/Endava/BEEQ/pull/1774)), Nx → v23.1.0 ([99f2829f](https://github.com/Endava/BEEQ/commit/99f2829f)), pnpm → v11.13.1 ([1e8146a8](https://github.com/Endava/BEEQ/commit/1e8146a8)), Playwright → v1.61.1 ([#1717](https://github.com/Endava/BEEQ/pull/1717)), Playwright Docker image → v1.61.1 ([#1769](https://github.com/Endava/BEEQ/pull/1769)), commitlint → v21 ([#1719](https://github.com/Endava/BEEQ/pull/1719)), `@wc-toolkit/cem-analyzer-plugin` → v1.0.2 ([#1772](https://github.com/Endava/BEEQ/pull/1772)).
+
+  ### ❤️ Thank You
+
+  - [Andrei Morosan](https://github.com/Morosan)
+  - [Dabiel Gonzalez-Ramos](https://github.com/dgonzalezr)
+</Update>
+
 <Update label="v1.13.0" description="July 2026">
   This release upgrades the **Datepicker** with built-in month and year selection (no more Cally.js dependency), adds background-color CSS properties to **Checkbox** and **Radio**, and ships several fixes to form-control theming and calendar rendering.
 
