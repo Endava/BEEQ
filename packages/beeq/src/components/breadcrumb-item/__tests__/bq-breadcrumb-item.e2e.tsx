@@ -71,4 +71,20 @@ describe('bq-breadcrumb-item', () => {
     expect(bqClick).toHaveReceivedEventTimes(1);
     expect(bqBlur).toHaveReceivedEventTimes(1);
   });
+
+  it('should prevent native navigation without stopping click propagation when bqClick is canceled', async () => {
+    const { root, spyOnEvent } = await render(<bq-breadcrumb-item href="#destination">Home</bq-breadcrumb-item>);
+    const anchor = root.shadowRoot.querySelector<HTMLAnchorElement>('.breadcrumb-item');
+    const nativeClick = new MouseEvent('click', { bubbles: true, cancelable: true, composed: true });
+    const clickHandler = vi.fn();
+    const bqClick = spyOnEvent('bqClick');
+
+    root.addEventListener('bqClick', (event) => event.preventDefault(), { once: true });
+    root.addEventListener('click', clickHandler);
+    anchor.dispatchEvent(nativeClick);
+
+    expect(bqClick).toHaveReceivedEventTimes(1);
+    expect(nativeClick.defaultPrevented).toBe(true);
+    expect(clickHandler).toHaveBeenCalledOnce();
+  });
 });
