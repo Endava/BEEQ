@@ -1,4 +1,4 @@
-import { Component, Element, Host, h, Prop } from '@stencil/core';
+import { Component, Host, h, Listen, Prop } from '@stencil/core';
 
 /**
  * The Breadcrumb is used to wraps a series of breadcrumb items to indicate the current page's location within a navigational hierarchy.
@@ -32,14 +32,9 @@ import { Component, Element, Host, h, Prop } from '@stencil/core';
 export class BqBreadcrumb {
   // Own Properties
   // ====================
-
-  private navElem: HTMLElement;
-  private spanElem: HTMLElement;
-
-  // Reference to host HTML element
-  // ===================================
-
-  @Element() el!: HTMLBqBreadcrumbElement;
+  private breadcrumbSlotElem: HTMLSlotElement;
+  private readonly generatedSeparators = new WeakSet<Element>();
+  private separatorSlotElem: HTMLSlotElement;
 
   // State() variables
   // Inlined decorator, alphabetical order
@@ -63,11 +58,24 @@ export class BqBreadcrumb {
   // =====================================
 
   componentDidLoad() {
-    this.handleSlotChange();
+    this.reconcileBreadcrumbItems();
+  }
+
+  connectedCallback() {
+    if (!this.breadcrumbSlotElem || !this.separatorSlotElem) return;
+
+    this.reconcileBreadcrumbItems();
   }
 
   // Listeners
   // ==============
+
+  @Listen('svgLoaded')
+  handleSeparatorReady(event: CustomEvent<string>): void {
+    if (event.target !== this.separatorFromSlot) return;
+
+    this.reconcileBreadcrumbItems();
+  }
 
   // Public methods API
   // These methods are exposed on the host element.
@@ -82,39 +90,69 @@ export class BqBreadcrumb {
   // =======================================================
 
   private handleSlotChange = (): void => {
+    this.reconcileBreadcrumbItems();
+  };
+
+  /**
+   * Rebuilds BEEQ-generated separators after breadcrumb items or the separator
+   * source change. Consumer-provided item separators are preserved, while the
+   * last item remains separator-free and is marked as the current page.
+   */
+  private reconcileBreadcrumbItems = (): void => {
     const breadcrumbItems = this.breadcrumbItems;
-    const itemCount = breadcrumbItems.length;
-    const separatorElem = this.getSeparatorElem();
+    const lastItemIndex = breadcrumbItems.length - 1;
 
-    breadcrumbItems.forEach((item, index) => {
-      const isLastItem = index === itemCount - 1;
-      const separatorSlot = item.querySelector('[slot="separator"]');
+    for (const [index, item] of breadcrumbItems.entries()) {
+      const isLastItem = index === lastItemIndex;
+      let hasConsumerSeparator = false;
 
-      if (!separatorSlot && !isLastItem) {
-        item.append(separatorElem.cloneNode(true));
+      // Remove only separators created by a previous reconciliation pass.
+      // Any other slotted separator belongs to the consumer and must remain.
+      for (const separator of item.querySelectorAll<HTMLElement>(':scope > [slot="separator"]')) {
+        if (this.generatedSeparators.has(separator)) {
+          separator.remove();
+        } else {
+          hasConsumerSeparator = true;
+        }
       }
 
       item.setAttribute('aria-current', isLastItem ? 'page' : '');
-    });
+
+      // Last items have no separator; consumer separators replace the generated one.
+      if (isLastItem || hasConsumerSeparator) continue;
+
+      item.append(this.createSeparator());
+    }
   };
 
-  private getSeparatorElem = (): HTMLElement => {
-    const clone = this.separatorFromSlot.cloneNode(true) as HTMLElement;
-    clone.slot = 'separator';
+  private createSeparator = (): HTMLElement => {
+    const source = this.separatorFromSlot;
+    const separator = source.cloneNode(true) as HTMLElement;
 
-    return clone;
+    if (source.localName === 'bq-icon') {
+      const sourceIcon = source as HTMLBqIconElement;
+      Object.assign(separator as HTMLBqIconElement, {
+        color: sourceIcon.color,
+        label: sourceIcon.label,
+        name: sourceIcon.name,
+        size: sourceIcon.size,
+        src: sourceIcon.src,
+        weight: sourceIcon.weight,
+      });
+    }
+
+    separator.slot = 'separator';
+    this.generatedSeparators.add(separator);
+
+    return separator;
   };
 
-  private get separatorFromSlot() {
-    return this.spanElem
-      .querySelector<HTMLSlotElement>('slot[name="separator"]')
-      .assignedElements({ flatten: true })[0] as HTMLElement;
+  private get separatorFromSlot(): HTMLElement {
+    return this.separatorSlotElem.assignedElements({ flatten: true })[0] as HTMLElement;
   }
 
   private get breadcrumbItems(): HTMLBqBreadcrumbItemElement[] {
-    return this.navElem
-      .querySelector<HTMLSlotElement>('slot')
-      .assignedElements({ flatten: true }) as HTMLBqBreadcrumbItemElement[];
+    return this.breadcrumbSlotElem.assignedElements({ flatten: true }) as HTMLBqBreadcrumbItemElement[];
   }
 
   // render() function
@@ -124,25 +162,22 @@ export class BqBreadcrumb {
   render() {
     return (
       <Host>
-        <nav
-          aria-label={this.label}
-          class="flex items-center"
-          part="navigation"
-          ref={(elem) => {
-            this.navElem = elem;
-          }}
-        >
-          <slot onSlotchange={this.handleSlotChange}></slot>
+        <nav aria-label={this.label} class="flex items-center" part="navigation">
+          <slot
+            onSlotchange={this.handleSlotChange}
+            ref={(element) => {
+              this.breadcrumbSlotElem = element;
+            }}
+          />
         </nav>
-        <span
-          aria-hidden="true"
-          hidden
-          part="separator"
-          ref={(element) => {
-            this.spanElem = element;
-          }}
-        >
-          <slot name="separator">
+        <span aria-hidden="true" hidden part="separator">
+          <slot
+            name="separator"
+            onSlotchange={this.handleSlotChange}
+            ref={(element) => {
+              this.separatorSlotElem = element;
+            }}
+          >
             <span class="is-3 flex items-center justify-center">/</span>
           </slot>
         </span>
