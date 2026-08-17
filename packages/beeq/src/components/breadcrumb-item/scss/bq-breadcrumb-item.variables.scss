@@ -31,10 +31,11 @@
   --bq-breadcrumb-item--border-radius: theme(borderRadius.s);
 
   --bq-breadcrumb-item--line-height: theme(lineHeight.regular);
-  --bq-breadcrumb-item--text-color: theme(textColor.secondary);
-  --bq-breadcrumb-item--text-color-current: theme(textColor.brand);
+  --bq-breadcrumb-item--text-color: theme(textColor.brand);
+  --bq-breadcrumb-item--text-color-current: theme(textColor.secondary);
   --bq-breadcrumb-item--text-size: theme(fontSize.s);
   --bq-breadcrumb-item--text-size-separator: theme(fontSize.xs);
+  --bq-breadcrumb-item--separator-color: theme(colors.ui.tertiary);
 
   --bq-breadcrumb-item--padding-start: theme(spacing.xs2);
   --bq-breadcrumb-item--padding-end: theme(spacing.xs2);
