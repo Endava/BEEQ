@@ -108,7 +108,7 @@ export class BqBreadcrumb {
 
       // Remove only separators created by a previous reconciliation pass.
       // Any other slotted separator belongs to the consumer and must remain.
-      for (const separator of item.querySelectorAll<HTMLElement>(':scope > [slot="separator"]')) {
+      for (const separator of Array.from(item.querySelectorAll<HTMLElement>(':scope > [slot="separator"]'))) {
         if (this.generatedSeparators.has(separator)) {
           separator.remove();
         } else {
@@ -137,6 +137,7 @@ export class BqBreadcrumb {
         name: sourceIcon.name,
         size: sourceIcon.size,
         src: sourceIcon.src,
+        // !TO BE REMOVED: Delete this line when the `weight` property is removed from the `bq-icon` component.
         weight: sourceIcon.weight,
       });
     }
