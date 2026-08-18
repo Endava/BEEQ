@@ -451,6 +451,7 @@ export class BqSelect {
   private handleFocus = () => {
     if (this.disabled) return;
 
+    this.collapseInputSelection();
     this.bqFocus.emit(this.el);
   };
 
@@ -475,7 +476,7 @@ export class BqSelect {
     }
 
     this.resetOptionsVisibility();
-    this.inputElem.focus();
+    this.focusInput();
   };
 
   private handleMultipleSelection = (item: HTMLBqOptionElement) => {
@@ -567,6 +568,20 @@ export class BqSelect {
     this.inputElem.focus();
 
     ev.stopPropagation();
+  };
+
+  private focusInput = () => {
+    this.inputElem.focus();
+    this.collapseInputSelection();
+  };
+
+  private collapseInputSelection = () => {
+    if (!this.isSearchDisabled || !this.inputElem) return;
+
+    const end = this.inputElem.value.length;
+    if (this.inputElem.selectionStart === end && this.inputElem.selectionEnd === end) return;
+
+    this.inputElem.setSelectionRange(end, end);
   };
 
   private handleTagRemove = (item: HTMLBqOptionElement) => {
@@ -857,6 +872,7 @@ export class BqSelect {
                 onFocus={this.handleFocus}
                 onInput={this.handleInput}
                 onKeyDown={this.handleKeydown}
+                onSelect={this.collapseInputSelection}
                 part="input"
                 placeholder={this.displayPlaceholder}
                 readOnly={this.isSearchDisabled}
