@@ -47,6 +47,7 @@ export type TSelectValue = string | string[];
  * @attr {string} clear-button-label - The clear button aria label.
  * @attr {number} debounce-time - The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes.
  * @attr {boolean} disable-clear - If `true`, the clear button won't be displayed.
+ * @attr {boolean} disable-search - Disables text filtering while keeping option selection available.
  * @attr {boolean} disabled - Indicates whether the Select input is disabled and cannot be interacted with.
  * @attr {number} distance - Represents the distance (gutter or margin) between the Select panel and the input element.
  * @attr {string} form - The ID of the form that Select input field belongs to.
@@ -59,7 +60,7 @@ export type TSelectValue = string | string[];
  * @attr {string} panel-height - When set, it will override the height of the Select panel.
  * @attr {string} placeholder - The Select input placeholder text value.
  * @attr {"bottom" | "bottom-end" | "bottom-start" | "left" | "left-end" | "left-start" | "right" | "right-end" | "right-start" | "top" | "top-end" | "top-start"} placement - Position of the Select panel.
- * @attr {boolean} readonly - If `true`, the Select input cannot be modified.
+ * @attr {boolean} readonly - Deprecated. Use `disable-search` to allow selection without text filtering.
  * @attr {boolean} required - Indicates whether or not the Select input is required to be filled out before submitting the form.
  * @attr {boolean} same-width - Whether the panel should have the Select same width as the input element.
  * @attr {number} skidding - Represents the skidding between the Select panel and the input element.
@@ -191,6 +192,9 @@ export class BqSelect {
   /** If true, the clear button won't be displayed */
   @Prop({ reflect: true }) disableClear? = false;
 
+  /** If true, the search functionality within the Select panel will be disabled. No typing will be allowed */
+  @Prop({ reflect: true }) disableSearch?: boolean = false;
+
   /** Represents the distance (gutter or margin) between the Select panel and the input element. */
   @Prop({ reflect: true }) distance?: number = 8;
 
@@ -224,7 +228,10 @@ export class BqSelect {
   /** Position of the Select panel */
   @Prop({ reflect: true }) placement?: Placement = 'bottom';
 
-  /** If true, the list of options cannot be filtered (searching won't be available) */
+  /**
+   * @deprecated Use `disableSearch` to allow selection without text filtering.
+   * In a future major release, `readonly` will prevent changing the selected value.
+   */
   @Prop({ reflect: true }) readonly?: boolean;
 
   /** Indicates whether or not the Select input is required to be filled out before submitting the form. */
@@ -536,7 +543,7 @@ export class BqSelect {
   };
 
   private handleInput = (ev: Event) => {
-    if (this.disabled) return;
+    if (this.disabled || this.isSearchDisabled) return;
 
     const { value } = ev.target as HTMLInputElement;
 
@@ -764,6 +771,10 @@ export class BqSelect {
     return isDefined(this.displayValue);
   }
 
+  private get isSearchDisabled() {
+    return this.disableSearch || this.readonly;
+  }
+
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -807,6 +818,7 @@ export class BqSelect {
               'bq-select__control': true,
               [`validation-${this.validationStatus}`]: true,
               disabled: this.disabled,
+              'select-none': this.isSearchDisabled,
             }}
             part="control"
             slot="trigger"
@@ -847,7 +859,7 @@ export class BqSelect {
                 onKeyDown={this.handleKeydown}
                 part="input"
                 placeholder={this.displayPlaceholder}
-                readOnly={this.readonly}
+                readOnly={this.isSearchDisabled}
                 ref={(inputElem: HTMLInputElement) => {
                   this.inputElem = inputElem;
                 }}
