@@ -282,6 +282,27 @@ Use the `separator` slot to replace the default `/` separator.
   Use the same separator throughout a breadcrumb trail. Mixing separator styles in a single trail breaks visual consistency.
 </Note>
 
+### Intercepting navigation
+
+When a `bq-breadcrumb-item` has an `href`, activating it navigates to that URL. The `bqClick` event is cancelable: call `event.preventDefault()` on the event to stop the browser from following the link. Use this to route through a client-side router, prompt the user before leaving an unsaved form, or run analytics before navigating.
+
+```html HTML icon="html5"
+<bq-breadcrumb label="Breadcrumb">
+  <bq-breadcrumb-item href="/">Home</bq-breadcrumb-item>
+  <bq-breadcrumb-item href="/catalog">Catalog</bq-breadcrumb-item>
+  <bq-breadcrumb-item>Casual shirts</bq-breadcrumb-item>
+</bq-breadcrumb>
+
+<script>
+  document.querySelector("bq-breadcrumb").addEventListener("bqClick", (event) => {
+    // Stop the default link navigation and hand control to your router
+    event.preventDefault();
+    const href = event.target.getAttribute("href");
+    if (href) router.push(href);
+  });
+</script>
+```
+
 ## Options
 
 The following example shows how to combine icons with breadcrumb items.
@@ -472,11 +493,11 @@ Icons next to labels help users recognize categories at a glance. Use `size="16"
 
 Events are emitted by `bq-breadcrumb-item`.
 
-| Event | Description | Type |
-|---|---|---|
-| `bqBlur` | Handler to be called when item loses focus | `CustomEvent<HTMLBqBreadcrumbItemElement>` |
-| `bqClick` | Handler to be called when item is clicked | `CustomEvent<HTMLBqBreadcrumbItemElement>` |
-| `bqFocus` | Handler to be called when item is focused | `CustomEvent<HTMLBqBreadcrumbItemElement>` |
+| Event | Description | Type | Cancelable |
+|---|---|---|---|
+| `bqBlur` | Handler to be called when item loses focus | `CustomEvent<HTMLBqBreadcrumbItemElement>` | No |
+| `bqClick` | Handler to be called when item is clicked. Call `event.preventDefault()` to stop the underlying link navigation when the item is rendered as an `<a>` | `CustomEvent<HTMLBqBreadcrumbItemElement>` | Yes |
+| `bqFocus` | Handler to be called when item is focused | `CustomEvent<HTMLBqBreadcrumbItemElement>` | No |
 
 ### Slots
 
