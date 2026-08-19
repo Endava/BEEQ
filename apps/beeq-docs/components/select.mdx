@@ -2133,9 +2133,13 @@ Select this variant when you don't need additional helper text, giving users a s
   </CodeGroup>
 </CodeLivePreview>
 
-### Readonly
+### Non-searchable
 
-A readonly select shows the current value but prevents the panel from opening. Use it in review or summary screens where the displayed value is informational and should not be changed.
+Set `disable-search` to keep the option panel usable while blocking any typing in the input. Users can still open the panel, browse options, and pick a value, but they cannot filter the list by typing. Use it when the option set is short enough to scan and you want to prevent free-text input from shrinking the visible options.
+
+<Note>
+  The `readonly` attribute currently has the same effect and is now **deprecated** — use `disable-search` instead. In a future major release, `readonly` will prevent changing the selected value rather than disabling filtering.
+</Note>
 
 <CodeLivePreview mode="shadow" code={`
   <style>
@@ -2148,7 +2152,7 @@ A readonly select shows the current value but prevents the panel from opening. U
     }
   </style>
 
-  <bq-select placeholder="Placeholder" value="2" readonly>
+  <bq-select placeholder="Placeholder" value="2" disable-search>
     <label slot="label">Select label</label>
     <span slot="helper-text">
       <bq-icon name="star"></bq-icon>
@@ -2161,7 +2165,7 @@ A readonly select shows the current value but prevents the panel from opening. U
 `}>
   <CodeGroup>
     ```html HTML icon="html5" expandable
-    <bq-select placeholder="Placeholder" value="2" readonly>
+    <bq-select placeholder="Placeholder" value="2" disable-search>
       <label slot="label">Select label</label>
       <span slot="helper-text">
         <bq-icon name="star"></bq-icon>
@@ -2176,7 +2180,7 @@ A readonly select shows the current value but prevents the panel from opening. U
     ```jsx React icon="react" expandable
     import { BqIcon, BqOption, BqSelect } from "@beeq/react";
 
-    <BqSelect placeholder="Placeholder" value="2" readOnly>
+    <BqSelect placeholder="Placeholder" value="2" disableSearch>
       <label slot="label">Select label</label>
       <span slot="helper-text">
         <BqIcon name="star" />
@@ -2197,7 +2201,7 @@ A readonly select shows the current value but prevents the panel from opening. U
       standalone: true,
       imports: [BqIcon, BqOption, BqSelect],
       template: `
-        <bq-select placeholder="Placeholder" value="2" readonly>
+        <bq-select placeholder="Placeholder" value="2" disable-search>
           <label slot="label">Select label</label>
           <span slot="helper-text">
             <bq-icon name="star"></bq-icon>
@@ -2214,7 +2218,7 @@ A readonly select shows the current value but prevents the panel from opening. U
 
     ```vue Vue icon="vuejs" expandable
     <template>
-      <BqSelect placeholder="Placeholder" value="2" readonly>
+      <BqSelect placeholder="Placeholder" value="2" disableSearch>
         <label slot="label">Select label</label>
         <span slot="helper-text">
           <BqIcon name="star" />
@@ -3137,6 +3141,7 @@ Call `preventDefault()` on the `bqInput` event to take full control of option fi
 | `clearButtonLabel` | `clear-button-label` | The aria label for the clear button | `string` | `'Clear value'` |
 | `debounceTime` | `debounce-time` | Milliseconds to wait before emitting `bqInput` after typing | `number` | `0` |
 | `disableClear` | `disable-clear` | If `true`, the clear button is hidden | `boolean` | `false` |
+| `disableSearch` | `disable-search` | If `true`, typing in the input is disabled while option selection remains available | `boolean` | `false` |
 | `disabled` | `disabled` | If `true`, the select cannot be interacted with | `boolean` | `false` |
 | `disableScrollLock` | `disable-scroll-lock` | If `true`, the page body scroll will not be locked when the panel is open | `boolean` | `false` |
 | `distance` | `distance` | Gap in pixels between the panel and the input element | `number` | `8` |
@@ -3150,7 +3155,7 @@ Call `preventDefault()` on the `bqInput` event to take full control of option fi
 | `panelHeight` | `panel-height` | Overrides the default height of the Select panel | `string` | — |
 | `placeholder` | `placeholder` | Placeholder text shown when no value is selected | `string` | — |
 | `placement` | `placement` | Position of the Select panel relative to the input | `'bottom' \| 'bottom-end' \| 'bottom-start' \| 'left' \| 'left-end' \| 'left-start' \| 'right' \| 'right-end' \| 'right-start' \| 'top' \| 'top-end' \| 'top-start'` | `'bottom'` |
-| `readonly` | `readonly` | If `true`, the option list cannot be opened or filtered | `boolean` | — |
+| `readonly` | `readonly` | **Deprecated.** Use `disableSearch` to allow selection without text filtering. In a future major release, `readonly` will prevent changing the selected value instead of disabling filtering | `boolean` | — |
 | `required` | `required` | If `true`, a value must be selected before the form can be submitted | `boolean` | — |
 | `sameWidth` | `same-width` | If `true`, the panel matches the width of the input element | `boolean` | `true` |
 | `skidding` | `skidding` | Offset in pixels along the input element axis | `number` | `0` |
