@@ -1,3 +1,26 @@
+## 1.14.0 (2026-08-19)
+
+### Features ⚡️
+
+- **Select:** add non-searchable mode ([041baf22](https://github.com/Endava/BEEQ/commit/041baf22))
+
+### Bug Fixes 🐞
+
+- **Breadcrumb:** synchronize custom separators ([#1778](https://github.com/Endava/BEEQ/pull/1778))
+- **Breadcrumb:** correct item and separator colors ([8e5e6e0c](https://github.com/Endava/BEEQ/commit/8e5e6e0c))
+- **Breadcrumb Item:** allow canceling link navigation ([866b69a5](https://github.com/Endava/BEEQ/commit/866b69a5))
+- **Select:** avoid input text selection in non-searchable mode ([28ae69fb](https://github.com/Endava/BEEQ/commit/28ae69fb))
+
+### Chore ⚙️
+
+- **deps:** update stencil ([#1779](https://github.com/Endava/BEEQ/pull/1779))
+- **deps:** update react to v19.2.8 ([#1780](https://github.com/Endava/BEEQ/pull/1780))
+- **deps:** update types react ([#1781](https://github.com/Endava/BEEQ/pull/1781))
+
+### ❤️ Thank You
+
+- Dabiel Gonzalez-Ramos @dgonzalezr
+
 ## 1.13.1 (2026-08-13)
 
 ### Bug Fixes 🐞
