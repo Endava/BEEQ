@@ -196,25 +196,76 @@ To create a custom theme, define your own set of CSS variables that override the
   </Step>
 
   <Step title="Apply your custom theme">
-    Include your custom theme CSS file in your project and set the `bq-theme` and `bq-mode` attributes on the `<html>` element:
+    Include your custom theme CSS file in your project and set the `bq-theme` and `bq-mode` attributes on the `<html>` element.
 
     <Note>
       Always load `beeq.css` **before** your custom theme CSS so that your variables correctly override the defaults.
     </Note>
 
-    ```html
-    <!DOCTYPE html>
-    <html lang="en" bq-theme="my-custom-theme" bq-mode="light">
-      <head>
-        <link rel="stylesheet" href="path/to/beeq.css">
-        <link rel="stylesheet" href="path/to/custom-theme.css">
-      </head>
-      <body>
-        <!-- Your components will automatically use the custom theme -->
-        <bq-button>Click me</bq-button>
-      </body>
-    </html>
-    ```
+    Pick the setup that matches your project:
+
+    <CodeGroup>
+      ```html Plain HTML icon="html5"
+      <!DOCTYPE html>
+      <html lang="en" bq-theme="my-custom-theme" bq-mode="light">
+        <head>
+          <link rel="stylesheet" href="path/to/beeq.css">
+          <link rel="stylesheet" href="path/to/custom-theme.css">
+        </head>
+        <body>
+          <!-- Your components will automatically use the custom theme -->
+          <bq-button>Click me</bq-button>
+        </body>
+      </html>
+      ```
+
+      ```css Bundler (React / Vue / Angular) icon="css"
+      /* src/index.css — load BEEQ first, then your custom theme */
+      @import "@beeq/core/dist/beeq/beeq.css";
+      @import "./custom-theme.css";
+      ```
+
+      ```css Tailwind v4 icon="tailwind"
+      /* src/index.css */
+      @import "tailwindcss";
+      @import "@beeq/core/dist/beeq/beeq.css";
+      @plugin "@beeq/tailwindcss";
+      @import "./custom-theme.css";
+      ```
+
+      ```ts Tailwind v3 icon="tailwind" expandable
+      // tailwind.config.ts
+      import beeqPreset from "@beeq/tailwindcss";
+      import type { Config } from "tailwindcss";
+
+      export default {
+        content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx,vue}"],
+        presets: [beeqPreset],
+      } satisfies Config;
+      ```
+    </CodeGroup>
+
+    The `@beeq/tailwindcss` preset maps BEEQ tokens to Tailwind utility classes but does not define your custom theme. Keep the custom theme CSS as a separate file that overrides `--bq-*` variables, and load it after `beeq.css`.
+
+    Set the theme and mode on the root element from your app entry so the attributes are present before any component renders:
+
+    <CodeGroup>
+      ```tsx React icon="react"
+      // src/main.tsx
+      document.documentElement.setAttribute("bq-theme", "my-custom-theme");
+      document.documentElement.setAttribute("bq-mode", "light");
+      ```
+
+      ```ts Angular icon="angular"
+      // src/main.ts
+      document.documentElement.setAttribute("bq-theme", "my-custom-theme");
+      document.documentElement.setAttribute("bq-mode", "light");
+      ```
+
+      ```html Plain HTML icon="html5"
+      <html lang="en" bq-theme="my-custom-theme" bq-mode="light">
+      ```
+    </CodeGroup>
 
     To switch to dark mode, change the `bq-mode` attribute:
 
@@ -229,6 +280,10 @@ To create a custom theme, define your own set of CSS variables that override the
     <!-- or -->
     <body class="my-custom-theme dark"> ... </body>
     ```
+
+    <Tip>
+      For a full React setup — packages, styles, icons, and event handling — see the [React framework guide](/guides/frameworks/react). For the Tailwind utility classes that BEEQ ships alongside your custom theme, see [Colors → Tailwind CSS](/foundations/colors#tailwind-css).
+    </Tip>
   </Step>
 </Steps>
 
