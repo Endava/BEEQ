@@ -234,6 +234,10 @@ body,
       }
     }
   }
+
+  [data-component-part="code-block-root"] [data-component-part="scroll-area-content"] {
+    height: auto !important;
+  }
 }
 
 /* ---- Components fixes only for docs, not to be applied in the library. --- */
