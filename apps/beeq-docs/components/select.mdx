@@ -59,16 +59,15 @@ The select is composed of a label, an input field, a dropdown panel, and optiona
 
 | Part | Element | Description |
 |---|---|---|
-| **1** | Label | The descriptive label rendered above the input control |
+| **1** | Label | The descriptive label rendered above the input control. It can include an optional info icon for additional context and optional/required indicator |
 | **2** | Input field | The control area that displays the selected value or placeholder |
-| **3** | Leading icon | Optional prefix icon displayed at the start of the input field |
-| **4** | Placeholder | The hint text shown inside the input when no value is selected |
-| **5** | Dropdown panel | The floating container that opens below the input and holds the option list |
-| **6** | Menu | The list of selectable `bq-option` items inside the dropdown panel |
-| **7** | Scroll | The scrollbar that appears when the option list overflows the panel height |
-| **8** | Dropdown icon | The chevron caret at the end of the input that indicates the open/closed state |
-| **9** | Field status label (optional) | Helper text below the input providing guidance or validation feedback |
-| **10** | Info label (icon) | Optional icon accompanying the field status label for additional context |
+| **3** | Placeholder | The hint text shown inside the input when no value is selected |
+| **4** | Leading icon | Optional prefix icon displayed at the start of the input field |
+| **5** | Helper text (optional) | Helper text below the input providing guidance or validation feedback |
+| **6** | Dropdown icon | The chevron caret at the end of the input that indicates the open/closed state |
+| **7** | Dropdown panel | The floating container that opens below the input and holds the option list |
+| **8** | Menu | The list of selectable `bq-option` items inside the dropdown panel |
+| **9** | Scroll | The scrollbar that appears when the option list overflows the panel height |
 
 ## Design guidelines
 
@@ -79,6 +78,7 @@ The select is composed of a label, an input field, a dropdown panel, and optiona
     title="Single selection"
     imageLightSrc="/components/images/select/select-single-light.svg"
     imageDarkSrc="/components/images/select/select-single-dark.svg"
+    enableImgZoom
   >
     The default mode. Users pick exactly one option; the selected value replaces the placeholder text in the input.
   </CardTile>
@@ -86,6 +86,7 @@ The select is composed of a label, an input field, a dropdown panel, and optiona
     title="Multiple selection"
     imageLightSrc="/components/images/select/select-multiple-light.svg"
     imageDarkSrc="/components/images/select/select-multiple-dark.svg"
+    enableImgZoom
   >
     Enable with `multiple`. Selected items appear as removable tags inside the input. Use `max-tags-visible` to cap how many tags show before a `+N` overflow tag appears.
   </CardTile>
@@ -1551,6 +1552,29 @@ Choose this style when you want to include an optional label for additional cont
   </bq-select>
 `}>
   <CodeGroup>
+    ```css styles.css icon="css" expandable
+    [slot="label"] {
+      display: flex;
+      flex: 1 1 0%;
+    }
+
+    [slot="label"] > label {
+      display: flex;
+      flex-grow: 1;
+      align-items: center;
+    }
+
+    [slot="label"] > span {
+      color: var(--bq-text--secondary);
+    }
+
+    span[slot="helper-text"] {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+    ```
+
     ```html HTML icon="html5" expandable
     <bq-select placeholder="Placeholder">
       <div slot="label">
@@ -1570,6 +1594,7 @@ Choose this style when you want to include an optional label for additional cont
 
     ```jsx React icon="react" expandable
     import { BqIcon, BqOption, BqSelect } from "@beeq/react";
+    import "./styles.css";
 
     <BqSelect placeholder="Placeholder">
       <div slot="label">
@@ -1610,12 +1635,38 @@ Choose this style when you want to include an optional label for additional cont
           <bq-option value="2">Option 2</bq-option>
           <bq-option value="3">Option 3</bq-option>
         </bq-select>
-      `
+      `,
+      styles: [`
+        [slot="label"] {
+          display: flex;
+          flex: 1 1 0%;
+        }
+
+        [slot="label"] > label {
+          display: flex;
+          flex-grow: 1;
+          align-items: center;
+        }
+
+        [slot="label"] > span {
+          color: var(--bq-text--secondary);
+        }
+
+        span[slot="helper-text"] {
+          display: flex;
+          align-items: center;
+          gap: var(--bq-spacing-xs);
+        }
+      `]
     })
     export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs" expandable
+    <script setup>
+    import { BqIcon, BqOption, BqSelect } from "@beeq/vue";
+    </script>
+
     <template>
       <BqSelect placeholder="Placeholder">
         <div slot="label">
@@ -1633,9 +1684,28 @@ Choose this style when you want to include an optional label for additional cont
       </BqSelect>
     </template>
 
-    <script setup>
-    import { BqIcon, BqOption, BqSelect } from "@beeq/vue";
-    </script>
+    <style scoped>
+      [slot="label"] {
+        display: flex;
+        flex: 1 1 0%;
+      }
+
+      [slot="label"] > label {
+        display: flex;
+        flex-grow: 1;
+        align-items: center;
+      }
+
+      [slot="label"] > span {
+        color: var(--bq-text--secondary);
+      }
+
+      span[slot="helper-text"] {
+        display: flex;
+        align-items: center;
+        gap: var(--bq-spacing-xs);
+      }
+    </style>
     ```
   </CodeGroup>
 </CodeLivePreview>
@@ -1696,6 +1766,29 @@ Enhance user understanding by incorporating a `bq-tooltip` alongside the label, 
   </bq-select>
 `}>
   <CodeGroup>
+    ```css styles.css icon="css" expandable
+    [slot="label"] {
+      display: flex;
+      flex: 1 1 0%;
+    }
+
+    [slot="label"] > label {
+      display: flex;
+      flex-grow: 1;
+      align-items: center;
+    }
+
+    [slot="label"] > span {
+      color: var(--bq-text--secondary);
+    }
+
+    span[slot="helper-text"] {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+    ```
+
     ```html HTML icon="html5" expandable
     <bq-select placeholder="Placeholder">
       <div slot="label">
@@ -1721,6 +1814,7 @@ Enhance user understanding by incorporating a `bq-tooltip` alongside the label, 
 
     ```jsx React icon="react" expandable
     import { BqIcon, BqOption, BqSelect, BqTooltip } from "@beeq/react";
+    import "./styles.css";
 
     <BqSelect placeholder="Placeholder">
       <div slot="label">
@@ -1773,12 +1867,38 @@ Enhance user understanding by incorporating a `bq-tooltip` alongside the label, 
           <bq-option value="2">Option 2</bq-option>
           <bq-option value="3">Option 3</bq-option>
         </bq-select>
-      `
+      `,
+      styles: [`
+        [slot="label"] {
+          display: flex;
+          flex: 1 1 0%;
+        }
+
+        [slot="label"] > label {
+          display: flex;
+          flex-grow: 1;
+          align-items: center;
+        }
+
+        [slot="label"] > span {
+          color: var(--bq-text--secondary);
+        }
+
+        span[slot="helper-text"] {
+          display: flex;
+          align-items: center;
+          gap: var(--bq-spacing-xs);
+        }
+      `]
     })
     export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs" expandable
+    <script setup>
+    import { BqIcon, BqOption, BqSelect, BqTooltip } from "@beeq/vue";
+    </script>
+
     <template>
       <BqSelect placeholder="Placeholder">
         <div slot="label">
@@ -1802,9 +1922,28 @@ Enhance user understanding by incorporating a `bq-tooltip` alongside the label, 
       </BqSelect>
     </template>
 
-    <script setup>
-    import { BqIcon, BqOption, BqSelect, BqTooltip } from "@beeq/vue";
-    </script>
+    <style scoped>
+      [slot="label"] {
+        display: flex;
+        flex: 1 1 0%;
+      }
+
+      [slot="label"] > label {
+        display: flex;
+        flex-grow: 1;
+        align-items: center;
+      }
+
+      [slot="label"] > span {
+        color: var(--bq-text--secondary);
+      }
+
+      span[slot="helper-text"] {
+        display: flex;
+        align-items: center;
+        gap: var(--bq-spacing-xs);
+      }
+    </style>
     ```
   </CodeGroup>
 </CodeLivePreview>
@@ -1927,6 +2066,10 @@ Adjust the panel placement to suit your layout. Use the `placement` attribute to
     ```
 
     ```vue Vue icon="vuejs" expandable
+    <script setup>
+    import { BqIcon, BqOption, BqSelect, BqTooltip } from "@beeq/vue";
+    </script>
+
     <template>
       <BqSelect placeholder="Placeholder" placement="top">
         <label slot="label">
@@ -1946,10 +2089,6 @@ Adjust the panel placement to suit your layout. Use the `placement` attribute to
         <BqOption value="3">Option 3</BqOption>
       </BqSelect>
     </template>
-
-    <script setup>
-    import { BqIcon, BqOption, BqSelect, BqTooltip } from "@beeq/vue";
-    </script>
     ```
   </CodeGroup>
 </CodeLivePreview>
@@ -2034,6 +2173,10 @@ Use this style when you prefer a minimal look and the field's purpose is conveye
     ```
 
     ```vue Vue icon="vuejs" expandable
+    <script setup>
+    import { BqIcon, BqOption, BqSelect } from "@beeq/vue";
+    </script>
+
     <template>
       <BqSelect placeholder="Placeholder">
         <BqIcon name="user-circle" slot="prefix" />
@@ -2046,10 +2189,6 @@ Use this style when you prefer a minimal look and the field's purpose is conveye
         <BqOption value="3">Option 3</BqOption>
       </BqSelect>
     </template>
-
-    <script setup>
-    import { BqIcon, BqOption, BqSelect } from "@beeq/vue";
-    </script>
     ```
   </CodeGroup>
 </CodeLivePreview>
@@ -2116,6 +2255,10 @@ Select this variant when you don't need additional helper text, giving users a s
     ```
 
     ```vue Vue icon="vuejs" expandable
+    <script setup>
+    import { BqIcon, BqOption, BqSelect } from "@beeq/vue";
+    </script>
+
     <template>
       <BqSelect placeholder="Placeholder">
         <label slot="label">Select label</label>
@@ -2125,10 +2268,6 @@ Select this variant when you don't need additional helper text, giving users a s
         <BqOption value="3">Option 3</BqOption>
       </BqSelect>
     </template>
-
-    <script setup>
-    import { BqIcon, BqOption, BqSelect } from "@beeq/vue";
-    </script>
     ```
   </CodeGroup>
 </CodeLivePreview>
@@ -2217,6 +2356,10 @@ Set `disable-search` to keep the option panel usable while blocking any typing i
     ```
 
     ```vue Vue icon="vuejs" expandable
+    <script setup>
+    import { BqIcon, BqOption, BqSelect } from "@beeq/vue";
+    </script>
+
     <template>
       <BqSelect placeholder="Placeholder" value="2" disableSearch>
         <label slot="label">Select label</label>
@@ -2229,10 +2372,6 @@ Set `disable-search` to keep the option panel usable while blocking any typing i
         <BqOption value="3">Option 3</BqOption>
       </BqSelect>
     </template>
-
-    <script setup>
-    import { BqIcon, BqOption, BqSelect } from "@beeq/vue";
-    </script>
     ```
   </CodeGroup>
 </CodeLivePreview>
@@ -2317,6 +2456,10 @@ Set `disable-clear` to hide the clear button and prevent one-click deselection. 
     ```
 
     ```vue Vue icon="vuejs" expandable
+    <script setup>
+    import { BqIcon, BqOption, BqSelect } from "@beeq/vue";
+    </script>
+
     <template>
       <BqSelect placeholder="Placeholder" value="1" disableClear>
         <label slot="label">Select label</label>
@@ -2329,10 +2472,6 @@ Set `disable-clear` to hide the clear button and prevent one-click deselection. 
         <BqOption value="3">Option 3</BqOption>
       </BqSelect>
     </template>
-
-    <script setup>
-    import { BqIcon, BqOption, BqSelect } from "@beeq/vue";
-    </script>
     ```
   </CodeGroup>
 </CodeLivePreview>
