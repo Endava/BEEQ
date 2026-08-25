@@ -93,7 +93,7 @@ export class BqBreadcrumbItem {
   @Event({ bubbles: true, composed: true }) bqFocus: EventEmitter<HTMLBqBreadcrumbItemElement>;
 
   /** Handler to be called when item is clicked */
-  @Event({ bubbles: true, composed: true }) bqClick: EventEmitter<HTMLBqBreadcrumbItemElement>;
+  @Event({ bubbles: true, cancelable: true, composed: true }) bqClick: EventEmitter<HTMLBqBreadcrumbItemElement>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -122,8 +122,11 @@ export class BqBreadcrumbItem {
     this.bqFocus.emit(this.el);
   };
 
-  private onClick = () => {
-    this.bqClick.emit(this.el);
+  private onClick = (event: MouseEvent): void => {
+    const bqClickEvent = this.bqClick.emit(this.el);
+    if (!bqClickEvent.defaultPrevented) return;
+
+    event.preventDefault();
   };
 
   // render() function

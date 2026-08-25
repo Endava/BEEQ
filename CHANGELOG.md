@@ -1,3 +1,58 @@
+## 1.14.0 (2026-08-19)
+
+### Features ⚡️
+
+- **Select:** add non-searchable mode ([041baf22](https://github.com/Endava/BEEQ/commit/041baf22))
+
+### Bug Fixes 🐞
+
+- **Breadcrumb:** synchronize custom separators ([#1778](https://github.com/Endava/BEEQ/pull/1778))
+- **Breadcrumb:** correct item and separator colors ([8e5e6e0c](https://github.com/Endava/BEEQ/commit/8e5e6e0c))
+- **Breadcrumb Item:** allow canceling link navigation ([866b69a5](https://github.com/Endava/BEEQ/commit/866b69a5))
+- **Select:** avoid input text selection in non-searchable mode ([28ae69fb](https://github.com/Endava/BEEQ/commit/28ae69fb))
+
+### Chore ⚙️
+
+- **deps:** update stencil ([#1779](https://github.com/Endava/BEEQ/pull/1779))
+- **deps:** update react to v19.2.8 ([#1780](https://github.com/Endava/BEEQ/pull/1780))
+- **deps:** update types react ([#1781](https://github.com/Endava/BEEQ/pull/1781))
+
+### ❤️ Thank You
+
+- Dabiel Gonzalez-Ramos @dgonzalezr
+
+## 1.13.1 (2026-08-13)
+
+### Bug Fixes 🐞
+
+- **Icons:** import decompress as callable default in the svg generator ([#1761](https://github.com/Endava/BEEQ/pull/1761))
+- **Tooltip:** prevent positioning drift in scrollable containers ([#1776](https://github.com/Endava/BEEQ/pull/1776))
+
+### Refactor 🛠️
+
+- **Icons executor:** replace fs-extra method imports with namespace import ([a6dfc8f3](https://github.com/Endava/BEEQ/commit/a6dfc8f3))
+
+### Chore ⚙️
+
+- **deps:** update pnpm to v11.13.1 ([1e8146a8](https://github.com/Endava/BEEQ/commit/1e8146a8))
+- **deps:** update nx to v23.1.0 (major) ([99f2829f](https://github.com/Endava/BEEQ/commit/99f2829f))
+- **deps:** update stencil ([#1758](https://github.com/Endava/BEEQ/pull/1758))
+- **deps:** update mcr.microsoft.com/playwright docker tag to v1.61.1 ([#1769](https://github.com/Endava/BEEQ/pull/1769))
+- **deps:** update dependency postcss to v8.5.18 [security] ([#1768](https://github.com/Endava/BEEQ/pull/1768))
+- **deps:** update dependency playwright to v1.61.1 ([#1717](https://github.com/Endava/BEEQ/pull/1717))
+- **deps:** remove @nxext/stencil dependency and replace executors with a local Stencil build runner ([#1771](https://github.com/Endava/BEEQ/pull/1771))
+- **deps:** update dependency @wc-toolkit/cem-analyzer-plugin to v1.0.2 ([#1772](https://github.com/Endava/BEEQ/pull/1772))
+- **deps:** update storybook to v10.5.4 ([#1773](https://github.com/Endava/BEEQ/pull/1773))
+- **deps:** update angular to v22.0.8 ([#1774](https://github.com/Endava/BEEQ/pull/1774))
+- **deps:** update commitlint to v21 ([#1719](https://github.com/Endava/BEEQ/pull/1719))
+- **deps:** update dependency postcss to v8.5.23 [security] ([#1775](https://github.com/Endava/BEEQ/pull/1775))
+- **renovate:** update branch and PR limits for Renovate ([0d1d364f](https://github.com/Endava/BEEQ/commit/0d1d364f))
+
+### ❤️ Thank You
+
+- Andrei Morosan
+- Dabiel Gonzalez-Ramos @dgonzalezr
+
 ## 1.13.0 (2026-07-15)
 
 ### Features ⚡️

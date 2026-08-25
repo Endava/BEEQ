@@ -44,7 +44,7 @@
       "continuous": true
     },
     "build": {
-      "dependsOn": [{ "target": "icons" }],
+      "dependsOn": ["^build", { "target": "icons" }],
       "executor": "nx:run-commands",
       "outputs": [
         "{workspaceRoot}/dist/beeq",

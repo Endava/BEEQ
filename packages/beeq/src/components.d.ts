@@ -2072,6 +2072,7 @@ export namespace Components {
      * @attr {string} clear-button-label - The clear button aria label.
      * @attr {number} debounce-time - The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes.
      * @attr {boolean} disable-clear - If `true`, the clear button won't be displayed.
+     * @attr {boolean} disable-search - Disables text filtering while keeping option selection available.
      * @attr {boolean} disabled - Indicates whether the Select input is disabled and cannot be interacted with.
      * @attr {number} distance - Represents the distance (gutter or margin) between the Select panel and the input element.
      * @attr {string} form - The ID of the form that Select input field belongs to.
@@ -2084,7 +2085,7 @@ export namespace Components {
      * @attr {string} panel-height - When set, it will override the height of the Select panel.
      * @attr {string} placeholder - The Select input placeholder text value.
      * @attr {"bottom" | "bottom-end" | "bottom-start" | "left" | "left-end" | "left-start" | "right" | "right-end" | "right-start" | "top" | "top-end" | "top-start"} placement - Position of the Select panel.
-     * @attr {boolean} readonly - If `true`, the Select input cannot be modified.
+     * @attr {boolean} readonly - Deprecated. Use `disable-search` to allow selection without text filtering.
      * @attr {boolean} required - Indicates whether or not the Select input is required to be filled out before submitting the form.
      * @attr {boolean} same-width - Whether the panel should have the Select same width as the input element.
      * @attr {number} skidding - Represents the skidding between the Select panel and the input element.
@@ -2150,6 +2151,11 @@ export namespace Components {
          */
         "disableScrollLock"?: boolean;
         /**
+          * If true, the search functionality within the Select panel will be disabled. No typing will be allowed
+          * @default false
+         */
+        "disableSearch"?: boolean;
+        /**
           * Indicates whether the Select input is disabled or not. If `true`, the Select is disabled and cannot be interacted with.
           * @default false
          */
@@ -2205,7 +2211,7 @@ export namespace Components {
          */
         "placement"?: Placement;
         /**
-          * If true, the list of options cannot be filtered (searching won't be available)
+          * @deprecated Use `disableSearch` to allow selection without text filtering. In a future major release, `readonly` will prevent changing the selected value.
          */
         "readonly"?: boolean;
         /**
@@ -4706,6 +4712,7 @@ declare global {
      * @attr {string} clear-button-label - The clear button aria label.
      * @attr {number} debounce-time - The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes.
      * @attr {boolean} disable-clear - If `true`, the clear button won't be displayed.
+     * @attr {boolean} disable-search - Disables text filtering while keeping option selection available.
      * @attr {boolean} disabled - Indicates whether the Select input is disabled and cannot be interacted with.
      * @attr {number} distance - Represents the distance (gutter or margin) between the Select panel and the input element.
      * @attr {string} form - The ID of the form that Select input field belongs to.
@@ -4718,7 +4725,7 @@ declare global {
      * @attr {string} panel-height - When set, it will override the height of the Select panel.
      * @attr {string} placeholder - The Select input placeholder text value.
      * @attr {"bottom" | "bottom-end" | "bottom-start" | "left" | "left-end" | "left-start" | "right" | "right-end" | "right-start" | "top" | "top-end" | "top-start"} placement - Position of the Select panel.
-     * @attr {boolean} readonly - If `true`, the Select input cannot be modified.
+     * @attr {boolean} readonly - Deprecated. Use `disable-search` to allow selection without text filtering.
      * @attr {boolean} required - Indicates whether or not the Select input is required to be filled out before submitting the form.
      * @attr {boolean} same-width - Whether the panel should have the Select same width as the input element.
      * @attr {number} skidding - Represents the skidding between the Select panel and the input element.
@@ -5476,7 +5483,7 @@ declare global {
     }
 }
 declare namespace LocalJSX {
-    type OneOf<K extends string, PropT, AttrT = PropT> = { [P in K]: PropT } & { [P in `attr:${K}` | `prop:${K}`]?: never } | { [P in `attr:${K}`]: AttrT } & { [P in K | `prop:${K}`]?: never } | { [P in `prop:${K}`]: PropT } & { [P in K | `attr:${K}`]?: never };
+    type OneOf<K extends string, PropT, AttrT = PropT> = { [P in K]: PropT } & { [P in `attr:${K}`]?: never } | { [P in `attr:${K}`]: AttrT } & { [P in K]?: never };
 
     /**
      * The Accordion is a UI component that allows users to toggle between showing and hiding content sections. It provides a collapsible functionality, where only one section can be expanded at a time, while the others remain collapsed.
@@ -7653,6 +7660,7 @@ declare namespace LocalJSX {
      * @attr {string} clear-button-label - The clear button aria label.
      * @attr {number} debounce-time - The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes.
      * @attr {boolean} disable-clear - If `true`, the clear button won't be displayed.
+     * @attr {boolean} disable-search - Disables text filtering while keeping option selection available.
      * @attr {boolean} disabled - Indicates whether the Select input is disabled and cannot be interacted with.
      * @attr {number} distance - Represents the distance (gutter or margin) between the Select panel and the input element.
      * @attr {string} form - The ID of the form that Select input field belongs to.
@@ -7665,7 +7673,7 @@ declare namespace LocalJSX {
      * @attr {string} panel-height - When set, it will override the height of the Select panel.
      * @attr {string} placeholder - The Select input placeholder text value.
      * @attr {"bottom" | "bottom-end" | "bottom-start" | "left" | "left-end" | "left-start" | "right" | "right-end" | "right-start" | "top" | "top-end" | "top-start"} placement - Position of the Select panel.
-     * @attr {boolean} readonly - If `true`, the Select input cannot be modified.
+     * @attr {boolean} readonly - Deprecated. Use `disable-search` to allow selection without text filtering.
      * @attr {boolean} required - Indicates whether or not the Select input is required to be filled out before submitting the form.
      * @attr {boolean} same-width - Whether the panel should have the Select same width as the input element.
      * @attr {number} skidding - Represents the skidding between the Select panel and the input element.
@@ -7724,6 +7732,11 @@ declare namespace LocalJSX {
           * @default false
          */
         "disableScrollLock"?: boolean;
+        /**
+          * If true, the search functionality within the Select panel will be disabled. No typing will be allowed
+          * @default false
+         */
+        "disableSearch"?: boolean;
         /**
           * Indicates whether the Select input is disabled or not. If `true`, the Select is disabled and cannot be interacted with.
           * @default false
@@ -7800,7 +7813,7 @@ declare namespace LocalJSX {
          */
         "placement"?: Placement;
         /**
-          * If true, the list of options cannot be filtered (searching won't be available)
+          * @deprecated Use `disableSearch` to allow selection without text filtering. In a future major release, `readonly` will prevent changing the selected value.
          */
         "readonly"?: boolean;
         /**
@@ -9163,6 +9176,7 @@ declare namespace LocalJSX {
         "disableScrollLock": boolean;
         "disabled": boolean;
         "disableClear": boolean;
+        "disableSearch": boolean;
         "distance": number;
         "form": string;
         "formValidationMessage": string;
@@ -10356,6 +10370,7 @@ declare module "@stencil/core" {
              * @attr {string} clear-button-label - The clear button aria label.
              * @attr {number} debounce-time - The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes.
              * @attr {boolean} disable-clear - If `true`, the clear button won't be displayed.
+             * @attr {boolean} disable-search - Disables text filtering while keeping option selection available.
              * @attr {boolean} disabled - Indicates whether the Select input is disabled and cannot be interacted with.
              * @attr {number} distance - Represents the distance (gutter or margin) between the Select panel and the input element.
              * @attr {string} form - The ID of the form that Select input field belongs to.
@@ -10368,7 +10383,7 @@ declare module "@stencil/core" {
              * @attr {string} panel-height - When set, it will override the height of the Select panel.
              * @attr {string} placeholder - The Select input placeholder text value.
              * @attr {"bottom" | "bottom-end" | "bottom-start" | "left" | "left-end" | "left-start" | "right" | "right-end" | "right-start" | "top" | "top-end" | "top-start"} placement - Position of the Select panel.
-             * @attr {boolean} readonly - If `true`, the Select input cannot be modified.
+             * @attr {boolean} readonly - Deprecated. Use `disable-search` to allow selection without text filtering.
              * @attr {boolean} required - Indicates whether or not the Select input is required to be filled out before submitting the form.
              * @attr {boolean} same-width - Whether the panel should have the Select same width as the input element.
              * @attr {number} skidding - Represents the skidding between the Select panel and the input element.

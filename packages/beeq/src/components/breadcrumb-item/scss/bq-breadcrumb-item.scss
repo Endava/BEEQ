@@ -19,10 +19,10 @@
   @apply transition-colors duration-300 ease-in-out;
   @apply cursor-pointer no-underline;
 
-  border-style: var(--bq-avatar--border-style);
+  border-style: var(--bq-breadcrumb-item--border-style);
 }
 
 .breadcrumb-separator {
-  @apply flex items-center text-[length:--bq-breadcrumb-item--text-size-separator];
+  @apply flex items-center text-[length:--bq-breadcrumb-item--text-size-separator] text-[color:--bq-breadcrumb-item--separator-color];
   @apply pe-[--bq-breadcrumb-item--padding-end-separator] ps-[--bq-breadcrumb-item--padding-start-separator];
 }

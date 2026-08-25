@@ -28,7 +28,8 @@
           "tsConfig": "{projectRoot}/tsconfig.lib.json"
         }
       },
-      "defaultConfiguration": "production"
+      "defaultConfiguration": "production",
+      "dependsOn": ["^build", { "target": "prebuild" }]
     },
     "check": {
       "executor": "nx:run-commands",

@@ -326,6 +326,8 @@ describe('bq-select', () => {
     const alphaOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="alpha"]');
     const betaOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="beta"]');
 
+    expect(input.readOnly).toBe(false);
+
     await userEvent.click(input);
     // Use fill instead of type to set the value atomically, ensuring exactly 1 bqInput
     // event fires regardless of debounce timing across character keystrokes
@@ -335,6 +337,124 @@ describe('bq-select', () => {
     expect(bqInput).toHaveReceivedEventTimes(1);
     expect(alphaOption.hidden).toBe(false);
     expect(betaOption.hidden).toBe(true);
+  });
+
+  it('should disable typing while allowing option selection when disableSearch is true', async () => {
+    const { root, spyOnEvent, waitForChanges } = await render(
+      <bq-select name="bq-select" disableSearch value="alpha">
+        <bq-option value="alpha">Alpha</bq-option>
+        <bq-option value="beta">Beta</bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const input = getInput(select);
+    const betaOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="beta"]');
+    const bqInput = spyOnEvent('bqInput');
+
+    expect(input.readOnly).toBe(true);
+
+    await userEvent.click(input);
+    await userEvent.keyboard('bet');
+    await waitForChanges();
+
+    expect(input.value).toBe('Alpha');
+    expect(bqInput).toHaveReceivedEventTimes(0);
+    expect(root.querySelectorAll('bq-option[hidden]')).toHaveLength(0);
+    expect(getDropdown(select)).toHaveAttribute('open');
+
+    input.setSelectionRange(0, input.value.length);
+    await userEvent.click(getOptionButton(betaOption));
+    await waitForChanges();
+
+    expect(betaOption).toHaveAttribute('selected');
+    expect(select.value).toBe('beta');
+    expect(input.value).toBe('Beta');
+    expect(input.selectionStart).toBe(input.value.length);
+    expect(input.selectionEnd).toBe(input.value.length);
+    expect(select.shadowRoot.activeElement).toBe(input);
+  });
+
+  it('should collapse the selection after keyboard selection when readonly', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-select name="bq-select" readonly value="alpha">
+        <bq-option value="alpha">Alpha</bq-option>
+        <bq-option value="beta">Beta</bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const input = getInput(select);
+    const betaOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="beta"]');
+
+    await userEvent.click(getControl(select));
+    await waitForChanges();
+
+    input.setSelectionRange(0, input.value.length);
+    const betaButton = getOptionButton(betaOption);
+    betaButton.focus();
+    betaButton.dispatchEvent(new KeyboardEvent('keydown', { bubbles: true, composed: true, key: 'Enter' }));
+    await waitForChanges();
+
+    expect(input.value).toBe('Beta');
+    expect(input.selectionStart).toBe(input.value.length);
+    expect(input.selectionEnd).toBe(input.value.length);
+    expect(select.shadowRoot.activeElement).toBe(input);
+
+    await userEvent.click(input);
+    await waitForChanges();
+
+    expect(getDropdown(select)).toHaveAttribute('open');
+    expect(input.selectionStart).toBe(input.value.length);
+    expect(input.selectionEnd).toBe(input.value.length);
+
+    input.setSelectionRange(0, input.value.length);
+    await userEvent.click(input);
+    await waitForChanges();
+
+    expect(getDropdown(select)).not.toHaveAttribute('open');
+    expect(input.selectionStart).toBe(input.value.length);
+    expect(input.selectionEnd).toBe(input.value.length);
+  });
+
+  it('should collapse retained selection whenever a readonly input receives focus', async () => {
+    const { root, waitForChanges } = await render(
+      <div>
+        <button type="button">Before select</button>
+        <bq-select name="bq-select" readonly value="alpha" />
+      </div>,
+    );
+    const select = root.querySelector<HTMLBqSelectElement>('bq-select');
+    const input = getInput(select);
+
+    input.setSelectionRange(0, input.value.length);
+    input.focus();
+    await waitForChanges();
+
+    expect(select.shadowRoot.activeElement).toBe(input);
+    expect(input.selectionStart).toBe(input.value.length);
+    expect(input.selectionEnd).toBe(input.value.length);
+
+    input.blur();
+    root.querySelector('button').focus();
+    input.setSelectionRange(0, input.value.length);
+    await userEvent.tab();
+    await waitForChanges();
+
+    expect(select.shadowRoot.activeElement).toBe(input);
+    expect(input.selectionStart).toBe(input.value.length);
+    expect(input.selectionEnd).toBe(input.value.length);
+  });
+
+  it('should preserve native selection for searchable inputs', async () => {
+    const { root } = await render(<bq-select name="bq-select" value="alpha" />);
+    const select = root as HTMLBqSelectElement;
+    const input = getInput(select);
+
+    input.focus();
+    input.setSelectionRange(0, input.value.length);
+    input.dispatchEvent(new Event('select', { bubbles: true }));
+
+    expect(input.selectionStart).toBe(0);
+    expect(input.selectionEnd).toBe(input.value.length);
   });
 
   it('should hide the clear button when disableClear is true', async () => {

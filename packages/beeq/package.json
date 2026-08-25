@@ -1,6 +1,6 @@
 {
   "name": "@beeq/core",
-  "version": "1.13.0",
+  "version": "1.14.0",
   "license": "Apache-2.0",
   "description": "BEEQ, a Design System components ruled by Endavan developers :)",
   "main": "./dist/index.cjs.js",
@@ -12,8 +12,8 @@
   "unpkg": "./dist/beeq/beeq.esm.js",
   "files": ["dist/"],
   "dependencies": {
-    "@floating-ui/core": "^1.7.4",
-    "@floating-ui/dom": "^1.7.5",
+    "@floating-ui/core": "^1.8.0",
+    "@floating-ui/dom": "^1.8.0",
     "@stencil/core": "^4.41.3"
   },
   "repository": {
