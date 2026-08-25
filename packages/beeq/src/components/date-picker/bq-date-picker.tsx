@@ -49,7 +49,6 @@ import {
   toISO,
 } from './helper/calendar';
 import { CALENDAR_PARTS, DECADE_GRID_SIZE, DEFAULT_INPUT_ID, MAX_MONTHS_PER_VIEW } from './helper/constants';
-import { parseTypedInput } from './helper/input';
 import { formatMonth } from './helper/intl';
 import { getHeaderLabel, getHeaderTitleLabel, getNextLabel, getPreviousLabel } from './helper/labels';
 import { formatMaskedValue, getMaskPlaceholder } from './helper/mask';
@@ -265,8 +264,6 @@ export class BqDatePicker {
   private prefixElem?: HTMLElement;
   private segmentContainerElem?: HTMLElement;
 
-  /** Unnamed editable sink used only to receive browser clipboard events from a segmented field. */
-  private clipboardInputElem?: HTMLInputElement;
   private triggerBtnElem?: HTMLBqButtonElement;
 
   // Reference to host HTML element
@@ -675,11 +672,6 @@ export class BqDatePicker {
   private handleSegmentKeyDown = (ev: KeyboardEvent, key: TDateSegmentKey): void => {
     if (this.disabled) return;
 
-    if ((ev.metaKey || ev.ctrlKey) && ev.key.toLowerCase() === 'v') {
-      this.activeSegment = key;
-      this.clipboardInputElem?.focus();
-      return;
-    }
     if (this.handleSegmentPopupShortcut(ev)) return;
     if (this.handleSegmentNavigation(ev, key)) return;
     if (this.handleSegmentDeletion(ev, key)) return;
@@ -800,34 +792,6 @@ export class BqDatePicker {
   private handleSegmentsClick = (ev: MouseEvent): void => {
     if (!this.activeSegment) return;
     this.handleSegmentClick(this.activeSegment, ev);
-  };
-
-  /** Applies a complete pasted date atomically, preserving the current draft when parsing fails. */
-  private handleSegmentsPaste = (ev: ClipboardEvent): void => {
-    if (this.disabled) return;
-    const text = ev.clipboardData?.getData('text/plain');
-    if (!text?.trim()) return;
-    ev.preventDefault();
-    ev.stopPropagation();
-
-    const parsed = parseTypedInput(text, this.locale, this.precision, this.min, this.max, this.isDateDisallowed);
-    if (!parsed.value) {
-      this.hasBadInput = true;
-      this.syncValidity();
-      return;
-    }
-
-    const nextSelection = parseValue(parsed.value, 'single', this.precision);
-    const nextValue = serializeValue(nextSelection, this.type, this.precision) || undefined;
-    this.value = nextValue;
-    this.segmentGroups = getDateSegmentGroups(nextValue, this.type, this.precision, this.pickerMask);
-    this.activeSegment =
-      getFirstEmptySegmentKey(this.segmentGroups) ??
-      (this.segmentGroups[0]?.segments[0]
-        ? { groupId: this.segmentGroups[0].id, field: this.segmentGroups[0].segments[0].field }
-        : undefined);
-    this.bqChange.emit({ value: this.value, el: this.el });
-    if (this.activeSegment) this.focusSegment(this.activeSegment);
   };
 
   /** Routes control-surface clicks to the active segment without hijacking action buttons. */
@@ -1709,15 +1673,6 @@ export class BqDatePicker {
               }}
               role="group"
             >
-              <input
-                aria-hidden="true"
-                class="bq-date-picker__clipboard-input"
-                onPaste={this.handleSegmentsPaste}
-                ref={(el) => {
-                  this.clipboardInputElem = el;
-                }}
-                tabindex={-1}
-              />
               {this.segmentGroups.map((group, index) => [
                 index > 0 && (
                   <span aria-hidden="true" class="bq-date-picker__segment-group-literal">
