@@ -313,12 +313,11 @@ export class BqDatePicker {
   @Prop({ reflect: true }) firstDayOfWeek: DaysOfWeek = 1;
 
   /**
-   * Options used when formatting the displayed value.
+   * Numeric options used to derive the input mask's field order and separators.
    *
-   * When omitted, sensible defaults are picked based on `precision`:
-   * - `day`   → `{ day: 'numeric', month: 'short', year: 'numeric' }`
-   * - `month` → `{ month: 'long', year: 'numeric' }`
-   * - `year`  → `{ year: 'numeric' }`
+   * The options must contain numeric or two-digit day/month fields and a
+   * numeric year. Textual or variable-length fields fall back to the locale
+   * numeric mask and emit a development warning.
    */
   @Prop() formatOptions?: Intl.DateTimeFormatOptions;
 

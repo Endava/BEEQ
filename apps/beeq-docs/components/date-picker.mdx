@@ -103,15 +103,12 @@ The date picker combines a labeled field with a calendar surface that helps peop
 Use the default `single` type when users need to choose one date. This is the best starting point for appointments, due dates, deadlines, and similar tasks.
 
 <Note>
-  Users can also enter a date manually. After pressing <kbd>Tab</kbd>, the component formats the value and reflects it in the calendar view.
+  All selection types support locale-derived numeric masks. With `locale="en-GB"`, day precision uses `dd/mm/yyyy`; a range uses `dd/mm/yyyy - dd/mm/yyyy`; and multi-date entry uses comma-separated masks. Month and year precision use the matching `mm/yyyy` and `yyyy` masks.
 
   The wire format of the `value` attribute — and of `min`/`max` — depends on `precision`:
   `day` uses `YYYY-MM-DD`, `month` uses `YYYY-MM`, and `year` uses `YYYY`. For `type="range"` two tokens are joined with `/` (`start/end`); for `type="multi"` tokens are space-separated.
 
-  Supported input formats include:
-  - ISO format: `2024-05-30`
-  - Text format: `30 May 2024`, `May 30, 2024`, `30 January 2024`, `January 1, 1970` (locale-aware)
-  - Numeric format: `30/05/2024`, `05-30-2024`, `30.05.2024`, `05.30.2024` (with day/month heuristics)
+  A custom `placeholder` is preserved when you provide one. Omit it when you want the mask itself to be visible before the user starts typing.
 </Note>
 
 <CodeLivePreview mode="shadow" code={`
@@ -166,7 +163,7 @@ Use the default `single` type when users need to choose one date. This is the be
 </CodeLivePreview>
 
 <Tip>
-  `type="single"` is the default. Unlike `range` and `multi`, the single-date picker also supports manual typing with locale-aware parsing.
+  `type="single"` is the default. `range` and `multi` use the same editable mask model, so users can type, paste, or choose dates from the calendar in every selection mode.
 </Tip>
 
 ### Date range
@@ -1248,9 +1245,9 @@ Use `isDateDisallowed` to make specific dates unavailable for selection. This is
 </CodeGroup>
 </CodeLivePreview>
 
-### Custom display format
+### Input mask format
 
-Use `formatOptions` to customize the display format of the selected date in the input field. This does not affect the underlying value, which is always stored as `YYYY-MM-DD`.
+Use numeric `formatOptions` to set the mask's field order and separators. The component supports `numeric` or `2-digit` day/month fields with a numeric year. This does not affect the underlying ISO wire value.
 
 <CodeLivePreview mode="iframe" height="30rem" removePadding code={`
   <style>
@@ -1375,7 +1372,7 @@ Use `formatOptions` to customize the display format of the selected date in the 
 </CodeLivePreview>
 
 <Warning>
-  Use `formatOptions` carefully with `range` and `multi`. Long formats such as `weekday: 'long'` can produce unwieldy display values when multiple dates appear in the input field.
+  Textual or variable-length options such as `month: 'long'`, `weekday`, and `dateStyle` cannot form a fixed mask. The component falls back to the locale's numeric mask and logs a development warning.
 </Warning>
 
 ### Form integration
@@ -1652,7 +1649,8 @@ Use `formatOptions` to customize the display format of the selected date in the 
 - The input uses `aria-haspopup="dialog"` and `aria-controls` to announce the calendar panel. A `label` slot supplies `aria-labelledby` for both the input and calendar panel.
 - The calendar panel carries `role="dialog"` and is labelled via `aria-labelledby` when a label is present, or by its built-in "Date picker" label otherwise. The panel is not modal.
 - The component emits `bqFocus`, `bqBlur`, `bqChange`, and `bqClear`, which give you the hooks needed to announce validation results, react to changes, and keep form state synchronized.
-- Keyboard users can open the calendar panel with `Enter` or `Space`, navigate days with the arrow keys, and close the panel with `Escape`.
+- Focusing or typing in the input with a keyboard does not open the panel. Tab to the calendar icon, then press `Enter` or `Space` to open the panel and move focus into its active date cell. The arrow keys navigate calendar cells and `Escape` closes the panel.
+- Clicking an input opens the calendar while keeping focus in the input, so users can continue editing the mask. Clicking the calendar icon opens the panel and moves focus into it.
 - Always provide a visible label through the `label` slot. Without it, the input has no programmatic label, so nearby context must provide an equivalent accessible name.
 - Validation states should never rely on color alone. Pair `validationStatus` with visible error text so screen reader users receive the same feedback as sighted users.
 - Keep `locale`, `first-day-of-week`, and display formatting aligned with user expectations so typed input and visible values remain understandable for all users.
@@ -1672,7 +1670,7 @@ Use `formatOptions` to customize the display format of the selected date in the 
 | `firstDayOfWeek` | `first-day-of-week` | First day of the week where Sunday is `0` | `0 \| 1 \| 2 \| 3 \| 4 \| 5 \| 6` | `1` |
 | `form` | `form` | ID of the form the input belongs to | `string` | `undefined` |
 | `formValidationMessage` | `form-validation-message` | Native validation message used for required, invalid typed, and out-of-bounds values | `string` | `undefined` |
-| `formatOptions` | *(property only)* | `Intl.DateTimeFormat` options used for the displayed value. When omitted, defaults are derived from `precision` (`day` → `{ day, month, year }`, `month` → `{ month, year }`, `year` → `{ year }`) | `DateTimeFormatOptions` | `undefined` |
+| `formatOptions` | *(property only)* | Numeric `Intl.DateTimeFormat` options that control input-mask order and separators. Textual or variable-length options fall back to the locale numeric mask with a development warning. | `DateTimeFormatOptions` | `undefined` |
 | `initialView` | `initial-view` | Starting view when `precision` is `"day"`; month and year precision always open in their matching view | `"days" \| "months" \| "years"` | `"days"` |
 | `isDateDisallowed` | *(property only)* | Function used to disable specific dates | `(date: Date) => boolean` | `undefined` |
 | `locale` | `locale` | Locale used to format and parse dates | `Intl.LocalesArgument` | `"en-GB"` |
