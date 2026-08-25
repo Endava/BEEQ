@@ -52,12 +52,6 @@ import {
 import { CALENDAR_PARTS, DECADE_GRID_SIZE, DEFAULT_INPUT_ID, MAX_MONTHS_PER_VIEW } from './helper/constants';
 import { formatMonth } from './helper/intl';
 import { getHeaderLabel, getHeaderTitleLabel, getNextLabel, getPreviousLabel } from './helper/labels';
-import { advanceFocusedMonth, advanceFocusedYear, getGridColumns } from './helper/navigation';
-import { applySelection, buildTentativeRange, parseValue, serializeValue } from './helper/selection';
-import {
-  computeHasValue,
-  normalizeValue,
-} from './helper/value';
 import {
   applyPickerMask,
   formatMaskedValue,
@@ -67,6 +61,9 @@ import {
   parseMaskedInputToken,
   serializeMaskedInputTokens,
 } from './helper/mask';
+import { advanceFocusedMonth, advanceFocusedYear, getGridColumns } from './helper/navigation';
+import { applySelection, buildTentativeRange, parseValue, serializeValue } from './helper/selection';
+import { computeHasValue, normalizeValue } from './helper/value';
 
 /** Compose the default constraint-validation message for a set of flags. */
 const defaultValidityMessage = (flags: ValidityStateFlags): string => {
@@ -526,7 +523,9 @@ export class BqDatePicker {
     if (!open) {
       this.tentativeHover = undefined;
       if (this.activeOpenSource !== 'input') {
-        requestAnimationFrame(() => this.triggerBtnElem?.shadowRoot?.querySelector<HTMLButtonElement>('button')?.focus());
+        requestAnimationFrame(() =>
+          this.triggerBtnElem?.shadowRoot?.querySelector<HTMLButtonElement>('button')?.focus(),
+        );
       }
       return;
     }
@@ -658,28 +657,10 @@ export class BqDatePicker {
     this.bqFocus.emit(this.el);
   };
 
-  private handleInputChange = (ev: Event): void => {
-    if (this.disabled || !isHTMLElement(ev.target, 'input')) return;
-
-    const inputValue = ev.target.value.trim();
-    if (!inputValue) {
-      this.hasBadInput = false;
-      this.clearValue();
-      this.bqChange.emit({ value: this.value, el: this.el });
-      return;
-    }
-
+  private parseInputValue = (inputValue: string): { value?: string; invalid?: boolean } => {
     const tokens = getMaskedInputTokens(inputValue, this.type, this.locale, this.precision, this.formatOptions);
-    if (!tokens) {
-      this.handleInvalidInput();
-      return;
-    }
-    if (tokens.length === 0) {
-      this.hasBadInput = false;
-      this.clearValue();
-      this.bqChange.emit({ value: this.value, el: this.el });
-      return;
-    }
+    if (!tokens) return { invalid: true };
+    if (tokens.length === 0) return {};
 
     const parsedTokens = tokens.map((token) =>
       parseMaskedInputToken(
@@ -692,23 +673,41 @@ export class BqDatePicker {
         this.formatOptions,
       ),
     );
-    if (parsedTokens.some((parsed) => parsed.invalid || parsed.value == null)) {
-      this.handleInvalidInput();
-      return;
-    }
+    if (parsedTokens.some((parsed) => parsed.invalid || parsed.value == null)) return { invalid: true };
 
-    const nextValue = serializeMaskedInputTokens(
+    const value = serializeMaskedInputTokens(
       parsedTokens.map((parsed) => parsed.value as string),
       this.type,
       this.precision,
     );
-    if (!nextValue) {
+    return value ? { value } : { invalid: true };
+  };
+
+  private handleInputChange = (ev: Event): void => {
+    if (this.disabled || !isHTMLElement(ev.target, 'input')) return;
+
+    const inputValue = ev.target.value.trim();
+    if (!inputValue) {
+      this.hasBadInput = false;
+      this.clearValue();
+      this.bqChange.emit({ value: this.value, el: this.el });
+      return;
+    }
+
+    const parsed = this.parseInputValue(inputValue);
+    if (parsed.invalid) {
       this.handleInvalidInput();
+      return;
+    }
+    if (!parsed.value) {
+      this.hasBadInput = false;
+      this.clearValue();
+      this.bqChange.emit({ value: this.value, el: this.el });
       return;
     }
 
     this.hasBadInput = false;
-    this.value = nextValue;
+    this.value = parsed.value;
     this.bqChange.emit({ value: this.value, el: this.el });
   };
 
@@ -742,6 +741,11 @@ export class BqDatePicker {
     this.displayDate = maskedValue;
     const selection = getMaskedSelectionRange(maskedValue, rawValue.slice(0, selectionStart).replace(/\D/g, '').length);
     requestAnimationFrame(() => this.inputElem?.setSelectionRange(selection.start, selection.end));
+
+    const parsed = this.parseInputValue(maskedValue);
+    if (!parsed.value || parsed.value === this.value) return;
+    this.hasBadInput = false;
+    this.value = parsed.value;
   };
 
   private handleClearClick = (ev: CustomEvent): void => {

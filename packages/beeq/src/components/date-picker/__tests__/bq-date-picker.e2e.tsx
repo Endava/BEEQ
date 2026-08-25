@@ -288,10 +288,11 @@ describe('bq-date-picker', () => {
 
     input.value = '15/05/2026 - 20/05/2026';
     input.dispatchEvent(new InputEvent('input', { bubbles: true, inputType: 'insertText' }));
-    input.dispatchEvent(new Event('change', { bubbles: true }));
     await waitForChanges();
 
     expect(datePicker.value).toBe('2026-05-15/2026-05-20');
+    expect(getDayButton(datePicker, '2026-05-15')).toHaveClass('is-selected');
+    expect(getDayButton(datePicker, '2026-05-20')).toHaveClass('is-selected');
   });
 
   it('should commit masked multi input to the sorted multi wire format', async () => {
