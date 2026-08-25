@@ -100,6 +100,15 @@ export const getMaskedCaretPosition = (input: string, enteredDigits: number): nu
   return input.length;
 };
 
+export const getMaskedSelectionRange = (
+  input: string,
+  enteredDigits: number,
+): { start: number; end: number } => {
+  const start = getMaskedCaretPosition(input, enteredDigits);
+  const placeholder = /^(dd|mm|yyyy)/.exec(input.slice(start))?.[0];
+  return { start, end: placeholder ? start + placeholder.length : start };
+};
+
 export const formatMaskedValue = (
   value: string | undefined,
   type: TDatePickerType,

@@ -193,7 +193,8 @@ describe('bq-date-picker', () => {
     await waitForChanges();
 
     expect(datePicker.value).toBeUndefined();
-    expect(getInput(datePicker)?.value).toBe('dd/mm/yyyy');
+    expect(getInput(datePicker)?.value).toBe('');
+    expect(getInput(datePicker)).toEqualAttribute('placeholder', 'dd/mm/yyyy');
     expect(bqClear).toHaveReceivedEventTimes(1);
   });
 

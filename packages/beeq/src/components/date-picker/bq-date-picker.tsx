@@ -61,8 +61,8 @@ import {
 import {
   applyPickerMask,
   formatMaskedValue,
-  getMaskedCaretPosition,
   getMaskedInputTokens,
+  getMaskedSelectionRange,
   getMaskPlaceholder,
   parseMaskedInputToken,
   serializeMaskedInputTokens,
@@ -728,20 +728,20 @@ export class BqDatePicker {
     if (this.open) return;
     this.pendingOpenSource = 'input';
     this.open = true;
-    if (this.inputElem?.value !== this.maskPlaceholder) return;
-    const [firstSegment] = getDateMask(this.locale, this.precision, this.formatOptions).segments;
-    if (!firstSegment) return;
-    requestAnimationFrame(() => this.inputElem?.setSelectionRange(firstSegment.start, firstSegment.end));
   };
 
   private handleInputValue = (ev: Event): void => {
     if (this.disabled || !isHTMLElement(ev.target, 'input')) return;
     const selectionStart = ev.target.selectionStart ?? 0;
     const rawValue = ev.target.value;
+    if (!rawValue) {
+      this.displayDate = undefined;
+      return;
+    }
     const maskedValue = applyPickerMask(rawValue, this.type, this.locale, this.precision, this.formatOptions);
     this.displayDate = maskedValue;
-    const caret = getMaskedCaretPosition(maskedValue, rawValue.slice(0, selectionStart).replace(/\D/g, '').length);
-    requestAnimationFrame(() => this.inputElem?.setSelectionRange(caret, caret));
+    const selection = getMaskedSelectionRange(maskedValue, rawValue.slice(0, selectionStart).replace(/\D/g, '').length);
+    requestAnimationFrame(() => this.inputElem?.setSelectionRange(selection.start, selection.end));
   };
 
   private handleClearClick = (ev: CustomEvent): void => {
@@ -776,7 +776,7 @@ export class BqDatePicker {
 
   private clearValue = (): void => {
     this.value = undefined;
-    this.displayDate = undefined;
+    this.displayDate = '';
     this.hasBadInput = false;
     this.internals.setFormValue(null);
     this.tentativeHover = undefined;
@@ -808,7 +808,9 @@ export class BqDatePicker {
     this.internals.setFormValue(!isNil(current) ? `${current}` : null);
     this.syncValidity();
     this.hasValue = computeHasValue(current);
-    this.displayDate = formatMaskedValue(current, this.type, this.locale, this.precision, this.formatOptions);
+    this.displayDate = current
+      ? formatMaskedValue(current, this.type, this.locale, this.precision, this.formatOptions)
+      : '';
   };
 
   /**
@@ -1488,7 +1490,7 @@ export class BqDatePicker {
               role="combobox"
               spellcheck={false}
               type="text"
-              value={this.displayDate ?? (this.placeholder ? undefined : this.maskPlaceholder)}
+              value={this.displayDate}
             />
 
             {this.hasValue && !this.disabled && !this.disableClear && (

@@ -103,12 +103,12 @@ The date picker combines a labeled field with a calendar surface that helps peop
 Use the default `single` type when users need to choose one date. This is the best starting point for appointments, due dates, deadlines, and similar tasks.
 
 <Note>
-  All selection types support locale-derived numeric masks. With `locale="en-GB"`, day precision uses `dd/mm/yyyy`; a range uses `dd/mm/yyyy - dd/mm/yyyy`; and multi-date entry uses comma-separated masks. Month and year precision use the matching `mm/yyyy` and `yyyy` masks.
+  All selection types expose a locale-derived numeric mask before entry starts, then keep that mask visible while the user types. With `locale="en-GB"`, day precision uses `dd/mm/yyyy`; a range uses `dd/mm/yyyy - dd/mm/yyyy`; and multi-date entry uses comma-separated masks. Month and year precision use the matching `mm/yyyy` and `yyyy` masks.
 
   The wire format of the `value` attribute — and of `min`/`max` — depends on `precision`:
   `day` uses `YYYY-MM-DD`, `month` uses `YYYY-MM`, and `year` uses `YYYY`. For `type="range"` two tokens are joined with `/` (`start/end`); for `type="multi"` tokens are space-separated.
 
-  A custom `placeholder` is preserved when you provide one. Omit it when you want the mask itself to be visible before the user starts typing.
+  A custom `placeholder` is preserved when you provide one. Omit it when you want the mask itself to orient users before they start typing.
 </Note>
 
 <CodeLivePreview mode="shadow" code={`
