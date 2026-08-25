@@ -140,31 +140,55 @@
   @extend %dp-validation-state;
 }
 
-/* -------------------------------- Input ---------------------------------- */
+/* --------------------------- Segmented input ----------------------------- */
 
-.bq-date-picker__input {
+.bq-date-picker__segments {
+  display: flex;
+  align-items: center;
   flex: 1 1 auto;
   min-inline-size: 0;
-  padding: 0;
-  margin: 0;
-  border: none;
-  background: transparent;
   color: inherit;
   font: inherit;
   font-size: inherit;
+  line-height: inherit;
+}
 
-  &::placeholder {
+.bq-date-picker__segment-group {
+  display: inline-flex;
+  align-items: center;
+  min-inline-size: max-content;
+}
+
+.bq-date-picker__segment {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+  cursor: text;
+  font-variant-numeric: tabular-nums;
+  outline: none;
+  padding-inline: var(--bq-spacing-xs3);
+  text-align: center;
+  white-space: nowrap;
+
+  &.is-empty {
     color: var(--bq-date-picker--text-placeholder-color);
   }
 
-  &:focus,
-  &:focus-visible {
-    outline: none;
+  &.is-active:focus-visible {
+    border-radius: var(--bq-date-picker--border-radius);
+    background-color: color-mix(in srgb, var(--bq-focus), transparent 88%);
   }
 }
 
-:host(:not([value])) .bq-date-picker__input {
-  color: var(--bq-date-picker--text-placeholder-color);
+.bq-date-picker__segment-literal,
+.bq-date-picker__segment-group-literal {
+  display: inline-flex;
+  align-items: center;
+  color: inherit;
+  pointer-events: none;
+  user-select: none;
+  white-space: pre;
 }
 
 .bq-date-picker__mask-description {

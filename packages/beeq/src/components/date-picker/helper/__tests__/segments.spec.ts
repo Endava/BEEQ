@@ -1,7 +1,13 @@
 import { describe, expect, it } from 'vitest';
 
 import { getDateMask } from '../../../../shared/utils';
-import { getAdjacentSegmentKey, getDateSegmentGroups, getFirstEmptySegmentKey, updateDateSegment } from '../segments';
+import {
+  getAdjacentSegmentKey,
+  getDateSegmentGroups,
+  getDateSegmentGroupValue,
+  getFirstEmptySegmentKey,
+  updateDateSegment,
+} from '../segments';
 
 describe(getDateSegmentGroups.name, () => {
   it('should derive locale-ordered groups from a complete single value', () => {
@@ -48,5 +54,14 @@ describe('segment navigation', () => {
     const result = updateDateSegment(groups, { groupId: 0, field: 'month' }, '11');
 
     expect(result[0].segments.map((segment) => segment.value)).toEqual(['25', '11', '1990']);
+  });
+
+  it('should serialize only complete groups at the selected precision', () => {
+    const groups = getDateSegmentGroups('1990-12-25', 'single', 'day', getDateMask('en-GB', 'day'));
+    const incomplete = updateDateSegment(groups, { groupId: 0, field: 'month' }, '1');
+
+    expect(getDateSegmentGroupValue(groups[0], 'day')).toBe('1990-12-25');
+    expect(getDateSegmentGroupValue(incomplete[0], 'day')).toBeUndefined();
+    expect(getDateSegmentGroupValue(groups[0], 'month')).toBe('1990-12');
   });
 });
