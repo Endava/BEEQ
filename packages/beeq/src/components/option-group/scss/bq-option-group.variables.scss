@@ -1,5 +1,5 @@
 /* -------------------------------------------------------------------------- */
-/*                          Option group custom properties           */
+/*                      Option group custom properties                       */
 /* -------------------------------------------------------------------------- */
 
 :host {
@@ -14,16 +14,16 @@
   * @prop --bq-option-group--label-text-padding-end - option group text within label padding start
   * @prop --bq-option-group--container-padding-start - option group container padding start
   */
-  --bq-option-group--background: theme(backgroundColor.ui.primary);
-  --bq-option-group--font-size: theme(fontSize.s);
-  --bq-option-group--line-height: theme(lineHeight.regular);
+  --bq-option-group--background: var(--bq-ui--primary);
+  --bq-option-group--font-size: var(--bq-font-size--s);
+  --bq-option-group--line-height: var(--bq-font-line-height--regular);
 
-  --bq-option-group--label-padding-start: theme(spacing.s);
-  --bq-option-group--label-padding-end: theme(spacing.s);
-  --bq-option-group--label-paddingY: theme(spacing.xs);
+  --bq-option-group--label-padding-start: var(--bq-spacing-s);
+  --bq-option-group--label-padding-end: var(--bq-spacing-s);
+  --bq-option-group--label-paddingY: var(--bq-spacing-xs);
 
-  --bq-option-group--label-text-padding-start: theme(spacing.s);
-  --bq-option-group--label-text-padding-end: theme(spacing.s);
+  --bq-option-group--label-text-padding-start: var(--bq-spacing-s);
+  --bq-option-group--label-text-padding-end: var(--bq-spacing-s);
 
-  --bq-option-group--container-padding-start: theme(spacing.xxl);
+  --bq-option-group--container-padding-start: var(--bq-spacing-xxl);
 }
