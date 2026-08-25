@@ -742,9 +742,16 @@ export class BqDatePicker {
     ev.preventDefault();
 
     const segment = getDateSegment(this.segmentGroups, key);
-    if (!segment || segment.value.length !== segment.maxLength) return true;
+    if (!segment) return true;
+    if (segment.value.length !== segment.maxLength) {
+      this.segmentGroups = updateDateSegment(this.segmentGroups, key, this.getCurrentSegmentValue(segment.field));
+      this.syncSegmentDraftValue();
+      this.activeSegment = key;
+      this.focusSegment(key);
+      return true;
+    }
 
-    const limits = segment.field === 'day' ? [1, 31] : segment.field === 'month' ? [1, 12] : [1, 9999];
+    const limits = this.getSegmentLimits(segment.field);
     const candidate = Number(segment.value) + (ev.key === 'ArrowUp' ? 1 : -1);
     if (candidate < limits[0] || candidate > limits[1]) return true;
 
@@ -752,6 +759,13 @@ export class BqDatePicker {
     const nextGroups = updateDateSegment(this.segmentGroups, key, nextValue);
     const group = nextGroups.find((item) => item.id === key.groupId);
     const iso = group ? getDateSegmentGroupValue(group, this.precision) : undefined;
+    if (!iso) {
+      this.segmentGroups = nextGroups;
+      this.syncSegmentDraftValue();
+      this.activeSegment = key;
+      this.focusSegment(key);
+      return true;
+    }
     const date = iso ? parseValue(iso, 'single', this.precision)[0] : undefined;
     const parsed = date ? parseISO(date) : undefined;
     if (!parsed || !isWithinBounds(parsed, this.min, this.max) || this.isDateDisallowed?.(parsed)) return true;
@@ -761,6 +775,21 @@ export class BqDatePicker {
     this.activeSegment = key;
     this.focusSegment(key);
     return true;
+  };
+
+  /** Returns today's value for the requested date field, preserving its fixed segment width. */
+  private getCurrentSegmentValue = (field: 'day' | 'month' | 'year'): string => {
+    const today = getTodayISO();
+    if (field === 'day') return today.slice(8, 10);
+    if (field === 'month') return today.slice(5, 7);
+    return today.slice(0, 4);
+  };
+
+  /** Returns the allowed numeric range for a date segment before full-date validation. */
+  private getSegmentLimits = (field: 'day' | 'month' | 'year'): [number, number] => {
+    if (field === 'day') return [1, 31];
+    if (field === 'month') return [1, 12];
+    return [1, 9999];
   };
 
   /** Adds one numeric character, replacing a completed segment when necessary. */
