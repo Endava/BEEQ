@@ -234,6 +234,168 @@ describe('bq-date-picker', () => {
     expect(datePicker.shadowRoot?.activeElement).toBe(input);
   });
 
+  it('should render a fixed mask and select its first segment on focus', async () => {
+    const { root } = await render(<bq-date-picker locale="en-GB" name="date-picker" type="range" />);
+    const datePicker = root as HTMLBqDatePickerElement;
+    const input = getInput(datePicker);
+    if (!input) throw new Error('Expected date picker input');
+
+    expect(input.value).toBe('dd/mm/yyyy - dd/mm/yyyy');
+
+    input.focus();
+    await waitForStable(root);
+
+    expect(input.selectionStart).toBe(0);
+    expect(input.selectionEnd).toBe(2);
+  });
+
+  it('should retain fixed separators when deleting an entered segment', async () => {
+    const { root, waitForChanges } = await render(<bq-date-picker locale="en-GB" name="date-picker" type="single" />);
+    const datePicker = root as HTMLBqDatePickerElement;
+    const input = getInput(datePicker);
+    if (!input) throw new Error('Expected date picker input');
+
+    input.setSelectionRange(0, 2);
+    input.dispatchEvent(
+      new InputEvent('beforeinput', { bubbles: true, cancelable: true, data: '15', inputType: 'insertText' }),
+    );
+    await waitForChanges();
+    expect(input.value).toBe('15/mm/yyyy');
+
+    input.setSelectionRange(0, 2);
+    input.dispatchEvent(
+      new InputEvent('beforeinput', { bubbles: true, cancelable: true, inputType: 'deleteContentBackward' }),
+    );
+    await waitForChanges();
+
+    expect(input.value).toBe('dd/mm/yyyy');
+  });
+
+  it('should complete a segment across consecutive keystrokes and backspace into the previous segment', async () => {
+    const { root, waitForChanges } = await render(<bq-date-picker locale="en-GB" name="date-picker" type="single" />);
+    const datePicker = root as HTMLBqDatePickerElement;
+    const input = getInput(datePicker);
+    if (!input) throw new Error('Expected date picker input');
+
+    input.setSelectionRange(0, 2);
+    input.dispatchEvent(
+      new InputEvent('beforeinput', { bubbles: true, cancelable: true, data: '2', inputType: 'insertText' }),
+    );
+    input.dispatchEvent(
+      new InputEvent('beforeinput', { bubbles: true, cancelable: true, data: '5', inputType: 'insertText' }),
+    );
+    await waitForChanges();
+
+    expect(input.value).toBe('25/mm/yyyy');
+    expect(input.selectionStart).toBe(3);
+    expect(input.selectionEnd).toBe(5);
+
+    input.dispatchEvent(
+      new InputEvent('beforeinput', { bubbles: true, cancelable: true, inputType: 'deleteContentBackward' }),
+    );
+    await waitForChanges();
+
+    expect(input.value).toBe('2d/mm/yyyy');
+    expect(input.selectionStart).toBe(0);
+    expect(input.selectionEnd).toBe(2);
+  });
+
+  it('should keep partial month and year edits in their active segment', async () => {
+    const { root, waitForChanges } = await render(<bq-date-picker locale="en-GB" name="date-picker" type="single" />);
+    const datePicker = root as HTMLBqDatePickerElement;
+    const input = getInput(datePicker);
+    if (!input) throw new Error('Expected date picker input');
+
+    input.setSelectionRange(0, 2);
+    for (const data of ['2', '5', '1', '2', '2']) {
+      input.dispatchEvent(
+        new InputEvent('beforeinput', { bubbles: true, cancelable: true, data, inputType: 'insertText' }),
+      );
+    }
+    await waitForChanges();
+
+    expect(input.value).toBe('25/12/2yyy');
+    expect(input.selectionStart).toBe(6);
+    expect(input.selectionEnd).toBe(10);
+
+    input.dispatchEvent(
+      new InputEvent('beforeinput', { bubbles: true, cancelable: true, inputType: 'deleteContentBackward' }),
+    );
+    await waitForChanges();
+
+    expect(input.value).toBe('25/12/yyyy');
+    expect(input.selectionStart).toBe(3);
+    expect(input.selectionEnd).toBe(5);
+
+    input.dispatchEvent(
+      new InputEvent('beforeinput', { bubbles: true, cancelable: true, inputType: 'deleteContentBackward' }),
+    );
+    await waitForChanges();
+
+    expect(input.value).toBe('25/mm/yyyy');
+    expect(input.selectionStart).toBe(0);
+    expect(input.selectionEnd).toBe(2);
+  });
+
+  it('should clear a completed segment before replacing it', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-date-picker locale="en-GB" name="date-picker" type="single" value="1983-12-25" />,
+    );
+    const datePicker = root as HTMLBqDatePickerElement;
+    const input = getInput(datePicker);
+    if (!input) throw new Error('Expected date picker input');
+
+    input.setSelectionRange(0, 2);
+    input.dispatchEvent(
+      new InputEvent('beforeinput', { bubbles: true, cancelable: true, data: '1', inputType: 'insertText' }),
+    );
+    await waitForChanges();
+
+    expect(input.value).toBe('1d/12/1983');
+    expect(input.selectionStart).toBe(0);
+    expect(input.selectionEnd).toBe(2);
+  });
+
+  it('should replace both digits of a completed month segment', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-date-picker locale="en-GB" name="date-picker" type="single" value="1983-12-25" />,
+    );
+    const datePicker = root as HTMLBqDatePickerElement;
+    const input = getInput(datePicker);
+    if (!input) throw new Error('Expected date picker input');
+
+    input.setSelectionRange(3, 5);
+    for (const data of ['1', '1']) {
+      input.dispatchEvent(
+        new InputEvent('beforeinput', { bubbles: true, cancelable: true, data, inputType: 'insertText' }),
+      );
+    }
+    await waitForChanges();
+
+    expect(input.value).toBe('25/11/1983');
+    expect(input.selectionStart).toBe(6);
+    expect(input.selectionEnd).toBe(10);
+  });
+
+  it('should select the last segment when Shift+Tab returns from the clear button', async () => {
+    const { root } = await render(
+      <bq-date-picker locale="en-GB" name="date-picker" type="single" value="1983-12-25" />,
+    );
+    const datePicker = root as HTMLBqDatePickerElement;
+    const input = getInput(datePicker);
+    const clearButton = datePicker.shadowRoot?.querySelector<HTMLBqButtonElement>('[part="clear-btn"]');
+    if (!input || !clearButton) throw new Error('Expected date picker input and clear button');
+
+    clearButton.dispatchEvent(
+      new KeyboardEvent('keydown', { bubbles: true, composed: true, key: 'Tab', shiftKey: true }),
+    );
+    input.focus();
+    await waitForStable(root);
+
+    expect(input.selectionStart).toBe(6);
+    expect(input.selectionEnd).toBe(10);
+  });
+
   it('should open the calendar from an input pointer click without moving input focus', async () => {
     const { root, waitForChanges } = await render(<bq-date-picker name="date-picker" type="single" />);
     const datePicker = root as HTMLBqDatePickerElement;
