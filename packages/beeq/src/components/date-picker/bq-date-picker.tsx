@@ -674,6 +674,7 @@ export class BqDatePicker {
     if (this.handleSegmentPopupShortcut(ev)) return;
     if (this.handleSegmentNavigation(ev, key)) return;
     if (this.handleSegmentDeletion(ev, key)) return;
+    if (this.handleSegmentIncrement(ev, key)) return;
     this.handleSegmentDigit(ev, key);
   };
 
@@ -686,11 +687,21 @@ export class BqDatePicker {
     return true;
   };
 
-  /** Moves active focus between adjacent visual segments. */
+  /** Moves active focus between adjacent segments or to a group boundary. */
   private handleSegmentNavigation = (ev: KeyboardEvent, key: TDateSegmentKey): boolean => {
-    if (ev.key !== 'ArrowLeft' && ev.key !== 'ArrowRight') return false;
+    if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(ev.key)) return false;
     ev.preventDefault();
-    const next = getAdjacentSegmentKey(this.segmentGroups, key, ev.key === 'ArrowLeft' ? -1 : 1);
+    const group = this.segmentGroups.find((item) => item.id === key.groupId);
+    const boundarySegment =
+      ev.key === 'Home'
+        ? group?.segments[0]
+        : ev.key === 'End'
+          ? group?.segments[group.segments.length - 1]
+          : undefined;
+    const next =
+      boundarySegment && group
+        ? { groupId: group.id, field: boundarySegment.field }
+        : getAdjacentSegmentKey(this.segmentGroups, key, ev.key === 'ArrowLeft' ? -1 : 1);
     if (!next) return true;
     this.activeSegment = next;
     this.focusSegment(next);
@@ -721,6 +732,33 @@ export class BqDatePicker {
       }
     }
     this.activeSegment = key;
+    return true;
+  };
+
+  /** Increments or decrements a complete segment when the resulting date remains selectable. */
+  private handleSegmentIncrement = (ev: KeyboardEvent, key: TDateSegmentKey): boolean => {
+    if (ev.key !== 'ArrowUp' && ev.key !== 'ArrowDown') return false;
+    ev.preventDefault();
+
+    const segment = getDateSegment(this.segmentGroups, key);
+    if (!segment || segment.value.length !== segment.maxLength) return true;
+
+    const limits = segment.field === 'day' ? [1, 31] : segment.field === 'month' ? [1, 12] : [1, 9999];
+    const candidate = Number(segment.value) + (ev.key === 'ArrowUp' ? 1 : -1);
+    if (candidate < limits[0] || candidate > limits[1]) return true;
+
+    const nextValue = `${candidate}`.padStart(segment.maxLength, '0');
+    const nextGroups = updateDateSegment(this.segmentGroups, key, nextValue);
+    const group = nextGroups.find((item) => item.id === key.groupId);
+    const iso = group ? getDateSegmentGroupValue(group, this.precision) : undefined;
+    const date = iso ? parseValue(iso, 'single', this.precision)[0] : undefined;
+    const parsed = date ? parseISO(date) : undefined;
+    if (!parsed || !isWithinBounds(parsed, this.min, this.max) || this.isDateDisallowed?.(parsed)) return true;
+
+    this.segmentGroups = nextGroups;
+    this.syncSegmentDraftValue();
+    this.activeSegment = key;
+    this.focusSegment(key);
     return true;
   };
 
