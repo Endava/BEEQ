@@ -15,6 +15,11 @@ const getDropdownPanel = (datePicker: HTMLBqDatePickerElement) => {
 const getClearButton = (datePicker: HTMLBqDatePickerElement) =>
   datePicker.shadowRoot?.querySelector<HTMLBqButtonElement | null>('[part="clear-btn"]');
 
+const getCalendarTriggerButton = (datePicker: HTMLBqDatePickerElement) =>
+  datePicker.shadowRoot
+    ?.querySelector<HTMLBqButtonElement>('[part~="calendar-trigger"]')
+    ?.shadowRoot?.querySelector<HTMLButtonElement>('button');
+
 const getHeaderTitle = (datePicker: HTMLBqDatePickerElement) =>
   datePicker.shadowRoot?.querySelector<HTMLBqButtonElement>('[part~="calendar__heading"]');
 
@@ -188,7 +193,7 @@ describe('bq-date-picker', () => {
     await waitForChanges();
 
     expect(datePicker.value).toBeUndefined();
-    expect(getInput(datePicker)?.value).toBe('');
+    expect(getInput(datePicker)?.value).toBe('dd/mm/yyyy');
     expect(bqClear).toHaveReceivedEventTimes(1);
   });
 
@@ -216,6 +221,48 @@ describe('bq-date-picker', () => {
     expect(bqBlur).toHaveReceivedEventTimes(1);
   });
 
+  it('should not open the calendar when the input receives keyboard focus', async () => {
+    const { root } = await render(<bq-date-picker name="date-picker" type="single" />);
+    const datePicker = root as HTMLBqDatePickerElement;
+    const input = getInput(datePicker);
+
+    input?.focus();
+    await waitForStable(root);
+
+    expect(datePicker.open).toBe(false);
+    expect(datePicker.shadowRoot?.activeElement).toBe(input);
+  });
+
+  it('should open the calendar from an input pointer click without moving input focus', async () => {
+    const { root, waitForChanges } = await render(<bq-date-picker name="date-picker" type="single" />);
+    const datePicker = root as HTMLBqDatePickerElement;
+    const input = getInput(datePicker);
+
+    await userEvent.click(input);
+    await waitForChanges();
+    await waitForStable(root);
+
+    expect(datePicker.open).toBe(true);
+    expect(datePicker.shadowRoot?.activeElement).toBe(input);
+  });
+
+  it('should move focus into the calendar when the icon trigger is activated', async () => {
+    const { root, waitForChanges } = await render(<bq-date-picker name="date-picker" type="single" />);
+    const datePicker = root as HTMLBqDatePickerElement;
+    const trigger = getCalendarTriggerButton(datePicker);
+
+    trigger?.focus();
+    await userEvent.keyboard('{Enter}');
+    await waitForChanges();
+    await waitForStable(root);
+
+    expect(datePicker.open).toBe(true);
+    expect(datePicker.shadowRoot?.activeElement).not.toBe(trigger);
+    expect(datePicker.shadowRoot?.querySelector('[role="grid"] button:focus')).toBe(
+      datePicker.shadowRoot?.querySelector('[role="grid"] [tabindex="0"]'),
+    );
+  });
+
   it('should emit `bqChange` when the input value changes', async () => {
     const { root, spyOnEvent, waitForChanges } = await render(<bq-date-picker name="date-picker" type="single" />);
     const datePicker = root as HTMLBqDatePickerElement;
@@ -223,13 +270,41 @@ describe('bq-date-picker', () => {
     const input = getInput(datePicker);
 
     await userEvent.clear(input);
-    await userEvent.type(input, '2026-05-21');
+    await userEvent.type(input, '21052026');
     await userEvent.tab();
     await waitForChanges();
 
     expect(datePicker.value).toBe('2026-05-21');
     expect(bqChange).toHaveReceivedEventTimes(1);
     expect(bqChange.events[0].detail.value).toBe('2026-05-21');
+  });
+
+  it('should commit masked range input to the range wire format', async () => {
+    const { root, waitForChanges } = await render(<bq-date-picker name="date-picker" type="range" />);
+    const datePicker = root as HTMLBqDatePickerElement;
+    const input = getInput(datePicker);
+    if (!input) throw new Error('Expected date picker input');
+
+    input.value = '15/05/2026 - 20/05/2026';
+    input.dispatchEvent(new InputEvent('input', { bubbles: true, inputType: 'insertText' }));
+    input.dispatchEvent(new Event('change', { bubbles: true }));
+    await waitForChanges();
+
+    expect(datePicker.value).toBe('2026-05-15/2026-05-20');
+  });
+
+  it('should commit masked multi input to the sorted multi wire format', async () => {
+    const { root, waitForChanges } = await render(<bq-date-picker name="date-picker" type="multi" />);
+    const datePicker = root as HTMLBqDatePickerElement;
+    const input = getInput(datePicker);
+    if (!input) throw new Error('Expected date picker input');
+
+    input.value = '20/05/2026, 15/05/2026';
+    input.dispatchEvent(new InputEvent('input', { bubbles: true, inputType: 'insertText' }));
+    input.dispatchEvent(new Event('change', { bubbles: true }));
+    await waitForChanges();
+
+    expect(datePicker.value).toBe('2026-05-15 2026-05-20');
   });
 
   it('should clamp the input value to `min` when below range', async () => {
@@ -240,7 +315,7 @@ describe('bq-date-picker', () => {
     const input = getInput(datePicker);
 
     await userEvent.clear(input);
-    await userEvent.type(input, '2026-05-10');
+    await userEvent.type(input, '10052026');
     await userEvent.tab();
     await waitForChanges();
 
@@ -255,7 +330,7 @@ describe('bq-date-picker', () => {
     const input = getInput(datePicker);
 
     await userEvent.clear(input);
-    await userEvent.type(input, '2026-06-10');
+    await userEvent.type(input, '10062026');
     await userEvent.tab();
     await waitForChanges();
 
@@ -946,8 +1021,7 @@ describe('bq-date-picker', () => {
     expect(datePicker.open).toBe(true);
   });
 
-  it('auto-swaps default formatOptions per precision when not provided', async () => {
-    // Month precision → default is { month: 'long', year: 'numeric' } — no day number.
+  it('uses the locale numeric mask when formatOptions are not provided', async () => {
     const { root, waitForChanges } = await render(
       <bq-date-picker precision="month" name="date-picker" value="2026-05" locale="en-GB" />,
     );
@@ -955,10 +1029,7 @@ describe('bq-date-picker', () => {
     await waitForChanges();
 
     const input = getInput(datePicker);
-    expect(input?.value).toMatch(/May/);
-    expect(input?.value).toMatch(/2026/);
-    // Should NOT contain the day number.
-    expect(input?.value).not.toMatch(/\b(1|01)\b/);
+    expect(input?.value).toBe('05/2026');
   });
 
   it('respects consumer-provided formatOptions over the precision default', async () => {
@@ -979,7 +1050,22 @@ describe('bq-date-picker', () => {
     expect(input?.value).not.toMatch(/May/);
   });
 
-  it('formats a multi value without day numbers when precision is month', async () => {
+  it('should fall back to the locale numeric mask for incompatible formatOptions', async () => {
+    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
+    const { root } = await render(
+      <bq-date-picker name="date-picker" value="2026-05-15" formatOptions={{ dateStyle: 'full' }} />,
+    );
+    const datePicker = root as HTMLBqDatePickerElement;
+
+    await waitForStable(root);
+
+    expect(getInput(datePicker)?.value).toBe('15/05/2026');
+    expect(warnSpy).toHaveBeenCalledWith(
+      '[BQ-DATE-PICKER] formatOptions must contain only numeric date fields to configure the input mask; using the locale default.',
+    );
+  });
+
+  it('formats multi values with the month-precision mask and trailing entry segment', async () => {
     const { root, waitForChanges } = await render(
       <bq-date-picker
         name="date-picker"
@@ -993,12 +1079,7 @@ describe('bq-date-picker', () => {
     await waitForChanges();
 
     const input = getInput(datePicker);
-    // Precision default is { month: 'long', year: 'numeric' } — no day number.
-    expect(input?.value).toMatch(/January/);
-    expect(input?.value).toMatch(/March/);
-    expect(input?.value).toMatch(/May/);
-    expect(input?.value).not.toMatch(/\b1 Jan\b/);
-    expect(input?.value).not.toMatch(/\b01\b/);
+    expect(input?.value).toBe('01/2026, 03/2026, 05/2026, mm/yyyy');
   });
 
   it('formats a multi value with only the year when precision is year', async () => {
@@ -1252,7 +1333,7 @@ describe('bq-date-picker', () => {
     const input = getInput(datePicker);
 
     await userEvent.clear(input);
-    await userEvent.type(input, '2026-05-21');
+    await userEvent.type(input, '052026');
     await userEvent.tab();
     await waitForChanges();
 
