@@ -163,6 +163,10 @@
   }
 }
 
+:host(:not([value])) .bq-date-picker__input {
+  color: var(--bq-date-picker--text-placeholder-color);
+}
+
 .bq-date-picker__mask-description {
   position: absolute;
   inline-size: 1px;
