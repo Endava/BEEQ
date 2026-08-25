@@ -151,11 +151,20 @@
   font: inherit;
   font-size: inherit;
   line-height: inherit;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  white-space: nowrap;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .bq-date-picker__segment-group {
   display: inline-flex;
   align-items: center;
+  flex: none;
   min-inline-size: max-content;
 }
 
@@ -167,7 +176,7 @@
   cursor: text;
   font-variant-numeric: tabular-nums;
   outline: none;
-  padding-inline: var(--bq-spacing-xs3);
+  padding-inline: .075rem;
   text-align: center;
   white-space: nowrap;
 
@@ -176,7 +185,7 @@
   }
 
   &.is-active:focus-visible {
-    border-radius: var(--bq-date-picker--border-radius);
+    border-radius: var(--bq-radius--xs);
     background-color: color-mix(in srgb, var(--bq-focus), transparent 88%);
   }
 }

@@ -864,7 +864,15 @@ export class BqDatePicker {
     this.internals.setFormValue(nextValue ?? null);
     this.hasValue = computeHasValue(nextValue);
     this.syncValidity();
+    this.syncMultiSegmentGroups(nextValue);
     this.bqChange.emit({ value: this.value, el: this.el });
+  };
+
+  /** Restores the trailing blank group required to enter another multi-date value. */
+  private syncMultiSegmentGroups = (value: string | undefined): void => {
+    if (this.type !== 'multi') return;
+    this.segmentGroups = getDateSegmentGroups(value, this.type, this.precision, this.pickerMask);
+    this.activeSegment = getFirstEmptySegmentKey(this.segmentGroups) ?? this.activeSegment;
   };
 
   /**
