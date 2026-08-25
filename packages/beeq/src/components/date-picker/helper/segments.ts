@@ -1,0 +1,113 @@
+import type { TDateMask, TDateMaskField } from '../../../shared/utils';
+import type { TDatePickerType, TDatePrecision } from '../bq-date-picker.types';
+import { parseValue } from './selection';
+
+/** A single locale-derived numeric field within an editable date group. */
+export type TDateSegment = {
+  field: TDateMaskField;
+  maxLength: number;
+  placeholder: string;
+  value: string;
+};
+
+/** One editable date token, used as a date, range endpoint, or multi-date entry. */
+export type TDateSegmentGroup = {
+  id: number;
+  segments: TDateSegment[];
+};
+
+/** Stable address for the focused or updated segment across component renders. */
+export type TDateSegmentKey = {
+  field: TDateMaskField;
+  groupId: number;
+};
+
+const getISOValues = (iso: string): Record<TDateMaskField, string> => ({
+  day: iso.slice(8, 10),
+  month: iso.slice(5, 7),
+  year: iso.slice(0, 4),
+});
+
+const createSegmentGroup = (id: number, mask: TDateMask, iso?: string): TDateSegmentGroup => {
+  const values = iso ? getISOValues(iso) : undefined;
+  return {
+    id,
+    segments: mask.segments.map((segment) => ({
+      field: segment.field,
+      maxLength: segment.placeholder.length,
+      placeholder: segment.placeholder,
+      value: values?.[segment.field] ?? '',
+    })),
+  };
+};
+
+/**
+ * Builds locale-ordered editable segment groups from the current canonical
+ * value. The visual draft is deliberately separate from form serialization.
+ */
+export const getDateSegmentGroups = (
+  value: string | undefined,
+  type: TDatePickerType,
+  precision: TDatePrecision,
+  mask: TDateMask,
+): TDateSegmentGroup[] => {
+  const selection = parseValue(value, type, precision);
+
+  if (type === 'range') {
+    return [createSegmentGroup(0, mask, selection[0]), createSegmentGroup(1, mask, selection[1])];
+  }
+
+  if (type === 'multi') {
+    return [
+      ...selection.map((iso, index) => createSegmentGroup(index, mask, iso)),
+      createSegmentGroup(selection.length, mask),
+    ];
+  }
+
+  return [createSegmentGroup(0, mask, selection[0])];
+};
+
+/** Returns the segment addressed by a stable group/field key. */
+export const getDateSegment = (groups: TDateSegmentGroup[], key: TDateSegmentKey): TDateSegment | undefined =>
+  groups.find((group) => group.id === key.groupId)?.segments.find((segment) => segment.field === key.field);
+
+/** Finds the first incomplete segment in visual order for initial focus placement. */
+export const getFirstEmptySegmentKey = (groups: TDateSegmentGroup[]): TDateSegmentKey | undefined => {
+  for (const group of groups) {
+    const segment = group.segments.find((item) => !item.value);
+    if (segment) return { groupId: group.id, field: segment.field };
+  }
+  return undefined;
+};
+
+/** Flattens visual groups into the roving-focus navigation order. */
+export const getSegmentKeys = (groups: TDateSegmentGroup[]): TDateSegmentKey[] =>
+  groups.flatMap((group) => group.segments.map((segment) => ({ groupId: group.id, field: segment.field })));
+
+/** Moves one segment backward or forward, including across date-group boundaries. */
+export const getAdjacentSegmentKey = (
+  groups: TDateSegmentGroup[],
+  current: TDateSegmentKey,
+  direction: -1 | 1,
+): TDateSegmentKey | undefined => {
+  const keys = getSegmentKeys(groups);
+  const index = keys.findIndex((key) => key.groupId === current.groupId && key.field === current.field);
+  if (index === -1) return undefined;
+  return keys[index + direction];
+};
+
+/** Returns an immutable group update while limiting the value to that segment's width. */
+export const updateDateSegment = (
+  groups: TDateSegmentGroup[],
+  key: TDateSegmentKey,
+  value: string,
+): TDateSegmentGroup[] =>
+  groups.map((group) => {
+    if (group.id !== key.groupId) return group;
+    return {
+      ...group,
+      segments: group.segments.map((segment) =>
+        segment.field === key.field ? { ...segment, value: value.slice(0, segment.maxLength) } : segment,
+      ),
+    };
+  });
