@@ -125,7 +125,7 @@ const defaultValidityMessage = (flags: ValidityStateFlags): string => {
  * @attr {string} name - Input name.
  * @attr {boolean} open - If `true`, the panel is visible.
  * @attr {string} panel-height - Overrides the height of the panel.
- * @attr {string} placeholder - Input placeholder text.
+ * @attr {string} placeholder - Legacy placeholder text. The locale-derived date mask is always shown instead.
  * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Placement of the panel.
  * @attr {boolean} required - Whether a value must be selected before submitting the form.
  * @attr {boolean} show-outside-days - Whether to render days that belong to adjacent months.
@@ -365,7 +365,7 @@ export class BqDatePicker {
   /** Overrides the height of the Date picker panel. */
   @Prop({ reflect: true, mutable: true }) panelHeight?: string = 'auto';
 
-  /** Placeholder text shown when no value is selected. */
+  /** Legacy placeholder text. The locale-derived date mask is shown when no value is selected. */
   @Prop({ reflect: true }) placeholder?: string;
 
   /** Position of the Date picker panel. */
@@ -1484,7 +1484,7 @@ export class BqDatePicker {
               onInput={this.handleInputValue}
               onKeyDown={this.handleInputKeyDown}
               part={CALENDAR_PARTS.input}
-              placeholder={this.placeholder ?? this.maskPlaceholder}
+              placeholder={this.maskPlaceholder}
               ref={(el) => {
                 this.inputElem = el;
               }}

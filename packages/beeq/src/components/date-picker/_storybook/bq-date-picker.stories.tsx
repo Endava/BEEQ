@@ -104,7 +104,7 @@ const meta: Meta = {
     name: 'bq-date-picker',
     open: false,
     'panel-height': 'auto',
-    placeholder: 'Enter your date',
+    placeholder: undefined,
     placement: 'bottom-end',
     precision: 'day',
     required: false,
