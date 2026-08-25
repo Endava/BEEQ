@@ -103,12 +103,12 @@ The date picker combines a labeled field with a calendar surface that helps peop
 Use the default `single` type when users need to choose one date. This is the best starting point for appointments, due dates, deadlines, and similar tasks.
 
 <Note>
-  All selection types expose a locale-derived numeric mask before entry starts, then keep that mask visible while the user types. With `locale="en-GB"`, day precision uses `dd/mm/yyyy`; a range uses `dd/mm/yyyy - dd/mm/yyyy`; and multi-date entry uses comma-separated masks. Month and year precision use the matching `mm/yyyy` and `yyyy` masks.
+  All selection types expose a fixed, locale-derived numeric mask before entry starts. Its separators stay in place while users replace date segments, so the field never shifts into a free-text layout. With `locale="en-GB"`, day precision uses `dd/mm/yyyy`; a range uses `dd/mm/yyyy - dd/mm/yyyy`; and multi-date entry uses comma-separated masks. Month and year precision use the matching `mm/yyyy` and `yyyy` masks.
 
   The wire format of the `value` attribute — and of `min`/`max` — depends on `precision`:
   `day` uses `YYYY-MM-DD`, `month` uses `YYYY-MM`, and `year` uses `YYYY`. For `type="range"` two tokens are joined with `/` (`start/end`); for `type="multi"` tokens are space-separated.
 
-  The locale-derived mask is always shown before entry starts, including when a `placeholder` is provided. The expected mask is also exposed to assistive technology.
+  The locale-derived mask is always shown before entry starts, including when a `placeholder` is provided. On focus, its first segment is selected; typing advances to the next segment, arrow keys move between segments, and deletion restores the segment placeholder. The expected mask is also exposed to assistive technology.
 </Note>
 
 <CodeLivePreview mode="shadow" code={`
@@ -1649,7 +1649,7 @@ Use numeric `formatOptions` to set the mask's field order and separators. The co
 - The input uses `aria-haspopup="dialog"` and `aria-controls` to announce the calendar panel. A `label` slot supplies `aria-labelledby` for both the input and calendar panel.
 - The calendar panel carries `role="dialog"` and is labelled via `aria-labelledby` when a label is present, or by its built-in "Date picker" label otherwise. The panel is not modal.
 - The component emits `bqFocus`, `bqBlur`, `bqChange`, and `bqClear`, which give you the hooks needed to announce validation results, react to changes, and keep form state synchronized.
-- Focusing or typing in the input with a keyboard does not open the panel. Tab to the calendar icon, then press `Enter` or `Space` to open the panel and move focus into its active date cell. The arrow keys navigate calendar cells and `Escape` closes the panel.
+- Focusing or typing in the input with a keyboard does not open the panel. Press `Alt`+`ArrowDown`, or Tab to the calendar icon and press `Enter` or `Space`, to open the panel. Calendar-trigger activation moves focus into its active date cell; the arrow keys navigate calendar cells and `Escape` closes the panel.
 - Clicking an input opens the calendar while keeping focus in the input, so users can continue editing the mask. Clicking the calendar icon opens the panel and moves focus into it.
 - Always provide a visible label through the `label` slot. Without it, the input has no programmatic label, so nearby context must provide an equivalent accessible name.
 - Validation states should never rely on color alone. Pair `validationStatus` with visible error text so screen reader users receive the same feedback as sighted users.
