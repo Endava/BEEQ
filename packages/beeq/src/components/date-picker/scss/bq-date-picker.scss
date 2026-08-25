@@ -168,15 +168,6 @@
   min-inline-size: max-content;
 }
 
-.bq-date-picker__clipboard-input {
-  position: absolute;
-  inline-size: 1px;
-  block-size: 1px;
-  overflow: hidden;
-  opacity: 0;
-  pointer-events: none;
-}
-
 .bq-date-picker__segment {
   display: inline-flex;
   align-items: center;
