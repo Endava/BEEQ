@@ -184,10 +184,11 @@
     color: var(--bq-date-picker--text-placeholder-color);
   }
 
-  &.is-active:focus-visible {
-    border-radius: var(--bq-radius--xs);
-    background-color: color-mix(in srgb, var(--bq-focus), transparent 88%);
-  }
+}
+
+.bq-date-picker__segments:focus-within .bq-date-picker__segment.is-active {
+  border-radius: var(--bq-radius--xs);
+  background-color: color-mix(in srgb, var(--bq-focus), transparent 88%);
 }
 
 .bq-date-picker__segment-literal,

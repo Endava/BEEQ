@@ -697,7 +697,7 @@ export class BqDatePicker {
     return true;
   };
 
-  /** Clears a segment or moves backward when Backspace is pressed on an empty segment. */
+  /** Clears a whole segment; Backspace then moves to the prior segment for continued deletion. */
   private handleSegmentDeletion = (ev: KeyboardEvent, key: TDateSegmentKey): boolean => {
     if (ev.key !== 'Backspace' && ev.key !== 'Delete') return false;
     ev.preventDefault();
@@ -712,6 +712,14 @@ export class BqDatePicker {
     }
     this.segmentGroups = updateDateSegment(this.segmentGroups, key, '');
     this.syncSegmentDraftValue();
+    if (ev.key === 'Backspace') {
+      const previous = getAdjacentSegmentKey(this.segmentGroups, key, -1);
+      if (previous) {
+        this.activeSegment = previous;
+        this.focusSegment(previous);
+        return true;
+      }
+    }
     this.activeSegment = key;
     return true;
   };
@@ -736,6 +744,21 @@ export class BqDatePicker {
   private handleSegmentClick = (key: TDateSegmentKey, ev: MouseEvent): void => {
     this.activeSegment = key;
     this.handleSegmentControlClick(ev);
+    // The dropdown completes its own panel-focus work while opening. Defer the
+    // segment focus until that work has finished so pointer entry remains here.
+    requestAnimationFrame(() => this.focusSegment(key));
+  };
+
+  /** Focuses the current roving segment when the user clicks unoccupied field space or a separator. */
+  private handleSegmentsClick = (ev: MouseEvent): void => {
+    if (!this.activeSegment) return;
+    this.handleSegmentClick(this.activeSegment, ev);
+  };
+
+  /** Routes control-surface clicks to the active segment without hijacking action buttons. */
+  private handleControlClick = (ev: MouseEvent): void => {
+    if (ev.composedPath().some((target) => target instanceof HTMLElement && target.tagName === 'BQ-BUTTON')) return;
+    this.handleSegmentsClick(ev);
   };
 
   /** Emits focus only when focus enters the segmented date field from outside it. */
@@ -769,7 +792,10 @@ export class BqDatePicker {
     this.clearValue();
     this.bqClear.emit(this.el);
     this.bqChange.emit({ value: this.value, el: this.el });
-    if (this.activeSegment) this.focusSegment(this.activeSegment);
+    this.segmentGroups = getDateSegmentGroups(undefined, this.type, this.precision, this.pickerMask);
+    const firstSegment = getFirstEmptySegmentKey(this.segmentGroups);
+    this.activeSegment = firstSegment;
+    if (firstSegment) requestAnimationFrame(() => this.focusSegment(firstSegment));
     ev.stopPropagation();
   };
 
@@ -1571,6 +1597,7 @@ export class BqDatePicker {
           skidding={this.skidding}
           strategy={this.strategy}
         >
+          {/* biome-ignore lint/a11y/noStaticElementInteractions: pointer handling delegates to the roving-focus segment group */}
           <div
             class={{
               'bq-date-picker__control': true,
@@ -1578,6 +1605,8 @@ export class BqDatePicker {
               'is-disabled': !!this.disabled,
               'is-open': !!this.open,
             }}
+            onClick={this.handleControlClick}
+            onKeyDown={(ev) => ev.stopPropagation()}
             part={CALENDAR_PARTS.control}
             slot="trigger"
           >
@@ -1597,6 +1626,8 @@ export class BqDatePicker {
               aria-invalid={this.validationStatus === 'error' || this.hasConstraintError ? 'true' : 'false'}
               aria-labelledby={this.hasLabel ? labelId : undefined}
               class="bq-date-picker__segments"
+              onClick={this.handleSegmentsClick}
+              onKeyDown={(ev) => ev.stopPropagation()}
               part={CALENDAR_PARTS.input}
               ref={(el) => {
                 this.segmentContainerElem = el;
