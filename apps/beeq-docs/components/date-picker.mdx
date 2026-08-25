@@ -108,7 +108,7 @@ Use the default `single` type when users need to choose one date. This is the be
   The wire format of the `value` attribute — and of `min`/`max` — depends on `precision`:
   `day` uses `YYYY-MM-DD`, `month` uses `YYYY-MM`, and `year` uses `YYYY`. For `type="range"` two tokens are joined with `/` (`start/end`); for `type="multi"` tokens are space-separated.
 
-  A custom `placeholder` is preserved when you provide one. Omit it when you want the mask itself to orient users before they start typing. The expected mask is also exposed to assistive technology.
+  The locale-derived mask is always shown before entry starts, including when a `placeholder` is provided. The expected mask is also exposed to assistive technology.
 </Note>
 
 <CodeLivePreview mode="shadow" code={`
@@ -1681,7 +1681,7 @@ Use numeric `formatOptions` to set the mask's field order and separators. The co
 | `name` | `name` | Name of the underlying input | `string` | `undefined` |
 | `open` | `open` | If `true`, the calendar panel is visible | `boolean` | `false` |
 | `panelHeight` | `panel-height` | Overrides the panel height | `string` | `"auto"` |
-| `placeholder` | `placeholder` | Placeholder text | `string` | `undefined` |
+| `placeholder` | `placeholder` | Legacy placeholder text. The locale-derived mask is shown instead. | `string` | `undefined` |
 | `placement` | `placement` | Position of the calendar panel | `"top" \| "top-start" \| "top-end" \| "right" \| "right-start" \| "right-end" \| "bottom" \| "bottom-start" \| "bottom-end" \| "left" \| "left-start" \| "left-end"` | `"bottom-end"` |
 | `precision` | `precision` | Granularity of the committed value (`day` → `YYYY-MM-DD`, `month` → `YYYY-MM`, `year` → `YYYY`) | `"day" \| "month" \| "year"` | `"day"` |
 | `required` | `required` | Marks the date picker as required | `boolean` | `false` |

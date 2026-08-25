@@ -888,13 +888,13 @@ describe('bq-date-picker', () => {
     expect(getClearButton(datePicker)).toEqualAttribute('label', 'Reset date');
   });
 
-  it('should apply `placeholder` to the input', async () => {
+  it('should retain the locale-derived mask when `placeholder` is set', async () => {
     const { root } = await render(<bq-date-picker name="date-picker" placeholder="DD/MM/YYYY" />);
     const datePicker = root as HTMLBqDatePickerElement;
 
     await waitForStable(root);
 
-    expect(getInput(datePicker)).toEqualAttribute('placeholder', 'DD/MM/YYYY');
+    expect(getInput(datePicker)).toEqualAttribute('placeholder', 'dd/mm/yyyy');
   });
 
   it('should describe the locale-derived mask to assistive technology', async () => {
