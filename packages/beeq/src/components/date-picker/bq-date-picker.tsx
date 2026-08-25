@@ -1415,6 +1415,7 @@ export class BqDatePicker {
 
   render() {
     const labelId = `bq-date-picker__label-${this.name || DEFAULT_INPUT_ID}`;
+    const maskDescriptionId = `bq-date-picker__mask-${this.name || DEFAULT_INPUT_ID}`;
     const popupId = `bq-date-picker__popup-${this.name || DEFAULT_INPUT_ID}`;
 
     return (
@@ -1463,6 +1464,7 @@ export class BqDatePicker {
 
             <input
               aria-controls={popupId}
+              aria-describedby={maskDescriptionId}
               aria-disabled={this.disabled ? 'true' : 'false'}
               aria-expanded={this.open ? 'true' : 'false'}
               aria-haspopup="dialog"
@@ -1492,6 +1494,9 @@ export class BqDatePicker {
               type="text"
               value={this.displayDate}
             />
+            <span class="bq-date-picker__mask-description" id={maskDescriptionId}>
+              Expected format: {this.maskPlaceholder}
+            </span>
 
             {this.hasValue && !this.disabled && !this.disableClear && (
               <bq-button

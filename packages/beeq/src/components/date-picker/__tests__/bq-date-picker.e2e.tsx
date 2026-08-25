@@ -897,6 +897,18 @@ describe('bq-date-picker', () => {
     expect(getInput(datePicker)).toEqualAttribute('placeholder', 'DD/MM/YYYY');
   });
 
+  it('should describe the locale-derived mask to assistive technology', async () => {
+    const { root } = await render(<bq-date-picker name="date-picker" locale="de-DE" />);
+    const datePicker = root as HTMLBqDatePickerElement;
+
+    await waitForStable(root);
+
+    const input = getInput(datePicker);
+    const descriptionId = input?.getAttribute('aria-describedby');
+    const description = datePicker.shadowRoot?.querySelector<HTMLElement>(`#${descriptionId}`);
+    expect(description?.textContent?.trim()).toBe('Expected format: dd.mm.yyyy');
+  });
+
   it('should reorder weekday headers when `firstDayOfWeek` changes', async () => {
     const { root, setProps } = await render(
       <bq-date-picker name="date-picker" firstDayOfWeek={1} locale="en-GB" open />,

@@ -108,7 +108,7 @@ Use the default `single` type when users need to choose one date. This is the be
   The wire format of the `value` attribute — and of `min`/`max` — depends on `precision`:
   `day` uses `YYYY-MM-DD`, `month` uses `YYYY-MM`, and `year` uses `YYYY`. For `type="range"` two tokens are joined with `/` (`start/end`); for `type="multi"` tokens are space-separated.
 
-  A custom `placeholder` is preserved when you provide one. Omit it when you want the mask itself to orient users before they start typing.
+  A custom `placeholder` is preserved when you provide one. Omit it when you want the mask itself to orient users before they start typing. The expected mask is also exposed to assistive technology.
 </Note>
 
 <CodeLivePreview mode="shadow" code={`
