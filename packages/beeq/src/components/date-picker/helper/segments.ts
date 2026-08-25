@@ -96,6 +96,24 @@ export const getAdjacentSegmentKey = (
   return keys[index + direction];
 };
 
+/** Converts a complete visual group into its canonical precision-aware ISO token. */
+export const getDateSegmentGroupValue = (group: TDateSegmentGroup, precision: TDatePrecision): string | undefined => {
+  const values = Object.fromEntries(group.segments.map((segment) => [segment.field, segment.value])) as Partial<
+    Record<TDateMaskField, string>
+  >;
+  const isComplete = (field: TDateMaskField): boolean => {
+    const segment = group.segments.find((item) => item.field === field);
+    return Boolean(segment && segment.value.length === segment.maxLength);
+  };
+  if (!isComplete('year')) return undefined;
+  if (precision !== 'year' && !isComplete('month')) return undefined;
+  if (precision === 'day' && !isComplete('day')) return undefined;
+
+  if (precision === 'year') return values.year;
+  if (precision === 'month') return `${values.year}-${values.month}`;
+  return `${values.year}-${values.month}-${values.day}`;
+};
+
 /** Returns an immutable group update while limiting the value to that segment's width. */
 export const updateDateSegment = (
   groups: TDateSegmentGroup[],

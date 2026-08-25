@@ -8,7 +8,6 @@ import {
   getTodayISO,
   hasSlotContent,
   isEventTargetChildOfElement,
-  isHTMLElement,
   isNil,
   updateFormValidity,
   validatePropValue,
@@ -52,18 +51,18 @@ import {
 import { CALENDAR_PARTS, DECADE_GRID_SIZE, DEFAULT_INPUT_ID, MAX_MONTHS_PER_VIEW } from './helper/constants';
 import { formatMonth } from './helper/intl';
 import { getHeaderLabel, getHeaderTitleLabel, getNextLabel, getPreviousLabel } from './helper/labels';
-import {
-  applyFixedMaskEdit,
-  applyPickerMask,
-  formatMaskedValue,
-  getAdjacentMaskSegmentSelection,
-  getMaskedInputTokens,
-  getMaskedSelectionRange,
-  getMaskPlaceholder,
-  parseMaskedInputToken,
-  serializeMaskedInputTokens,
-} from './helper/mask';
+import { formatMaskedValue, getMaskPlaceholder } from './helper/mask';
 import { advanceFocusedMonth, advanceFocusedYear, getGridColumns } from './helper/navigation';
+import {
+  getAdjacentSegmentKey,
+  getDateSegment,
+  getDateSegmentGroups,
+  getDateSegmentGroupValue,
+  getFirstEmptySegmentKey,
+  type TDateSegmentGroup,
+  type TDateSegmentKey,
+  updateDateSegment,
+} from './helper/segments';
 import { applySelection, buildTentativeRange, parseValue, serializeValue } from './helper/selection';
 import { computeHasValue, normalizeValue } from './helper/value';
 
@@ -245,20 +244,16 @@ export class BqDatePicker {
   /** Source of the current panel opening, used to preserve the appropriate focus target. */
   private activeOpenSource: 'input' | 'trigger' | 'programmatic' = 'programmatic';
 
-  private clearBtnElem?: HTMLBqButtonElement;
-
-  private focusLastMaskOnInputFocus = false;
-
   /** Initial `value` captured at load time, restored on form reset. */
   private initialValue?: string;
-
-  private inputElem?: HTMLInputElement;
 
   /** Set while `commitSelection` writes back to `this.value`. */
   private isCommittingSelection = false;
 
+  /** Prevents an internal segment commit from replacing an incomplete visual draft. */
+  private isCommittingSegmentDraft = false;
+
   private labelElem?: HTMLElement;
-  private maskSelection?: { start: number; end: number };
 
   /** Pending requestAnimationFrame id used by `focusButton`. */
   private pendingFocusRAF?: number;
@@ -267,6 +262,7 @@ export class BqDatePicker {
   private pendingOpenSource?: 'input' | 'trigger';
 
   private prefixElem?: HTMLElement;
+  private segmentContainerElem?: HTMLElement;
   private triggerBtnElem?: HTMLBqButtonElement;
 
   // Reference to host HTML element
@@ -288,6 +284,8 @@ export class BqDatePicker {
   @State() hasLabel = false;
   @State() hasPrefix = false;
   @State() hasValue = false;
+  @State() activeSegment?: TDateSegmentKey;
+  @State() segmentGroups: TDateSegmentGroup[] = [];
   @State() tentativeHover?: string;
   @State() view: TCalendarView = 'days';
   @State() viewDate: Date = new Date();
@@ -441,7 +439,7 @@ export class BqDatePicker {
     }
 
     this.hasBadInput = false;
-    this.syncDerivedFromValue();
+    if (!this.isCommittingSegmentDraft) this.syncDerivedFromValue();
     if (this.isCommittingSelection) return;
     this.syncViewToValue();
   }
@@ -594,7 +592,7 @@ export class BqDatePicker {
   componentDidLoad() {
     this.handleSlotChange();
     this.handleValueChange(this.value, undefined);
-    if (this.autofocus) this.inputElem?.focus();
+    if (this.autofocus && this.activeSegment) this.focusSegment(this.activeSegment);
     // `@Watch('open')` doesn't run for the initial prop value. Treat an
     // initially open picker as programmatic and focus its active calendar cell.
     if (this.open) this.focusActiveCell();
@@ -630,46 +628,6 @@ export class BqDatePicker {
     this.open = open;
   }
 
-  @Listen('beforeinput', { capture: true })
-  handleInputBeforeInput(ev: InputEvent) {
-    const input = ev.composedPath().find((target): target is HTMLInputElement => isHTMLElement(target, 'input'));
-    if (this.disabled || !input || !ev.inputType || ev.isComposing) return;
-
-    ev.preventDefault();
-    const selection = this.maskSelection ?? {
-      start: input.selectionStart ?? 0,
-      end: input.selectionEnd ?? 0,
-    };
-    const edit = applyFixedMaskEdit(
-      input.value || this.maskPlaceholder,
-      selection.start,
-      selection.end,
-      ev.inputType,
-      ev.data,
-      this.type,
-      this.locale,
-      this.precision,
-      this.formatOptions,
-    );
-    input.value = edit.value;
-    this.displayDate = edit.value;
-    this.maskSelection = edit.selection;
-    input.setSelectionRange(edit.selection.start, edit.selection.end);
-    requestAnimationFrame(() => input.setSelectionRange(edit.selection.start, edit.selection.end));
-
-    const parsed = this.parseInputValue(edit.value);
-    if (!parsed.value || parsed.value === this.value) return;
-    this.hasBadInput = false;
-    this.value = parsed.value;
-  }
-
-  @Listen('keydown', { capture: true })
-  handleClearButtonKeyDown(ev: KeyboardEvent) {
-    if (ev.key !== 'Tab' || !ev.shiftKey || !this.clearBtnElem) return;
-    if (!ev.composedPath().includes(this.clearBtnElem)) return;
-    this.focusLastMaskOnInputFocus = true;
-  }
-
   // Public methods API
   // These methods are exposed on the host element.
   // Always use two lines.
@@ -700,96 +658,104 @@ export class BqDatePicker {
     this.bqBlur.emit(this.el);
   };
 
-  private handleFocus = (): void => {
-    if (this.disabled) return;
-    this.bqFocus.emit(this.el);
-    const focusLastMask = this.focusLastMaskOnInputFocus;
-    this.focusLastMaskOnInputFocus = false;
+  /** Moves DOM focus after the roving-tabindex state has rendered. */
+  private focusSegment = (key: TDateSegmentKey): void => {
     requestAnimationFrame(() => {
-      const input = this.inputElem;
-      if (!input) return;
-      const value = input.value || this.maskPlaceholder;
-      const selection = focusLastMask
-        ? getAdjacentMaskSegmentSelection(
-            value,
-            value.length,
-            this.type,
-            this.locale,
-            this.precision,
-            0,
-            this.formatOptions,
-          )
-        : getMaskedSelectionRange(value, 0);
-      this.maskSelection = selection;
-      input.setSelectionRange(selection.start, selection.end);
+      this.segmentContainerElem
+        ?.querySelector<HTMLElement>(`[data-group-id="${key.groupId}"][data-segment-field="${key.field}"]`)
+        ?.focus();
     });
   };
 
-  private parseInputValue = (inputValue: string): { value?: string; invalid?: boolean } => {
-    const tokens = getMaskedInputTokens(inputValue, this.type, this.locale, this.precision, this.formatOptions);
-    if (!tokens) return { invalid: true };
-    if (tokens.length === 0) return {};
-
-    const parsedTokens = tokens.map((token) =>
-      parseMaskedInputToken(
-        token,
-        this.locale,
-        this.precision,
-        this.min,
-        this.max,
-        this.isDateDisallowed,
-        this.formatOptions,
-      ),
-    );
-    if (parsedTokens.some((parsed) => parsed.invalid || parsed.value == null)) return { invalid: true };
-
-    const value = serializeMaskedInputTokens(
-      parsedTokens.map((parsed) => parsed.value as string),
-      this.type,
-      this.precision,
-    );
-    return value ? { value } : { invalid: true };
-  };
-
-  private handleInputChange = (ev: Event): void => {
-    if (this.disabled || !isHTMLElement(ev.target, 'input')) return;
-
-    const inputValue = ev.target.value.trim();
-    if (!inputValue) {
-      this.hasBadInput = false;
-      this.clearValue();
-      this.bqChange.emit({ value: this.value, el: this.el });
-      return;
-    }
-
-    const parsed = this.parseInputValue(inputValue);
-    if (parsed.invalid) {
-      this.handleInvalidInput();
-      return;
-    }
-    if (!parsed.value) {
-      this.hasBadInput = false;
-      this.clearValue();
-      this.bqChange.emit({ value: this.value, el: this.el });
-      return;
-    }
-
-    this.hasBadInput = false;
-    this.value = parsed.value;
-    this.bqChange.emit({ value: this.value, el: this.el });
-  };
-
-  private handleInvalidInput = (): void => {
+  /** Keeps keyboard focus inside a locale-ordered date segment sequence. */
+  private handleSegmentKeyDown = (ev: KeyboardEvent, key: TDateSegmentKey): void => {
     if (this.disabled) return;
-    // Flag as `badInput` and emit `undefined` — never propagate the raw
-    // typed string, which would break the precision-aware wire contract.
-    this.hasBadInput = true;
-    this.internals.setFormValue(null);
-    this.syncValidity();
-    this.bqChange.emit({ value: undefined, el: this.el });
+
+    if (this.handleSegmentPopupShortcut(ev)) return;
+    if (this.handleSegmentNavigation(ev, key)) return;
+    if (this.handleSegmentDeletion(ev, key)) return;
+    this.handleSegmentDigit(ev, key);
   };
 
-  private handleInputClick = (ev: MouseEvent): void => {
+  /** Opens the calendar from the keyboard without changing segment focus. */
+  private handleSegmentPopupShortcut = (ev: KeyboardEvent): boolean => {
+    if (!ev.altKey || ev.key !== 'ArrowDown' || this.open) return false;
+    ev.preventDefault();
+    this.pendingOpenSource = 'input';
+    this.open = true;
+    return true;
+  };
+
+  /** Moves active focus between adjacent visual segments. */
+  private handleSegmentNavigation = (ev: KeyboardEvent, key: TDateSegmentKey): boolean => {
+    if (ev.key !== 'ArrowLeft' && ev.key !== 'ArrowRight') return false;
+    ev.preventDefault();
+    const next = getAdjacentSegmentKey(this.segmentGroups, key, ev.key === 'ArrowLeft' ? -1 : 1);
+    if (!next) return true;
+    this.activeSegment = next;
+    this.focusSegment(next);
+    return true;
+  };
+
+  /** Clears a segment or moves backward when Backspace is pressed on an empty segment. */
+  private handleSegmentDeletion = (ev: KeyboardEvent, key: TDateSegmentKey): boolean => {
+    if (ev.key !== 'Backspace' && ev.key !== 'Delete') return false;
+    ev.preventDefault();
+    const segment = getDateSegment(this.segmentGroups, key);
+    if (!segment) return true;
+    if (!segment.value && ev.key === 'Backspace') {
+      const previous = getAdjacentSegmentKey(this.segmentGroups, key, -1);
+      if (!previous) return true;
+      this.activeSegment = previous;
+      this.focusSegment(previous);
+      return true;
+    }
+    this.segmentGroups = updateDateSegment(this.segmentGroups, key, '');
+    this.syncSegmentDraftValue();
+    this.activeSegment = key;
+    return true;
+  };
+
+  /** Adds one numeric character, replacing a completed segment when necessary. */
+  private handleSegmentDigit = (ev: KeyboardEvent, key: TDateSegmentKey): void => {
+    if (!/^\d$/.test(ev.key) || ev.metaKey || ev.ctrlKey) return;
+    ev.preventDefault();
+    const segment = getDateSegment(this.segmentGroups, key);
+    if (!segment) return;
+    const nextValue = segment.value.length >= segment.maxLength ? ev.key : `${segment.value}${ev.key}`;
+    this.segmentGroups = updateDateSegment(this.segmentGroups, key, nextValue);
+    this.syncSegmentDraftValue();
+    if (nextValue.length < segment.maxLength) return;
+    const next = getAdjacentSegmentKey(this.segmentGroups, key, 1);
+    if (!next) return;
+    this.activeSegment = next;
+    this.focusSegment(next);
+  };
+
+  /** Opens the calendar from a segment without moving keyboard focus into the panel. */
+  private handleSegmentClick = (key: TDateSegmentKey, ev: MouseEvent): void => {
+    this.activeSegment = key;
+    this.handleSegmentControlClick(ev);
+  };
+
+  /** Emits focus only when focus enters the segmented date field from outside it. */
+  private handleSegmentsFocusIn = (ev: FocusEvent): void => {
+    if (this.segmentContainerElem?.contains(ev.relatedTarget as Node)) return;
+    this.handleFocus();
+  };
+
+  /** Emits blur only when focus leaves the segmented date field entirely. */
+  private handleSegmentsFocusOut = (ev: FocusEvent): void => {
+    if (this.segmentContainerElem?.contains(ev.relatedTarget as Node)) return;
+    this.handleBlur();
+  };
+
+  private handleFocus = (): void => {
+    if (this.disabled) return;
+    this.bqFocus.emit(this.el);
+  };
+
+  private handleSegmentControlClick = (ev: MouseEvent): void => {
     if (this.disabled) return;
     ev.stopPropagation();
     if (this.open) return;
@@ -797,41 +763,13 @@ export class BqDatePicker {
     this.open = true;
   };
 
-  private handleInputValue = (ev: Event): void => {
-    if (this.disabled || !isHTMLElement(ev.target, 'input')) return;
-    const selectionStart = ev.target.selectionStart ?? 0;
-    const rawValue = ev.target.value;
-    if (!rawValue) {
-      this.displayDate = this.maskPlaceholder;
-      return;
-    }
-    const maskedValue = applyPickerMask(rawValue, this.type, this.locale, this.precision, this.formatOptions);
-    this.displayDate = maskedValue;
-    const selection = getMaskedSelectionRange(maskedValue, rawValue.slice(0, selectionStart).replace(/\D/g, '').length);
-    requestAnimationFrame(() => this.inputElem?.setSelectionRange(selection.start, selection.end));
-
-    const parsed = this.parseInputValue(maskedValue);
-    if (!parsed.value || parsed.value === this.value) return;
-    this.hasBadInput = false;
-    this.value = parsed.value;
-  };
-
-  private handleInputSelect = (ev: Event): void => {
-    if (!isHTMLElement(ev.target, 'input')) return;
-    this.maskSelection = {
-      start: ev.target.selectionStart ?? 0,
-      end: ev.target.selectionEnd ?? 0,
-    };
-  };
-
   private handleClearClick = (ev: CustomEvent): void => {
     if (this.disabled) return;
-    if (this.inputElem) this.inputElem.value = '';
 
     this.clearValue();
     this.bqClear.emit(this.el);
     this.bqChange.emit({ value: this.value, el: this.el });
-    this.inputElem?.focus();
+    if (this.activeSegment) this.focusSegment(this.activeSegment);
     ev.stopPropagation();
   };
 
@@ -842,46 +780,10 @@ export class BqDatePicker {
     this.open = !this.open;
   };
 
-  /**
-   * Handles keyboard shortcuts on the text input.
-   * - `Escape` → close panel (focus stays on input).
-   */
-  private handleInputKeyDown = (ev: KeyboardEvent): void => {
-    if (this.disabled) return;
-    if (ev.altKey && ev.key === 'ArrowDown' && !this.open) {
-      ev.preventDefault();
-      this.pendingOpenSource = 'input';
-      this.open = true;
-      return;
-    }
-    if (ev.key === 'ArrowLeft' || ev.key === 'ArrowRight') {
-      ev.preventDefault();
-      const input = this.inputElem;
-      if (!input) return;
-      const selection = getAdjacentMaskSegmentSelection(
-        input.value || this.maskPlaceholder,
-        input.selectionStart ?? 0,
-        this.type,
-        this.locale,
-        this.precision,
-        ev.key === 'ArrowLeft' ? -1 : 1,
-        this.formatOptions,
-      );
-      this.maskSelection = selection;
-      input.setSelectionRange(selection.start, selection.end);
-      return;
-    }
-    if (ev.key === 'Escape' && this.open) {
-      ev.preventDefault();
-      this.open = false;
-    }
-  };
-
   private clearValue = (): void => {
     this.value = undefined;
     this.displayDate = this.maskPlaceholder;
     this.hasBadInput = false;
-    this.maskSelection = undefined;
     this.internals.setFormValue(null);
     this.tentativeHover = undefined;
   };
@@ -896,7 +798,7 @@ export class BqDatePicker {
       internals: this.internals,
       required: this.required,
       value: this.value,
-      inputElem: this.inputElem,
+      inputElem: this.segmentContainerElem,
       validationMessage: this.formValidationMessage,
       defaultMessage: 'Please, input or select a valid date',
     });
@@ -915,6 +817,54 @@ export class BqDatePicker {
     this.displayDate = current
       ? formatMaskedValue(current, this.type, this.locale, this.precision, this.formatOptions)
       : this.maskPlaceholder;
+    this.segmentGroups = getDateSegmentGroups(current, this.type, this.precision, this.pickerMask);
+    const firstSegment = this.segmentGroups[0]?.segments[0];
+    this.activeSegment =
+      getFirstEmptySegmentKey(this.segmentGroups) ??
+      (firstSegment ? { groupId: this.segmentGroups[0].id, field: firstSegment.field } : undefined);
+  };
+
+  /**
+   * Commits completed, valid visual groups to the canonical value while keeping
+   * partial drafts visible and preserving the last valid selection.
+   */
+  private syncSegmentDraftValue = (): void => {
+    const values = this.segmentGroups.map((group) => getDateSegmentGroupValue(group, this.precision));
+    const hasPartialGroup = this.segmentGroups.some((group, index) => {
+      if (values[index]) return false;
+      return group.segments.some((segment) => Boolean(segment.value));
+    });
+    const complete = values.filter((value): value is string => Boolean(value));
+    const selection = complete.flatMap((value) => parseValue(value, 'single', this.precision));
+    const hasInvalidValue = complete.length > 0 && selection.length !== complete.length;
+    const hasDisallowedValue = selection.some((iso) => {
+      const date = parseISO(iso);
+      return !date || !isWithinBounds(date, this.min, this.max) || Boolean(this.isDateDisallowed?.(date));
+    });
+
+    this.hasBadInput = hasInvalidValue || hasDisallowedValue;
+    this.syncValidity();
+    if (this.hasBadInput || hasPartialGroup) return;
+
+    const next =
+      this.type === 'single'
+        ? selection.slice(0, 1)
+        : this.type === 'range'
+          ? selection.length === 2 || (selection.length === 1 && values[0])
+            ? selection.slice(0, 2)
+            : []
+          : selection;
+
+    const nextValue = serializeValue(next, this.type, this.precision) || undefined;
+    if (nextValue === this.value) return;
+
+    this.isCommittingSegmentDraft = true;
+    this.value = nextValue;
+    this.isCommittingSegmentDraft = false;
+    this.internals.setFormValue(nextValue ?? null);
+    this.hasValue = computeHasValue(nextValue);
+    this.syncValidity();
+    this.bqChange.emit({ value: this.value, el: this.el });
   };
 
   /**
@@ -941,7 +891,7 @@ export class BqDatePicker {
 
     this.internals.states.delete('valid');
     this.internals.states.add('invalid');
-    this.internals.setValidity(flags, message, this.inputElem);
+    this.internals.setValidity(flags, message, this.segmentContainerElem);
     this.hasConstraintError = true;
   };
 
@@ -1006,6 +956,10 @@ export class BqDatePicker {
 
   private get maskPlaceholder(): string {
     return getMaskPlaceholder(this.type, this.locale, this.precision, this.formatOptions);
+  }
+
+  private get pickerMask() {
+    return getDateMask(this.locale, this.precision, this.formatOptions);
   }
 
   private warnForIncompatibleFormatOptions = (): void => {
@@ -1258,7 +1212,7 @@ export class BqDatePicker {
       PageDown: () => this.pageFocusedMonth(1, ev.shiftKey),
       Escape: () => {
         this.open = false;
-        this.inputElem?.focus();
+        if (this.activeSegment) this.focusSegment(this.activeSegment);
       },
       Enter: () => this.selectFocusedDay(),
       ' ': () => this.selectFocusedDay(),
@@ -1513,6 +1467,69 @@ export class BqDatePicker {
     return this.renderDayPanels();
   };
 
+  /** Builds the accessible name that identifies a date field and its range endpoint. */
+  private getSegmentLabel = (key: TDateSegmentKey): string =>
+    `${this.type === 'range' ? (key.groupId === 0 ? 'Start date ' : 'End date ') : ''}${key.field}`;
+
+  /** Renders a numeric spinbutton segment with a fixed locale-derived width. */
+  private renderSegment = (group: TDateSegmentGroup, index: number): JSX.Element => {
+    const segment = group.segments[index];
+    const key = { groupId: group.id, field: segment.field };
+    const isActive = this.activeSegment?.groupId === key.groupId && this.activeSegment.field === key.field;
+
+    return (
+      <span
+        aria-label={this.getSegmentLabel(key)}
+        aria-valuemax={segment.field === 'day' ? 31 : segment.field === 'month' ? 12 : 9999}
+        aria-valuemin={1}
+        aria-valuetext={segment.value || 'Empty'}
+        class={{
+          'bq-date-picker__segment': true,
+          'is-active': isActive,
+          'is-empty': !segment.value,
+          'is-partial': segment.value.length > 0 && segment.value.length < segment.maxLength,
+        }}
+        data-group-id={`${key.groupId}`}
+        data-segment-field={key.field}
+        inputmode="numeric"
+        onBlur={this.handleSegmentsFocusOut}
+        onClick={(ev) => this.handleSegmentClick(key, ev)}
+        onFocus={this.handleSegmentsFocusIn}
+        onKeyDown={(ev) => this.handleSegmentKeyDown(ev, key)}
+        part="segment"
+        role="spinbutton"
+        tabindex={isActive ? 0 : -1}
+      >
+        {segment.value || segment.placeholder}
+      </span>
+    );
+  };
+
+  /** Renders one locale-ordered date token as discrete editable spinbutton segments. */
+  private renderSegmentGroup = (group: TDateSegmentGroup): JSX.Element => {
+    const mask = this.pickerMask;
+
+    return (
+      <span class="bq-date-picker__segment-group">
+        {group.segments.map((_, index) => {
+          const next = group.segments[index + 1];
+          const literal = mask.template.slice(
+            mask.segments[index].end,
+            next ? mask.segments[index + 1].start : undefined,
+          );
+          return [
+            this.renderSegment(group, index),
+            literal && (
+              <span aria-hidden="true" class="bq-date-picker__segment-literal" part="segment-literal">
+                {literal}
+              </span>
+            ),
+          ];
+        })}
+      </span>
+    );
+  };
+
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -1566,39 +1583,27 @@ export class BqDatePicker {
               <slot name="prefix" onSlotchange={this.handleSlotChange} />
             </span>
 
-            <input
-              aria-controls={popupId}
+            <div
               aria-describedby={maskDescriptionId}
               aria-disabled={this.disabled ? 'true' : 'false'}
-              aria-expanded={this.open ? 'true' : 'false'}
-              aria-haspopup="dialog"
               aria-invalid={this.validationStatus === 'error' || this.hasConstraintError ? 'true' : 'false'}
               aria-labelledby={this.hasLabel ? labelId : undefined}
-              autoCapitalize="off"
-              autoComplete="off"
-              class="bq-date-picker__input"
-              disabled={this.disabled}
-              form={this.form}
-              id={this.name || DEFAULT_INPUT_ID}
-              name={this.name}
-              onBlur={this.handleBlur}
-              onChange={this.handleInputChange}
-              onClick={this.handleInputClick}
-              onFocus={this.handleFocus}
-              onInput={this.handleInputValue}
-              onKeyDown={this.handleInputKeyDown}
-              onSelect={this.handleInputSelect}
+              class="bq-date-picker__segments"
               part={CALENDAR_PARTS.input}
-              placeholder={this.maskPlaceholder}
               ref={(el) => {
-                this.inputElem = el;
+                this.segmentContainerElem = el;
               }}
-              required={this.required}
-              role="combobox"
-              spellcheck={false}
-              type="text"
-              value={this.displayDate}
-            />
+              role="group"
+            >
+              {this.segmentGroups.map((group, index) => [
+                index > 0 && (
+                  <span aria-hidden="true" class="bq-date-picker__segment-group-literal">
+                    {this.type === 'range' ? ' - ' : ', '}
+                  </span>
+                ),
+                this.renderSegmentGroup(group),
+              ])}
+            </div>
             <span class="bq-date-picker__mask-description" id={maskDescriptionId}>
               Expected format: {this.maskPlaceholder}
             </span>
@@ -1613,9 +1618,6 @@ export class BqDatePicker {
                 onBqClick={this.handleClearClick}
                 onlyIcon
                 part={CALENDAR_PARTS.clearBtn}
-                ref={(el) => {
-                  this.clearBtnElem = el;
-                }}
                 size="small"
               >
                 <slot name="clear-icon">
