@@ -37,13 +37,14 @@ Before proceeding with implementation, consider asking:
 
 ## Local build performance: `BEEQ_SKIP_ICONS` and `:fast` scripts
 
-The `beeq:build` target declares `dependsOn: [{ "target": "icons" }, ...]`,
-and the shared `nx.json` `targetDefaults` make `beeq:storybook-build` and
-`beeq:e2e` depend on `beeq:build`. As a result any Nx Cloud DTE agent that
-picks up `build`, `storybook-build`, or `e2e` for `beeq` always has the
-flattened Phosphor SVG assets on disk before running. The
-icons executor is idempotent — a warm run is a sub-second fingerprint check
-— so the dependency is effectively free after the first cold checkout.
+The `beeq:build-stencil` target declares `dependsOn: [{ "target": "icons" }, ...]`,
+and `beeq:build` depends on `beeq:build-stencil` before running `beeq:build-styles`.
+The shared `nx.json` `targetDefaults` make `beeq:storybook-build` and `beeq:e2e`
+depend on `beeq:build`. As a result any Nx Cloud DTE agent that picks up `build`,
+`storybook-build`, or `e2e` for `beeq` always has the flattened Phosphor SVG assets
+on disk before running. The icons executor is idempotent — a warm run is a
+sub-second fingerprint check — so the dependency is effectively free after the
+first cold checkout.
 
 For the rare cases where an AI agent (or a human) needs to iterate quickly
 and knows the SVG folder is already populated and unchanged, the icons

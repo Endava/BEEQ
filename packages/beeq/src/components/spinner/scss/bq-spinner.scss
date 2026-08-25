@@ -1,105 +1,121 @@
 /* -------------------------------------------------------------------------- */
 /*                               Spinner styles                               */
 /* -------------------------------------------------------------------------- */
+
 @import './bq-spinner.variables';
 
+/* ---------------------------------- Host ---------------------------------- */
+
 :host {
-  @apply relative inline-block;
+  --_spinner-size: var(--bq-spinner--size-medium);
+  --_spinner-text-font-size: var(--bq-spinner--medium-text-fontSize);
+
+  position: relative;
+  display: inline-block;
 }
+
+/* ---------------------------------- Base ---------------------------------- */
 
 .bq-spinner {
-  @apply flex;
+  display: flex;
 }
 
-/* -------------------------------------------------------------------------- */
-/*                             Spinner loader size                            */
-/* -------------------------------------------------------------------------- */
+/* ------------------------------- Structure -------------------------------- */
 
-.bq-spinner--loader.large {
-  @apply bs-[--bq-spinner--size-large] is-[--bq-spinner--size-large];
+.bq-spinner__loader {
+  position: relative;
+  block-size: var(--_spinner-size);
+  inline-size: var(--_spinner-size);
+  color: var(--bq-spinner--color);
 }
 
-.bq-spinner--loader.medium {
-  @apply bs-[--bq-spinner--size-medium] is-[--bq-spinner--size-medium];
+.bq-spinner__loader svg {
+  block-size: 100%;
+  inline-size: 100%;
 }
 
-.bq-spinner--loader.small {
-  @apply bs-[--bq-spinner--size-small] is-[--bq-spinner--size-small];
+.bq-spinner__icon {
+  display: flex;
 }
 
-/* -------------------------------------------------------------------------- */
-/*                                Text position                               */
-/* -------------------------------------------------------------------------- */
-
-.text-left,
-.text-right {
-  @apply flex-row items-center;
-
-  &.has-text {
-    @apply gap-x-m;
-  }
+.bq-spinner__text {
+  color: var(--bq-text--primary);
+  font-weight: var(--bq-font-weight--medium);
+  font-size: var(--_spinner-text-font-size);
+  line-height: var(--bq-spinner--text-lineHeight);
 }
 
-.text-left {
-  .bq-spinner--loader,
-  .bq-spinner--icon {
-    @apply order-2;
-  }
+/* -------------------------------- Variants -------------------------------- */
 
-  .bq-spinner--text {
-    @apply order-1;
-  }
+:host([size='small']) {
+  --_spinner-size: var(--bq-spinner--size-small);
+  --_spinner-text-font-size: var(--bq-spinner--small-text-fontSize);
 }
 
-.text-right {
-  .bq-spinner--loader,
-  .bq-spinner--icon {
-    @apply order-1;
-  }
-
-  .bq-spinner--text {
-    @apply order-2;
-  }
+:host([size='large']) {
+  --_spinner-size: var(--bq-spinner--size-large);
+  --_spinner-text-font-size: var(--bq-spinner--large-text-fontSize);
 }
 
-.text-above,
-.text-below {
-  @apply flex-col items-center;
-
-  &.has-text {
-    @apply gap-y-m;
-  }
+:host([text-position='left']) .bq-spinner,
+:host([text-position='right']) .bq-spinner,
+:host([text-position='above']) .bq-spinner,
+:host([text-position='below']) .bq-spinner {
+  align-items: center;
 }
 
-.text-above {
-  .bq-spinner--loader,
-  .bq-spinner--icon {
-    @apply order-2;
-  }
-
-  .bq-spinner--text {
-    @apply order-1;
-  }
+:host([text-position='left']) .bq-spinner,
+:host([text-position='right']) .bq-spinner {
+  flex-direction: row;
 }
 
-.text-below {
-  .bq-spinner--loader,
-  .bq-spinner--icon {
-    @apply order-1;
-  }
-
-  .bq-spinner--text {
-    @apply order-2;
-  }
+:host([text-position='above']) .bq-spinner,
+:host([text-position='below']) .bq-spinner {
+  flex-direction: column;
 }
 
-/* -------------------------------------------------------------------------- */
-/*                      Animate slotted icon if provided                      */
-/* -------------------------------------------------------------------------- */
+:host([text-position='left']) .bq-spinner__loader,
+:host([text-position='left']) .bq-spinner__icon,
+:host([text-position='right']) .bq-spinner__text,
+:host([text-position='below']) .bq-spinner__text {
+  order: 2;
+}
 
-.is-animated {
-  .bq-spinner--icon,
-  .bq-spinner--loader > svg {
-    @include animation-spin;
-  }
+:host([text-position='left']) .bq-spinner__text,
+:host([text-position='right']) .bq-spinner__loader,
+:host([text-position='right']) .bq-spinner__icon,
+:host([text-position='above']) .bq-spinner__text,
+:host([text-position='below']) .bq-spinner__loader,
+:host([text-position='below']) .bq-spinner__icon {
+  order: 1;
+}
+
+:host([text-position='above']) .bq-spinner__loader,
+:host([text-position='above']) .bq-spinner__icon {
+  order: 2;
+}
+
+:host([text-position='none']) .bq-spinner__text {
+  display: none;
+}
+
+/* --------------------------------- States --------------------------------- */
+
+:host([text-position='left']) .bq-spinner.is-populated,
+:host([text-position='right']) .bq-spinner.is-populated {
+  column-gap: var(--bq-spacing-m);
+}
+
+:host([text-position='above']) .bq-spinner.is-populated,
+:host([text-position='below']) .bq-spinner.is-populated {
+  row-gap: var(--bq-spacing-m);
+}
+
+.bq-spinner__icon.is-hidden {
+  display: none;
+}
+
+:host([animation]) .bq-spinner__icon,
+:host([animation]) .bq-spinner__loader > svg {
+  @include animation-spin;
 }

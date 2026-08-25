@@ -37,6 +37,7 @@ It can be an element of the navigation system that allows users to select differ
 | ---------- | ---------------------------------------------------- |
 |            | The label content to be displayed.                   |
 | `"prefix"` | The prefix content to be displayed before the label. |
+| `"suffix"` |                                                      |
 
 
 ## Shadow Parts

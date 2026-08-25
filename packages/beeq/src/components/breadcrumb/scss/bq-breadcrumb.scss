@@ -1,7 +1,23 @@
 /* -------------------------------------------------------------------------- */
-/*                                Breadcrumb styles                */
+/*                              Breadcrumb Styles                             */
 /* -------------------------------------------------------------------------- */
 
+/* ---------------------------------- Host ---------------------------------- */
+
 :host {
-  @apply block;
+  display: block;
+}
+
+/* ------------------------------- Structure -------------------------------- */
+
+.bq-breadcrumb__navigation {
+  display: flex;
+  align-items: center;
+}
+
+.bq-breadcrumb__separator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--bq-spacing-s);
 }
