@@ -53,8 +53,10 @@ import { CALENDAR_PARTS, DECADE_GRID_SIZE, DEFAULT_INPUT_ID, MAX_MONTHS_PER_VIEW
 import { formatMonth } from './helper/intl';
 import { getHeaderLabel, getHeaderTitleLabel, getNextLabel, getPreviousLabel } from './helper/labels';
 import {
+  applyFixedMaskEdit,
   applyPickerMask,
   formatMaskedValue,
+  getAdjacentMaskSegmentSelection,
   getMaskedInputTokens,
   getMaskedSelectionRange,
   getMaskPlaceholder,
@@ -243,6 +245,10 @@ export class BqDatePicker {
   /** Source of the current panel opening, used to preserve the appropriate focus target. */
   private activeOpenSource: 'input' | 'trigger' | 'programmatic' = 'programmatic';
 
+  private clearBtnElem?: HTMLBqButtonElement;
+
+  private focusLastMaskOnInputFocus = false;
+
   /** Initial `value` captured at load time, restored on form reset. */
   private initialValue?: string;
 
@@ -252,6 +258,7 @@ export class BqDatePicker {
   private isCommittingSelection = false;
 
   private labelElem?: HTMLElement;
+  private maskSelection?: { start: number; end: number };
 
   /** Pending requestAnimationFrame id used by `focusButton`. */
   private pendingFocusRAF?: number;
@@ -580,6 +587,7 @@ export class BqDatePicker {
     this.checkPropValues();
     this.handleMonthsChange();
     this.warnForIncompatibleFormatOptions();
+    this.syncDerivedFromValue();
     this.syncViewToValue();
   }
 
@@ -622,6 +630,46 @@ export class BqDatePicker {
     this.open = open;
   }
 
+  @Listen('beforeinput', { capture: true })
+  handleInputBeforeInput(ev: InputEvent) {
+    const input = ev.composedPath().find((target): target is HTMLInputElement => isHTMLElement(target, 'input'));
+    if (this.disabled || !input || !ev.inputType || ev.isComposing) return;
+
+    ev.preventDefault();
+    const selection = this.maskSelection ?? {
+      start: input.selectionStart ?? 0,
+      end: input.selectionEnd ?? 0,
+    };
+    const edit = applyFixedMaskEdit(
+      input.value || this.maskPlaceholder,
+      selection.start,
+      selection.end,
+      ev.inputType,
+      ev.data,
+      this.type,
+      this.locale,
+      this.precision,
+      this.formatOptions,
+    );
+    input.value = edit.value;
+    this.displayDate = edit.value;
+    this.maskSelection = edit.selection;
+    input.setSelectionRange(edit.selection.start, edit.selection.end);
+    requestAnimationFrame(() => input.setSelectionRange(edit.selection.start, edit.selection.end));
+
+    const parsed = this.parseInputValue(edit.value);
+    if (!parsed.value || parsed.value === this.value) return;
+    this.hasBadInput = false;
+    this.value = parsed.value;
+  }
+
+  @Listen('keydown', { capture: true })
+  handleClearButtonKeyDown(ev: KeyboardEvent) {
+    if (ev.key !== 'Tab' || !ev.shiftKey || !this.clearBtnElem) return;
+    if (!ev.composedPath().includes(this.clearBtnElem)) return;
+    this.focusLastMaskOnInputFocus = true;
+  }
+
   // Public methods API
   // These methods are exposed on the host element.
   // Always use two lines.
@@ -655,6 +703,26 @@ export class BqDatePicker {
   private handleFocus = (): void => {
     if (this.disabled) return;
     this.bqFocus.emit(this.el);
+    const focusLastMask = this.focusLastMaskOnInputFocus;
+    this.focusLastMaskOnInputFocus = false;
+    requestAnimationFrame(() => {
+      const input = this.inputElem;
+      if (!input) return;
+      const value = input.value || this.maskPlaceholder;
+      const selection = focusLastMask
+        ? getAdjacentMaskSegmentSelection(
+            value,
+            value.length,
+            this.type,
+            this.locale,
+            this.precision,
+            0,
+            this.formatOptions,
+          )
+        : getMaskedSelectionRange(value, 0);
+      this.maskSelection = selection;
+      input.setSelectionRange(selection.start, selection.end);
+    });
   };
 
   private parseInputValue = (inputValue: string): { value?: string; invalid?: boolean } => {
@@ -734,7 +802,7 @@ export class BqDatePicker {
     const selectionStart = ev.target.selectionStart ?? 0;
     const rawValue = ev.target.value;
     if (!rawValue) {
-      this.displayDate = undefined;
+      this.displayDate = this.maskPlaceholder;
       return;
     }
     const maskedValue = applyPickerMask(rawValue, this.type, this.locale, this.precision, this.formatOptions);
@@ -746,6 +814,14 @@ export class BqDatePicker {
     if (!parsed.value || parsed.value === this.value) return;
     this.hasBadInput = false;
     this.value = parsed.value;
+  };
+
+  private handleInputSelect = (ev: Event): void => {
+    if (!isHTMLElement(ev.target, 'input')) return;
+    this.maskSelection = {
+      start: ev.target.selectionStart ?? 0,
+      end: ev.target.selectionEnd ?? 0,
+    };
   };
 
   private handleClearClick = (ev: CustomEvent): void => {
@@ -772,6 +848,29 @@ export class BqDatePicker {
    */
   private handleInputKeyDown = (ev: KeyboardEvent): void => {
     if (this.disabled) return;
+    if (ev.altKey && ev.key === 'ArrowDown' && !this.open) {
+      ev.preventDefault();
+      this.pendingOpenSource = 'input';
+      this.open = true;
+      return;
+    }
+    if (ev.key === 'ArrowLeft' || ev.key === 'ArrowRight') {
+      ev.preventDefault();
+      const input = this.inputElem;
+      if (!input) return;
+      const selection = getAdjacentMaskSegmentSelection(
+        input.value || this.maskPlaceholder,
+        input.selectionStart ?? 0,
+        this.type,
+        this.locale,
+        this.precision,
+        ev.key === 'ArrowLeft' ? -1 : 1,
+        this.formatOptions,
+      );
+      this.maskSelection = selection;
+      input.setSelectionRange(selection.start, selection.end);
+      return;
+    }
     if (ev.key === 'Escape' && this.open) {
       ev.preventDefault();
       this.open = false;
@@ -780,8 +879,9 @@ export class BqDatePicker {
 
   private clearValue = (): void => {
     this.value = undefined;
-    this.displayDate = '';
+    this.displayDate = this.maskPlaceholder;
     this.hasBadInput = false;
+    this.maskSelection = undefined;
     this.internals.setFormValue(null);
     this.tentativeHover = undefined;
   };
@@ -814,7 +914,7 @@ export class BqDatePicker {
     this.hasValue = computeHasValue(current);
     this.displayDate = current
       ? formatMaskedValue(current, this.type, this.locale, this.precision, this.formatOptions)
-      : '';
+      : this.maskPlaceholder;
   };
 
   /**
@@ -1487,6 +1587,7 @@ export class BqDatePicker {
               onFocus={this.handleFocus}
               onInput={this.handleInputValue}
               onKeyDown={this.handleInputKeyDown}
+              onSelect={this.handleInputSelect}
               part={CALENDAR_PARTS.input}
               placeholder={this.maskPlaceholder}
               ref={(el) => {
@@ -1512,6 +1613,9 @@ export class BqDatePicker {
                 onBqClick={this.handleClearClick}
                 onlyIcon
                 part={CALENDAR_PARTS.clearBtn}
+                ref={(el) => {
+                  this.clearBtnElem = el;
+                }}
                 size="small"
               >
                 <slot name="clear-icon">
