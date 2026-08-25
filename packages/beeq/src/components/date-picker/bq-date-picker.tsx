@@ -4,6 +4,7 @@ import type { JSX } from '@stencil/core/internal';
 
 import type { Placement } from '../../services/interfaces';
 import {
+  getDateMask,
   getTodayISO,
   hasSlotContent,
   isEventTargetChildOfElement,
@@ -49,17 +50,23 @@ import {
   toISO,
 } from './helper/calendar';
 import { CALENDAR_PARTS, DECADE_GRID_SIZE, DEFAULT_INPUT_ID, MAX_MONTHS_PER_VIEW } from './helper/constants';
-import { parseTypedInput } from './helper/input';
 import { formatMonth } from './helper/intl';
 import { getHeaderLabel, getHeaderTitleLabel, getNextLabel, getPreviousLabel } from './helper/labels';
 import { advanceFocusedMonth, advanceFocusedYear, getGridColumns } from './helper/navigation';
 import { applySelection, buildTentativeRange, parseValue, serializeValue } from './helper/selection';
 import {
-  computeDisplayDate,
   computeHasValue,
-  DEFAULT_FORMAT_OPTIONS_BY_PRECISION,
   normalizeValue,
 } from './helper/value';
+import {
+  applyPickerMask,
+  formatMaskedValue,
+  getMaskedCaretPosition,
+  getMaskedInputTokens,
+  getMaskPlaceholder,
+  parseMaskedInputToken,
+  serializeMaskedInputTokens,
+} from './helper/mask';
 
 /** Compose the default constraint-validation message for a set of flags. */
 const defaultValidityMessage = (flags: ValidityStateFlags): string => {
@@ -236,6 +243,9 @@ export class BqDatePicker {
   /** Sticky flag: last typed input couldn't be parsed. Cleared on next successful commit or `clear()`. */
   private hasBadInput: boolean = false;
 
+  /** Source of the current panel opening, used to preserve the appropriate focus target. */
+  private activeOpenSource: 'input' | 'trigger' | 'programmatic' = 'programmatic';
+
   /** Initial `value` captured at load time, restored on form reset. */
   private initialValue?: string;
 
@@ -248,6 +258,9 @@ export class BqDatePicker {
 
   /** Pending requestAnimationFrame id used by `focusButton`. */
   private pendingFocusRAF?: number;
+
+  /** Source to apply to the next open transition initiated by this component. */
+  private pendingOpenSource?: 'input' | 'trigger';
 
   private prefixElem?: HTMLElement;
   private triggerBtnElem?: HTMLBqButtonElement;
@@ -433,15 +446,8 @@ export class BqDatePicker {
   @Watch('formatOptions')
   @Watch('locale')
   handleFormattingChange() {
-    // Re-format the display without re-parsing the wire value.
-    this.hasValue = computeHasValue(this.value);
-    this.displayDate = computeDisplayDate(
-      this.value,
-      this.type,
-      this.locale,
-      this.effectiveFormatOptions,
-      this.precision,
-    );
+    this.warnForIncompatibleFormatOptions();
+    this.syncDerivedFromValue();
   }
 
   @Watch('type')
@@ -520,18 +526,17 @@ export class BqDatePicker {
   handleOpen(open: boolean) {
     if (!open) {
       this.tentativeHover = undefined;
-      // Return focus to the calendar trigger button after closing the panel,
-      // so keyboard users don't lose their position in the document.
-      requestAnimationFrame(() => this.triggerBtnElem?.shadowRoot?.querySelector<HTMLButtonElement>('button')?.focus());
+      if (this.activeOpenSource !== 'input') {
+        requestAnimationFrame(() => this.triggerBtnElem?.shadowRoot?.querySelector<HTMLButtonElement>('button')?.focus());
+      }
       return;
     }
+    this.activeOpenSource = this.pendingOpenSource ?? 'programmatic';
+    this.pendingOpenSource = undefined;
     // Precision locks the initial view; otherwise honor the consumer-provided one.
     this.view = this.precision === 'day' ? this.initialView : this.precisionToView(this.precision);
     this.syncViewToValue();
-    // Move keyboard focus into the calendar so screen-reader / keyboard users
-    // land on the focused day (or the equivalent focused cell for
-    // months/years views). Non-modal popup: focus is *moved*, not trapped.
-    this.focusActiveCell();
+    if (this.activeOpenSource !== 'input') this.focusActiveCell();
   }
 
   @Watch('view')
@@ -576,6 +581,7 @@ export class BqDatePicker {
     this.view = this.precision === 'day' ? this.initialView : this.precisionToView(this.precision);
     this.checkPropValues();
     this.handleMonthsChange();
+    this.warnForIncompatibleFormatOptions();
     this.syncViewToValue();
   }
 
@@ -583,8 +589,8 @@ export class BqDatePicker {
     this.handleSlotChange();
     this.handleValueChange(this.value, undefined);
     if (this.autofocus) this.inputElem?.focus();
-    // `@Watch('open')` doesn't run for the initial prop value, so pickers
-    // rendered with `open` never move focus into the calendar. Do it here.
+    // `@Watch('open')` doesn't run for the initial prop value. Treat an
+    // initially open picker as programmatic and focus its active calendar cell.
     if (this.open) this.focusActiveCell();
   }
 
@@ -664,20 +670,79 @@ export class BqDatePicker {
       return;
     }
 
-    const parsed = parseTypedInput(inputValue, this.locale, this.precision, this.min, this.max, this.isDateDisallowed);
-    if (parsed.invalid || parsed.value == null) {
-      // Flag as `badInput` and emit `undefined` — never propagate the raw
-      // typed string, which would break the precision-aware wire contract.
-      this.hasBadInput = true;
-      this.internals.setFormValue(null);
-      this.syncValidity();
-      this.bqChange.emit({ value: undefined, el: this.el });
+    const tokens = getMaskedInputTokens(inputValue, this.type, this.locale, this.precision, this.formatOptions);
+    if (!tokens) {
+      this.handleInvalidInput();
+      return;
+    }
+    if (tokens.length === 0) {
+      this.hasBadInput = false;
+      this.clearValue();
+      this.bqChange.emit({ value: this.value, el: this.el });
+      return;
+    }
+
+    const parsedTokens = tokens.map((token) =>
+      parseMaskedInputToken(
+        token,
+        this.locale,
+        this.precision,
+        this.min,
+        this.max,
+        this.isDateDisallowed,
+        this.formatOptions,
+      ),
+    );
+    if (parsedTokens.some((parsed) => parsed.invalid || parsed.value == null)) {
+      this.handleInvalidInput();
+      return;
+    }
+
+    const nextValue = serializeMaskedInputTokens(
+      parsedTokens.map((parsed) => parsed.value as string),
+      this.type,
+      this.precision,
+    );
+    if (!nextValue) {
+      this.handleInvalidInput();
       return;
     }
 
     this.hasBadInput = false;
-    this.value = parsed.value;
+    this.value = nextValue;
     this.bqChange.emit({ value: this.value, el: this.el });
+  };
+
+  private handleInvalidInput = (): void => {
+    if (this.disabled) return;
+    // Flag as `badInput` and emit `undefined` — never propagate the raw
+    // typed string, which would break the precision-aware wire contract.
+    this.hasBadInput = true;
+    this.internals.setFormValue(null);
+    this.syncValidity();
+    this.bqChange.emit({ value: undefined, el: this.el });
+  };
+
+  private handleInputClick = (ev: MouseEvent): void => {
+    if (this.disabled) return;
+    ev.stopPropagation();
+    if (this.open) return;
+    this.pendingOpenSource = 'input';
+    this.open = true;
+    if (this.inputElem?.value !== this.maskPlaceholder) return;
+    const [firstSegment] = getDateMask(this.locale, this.precision, this.formatOptions).segments;
+    if (!firstSegment) return;
+    requestAnimationFrame(() => this.inputElem?.setSelectionRange(firstSegment.start, firstSegment.end));
+  };
+
+  private handleInputValue = (ev: Event): void => {
+    if (this.disabled || !isHTMLElement(ev.target, 'input')) return;
+    const selectionStart = ev.target.selectionStart ?? 0;
+    const rawValue = ev.target.value;
+    const maskedValue = applyPickerMask(rawValue, this.type, this.locale, this.precision, this.formatOptions);
+    this.displayDate = maskedValue;
+    const caret = getMaskedCaretPosition(maskedValue, rawValue.slice(0, selectionStart).replace(/\D/g, '').length);
+    requestAnimationFrame(() => this.inputElem?.setSelectionRange(caret, caret));
   };
 
   private handleClearClick = (ev: CustomEvent): void => {
@@ -694,20 +759,17 @@ export class BqDatePicker {
   /** Toggles the calendar panel open/closed when the trigger button is activated. */
   private handleTriggerClick = (): void => {
     if (this.disabled) return;
+    this.pendingOpenSource = 'trigger';
     this.open = !this.open;
   };
 
   /**
    * Handles keyboard shortcuts on the text input.
-   * - `ArrowDown` / `Alt+ArrowDown` → open panel and focus active cell.
    * - `Escape` → close panel (focus stays on input).
    */
   private handleInputKeyDown = (ev: KeyboardEvent): void => {
     if (this.disabled) return;
-    if (ev.key === 'ArrowDown') {
-      ev.preventDefault();
-      if (!this.open) this.open = true;
-    } else if (ev.key === 'Escape' && this.open) {
+    if (ev.key === 'Escape' && this.open) {
       ev.preventDefault();
       this.open = false;
     }
@@ -739,7 +801,7 @@ export class BqDatePicker {
 
   /**
    * Recompute all state derived from the public `value` (form value,
-   * `hasValue`, formatted display). Called from `value` and any prop that
+   * `hasValue`, masked display). Called from `value` and any prop that
    * affects display formatting (`type`, `locale`, `formatOptions`).
    */
   private syncDerivedFromValue = (): void => {
@@ -747,7 +809,7 @@ export class BqDatePicker {
     this.internals.setFormValue(!isNil(current) ? `${current}` : null);
     this.syncValidity();
     this.hasValue = computeHasValue(current);
-    this.displayDate = computeDisplayDate(current, this.type, this.locale, this.effectiveFormatOptions, this.precision);
+    this.displayDate = formatMaskedValue(current, this.type, this.locale, this.precision, this.formatOptions);
   };
 
   /**
@@ -837,15 +899,17 @@ export class BqDatePicker {
     return parsed;
   }
 
-  /**
-   * Effective `Intl.DateTimeFormatOptions` — user-provided when set, otherwise
-   * the precision-appropriate default. Prevents a `month` picker from
-   * accidentally rendering "1 May 2026" when the consumer just sets
-   * `precision="month"` without overriding `formatOptions`.
-   */
-  private get effectiveFormatOptions(): Intl.DateTimeFormatOptions {
-    return this.formatOptions ?? DEFAULT_FORMAT_OPTIONS_BY_PRECISION[this.precision];
+  private get maskPlaceholder(): string {
+    return getMaskPlaceholder(this.type, this.locale, this.precision, this.formatOptions);
   }
+
+  private warnForIncompatibleFormatOptions = (): void => {
+    if (!this.formatOptions) return;
+    if (!getDateMask(this.locale, this.precision, this.formatOptions).usedFallback) return;
+    console.warn(
+      '[BQ-DATE-PICKER] formatOptions must contain only numeric date fields to configure the input mask; using the locale default.',
+    );
+  };
 
   /** Map a precision value to the calendar view that commits selections. */
   private precisionToView = (precision: TDatePrecision): TCalendarView => {
@@ -1412,11 +1476,12 @@ export class BqDatePicker {
               name={this.name}
               onBlur={this.handleBlur}
               onChange={this.handleInputChange}
+              onClick={this.handleInputClick}
               onFocus={this.handleFocus}
+              onInput={this.handleInputValue}
               onKeyDown={this.handleInputKeyDown}
               part={CALENDAR_PARTS.input}
-              placeholder={this.placeholder}
-              readonly={this.type !== 'single'}
+              placeholder={this.placeholder ?? this.maskPlaceholder}
               ref={(el) => {
                 this.inputElem = el;
               }}
@@ -1424,7 +1489,7 @@ export class BqDatePicker {
               role="combobox"
               spellcheck={false}
               type="text"
-              value={this.displayDate}
+              value={this.displayDate ?? (this.placeholder ? undefined : this.maskPlaceholder)}
             />
 
             {this.hasValue && !this.disabled && !this.disableClear && (
