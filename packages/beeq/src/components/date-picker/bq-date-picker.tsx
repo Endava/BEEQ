@@ -793,7 +793,7 @@ export class BqDatePicker {
     this.segmentGroups = groups;
     this.activeSegment = key;
     this.syncSegmentDraftValue();
-    this.focusSegment(key);
+    this.focusSegment(this.activeSegment ?? key);
   };
 
   /** Returns today's value for the requested date field, preserving its fixed segment width. */
