@@ -60,6 +60,7 @@ import {
   getDateSegmentGroups,
   getDateSegmentGroupValue,
   getFirstEmptySegmentKey,
+  getNextAvailableDateSegmentGroups,
   type TDateSegmentGroup,
   type TDateSegmentKey,
   updateDateSegment,
@@ -753,7 +754,7 @@ export class BqDatePicker {
     return true;
   };
 
-  /** Increments or decrements a complete segment when the resulting date remains selectable. */
+  /** Increments or decrements a segment, skipping unavailable dates once its group is complete. */
   private handleSegmentIncrement = (ev: KeyboardEvent, key: TDateSegmentKey): boolean => {
     if (ev.key !== 'ArrowUp' && ev.key !== 'ArrowDown') return false;
 
@@ -770,24 +771,18 @@ export class BqDatePicker {
       return true;
     }
 
-    const limits = this.getSegmentLimits(segment.field);
-    const candidate = Number(segment.value) + (ev.key === 'ArrowUp' ? 1 : -1);
-    if (candidate < limits[0] || candidate > limits[1]) return true;
+    const nextGroups = getNextAvailableDateSegmentGroups(
+      this.segmentGroups,
+      key,
+      ev.key === 'ArrowUp' ? 1 : -1,
+      this.precision,
+      (iso) => {
+        const parsed = parseISO(iso);
+        return Boolean(parsed && isWithinBounds(parsed, this.min, this.max) && !this.isDateDisallowed?.(parsed));
+      },
+    );
+    if (nextGroups) this.applySegmentDraftUpdate(nextGroups, key);
 
-    const nextValue = `${candidate}`.padStart(segment.maxLength, '0');
-    const nextGroups = updateDateSegment(this.segmentGroups, key, nextValue);
-    const group = nextGroups.find((item) => item.id === key.groupId);
-    const iso = group ? getDateSegmentGroupValue(group, this.precision) : undefined;
-    if (!iso) {
-      this.applySegmentDraftUpdate(nextGroups, key);
-      return true;
-    }
-
-    const date = iso ? parseValue(iso, 'single', this.precision)[0] : undefined;
-    const parsed = date ? parseISO(date) : undefined;
-    if (!parsed || !isWithinBounds(parsed, this.min, this.max) || this.isDateDisallowed?.(parsed)) return true;
-
-    this.applySegmentDraftUpdate(nextGroups, key);
     return true;
   };
 
@@ -805,13 +800,6 @@ export class BqDatePicker {
     if (field === 'day') return today.slice(8, 10);
     if (field === 'month') return today.slice(5, 7);
     return today.slice(0, 4);
-  };
-
-  /** Returns the allowed numeric range for a date segment before full-date validation. */
-  private getSegmentLimits = (field: 'day' | 'month' | 'year'): [number, number] => {
-    if (field === 'day') return [1, 31];
-    if (field === 'month') return [1, 12];
-    return [1, 9999];
   };
 
   /** Adds one numeric character, replacing a completed segment when necessary. */

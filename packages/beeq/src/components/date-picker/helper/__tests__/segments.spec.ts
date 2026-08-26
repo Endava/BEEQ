@@ -7,6 +7,7 @@ import {
   getDateSegmentGroups,
   getDateSegmentGroupValue,
   getFirstEmptySegmentKey,
+  getNextAvailableDateSegmentGroups,
   updateDateSegment,
 } from '../segments';
 
@@ -55,6 +56,18 @@ describe('segment navigation', () => {
 
     expect(getDateSegmentGroupBoundaryKey(group, 'start')).toEqual({ groupId: 0, field: 'day' });
     expect(getDateSegmentGroupBoundaryKey(group, 'end')).toEqual({ groupId: 0, field: 'year' });
+  });
+
+  it('should skip unavailable dates while stepping a complete segment', () => {
+    const groups = getDateSegmentGroups('2026-05-17', 'single', 'day', getDateMask('en-GB', 'day'));
+    const isDateAllowed = (iso: string): boolean => !['2026-05-15', '2026-05-16'].includes(iso);
+
+    const previous = getNextAvailableDateSegmentGroups(groups, { groupId: 0, field: 'day' }, -1, 'day', isDateAllowed);
+    const next = getNextAvailableDateSegmentGroups(groups, { groupId: 0, field: 'day' }, 1, 'day', isDateAllowed);
+    if (!previous || !next) throw new Error('Expected an available date in both directions');
+
+    expect(getDateSegmentGroupValue(previous[0], 'day')).toBe('2026-05-14');
+    expect(getDateSegmentGroupValue(next[0], 'day')).toBe('2026-05-18');
   });
 
   it('should replace only the selected segment value', () => {

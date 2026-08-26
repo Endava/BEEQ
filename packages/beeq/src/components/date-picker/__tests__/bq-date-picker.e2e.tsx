@@ -950,6 +950,35 @@ describe('bq-date-picker', () => {
     expect(bqChange).toHaveReceivedEventTimes(0);
   });
 
+  it('should skip disallowed dates when incrementing or decrementing a completed segment', async () => {
+    const { root, waitForChanges } = await render(<bq-date-picker name="date-picker" value="2026-05-17" />);
+    const datePicker = root as HTMLBqDatePickerElement;
+    datePicker.isDateDisallowed = (date: Date) => date.getDate() === 15 || date.getDate() === 16;
+    await waitForChanges();
+    await waitForStable(root);
+
+    const daySegment = getSegment(datePicker, 'day');
+    const decrement = new KeyboardEvent('keydown', {
+      bubbles: true,
+      cancelable: true,
+      composed: true,
+      key: 'ArrowDown',
+    });
+    daySegment?.dispatchEvent(decrement);
+    await waitForChanges();
+
+    expect(decrement.defaultPrevented).toBe(true);
+    expect(getSegment(datePicker, 'day')?.textContent).toBe('14');
+    expect(datePicker.value).toBe('2026-05-14');
+
+    const increment = new KeyboardEvent('keydown', { bubbles: true, cancelable: true, composed: true, key: 'ArrowUp' });
+    daySegment?.dispatchEvent(increment);
+    await waitForChanges();
+
+    expect(increment.defaultPrevented).toBe(true);
+    expect(datePicker.value).toBe('2026-05-17');
+  });
+
   /* --------------------------- Keyboard navigation --------------------------- */
 
   it('should move the focused day with ArrowRight', async () => {

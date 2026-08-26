@@ -105,6 +105,33 @@ export const getDateSegmentGroupBoundaryKey = (
   return segment && group ? { groupId: group.id, field: segment.field } : undefined;
 };
 
+/** Finds the next complete group produced by stepping a field to an allowed ISO date. */
+export const getNextAvailableDateSegmentGroups = (
+  groups: TDateSegmentGroup[],
+  key: TDateSegmentKey,
+  direction: -1 | 1,
+  precision: TDatePrecision,
+  isDateAllowed: (iso: string) => boolean,
+): TDateSegmentGroup[] | undefined => {
+  const segment = getDateSegment(groups, key);
+  if (!segment) return undefined;
+
+  const [min, max] = segment.field === 'day' ? [1, 31] : segment.field === 'month' ? [1, 12] : [1, 9999];
+  for (
+    let candidate = Number(segment.value) + direction;
+    candidate >= min && candidate <= max;
+    candidate += direction
+  ) {
+    const nextGroups = updateDateSegment(groups, key, `${candidate}`.padStart(segment.maxLength, '0'));
+    const group = nextGroups.find((item) => item.id === key.groupId);
+    const value = group ? getDateSegmentGroupValue(group, precision) : undefined;
+    const [iso] = parseValue(value, 'single', precision);
+    if (iso && isDateAllowed(iso)) return nextGroups;
+  }
+
+  return undefined;
+};
+
 /** Converts a complete visual group into its canonical precision-aware ISO token. */
 export const getDateSegmentGroupValue = (group: TDateSegmentGroup, precision: TDatePrecision): string | undefined => {
   const values = Object.fromEntries(group.segments.map((segment) => [segment.field, segment.value])) as Partial<
