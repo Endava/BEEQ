@@ -61,6 +61,7 @@ import {
   getDateSegmentGroupValue,
   getFirstEmptySegmentKey,
   getNextAvailableDateSegmentGroups,
+  getNextPartialDateSegmentGroups,
   type TDateSegmentGroup,
   type TDateSegmentKey,
   updateDateSegment,
@@ -441,7 +442,9 @@ export class BqDatePicker {
     }
 
     this.hasBadInput = false;
-    if (!this.isCommittingSegmentDraft) this.syncDerivedFromValue();
+    const isSegmentDraftCommit = this.isCommittingSegmentDraft;
+    this.isCommittingSegmentDraft = false;
+    if (!isSegmentDraftCommit) this.syncDerivedFromValue();
     if (this.isCommittingSelection) return;
 
     this.syncViewToValue();
@@ -771,16 +774,15 @@ export class BqDatePicker {
       return true;
     }
 
-    const nextGroups = getNextAvailableDateSegmentGroups(
-      this.segmentGroups,
-      key,
-      ev.key === 'ArrowUp' ? 1 : -1,
-      this.precision,
-      (iso) => {
-        const parsed = parseISO(iso);
-        return Boolean(parsed && isWithinBounds(parsed, this.min, this.max) && !this.isDateDisallowed?.(parsed));
-      },
-    );
+    const direction = ev.key === 'ArrowUp' ? 1 : -1;
+    const group = this.segmentGroups.find((item) => item.id === key.groupId);
+    const nextGroups =
+      group && getDateSegmentGroupValue(group, this.precision)
+        ? getNextAvailableDateSegmentGroups(this.segmentGroups, key, direction, this.precision, (iso) => {
+            const parsed = parseISO(iso);
+            return Boolean(parsed && isWithinBounds(parsed, this.min, this.max) && !this.isDateDisallowed?.(parsed));
+          })
+        : getNextPartialDateSegmentGroups(this.segmentGroups, key, direction);
     if (nextGroups) this.applySegmentDraftUpdate(nextGroups, key);
 
     return true;
@@ -789,8 +791,8 @@ export class BqDatePicker {
   /** Applies a draft update and restores focus to the segment that initiated it. */
   private applySegmentDraftUpdate = (groups: TDateSegmentGroup[], key: TDateSegmentKey): void => {
     this.segmentGroups = groups;
-    this.syncSegmentDraftValue();
     this.activeSegment = key;
+    this.syncSegmentDraftValue();
     this.focusSegment(key);
   };
 
@@ -859,6 +861,7 @@ export class BqDatePicker {
     if (this.segmentContainerElem?.contains(ev.relatedTarget as Node)) return;
 
     this.clampCompleteSegmentGroupsToBounds();
+    this.normalizeInvertedRangeSegments();
     this.handleBlur();
   };
 
@@ -949,11 +952,40 @@ export class BqDatePicker {
    * partial drafts visible and preserving the last valid selection.
    */
   private syncSegmentDraftValue = (): void => {
+    const { hasDisallowedValue, hasInvalidValue, hasPartialGroup, selection, values } = this.getSegmentDraftState();
+
+    this.hasBadInput = hasInvalidValue || hasDisallowedValue;
+
+    this.syncValidity();
+
+    if (this.hasBadInput || hasPartialGroup) return;
+
+    const next = this.getSegmentDraftSelection(selection, values);
+    const nextValue = serializeValue(next, this.type, this.precision) || undefined;
+    if (nextValue === this.value) return;
+
+    this.isCommittingSegmentDraft = true;
+    this.value = nextValue;
+    this.internals.setFormValue(nextValue ?? null);
+    this.hasValue = computeHasValue(nextValue);
+
+    this.syncValidity();
+    this.syncMultiSegmentGroups(nextValue);
+    this.bqChange.emit({ value: this.value, el: this.el });
+  };
+
+  /** Returns validation state and normalized ISO dates for the current visual segment draft. */
+  private getSegmentDraftState = (): {
+    hasDisallowedValue: boolean;
+    hasInvalidValue: boolean;
+    hasPartialGroup: boolean;
+    selection: TSelection;
+    values: (string | undefined)[];
+  } => {
     const values = this.segmentGroups.map((group) => getDateSegmentGroupValue(group, this.precision));
-    const hasPartialGroup = this.segmentGroups.some((group, index) => {
-      if (values[index]) return false;
-      return group.segments.some((segment) => Boolean(segment.value));
-    });
+    const hasPartialGroup = this.segmentGroups.some(
+      (group, index) => !values[index] && group.segments.some((segment) => Boolean(segment.value)),
+    );
     const complete = values.filter((value): value is string => Boolean(value));
     const selection = complete.flatMap((value) => parseValue(value, 'single', this.precision));
     const hasInvalidValue = complete.length > 0 && selection.length !== complete.length;
@@ -962,33 +994,25 @@ export class BqDatePicker {
       return !date || !isWithinBounds(date, this.min, this.max) || Boolean(this.isDateDisallowed?.(date));
     });
 
-    this.hasBadInput = hasInvalidValue || hasDisallowedValue;
+    return { hasDisallowedValue, hasInvalidValue, hasPartialGroup, selection, values };
+  };
 
-    this.syncValidity();
+  /** Returns the selection that can be committed for the active picker type. */
+  private getSegmentDraftSelection = (selection: TSelection, values: (string | undefined)[]): TSelection => {
+    if (this.type === 'single') return selection.slice(0, 1);
+    if (this.type === 'multi') return selection;
+    return selection.length === 2 || (selection.length === 1 && values[0]) ? selection.slice(0, 2) : [];
+  };
 
-    if (this.hasBadInput || hasPartialGroup) return;
+  /** Aligns completed inverted range groups with the canonical start/end order after segment editing ends. */
+  private normalizeInvertedRangeSegments = (): void => {
+    if (this.type !== 'range') return;
 
-    const next =
-      this.type === 'single'
-        ? selection.slice(0, 1)
-        : this.type === 'range'
-          ? selection.length === 2 || (selection.length === 1 && values[0])
-            ? selection.slice(0, 2)
-            : []
-          : selection;
+    const values = this.segmentGroups.map((group) => getDateSegmentGroupValue(group, this.precision));
+    const selection = values.flatMap((value) => parseValue(value, 'single', this.precision));
+    if (selection.length !== 2 || selection[0] <= selection[1]) return;
 
-    const nextValue = serializeValue(next, this.type, this.precision) || undefined;
-    if (nextValue === this.value) return;
-
-    this.isCommittingSegmentDraft = true;
-    this.value = nextValue;
-    this.isCommittingSegmentDraft = false;
-    this.internals.setFormValue(nextValue ?? null);
-    this.hasValue = computeHasValue(nextValue);
-
-    this.syncValidity();
-    this.syncMultiSegmentGroups(nextValue);
-    this.bqChange.emit({ value: this.value, el: this.el });
+    this.segmentGroups = getDateSegmentGroups(this.value, this.type, this.precision, this.pickerMask);
   };
 
   /** Clamps each complete date group when focus leaves the segmented field. */
