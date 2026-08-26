@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { getDateMask } from '../../../../shared/utils';
 import {
   getAdjacentSegmentKey,
+  getDateSegmentGroupBoundaryKey,
   getDateSegmentGroups,
   getDateSegmentGroupValue,
   getFirstEmptySegmentKey,
@@ -47,6 +48,13 @@ describe('segment navigation', () => {
 
     expect(getFirstEmptySegmentKey(groups)).toEqual({ groupId: 1, field: 'day' });
     expect(getAdjacentSegmentKey(groups, { groupId: 0, field: 'year' }, 1)).toEqual({ groupId: 1, field: 'day' });
+  });
+
+  it('should return the first and last segment key for a date group', () => {
+    const [group] = getDateSegmentGroups('1990-12-25', 'single', 'day', getDateMask('en-GB', 'day'));
+
+    expect(getDateSegmentGroupBoundaryKey(group, 'start')).toEqual({ groupId: 0, field: 'day' });
+    expect(getDateSegmentGroupBoundaryKey(group, 'end')).toEqual({ groupId: 0, field: 'year' });
   });
 
   it('should replace only the selected segment value', () => {

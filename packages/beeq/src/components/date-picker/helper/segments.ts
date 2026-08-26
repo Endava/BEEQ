@@ -96,6 +96,15 @@ export const getAdjacentSegmentKey = (
   return keys[index + direction];
 };
 
+/** Returns the first or last segment key within one date group. */
+export const getDateSegmentGroupBoundaryKey = (
+  group: TDateSegmentGroup | undefined,
+  boundary: 'start' | 'end',
+): TDateSegmentKey | undefined => {
+  const segment = boundary === 'start' ? group?.segments[0] : group?.segments[group.segments.length - 1];
+  return segment && group ? { groupId: group.id, field: segment.field } : undefined;
+};
+
 /** Converts a complete visual group into its canonical precision-aware ISO token. */
 export const getDateSegmentGroupValue = (group: TDateSegmentGroup, precision: TDatePrecision): string | undefined => {
   const values = Object.fromEntries(group.segments.map((segment) => [segment.field, segment.value])) as Partial<
