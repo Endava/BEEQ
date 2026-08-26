@@ -284,6 +284,8 @@ export class BqDatePicker {
   // Inlined decorator, alphabetical order
   // =======================================
 
+  @State() activeSegment?: TDateSegmentKey;
+  @State() announcement: string = '';
   @State() decadeStart: number = getDecadeStart(new Date().getFullYear());
   @State() focusedISO: string = getTodayISO();
   @State() focusedMonth: number = new Date().getMonth();
@@ -292,8 +294,6 @@ export class BqDatePicker {
   @State() hasLabel = false;
   @State() hasPrefix = false;
   @State() hasValue = false;
-  @State() activeSegment?: TDateSegmentKey;
-  @State() announcement: string = '';
   @State() segmentGroups: TDateSegmentGroup[] = [];
   @State() tentativeHover?: string;
   @State() view: TCalendarView = 'days';
