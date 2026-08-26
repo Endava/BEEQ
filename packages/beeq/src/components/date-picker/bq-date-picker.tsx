@@ -49,7 +49,7 @@ import {
   toISO,
 } from './helper/calendar';
 import { CALENDAR_PARTS, DECADE_GRID_SIZE, DEFAULT_INPUT_ID, MAX_MONTHS_PER_VIEW } from './helper/constants';
-import { formatMonth } from './helper/intl';
+import { formatDate, formatMonth, formatYear } from './helper/intl';
 import { getHeaderLabel, getHeaderTitleLabel, getNextLabel, getPreviousLabel } from './helper/labels';
 import { getMaskPlaceholder } from './helper/mask';
 import { advanceFocusedMonth, advanceFocusedYear, getGridColumns } from './helper/navigation';
@@ -264,6 +264,9 @@ export class BqDatePicker {
   /** Source to apply to the next open transition initiated by this component. */
   private pendingOpenSource?: 'input' | 'trigger';
 
+  /** Ensures a completed calendar selection returns to segmented entry. */
+  private shouldRestoreSegmentFocusAfterSelection = false;
+
   private prefixElem?: HTMLElement;
   private segmentContainerElem?: HTMLElement;
 
@@ -288,6 +291,7 @@ export class BqDatePicker {
   @State() hasPrefix = false;
   @State() hasValue = false;
   @State() activeSegment?: TDateSegmentKey;
+  @State() announcement: string = '';
   @State() segmentGroups: TDateSegmentGroup[] = [];
   @State() tentativeHover?: string;
   @State() view: TCalendarView = 'days';
@@ -535,6 +539,17 @@ export class BqDatePicker {
   handleOpen(open: boolean) {
     if (!open) {
       this.tentativeHover = undefined;
+      if (this.shouldRestoreSegmentFocusAfterSelection) {
+        this.shouldRestoreSegmentFocusAfterSelection = false;
+        const firstSegment = this.segmentGroups[0]?.segments[0];
+        if (firstSegment) {
+          const key = { groupId: this.segmentGroups[0].id, field: firstSegment.field };
+          this.activeSegment = key;
+          this.focusSegment(key);
+        }
+        return;
+      }
+
       if (this.activeOpenSource !== 'input') {
         requestAnimationFrame(() =>
           this.triggerBtnElem?.shadowRoot?.querySelector<HTMLButtonElement>('button')?.focus(),
@@ -842,6 +857,14 @@ export class BqDatePicker {
     this.handleSegmentClick(this.activeSegment, ev);
   };
 
+  /** Sends label activation to the current roving segment. */
+  private handleLabelClick = (ev: MouseEvent): void => {
+    if (this.disabled || !this.activeSegment) return;
+
+    ev.preventDefault();
+    this.focusSegment(this.activeSegment);
+  };
+
   /** Routes control-surface clicks to the active segment without hijacking action buttons. */
   private handleControlClick = (ev: MouseEvent): void => {
     if (ev.composedPath().some((target) => target instanceof HTMLElement && target.tagName === 'BQ-BUTTON')) return;
@@ -854,6 +877,7 @@ export class BqDatePicker {
     if (this.segmentContainerElem?.contains(ev.relatedTarget as Node)) return;
 
     this.handleFocus();
+    this.announceSelection();
   };
 
   /** Emits blur only when focus leaves the segmented date field entirely. */
@@ -869,6 +893,44 @@ export class BqDatePicker {
     if (this.disabled) return;
 
     this.bqFocus.emit(this.el);
+  };
+
+  /** Announces the current selection once when focus enters or a panel selection commits. */
+  private announceSelection = (): void => {
+    const values = this.selection
+      .map((iso) => {
+        const date = parseISO(iso);
+        if (!date) return undefined;
+
+        if (this.precision === 'month') return formatMonth(date, this.locale, 'long', true);
+        if (this.precision === 'year') return formatYear(date, this.locale);
+        return formatDate(date, this.locale, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+      })
+      .filter((value): value is string => Boolean(value));
+
+    let message = 'No date selected';
+    if (this.type === 'range' && values.length === 1)
+      message = `Selected start date: ${values[0]}. End date not selected`;
+    else if (this.type === 'range' && values.length === 2)
+      message = `Selected date range: ${values[0]} to ${values[1]}`;
+    else if (this.type === 'multi' && values.length > 0) message = `Selected dates: ${values.join(', ')}`;
+    else if (values[0]) message = `Selected date: ${values[0]}`;
+
+    this.announce(message);
+  };
+
+  /** Updates the shared polite live region, including when the text repeats. */
+  private announce = (message: string): void => {
+    // Clear before restoring the message so repeated announcements are read.
+    this.announcement = '';
+    requestAnimationFrame(() => {
+      this.announcement = message;
+    });
+  };
+
+  /** Announces the current calendar context after previous/next navigation. */
+  private announceCalendarContext = (): void => {
+    this.announce(`Calendar: ${this.getHeaderLabel()}`);
   };
 
   private handleSegmentControlClick = (ev: MouseEvent): void => {
@@ -1236,6 +1298,7 @@ export class BqDatePicker {
     } else {
       this.decadeStart = this.decadeStart - DECADE_GRID_SIZE;
     }
+    this.announceCalendarContext();
   };
 
   private handleHeaderNext = (): void => {
@@ -1248,6 +1311,7 @@ export class BqDatePicker {
     } else {
       this.decadeStart = this.decadeStart + DECADE_GRID_SIZE;
     }
+    this.announceCalendarContext();
   };
 
   private handleMonthSelect = (month: number): void => {
@@ -1339,6 +1403,8 @@ export class BqDatePicker {
     this.tentativeHover = this.type === 'range' && next.length === 1 ? iso : undefined;
 
     this.bqChange.emit({ value: this.value, el: this.el });
+    this.announceSelection();
+    this.shouldRestoreSegmentFocusAfterSelection = !shouldStayOpen;
     this.open = shouldStayOpen;
   };
 
@@ -1417,7 +1483,7 @@ export class BqDatePicker {
       PageDown: () => this.pageFocusedMonth(1, ev.shiftKey),
       Escape: () => {
         this.open = false;
-        if (this.activeSegment) this.focusSegment(this.activeSegment);
+        if (this.activeOpenSource === 'input' && this.activeSegment) this.focusSegment(this.activeSegment);
       },
       Enter: () => this.selectFocusedDay(),
       ' ': () => this.selectFocusedDay(),
@@ -1579,6 +1645,13 @@ export class BqDatePicker {
     // Builds the accessible name that identifies a date field and its range endpoint.
     `${this.type === 'range' ? (key.groupId === 0 ? 'Start date ' : 'End date ') : ''}${key.field}`;
 
+  /** Builds the accessible name for a complete locale-ordered date group. */
+  private getSegmentGroupLabel = (groupId: number): string => {
+    if (this.type === 'range') return groupId === 0 ? 'Start date' : 'End date';
+    if (this.type === 'multi') return `Date ${groupId + 1}`;
+    return 'Date';
+  };
+
   // Partial render methods for the calendar panel. These are called from `renderView` which is the only render method that is called from `render`.
   // This keeps the render methods organized and focused on specific parts of the component.
   // ===================================
@@ -1682,12 +1755,21 @@ export class BqDatePicker {
     const segment = group.segments[index];
     const key = { groupId: group.id, field: segment.field };
     const isActive = this.activeSegment?.groupId === key.groupId && this.activeSegment.field === key.field;
+    const maxValue = segment.field === 'day' ? 31 : segment.field === 'month' ? 12 : 9999;
+    const numericValue = Number(segment.value);
+    const valueNow =
+      segment.value.length === segment.maxLength && numericValue >= 1 && numericValue <= maxValue
+        ? numericValue
+        : undefined;
+    const isInvalid = this.validationStatus === 'error' || this.hasConstraintError;
 
     return (
       <span
         aria-label={this.getSegmentLabel(key)}
-        aria-valuemax={segment.field === 'day' ? 31 : segment.field === 'month' ? 12 : 9999}
+        aria-invalid={isInvalid ? 'true' : 'false'}
+        aria-valuemax={maxValue}
         aria-valuemin={1}
+        aria-valuenow={valueNow}
         aria-valuetext={segment.value || 'Empty'}
         class={{
           'bq-date-picker__segment': true,
@@ -1716,7 +1798,7 @@ export class BqDatePicker {
     const mask = this.pickerMask;
 
     return (
-      <span class="bq-date-picker__segment-group">
+      <span aria-label={this.getSegmentGroupLabel(group.id)} class="bq-date-picker__segment-group" role="group">
         {group.segments.map((_, index) => {
           const next = group.segments[index + 1];
           const literal = mask.template.slice(
@@ -1753,9 +1835,11 @@ export class BqDatePicker {
 
     return (
       <div class="bq-date-picker" part={CALENDAR_PARTS.base}>
+        {/* biome-ignore lint/a11y/useKeyWithClickEvents: pointer activation forwards focus; keyboard users tab directly to the roving segment group. */}
         <label
           class={{ 'bq-date-picker__label': true, 'is-hidden': !this.hasLabel }}
           htmlFor={this.name || DEFAULT_INPUT_ID}
+          onClick={this.handleLabelClick}
           part={CALENDAR_PARTS.label}
           ref={(labelElem) => {
             this.labelElem = labelElem;
@@ -1823,6 +1907,9 @@ export class BqDatePicker {
             </div>
             <span class="bq-date-picker__mask-description" id={maskDescriptionId}>
               Expected format: {this.maskPlaceholder}
+            </span>
+            <span aria-atomic="true" aria-live="polite" class="bq-date-picker__announcement" role="status">
+              {this.announcement}
             </span>
 
             {this.hasValue && !this.disabled && !this.disableClear && (

@@ -201,7 +201,8 @@
   white-space: pre;
 }
 
-.bq-date-picker__mask-description {
+.bq-date-picker__mask-description,
+.bq-date-picker__announcement {
   position: absolute;
   inline-size: 1px;
   block-size: 1px;
