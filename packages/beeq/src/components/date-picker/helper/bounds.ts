@@ -87,6 +87,15 @@ export const isDateWithinBounds = (iso: string, min?: string | null, max?: strin
   return true;
 };
 
+/** Clamps a full ISO date to the nearest inclusive min/max boundary. */
+export const clampISOToBounds = (iso: string, min?: string | null, max?: string | null): string => {
+  const paddedMin = padBound(min, 'min');
+  const paddedMax = padBound(max, 'max');
+  if (paddedMin !== null && iso < paddedMin) return paddedMin;
+  if (paddedMax !== null && iso > paddedMax) return paddedMax;
+  return iso;
+};
+
 /**
  * Pad a bound string up to full `YYYY-MM-DD` length so it can be lexically
  * compared with a full ISO date. `min` widens down (missing pieces become

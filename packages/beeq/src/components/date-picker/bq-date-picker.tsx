@@ -35,7 +35,7 @@ import { CalendarDayView } from './components/CalendarDayView';
 import { CalendarHeader } from './components/CalendarHeader';
 import { CalendarMonthView } from './components/CalendarMonthView';
 import { CalendarYearView } from './components/CalendarYearView';
-import { isMonthWithinBounds, isYearWithinBounds, padBound } from './helper/bounds';
+import { clampISOToBounds, isMonthWithinBounds, isYearWithinBounds, padBound } from './helper/bounds';
 import {
   addDays,
   addMonths,
@@ -870,6 +870,7 @@ export class BqDatePicker {
   private handleSegmentsFocusOut = (ev: FocusEvent): void => {
     if (this.segmentContainerElem?.contains(ev.relatedTarget as Node)) return;
 
+    this.clampCompleteSegmentGroupsToBounds();
     this.handleBlur();
   };
 
@@ -1000,6 +1001,34 @@ export class BqDatePicker {
     this.syncValidity();
     this.syncMultiSegmentGroups(nextValue);
     this.bqChange.emit({ value: this.value, el: this.el });
+  };
+
+  /** Clamps each complete date group when focus leaves the segmented field. */
+  private clampCompleteSegmentGroupsToBounds = (): void => {
+    if (!this.min && !this.max) return;
+
+    const nextGroups = this.segmentGroups.map((group) => {
+      const value = getDateSegmentGroupValue(group, this.precision);
+      if (!value) return group;
+
+      const [iso] = parseValue(value, 'single', this.precision);
+      if (!iso) return group;
+
+      const clampedISO = clampISOToBounds(iso, this.min, this.max);
+      if (clampedISO === iso) return group;
+
+      const [clampedGroup] = getDateSegmentGroups(
+        serializeValue([clampedISO], 'single', this.precision),
+        'single',
+        this.precision,
+        this.pickerMask,
+      );
+      return { ...clampedGroup, id: group.id };
+    });
+    if (nextGroups.every((group, index) => group === this.segmentGroups[index])) return;
+
+    this.segmentGroups = nextGroups;
+    this.syncSegmentDraftValue();
   };
 
   /** Restores the trailing blank group required to enter another multi-date value. */
