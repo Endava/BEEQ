@@ -132,6 +132,22 @@ export const getNextAvailableDateSegmentGroups = (
   return undefined;
 };
 
+/** Steps one completed segment while its date group is still incomplete. */
+export const getNextPartialDateSegmentGroups = (
+  groups: TDateSegmentGroup[],
+  key: TDateSegmentKey,
+  direction: -1 | 1,
+): TDateSegmentGroup[] | undefined => {
+  const segment = getDateSegment(groups, key);
+  if (!segment) return undefined;
+
+  const [min, max] = segment.field === 'day' ? [1, 31] : segment.field === 'month' ? [1, 12] : [1, 9999];
+  const candidate = Number(segment.value) + direction;
+  if (candidate < min || candidate > max) return undefined;
+
+  return updateDateSegment(groups, key, `${candidate}`.padStart(segment.maxLength, '0'));
+};
+
 /** Converts a complete visual group into its canonical precision-aware ISO token. */
 export const getDateSegmentGroupValue = (group: TDateSegmentGroup, precision: TDatePrecision): string | undefined => {
   const values = Object.fromEntries(group.segments.map((segment) => [segment.field, segment.value])) as Partial<

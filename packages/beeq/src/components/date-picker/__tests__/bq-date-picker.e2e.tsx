@@ -2,13 +2,14 @@ import { h } from '@stencil/core';
 import { afterEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
 import { userEvent } from 'vitest/browser';
 
+import { getTodayISO } from '../../../shared/utils';
 import { getTextContent } from '../../../shared/utils/slot';
 
 const getInput = (datePicker: HTMLBqDatePickerElement) =>
   datePicker.shadowRoot?.querySelector<HTMLInputElement>('[part="input"]');
 
-const getSegment = (datePicker: HTMLBqDatePickerElement, field: 'day' | 'month' | 'year') =>
-  datePicker.shadowRoot?.querySelector<HTMLElement>(`[data-segment-field="${field}"]`);
+const getSegment = (datePicker: HTMLBqDatePickerElement, field: 'day' | 'month' | 'year', groupId = 0) =>
+  datePicker.shadowRoot?.querySelector<HTMLElement>(`[data-group-id="${groupId}"][data-segment-field="${field}"]`);
 
 const getDropdownPanel = (datePicker: HTMLBqDatePickerElement) => {
   const dropdown = datePicker.shadowRoot?.querySelector<HTMLBqDropdownElement>('.bq-date-picker__dropdown');
@@ -728,6 +729,64 @@ describe('bq-date-picker', () => {
     await waitForChanges();
 
     expect(datePicker.value).toBe('2026-05-15/2026-05-20');
+  });
+
+  it('should normalize inverted range segments when focus leaves the field', async () => {
+    const { root, spyOnEvent, waitForChanges } = await render(
+      <bq-date-picker name="date-picker" type="range" value="2026-05-20" />,
+    );
+    const datePicker = root as HTMLBqDatePickerElement;
+    const bqChange = spyOnEvent('bqChange');
+    await waitForStable(root);
+
+    const enterSegmentValue = async (field: 'day' | 'month' | 'year', value: string): Promise<void> => {
+      for (const key of value) {
+        getSegment(datePicker, field, 1)?.dispatchEvent(
+          new KeyboardEvent('keydown', { bubbles: true, cancelable: true, composed: true, key }),
+        );
+        await waitForChanges();
+      }
+    };
+
+    await enterSegmentValue('day', '10');
+    await enterSegmentValue('month', '05');
+    await enterSegmentValue('year', '2026');
+    await waitForStable(root);
+
+    expect(datePicker.value).toBe('2026-05-10/2026-05-20');
+    expect(getSegment(datePicker, 'day', 0)?.textContent).toBe('20');
+    expect(getSegment(datePicker, 'day', 1)?.textContent).toBe('10');
+    expect(datePicker.shadowRoot?.activeElement).toBe(getSegment(datePicker, 'year', 1));
+    expect(bqChange).toHaveReceivedEventTimes(1);
+
+    getCalendarTriggerButton(datePicker)?.focus();
+    await waitForChanges();
+
+    expect(getSegment(datePicker, 'day', 0)?.textContent).toBe('10');
+    expect(getSegment(datePicker, 'day', 1)?.textContent).toBe('20');
+  });
+
+  it('should step an incomplete range end-date segment after seeding it', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-date-picker name="date-picker" type="range" value="2026-05-15" />,
+    );
+    const datePicker = root as HTMLBqDatePickerElement;
+
+    const seededDay = Number(getTodayISO().slice(8, 10));
+    const key = seededDay < 31 ? 'ArrowUp' : 'ArrowDown';
+    const expectedDay = `${seededDay + (key === 'ArrowUp' ? 1 : -1)}`.padStart(2, '0');
+
+    getSegment(datePicker, 'day', 1)?.dispatchEvent(
+      new KeyboardEvent('keydown', { bubbles: true, cancelable: true, composed: true, key }),
+    );
+    await waitForChanges();
+    getSegment(datePicker, 'day', 1)?.dispatchEvent(
+      new KeyboardEvent('keydown', { bubbles: true, cancelable: true, composed: true, key }),
+    );
+    await waitForChanges();
+
+    expect(getSegment(datePicker, 'day', 1)?.textContent).toBe(expectedDay);
+    expect(datePicker.value).toBe('2026-05-15');
   });
 
   it('should move to the previous month when the previous button is clicked', async () => {

@@ -8,6 +8,7 @@ import {
   getDateSegmentGroupValue,
   getFirstEmptySegmentKey,
   getNextAvailableDateSegmentGroups,
+  getNextPartialDateSegmentGroups,
   updateDateSegment,
 } from '../segments';
 
@@ -68,6 +69,15 @@ describe('segment navigation', () => {
 
     expect(getDateSegmentGroupValue(previous[0], 'day')).toBe('2026-05-14');
     expect(getDateSegmentGroupValue(next[0], 'day')).toBe('2026-05-18');
+  });
+
+  it('should step a completed segment in an incomplete date group', () => {
+    const groups = getDateSegmentGroups('2026-05-15', 'range', 'day', getDateMask('en-GB', 'day'));
+    const withDay = updateDateSegment(groups, { groupId: 1, field: 'day' }, '10');
+    const next = getNextPartialDateSegmentGroups(withDay, { groupId: 1, field: 'day' }, 1);
+    if (!next) throw new Error('Expected the incomplete end-date day to increment');
+
+    expect(next[1].segments.map((segment) => segment.value)).toEqual(['11', '', '']);
   });
 
   it('should replace only the selected segment value', () => {
