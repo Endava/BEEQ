@@ -51,7 +51,7 @@ import {
 import { CALENDAR_PARTS, DECADE_GRID_SIZE, DEFAULT_INPUT_ID, MAX_MONTHS_PER_VIEW } from './helper/constants';
 import { formatMonth } from './helper/intl';
 import { getHeaderLabel, getHeaderTitleLabel, getNextLabel, getPreviousLabel } from './helper/labels';
-import { formatMaskedValue, getMaskPlaceholder } from './helper/mask';
+import { getMaskPlaceholder } from './helper/mask';
 import { advanceFocusedMonth, advanceFocusedYear, getGridColumns } from './helper/navigation';
 import {
   getAdjacentSegmentKey,
@@ -277,7 +277,6 @@ export class BqDatePicker {
   // =======================================
 
   @State() decadeStart: number = getDecadeStart(new Date().getFullYear());
-  @State() displayDate?: string;
   @State() focusedISO: string = getTodayISO();
   @State() focusedMonth: number = new Date().getMonth();
   @State() focusedYear: number = new Date().getFullYear();
@@ -876,7 +875,6 @@ export class BqDatePicker {
 
   private clearValue = (): void => {
     this.value = undefined;
-    this.displayDate = this.maskPlaceholder;
     this.hasBadInput = false;
     this.internals.setFormValue(null);
     this.tentativeHover = undefined;
@@ -899,18 +897,14 @@ export class BqDatePicker {
   };
 
   /**
-   * Recompute all state derived from the public `value` (form value,
-   * `hasValue`, masked display). Called from `value` and any prop that
-   * affects display formatting (`type`, `locale`, `formatOptions`).
+   * Recompute state derived from the public `value` (form value, selection
+   * presence, and visual groups). Called when value or mask-defining props change.
    */
   private syncDerivedFromValue = (): void => {
     const current = this.value;
     this.internals.setFormValue(!isNil(current) ? `${current}` : null);
     this.syncValidity();
     this.hasValue = computeHasValue(current);
-    this.displayDate = current
-      ? formatMaskedValue(current, this.type, this.locale, this.precision, this.formatOptions)
-      : this.maskPlaceholder;
     this.segmentGroups = getDateSegmentGroups(current, this.type, this.precision, this.pickerMask);
     const firstSegment = this.segmentGroups[0]?.segments[0];
     this.activeSegment =
