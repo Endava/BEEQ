@@ -8,6 +8,9 @@ import { getTextContent } from '../../../shared/utils/slot';
 const getSegmentContainer = (datePicker: HTMLBqDatePickerElement) =>
   datePicker.shadowRoot?.querySelector<HTMLElement>('[part="input"]');
 
+const getSelectionAnnouncement = (datePicker: HTMLBqDatePickerElement) =>
+  datePicker.shadowRoot?.querySelector<HTMLElement>('[role="status"]');
+
 const getSegment = (datePicker: HTMLBqDatePickerElement, field: 'day' | 'month' | 'year', groupId = 0) =>
   datePicker.shadowRoot?.querySelector<HTMLElement>(`[data-group-id="${groupId}"][data-segment-field="${field}"]`);
 
@@ -15,6 +18,9 @@ const getSegmentFields = (datePicker: HTMLBqDatePickerElement, groupId = 0) =>
   Array.from(datePicker.shadowRoot?.querySelectorAll<HTMLElement>(`[data-group-id="${groupId}"]`) ?? []).map(
     (segment) => segment.getAttribute('data-segment-field'),
   );
+
+const getSegmentGroup = (datePicker: HTMLBqDatePickerElement, groupId = 0) =>
+  datePicker.shadowRoot?.querySelectorAll<HTMLElement>('.bq-date-picker__segment-group')[groupId];
 
 const typeSegment = async (
   datePicker: HTMLBqDatePickerElement,
@@ -78,6 +84,11 @@ const getYearGrid = (datePicker: HTMLBqDatePickerElement) =>
   datePicker.shadowRoot?.querySelector<HTMLElement>('.bq-date-picker__years[role="grid"]');
 
 const waitForSegmentFocus = (): Promise<void> => new Promise((resolve) => requestAnimationFrame(() => resolve()));
+
+const waitForSelectionAnnouncement = async (): Promise<void> => {
+  await waitForSegmentFocus();
+  await waitForSegmentFocus();
+};
 
 afterEach(() => {
   vi.restoreAllMocks();
@@ -555,6 +566,25 @@ describe('bq-date-picker', () => {
     expect(getGrid(datePicker)).toEqualAttribute('aria-label', 'July 2026');
   });
 
+  it('should give calendar day buttons complete localized date labels', async () => {
+    const { root } = await render(<bq-date-picker name="date-picker" locale="en-GB" open value="2026-07-15" />);
+    const datePicker = root as HTMLBqDatePickerElement;
+    await waitForStable(root);
+
+    expect(getDayButton(datePicker, '2026-07-15')).toEqualAttribute('aria-label', 'Wednesday, 15 July 2026');
+  });
+
+  it('should give abbreviated month buttons full localized month and year labels', async () => {
+    const { root } = await render(
+      <bq-date-picker initialView="months" name="date-picker" locale="en-GB" open value="2026-07-15" />,
+    );
+    const datePicker = root as HTMLBqDatePickerElement;
+    await waitForStable(root);
+
+    expect(getMonthButton(datePicker, 6)).toEqualAttribute('aria-label', 'July 2026');
+    expect(getMonthButton(datePicker, 6)?.textContent).toBe('Jul');
+  });
+
   it('should open on the `initialView` when the panel becomes visible', async () => {
     const { root } = await render(<bq-date-picker initialView="months" name="date-picker" open value="2026-07-15" />);
     const datePicker = root as HTMLBqDatePickerElement;
@@ -861,6 +891,7 @@ describe('bq-date-picker', () => {
     expect(getSegment(emptyPicker, 'day')).toEqualAttribute('aria-valuemin', '1');
     expect(getSegment(emptyPicker, 'day')).toEqualAttribute('aria-valuemax', '31');
     expect(getSegment(emptyPicker, 'day')).toEqualAttribute('aria-valuetext', 'Empty');
+    expect(getSegment(emptyPicker, 'day')).not.toHaveAttribute('aria-valuenow');
 
     const { root: populatedRoot } = await render(<bq-date-picker name="populated-date-picker" value="2026-05-15" />);
     const populatedPicker = populatedRoot as HTMLBqDatePickerElement;
@@ -869,6 +900,145 @@ describe('bq-date-picker', () => {
     expect(getSegment(populatedPicker, 'day')).toEqualAttribute('aria-valuetext', '15');
     expect(getSegment(populatedPicker, 'month')).toEqualAttribute('aria-valuetext', '05');
     expect(getSegment(populatedPicker, 'year')).toEqualAttribute('aria-valuetext', '2026');
+    expect(getSegment(populatedPicker, 'day')).toEqualAttribute('aria-valuenow', '15');
+    expect(getSegment(populatedPicker, 'month')).toEqualAttribute('aria-valuenow', '5');
+    expect(getSegment(populatedPicker, 'year')).toEqualAttribute('aria-valuenow', '2026');
+  });
+
+  it.each([
+    ['single', '2026-07-15', 'Selected date: Wednesday, 15 July 2026'],
+    ['range', '2026-07-15/2026-07-20', 'Selected date range: Wednesday, 15 July 2026 to Monday, 20 July 2026'],
+    ['multi', '2026-07-15 2026-07-20', 'Selected dates: Wednesday, 15 July 2026, Monday, 20 July 2026'],
+  ] as const)('should announce the current %s selection when focus enters the segments', async (type, value, expected) => {
+    const { root } = await render(<bq-date-picker name="date-picker" type={type} value={value} />);
+    const datePicker = root as HTMLBqDatePickerElement;
+
+    getSegment(datePicker, 'day')?.focus();
+    await waitForSelectionAnnouncement();
+
+    expect(getSelectionAnnouncement(datePicker)?.textContent).toBe(expected);
+  });
+
+  it('should not change the selection announcement while roving between segments', async () => {
+    const { root } = await render(<bq-date-picker name="date-picker" value="2026-07-15" />);
+    const datePicker = root as HTMLBqDatePickerElement;
+
+    getSegment(datePicker, 'day')?.focus();
+    await waitForSelectionAnnouncement();
+    await userEvent.keyboard('{ArrowRight}');
+    await waitForSelectionAnnouncement();
+
+    expect(getSelectionAnnouncement(datePicker)?.textContent).toBe('Selected date: Wednesday, 15 July 2026');
+  });
+
+  it('should announce a date committed from the calendar panel', async () => {
+    const { root, waitForChanges } = await render(<bq-date-picker name="date-picker" open value="2026-05-10" />);
+    const datePicker = root as HTMLBqDatePickerElement;
+
+    getDayButton(datePicker, '2026-05-15')?.click();
+    await waitForChanges();
+    await waitForSelectionAnnouncement();
+
+    expect(getSelectionAnnouncement(datePicker)?.textContent).toBe('Selected date: Friday, 15 May 2026');
+  });
+
+  it.each([
+    ['days', undefined, 'Calendar: June 2026'],
+    ['months', 'months', 'Calendar: 2025'],
+    ['years', 'years', 'Calendar: 2007 – 2018'],
+  ] as const)('should announce the %s view context after calendar navigation', async (_, initialView, expected) => {
+    const { root } = await render(
+      <bq-date-picker initialView={initialView} name="date-picker" open value="2026-07-15" />,
+    );
+    const datePicker = root as HTMLBqDatePickerElement;
+
+    await userEvent.click(getPrevButton(datePicker) as HTMLButtonElement);
+    await waitForSelectionAnnouncement();
+
+    expect(getSelectionAnnouncement(datePicker)?.textContent).toBe(expected);
+  });
+
+  it('should focus the first segment after committing a calendar selection', async () => {
+    const { root } = await render(<bq-date-picker name="date-picker" value="2026-05-10" />);
+    const datePicker = root as HTMLBqDatePickerElement;
+    const trigger = getCalendarTriggerButton(datePicker);
+    if (!trigger) throw new Error('Expected calendar trigger');
+
+    await userEvent.click(trigger);
+    await waitForStable(root);
+    await userEvent.click(getDayButton(datePicker, '2026-05-15') as HTMLButtonElement);
+    await waitForStable(root);
+    await waitForSegmentFocus();
+
+    expect(datePicker.open).toBe(false);
+    expect(datePicker.shadowRoot?.activeElement).toBe(getSegment(datePicker, 'day'));
+  });
+
+  it('should focus the active segment when its label is activated', async () => {
+    const { root } = await render(
+      <bq-date-picker name="date-picker">
+        <span slot="label">Appointment date</span>
+      </bq-date-picker>,
+    );
+    const datePicker = root as HTMLBqDatePickerElement;
+    const label = datePicker.shadowRoot?.querySelector<HTMLElement>('[part="label"]');
+    if (!label) throw new Error('Expected date picker label');
+
+    await userEvent.click(label);
+    await waitForSegmentFocus();
+
+    expect(datePicker.shadowRoot?.activeElement).toBe(getSegment(datePicker, 'day'));
+  });
+
+  it('should label range endpoints and multi-date segment groups', async () => {
+    const { root: rangeRoot } = await render(
+      <bq-date-picker name="range-date-picker" type="range" value="2026-05-15/2026-05-20" />,
+    );
+    const rangePicker = rangeRoot as HTMLBqDatePickerElement;
+    await waitForStable(rangeRoot);
+
+    expect(getSegmentGroup(rangePicker, 0)).toEqualAttribute('role', 'group');
+    expect(getSegmentGroup(rangePicker, 0)).toEqualAttribute('aria-label', 'Start date');
+    expect(getSegmentGroup(rangePicker, 1)).toEqualAttribute('aria-label', 'End date');
+    expect(getSegment(rangePicker, 'day', 0)).toEqualAttribute('aria-label', 'Start date day');
+    expect(getSegment(rangePicker, 'day', 1)).toEqualAttribute('aria-label', 'End date day');
+
+    const { root: multiRoot } = await render(
+      <bq-date-picker name="multi-date-picker" type="multi" value="2026-05-15" />,
+    );
+    const multiPicker = multiRoot as HTMLBqDatePickerElement;
+    await waitForStable(multiRoot);
+
+    expect(getSegmentGroup(multiPicker, 0)).toEqualAttribute('aria-label', 'Date 1');
+    expect(getSegmentGroup(multiPicker, 1)).toEqualAttribute('aria-label', 'Date 2');
+  });
+
+  it('should expose invalid state on every segment', async () => {
+    const { root } = await render(<bq-date-picker name="date-picker" validationStatus="error" value="2026-05-15" />);
+    const datePicker = root as HTMLBqDatePickerElement;
+    await waitForStable(root);
+
+    expect(getSegment(datePicker, 'day')).toEqualAttribute('aria-invalid', 'true');
+    expect(getSegment(datePicker, 'month')).toEqualAttribute('aria-invalid', 'true');
+    expect(getSegment(datePicker, 'year')).toEqualAttribute('aria-invalid', 'true');
+  });
+
+  it('should return focus to the calendar trigger after closing the panel', async () => {
+    const { root } = await render(<bq-date-picker name="date-picker" />);
+    const datePicker = root as HTMLBqDatePickerElement;
+    const trigger = getCalendarTriggerButton(datePicker);
+    if (!trigger) throw new Error('Expected calendar trigger');
+
+    await userEvent.click(trigger);
+    await waitForStable(root);
+    await userEvent.keyboard('{Escape}');
+    await waitForStable(root);
+    await waitForSegmentFocus();
+
+    expect(datePicker.open).toBe(false);
+    expect(datePicker.shadowRoot?.activeElement).toBe(
+      datePicker.shadowRoot?.querySelector<HTMLBqButtonElement>('[part~="calendar-trigger"]'),
+    );
   });
 
   it('should move to the previous month when the previous button is clicked', async () => {
