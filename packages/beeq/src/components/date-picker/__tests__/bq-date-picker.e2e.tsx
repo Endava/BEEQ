@@ -5,11 +5,30 @@ import { userEvent } from 'vitest/browser';
 import { getTodayISO } from '../../../shared/utils';
 import { getTextContent } from '../../../shared/utils/slot';
 
-const getInput = (datePicker: HTMLBqDatePickerElement) =>
-  datePicker.shadowRoot?.querySelector<HTMLInputElement>('[part="input"]');
+const getSegmentContainer = (datePicker: HTMLBqDatePickerElement) =>
+  datePicker.shadowRoot?.querySelector<HTMLElement>('[part="input"]');
 
 const getSegment = (datePicker: HTMLBqDatePickerElement, field: 'day' | 'month' | 'year', groupId = 0) =>
   datePicker.shadowRoot?.querySelector<HTMLElement>(`[data-group-id="${groupId}"][data-segment-field="${field}"]`);
+
+const getSegmentFields = (datePicker: HTMLBqDatePickerElement, groupId = 0) =>
+  Array.from(datePicker.shadowRoot?.querySelectorAll<HTMLElement>(`[data-group-id="${groupId}"]`) ?? []).map(
+    (segment) => segment.getAttribute('data-segment-field'),
+  );
+
+const typeSegment = async (
+  datePicker: HTMLBqDatePickerElement,
+  field: 'day' | 'month' | 'year',
+  value: string,
+  groupId = 0,
+): Promise<void> => {
+  const segment = getSegment(datePicker, field, groupId);
+  if (!segment) throw new Error(`Expected ${field} segment in group ${groupId}`);
+
+  segment.focus();
+  await userEvent.keyboard(value);
+  await waitForSegmentFocus();
+};
 
 const getDropdownPanel = (datePicker: HTMLBqDatePickerElement) => {
   const dropdown = datePicker.shadowRoot?.querySelector<HTMLBqDropdownElement>('.bq-date-picker__dropdown');
@@ -58,6 +77,8 @@ const getMonthGrid = (datePicker: HTMLBqDatePickerElement) =>
 const getYearGrid = (datePicker: HTMLBqDatePickerElement) =>
   datePicker.shadowRoot?.querySelector<HTMLElement>('.bq-date-picker__years[role="grid"]');
 
+const waitForSegmentFocus = (): Promise<void> => new Promise((resolve) => requestAnimationFrame(() => resolve()));
+
 afterEach(() => {
   vi.restoreAllMocks();
 });
@@ -82,20 +103,22 @@ describe('bq-date-picker', () => {
     await waitForStable(root);
 
     expect(getDropdownPanel(datePicker)).toHaveAttribute('open');
-    expect(getInput(datePicker)).toEqualAttribute('aria-expanded', 'true');
+    expect(getSegmentContainer(datePicker)).toEqualAttribute('role', 'group');
+    expect(getSegment(datePicker, 'day')).toEqualAttribute('tabindex', '0');
   });
 
-  it('should reflect popup state through `aria-expanded`', async () => {
+  it('should retain the segmented field while the popup state changes', async () => {
     const { root, setProps, waitForChanges } = await render(<bq-date-picker name="date-picker" />);
     const datePicker = root as HTMLBqDatePickerElement;
 
-    expect(getInput(datePicker)).toEqualAttribute('aria-expanded', 'false');
+    expect(getSegmentContainer(datePicker)).toEqualAttribute('role', 'group');
 
     await setProps({ open: true });
     await waitForChanges();
     await waitForStable(root);
 
-    expect(getInput(datePicker)).toEqualAttribute('aria-expanded', 'true');
+    expect(getDropdownPanel(datePicker)).toHaveAttribute('open');
+    expect(getSegmentContainer(datePicker)).toEqualAttribute('role', 'group');
   });
 
   it('should reflect `disabled` to the host attribute', async () => {
@@ -166,13 +189,15 @@ describe('bq-date-picker', () => {
     expect(root).toEqualAttribute('value', '2026-05/2026-06');
   });
 
-  it('should reflect a single ISO value into the display input', async () => {
+  it('should reflect a single ISO value into populated segments', async () => {
     const { root } = await render(<bq-date-picker name="date-picker" type="single" value="2026-05-30" />);
     const datePicker = root as HTMLBqDatePickerElement;
 
     await waitForStable(root);
 
-    expect(getInput(datePicker)?.value).not.toBe('');
+    expect(getSegment(datePicker, 'day')?.textContent).toBe('30');
+    expect(getSegment(datePicker, 'month')?.textContent).toBe('05');
+    expect(getSegment(datePicker, 'year')?.textContent).toBe('2026');
     expect(datePicker.value).toBe('2026-05-30');
   });
 
@@ -197,8 +222,8 @@ describe('bq-date-picker', () => {
     await waitForChanges();
 
     expect(datePicker.value).toBeUndefined();
-    expect(getInput(datePicker)?.value).toBe('');
-    expect(getInput(datePicker)).toEqualAttribute('placeholder', 'dd/mm/yyyy');
+    expect(getSegment(datePicker, 'day')?.textContent).toBe('dd');
+    expect(getSegment(datePicker, 'day')).toEqualAttribute('aria-valuetext', 'Empty');
     expect(bqClear).toHaveReceivedEventTimes(1);
   });
 
@@ -211,134 +236,102 @@ describe('bq-date-picker', () => {
     expect(getClearButton(datePicker)).toBeNull();
   });
 
-  it('should emit focus and blur events from the input', async () => {
+  it('should emit focus and blur events from the segmented field', async () => {
     const { root, spyOnEvent, waitForChanges } = await render(<bq-date-picker name="date-picker" type="single" />);
     const datePicker = root as HTMLBqDatePickerElement;
     const bqFocus = spyOnEvent('bqFocus');
     const bqBlur = spyOnEvent('bqBlur');
-    const input = getInput(datePicker);
+    const day = getSegment(datePicker, 'day');
+    const trigger = getCalendarTriggerButton(datePicker);
 
-    input?.dispatchEvent(new Event('focus'));
-    input?.dispatchEvent(new Event('blur'));
+    day?.focus();
+    trigger?.focus();
     await waitForChanges();
 
-    expect(bqFocus).toHaveReceivedEventTimes(1);
-    expect(bqBlur).toHaveReceivedEventTimes(1);
+    expect(bqFocus.events.some((event) => event.detail === datePicker)).toBe(true);
+    expect(bqBlur.events.some((event) => event.detail === datePicker)).toBe(true);
   });
 
-  it('should not open the calendar when the input receives keyboard focus', async () => {
+  it('should not open the calendar when a segment receives keyboard focus', async () => {
     const { root } = await render(<bq-date-picker name="date-picker" type="single" />);
     const datePicker = root as HTMLBqDatePickerElement;
-    const input = getInput(datePicker);
+    const day = getSegment(datePicker, 'day');
 
-    input?.focus();
+    day?.focus();
     await waitForStable(root);
 
     expect(datePicker.open).toBe(false);
-    expect(datePicker.shadowRoot?.activeElement).toBe(input);
+    expect(datePicker.shadowRoot?.activeElement).toBe(day);
   });
 
-  it('should render a fixed mask and select its first segment on focus', async () => {
+  it('should render locale-ordered range spinbutton groups and focus the first segment', async () => {
     const { root } = await render(<bq-date-picker locale="en-GB" name="date-picker" type="range" />);
     const datePicker = root as HTMLBqDatePickerElement;
-    const input = getInput(datePicker);
-    if (!input) throw new Error('Expected date picker input');
 
-    expect(input.value).toBe('dd/mm/yyyy - dd/mm/yyyy');
+    expect(datePicker.shadowRoot?.querySelectorAll('[role="spinbutton"]')).toHaveLength(6);
+    expect(getSegment(datePicker, 'day')?.textContent).toBe('dd');
+    expect(getSegment(datePicker, 'month')?.textContent).toBe('mm');
+    expect(getSegment(datePicker, 'year')?.textContent).toBe('yyyy');
+    expect(getSegment(datePicker, 'day', 1)?.textContent).toBe('dd');
 
-    input.focus();
+    getSegment(datePicker, 'day')?.focus();
     await waitForStable(root);
 
-    expect(input.selectionStart).toBe(0);
-    expect(input.selectionEnd).toBe(2);
+    expect(datePicker.shadowRoot?.activeElement).toBe(getSegment(datePicker, 'day'));
   });
 
-  it('should retain fixed separators when deleting an entered segment', async () => {
+  it('should retain segment literals when deleting an entered segment', async () => {
     const { root, waitForChanges } = await render(<bq-date-picker locale="en-GB" name="date-picker" type="single" />);
     const datePicker = root as HTMLBqDatePickerElement;
-    const input = getInput(datePicker);
-    if (!input) throw new Error('Expected date picker input');
 
-    input.setSelectionRange(0, 2);
-    input.dispatchEvent(
-      new InputEvent('beforeinput', { bubbles: true, cancelable: true, data: '15', inputType: 'insertText' }),
-    );
+    await typeSegment(datePicker, 'day', '15');
     await waitForChanges();
-    expect(input.value).toBe('15/mm/yyyy');
+    expect(getSegment(datePicker, 'day')?.textContent).toBe('15');
+    expect(datePicker.shadowRoot?.querySelectorAll('[part="segment-literal"]')).toHaveLength(2);
 
-    input.setSelectionRange(0, 2);
-    input.dispatchEvent(
-      new InputEvent('beforeinput', { bubbles: true, cancelable: true, inputType: 'deleteContentBackward' }),
-    );
+    getSegment(datePicker, 'day')?.focus();
+    await userEvent.keyboard('{Delete}');
     await waitForChanges();
 
-    expect(input.value).toBe('dd/mm/yyyy');
+    expect(getSegment(datePicker, 'day')?.textContent).toBe('dd');
+    expect(datePicker.shadowRoot?.querySelectorAll('[part="segment-literal"]')).toHaveLength(2);
   });
 
-  it('should complete a segment across consecutive keystrokes and backspace into the previous segment', async () => {
+  it('should advance after a completed segment and return on Backspace', async () => {
     const { root, waitForChanges } = await render(<bq-date-picker locale="en-GB" name="date-picker" type="single" />);
     const datePicker = root as HTMLBqDatePickerElement;
-    const input = getInput(datePicker);
-    if (!input) throw new Error('Expected date picker input');
 
-    input.setSelectionRange(0, 2);
-    input.dispatchEvent(
-      new InputEvent('beforeinput', { bubbles: true, cancelable: true, data: '2', inputType: 'insertText' }),
-    );
-    input.dispatchEvent(
-      new InputEvent('beforeinput', { bubbles: true, cancelable: true, data: '5', inputType: 'insertText' }),
-    );
+    await typeSegment(datePicker, 'day', '25');
     await waitForChanges();
 
-    expect(input.value).toBe('25/mm/yyyy');
-    expect(input.selectionStart).toBe(3);
-    expect(input.selectionEnd).toBe(5);
+    expect(getSegment(datePicker, 'day')?.textContent).toBe('25');
+    expect(datePicker.shadowRoot?.activeElement).toBe(getSegment(datePicker, 'month'));
 
-    input.dispatchEvent(
-      new InputEvent('beforeinput', { bubbles: true, cancelable: true, inputType: 'deleteContentBackward' }),
-    );
+    await userEvent.keyboard('{Backspace}');
+    await waitForSegmentFocus();
     await waitForChanges();
 
-    expect(input.value).toBe('2d/mm/yyyy');
-    expect(input.selectionStart).toBe(0);
-    expect(input.selectionEnd).toBe(2);
+    expect(datePicker.shadowRoot?.activeElement).toBe(getSegment(datePicker, 'day'));
   });
 
   it('should keep partial month and year edits in their active segment', async () => {
     const { root, waitForChanges } = await render(<bq-date-picker locale="en-GB" name="date-picker" type="single" />);
     const datePicker = root as HTMLBqDatePickerElement;
-    const input = getInput(datePicker);
-    if (!input) throw new Error('Expected date picker input');
 
-    input.setSelectionRange(0, 2);
-    for (const data of ['2', '5', '1', '2', '2']) {
-      input.dispatchEvent(
-        new InputEvent('beforeinput', { bubbles: true, cancelable: true, data, inputType: 'insertText' }),
-      );
-    }
+    await typeSegment(datePicker, 'day', '25');
+    await typeSegment(datePicker, 'month', '12');
+    await typeSegment(datePicker, 'year', '2');
     await waitForChanges();
 
-    expect(input.value).toBe('25/12/2yyy');
-    expect(input.selectionStart).toBe(6);
-    expect(input.selectionEnd).toBe(10);
+    expect(getSegment(datePicker, 'day')?.textContent).toBe('25');
+    expect(getSegment(datePicker, 'month')?.textContent).toBe('12');
+    expect(getSegment(datePicker, 'year')?.textContent).toBe('2');
+    expect(datePicker.shadowRoot?.activeElement).toBe(getSegment(datePicker, 'year'));
 
-    input.dispatchEvent(
-      new InputEvent('beforeinput', { bubbles: true, cancelable: true, inputType: 'deleteContentBackward' }),
-    );
+    await userEvent.keyboard('{Backspace}');
     await waitForChanges();
-
-    expect(input.value).toBe('25/12/yyyy');
-    expect(input.selectionStart).toBe(3);
-    expect(input.selectionEnd).toBe(5);
-
-    input.dispatchEvent(
-      new InputEvent('beforeinput', { bubbles: true, cancelable: true, inputType: 'deleteContentBackward' }),
-    );
-    await waitForChanges();
-
-    expect(input.value).toBe('25/mm/yyyy');
-    expect(input.selectionStart).toBe(0);
-    expect(input.selectionEnd).toBe(2);
+    expect(getSegment(datePicker, 'year')?.textContent).toBe('yyyy');
+    expect(datePicker.shadowRoot?.activeElement).toBe(getSegment(datePicker, 'month'));
   });
 
   it('should clear a completed segment before replacing it', async () => {
@@ -346,18 +339,12 @@ describe('bq-date-picker', () => {
       <bq-date-picker locale="en-GB" name="date-picker" type="single" value="1983-12-25" />,
     );
     const datePicker = root as HTMLBqDatePickerElement;
-    const input = getInput(datePicker);
-    if (!input) throw new Error('Expected date picker input');
 
-    input.setSelectionRange(0, 2);
-    input.dispatchEvent(
-      new InputEvent('beforeinput', { bubbles: true, cancelable: true, data: '1', inputType: 'insertText' }),
-    );
+    await typeSegment(datePicker, 'day', '1');
     await waitForChanges();
 
-    expect(input.value).toBe('1d/12/1983');
-    expect(input.selectionStart).toBe(0);
-    expect(input.selectionEnd).toBe(2);
+    expect(getSegment(datePicker, 'day')?.textContent).toBe('1');
+    expect(datePicker.shadowRoot?.activeElement).toBe(getSegment(datePicker, 'day'));
   });
 
   it('should replace both digits of a completed month segment', async () => {
@@ -365,52 +352,37 @@ describe('bq-date-picker', () => {
       <bq-date-picker locale="en-GB" name="date-picker" type="single" value="1983-12-25" />,
     );
     const datePicker = root as HTMLBqDatePickerElement;
-    const input = getInput(datePicker);
-    if (!input) throw new Error('Expected date picker input');
 
-    input.setSelectionRange(3, 5);
-    for (const data of ['1', '1']) {
-      input.dispatchEvent(
-        new InputEvent('beforeinput', { bubbles: true, cancelable: true, data, inputType: 'insertText' }),
-      );
-    }
+    await typeSegment(datePicker, 'month', '11');
     await waitForChanges();
 
-    expect(input.value).toBe('25/11/1983');
-    expect(input.selectionStart).toBe(6);
-    expect(input.selectionEnd).toBe(10);
+    expect(getSegment(datePicker, 'month')?.textContent).toBe('11');
+    expect(datePicker.shadowRoot?.activeElement).toBe(getSegment(datePicker, 'year'));
   });
 
-  it('should select the last segment when Shift+Tab returns from the clear button', async () => {
+  it('should expose the populated final segment before the clear button', async () => {
     const { root } = await render(
       <bq-date-picker locale="en-GB" name="date-picker" type="single" value="1983-12-25" />,
     );
     const datePicker = root as HTMLBqDatePickerElement;
-    const input = getInput(datePicker);
     const clearButton = datePicker.shadowRoot?.querySelector<HTMLBqButtonElement>('[part="clear-btn"]');
-    if (!input || !clearButton) throw new Error('Expected date picker input and clear button');
+    if (!clearButton) throw new Error('Expected clear button');
 
-    clearButton.dispatchEvent(
-      new KeyboardEvent('keydown', { bubbles: true, composed: true, key: 'Tab', shiftKey: true }),
-    );
-    input.focus();
-    await waitForStable(root);
-
-    expect(input.selectionStart).toBe(6);
-    expect(input.selectionEnd).toBe(10);
+    expect(getSegment(datePicker, 'year')?.textContent).toBe('1983');
+    expect(clearButton).toEqualAttribute('label', 'Clear value');
   });
 
-  it('should open the calendar from an input pointer click without moving input focus', async () => {
+  it('should open the calendar from a segment pointer click without moving focus', async () => {
     const { root, waitForChanges } = await render(<bq-date-picker name="date-picker" type="single" />);
     const datePicker = root as HTMLBqDatePickerElement;
-    const input = getInput(datePicker);
+    const day = getSegment(datePicker, 'day');
 
-    await userEvent.click(input);
+    await userEvent.click(day);
     await waitForChanges();
     await waitForStable(root);
 
     expect(datePicker.open).toBe(true);
-    expect(datePicker.shadowRoot?.activeElement).toBe(input);
+    expect(datePicker.shadowRoot?.activeElement).toBe(day);
   });
 
   it('should move focus into the calendar when the icon trigger is activated', async () => {
@@ -430,15 +402,14 @@ describe('bq-date-picker', () => {
     );
   });
 
-  it('should emit `bqChange` when the input value changes', async () => {
+  it('should emit `bqChange` when a segmented date is completed', async () => {
     const { root, spyOnEvent, waitForChanges } = await render(<bq-date-picker name="date-picker" type="single" />);
     const datePicker = root as HTMLBqDatePickerElement;
     const bqChange = spyOnEvent('bqChange');
-    const input = getInput(datePicker);
 
-    await userEvent.clear(input);
-    await userEvent.type(input, '21052026');
-    await userEvent.tab();
+    await typeSegment(datePicker, 'day', '21');
+    await typeSegment(datePicker, 'month', '05');
+    await typeSegment(datePicker, 'year', '2026');
     await waitForChanges();
 
     expect(datePicker.value).toBe('2026-05-21');
@@ -446,14 +417,16 @@ describe('bq-date-picker', () => {
     expect(bqChange.events[0].detail.value).toBe('2026-05-21');
   });
 
-  it('should commit masked range input to the range wire format', async () => {
+  it('should commit completed range segment groups to the range wire format', async () => {
     const { root, waitForChanges } = await render(<bq-date-picker name="date-picker" type="range" />);
     const datePicker = root as HTMLBqDatePickerElement;
-    const input = getInput(datePicker);
-    if (!input) throw new Error('Expected date picker input');
 
-    input.value = '15/05/2026 - 20/05/2026';
-    input.dispatchEvent(new InputEvent('input', { bubbles: true, inputType: 'insertText' }));
+    await typeSegment(datePicker, 'day', '15', 0);
+    await typeSegment(datePicker, 'month', '05', 0);
+    await typeSegment(datePicker, 'year', '2026', 0);
+    await typeSegment(datePicker, 'day', '20', 1);
+    await typeSegment(datePicker, 'month', '05', 1);
+    await typeSegment(datePicker, 'year', '2026', 1);
     await waitForChanges();
 
     expect(datePicker.value).toBe('2026-05-15/2026-05-20');
@@ -461,45 +434,44 @@ describe('bq-date-picker', () => {
     expect(getDayButton(datePicker, '2026-05-20')).toHaveClass('is-selected');
   });
 
-  it('should commit masked multi input to the sorted multi wire format', async () => {
+  it('should commit multiple segment groups to the sorted multi wire format', async () => {
     const { root, waitForChanges } = await render(<bq-date-picker name="date-picker" type="multi" />);
     const datePicker = root as HTMLBqDatePickerElement;
-    const input = getInput(datePicker);
-    if (!input) throw new Error('Expected date picker input');
 
-    input.value = '20/05/2026, 15/05/2026';
-    input.dispatchEvent(new InputEvent('input', { bubbles: true, inputType: 'insertText' }));
-    input.dispatchEvent(new Event('change', { bubbles: true }));
+    await typeSegment(datePicker, 'day', '20', 0);
+    await typeSegment(datePicker, 'month', '05', 0);
+    await typeSegment(datePicker, 'year', '2026', 0);
+    await typeSegment(datePicker, 'day', '15', 1);
+    await typeSegment(datePicker, 'month', '05', 1);
+    await typeSegment(datePicker, 'year', '2026', 1);
     await waitForChanges();
 
     expect(datePicker.value).toBe('2026-05-15 2026-05-20');
   });
 
-  it('should clamp the input value to `min` when below range', async () => {
+  it('should clamp completed segments to `min` when focus leaves the field', async () => {
     const { root, waitForChanges } = await render(
       <bq-date-picker name="date-picker" max="2026-05-30" min="2026-05-20" type="single" />,
     );
     const datePicker = root as HTMLBqDatePickerElement;
-    const input = getInput(datePicker);
-
-    await userEvent.clear(input);
-    await userEvent.type(input, '10052026');
-    await userEvent.tab();
+    await typeSegment(datePicker, 'day', '10');
+    await typeSegment(datePicker, 'month', '05');
+    await typeSegment(datePicker, 'year', '2026');
+    getCalendarTriggerButton(datePicker)?.focus();
     await waitForChanges();
 
     expect(datePicker.value).toBe('2026-05-20');
   });
 
-  it('should clamp the input value to `max` when above range', async () => {
+  it('should clamp completed segments to `max` when focus leaves the field', async () => {
     const { root, waitForChanges } = await render(
       <bq-date-picker name="date-picker" max="2026-05-30" min="2026-05-20" type="single" />,
     );
     const datePicker = root as HTMLBqDatePickerElement;
-    const input = getInput(datePicker);
-
-    await userEvent.clear(input);
-    await userEvent.type(input, '10062026');
-    await userEvent.tab();
+    await typeSegment(datePicker, 'day', '10');
+    await typeSegment(datePicker, 'month', '06');
+    await typeSegment(datePicker, 'year', '2026');
+    getCalendarTriggerButton(datePicker)?.focus();
     await waitForChanges();
 
     expect(datePicker.value).toBe('2026-05-30');
@@ -512,7 +484,7 @@ describe('bq-date-picker', () => {
     await waitForStable(root);
 
     const control = root.shadowRoot?.querySelector('[part="control"]');
-    const input = getInput(datePicker);
+    const input = getSegmentContainer(datePicker);
 
     expect(control).toHaveClass('validation-error');
     expect(input).toEqualAttribute('aria-invalid', 'true');
@@ -539,12 +511,11 @@ describe('bq-date-picker', () => {
     const bqBlur = spyOnEvent('bqBlur');
     const bqChange = spyOnEvent('bqChange');
     const bqClear = spyOnEvent('bqClear');
-    const input = getInput(datePicker);
+    const day = getSegment(datePicker, 'day');
 
-    input?.dispatchEvent(new Event('focus'));
-    input?.dispatchEvent(new Event('blur'));
-    if (input) input.value = '2026-05-30';
-    input?.dispatchEvent(new Event('change'));
+    day?.focus();
+    getCalendarTriggerButton(datePicker)?.focus();
+    await typeSegment(datePicker, 'day', '30');
     await datePicker.clear();
     await waitForChanges();
 
@@ -813,6 +784,93 @@ describe('bq-date-picker', () => {
     expect(getSegment(datePicker, 'day', 1)?.textContent).toBe(getTodayISO().slice(8, 10));
   });
 
+  it('should use roving tabindex for ArrowLeft, ArrowRight, Home, and End segment navigation', async () => {
+    const { root, waitForChanges } = await render(<bq-date-picker name="date-picker" value="2026-05-15" />);
+    const datePicker = root as HTMLBqDatePickerElement;
+    const day = getSegment(datePicker, 'day');
+
+    day?.focus();
+    await userEvent.keyboard('{ArrowRight}');
+    await waitForChanges();
+    await waitForSegmentFocus();
+
+    expect(datePicker.shadowRoot?.activeElement).toBe(getSegment(datePicker, 'month'));
+    expect(getSegment(datePicker, 'month')).toEqualAttribute('tabindex', '0');
+    expect(getSegment(datePicker, 'day')).toEqualAttribute('tabindex', '-1');
+
+    await userEvent.keyboard('{End}');
+    await waitForSegmentFocus();
+    expect(datePicker.shadowRoot?.activeElement).toBe(getSegment(datePicker, 'year'));
+
+    await userEvent.keyboard('{Home}');
+    await waitForSegmentFocus();
+    expect(datePicker.shadowRoot?.activeElement).toBe(day);
+  });
+
+  it('should retain pointer focus on the selected segment while opening the calendar', async () => {
+    const { root } = await render(<bq-date-picker name="date-picker" />);
+    const datePicker = root as HTMLBqDatePickerElement;
+    const month = getSegment(datePicker, 'month');
+
+    if (!month) throw new Error('Expected month segment');
+    await userEvent.click(month);
+    await waitForSegmentFocus();
+
+    expect(datePicker.open).toBe(true);
+    expect(datePicker.shadowRoot?.activeElement).toBe(month);
+  });
+
+  it('should reset focus to the first segment after clearing a date', async () => {
+    const { root } = await render(<bq-date-picker name="date-picker" value="2026-05-15" />);
+    const datePicker = root as HTMLBqDatePickerElement;
+    const clearButton = getClearButton(datePicker)?.shadowRoot?.querySelector<HTMLButtonElement>('button');
+    if (!clearButton) throw new Error('Expected clear button');
+
+    await userEvent.click(clearButton);
+    await waitForSegmentFocus();
+
+    expect(datePicker.value).toBeUndefined();
+    expect(datePicker.shadowRoot?.activeElement).toBe(getSegment(datePicker, 'day'));
+    expect(getSegment(datePicker, 'day')).toEqualAttribute('aria-valuetext', 'Empty');
+  });
+
+  it('should clear a whole segment and move backward on Backspace', async () => {
+    const { root, waitForChanges } = await render(<bq-date-picker name="date-picker" value="2026-05-15" />);
+    const datePicker = root as HTMLBqDatePickerElement;
+    const month = getSegment(datePicker, 'month');
+
+    month?.focus();
+    await userEvent.keyboard('{Delete}');
+    await waitForChanges();
+
+    expect(getSegment(datePicker, 'month')?.textContent).toBe('mm');
+    expect(datePicker.shadowRoot?.activeElement).toBe(month);
+
+    await userEvent.keyboard('{Backspace}');
+    await waitForSegmentFocus();
+
+    expect(datePicker.shadowRoot?.activeElement).toBe(getSegment(datePicker, 'day'));
+  });
+
+  it('should expose empty and populated segment spinbutton states', async () => {
+    const { root: emptyRoot } = await render(<bq-date-picker name="empty-date-picker" />);
+    const emptyPicker = emptyRoot as HTMLBqDatePickerElement;
+    await waitForStable(emptyRoot);
+
+    expect(getSegment(emptyPicker, 'day')).toEqualAttribute('role', 'spinbutton');
+    expect(getSegment(emptyPicker, 'day')).toEqualAttribute('aria-valuemin', '1');
+    expect(getSegment(emptyPicker, 'day')).toEqualAttribute('aria-valuemax', '31');
+    expect(getSegment(emptyPicker, 'day')).toEqualAttribute('aria-valuetext', 'Empty');
+
+    const { root: populatedRoot } = await render(<bq-date-picker name="populated-date-picker" value="2026-05-15" />);
+    const populatedPicker = populatedRoot as HTMLBqDatePickerElement;
+    await waitForStable(populatedRoot);
+
+    expect(getSegment(populatedPicker, 'day')).toEqualAttribute('aria-valuetext', '15');
+    expect(getSegment(populatedPicker, 'month')).toEqualAttribute('aria-valuetext', '05');
+    expect(getSegment(populatedPicker, 'year')).toEqualAttribute('aria-valuetext', '2026');
+  });
+
   it('should move to the previous month when the previous button is clicked', async () => {
     const { root, waitForChanges } = await render(
       <bq-date-picker name="date-picker" locale="en-GB" open value="2026-05-15" />,
@@ -906,27 +964,26 @@ describe('bq-date-picker', () => {
     expect(datePicker.value).toBe('2026-05-15');
   });
 
-  it('should focus the input when `autofocus` is set', async () => {
+  it('should focus the first segment when `autofocus` is set', async () => {
     const { root } = await render(<bq-date-picker name="date-picker" autofocus />);
     const datePicker = root as HTMLBqDatePickerElement;
 
     await waitForStable(root);
 
-    expect(datePicker.shadowRoot?.activeElement).toBe(getInput(datePicker));
+    expect(datePicker.shadowRoot?.activeElement).toBe(getSegment(datePicker, 'day'));
   });
 
-  it('should wire ARIA relationships between input and popup', async () => {
+  it('should expose group and dialog semantics for the segmented picker', async () => {
     const { root } = await render(<bq-date-picker name="my-picker" />);
     const datePicker = root as HTMLBqDatePickerElement;
 
     await waitForStable(root);
-    const input = getInput(datePicker);
+    const segments = getSegmentContainer(datePicker);
     const popup = datePicker.shadowRoot?.querySelector<HTMLElement>('[role="dialog"]');
-    const controlsId = input?.getAttribute('aria-controls');
 
-    expect(input).toEqualAttribute('aria-haspopup', 'dialog');
-    expect(controlsId).toBeTruthy();
-    expect(popup?.id).toBe(controlsId);
+    expect(segments).toEqualAttribute('role', 'group');
+    expect(segments).toEqualAttribute('aria-disabled', 'false');
+    expect(popup).toEqualAttribute('aria-label', 'Date picker');
   });
 
   /* ------------------------------- Slots -------------------------------- */
@@ -1201,13 +1258,15 @@ describe('bq-date-picker', () => {
     expect(getClearButton(datePicker)).toEqualAttribute('label', 'Reset date');
   });
 
-  it('should retain the locale-derived mask when `placeholder` is set', async () => {
+  it('should retain locale-derived segment placeholders when `placeholder` is set', async () => {
     const { root } = await render(<bq-date-picker name="date-picker" placeholder="DD/MM/YYYY" />);
     const datePicker = root as HTMLBqDatePickerElement;
 
     await waitForStable(root);
 
-    expect(getInput(datePicker)).toEqualAttribute('placeholder', 'dd/mm/yyyy');
+    expect(getSegment(datePicker, 'day')?.textContent).toBe('dd');
+    expect(getSegment(datePicker, 'month')?.textContent).toBe('mm');
+    expect(getSegment(datePicker, 'year')?.textContent).toBe('yyyy');
   });
 
   it('should describe the locale-derived mask to assistive technology', async () => {
@@ -1216,8 +1275,8 @@ describe('bq-date-picker', () => {
 
     await waitForStable(root);
 
-    const input = getInput(datePicker);
-    const descriptionId = input?.getAttribute('aria-describedby');
+    const segments = getSegmentContainer(datePicker);
+    const descriptionId = segments?.getAttribute('aria-describedby');
     const description = datePicker.shadowRoot?.querySelector<HTMLElement>(`#${descriptionId}`);
     expect(description?.textContent?.trim()).toBe('Expected format: dd.mm.yyyy');
   });
@@ -1347,15 +1406,16 @@ describe('bq-date-picker', () => {
     expect(datePicker.open).toBe(true);
   });
 
-  it('uses the locale numeric mask when formatOptions are not provided', async () => {
+  it('uses locale-ordered numeric month and year segments when formatOptions are not provided', async () => {
     const { root, waitForChanges } = await render(
       <bq-date-picker precision="month" name="date-picker" value="2026-05" locale="en-GB" />,
     );
     const datePicker = root as HTMLBqDatePickerElement;
     await waitForChanges();
 
-    const input = getInput(datePicker);
-    expect(input?.value).toBe('05/2026');
+    expect(getSegmentFields(datePicker)).toEqual(['month', 'year']);
+    expect(getSegment(datePicker, 'month')?.textContent).toBe('05');
+    expect(getSegment(datePicker, 'year')?.textContent).toBe('2026');
   });
 
   it('respects consumer-provided formatOptions over the precision default', async () => {
@@ -1371,9 +1431,9 @@ describe('bq-date-picker', () => {
     const datePicker = root as HTMLBqDatePickerElement;
     await waitForChanges();
 
-    const input = getInput(datePicker);
-    expect(input?.value).toMatch(/05/);
-    expect(input?.value).not.toMatch(/May/);
+    expect(getSegmentFields(datePicker)).toEqual(['month', 'year']);
+    expect(getSegment(datePicker, 'month')?.textContent).toBe('05');
+    expect(getSegment(datePicker, 'month')?.textContent).not.toMatch(/May/);
   });
 
   it('should fall back to the locale numeric mask for incompatible formatOptions', async () => {
@@ -1385,13 +1445,16 @@ describe('bq-date-picker', () => {
 
     await waitForStable(root);
 
-    expect(getInput(datePicker)?.value).toBe('15/05/2026');
+    expect(getSegmentFields(datePicker)).toEqual(['day', 'month', 'year']);
+    expect(getSegment(datePicker, 'day')?.textContent).toBe('15');
+    expect(getSegment(datePicker, 'month')?.textContent).toBe('05');
+    expect(getSegment(datePicker, 'year')?.textContent).toBe('2026');
     expect(warnSpy).toHaveBeenCalledWith(
       '[BQ-DATE-PICKER] formatOptions must contain only numeric date fields to configure the input mask; using the locale default.',
     );
   });
 
-  it('formats multi values with the month-precision mask and trailing entry segment', async () => {
+  it('formats multi values with month segments and a trailing empty group', async () => {
     const { root, waitForChanges } = await render(
       <bq-date-picker
         name="date-picker"
@@ -1404,23 +1467,25 @@ describe('bq-date-picker', () => {
     const datePicker = root as HTMLBqDatePickerElement;
     await waitForChanges();
 
-    const input = getInput(datePicker);
-    expect(input?.value).toBe('01/2026, 03/2026, 05/2026, mm/yyyy');
+    expect(getSegment(datePicker, 'month', 0)?.textContent).toBe('01');
+    expect(getSegment(datePicker, 'month', 1)?.textContent).toBe('03');
+    expect(getSegment(datePicker, 'month', 2)?.textContent).toBe('05');
+    expect(getSegment(datePicker, 'month', 3)?.textContent).toBe('mm');
+    expect(getSegment(datePicker, 'year', 3)?.textContent).toBe('yyyy');
   });
 
-  it('formats a multi value with only the year when precision is year', async () => {
+  it('formats multi values as year-only segments when precision is year', async () => {
     const { root, waitForChanges } = await render(
       <bq-date-picker precision="year" name="date-picker" type="multi" value="2020 2022 2025" locale="en-GB" />,
     );
     const datePicker = root as HTMLBqDatePickerElement;
     await waitForChanges();
 
-    const input = getInput(datePicker);
-    expect(input?.value).toMatch(/2020/);
-    expect(input?.value).toMatch(/2022/);
-    expect(input?.value).toMatch(/2025/);
-    // No month name, no day.
-    expect(input?.value).not.toMatch(/Jan|January/);
+    expect(getSegmentFields(datePicker, 0)).toEqual(['year']);
+    expect(getSegment(datePicker, 'year', 0)?.textContent).toBe('2020');
+    expect(getSegment(datePicker, 'year', 1)?.textContent).toBe('2022');
+    expect(getSegment(datePicker, 'year', 2)?.textContent).toBe('2025');
+    expect(getSegment(datePicker, 'year', 3)?.textContent).toBe('yyyy');
   });
 
   it('applies is-selected to a new month anchor after a completed range', async () => {
@@ -1648,55 +1713,50 @@ describe('bq-date-picker', () => {
     expect(april).not.toHaveAttribute('disabled');
   });
 
-  /* Precision-aware typed input */
+  /* Precision-aware segment entry */
 
-  it('should emit month-precision value when typing at precision="month"', async () => {
+  it('should emit a month-precision value when month and year segments are completed', async () => {
     const { root, spyOnEvent, waitForChanges } = await render(
       <bq-date-picker precision="month" name="date-picker" type="single" />,
     );
     const datePicker = root as HTMLBqDatePickerElement;
     const bqChange = spyOnEvent('bqChange');
-    const input = getInput(datePicker);
 
-    await userEvent.clear(input);
-    await userEvent.type(input, '052026');
-    await userEvent.tab();
+    await typeSegment(datePicker, 'month', '05');
+    await typeSegment(datePicker, 'year', '2026');
     await waitForChanges();
 
     expect(datePicker.value).toBe('2026-05');
     expect(bqChange.events.at(-1)?.detail.value).toBe('2026-05');
   });
 
-  it('should emit year-precision value when typing at precision="year"', async () => {
+  it('should emit a year-precision value when the year segment is completed', async () => {
     const { root, spyOnEvent, waitForChanges } = await render(
       <bq-date-picker precision="year" name="date-picker" type="single" />,
     );
     const datePicker = root as HTMLBqDatePickerElement;
     const bqChange = spyOnEvent('bqChange');
-    const input = getInput(datePicker);
 
-    await userEvent.clear(input);
-    await userEvent.type(input, '2026-05-21');
-    await userEvent.tab();
+    await typeSegment(datePicker, 'year', '2026');
     await waitForChanges();
 
     expect(datePicker.value).toBe('2026');
     expect(bqChange.events.at(-1)?.detail.value).toBe('2026');
   });
 
-  it('should emit undefined (not the raw typed string) when input is unparseable', async () => {
+  it('should not commit or emit a raw value for an invalid completed segment group', async () => {
     const { root, spyOnEvent, waitForChanges } = await render(<bq-date-picker name="date-picker" type="single" />);
     const datePicker = root as HTMLBqDatePickerElement;
     const bqChange = spyOnEvent('bqChange');
-    const input = getInput(datePicker);
 
-    await userEvent.clear(input);
-    await userEvent.type(input, 'not-a-date');
-    await userEvent.tab();
+    await typeSegment(datePicker, 'day', '99');
+    await typeSegment(datePicker, 'month', '99');
+    await typeSegment(datePicker, 'year', '2026');
     await waitForChanges();
 
     expect(datePicker.value).toBeUndefined();
-    expect(bqChange.events.at(-1)?.detail.value).toBeUndefined();
+    expect(datePicker.matches(':state(invalid)')).toBe(true);
+    expect(bqChange).toHaveReceivedEventTimes(0);
   });
 
   it('should mark validity as rangeUnderflow when value is below a new min', async () => {
@@ -1711,7 +1771,7 @@ describe('bq-date-picker', () => {
     // Value is preserved; the picker exposes invalidity via the `:state(invalid)` flag.
     expect(datePicker.value).toBe('2026-01-15');
     expect(datePicker.matches(':state(invalid)')).toBe(true);
-    expect(getInput(datePicker)).toEqualAttribute('aria-invalid', 'true');
+    expect(getSegmentContainer(datePicker)).toEqualAttribute('aria-invalid', 'true');
   });
 
   it('should not stay invalid once value is brought back within bounds', async () => {
@@ -1751,18 +1811,17 @@ describe('bq-date-picker', () => {
     expect(datePicker.matches(':state(invalid)')).toBe(false);
   });
 
-  it('should mark validity as `badInput` when typed text cannot be parsed', async () => {
+  it('should mark validity as `badInput` when completed segments form an invalid date', async () => {
     const { root, waitForChanges } = await render(<bq-date-picker name="date-picker" type="single" />);
     const datePicker = root as HTMLBqDatePickerElement;
-    const input = getInput(datePicker);
 
-    await userEvent.clear(input);
-    await userEvent.type(input, 'not-a-date');
-    await userEvent.tab();
+    await typeSegment(datePicker, 'day', '99');
+    await typeSegment(datePicker, 'month', '99');
+    await typeSegment(datePicker, 'year', '2026');
     await waitForChanges();
 
     expect(datePicker.matches(':state(invalid)')).toBe(true);
-    expect(getInput(datePicker)).toEqualAttribute('aria-invalid', 'true');
+    expect(getSegmentContainer(datePicker)).toEqualAttribute('aria-invalid', 'true');
   });
 
   it('should expose the custom `formValidationMessage` for bounds errors', async () => {
@@ -1785,36 +1844,38 @@ describe('bq-date-picker', () => {
     expect(setValiditySpy.mock.calls.at(-1)?.[1]).toBe('Choose a date on or after 1 June 2026');
   });
 
-  it('should clear the `badInput` flag on the next valid typed input', async () => {
+  it('should clear the `badInput` flag on the next valid segment entry', async () => {
     const { root, waitForChanges } = await render(<bq-date-picker name="date-picker" type="single" />);
     const datePicker = root as HTMLBqDatePickerElement;
-    const input = getInput(datePicker);
 
-    await userEvent.clear(input);
-    await userEvent.type(input, 'not-a-date');
-    await userEvent.tab();
+    await typeSegment(datePicker, 'day', '99');
+    await typeSegment(datePicker, 'month', '99');
+    await typeSegment(datePicker, 'year', '2026');
     await waitForChanges();
     expect(datePicker.matches(':state(invalid)')).toBe(true);
 
-    await userEvent.clear(input);
-    await userEvent.type(input, '15/06/2026');
-    await userEvent.tab();
+    for (const field of ['day', 'month', 'year'] as const) {
+      getSegment(datePicker, field)?.focus();
+      await userEvent.keyboard('{Delete}');
+    }
+    await typeSegment(datePicker, 'day', '15');
+    await typeSegment(datePicker, 'month', '06');
+    await typeSegment(datePicker, 'year', '2026');
     await waitForChanges();
 
     expect(datePicker.value).toBe('2026-06-15');
     expect(datePicker.matches(':state(invalid)')).toBe(false);
-    expect(getInput(datePicker)).toEqualAttribute('aria-invalid', 'false');
+    expect(getSegmentContainer(datePicker)).toEqualAttribute('aria-invalid', 'false');
   });
 
   it('should clear the `badInput` flag after selecting a valid date from the calendar', async () => {
     const { root, waitForChanges } = await render(<bq-date-picker name="date-picker" open value="2026-05-15" />);
     const datePicker = root as HTMLBqDatePickerElement;
-    const input = getInput(datePicker);
 
     await waitForStable(root);
-    await userEvent.clear(input);
-    await userEvent.type(input, 'not-a-date');
-    await userEvent.tab();
+    await typeSegment(datePicker, 'day', '99');
+    await typeSegment(datePicker, 'month', '99');
+    await typeSegment(datePicker, 'year', '2026');
     await waitForChanges();
     expect(datePicker.matches(':state(invalid)')).toBe(true);
 
@@ -1823,17 +1884,16 @@ describe('bq-date-picker', () => {
 
     expect(datePicker.value).toBe('2026-05-20');
     expect(datePicker.matches(':state(invalid)')).toBe(false);
-    expect(getInput(datePicker)).toEqualAttribute('aria-invalid', 'false');
+    expect(getSegmentContainer(datePicker)).toEqualAttribute('aria-invalid', 'false');
   });
 
   it('should clear the `badInput` flag after an external valid value update', async () => {
     const { root, setProps, waitForChanges } = await render(<bq-date-picker name="date-picker" type="single" />);
     const datePicker = root as HTMLBqDatePickerElement;
-    const input = getInput(datePicker);
 
-    await userEvent.clear(input);
-    await userEvent.type(input, 'not-a-date');
-    await userEvent.tab();
+    await typeSegment(datePicker, 'day', '99');
+    await typeSegment(datePicker, 'month', '99');
+    await typeSegment(datePicker, 'year', '2026');
     await waitForChanges();
     expect(datePicker.matches(':state(invalid)')).toBe(true);
 
@@ -1842,7 +1902,7 @@ describe('bq-date-picker', () => {
 
     expect(datePicker.value).toBe('2026-06-15');
     expect(datePicker.matches(':state(invalid)')).toBe(false);
-    expect(getInput(datePicker)).toEqualAttribute('aria-invalid', 'false');
+    expect(getSegmentContainer(datePicker)).toEqualAttribute('aria-invalid', 'false');
   });
 
   it('should keep `rangeUnderflow` when `required` is toggled after a bad value is set', async () => {
