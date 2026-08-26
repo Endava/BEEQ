@@ -789,6 +789,30 @@ describe('bq-date-picker', () => {
     expect(datePicker.value).toBe('2026-05-15');
   });
 
+  it('should focus the trailing multi-date segment after ArrowUp completes a date', async () => {
+    const { root, waitForChanges } = await render(<bq-date-picker name="date-picker" type="multi" />);
+    const datePicker = root as HTMLBqDatePickerElement;
+    const increment = async (groupId: number, field: 'day' | 'month' | 'year'): Promise<void> => {
+      getSegment(datePicker, field, groupId)?.dispatchEvent(
+        new KeyboardEvent('keydown', { bubbles: true, cancelable: true, composed: true, key: 'ArrowUp' }),
+      );
+      await waitForChanges();
+    };
+
+    await increment(0, 'day');
+    await increment(0, 'month');
+    await increment(0, 'year');
+    await waitForStable(root);
+
+    expect(datePicker.shadowRoot?.activeElement).toBe(getSegment(datePicker, 'day', 1));
+
+    const firstYear = getSegment(datePicker, 'year', 0)?.textContent;
+    await increment(1, 'day');
+
+    expect(getSegment(datePicker, 'year', 0)?.textContent).toBe(firstYear);
+    expect(getSegment(datePicker, 'day', 1)?.textContent).toBe(getTodayISO().slice(8, 10));
+  });
+
   it('should move to the previous month when the previous button is clicked', async () => {
     const { root, waitForChanges } = await render(
       <bq-date-picker name="date-picker" locale="en-GB" open value="2026-05-15" />,
