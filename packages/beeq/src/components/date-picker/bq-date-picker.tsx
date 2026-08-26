@@ -80,9 +80,10 @@ const defaultValidityMessage = (flags: ValidityStateFlags): string => {
 /**
  * The Date Picker is a pure-Stencil calendar input.
  *
- * It supports single, multi, and range selection, three navigation views
- * (days → months → years), full localization via `Intl.DateTimeFormat`,
- * multi-month side-by-side rendering, and RTL layouts.
+ * It supports single, multi, and range selection through locale-ordered,
+ * keyboard-editable date segments or a calendar panel. It also provides three
+ * navigation views (days → months → years), full localization via
+ * `Intl.DateTimeFormat`, multi-month side-by-side rendering, and RTL layouts.
  *
  * @example How to use it
  * ```html
@@ -90,7 +91,6 @@ const defaultValidityMessage = (flags: ValidityStateFlags): string => {
  *   first-day-of-week="1"
  *   locale="en-GB"
  *   name="bq-date-picker"
- *   placeholder="Enter your date"
  *   type="single"
  *   value="2026-07-15"
  * >
@@ -126,7 +126,7 @@ const defaultValidityMessage = (flags: ValidityStateFlags): string => {
  * @attr {string} name - Input name.
  * @attr {boolean} open - If `true`, the panel is visible.
  * @attr {string} panel-height - Overrides the height of the panel.
- * @attr {string} placeholder - Legacy placeholder text. The locale-derived date mask is always shown instead.
+ * @attr {string} placeholder - Deprecated. Locale-derived segment format hints always describe the expected entry layout instead.
  * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Placement of the panel.
  * @attr {boolean} required - Whether a value must be selected before submitting the form.
  * @attr {boolean} show-outside-days - Whether to render days that belong to adjacent months.
@@ -159,7 +159,9 @@ const defaultValidityMessage = (flags: ValidityStateFlags): string => {
  * @part control - The input control wrapper.
  * @part prefix - The prefix slot container.
  * @part suffix - The suffix slot container.
- * @part input - The native input element.
+ * @part input - The segmented date field group.
+ * @part segment - An editable day, month, or year segment.
+ * @part segment-literal - A locale-derived separator between date segments.
  * @part clear-btn - The clear button.
  * @part calendar-trigger - The calendar icon trigger button.
  * @part button - Any button rendered inside the calendar (nav or day/month/year cell).
@@ -374,7 +376,10 @@ export class BqDatePicker {
   /** Overrides the height of the Date picker panel. */
   @Prop({ reflect: true, mutable: true }) panelHeight?: string = 'auto';
 
-  /** Legacy placeholder text. The locale-derived date mask is shown when no value is selected. */
+  /**
+   * @deprecated Locale-derived segment format hints always describe the
+   * expected entry layout, so this value no longer changes the rendered field.
+   */
   @Prop({ reflect: true }) placeholder?: string;
 
   /** Position of the Date picker panel. */
@@ -1784,7 +1789,7 @@ export class BqDatePicker {
         onClick={(ev) => this.handleSegmentClick(key, ev)}
         onFocus={this.handleSegmentsFocusIn}
         onKeyDown={(ev) => this.handleSegmentKeyDown(ev, key)}
-        part="segment"
+        part={CALENDAR_PARTS.segment}
         role="spinbutton"
         tabindex={isActive ? 0 : -1}
       >
@@ -1808,7 +1813,7 @@ export class BqDatePicker {
           return [
             this.renderSegment(group, index),
             literal && (
-              <span aria-hidden="true" class="bq-date-picker__segment-literal" part="segment-literal">
+              <span aria-hidden="true" class="bq-date-picker__segment-literal" part={CALENDAR_PARTS.segmentLiteral}>
                 {literal}
               </span>
             ),

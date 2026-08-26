@@ -11,7 +11,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
   <img className="hidden dark:block" src="/components/images/date-picker/date-picker-overview-dark.svg" alt="BEEQ Date-picker component overview" />
 </Frame>
 
-Date pickers provide a guided way to enter dates through a calendar interface. They reduce ambiguity, prevent formatting mistakes, and make it easier to choose a single date, a range, or multiple dates depending on the task.
+Date pickers combine a calendar with locale-ordered day, month, and year segments. They reduce ambiguity, prevent formatting mistakes, and support single dates, ranges, and multiple dates.
 
 <Note>
   Use a date picker when the interface benefits from visual date selection or date validation. If users need to enter very flexible freeform dates or work with a tiny, predictable set of choices, a simpler input or select may be more appropriate.
@@ -65,7 +65,7 @@ The date picker combines a labeled field with a calendar surface that helps peop
 | Part | Element | Description |
 |---|---|---|
 | **1** | Label | Describes what date the field is asking for (`label` slot) |
-| **2** | Date field | The input control people focus, type into, or use to open the calendar |
+| **2** | Date segments | The day, month, and year controls people focus and edit, ordered for the active locale |
 | **3** | Icon | The calendar affordance that signals date selection and panel access |
 | **4** | Calendar | The panel surface that contains the date selection interface |
 | **5** | Month and year control | The heading and navigation controls used to move through months and years |
@@ -103,22 +103,22 @@ The date picker combines a labeled field with a calendar surface that helps peop
 Use the default `single` type when users need to choose one date. This is the best starting point for appointments, due dates, deadlines, and similar tasks.
 
 <Note>
-  All selection types expose a fixed, locale-derived numeric mask before entry starts. Its separators stay in place while users replace date segments, so the field never shifts into a free-text layout. With `locale="en-GB"`, day precision uses `dd/mm/yyyy`; a range uses `dd/mm/yyyy - dd/mm/yyyy`; and multi-date entry uses comma-separated masks. Month and year precision use the matching `mm/yyyy` and `yyyy` masks.
+  All selection types use locale-ordered numeric segments. A format hint shows the expected layout before entry starts; for `locale="en-GB"`, day precision uses `dd/mm/yyyy`, month precision uses `mm/yyyy`, and year precision uses `yyyy`. Ranges and multiple dates render separate segment groups.
 
   The wire format of the `value` attribute — and of `min`/`max` — depends on `precision`:
   `day` uses `YYYY-MM-DD`, `month` uses `YYYY-MM`, and `year` uses `YYYY`. For `type="range"` two tokens are joined with `/` (`start/end`); for `type="multi"` tokens are space-separated.
 
-  The locale-derived mask is always shown before entry starts, including when a `placeholder` is provided. On focus, its first segment is selected; typing advances to the next segment, arrow keys move between segments, and deletion restores the segment placeholder. The expected mask is also exposed to assistive technology.
+  The locale-derived format hint is always shown before entry starts. On focus, one segment is active. Type digits to replace that segment, use `ArrowLeft` and `ArrowRight` to move, `Home` and `End` to reach a group boundary, `ArrowUp` and `ArrowDown` to change a value, and `Backspace` or `Delete` to clear a segment. Paste is not supported.
 </Note>
 
 <CodeLivePreview mode="shadow" code={`
-  <bq-date-picker name="appointment-date" placeholder="Select a date">
+  <bq-date-picker name="appointment-date">
     <label slot="label">Appointment date</label>
   </bq-date-picker>
 `}>
   <CodeGroup>
     ```html HTML icon="html5"
-    <bq-date-picker name="appointment-date" placeholder="Select a date">
+    <bq-date-picker name="appointment-date">
       <label slot="label">Appointment date</label>
     </bq-date-picker>
     ```
@@ -126,7 +126,7 @@ Use the default `single` type when users need to choose one date. This is the be
     ```jsx React icon="react"
     import { BqDatePicker } from "@beeq/react";
 
-    <BqDatePicker name="appointment-date" placeholder="Select a date">
+    <BqDatePicker name="appointment-date">
       <label slot="label">Appointment date</label>
     </BqDatePicker>
     ```
@@ -140,7 +140,7 @@ Use the default `single` type when users need to choose one date. This is the be
       standalone: true,
       imports: [BqDatePicker],
       template: `
-        <bq-date-picker name="appointment-date" placeholder="Select a date">
+        <bq-date-picker name="appointment-date">
           <label slot="label">Appointment date</label>
         </bq-date-picker>
       `
@@ -154,7 +154,7 @@ Use the default `single` type when users need to choose one date. This is the be
     </script>
 
     <template>
-      <BqDatePicker name="appointment-date" placeholder="Select a date">
+      <BqDatePicker name="appointment-date">
         <label slot="label">Appointment date</label>
       </BqDatePicker>
     </template>
@@ -163,7 +163,7 @@ Use the default `single` type when users need to choose one date. This is the be
 </CodeLivePreview>
 
 <Tip>
-  `type="single"` is the default. `range` and `multi` use the same editable mask model, so users can type, paste, or choose dates from the calendar in every selection mode.
+  `type="single"` is the default. `range` and `multi` use the same segmented-entry model, so users can type digits or choose dates from the calendar in every selection mode.
 </Tip>
 
 ### Date range
@@ -1245,9 +1245,9 @@ Use `isDateDisallowed` to make specific dates unavailable for selection. This is
 </CodeGroup>
 </CodeLivePreview>
 
-### Input mask format
+### Segment layout
 
-Use numeric `formatOptions` to set the mask's field order and separators. The component supports `numeric` or `2-digit` day/month fields with a numeric year. This does not affect the underlying ISO wire value.
+Use numeric `formatOptions` to set the segment order and separators. The component supports `numeric` or `2-digit` day/month fields with a numeric year. This does not affect the underlying ISO wire value.
 
 <CodeLivePreview mode="iframe" height="30rem" removePadding code={`
   <style>
@@ -1372,7 +1372,7 @@ Use numeric `formatOptions` to set the mask's field order and separators. The co
 </CodeLivePreview>
 
 <Warning>
-  Textual or variable-length options such as `month: 'long'`, `weekday`, and `dateStyle` cannot form a fixed mask. The component falls back to the locale's numeric mask and logs a development warning.
+  Textual or variable-length options such as `month: 'long'`, `weekday`, and `dateStyle` cannot define a numeric segment layout. The component falls back to the locale's numeric layout and logs a development warning.
 </Warning>
 
 ### Form integration
@@ -1644,14 +1644,14 @@ Use numeric `formatOptions` to set the mask's field order and separators. The co
 
 ## Accessibility
 
-- `bq-date-picker` is form-associated and delegates focus, so it participates in native forms and moves focus into the internal `<input>` element when the component receives focus.
-- The input element sets `aria-disabled="true"` when `disabled` is `true`. It sets `aria-invalid="true"` for `validationStatus="error"` and native constraint failures such as required, invalid, or out-of-bounds values.
-- The input uses `aria-haspopup="dialog"` and `aria-controls` to announce the calendar panel. A `label` slot supplies `aria-labelledby` for both the input and calendar panel.
+- `bq-date-picker` is form-associated and delegates focus, so it participates in native forms and moves focus into its segmented date field when the component receives focus.
+- The segmented field is a labelled `group`; each day, month, and year control is a `spinbutton` with localized limits, value text, and roving tabindex. Range endpoints and multi-date groups have their own accessible labels.
+- The segmented field sets `aria-disabled="true"` when `disabled` is `true`. Each segment sets `aria-invalid="true"` for `validationStatus="error"` and native constraint failures such as required, invalid, or out-of-bounds values.
 - The calendar panel carries `role="dialog"` and is labelled via `aria-labelledby` when a label is present, or by its built-in "Date picker" label otherwise. The panel is not modal.
-- The component emits `bqFocus`, `bqBlur`, `bqChange`, and `bqClear`, which give you the hooks needed to announce validation results, react to changes, and keep form state synchronized.
-- Focusing or typing in the input with a keyboard does not open the panel. Press `Alt`+`ArrowDown`, or Tab to the calendar icon and press `Enter` or `Space`, to open the panel. Calendar-trigger activation moves focus into its active date cell; the arrow keys navigate calendar cells and `Escape` closes the panel.
-- Clicking an input opens the calendar while keeping focus in the input, so users can continue editing the mask. Clicking the calendar icon opens the panel and moves focus into it.
-- Always provide a visible label through the `label` slot. Without it, the input has no programmatic label, so nearby context must provide an equivalent accessible name.
+- The component announces a completed selection when focus enters the field, after a calendar selection, and announces the current calendar month, year, or year range after previous/next navigation.
+- Press `Alt`+`ArrowDown`, or Tab to the calendar icon and press `Enter` or `Space`, to open the panel. Calendar-trigger activation moves focus into its active date cell; the arrow keys navigate calendar cells and `Escape` closes the panel.
+- Clicking the segmented field opens the calendar while keeping segment focus. Clicking the calendar icon opens the panel and moves focus into it. Selecting a value from the panel returns focus to the first segment.
+- Calendar days and months expose localized full names to assistive technology. Always provide a visible label through the `label` slot so the field and calendar dialog have a programmatic name.
 - Validation states should never rely on color alone. Pair `validationStatus` with visible error text so screen reader users receive the same feedback as sighted users.
 - Keep `locale`, `first-day-of-week`, and display formatting aligned with user expectations so typed input and visible values remain understandable for all users.
 
@@ -1670,7 +1670,7 @@ Use numeric `formatOptions` to set the mask's field order and separators. The co
 | `firstDayOfWeek` | `first-day-of-week` | First day of the week where Sunday is `0` | `0 \| 1 \| 2 \| 3 \| 4 \| 5 \| 6` | `1` |
 | `form` | `form` | ID of the form the input belongs to | `string` | `undefined` |
 | `formValidationMessage` | `form-validation-message` | Native validation message used for required, invalid typed, and out-of-bounds values | `string` | `undefined` |
-| `formatOptions` | *(property only)* | Numeric `Intl.DateTimeFormat` options that control input-mask order and separators. Textual or variable-length options fall back to the locale numeric mask with a development warning. | `DateTimeFormatOptions` | `undefined` |
+| `formatOptions` | *(property only)* | Numeric `Intl.DateTimeFormat` options that control segment order and separators. Textual or variable-length options fall back to the locale numeric layout with a development warning. | `DateTimeFormatOptions` | `undefined` |
 | `initialView` | `initial-view` | Starting view when `precision` is `"day"`; month and year precision always open in their matching view | `"days" \| "months" \| "years"` | `"days"` |
 | `isDateDisallowed` | *(property only)* | Function used to disable specific dates | `(date: Date) => boolean` | `undefined` |
 | `locale` | `locale` | Locale used to format and parse dates | `Intl.LocalesArgument` | `"en-GB"` |
@@ -1681,7 +1681,7 @@ Use numeric `formatOptions` to set the mask's field order and separators. The co
 | `name` | `name` | Name of the underlying input | `string` | `undefined` |
 | `open` | `open` | If `true`, the calendar panel is visible | `boolean` | `false` |
 | `panelHeight` | `panel-height` | Overrides the panel height | `string` | `"auto"` |
-| `placeholder` | `placeholder` | Legacy placeholder text. The locale-derived mask is shown instead. | `string` | `undefined` |
+| `placeholder` | `placeholder` | **Deprecated.** Locale-derived segment format hints always describe the expected entry layout, so this value no longer changes the rendered field. | `string` | `undefined` |
 | `placement` | `placement` | Position of the calendar panel | `"top" \| "top-start" \| "top-end" \| "right" \| "right-start" \| "right-end" \| "bottom" \| "bottom-start" \| "bottom-end" \| "left" \| "left-start" \| "left-end"` | `"bottom-end"` |
 | `precision` | `precision` | Granularity of the committed value (`day` → `YYYY-MM-DD`, `month` → `YYYY-MM`, `year` → `YYYY`) | `"day" \| "month" \| "year"` | `"day"` |
 | `required` | `required` | Marks the date picker as required | `boolean` | `false` |
@@ -1697,7 +1697,7 @@ Use numeric `formatOptions` to set the mask's field order and separators. The co
 | Event | Description | Type |
 |---|---|---|
 | `bqBlur` | Fired when the input loses focus | `CustomEvent<HTMLBqDatePickerElement>` |
-| `bqChange` | Fired when the input value changes after typing, pasting, or selecting a date | `CustomEvent<{ value: string \| undefined; el: HTMLBqDatePickerElement }>` |
+| `bqChange` | Fired when the value changes after segment entry or calendar selection | `CustomEvent<{ value: string \| undefined; el: HTMLBqDatePickerElement }>` |
 | `bqClear` | Fired when the value is cleared | `CustomEvent<HTMLBqDatePickerElement>` |
 | `bqFocus` | Fired when the input receives focus | `CustomEvent<HTMLBqDatePickerElement>` |
 | `bqViewChange` | Fired when the calendar view switches between days/months/years | `CustomEvent<{ view: "days" \| "months" \| "years"; el: HTMLBqDatePickerElement }>` |
@@ -1732,7 +1732,9 @@ Use numeric `formatOptions` to set the mask's field order and separators. The co
 | `control` | Input control wrapper |
 | `prefix` | Prefix slot container |
 | `suffix` | Suffix slot container |
-| `input` | Native input element |
+| `input` | Segmented date field group |
+| `segment` | Editable day, month, or year segment |
+| `segment-literal` | Locale-derived separator between date segments |
 | `clear-btn` | Clear button |
 | `calendar-trigger` | Calendar icon trigger button |
 | `button` | Any button rendered inside the calendar (nav or day/month/year cell) |
