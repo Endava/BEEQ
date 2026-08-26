@@ -743,10 +743,10 @@ export class BqDatePicker {
     const segment = getDateSegment(this.segmentGroups, key);
     if (!segment) return true;
     if (segment.value.length !== segment.maxLength) {
-      this.segmentGroups = updateDateSegment(this.segmentGroups, key, this.getCurrentSegmentValue(segment.field));
-      this.syncSegmentDraftValue();
-      this.activeSegment = key;
-      this.focusSegment(key);
+      this.applySegmentDraftUpdate(
+        updateDateSegment(this.segmentGroups, key, this.getCurrentSegmentValue(segment.field)),
+        key,
+      );
       return true;
     }
 
@@ -759,21 +759,23 @@ export class BqDatePicker {
     const group = nextGroups.find((item) => item.id === key.groupId);
     const iso = group ? getDateSegmentGroupValue(group, this.precision) : undefined;
     if (!iso) {
-      this.segmentGroups = nextGroups;
-      this.syncSegmentDraftValue();
-      this.activeSegment = key;
-      this.focusSegment(key);
+      this.applySegmentDraftUpdate(nextGroups, key);
       return true;
     }
     const date = iso ? parseValue(iso, 'single', this.precision)[0] : undefined;
     const parsed = date ? parseISO(date) : undefined;
     if (!parsed || !isWithinBounds(parsed, this.min, this.max) || this.isDateDisallowed?.(parsed)) return true;
 
-    this.segmentGroups = nextGroups;
+    this.applySegmentDraftUpdate(nextGroups, key);
+    return true;
+  };
+
+  /** Applies a draft update and restores focus to the segment that initiated it. */
+  private applySegmentDraftUpdate = (groups: TDateSegmentGroup[], key: TDateSegmentKey): void => {
+    this.segmentGroups = groups;
     this.syncSegmentDraftValue();
     this.activeSegment = key;
     this.focusSegment(key);
-    return true;
   };
 
   /** Returns today's value for the requested date field, preserving its fixed segment width. */
