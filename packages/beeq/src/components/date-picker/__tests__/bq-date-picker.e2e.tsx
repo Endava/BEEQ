@@ -22,6 +22,12 @@ const getSegmentFields = (datePicker: HTMLBqDatePickerElement, groupId = 0) =>
 const getSegmentGroup = (datePicker: HTMLBqDatePickerElement, groupId = 0) =>
   datePicker.shadowRoot?.querySelectorAll<HTMLElement>('.bq-date-picker__segment-group')[groupId];
 
+const expectSegmentsAriaInvalid = (datePicker: HTMLBqDatePickerElement, value: 'true' | 'false'): void => {
+  for (const field of ['day', 'month', 'year'] as const) {
+    expect(getSegment(datePicker, field)).toEqualAttribute('aria-invalid', value);
+  }
+};
+
 const typeSegment = async (
   datePicker: HTMLBqDatePickerElement,
   field: 'day' | 'month' | 'year',
@@ -488,17 +494,15 @@ describe('bq-date-picker', () => {
     expect(datePicker.value).toBe('2026-05-30');
   });
 
-  it('should apply validation status classes and aria-invalid', async () => {
+  it('should apply validation status classes and mark date segments invalid', async () => {
     const { root } = await render(<bq-date-picker name="date-picker" type="single" validationStatus="error" />);
     const datePicker = root as HTMLBqDatePickerElement;
 
     await waitForStable(root);
 
     const control = root.shadowRoot?.querySelector('[part="control"]');
-    const input = getSegmentContainer(datePicker);
-
     expect(control).toHaveClass('validation-error');
-    expect(input).toEqualAttribute('aria-invalid', 'true');
+    expectSegmentsAriaInvalid(datePicker, 'true');
   });
 
   it('should warn and fall back to the default for invalid enum props', async () => {
@@ -1941,7 +1945,7 @@ describe('bq-date-picker', () => {
     // Value is preserved; the picker exposes invalidity via the `:state(invalid)` flag.
     expect(datePicker.value).toBe('2026-01-15');
     expect(datePicker.matches(':state(invalid)')).toBe(true);
-    expect(getSegmentContainer(datePicker)).toEqualAttribute('aria-invalid', 'true');
+    expectSegmentsAriaInvalid(datePicker, 'true');
   });
 
   it('should not stay invalid once value is brought back within bounds', async () => {
@@ -1991,7 +1995,7 @@ describe('bq-date-picker', () => {
     await waitForChanges();
 
     expect(datePicker.matches(':state(invalid)')).toBe(true);
-    expect(getSegmentContainer(datePicker)).toEqualAttribute('aria-invalid', 'true');
+    expectSegmentsAriaInvalid(datePicker, 'true');
   });
 
   it('should expose the custom `formValidationMessage` for bounds errors', async () => {
@@ -2035,7 +2039,7 @@ describe('bq-date-picker', () => {
 
     expect(datePicker.value).toBe('2026-06-15');
     expect(datePicker.matches(':state(invalid)')).toBe(false);
-    expect(getSegmentContainer(datePicker)).toEqualAttribute('aria-invalid', 'false');
+    expectSegmentsAriaInvalid(datePicker, 'false');
   });
 
   it('should clear the `badInput` flag after selecting a valid date from the calendar', async () => {
@@ -2054,7 +2058,7 @@ describe('bq-date-picker', () => {
 
     expect(datePicker.value).toBe('2026-05-20');
     expect(datePicker.matches(':state(invalid)')).toBe(false);
-    expect(getSegmentContainer(datePicker)).toEqualAttribute('aria-invalid', 'false');
+    expectSegmentsAriaInvalid(datePicker, 'false');
   });
 
   it('should clear the `badInput` flag after an external valid value update', async () => {
@@ -2072,7 +2076,7 @@ describe('bq-date-picker', () => {
 
     expect(datePicker.value).toBe('2026-06-15');
     expect(datePicker.matches(':state(invalid)')).toBe(false);
-    expect(getSegmentContainer(datePicker)).toEqualAttribute('aria-invalid', 'false');
+    expectSegmentsAriaInvalid(datePicker, 'false');
   });
 
   it('should keep `rangeUnderflow` when `required` is toggled after a bad value is set', async () => {
