@@ -706,6 +706,8 @@ export class BqDatePicker {
   private handleSegmentKeyDown = (ev: KeyboardEvent, key: TDateSegmentKey): void => {
     if (this.disabled) return;
 
+    ev.stopPropagation();
+
     if (this.handleSegmentPopupShortcut(ev)) return;
     if (this.handleSegmentNavigation(ev, key)) return;
     if (this.handleSegmentDeletion(ev, key)) return;
@@ -732,10 +734,14 @@ export class BqDatePicker {
     ev.preventDefault();
 
     const group = this.segmentGroups.find((item) => item.id === key.groupId);
-    const next =
-      ev.key === 'Home' || ev.key === 'End'
-        ? getDateSegmentGroupBoundaryKey(group, ev.key === 'Home' ? 'start' : 'end')
-        : getAdjacentSegmentKey(this.segmentGroups, key, ev.key === 'ArrowLeft' ? -1 : 1);
+    let next: TDateSegmentKey | undefined;
+    if (ev.key === 'Home' || ev.key === 'End') {
+      const boundary = ev.key === 'Home' ? 'start' : 'end';
+      next = getDateSegmentGroupBoundaryKey(group, boundary);
+    } else {
+      const direction = ev.key === 'ArrowLeft' ? -1 : 1;
+      next = getAdjacentSegmentKey(this.segmentGroups, key, direction);
+    }
     if (!next) return true;
 
     this.activeSegment = next;
@@ -1646,9 +1652,18 @@ export class BqDatePicker {
     return getNextLabel(this.view);
   };
 
-  private getSegmentLabel = (key: TDateSegmentKey): string =>
-    // Builds the accessible name that identifies a date field and its range endpoint.
-    `${this.type === 'range' ? (key.groupId === 0 ? 'Start date ' : 'End date ') : ''}${key.field}`;
+  /** Builds the accessible name that identifies a date field and its range endpoint. */
+  private getSegmentLabel = (key: TDateSegmentKey): string => {
+    const groupLabel = this.type === 'range' ? this.getSegmentGroupLabel(key.groupId) : undefined;
+    return `${groupLabel ? `${groupLabel} ` : ''}${key.field}`;
+  };
+
+  /** Returns the maximum numeric value accepted by a date segment. */
+  private getSegmentMaxValue = (field: TDateSegmentKey['field']): number => {
+    if (field === 'day') return 31;
+    if (field === 'month') return 12;
+    return 9999;
+  };
 
   /** Builds the accessible name for a complete locale-ordered date group. */
   private getSegmentGroupLabel = (groupId: number): string => {
@@ -1760,7 +1775,7 @@ export class BqDatePicker {
     const segment = group.segments[index];
     const key = { groupId: group.id, field: segment.field };
     const isActive = this.activeSegment?.groupId === key.groupId && this.activeSegment.field === key.field;
-    const maxValue = segment.field === 'day' ? 31 : segment.field === 'month' ? 12 : 9999;
+    const maxValue = this.getSegmentMaxValue(segment.field);
     const numericValue = Number(segment.value);
     const valueNow =
       segment.value.length === segment.maxLength && numericValue >= 1 && numericValue <= maxValue
@@ -1844,7 +1859,10 @@ export class BqDatePicker {
         <label
           class={{ 'bq-date-picker__label': true, 'is-hidden': !this.hasLabel }}
           htmlFor={this.name || DEFAULT_INPUT_ID}
-          onClick={this.handleLabelClick}
+          onClick={
+            this
+              .handleLabelClick /* NOSONAR: Native labels are pointer-activated; keyboard focus enters the roving spinbuttons directly. */
+          }
           part={CALENDAR_PARTS.label}
           ref={(labelElem) => {
             this.labelElem = labelElem;
@@ -1864,8 +1882,8 @@ export class BqDatePicker {
           skidding={this.skidding}
           strategy={this.strategy}
         >
-          {/* biome-ignore lint/a11y/noStaticElementInteractions: pointer handling delegates to the roving-focus segment group */}
           <div
+            aria-label="Date picker"
             class={{
               'bq-date-picker__control': true,
               [`validation-${this.validationStatus}`]: true,
@@ -1875,6 +1893,7 @@ export class BqDatePicker {
             onClick={this.handleControlClick}
             onKeyDown={(ev) => ev.stopPropagation()}
             part={CALENDAR_PARTS.control}
+            role="group"
             slot="trigger"
           >
             <span
@@ -1890,11 +1909,8 @@ export class BqDatePicker {
             <div
               aria-describedby={maskDescriptionId}
               aria-disabled={this.disabled ? 'true' : 'false'}
-              aria-invalid={this.validationStatus === 'error' || this.hasConstraintError ? 'true' : 'false'}
               aria-labelledby={this.hasLabel ? labelId : undefined}
               class="bq-date-picker__segments"
-              onClick={this.handleSegmentsClick}
-              onKeyDown={(ev) => ev.stopPropagation()}
               part={CALENDAR_PARTS.input}
               ref={(el) => {
                 this.segmentContainerElem = el;

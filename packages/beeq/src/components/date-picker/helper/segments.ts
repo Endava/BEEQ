@@ -23,6 +23,18 @@ export type TDateSegmentKey = {
 };
 
 /**
+ * Returns the inclusive numeric range for a date segment.
+ *
+ * @param field Date field whose range is requested.
+ * @returns The minimum and maximum values accepted by the field.
+ */
+const getSegmentValueRange = (field: TDateMaskField): readonly [number, number] => {
+  if (field === 'day') return [1, 31];
+  if (field === 'month') return [1, 12];
+  return [1, 9999];
+};
+
+/**
  * Extracts the numeric date fields from a full ISO date.
  *
  * @param iso Full `YYYY-MM-DD` ISO date.
@@ -174,7 +186,7 @@ export const getNextAvailableDateSegmentGroups = (
   const segment = getDateSegment(groups, key);
   if (!segment) return undefined;
 
-  const [min, max] = segment.field === 'day' ? [1, 31] : segment.field === 'month' ? [1, 12] : [1, 9999];
+  const [min, max] = getSegmentValueRange(segment.field);
   for (
     let candidate = Number(segment.value) + direction;
     candidate >= min && candidate <= max;
@@ -206,7 +218,7 @@ export const getNextPartialDateSegmentGroups = (
   const segment = getDateSegment(groups, key);
   if (!segment) return undefined;
 
-  const [min, max] = segment.field === 'day' ? [1, 31] : segment.field === 'month' ? [1, 12] : [1, 9999];
+  const [min, max] = getSegmentValueRange(segment.field);
   const candidate = Number(segment.value) + direction;
   if (candidate < min || candidate > max) return undefined;
 

@@ -4,10 +4,7 @@ import { getDateMask, isDateMaskFormatOptionsCompatible } from '../date';
 
 describe(isDateMaskFormatOptionsCompatible.name, () => {
   it('should accept numeric options that include every day-precision field', () => {
-    const result = isDateMaskFormatOptionsCompatible(
-      { day: '2-digit', month: 'numeric', year: 'numeric' },
-      'day',
-    );
+    const result = isDateMaskFormatOptionsCompatible({ day: '2-digit', month: 'numeric', year: 'numeric' }, 'day');
 
     expect(result).toBe(true);
   });
@@ -19,10 +16,7 @@ describe(isDateMaskFormatOptionsCompatible.name, () => {
   });
 
   it('should reject options that produce textual month names', () => {
-    const result = isDateMaskFormatOptionsCompatible(
-      { day: 'numeric', month: 'long', year: 'numeric' },
-      'day',
-    );
+    const result = isDateMaskFormatOptionsCompatible({ day: 'numeric', month: 'long', year: 'numeric' }, 'day');
 
     expect(result).toBe(false);
   });
