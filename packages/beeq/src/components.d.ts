@@ -723,16 +723,16 @@ export namespace Components {
     }
     /**
      * The Date Picker is a pure-Stencil calendar input.
-     * It supports single, multi, and range selection, three navigation views
-     * (days → months → years), full localization via `Intl.DateTimeFormat`,
-     * multi-month side-by-side rendering, and RTL layouts.
+     * It supports single, multi, and range selection through locale-ordered,
+     * keyboard-editable date segments or a calendar panel. It also provides three
+     * navigation views (days → months → years), full localization via
+     * `Intl.DateTimeFormat`, multi-month side-by-side rendering, and RTL layouts.
      * @example How to use it
      * ```html
      * <bq-date-picker
      * first-day-of-week="1"
      * locale="en-GB"
      * name="bq-date-picker"
-     * placeholder="Enter your date"
      * type="single"
      * value="2026-07-15"
      * >
@@ -764,7 +764,7 @@ export namespace Components {
      * @attr {string} name - Input name.
      * @attr {boolean} open - If `true`, the panel is visible.
      * @attr {string} panel-height - Overrides the height of the panel.
-     * @attr {string} placeholder - Input placeholder text.
+     * @attr {string} placeholder - Deprecated. Locale-derived segment format hints always describe the expected entry layout instead.
      * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Placement of the panel.
      * @attr {boolean} required - Whether a value must be selected before submitting the form.
      * @attr {boolean} show-outside-days - Whether to render days that belong to adjacent months.
@@ -865,7 +865,7 @@ export namespace Components {
          */
         "formValidationMessage"?: string;
         /**
-          * Options used when formatting the displayed value.  When omitted, sensible defaults are picked based on `precision`: - `day`   → `{ day: 'numeric', month: 'short', year: 'numeric' }` - `month` → `{ month: 'long', year: 'numeric' }` - `year`  → `{ year: 'numeric' }`
+          * Numeric options used to derive the input mask's field order and separators.  The options must contain numeric or two-digit day/month fields and a numeric year. Textual or variable-length fields fall back to the locale numeric mask and emit a development warning.
          */
         "formatOptions"?: Intl.DateTimeFormatOptions;
         /**
@@ -915,7 +915,7 @@ export namespace Components {
          */
         "panelHeight"?: string;
         /**
-          * Placeholder text shown when no value is selected.
+          * @deprecated Locale-derived segment format hints always describe the expected entry layout, so this value no longer changes the rendered field.
          */
         "placeholder"?: string;
         /**
@@ -3850,16 +3850,16 @@ declare global {
     }
     /**
      * The Date Picker is a pure-Stencil calendar input.
-     * It supports single, multi, and range selection, three navigation views
-     * (days → months → years), full localization via `Intl.DateTimeFormat`,
-     * multi-month side-by-side rendering, and RTL layouts.
+     * It supports single, multi, and range selection through locale-ordered,
+     * keyboard-editable date segments or a calendar panel. It also provides three
+     * navigation views (days → months → years), full localization via
+     * `Intl.DateTimeFormat`, multi-month side-by-side rendering, and RTL layouts.
      * @example How to use it
      * ```html
      * <bq-date-picker
      * first-day-of-week="1"
      * locale="en-GB"
      * name="bq-date-picker"
-     * placeholder="Enter your date"
      * type="single"
      * value="2026-07-15"
      * >
@@ -3891,7 +3891,7 @@ declare global {
      * @attr {string} name - Input name.
      * @attr {boolean} open - If `true`, the panel is visible.
      * @attr {string} panel-height - Overrides the height of the panel.
-     * @attr {string} placeholder - Input placeholder text.
+     * @attr {string} placeholder - Deprecated. Locale-derived segment format hints always describe the expected entry layout instead.
      * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Placement of the panel.
      * @attr {boolean} required - Whether a value must be selected before submitting the form.
      * @attr {boolean} show-outside-days - Whether to render days that belong to adjacent months.
@@ -5484,7 +5484,7 @@ declare global {
     }
 }
 declare namespace LocalJSX {
-    type OneOf<K extends string, PropT, AttrT = PropT> = { [P in K]: PropT } & { [P in `attr:${K}` | `prop:${K}`]?: never } | { [P in `attr:${K}`]: AttrT } & { [P in K | `prop:${K}`]?: never } | { [P in `prop:${K}`]: PropT } & { [P in K | `attr:${K}`]?: never };
+    type OneOf<K extends string, PropT, AttrT = PropT> = { [P in K]: PropT } & { [P in `attr:${K}`]?: never } | { [P in `attr:${K}`]: AttrT } & { [P in K]?: never };
 
     /**
      * The Accordion is a UI component that allows users to toggle between showing and hiding content sections. It provides a collapsible functionality, where only one section can be expanded at a time, while the others remain collapsed.
@@ -6217,16 +6217,16 @@ declare namespace LocalJSX {
     }
     /**
      * The Date Picker is a pure-Stencil calendar input.
-     * It supports single, multi, and range selection, three navigation views
-     * (days → months → years), full localization via `Intl.DateTimeFormat`,
-     * multi-month side-by-side rendering, and RTL layouts.
+     * It supports single, multi, and range selection through locale-ordered,
+     * keyboard-editable date segments or a calendar panel. It also provides three
+     * navigation views (days → months → years), full localization via
+     * `Intl.DateTimeFormat`, multi-month side-by-side rendering, and RTL layouts.
      * @example How to use it
      * ```html
      * <bq-date-picker
      * first-day-of-week="1"
      * locale="en-GB"
      * name="bq-date-picker"
-     * placeholder="Enter your date"
      * type="single"
      * value="2026-07-15"
      * >
@@ -6258,7 +6258,7 @@ declare namespace LocalJSX {
      * @attr {string} name - Input name.
      * @attr {boolean} open - If `true`, the panel is visible.
      * @attr {string} panel-height - Overrides the height of the panel.
-     * @attr {string} placeholder - Input placeholder text.
+     * @attr {string} placeholder - Deprecated. Locale-derived segment format hints always describe the expected entry layout instead.
      * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Placement of the panel.
      * @attr {boolean} required - Whether a value must be selected before submitting the form.
      * @attr {boolean} show-outside-days - Whether to render days that belong to adjacent months.
@@ -6354,7 +6354,7 @@ declare namespace LocalJSX {
          */
         "formValidationMessage"?: string;
         /**
-          * Options used when formatting the displayed value.  When omitted, sensible defaults are picked based on `precision`: - `day`   → `{ day: 'numeric', month: 'short', year: 'numeric' }` - `month` → `{ month: 'long', year: 'numeric' }` - `year`  → `{ year: 'numeric' }`
+          * Numeric options used to derive the input mask's field order and separators.  The options must contain numeric or two-digit day/month fields and a numeric year. Textual or variable-length fields fall back to the locale numeric mask and emit a development warning.
          */
         "formatOptions"?: Intl.DateTimeFormatOptions;
         /**
@@ -6424,7 +6424,7 @@ declare namespace LocalJSX {
          */
         "panelHeight"?: string;
         /**
-          * Placeholder text shown when no value is selected.
+          * @deprecated Locale-derived segment format hints always describe the expected entry layout, so this value no longer changes the rendered field.
          */
         "placeholder"?: string;
         /**
@@ -9740,16 +9740,16 @@ declare module "@stencil/core" {
             "bq-checkbox": LocalJSX.IntrinsicElements["bq-checkbox"] & JSXBase.HTMLAttributes<HTMLBqCheckboxElement>;
             /**
              * The Date Picker is a pure-Stencil calendar input.
-             * It supports single, multi, and range selection, three navigation views
-             * (days → months → years), full localization via `Intl.DateTimeFormat`,
-             * multi-month side-by-side rendering, and RTL layouts.
+             * It supports single, multi, and range selection through locale-ordered,
+             * keyboard-editable date segments or a calendar panel. It also provides three
+             * navigation views (days → months → years), full localization via
+             * `Intl.DateTimeFormat`, multi-month side-by-side rendering, and RTL layouts.
              * @example How to use it
              * ```html
              * <bq-date-picker
              * first-day-of-week="1"
              * locale="en-GB"
              * name="bq-date-picker"
-             * placeholder="Enter your date"
              * type="single"
              * value="2026-07-15"
              * >
@@ -9781,7 +9781,7 @@ declare module "@stencil/core" {
              * @attr {string} name - Input name.
              * @attr {boolean} open - If `true`, the panel is visible.
              * @attr {string} panel-height - Overrides the height of the panel.
-             * @attr {string} placeholder - Input placeholder text.
+             * @attr {string} placeholder - Deprecated. Locale-derived segment format hints always describe the expected entry layout instead.
              * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Placement of the panel.
              * @attr {boolean} required - Whether a value must be selected before submitting the form.
              * @attr {boolean} show-outside-days - Whether to render days that belong to adjacent months.
