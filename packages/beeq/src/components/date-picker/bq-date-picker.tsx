@@ -1655,7 +1655,9 @@ export class BqDatePicker {
   /** Builds the accessible name that identifies a date field and its range endpoint. */
   private getSegmentLabel = (key: TDateSegmentKey): string => {
     const groupLabel = this.type === 'range' ? this.getSegmentGroupLabel(key.groupId) : undefined;
-    return `${groupLabel ? `${groupLabel} ` : ''}${key.field}`;
+    if (!groupLabel) return key.field;
+
+    return `${groupLabel} ${key.field}`;
   };
 
   /** Returns the maximum numeric value accepted by a date segment. */
