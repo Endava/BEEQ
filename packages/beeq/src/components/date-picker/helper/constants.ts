@@ -25,6 +25,8 @@ export const CALENDAR_PARTS = {
   prefix: 'prefix',
   suffix: 'suffix',
   input: 'input',
+  segment: 'segment',
+  segmentLiteral: 'segment-literal',
   clearBtn: 'clear-btn',
   button: 'button',
   panel: 'panel',
