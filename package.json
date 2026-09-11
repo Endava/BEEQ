@@ -136,9 +136,9 @@
     "node": ">=22.0.0",
     "pnpm": ">=11.0.0"
   },
-  "packageManager": "pnpm@11.13.1",
+  "packageManager": "pnpm@12.4.0",
   "volta": {
     "node": "24.16.0",
-    "pnpm": "11.13.1"
+    "pnpm": "12.4.0"
   }
 }
