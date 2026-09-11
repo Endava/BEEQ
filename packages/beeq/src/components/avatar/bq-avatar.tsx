@@ -38,6 +38,7 @@ import { AVATAR_SHAPE, AVATAR_SIZE } from './bq-avatar.types';
  * @part text - The `<span>` tag element that rendered the `Initials` text string.
  * @part badge - The container that wraps the badge slot element.
  *
+ * @cssprop --bq-avatar-background - Deprecated, use --bq-avatar--background instead.
  * @cssprop --bq-avatar--background - Avatar background color
  *
  * @cssprop --bq-avatar--border-color - Avatar border color
@@ -68,7 +69,7 @@ export class BqAvatar {
   // Own Properties
   // ====================
 
-  trimmedInitials: string;
+  private trimmedInitials?: string;
 
   // Reference to host HTML element
   // ===================================
@@ -79,22 +80,22 @@ export class BqAvatar {
   // Inlined decorator, alphabetical order
   // =======================================
 
-  @State() hasError: boolean;
+  @State() hasError: boolean = false;
 
   // Public Property API
   // ========================
 
   /** Alternate text for the avatar image if the image cannot be displayed */
-  @Prop({ reflect: true }) altText: string;
+  @Prop({ reflect: true }) altText?: string;
 
   /** The image source to load on the avatar (this can be also a base64 encoded image) */
-  @Prop({ reflect: true }) image: string;
+  @Prop({ reflect: true }) image?: string;
 
   /** A text to use for describing the avatar on assistive devices */
-  @Prop({ reflect: true }) label: string;
+  @Prop({ reflect: true }) label?: string;
 
   /** The text to display on avatar */
-  @Prop({ reflect: true }) initials: string;
+  @Prop({ reflect: true }) initials?: string;
 
   /** The shape of the avatar */
   @Prop({ reflect: true }) shape: TAvatarShape = 'circle';
@@ -157,24 +158,18 @@ export class BqAvatar {
   };
 
   private trimInitialsBasedOnSize = (): void => {
-    if (!this.initials) return;
-
-    AVATAR_SIZE.forEach((size: TAvatarSize) => {
-      if (this.size === size) {
-        this.trimmedInitials = this.initials.substring(0, this.getIndex(size));
-      }
-    });
+    const maxLength = this.getIndex[this.size] ?? this.getIndex.xsmall;
+    this.trimmedInitials = this.initials?.substring(0, maxLength);
   };
 
-  private getIndex = (size: TAvatarSize): number => {
-    const sizeIndexMap = {
+  private get getIndex(): { [Key in TAvatarSize]: number } {
+    return {
       xsmall: 1,
       small: 2,
       medium: 3,
       large: 4,
     };
-    return sizeIndexMap[size] ?? sizeIndexMap.xsmall;
-  };
+  }
 
   // render() function
   // Always the last one in the class.
@@ -183,46 +178,17 @@ export class BqAvatar {
   render() {
     return (
       <Host>
-        <div
-          aria-label={this.label}
-          class={{
-            'bq-avatar': true,
-            [`size--${this.size}`]: true,
-            'rounded-[--bq-avatar--border-radius-circle]': this.shape === 'circle',
-            'rounded-[--bq-avatar--border-radius-squareXs]': this.shape === 'square' && this.size === 'xsmall',
-            'rounded-[--bq-avatar--border-radius-squareS]': this.shape === 'square' && this.size === 'small',
-            'rounded-[--bq-avatar--border-radius-squareM]':
-              this.shape === 'square' && (this.size === 'medium' || this.size === 'large'),
-          }}
-          part="base"
-          role="img"
-        >
+        <div class="bq-avatar" aria-label={this.label} part="base" role="img">
           {this.initials && (
-            <span
-              class="bs-full is-full absolute inset-bs-0 start-0 inline-flex items-center justify-center font-bold text-primary"
-              part="text"
-            >
+            <span class="bq-avatar__text" part="text">
               {this.trimmedInitials}
             </span>
           )}
           {this.image && !this.hasError && (
-            <img
-              alt={this.altText ?? undefined}
-              class="bs-full is-full absolute inset-bs-0 start-0 object-cover"
-              onError={this.onImageError}
-              part="img"
-              src={this.image}
-            />
+            <img alt={this.altText} class="bq-avatar__image" onError={this.onImageError} part="img" src={this.image} />
           )}
         </div>
-        <div
-          class={{
-            'absolute flex items-center justify-center': true,
-            'inset-bs-[--bq-avatar--badge-top-square] start-[--bq-avatar--badge-left-square]': this.shape === 'square',
-            'inset-bs-[--bq-avatar--badge-top-circle] start-[--bq-avatar--badge-left-circle]': this.shape === 'circle',
-          }}
-          part="badge"
-        >
+        <div class="bq-avatar__badge" part="badge">
           <slot name="badge"></slot>
         </div>
       </Host>

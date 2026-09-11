@@ -1,10 +1,10 @@
 /* -------------------------------------------------------------------------- */
-/*                          Accordion group custom properties           */
+/*                    Accordion Group Custom Properties                       */
 /* -------------------------------------------------------------------------- */
 
 :host {
   /**
    * @prop --bq-accordion-group--gap: Accordion group distance between elements
   */
-  --bq-accordion-group--gap: theme(spacing.xs);
+  --bq-accordion-group--gap: var(--bq-spacing-xs);
 }

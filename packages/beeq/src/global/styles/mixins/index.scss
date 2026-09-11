@@ -2,5 +2,10 @@
  * The mixins are imported via the globalStyle option in the stencil.config.ts file.
  * @see packages/beeq/stencil.config.ts
  */
+@import './color-mix';
+@import './focus-ring';
 @import './keyframes';
+@import './logical';
 @import './scrollbar';
+@import './typography';
+@import './visibility';

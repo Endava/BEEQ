@@ -2,187 +2,235 @@
 /*                                Button styles                               */
 /* -------------------------------------------------------------------------- */
 
-@import './bq-button.variables';
+@layer bq.reset, bq.tokens, bq.themes, bq.base, bq.public, bq.overrides,
+  bq-button.tokens, bq-button.base, bq-button.structure, bq-button.variants, bq-button.states, bq-button.parts;
 
-@layer components {
-  // Common button base style
+@layer bq-button.tokens {
+  @import './bq-button.variables';
+}
+
+/* ---------------------------------- Host ---------------------------------- */
+
+@layer bq-button.base {
+  :host {
+    --_button-background-color: transparent;
+    --_button-border-color: var(--bq-button--border-color);
+    --_button-color: var(--bq-text--primary);
+    --_button-hover-background-color: transparent;
+    --_button-active-background-color: transparent;
+
+    position: relative;
+    display: inline-block;
+    inline-size: auto;
+    border-radius: var(--bq-button--border-radius);
+  }
+
+  :host([block]) {
+    inline-size: 100%;
+  }
+}
+
+/* ---------------------------------- Base ---------------------------------- */
+
+@layer bq-button.base {
   .bq-button {
-    @apply box-border flex cursor-[inherit] items-center justify-center font-medium leading-regular;
-    @apply rounded-[--bq-button--border-radius] border-solid border-[length:--bq-button--border-width] border-[color:--bq-button--border-color];
-    @apply transition-[background-color,border-color,color] duration-300 ease-in-out;
-    // Prevent text selection on click
-    @apply select-none;
-    // `DISABLED` state
-    @apply disabled:cursor-not-allowed disabled:opacity-60;
-    // `FOCUS` state
-    @apply focus-visible:focus;
-    // Internal workaround to allow overriding icon color via CSS variables from slotted bq-buttons
-    // @see: packages/beeq/src/components/side-menu/scss/bq-side-menu.scss
-    @apply [&_::slotted(bq-icon)]:[--bq-icon--color:_var(--bq-button--icon-color,_currentColor)];
-    // On hover, update the icon color if custom property is defined
-    &:hover:not(:disabled) ::slotted(bq-icon) {
-      --bq-icon--color: var(--bq-button-hover--icon-color, var(--bq-button--icon-color, currentColor));
-    }
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--_button-color);
+    font-weight: var(--bq-font-weight--medium);
+    line-height: var(--bq-font-line-height--regular);
+    user-select: none;
+    background-color: var(--_button-background-color);
+    border-color: var(--_button-border-color);
+    border-radius: var(--bq-button--border-radius);
+    border-style: var(--bq-button--border-style);
+    border-width: var(--bq-button--border-width);
+    cursor: inherit;
+    transition-timing-function: ease-in-out;
+    transition-duration: 300ms;
+    transition-property: background-color, border-color, color;
   }
 }
 
-:host {
-  @apply is-auto relative inline-block rounded-[--bq-button--border-radius];
-}
+/* ------------------------------- Structure -------------------------------- */
 
-:host([block]),
-.block {
-  @apply is-full;
-}
+@layer bq-button.structure {
+  .bq-button.block {
+    inline-size: 100%;
+  }
 
-/* -------------------------------------------------------------------------- */
-/*                                 Appearance                                 */
-/* -------------------------------------------------------------------------- */
+  .content-left {
+    justify-content: flex-start;
+  }
 
-.bq-button--primary {
-  @apply bg-ui-brand text-alt;
-  // Primary `HOVER` state
-  @apply hover:enabled:bg-hover-ui-brand;
-  // Primary `ACTIVE` state
-  @apply active:enabled:bg-active-ui-brand active:enabled:hover:bg-active-ui-brand;
-}
+  .content-right {
+    justify-content: flex-end;
+  }
 
-.bq-button--primary.ghost {
-  @apply [--bq-button--border-color:var(--bq-stroke--brand)] bg-transparent text-brand;
-  // Primary `HOVER` state
-  @apply hover:enabled:bg-hover-ui-primary;
-  // Primary `ACTIVE` state
-  @apply active:enabled:bg-active-ui-primary active:enabled:hover:bg-active-ui-primary;
-}
+  .bq-button__prefix,
+  .bq-button__suffix {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    pointer-events: none;
+  }
 
-.bq-button--primary.danger {
-  @apply bg-ui-danger text-alt;
-  // Primary `HOVER` state
-  @apply hover:enabled:bg-hover-ui-danger;
-  // Primary `ACTIVE` state
-  @apply active:enabled:bg-active-ui-danger active:enabled:hover:bg-active-ui-danger;
-}
+  .bq-button.has-prefix .bq-button__label {
+    padding-inline-start: var(--bq-spacing-xs2);
+  }
 
-.bq-button--secondary {
-  @apply bg-ui-secondary text-primary;
-  // Secondary `HOVER` state
-  @apply hover:enabled:bg-hover-ui-secondary;
-  // Secondary `ACTIVE` state
-  @apply active:enabled:bg-active-ui-secondary active:enabled:hover:bg-active-ui-secondary;
-}
-
-.bq-button--secondary.ghost {
-  @apply [--bq-button--border-color:var(--bq-stroke--tertiary)] bg-transparent text-primary;
-  // Secondary `HOVER` state
-  @apply hover:enabled:bg-hover-ui-secondary;
-  // Secondary `ACTIVE` state
-  @apply active:enabled:bg-active-ui-secondary active:enabled:hover:bg-active-ui-secondary;
-}
-
-.bq-button--link {
-  @apply cursor-pointer bg-transparent text-brand no-underline;
-  // Primary `HOVER` state
-  @apply [&:not(.disabled)]:hover:bg-hover-ui-primary;
-  // Primary `ACTIVE` state
-  @apply [&:not(.disabled)]:active:bg-active-ui-secondary [&:not(.disabled)]:active:hover:bg-active-ui-secondary;
-  // HTML `<a>` elements does not have a `disabled` state so we need to handle it manually
-  &.disabled {
-    @apply cursor-not-allowed opacity-60;
+  .bq-button.has-suffix .bq-button__label {
+    padding-inline-end: var(--bq-spacing-xs2);
   }
 }
 
-.bq-button--text {
-  @apply bg-transparent text-primary;
-  // Primary `HOVER` state
-  @apply hover:enabled:bg-hover-ui-primary;
-  // Primary `ACTIVE` state
-  @apply active:enabled:bg-active-ui-secondary active:enabled:hover:bg-active-ui-secondary;
-}
+/* -------------------------------- Variants -------------------------------- */
 
-/* -------------------------------------------------------------------------- */
-/*                                    Size                                    */
-/* -------------------------------------------------------------------------- */
+@layer bq-button.variants {
+  .bq-button--primary {
+    --_button-background-color: var(--bq-ui--brand);
+    --_button-color: var(--bq-text--alt);
+    --_button-hover-background-color: var(--bq-ui--brand);
+    --_button-active-background-color: var(--bq-ui--brand);
+  }
 
-.only-icon {
-  @apply aspect-square;
-}
+  .bq-button--primary.ghost {
+    --_button-background-color: transparent;
+    --_button-border-color: var(--bq-stroke--brand);
+    --_button-color: var(--bq-text--brand);
+    --_button-hover-background-color: var(--bq-ui--primary);
+    --_button-active-background-color: var(--bq-ui--primary);
+  }
 
-.small {
-  @apply text-[length:--bq-button--small-font-size] p-b-[--bq-button--small-paddingY] p-i-[--bq-button--small-paddingX];
+  .bq-button--primary.danger {
+    --_button-background-color: var(--bq-ui--danger);
+    --_button-color: var(--bq-text--alt);
+    --_button-hover-background-color: var(--bq-ui--danger);
+    --_button-active-background-color: var(--bq-ui--danger);
+  }
 
-  &.only-icon {
-    @apply p-[--bq-button--small-paddingY];
+  .bq-button--secondary {
+    --_button-background-color: var(--bq-ui--secondary);
+    --_button-color: var(--bq-text--primary);
+    --_button-hover-background-color: var(--bq-ui--secondary);
+    --_button-active-background-color: var(--bq-ui--secondary);
+  }
+
+  .bq-button--secondary.ghost {
+    --_button-background-color: transparent;
+    --_button-border-color: var(--bq-stroke--tertiary);
+    --_button-hover-background-color: var(--bq-ui--secondary);
+    --_button-active-background-color: var(--bq-ui--secondary);
+  }
+
+  .bq-button--link {
+    --_button-background-color: transparent;
+    --_button-color: var(--bq-text--brand);
+    --_button-hover-background-color: var(--bq-ui--primary);
+    --_button-active-background-color: var(--bq-ui--secondary);
+
+    cursor: pointer;
+    text-decoration-line: none;
+  }
+
+  .bq-button--text {
+    --_button-background-color: transparent;
+    --_button-color: var(--bq-text--primary);
+    --_button-hover-background-color: var(--bq-ui--primary);
+    --_button-active-background-color: var(--bq-ui--secondary);
+  }
+
+  .only-icon {
+    aspect-ratio: 1;
+  }
+
+  .small {
+    padding-block: var(--bq-button--small-paddingY);
+    padding-inline: var(--bq-button--small-paddingX);
+    font-size: var(--bq-button--small-font-size);
+  }
+
+  .small.only-icon {
+    padding-block: var(--bq-button--small-paddingY);
+    padding-inline: var(--bq-button--small-paddingY);
+  }
+
+  .medium {
+    padding-block: var(--bq-button--medium-paddingY);
+    padding-inline: var(--bq-button--medium-paddingX);
+    font-size: var(--bq-button--medium-font-size);
+  }
+
+  .medium.only-icon {
+    padding-block: var(--bq-button--medium-paddingY);
+    padding-inline: var(--bq-button--medium-paddingY);
+  }
+
+  .large {
+    padding-block: var(--bq-button--large-paddingY);
+    padding-inline: var(--bq-button--large-paddingX);
+    font-size: var(--bq-button--large-font-size);
+  }
+
+  .large.only-icon {
+    padding-block: var(--bq-button--large-paddingY);
+    padding-inline: var(--bq-button--large-paddingY);
   }
 }
 
-.medium {
-  @apply text-[length:--bq-button--medium-font-size] p-b-[--bq-button--medium-paddingY] p-i-[--bq-button--medium-paddingX];
+/* --------------------------------- States --------------------------------- */
 
-  &.only-icon {
-    @apply p-[--bq-button--medium-paddingY];
+@layer bq-button.states {
+  .bq-button:focus-visible {
+    @include bq-focus-ring;
+  }
+
+  .bq-button:not(:disabled, .disabled):hover {
+    @include bq-color-mix(background-color, var(--_button-hover-background-color), hover);
+  }
+
+  .bq-button:not(:disabled, .disabled):active {
+    @include bq-color-mix(background-color, var(--_button-active-background-color), active);
+  }
+
+  .bq-button:disabled,
+  .bq-button.disabled {
+    cursor: not-allowed;
+    opacity: var(--bq-disabled-opacity, 0.6);
+  }
+
+  .bq-button.loading {
+    position: relative;
+    cursor: wait;
+  }
+
+  .bq-button.loading .bq-button__prefix,
+  .bq-button.loading .bq-button__label,
+  .bq-button.loading .bq-button__suffix {
+    visibility: hidden;
   }
 }
 
-.large {
-  @apply text-[length:--bq-button--large-font-size] p-b-[--bq-button--large-paddingY] p-i-[--bq-button--large-paddingX];
+/* ---------------------------------- Parts --------------------------------- */
 
-  &.only-icon {
-    @apply p-[--bq-button--large-paddingY];
+@layer bq-button.parts {
+  .bq-button ::slotted(bq-icon) {
+    --bq-icon--color: var(--bq-button--icon-color, currentColor);
   }
-}
 
-/* -------------------------------------------------------------------------- */
-/*                                    Label                                   */
-/* -------------------------------------------------------------------------- */
+  .bq-button:hover:not(:disabled, .disabled) ::slotted(bq-icon) {
+    --bq-icon--color: var(--bq-button-hover--icon-color, var(--bq-button--icon-color, currentColor));
+  }
 
-.bq-button__label ::slotted(bq-icon) {
-  @apply flex;
-}
+  .bq-button__label ::slotted(bq-icon) {
+    display: flex;
+  }
 
-.content-left {
-  @apply justify-start;
-}
+  .bq-button__loader {
+    position: absolute;
 
-.content-right {
-  @apply justify-end;
-}
-
-/* -------------------------------------------------------------------------- */
-/*                           Prefix and Suffix slots                          */
-/* -------------------------------------------------------------------------- */
-
-.bq-button__prefix,
-.bq-button__suffix {
-  @apply pointer-events-none flex shrink-0 grow-0 basis-auto items-center;
-}
-
-.bq-button.has-prefix .bq-button__label {
-  @apply ps-xs2;
-}
-
-.bq-button.has-suffix .bq-button__label {
-  @apply pe-xs2;
-}
-
-/* -------------------------------------------------------------------------- */
-/*                                   Loading                                  */
-/* -------------------------------------------------------------------------- */
-
-.bq-button.loading {
-  @apply relative cursor-wait;
-}
-
-.bq-button.loading .bq-button__prefix,
-.bq-button.loading .bq-button__label,
-.bq-button.loading .bq-button__suffix {
-  @apply invisible;
-}
-
-/* -------------------------------------------------------------------------- */
-/*                                Spinner icon                                */
-/* -------------------------------------------------------------------------- */
-
-.bq-button__loader {
-  @include animation-spin;
-  @apply absolute;
+    @include animation-spin;
+  }
 }

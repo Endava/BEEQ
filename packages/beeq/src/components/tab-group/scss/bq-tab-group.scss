@@ -1,49 +1,80 @@
 /* -------------------------------------------------------------------------- */
-/*                                Tab styles                               */
+/*                              Tab group styles                              */
 /* -------------------------------------------------------------------------- */
 
+/* ---------------------------------- Host ---------------------------------- */
+
 :host {
-  @apply block;
+  display: block;
 }
+
+/* ---------------------------------- Base ---------------------------------- */
 
 .bq-tab-group {
-  @apply relative;
+  /* Divider defaults: horizontal orientation, block-end edge */
+  --_divider-block-size: var(--bq-stroke-s);
+  --_divider-inline-size: 100%;
+  --_divider-inset-block: auto 0;
+  --_divider-inset-inline: 0;
 
-  &::after {
-    @apply absolute flex border-0 border-solid border-primary content-empty;
-  }
-
-  &--horizontal-start,
-  &--horizontal-end {
-    &::after {
-      @apply is-full inset-be-0 [border-block-end-width:--bq-stroke-s];
-    }
-  }
-
-  &--horizontal-start {
-    @apply justify-start;
-  }
-
-  &--horizontal-end {
-    @apply justify-end;
-  }
-
-  &--vertical-start::after {
-    @apply end-0 bs-full is-0 [border-block-end-width:0px] [border-inline-end-width:--bq-stroke-s];
-  }
-
-  &--vertical-end::after {
-    @apply start-0 bs-full is-0 [border-block-end-width:0px] [border-inline-start-width:--bq-stroke-s];
-  }
+  position: relative;
+  display: flex;
+  inline-size: 100%;
 }
 
-.bq-tab-group.no-divider {
-  &::after {
-    @apply content-none;
-  }
+.bq-tab-group::after {
+  content: '';
+  position: absolute;
+  inset-block: var(--_divider-inset-block);
+  inset-inline: var(--_divider-inset-inline);
+  block-size: var(--_divider-block-size);
+  inline-size: var(--_divider-inline-size);
+  background-color: var(--bq-stroke--primary);
 }
 
-.bq-tab-group--container {
+/* ------------------------------- Structure -------------------------------- */
+
+.bq-tab-group__tabs {
   @include hide-scrollbar;
-  @apply gap-xs2 p-xs2; // This will avoid cutting the outline focus style
+
+  display: flex;
+  gap: var(--bq-spacing-xs2);
+  // Padding prevents the tab focus outline from being clipped by the container overflow.
+  padding: var(--bq-spacing-xs2);
+  overflow: auto hidden;
+}
+
+/* -------------------------------- Variants -------------------------------- */
+
+:host([orientation='vertical']) {
+  display: inline-block;
+}
+
+:host([orientation='horizontal'][placement='end']) .bq-tab-group {
+  justify-content: flex-end;
+}
+
+:host([orientation='vertical']) .bq-tab-group__tabs {
+  flex-direction: column;
+  overflow: hidden auto;
+}
+
+:host([orientation='vertical'][placement='start']) .bq-tab-group {
+  --_divider-block-size: 100%;
+  --_divider-inline-size: var(--bq-stroke-s);
+  --_divider-inset-block: 0;
+  --_divider-inset-inline: auto 0;
+}
+
+:host([orientation='vertical'][placement='end']) .bq-tab-group {
+  --_divider-block-size: 100%;
+  --_divider-inline-size: var(--bq-stroke-s);
+  --_divider-inset-block: 0;
+  --_divider-inset-inline: 0 auto;
+}
+
+/* --------------------------------- States --------------------------------- */
+
+:host([disable-divider]) .bq-tab-group::after {
+  content: none;
 }

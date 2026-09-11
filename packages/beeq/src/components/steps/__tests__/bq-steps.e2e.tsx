@@ -111,13 +111,15 @@ describe('bq-steps', () => {
     expect(step2.status).toBe('current');
   });
 
-  it('should apply vertical layout classes', async () => {
+  it('should reflect vertical orientation on the host', async () => {
     const { root } = await render(<bq-steps orientation="vertical" />);
+
+    await waitForStable(root);
 
     const container = root.shadowRoot?.querySelector('[part="container"]');
 
-    expect(container).toHaveClass('flex-col');
-    expect(container).toHaveClass('bs-full');
+    expect(root).toEqualAttribute('orientation', 'vertical');
+    expect(container).toHaveClass('bq-steps');
   });
 
   it('should handle invalid props', async () => {

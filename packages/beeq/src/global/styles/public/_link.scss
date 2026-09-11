@@ -1,0 +1,44 @@
+@layer bq.public {
+  .bq-link {
+    position: relative;
+    display: inline-block;
+    border-radius: var(--bq-radius--xs);
+    color: var(--bq-text--brand);
+    text-decoration-line: none;
+
+    @include bq-focus-visible;
+
+    &::after {
+      position: absolute;
+      inset-block-end: 0;
+      inset-inline-start: 0;
+      display: block;
+      inline-size: 100%;
+      block-size: 2px;
+      border-radius: var(--bq-radius--full);
+      background-color: transparent;
+      content: '';
+      transform: scaleX(0);
+      transition-duration: 300ms;
+      transition-property: transform;
+    }
+
+    &:hover {
+      @include bq-color-mix(color, var(--bq-text--brand), hover);
+
+      &::after {
+        @include bq-color-mix(background-color, var(--bq-ui--brand), hover);
+
+        transform: scaleX(1);
+      }
+    }
+
+    &:active {
+      @include bq-color-mix(color, var(--bq-text--brand), active);
+
+      &::after {
+        @include bq-color-mix(background-color, var(--bq-ui--brand), active);
+      }
+    }
+  }
+}

@@ -75,8 +75,7 @@ describe('bq-panel', () => {
 
     expect(panelStyle).toEqual({
       width: '320px',
-      boxShadow:
-        'rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.12) 0px 10px 48px -16px',
+      boxShadow: 'rgba(0, 0, 0, 0.12) 0px 10px 48px -16px',
       padding: '8px',
     });
   });

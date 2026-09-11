@@ -1,106 +1,194 @@
 /* -------------------------------------------------------------------------- */
-/*                        Tag styles                        */
+/*                                 Tag styles                                 */
 /* -------------------------------------------------------------------------- */
 
 @import './bq-tag.variables';
+@layer bq.reset, bq.tokens, bq.themes, bq.base, bq.utilities, bq.overrides,
+  bq-tag.tokens, bq-tag.base, bq-tag.structure, bq-tag.variants, bq-tag.states, bq-tag.parts;
 
-:host {
-  @apply relative inline-block;
-}
+/* ---------------------------------- Host ---------------------------------- */
 
-:host([hidden]) {
-  @apply hidden;
-}
+@layer bq-tag.base {
+  :host {
+    --_tag-background-color: var(--bq-tag--background-color);
+    --_tag-border-color: var(--bq-tag--border-color);
+    --_tag-border-radius: var(--bq-tag--border-radius);
+    --_tag-gap: var(--bq-tag--medium-gap);
+    --_tag-icon-prefix-size: 24px;
+    --_tag-padding-block: var(--bq-tag--medium-padding-y);
+    --_tag-padding-inline: var(--bq-tag--medium-padding-x);
+    --_tag-text-color: var(--bq-text--primary);
+    --_tag-text-font-size: var(--bq-font-size--m);
 
-.bq-tag {
-  @apply box-border inline-flex select-none flex-row items-center justify-center bg-[--bq-tag--background-color];
-  @apply gap-[--bq-tag--medium-gap] font-medium leading-regular text-primary p-b-[--bq-tag--medium-padding-y] p-i-[--bq-tag--medium-padding-x];
-  @apply rounded-[--bq-tag--border-radius] border-[length:--bq-tag--border-width] border-[color:--bq-tag--border-color];
-  @apply transition-colors duration-300 ease-in-out;
+    position: relative;
+    display: inline-block;
+  }
 
-  border-style: var(--bq-tag--border-style);
-}
-
-/* ---------------------------------- Size ---------------------------------- */
-
-.bq-tag__xsmall,
-.bq-tag__small {
-  @apply gap-[--bq-tag--small-gap] p-b-[--bq-tag--small-padding-y] p-i-[--bq-tag--small-padding-x];
-
-  /* Apply predefined border radius only if the border property have NO VALUE */
-  &:not(.has-border) {
-    @apply rounded-[--bq-tag--small-border-radius];
+  :host([hidden]) {
+    display: none;
   }
 }
 
-/* --------------------------------- Action --------------------------------- */
+/* ---------------------------------- Base ---------------------------------- */
 
-.bq-tag__default.is-clickable {
-  @apply cursor-pointer;
-  // Focus
-  @apply focus-visible:focus;
-  // Hover
-  @apply hover:enabled:bg-[color-mix(in_srgb,_var(--bq-tag--background-color),_var(--bq-hover)_20%)];
-  // Active/Selected
-  @apply [&.active]:text-alt [&.active]:[--bq-tag--background-color:--bq-ui--brand];
-  // Disabled
-  @apply disabled:cursor-not-allowed disabled:border-none disabled:opacity-60;
-}
-
-/* ------------------------------ Color styles ------------------------------ */
-
-.bq-tag__error {
-  &.bq-tag__filled {
-    @apply bg-ui-danger text-alt;
-  }
-
-  &.bq-tag__outline {
-    @apply bg-ui-danger-alt text-danger [--bq-tag--border-color:--bq-stroke--danger];
-  }
-}
-
-.bq-tag__gray {
-  &.bq-tag__filled {
-    @apply bg-ui-tertiary text-alt;
-  }
-
-  &.bq-tag__outline {
-    @apply bg-ui-primary text-primary [--bq-tag--border-color:--bq-stroke--tertiary];
+@layer bq-tag.base {
+  .bq-tag {
+    box-sizing: border-box;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: var(--_tag-gap);
+    padding-block: var(--_tag-padding-block);
+    padding-inline: var(--_tag-padding-inline);
+    color: var(--_tag-text-color);
+    font-weight: var(--bq-font-weight--medium);
+    line-height: var(--bq-font-line-height--regular);
+    user-select: none;
+    background-color: var(--_tag-background-color);
+    border-color: var(--_tag-border-color);
+    border-radius: var(--_tag-border-radius);
+    border-style: var(--bq-tag--border-style);
+    border-width: var(--bq-tag--border-width);
+    transition-timing-function: ease-in-out;
+    transition-duration: 300ms;
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
   }
 }
 
-.bq-tag__info {
-  &.bq-tag__filled {
-    @apply bg-ui-brand text-alt;
+/* ------------------------------- Structure -------------------------------- */
+
+@layer bq-tag.structure {
+  .bq-tag__prefix {
+    display: inline-flex;
   }
 
-  &.bq-tag__outline {
-    @apply bg-ui-brand-alt text-brand [--bq-tag--border-color:--bq-stroke--brand];
-  }
-}
-
-.bq-tag__success {
-  &.bq-tag__filled {
-    @apply bg-ui-success text-alt;
-  }
-
-  &.bq-tag__outline {
-    @apply bg-ui-success-alt text-success [--bq-tag--border-color:--bq-tag--border-success];
+  .bq-tag__text {
+    font-size: var(--_tag-text-font-size);
   }
 }
 
-.bq-tag__warning {
-  &.bq-tag__filled {
-    @apply bg-ui-warning text-alt;
+/* -------------------------------- Variants -------------------------------- */
+
+@layer bq-tag.variants {
+  :host([size='xsmall']),
+  :host([size='small']) {
+    --_tag-border-radius: var(--bq-tag--small-border-radius);
+    --_tag-gap: var(--bq-tag--small-gap);
+    --_tag-padding-block: var(--bq-tag--small-padding-y);
+    --_tag-padding-inline: var(--bq-tag--small-padding-x);
   }
 
-  &.bq-tag__outline {
-    @apply border-warning bg-ui-warning-alt text-warning;
+  :host([size='xsmall']) {
+    --_tag-text-font-size: var(--bq-font-size--xs);
+  }
+
+  :host([size='small']) {
+    --_tag-text-font-size: var(--bq-font-size--s);
+  }
+
+  :host([color='error'][variant='filled']) {
+    --_tag-background-color: var(--bq-ui--danger);
+    --_tag-text-color: var(--bq-text--alt);
+  }
+
+  :host([color='error'][variant='outline']) {
+    --_tag-background-color: var(--bq-ui--danger-alt);
+    --_tag-border-color: var(--bq-stroke--danger);
+    --_tag-text-color: var(--bq-text--danger);
+  }
+
+  :host([color='gray'][variant='filled']) {
+    --_tag-background-color: var(--bq-ui--tertiary);
+    --_tag-text-color: var(--bq-text--alt);
+  }
+
+  :host([color='gray'][variant='outline']) {
+    --_tag-background-color: var(--bq-ui--primary);
+    --_tag-border-color: var(--bq-stroke--tertiary);
+    --_tag-text-color: var(--bq-text--primary);
+  }
+
+  :host([color='info'][variant='filled']) {
+    --_tag-background-color: var(--bq-ui--brand);
+    --_tag-text-color: var(--bq-text--alt);
+  }
+
+  :host([color='info'][variant='outline']) {
+    --_tag-background-color: var(--bq-ui--brand-alt);
+    --_tag-border-color: var(--bq-stroke--brand);
+    --_tag-text-color: var(--bq-text--brand);
+  }
+
+  :host([color='success'][variant='filled']) {
+    --_tag-background-color: var(--bq-ui--success);
+    --_tag-text-color: var(--bq-text--alt);
+  }
+
+  :host([color='success'][variant='outline']) {
+    --_tag-background-color: var(--bq-ui--success-alt);
+    --_tag-border-color: var(--bq-stroke--success);
+    --_tag-text-color: var(--bq-text--success);
+  }
+
+  :host([color='warning'][variant='filled']) {
+    --_tag-background-color: var(--bq-ui--warning);
+    --_tag-text-color: var(--bq-text--alt);
+  }
+
+  :host([color='warning'][variant='outline']) {
+    --_tag-background-color: var(--bq-ui--warning-alt);
+    --_tag-border-color: var(--bq-stroke--warning);
+    --_tag-text-color: var(--bq-text--warning);
   }
 }
 
-/* --------------- Apply the right size to the bq-icon prefix --------------- */
+/* --------------------------------- States --------------------------------- */
 
-.bq-tag__prefix ::slotted(bq-icon) {
-  --bq-icon--size: var(--bq-tag--icon-prefix-size) !important;
+@layer bq-tag.states {
+  :host([selected][clickable]:not([color], [removable])) {
+    --_tag-background-color: var(--bq-ui--brand);
+    --_tag-text-color: var(--bq-text--alt);
+  }
+
+  :host([clickable]:not([color], [removable])) .bq-tag {
+    cursor: pointer;
+  }
+
+  :host([clickable]:not([color], [removable])) .bq-tag:focus-visible {
+    outline: var(--bq-ring-width, 2px) solid var(--bq-ring-color-focus, var(--bq-focus));
+    outline-offset: var(--bq-ring-offset-width, 1px);
+  }
+
+  :host([clickable]:not([color], [removable])) .bq-tag:hover:enabled {
+    background-color: color-mix(in srgb, var(--_tag-background-color), var(--bq-hover) 20%);
+  }
+
+  :host([disabled][clickable]:not([color], [removable])) .bq-tag:disabled {
+    cursor: not-allowed;
+    border-style: none;
+    opacity: 0.6;
+  }
+
+  .bq-tag__prefix.is-hidden {
+    display: none;
+  }
+}
+
+/* ---------------------------------- Slots --------------------------------- */
+
+@layer bq-tag.structure {
+  .bq-tag__prefix ::slotted(bq-icon) {
+    /* stylelint-disable-next-line declaration-no-important -- slotted bq-icon keeps its own default size otherwise */
+    --bq-icon--size: var(--_tag-icon-prefix-size) !important;
+  }
+}
+
+/* ---------------------------------- Parts --------------------------------- */
+
+@layer bq-tag.parts {
+  .bq-tag__close::part(button) {
+    padding: 0;
+    border: none;
+  }
 }

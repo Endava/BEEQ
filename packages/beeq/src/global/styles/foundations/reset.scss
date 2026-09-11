@@ -1,0 +1,85 @@
+// Shared reset foundation imported by default.scss and the standalone reset.scss entrypoint.
+@layer bq.reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  * {
+    margin-block: 0;
+    margin-inline: 0;
+  }
+
+  ul[role='list'],
+  ol[role='list'] {
+    list-style-type: none;
+  }
+
+  html {
+    font-family: var(--bq-font-family);
+    font-size: var(--bq-font-size--m);
+    text-size-adjust: none;
+  }
+
+  html:focus-within {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-block-size: 100vb;
+    color: var(--bq-text--primary);
+    background-color: var(--bq-background--primary);
+    line-height: var(--bq-font-line-height--regular);
+    text-rendering: optimizeSpeed;
+  }
+
+  a:not([class]) {
+    text-decoration-skip-ink: auto;
+  }
+
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    display: block;
+    max-inline-size: 100%;
+  }
+
+  input,
+  button,
+  select,
+  textarea {
+    font: inherit;
+  }
+
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    overflow-wrap: break-word;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html:focus-within {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      /* stylelint-disable declaration-no-important -- User motion preferences must win over component animation styles. */
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto;
+      transition-duration: 0.01ms !important;
+      /* stylelint-enable declaration-no-important */
+    }
+  }
+}

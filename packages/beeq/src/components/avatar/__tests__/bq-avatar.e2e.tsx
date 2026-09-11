@@ -17,17 +17,17 @@ describe('bq-avatar', () => {
   it('should render initials', async () => {
     const { root } = await render(<bq-avatar initials="JS" />);
 
-    const textPart = root.shadowRoot.querySelector('[part="text"]');
+    const textPart = root.shadowRoot?.querySelector('[part="text"]');
     expect(textPart).not.toBeNull();
-    expect(textPart.textContent.trim()).toBe('JS');
+    expect(textPart?.textContent.trim()).toBe('JS');
   });
 
   it('should trim initials based on size', async () => {
     const { root } = await render(<bq-avatar initials="JOHN" size="xsmall" />);
 
-    const textPart = root.shadowRoot.querySelector('[part="text"]');
+    const textPart = root.shadowRoot?.querySelector('[part="text"]');
     // xsmall trims to 1 character
-    expect(textPart.textContent.trim()).toBe('J');
+    expect(textPart?.textContent.trim()).toBe('J');
   });
 
   it('should render image', async () => {
@@ -35,14 +35,14 @@ describe('bq-avatar', () => {
       <bq-avatar image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?auto=format&fit=crop&w=100&q=80" />,
     );
 
-    const imgPart = root.shadowRoot.querySelector('[part="img"]');
+    const imgPart = root.shadowRoot?.querySelector('[part="img"]');
     expect(imgPart).not.toBeNull();
   });
 
   it('should fall back to initials when image fails to load', async () => {
     const { root, waitForChanges } = await render(<bq-avatar image="invalid-url.jpg" initials="JS" />);
 
-    const img = root.shadowRoot.querySelector<HTMLImageElement>('[part="img"]');
+    const img = root.shadowRoot?.querySelector<HTMLImageElement>('[part="img"]');
 
     if (img) {
       // Image hasn't failed yet — wait for the error event then let Stencil re-render
@@ -51,8 +51,8 @@ describe('bq-avatar', () => {
     }
     // else: error already fired during render(), component already re-rendered
 
-    expect(root.shadowRoot.querySelector('[part="img"]')).toBeNull();
-    expect(root.shadowRoot.querySelector('[part="text"]')).not.toBeNull();
+    expect(root.shadowRoot?.querySelector('[part="img"]')).toBeNull();
+    expect(root.shadowRoot?.querySelector('[part="text"]')).not.toBeNull();
   });
 
   it('should render with badge slot', async () => {
@@ -71,7 +71,7 @@ describe('bq-avatar', () => {
   it('should set aria-label from label prop', async () => {
     const { root } = await render(<bq-avatar initials="JS" label="John Doe profile picture" />);
 
-    const base = root.shadowRoot.querySelector('[part="base"]');
+    const base = root.shadowRoot?.querySelector('[part="base"]');
     expect(base).toEqualAttribute('aria-label', 'John Doe profile picture');
   });
 

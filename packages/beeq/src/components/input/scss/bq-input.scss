@@ -151,6 +151,7 @@
 
 bq-icon,
 ::slotted(bq-icon) {
+  /* stylelint-disable-next-line declaration-no-important */
   --bq-icon--size: var(--bq-input--icon-size) !important;
 }
 

@@ -1,0 +1,97 @@
+// Shared typography foundation imported by default.scss and the standalone typography.scss entrypoint.
+@layer bq.base {
+  .display {
+    font-family: inherit;
+    font-size: var(--bq-font-size--xxl5);
+    font-weight: var(--bq-font-weight--regular);
+    line-height: var(--bq-font-line-height--small);
+  }
+
+  h1,
+  .h1 {
+    font-family: inherit;
+    font-size: var(--bq-font-size--xxl4);
+    font-weight: var(--bq-font-weight--regular);
+    line-height: var(--bq-font-line-height--small);
+  }
+
+  h2,
+  .h2 {
+    font-family: inherit;
+    font-size: var(--bq-font-size--xxl3);
+    font-weight: var(--bq-font-weight--regular);
+    line-height: var(--bq-font-line-height--small);
+  }
+
+  h3,
+  .h3 {
+    font-family: inherit;
+    font-size: var(--bq-font-size--xxl2);
+    font-weight: var(--bq-font-weight--regular);
+    line-height: var(--bq-font-line-height--small);
+  }
+
+  h4,
+  .h4 {
+    font-family: inherit;
+    font-size: var(--bq-font-size--xxl);
+    font-weight: var(--bq-font-weight--regular);
+    line-height: var(--bq-font-line-height--small);
+  }
+
+  h5,
+  .h5 {
+    font-family: inherit;
+    font-size: var(--bq-font-size--xl);
+    font-weight: var(--bq-font-weight--regular);
+    line-height: var(--bq-font-line-height--regular);
+  }
+
+  h6,
+  .h6 {
+    font-family: inherit;
+    font-size: var(--bq-font-size--l);
+    font-weight: var(--bq-font-weight--regular);
+    line-height: var(--bq-font-line-height--regular);
+  }
+
+  figcaption,
+  .caption {
+    font-family: inherit;
+    font-size: var(--bq-font-size--s);
+    font-weight: var(--bq-font-weight--regular);
+    line-height: var(--bq-font-line-height--regular);
+  }
+
+  .overline {
+    font-family: inherit;
+    font-size: var(--bq-font-size--xs);
+    font-weight: var(--bq-font-weight--regular);
+    line-height: var(--bq-font-line-height--regular);
+  }
+
+  .display,
+  h1,
+  .h1,
+  h2,
+  .h2,
+  h3,
+  .h3,
+  h4,
+  .h4,
+  h5,
+  .h5,
+  h6,
+  .h6,
+  caption,
+  .caption,
+  .overline {
+    &.semibold {
+      font-weight: var(--bq-font-weight--semibold);
+    }
+
+    &.bold {
+      font-weight: var(--bq-font-weight--bold);
+    }
+  }
+}

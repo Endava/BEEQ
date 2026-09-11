@@ -64,6 +64,17 @@
         }
       }
     },
+    "build-styles": {
+      "executor": "nx:run-commands",
+      "outputs": [
+        "{workspaceRoot}/dist/beeq/dist/beeq/css/tokens.css",
+        "{workspaceRoot}/dist/beeq/dist/beeq/css/reset.css",
+        "{workspaceRoot}/dist/beeq/dist/beeq/css/typography.css"
+      ],
+      "options": {
+        "command": "node packages/beeq/scripts/build-styles.mjs"
+      }
+    },
     "storybook-build": {
       "executor": "@nx/storybook:build",
       "outputs": ["{options.outputDir}", "{options.config.configDir}"],
@@ -83,7 +94,7 @@
       "executor": "nx:run-commands",
       "outputs": ["{projectRoot}/.storybook/assets/css"],
       "options": {
-        "command": "pnpm exec tailwindcss -i packages/beeq/src/global/styles/default.scss -o packages/beeq/.storybook/assets/css/stories.css --postcss ./postcss.config.js --watch"
+        "command": "node packages/beeq/scripts/build-styles.mjs --storybook --watch"
       },
       "continuous": true
     },
@@ -91,7 +102,7 @@
       "executor": "nx:run-commands",
       "outputs": ["{projectRoot}/.storybook/assets/css"],
       "options": {
-        "command": "pnpm exec tailwindcss -i packages/beeq/src/global/styles/default.scss -o packages/beeq/.storybook/assets/css/stories.css --postcss ./postcss.config.js --minify"
+        "command": "node packages/beeq/scripts/build-styles.mjs --storybook --minify"
       }
     },
     "icons": {
@@ -150,6 +161,13 @@
         "lintFilePatterns": ["{projectRoot}/**/*.css", "{projectRoot}/**/*.scss"],
         "configFile": "packages/beeq/.stylelintrc.json",
         "ignorePath": ".gitignore"
+      }
+    },
+    "stylelint-strict": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "pnpm exec stylelint \"src/**/*.{css,scss}\" --config .stylelintrc.strict.json",
+        "cwd": "packages/beeq"
       }
     },
     "prepare-storybook": {

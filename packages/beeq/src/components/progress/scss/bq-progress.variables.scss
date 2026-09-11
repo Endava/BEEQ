@@ -1,5 +1,5 @@
 /* -------------------------------------------------------------------------- */
-/*                   Progress custom properties                  */
+/*                         Progress custom properties                         */
 /* -------------------------------------------------------------------------- */
 
 :host {
@@ -9,8 +9,8 @@
    * @prop --bq-progress-bar--indicatorColor - The progress bar color (inside the track area)
    * @prop --bq-progress-bar--trackColor - The progress bar track area (the grey one)
    */
-  --bq-progress-bar--height: theme(height.1);
+  --bq-progress-bar--height: var(--bq-spacing-xs2);
   --bq-progress-bar--indeterminateWidth: 25%;
-  --bq-progress-bar--indicatorColor: theme(backgroundColor.ui.brand);
-  --bq-progress-bar--trackColor: theme(backgroundColor.ui.secondary);
+  --bq-progress-bar--indicatorColor: var(--bq-ui--brand);
+  --bq-progress-bar--trackColor: var(--bq-ui--secondary);
 }

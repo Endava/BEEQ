@@ -1,9 +1,20 @@
 /* -------------------------------------------------------------------------- */
-/*                                Accordion group styles                */
+/*                            Accordion Group Styles                          */
 /* -------------------------------------------------------------------------- */
 
 @import './bq-accordion-group.variables';
 
+/* ---------------------------------- Host ---------------------------------- */
+
 :host {
-  @apply block w-full;
+  display: block;
+  inline-size: 100%;
+}
+
+/* ---------------------------------- Base ---------------------------------- */
+
+.bq-accordion-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bq-accordion-group--gap);
 }

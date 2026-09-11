@@ -13,6 +13,6 @@
   scrollbar-width: none;
 
   &::-webkit-scrollbar {
-    @apply hidden;
+    display: none;
   }
 }

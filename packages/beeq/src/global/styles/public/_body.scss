@@ -1,0 +1,33 @@
+@layer bq.public {
+  /* Use these classes in the document.body when side menu component is present. */
+  .bq-body--side-menu {
+    position: relative;
+    transition-duration: 300ms;
+    transition-property: padding-inline-start;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .bq-body--side-menu__collapse {
+    /* stylelint-disable-next-line declaration-no-important -- body layout override must win over page styles */
+    padding-inline-start: var(--bq-side-menu--width-collapse) !important;
+  }
+
+  .bq-body--side-menu__expand {
+    /* stylelint-disable-next-line declaration-no-important -- body layout override must win over page styles */
+    padding-inline-start: var(--bq-side-menu--width) !important;
+  }
+
+  /* Use this class for body scroll lock when floating panels are open. */
+  .bq-body--scroll-lock {
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+
+  @supports (-webkit-touch-callout: none) {
+    .bq-body--scroll-lock {
+      overscroll-behavior: none;
+      /* iOS-specific: prevent rubber band scrolling */
+      -webkit-overflow-scrolling: auto;
+    }
+  }
+}

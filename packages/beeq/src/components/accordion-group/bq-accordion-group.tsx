@@ -140,7 +140,7 @@ export class BqAccordionGroup {
 
   render() {
     return (
-      <div class="flex flex-col gap-[--bq-accordion-group--gap]" part="base">
+      <div class="bq-accordion-group" part="base">
         <slot />
       </div>
     );

@@ -163,7 +163,7 @@ export class BqBreadcrumb {
   render() {
     return (
       <Host>
-        <nav aria-label={this.label} class="flex items-center" part="navigation">
+        <nav aria-label={this.label} class="bq-breadcrumb__navigation" part="navigation">
           <slot
             onSlotchange={this.handleSlotChange}
             ref={(element) => {
@@ -179,7 +179,7 @@ export class BqBreadcrumb {
               this.separatorSlotElem = element;
             }}
           >
-            <span class="is-3 flex items-center justify-center text-ui-tertiary" part="separator">
+            <span class="bq-breadcrumb__separator" part="separator">
               /
             </span>
           </slot>

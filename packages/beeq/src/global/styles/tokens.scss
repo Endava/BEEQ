@@ -1,0 +1,6 @@
+// Public build entrypoint for dist/beeq/dist/beeq/tokens.css.
+// Keep the emitted token declarations in foundations/ so default.scss and this
+// standalone bundle share one source of truth.
+@import './foundations/layers';
+@import './foundations/tokens';
+@import './foundations/themes';

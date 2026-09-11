@@ -84,6 +84,7 @@ Type: `Promise<void>`
 
 | Slot            | Description                     |
 | --------------- | ------------------------------- |
+|                 | The default slot                |
 | `"clear-icon"`  | The clear icon slot container.  |
 | `"helper-text"` | The helper text slot container. |
 | `"label"`       | The label slot container.       |

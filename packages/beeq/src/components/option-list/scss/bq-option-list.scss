@@ -1,9 +1,19 @@
 /* -------------------------------------------------------------------------- */
-/*                                Option list styles                */
+/*                              Option List Styles                            */
 /* -------------------------------------------------------------------------- */
 
 @import './bq-option-list.variables';
 
+/* ---------------------------------- Host ---------------------------------- */
+
 :host {
-  @apply block;
+  display: block;
+}
+
+/* ---------------------------------- Base ---------------------------------- */
+
+.bq-option-list {
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--bq-option-group--gapY-list);
 }

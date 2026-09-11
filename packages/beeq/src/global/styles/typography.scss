@@ -1,0 +1,5 @@
+// Public build entrypoint for dist/beeq/dist/beeq/typography.css.
+// This bundle intentionally excludes @font-face; fonts are loaded only through
+// font-face.scss in the full beeq.css bundle.
+@import './foundations/layers';
+@import './foundations/typography';

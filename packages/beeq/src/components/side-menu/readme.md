@@ -45,6 +45,7 @@ Type: `Promise<void>`
 
 | Slot                                            | Description                                                    |
 | ----------------------------------------------- | -------------------------------------------------------------- |
+|                                                 | The default slot                                               |
 | `"The main section that holds all menu items."` |                                                                |
 | `"footer"`                                      | The section for adding footer content to the side menu.        |
 | `"logo"`                                        | The section for displaying the logo or brand in the side menu. |
