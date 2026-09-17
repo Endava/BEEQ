@@ -29,9 +29,10 @@ The Breadcrumb Item helps users understand their current location within a websi
 
 ## Slots
 
-| Slot | Description                                                     |
-| ---- | --------------------------------------------------------------- |
-|      | The default slot is used to add content to the breadcrumb item. |
+| Slot          | Description                                                     |
+| ------------- | --------------------------------------------------------------- |
+|               | The default slot is used to add content to the breadcrumb item. |
+| `"separator"` |                                                                 |
 
 
 ## Shadow Parts

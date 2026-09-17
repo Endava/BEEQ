@@ -92,4 +92,23 @@ describe('bq-badge', () => {
     expect(badge).toHaveClass('digit');
     expect(badge).toHaveClass('p-i-xs2');
   });
+
+  it('should update content length when a non-first slotted node changes', async () => {
+    const { root } = await render(
+      <bq-badge>
+        <span>1</span>
+        <span>2</span>
+      </bq-badge>,
+    );
+
+    await waitForStable(root);
+
+    const badge = root.shadowRoot.querySelector('.bq-badge') as HTMLDivElement;
+    const [, secondNode] = root.querySelectorAll<HTMLSpanElement>('span');
+
+    secondNode.textContent = '';
+
+    expect(badge).toHaveClass('digit');
+    await expect.poll(() => badge.classList.contains('p-i-xs2')).toBe(false);
+  });
 });
