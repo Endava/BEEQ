@@ -95,6 +95,24 @@ describe('bq-select', () => {
     expect(root.querySelectorAll('bq-option')).toHaveLength(3);
   });
 
+  it('should apply checkbox presentation to options added after load', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-select name="bq-select" showCheckboxes>
+        <bq-option value="1">Option 1</bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const option = document.createElement('bq-option');
+    option.value = '2';
+    option.textContent = 'Option 2';
+
+    await waitForChanges();
+    select.appendChild(option);
+    await waitForStable(root);
+
+    expect(option.shadowRoot?.querySelector('bq-checkbox')).not.toBeNull();
+  });
+
   it('should render with selected option', async () => {
     const { root, waitForChanges } = await render(
       <bq-select name="bq-select" value="1">

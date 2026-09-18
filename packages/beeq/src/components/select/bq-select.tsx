@@ -606,6 +606,7 @@ export class BqSelect {
     this.hasPrefix = hasSlotContent(this.prefixElem);
     this.hasSuffix = hasSlotContent(this.suffixElem);
     this.hasHelperText = hasSlotContent(this.helperTextElem);
+    this.syncOptionPresentation();
   };
 
   private resetOptionsVisibility = () => {
@@ -944,7 +945,7 @@ export class BqSelect {
             onBqSelect={this.handleSelect}
             role="listbox"
           >
-            <slot />
+            <slot onSlotchange={this.handleSlotChange} />
           </bq-option-list>
         </bq-dropdown>
         {/* Helper text */}
