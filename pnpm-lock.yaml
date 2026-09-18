@@ -117,23 +117,23 @@ importers:
         specifier: 22.1.7
         version: 22.1.7(chokidar@5.0.0)
       '@stencil/angular-output-target':
-        specifier: 1.4.1
-        version: 1.4.1(@stencil/core@4.44.2)
+        specifier: 1.5.0
+        version: 1.5.0(@stencil/core@4.45.0)
       '@stencil/core':
-        specifier: 4.44.2
-        version: 4.44.2
+        specifier: 4.45.0
+        version: 4.45.0
       '@stencil/react-output-target':
         specifier: 1.6.2
-        version: 1.6.2(@stencil/core@4.44.2)(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+        version: 1.6.2(@stencil/core@4.45.0)(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       '@stencil/sass':
         specifier: 3.3.3
-        version: 3.3.3(@stencil/core@4.44.2)
+        version: 3.3.3(@stencil/core@4.45.0)
       '@stencil/vitest':
-        specifier: 1.15.0
-        version: 1.15.0(@stencil/core@4.44.2)(@vitest/browser-playwright@4.1.5)(playwright@1.61.1)(vitest@4.1.5)
+        specifier: 1.15.1
+        version: 1.15.1(@stencil/core@4.45.0)(@vitest/browser-playwright@4.1.5)(playwright@1.61.1)(vitest@4.1.5)
       '@stencil/vue-output-target':
-        specifier: 0.14.2
-        version: 0.14.2(@stencil/core@4.44.2)(vue@3.5.33(typescript@6.0.3))
+        specifier: 0.14.3
+        version: 0.14.3(@stencil/core@4.45.0)(vue@3.5.33(typescript@6.0.3))
       '@storybook/addon-a11y':
         specifier: 10.6.0
         version: 10.6.0(storybook@10.6.0(@types/react@19.3.0)(prettier@3.8.4)(react-dom@19.3.0(react@19.3.0))(react@19.3.0))
@@ -3505,8 +3505,8 @@ packages:
   '@standard-schema/spec@1.1.0':
     resolution: {integrity: sha512-l2aFy5jALhniG5HgqrD6jXLi/rUWrKvqN/qJx6yoJsgKhblVd+iqqU4RCXavm/jPityDo5TCvKMnpjKnOriy0w==}
 
-  '@stencil/angular-output-target@1.4.1':
-    resolution: {integrity: sha512-sy+k9B5jcT6hpaVU9n+/ZUjz3qVr9PAdPgy2c3LFQouW1aFSa3Ng0O+Ia3wk7LMeL3vDetCn2X+p2ewdHGc1vA==}
+  '@stencil/angular-output-target@1.5.0':
+    resolution: {integrity: sha512-zr3n6PP3Gcj5pEyJgn32eJkSXSW5sH6XuSe7mG/MbSCZ6Odds4J7zplBDAc7WgTIcaxY1xS0cR21q1SCncwpkA==}
     peerDependencies:
       '@stencil/core': '>=2.0.0 || >=3 || >=4.0.0 || ^5.0.0 || >=5.0.0-alpha.17 <5.0.0-next.0'
 
@@ -3515,8 +3515,8 @@ packages:
     engines: {node: '>=16.0.0', npm: '>=7.10.0'}
     hasBin: true
 
-  '@stencil/core@4.44.2':
-    resolution: {integrity: sha512-TNaYdlyHfy8UF7glvZwaY6pM0AhgCOXuW5Kx3+AO+ITeaipCHWXi5tkZ6P/3HCL+hUySc60lPKSnZ4xdYIFb4g==}
+  '@stencil/core@4.45.0':
+    resolution: {integrity: sha512-cHd0liRzN+MKf2eoLg4XHzEBQvK04j6g1lhqZb0BR1a5kXUNaYPmS6IlM/YqYMlZ3eSDiGqwjRSx5SIwP1Imow==}
     engines: {node: '>=16.0.0', npm: '>=7.10.0'}
     hasBin: true
 
@@ -3540,8 +3540,8 @@ packages:
     peerDependencies:
       '@stencil/core': ^4.0.0 || ^5.0.0 || >=5.0.0-alpha.19 <5.0.0-next.0
 
-  '@stencil/vitest@1.15.0':
-    resolution: {integrity: sha512-eQ4799whokDh3DRK42klthJIU9fTcr9Ws98LEs/wlaXeVD59/yGGZCWZYYZnQZETVNehlB4i4R74KKLjuQSeEQ==}
+  '@stencil/vitest@1.15.1':
+    resolution: {integrity: sha512-aOOMF9UZPqdfvfllMRfDnvkcwTdk72UFHV6tGdNmlD3/VD5ooYVI0GIVzQOCSVI1H8540H8OtF+CHeP7eijMgw==}
     engines: {node: ^20.0.0 || ^22.0.0 || >=24.0.0}
     hasBin: true
     peerDependencies:
@@ -3588,8 +3588,8 @@ packages:
       vue-router:
         optional: true
 
-  '@stencil/vue-output-target@0.14.2':
-    resolution: {integrity: sha512-KF09dlRXvieXYEW7MnvnUoAWnQKm3JLori9UiB4xoTdJQeI987nRx5N5zzci+L3j4Ta+932D6+pJuWvHZJb+jA==}
+  '@stencil/vue-output-target@0.14.3':
+    resolution: {integrity: sha512-2/u1rP+6ob3ymvIWGAYZKIm9LlpaJCgmoWHGchkOBOVoReCHfyK7wvQ0xtatOgrS7PCMVhKpTRwzine1xm9gjA==}
     peerDependencies:
       '@stencil/core': '>=2.0.0 || >=3 || >=4.0.0 || ^5.0.0 || >=5.0.0-alpha.17 <5.0.0-next.0'
       vue: ^3.4.38
@@ -8635,8 +8635,8 @@ packages:
       yaml:
         optional: true
 
-  vitest-environment-stencil@1.15.0:
-    resolution: {integrity: sha512-TvQCdVJPvK5HMrzR8W5TYomihvUFU13OsMc380YXV+SzMheRbS26e5988SmTR17C5EXDzAtvGMBgTpT+QkmwHA==}
+  vitest-environment-stencil@1.15.1:
+    resolution: {integrity: sha512-x4JGSytUr5oeRqTrgnr++yY+wAXgvAAF1TxaqIp0jfvTnaEM5psrDYbwuy6oD+X1+DSSN9nkufMw0E4y099goQ==}
     peerDependencies:
       '@stencil/core': ^4.0.0 || >=5.0.0-alpha.0 <5.0.0-next.0 || ^5.0.0
 
@@ -12143,9 +12143,9 @@ snapshots:
 
   '@standard-schema/spec@1.1.0': {}
 
-  '@stencil/angular-output-target@1.4.1(@stencil/core@4.44.2)':
+  '@stencil/angular-output-target@1.5.0(@stencil/core@4.45.0)':
     dependencies:
-      '@stencil/core': 4.44.2
+      '@stencil/core': 4.45.0
 
   '@stencil/core@4.43.5':
     optionalDependencies:
@@ -12158,7 +12158,7 @@ snapshots:
       '@rollup/rollup-win32-arm64-msvc': 4.44.0
       '@rollup/rollup-win32-x64-msvc': 4.44.0
 
-  '@stencil/core@4.44.2':
+  '@stencil/core@4.45.0':
     optionalDependencies:
       '@rollup/rollup-darwin-arm64': 4.44.0
       '@rollup/rollup-darwin-x64': 4.44.0
@@ -12181,10 +12181,10 @@ snapshots:
     transitivePeerDependencies:
       - '@types/react'
 
-  '@stencil/react-output-target@1.6.2(@stencil/core@4.44.2)(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
+  '@stencil/react-output-target@1.6.2(@stencil/core@4.45.0)(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
     dependencies:
       '@lit/react': 1.0.8(@types/react@19.3.0)
-      '@stencil/core': 4.44.2
+      '@stencil/core': 4.45.0
       html-react-parser: 5.2.17(@types/react@19.3.0)(react@19.3.0)
       react: 19.3.0
       react-dom: 19.3.0(react@19.3.0)
@@ -12193,18 +12193,18 @@ snapshots:
     transitivePeerDependencies:
       - '@types/react'
 
-  '@stencil/sass@3.3.3(@stencil/core@4.44.2)':
+  '@stencil/sass@3.3.3(@stencil/core@4.45.0)':
     dependencies:
-      '@stencil/core': 4.44.2
+      '@stencil/core': 4.45.0
       sass-embedded: 1.100.0
 
-  '@stencil/vitest@1.15.0(@stencil/core@4.44.2)(@vitest/browser-playwright@4.1.5)(playwright@1.61.1)(vitest@4.1.5)':
+  '@stencil/vitest@1.15.1(@stencil/core@4.45.0)(@vitest/browser-playwright@4.1.5)(playwright@1.61.1)(vitest@4.1.5)':
     dependencies:
-      '@stencil/core': 4.44.2
+      '@stencil/core': 4.45.0
       jiti: 2.7.0
       local-pkg: 1.2.1
       vitest: 4.1.5(@types/node@25.9.3)(@vitest/browser-playwright@4.1.5)(@vitest/coverage-istanbul@4.1.5)(vite@8.0.16(@types/node@25.9.3)(esbuild@0.28.1)(jiti@1.21.7)(less@4.6.6)(sass-embedded@1.100.0)(sass@1.101.0)(terser@5.48.0)(tsx@4.22.4)(yaml@2.9.0))
-      vitest-environment-stencil: 1.15.0(@stencil/core@4.44.2)(@vitest/browser-playwright@4.1.5)(playwright@1.61.1)(vitest@4.1.5)
+      vitest-environment-stencil: 1.15.1(@stencil/core@4.45.0)(@vitest/browser-playwright@4.1.5)(playwright@1.61.1)(vitest@4.1.5)
     optionalDependencies:
       '@vitest/browser-playwright': 4.1.5(playwright@1.61.1)(vite@8.0.16(@types/node@25.9.3)(esbuild@0.28.1)(jiti@1.21.7)(less@4.6.6)(sass-embedded@1.100.0)(sass@1.101.0)(terser@5.48.0)(tsx@4.22.4)(yaml@2.9.0))(vitest@4.1.5)
       playwright: 1.61.1
@@ -12215,11 +12215,11 @@ snapshots:
     optionalDependencies:
       '@stencil/core': 4.43.5
 
-  '@stencil/vue-output-target@0.14.2(@stencil/core@4.44.2)(vue@3.5.33(typescript@6.0.3))':
+  '@stencil/vue-output-target@0.14.3(@stencil/core@4.45.0)(vue@3.5.33(typescript@6.0.3))':
     dependencies:
       vue: 3.5.33(typescript@6.0.3)
     optionalDependencies:
-      '@stencil/core': 4.44.2
+      '@stencil/core': 4.45.0
 
   '@storybook/addon-a11y@10.6.0(storybook@10.6.0(@types/react@19.3.0)(prettier@3.8.4)(react-dom@19.3.0(react@19.3.0))(react@19.3.0))':
     dependencies:
@@ -17806,10 +17806,10 @@ snapshots:
       tsx: 4.22.4
       yaml: 2.9.0
 
-  vitest-environment-stencil@1.15.0(@stencil/core@4.44.2)(@vitest/browser-playwright@4.1.5)(playwright@1.61.1)(vitest@4.1.5):
+  vitest-environment-stencil@1.15.1(@stencil/core@4.45.0)(@vitest/browser-playwright@4.1.5)(playwright@1.61.1)(vitest@4.1.5):
     dependencies:
-      '@stencil/core': 4.44.2
-      '@stencil/vitest': 1.15.0(@stencil/core@4.44.2)(@vitest/browser-playwright@4.1.5)(playwright@1.61.1)(vitest@4.1.5)
+      '@stencil/core': 4.45.0
+      '@stencil/vitest': 1.15.1(@stencil/core@4.45.0)(@vitest/browser-playwright@4.1.5)(playwright@1.61.1)(vitest@4.1.5)
     transitivePeerDependencies:
       - '@playwright/test'
       - '@stencil/mock-doc'
