@@ -42,7 +42,6 @@ const meta: Meta = {
     name: { control: 'text' },
     open: { control: 'boolean' },
     'panel-height': { control: 'text' },
-    placeholder: { control: 'text' },
     precision: { control: 'select', options: [...DATE_PRECISION] },
     placement: {
       control: 'select',
@@ -104,7 +103,6 @@ const meta: Meta = {
     name: 'bq-date-picker',
     open: false,
     'panel-height': 'auto',
-    placeholder: 'Enter your date',
     placement: 'bottom-end',
     precision: 'day',
     required: false,
@@ -193,7 +191,6 @@ const Template = (args: Args) => {
       name=${ifDefined(args.name)}
       ?open=${args.open}
       panel-height=${ifDefined(args['panel-height'])}
-      placeholder=${ifDefined(args.placeholder)}
       placement=${ifDefined(args.placement)}
       precision=${ifDefined(args.precision)}
       ?required=${args.required}
@@ -329,7 +326,6 @@ export const MonthPrecision: Story = {
     value: '2026-05',
     // Let the component pick its precision default ({ month: 'long', year: 'numeric' })
     formatOptions: undefined,
-    placeholder: 'Select month',
   },
 };
 
@@ -341,7 +337,6 @@ export const YearPrecision: Story = {
     precision: 'year',
     value: '2026',
     formatOptions: undefined,
-    placeholder: 'Select year',
   },
 };
 
@@ -354,7 +349,6 @@ export const MonthPrecisionRange: Story = {
     type: 'range',
     value: '2026-03/2026-08',
     formatOptions: undefined,
-    placeholder: 'Select month range',
   },
 };
 
@@ -367,7 +361,6 @@ export const MonthPrecisionMulti: Story = {
     type: 'multi',
     value: '2026-01 2026-03 2026-05 2026-07 2026-10 2026-12',
     formatOptions: undefined,
-    placeholder: 'Select months',
   },
 };
 
@@ -380,7 +373,6 @@ export const YearPrecisionMulti: Story = {
     type: 'multi',
     value: '2020 2022 2025 2027 2030',
     formatOptions: undefined,
-    placeholder: 'Select years',
   },
 };
 
@@ -473,12 +465,6 @@ export const Tooltip: Story = {
   parameters: { layout: 'centered' },
 };
 
-export const NoLabel: Story = {
-  name: 'With no label',
-  render: Template,
-  args: { noLabel: true, value: '2026-10-13' },
-};
-
 /* -------------------------------- Validation ------------------------------- */
 
 export const ValidationStatus: Story = {
@@ -552,7 +538,6 @@ export const WithForm: Story = {
               <bq-date-picker
                 name="passportExpiration"
                 value="2034-05-20"
-                placeholder="Select a date"
                 form-validation-message="Please, you must provide your passport expiration date"
                 type="single"
                 required
@@ -562,7 +547,6 @@ export const WithForm: Story = {
             </div>
             <bq-date-picker
               name="tripDate"
-              placeholder="Select a start and end date for your travel"
               form-validation-message="Please, tell us when you are planning to travel"
               value="2026-12-25/2027-01-10"
               type="range"

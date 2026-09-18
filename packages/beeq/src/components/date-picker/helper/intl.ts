@@ -11,11 +11,25 @@ const cache = new Map<string, Intl.DateTimeFormat>();
 /** Prevents unbounded growth in long-running apps. */
 const CACHE_MAX_SIZE = 64;
 
+/**
+ * Builds a stable cache key for formatter inputs.
+ *
+ * @param locale Locale argument passed to `Intl.DateTimeFormat`.
+ * @param options Formatting options passed to `Intl.DateTimeFormat`.
+ * @returns The cache key for the formatter configuration.
+ */
 const cacheKey = (locale: Intl.LocalesArgument, options: Intl.DateTimeFormatOptions): string => {
   const localeKey = typeof locale === 'string' ? locale : JSON.stringify(locale ?? '');
   return `${localeKey}|${JSON.stringify(options)}`;
 };
 
+/**
+ * Gets a cached formatter, evicting the oldest cached entry when full.
+ *
+ * @param locale Locale argument passed to `Intl.DateTimeFormat`.
+ * @param options Formatting options passed to `Intl.DateTimeFormat`.
+ * @returns The cached or newly created formatter.
+ */
 const getFormatter = (locale: Intl.LocalesArgument, options: Intl.DateTimeFormatOptions): Intl.DateTimeFormat => {
   const key = cacheKey(locale, options);
   let formatter = cache.get(key);
@@ -32,6 +46,11 @@ const getFormatter = (locale: Intl.LocalesArgument, options: Intl.DateTimeFormat
 
 /**
  * Format a full date, e.g. "1 January 2026".
+ *
+ * @param date Date to format.
+ * @param locale Locale used for formatting.
+ * @param options Date formatting options.
+ * @returns The localized date string.
  */
 export const formatDate = (
   date: Date,
@@ -41,6 +60,12 @@ export const formatDate = (
 
 /**
  * Format a month, e.g. "January 2026" or "Jan".
+ *
+ * @param date Date whose month to format.
+ * @param locale Locale used for formatting.
+ * @param monthStyle Month name style.
+ * @param includeYear Whether to include the year in the result.
+ * @returns The localized month string.
  */
 export const formatMonth = (
   date: Date,
@@ -55,6 +80,10 @@ export const formatMonth = (
 
 /**
  * Format a year, e.g. "2026".
+ *
+ * @param date Date whose year to format.
+ * @param locale Locale used for formatting.
+ * @returns The localized year string.
  */
 export const formatYear = (date: Date, locale: Intl.LocalesArgument): string =>
   getFormatter(locale, { year: 'numeric' }).format(date);
@@ -90,6 +119,7 @@ export const getWeekdayNames = (
  *
  * @param locale The locale used for formatting.
  * @param style  Month style (long, short, narrow).
+ * @returns An array of localized month names in calendar order.
  */
 export const getMonthNames = (locale: Intl.LocalesArgument, style: 'long' | 'short' | 'narrow' = 'short'): string[] => {
   const formatter = getFormatter(locale, { month: style });

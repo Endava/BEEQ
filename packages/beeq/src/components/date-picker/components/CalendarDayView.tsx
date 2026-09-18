@@ -3,7 +3,7 @@ import { type FunctionalComponent, h } from '@stencil/core';
 import type { TDatePickerType, TSelection } from '../bq-date-picker.types';
 import { buildMonthMatrix, isSameDay, isWithinBounds, type TCalendarCell } from '../helper/calendar';
 import { CALENDAR_PARTS } from '../helper/constants';
-import { formatMonth, getWeekdayNames } from '../helper/intl';
+import { formatDate, formatMonth, getWeekdayNames } from '../helper/intl';
 import { isRangeEnd, isRangeInner, isRangeStart, isSelected } from '../helper/selection';
 
 type TCellState = {
@@ -63,6 +63,7 @@ const computeCellState = (cell: TCalendarCell, ctx: TCellContext): TCellState =>
 };
 
 type TCellCallbacks = {
+  locale: Intl.LocalesArgument;
   onDaySelect: (iso: string, ev: MouseEvent) => void;
   onDayHover: (iso: string | undefined) => void;
   onDayFocus: (iso: string) => void;
@@ -81,6 +82,12 @@ const renderCell = (cell: TCalendarCell, state: TCellState, cb: TCellCallbacks) 
     <button
       aria-current={state.isToday ? 'date' : undefined}
       aria-disabled={state.disabled ? 'true' : undefined}
+      aria-label={formatDate(cell.date, cb.locale, {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+      })}
       class={{
         'bq-date-picker__day': true,
         'is-selected': state.selected,
@@ -212,7 +219,7 @@ export const CalendarDayView: FunctionalComponent<TCalendarDayViewProps> = (prop
                   isDateDisallowed,
                   showOutsideDays,
                 });
-                return renderCell(cell, state, { onDaySelect, onDayHover, onDayFocus });
+                return renderCell(cell, state, { locale, onDaySelect, onDayHover, onDayFocus });
               })}
             </tr>
           ))}

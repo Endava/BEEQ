@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 import {
   boundYear,
   boundYearMonth,
+  clampISOToBounds,
   isDateWithinBounds,
   isMonthWithinBounds,
   isYearWithinBounds,
@@ -134,5 +135,17 @@ describe('bounds — isDateWithinBounds', () => {
     expect(isDateWithinBounds('2025-06-30', '2025-06', '2025-06')).toBe(true);
     expect(isDateWithinBounds('2025-05-31', '2025-06', '2025-06')).toBe(false);
     expect(isDateWithinBounds('2025-07-01', '2025-06', '2025-06')).toBe(false);
+  });
+});
+
+describe('bounds — clampISOToBounds', () => {
+  it.each([
+    ['2025-06-15', undefined, undefined, '2025-06-15'],
+    ['2025-06-09', '2025-06-10', '2025-06-20', '2025-06-10'],
+    ['2025-06-21', '2025-06-10', '2025-06-20', '2025-06-20'],
+    ['2024-12-31', '2025', undefined, '2025-01-01'],
+    ['2026-03-01', undefined, '2024-02', '2024-02-29'],
+  ] as const)('clamps %s between %s and %s to %s', (iso, min, max, expected) => {
+    expect(clampISOToBounds(iso, min, max)).toBe(expected);
   });
 });
