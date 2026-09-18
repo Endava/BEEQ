@@ -99,21 +99,21 @@ describe('bq-select', () => {
     expect(root.querySelectorAll('bq-option')).toHaveLength(3);
   });
 
-  it('should reflect `show-checkboxes`', async () => {
+  it('should reflect `enable-checkboxes`', async () => {
     const { root, setProps } = await render(<bq-select name="bq-select" />);
 
-    expect(root).not.toHaveAttribute('show-checkboxes');
+    expect(root).not.toHaveAttribute('enable-checkboxes');
 
-    await setProps({ showCheckboxes: true });
-    expect(root).toHaveAttribute('show-checkboxes');
+    await setProps({ enableCheckboxes: true });
+    expect(root).toHaveAttribute('enable-checkboxes');
 
-    await setProps({ showCheckboxes: false });
-    expect(root).not.toHaveAttribute('show-checkboxes');
+    await setProps({ enableCheckboxes: false });
+    expect(root).not.toHaveAttribute('enable-checkboxes');
   });
 
   it('should apply checkbox presentation to options added after load', async () => {
     const { root, waitForChanges } = await render(
-      <bq-select name="bq-select" showCheckboxes>
+      <bq-select name="bq-select" enableCheckboxes>
         <bq-option value="1">Option 1</bq-option>
       </bq-select>,
     );
@@ -131,7 +131,7 @@ describe('bq-select', () => {
 
   it('should synchronize selected and unselected checkbox states', async () => {
     const { root, setProps, waitForChanges } = await render(
-      <bq-select name="bq-select" multiple showCheckboxes>
+      <bq-select name="bq-select" multiple enableCheckboxes>
         <bq-option value="1">Option 1</bq-option>
         <bq-option value="2">Option 2</bq-option>
       </bq-select>,
@@ -214,7 +214,7 @@ describe('bq-select', () => {
 
   it('should render and toggle checkbox options when enabled', async () => {
     const { root, spyOnEvent, waitForChanges } = await render(
-      <bq-select name="bq-select" keepOpenOnSelect multiple showCheckboxes>
+      <bq-select name="bq-select" keepOpenOnSelect multiple enableCheckboxes>
         <bq-option value="1">Option 1</bq-option>
         <bq-option value="2">Option 2</bq-option>
       </bq-select>,
@@ -248,7 +248,7 @@ describe('bq-select', () => {
 
   it('should select by label click and checkbox click without duplicate events', async () => {
     const { root, spyOnEvent, waitForChanges } = await render(
-      <bq-select name="bq-select" keepOpenOnSelect multiple showCheckboxes>
+      <bq-select name="bq-select" keepOpenOnSelect multiple enableCheckboxes>
         <bq-option value="1">Option 1</bq-option>
         <bq-option value="2">Option 2</bq-option>
       </bq-select>,
@@ -275,7 +275,7 @@ describe('bq-select', () => {
 
   it('should select a checkbox option with Space', async () => {
     const { root, spyOnEvent, waitForChanges } = await render(
-      <bq-select name="bq-select" keepOpenOnSelect multiple showCheckboxes>
+      <bq-select name="bq-select" keepOpenOnSelect multiple enableCheckboxes>
         <bq-option value="1">Option 1</bq-option>
       </bq-select>,
     );
@@ -297,7 +297,7 @@ describe('bq-select', () => {
 
   it('should keep selected row styling with checkboxes enabled', async () => {
     const { root, waitForChanges } = await render(
-      <bq-select name="bq-select" multiple showCheckboxes value={['1']}>
+      <bq-select name="bq-select" multiple enableCheckboxes value={['1']}>
         <bq-option value="1">Option 1</bq-option>
         <bq-option value="2">Option 2</bq-option>
       </bq-select>,

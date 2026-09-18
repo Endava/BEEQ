@@ -2096,7 +2096,7 @@ export namespace Components {
      * @attr {boolean} readonly - Deprecated. Use `disable-search` to allow selection without text filtering.
      * @attr {boolean} required - Indicates whether or not the Select input is required to be filled out before submitting the form.
      * @attr {boolean} same-width - Whether the panel should have the Select same width as the input element.
-     * @attr {boolean} show-checkboxes - If `true`, options will render with checkboxes.
+     * @attr {boolean} enable-checkboxes - If `true`, options will render with checkboxes.
      * @attr {number} skidding - Represents the skidding between the Select panel and the input element.
      * @attr {"absolute" | "fixed"} strategy - Defines the strategy to position the Select panel.
      * @attr {"error" | "success" | "warning" | "none"} validation-status - The validation status of the Select input.
@@ -2175,6 +2175,11 @@ export namespace Components {
          */
         "distance"?: number;
         /**
+          * If true, options will render with checkboxes.
+          * @default false
+         */
+        "enableCheckboxes"?: boolean;
+        /**
           * The ID of the form that the Select input belongs to.
          */
         "form"?: string;
@@ -2239,11 +2244,6 @@ export namespace Components {
           * @default true
          */
         "sameWidth"?: boolean;
-        /**
-          * If true, options will render with checkboxes.
-          * @default false
-         */
-        "showCheckboxes"?: boolean;
         /**
           * Represents the skidding between the Select panel and the input element.
           * @default 0
@@ -4744,7 +4744,7 @@ declare global {
      * @attr {boolean} readonly - Deprecated. Use `disable-search` to allow selection without text filtering.
      * @attr {boolean} required - Indicates whether or not the Select input is required to be filled out before submitting the form.
      * @attr {boolean} same-width - Whether the panel should have the Select same width as the input element.
-     * @attr {boolean} show-checkboxes - If `true`, options will render with checkboxes.
+     * @attr {boolean} enable-checkboxes - If `true`, options will render with checkboxes.
      * @attr {number} skidding - Represents the skidding between the Select panel and the input element.
      * @attr {"absolute" | "fixed"} strategy - Defines the strategy to position the Select panel.
      * @attr {"error" | "success" | "warning" | "none"} validation-status - The validation status of the Select input.
@@ -7701,7 +7701,7 @@ declare namespace LocalJSX {
      * @attr {boolean} readonly - Deprecated. Use `disable-search` to allow selection without text filtering.
      * @attr {boolean} required - Indicates whether or not the Select input is required to be filled out before submitting the form.
      * @attr {boolean} same-width - Whether the panel should have the Select same width as the input element.
-     * @attr {boolean} show-checkboxes - If `true`, options will render with checkboxes.
+     * @attr {boolean} enable-checkboxes - If `true`, options will render with checkboxes.
      * @attr {number} skidding - Represents the skidding between the Select panel and the input element.
      * @attr {"absolute" | "fixed"} strategy - Defines the strategy to position the Select panel.
      * @attr {"error" | "success" | "warning" | "none"} validation-status - The validation status of the Select input.
@@ -7773,6 +7773,11 @@ declare namespace LocalJSX {
           * @default 8
          */
         "distance"?: number;
+        /**
+          * If true, options will render with checkboxes.
+          * @default false
+         */
+        "enableCheckboxes"?: boolean;
         /**
           * The ID of the form that the Select input belongs to.
          */
@@ -7851,11 +7856,6 @@ declare namespace LocalJSX {
           * @default true
          */
         "sameWidth"?: boolean;
-        /**
-          * If true, options will render with checkboxes.
-          * @default false
-         */
-        "showCheckboxes"?: boolean;
         /**
           * Represents the skidding between the Select panel and the input element.
           * @default 0
@@ -9222,7 +9222,7 @@ declare namespace LocalJSX {
         "readonly": boolean;
         "required": boolean;
         "sameWidth": boolean;
-        "showCheckboxes": boolean;
+        "enableCheckboxes": boolean;
         "skidding": number;
         "strategy": 'fixed' | 'absolute';
         "validationStatus": TInputValidation;
@@ -10421,7 +10421,7 @@ declare module "@stencil/core" {
              * @attr {boolean} readonly - Deprecated. Use `disable-search` to allow selection without text filtering.
              * @attr {boolean} required - Indicates whether or not the Select input is required to be filled out before submitting the form.
              * @attr {boolean} same-width - Whether the panel should have the Select same width as the input element.
-             * @attr {boolean} show-checkboxes - If `true`, options will render with checkboxes.
+             * @attr {boolean} enable-checkboxes - If `true`, options will render with checkboxes.
              * @attr {number} skidding - Represents the skidding between the Select panel and the input element.
              * @attr {"absolute" | "fixed"} strategy - Defines the strategy to position the Select panel.
              * @attr {"error" | "success" | "warning" | "none"} validation-status - The validation status of the Select input.

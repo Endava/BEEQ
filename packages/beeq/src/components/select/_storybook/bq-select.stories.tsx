@@ -51,7 +51,7 @@ const meta: Meta = {
     readonly: { control: 'boolean' },
     required: { control: 'boolean' },
     'same-width': { control: 'boolean' },
-    'show-checkboxes': { control: 'boolean' },
+    'enable-checkboxes': { control: 'boolean' },
     skidding: { control: 'number' },
     strategy: { control: 'select', options: ['fixed', 'absolute'] },
     'validation-status': { control: 'select', options: [...INPUT_VALIDATION] },
@@ -90,7 +90,7 @@ const meta: Meta = {
     placement: 'bottom',
     placeholder: 'Placeholder',
     'same-width': false,
-    'show-checkboxes': false,
+    'enable-checkboxes': false,
     skidding: 0,
     strategy: 'fixed',
     readonly: false,
@@ -220,7 +220,7 @@ const Template = (args: Args) => {
       ?readonly=${args.readonly}
       ?required=${args.required}
       ?same-width=${args['same-width']}
-      ?show-checkboxes=${args['show-checkboxes']}
+      ?enable-checkboxes=${args['enable-checkboxes']}
       skidding=${args.skidding}
       strategy=${args.strategy}
       validation-status=${args['validation-status']}
@@ -329,7 +329,7 @@ export const MultipleCheckboxes: Story = {
   args: {
     'keep-open-on-select': true,
     multiple: true,
-    'show-checkboxes': true,
+    'enable-checkboxes': true,
     value: ['running', 'biking', 'pizza'],
   },
 };
