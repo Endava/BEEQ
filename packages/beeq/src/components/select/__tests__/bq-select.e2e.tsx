@@ -12,7 +12,7 @@ const getDropdown = (select: HTMLBqSelectElement) =>
 const getClearButton = (select: HTMLBqSelectElement) =>
   select.shadowRoot?.querySelector('bq-button')?.shadowRoot?.querySelector<HTMLButtonElement>('[part="button"]');
 const getOptionButton = (option: HTMLBqOptionElement) =>
-  option.shadowRoot?.querySelector<HTMLButtonElement>('[part="base"]');
+  option.shadowRoot?.querySelector<HTMLButtonElement>('button[part="base"]');
 const getOptionCheckbox = (option: HTMLBqOptionElement) =>
   option.shadowRoot?.querySelector<HTMLBqCheckboxElement>('bq-checkbox');
 const getOptionCheckboxBase = (option: HTMLBqOptionElement) =>
@@ -173,7 +173,10 @@ describe('bq-select', () => {
     await waitForChanges();
 
     expect(getOptionCheckbox(option)).not.toBeNull();
-    expect(getOptionButton(option)).toBeUndefined();
+    expect(getOptionButton(option)).toBeNull();
+
+    await userEvent.click(getControl(select));
+    await waitForChanges();
 
     await userEvent.click(getOptionCheckboxBase(option));
     await waitForChanges();

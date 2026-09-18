@@ -1,7 +1,13 @@
 import { h } from '@stencil/core';
-import { describe, expect, it, render } from '@stencil/vitest';
+import { describe, expect, it, render, waitForStable } from '@stencil/vitest';
+import { userEvent } from 'vitest/browser';
 
 import { getTextContent } from '../../../shared/utils/slot';
+
+const getOptionCheckbox = (option: HTMLBqOptionElement) =>
+  option.shadowRoot?.querySelector<HTMLBqCheckboxElement>('bq-checkbox');
+const getCheckboxInput = (checkbox?: HTMLBqCheckboxElement) => checkbox?.shadowRoot?.querySelector('[part="input"]');
+const getCheckboxBase = (checkbox?: HTMLBqCheckboxElement) => checkbox?.shadowRoot?.querySelector('[part="base"]');
 
 describe('bq-option', () => {
   it('should render', async () => {
@@ -144,6 +150,52 @@ describe('bq-option', () => {
     const { root } = await render(<bq-option selected>Option 1</bq-option>);
 
     expect(root).toEqualAttribute('aria-selected', 'true');
+  });
+
+  it('should expose the option label and checkbox states accessibly', async () => {
+    const { root } = await render(
+      <bq-option checkbox disabled selected value="option-value">
+        Option label
+      </bq-option>,
+    );
+    const option = root as HTMLBqOptionElement;
+    const checkbox = getOptionCheckbox(option);
+    const input = getCheckboxInput(checkbox);
+    const base = getCheckboxBase(checkbox);
+
+    await waitForStable(root);
+
+    expect(option).toEqualAttribute('aria-selected', 'true');
+    expect(option).toEqualAttribute('aria-disabled', 'true');
+    expect(base).toEqualAttribute('aria-label', 'Option label');
+    expect(input).toEqualAttribute('aria-checked', 'true');
+    expect(input).toEqualAttribute('aria-disabled', 'true');
+  });
+
+  it('should toggle from the checkbox with Space and emit focus and blur once', async () => {
+    const { root, spyOnEvent, waitForChanges } = await render(
+      <bq-option checkbox value="option-value">
+        Option label
+      </bq-option>,
+    );
+    const checkbox = getOptionCheckbox(root as HTMLBqOptionElement);
+    const input = getCheckboxInput(checkbox) as HTMLInputElement;
+    const bqClick = spyOnEvent('bqClick');
+
+    await waitForStable(root);
+    await checkbox?.vFocus();
+    await waitForChanges();
+    expect(checkbox?.shadowRoot?.activeElement).toBe(input);
+
+    await userEvent.keyboard(' ');
+    await waitForChanges();
+
+    expect((getCheckboxInput(checkbox) as HTMLInputElement).checked).toBe(true);
+    expect(bqClick).toHaveReceivedEventTimes(1);
+
+    await checkbox?.vBlur();
+    await waitForChanges();
+    expect(checkbox?.shadowRoot?.activeElement).toBeNull();
   });
 
   it('should render prefix element', async () => {

@@ -1,7 +1,7 @@
 import type { EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Fragment, Host, h, Listen, Prop, State } from '@stencil/core';
 
-import { hasSlotContent, isEventTargetChildOfElement } from '../../shared/utils';
+import { getTextContent, hasSlotContent, isEventTargetChildOfElement } from '../../shared/utils';
 
 /**
  * An option refers to a specific choice that appears in a list of selectable items that can be opened or closed by the user.
@@ -145,21 +145,8 @@ export class BqOption {
   onCheckboxChange(event: CustomEvent) {
     if (!this.checkbox || !isEventTargetChildOfElement(event, this.checkboxElem)) return;
 
+    event.stopImmediatePropagation();
     this.bqClick.emit(this.el);
-  }
-
-  @Listen('bqFocus')
-  onCheckboxFocus(event: CustomEvent) {
-    if (!this.checkbox || !isEventTargetChildOfElement(event, this.checkboxElem)) return;
-
-    this.bqFocus.emit(this.el);
-  }
-
-  @Listen('bqBlur')
-  onCheckboxBlur(event: CustomEvent) {
-    if (!this.checkbox || !isEventTargetChildOfElement(event, this.checkboxElem)) return;
-
-    this.bqBlur.emit(this.el);
   }
 
   // Public methods API
@@ -208,6 +195,15 @@ export class BqOption {
     this.hasPrefix = hasSlotContent(this.prefixElem, 'prefix');
     this.hasSuffix = hasSlotContent(this.suffixElem, 'suffix');
   };
+
+  private get optionLabel() {
+    const labelSlot = this.el.shadowRoot?.querySelector<HTMLSlotElement>('slot:not([name])');
+    const label = labelSlot
+      ? getTextContent(labelSlot, { recurse: true }) || this.el.textContent?.trim()
+      : this.el.textContent?.trim();
+
+    return label || this.value || 'option';
+  }
 
   private get isDisabledOrHidden() {
     return this.disabled || this.hidden;
@@ -259,11 +255,11 @@ export class BqOption {
       >
         {this.checkbox ? (
           <bq-checkbox
-            aria-label={this.value || 'option'}
+            aria-label={this.optionLabel}
             checked={this.selected}
             class="bq-option__checkbox"
             disabled={this.isDisabledOrHidden}
-            name={this.value || 'option'}
+            name={this.optionLabel}
             exportparts="base:checkbox-base,control:checkbox-control,input:checkbox-input,checkbox:checkbox-checkbox,label:checkbox-label"
             part="base"
             ref={(element) => {
