@@ -1,7 +1,7 @@
 import type { EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, h, Listen, Prop, State } from '@stencil/core';
+import { Component, Element, Event, Fragment, Host, h, Listen, Prop, State } from '@stencil/core';
 
-import { hasSlotContent } from '../../shared/utils';
+import { hasSlotContent, isEventTargetChildOfElement } from '../../shared/utils';
 
 /**
  * An option refers to a specific choice that appears in a list of selectable items that can be opened or closed by the user.
@@ -18,8 +18,11 @@ import { hasSlotContent } from '../../shared/utils';
  * @documentation https://storybook.beeq.design/?path=/story/components-option--with-option-group
  * @status stable
  *
+ * @dependency bq-checkbox
+ *
  * @attr {boolean} disabled - If true, the option is disabled.
  * @attr {boolean} hidden - If true, the option is hidden.
+ * @attr {boolean} checkbox - If true, the option renders as a checkbox option.
  * @attr {string} value - A string representing the value of the option. Can be used to identify the item.
  * @attr {boolean} selected - If true, the option is selected and active.
  *
@@ -35,6 +38,11 @@ import { hasSlotContent } from '../../shared/utils';
  * @part label - The `span` element in which the label text is displayed.
  * @part prefix - The `span` element in which the prefix is displayed (generally `bq-icon`).
  * @part suffix - The `span` element in which the suffix is displayed (generally `bq-icon`).
+ * @part checkbox-base - The checkbox base wrapper exported from the nested `bq-checkbox`.
+ * @part checkbox-control - The checkbox control wrapper exported from the nested `bq-checkbox`.
+ * @part checkbox-input - The native checkbox input exported from the nested `bq-checkbox`.
+ * @part checkbox-checkbox - The checkbox indicator exported from the nested `bq-checkbox`.
+ * @part checkbox-label - The checkbox label exported from the nested `bq-checkbox`.
  *
  * @cssprop --bq-option--background - background color
  * @cssprop --bq-option--font-size - font size
@@ -60,6 +68,7 @@ export class BqOption {
 
   private prefixElem: HTMLElement;
   private suffixElem: HTMLElement;
+  private checkboxElem?: HTMLBqCheckboxElement;
 
   // Reference to host HTML element
   // ===================================
@@ -81,6 +90,9 @@ export class BqOption {
 
   /** If true, the option is disabled. */
   @Prop({ reflect: true }) disabled?: boolean = false;
+
+  /** If true, the option renders as a checkbox option. */
+  @Prop({ reflect: true }) checkbox = false;
 
   /** The display value of the option. It can be used to override the default displayed value. */
   @Prop({ reflect: true }) displayValue?: string;
@@ -127,6 +139,27 @@ export class BqOption {
     // Prevent the default behavior to avoid triggering a synthetic click event
     event.preventDefault();
     this.bqEnter.emit(this.el);
+  }
+
+  @Listen('bqChange')
+  onCheckboxChange(event: CustomEvent) {
+    if (!this.checkbox || !isEventTargetChildOfElement(event, this.checkboxElem)) return;
+
+    this.bqClick.emit(this.el);
+  }
+
+  @Listen('bqFocus')
+  onCheckboxFocus(event: CustomEvent) {
+    if (!this.checkbox || !isEventTargetChildOfElement(event, this.checkboxElem)) return;
+
+    this.bqFocus.emit(this.el);
+  }
+
+  @Listen('bqBlur')
+  onCheckboxBlur(event: CustomEvent) {
+    if (!this.checkbox || !isEventTargetChildOfElement(event, this.checkboxElem)) return;
+
+    this.bqBlur.emit(this.el);
   }
 
   // Public methods API
@@ -180,6 +213,38 @@ export class BqOption {
     return this.disabled || this.hidden;
   }
 
+  private renderOptionContent = (displayClass: 'flex' | 'inline-flex') => (
+    <Fragment>
+      <span
+        class={{
+          [`bq-option__prefix me-[--bq-option--gap-start] ${displayClass} items-center`]: true,
+          '!hidden': !this.hasPrefix,
+        }}
+        part="prefix"
+        ref={(elem) => {
+          this.prefixElem = elem;
+        }}
+      >
+        <slot name="prefix" onSlotchange={this.handleSlotChange} />
+      </span>
+      <span class="bq-option__label" part="label">
+        <slot />
+      </span>
+      <span
+        class={{
+          [`bq-option__suffix ms-[--bq-option--gap-end] ml-auto ${displayClass} items-center`]: true,
+          '!hidden': !this.hasSuffix,
+        }}
+        part="suffix"
+        ref={(elem) => {
+          this.suffixElem = elem;
+        }}
+      >
+        <slot name="suffix" onSlotchange={this.handleSlotChange} />
+      </span>
+    </Fragment>
+  );
+
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -192,47 +257,40 @@ export class BqOption {
         aria-selected={this.selected ? 'true' : 'false'}
         role="option"
       >
-        <button
-          class={{
-            'bq-option': true,
-            active: !this.disabled && this.selected,
-          }}
-          disabled={this.disabled}
-          onBlur={this.onBlur}
-          onClick={this.onClick}
-          onFocus={this.onFocus}
-          part="base"
-          tabindex={this.isDisabledOrHidden ? '-1' : '0'}
-          type="button"
-        >
-          <span
-            class={{
-              'bq-option__prefix me-[--bq-option--gap-start] flex items-center': true,
-              '!hidden': !this.hasPrefix,
+        {this.checkbox ? (
+          <bq-checkbox
+            aria-label={this.value || 'option'}
+            checked={this.selected}
+            class="bq-option__checkbox"
+            disabled={this.isDisabledOrHidden}
+            name={this.value || 'option'}
+            exportparts="base:checkbox-base,control:checkbox-control,input:checkbox-input,checkbox:checkbox-checkbox,label:checkbox-label"
+            part="base"
+            ref={(element) => {
+              this.checkboxElem = element;
             }}
-            part="prefix"
-            ref={(elem) => {
-              this.prefixElem = elem;
-            }}
+            value={this.value || 'option'}
+            backgroundOnHover
           >
-            <slot name="prefix" onSlotchange={this.handleSlotChange} />
-          </span>
-          <span class="bq-option__label" part="label">
-            <slot />
-          </span>
-          <span
+            {this.renderOptionContent('inline-flex')}
+          </bq-checkbox>
+        ) : (
+          <button
             class={{
-              'bq-option__suffix ms-[--bq-option--gap-end] ml-auto flex items-center': true,
-              '!hidden': !this.hasSuffix,
+              'bq-option': true,
+              active: !this.disabled && this.selected,
             }}
-            part="suffix"
-            ref={(elem) => {
-              this.suffixElem = elem;
-            }}
+            disabled={this.disabled}
+            onBlur={this.onBlur}
+            onClick={this.onClick}
+            onFocus={this.onFocus}
+            part="base"
+            tabindex={this.isDisabledOrHidden ? '-1' : '0'}
+            type="button"
           >
-            <slot name="suffix" onSlotchange={this.handleSlotChange} />
-          </span>
-        </button>
+            {this.renderOptionContent('flex')}
+          </button>
+        )}
       </Host>
     );
   }

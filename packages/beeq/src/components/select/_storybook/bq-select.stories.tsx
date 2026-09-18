@@ -51,6 +51,7 @@ const meta: Meta = {
     readonly: { control: 'boolean' },
     required: { control: 'boolean' },
     'same-width': { control: 'boolean' },
+    'show-checkboxes': { control: 'boolean' },
     skidding: { control: 'number' },
     strategy: { control: 'select', options: ['fixed', 'absolute'] },
     'validation-status': { control: 'select', options: [...INPUT_VALIDATION] },
@@ -89,6 +90,7 @@ const meta: Meta = {
     placement: 'bottom',
     placeholder: 'Placeholder',
     'same-width': false,
+    'show-checkboxes': false,
     skidding: 0,
     strategy: 'fixed',
     readonly: false,
@@ -99,28 +101,36 @@ const meta: Meta = {
     // Not part of the public API, so we don't want to expose it in the docs
     options: `
       <bq-option value="running">
-        <bq-icon slot="prefix" name="sneaker-move"></bq-icon> Running
+        <bq-icon slot="prefix" name="sneaker-move"></bq-icon>
+        Running
       </bq-option>
       <bq-option value="hiking">
-        <bq-icon slot="prefix" name="boot"></bq-icon> Hiking
+        <bq-icon slot="prefix" name="boot"></bq-icon>
+        Hiking
       </bq-option>
       <bq-option value="biking">
-        <bq-icon slot="prefix" name="person-simple-bike"></bq-icon> Biking
+        <bq-icon slot="prefix" name="person-simple-bike"></bq-icon>
+        Biking
       </bq-option>
       <bq-option value="swimming">
-        <bq-icon slot="prefix" name="swimming-pool"></bq-icon> Swimming
+        <bq-icon slot="prefix" name="swimming-pool"></bq-icon>
+        Swimming
       </bq-option>
       <bq-option value="pizza">
-        <bq-icon slot="prefix" name="pizza"></bq-icon> Pizza
+        <bq-icon slot="prefix" name="pizza"></bq-icon>
+        Pizza
       </bq-option>
       <bq-option value="hamburger">
-        <bq-icon slot="prefix" name="hamburger"></bq-icon> Hamburger
+        <bq-icon slot="prefix" name="hamburger"></bq-icon>
+        Hamburger
       </bq-option>
       <bq-option value="cookie">
-        <bq-icon slot="prefix" name="cookie"></bq-icon> Cookie
+        <bq-icon slot="prefix" name="cookie"></bq-icon>
+        Cookie
       </bq-option>
       <bq-option value="ice-cream">
-        <bq-icon slot="prefix" name="ice-cream"></bq-icon> Ice-cream
+        <bq-icon slot="prefix" name="ice-cream"></bq-icon>
+        Ice-cream
       </bq-option>
     `,
   },
@@ -210,6 +220,7 @@ const Template = (args: Args) => {
       ?readonly=${args.readonly}
       ?required=${args.required}
       ?same-width=${args['same-width']}
+      ?show-checkboxes=${args['show-checkboxes']}
       skidding=${args.skidding}
       strategy=${args.strategy}
       validation-status=${args['validation-status']}
@@ -309,6 +320,16 @@ export const Multiple: Story = {
   args: {
     'keep-open-on-select': true,
     multiple: true,
+    value: ['running', 'biking', 'pizza'],
+  },
+};
+
+export const MultipleCheckboxes: Story = {
+  render: Template,
+  args: {
+    'keep-open-on-select': true,
+    multiple: true,
+    'show-checkboxes': true,
     value: ['running', 'biking', 'pizza'],
   },
 };

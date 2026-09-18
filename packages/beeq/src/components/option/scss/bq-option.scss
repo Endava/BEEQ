@@ -35,3 +35,17 @@
   @apply inline-block flex-auto overflow-hidden text-ellipsis text-start whitespace-nowrap;
   @apply pe-[--bq-option-label--padding-end] ps-[--bq-option-label--padding-start];
 }
+
+.bq-option__checkbox,
+.bq-option__checkbox::part(base),
+.bq-option__checkbox::part(label) {
+  @apply is-full;
+}
+
+:host([selected]) .bq-option__checkbox::part(base) {
+  @apply bg-ui-brand-alt;
+}
+
+:host([selected]) .bq-option__checkbox::part(label) {
+  @apply text-brand;
+}

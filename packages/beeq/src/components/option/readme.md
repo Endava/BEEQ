@@ -14,6 +14,7 @@ It can be an element of the navigation system that allows users to select differ
 
 | Property       | Attribute       | Description                                                                              | Type      | Default     |
 | -------------- | --------------- | ---------------------------------------------------------------------------------------- | --------- | ----------- |
+| `checkbox`     | `checkbox`      | If true, the option renders as a checkbox option.                                        | `boolean` | `false`     |
 | `disabled`     | `disabled`      | If true, the option is disabled.                                                         | `boolean` | `false`     |
 | `displayValue` | `display-value` | The display value of the option. It can be used to override the default displayed value. | `string`  | `undefined` |
 | `hidden`       | `hidden`        | If true, the option is hidden.                                                           | `boolean` | `false`     |
@@ -42,13 +43,31 @@ It can be an element of the navigation system that allows users to select differ
 
 ## Shadow Parts
 
-| Part       | Description                                                                |
-| ---------- | -------------------------------------------------------------------------- |
-| `"base"`   | The component's internal wrapper.                                          |
-| `"label"`  | The `span` element in which the label text is displayed.                   |
-| `"prefix"` | The `span` element in which the prefix is displayed (generally `bq-icon`). |
-| `"suffix"` | The `span` element in which the suffix is displayed (generally `bq-icon`). |
+| Part                  | Description                                                                |
+| --------------------- | -------------------------------------------------------------------------- |
+| `"base"`              | The component's internal wrapper.                                          |
+| `"checkbox-base"`     | The checkbox base wrapper exported from the nested `bq-checkbox`.          |
+| `"checkbox-checkbox"` | The checkbox indicator exported from the nested `bq-checkbox`.             |
+| `"checkbox-control"`  | The checkbox control wrapper exported from the nested `bq-checkbox`.       |
+| `"checkbox-input"`    | The native checkbox input exported from the nested `bq-checkbox`.          |
+| `"checkbox-label"`    | The checkbox label exported from the nested `bq-checkbox`.                 |
+| `"label"`             | The `span` element in which the label text is displayed.                   |
+| `"prefix"`            | The `span` element in which the prefix is displayed (generally `bq-icon`). |
+| `"suffix"`            | The `span` element in which the suffix is displayed (generally `bq-icon`). |
 
+
+## Dependencies
+
+### Depends on
+
+- [bq-checkbox](../checkbox)
+
+### Graph
+```mermaid
+graph TD;
+  bq-option --> bq-checkbox
+  style bq-option fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

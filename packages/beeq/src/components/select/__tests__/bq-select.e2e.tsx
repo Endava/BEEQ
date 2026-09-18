@@ -13,6 +13,10 @@ const getClearButton = (select: HTMLBqSelectElement) =>
   select.shadowRoot?.querySelector('bq-button')?.shadowRoot?.querySelector<HTMLButtonElement>('[part="button"]');
 const getOptionButton = (option: HTMLBqOptionElement) =>
   option.shadowRoot?.querySelector<HTMLButtonElement>('[part="base"]');
+const getOptionCheckbox = (option: HTMLBqOptionElement) =>
+  option.shadowRoot?.querySelector<HTMLBqCheckboxElement>('bq-checkbox');
+const getOptionCheckboxBase = (option: HTMLBqOptionElement) =>
+  getOptionCheckbox(option)?.shadowRoot?.querySelector<HTMLElement>('[part="base"]');
 const getHelperText = (select: HTMLBqSelectElement) =>
   select.shadowRoot?.querySelector<HTMLElement>('[part="helper-text"]');
 
@@ -153,6 +157,37 @@ describe('bq-select', () => {
     expect(displayTags).toHaveLength(2);
     expect(displayTags[0].textContent?.trim()).toContain('Option 1');
     expect(displayTags[1].textContent?.trim()).toContain('Option 2');
+  });
+
+  it('should render and toggle checkbox options when enabled', async () => {
+    const { root, spyOnEvent, waitForChanges } = await render(
+      <bq-select name="bq-select" keepOpenOnSelect multiple showCheckboxes>
+        <bq-option value="1">Option 1</bq-option>
+        <bq-option value="2">Option 2</bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const option = root.querySelector('bq-option[value="2"]') as HTMLBqOptionElement;
+    const bqSelect = spyOnEvent('bqSelect');
+
+    await waitForChanges();
+
+    expect(getOptionCheckbox(option)).not.toBeNull();
+    expect(getOptionButton(option)).toBeUndefined();
+
+    await userEvent.click(getOptionCheckboxBase(option));
+    await waitForChanges();
+
+    expect(option).toHaveAttribute('selected');
+    expect(select.value).toEqual(['2']);
+    expect(bqSelect).toHaveReceivedEventTimes(1);
+
+    await userEvent.click(getOptionCheckboxBase(option));
+    await waitForChanges();
+
+    expect(option).not.toHaveAttribute('selected');
+    expect(select.value).toEqual([]);
+    expect(bqSelect).toHaveReceivedEventTimes(2);
   });
 
   it('should rerender when value changes externally', async () => {
