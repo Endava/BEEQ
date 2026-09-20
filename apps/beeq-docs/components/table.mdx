@@ -63,6 +63,10 @@ Tables organize information into rows and columns so people can compare values, 
   <Card title="Bordered layout">
     Use `.bordered` when each cell needs an explicit boundary, such as in financial or spreadsheet-style tables where column delineation helps readability.
   </Card>
+
+  <Card title="Large datasets">
+    BEEQ does not ship a pagination, sorting, filtering, or virtualization component. Render only the current page of rows yourself, then compose page controls from `bq-button`, `bq-select`, or `bq-input` to let users move between pages.
+  </Card>
 </CardGroup>
 
 ## Anatomy
@@ -789,6 +793,181 @@ Add the `bordered` class to draw explicit borders around each cell and the table
     ```
   </CodeGroup>
 </CodeLivePreview>
+
+### Pagination and large datasets
+
+BEEQ does not ship a pagination, sorting, filtering, or virtualization component, and the `bq-table` class does not read from a data source. You render the current page of rows yourself in your framework, then build the page controls from existing BEEQ components — typically `bq-button` for previous and next, and `bq-select` for the page size.
+
+<CodeLivePreview mode="iframe" height="22rem" removePadding code={`
+  <style>
+    body { padding: var(--bq-spacing-m); }
+    .pager {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--bq-spacing-m);
+      margin-block-start: var(--bq-spacing-m);
+    }
+    .pager__nav { display: flex; align-items: center; gap: var(--bq-spacing-s); }
+    .pager__size { display: flex; align-items: center; gap: var(--bq-spacing-s); }
+    .pager__status { color: var(--bq-text--secondary); font: var(--bq-text-body-s); }
+  </style>
+
+  <table class="bq-table" id="tbl">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody id="rows"></tbody>
+  </table>
+
+  <div class="pager">
+    <div class="pager__size">
+      <span class="pager__status">Rows per page</span>
+      <bq-select id="size" value="5" style="min-inline-size: 5rem;">
+        <bq-option value="5">5</bq-option>
+        <bq-option value="10">10</bq-option>
+        <bq-option value="25">25</bq-option>
+      </bq-select>
+    </div>
+    <div class="pager__nav">
+      <span class="pager__status" id="status"></span>
+      <bq-button id="prev" appearance="secondary" size="small">Previous</bq-button>
+      <bq-button id="next" appearance="secondary" size="small">Next</bq-button>
+    </div>
+  </div>
+
+  <script>
+    (() => {
+      const data = Array.from({ length: 23 }, (_, i) => ({
+        id: i + 1,
+        name: \`Record \${i + 1}\`,
+        status: i % 2 ? 'Active' : 'Pending',
+      }));
+      let page = 1;
+      let size = 5;
+      const rows = previewRoot.querySelector('#rows');
+      const status = previewRoot.querySelector('#status');
+      const prev = previewRoot.querySelector('#prev');
+      const next = previewRoot.querySelector('#next');
+      const select = previewRoot.querySelector('#size');
+
+      const render = () => {
+        const pages = Math.max(1, Math.ceil(data.length / size));
+        page = Math.min(page, pages);
+        const start = (page - 1) * size;
+        const slice = data.slice(start, start + size);
+        rows.innerHTML = slice.map(r =>
+          \`<tr><td>\${r.id}</td><td>\${r.name}</td><td>\${r.status}</td></tr>\`
+        ).join('');
+        status.textContent = \`Page \${page} of \${pages}\`;
+        prev.disabled = page <= 1;
+        next.disabled = page >= pages;
+      };
+
+      prev.addEventListener('bqClick', () => { page -= 1; render(); });
+      next.addEventListener('bqClick', () => { page += 1; render(); });
+      select.addEventListener('bqSelect', (event) => {
+        size = Number(event.detail.value);
+        page = 1;
+        render();
+      });
+
+      render();
+    })();
+  </script>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <table class="bq-table" id="tbl">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+
+    <div class="pager">
+      <bq-select id="size" value="5">
+        <bq-option value="5">5</bq-option>
+        <bq-option value="10">10</bq-option>
+        <bq-option value="25">25</bq-option>
+      </bq-select>
+      <bq-button id="prev" appearance="secondary" size="small">Previous</bq-button>
+      <bq-button id="next" appearance="secondary" size="small">Next</bq-button>
+    </div>
+
+    <script>
+      const data = fetchYourRows();
+      let page = 1;
+      let size = 5;
+
+      const render = () => {
+        const start = (page - 1) * size;
+        const slice = data.slice(start, start + size);
+        document.querySelector('#rows').innerHTML = slice
+          .map((r) => `<tr><td>${r.id}</td><td>${r.name}</td><td>${r.status}</td></tr>`)
+          .join('');
+      };
+
+      document.querySelector('#prev').addEventListener('bqClick', () => { page -= 1; render(); });
+      document.querySelector('#next').addEventListener('bqClick', () => { page += 1; render(); });
+      document.querySelector('#size').addEventListener('bqSelect', (event) => {
+        size = Number(event.detail.value);
+        page = 1;
+        render();
+      });
+
+      render();
+    </script>
+    ```
+
+    ```jsx React icon="react" expandable
+    import { useMemo, useState } from "react";
+    import { BqButton, BqOption, BqSelect } from "@beeq/react";
+
+    export function PaginatedTable({ data }) {
+      const [page, setPage] = useState(1);
+      const [size, setSize] = useState(5);
+      const pages = Math.max(1, Math.ceil(data.length / size));
+      const rows = useMemo(() => data.slice((page - 1) * size, page * size), [data, page, size]);
+
+      return (
+        <>
+          <table className="bq-table">
+            <thead>
+              <tr><th>ID</th><th>Name</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              {rows.map((r) => (
+                <tr key={r.id}><td>{r.id}</td><td>{r.name}</td><td>{r.status}</td></tr>
+              ))}
+            </tbody>
+          </table>
+
+          <BqSelect value={String(size)} onBqSelect={(event) => { setSize(Number(event.detail.value)); setPage(1); }}>
+            <BqOption value="5">5</BqOption>
+            <BqOption value="10">10</BqOption>
+            <BqOption value="25">25</BqOption>
+          </BqSelect>
+          <BqButton appearance="secondary" size="small" disabled={page <= 1} onBqClick={() => setPage(page - 1)}>Previous</BqButton>
+          <BqButton appearance="secondary" size="small" disabled={page >= pages} onBqClick={() => setPage(page + 1)}>Next</BqButton>
+        </>
+      );
+    }
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Note>
+  Announce page changes for screen reader users. Move focus to the first cell of the new page, or use an `aria-live="polite"` region to say "Page 2 of 5" after each transition.
+</Note>
 
 ## Best practices
 
