@@ -113,7 +113,7 @@ describe('bq-select', () => {
 
   it('should apply checkbox presentation to options added after load', async () => {
     const { root, waitForChanges } = await render(
-      <bq-select name="bq-select" enableCheckboxes>
+      <bq-select name="bq-select" multiple enableCheckboxes>
         <bq-option value="1">Option 1</bq-option>
       </bq-select>,
     );
@@ -127,6 +127,26 @@ describe('bq-select', () => {
     await waitForStable(root);
 
     expect(option.shadowRoot?.querySelector('bq-checkbox')).not.toBeNull();
+  });
+
+  it('should only render checkboxes for multiple selection', async () => {
+    const { root, setProps, waitForChanges } = await render(
+      <bq-select name="bq-select" enableCheckboxes>
+        <bq-option value="1">Option 1</bq-option>
+      </bq-select>,
+    );
+    const option = root.querySelector('bq-option') as HTMLBqOptionElement;
+
+    await waitForChanges();
+    expect(getOptionCheckbox(option)).toBeNull();
+
+    await setProps({ multiple: true });
+    await waitForChanges();
+    expect(getOptionCheckbox(option)).not.toBeNull();
+
+    await setProps({ multiple: false });
+    await waitForChanges();
+    expect(getOptionCheckbox(option)).toBeNull();
   });
 
   it('should synchronize selected and unselected checkbox states', async () => {
