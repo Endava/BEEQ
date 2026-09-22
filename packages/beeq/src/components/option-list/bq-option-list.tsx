@@ -66,6 +66,8 @@ export class BqOptionList {
   // =====================================
 
   componentDidLoad() {
+    if (this.el.hasAttribute('role')) return;
+
     this.el.setAttribute('role', 'listbox');
   }
 
@@ -74,8 +76,8 @@ export class BqOptionList {
 
   @Listen('bqClick', { passive: true })
   @Listen('bqEnter', { passive: true })
-  onBqSelect(event: CustomEvent<HTMLElement>) {
-    const { target: item } = event;
+  onBqSelect(event: CustomEvent<HTMLBqOptionElement>) {
+    const { detail: item } = event;
     if (!isHTMLElement(item, 'bq-option') || !isEventTargetChildOfElement(event, this.el)) return;
 
     this.bqSelect.emit({ item, value: item.value });

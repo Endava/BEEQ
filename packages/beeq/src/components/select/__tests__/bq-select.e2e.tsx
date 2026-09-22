@@ -13,6 +13,12 @@ const getClearButton = (select: HTMLBqSelectElement) =>
   select.shadowRoot?.querySelector('bq-button')?.shadowRoot?.querySelector<HTMLButtonElement>('[part="button"]');
 const getOptionButton = (option: HTMLBqOptionElement) =>
   option.shadowRoot?.querySelector<HTMLButtonElement>('button[part="base"]');
+const getOptionSelectionControl = (option: HTMLBqOptionElement) =>
+  option.shadowRoot?.querySelector<HTMLElement>('[part="base"]');
+const getOptionExpandButton = (option: HTMLBqOptionElement) =>
+  option.shadowRoot?.querySelector<HTMLBqButtonElement>('[part="expand"]');
+const getOptionExpandButtonControl = (option: HTMLBqOptionElement) =>
+  getOptionExpandButton(option)?.shadowRoot?.querySelector<HTMLButtonElement>('[part="button"]');
 const getOptionCheckbox = (option: HTMLBqOptionElement) =>
   option.shadowRoot?.querySelector<HTMLBqCheckboxElement>('bq-checkbox');
 const getOptionCheckboxInput = (option: HTMLBqOptionElement) =>
@@ -23,6 +29,15 @@ const getOptionCheckboxMark = (option: HTMLBqOptionElement) =>
   getOptionCheckbox(option)?.shadowRoot?.querySelector<HTMLElement>('[part="checkbox"]');
 const getHelperText = (select: HTMLBqSelectElement) =>
   select.shadowRoot?.querySelector<HTMLElement>('[part="helper-text"]');
+const setDropdownOpen = (select: HTMLBqSelectElement, open: boolean) => {
+  getDropdown(select)?.dispatchEvent(
+    new CustomEvent('bqOpen', {
+      bubbles: true,
+      composed: true,
+      detail: { open },
+    }),
+  );
+};
 
 afterEach(() => {
   vi.restoreAllMocks();
@@ -536,6 +551,260 @@ describe('bq-select', () => {
     expect(bqInput).toHaveReceivedEventTimes(1);
     expect(alphaOption.hidden).toBe(false);
     expect(betaOption.hidden).toBe(true);
+  });
+
+  it('should expand collapsed parents when a nested option matches the search', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-select name="bq-select">
+        <bq-option value="frontend">
+          Frontend
+          <bq-option slot="options" value="framework">
+            Framework
+            <bq-option slot="options" value="react">
+              React
+            </bq-option>
+            <bq-option slot="options" value="stencil">
+              Stencil
+            </bq-option>
+          </bq-option>
+        </bq-option>
+        <bq-option value="backend">Backend</bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const input = getInput(select);
+    const frontendOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="frontend"]');
+    const frameworkOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="framework"]');
+    const reactOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="react"]');
+    const stencilOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="stencil"]');
+    const backendOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="backend"]');
+
+    expect(frontendOption.expanded).toBe(false);
+
+    await userEvent.click(input);
+    await userEvent.fill(input, 'rea');
+    await waitForChanges();
+
+    expect(frontendOption.expanded).toBe(true);
+    expect(frameworkOption.expanded).toBe(true);
+    expect(getOptionExpandButtonControl(frontendOption)).toEqualAttribute('aria-expanded', 'true');
+    expect(getOptionExpandButtonControl(frameworkOption)).toEqualAttribute('aria-expanded', 'true');
+    expect(frontendOption.hidden).toBe(false);
+    expect(frameworkOption.hidden).toBe(false);
+    expect(reactOption.hidden).toBe(false);
+    expect(stencilOption.hidden).toBe(true);
+    expect(backendOption.hidden).toBe(true);
+
+    setDropdownOpen(select, false);
+    await waitForChanges();
+
+    expect(frontendOption.expanded).toBe(false);
+    expect(frameworkOption.expanded).toBe(false);
+  });
+
+  it('should use tree semantics for nested options', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-select name="bq-select">
+        <bq-option value="frontend">
+          Frontend
+          <bq-option slot="options" value="react">
+            React
+          </bq-option>
+        </bq-option>
+        <bq-option value="backend">Backend</bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const optionList = select.shadowRoot?.querySelector<HTMLBqOptionListElement>('bq-option-list');
+    const frontendOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="frontend"]');
+    const reactOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="react"]');
+    const backendOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="backend"]');
+
+    await waitForChanges();
+    await waitForStable(root);
+
+    expect(getInput(select)).toEqualAttribute('aria-haspopup', 'tree');
+    expect(optionList).toEqualAttribute('role', 'tree');
+    expect(frontendOption).toEqualAttribute('role', 'treeitem');
+    expect(reactOption).toEqualAttribute('role', 'treeitem');
+    expect(backendOption).toEqualAttribute('role', 'treeitem');
+  });
+
+  it('should select nested parent and child labels independently without selecting on expand', async () => {
+    const { root, spyOnEvent, waitForChanges } = await render(
+      <bq-select name="bq-select" keepOpenOnSelect>
+        <bq-option expanded value="frontend">
+          Frontend
+          <bq-option slot="options" value="react">
+            React
+          </bq-option>
+        </bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const frontendOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="frontend"]');
+    const reactOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="react"]');
+    const bqSelect = spyOnEvent('bqSelect');
+
+    await userEvent.click(getControl(select));
+    await waitForChanges();
+
+    await userEvent.click(getOptionExpandButtonControl(frontendOption));
+    await waitForChanges();
+
+    expect(bqSelect).toHaveReceivedEventTimes(0);
+    expect(select.value).toBe('');
+
+    await userEvent.click(getOptionSelectionControl(frontendOption));
+    await waitForChanges();
+
+    expect(frontendOption).toHaveAttribute('selected');
+    expect(reactOption).not.toHaveAttribute('selected');
+    expect(select.value).toBe('frontend');
+    expect(bqSelect).toHaveReceivedEventTimes(1);
+
+    await userEvent.click(getOptionExpandButtonControl(frontendOption));
+    await waitForChanges();
+
+    expect(bqSelect).toHaveReceivedEventTimes(1);
+
+    await userEvent.click(getOptionSelectionControl(reactOption));
+    await waitForChanges();
+
+    expect(frontendOption).not.toHaveAttribute('selected');
+    expect(reactOption).toHaveAttribute('selected');
+    expect(select.value).toBe('react');
+    expect(bqSelect).toHaveReceivedEventTimes(2);
+  });
+
+  it('should select the focused nested child with Enter and Space without selecting its parent', async () => {
+    const { root, setProps, spyOnEvent, waitForChanges } = await render(
+      <bq-select name="bq-select" keepOpenOnSelect>
+        <bq-option expanded value="frontend">
+          Frontend
+          <bq-option slot="options" value="react">
+            React
+          </bq-option>
+        </bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const frontendOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="frontend"]');
+    const reactOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="react"]');
+    const bqSelect = spyOnEvent('bqSelect');
+
+    await userEvent.click(getControl(select));
+    await waitForChanges();
+
+    reactOption.focus();
+    await userEvent.keyboard('{Enter}');
+    await waitForChanges();
+
+    expect(frontendOption).not.toHaveAttribute('selected');
+    expect(reactOption).toHaveAttribute('selected');
+    expect(bqSelect).toHaveReceivedEventTimes(1);
+
+    await setProps({ value: '' });
+    await waitForChanges();
+    reactOption.focus();
+    await userEvent.keyboard(' ');
+    await waitForChanges();
+
+    expect(frontendOption).not.toHaveAttribute('selected');
+    expect(reactOption).toHaveAttribute('selected');
+    expect(bqSelect).toHaveReceivedEventTimes(2);
+  });
+
+  it('should retain search expansion for a selected descendant unless the user collapses it', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-select name="bq-select" value="react">
+        <bq-option value="frontend">
+          Frontend
+          <bq-option slot="options" value="react">
+            React
+          </bq-option>
+        </bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const input = getInput(select);
+    const frontendOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="frontend"]');
+    const reactOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="react"]');
+
+    await waitForStable(root);
+    await userEvent.click(input);
+    await userEvent.fill(input, 'rea');
+    await waitForChanges();
+
+    expect(reactOption.selected).toBe(true);
+    expect(frontendOption.expanded).toBe(true);
+
+    setDropdownOpen(select, false);
+    await waitForChanges();
+
+    expect(frontendOption.expanded).toBe(true);
+
+    setDropdownOpen(select, true);
+    await waitForChanges();
+    await userEvent.click(getOptionExpandButtonControl(frontendOption));
+    await waitForStable(root);
+    setDropdownOpen(select, false);
+    await waitForChanges();
+
+    expect(frontendOption.expanded).toBe(false);
+  });
+
+  it('should identify the selected child on a collapsed parent in single select mode', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-select name="bq-select" value="react">
+        <bq-option value="frontend">
+          Frontend
+          <bq-option slot="options" value="react">
+            React
+          </bq-option>
+        </bq-option>
+      </bq-select>,
+    );
+    const parentOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="frontend"]');
+    const childOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="react"]');
+    const selectedDescendantStatus =
+      parentOption.shadowRoot?.querySelector<HTMLElement>('[part="selected-descendant"]');
+
+    await waitForChanges();
+    await waitForStable(root);
+
+    expect(parentOption).toEqualAttribute('aria-selected', 'false');
+    expect(parentOption).toEqualAttribute('aria-label', 'Frontend, React selected');
+    expect(childOption).toHaveAttribute('selected');
+    expect(selectedDescendantStatus).toHaveTextContent('React selected');
+  });
+
+  it('should preserve a user expansion after search closes', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-select name="bq-select">
+        <bq-option value="frontend">
+          Frontend
+          <bq-option slot="options" value="react">
+            React
+          </bq-option>
+        </bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const input = getInput(select);
+    const frontendOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="frontend"]');
+
+    await userEvent.click(input);
+    await userEvent.fill(input, 'rea');
+    await waitForChanges();
+    await userEvent.click(getOptionExpandButtonControl(frontendOption));
+    await waitForStable(root);
+    await userEvent.click(getOptionExpandButtonControl(frontendOption));
+    await waitForStable(root);
+    setDropdownOpen(select, false);
+    await waitForChanges();
+
+    expect(frontendOption.expanded).toBe(true);
   });
 
   it('should disable typing while allowing option selection when disableSearch is true', async () => {

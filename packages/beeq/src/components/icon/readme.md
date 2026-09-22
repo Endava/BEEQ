@@ -48,6 +48,7 @@ It is a small graphical element that is used to enhance the user interface and i
  - [bq-empty-state](../empty-state)
  - [bq-input](../input)
  - [bq-notification](../notification)
+ - [bq-option](../option)
  - [bq-select](../select)
  - [bq-switch](../switch)
  - [bq-tag](../tag)
@@ -65,6 +66,7 @@ graph TD;
   bq-empty-state --> bq-icon
   bq-input --> bq-icon
   bq-notification --> bq-icon
+  bq-option --> bq-icon
   bq-select --> bq-icon
   bq-switch --> bq-icon
   bq-tag --> bq-icon

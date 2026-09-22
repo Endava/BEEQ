@@ -8,6 +8,14 @@ const getOptionCheckbox = (option: HTMLBqOptionElement) =>
   option.shadowRoot?.querySelector<HTMLBqCheckboxElement>('bq-checkbox');
 const getCheckboxInput = (checkbox?: HTMLBqCheckboxElement) => checkbox?.shadowRoot?.querySelector('[part="input"]');
 const getCheckboxBase = (checkbox?: HTMLBqCheckboxElement) => checkbox?.shadowRoot?.querySelector('[part="base"]');
+const getExpandButton = (option: HTMLBqOptionElement) =>
+  option.shadowRoot?.querySelector<HTMLBqButtonElement>('[part="expand"]');
+const getExpandButtonControl = (option: HTMLBqOptionElement) =>
+  getExpandButton(option)?.shadowRoot?.querySelector<HTMLButtonElement>('[part="button"]');
+const getNestedOptions = (option: HTMLBqOptionElement) =>
+  option.shadowRoot?.querySelector<HTMLElement>('[part="options"]');
+const getSelectedDescendantStatus = (option: HTMLBqOptionElement) =>
+  option.shadowRoot?.querySelector<HTMLElement>('[part="selected-descendant"]');
 
 describe('bq-option', () => {
   it('should render', async () => {
@@ -231,8 +239,145 @@ describe('bq-option', () => {
   it('should handle `selected` property', async () => {
     const { root } = await render(<bq-option selected>Option 1</bq-option>);
 
-    const bqOption = root.shadowRoot?.querySelector('button[part="base"]');
+    const optionItem = root.shadowRoot?.querySelector('[part="item"]');
 
-    expect(bqOption).toHaveClass('active');
+    expect(optionItem).not.toBeNull();
+    expect(root).toHaveAttribute('selected');
+  });
+
+  it('should identify a selected nested option without selecting its collapsed parent', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-option value="parent">
+        Parent
+        <bq-option slot="options" value="child">
+          Child
+        </bq-option>
+      </bq-option>,
+    );
+    const option = root as HTMLBqOptionElement;
+    const child = root.querySelector<HTMLBqOptionElement>('bq-option[value="child"]');
+
+    child.selected = true;
+    await waitForChanges();
+    await waitForStable(root);
+
+    expect(option).toEqualAttribute('aria-selected', 'false');
+    expect(option).toEqualAttribute('aria-label', 'Parent, Child selected');
+    expect(getSelectedDescendantStatus(option)).toHaveTextContent('Child selected');
+
+    option.expanded = true;
+    await waitForChanges();
+
+    expect(option).not.toHaveAttribute('aria-label');
+    expect(getSelectedDescendantStatus(option)).toBeNull();
+  });
+
+  it('should expand and collapse nested options without changing selection', async () => {
+    const { root, setProps, spyOnEvent, waitForChanges } = await render(
+      <bq-option value="parent">
+        Parent
+        <bq-option slot="options" value="child">
+          Child
+        </bq-option>
+      </bq-option>,
+    );
+    const option = root as HTMLBqOptionElement;
+    const expandButtonControl = getExpandButtonControl(option);
+    const bqClick = spyOnEvent('bqClick');
+
+    await waitForChanges();
+
+    expect(option).not.toHaveAttribute('expanded');
+    expect(expandButtonControl).toEqualAttribute('aria-expanded', 'false');
+    expect(getNestedOptions(option)).toHaveClass('!hidden');
+
+    await userEvent.click(expandButtonControl);
+    await waitForChanges();
+
+    expect(option).toHaveAttribute('expanded');
+    expect(option).not.toHaveAttribute('selected');
+    expect(expandButtonControl).toEqualAttribute('aria-expanded', 'true');
+    expect(getNestedOptions(option)).not.toHaveClass('!hidden');
+    expect(bqClick).toHaveReceivedEventTimes(0);
+
+    await setProps({ expanded: false });
+    await waitForChanges();
+
+    expect(expandButtonControl).toEqualAttribute('aria-expanded', 'false');
+    expect(getNestedOptions(option)).toHaveClass('!hidden');
+  });
+
+  it('should expand nested options with Enter without selecting the parent', async () => {
+    const { root, spyOnEvent, waitForChanges } = await render(
+      <bq-option value="parent">
+        Parent
+        <bq-option slot="options" value="child">
+          Child
+        </bq-option>
+      </bq-option>,
+    );
+    const option = root as HTMLBqOptionElement;
+    const expandButtonControl = getExpandButtonControl(option);
+    const bqClick = spyOnEvent('bqClick');
+
+    await waitForChanges();
+    await userEvent.click(expandButtonControl);
+    await waitForChanges();
+    await userEvent.keyboard('{Enter}');
+    await waitForChanges();
+
+    expect(expandButtonControl).toEqualAttribute('aria-expanded', 'false');
+    expect(option).not.toHaveAttribute('selected');
+    expect(bqClick).toHaveReceivedEventTimes(0);
+
+    await userEvent.keyboard(' ');
+    await waitForChanges();
+
+    expect(expandButtonControl).toEqualAttribute('aria-expanded', 'true');
+    expect(option).not.toHaveAttribute('selected');
+    expect(bqClick).toHaveReceivedEventTimes(0);
+  });
+
+  it('should use tree semantics for nested options', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-option value="parent">
+        Parent
+        <bq-option slot="options" value="child">
+          Child
+        </bq-option>
+      </bq-option>,
+    );
+    const option = root as HTMLBqOptionElement;
+    const child = root.querySelector<HTMLBqOptionElement>('bq-option[value="child"]');
+    const expandButtonControl = getExpandButtonControl(option);
+
+    await waitForChanges();
+    await waitForStable(root);
+
+    expect(option).toEqualAttribute('role', 'treeitem');
+    expect(option).toEqualAttribute('aria-expanded', 'false');
+    expect(child).toEqualAttribute('role', 'treeitem');
+    expect(getNestedOptions(option)).toEqualAttribute('role', 'group');
+    expect(expandButtonControl).toEqualAttribute('tabindex', '-1');
+  });
+
+  it('should render an optional expand label', async () => {
+    const { root } = await render(
+      <bq-option value="parent">
+        Parent
+        <span slot="expand-label">2 levels</span>
+        <bq-option slot="options" value="child">
+          Child
+        </bq-option>
+      </bq-option>,
+    );
+    const option = root as HTMLBqOptionElement;
+    const expandLabelSlot = option.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="expand-label"]');
+
+    await waitForStable(root);
+
+    expect(getTextContent(expandLabelSlot, { recurse: true })).toBe('2 levels');
+    expect(getExpandButton(option)?.onlyIcon).toBe(false);
+    expect(getExpandButtonControl(option)).toEqualAttribute('aria-label', 'Expand Parent');
   });
 });

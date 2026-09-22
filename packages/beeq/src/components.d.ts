@@ -1649,9 +1649,12 @@ export namespace Components {
      * @documentation https://storybook.beeq.design/?path=/story/components-option--with-option-group
      * @status stable
      * @dependency bq-checkbox
+     * @dependency bq-button
+     * @dependency bq-icon
      * @attr {boolean} disabled - If true, the option is disabled.
      * @attr {boolean} hidden - If true, the option is hidden.
      * @attr {boolean} checkbox - If true, the option renders as a checkbox option.
+     * @attr {boolean} expanded - If true, nested options are displayed.
      * @attr {string} value - A string representing the value of the option. Can be used to identify the item.
      * @attr {boolean} selected - If true, the option is selected and active.
      * @event bqBlur - Handler to be called when item loses focus.
@@ -1687,6 +1690,11 @@ export namespace Components {
          */
         "displayValue"?: string;
         /**
+          * If true, nested options are displayed.
+          * @default false
+         */
+        "expanded": boolean;
+        /**
           * If true, the option is hidden.
           * @default false
          */
@@ -1696,6 +1704,10 @@ export namespace Components {
           * @default false
          */
         "selected": boolean;
+        /**
+          * @default false
+         */
+        "tree": boolean;
         /**
           * A string representing the value of the option. Can be used to identify the item
          */
@@ -4408,9 +4420,12 @@ declare global {
      * @documentation https://storybook.beeq.design/?path=/story/components-option--with-option-group
      * @status stable
      * @dependency bq-checkbox
+     * @dependency bq-button
+     * @dependency bq-icon
      * @attr {boolean} disabled - If true, the option is disabled.
      * @attr {boolean} hidden - If true, the option is hidden.
      * @attr {boolean} checkbox - If true, the option renders as a checkbox option.
+     * @attr {boolean} expanded - If true, nested options are displayed.
      * @attr {string} value - A string representing the value of the option. Can be used to identify the item.
      * @attr {boolean} selected - If true, the option is selected and active.
      * @event bqBlur - Handler to be called when item loses focus.
@@ -7221,9 +7236,12 @@ declare namespace LocalJSX {
      * @documentation https://storybook.beeq.design/?path=/story/components-option--with-option-group
      * @status stable
      * @dependency bq-checkbox
+     * @dependency bq-button
+     * @dependency bq-icon
      * @attr {boolean} disabled - If true, the option is disabled.
      * @attr {boolean} hidden - If true, the option is hidden.
      * @attr {boolean} checkbox - If true, the option renders as a checkbox option.
+     * @attr {boolean} expanded - If true, nested options are displayed.
      * @attr {string} value - A string representing the value of the option. Can be used to identify the item.
      * @attr {boolean} selected - If true, the option is selected and active.
      * @event bqBlur - Handler to be called when item loses focus.
@@ -7259,6 +7277,11 @@ declare namespace LocalJSX {
          */
         "displayValue"?: string;
         /**
+          * If true, nested options are displayed.
+          * @default false
+         */
+        "expanded"?: boolean;
+        /**
           * If true, the option is hidden.
           * @default false
          */
@@ -7284,6 +7307,10 @@ declare namespace LocalJSX {
           * @default false
          */
         "selected"?: boolean;
+        /**
+          * @default false
+         */
+        "tree"?: boolean;
         /**
           * A string representing the value of the option. Can be used to identify the item
          */
@@ -9153,7 +9180,9 @@ declare namespace LocalJSX {
         "disabled": boolean;
         "checkbox": boolean;
         "displayValue": string;
+        "expanded": boolean;
         "selected": boolean;
+        "tree": boolean;
         "value": string;
     }
     interface BqOptionListAttributes {
@@ -10176,9 +10205,12 @@ declare module "@stencil/core" {
              * @documentation https://storybook.beeq.design/?path=/story/components-option--with-option-group
              * @status stable
              * @dependency bq-checkbox
+             * @dependency bq-button
+             * @dependency bq-icon
              * @attr {boolean} disabled - If true, the option is disabled.
              * @attr {boolean} hidden - If true, the option is hidden.
              * @attr {boolean} checkbox - If true, the option renders as a checkbox option.
+             * @attr {boolean} expanded - If true, nested options are displayed.
              * @attr {string} value - A string representing the value of the option. Can be used to identify the item.
              * @attr {boolean} selected - If true, the option is selected and active.
              * @event bqBlur - Handler to be called when item loses focus.

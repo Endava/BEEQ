@@ -145,6 +145,10 @@ export class BqSelect {
 
   private debounceQuery: TDebounce<void>;
   private debounceInput: TDebounce<void>;
+  private expansionObserver?: MutationObserver;
+  private restoringSearchExpandedOptions = new WeakSet<HTMLBqOptionElement>();
+  private searchExpandedOptions = new Set<HTMLBqOptionElement>();
+  private userExpandedOptions = new Map<HTMLBqOptionElement, boolean>();
 
   private fallbackInputId = 'select';
 
@@ -163,6 +167,7 @@ export class BqSelect {
   @State() selectedOptions: HTMLBqOptionElement[] = [];
 
   @State() hasLabel = false;
+  @State() hasNestedOptions = false;
   @State() hasPrefix = false;
   @State() hasSuffix = false;
   @State() hasValue = false;
@@ -342,11 +347,16 @@ export class BqSelect {
   componentDidLoad() {
     this.handleSlotChange();
     this.syncOptionPresentation();
+    this.observeOptionExpansion();
 
     if (this.multiple && Array.isArray(this.value)) {
       this.selectedOptions = this.options.filter((item) => this.value.includes(item.value));
     }
     this.handleValueChange();
+  }
+
+  disconnectedCallback() {
+    this.expansionObserver?.disconnect();
   }
 
   formAssociatedCallback() {
@@ -370,6 +380,7 @@ export class BqSelect {
     if (!ev.composedPath().includes(this.el)) return;
 
     this.open = ev.detail.open;
+    if (!this.open) this.restoreSearchExpansion();
   }
 
   @Listen('bqFocus', { capture: true })
@@ -524,15 +535,23 @@ export class BqSelect {
     }
 
     this.debounceQuery = debounce(() => {
+      const query = trimmedValue.toLowerCase();
+      const matchesByOption = new Map<HTMLBqOptionElement, boolean>();
+
       this.options.forEach((item: HTMLBqOptionElement) => {
-        // We want to get the entire inner text of the option element
-        // to allow searching across the entire text, not just the first level
-        const optionLabel = item.innerText?.trim().toLowerCase();
+        // We want to get the full option text to allow searching across nested options.
+        const optionLabel = item.textContent?.trim().toLowerCase();
         const optionValue = item.value?.toLowerCase();
-        // Show item if EITHER label OR value matches
-        const matches =
-          optionLabel.includes(trimmedValue.toLowerCase()) || optionValue.includes(trimmedValue.toLowerCase());
+        // Show item if EITHER label OR value matches.
+        matchesByOption.set(item, optionLabel.includes(query) || optionValue.includes(query));
+      });
+
+      matchesByOption.forEach((matches, item) => {
         item.hidden = !matches;
+
+        if (matches) {
+          this.expandOptionAncestors(item);
+        }
       });
     }, this.debounceTime);
 
@@ -608,6 +627,7 @@ export class BqSelect {
     this.hasPrefix = hasSlotContent(this.prefixElem);
     this.hasSuffix = hasSlotContent(this.suffixElem);
     this.hasHelperText = hasSlotContent(this.helperTextElem);
+    this.hasNestedOptions = this.options.some((option) => option.querySelector('bq-option[slot="options"]'));
     this.syncOptionPresentation();
   };
 
@@ -617,9 +637,74 @@ export class BqSelect {
     });
   };
 
+  private expandOptionAncestors = (option: HTMLBqOptionElement) => {
+    let parentOption = option.parentElement?.closest<HTMLBqOptionElement>('bq-option');
+
+    while (parentOption && this.el.contains(parentOption)) {
+      if (!parentOption.expanded) {
+        this.searchExpandedOptions.add(parentOption);
+        parentOption.expanded = true;
+      }
+
+      parentOption = parentOption.parentElement?.closest<HTMLBqOptionElement>('bq-option');
+    }
+  };
+
+  private hasSelectedDescendant = (option: HTMLBqOptionElement) =>
+    this.options.some((item) => item !== option && option.contains(item) && item.selected);
+
+  private handleOptionExpansionMutations = (mutations: MutationRecord[]) => {
+    mutations.forEach((mutation) => {
+      const option = mutation.target as HTMLBqOptionElement;
+
+      if (this.restoringSearchExpandedOptions.has(option)) {
+        this.restoringSearchExpandedOptions.delete(option);
+        return;
+      }
+
+      if (option.expanded && this.searchExpandedOptions.has(option)) return;
+
+      this.searchExpandedOptions.delete(option);
+      this.userExpandedOptions.set(option, option.expanded);
+    });
+  };
+
+  private observeOptionExpansion = () => {
+    this.expansionObserver = new MutationObserver(this.handleOptionExpansionMutations);
+    this.expansionObserver.observe(this.el, {
+      attributeFilter: ['expanded'],
+      attributes: true,
+      subtree: true,
+    });
+  };
+
+  private restoreSearchExpansion = () => {
+    this.searchExpandedOptions.forEach((option) => {
+      if (!this.el.contains(option)) {
+        this.searchExpandedOptions.delete(option);
+        this.userExpandedOptions.delete(option);
+        return;
+      }
+
+      const userExpanded = this.userExpandedOptions.get(option);
+      if (userExpanded !== undefined) {
+        this.searchExpandedOptions.delete(option);
+        option.expanded = userExpanded;
+        return;
+      }
+
+      if (this.hasSelectedDescendant(option)) return;
+
+      this.restoringSearchExpandedOptions.add(option);
+      this.searchExpandedOptions.delete(option);
+      option.expanded = false;
+    });
+  };
+
   private syncOptionPresentation = () => {
     this.options.forEach((option) => {
-      option.checkbox = Boolean(this.enableCheckboxes && this.multiple);
+      option.checkbox = Boolean(this.enableCheckboxes && this.multiple && !this.hasNestedOptions);
+      option.toggleAttribute('tree', this.hasNestedOptions);
     });
   };
 
@@ -879,7 +964,7 @@ export class BqSelect {
                 aria-controls={`bq-options-${this.name}`}
                 aria-disabled={this.disabled ? 'true' : 'false'}
                 aria-expanded={this.open ? 'true' : 'false'}
-                aria-haspopup="listbox"
+                aria-haspopup={this.hasNestedOptions ? 'tree' : 'listbox'}
                 autoCapitalize="off"
                 autoComplete="off"
                 class="bq-select__control--input is-full flex-grow"
@@ -941,11 +1026,10 @@ export class BqSelect {
             </span>
           </div>
           <bq-option-list
-            aria-expanded={this.open ? 'true' : 'false'}
             exportparts="base:option-list"
             id={`bq-options-${this.name}`}
             onBqSelect={this.handleSelect}
-            role="listbox"
+            role={this.hasNestedOptions ? 'tree' : 'listbox'}
           >
             <slot onSlotchange={this.handleSlotChange} />
           </bq-option-list>
