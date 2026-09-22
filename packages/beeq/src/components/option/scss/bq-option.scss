@@ -77,8 +77,6 @@
 
 .bq-option__options {
   @apply m-bs-xs2 ms-[--bq-option--padding-start] flex flex-col gap-y-[--bq-option-group--gapY-list] ps-s;
-
-  border-inline-start: 1px solid var(--bq-stroke--primary);
 }
 
 :host([slot='options']) {
@@ -94,6 +92,15 @@
   inline-size: var(--bq-option--padding-start);
   border-block-end: 1px solid var(--bq-stroke--primary);
   border-inline-start: 1px solid var(--bq-stroke--primary);
-  border-end-start-radius: var(--bq-option--border-radius);
+  margin-inline-start: -1px;
+}
+
+:host([slot='options']:not(:last-child))::after {
+  content: '';
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: calc(-1 * var(--bq-option--padding-start));
+  block-size: calc(50% + var(--bq-option-group--gapY-list));
+  border-inline-start: 1px solid var(--bq-stroke--primary);
   margin-inline-start: -1px;
 }
