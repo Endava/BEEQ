@@ -524,15 +524,23 @@ export class BqSelect {
     }
 
     this.debounceQuery = debounce(() => {
+      const query = trimmedValue.toLowerCase();
+      const matchesByOption = new Map<HTMLBqOptionElement, boolean>();
+
       this.options.forEach((item: HTMLBqOptionElement) => {
-        // We want to get the entire inner text of the option element
-        // to allow searching across the entire text, not just the first level
-        const optionLabel = item.innerText?.trim().toLowerCase();
+        // We want to get the full option text to allow searching across nested options.
+        const optionLabel = item.textContent?.trim().toLowerCase();
         const optionValue = item.value?.toLowerCase();
-        // Show item if EITHER label OR value matches
-        const matches =
-          optionLabel.includes(trimmedValue.toLowerCase()) || optionValue.includes(trimmedValue.toLowerCase());
+        // Show item if EITHER label OR value matches.
+        matchesByOption.set(item, optionLabel.includes(query) || optionValue.includes(query));
+      });
+
+      matchesByOption.forEach((matches, item) => {
         item.hidden = !matches;
+
+        if (matches) {
+          this.expandOptionAncestors(item);
+        }
       });
     }, this.debounceTime);
 
@@ -615,6 +623,15 @@ export class BqSelect {
     this.options.forEach((item: HTMLBqOptionElement) => {
       item.hidden = false;
     });
+  };
+
+  private expandOptionAncestors = (option: HTMLBqOptionElement) => {
+    let parentOption = option.parentElement?.closest<HTMLBqOptionElement>('bq-option');
+
+    while (parentOption && this.el.contains(parentOption)) {
+      parentOption.expanded = true;
+      parentOption = parentOption.parentElement?.closest<HTMLBqOptionElement>('bq-option');
+    }
   };
 
   private syncOptionPresentation = () => {

@@ -16,6 +16,7 @@ const meta: Meta = {
     disabled: { control: 'boolean' },
     hidden: { control: 'boolean' },
     checkbox: { control: 'boolean' },
+    expanded: { control: 'boolean' },
     selected: { control: 'boolean' },
     // Event handlers
     bqBlur: { action: 'bqBlur' },
@@ -33,6 +34,7 @@ const meta: Meta = {
     disabled: false,
     hidden: false,
     checkbox: false,
+    expanded: false,
     selected: false,
     iconPrefix: undefined,
     iconSuffix: undefined,
@@ -55,6 +57,7 @@ const Template = (args: Args) => {
       ?disabled=${args.disabled}
       ?hidden=${args.hidden}
       ?checkbox=${args.checkbox}
+      ?expanded=${args.expanded}
       ?selected=${args.selected}
       value=${ifDefined(args.value)}
       @bqBlur=${args.bqBlur}
@@ -107,6 +110,19 @@ export const Checkbox: Story = {
         ${Template({ ...args, checkbox: true, selected: true, text: 'Change password', value: 'changepassword' })}
       `,
     })}`,
+};
+
+export const Nested: Story = {
+  render: () => html`
+    <bq-option-list>
+      <bq-option expanded value="frontend">
+        Frontend
+        <span slot="expand-label">2 levels</span>
+        <bq-option slot="options" value="react">React</bq-option>
+        <bq-option slot="options" value="stencil">Stencil</bq-option>
+      </bq-option>
+    </bq-option-list>
+  `,
 };
 
 export const Disabled: Story = {

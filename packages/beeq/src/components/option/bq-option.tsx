@@ -1,7 +1,7 @@
 import type { EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Fragment, Host, h, Listen, Prop, State } from '@stencil/core';
 
-import { getTextContent, hasSlotContent, isEventTargetChildOfElement } from '../../shared/utils';
+import { getTextContent, hasSlot, hasSlotContent, isEventTargetChildOfElement } from '../../shared/utils';
 
 /**
  * An option refers to a specific choice that appears in a list of selectable items that can be opened or closed by the user.
@@ -19,10 +19,13 @@ import { getTextContent, hasSlotContent, isEventTargetChildOfElement } from '../
  * @status stable
  *
  * @dependency bq-checkbox
+ * @dependency bq-button
+ * @dependency bq-icon
  *
  * @attr {boolean} disabled - If true, the option is disabled.
  * @attr {boolean} hidden - If true, the option is hidden.
  * @attr {boolean} checkbox - If true, the option renders as a checkbox option.
+ * @attr {boolean} expanded - If true, nested options are displayed.
  * @attr {string} value - A string representing the value of the option. Can be used to identify the item.
  * @attr {boolean} selected - If true, the option is selected and active.
  *
@@ -34,8 +37,11 @@ import { getTextContent, hasSlotContent, isEventTargetChildOfElement } from '../
  * @slot prefix - The prefix content to be displayed before the label.
  * @slot - The label content to be displayed.
  * @slot suffix - The suffix content to be displayed after the label.
+ * @slot expand-label - Optional text displayed in the expand or collapse control.
+ * @slot options - Nested option items displayed when the option is expanded.
  *
- * @part base - The component's internal wrapper.
+ * @part base - The option selection control.
+ * @part item - The interactive option row.
  * @part label - The `span` element in which the label text is displayed.
  * @part prefix - The `span` element in which the prefix is displayed (generally `bq-icon`).
  * @part suffix - The `span` element in which the suffix is displayed (generally `bq-icon`).
@@ -44,6 +50,10 @@ import { getTextContent, hasSlotContent, isEventTargetChildOfElement } from '../
  * @part checkbox-input - The native checkbox input exported from the nested `bq-checkbox`.
  * @part checkbox-checkbox - The checkbox indicator exported from the nested `bq-checkbox`.
  * @part checkbox-label - The checkbox label exported from the nested `bq-checkbox`.
+ * @part expand - The button used to expand or collapse nested options.
+ * @part expand-button - The native button exported from the expand control.
+ * @part expand-label - The label exported from the expand control.
+ * @part options - The container for nested options.
  *
  * @cssprop --bq-option--background - background color
  * @cssprop --bq-option--font-size - font size
@@ -70,6 +80,8 @@ export class BqOption {
   private prefixElem: HTMLElement;
   private suffixElem: HTMLElement;
   private checkboxElem?: HTMLBqCheckboxElement;
+  private expandElem?: HTMLBqButtonElement;
+  private optionsElem?: HTMLElement;
 
   // Reference to host HTML element
   // ===================================
@@ -80,6 +92,8 @@ export class BqOption {
   // Inlined decorator, alphabetical order
   // =======================================
 
+  @State() hasExpandLabel: boolean = false;
+  @State() hasOptions: boolean = false;
   @State() hasPrefix: boolean = false;
   @State() hasSuffix: boolean = false;
 
@@ -97,6 +111,9 @@ export class BqOption {
 
   /** The display value of the option. It can be used to override the default displayed value. */
   @Prop({ reflect: true }) displayValue?: string;
+
+  /** If true, nested options are displayed. */
+  @Prop({ reflect: true, mutable: true }) expanded = false;
 
   /** If true, the option is selected and active. */
   @Prop({ reflect: true }) selected: boolean = false;
@@ -131,11 +148,16 @@ export class BqOption {
     this.handleSlotChange();
   }
 
+  componentDidRender() {
+    this.syncExpandButtonState();
+  }
+
   // Listeners
   // ==============
 
   @Listen('keydown')
   onKeyDown(event: KeyboardEvent) {
+    if (isEventTargetChildOfElement(event, this.expandElem)) return;
     if (event.key !== 'Enter') return;
     // Prevent the default behavior to avoid triggering a synthetic click event
     event.preventDefault();
@@ -209,8 +231,26 @@ export class BqOption {
   };
 
   private handleSlotChange = () => {
+    this.hasExpandLabel = hasSlot(this.el, 'expand-label');
     this.hasPrefix = hasSlotContent(this.prefixElem, 'prefix');
+    this.hasOptions = hasSlotContent(this.optionsElem);
     this.hasSuffix = hasSlotContent(this.suffixElem, 'suffix');
+  };
+
+  private handleExpandClick = (event: CustomEvent<HTMLBqButtonElement>) => {
+    event.stopPropagation();
+
+    if (this.isDisabledOrHidden) {
+      event.preventDefault();
+      return;
+    }
+
+    this.expanded = !this.expanded;
+  };
+
+  private syncExpandButtonState = () => {
+    const expandButton = this.expandElem?.shadowRoot?.querySelector('[part="button"]');
+    expandButton?.setAttribute('aria-expanded', this.expanded ? 'true' : 'false');
   };
 
   private get optionLabel() {
@@ -258,6 +298,35 @@ export class BqOption {
     </Fragment>
   );
 
+  private renderExpandButton = () => (
+    <bq-button
+      aria-label={`${this.expanded ? 'Collapse' : 'Expand'} ${this.optionLabel}`}
+      appearance="text"
+      class="bq-option__expand"
+      disabled={this.isDisabledOrHidden}
+      exportparts="button:expand-button,label:expand-label"
+      label={`${this.expanded ? 'Collapse' : 'Expand'} ${this.optionLabel}`}
+      onBqClick={this.handleExpandClick}
+      onlyIcon={!this.hasExpandLabel}
+      part="expand"
+      ref={(element) => {
+        this.expandElem = element;
+      }}
+      size="small"
+      type="button"
+    >
+      <span class={{ 'bq-option__expand-label text-s': true, '!hidden': !this.hasExpandLabel }}>
+        <slot name="expand-label" onSlotchange={this.handleSlotChange} />
+      </span>
+      <bq-icon
+        aria-hidden="true"
+        name={this.expanded ? 'caret-up' : 'caret-down'}
+        size={16}
+        slot={this.hasExpandLabel ? 'suffix' : undefined}
+      />
+    </bq-button>
+  );
+
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -270,40 +339,49 @@ export class BqOption {
         aria-selected={this.selected ? 'true' : 'false'}
         role="option"
       >
-        {this.checkbox ? (
-          <bq-checkbox
-            aria-label={this.optionLabel}
-            checked={this.selected}
-            class="bq-option__checkbox"
-            disabled={this.isDisabledOrHidden}
-            name={this.optionLabel}
-            exportparts="base:checkbox-base,control:checkbox-control,input:checkbox-input,checkbox:checkbox-checkbox,label:checkbox-label"
-            part="base"
-            ref={(element) => {
-              this.checkboxElem = element;
-            }}
-            value={this.value || 'option'}
-            backgroundOnHover
-          >
-            {this.renderOptionContent('inline-flex')}
-          </bq-checkbox>
-        ) : (
-          <button
-            class={{
-              'bq-option': true,
-              active: !this.disabled && this.selected,
-            }}
-            disabled={this.disabled}
-            onBlur={this.onBlur}
-            onClick={this.onClick}
-            onFocus={this.onFocus}
-            part="base"
-            tabindex={this.isDisabledOrHidden ? '-1' : '0'}
-            type="button"
-          >
-            {this.renderOptionContent('flex')}
-          </button>
-        )}
+        <div class="bq-option__item" part="item">
+          {this.checkbox ? (
+            <bq-checkbox
+              aria-label={this.optionLabel}
+              checked={this.selected}
+              class="bq-option__checkbox"
+              disabled={this.isDisabledOrHidden}
+              name={this.optionLabel}
+              exportparts="base:checkbox-base,control:checkbox-control,input:checkbox-input,checkbox:checkbox-checkbox,label:checkbox-label"
+              part="base"
+              ref={(element) => {
+                this.checkboxElem = element;
+              }}
+              value={this.value || 'option'}
+            >
+              {this.renderOptionContent('inline-flex')}
+            </bq-checkbox>
+          ) : (
+            <button
+              class="bq-option"
+              disabled={this.disabled}
+              onBlur={this.onBlur}
+              onClick={this.onClick}
+              onFocus={this.onFocus}
+              part="base"
+              tabindex={this.isDisabledOrHidden ? '-1' : '0'}
+              type="button"
+            >
+              {this.renderOptionContent('flex')}
+            </button>
+          )}
+          {this.hasOptions && this.renderExpandButton()}
+        </div>
+        <div
+          aria-hidden={!this.hasOptions || !this.expanded ? 'true' : 'false'}
+          class={{ 'bq-option__options': true, '!hidden': !this.hasOptions || !this.expanded }}
+          part="options"
+          ref={(element) => {
+            this.optionsElem = element;
+          }}
+        >
+          <slot name="options" onSlotchange={this.handleSlotChange} />
+        </div>
       </Host>
     );
   }

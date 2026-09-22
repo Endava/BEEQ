@@ -13,6 +13,10 @@ const getClearButton = (select: HTMLBqSelectElement) =>
   select.shadowRoot?.querySelector('bq-button')?.shadowRoot?.querySelector<HTMLButtonElement>('[part="button"]');
 const getOptionButton = (option: HTMLBqOptionElement) =>
   option.shadowRoot?.querySelector<HTMLButtonElement>('button[part="base"]');
+const getOptionExpandButton = (option: HTMLBqOptionElement) =>
+  option.shadowRoot?.querySelector<HTMLBqButtonElement>('[part="expand"]');
+const getOptionExpandButtonControl = (option: HTMLBqOptionElement) =>
+  getOptionExpandButton(option)?.shadowRoot?.querySelector<HTMLButtonElement>('[part="button"]');
 const getOptionCheckbox = (option: HTMLBqOptionElement) =>
   option.shadowRoot?.querySelector<HTMLBqCheckboxElement>('bq-checkbox');
 const getOptionCheckboxInput = (option: HTMLBqOptionElement) =>
@@ -536,6 +540,49 @@ describe('bq-select', () => {
     expect(bqInput).toHaveReceivedEventTimes(1);
     expect(alphaOption.hidden).toBe(false);
     expect(betaOption.hidden).toBe(true);
+  });
+
+  it('should expand collapsed parents when a nested option matches the search', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-select name="bq-select">
+        <bq-option value="frontend">
+          Frontend
+          <bq-option slot="options" value="framework">
+            Framework
+            <bq-option slot="options" value="react">
+              React
+            </bq-option>
+            <bq-option slot="options" value="stencil">
+              Stencil
+            </bq-option>
+          </bq-option>
+        </bq-option>
+        <bq-option value="backend">Backend</bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const input = getInput(select);
+    const frontendOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="frontend"]');
+    const frameworkOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="framework"]');
+    const reactOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="react"]');
+    const stencilOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="stencil"]');
+    const backendOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="backend"]');
+
+    expect(frontendOption.expanded).toBe(false);
+
+    await userEvent.click(input);
+    await userEvent.fill(input, 'rea');
+    await waitForChanges();
+
+    expect(frontendOption.expanded).toBe(true);
+    expect(frameworkOption.expanded).toBe(true);
+    expect(getOptionExpandButtonControl(frontendOption)).toEqualAttribute('aria-expanded', 'true');
+    expect(getOptionExpandButtonControl(frameworkOption)).toEqualAttribute('aria-expanded', 'true');
+    expect(frontendOption.hidden).toBe(false);
+    expect(frameworkOption.hidden).toBe(false);
+    expect(reactOption.hidden).toBe(false);
+    expect(stencilOption.hidden).toBe(true);
+    expect(backendOption.hidden).toBe(true);
   });
 
   it('should disable typing while allowing option selection when disableSearch is true', async () => {

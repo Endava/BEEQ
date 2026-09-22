@@ -151,6 +151,21 @@ const defaultOptionsData = [
   { value: 'ice-cream', label: 'Ice-cream', icon: 'ice-cream' },
 ];
 
+const nestedOptions = `
+  <bq-option expanded value="frontend">
+    Frontend
+    <span slot="expand-label">2 levels</span>
+    <bq-option slot="options" value="react">React</bq-option>
+    <bq-option slot="options" value="stencil">Stencil</bq-option>
+  </bq-option>
+  <bq-option value="backend">
+    Backend
+    <span slot="expand-label">2 levels</span>
+    <bq-option slot="options" value="node-js">Node.js</bq-option>
+    <bq-option slot="options" value="dotnet">.NET</bq-option>
+  </bq-option>
+`;
+
 const Template = (args: Args) => {
   const [, updateArgs] = useArgs();
 
@@ -341,6 +356,15 @@ export const MultipleCustomRender: Story = {
     multiple: true,
     customTags: true,
     value: ['running', 'biking', 'pizza'],
+  },
+};
+
+export const NestedOptions: Story = {
+  name: 'Nested options',
+  render: Template,
+  args: {
+    open: true,
+    options: nestedOptions,
   },
 };
 
