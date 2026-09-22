@@ -12,7 +12,15 @@ const getDropdown = (select: HTMLBqSelectElement) =>
 const getClearButton = (select: HTMLBqSelectElement) =>
   select.shadowRoot?.querySelector('bq-button')?.shadowRoot?.querySelector<HTMLButtonElement>('[part="button"]');
 const getOptionButton = (option: HTMLBqOptionElement) =>
-  option.shadowRoot?.querySelector<HTMLButtonElement>('[part="base"]');
+  option.shadowRoot?.querySelector<HTMLButtonElement>('button[part="base"]');
+const getOptionCheckbox = (option: HTMLBqOptionElement) =>
+  option.shadowRoot?.querySelector<HTMLBqCheckboxElement>('bq-checkbox');
+const getOptionCheckboxInput = (option: HTMLBqOptionElement) =>
+  getOptionCheckbox(option)?.shadowRoot?.querySelector<HTMLInputElement>('[part="input"]');
+const getOptionCheckboxBase = (option: HTMLBqOptionElement) =>
+  getOptionCheckbox(option)?.shadowRoot?.querySelector<HTMLElement>('[part="base"]');
+const getOptionCheckboxMark = (option: HTMLBqOptionElement) =>
+  getOptionCheckbox(option)?.shadowRoot?.querySelector<HTMLElement>('[part="checkbox"]');
 const getHelperText = (select: HTMLBqSelectElement) =>
   select.shadowRoot?.querySelector<HTMLElement>('[part="helper-text"]');
 
@@ -91,6 +99,91 @@ describe('bq-select', () => {
     expect(root.querySelectorAll('bq-option')).toHaveLength(3);
   });
 
+  it('should reflect `enable-checkboxes`', async () => {
+    const { root, setProps } = await render(<bq-select name="bq-select" />);
+
+    expect(root).not.toHaveAttribute('enable-checkboxes');
+
+    await setProps({ enableCheckboxes: true });
+    expect(root).toHaveAttribute('enable-checkboxes');
+
+    await setProps({ enableCheckboxes: false });
+    expect(root).not.toHaveAttribute('enable-checkboxes');
+  });
+
+  it('should apply checkbox presentation to options added after load', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-select name="bq-select" multiple enableCheckboxes>
+        <bq-option value="1">Option 1</bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const option = document.createElement('bq-option');
+    option.value = '2';
+    option.textContent = 'Option 2';
+
+    await waitForChanges();
+    select.appendChild(option);
+    await waitForStable(root);
+
+    expect(option.shadowRoot?.querySelector('bq-checkbox')).not.toBeNull();
+  });
+
+  it('should only render checkboxes for multiple selection', async () => {
+    const { root, setProps, waitForChanges } = await render(
+      <bq-select name="bq-select">
+        <bq-option value="1">Option 1</bq-option>
+      </bq-select>,
+    );
+    const option = root.querySelector('bq-option') as HTMLBqOptionElement;
+
+    await waitForChanges();
+    expect(getOptionCheckbox(option)).toBeNull();
+
+    await setProps({ enableCheckboxes: true });
+    await waitForChanges();
+    expect(getOptionCheckbox(option)).toBeNull();
+
+    await setProps({ multiple: true });
+    await waitForChanges();
+    expect(getOptionCheckbox(option)).not.toBeNull();
+
+    await setProps({ enableCheckboxes: false });
+    await waitForChanges();
+    expect(getOptionCheckbox(option)).toBeNull();
+
+    await setProps({ enableCheckboxes: true, multiple: false });
+    await waitForChanges();
+    expect(getOptionCheckbox(option)).toBeNull();
+
+    await setProps({ multiple: true });
+    await waitForChanges();
+    expect(getOptionCheckbox(option)).not.toBeNull();
+
+    await setProps({ multiple: false });
+    await waitForChanges();
+    expect(getOptionCheckbox(option)).toBeNull();
+  });
+
+  it('should synchronize selected and unselected checkbox states', async () => {
+    const { root, setProps, waitForChanges } = await render(
+      <bq-select name="bq-select" multiple enableCheckboxes>
+        <bq-option value="1">Option 1</bq-option>
+        <bq-option value="2">Option 2</bq-option>
+      </bq-select>,
+    );
+    const selectedOption = root.querySelector('bq-option[value="1"]') as HTMLBqOptionElement;
+    const unselectedOption = root.querySelector('bq-option[value="2"]') as HTMLBqOptionElement;
+
+    await setProps({ value: ['1'] });
+    await waitForChanges();
+
+    expect(getOptionCheckboxInput(selectedOption)?.checked).toBe(true);
+    expect(getOptionCheckboxInput(unselectedOption)?.checked).toBe(false);
+    expect(getOptionCheckboxInput(selectedOption)).toEqualAttribute('aria-checked', 'true');
+    expect(getOptionCheckboxInput(unselectedOption)).toEqualAttribute('aria-checked', 'false');
+  });
+
   it('should render with selected option', async () => {
     const { root, waitForChanges } = await render(
       <bq-select name="bq-select" value="1">
@@ -153,6 +246,112 @@ describe('bq-select', () => {
     expect(displayTags).toHaveLength(2);
     expect(displayTags[0].textContent?.trim()).toContain('Option 1');
     expect(displayTags[1].textContent?.trim()).toContain('Option 2');
+  });
+
+  it('should render and toggle checkbox options when enabled', async () => {
+    const { root, spyOnEvent, waitForChanges } = await render(
+      <bq-select name="bq-select" keepOpenOnSelect multiple enableCheckboxes>
+        <bq-option value="1">Option 1</bq-option>
+        <bq-option value="2">Option 2</bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const option = root.querySelector('bq-option[value="2"]') as HTMLBqOptionElement;
+    const bqSelect = spyOnEvent('bqSelect');
+
+    await waitForChanges();
+
+    expect(getOptionCheckbox(option)).not.toBeNull();
+    expect(getOptionButton(option)).toBeNull();
+
+    await userEvent.click(getControl(select));
+    await waitForChanges();
+
+    await userEvent.click(getOptionCheckboxBase(option));
+    await waitForChanges();
+
+    expect(option).toHaveAttribute('selected');
+    expect(select.value).toEqual(['2']);
+    expect(bqSelect).toHaveReceivedEventTimes(1);
+
+    await userEvent.click(getOptionCheckboxBase(option));
+    await waitForChanges();
+
+    expect(option).not.toHaveAttribute('selected');
+    expect(select.value).toEqual([]);
+    expect(bqSelect).toHaveReceivedEventTimes(2);
+  });
+
+  it('should select by label click and checkbox click without duplicate events', async () => {
+    const { root, spyOnEvent, waitForChanges } = await render(
+      <bq-select name="bq-select" keepOpenOnSelect multiple enableCheckboxes>
+        <bq-option value="1">Option 1</bq-option>
+        <bq-option value="2">Option 2</bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const firstOption = root.querySelector('bq-option[value="1"]') as HTMLBqOptionElement;
+    const secondOption = root.querySelector('bq-option[value="2"]') as HTMLBqOptionElement;
+    const bqSelect = spyOnEvent('bqSelect');
+
+    await userEvent.click(getControl(select));
+    await waitForChanges();
+    await userEvent.click(getOptionCheckboxBase(firstOption));
+    await waitForChanges();
+
+    expect(firstOption).toHaveAttribute('selected');
+    expect(bqSelect).toHaveReceivedEventTimes(1);
+
+    await userEvent.click(getOptionCheckboxMark(secondOption));
+    await waitForChanges();
+
+    expect(secondOption).toHaveAttribute('selected');
+    expect(bqSelect).toHaveReceivedEventTimes(2);
+  });
+
+  it('should select a checkbox option with Space', async () => {
+    const { root, spyOnEvent, waitForChanges } = await render(
+      <bq-select name="bq-select" keepOpenOnSelect multiple enableCheckboxes>
+        <bq-option value="1">Option 1</bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const option = root.querySelector('bq-option') as HTMLBqOptionElement;
+    const checkbox = getOptionCheckbox(option);
+    const bqSelect = spyOnEvent('bqSelect');
+
+    await userEvent.click(getControl(select));
+    await waitForChanges();
+    await checkbox?.vFocus();
+    await userEvent.keyboard(' ');
+    await waitForChanges();
+
+    expect(option).toHaveAttribute('selected');
+    expect(select.value).toEqual(['1']);
+    expect(bqSelect).toHaveReceivedEventTimes(1);
+  });
+
+  it('should keep selected row styling with checkboxes enabled', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-select name="bq-select" multiple enableCheckboxes value={['1']}>
+        <bq-option value="1">Option 1</bq-option>
+        <bq-option value="2">Option 2</bq-option>
+      </bq-select>,
+    );
+    const selectedOption = root.querySelector('bq-option[value="1"]') as HTMLBqOptionElement;
+    const unselectedOption = root.querySelector('bq-option[value="2"]') as HTMLBqOptionElement;
+    const selectedLabel = getOptionCheckbox(selectedOption)?.shadowRoot?.querySelector<HTMLElement>('[part="label"]');
+    const unselectedLabel =
+      getOptionCheckbox(unselectedOption)?.shadowRoot?.querySelector<HTMLElement>('[part="label"]');
+
+    await waitForChanges();
+
+    expect(selectedOption).toHaveAttribute('selected');
+    expect(selectedLabel).not.toBeNull();
+    expect(unselectedLabel).not.toBeNull();
+    expect(getComputedStyle(selectedLabel as HTMLElement).color).not.toBe(
+      getComputedStyle(unselectedLabel as HTMLElement).color,
+    );
   });
 
   it('should rerender when value changes externally', async () => {

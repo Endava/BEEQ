@@ -356,7 +356,7 @@ export class BqCheckbox {
           class="bq-checkbox__label ps-xs text-start font-medium text-primary leading-regular group-hover-[&:not(.is-disabled)]:text-hover-primary group-[.is-disabled]:opacity-60"
           part="label"
         >
-          <slot />
+          <slot class="flex items-center" />
         </span>
       </label>
     );

@@ -63,6 +63,7 @@ export type TSelectValue = string | string[];
  * @attr {boolean} readonly - Deprecated. Use `disable-search` to allow selection without text filtering.
  * @attr {boolean} required - Indicates whether or not the Select input is required to be filled out before submitting the form.
  * @attr {boolean} same-width - Whether the panel should have the Select same width as the input element.
+ * @attr {boolean} enable-checkboxes - If `true` and `multiple` is enabled, options will render with checkboxes.
  * @attr {number} skidding - Represents the skidding between the Select panel and the input element.
  * @attr {"absolute" | "fixed"} strategy - Defines the strategy to position the Select panel.
  * @attr {"error" | "success" | "warning" | "none"} validation-status - The validation status of the Select input.
@@ -76,6 +77,7 @@ export type TSelectValue = string | string[];
  * @event bqSelect - The callback handler is emitted when the selected value has changed.
  *
  * @slot label - The label slot container.
+ * @slot - The options rendered in the select list.
  * @slot prefix - The prefix slot container.
  * @slot tags - The tags slot container.
  * @slot clear-icon - The clear icon slot container.
@@ -240,6 +242,9 @@ export class BqSelect {
   /** Whether the panel should have the Select same width as the input element */
   @Prop({ reflect: true }) sameWidth?: boolean = true;
 
+  /** If true, options will render with checkboxes when multiple selection is enabled. */
+  @Prop({ reflect: true }) enableCheckboxes?: boolean;
+
   /**  Represents the skidding between the Select panel and the input element. */
   @Prop({ reflect: true }) skidding?: number = 0;
 
@@ -297,6 +302,12 @@ export class BqSelect {
     this.updateFormValidity();
   }
 
+  @Watch('enableCheckboxes')
+  @Watch('multiple')
+  handleEnableCheckboxesChange() {
+    this.syncOptionPresentation();
+  }
+
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
@@ -330,6 +341,7 @@ export class BqSelect {
 
   componentDidLoad() {
     this.handleSlotChange();
+    this.syncOptionPresentation();
 
     if (this.multiple && Array.isArray(this.value)) {
       this.selectedOptions = this.options.filter((item) => this.value.includes(item.value));
@@ -596,11 +608,18 @@ export class BqSelect {
     this.hasPrefix = hasSlotContent(this.prefixElem);
     this.hasSuffix = hasSlotContent(this.suffixElem);
     this.hasHelperText = hasSlotContent(this.helperTextElem);
+    this.syncOptionPresentation();
   };
 
   private resetOptionsVisibility = () => {
     this.options.forEach((item: HTMLBqOptionElement) => {
       item.hidden = false;
+    });
+  };
+
+  private syncOptionPresentation = () => {
+    this.options.forEach((option) => {
+      option.checkbox = Boolean(this.enableCheckboxes && this.multiple);
     });
   };
 
@@ -928,7 +947,7 @@ export class BqSelect {
             onBqSelect={this.handleSelect}
             role="listbox"
           >
-            <slot />
+            <slot onSlotchange={this.handleSlotChange} />
           </bq-option-list>
         </bq-dropdown>
         {/* Helper text */}

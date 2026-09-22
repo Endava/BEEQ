@@ -1648,8 +1648,10 @@ export namespace Components {
      * ```
      * @documentation https://storybook.beeq.design/?path=/story/components-option--with-option-group
      * @status stable
+     * @dependency bq-checkbox
      * @attr {boolean} disabled - If true, the option is disabled.
      * @attr {boolean} hidden - If true, the option is hidden.
+     * @attr {boolean} checkbox - If true, the option renders as a checkbox option.
      * @attr {string} value - A string representing the value of the option. Can be used to identify the item.
      * @attr {boolean} selected - If true, the option is selected and active.
      * @event bqBlur - Handler to be called when item loses focus.
@@ -1670,6 +1672,11 @@ export namespace Components {
      * @cssprop --bq-option--padding-end - option label padding end
      */
     interface BqOption {
+        /**
+          * If true, the option renders as a checkbox option.
+          * @default false
+         */
+        "checkbox": boolean;
         /**
           * If true, the option is disabled.
           * @default false
@@ -2089,6 +2096,7 @@ export namespace Components {
      * @attr {boolean} readonly - Deprecated. Use `disable-search` to allow selection without text filtering.
      * @attr {boolean} required - Indicates whether or not the Select input is required to be filled out before submitting the form.
      * @attr {boolean} same-width - Whether the panel should have the Select same width as the input element.
+     * @attr {boolean} enable-checkboxes - If `true` and `multiple` is enabled, options will render with checkboxes.
      * @attr {number} skidding - Represents the skidding between the Select panel and the input element.
      * @attr {"absolute" | "fixed"} strategy - Defines the strategy to position the Select panel.
      * @attr {"error" | "success" | "warning" | "none"} validation-status - The validation status of the Select input.
@@ -2166,6 +2174,10 @@ export namespace Components {
           * @default 8
          */
         "distance"?: number;
+        /**
+          * If true, options will render with checkboxes when multiple selection is enabled.
+         */
+        "enableCheckboxes"?: boolean;
         /**
           * The ID of the form that the Select input belongs to.
          */
@@ -4395,8 +4407,10 @@ declare global {
      * ```
      * @documentation https://storybook.beeq.design/?path=/story/components-option--with-option-group
      * @status stable
+     * @dependency bq-checkbox
      * @attr {boolean} disabled - If true, the option is disabled.
      * @attr {boolean} hidden - If true, the option is hidden.
+     * @attr {boolean} checkbox - If true, the option renders as a checkbox option.
      * @attr {string} value - A string representing the value of the option. Can be used to identify the item.
      * @attr {boolean} selected - If true, the option is selected and active.
      * @event bqBlur - Handler to be called when item loses focus.
@@ -4729,6 +4743,7 @@ declare global {
      * @attr {boolean} readonly - Deprecated. Use `disable-search` to allow selection without text filtering.
      * @attr {boolean} required - Indicates whether or not the Select input is required to be filled out before submitting the form.
      * @attr {boolean} same-width - Whether the panel should have the Select same width as the input element.
+     * @attr {boolean} enable-checkboxes - If `true` and `multiple` is enabled, options will render with checkboxes.
      * @attr {number} skidding - Represents the skidding between the Select panel and the input element.
      * @attr {"absolute" | "fixed"} strategy - Defines the strategy to position the Select panel.
      * @attr {"error" | "success" | "warning" | "none"} validation-status - The validation status of the Select input.
@@ -7205,8 +7220,10 @@ declare namespace LocalJSX {
      * ```
      * @documentation https://storybook.beeq.design/?path=/story/components-option--with-option-group
      * @status stable
+     * @dependency bq-checkbox
      * @attr {boolean} disabled - If true, the option is disabled.
      * @attr {boolean} hidden - If true, the option is hidden.
+     * @attr {boolean} checkbox - If true, the option renders as a checkbox option.
      * @attr {string} value - A string representing the value of the option. Can be used to identify the item.
      * @attr {boolean} selected - If true, the option is selected and active.
      * @event bqBlur - Handler to be called when item loses focus.
@@ -7227,6 +7244,11 @@ declare namespace LocalJSX {
      * @cssprop --bq-option--padding-end - option label padding end
      */
     interface BqOption {
+        /**
+          * If true, the option renders as a checkbox option.
+          * @default false
+         */
+        "checkbox"?: boolean;
         /**
           * If true, the option is disabled.
           * @default false
@@ -7678,6 +7700,7 @@ declare namespace LocalJSX {
      * @attr {boolean} readonly - Deprecated. Use `disable-search` to allow selection without text filtering.
      * @attr {boolean} required - Indicates whether or not the Select input is required to be filled out before submitting the form.
      * @attr {boolean} same-width - Whether the panel should have the Select same width as the input element.
+     * @attr {boolean} enable-checkboxes - If `true` and `multiple` is enabled, options will render with checkboxes.
      * @attr {number} skidding - Represents the skidding between the Select panel and the input element.
      * @attr {"absolute" | "fixed"} strategy - Defines the strategy to position the Select panel.
      * @attr {"error" | "success" | "warning" | "none"} validation-status - The validation status of the Select input.
@@ -7749,6 +7772,10 @@ declare namespace LocalJSX {
           * @default 8
          */
         "distance"?: number;
+        /**
+          * If true, options will render with checkboxes when multiple selection is enabled.
+         */
+        "enableCheckboxes"?: boolean;
         /**
           * The ID of the form that the Select input belongs to.
          */
@@ -9124,6 +9151,7 @@ declare namespace LocalJSX {
     interface BqOptionAttributes {
         "hidden": boolean;
         "disabled": boolean;
+        "checkbox": boolean;
         "displayValue": string;
         "selected": boolean;
         "value": string;
@@ -9192,6 +9220,7 @@ declare namespace LocalJSX {
         "readonly": boolean;
         "required": boolean;
         "sameWidth": boolean;
+        "enableCheckboxes": boolean;
         "skidding": number;
         "strategy": 'fixed' | 'absolute';
         "validationStatus": TInputValidation;
@@ -10146,8 +10175,10 @@ declare module "@stencil/core" {
              * ```
              * @documentation https://storybook.beeq.design/?path=/story/components-option--with-option-group
              * @status stable
+             * @dependency bq-checkbox
              * @attr {boolean} disabled - If true, the option is disabled.
              * @attr {boolean} hidden - If true, the option is hidden.
+             * @attr {boolean} checkbox - If true, the option renders as a checkbox option.
              * @attr {string} value - A string representing the value of the option. Can be used to identify the item.
              * @attr {boolean} selected - If true, the option is selected and active.
              * @event bqBlur - Handler to be called when item loses focus.
@@ -10388,6 +10419,7 @@ declare module "@stencil/core" {
              * @attr {boolean} readonly - Deprecated. Use `disable-search` to allow selection without text filtering.
              * @attr {boolean} required - Indicates whether or not the Select input is required to be filled out before submitting the form.
              * @attr {boolean} same-width - Whether the panel should have the Select same width as the input element.
+             * @attr {boolean} enable-checkboxes - If `true` and `multiple` is enabled, options will render with checkboxes.
              * @attr {number} skidding - Represents the skidding between the Select panel and the input element.
              * @attr {"absolute" | "fixed"} strategy - Defines the strategy to position the Select panel.
              * @attr {"error" | "success" | "warning" | "none"} validation-status - The validation status of the Select input.
