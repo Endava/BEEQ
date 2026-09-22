@@ -46,22 +46,23 @@ It can be an element of the navigation system that allows users to select differ
 
 ## Shadow Parts
 
-| Part                  | Description                                                                |
-| --------------------- | -------------------------------------------------------------------------- |
-| `"base"`              | The option selection control.                                              |
-| `"checkbox-base"`     | The checkbox base wrapper exported from the nested `bq-checkbox`.          |
-| `"checkbox-checkbox"` | The checkbox indicator exported from the nested `bq-checkbox`.             |
-| `"checkbox-control"`  | The checkbox control wrapper exported from the nested `bq-checkbox`.       |
-| `"checkbox-input"`    | The native checkbox input exported from the nested `bq-checkbox`.          |
-| `"checkbox-label"`    | The checkbox label exported from the nested `bq-checkbox`.                 |
-| `"expand"`            | The button used to expand or collapse nested options.                      |
-| `"expand-button"`     | The native button exported from the expand control.                        |
-| `"expand-label"`      | The label exported from the expand control.                                |
-| `"item"`              | The interactive option row.                                                |
-| `"label"`             | The `span` element in which the label text is displayed.                   |
-| `"options"`           | The container for nested options.                                          |
-| `"prefix"`            | The `span` element in which the prefix is displayed (generally `bq-icon`). |
-| `"suffix"`            | The `span` element in which the suffix is displayed (generally `bq-icon`). |
+| Part                    | Description                                                                    |
+| ----------------------- | ------------------------------------------------------------------------------ |
+| `"base"`                | The option selection control.                                                  |
+| `"checkbox-base"`       | The checkbox base wrapper exported from the nested `bq-checkbox`.              |
+| `"checkbox-checkbox"`   | The checkbox indicator exported from the nested `bq-checkbox`.                 |
+| `"checkbox-control"`    | The checkbox control wrapper exported from the nested `bq-checkbox`.           |
+| `"checkbox-input"`      | The native checkbox input exported from the nested `bq-checkbox`.              |
+| `"checkbox-label"`      | The checkbox label exported from the nested `bq-checkbox`.                     |
+| `"expand"`              | The button used to expand or collapse nested options.                          |
+| `"expand-button"`       | The native button exported from the expand control.                            |
+| `"expand-label"`        | The label exported from the expand control.                                    |
+| `"item"`                | The interactive option row.                                                    |
+| `"label"`               | The `span` element in which the label text is displayed.                       |
+| `"options"`             | The container for nested options.                                              |
+| `"prefix"`              | The `span` element in which the prefix is displayed (generally `bq-icon`).     |
+| `"selected-descendant"` | The status displayed when a collapsed option contains selected nested options. |
+| `"suffix"`              | The `span` element in which the suffix is displayed (generally `bq-icon`).     |
 
 
 ## Dependencies

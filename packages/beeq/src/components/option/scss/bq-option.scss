@@ -63,6 +63,10 @@
   @apply text-inherit enabled:hover:bg-transparent enabled:hover:text-brand;
 }
 
+.bq-option__selected-descendant {
+  @apply ms-s shrink-0 text-s text-secondary;
+}
+
 .bq-option__options {
   @apply m-bs-xs2 ms-[--bq-option--padding-start] flex flex-col gap-y-[--bq-option-group--gapY-list] ps-s;
 

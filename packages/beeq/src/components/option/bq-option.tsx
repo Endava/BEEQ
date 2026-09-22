@@ -53,6 +53,7 @@ import { getTextContent, hasSlot, hasSlotContent, isEventTargetChildOfElement } 
  * @part expand - The button used to expand or collapse nested options.
  * @part expand-button - The native button exported from the expand control.
  * @part expand-label - The label exported from the expand control.
+ * @part selected-descendant - The status displayed when a collapsed option contains selected nested options.
  * @part options - The container for nested options.
  *
  * @cssprop --bq-option--background - background color
@@ -82,6 +83,7 @@ export class BqOption {
   private checkboxElem?: HTMLBqCheckboxElement;
   private expandElem?: HTMLBqButtonElement;
   private optionsElem?: HTMLElement;
+  private selectedDescendantObserver?: MutationObserver;
 
   // Reference to host HTML element
   // ===================================
@@ -95,6 +97,8 @@ export class BqOption {
   @State() hasExpandLabel: boolean = false;
   @State() hasOptions: boolean = false;
   @State() hasPrefix: boolean = false;
+  @State() selectedDescendantCount = 0;
+  @State() selectedDescendantLabel?: string;
   @State() hasSuffix: boolean = false;
 
   // Public Property API
@@ -146,10 +150,15 @@ export class BqOption {
 
   componentDidLoad() {
     this.handleSlotChange();
+    this.observeSelectedDescendants();
   }
 
   componentDidRender() {
     this.syncExpandButtonState();
+  }
+
+  disconnectedCallback() {
+    this.selectedDescendantObserver?.disconnect();
   }
 
   // Listeners
@@ -235,6 +244,7 @@ export class BqOption {
     this.hasPrefix = hasSlotContent(this.prefixElem, 'prefix');
     this.hasOptions = hasSlotContent(this.optionsElem);
     this.hasSuffix = hasSlotContent(this.suffixElem, 'suffix');
+    this.syncSelectedDescendants();
   };
 
   private handleExpandClick = (event: CustomEvent<HTMLBqButtonElement>) => {
@@ -262,9 +272,51 @@ export class BqOption {
     return label || this.value || 'option';
   }
 
+  private get selectedDescendantStatus() {
+    if (this.expanded || !this.selectedDescendantCount) return undefined;
+
+    if (this.selectedDescendantCount === 1) {
+      return `${this.selectedDescendantLabel} selected`;
+    }
+
+    return `${this.selectedDescendantCount} selected`;
+  }
+
+  private get selectedDescendantAccessibleLabel() {
+    const status = this.selectedDescendantStatus;
+
+    return status ? `${this.optionLabel}, ${status}` : undefined;
+  }
+
   private get isDisabledOrHidden() {
     return this.disabled || this.hidden;
   }
+
+  private getOptionLabel = (option: HTMLBqOptionElement) => {
+    if (option.displayValue) return option.displayValue.trim();
+
+    const labelSlot = option.shadowRoot?.querySelector<HTMLSlotElement>('slot:not([name])');
+    const label = labelSlot ? getTextContent(labelSlot, { recurse: true }) : option.textContent?.trim();
+
+    return label || option.value || 'option';
+  };
+
+  private observeSelectedDescendants = () => {
+    this.selectedDescendantObserver = new MutationObserver(this.syncSelectedDescendants);
+    this.selectedDescendantObserver.observe(this.el, {
+      attributeFilter: ['selected'],
+      attributes: true,
+      childList: true,
+      subtree: true,
+    });
+  };
+
+  private syncSelectedDescendants = () => {
+    const selectedDescendants = Array.from(this.el.querySelectorAll<HTMLBqOptionElement>('bq-option[selected]'));
+
+    this.selectedDescendantCount = selectedDescendants.length;
+    this.selectedDescendantLabel = selectedDescendants[0] ? this.getOptionLabel(selectedDescendants[0]) : undefined;
+  };
 
   private renderOptionContent = (displayClass: 'flex' | 'inline-flex') => (
     <Fragment>
@@ -336,6 +388,7 @@ export class BqOption {
       <Host
         aria-disabled={this.isDisabledOrHidden ? 'true' : 'false'}
         aria-hidden={this.hidden ? 'true' : 'false'}
+        aria-label={this.selectedDescendantAccessibleLabel}
         aria-selected={this.selected ? 'true' : 'false'}
         role="option"
       >
@@ -369,6 +422,11 @@ export class BqOption {
             >
               {this.renderOptionContent('flex')}
             </button>
+          )}
+          {this.selectedDescendantStatus && (
+            <span aria-hidden="true" class="bq-option__selected-descendant" part="selected-descendant">
+              {this.selectedDescendantStatus}
+            </span>
           )}
           {this.hasOptions && this.renderExpandButton()}
         </div>

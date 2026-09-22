@@ -145,6 +145,10 @@ export class BqSelect {
 
   private debounceQuery: TDebounce<void>;
   private debounceInput: TDebounce<void>;
+  private expansionObserver?: MutationObserver;
+  private restoringSearchExpandedOptions = new WeakSet<HTMLBqOptionElement>();
+  private searchExpandedOptions = new Set<HTMLBqOptionElement>();
+  private userExpandedOptions = new Map<HTMLBqOptionElement, boolean>();
 
   private fallbackInputId = 'select';
 
@@ -342,11 +346,16 @@ export class BqSelect {
   componentDidLoad() {
     this.handleSlotChange();
     this.syncOptionPresentation();
+    this.observeOptionExpansion();
 
     if (this.multiple && Array.isArray(this.value)) {
       this.selectedOptions = this.options.filter((item) => this.value.includes(item.value));
     }
     this.handleValueChange();
+  }
+
+  disconnectedCallback() {
+    this.expansionObserver?.disconnect();
   }
 
   formAssociatedCallback() {
@@ -370,6 +379,7 @@ export class BqSelect {
     if (!ev.composedPath().includes(this.el)) return;
 
     this.open = ev.detail.open;
+    if (!this.open) this.restoreSearchExpansion();
   }
 
   @Listen('bqFocus', { capture: true })
@@ -629,9 +639,64 @@ export class BqSelect {
     let parentOption = option.parentElement?.closest<HTMLBqOptionElement>('bq-option');
 
     while (parentOption && this.el.contains(parentOption)) {
-      parentOption.expanded = true;
+      if (!parentOption.expanded) {
+        this.searchExpandedOptions.add(parentOption);
+        parentOption.expanded = true;
+      }
+
       parentOption = parentOption.parentElement?.closest<HTMLBqOptionElement>('bq-option');
     }
+  };
+
+  private hasSelectedDescendant = (option: HTMLBqOptionElement) =>
+    this.options.some((item) => item !== option && option.contains(item) && item.selected);
+
+  private handleOptionExpansionMutations = (mutations: MutationRecord[]) => {
+    mutations.forEach((mutation) => {
+      const option = mutation.target as HTMLBqOptionElement;
+
+      if (this.restoringSearchExpandedOptions.has(option)) {
+        this.restoringSearchExpandedOptions.delete(option);
+        return;
+      }
+
+      if (option.expanded && this.searchExpandedOptions.has(option)) return;
+
+      this.searchExpandedOptions.delete(option);
+      this.userExpandedOptions.set(option, option.expanded);
+    });
+  };
+
+  private observeOptionExpansion = () => {
+    this.expansionObserver = new MutationObserver(this.handleOptionExpansionMutations);
+    this.expansionObserver.observe(this.el, {
+      attributeFilter: ['expanded'],
+      attributes: true,
+      subtree: true,
+    });
+  };
+
+  private restoreSearchExpansion = () => {
+    this.searchExpandedOptions.forEach((option) => {
+      if (!this.el.contains(option)) {
+        this.searchExpandedOptions.delete(option);
+        this.userExpandedOptions.delete(option);
+        return;
+      }
+
+      const userExpanded = this.userExpandedOptions.get(option);
+      if (userExpanded !== undefined) {
+        this.searchExpandedOptions.delete(option);
+        option.expanded = userExpanded;
+        return;
+      }
+
+      if (this.hasSelectedDescendant(option)) return;
+
+      this.restoringSearchExpandedOptions.add(option);
+      this.searchExpandedOptions.delete(option);
+      option.expanded = false;
+    });
   };
 
   private syncOptionPresentation = () => {

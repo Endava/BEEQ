@@ -27,6 +27,15 @@ const getOptionCheckboxMark = (option: HTMLBqOptionElement) =>
   getOptionCheckbox(option)?.shadowRoot?.querySelector<HTMLElement>('[part="checkbox"]');
 const getHelperText = (select: HTMLBqSelectElement) =>
   select.shadowRoot?.querySelector<HTMLElement>('[part="helper-text"]');
+const setDropdownOpen = (select: HTMLBqSelectElement, open: boolean) => {
+  getDropdown(select)?.dispatchEvent(
+    new CustomEvent('bqOpen', {
+      bubbles: true,
+      composed: true,
+      detail: { open },
+    }),
+  );
+};
 
 afterEach(() => {
   vi.restoreAllMocks();
@@ -583,6 +592,104 @@ describe('bq-select', () => {
     expect(reactOption.hidden).toBe(false);
     expect(stencilOption.hidden).toBe(true);
     expect(backendOption.hidden).toBe(true);
+
+    setDropdownOpen(select, false);
+    await waitForChanges();
+
+    expect(frontendOption.expanded).toBe(false);
+    expect(frameworkOption.expanded).toBe(false);
+  });
+
+  it('should retain search expansion for a selected descendant unless the user collapses it', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-select name="bq-select" value="react">
+        <bq-option value="frontend">
+          Frontend
+          <bq-option slot="options" value="react">
+            React
+          </bq-option>
+        </bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const input = getInput(select);
+    const frontendOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="frontend"]');
+    const reactOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="react"]');
+
+    await waitForStable(root);
+    await userEvent.click(input);
+    await userEvent.fill(input, 'rea');
+    await waitForChanges();
+
+    expect(reactOption.selected).toBe(true);
+    expect(frontendOption.expanded).toBe(true);
+
+    setDropdownOpen(select, false);
+    await waitForChanges();
+
+    expect(frontendOption.expanded).toBe(true);
+
+    setDropdownOpen(select, true);
+    await waitForChanges();
+    await userEvent.click(getOptionExpandButtonControl(frontendOption));
+    await waitForStable(root);
+    setDropdownOpen(select, false);
+    await waitForChanges();
+
+    expect(frontendOption.expanded).toBe(false);
+  });
+
+  it('should identify the selected child on a collapsed parent in single select mode', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-select name="bq-select" value="react">
+        <bq-option value="frontend">
+          Frontend
+          <bq-option slot="options" value="react">
+            React
+          </bq-option>
+        </bq-option>
+      </bq-select>,
+    );
+    const parentOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="frontend"]');
+    const childOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="react"]');
+    const selectedDescendantStatus =
+      parentOption.shadowRoot?.querySelector<HTMLElement>('[part="selected-descendant"]');
+
+    await waitForChanges();
+    await waitForStable(root);
+
+    expect(parentOption).toEqualAttribute('aria-selected', 'false');
+    expect(parentOption).toEqualAttribute('aria-label', 'Frontend, React selected');
+    expect(childOption).toHaveAttribute('selected');
+    expect(selectedDescendantStatus).toHaveTextContent('React selected');
+  });
+
+  it('should preserve a user expansion after search closes', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-select name="bq-select">
+        <bq-option value="frontend">
+          Frontend
+          <bq-option slot="options" value="react">
+            React
+          </bq-option>
+        </bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const input = getInput(select);
+    const frontendOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="frontend"]');
+
+    await userEvent.click(input);
+    await userEvent.fill(input, 'rea');
+    await waitForChanges();
+    await userEvent.click(getOptionExpandButtonControl(frontendOption));
+    await waitForStable(root);
+    await userEvent.click(getOptionExpandButtonControl(frontendOption));
+    await waitForStable(root);
+    setDropdownOpen(select, false);
+    await waitForChanges();
+
+    expect(frontendOption.expanded).toBe(true);
   });
 
   it('should disable typing while allowing option selection when disableSearch is true', async () => {
