@@ -329,6 +329,36 @@ describe('bq-option', () => {
     expect(expandButtonControl).toEqualAttribute('aria-expanded', 'false');
     expect(option).not.toHaveAttribute('selected');
     expect(bqClick).toHaveReceivedEventTimes(0);
+
+    await userEvent.keyboard(' ');
+    await waitForChanges();
+
+    expect(expandButtonControl).toEqualAttribute('aria-expanded', 'true');
+    expect(option).not.toHaveAttribute('selected');
+    expect(bqClick).toHaveReceivedEventTimes(0);
+  });
+
+  it('should use tree semantics for nested options', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-option value="parent">
+        Parent
+        <bq-option slot="options" value="child">
+          Child
+        </bq-option>
+      </bq-option>,
+    );
+    const option = root as HTMLBqOptionElement;
+    const child = root.querySelector<HTMLBqOptionElement>('bq-option[value="child"]');
+    const expandButtonControl = getExpandButtonControl(option);
+
+    await waitForChanges();
+    await waitForStable(root);
+
+    expect(option).toEqualAttribute('role', 'treeitem');
+    expect(option).toEqualAttribute('aria-expanded', 'false');
+    expect(child).toEqualAttribute('role', 'treeitem');
+    expect(getNestedOptions(option)).toEqualAttribute('role', 'group');
+    expect(expandButtonControl).toEqualAttribute('tabindex', '-1');
   });
 
   it('should render an optional expand label', async () => {

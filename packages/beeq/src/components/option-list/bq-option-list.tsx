@@ -66,6 +66,8 @@ export class BqOptionList {
   // =====================================
 
   componentDidLoad() {
+    if (this.el.hasAttribute('role')) return;
+
     this.el.setAttribute('role', 'listbox');
   }
 

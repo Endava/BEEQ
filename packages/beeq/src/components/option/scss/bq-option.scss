@@ -44,6 +44,14 @@
   border-style: var(--bq-option--border-style);
 }
 
+:host(:focus) .bq-option__item {
+  @apply focus;
+}
+
+:host(:focus) {
+  outline: none;
+}
+
 :host([selected]) .bq-option__item {
   @apply bg-ui-brand-alt text-brand;
 }

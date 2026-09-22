@@ -1705,6 +1705,10 @@ export namespace Components {
          */
         "selected": boolean;
         /**
+          * @default false
+         */
+        "tree": boolean;
+        /**
           * A string representing the value of the option. Can be used to identify the item
          */
         "value"?: string;
@@ -7304,6 +7308,10 @@ declare namespace LocalJSX {
          */
         "selected"?: boolean;
         /**
+          * @default false
+         */
+        "tree"?: boolean;
+        /**
           * A string representing the value of the option. Can be used to identify the item
          */
         "value"?: string;
@@ -9174,6 +9182,7 @@ declare namespace LocalJSX {
         "displayValue": string;
         "expanded": boolean;
         "selected": boolean;
+        "tree": boolean;
         "value": string;
     }
     interface BqOptionListAttributes {

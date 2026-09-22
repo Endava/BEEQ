@@ -1,7 +1,13 @@
 import type { EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Fragment, Host, h, Listen, Prop, State } from '@stencil/core';
 
-import { getTextContent, hasSlot, hasSlotContent, isEventTargetChildOfElement } from '../../shared/utils';
+import {
+  getTextContent,
+  hasSlot,
+  hasSlotContent,
+  isEventTargetChildOfElement,
+  isHTMLElement,
+} from '../../shared/utils';
 
 /**
  * An option refers to a specific choice that appears in a list of selectable items that can be opened or closed by the user.
@@ -122,6 +128,9 @@ export class BqOption {
   /** If true, the option is selected and active. */
   @Prop({ reflect: true }) selected: boolean = false;
 
+  /** @internal Applied by `bq-select` when rendering nested options with tree semantics. */
+  @Prop({ reflect: true }) tree = false;
+
   /** A string representing the value of the option. Can be used to identify the item */
   @Prop({ reflect: true }) value?: string;
 
@@ -166,7 +175,12 @@ export class BqOption {
 
   @Listen('keydown')
   onKeyDown(event: KeyboardEvent) {
+    if (this.isEventFromNestedOption(event)) return;
     if (isEventTargetChildOfElement(event, this.expandElem)) return;
+    if (this.isTreeItem) {
+      this.handleTreeItemKeydown(event);
+      return;
+    }
     if (event.key !== 'Enter') return;
     // Prevent the default behavior to avoid triggering a synthetic click event
     event.preventDefault();
@@ -239,6 +253,13 @@ export class BqOption {
     this.bqClick.emit(this.el);
   };
 
+  private onTreeItemClick = (event: Event) => {
+    if (this.isEventFromNestedOption(event)) return;
+    if (isEventTargetChildOfElement(event, this.expandElem)) return;
+
+    this.onClick(event);
+  };
+
   private handleSlotChange = () => {
     this.hasExpandLabel = hasSlot(this.el, 'expand-label');
     this.hasPrefix = hasSlotContent(this.prefixElem, 'prefix');
@@ -259,8 +280,15 @@ export class BqOption {
   };
 
   private syncExpandButtonState = () => {
-    const expandButton = this.expandElem?.shadowRoot?.querySelector('[part="button"]');
+    const expandButton = this.expandElem?.shadowRoot?.querySelector<HTMLButtonElement>('[part="button"]');
+    if (!expandButton) return;
+
     expandButton?.setAttribute('aria-expanded', this.expanded ? 'true' : 'false');
+
+    if (!this.isTreeItem) return;
+
+    expandButton.setAttribute('aria-hidden', 'true');
+    expandButton.tabIndex = -1;
   };
 
   private get optionLabel() {
@@ -292,6 +320,17 @@ export class BqOption {
     return this.disabled || this.hidden;
   }
 
+  private get isTreeItem() {
+    return this.tree || this.hasOptions || Boolean(this.el.parentElement?.closest('bq-option'));
+  }
+
+  private isEventFromNestedOption = (event: Event) => {
+    const sourceOption = event.composedPath().find((target) => isHTMLElement(target, 'bq-option'));
+    if (!isHTMLElement(sourceOption, 'bq-option')) return false;
+
+    return sourceOption !== this.el && this.el.contains(sourceOption);
+  };
+
   private getOptionLabel = (option: HTMLBqOptionElement) => {
     if (option.displayValue) return option.displayValue.trim();
 
@@ -299,6 +338,27 @@ export class BqOption {
     const label = labelSlot ? getTextContent(labelSlot, { recurse: true }) : option.textContent?.trim();
 
     return label || option.value || 'option';
+  };
+
+  private handleTreeItemKeydown = (event: KeyboardEvent) => {
+    if (this.isDisabledOrHidden) return;
+
+    if (event.key === 'ArrowRight' && this.hasOptions && !this.expanded) {
+      event.preventDefault();
+      this.expanded = true;
+      return;
+    }
+
+    if (event.key === 'ArrowLeft' && this.hasOptions && this.expanded) {
+      event.preventDefault();
+      this.expanded = false;
+      return;
+    }
+
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+
+    event.preventDefault();
+    this.bqEnter.emit(this.el);
   };
 
   private observeSelectedDescendants = () => {
@@ -379,6 +439,75 @@ export class BqOption {
     </bq-button>
   );
 
+  private renderNestedOptions = () => (
+    <div
+      aria-hidden={!this.hasOptions || !this.expanded ? 'true' : 'false'}
+      class={{ 'bq-option__options': true, '!hidden': !this.hasOptions || !this.expanded }}
+      part="options"
+      ref={(element) => {
+        this.optionsElem = element;
+      }}
+      role={this.isTreeItem && this.hasOptions ? 'group' : undefined}
+    >
+      <slot name="options" onSlotchange={this.handleSlotChange} />
+    </div>
+  );
+
+  private renderSelectedDescendantStatus = () => {
+    if (!this.selectedDescendantStatus) return;
+
+    return (
+      <span aria-hidden="true" class="bq-option__selected-descendant" part="selected-descendant">
+        {this.selectedDescendantStatus}
+      </span>
+    );
+  };
+
+  private renderSelectionControl = () => {
+    if (this.isTreeItem) {
+      return (
+        <div class="bq-option" part="base">
+          {this.renderOptionContent('flex')}
+        </div>
+      );
+    }
+
+    if (this.checkbox) {
+      return (
+        <bq-checkbox
+          aria-label={this.optionLabel}
+          checked={this.selected}
+          class="bq-option__checkbox"
+          disabled={this.isDisabledOrHidden}
+          name={this.optionLabel}
+          exportparts="base:checkbox-base,control:checkbox-control,input:checkbox-input,checkbox:checkbox-checkbox,label:checkbox-label"
+          part="base"
+          ref={(element) => {
+            this.checkboxElem = element;
+          }}
+          value={this.value || 'option'}
+        >
+          {this.renderOptionContent('inline-flex')}
+        </bq-checkbox>
+      );
+    }
+
+    return (
+      <button
+        class="bq-option"
+        disabled={this.disabled}
+        onBlur={this.onBlur}
+        onClick={this.onClick}
+        onFocus={this.onFocus}
+        part="base"
+        tabindex={this.isDisabledOrHidden ? '-1' : '0'}
+        type="button"
+      >
+        {this.renderOptionContent('flex')}
+      </button>
+    );
+  };
+
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -387,59 +516,22 @@ export class BqOption {
     return (
       <Host
         aria-disabled={this.isDisabledOrHidden ? 'true' : 'false'}
+        aria-expanded={this.isTreeItem && this.hasOptions ? (this.expanded ? 'true' : 'false') : undefined}
         aria-hidden={this.hidden ? 'true' : 'false'}
         aria-label={this.selectedDescendantAccessibleLabel}
         aria-selected={this.selected ? 'true' : 'false'}
-        role="option"
+        onBlur={this.isTreeItem ? this.onBlur : undefined}
+        onClick={this.isTreeItem ? this.onTreeItemClick : undefined}
+        onFocus={this.isTreeItem ? this.onFocus : undefined}
+        role={this.isTreeItem ? 'treeitem' : 'option'}
+        tabindex={this.isTreeItem && !this.isDisabledOrHidden ? '0' : undefined}
       >
         <div class="bq-option__item" part="item">
-          {this.checkbox ? (
-            <bq-checkbox
-              aria-label={this.optionLabel}
-              checked={this.selected}
-              class="bq-option__checkbox"
-              disabled={this.isDisabledOrHidden}
-              name={this.optionLabel}
-              exportparts="base:checkbox-base,control:checkbox-control,input:checkbox-input,checkbox:checkbox-checkbox,label:checkbox-label"
-              part="base"
-              ref={(element) => {
-                this.checkboxElem = element;
-              }}
-              value={this.value || 'option'}
-            >
-              {this.renderOptionContent('inline-flex')}
-            </bq-checkbox>
-          ) : (
-            <button
-              class="bq-option"
-              disabled={this.disabled}
-              onBlur={this.onBlur}
-              onClick={this.onClick}
-              onFocus={this.onFocus}
-              part="base"
-              tabindex={this.isDisabledOrHidden ? '-1' : '0'}
-              type="button"
-            >
-              {this.renderOptionContent('flex')}
-            </button>
-          )}
-          {this.selectedDescendantStatus && (
-            <span aria-hidden="true" class="bq-option__selected-descendant" part="selected-descendant">
-              {this.selectedDescendantStatus}
-            </span>
-          )}
+          {this.renderSelectionControl()}
+          {this.renderSelectedDescendantStatus()}
           {this.hasOptions && this.renderExpandButton()}
         </div>
-        <div
-          aria-hidden={!this.hasOptions || !this.expanded ? 'true' : 'false'}
-          class={{ 'bq-option__options': true, '!hidden': !this.hasOptions || !this.expanded }}
-          part="options"
-          ref={(element) => {
-            this.optionsElem = element;
-          }}
-        >
-          <slot name="options" onSlotchange={this.handleSlotChange} />
-        </div>
+        {this.renderNestedOptions()}
       </Host>
     );
   }

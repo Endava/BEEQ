@@ -167,6 +167,7 @@ export class BqSelect {
   @State() selectedOptions: HTMLBqOptionElement[] = [];
 
   @State() hasLabel = false;
+  @State() hasNestedOptions = false;
   @State() hasPrefix = false;
   @State() hasSuffix = false;
   @State() hasValue = false;
@@ -626,6 +627,7 @@ export class BqSelect {
     this.hasPrefix = hasSlotContent(this.prefixElem);
     this.hasSuffix = hasSlotContent(this.suffixElem);
     this.hasHelperText = hasSlotContent(this.helperTextElem);
+    this.hasNestedOptions = this.options.some((option) => option.querySelector('bq-option[slot="options"]'));
     this.syncOptionPresentation();
   };
 
@@ -701,7 +703,8 @@ export class BqSelect {
 
   private syncOptionPresentation = () => {
     this.options.forEach((option) => {
-      option.checkbox = Boolean(this.enableCheckboxes && this.multiple);
+      option.checkbox = Boolean(this.enableCheckboxes && this.multiple && !this.hasNestedOptions);
+      option.toggleAttribute('tree', this.hasNestedOptions);
     });
   };
 
@@ -961,7 +964,7 @@ export class BqSelect {
                 aria-controls={`bq-options-${this.name}`}
                 aria-disabled={this.disabled ? 'true' : 'false'}
                 aria-expanded={this.open ? 'true' : 'false'}
-                aria-haspopup="listbox"
+                aria-haspopup={this.hasNestedOptions ? 'tree' : 'listbox'}
                 autoCapitalize="off"
                 autoComplete="off"
                 class="bq-select__control--input is-full flex-grow"
@@ -1023,11 +1026,10 @@ export class BqSelect {
             </span>
           </div>
           <bq-option-list
-            aria-expanded={this.open ? 'true' : 'false'}
             exportparts="base:option-list"
             id={`bq-options-${this.name}`}
             onBqSelect={this.handleSelect}
-            role="listbox"
+            role={this.hasNestedOptions ? 'tree' : 'listbox'}
           >
             <slot onSlotchange={this.handleSlotChange} />
           </bq-option-list>
