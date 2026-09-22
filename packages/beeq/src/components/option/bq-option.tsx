@@ -33,6 +33,7 @@ import { getTextContent, hasSlotContent, isEventTargetChildOfElement } from '../
  *
  * @slot prefix - The prefix content to be displayed before the label.
  * @slot - The label content to be displayed.
+ * @slot suffix - The suffix content to be displayed after the label.
  *
  * @part base - The component's internal wrapper.
  * @part label - The `span` element in which the label text is displayed.
@@ -142,11 +143,27 @@ export class BqOption {
   }
 
   @Listen('bqChange')
-  onCheckboxChange(event: CustomEvent) {
+  onCheckboxChange(event: CustomEvent<{ checked: boolean }>) {
     if (!this.checkbox || !isEventTargetChildOfElement(event, this.checkboxElem)) return;
 
     event.stopImmediatePropagation();
     this.bqClick.emit(this.el);
+  }
+
+  @Listen('bqFocus')
+  onCheckboxFocus(event: CustomEvent<HTMLBqCheckboxElement>) {
+    if (!this.checkbox || !isEventTargetChildOfElement(event, this.checkboxElem)) return;
+
+    event.stopImmediatePropagation();
+    this.bqFocus.emit(this.el);
+  }
+
+  @Listen('bqBlur')
+  onCheckboxBlur(event: CustomEvent<HTMLBqCheckboxElement>) {
+    if (!this.checkbox || !isEventTargetChildOfElement(event, this.checkboxElem)) return;
+
+    event.stopImmediatePropagation();
+    this.bqBlur.emit(this.el);
   }
 
   // Public methods API

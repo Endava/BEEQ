@@ -77,6 +77,7 @@ export type TSelectValue = string | string[];
  * @event bqSelect - The callback handler is emitted when the selected value has changed.
  *
  * @slot label - The label slot container.
+ * @slot - The options rendered in the select list.
  * @slot prefix - The prefix slot container.
  * @slot tags - The tags slot container.
  * @slot clear-icon - The clear icon slot container.
@@ -242,7 +243,7 @@ export class BqSelect {
   @Prop({ reflect: true }) sameWidth?: boolean = true;
 
   /** If true, options will render with checkboxes when multiple selection is enabled. */
-  @Prop({ reflect: true }) enableCheckboxes?: boolean = false;
+  @Prop({ reflect: true }) enableCheckboxes?: boolean;
 
   /**  Represents the skidding between the Select panel and the input element. */
   @Prop({ reflect: true }) skidding?: number = 0;

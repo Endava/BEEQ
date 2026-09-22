@@ -2176,7 +2176,6 @@ export namespace Components {
         "distance"?: number;
         /**
           * If true, options will render with checkboxes when multiple selection is enabled.
-          * @default false
          */
         "enableCheckboxes"?: boolean;
         /**
@@ -7775,7 +7774,6 @@ declare namespace LocalJSX {
         "distance"?: number;
         /**
           * If true, options will render with checkboxes when multiple selection is enabled.
-          * @default false
          */
         "enableCheckboxes"?: boolean;
         /**

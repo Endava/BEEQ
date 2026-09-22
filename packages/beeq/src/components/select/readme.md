@@ -21,7 +21,7 @@ The select input component lets users choose from a predefined list, commonly us
 | `disableSearch`         | `disable-search`          | If true, the search functionality within the Select panel will be disabled. No typing will be allowed                                                                                                    | `boolean`                                                                                                                                                            | `false`         |
 | `disabled`              | `disabled`                | Indicates whether the Select input is disabled or not. If `true`, the Select is disabled and cannot be interacted with.                                                                                  | `boolean`                                                                                                                                                            | `false`         |
 | `distance`              | `distance`                | Represents the distance (gutter or margin) between the Select panel and the input element.                                                                                                               | `number`                                                                                                                                                             | `8`             |
-| `enableCheckboxes`      | `enable-checkboxes`       | If true, options will render with checkboxes when multiple selection is enabled.                                                                                                                         | `boolean`                                                                                                                                                            | `false`         |
+| `enableCheckboxes`      | `enable-checkboxes`       | If true, options will render with checkboxes when multiple selection is enabled.                                                                                                                         | `boolean`                                                                                                                                                            | `undefined`     |
 | `form`                  | `form`                    | The ID of the form that the Select input belongs to.                                                                                                                                                     | `string`                                                                                                                                                             | `undefined`     |
 | `formValidationMessage` | `form-validation-message` | The native form validation message (mandatory if `required` is set)                                                                                                                                      | `string`                                                                                                                                                             | `undefined`     |
 | `keepOpenOnSelect`      | `keep-open-on-select`     | If true, the Select panel will remain open after a selection is made.                                                                                                                                    | `boolean`                                                                                                                                                            | `false`         |
@@ -83,15 +83,15 @@ Type: `Promise<void>`
 
 ## Slots
 
-| Slot            | Description                     |
-| --------------- | ------------------------------- |
-|                 | The default slot                |
-| `"clear-icon"`  | The clear icon slot container.  |
-| `"helper-text"` | The helper text slot container. |
-| `"label"`       | The label slot container.       |
-| `"prefix"`      | The prefix slot container.      |
-| `"suffix"`      | The suffix slot container.      |
-| `"tags"`        | The tags slot container.        |
+| Slot            | Description                              |
+| --------------- | ---------------------------------------- |
+|                 | The options rendered in the select list. |
+| `"clear-icon"`  | The clear icon slot container.           |
+| `"helper-text"` | The helper text slot container.          |
+| `"label"`       | The label slot container.                |
+| `"prefix"`      | The prefix slot container.               |
+| `"suffix"`      | The suffix slot container.               |
+| `"tags"`        | The tags slot container.                 |
 
 
 ## Shadow Parts

@@ -180,12 +180,15 @@ describe('bq-option', () => {
     );
     const checkbox = getOptionCheckbox(root as HTMLBqOptionElement);
     const input = getCheckboxInput(checkbox) as HTMLInputElement;
+    const bqFocus = spyOnEvent('bqFocus');
+    const bqBlur = spyOnEvent('bqBlur');
     const bqClick = spyOnEvent('bqClick');
 
     await waitForStable(root);
     await checkbox?.vFocus();
     await waitForChanges();
     expect(checkbox?.shadowRoot?.activeElement).toBe(input);
+    expect(bqFocus).toHaveReceivedEventTimes(1);
 
     await userEvent.keyboard(' ');
     await waitForChanges();
@@ -196,6 +199,7 @@ describe('bq-option', () => {
     await checkbox?.vBlur();
     await waitForChanges();
     expect(checkbox?.shadowRoot?.activeElement).toBeNull();
+    expect(bqBlur).toHaveReceivedEventTimes(1);
   });
 
   it('should render prefix element', async () => {

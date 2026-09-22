@@ -15,6 +15,7 @@ const meta: Meta = {
   argTypes: {
     disabled: { control: 'boolean' },
     hidden: { control: 'boolean' },
+    checkbox: { control: 'boolean' },
     selected: { control: 'boolean' },
     // Event handlers
     bqBlur: { action: 'bqBlur' },
@@ -31,6 +32,7 @@ const meta: Meta = {
   args: {
     disabled: false,
     hidden: false,
+    checkbox: false,
     selected: false,
     iconPrefix: undefined,
     iconSuffix: undefined,
@@ -52,6 +54,7 @@ const Template = (args: Args) => {
     <bq-option
       ?disabled=${args.disabled}
       ?hidden=${args.hidden}
+      ?checkbox=${args.checkbox}
       ?selected=${args.selected}
       value=${ifDefined(args.value)}
       @bqBlur=${args.bqBlur}
@@ -91,6 +94,17 @@ export const Active: Story = {
         ${Template({ ...args, text: 'Change password', iconPrefix: 'lock-simple', value: 'changepassword' })}
         <!-- Option 3 -->
         ${Template({ ...args, text: 'Close session', iconPrefix: 'sign-out', value: 'logout' })}
+      `,
+    })}`,
+};
+
+export const Checkbox: Story = {
+  render: (args: Args) =>
+    html`${TemplateList({
+      ...args,
+      children: html`
+        ${Template({ ...args, checkbox: true, text: 'User profile', value: 'user' })}
+        ${Template({ ...args, checkbox: true, selected: true, text: 'Change password', value: 'changepassword' })}
       `,
     })}`,
 };
