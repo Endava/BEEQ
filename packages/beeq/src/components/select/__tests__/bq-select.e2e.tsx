@@ -646,6 +646,9 @@ describe('bq-select', () => {
     const reactOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="react"]');
     const bqSelect = spyOnEvent('bqSelect');
 
+    await userEvent.click(getControl(select));
+    await waitForChanges();
+
     await userEvent.click(getOptionExpandButtonControl(frontendOption));
     await waitForChanges();
 
@@ -685,9 +688,13 @@ describe('bq-select', () => {
         </bq-option>
       </bq-select>,
     );
+    const select = root as HTMLBqSelectElement;
     const frontendOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="frontend"]');
     const reactOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="react"]');
     const bqSelect = spyOnEvent('bqSelect');
+
+    await userEvent.click(getControl(select));
+    await waitForChanges();
 
     reactOption.focus();
     await userEvent.keyboard('{Enter}');
