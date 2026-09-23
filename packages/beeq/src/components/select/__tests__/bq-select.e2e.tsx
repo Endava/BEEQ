@@ -318,7 +318,7 @@ describe('bq-select', () => {
     await waitForChanges();
 
     expect(option).not.toHaveAttribute('selected');
-    expect(select.value).toBe('');
+    expect(select.value).toEqual([]);
     expect(bqSelect).toHaveReceivedEventTimes(2);
   });
 
