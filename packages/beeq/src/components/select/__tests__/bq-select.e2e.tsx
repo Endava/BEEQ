@@ -1043,6 +1043,47 @@ describe('bq-select', () => {
     );
   });
 
+  it('should report duplicate nested option values once, including dynamically added options', async () => {
+    const error = vi.spyOn(console, 'error').mockImplementation(() => undefined);
+    const { root, waitForChanges } = await render(
+      <bq-select multiple name="bq-select">
+        <bq-option value="javascript">
+          JavaScript
+          <bq-option slot="options" value="javascript:beginner">
+            Beginner
+          </bq-option>
+        </bq-option>
+        <bq-option value="react">
+          React
+          <bq-option slot="options" value="react:beginner">
+            Beginner
+          </bq-option>
+        </bq-option>
+      </bq-select>,
+    );
+    const reactOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="react"]');
+    await waitForChanges();
+
+    const duplicateOption = document.createElement('bq-option');
+    duplicateOption.slot = 'options';
+    duplicateOption.value = 'javascript:beginner';
+    reactOption.append(duplicateOption);
+    await waitForChanges();
+
+    expect(error).toHaveBeenCalledTimes(1);
+    expect(error).toHaveBeenCalledWith(
+      '[BqSelect] Duplicate option value "javascript:beginner" detected. Option values must be unique within a nested select.',
+    );
+
+    const uniqueOption = document.createElement('bq-option');
+    uniqueOption.slot = 'options';
+    uniqueOption.value = 'react:advanced';
+    reactOption.append(uniqueOption);
+    await waitForChanges();
+
+    expect(error).toHaveBeenCalledTimes(1);
+  });
+
   it('should clear nested selections when changing from multiple to single select', async () => {
     const { root, setProps, waitForChanges } = await render(
       <bq-select multiple name="bq-select" value={['react']}>

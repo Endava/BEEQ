@@ -173,6 +173,7 @@ export class BqSelect {
   private restoringSearchExpandedOptions = new WeakSet<HTMLBqOptionElement>();
   private searchExpandedOptions = new Set<HTMLBqOptionElement>();
   private userExpandedOptions = new Map<HTMLBqOptionElement, boolean>();
+  private reportedDuplicateOptionValues = new Set<string>();
   private hasWarnedUnsupportedNestedOptions = false;
 
   private fallbackInputId = 'select';
@@ -728,8 +729,37 @@ export class BqSelect {
 
   private syncOptionsAndValue = (optionStructure = this.getOptionStructure()) => {
     this.syncNestedOptionsMode(optionStructure);
+    this.reportDuplicateNestedOptionValues(optionStructure);
     this.syncOptionPresentation(optionStructure.all);
     this.syncValueState(optionStructure);
+  };
+
+  private reportDuplicateNestedOptionValues = (optionStructure: TSelectOptionStructure) => {
+    if (!this.hasNestedOptions) {
+      this.reportedDuplicateOptionValues.clear();
+      return;
+    }
+
+    const seenValues = new Set<string>();
+    const duplicateValues = new Set<string>();
+
+    optionStructure.all.forEach((option) => {
+      if (seenValues.has(option.value)) duplicateValues.add(option.value);
+      seenValues.add(option.value);
+    });
+
+    this.reportedDuplicateOptionValues.forEach((value) => {
+      if (!duplicateValues.has(value)) this.reportedDuplicateOptionValues.delete(value);
+    });
+
+    duplicateValues.forEach((value) => {
+      if (this.reportedDuplicateOptionValues.has(value)) return;
+
+      console.error(
+        `[BqSelect] Duplicate option value "${value}" detected. Option values must be unique within a nested select.`,
+      );
+      this.reportedDuplicateOptionValues.add(value);
+    });
   };
 
   private syncOptionPresentation = (options: HTMLBqOptionElement[]) => {
