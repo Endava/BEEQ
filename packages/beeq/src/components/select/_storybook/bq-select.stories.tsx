@@ -152,17 +152,33 @@ const defaultOptionsData = [
 ];
 
 const nestedOptions = `
-  <bq-option expanded value="frontend">
-    Frontend
-    <span slot="expand-label">2 levels</span>
-    <bq-option slot="options" value="react">React</bq-option>
-    <bq-option slot="options" value="stencil">Stencil</bq-option>
+  <bq-option expanded value="javascript">
+    JavaScript
+    <bq-option slot="options" value="javascript:beginner">Beginner</bq-option>
+    <bq-option slot="options" value="javascript:intermediate">Intermediate</bq-option>
+    <bq-option slot="options" value="javascript:advanced">Advanced</bq-option>
+    <bq-option slot="options" value="javascript:expert">Expert</bq-option>
   </bq-option>
-  <bq-option value="backend">
-    Backend
-    <span slot="expand-label">2 levels</span>
-    <bq-option slot="options" value="node-js">Node.js</bq-option>
-    <bq-option slot="options" value="dotnet">.NET</bq-option>
+  <bq-option value="react">
+    React
+    <bq-option slot="options" value="react:beginner">Beginner</bq-option>
+    <bq-option slot="options" value="react:intermediate">Intermediate</bq-option>
+    <bq-option slot="options" value="react:advanced">Advanced</bq-option>
+    <bq-option slot="options" value="react:expert">Expert</bq-option>
+  </bq-option>
+  <bq-option value="node-js">
+    Node.js
+    <bq-option slot="options" value="node-js:beginner">Beginner</bq-option>
+    <bq-option slot="options" value="node-js:intermediate">Intermediate</bq-option>
+    <bq-option slot="options" value="node-js:advanced">Advanced</bq-option>
+    <bq-option slot="options" value="node-js:expert">Expert</bq-option>
+  </bq-option>
+  <bq-option value="dotnet-core">
+    .NET Core
+    <bq-option slot="options" value="dotnet-core:beginner">Beginner</bq-option>
+    <bq-option slot="options" value="dotnet-core:intermediate">Intermediate</bq-option>
+    <bq-option slot="options" value="dotnet-core:advanced">Advanced</bq-option>
+    <bq-option slot="options" value="dotnet-core:expert">Expert</bq-option>
   </bq-option>
 `;
 

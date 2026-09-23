@@ -285,7 +285,7 @@ export class BqCheckbox {
           part="control"
         >
           <input
-            aria-checked={this.checked ? 'true' : 'false'}
+            aria-checked={this.indeterminate ? 'mixed' : this.checked ? 'true' : 'false'}
             aria-disabled={this.disabled ? 'true' : 'false'}
             checked={this.checked}
             class="bq-checkbox__input pointer-events-none absolute m-b-0 m-i-0 p-b-0 p-i-0 opacity-0"

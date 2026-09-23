@@ -14,8 +14,8 @@ const getExpandButtonControl = (option: HTMLBqOptionElement) =>
   getExpandButton(option)?.shadowRoot?.querySelector<HTMLButtonElement>('[part="button"]');
 const getNestedOptions = (option: HTMLBqOptionElement) =>
   option.shadowRoot?.querySelector<HTMLElement>('[part="options"]');
-const getSelectedDescendantStatus = (option: HTMLBqOptionElement) =>
-  option.shadowRoot?.querySelector<HTMLElement>('[part="selected-descendant"]');
+const getSelectionSummary = (option: HTMLBqOptionElement) =>
+  option.shadowRoot?.querySelector<HTMLElement>('[part="selection-summary"]');
 
 describe('bq-option', () => {
   it('should render', async () => {
@@ -180,6 +180,21 @@ describe('bq-option', () => {
     expect(input).toEqualAttribute('aria-disabled', 'true');
   });
 
+  it('should expose an indeterminate checkbox state', async () => {
+    const { root } = await render(
+      <bq-option checkbox indeterminate value="option-value">
+        Option label
+      </bq-option>,
+    );
+    const checkbox = getOptionCheckbox(root as HTMLBqOptionElement);
+    const input = getCheckboxInput(checkbox) as HTMLInputElement;
+
+    await waitForStable(root);
+
+    expect(input.indeterminate).toBe(true);
+    expect(input).toEqualAttribute('aria-checked', 'mixed');
+  });
+
   it('should toggle from the checkbox with Space and emit focus and blur once', async () => {
     const { root, spyOnEvent, waitForChanges } = await render(
       <bq-option checkbox value="option-value">
@@ -245,7 +260,7 @@ describe('bq-option', () => {
     expect(root).toHaveAttribute('selected');
   });
 
-  it('should identify a selected nested option without selecting its collapsed parent', async () => {
+  it('should identify a selected nested option without a visible parent count', async () => {
     const { root, waitForChanges } = await render(
       <bq-option value="parent">
         Parent
@@ -263,13 +278,44 @@ describe('bq-option', () => {
 
     expect(option).toEqualAttribute('aria-selected', 'false');
     expect(option).toEqualAttribute('aria-label', 'Parent, Child selected');
-    expect(getSelectedDescendantStatus(option)).toHaveTextContent('Child selected');
+    expect(option.shadowRoot?.querySelector('[part="selected-descendant"]')).toBeNull();
 
     option.expanded = true;
     await waitForChanges();
 
     expect(option).not.toHaveAttribute('aria-label');
-    expect(getSelectedDescendantStatus(option)).toBeNull();
+  });
+
+  it('should display customizable nested selection summaries and allow opting out', async () => {
+    const { root, setProps, waitForChanges } = await render(
+      <bq-option allSelectedLabel="All levels" selectedCountLabel="{count} levels selected" value="parent">
+        Parent
+        <bq-option slot="options" value="child-one">
+          Child one
+        </bq-option>
+        <bq-option slot="options" value="child-two">
+          Child two
+        </bq-option>
+      </bq-option>,
+    );
+    const option = root as HTMLBqOptionElement;
+    const firstChild = root.querySelector<HTMLBqOptionElement>('bq-option[value="child-one"]');
+    const secondChild = root.querySelector<HTMLBqOptionElement>('bq-option[value="child-two"]');
+
+    firstChild.selected = true;
+    await waitForChanges();
+
+    expect(getSelectionSummary(option)).toHaveTextContent('1 levels selected');
+
+    secondChild.selected = true;
+    await waitForChanges();
+
+    expect(getSelectionSummary(option)).toHaveTextContent('All levels');
+
+    await setProps({ showSelectionSummary: false });
+    await waitForChanges();
+
+    expect(getSelectionSummary(option)).toBeNull();
   });
 
   it('should expand and collapse nested options without changing selection', async () => {

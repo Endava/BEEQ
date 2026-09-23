@@ -28,6 +28,10 @@
   @apply is-full;
 }
 
+.bq-option__checkbox {
+  @apply inline-flex;
+}
+
 .bq-option__checkbox::part(base) {
   @apply rounded-none bg-transparent p-0;
 }
@@ -67,16 +71,17 @@
 
 .bq-option__expand::part(button) {
   --bq-button--border-radius: var(--bq-radius--s);
+  --bq-button--small-font-size: var(--bq-font-size--xs);
 
   @apply text-inherit enabled:hover:bg-transparent enabled:hover:text-brand;
 }
 
-.bq-option__selected-descendant {
+.bq-option__selection-summary {
   @apply ms-s shrink-0 text-s text-secondary;
 }
 
 .bq-option__options {
-  @apply m-bs-xs2 ms-[--bq-option--padding-start] flex flex-col gap-y-[--bq-option-group--gapY-list] ps-s;
+  @apply m-bs-xs2 ms-[calc(var(--bq-option--padding-start)_*_2)] flex flex-col gap-y-xs2 ps-s;
 }
 
 :host([slot='options']) {
