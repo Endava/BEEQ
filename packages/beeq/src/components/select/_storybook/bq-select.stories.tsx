@@ -363,6 +363,7 @@ export const NestedOptions: Story = {
   name: 'Nested options',
   render: Template,
   args: {
+    multiple: true,
     open: true,
     options: nestedOptions,
   },
@@ -549,7 +550,6 @@ export const WithForm: Story = {
       ev.preventDefault();
       const form = ev.target as HTMLFormElement;
       const formData = new FormData(form);
-      // @ts-expect-error FormData.entries is not typed
       const formValues = Object.fromEntries(formData.entries());
 
       const codeElement = document.getElementById('form-data');

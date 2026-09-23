@@ -320,8 +320,18 @@ export class BqOption {
     return this.disabled || this.hidden;
   }
 
+  private get isManagedBySelect() {
+    return Boolean(this.el.closest('bq-select'));
+  }
+
   private get isTreeItem() {
+    if (this.isManagedBySelect) return this.tree;
+
     return this.tree || this.hasOptions || Boolean(this.el.parentElement?.closest('bq-option'));
+  }
+
+  private get shouldRenderNestedOptions() {
+    return !this.isManagedBySelect || this.tree;
   }
 
   private isEventFromNestedOption = (event: Event) => {
@@ -439,19 +449,23 @@ export class BqOption {
     </bq-button>
   );
 
-  private renderNestedOptions = () => (
-    <div
-      aria-hidden={!this.hasOptions || !this.expanded ? 'true' : 'false'}
-      class={{ 'bq-option__options': true, '!hidden': !this.hasOptions || !this.expanded }}
-      part="options"
-      ref={(element) => {
-        this.optionsElem = element;
-      }}
-      role={this.isTreeItem && this.hasOptions ? 'group' : undefined}
-    >
-      <slot name="options" onSlotchange={this.handleSlotChange} />
-    </div>
-  );
+  private renderNestedOptions = () => {
+    if (!this.shouldRenderNestedOptions) return;
+
+    return (
+      <div
+        aria-hidden={!this.hasOptions || !this.expanded ? 'true' : 'false'}
+        class={{ 'bq-option__options': true, '!hidden': !this.hasOptions || !this.expanded }}
+        part="options"
+        ref={(element) => {
+          this.optionsElem = element;
+        }}
+        role={this.isTreeItem && this.hasOptions ? 'group' : undefined}
+      >
+        <slot name="options" onSlotchange={this.handleSlotChange} />
+      </div>
+    );
+  };
 
   private renderSelectedDescendantStatus = () => {
     if (!this.selectedDescendantStatus) return;
@@ -529,7 +543,7 @@ export class BqOption {
         <div class="bq-option__item" part="item">
           {this.renderSelectionControl()}
           {this.renderSelectedDescendantStatus()}
-          {this.hasOptions && this.renderExpandButton()}
+          {this.shouldRenderNestedOptions && this.hasOptions && this.renderExpandButton()}
         </div>
         {this.renderNestedOptions()}
       </Host>
