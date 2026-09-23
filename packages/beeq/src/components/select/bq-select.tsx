@@ -788,11 +788,7 @@ export class BqSelect {
 
   private normalizeValue = (optionStructure: TSelectOptionStructure): TSelectValue => {
     if (this.multiple) {
-      const value = Array.isArray(this.value)
-        ? this.value
-        : isNil(this.value) || this.value === ''
-          ? []
-          : stringToArray(this.value);
+      const value = this.getMultipleValue();
 
       return this.hasNestedOptions ? this.normalizeNestedValue(value, optionStructure) : value;
     }
@@ -801,6 +797,13 @@ export class BqSelect {
     const isNestedValue = optionStructure.nested.some((option) => option.value?.toLowerCase() === value.toLowerCase());
 
     return isNestedValue ? '' : value;
+  };
+
+  private getMultipleValue = (): string[] => {
+    if (Array.isArray(this.value)) return this.value;
+    if (isNil(this.value) || this.value === '') return [];
+
+    return stringToArray(this.value);
   };
 
   private normalizeNestedValue = (value: string[], optionStructure: TSelectOptionStructure) => {

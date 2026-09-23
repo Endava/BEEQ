@@ -356,6 +356,13 @@ export class BqOption {
     return this.disabled || this.hidden;
   }
 
+  private get ariaChecked() {
+    if (!this.isTreeItem || !this.checkbox) return undefined;
+    if (this.indeterminate) return 'mixed';
+
+    return this.selected ? 'true' : 'false';
+  }
+
   private get isManagedBySelect() {
     return Boolean(this.el.closest('bq-select'));
   }
@@ -575,15 +582,7 @@ export class BqOption {
         aria-expanded={this.isTreeItem && this.hasOptions ? (this.expanded ? 'true' : 'false') : undefined}
         aria-hidden={this.hidden ? 'true' : 'false'}
         aria-label={this.selectedDescendantAccessibleLabel}
-        aria-checked={
-          this.isTreeItem && this.checkbox
-            ? this.indeterminate
-              ? 'mixed'
-              : this.selected
-                ? 'true'
-                : 'false'
-            : undefined
-        }
+        aria-checked={this.ariaChecked}
         aria-selected={this.selected ? 'true' : 'false'}
         onBlur={this.isTreeItem ? this.onBlur : undefined}
         onClick={this.isTreeItem ? this.onTreeItemClick : undefined}
