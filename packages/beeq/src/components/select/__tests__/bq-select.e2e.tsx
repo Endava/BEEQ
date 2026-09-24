@@ -228,6 +228,26 @@ describe('bq-select', () => {
     expect(getOptionCheckboxInput(unselectedOption)).toEqualAttribute('aria-checked', 'false');
   });
 
+  it('should expose checkbox selection through the option semantics', async () => {
+    const { root, setProps, waitForChanges } = await render(
+      <bq-select name="bq-select" multiple enableCheckboxes>
+        <bq-option value="1">Option 1</bq-option>
+      </bq-select>,
+    );
+    const option = root.querySelector<HTMLBqOptionElement>('bq-option');
+    const checkbox = getOptionCheckbox(option);
+    const input = getOptionCheckboxInput(option);
+
+    await setProps({ value: ['1'] });
+    await waitForChanges();
+
+    expect(option).toEqualAttribute('role', 'option');
+    expect(option).toEqualAttribute('aria-checked', 'true');
+    expect(option).not.toHaveAttribute('aria-selected');
+    expect(checkbox).toEqualAttribute('aria-hidden', 'true');
+    expect(input).toEqualAttribute('tabindex', '-1');
+  });
+
   it('should render with selected option', async () => {
     const { root, waitForChanges } = await render(
       <bq-select name="bq-select" value="1">
@@ -242,6 +262,22 @@ describe('bq-select', () => {
 
     expect(root.querySelector('bq-option[value="1"]')).toHaveAttribute('selected');
     expect(getInput(select).value).toBe('Option 1');
+  });
+
+  it('should use the complete default slot content as the selected label', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-select name="bq-select" value="1">
+        <bq-option value="1">
+          <span>Option</span> label
+        </bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+
+    await waitForChanges();
+    await waitForStable(root);
+
+    expect(getInput(select).value).toBe('Option label');
   });
 
   it('should select an option and emit bqSelect', async () => {
@@ -353,8 +389,8 @@ describe('bq-select', () => {
     expect(bqSelect).toHaveReceivedEventTimes(2);
   });
 
-  it('should select a checkbox option with Space', async () => {
-    const { root, spyOnEvent, waitForChanges } = await render(
+  it('should select a checkbox option with Enter and Space', async () => {
+    const { root, setProps, spyOnEvent, waitForChanges } = await render(
       <bq-select name="bq-select" keepOpenOnSelect multiple enableCheckboxes>
         <bq-option value="1">Option 1</bq-option>
       </bq-select>,
@@ -367,12 +403,22 @@ describe('bq-select', () => {
     await userEvent.click(getControl(select));
     await waitForChanges();
     await checkbox?.vFocus();
-    await userEvent.keyboard(' ');
+    await userEvent.keyboard('{Enter}');
     await waitForChanges();
 
     expect(option).toHaveAttribute('selected');
     expect(select.value).toEqual(['1']);
     expect(bqSelect).toHaveReceivedEventTimes(1);
+
+    await setProps({ value: [] });
+    await waitForChanges();
+    await checkbox?.vFocus();
+    await userEvent.keyboard(' ');
+    await waitForChanges();
+
+    expect(option).toHaveAttribute('selected');
+    expect(select.value).toEqual(['1']);
+    expect(bqSelect).toHaveReceivedEventTimes(2);
   });
 
   it('should keep selected row styling with checkboxes enabled', async () => {
@@ -723,9 +769,170 @@ describe('bq-select', () => {
 
     expect(getInput(select)).toEqualAttribute('aria-haspopup', 'tree');
     expect(optionList).toEqualAttribute('role', 'tree');
+    expect(optionList).toEqualAttribute('aria-multiselectable', 'true');
     expect(frontendOption).toEqualAttribute('role', 'treeitem');
     expect(reactOption).toEqualAttribute('role', 'treeitem');
     expect(backendOption).toEqualAttribute('role', 'treeitem');
+    expect(frontendOption).toEqualAttribute('tabindex', '0');
+    expect(reactOption).toEqualAttribute('tabindex', '-1');
+    expect(backendOption).toEqualAttribute('tabindex', '-1');
+  });
+
+  it('should expose nested checkbox states through tree items', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-select multiple name="bq-select" value={['frontend', 'react']}>
+        <bq-option value="frontend">
+          Frontend
+          <bq-option slot="options" value="react">
+            React
+          </bq-option>
+          <bq-option slot="options" value="stencil">
+            Stencil
+          </bq-option>
+        </bq-option>
+      </bq-select>,
+    );
+    const parentOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="frontend"]');
+    const childOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="react"]');
+
+    await waitForChanges();
+
+    expect(parentOption).toEqualAttribute('aria-checked', 'mixed');
+    expect(parentOption).not.toHaveAttribute('aria-selected');
+    expect(getOptionCheckbox(parentOption)).toEqualAttribute('aria-hidden', 'true');
+    expect(getOptionCheckboxInput(parentOption)).toEqualAttribute('tabindex', '-1');
+    expect(childOption).toEqualAttribute('aria-checked', 'true');
+    expect(childOption).not.toHaveAttribute('aria-selected');
+  });
+
+  it('should open and navigate flat options with Arrow Down and Arrow Up', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-select name="bq-select">
+        <bq-option value="alpha">Alpha</bq-option>
+        <bq-option value="beta">Beta</bq-option>
+        <bq-option value="gamma">Gamma</bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const input = getInput(select);
+    const alphaOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="alpha"]');
+    const betaOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="beta"]');
+
+    input.focus();
+    await userEvent.keyboard('{ArrowDown}');
+    await waitForChanges();
+
+    expect(select.open).toBe(true);
+    expect(document.activeElement).toBe(alphaOption);
+
+    await userEvent.keyboard('{ArrowDown}');
+    await waitForChanges();
+
+    expect(document.activeElement).toBe(betaOption);
+
+    await userEvent.keyboard('{ArrowUp}');
+    await waitForChanges();
+
+    expect(document.activeElement).toBe(alphaOption);
+  });
+
+  it('should skip disabled and hidden options during keyboard navigation', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-select name="bq-select">
+        <bq-option value="alpha">Alpha</bq-option>
+        <bq-option disabled value="beta">
+          Beta
+        </bq-option>
+        <bq-option hidden value="gamma">
+          Gamma
+        </bq-option>
+        <bq-option value="delta">Delta</bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const input = getInput(select);
+    const deltaOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="delta"]');
+
+    input.focus();
+    await userEvent.keyboard('{ArrowDown}');
+    await waitForChanges();
+    await userEvent.keyboard('{ArrowDown}');
+    await waitForChanges();
+
+    expect(document.activeElement).toBe(deltaOption);
+  });
+
+  it('should navigate nested options with roving tree focus', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-select multiple name="bq-select">
+        <bq-option value="frontend">
+          Frontend
+          <bq-option slot="options" value="react">
+            React
+          </bq-option>
+          <bq-option slot="options" value="stencil">
+            Stencil
+          </bq-option>
+        </bq-option>
+        <bq-option value="backend">Backend</bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const input = getInput(select);
+    const frontendOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="frontend"]');
+    const reactOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="react"]');
+    const stencilOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="stencil"]');
+    const backendOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="backend"]');
+
+    input.focus();
+    await userEvent.keyboard('{ArrowDown}');
+    await waitForChanges();
+
+    expect(select.open).toBe(true);
+    expect(document.activeElement).toBe(frontendOption);
+
+    await userEvent.keyboard('{ArrowRight}');
+    await waitForChanges();
+
+    expect(frontendOption.expanded).toBe(true);
+    expect(document.activeElement).toBe(frontendOption);
+
+    await userEvent.keyboard('{ArrowRight}');
+    await waitForChanges();
+
+    expect(document.activeElement).toBe(reactOption);
+    expect(reactOption).toEqualAttribute('tabindex', '0');
+    expect(frontendOption).toEqualAttribute('tabindex', '-1');
+
+    await userEvent.keyboard('{ArrowDown}');
+    await waitForChanges();
+
+    expect(document.activeElement).toBe(stencilOption);
+
+    await userEvent.keyboard('{End}');
+    await waitForChanges();
+
+    expect(document.activeElement).toBe(backendOption);
+
+    await userEvent.keyboard('{Home}');
+    await waitForChanges();
+
+    expect(document.activeElement).toBe(frontendOption);
+
+    await userEvent.keyboard('{ArrowRight}');
+    await waitForChanges();
+    await userEvent.keyboard('{ArrowDown}');
+    await waitForChanges();
+    await userEvent.keyboard('{ArrowLeft}');
+    await waitForChanges();
+
+    expect(document.activeElement).toBe(frontendOption);
+
+    await userEvent.keyboard('{ArrowLeft}');
+    await waitForChanges();
+
+    expect(frontendOption.expanded).toBe(false);
+    expect(document.activeElement).toBe(frontendOption);
   });
 
   it('should cascade nested parent selection without selecting on expand', async () => {
@@ -832,11 +1039,21 @@ describe('bq-select', () => {
       },
     ]);
 
-    await userEvent.click(getOptionCheckboxBase(frontendOption));
+    await userEvent.click(getOptionCheckboxBase(stencilOption));
+    await waitForChanges();
+
+    expect(select.value).toEqual(['frontend', 'react']);
+    expect(getOptionCheckboxInput(frontendOption)?.checked).toBe(false);
+    expect(getOptionCheckboxInput(frontendOption)?.indeterminate).toBe(true);
+
+    await userEvent.click(getOptionCheckboxBase(reactOption));
     await waitForChanges();
 
     expect(select.value).toEqual([]);
-    expect(bqSelect.events[2].detail.selectionTree).toEqual([]);
+    expect(frontendOption).not.toHaveAttribute('selected');
+    expect(getOptionCheckboxInput(frontendOption)?.checked).toBe(false);
+    expect(getOptionCheckboxInput(frontendOption)?.indeterminate).toBe(false);
+    expect(bqSelect.events.at(-1)?.detail.selectionTree).toEqual([]);
   });
 
   it('should cascade selections and emit the selection tree across three nesting levels', async () => {
@@ -1031,6 +1248,7 @@ describe('bq-select', () => {
 
     expect(frontendOption).toHaveAttribute('selected');
     expect(reactOption).toHaveAttribute('selected');
+    expect(document.activeElement).toBe(reactOption);
     expect(bqSelect).toHaveReceivedEventTimes(1);
 
     await setProps({ value: [] });
@@ -1041,6 +1259,7 @@ describe('bq-select', () => {
 
     expect(frontendOption).toHaveAttribute('selected');
     expect(reactOption).toHaveAttribute('selected');
+    expect(document.activeElement).toBe(reactOption);
     expect(bqSelect).toHaveReceivedEventTimes(2);
   });
 
@@ -1123,6 +1342,8 @@ describe('bq-select', () => {
 
   it('should warn once when nested options are used without multiple', async () => {
     const warn = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
+    const nestedOptionsWarning =
+      '[BqSelect] Nested options require `multiple` to be enabled. Nested descendants are unavailable.';
     const { root, setProps, waitForChanges } = await render(
       <bq-select name="bq-select">
         <bq-option value="frontend">
@@ -1139,10 +1360,7 @@ describe('bq-select', () => {
     await waitForChanges();
 
     expect(root).toEqualAttribute('value', '');
-    expect(warn).toHaveBeenCalledTimes(1);
-    expect(warn).toHaveBeenCalledWith(
-      '[BqSelect] Nested options require `multiple` to be enabled. Nested descendants are unavailable.',
-    );
+    expect(warn.mock.calls.filter(([message]) => message === nestedOptionsWarning)).toHaveLength(1);
   });
 
   it('should report duplicate nested option values once, including dynamically added options', async () => {
@@ -1574,6 +1792,24 @@ describe('bq-select', () => {
     await sleep(300);
 
     expect(bqInput).toHaveReceivedEventTimes(1);
+  });
+
+  it('should cancel pending input work when disconnected', async () => {
+    const { root, spyOnEvent } = await render(
+      <bq-select debounceTime={250} name="bq-select">
+        <bq-option value="alpha">Alpha</bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const bqInput = spyOnEvent('bqInput');
+    const input = getInput(select);
+
+    await userEvent.click(input);
+    await userEvent.type(input, 'a');
+    select.remove();
+    await sleep(300);
+
+    expect(bqInput).toHaveReceivedEventTimes(0);
   });
 
   it('should reset to a given value using the reset method', async () => {

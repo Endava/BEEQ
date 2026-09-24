@@ -19,7 +19,6 @@
 
 .bq-option__label {
   @apply inline-block flex-auto overflow-hidden text-ellipsis text-start whitespace-nowrap;
-  @apply pe-[--bq-option--padding-end] ps-[--bq-option--padding-start];
 }
 
 .bq-option__checkbox,
