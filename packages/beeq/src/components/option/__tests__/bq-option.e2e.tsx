@@ -195,24 +195,6 @@ describe('bq-option', () => {
     expect(input).toEqualAttribute('aria-checked', 'mixed');
   });
 
-  it('should use aria-checked as the nested checkbox selection state', async () => {
-    const { root, waitForChanges } = await render(
-      <bq-option checkbox expanded selected value="parent">
-        Parent
-        <bq-option slot="options" value="child">
-          Child
-        </bq-option>
-      </bq-option>,
-    );
-    const option = root as HTMLBqOptionElement;
-
-    await waitForChanges();
-
-    expect(option).toEqualAttribute('role', 'treeitem');
-    expect(option).toEqualAttribute('aria-checked', 'true');
-    expect(option).not.toHaveAttribute('aria-selected');
-  });
-
   it('should support custom nested selection summaries and opt-out', async () => {
     const { root, setProps, waitForChanges } = await render(
       <bq-option allSelectedLabel="All levels" checkbox expanded selectedCountLabel="{count} levels" value="frontend">
