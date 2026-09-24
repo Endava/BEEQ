@@ -90,7 +90,7 @@ type TSelectDisplayTag = {
  * @attr {number} skidding - Represents the skidding between the Select panel and the input element.
  * @attr {"absolute" | "fixed"} strategy - Defines the strategy to position the Select panel.
  * @attr {"error" | "success" | "warning" | "none"} validation-status - The validation status of the Select input.
- * @attr {"number" | "string" | "string[]"} value - The select input value can be used to reset the field to a previous value.
+ * @attr {string | string[]} value - The select input value can be used to reset the field to a previous value.
  *
  * @method clear - Method to be called to clear the selected value.
  *
