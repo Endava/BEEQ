@@ -839,6 +839,70 @@ describe('bq-select', () => {
     expect(bqSelect.events[2].detail.selectionTree).toEqual([]);
   });
 
+  it('should cascade selections and emit the selection tree across three nesting levels', async () => {
+    const { root, spyOnEvent, waitForChanges } = await render(
+      <bq-select multiple name="skills" keepOpenOnSelect>
+        <bq-option expanded value="frontend">
+          Frontend
+          <bq-option expanded slot="options" value="frameworks">
+            Frameworks
+            <bq-option slot="options" value="react">
+              React
+            </bq-option>
+            <bq-option slot="options" value="stencil">
+              Stencil
+            </bq-option>
+          </bq-option>
+        </bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const frontendOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="frontend"]');
+    const frameworksOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="frameworks"]');
+    const reactOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="react"]');
+    const bqSelect = spyOnEvent('bqSelect');
+
+    await userEvent.click(getControl(select));
+    await userEvent.click(getOptionCheckboxBase(reactOption));
+    await waitForChanges();
+
+    expect(select.value).toEqual(['frontend', 'frameworks', 'react']);
+    expect(getOptionCheckboxInput(frontendOption)?.indeterminate).toBe(true);
+    expect(getOptionCheckboxInput(frameworksOption)?.indeterminate).toBe(true);
+    expect(bqSelect.events[0].detail.selectionTree).toEqual([
+      {
+        children: [
+          {
+            children: [{ children: [], value: 'react' }],
+            value: 'frameworks',
+          },
+        ],
+        value: 'frontend',
+      },
+    ]);
+
+    await userEvent.click(getOptionCheckboxBase(frameworksOption));
+    await waitForChanges();
+
+    expect(select.value).toEqual(['frontend', 'frameworks', 'react', 'stencil']);
+    expect(getOptionCheckboxInput(frontendOption)?.checked).toBe(true);
+    expect(getOptionCheckboxInput(frameworksOption)?.checked).toBe(true);
+    expect(bqSelect.events[1].detail.selectionTree).toEqual([
+      {
+        children: [
+          {
+            children: [
+              { children: [], value: 'react' },
+              { children: [], value: 'stencil' },
+            ],
+            value: 'frameworks',
+          },
+        ],
+        value: 'frontend',
+      },
+    ]);
+  });
+
   it('should not cascade selection to disabled or hidden nested options', async () => {
     const { root, waitForChanges } = await render(
       <bq-select multiple name="skills" keepOpenOnSelect>
