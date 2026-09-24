@@ -321,7 +321,7 @@ export class BqOption {
 
   private syncCheckboxState = () => {
     const checkboxInput = this.checkboxElem?.shadowRoot?.querySelector<HTMLInputElement>('[part="input"]');
-    if (!checkboxInput || !this.isTreeItem) return;
+    if (!checkboxInput || !this.isSelectCheckboxOption) return;
 
     checkboxInput.tabIndex = -1;
   };
@@ -479,6 +479,7 @@ export class BqOption {
       return (
         <bq-checkbox
           aria-label={this.optionLabel}
+          aria-hidden={this.isSelectCheckboxOption ? 'true' : undefined}
           checked={this.selected && !this.indeterminate}
           class="bq-option__checkbox"
           disabled={this.isDisabledOrHidden}
@@ -521,14 +522,14 @@ export class BqOption {
   };
 
   private get ariaChecked() {
-    if (!this.isTreeItem || !this.checkbox) return undefined;
+    if (!this.isSelectCheckboxOption) return undefined;
     if (this.indeterminate) return 'mixed';
 
     return this.selected ? 'true' : 'false';
   }
 
   private get ariaSelected() {
-    if (this.isTreeItem && this.checkbox) return undefined;
+    if (this.isSelectCheckboxOption) return undefined;
 
     return this.selected ? 'true' : 'false';
   }
@@ -539,6 +540,10 @@ export class BqOption {
 
   private get isManagedBySelect() {
     return Boolean(this.el.closest('bq-select'));
+  }
+
+  private get isSelectCheckboxOption() {
+    return this.isManagedBySelect && this.checkbox;
   }
 
   private get isTreeItem() {

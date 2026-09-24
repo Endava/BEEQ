@@ -228,6 +228,26 @@ describe('bq-select', () => {
     expect(getOptionCheckboxInput(unselectedOption)).toEqualAttribute('aria-checked', 'false');
   });
 
+  it('should expose checkbox selection through the option semantics', async () => {
+    const { root, setProps, waitForChanges } = await render(
+      <bq-select name="bq-select" multiple enableCheckboxes>
+        <bq-option value="1">Option 1</bq-option>
+      </bq-select>,
+    );
+    const option = root.querySelector<HTMLBqOptionElement>('bq-option');
+    const checkbox = getOptionCheckbox(option);
+    const input = getOptionCheckboxInput(option);
+
+    await setProps({ value: ['1'] });
+    await waitForChanges();
+
+    expect(option).toEqualAttribute('role', 'option');
+    expect(option).toEqualAttribute('aria-checked', 'true');
+    expect(option).not.toHaveAttribute('aria-selected');
+    expect(checkbox).toEqualAttribute('aria-hidden', 'true');
+    expect(input).toEqualAttribute('tabindex', '-1');
+  });
+
   it('should render with selected option', async () => {
     const { root, waitForChanges } = await render(
       <bq-select name="bq-select" value="1">
