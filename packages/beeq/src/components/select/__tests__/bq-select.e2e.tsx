@@ -1082,6 +1082,14 @@ describe('bq-select', () => {
     await waitForChanges();
 
     expect(error).toHaveBeenCalledTimes(1);
+
+    uniqueOption.value = 'javascript';
+    await waitForChanges();
+
+    expect(error).toHaveBeenCalledTimes(2);
+    expect(error).toHaveBeenLastCalledWith(
+      '[BqSelect] Duplicate option value "javascript" detected. Option values must be unique within a nested select.',
+    );
   });
 
   it('should clear nested selections when changing from multiple to single select', async () => {

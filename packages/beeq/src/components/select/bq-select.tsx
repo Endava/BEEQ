@@ -1092,7 +1092,7 @@ export class BqSelect {
   private observeOptions = () => {
     this.optionsObserver = new MutationObserver(this.handleOptionMarkupMutations);
     this.optionsObserver.observe(this.el, {
-      attributeFilter: ['slot'],
+      attributeFilter: ['slot', 'value'],
       attributes: true,
       childList: true,
       subtree: true,
