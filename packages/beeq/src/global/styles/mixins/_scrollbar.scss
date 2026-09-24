@@ -12,7 +12,7 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 
-  &::-webkit-scrollbar {
+  @at-root #{&}::-webkit-scrollbar {
     @apply hidden;
   }
 }
