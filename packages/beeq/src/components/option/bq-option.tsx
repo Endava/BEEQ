@@ -77,8 +77,8 @@ import {
  * @cssprop --bq-option--gap-start - gap space between prefix and label
  * @cssprop --bq-option--gap-end - gap space between label and suffix
  * @cssprop --bq-option--paddingY - padding Y axis
- * @cssprop --bq-option--padding-start - option label padding start
- * @cssprop --bq-option--padding-end - option label padding end
+ * @cssprop --bq-option--padding-start - option item padding start
+ * @cssprop --bq-option--padding-end - option item padding end
  */
 @Component({
   tag: 'bq-option',

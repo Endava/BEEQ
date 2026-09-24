@@ -1676,8 +1676,8 @@ export namespace Components {
      * @cssprop --bq-option--gap-start - gap space between prefix and label
      * @cssprop --bq-option--gap-end - gap space between label and suffix
      * @cssprop --bq-option--paddingY - padding Y axis
-     * @cssprop --bq-option--padding-start - option label padding start
-     * @cssprop --bq-option--padding-end - option label padding end
+     * @cssprop --bq-option--padding-start - option item padding start
+     * @cssprop --bq-option--padding-end - option item padding end
      */
     interface BqOption {
         /**
@@ -4471,8 +4471,8 @@ declare global {
      * @cssprop --bq-option--gap-start - gap space between prefix and label
      * @cssprop --bq-option--gap-end - gap space between label and suffix
      * @cssprop --bq-option--paddingY - padding Y axis
-     * @cssprop --bq-option--padding-start - option label padding start
-     * @cssprop --bq-option--padding-end - option label padding end
+     * @cssprop --bq-option--padding-start - option item padding start
+     * @cssprop --bq-option--padding-end - option item padding end
      */
     interface HTMLBqOptionElement extends Components.BqOption, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqOptionElementEventMap>(type: K, listener: (this: HTMLBqOptionElement, ev: BqOptionCustomEvent<HTMLBqOptionElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -7291,8 +7291,8 @@ declare namespace LocalJSX {
      * @cssprop --bq-option--gap-start - gap space between prefix and label
      * @cssprop --bq-option--gap-end - gap space between label and suffix
      * @cssprop --bq-option--paddingY - padding Y axis
-     * @cssprop --bq-option--padding-start - option label padding start
-     * @cssprop --bq-option--padding-end - option label padding end
+     * @cssprop --bq-option--padding-start - option item padding start
+     * @cssprop --bq-option--padding-end - option item padding end
      */
     interface BqOption {
         /**
@@ -10288,8 +10288,8 @@ declare module "@stencil/core" {
              * @cssprop --bq-option--gap-start - gap space between prefix and label
              * @cssprop --bq-option--gap-end - gap space between label and suffix
              * @cssprop --bq-option--paddingY - padding Y axis
-             * @cssprop --bq-option--padding-start - option label padding start
-             * @cssprop --bq-option--padding-end - option label padding end
+             * @cssprop --bq-option--padding-start - option item padding start
+             * @cssprop --bq-option--padding-end - option item padding end
              */
             "bq-option": LocalJSX.IntrinsicElements["bq-option"] & JSXBase.HTMLAttributes<HTMLBqOptionElement>;
             /**
