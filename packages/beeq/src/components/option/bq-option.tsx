@@ -29,9 +29,14 @@ import {
  * @dependency bq-icon
  *
  * @attr {boolean} disabled - If true, the option is disabled.
+ * @attr {string} display-value - Overrides the displayed option value.
  * @attr {boolean} hidden - If true, the option is hidden.
  * @attr {boolean} checkbox - If true, the option renders as a checkbox option.
  * @attr {boolean} expanded - If true, nested options are displayed.
+ * @attr {boolean} indeterminate - If true, the option checkbox represents a partial nested selection.
+ * @attr {string} all-selected-label - Text displayed when all selectable nested options are selected.
+ * @attr {string} selected-count-label - Text displayed when some selectable nested options are selected. Use `{count}` as the selected option count placeholder.
+ * @attr {boolean} show-selection-summary - If true, displays the nested selection summary beside the expand control.
  * @attr {string} value - A string representing the value of the option. Can be used to identify the item.
  * @attr {boolean} selected - If true, the option is selected and active.
  *
@@ -59,7 +64,7 @@ import {
  * @part expand - The button used to expand or collapse nested options.
  * @part expand-button - The native button exported from the expand control.
  * @part expand-label - The label exported from the expand control.
- * @part selected-descendant - The status displayed when a collapsed option contains selected nested options.
+ * @part selection-summary - The nested selection summary displayed beside the expand control.
  * @part options - The container for nested options.
  *
  * @cssprop --bq-option--background - background color
@@ -103,9 +108,11 @@ export class BqOption {
   @State() hasExpandLabel: boolean = false;
   @State() hasOptions: boolean = false;
   @State() hasPrefix: boolean = false;
+  @State() hasSuffix: boolean = false;
   @State() selectedDescendantCount = 0;
   @State() selectedDescendantLabel?: string;
-  @State() hasSuffix: boolean = false;
+  @State() selectedSelectableDescendantCount = 0;
+  @State() selectableDescendantCount = 0;
 
   // Public Property API
   // ========================
@@ -124,6 +131,18 @@ export class BqOption {
 
   /** If true, nested options are displayed. */
   @Prop({ reflect: true, mutable: true }) expanded = false;
+
+  /** If true, the option checkbox represents a partial nested selection. */
+  @Prop({ reflect: true }) indeterminate = false;
+
+  /** Text displayed when all selectable nested options are selected. */
+  @Prop({ reflect: true }) allSelectedLabel = 'All selected';
+
+  /** Text displayed when some selectable nested options are selected. Use `{count}` as the selected option count placeholder. */
+  @Prop({ reflect: true }) selectedCountLabel = '{count} selected';
+
+  /** If true, displays the nested selection summary beside the expand control. */
+  @Prop({ reflect: true }) showSelectionSummary = true;
 
   /** If true, the option is selected and active. */
   @Prop({ reflect: true }) selected: boolean = false;
@@ -163,6 +182,7 @@ export class BqOption {
   }
 
   componentDidRender() {
+    this.syncCheckboxState();
     this.syncExpandButtonState();
   }
 
@@ -174,8 +194,9 @@ export class BqOption {
   // ==============
 
   @Listen('keydown')
-  onKeyDown(event: KeyboardEvent) {
+  handleKeydown(event: KeyboardEvent) {
     if (this.isEventFromNestedOption(event)) return;
+    if (isEventTargetChildOfElement(event, this.checkboxElem)) return;
     if (isEventTargetChildOfElement(event, this.expandElem)) return;
     if (this.isTreeItem) {
       this.handleTreeItemKeydown(event);
@@ -188,7 +209,7 @@ export class BqOption {
   }
 
   @Listen('bqChange')
-  onCheckboxChange(event: CustomEvent<{ checked: boolean }>) {
+  handleCheckboxChange(event: CustomEvent<{ checked: boolean }>) {
     if (!this.checkbox || !isEventTargetChildOfElement(event, this.checkboxElem)) return;
 
     event.stopImmediatePropagation();
@@ -196,7 +217,7 @@ export class BqOption {
   }
 
   @Listen('bqFocus')
-  onCheckboxFocus(event: CustomEvent<HTMLBqCheckboxElement>) {
+  handleCheckboxFocus(event: CustomEvent<HTMLBqCheckboxElement>) {
     if (!this.checkbox || !isEventTargetChildOfElement(event, this.checkboxElem)) return;
 
     event.stopImmediatePropagation();
@@ -204,7 +225,7 @@ export class BqOption {
   }
 
   @Listen('bqBlur')
-  onCheckboxBlur(event: CustomEvent<HTMLBqCheckboxElement>) {
+  handleCheckboxBlur(event: CustomEvent<HTMLBqCheckboxElement>) {
     if (!this.checkbox || !isEventTargetChildOfElement(event, this.checkboxElem)) return;
 
     event.stopImmediatePropagation();
@@ -255,6 +276,7 @@ export class BqOption {
 
   private onTreeItemClick = (event: Event) => {
     if (this.isEventFromNestedOption(event)) return;
+    if (isEventTargetChildOfElement(event, this.checkboxElem)) return;
     if (isEventTargetChildOfElement(event, this.expandElem)) return;
 
     this.onClick(event);
@@ -291,38 +313,12 @@ export class BqOption {
     expandButton.tabIndex = -1;
   };
 
-  private get optionLabel() {
-    const labelSlot = this.el.shadowRoot?.querySelector<HTMLSlotElement>('slot:not([name])');
-    const label = labelSlot
-      ? getTextContent(labelSlot, { recurse: true }) || this.el.textContent?.trim()
-      : this.el.textContent?.trim();
+  private syncCheckboxState = () => {
+    const checkboxInput = this.checkboxElem?.shadowRoot?.querySelector<HTMLInputElement>('[part="input"]');
+    if (!checkboxInput || !this.isTreeItem) return;
 
-    return label || this.value || 'option';
-  }
-
-  private get selectedDescendantStatus() {
-    if (this.expanded || !this.selectedDescendantCount) return undefined;
-
-    if (this.selectedDescendantCount === 1) {
-      return `${this.selectedDescendantLabel} selected`;
-    }
-
-    return `${this.selectedDescendantCount} selected`;
-  }
-
-  private get selectedDescendantAccessibleLabel() {
-    const status = this.selectedDescendantStatus;
-
-    return status ? `${this.optionLabel}, ${status}` : undefined;
-  }
-
-  private get isDisabledOrHidden() {
-    return this.disabled || this.hidden;
-  }
-
-  private get isTreeItem() {
-    return this.tree || this.hasOptions || Boolean(this.el.parentElement?.closest('bq-option'));
-  }
+    checkboxInput.tabIndex = -1;
+  };
 
   private isEventFromNestedOption = (event: Event) => {
     const sourceOption = event.composedPath().find((target) => isHTMLElement(target, 'bq-option'));
@@ -364,7 +360,7 @@ export class BqOption {
   private observeSelectedDescendants = () => {
     this.selectedDescendantObserver = new MutationObserver(this.syncSelectedDescendants);
     this.selectedDescendantObserver.observe(this.el, {
-      attributeFilter: ['selected'],
+      attributeFilter: ['disabled', 'hidden', 'selected'],
       attributes: true,
       childList: true,
       subtree: true,
@@ -373,9 +369,14 @@ export class BqOption {
 
   private syncSelectedDescendants = () => {
     const selectedDescendants = Array.from(this.el.querySelectorAll<HTMLBqOptionElement>('bq-option[selected]'));
+    const selectableDescendants = Array.from(this.el.querySelectorAll<HTMLBqOptionElement>('bq-option')).filter(
+      (option) => !option.disabled && !option.hidden,
+    );
 
     this.selectedDescendantCount = selectedDescendants.length;
     this.selectedDescendantLabel = selectedDescendants[0] ? this.getOptionLabel(selectedDescendants[0]) : undefined;
+    this.selectedSelectableDescendantCount = selectableDescendants.filter((option) => option.selected).length;
+    this.selectableDescendantCount = selectableDescendants.length;
   };
 
   private renderOptionContent = (displayClass: 'flex' | 'inline-flex') => (
@@ -427,7 +428,7 @@ export class BqOption {
       size="small"
       type="button"
     >
-      <span class={{ 'bq-option__expand-label text-s': true, '!hidden': !this.hasExpandLabel }}>
+      <span class={{ 'bq-option__expand-label': true, '!hidden': !this.hasExpandLabel }}>
         <slot name="expand-label" onSlotchange={this.handleSlotChange} />
       </span>
       <bq-icon
@@ -439,46 +440,43 @@ export class BqOption {
     </bq-button>
   );
 
-  private renderNestedOptions = () => (
-    <div
-      aria-hidden={!this.hasOptions || !this.expanded ? 'true' : 'false'}
-      class={{ 'bq-option__options': true, '!hidden': !this.hasOptions || !this.expanded }}
-      part="options"
-      ref={(element) => {
-        this.optionsElem = element;
-      }}
-      role={this.isTreeItem && this.hasOptions ? 'group' : undefined}
-    >
-      <slot name="options" onSlotchange={this.handleSlotChange} />
-    </div>
-  );
-
-  private renderSelectedDescendantStatus = () => {
-    if (!this.selectedDescendantStatus) return;
+  private renderNestedOptions = () => {
+    if (!this.shouldRenderNestedOptions) return;
 
     return (
-      <span aria-hidden="true" class="bq-option__selected-descendant" part="selected-descendant">
-        {this.selectedDescendantStatus}
+      <div
+        aria-hidden={!this.hasOptions || !this.expanded ? 'true' : 'false'}
+        class={{ 'bq-option__options': true, '!hidden': !this.hasOptions || !this.expanded }}
+        part="options"
+        ref={(element) => {
+          this.optionsElem = element;
+        }}
+        role={this.isTreeItem && this.hasOptions ? 'group' : undefined}
+      >
+        <slot name="options" onSlotchange={this.handleSlotChange} />
+      </div>
+    );
+  };
+
+  private renderSelectionSummary = () => {
+    if (!this.selectionSummary) return;
+
+    return (
+      <span aria-hidden="true" class="bq-option__selection-summary" part="selection-summary">
+        {this.selectionSummary}
       </span>
     );
   };
 
   private renderSelectionControl = () => {
-    if (this.isTreeItem) {
-      return (
-        <div class="bq-option" part="base">
-          {this.renderOptionContent('flex')}
-        </div>
-      );
-    }
-
     if (this.checkbox) {
       return (
         <bq-checkbox
           aria-label={this.optionLabel}
-          checked={this.selected}
+          checked={this.selected && !this.indeterminate}
           class="bq-option__checkbox"
           disabled={this.isDisabledOrHidden}
+          indeterminate={this.indeterminate}
           name={this.optionLabel}
           exportparts="base:checkbox-base,control:checkbox-control,input:checkbox-input,checkbox:checkbox-checkbox,label:checkbox-label"
           part="base"
@@ -489,6 +487,14 @@ export class BqOption {
         >
           {this.renderOptionContent('inline-flex')}
         </bq-checkbox>
+      );
+    }
+
+    if (this.isTreeItem) {
+      return (
+        <div class="bq-option" part="base">
+          {this.renderOptionContent('flex')}
+        </div>
       );
     }
 
@@ -508,6 +514,64 @@ export class BqOption {
     );
   };
 
+  private get ariaChecked() {
+    if (!this.isTreeItem || !this.checkbox) return undefined;
+    if (this.indeterminate) return 'mixed';
+
+    return this.selected ? 'true' : 'false';
+  }
+
+  private get isDisabledOrHidden() {
+    return this.disabled || this.hidden;
+  }
+
+  private get isManagedBySelect() {
+    return Boolean(this.el.closest('bq-select'));
+  }
+
+  private get isTreeItem() {
+    if (this.isManagedBySelect) return this.tree;
+
+    return this.tree || this.hasOptions || Boolean(this.el.parentElement?.closest('bq-option'));
+  }
+
+  private get optionLabel() {
+    const labelSlot = this.el.shadowRoot?.querySelector<HTMLSlotElement>('slot:not([name])');
+    const label = labelSlot
+      ? getTextContent(labelSlot, { recurse: true }) || this.el.textContent?.trim()
+      : this.el.textContent?.trim();
+
+    return label || this.value || 'option';
+  }
+
+  private get selectedDescendantStatus() {
+    if (this.expanded || !this.selectedDescendantCount) return undefined;
+
+    if (this.selectedDescendantCount === 1) {
+      return `${this.selectedDescendantLabel} selected`;
+    }
+
+    return `${this.selectedDescendantCount} selected`;
+  }
+
+  private get selectedDescendantAccessibleLabel() {
+    const status = this.selectedDescendantStatus;
+
+    return status ? `${this.optionLabel}, ${status}` : undefined;
+  }
+
+  private get selectionSummary() {
+    if (!this.showSelectionSummary || !this.selectedSelectableDescendantCount) return undefined;
+
+    if (this.selectedSelectableDescendantCount === this.selectableDescendantCount) return this.allSelectedLabel;
+
+    return this.selectedCountLabel.replaceAll('{count}', String(this.selectedSelectableDescendantCount));
+  }
+
+  private get shouldRenderNestedOptions() {
+    return !this.isManagedBySelect || this.tree;
+  }
+
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -519,6 +583,7 @@ export class BqOption {
         aria-expanded={this.isTreeItem && this.hasOptions ? (this.expanded ? 'true' : 'false') : undefined}
         aria-hidden={this.hidden ? 'true' : 'false'}
         aria-label={this.selectedDescendantAccessibleLabel}
+        aria-checked={this.ariaChecked}
         aria-selected={this.selected ? 'true' : 'false'}
         onBlur={this.isTreeItem ? this.onBlur : undefined}
         onClick={this.isTreeItem ? this.onTreeItemClick : undefined}
@@ -528,8 +593,8 @@ export class BqOption {
       >
         <div class="bq-option__item" part="item">
           {this.renderSelectionControl()}
-          {this.renderSelectedDescendantStatus()}
-          {this.hasOptions && this.renderExpandButton()}
+          {this.renderSelectionSummary()}
+          {this.shouldRenderNestedOptions && this.hasOptions && this.renderExpandButton()}
         </div>
         {this.renderNestedOptions()}
       </Host>

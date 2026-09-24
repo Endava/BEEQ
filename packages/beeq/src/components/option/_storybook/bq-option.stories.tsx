@@ -13,29 +13,43 @@ const meta: Meta = {
     },
   },
   argTypes: {
+    'all-selected-label': { control: 'text' },
     disabled: { control: 'boolean' },
+    'display-value': { control: 'text' },
     hidden: { control: 'boolean' },
     checkbox: { control: 'boolean' },
     expanded: { control: 'boolean' },
+    indeterminate: { control: 'boolean' },
     selected: { control: 'boolean' },
+    'selected-count-label': { control: 'text' },
+    'show-selection-summary': { control: 'boolean' },
+    value: { control: 'text' },
     // Event handlers
     bqBlur: { action: 'bqBlur' },
     bqFocus: { action: 'bqFocus' },
     bqClick: { action: 'bqClick' },
+    bqEnter: { action: 'bqEnter' },
     // Event handler of the parent component (bq-option-list)
     bqSelect: { action: 'bqSelect', table: { disable: true } },
     // Not part of the public API, so we don't want to expose it in the docs
     children: { control: 'text', table: { disable: true } },
+    nestedChildren: { control: 'text', table: { disable: true } },
     text: { control: 'text', table: { disable: true } },
     iconPrefix: { control: 'text', table: { disable: true } },
     iconSuffix: { control: 'text', table: { disable: true } },
   },
   args: {
+    'all-selected-label': 'All selected',
     disabled: false,
+    'display-value': undefined,
     hidden: false,
     checkbox: false,
     expanded: false,
+    indeterminate: false,
     selected: false,
+    'selected-count-label': '{count} selected',
+    'show-selection-summary': true,
+    value: undefined,
     iconPrefix: undefined,
     iconSuffix: undefined,
   },
@@ -57,16 +71,30 @@ const Template = (args: Args) => {
       ?disabled=${args.disabled}
       ?hidden=${args.hidden}
       ?checkbox=${args.checkbox}
+      all-selected-label=${ifDefined(args['all-selected-label'])}
+      display-value=${ifDefined(args['display-value'])}
       ?expanded=${args.expanded}
+      ?indeterminate=${args.indeterminate}
       ?selected=${args.selected}
+      selected-count-label=${ifDefined(args['selected-count-label'])}
+      ?show-selection-summary=${args['show-selection-summary']}
       value=${ifDefined(args.value)}
       @bqBlur=${args.bqBlur}
       @bqFocus=${args.bqFocus}
       @bqClick=${args.bqClick}
+      @bqEnter=${args.bqEnter}
     >
       ${bqIconPrefix}
       <span>${args.text}</span>
       ${bqIconSuffix}
+      ${
+        ifDefined(args.nestedChildren)
+          ? html`
+        <!-- Nested options -->
+        ${args.nestedChildren}
+      `
+          : nothing
+      }
     </bq-option>
   `;
 };
@@ -113,15 +141,60 @@ export const Checkbox: Story = {
 };
 
 export const Nested: Story = {
-  render: () => html`
-    <bq-option-list>
-      <bq-option expanded value="frontend">
-        Frontend
-        <span slot="expand-label">2 levels</span>
-        <bq-option slot="options" value="react">React</bq-option>
-        <bq-option slot="options" value="stencil">Stencil</bq-option>
-      </bq-option>
-    </bq-option-list>
+  render: (args: Args) => html`
+    ${TemplateList({
+      ...args,
+      children: html`
+        <!-- Option 1 -->
+        ${Template({
+          ...args,
+          expanded: true,
+          text: 'Frontend',
+          value: 'frontend',
+          nestedChildren: html`
+            <bq-option slot="options" value="react">React</bq-option>
+            <bq-option slot="options" value="stencil">Stencil</bq-option>
+          `,
+        })}
+      `,
+    })}
+  `,
+};
+
+export const NestedSelectionStates: Story = {
+  render: (args: Args) => html`
+    ${TemplateList({
+      ...args,
+      children: html`
+        <!-- Option 1 -->
+        ${Template({
+          ...args,
+          checkbox: true,
+          expanded: true,
+          indeterminate: true,
+          selected: true,
+          text: 'Frontend',
+          value: 'frontend',
+          nestedChildren: html`
+            <bq-option checkbox selected slot="options" value="react">React</bq-option>
+            <bq-option checkbox slot="options" value="stencil">Stencil</bq-option>
+          `,
+        })}
+        <!-- Option 2 -->
+        ${Template({
+          ...args,
+          checkbox: true,
+          expanded: true,
+          selected: true,
+          text: 'Backend',
+          value: 'backend',
+          nestedChildren: html`
+            <bq-option checkbox selected slot="options" value="node">Node.js</bq-option>
+            <bq-option checkbox selected slot="options" value="dotnet">.NET</bq-option>
+          `,
+        })}
+      `,
+    })}
   `,
 };
 

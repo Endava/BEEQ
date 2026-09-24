@@ -22,7 +22,7 @@ import { TIconWeight } from "./components/icon/bq-icon.types";
 import { TNotificationBorderRadius, TNotificationType } from "./components/notification/bq-notification.types";
 import { TProgressBorderShape, TProgressThickness, TProgressType } from "./components/progress/bq-progress.types";
 import { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
-import { TSelectValue } from "./components/select/bq-select";
+import { TSelectChangeDetail, TSelectValue } from "./components/select/bq-select";
 import { TSideMenuAppearance, TSideMenuSize } from "./components/side-menu/bq-side-menu.types";
 import { TSliderType, TSliderValue } from "./components/slider/bq-slider.types";
 import { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
@@ -51,7 +51,7 @@ export { TIconWeight } from "./components/icon/bq-icon.types";
 export { TNotificationBorderRadius, TNotificationType } from "./components/notification/bq-notification.types";
 export { TProgressBorderShape, TProgressThickness, TProgressType } from "./components/progress/bq-progress.types";
 export { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
-export { TSelectValue } from "./components/select/bq-select";
+export { TSelectChangeDetail, TSelectValue } from "./components/select/bq-select";
 export { TSideMenuAppearance, TSideMenuSize } from "./components/side-menu/bq-side-menu.types";
 export { TSliderType, TSliderValue } from "./components/slider/bq-slider.types";
 export { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
@@ -1652,9 +1652,14 @@ export namespace Components {
      * @dependency bq-button
      * @dependency bq-icon
      * @attr {boolean} disabled - If true, the option is disabled.
+     * @attr {string} display-value - Overrides the displayed option value.
      * @attr {boolean} hidden - If true, the option is hidden.
      * @attr {boolean} checkbox - If true, the option renders as a checkbox option.
      * @attr {boolean} expanded - If true, nested options are displayed.
+     * @attr {boolean} indeterminate - If true, the option checkbox represents a partial nested selection.
+     * @attr {string} all-selected-label - Text displayed when all selectable nested options are selected.
+     * @attr {string} selected-count-label - Text displayed when some selectable nested options are selected. Use `{count}` as the selected option count placeholder.
+     * @attr {boolean} show-selection-summary - If true, displays the nested selection summary beside the expand control.
      * @attr {string} value - A string representing the value of the option. Can be used to identify the item.
      * @attr {boolean} selected - If true, the option is selected and active.
      * @event bqBlur - Handler to be called when item loses focus.
@@ -1675,6 +1680,11 @@ export namespace Components {
      * @cssprop --bq-option--padding-end - option label padding end
      */
     interface BqOption {
+        /**
+          * Text displayed when all selectable nested options are selected.
+          * @default 'All selected'
+         */
+        "allSelectedLabel": string;
         /**
           * If true, the option renders as a checkbox option.
           * @default false
@@ -1700,10 +1710,25 @@ export namespace Components {
          */
         "hidden": boolean;
         /**
+          * If true, the option checkbox represents a partial nested selection.
+          * @default false
+         */
+        "indeterminate": boolean;
+        /**
           * If true, the option is selected and active.
           * @default false
          */
         "selected": boolean;
+        /**
+          * Text displayed when some selectable nested options are selected. Use `{count}` as the selected option count placeholder.
+          * @default '{count} selected'
+         */
+        "selectedCountLabel": string;
+        /**
+          * If true, displays the nested selection summary beside the expand control.
+          * @default true
+         */
+        "showSelectionSummary": boolean;
         /**
           * @default false
          */
@@ -2108,20 +2133,19 @@ export namespace Components {
      * @attr {boolean} readonly - Deprecated. Use `disable-search` to allow selection without text filtering.
      * @attr {boolean} required - Indicates whether or not the Select input is required to be filled out before submitting the form.
      * @attr {boolean} same-width - Whether the panel should have the Select same width as the input element.
-     * @attr {boolean} enable-checkboxes - If `true` and `multiple` is enabled, options will render with checkboxes.
+     * @attr {boolean} enable-checkboxes - If `true` and `multiple` is enabled, flat options render with checkboxes. Nested multi-select options always render with checkboxes.
      * @attr {number} skidding - Represents the skidding between the Select panel and the input element.
      * @attr {"absolute" | "fixed"} strategy - Defines the strategy to position the Select panel.
      * @attr {"error" | "success" | "warning" | "none"} validation-status - The validation status of the Select input.
-     * @attr {"number" | "string" | "string[]"} value - The select input value can be used to reset the field to a previous value.
+     * @attr {string | string[]} value - The select input value can be used to reset the field to a previous value.
      * @method clear - Method to be called to clear the selected value.
      * @event bqBlur - The callback handler is emitted when the Select input loses focus.
      * @event bqClear - The callback handler is emitted when the selected value has been cleared.
      * @event bqFocus - A callback handler is emitted when the Select input has received focus.
-     * @event bqSelect - The callback handler is emitted when the selected value has changed.
+     * @event bqSelect - The callback handler is emitted when the selected value has changed. Nested multi-select events include selected paths in `selectionTree`.
      * @cssprop --bq-select--background-color - Select background color
      * @cssprop --bq-select--border-color - Select border color
      * @cssprop --bq-select--border-color-focus - Select border color on focus
-     * @cssprop --bq-select--border-color-disabled - Select border color when disabled
      * @cssprop --bq-select--border-radius - Select border radius
      * @cssprop --bq-select--border-width - Select border width
      * @cssprop --bq-select--border-style - Select border style
@@ -2187,7 +2211,7 @@ export namespace Components {
          */
         "distance"?: number;
         /**
-          * If true, options will render with checkboxes when multiple selection is enabled.
+          * If true, flat options render with checkboxes when multiple selection is enabled. Nested multi-select options always render with checkboxes.
          */
         "enableCheckboxes"?: boolean;
         /**
@@ -4423,9 +4447,14 @@ declare global {
      * @dependency bq-button
      * @dependency bq-icon
      * @attr {boolean} disabled - If true, the option is disabled.
+     * @attr {string} display-value - Overrides the displayed option value.
      * @attr {boolean} hidden - If true, the option is hidden.
      * @attr {boolean} checkbox - If true, the option renders as a checkbox option.
      * @attr {boolean} expanded - If true, nested options are displayed.
+     * @attr {boolean} indeterminate - If true, the option checkbox represents a partial nested selection.
+     * @attr {string} all-selected-label - Text displayed when all selectable nested options are selected.
+     * @attr {string} selected-count-label - Text displayed when some selectable nested options are selected. Use `{count}` as the selected option count placeholder.
+     * @attr {boolean} show-selection-summary - If true, displays the nested selection summary beside the expand control.
      * @attr {string} value - A string representing the value of the option. Can be used to identify the item.
      * @attr {boolean} selected - If true, the option is selected and active.
      * @event bqBlur - Handler to be called when item loses focus.
@@ -4713,7 +4742,7 @@ declare global {
         "bqBlur": HTMLBqSelectElement;
         "bqClear": HTMLBqSelectElement;
         "bqFocus": HTMLBqSelectElement;
-        "bqSelect": { value: string | number | string[]; item: HTMLBqOptionElement };
+        "bqSelect": TSelectChangeDetail;
         "bqInput": { value: string | number | string[] };
     }
     /**
@@ -4758,20 +4787,19 @@ declare global {
      * @attr {boolean} readonly - Deprecated. Use `disable-search` to allow selection without text filtering.
      * @attr {boolean} required - Indicates whether or not the Select input is required to be filled out before submitting the form.
      * @attr {boolean} same-width - Whether the panel should have the Select same width as the input element.
-     * @attr {boolean} enable-checkboxes - If `true` and `multiple` is enabled, options will render with checkboxes.
+     * @attr {boolean} enable-checkboxes - If `true` and `multiple` is enabled, flat options render with checkboxes. Nested multi-select options always render with checkboxes.
      * @attr {number} skidding - Represents the skidding between the Select panel and the input element.
      * @attr {"absolute" | "fixed"} strategy - Defines the strategy to position the Select panel.
      * @attr {"error" | "success" | "warning" | "none"} validation-status - The validation status of the Select input.
-     * @attr {"number" | "string" | "string[]"} value - The select input value can be used to reset the field to a previous value.
+     * @attr {string | string[]} value - The select input value can be used to reset the field to a previous value.
      * @method clear - Method to be called to clear the selected value.
      * @event bqBlur - The callback handler is emitted when the Select input loses focus.
      * @event bqClear - The callback handler is emitted when the selected value has been cleared.
      * @event bqFocus - A callback handler is emitted when the Select input has received focus.
-     * @event bqSelect - The callback handler is emitted when the selected value has changed.
+     * @event bqSelect - The callback handler is emitted when the selected value has changed. Nested multi-select events include selected paths in `selectionTree`.
      * @cssprop --bq-select--background-color - Select background color
      * @cssprop --bq-select--border-color - Select border color
      * @cssprop --bq-select--border-color-focus - Select border color on focus
-     * @cssprop --bq-select--border-color-disabled - Select border color when disabled
      * @cssprop --bq-select--border-radius - Select border radius
      * @cssprop --bq-select--border-width - Select border width
      * @cssprop --bq-select--border-style - Select border style
@@ -7239,9 +7267,14 @@ declare namespace LocalJSX {
      * @dependency bq-button
      * @dependency bq-icon
      * @attr {boolean} disabled - If true, the option is disabled.
+     * @attr {string} display-value - Overrides the displayed option value.
      * @attr {boolean} hidden - If true, the option is hidden.
      * @attr {boolean} checkbox - If true, the option renders as a checkbox option.
      * @attr {boolean} expanded - If true, nested options are displayed.
+     * @attr {boolean} indeterminate - If true, the option checkbox represents a partial nested selection.
+     * @attr {string} all-selected-label - Text displayed when all selectable nested options are selected.
+     * @attr {string} selected-count-label - Text displayed when some selectable nested options are selected. Use `{count}` as the selected option count placeholder.
+     * @attr {boolean} show-selection-summary - If true, displays the nested selection summary beside the expand control.
      * @attr {string} value - A string representing the value of the option. Can be used to identify the item.
      * @attr {boolean} selected - If true, the option is selected and active.
      * @event bqBlur - Handler to be called when item loses focus.
@@ -7262,6 +7295,11 @@ declare namespace LocalJSX {
      * @cssprop --bq-option--padding-end - option label padding end
      */
     interface BqOption {
+        /**
+          * Text displayed when all selectable nested options are selected.
+          * @default 'All selected'
+         */
+        "allSelectedLabel"?: string;
         /**
           * If true, the option renders as a checkbox option.
           * @default false
@@ -7287,6 +7325,11 @@ declare namespace LocalJSX {
          */
         "hidden"?: boolean;
         /**
+          * If true, the option checkbox represents a partial nested selection.
+          * @default false
+         */
+        "indeterminate"?: boolean;
+        /**
           * Handler to be called when item loses focus
          */
         "onBqBlur"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
@@ -7307,6 +7350,16 @@ declare namespace LocalJSX {
           * @default false
          */
         "selected"?: boolean;
+        /**
+          * Text displayed when some selectable nested options are selected. Use `{count}` as the selected option count placeholder.
+          * @default '{count} selected'
+         */
+        "selectedCountLabel"?: string;
+        /**
+          * If true, displays the nested selection summary beside the expand control.
+          * @default true
+         */
+        "showSelectionSummary"?: boolean;
         /**
           * @default false
          */
@@ -7727,20 +7780,19 @@ declare namespace LocalJSX {
      * @attr {boolean} readonly - Deprecated. Use `disable-search` to allow selection without text filtering.
      * @attr {boolean} required - Indicates whether or not the Select input is required to be filled out before submitting the form.
      * @attr {boolean} same-width - Whether the panel should have the Select same width as the input element.
-     * @attr {boolean} enable-checkboxes - If `true` and `multiple` is enabled, options will render with checkboxes.
+     * @attr {boolean} enable-checkboxes - If `true` and `multiple` is enabled, flat options render with checkboxes. Nested multi-select options always render with checkboxes.
      * @attr {number} skidding - Represents the skidding between the Select panel and the input element.
      * @attr {"absolute" | "fixed"} strategy - Defines the strategy to position the Select panel.
      * @attr {"error" | "success" | "warning" | "none"} validation-status - The validation status of the Select input.
-     * @attr {"number" | "string" | "string[]"} value - The select input value can be used to reset the field to a previous value.
+     * @attr {string | string[]} value - The select input value can be used to reset the field to a previous value.
      * @method clear - Method to be called to clear the selected value.
      * @event bqBlur - The callback handler is emitted when the Select input loses focus.
      * @event bqClear - The callback handler is emitted when the selected value has been cleared.
      * @event bqFocus - A callback handler is emitted when the Select input has received focus.
-     * @event bqSelect - The callback handler is emitted when the selected value has changed.
+     * @event bqSelect - The callback handler is emitted when the selected value has changed. Nested multi-select events include selected paths in `selectionTree`.
      * @cssprop --bq-select--background-color - Select background color
      * @cssprop --bq-select--border-color - Select border color
      * @cssprop --bq-select--border-color-focus - Select border color on focus
-     * @cssprop --bq-select--border-color-disabled - Select border color when disabled
      * @cssprop --bq-select--border-radius - Select border radius
      * @cssprop --bq-select--border-width - Select border width
      * @cssprop --bq-select--border-style - Select border style
@@ -7800,7 +7852,7 @@ declare namespace LocalJSX {
          */
         "distance"?: number;
         /**
-          * If true, options will render with checkboxes when multiple selection is enabled.
+          * If true, flat options render with checkboxes when multiple selection is enabled. Nested multi-select options always render with checkboxes.
          */
         "enableCheckboxes"?: boolean;
         /**
@@ -7847,9 +7899,9 @@ declare namespace LocalJSX {
          */
         "onBqInput"?: (event: BqSelectCustomEvent<{ value: string | number | string[] }>) => void;
         /**
-          * Callback handler emitted when the selected value has changed
+          * Callback handler emitted when the selected value has changed. Nested multi-select also includes selected paths in `selectionTree`.
          */
-        "onBqSelect"?: (event: BqSelectCustomEvent<{ value: string | number | string[]; item: HTMLBqOptionElement }>) => void;
+        "onBqSelect"?: (event: BqSelectCustomEvent<TSelectChangeDetail>) => void;
         /**
           * If true, the Select panel will be visible.
           * @default false
@@ -9181,6 +9233,10 @@ declare namespace LocalJSX {
         "checkbox": boolean;
         "displayValue": string;
         "expanded": boolean;
+        "indeterminate": boolean;
+        "allSelectedLabel": string;
+        "selectedCountLabel": string;
+        "showSelectionSummary": boolean;
         "selected": boolean;
         "tree": boolean;
         "value": string;
@@ -10208,9 +10264,14 @@ declare module "@stencil/core" {
              * @dependency bq-button
              * @dependency bq-icon
              * @attr {boolean} disabled - If true, the option is disabled.
+             * @attr {string} display-value - Overrides the displayed option value.
              * @attr {boolean} hidden - If true, the option is hidden.
              * @attr {boolean} checkbox - If true, the option renders as a checkbox option.
              * @attr {boolean} expanded - If true, nested options are displayed.
+             * @attr {boolean} indeterminate - If true, the option checkbox represents a partial nested selection.
+             * @attr {string} all-selected-label - Text displayed when all selectable nested options are selected.
+             * @attr {string} selected-count-label - Text displayed when some selectable nested options are selected. Use `{count}` as the selected option count placeholder.
+             * @attr {boolean} show-selection-summary - If true, displays the nested selection summary beside the expand control.
              * @attr {string} value - A string representing the value of the option. Can be used to identify the item.
              * @attr {boolean} selected - If true, the option is selected and active.
              * @event bqBlur - Handler to be called when item loses focus.
@@ -10451,20 +10512,19 @@ declare module "@stencil/core" {
              * @attr {boolean} readonly - Deprecated. Use `disable-search` to allow selection without text filtering.
              * @attr {boolean} required - Indicates whether or not the Select input is required to be filled out before submitting the form.
              * @attr {boolean} same-width - Whether the panel should have the Select same width as the input element.
-             * @attr {boolean} enable-checkboxes - If `true` and `multiple` is enabled, options will render with checkboxes.
+             * @attr {boolean} enable-checkboxes - If `true` and `multiple` is enabled, flat options render with checkboxes. Nested multi-select options always render with checkboxes.
              * @attr {number} skidding - Represents the skidding between the Select panel and the input element.
              * @attr {"absolute" | "fixed"} strategy - Defines the strategy to position the Select panel.
              * @attr {"error" | "success" | "warning" | "none"} validation-status - The validation status of the Select input.
-             * @attr {"number" | "string" | "string[]"} value - The select input value can be used to reset the field to a previous value.
+             * @attr {string | string[]} value - The select input value can be used to reset the field to a previous value.
              * @method clear - Method to be called to clear the selected value.
              * @event bqBlur - The callback handler is emitted when the Select input loses focus.
              * @event bqClear - The callback handler is emitted when the selected value has been cleared.
              * @event bqFocus - A callback handler is emitted when the Select input has received focus.
-             * @event bqSelect - The callback handler is emitted when the selected value has changed.
+             * @event bqSelect - The callback handler is emitted when the selected value has changed. Nested multi-select events include selected paths in `selectionTree`.
              * @cssprop --bq-select--background-color - Select background color
              * @cssprop --bq-select--border-color - Select border color
              * @cssprop --bq-select--border-color-focus - Select border color on focus
-             * @cssprop --bq-select--border-color-disabled - Select border color when disabled
              * @cssprop --bq-select--border-radius - Select border radius
              * @cssprop --bq-select--border-width - Select border width
              * @cssprop --bq-select--border-style - Select border style

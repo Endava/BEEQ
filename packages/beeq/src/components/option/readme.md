@@ -12,15 +12,19 @@ It can be an element of the navigation system that allows users to select differ
 
 ## Properties
 
-| Property       | Attribute       | Description                                                                              | Type      | Default     |
-| -------------- | --------------- | ---------------------------------------------------------------------------------------- | --------- | ----------- |
-| `checkbox`     | `checkbox`      | If true, the option renders as a checkbox option.                                        | `boolean` | `false`     |
-| `disabled`     | `disabled`      | If true, the option is disabled.                                                         | `boolean` | `false`     |
-| `displayValue` | `display-value` | The display value of the option. It can be used to override the default displayed value. | `string`  | `undefined` |
-| `expanded`     | `expanded`      | If true, nested options are displayed.                                                   | `boolean` | `false`     |
-| `hidden`       | `hidden`        | If true, the option is hidden.                                                           | `boolean` | `false`     |
-| `selected`     | `selected`      | If true, the option is selected and active.                                              | `boolean` | `false`     |
-| `value`        | `value`         | A string representing the value of the option. Can be used to identify the item          | `string`  | `undefined` |
+| Property               | Attribute                | Description                                                                                                              | Type      | Default              |
+| ---------------------- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------ | --------- | -------------------- |
+| `allSelectedLabel`     | `all-selected-label`     | Text displayed when all selectable nested options are selected.                                                          | `string`  | `'All selected'`     |
+| `checkbox`             | `checkbox`               | If true, the option renders as a checkbox option.                                                                        | `boolean` | `false`              |
+| `disabled`             | `disabled`               | If true, the option is disabled.                                                                                         | `boolean` | `false`              |
+| `displayValue`         | `display-value`          | The display value of the option. It can be used to override the default displayed value.                                 | `string`  | `undefined`          |
+| `expanded`             | `expanded`               | If true, nested options are displayed.                                                                                   | `boolean` | `false`              |
+| `hidden`               | `hidden`                 | If true, the option is hidden.                                                                                           | `boolean` | `false`              |
+| `indeterminate`        | `indeterminate`          | If true, the option checkbox represents a partial nested selection.                                                      | `boolean` | `false`              |
+| `selected`             | `selected`               | If true, the option is selected and active.                                                                              | `boolean` | `false`              |
+| `selectedCountLabel`   | `selected-count-label`   | Text displayed when some selectable nested options are selected. Use `{count}` as the selected option count placeholder. | `string`  | `'{count} selected'` |
+| `showSelectionSummary` | `show-selection-summary` | If true, displays the nested selection summary beside the expand control.                                                | `boolean` | `true`               |
+| `value`                | `value`                  | A string representing the value of the option. Can be used to identify the item                                          | `string`  | `undefined`          |
 
 
 ## Events
@@ -46,23 +50,23 @@ It can be an element of the navigation system that allows users to select differ
 
 ## Shadow Parts
 
-| Part                    | Description                                                                    |
-| ----------------------- | ------------------------------------------------------------------------------ |
-| `"base"`                | The option selection control.                                                  |
-| `"checkbox-base"`       | The checkbox base wrapper exported from the nested `bq-checkbox`.              |
-| `"checkbox-checkbox"`   | The checkbox indicator exported from the nested `bq-checkbox`.                 |
-| `"checkbox-control"`    | The checkbox control wrapper exported from the nested `bq-checkbox`.           |
-| `"checkbox-input"`      | The native checkbox input exported from the nested `bq-checkbox`.              |
-| `"checkbox-label"`      | The checkbox label exported from the nested `bq-checkbox`.                     |
-| `"expand"`              | The button used to expand or collapse nested options.                          |
-| `"expand-button"`       | The native button exported from the expand control.                            |
-| `"expand-label"`        | The label exported from the expand control.                                    |
-| `"item"`                | The interactive option row.                                                    |
-| `"label"`               | The `span` element in which the label text is displayed.                       |
-| `"options"`             | The container for nested options.                                              |
-| `"prefix"`              | The `span` element in which the prefix is displayed (generally `bq-icon`).     |
-| `"selected-descendant"` | The status displayed when a collapsed option contains selected nested options. |
-| `"suffix"`              | The `span` element in which the suffix is displayed (generally `bq-icon`).     |
+| Part                  | Description                                                                |
+| --------------------- | -------------------------------------------------------------------------- |
+| `"base"`              | The option selection control.                                              |
+| `"checkbox-base"`     | The checkbox base wrapper exported from the nested `bq-checkbox`.          |
+| `"checkbox-checkbox"` | The checkbox indicator exported from the nested `bq-checkbox`.             |
+| `"checkbox-control"`  | The checkbox control wrapper exported from the nested `bq-checkbox`.       |
+| `"checkbox-input"`    | The native checkbox input exported from the nested `bq-checkbox`.          |
+| `"checkbox-label"`    | The checkbox label exported from the nested `bq-checkbox`.                 |
+| `"expand"`            | The button used to expand or collapse nested options.                      |
+| `"expand-button"`     | The native button exported from the expand control.                        |
+| `"expand-label"`      | The label exported from the expand control.                                |
+| `"item"`              | The interactive option row.                                                |
+| `"label"`             | The `span` element in which the label text is displayed.                   |
+| `"options"`           | The container for nested options.                                          |
+| `"prefix"`            | The `span` element in which the prefix is displayed (generally `bq-icon`). |
+| `"selection-summary"` | The nested selection summary displayed beside the expand control.          |
+| `"suffix"`            | The `span` element in which the suffix is displayed (generally `bq-icon`). |
 
 
 ## Dependencies
