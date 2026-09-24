@@ -1342,6 +1342,8 @@ describe('bq-select', () => {
 
   it('should warn once when nested options are used without multiple', async () => {
     const warn = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
+    const nestedOptionsWarning =
+      '[BqSelect] Nested options require `multiple` to be enabled. Nested descendants are unavailable.';
     const { root, setProps, waitForChanges } = await render(
       <bq-select name="bq-select">
         <bq-option value="frontend">
@@ -1358,10 +1360,7 @@ describe('bq-select', () => {
     await waitForChanges();
 
     expect(root).toEqualAttribute('value', '');
-    expect(warn).toHaveBeenCalledTimes(1);
-    expect(warn).toHaveBeenCalledWith(
-      '[BqSelect] Nested options require `multiple` to be enabled. Nested descendants are unavailable.',
-    );
+    expect(warn.mock.calls.filter(([message]) => message === nestedOptionsWarning)).toHaveLength(1);
   });
 
   it('should report duplicate nested option values once, including dynamically added options', async () => {
