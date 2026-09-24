@@ -63,6 +63,10 @@ Tables organize information into rows and columns so people can compare values, 
   <Card title="Bordered layout">
     Use `.bordered` when each cell needs an explicit boundary, such as in financial or spreadsheet-style tables where column delineation helps readability.
   </Card>
+
+  <Card title="Large datasets">
+    BEEQ does not ship a pagination, sorting, filtering, or virtualization component. Render only the current page of rows yourself, then compose page controls from `bq-button`, `bq-select`, or `bq-input` to let users move between pages.
+  </Card>
 </CardGroup>
 
 ## Anatomy
@@ -789,6 +793,633 @@ Add the `bordered` class to draw explicit borders around each cell and the table
     ```
   </CodeGroup>
 </CodeLivePreview>
+
+### Pagination and large datasets
+
+BEEQ does not ship a pagination, sorting, filtering, or virtualization component, and the `bq-table` class does not read from a data source. You render the current page of rows yourself in your framework, then build the page controls from existing BEEQ components — typically `bq-button` for previous and next, and `bq-select` for the page size.
+
+<CodeLivePreview mode="iframe" height="28rem" removePadding code={`
+  <style>
+    body { padding: var(--bq-spacing-m); }
+    .pager {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--bq-spacing-m);
+      margin-block-start: var(--bq-spacing-m);
+    }
+    .pager__nav { display: flex; align-items: center; gap: var(--bq-spacing-xs); }
+    .pager__size { display: flex; align-items: center; gap: var(--bq-spacing-xs); }
+    .pager__status { color: var(--bq-text--secondary); font: var(--bq-text-body-s); }
+    .pager__size bq-select { inline-size: 5rem; }
+    .pages__container { display: flex; align-items: center; gap: var(--bq-spacing-xs); }
+    .visually-hidden {
+      position: absolute;
+      inline-size: 1px;
+      block-size: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+  </style>
+
+  <table class="bq-table" id="tbl">
+    <caption class="visually-hidden">Records</caption>
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Status</th>
+      </tr>
+    </thead>
+    <tbody id="rows"></tbody>
+  </table>
+
+  <div class="pager">
+    <div class="pager__size">
+      <span class="pager__status">Displaying</span>
+      <bq-select id="size" value="5" disable-clear disable-search same-width>
+        <bq-option value="5">5</bq-option>
+        <bq-option value="10">10</bq-option>
+        <bq-option value="25">25</bq-option>
+      </bq-select>
+      <span id="total_records"></span>
+    </div>
+    <nav class="pager__nav" aria-label="Pagination">
+      <bq-button id="prev" appearance="text" size="small" border="s" only-icon label="Previous page">
+        <bq-icon name="caret-left"></bq-icon>
+      </bq-button>
+      <div class="pages__container" id="pages_container"></div>
+      <bq-button id="next" appearance="text" size="small" border="s" only-icon label="Next page">
+        <bq-icon name="caret-right"></bq-icon>
+      </bq-button>
+    </nav>
+  </div>
+  <span class="visually-hidden" id="page_status" aria-live="polite"></span>
+
+  <script>
+    (() => {
+      const records = Array.from({ length: 23 }, (_, index) => ({
+        id: index + 1,
+        name: \`Record \${index + 1}\`,
+        status: index % 2 ? 'Active' : 'Pending',
+      }));
+      let page = 1;
+      let size = 5;
+      const rows = previewRoot.querySelector('#rows');
+      const prev = previewRoot.querySelector('#prev');
+      const next = previewRoot.querySelector('#next');
+      const select = previewRoot.querySelector('#size');
+      const totalRecords = previewRoot.querySelector('#total_records');
+      const pageStatus = previewRoot.querySelector('#page_status');
+      const pagesContainer = previewRoot.querySelector('#pages_container');
+
+      const render = () => {
+        const pageCount = Math.max(1, Math.ceil(records.length / size));
+        const start = (page - 1) * size;
+        const pageRecords = records.slice(start, start + size);
+        rows.innerHTML = pageRecords.map(record =>
+          \`<tr><td>\${record.id}</td><td>\${record.name}</td><td>\${record.status}</td></tr>\`
+        ).join('');
+        prev.disabled = page <= 1;
+        next.disabled = page >= pageCount;
+        totalRecords.textContent = \`from \${records.length}\`;
+        pageStatus.textContent = \`Page \${page} of \${pageCount}\`;
+        pagesContainer.innerHTML = Array.from({ length: pageCount }, (_, index) => {
+          const pageNumber = index + 1;
+          const appearance = page === pageNumber ? 'primary' : 'text';
+          const current = page === pageNumber ? 'page' : 'false';
+
+          return \`<bq-button appearance="\${appearance}" size="small" border="s" label="Page \${pageNumber}" aria-current="\${current}" data-page="\${pageNumber}">\${pageNumber}</bq-button>\`;
+        }).join('');
+      };
+
+      const setPage = (nextPage) => {
+        const pageCount = Math.max(1, Math.ceil(records.length / size));
+        page = Math.max(1, Math.min(nextPage, pageCount));
+        render();
+      };
+
+      pagesContainer.addEventListener('bqClick', (event) => {
+        const button = event.target.closest('bq-button[data-page]');
+        if (button) setPage(Number(button.dataset.page));
+      });
+
+      prev.addEventListener('bqClick', () => setPage(page - 1));
+      next.addEventListener('bqClick', () => setPage(page + 1));
+      select.addEventListener('bqSelect', (event) => {
+        size = Number(event.detail.value);
+        setPage(1);
+      });
+
+      render();
+    })();
+  </script>
+`}>
+  <CodeGroup>
+    ```css styles.css icon="css" expandable
+    .pager {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--bq-spacing-m);
+      margin-block-start: var(--bq-spacing-m);
+    }
+
+    .pager__nav,
+    .pager__size,
+    .pages__container {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+
+    .pager__status {
+      color: var(--bq-text--secondary);
+      font: var(--bq-text-body-s);
+    }
+
+    .pager__size bq-select {
+      inline-size: 5rem;
+    }
+
+    .visually-hidden {
+      position: absolute;
+      inline-size: 1px;
+      block-size: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    ```
+
+    ```javascript script.js icon="js" expandable
+    (() => {
+      const records = Array.from({ length: 23 }, (_, index) => ({
+        id: index + 1,
+        name: `Record ${index + 1}`,
+        status: index % 2 ? "Active" : "Pending",
+      }));
+      let page = 1;
+      let size = 5;
+      const rows = document.querySelector("#rows");
+      const prev = document.querySelector("#prev");
+      const next = document.querySelector("#next");
+      const select = document.querySelector("#size");
+      const totalRecords = document.querySelector("#total_records");
+      const pageStatus = document.querySelector("#page_status");
+      const pagesContainer = document.querySelector("#pages_container");
+
+      const render = () => {
+        const pageCount = Math.max(1, Math.ceil(records.length / size));
+        const start = (page - 1) * size;
+        const pageRecords = records.slice(start, start + size);
+        rows.innerHTML = pageRecords
+          .map(
+            (record) =>
+              `<tr><td>${record.id}</td><td>${record.name}</td><td>${record.status}</td></tr>`,
+          )
+          .join("");
+        prev.disabled = page <= 1;
+        next.disabled = page >= pageCount;
+        totalRecords.textContent = `from ${records.length}`;
+        pageStatus.textContent = `Page ${page} of ${pageCount}`;
+        pagesContainer.innerHTML = Array.from({ length: pageCount }, (_, index) => {
+          const pageNumber = index + 1;
+          const appearance = page === pageNumber ? "primary" : "text";
+          const current = page === pageNumber ? "page" : "false";
+          return `
+            <bq-button
+              appearance="${appearance}"
+              size="small"
+              border="s"
+              label="Page ${pageNumber}"
+              aria-current="${current}"
+              data-page="${pageNumber}"
+            >${pageNumber}</bq-button>
+          `;
+        }).join("");
+      };
+
+      const setPage = (nextPage) => {
+        const pageCount = Math.max(1, Math.ceil(records.length / size));
+        page = Math.max(1, Math.min(nextPage, pageCount));
+        render();
+      };
+
+      pagesContainer.addEventListener("bqClick", (event) => {
+        const button = event.target.closest("bq-button[data-page]");
+        if (button) setPage(Number(button.dataset.page));
+      });
+
+      prev.addEventListener("bqClick", () => setPage(page - 1));
+      next.addEventListener("bqClick", () => setPage(page + 1));
+      select.addEventListener("bqSelect", (event) => {
+        size = Number(event.detail.value);
+        setPage(1);
+      });
+
+      render();
+    })();
+    ```
+
+    ```html HTML icon="html5" expandable
+    <table class="bq-table" id="tbl">
+      <caption class="visually-hidden">Records</caption>
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Name</th>
+          <th scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+
+    <div class="pager" aria-label="Pagination">
+      <div class="pager__size">
+        <span class="pager__status">Displaying</span>
+        <bq-select id="size" value="5" disable-clear disable-search same-width>
+          <bq-option value="5">5</bq-option>
+          <bq-option value="10">10</bq-option>
+          <bq-option value="25">25</bq-option>
+        </bq-select>
+        <span class="pager__status" id="total_records"></span>
+      </div>
+      <nav class="pager__nav" aria-label="Pagination">
+        <bq-button id="prev" appearance="text" size="small" border="s" only-icon label="Previous page">
+          <bq-icon name="caret-left"></bq-icon>
+        </bq-button>
+        <div class="pages__container" id="pages_container"></div>
+        <bq-button id="next" appearance="text" size="small" border="s" only-icon label="Next page">
+          <bq-icon name="caret-right"></bq-icon>
+        </bq-button>
+      </nav>
+    </div>
+    <span class="visually-hidden" id="page_status" aria-live="polite"></span>
+
+    <!-- Add the JavaScript from the JavaScript tab. -->
+    ```
+
+    ```jsx React icon="react" expandable
+    import { useState } from "react";
+    import { BqButton, BqIcon, BqOption, BqSelect } from "@beeq/react";
+    import "./styles.css";
+
+    const records = Array.from({ length: 23 }, (_, index) => ({
+      id: index + 1,
+      name: `Record ${index + 1}`,
+      status: index % 2 ? "Active" : "Pending",
+    }));
+
+    export function PaginatedTable() {
+      const [page, setPage] = useState(1);
+      const [size, setSize] = useState(5);
+      const pageCount = Math.max(1, Math.ceil(records.length / size));
+      const pageNumbers = Array.from(
+        { length: pageCount },
+        (_, index) => index + 1,
+      );
+      const rows = records.slice((page - 1) * size, page * size);
+
+      const setCurrentPage = (nextPage) => {
+        setPage(Math.max(1, Math.min(nextPage, pageCount)));
+      };
+
+      const handleSizeChange = (event) => {
+        setSize(Number(event.detail.value));
+        setPage(1);
+      };
+
+      return (
+        <>
+          <table className="bq-table">
+            <caption className="visually-hidden">Records</caption>
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((row) => (
+                <tr key={row.id}>
+                  <td>{row.id}</td>
+                  <td>{row.name}</td>
+                  <td>{row.status}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          <div className="pager" aria-label="Pagination">
+            <div className="pager__size">
+              <span className="pager__status">Displaying</span>
+              <BqSelect
+                value={String(size)}
+                disableClear
+                disableSearch
+                sameWidth
+                onBqSelect={handleSizeChange}
+              >
+                <BqOption value="5">5</BqOption>
+                <BqOption value="10">10</BqOption>
+                <BqOption value="25">25</BqOption>
+              </BqSelect>
+              <span className="pager__status">from {records.length}</span>
+            </div>
+            <nav className="pager__nav" aria-label="Pagination">
+              <BqButton
+                appearance="text"
+                size="small"
+                border="s"
+                onlyIcon
+                label="Previous page"
+                disabled={page <= 1}
+                onBqClick={() => setCurrentPage(page - 1)}
+              >
+                <BqIcon name="caret-left" />
+              </BqButton>
+              <div className="pages__container">
+                {pageNumbers.map((pageNumber) => (
+                  <BqButton
+                    key={pageNumber}
+                    appearance={page === pageNumber ? "primary" : "text"}
+                    size="small"
+                    border="s"
+                    label={`Page ${pageNumber}`}
+                    aria-current={page === pageNumber ? "page" : undefined}
+                    onBqClick={() => setCurrentPage(pageNumber)}
+                  >
+                    {pageNumber}
+                  </BqButton>
+                ))}
+              </div>
+              <BqButton
+                appearance="text"
+                size="small"
+                border="s"
+                onlyIcon
+                label="Next page"
+                disabled={page >= pageCount}
+                onBqClick={() => setCurrentPage(page + 1)}
+              >
+                <BqIcon name="caret-right" />
+              </BqButton>
+            </nav>
+          </div>
+          <span className="visually-hidden" aria-live="polite">
+            Page {page} of {pageCount}
+          </span>
+        </>
+      );
+    }
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqButton, BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqButton, BqIcon, BqOption, BqSelect],
+      styleUrl: "./styles.css",
+      template: `
+        <table class="bq-table">
+          <caption class="visually-hidden">Records</caption>
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Name</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (row of rows; track row.id) {
+              <tr>
+                <td>{{ row.id }}</td>
+                <td>{{ row.name }}</td>
+                <td>{{ row.status }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+
+        <div class="pager" aria-label="Pagination">
+          <div class="pager__size">
+            <span class="pager__status">Displaying</span>
+            <bq-select
+              [value]="size"
+              [disableClear]="true"
+              [disableSearch]="true"
+              [sameWidth]="true"
+              (bqSelect)="handleSizeChange($event)"
+            >
+              <bq-option value="5">5</bq-option>
+              <bq-option value="10">10</bq-option>
+              <bq-option value="25">25</bq-option>
+            </bq-select>
+            <span class="pager__status">from {{ records.length }}</span>
+          </div>
+          <nav class="pager__nav" aria-label="Pagination">
+            <bq-button
+              appearance="text"
+              size="small"
+              border="s"
+              [onlyIcon]="true"
+              label="Previous page"
+              [disabled]="page <= 1"
+              (bqClick)="setPage(page - 1)"
+            >
+              <bq-icon name="caret-left"></bq-icon>
+            </bq-button>
+            <div class="pages__container">
+              @for (pageNumber of pageNumbers; track pageNumber) {
+                <bq-button
+                  [appearance]="page === pageNumber ? 'primary' : 'text'"
+                  size="small"
+                  border="s"
+                  [label]="'Page ' + pageNumber"
+                  [attr.aria-current]="page === pageNumber ? 'page' : null"
+                  (bqClick)="setPage(pageNumber)"
+                >
+                  {{ pageNumber }}
+                </bq-button>
+              }
+            </div>
+            <bq-button
+              appearance="text"
+              size="small"
+              border="s"
+              [onlyIcon]="true"
+              label="Next page"
+              [disabled]="page >= pageCount"
+              (bqClick)="setPage(page + 1)"
+            >
+              <bq-icon name="caret-right"></bq-icon>
+            </bq-button>
+          </nav>
+        </div>
+        <span class="visually-hidden" aria-live="polite">Page {{ page }} of {{ pageCount }}</span>
+      `,
+    })
+    export class PaginatedTableComponent {
+      readonly records = Array.from({ length: 23 }, (_, index) => ({
+        id: index + 1,
+        name: `Record ${index + 1}`,
+        status: index % 2 ? "Active" : "Pending",
+      }));
+      page = 1;
+      size = 5;
+
+      get pageCount() {
+        return Math.max(1, Math.ceil(this.records.length / this.size));
+      }
+
+      get pageNumbers() {
+        return Array.from({ length: this.pageCount }, (_, index) => index + 1);
+      }
+
+      get rows() {
+        return this.records.slice((this.page - 1) * this.size, this.page * this.size);
+      }
+
+      setPage(nextPage: number) {
+        this.page = Math.max(1, Math.min(nextPage, this.pageCount));
+      }
+      handleSizeChange(event: CustomEvent<{ value: string | number | string[] }>) {
+        this.size = Number(event.detail.value);
+        this.setPage(1);
+      }
+    }
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup>
+    import { computed, ref } from "vue";
+    import { BqButton, BqIcon, BqOption, BqSelect } from "@beeq/vue";
+    import "./styles.css";
+
+    const records = Array.from({ length: 23 }, (_, index) => ({
+      id: index + 1,
+      name: `Record ${index + 1}`,
+      status: index % 2 ? "Active" : "Pending",
+    }));
+    const page = ref(1);
+    const size = ref(5);
+    const pageCount = computed(() =>
+      Math.max(1, Math.ceil(records.length / size.value)),
+    );
+    const rows = computed(() =>
+      records.slice((page.value - 1) * size.value, page.value * size.value),
+    );
+    const pageNumbers = computed(() =>
+      Array.from({ length: pageCount.value }, (_, index) => index + 1),
+    );
+
+    const setPage = (nextPage) => {
+      page.value = Math.max(1, Math.min(nextPage, pageCount.value));
+    };
+    const handleSizeChange = (event) => {
+      size.value = Number(event.detail.value);
+      setPage(1);
+    };
+    </script>
+
+    <template>
+      <table class="bq-table">
+        <caption class="visually-hidden">Records</caption>
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="row in rows" :key="row.id">
+            <td>{{ row.id }}</td>
+            <td>{{ row.name }}</td>
+            <td>{{ row.status }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="pager" aria-label="Pagination">
+        <div class="pager__size">
+          <span class="pager__status">Displaying</span>
+          <BqSelect
+            :value="String(size)"
+            disableClear
+            disableSearch
+            sameWidth
+            @bqSelect="handleSizeChange"
+          >
+            <BqOption value="5">5</BqOption>
+            <BqOption value="10">10</BqOption>
+            <BqOption value="25">25</BqOption>
+          </BqSelect>
+          <span class="pager__status">from {{ records.length }}</span>
+        </div>
+        <nav class="pager__nav" aria-label="Pagination">
+          <BqButton
+            appearance="text"
+            size="small"
+            border="s"
+            onlyIcon
+            label="Previous page"
+            :disabled="page <= 1"
+            @bqClick="setPage(page - 1)"
+          >
+            <BqIcon name="caret-left" />
+          </BqButton>
+          <div class="pages__container">
+            <BqButton
+              v-for="pageNumber in pageNumbers"
+              :key="pageNumber"
+              :appearance="page === pageNumber ? 'primary' : 'text'"
+              size="small"
+              border="s"
+              :label="`Page ${pageNumber}`"
+              :aria-current="page === pageNumber ? 'page' : undefined"
+              @bqClick="setPage(pageNumber)"
+            >
+              {{ pageNumber }}
+            </BqButton>
+          </div>
+          <BqButton
+            appearance="text"
+            size="small"
+            border="s"
+            onlyIcon
+            label="Next page"
+            :disabled="page >= pageCount"
+            @bqClick="setPage(page + 1)"
+          >
+            <BqIcon name="caret-right" />
+          </BqButton>
+        </nav>
+      </div>
+      <span class="visually-hidden" aria-live="polite">
+        Page {{ page }} of {{ pageCount }}
+      </span>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Note>
+  Announce page changes for screen reader users. This example updates a polite live region after each transition; move focus to the first cell when the new page must become the next task.
+</Note>
 
 ## Best practices
 
