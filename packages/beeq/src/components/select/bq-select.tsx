@@ -30,8 +30,10 @@ export interface TSelectChangeDetail {
 
 type TSelectOptionStructure = {
   all: HTMLBqOptionElement[];
+  childrenByParent: Map<HTMLBqOptionElement, HTMLBqOptionElement[]>;
   hasNestedMarkup: boolean;
   nested: HTMLBqOptionElement[];
+  parentByChild: Map<HTMLBqOptionElement, HTMLBqOptionElement>;
   topLevel: HTMLBqOptionElement[];
 };
 
@@ -544,8 +546,7 @@ export class BqSelect {
 
   private handleMultipleSelection = (item: HTMLBqOptionElement) => {
     const optionStructure = this.getOptionStructure();
-    const options = this.getActiveOptions(optionStructure);
-    const value = this.getMultipleSelectionValue(item, options);
+    const value = this.getMultipleSelectionValue(item, optionStructure);
 
     this.value = value;
     this.syncValueState(optionStructure);
@@ -553,16 +554,17 @@ export class BqSelect {
     return value;
   };
 
-  private getMultipleSelectionValue = (item: HTMLBqOptionElement, options: HTMLBqOptionElement[]) => {
+  private getMultipleSelectionValue = (item: HTMLBqOptionElement, optionStructure: TSelectOptionStructure) => {
     // Set has O(1) complexity for insertion, deletion, and search operations, compared to an Array's O(n)
     const selectedValues = new Set(Array.isArray(this.value) ? this.value : []);
+    const options = this.getActiveOptions(optionStructure);
 
     if (!this.hasNestedOptions) {
       this.toggleOptionValue(selectedValues, item);
       return this.getSelectedOptionValues(selectedValues, options);
     }
 
-    this.toggleNestedOptionValue(selectedValues, item, options);
+    this.toggleNestedOptionValue(selectedValues, item, optionStructure);
     return this.getSelectedOptionValues(selectedValues, options);
   };
 
@@ -571,7 +573,7 @@ export class BqSelect {
     const options = this.getActiveOptions(optionStructure);
     const selectedValues = new Set(Array.isArray(this.value) ? this.value : []);
     const optionsToRemove = this.hasNestedOptions
-      ? [item, ...this.getOptionDescendants(item, options)].filter(this.isSelectableOption)
+      ? [item, ...this.getOptionDescendants(item, optionStructure)].filter(this.isSelectableOption)
       : [item];
 
     optionsToRemove.forEach((option) => {
@@ -741,9 +743,7 @@ export class BqSelect {
   };
 
   private hasSelectedDescendant = (option: HTMLBqOptionElement) =>
-    this.getActiveOptions(this.getOptionStructure()).some(
-      (item) => item !== option && option.contains(item) && item.selected,
-    );
+    this.getOptionDescendants(option, this.getOptionStructure()).some((item) => item.selected);
 
   private handleOptionExpansionMutations = (mutations: MutationRecord[]) => {
     mutations.forEach((mutation) => {
@@ -864,16 +864,10 @@ export class BqSelect {
     return true;
   };
 
-  private getTreeOptionParent = (option: HTMLBqOptionElement) => {
-    const parentOption = option.parentElement?.closest<HTMLBqOptionElement>('bq-option');
-
-    return parentOption && this.el.contains(parentOption) ? parentOption : undefined;
-  };
+  private getTreeOptionParent = (option: HTMLBqOptionElement) => this.getOptionStructure().parentByChild.get(option);
 
   private getTreeOptionChildren = (option: HTMLBqOptionElement) =>
-    this.getActiveOptions(this.getOptionStructure()).filter(
-      (nestedOption) => this.getTreeOptionParent(nestedOption) === option,
-    );
+    this.getOptionStructure().childrenByParent.get(option) || [];
 
   private isOptionNavigationKey = (key: string) =>
     ['ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'End', 'Home'].includes(key);
@@ -1010,7 +1004,7 @@ export class BqSelect {
     }
 
     this.syncUnsupportedNestedOptionsState(optionStructure);
-    this.syncSelectedOptionsState(options, value);
+    this.syncSelectedOptionsState(options, value, optionStructure);
     this.selectedOptions =
       this.multiple && Array.isArray(value) ? options.filter((option) => value.includes(option.value)) : [];
     this.updateDisplayLabel(options, value);
@@ -1045,7 +1039,7 @@ export class BqSelect {
     options.forEach((option) => {
       if (!selectedValues.has(option.value)) return;
 
-      this.getOptionAncestors(option, options).forEach((ancestor) => {
+      this.getOptionAncestors(option, optionStructure).forEach((ancestor) => {
         if (this.isSelectableOption(ancestor)) selectedValues.add(ancestor.value);
       });
     });
@@ -1068,19 +1062,19 @@ export class BqSelect {
   private toggleNestedOptionValue = (
     selectedValues: Set<string>,
     option: HTMLBqOptionElement,
-    options: HTMLBqOptionElement[],
+    optionStructure: TSelectOptionStructure,
   ) => {
-    const descendants = this.getOptionDescendants(option, options).filter(this.isSelectableOption);
+    const descendants = this.getOptionDescendants(option, optionStructure).filter(this.isSelectableOption);
 
     if (!descendants.length) {
       this.toggleOptionValue(selectedValues, option);
       if (selectedValues.has(option.value)) {
-        this.getOptionAncestors(option, options).forEach((ancestor) => {
+        this.getOptionAncestors(option, optionStructure).forEach((ancestor) => {
           if (this.isSelectableOption(ancestor)) selectedValues.add(ancestor.value);
         });
       } else {
-        this.getOptionAncestors(option, options).forEach((ancestor) => {
-          const selectedDescendants = this.getOptionDescendants(ancestor, options).some(
+        this.getOptionAncestors(option, optionStructure).forEach((ancestor) => {
+          const selectedDescendants = this.getOptionDescendants(ancestor, optionStructure).some(
             (descendant) => this.isSelectableOption(descendant) && selectedValues.has(descendant.value),
           );
 
@@ -1105,16 +1099,26 @@ export class BqSelect {
     });
   };
 
-  private getOptionDescendants = (option: HTMLBqOptionElement, options: HTMLBqOptionElement[]) =>
-    options.filter((nestedOption) => nestedOption !== option && option.contains(nestedOption));
+  private getOptionDescendants = (option: HTMLBqOptionElement, optionStructure: TSelectOptionStructure) => {
+    const descendants: HTMLBqOptionElement[] = [];
+    const addDescendants = (parent: HTMLBqOptionElement) => {
+      optionStructure.childrenByParent.get(parent)?.forEach((child) => {
+        descendants.push(child);
+        addDescendants(child);
+      });
+    };
 
-  private getOptionAncestors = (option: HTMLBqOptionElement, options: HTMLBqOptionElement[]) => {
+    addDescendants(option);
+    return descendants;
+  };
+
+  private getOptionAncestors = (option: HTMLBqOptionElement, optionStructure: TSelectOptionStructure) => {
     const ancestors: HTMLBqOptionElement[] = [];
-    let ancestor = option.parentElement?.closest<HTMLBqOptionElement>('bq-option');
+    let ancestor = optionStructure.parentByChild.get(option);
 
-    while (ancestor && this.el.contains(ancestor)) {
-      if (options.includes(ancestor)) ancestors.unshift(ancestor);
-      ancestor = ancestor.parentElement?.closest<HTMLBqOptionElement>('bq-option');
+    while (ancestor) {
+      ancestors.unshift(ancestor);
+      ancestor = optionStructure.parentByChild.get(ancestor);
     }
 
     return ancestors;
@@ -1132,8 +1136,7 @@ export class BqSelect {
     const getSelectedNode = (option: HTMLBqOptionElement): TSelectSelectionTreeNode | undefined => {
       if (!selectedValues.has(option.value)) return undefined;
 
-      const children = optionStructure.all
-        .filter((nestedOption) => nestedOption.parentElement?.closest('bq-option') === option)
+      const children = (optionStructure.childrenByParent.get(option) || [])
         .map(getSelectedNode)
         .filter((node): node is TSelectSelectionTreeNode => Boolean(node));
 
@@ -1159,7 +1162,11 @@ export class BqSelect {
     return value === nextValue;
   };
 
-  private syncSelectedOptionsState = (options: HTMLBqOptionElement[], value: TSelectValue) => {
+  private syncSelectedOptionsState = (
+    options: HTMLBqOptionElement[],
+    value: TSelectValue,
+    optionStructure: TSelectOptionStructure,
+  ) => {
     const lowerCaseValue = String(value).toLowerCase();
 
     options.forEach((option) => {
@@ -1169,18 +1176,18 @@ export class BqSelect {
         option.selected = option.value?.toLowerCase() === lowerCaseValue;
       }
 
-      option.toggleAttribute('indeterminate', this.getOptionIndeterminateState(option, options, value));
+      option.toggleAttribute('indeterminate', this.getOptionIndeterminateState(option, optionStructure, value));
     });
   };
 
   private getOptionIndeterminateState = (
     option: HTMLBqOptionElement,
-    options: HTMLBqOptionElement[],
+    optionStructure: TSelectOptionStructure,
     value: TSelectValue,
   ) => {
     if (!this.hasNestedOptions || !Array.isArray(value)) return false;
 
-    const selectableDescendants = this.getOptionDescendants(option, options).filter(this.isSelectableOption);
+    const selectableDescendants = this.getOptionDescendants(option, optionStructure).filter(this.isSelectableOption);
     if (!selectableDescendants.length) return false;
 
     const selectedValues = new Set(value);
@@ -1242,12 +1249,27 @@ export class BqSelect {
 
   private getOptionStructure = (): TSelectOptionStructure => {
     const all = Array.from(this.el.querySelectorAll<HTMLBqOptionElement>('bq-option'));
-    const nested = all.filter((option) => Boolean(option.parentElement?.closest('bq-option')));
+    const allOptions = new Set(all);
+    const childrenByParent = new Map<HTMLBqOptionElement, HTMLBqOptionElement[]>();
+    const parentByChild = new Map<HTMLBqOptionElement, HTMLBqOptionElement>();
+
+    all.forEach((option) => {
+      const parent = option.parentElement?.closest<HTMLBqOptionElement>('bq-option');
+      if (!parent || !allOptions.has(parent)) return;
+
+      const children = childrenByParent.get(parent) || [];
+      children.push(option);
+      childrenByParent.set(parent, children);
+      parentByChild.set(option, parent);
+    });
+    const nested = all.filter((option) => parentByChild.has(option));
 
     return {
       all,
+      childrenByParent,
       hasNestedMarkup: all.some((option) => option.querySelector('bq-option[slot="options"]')),
       nested,
+      parentByChild,
       topLevel: all.filter((option) => !nested.includes(option)),
     };
   };
@@ -1374,7 +1396,7 @@ export class BqSelect {
   };
 
   private getNestedTagLabel = (item: HTMLBqOptionElement, optionStructure: TSelectOptionStructure) => {
-    const selectableDescendants = this.getOptionDescendants(item, optionStructure.all).filter(this.isSelectableOption);
+    const selectableDescendants = this.getOptionDescendants(item, optionStructure).filter(this.isSelectableOption);
     const selectedCount = selectableDescendants.filter((option) => option.selected).length;
 
     if (!selectedCount || selectedCount === selectableDescendants.length) return this.getOptionLabel(item);
