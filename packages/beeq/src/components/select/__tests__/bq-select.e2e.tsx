@@ -1768,6 +1768,24 @@ describe('bq-select', () => {
     expect(bqInput).toHaveReceivedEventTimes(1);
   });
 
+  it('should cancel pending input work when disconnected', async () => {
+    const { root, spyOnEvent } = await render(
+      <bq-select debounceTime={250} name="bq-select">
+        <bq-option value="alpha">Alpha</bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const bqInput = spyOnEvent('bqInput');
+    const input = getInput(select);
+
+    await userEvent.click(input);
+    await userEvent.type(input, 'a');
+    select.remove();
+    await sleep(300);
+
+    expect(bqInput).toHaveReceivedEventTimes(0);
+  });
+
   it('should reset to a given value using the reset method', async () => {
     const { root, waitForChanges } = await render(
       <bq-select name="bq-select">

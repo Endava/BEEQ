@@ -377,6 +377,8 @@ export class BqSelect {
   }
 
   disconnectedCallback() {
+    this.debounceInput?.cancel();
+    this.debounceQuery?.cancel();
     this.expansionObserver?.disconnect();
     this.optionsObserver?.disconnect();
   }
