@@ -20,10 +20,12 @@ const meta: Meta = {
     'clear-button-label': { control: 'text' },
     'debounce-time': { control: 'number' },
     'disable-clear': { control: 'boolean' },
+    'disable-search': { control: 'boolean' },
     'disable-scroll-lock': { control: 'boolean' },
     distance: { control: 'number' },
     disabled: { control: 'boolean' },
     form: { control: 'text' },
+    'form-validation-message': { control: 'text' },
     'keep-open-on-select': { control: 'boolean' },
     name: { control: 'text' },
     'max-tags-visible': { control: 'number' },
@@ -77,10 +79,12 @@ const meta: Meta = {
     'clear-button-label': 'Clear value',
     'debounce-time': 0,
     'disable-clear': false,
+    'disable-search': false,
     'disable-scroll-lock': false,
     distance: 8,
     disabled: false,
     form: undefined,
+    'form-validation-message': undefined,
     'keep-open-on-select': false,
     name: 'bq-select',
     'max-tags-visible': 2,
@@ -236,10 +240,12 @@ const Template = (args: Args) => {
       clear-button-label=${args['clear-button-label']}
       debounce-time=${args['debounce-time']}
       ?disable-clear=${args['disable-clear']}
+      ?disable-search=${args['disable-search']}
       ?disable-scroll-lock=${args['disable-scroll-lock']}
       ?disabled=${args.disabled}
       distance=${ifDefined(args.distance)}
       form=${ifDefined(args.form)}
+      form-validation-message=${ifDefined(args['form-validation-message'])}
       ?keep-open-on-select=${args['keep-open-on-select']}
       name=${ifDefined(args.name)}
       max-tags-visible=${args['max-tags-visible']}
@@ -379,9 +385,11 @@ export const NestedOptions: Story = {
   name: 'Nested options',
   render: Template,
   args: {
+    'keep-open-on-select': true,
     multiple: true,
     open: true,
     options: nestedOptions,
+    value: ['javascript', 'javascript:beginner', 'javascript:intermediate'],
   },
 };
 
