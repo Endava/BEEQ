@@ -547,7 +547,7 @@ export class BqSelect {
     this.debounceQuery?.cancel();
 
     const trimmedValue = value?.trim();
-    if (!isDefined(trimmedValue)) {
+    if (!trimmedValue) {
       // For multi-select, just reset options visibility without clearing selections
       // This prevents backspace from removing selected tags when only clearing search text
       if (this.multiple) {

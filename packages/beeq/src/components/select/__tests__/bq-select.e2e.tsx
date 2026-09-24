@@ -662,6 +662,44 @@ describe('bq-select', () => {
     expect(frameworkOption.expanded).toBe(false);
   });
 
+  it('should reset nested search visibility without expanding unmatched parents', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-select multiple name="bq-select">
+        <bq-option value="frontend">
+          Frontend
+          <bq-option slot="options" value="react">
+            React
+          </bq-option>
+        </bq-option>
+        <bq-option value="backend">
+          Backend
+          <bq-option slot="options" value="node">
+            Node.js
+          </bq-option>
+        </bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const input = getInput(select);
+    const frontendOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="frontend"]');
+    const backendOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="backend"]');
+
+    await userEvent.click(input);
+    await userEvent.fill(input, 'rea');
+    await waitForChanges();
+
+    expect(frontendOption.expanded).toBe(true);
+    expect(backendOption.expanded).toBe(false);
+    expect(backendOption.hidden).toBe(true);
+
+    await userEvent.clear(input);
+    await waitForChanges();
+
+    expect(frontendOption.hidden).toBe(false);
+    expect(backendOption.hidden).toBe(false);
+    expect(backendOption.expanded).toBe(false);
+  });
+
   it('should use tree semantics for nested options', async () => {
     const { root, waitForChanges } = await render(
       <bq-select multiple name="bq-select">
