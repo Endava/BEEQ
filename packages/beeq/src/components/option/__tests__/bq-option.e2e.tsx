@@ -195,6 +195,36 @@ describe('bq-option', () => {
     expect(input).toEqualAttribute('aria-checked', 'mixed');
   });
 
+  it('should support custom nested selection summaries and opt-out', async () => {
+    const { root, setProps, waitForChanges } = await render(
+      <bq-option allSelectedLabel="All levels" checkbox expanded selectedCountLabel="{count} levels" value="frontend">
+        Frontend
+        <bq-option selected slot="options" value="react">
+          React
+        </bq-option>
+        <bq-option slot="options" value="stencil">
+          Stencil
+        </bq-option>
+      </bq-option>,
+    );
+    const option = root as HTMLBqOptionElement;
+    const stencilOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="stencil"]');
+
+    await waitForStable(root);
+
+    expect(getSelectionSummary(option)).toHaveTextContent('1 levels');
+
+    stencilOption.selected = true;
+    await waitForChanges();
+
+    expect(getSelectionSummary(option)).toHaveTextContent('All levels');
+
+    await setProps({ showSelectionSummary: false });
+    await waitForChanges();
+
+    expect(getSelectionSummary(option)).toBeNull();
+  });
+
   it('should toggle from the checkbox with Space and emit focus and blur once', async () => {
     const { root, spyOnEvent, waitForChanges } = await render(
       <bq-option checkbox value="option-value">
