@@ -1652,6 +1652,7 @@ export namespace Components {
      * @dependency bq-button
      * @dependency bq-icon
      * @attr {boolean} disabled - If true, the option is disabled.
+     * @attr {string} display-value - Overrides the displayed option value.
      * @attr {boolean} hidden - If true, the option is hidden.
      * @attr {boolean} checkbox - If true, the option renders as a checkbox option.
      * @attr {boolean} expanded - If true, nested options are displayed.
@@ -2145,7 +2146,6 @@ export namespace Components {
      * @cssprop --bq-select--background-color - Select background color
      * @cssprop --bq-select--border-color - Select border color
      * @cssprop --bq-select--border-color-focus - Select border color on focus
-     * @cssprop --bq-select--border-color-disabled - Select border color when disabled
      * @cssprop --bq-select--border-radius - Select border radius
      * @cssprop --bq-select--border-width - Select border width
      * @cssprop --bq-select--border-style - Select border style
@@ -4447,6 +4447,7 @@ declare global {
      * @dependency bq-button
      * @dependency bq-icon
      * @attr {boolean} disabled - If true, the option is disabled.
+     * @attr {string} display-value - Overrides the displayed option value.
      * @attr {boolean} hidden - If true, the option is hidden.
      * @attr {boolean} checkbox - If true, the option renders as a checkbox option.
      * @attr {boolean} expanded - If true, nested options are displayed.
@@ -4799,7 +4800,6 @@ declare global {
      * @cssprop --bq-select--background-color - Select background color
      * @cssprop --bq-select--border-color - Select border color
      * @cssprop --bq-select--border-color-focus - Select border color on focus
-     * @cssprop --bq-select--border-color-disabled - Select border color when disabled
      * @cssprop --bq-select--border-radius - Select border radius
      * @cssprop --bq-select--border-width - Select border width
      * @cssprop --bq-select--border-style - Select border style
@@ -7267,6 +7267,7 @@ declare namespace LocalJSX {
      * @dependency bq-button
      * @dependency bq-icon
      * @attr {boolean} disabled - If true, the option is disabled.
+     * @attr {string} display-value - Overrides the displayed option value.
      * @attr {boolean} hidden - If true, the option is hidden.
      * @attr {boolean} checkbox - If true, the option renders as a checkbox option.
      * @attr {boolean} expanded - If true, nested options are displayed.
@@ -7792,7 +7793,6 @@ declare namespace LocalJSX {
      * @cssprop --bq-select--background-color - Select background color
      * @cssprop --bq-select--border-color - Select border color
      * @cssprop --bq-select--border-color-focus - Select border color on focus
-     * @cssprop --bq-select--border-color-disabled - Select border color when disabled
      * @cssprop --bq-select--border-radius - Select border radius
      * @cssprop --bq-select--border-width - Select border width
      * @cssprop --bq-select--border-style - Select border style
@@ -10264,6 +10264,7 @@ declare module "@stencil/core" {
              * @dependency bq-button
              * @dependency bq-icon
              * @attr {boolean} disabled - If true, the option is disabled.
+             * @attr {string} display-value - Overrides the displayed option value.
              * @attr {boolean} hidden - If true, the option is hidden.
              * @attr {boolean} checkbox - If true, the option renders as a checkbox option.
              * @attr {boolean} expanded - If true, nested options are displayed.
@@ -10524,7 +10525,6 @@ declare module "@stencil/core" {
              * @cssprop --bq-select--background-color - Select background color
              * @cssprop --bq-select--border-color - Select border color
              * @cssprop --bq-select--border-color-focus - Select border color on focus
-             * @cssprop --bq-select--border-color-disabled - Select border color when disabled
              * @cssprop --bq-select--border-radius - Select border radius
              * @cssprop --bq-select--border-width - Select border width
              * @cssprop --bq-select--border-style - Select border style
