@@ -29,6 +29,7 @@ import {
  * @dependency bq-icon
  *
  * @attr {boolean} disabled - If true, the option is disabled.
+ * @attr {string} display-value - Overrides the displayed option value.
  * @attr {boolean} hidden - If true, the option is hidden.
  * @attr {boolean} checkbox - If true, the option renders as a checkbox option.
  * @attr {boolean} expanded - If true, nested options are displayed.
@@ -107,11 +108,11 @@ export class BqOption {
   @State() hasExpandLabel: boolean = false;
   @State() hasOptions: boolean = false;
   @State() hasPrefix: boolean = false;
+  @State() hasSuffix: boolean = false;
   @State() selectedDescendantCount = 0;
   @State() selectedDescendantLabel?: string;
   @State() selectedSelectableDescendantCount = 0;
   @State() selectableDescendantCount = 0;
-  @State() hasSuffix: boolean = false;
 
   // Public Property API
   // ========================
@@ -193,7 +194,7 @@ export class BqOption {
   // ==============
 
   @Listen('keydown')
-  onKeyDown(event: KeyboardEvent) {
+  handleKeydown(event: KeyboardEvent) {
     if (this.isEventFromNestedOption(event)) return;
     if (isEventTargetChildOfElement(event, this.checkboxElem)) return;
     if (isEventTargetChildOfElement(event, this.expandElem)) return;
@@ -208,7 +209,7 @@ export class BqOption {
   }
 
   @Listen('bqChange')
-  onCheckboxChange(event: CustomEvent<{ checked: boolean }>) {
+  handleCheckboxChange(event: CustomEvent<{ checked: boolean }>) {
     if (!this.checkbox || !isEventTargetChildOfElement(event, this.checkboxElem)) return;
 
     event.stopImmediatePropagation();
@@ -216,7 +217,7 @@ export class BqOption {
   }
 
   @Listen('bqFocus')
-  onCheckboxFocus(event: CustomEvent<HTMLBqCheckboxElement>) {
+  handleCheckboxFocus(event: CustomEvent<HTMLBqCheckboxElement>) {
     if (!this.checkbox || !isEventTargetChildOfElement(event, this.checkboxElem)) return;
 
     event.stopImmediatePropagation();
@@ -224,7 +225,7 @@ export class BqOption {
   }
 
   @Listen('bqBlur')
-  onCheckboxBlur(event: CustomEvent<HTMLBqCheckboxElement>) {
+  handleCheckboxBlur(event: CustomEvent<HTMLBqCheckboxElement>) {
     if (!this.checkbox || !isEventTargetChildOfElement(event, this.checkboxElem)) return;
 
     event.stopImmediatePropagation();
@@ -318,64 +319,6 @@ export class BqOption {
 
     checkboxInput.tabIndex = -1;
   };
-
-  private get optionLabel() {
-    const labelSlot = this.el.shadowRoot?.querySelector<HTMLSlotElement>('slot:not([name])');
-    const label = labelSlot
-      ? getTextContent(labelSlot, { recurse: true }) || this.el.textContent?.trim()
-      : this.el.textContent?.trim();
-
-    return label || this.value || 'option';
-  }
-
-  private get selectedDescendantStatus() {
-    if (this.expanded || !this.selectedDescendantCount) return undefined;
-
-    if (this.selectedDescendantCount === 1) {
-      return `${this.selectedDescendantLabel} selected`;
-    }
-
-    return `${this.selectedDescendantCount} selected`;
-  }
-
-  private get selectedDescendantAccessibleLabel() {
-    const status = this.selectedDescendantStatus;
-
-    return status ? `${this.optionLabel}, ${status}` : undefined;
-  }
-
-  private get selectionSummary() {
-    if (!this.showSelectionSummary || !this.selectedSelectableDescendantCount) return undefined;
-
-    if (this.selectedSelectableDescendantCount === this.selectableDescendantCount) return this.allSelectedLabel;
-
-    return this.selectedCountLabel.replaceAll('{count}', String(this.selectedSelectableDescendantCount));
-  }
-
-  private get isDisabledOrHidden() {
-    return this.disabled || this.hidden;
-  }
-
-  private get ariaChecked() {
-    if (!this.isTreeItem || !this.checkbox) return undefined;
-    if (this.indeterminate) return 'mixed';
-
-    return this.selected ? 'true' : 'false';
-  }
-
-  private get isManagedBySelect() {
-    return Boolean(this.el.closest('bq-select'));
-  }
-
-  private get isTreeItem() {
-    if (this.isManagedBySelect) return this.tree;
-
-    return this.tree || this.hasOptions || Boolean(this.el.parentElement?.closest('bq-option'));
-  }
-
-  private get shouldRenderNestedOptions() {
-    return !this.isManagedBySelect || this.tree;
-  }
 
   private isEventFromNestedOption = (event: Event) => {
     const sourceOption = event.composedPath().find((target) => isHTMLElement(target, 'bq-option'));
@@ -570,6 +513,64 @@ export class BqOption {
       </button>
     );
   };
+
+  private get ariaChecked() {
+    if (!this.isTreeItem || !this.checkbox) return undefined;
+    if (this.indeterminate) return 'mixed';
+
+    return this.selected ? 'true' : 'false';
+  }
+
+  private get isDisabledOrHidden() {
+    return this.disabled || this.hidden;
+  }
+
+  private get isManagedBySelect() {
+    return Boolean(this.el.closest('bq-select'));
+  }
+
+  private get isTreeItem() {
+    if (this.isManagedBySelect) return this.tree;
+
+    return this.tree || this.hasOptions || Boolean(this.el.parentElement?.closest('bq-option'));
+  }
+
+  private get optionLabel() {
+    const labelSlot = this.el.shadowRoot?.querySelector<HTMLSlotElement>('slot:not([name])');
+    const label = labelSlot
+      ? getTextContent(labelSlot, { recurse: true }) || this.el.textContent?.trim()
+      : this.el.textContent?.trim();
+
+    return label || this.value || 'option';
+  }
+
+  private get selectedDescendantStatus() {
+    if (this.expanded || !this.selectedDescendantCount) return undefined;
+
+    if (this.selectedDescendantCount === 1) {
+      return `${this.selectedDescendantLabel} selected`;
+    }
+
+    return `${this.selectedDescendantCount} selected`;
+  }
+
+  private get selectedDescendantAccessibleLabel() {
+    const status = this.selectedDescendantStatus;
+
+    return status ? `${this.optionLabel}, ${status}` : undefined;
+  }
+
+  private get selectionSummary() {
+    if (!this.showSelectionSummary || !this.selectedSelectableDescendantCount) return undefined;
+
+    if (this.selectedSelectableDescendantCount === this.selectableDescendantCount) return this.allSelectedLabel;
+
+    return this.selectedCountLabel.replaceAll('{count}', String(this.selectedSelectableDescendantCount));
+  }
+
+  private get shouldRenderNestedOptions() {
+    return !this.isManagedBySelect || this.tree;
+  }
 
   // render() function
   // Always the last one in the class.

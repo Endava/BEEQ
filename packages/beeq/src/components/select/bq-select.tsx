@@ -129,7 +129,6 @@ type TSelectDisplayTag = {
  * @cssprop --bq-select--background-color - Select background color
  * @cssprop --bq-select--border-color - Select border color
  * @cssprop --bq-select--border-color-focus - Select border color on focus
- * @cssprop --bq-select--border-color-disabled - Select border color when disabled
  * @cssprop --bq-select--border-radius - Select border radius
  * @cssprop --bq-select--border-width - Select border width
  * @cssprop --bq-select--border-style - Select border style
