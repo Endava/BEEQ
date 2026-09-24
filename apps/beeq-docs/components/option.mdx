@@ -14,7 +14,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 `bq-option` is a single selectable item inside a list-based UI control such as a dropdown, select, or navigation menu. It manages its own focused, selected, and disabled states, and communicates user interactions back to the parent through events.
 
 <Note>
-  `bq-option` must always be placed inside a `bq-option-list`, which provides the required `role="listbox"` context. Rendering an option outside a list breaks the ARIA relationship expected by assistive technologies.
+  Place standalone options in `bq-option-list`, or use them as direct children of `bq-select`. A nested `bq-select` manages the tree semantics, selection state, and checkboxes for its options.
 </Note>
 
 ## When to use
@@ -39,13 +39,13 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 
     * You need a standalone interactive control — use `bq-button` or `bq-checkbox` instead
     * The action is destructive and needs confirmation — surface it as a dialog or separate form element, not a list item
-    * The item will be displayed outside a `bq-option-list` context
+    * The item will not be managed by `bq-option-list`, `bq-select`, or another component that provides list semantics
   </Card>
 </CardGroup>
 
 ## Option patterns
 
-<CardGroup cols={3}>
+<CardGroup cols={2}>
   <Card title="Label only">
     The simplest form — a text label with no icon. Use for compact menus where space is limited and the labels are self-explanatory.
   </Card>
@@ -54,6 +54,9 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
   </Card>
   <Card title="Label + suffix icon">
     An icon to the right of the label signals a secondary function — such as an external link, a shortcut key, or a status indicator. Use sparingly so it does not compete with the primary label.
+  </Card>
+  <Card title="Nested parent">
+    A parent option contains related child options. Use this pattern only inside a multiple `bq-select`, where the Select manages cascading, mixed state, and keyboard tree navigation.
   </Card>
 </CardGroup>
 
@@ -64,13 +67,15 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
   <img className="hidden dark:block" src="/components/images/option/option-anatomy-dark.svg" alt="BEEQ Option component anatomy" />
 </Frame>
 
-Each option is a button-like surface with an optional prefix icon, a label, and an optional suffix icon. The three parts are spaced via dedicated CSS custom properties.
+Each option has an interactive row with a label and optional prefix, suffix, and checkbox controls.
 
 | Part | Element | Description |
 |---|---|---|
-| **1** | Prefix | Optional slot for an icon or element rendered before the label |
+| **1** | Option row | Interactive surface that contains the option controls and content |
 | **2** | Label | The main text content of the option |
-| **3** | Suffix | Optional slot for an icon or element rendered after the label |
+| **3** | Prefix | Optional slot for an icon or element rendered before the label |
+| **4** | Suffix | Optional slot for an icon or element rendered after the label |
+| **5** | Checkbox | Optional selection control for checkbox options |
 
 ## Design guidelines
 
@@ -114,6 +119,12 @@ Place prefix icons when the list is long and icon-based scanning helps users fin
   </Step>
 </Steps>
 
+### Nested parent options
+
+Use `expanded` and the `options` slot to define a branch. Inside a nested `bq-select`, do not manage `selected`, `indeterminate`, or `checkbox` on the parent yourself: Select keeps those states in sync with the canonical `value`.
+
+The parent can show a label beside its expand control through `expand-label`. `show-selection-summary` controls the generated summary; customise its complete and partial text with `all-selected-label` and `selected-count-label`. The latter replaces `{count}` with the number of selected selectable descendants.
+
 ## Usage
 
 ### Default
@@ -121,6 +132,14 @@ Place prefix icons when the list is long and icon-based scanning helps users fin
 A simple list of options inside a `bq-option-list`. Each option carries a `value` attribute used by the parent to identify which item the user selected.
 
 <CodeLivePreview mode="shadow" code={`
+  <style>
+    :host {
+      align-items: stretch !important;
+      flex-direction: column !important;
+      justify-content: flex-start !important;
+    }
+  </style>
+
   <bq-option-list>
     <bq-option value="profile">
       <span>User profile</span>
@@ -211,11 +230,111 @@ A simple list of options inside a `bq-option-list`. Each option carries a `value
   </CodeGroup>
 </CodeLivePreview>
 
+### Nested parent
+
+Use `expanded` on the parent and place child options in its `options` slot. Give every option in the branch a unique `value`.
+
+<Note>
+  This example focuses on the parent-child relationship. In a nested multiple [Select](/components/select), Select manages checkbox, selected, and indeterminate states.
+</Note>
+
+<CodeLivePreview mode="shadow" code={`
+  <style>
+    :host {
+      align-items: stretch !important;
+      flex-direction: column !important;
+      justify-content: flex-start !important;
+    }
+  </style>
+
+  <bq-option-list>
+    <bq-option expanded value="frontend">
+      Frontend
+      <span slot="expand-label">2 levels</span>
+      <bq-option slot="options" value="frontend:react">React</bq-option>
+      <bq-option slot="options" value="frontend:vue">Vue</bq-option>
+    </bq-option>
+  </bq-option-list>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <bq-option-list>
+      <bq-option expanded value="frontend">
+        Frontend
+        <span slot="expand-label">2 levels</span>
+        <bq-option slot="options" value="frontend:react">React</bq-option>
+        <bq-option slot="options" value="frontend:vue">Vue</bq-option>
+      </bq-option>
+    </bq-option-list>
+    ```
+
+    ```tsx React icon="react" expandable
+    import { BqOption, BqOptionList } from "@beeq/react";
+
+    <BqOptionList>
+      <BqOption expanded value="frontend">
+        Frontend
+        <span slot="expand-label">2 levels</span>
+        <BqOption slot="options" value="frontend:react">React</BqOption>
+        <BqOption slot="options" value="frontend:vue">Vue</BqOption>
+      </BqOption>
+    </BqOptionList>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqOption, BqOptionList } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqOption, BqOptionList],
+      template: `
+        <bq-option-list>
+          <bq-option expanded value="frontend">
+            Frontend
+            <span slot="expand-label">2 levels</span>
+            <bq-option slot="options" value="frontend:react">React</bq-option>
+            <bq-option slot="options" value="frontend:vue">Vue</bq-option>
+          </bq-option>
+        </bq-option-list>
+      `,
+    })
+    export class NestedOptionComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqOption, BqOptionList } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqOptionList>
+        <BqOption expanded value="frontend">
+          Frontend
+          <span slot="expand-label">2 levels</span>
+          <BqOption slot="options" value="frontend:react">React</BqOption>
+          <BqOption slot="options" value="frontend:vue">Vue</BqOption>
+        </BqOption>
+      </BqOptionList>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
 ### With prefix icon
 
 Add a `bq-icon` in the `prefix` slot to give each item a visual anchor. Icons make longer lists easier to scan and help users recognize options without reading every label.
 
 <CodeLivePreview mode="shadow" code={`
+  <style>
+    :host {
+      align-items: stretch !important;
+      flex-direction: column !important;
+      justify-content: flex-start !important;
+    }
+  </style>
+
   <bq-option-list>
     <bq-option value="profile">
       <bq-icon slot="prefix" name="user"></bq-icon>
@@ -326,6 +445,14 @@ Add a `bq-icon` in the `prefix` slot to give each item a visual anchor. Icons ma
 Use the `suffix` slot for a right-aligned secondary indicator. Common uses include link-out arrows, keyboard shortcuts, or status icons.
 
 <CodeLivePreview mode="shadow" code={`
+  <style>
+    :host {
+      align-items: stretch !important;
+      flex-direction: column !important;
+      justify-content: flex-start !important;
+    }
+  </style>
+
   <bq-option-list>
     <bq-option value="profile">
       <span>User profile</span>
@@ -458,6 +585,14 @@ Use the `suffix` slot for a right-aligned secondary indicator. Common uses inclu
 Set `selected` on the option that reflects the current active value. The component applies the brand accent styling automatically.
 
 <CodeLivePreview mode="shadow" code={`
+  <style>
+    :host {
+      align-items: stretch !important;
+      flex-direction: column !important;
+      justify-content: flex-start !important;
+    }
+  </style>
+
   <bq-option-list>
     <bq-option selected value="profile">
       <bq-icon slot="prefix" name="user"></bq-icon>
@@ -563,11 +698,107 @@ Set `selected` on the option that reflects the current active value. The compone
   </CodeGroup>
 </CodeLivePreview>
 
+### Checkbox option
+
+Set `checkbox` to render a checkbox inside a standalone option list. Use `selected` to reflect an initial checked state.
+
+<Note>
+  Inside a flat [Select](/components/select), set `multiple` and `enable-checkboxes` on Select instead. Select applies checkbox presentation to its options. Nested multiple Selects always render checkboxes.
+</Note>
+
+<CodeLivePreview mode="shadow" code={`
+  <style>
+    :host {
+      align-items: stretch !important;
+      flex-direction: column !important;
+      justify-content: flex-start !important;
+    }
+  </style>
+
+  <bq-option-list>
+    <bq-option checkbox selected value="email-notifications">
+      Email notifications
+    </bq-option>
+    <bq-option checkbox value="product-updates">
+      Product updates
+    </bq-option>
+  </bq-option-list>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <bq-option-list>
+      <bq-option checkbox selected value="email-notifications">
+        Email notifications
+      </bq-option>
+      <bq-option checkbox value="product-updates">
+        Product updates
+      </bq-option>
+    </bq-option-list>
+    ```
+
+    ```tsx React icon="react" expandable
+    import { BqOption, BqOptionList } from "@beeq/react";
+
+    <BqOptionList>
+      <BqOption checkbox selected value="email-notifications">
+        Email notifications
+      </BqOption>
+      <BqOption checkbox value="product-updates">
+        Product updates
+      </BqOption>
+    </BqOptionList>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqOption, BqOptionList } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqOption, BqOptionList],
+      template: `
+        <bq-option-list>
+          <bq-option checkbox [selected]="true" value="email-notifications">
+            Email notifications
+          </bq-option>
+          <bq-option checkbox value="product-updates">Product updates</bq-option>
+        </bq-option-list>
+      `,
+    })
+    export class CheckboxOptionComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqOption, BqOptionList } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqOptionList>
+        <BqOption checkbox :selected="true" value="email-notifications">
+          Email notifications
+        </BqOption>
+        <BqOption checkbox value="product-updates">Product updates</BqOption>
+      </BqOptionList>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
 ### Disabled state
 
 Set `disabled` on individual options to mark them as contextually unavailable. Disabled options remain visible in the list but do not respond to clicks or keyboard events.
 
 <CodeLivePreview mode="shadow" code={`
+  <style>
+    :host {
+      align-items: stretch !important;
+      flex-direction: column !important;
+      justify-content: flex-start !important;
+    }
+  </style>
+
   <bq-option-list>
     <bq-option value="profile">
       <bq-icon slot="prefix" name="user"></bq-icon>
@@ -698,6 +929,14 @@ Set `disabled` on individual options to mark them as contextually unavailable. D
 Set `hidden` on an option to remove it from the visible list and the accessibility tree while keeping it in the DOM. Unlike `disabled`, a hidden option is completely invisible — screen readers skip it and it cannot be focused. Use this for options that are programmatically toggled based on application state.
 
 <CodeLivePreview mode="shadow" code={`
+  <style>
+    :host {
+      align-items: stretch !important;
+      flex-direction: column !important;
+      justify-content: flex-start !important;
+    }
+  </style>
+
   <bq-option-list>
     <bq-option value="profile">
       <bq-icon slot="prefix" name="user"></bq-icon>
@@ -897,17 +1136,19 @@ Set `hidden` on an option to remove it from the visible list and the accessibili
 
 ## Accessibility
 
-`bq-option` sets `role="option"` on its host element automatically. It also manages the following ARIA attributes based on its props:
+For flat options, `bq-option` sets `role="option"` and exposes `aria-selected`. In a nested `bq-select`, the Select switches the option to `role="treeitem"` and manages the relationship with its tree container.
 
-- `aria-selected="true"` is set when `selected` is `true`, communicating the active choice to screen readers.
-- `aria-disabled` is always present on the host. It is set to `"true"` when `disabled` or `hidden` is `true`, and to `"false"` otherwise, ensuring assistive technologies always have the correct interactive state.
-- `aria-hidden="true"` is set when `hidden` is `true`, removing the item from the accessibility tree entirely.
+- `aria-selected` communicates the selected state for a flat option.
+- Nested checkbox options expose `aria-checked` as `"true"`, `"false"`, or `"mixed"` for a partial branch.
+- Nested parents expose `aria-expanded`, and their child container uses `role="group"` while it is visible.
+- `aria-disabled` is always present on the host. It is `"true"` when `disabled` or `hidden` is true.
+- `aria-hidden="true"` removes a hidden option from the accessibility tree.
 
 As a developer, you are responsible for:
 
-- **Placing options inside `bq-option-list`** — the `role="option"` on each item requires a `role="listbox"` ancestor, which `bq-option-list` provides. Rendering options outside this context breaks the ARIA relationship.
+- **Choosing the right parent** — use `bq-option-list` for a standalone flat list, or `bq-select` for select options. Do not put options in an arbitrary container.
 - **Providing meaningful labels** — the text inside the default slot is read by screen readers as the option's accessible name. Avoid icon-only options; always include a visible text label.
-- **Keyboard navigation** — `bq-option` listens for `Enter` keydown and emits `bqEnter`. The parent `bq-option-list` handles `ArrowUp`/`ArrowDown` focus management. Do not intercept these keys in your own handlers unless you are building a custom container.
+- **Keyboard navigation** — for a nested Select, let the Select handle `ArrowUp`, `ArrowDown`, `ArrowRight`, and `ArrowLeft`. Do not intercept these keys in your own handlers.
 
 ## API reference
 
@@ -915,10 +1156,16 @@ As a developer, you are responsible for:
 
 | Property | Attribute | Description | Type | Default |
 |---|---|---|---|---|
+| `allSelectedLabel` | `all-selected-label` | Text shown beside the expand control when all selectable descendants are selected | `string` | `'All selected'` |
+| `checkbox` | `checkbox` | If `true`, renders the option as a checkbox option | `boolean` | `false` |
 | `disabled` | `disabled` | If true, the option is disabled | `boolean` | `false` |
 | `displayValue` | `display-value` | Overrides the default displayed value of the option | `string` | — |
+| `expanded` | `expanded` | If `true`, displays child options from the `options` slot | `boolean` | `false` |
 | `hidden` | `hidden` | If true, the option is hidden | `boolean` | `false` |
+| `indeterminate` | `indeterminate` | If `true`, the checkbox represents a partial nested selection | `boolean` | `false` |
 | `selected` | `selected` | If true, the option is selected and active | `boolean` | `false` |
+| `selectedCountLabel` | `selected-count-label` | Partial-selection summary. Use `{count}` for the selected descendant count | `string` | `'{count} selected'` |
+| `showSelectionSummary` | `show-selection-summary` | If `true`, shows the nested selection summary beside the expand control | `boolean` | `true` |
 | `value` | `value` | A string used to identify the option | `string` | — |
 
 ### Events
@@ -935,6 +1182,8 @@ As a developer, you are responsible for:
 | Slot | Description |
 |---|---|
 | *(default)* | The label text content of the option |
+| `expand-label` | Optional text inside the expand or collapse control |
+| `options` | Nested option items shown when the parent is expanded |
 | `prefix` | Content rendered before the label — typically a `bq-icon` |
 | `suffix` | Content rendered after the label — typically a `bq-icon` |
 
@@ -942,10 +1191,21 @@ As a developer, you are responsible for:
 
 | Part | Description |
 |---|---|
-| `base` | The internal `<button>` wrapper of the option |
+| `base` | The option selection control |
+| `item` | The interactive option row |
 | `label` | The `<span>` element containing the label text |
 | `prefix` | The `<span>` element wrapping the prefix slot content |
 | `suffix` | The `<span>` element wrapping the suffix slot content |
+| `checkbox-base` | Base wrapper exported from the nested checkbox |
+| `checkbox-control` | Control wrapper exported from the nested checkbox |
+| `checkbox-input` | Native input exported from the nested checkbox |
+| `checkbox-checkbox` | Checkbox indicator exported from the nested checkbox |
+| `checkbox-label` | Label exported from the nested checkbox |
+| `expand` | Expand or collapse button |
+| `expand-button` | Native button exported from the expand control |
+| `expand-label` | Label exported from the expand control |
+| `selection-summary` | Nested selection summary beside the expand control |
+| `options` | Container for nested options |
 
 ### CSS custom properties
 
