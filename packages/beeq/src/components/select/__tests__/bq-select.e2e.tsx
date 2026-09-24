@@ -778,6 +778,33 @@ describe('bq-select', () => {
     expect(backendOption).toEqualAttribute('tabindex', '-1');
   });
 
+  it('should expose nested checkbox states through tree items', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-select multiple name="bq-select" value={['frontend', 'react']}>
+        <bq-option value="frontend">
+          Frontend
+          <bq-option slot="options" value="react">
+            React
+          </bq-option>
+          <bq-option slot="options" value="stencil">
+            Stencil
+          </bq-option>
+        </bq-option>
+      </bq-select>,
+    );
+    const parentOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="frontend"]');
+    const childOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="react"]');
+
+    await waitForChanges();
+
+    expect(parentOption).toEqualAttribute('aria-checked', 'mixed');
+    expect(parentOption).not.toHaveAttribute('aria-selected');
+    expect(getOptionCheckbox(parentOption)).toEqualAttribute('aria-hidden', 'true');
+    expect(getOptionCheckboxInput(parentOption)).toEqualAttribute('tabindex', '-1');
+    expect(childOption).toEqualAttribute('aria-checked', 'true');
+    expect(childOption).not.toHaveAttribute('aria-selected');
+  });
+
   it('should open and navigate flat options with Arrow Down and Arrow Up', async () => {
     const { root, waitForChanges } = await render(
       <bq-select name="bq-select">
