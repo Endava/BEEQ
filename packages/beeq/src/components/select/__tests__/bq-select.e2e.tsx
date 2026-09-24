@@ -264,6 +264,22 @@ describe('bq-select', () => {
     expect(getInput(select).value).toBe('Option 1');
   });
 
+  it('should use the complete default slot content as the selected label', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-select name="bq-select" value="1">
+        <bq-option value="1">
+          <span>Option</span> label
+        </bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+
+    await waitForChanges();
+    await waitForStable(root);
+
+    expect(getInput(select).value).toBe('Option label');
+  });
+
   it('should select an option and emit bqSelect', async () => {
     const { root, spyOnEvent, waitForChanges } = await render(
       <bq-select name="bq-select">

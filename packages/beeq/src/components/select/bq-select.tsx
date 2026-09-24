@@ -5,6 +5,7 @@ import type { BqTagCustomEvent } from '../..';
 import type { Placement } from '../../services/interfaces';
 import {
   debounce,
+  getTextContent,
   hasSlotContent,
   isDefined,
   isHTMLElement,
@@ -1204,36 +1205,11 @@ export class BqSelect {
     }
 
     const defaultSlot = item.shadowRoot?.querySelector('slot:not([name])');
-    if (!defaultSlot) {
-      return item.innerText.trim();
-    }
+    const label = defaultSlot
+      ? getTextContent(defaultSlot as HTMLSlotElement, { recurse: true })
+      : item.textContent?.trim();
 
-    const text = this.getItemTextContent(defaultSlot as HTMLSlotElement);
-    if (text) return text;
-
-    // Fallback to innerText
-    return item.innerText.trim();
-  };
-
-  private getItemTextContent = (slot: HTMLSlotElement): string | undefined => {
-    const nodes = slot.assignedNodes({ flatten: true });
-
-    for (const node of nodes) {
-      if (node.nodeType === Node.TEXT_NODE) {
-        const text = node.textContent?.trim();
-        if (text) return text;
-      }
-
-      // Element node - get first child text
-      if (node.nodeType === Node.ELEMENT_NODE) {
-        for (const child of Array.from((node as HTMLElement).childNodes)) {
-          const text = child.textContent?.trim();
-          if (text) return text;
-        }
-      }
-    }
-
-    return '';
+    return label || item.value || '';
   };
 
   private updateFormValidity = (value: TSelectValue = this.value) => {
