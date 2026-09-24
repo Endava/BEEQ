@@ -353,8 +353,8 @@ describe('bq-select', () => {
     expect(bqSelect).toHaveReceivedEventTimes(2);
   });
 
-  it('should select a checkbox option with Space', async () => {
-    const { root, spyOnEvent, waitForChanges } = await render(
+  it('should select a checkbox option with Enter and Space', async () => {
+    const { root, setProps, spyOnEvent, waitForChanges } = await render(
       <bq-select name="bq-select" keepOpenOnSelect multiple enableCheckboxes>
         <bq-option value="1">Option 1</bq-option>
       </bq-select>,
@@ -367,12 +367,22 @@ describe('bq-select', () => {
     await userEvent.click(getControl(select));
     await waitForChanges();
     await checkbox?.vFocus();
-    await userEvent.keyboard(' ');
+    await userEvent.keyboard('{Enter}');
     await waitForChanges();
 
     expect(option).toHaveAttribute('selected');
     expect(select.value).toEqual(['1']);
     expect(bqSelect).toHaveReceivedEventTimes(1);
+
+    await setProps({ value: [] });
+    await waitForChanges();
+    await checkbox?.vFocus();
+    await userEvent.keyboard(' ');
+    await waitForChanges();
+
+    expect(option).toHaveAttribute('selected');
+    expect(select.value).toEqual(['1']);
+    expect(bqSelect).toHaveReceivedEventTimes(2);
   });
 
   it('should keep selected row styling with checkboxes enabled', async () => {
@@ -723,9 +733,143 @@ describe('bq-select', () => {
 
     expect(getInput(select)).toEqualAttribute('aria-haspopup', 'tree');
     expect(optionList).toEqualAttribute('role', 'tree');
+    expect(optionList).toEqualAttribute('aria-multiselectable', 'true');
     expect(frontendOption).toEqualAttribute('role', 'treeitem');
     expect(reactOption).toEqualAttribute('role', 'treeitem');
     expect(backendOption).toEqualAttribute('role', 'treeitem');
+    expect(frontendOption).toEqualAttribute('tabindex', '0');
+    expect(reactOption).toEqualAttribute('tabindex', '-1');
+    expect(backendOption).toEqualAttribute('tabindex', '-1');
+  });
+
+  it('should open and navigate flat options with Arrow Down and Arrow Up', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-select name="bq-select">
+        <bq-option value="alpha">Alpha</bq-option>
+        <bq-option value="beta">Beta</bq-option>
+        <bq-option value="gamma">Gamma</bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const input = getInput(select);
+    const alphaOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="alpha"]');
+    const betaOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="beta"]');
+
+    input.focus();
+    await userEvent.keyboard('{ArrowDown}');
+    await waitForChanges();
+
+    expect(select.open).toBe(true);
+    expect(document.activeElement).toBe(alphaOption);
+
+    await userEvent.keyboard('{ArrowDown}');
+    await waitForChanges();
+
+    expect(document.activeElement).toBe(betaOption);
+
+    await userEvent.keyboard('{ArrowUp}');
+    await waitForChanges();
+
+    expect(document.activeElement).toBe(alphaOption);
+  });
+
+  it('should skip disabled and hidden options during keyboard navigation', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-select name="bq-select">
+        <bq-option value="alpha">Alpha</bq-option>
+        <bq-option disabled value="beta">
+          Beta
+        </bq-option>
+        <bq-option hidden value="gamma">
+          Gamma
+        </bq-option>
+        <bq-option value="delta">Delta</bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const input = getInput(select);
+    const deltaOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="delta"]');
+
+    input.focus();
+    await userEvent.keyboard('{ArrowDown}');
+    await waitForChanges();
+    await userEvent.keyboard('{ArrowDown}');
+    await waitForChanges();
+
+    expect(document.activeElement).toBe(deltaOption);
+  });
+
+  it('should navigate nested options with roving tree focus', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-select multiple name="bq-select">
+        <bq-option value="frontend">
+          Frontend
+          <bq-option slot="options" value="react">
+            React
+          </bq-option>
+          <bq-option slot="options" value="stencil">
+            Stencil
+          </bq-option>
+        </bq-option>
+        <bq-option value="backend">Backend</bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const input = getInput(select);
+    const frontendOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="frontend"]');
+    const reactOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="react"]');
+    const stencilOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="stencil"]');
+    const backendOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="backend"]');
+
+    input.focus();
+    await userEvent.keyboard('{ArrowDown}');
+    await waitForChanges();
+
+    expect(select.open).toBe(true);
+    expect(document.activeElement).toBe(frontendOption);
+
+    await userEvent.keyboard('{ArrowRight}');
+    await waitForChanges();
+
+    expect(frontendOption.expanded).toBe(true);
+    expect(document.activeElement).toBe(frontendOption);
+
+    await userEvent.keyboard('{ArrowRight}');
+    await waitForChanges();
+
+    expect(document.activeElement).toBe(reactOption);
+    expect(reactOption).toEqualAttribute('tabindex', '0');
+    expect(frontendOption).toEqualAttribute('tabindex', '-1');
+
+    await userEvent.keyboard('{ArrowDown}');
+    await waitForChanges();
+
+    expect(document.activeElement).toBe(stencilOption);
+
+    await userEvent.keyboard('{End}');
+    await waitForChanges();
+
+    expect(document.activeElement).toBe(backendOption);
+
+    await userEvent.keyboard('{Home}');
+    await waitForChanges();
+
+    expect(document.activeElement).toBe(frontendOption);
+
+    await userEvent.keyboard('{ArrowRight}');
+    await waitForChanges();
+    await userEvent.keyboard('{ArrowDown}');
+    await waitForChanges();
+    await userEvent.keyboard('{ArrowLeft}');
+    await waitForChanges();
+
+    expect(document.activeElement).toBe(frontendOption);
+
+    await userEvent.keyboard('{ArrowLeft}');
+    await waitForChanges();
+
+    expect(frontendOption.expanded).toBe(false);
+    expect(document.activeElement).toBe(frontendOption);
   });
 
   it('should cascade nested parent selection without selecting on expand', async () => {
@@ -832,11 +976,21 @@ describe('bq-select', () => {
       },
     ]);
 
-    await userEvent.click(getOptionCheckboxBase(frontendOption));
+    await userEvent.click(getOptionCheckboxBase(stencilOption));
+    await waitForChanges();
+
+    expect(select.value).toEqual(['frontend', 'react']);
+    expect(getOptionCheckboxInput(frontendOption)?.checked).toBe(false);
+    expect(getOptionCheckboxInput(frontendOption)?.indeterminate).toBe(true);
+
+    await userEvent.click(getOptionCheckboxBase(reactOption));
     await waitForChanges();
 
     expect(select.value).toEqual([]);
-    expect(bqSelect.events[2].detail.selectionTree).toEqual([]);
+    expect(frontendOption).not.toHaveAttribute('selected');
+    expect(getOptionCheckboxInput(frontendOption)?.checked).toBe(false);
+    expect(getOptionCheckboxInput(frontendOption)?.indeterminate).toBe(false);
+    expect(bqSelect.events.at(-1)?.detail.selectionTree).toEqual([]);
   });
 
   it('should cascade selections and emit the selection tree across three nesting levels', async () => {
@@ -1031,6 +1185,7 @@ describe('bq-select', () => {
 
     expect(frontendOption).toHaveAttribute('selected');
     expect(reactOption).toHaveAttribute('selected');
+    expect(document.activeElement).toBe(reactOption);
     expect(bqSelect).toHaveReceivedEventTimes(1);
 
     await setProps({ value: [] });
@@ -1041,6 +1196,7 @@ describe('bq-select', () => {
 
     expect(frontendOption).toHaveAttribute('selected');
     expect(reactOption).toHaveAttribute('selected');
+    expect(document.activeElement).toBe(reactOption);
     expect(bqSelect).toHaveReceivedEventTimes(2);
   });
 

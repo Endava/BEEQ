@@ -162,11 +162,13 @@ export class BqSelect {
   private helperTextElem?: HTMLElement;
   private inputElem?: HTMLInputElement;
   private labelElem?: HTMLElement;
+  private pendingOptionFocus?: HTMLBqOptionElement;
   private prefixElem?: HTMLElement;
   private suffixElem?: HTMLElement;
 
   private debounceQuery: TDebounce<void>;
   private debounceInput: TDebounce<void>;
+  private activeTreeOption?: HTMLBqOptionElement;
   private expansionObserver?: MutationObserver;
   private optionsObserver?: MutationObserver;
   private restoringSearchExpandedOptions = new WeakSet<HTMLBqOptionElement>();
@@ -365,6 +367,14 @@ export class BqSelect {
     this.observeOptions();
   }
 
+  componentDidRender() {
+    if (!this.open || !this.pendingOptionFocus) return;
+
+    const option = this.pendingOptionFocus;
+    this.pendingOptionFocus = undefined;
+    this.focusOption(option);
+  }
+
   disconnectedCallback() {
     this.expansionObserver?.disconnect();
     this.optionsObserver?.disconnect();
@@ -390,7 +400,10 @@ export class BqSelect {
     if (!ev.composedPath().includes(this.el)) return;
 
     this.open = ev.detail.open;
-    if (!this.open) this.restoreSearchExpansion();
+    if (!this.open) {
+      this.pendingOptionFocus = undefined;
+      this.restoreSearchExpansion();
+    }
   }
 
   @Listen('bqFocus', { capture: true })
@@ -399,7 +412,30 @@ export class BqSelect {
     // Stop propagation of focus and blur events coming from the `bq-option` elements
     if (isHTMLElement(ev.target, 'bq-select')) return;
 
+    if (this.hasNestedOptions && isHTMLElement(ev.target, 'bq-option')) {
+      this.setActiveTreeOption(ev.target);
+    }
+
     ev.stopPropagation();
+  }
+
+  @Listen('keydown', { capture: true })
+  handleOptionNavigation(event: KeyboardEvent) {
+    if (!this.open || !this.isOptionNavigationKey(event.key)) return;
+    if (event.composedPath().some((target) => isHTMLElement(target, 'bq-button'))) return;
+
+    const option = event.composedPath().find((target) => isHTMLElement(target, 'bq-option'));
+    if (!isHTMLElement(option, 'bq-option') || !this.el.contains(option)) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (this.hasNestedOptions) {
+      this.navigateTree(option, event.key);
+      return;
+    }
+
+    this.navigateFlatOptions(option, event.key);
   }
 
   @Listen('scroll', { target: 'window', passive: true, capture: true })
@@ -494,6 +530,12 @@ export class BqSelect {
     }
 
     this.resetOptionsVisibility();
+
+    if (this.hasNestedOptions && this.keepOpenOnSelect) {
+      this.focusTreeOption(item);
+      return;
+    }
+
     this.focusInput();
   };
 
@@ -577,6 +619,8 @@ export class BqSelect {
           this.expandOptionAncestors(item);
         }
       });
+
+      this.syncTreeTabIndexes();
     }, this.debounceTime);
 
     this.debounceQuery();
@@ -587,7 +631,25 @@ export class BqSelect {
   };
 
   private handleKeydown = (ev: KeyboardEvent) => {
-    if (this.disabled || ev.key !== 'Backspace' || !this.multiple) return;
+    if (this.disabled) return;
+
+    if (ev.key === 'ArrowDown' || ev.key === 'ArrowUp') {
+      ev.preventDefault();
+
+      const options = this.getVisibleOptions();
+      const option = ev.key === 'ArrowDown' ? options[0] : options.at(-1);
+
+      if (this.open) {
+        this.focusOption(option);
+        return;
+      }
+
+      this.pendingOptionFocus = option;
+      this.open = true;
+      return;
+    }
+
+    if (ev.key !== 'Backspace' || !this.multiple) return;
 
     // Only remove tags if input value is empty (no writing) and there are selected options
     if (this.inputElem?.value === '' && this.selectedOptions.length > 0) {
@@ -658,6 +720,8 @@ export class BqSelect {
     this.getActiveOptions(this.getOptionStructure()).forEach((item) => {
       item.hidden = false;
     });
+
+    this.syncTreeTabIndexes();
   };
 
   private expandOptionAncestors = (option: HTMLBqOptionElement) => {
@@ -692,6 +756,8 @@ export class BqSelect {
       this.searchExpandedOptions.delete(option);
       this.userExpandedOptions.set(option, option.expanded);
     });
+
+    this.syncTreeTabIndexes();
   };
 
   private observeOptionExpansion = () => {
@@ -764,8 +830,172 @@ export class BqSelect {
   private syncOptionPresentation = (options: HTMLBqOptionElement[]) => {
     options.forEach((option) => {
       option.checkbox = Boolean(this.multiple && (this.enableCheckboxes || this.hasNestedOptions));
-      option.toggleAttribute('tree', this.hasNestedOptions);
+      option.tree = this.hasNestedOptions;
     });
+
+    this.syncTreeTabIndexes(options);
+  };
+
+  private getVisibleTreeOptions = () => {
+    const options = this.getActiveOptions(this.getOptionStructure());
+
+    return options.filter((option) => this.isVisibleTreeOption(option));
+  };
+
+  private getVisibleOptions = () =>
+    this.hasNestedOptions
+      ? this.getVisibleTreeOptions()
+      : this.getActiveOptions(this.getOptionStructure()).filter(this.isSelectableOption);
+
+  private isVisibleTreeOption = (option: HTMLBqOptionElement) => {
+    if (!this.isSelectableOption(option)) return false;
+
+    let parentOption = option.parentElement?.closest<HTMLBqOptionElement>('bq-option');
+
+    while (parentOption && this.el.contains(parentOption)) {
+      if (parentOption.hidden || !parentOption.expanded) return false;
+
+      parentOption = parentOption.parentElement?.closest<HTMLBqOptionElement>('bq-option');
+    }
+
+    return true;
+  };
+
+  private getTreeOptionParent = (option: HTMLBqOptionElement) => {
+    const parentOption = option.parentElement?.closest<HTMLBqOptionElement>('bq-option');
+
+    return parentOption && this.el.contains(parentOption) ? parentOption : undefined;
+  };
+
+  private getTreeOptionChildren = (option: HTMLBqOptionElement) =>
+    this.getActiveOptions(this.getOptionStructure()).filter(
+      (nestedOption) => this.getTreeOptionParent(nestedOption) === option,
+    );
+
+  private isOptionNavigationKey = (key: string) =>
+    ['ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'End', 'Home'].includes(key);
+
+  private navigateFlatOptions = (option: HTMLBqOptionElement, key: string) => {
+    const visibleOptions = this.getVisibleOptions();
+    const currentIndex = visibleOptions.indexOf(option);
+    if (currentIndex < 0) return;
+
+    if (key === 'ArrowDown') {
+      this.focusOption(visibleOptions[currentIndex + 1]);
+      return;
+    }
+
+    if (key === 'ArrowUp') {
+      this.focusOption(visibleOptions[currentIndex - 1]);
+      return;
+    }
+
+    if (key === 'Home') {
+      this.focusOption(visibleOptions[0]);
+      return;
+    }
+
+    if (key === 'End') {
+      this.focusOption(visibleOptions.at(-1));
+    }
+  };
+
+  private navigateTree = (option: HTMLBqOptionElement, key: string) => {
+    const visibleOptions = this.getVisibleTreeOptions();
+    const currentOption = visibleOptions.includes(option) ? option : visibleOptions[0];
+    if (!currentOption) return;
+
+    const currentIndex = visibleOptions.indexOf(currentOption);
+
+    if (key === 'ArrowDown') {
+      this.focusTreeOption(visibleOptions[currentIndex + 1]);
+      return;
+    }
+
+    if (key === 'ArrowUp') {
+      this.focusTreeOption(visibleOptions[currentIndex - 1]);
+      return;
+    }
+
+    if (key === 'Home') {
+      this.focusTreeOption(visibleOptions[0]);
+      return;
+    }
+
+    if (key === 'End') {
+      this.focusTreeOption(visibleOptions.at(-1));
+      return;
+    }
+
+    const children = this.getTreeOptionChildren(currentOption);
+
+    if (key === 'ArrowRight') {
+      if (!children.length) return;
+
+      if (!currentOption.expanded) {
+        currentOption.expanded = true;
+        return;
+      }
+
+      this.focusTreeOption(children.find((child) => this.isVisibleTreeOption(child)));
+      return;
+    }
+
+    if (currentOption.expanded && children.length) {
+      currentOption.expanded = false;
+      return;
+    }
+
+    this.focusTreeOption(this.getTreeOptionParent(currentOption));
+  };
+
+  private focusTreeOption = (option?: HTMLBqOptionElement) => {
+    if (!option || !this.isVisibleTreeOption(option)) return;
+
+    this.setActiveTreeOption(option);
+    option.focus();
+  };
+
+  private focusOption = (option?: HTMLBqOptionElement) => {
+    if (!option) return;
+    if (this.hasNestedOptions) {
+      this.focusTreeOption(option);
+      return;
+    }
+
+    option.tabIndex = -1;
+    option.focus();
+  };
+
+  private syncTreeTabIndexes = (options = this.getActiveOptions(this.getOptionStructure())) => {
+    if (!this.hasNestedOptions) {
+      this.activeTreeOption = undefined;
+      options.forEach((option) => {
+        option.removeAttribute('data-tree-tab-index');
+        option.removeAttribute('tabindex');
+      });
+      return;
+    }
+
+    const visibleOptions = options.filter((option) => this.isVisibleTreeOption(option));
+    const activeOption =
+      this.activeTreeOption && visibleOptions.includes(this.activeTreeOption)
+        ? this.activeTreeOption
+        : visibleOptions[0];
+
+    this.activeTreeOption = activeOption;
+    options.forEach((option) => {
+      const tabIndex = option === activeOption ? 0 : -1;
+      option.dataset.treeTabIndex = String(tabIndex);
+      option.tabIndex = tabIndex;
+    });
+  };
+
+  private setActiveTreeOption = (option: HTMLBqOptionElement) => {
+    if (!this.isVisibleTreeOption(option)) return;
+
+    this.activeTreeOption = option;
+    this.syncTreeTabIndexes();
   };
 
   private syncValueState = (optionStructure: TSelectOptionStructure) => {
@@ -844,6 +1074,14 @@ export class BqSelect {
       if (selectedValues.has(option.value)) {
         this.getOptionAncestors(option, options).forEach((ancestor) => {
           if (this.isSelectableOption(ancestor)) selectedValues.add(ancestor.value);
+        });
+      } else {
+        this.getOptionAncestors(option, options).forEach((ancestor) => {
+          const selectedDescendants = this.getOptionDescendants(ancestor, options).some(
+            (descendant) => this.isSelectableOption(descendant) && selectedValues.has(descendant.value),
+          );
+
+          if (!selectedDescendants) selectedValues.delete(ancestor.value);
         });
       }
       return;
@@ -1313,14 +1551,26 @@ export class BqSelect {
               </slot>
             </span>
           </div>
-          <bq-option-list
-            exportparts="base:option-list"
-            id={`bq-options-${this.name}`}
-            onBqSelect={this.handleSelect}
-            role={this.hasNestedOptions ? 'tree' : 'listbox'}
-          >
-            <slot onSlotchange={this.handleSlotChange} />
-          </bq-option-list>
+          {this.hasNestedOptions ? (
+            <bq-option-list
+              aria-multiselectable="true"
+              exportparts="base:option-list"
+              id={`bq-options-${this.name}`}
+              onBqSelect={this.handleSelect}
+              role="tree"
+            >
+              <slot onSlotchange={this.handleSlotChange} />
+            </bq-option-list>
+          ) : (
+            <bq-option-list
+              exportparts="base:option-list"
+              id={`bq-options-${this.name}`}
+              onBqSelect={this.handleSelect}
+              role="listbox"
+            >
+              <slot onSlotchange={this.handleSlotChange} />
+            </bq-option-list>
+          )}
         </bq-dropdown>
         {/* Helper text */}
         <div

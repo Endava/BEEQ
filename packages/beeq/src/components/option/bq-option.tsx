@@ -196,13 +196,19 @@ export class BqOption {
   @Listen('keydown')
   handleKeydown(event: KeyboardEvent) {
     if (this.isEventFromNestedOption(event)) return;
-    if (isEventTargetChildOfElement(event, this.checkboxElem)) return;
+    if (isEventTargetChildOfElement(event, this.checkboxElem)) {
+      if (event.key !== 'Enter') return;
+
+      event.preventDefault();
+      this.bqClick.emit(this.el);
+      return;
+    }
     if (isEventTargetChildOfElement(event, this.expandElem)) return;
     if (this.isTreeItem) {
       this.handleTreeItemKeydown(event);
       return;
     }
-    if (event.key !== 'Enter') return;
+    if (event.key !== 'Enter' && event.key !== ' ') return;
     // Prevent the default behavior to avoid triggering a synthetic click event
     event.preventDefault();
     this.bqEnter.emit(this.el);
@@ -535,6 +541,12 @@ export class BqOption {
     return this.tree || this.hasOptions || Boolean(this.el.parentElement?.closest('bq-option'));
   }
 
+  private get treeTabIndex() {
+    const tabIndex = Number(this.el.dataset.treeTabIndex);
+
+    return Number.isNaN(tabIndex) ? 0 : tabIndex;
+  }
+
   private get optionLabel() {
     const labelSlot = this.el.shadowRoot?.querySelector<HTMLSlotElement>('slot:not([name])');
     const label = labelSlot
@@ -589,7 +601,7 @@ export class BqOption {
         onClick={this.isTreeItem ? this.onTreeItemClick : undefined}
         onFocus={this.isTreeItem ? this.onFocus : undefined}
         role={this.isTreeItem ? 'treeitem' : 'option'}
-        tabindex={this.isTreeItem && !this.isDisabledOrHidden ? '0' : undefined}
+        tabindex={this.isTreeItem && !this.isDisabledOrHidden ? String(this.treeTabIndex) : undefined}
       >
         <div class="bq-option__item" part="item">
           {this.renderSelectionControl()}
