@@ -33,6 +33,7 @@ const meta: Meta = {
     bqSelect: { action: 'bqSelect', table: { disable: true } },
     // Not part of the public API, so we don't want to expose it in the docs
     children: { control: 'text', table: { disable: true } },
+    nestedChildren: { control: 'text', table: { disable: true } },
     text: { control: 'text', table: { disable: true } },
     iconPrefix: { control: 'text', table: { disable: true } },
     iconSuffix: { control: 'text', table: { disable: true } },
@@ -86,6 +87,14 @@ const Template = (args: Args) => {
       ${bqIconPrefix}
       <span>${args.text}</span>
       ${bqIconSuffix}
+      ${
+        ifDefined(args.nestedChildren)
+          ? html`
+        <!-- Nested options -->
+        ${args.nestedChildren}
+      `
+          : nothing
+      }
     </bq-option>
   `;
 };
@@ -132,32 +141,60 @@ export const Checkbox: Story = {
 };
 
 export const Nested: Story = {
-  render: () => html`
-    <bq-option-list>
-      <bq-option expanded value="frontend">
-        Frontend
-        <span slot="expand-label">2 levels</span>
-        <bq-option slot="options" value="react">React</bq-option>
-        <bq-option slot="options" value="stencil">Stencil</bq-option>
-      </bq-option>
-    </bq-option-list>
+  render: (args: Args) => html`
+    ${TemplateList({
+      ...args,
+      children: html`
+        <!-- Option 1 -->
+        ${Template({
+          ...args,
+          expanded: true,
+          text: 'Frontend',
+          value: 'frontend',
+          nestedChildren: html`
+            <bq-option slot="options" value="react">React</bq-option>
+            <bq-option slot="options" value="stencil">Stencil</bq-option>
+          `,
+        })}
+      `,
+    })}
   `,
 };
 
 export const NestedSelectionStates: Story = {
-  render: () => html`
-    <bq-option-list>
-      <bq-option checkbox expanded indeterminate selected value="frontend">
-        Frontend
-        <bq-option checkbox selected slot="options" value="react">React</bq-option>
-        <bq-option checkbox slot="options" value="stencil">Stencil</bq-option>
-      </bq-option>
-      <bq-option checkbox expanded selected value="backend">
-        Backend
-        <bq-option checkbox selected slot="options" value="node">Node.js</bq-option>
-        <bq-option checkbox selected slot="options" value="dotnet">.NET</bq-option>
-      </bq-option>
-    </bq-option-list>
+  render: (args: Args) => html`
+    ${TemplateList({
+      ...args,
+      children: html`
+        <!-- Option 1 -->
+        ${Template({
+          ...args,
+          checkbox: true,
+          expanded: true,
+          indeterminate: true,
+          selected: true,
+          text: 'Frontend',
+          value: 'frontend',
+          nestedChildren: html`
+            <bq-option checkbox selected slot="options" value="react">React</bq-option>
+            <bq-option checkbox slot="options" value="stencil">Stencil</bq-option>
+          `,
+        })}
+        <!-- Option 2 -->
+        ${Template({
+          ...args,
+          checkbox: true,
+          expanded: true,
+          selected: true,
+          text: 'Backend',
+          value: 'backend',
+          nestedChildren: html`
+            <bq-option checkbox selected slot="options" value="node">Node.js</bq-option>
+            <bq-option checkbox selected slot="options" value="dotnet">.NET</bq-option>
+          `,
+        })}
+      `,
+    })}
   `,
 };
 

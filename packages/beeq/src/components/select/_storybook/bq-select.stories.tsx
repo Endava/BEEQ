@@ -156,33 +156,29 @@ const defaultOptionsData = [
 ];
 
 const nestedOptions = `
-  <bq-option expanded value="javascript">
+  <bq-option value="javascript">
     JavaScript
     <bq-option slot="options" value="javascript:beginner">Beginner</bq-option>
     <bq-option slot="options" value="javascript:intermediate">Intermediate</bq-option>
     <bq-option slot="options" value="javascript:advanced">Advanced</bq-option>
-    <bq-option slot="options" value="javascript:expert">Expert</bq-option>
   </bq-option>
-  <bq-option value="react">
+  <bq-option expanded value="react">
     React
     <bq-option slot="options" value="react:beginner">Beginner</bq-option>
     <bq-option slot="options" value="react:intermediate">Intermediate</bq-option>
     <bq-option slot="options" value="react:advanced">Advanced</bq-option>
-    <bq-option slot="options" value="react:expert">Expert</bq-option>
   </bq-option>
   <bq-option value="node-js">
     Node.js
     <bq-option slot="options" value="node-js:beginner">Beginner</bq-option>
     <bq-option slot="options" value="node-js:intermediate">Intermediate</bq-option>
     <bq-option slot="options" value="node-js:advanced">Advanced</bq-option>
-    <bq-option slot="options" value="node-js:expert">Expert</bq-option>
   </bq-option>
   <bq-option value="dotnet-core">
     .NET Core
     <bq-option slot="options" value="dotnet-core:beginner">Beginner</bq-option>
     <bq-option slot="options" value="dotnet-core:intermediate">Intermediate</bq-option>
     <bq-option slot="options" value="dotnet-core:advanced">Advanced</bq-option>
-    <bq-option slot="options" value="dotnet-core:expert">Expert</bq-option>
   </bq-option>
 `;
 
@@ -389,7 +385,15 @@ export const NestedOptions: Story = {
     multiple: true,
     open: true,
     options: nestedOptions,
-    value: ['javascript', 'javascript:beginner', 'javascript:intermediate'],
+    value: [
+      'javascript',
+      'javascript:beginner',
+      'javascript:intermediate',
+      'javascript:advanced',
+      'react',
+      'react:beginner',
+      'react:intermediate',
+    ],
   },
 };
 
