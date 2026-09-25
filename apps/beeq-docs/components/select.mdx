@@ -39,12 +39,15 @@ The select input lets users choose one option — or multiple options when `mult
 
 ## Patterns
 
-<CardGroup cols={2}>
+<CardGroup cols={3}>
   <Card title="Single select">
     Single Select allows the user to pick one option from a menu.
   </Card>
   <Card title="Multiple select">
-    Multiple Select allows the user to pick multiple options from a menu via checkboxes. Once selected, the items are shown as dismissible tags in the input field above.
+    Multiple Select supports independent choices. Add `enable-checkboxes` when checkboxes make the multi-select state easier to scan. Selected items appear as dismissible tags in the input.
+  </Card>
+  <Card title="Nested multiple select">
+    Use nested options for selectable categories and their related choices. Parents cascade selection to their selectable descendants and show a mixed state when only some descendants are selected.
   </Card>
 </CardGroup>
 
@@ -91,6 +94,17 @@ The select is composed of a label, an input field, a dropdown panel, and optiona
     Enable with `multiple`. Selected items appear as removable tags inside the input. Use `max-tags-visible` to cap how many tags show before a `+N` overflow tag appears.
   </CardTile>
 </CardGroup>
+
+### Nested multiple selection
+
+Use nested options when people need to select a category, its related choices, or both. Nesting is available only with `multiple`; single selects render only top-level options and log a browser warning when nested markup is present.
+
+- Nested multi-select always renders checkboxes. You do not need `enable-checkboxes`.
+- Selecting a parent selects its selectable descendants. Selecting a child also selects its selectable ancestors.
+- A parent becomes indeterminate while only some of its selectable descendants are selected. Disabled and hidden descendants are not changed by a cascade.
+- Use a unique `value` for every option in the tree. Duplicate values are reported in the browser console because they make the value and event payload ambiguous.
+
+In the input, nested selections render one tag per selected top-level parent. A partial selection adds the descendant count, such as `Frontend (2)`; a fully selected branch keeps the parent label without a count.
 
 ### Validation states
 
@@ -855,7 +869,7 @@ Employ the `disabled` attribute to restrict user interaction with the select com
 
 ### Multiple
 
-Use the `multiple` property to enable multiple selections. Use `keep-open-on-select` to keep the panel open while the user selects options. The `max-tags-visible` attribute controls how many tags are shown before a `+N` overflow tag appears.
+Use `multiple` to enable multiple selections. Add `enable-checkboxes` for a flat list when visible checkboxes make the current selections easier to scan. Use `keep-open-on-select` to keep the panel open while the user selects options. The `max-tags-visible` attribute controls how many tags are shown before a `+N` overflow tag appears.
 
 <CodeLivePreview mode="shadow" code={`
   <style>
@@ -869,6 +883,7 @@ Use the `multiple` property to enable multiple selections. Use `keep-open-on-sel
 
   <bq-select
     multiple
+    enable-checkboxes
     keep-open-on-select
     max-tags-visible="2"
     placeholder="Placeholder"
@@ -909,6 +924,7 @@ Use the `multiple` property to enable multiple selections. Use `keep-open-on-sel
     ```html HTML icon="html5" expandable
     <bq-select
       multiple
+      enable-checkboxes
       keep-open-on-select
       max-tags-visible="2"
       placeholder="Placeholder"
@@ -951,6 +967,7 @@ Use the `multiple` property to enable multiple selections. Use `keep-open-on-sel
 
     <BqSelect
       multiple
+      enableCheckboxes
       keepOpenOnSelect
       maxTagsVisible={2}
       placeholder="Placeholder"
@@ -999,6 +1016,7 @@ Use the `multiple` property to enable multiple selections. Use `keep-open-on-sel
       template: `
         <bq-select
           multiple
+          enable-checkboxes
           keep-open-on-select
           max-tags-visible="2"
           placeholder="Placeholder"
@@ -1043,6 +1061,7 @@ Use the `multiple` property to enable multiple selections. Use `keep-open-on-sel
     <template>
       <BqSelect
         multiple
+        enableCheckboxes
         keepOpenOnSelect
         :maxTagsVisible="2"
         placeholder="Placeholder"
@@ -1086,6 +1105,260 @@ Use the `multiple` property to enable multiple selections. Use `keep-open-on-sel
     ```
   </CodeGroup>
 </CodeLivePreview>
+
+### Nested options
+
+Nested options are a multiple-select pattern. Put child options in their parent’s `options` slot and give every option a unique value. The parent below starts expanded with one selected child, so its checkbox is indeterminate and its tag shows the selected descendant count.
+
+<CodeLivePreview mode="shadow" code={`
+  <style>
+    bq-select::part(panel) { z-index: 12; }
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+  </style>
+
+  <bq-select
+    multiple
+    keep-open-on-select
+    placeholder="Choose skills"
+    value='["frontend","frontend:react", "backend", "backend:node"]'
+  >
+    <label slot="label">Skills</label>
+    <bq-option
+      all-selected-label="All skills"
+      expanded
+      selected-count-label="{count} skills selected"
+      value="frontend"
+    >
+      Frontend
+      <span slot="expand-label">2 levels</span>
+      <bq-option slot="options" value="frontend:react">React</bq-option>
+      <bq-option slot="options" value="frontend:vue">Vue</bq-option>
+    </bq-option>
+    <bq-option value="backend">
+      Backend
+      <span slot="expand-label">2 levels</span>
+      <bq-option slot="options" value="backend:node">Node.js</bq-option>
+      <bq-option slot="options" value="backend:dotnet">.NET</bq-option>
+    </bq-option>
+  </bq-select>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <bq-select
+      multiple
+      keep-open-on-select
+      placeholder="Choose skills"
+      value='["frontend","frontend:react", "backend", "backend:node"]'
+    >
+      <label slot="label">Skills</label>
+      <bq-option
+        all-selected-label="All skills"
+        expanded
+        selected-count-label="{count} skills selected"
+        value="frontend"
+      >
+        Frontend
+        <span slot="expand-label">2 levels</span>
+        <bq-option slot="options" value="frontend:react">React</bq-option>
+        <bq-option slot="options" value="frontend:vue">Vue</bq-option>
+      </bq-option>
+      <bq-option value="backend">
+        Backend
+        <span slot="expand-label">2 levels</span>
+        <bq-option slot="options" value="backend:node">Node.js</bq-option>
+        <bq-option slot="options" value="backend:dotnet">.NET</bq-option>
+      </bq-option>
+    </bq-select>
+    ```
+
+    ```jsx React icon="react" expandable
+    import { BqOption, BqSelect } from "@beeq/react";
+
+    <BqSelect
+      multiple
+      keepOpenOnSelect
+      placeholder="Choose skills"
+      value={["frontend","frontend:react", "backend", "backend:node"]}
+    >
+      <label slot="label">Skills</label>
+      <BqOption
+        allSelectedLabel="All skills"
+        expanded
+        selectedCountLabel="{count} skills selected"
+        value="frontend"
+      >
+        Frontend
+        <span slot="expand-label">2 levels</span>
+        <BqOption slot="options" value="frontend:react">React</BqOption>
+        <BqOption slot="options" value="frontend:vue">Vue</BqOption>
+      </BqOption>
+      <BqOption value="backend">
+        Backend
+        <span slot="expand-label">2 levels</span>
+        <BqOption slot="options" value="backend:node">Node.js</BqOption>
+        <BqOption slot="options" value="backend:dotnet">.NET</BqOption>
+      </BqOption>
+    </BqSelect>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqOption, BqSelect } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqOption, BqSelect],
+      template: `
+        <bq-select
+          multiple
+          keep-open-on-select
+          placeholder="Choose skills"
+          value='["frontend","frontend:react", "backend", "backend:node"]'
+        >
+          <label slot="label">Skills</label>
+          <bq-option
+            all-selected-label="All skills"
+            expanded
+            selected-count-label="{count} skills selected"
+            value="frontend"
+          >
+            Frontend
+            <span slot="expand-label">2 levels</span>
+            <bq-option slot="options" value="frontend:react">React</bq-option>
+            <bq-option slot="options" value="frontend:vue">Vue</bq-option>
+          </bq-option>
+          <bq-option value="backend">
+            Backend
+            <span slot="expand-label">2 levels</span>
+            <bq-option slot="options" value="backend:node">Node.js</bq-option>
+            <bq-option slot="options" value="backend:dotnet">.NET</bq-option>
+          </bq-option>
+        </bq-select>
+      `,
+    })
+    export class NestedSelectComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqOption, BqSelect } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqSelect
+        multiple
+        keepOpenOnSelect
+        placeholder="Choose skills"
+        :value="['frontend','frontend:react', 'backend', 'backend:node']"
+      >
+        <label slot="label">Skills</label>
+        <BqOption
+          allSelectedLabel="All skills"
+          expanded
+          selectedCountLabel="{count} skills selected"
+          value="frontend"
+        >
+          Frontend
+          <span slot="expand-label">2 levels</span>
+          <BqOption slot="options" value="frontend:react">React</BqOption>
+          <BqOption slot="options" value="frontend:vue">Vue</BqOption>
+        </BqOption>
+        <BqOption value="backend">
+          Backend
+          <span slot="expand-label">2 levels</span>
+          <BqOption slot="options" value="backend:node">Node.js</BqOption>
+          <BqOption slot="options" value="backend:dotnet">.NET</BqOption>
+        </BqOption>
+      </BqSelect>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+#### Set a fully selected branch
+
+Use `value` to set and control the Select's state. It stays a flat array, even when the options are nested.
+
+<Steps>
+  <Step title="Add the parent value">
+    Include `"frontend"` when the Frontend parent is selected.
+  </Step>
+  <Step title="Add every selectable descendant">
+    Include `"frontend:react"` and `"frontend:vue"` to mark the whole Frontend branch as selected.
+  </Step>
+</Steps>
+
+The component keeps the parent tag as `Frontend` and shows the `all-selected-label` summary in the open list.
+
+```html HTML icon="html5" expandable
+<bq-select
+  multiple
+  value='["frontend","frontend:react","frontend:vue"]'
+>
+  <bq-option expanded value="frontend">
+    Frontend
+    <bq-option slot="options" value="frontend:react">React</bq-option>
+    <bq-option slot="options" value="frontend:vue">Vue</bq-option>
+  </bq-option>
+</bq-select>
+```
+
+<Warning>
+  `selectionTree` is event output, not component input. Do not pass it back into `value`.
+</Warning>
+
+<Tip>
+  Set `show-selection-summary="false"` on a parent option when the visual summary beside its expand control is not useful in your context.
+</Tip>
+
+#### Read a nested selection event
+
+Listen for `bqSelect` when the selection changes. The event gives you two views of the same state:
+
+| If you need to… | Use | Why |
+|---|---|---|
+| Set the Select value, reset it, submit a form, or call a flat API | `event.detail.value` | This is the canonical flat `string[]` used by the component. |
+| Send selected categories and children to a hierarchy-aware API | `event.detail.selectionTree` | This is a selected-only tree, built from the current `value`. |
+
+<Note>
+  `selectionTree` exists only for nested multi-select. It is `undefined` for flat and single Selects. Treat it as read-only output; keep using `value` to control the component.
+</Note>
+
+```javascript
+const skillsSelect = document.querySelector('bq-select');
+
+skillsSelect?.addEventListener('bqSelect', (event) => {
+  const { value, selectionTree } = event.detail;
+
+  saveFormState(value);
+  if (selectionTree) sendCategoryPayload(selectionTree);
+});
+```
+
+For example, `event.detail.selectionTree` looks like this after selecting the full Frontend branch and Node.js:
+
+```json
+[
+  {
+    "value": "frontend",
+    "children": [
+      { "value": "frontend:react", "children": [] },
+      { "value": "frontend:vue", "children": [] }
+    ]
+  },
+  {
+    "value": "backend",
+    "children": [
+      { "value": "backend:node", "children": [] }
+    ]
+  }
+]
+```
 
 ## Options
 
@@ -1684,7 +1957,7 @@ Choose this style when you want to include an optional label for additional cont
       </BqSelect>
     </template>
 
-    <style scoped>
+    <style>
       [slot="label"] {
         display: flex;
         flex: 1 1 0%;
@@ -1922,7 +2195,7 @@ Enhance user understanding by incorporating a `bq-tooltip` alongside the label, 
       </BqSelect>
     </template>
 
-    <style scoped>
+    <style>
       [slot="label"] {
         display: flex;
         flex: 1 1 0%;
@@ -2093,13 +2366,25 @@ Adjust the panel placement to suit your layout. Use the `placement` attribute to
   </CodeGroup>
 </CodeLivePreview>
 
-### With no label
+### Visually hidden label
 
-Use this style when you prefer a minimal look and the field's purpose is conveyed by surrounding context — for example, inside a table or toolbar where a visible label would be redundant.
+Keep an accessible label when the layout does not need one visibly. Use visually hidden text in the `label` slot, for example in a toolbar or compact table.
 
 <CodeLivePreview mode="shadow" code={`
   <style>
     bq-select::part(panel) { z-index: 12; }
+
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
 
     span {
       display: flex;
@@ -2109,6 +2394,7 @@ Use this style when you prefer a minimal look and the field's purpose is conveye
   </style>
 
   <bq-select placeholder="Placeholder">
+    <span class="visually-hidden" slot="label">Choose an account</span>
     <bq-icon name="user-circle" slot="prefix"></bq-icon>
     <span slot="helper-text">
       <bq-icon name="star"></bq-icon>
@@ -2120,8 +2406,23 @@ Use this style when you prefer a minimal look and the field's purpose is conveye
   </bq-select>
 `}>
   <CodeGroup>
+    ```css styles.css icon="css" expandable
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    ```
+
     ```html HTML icon="html5" expandable
     <bq-select placeholder="Placeholder">
+      <span class="visually-hidden" slot="label">Choose an account</span>
       <bq-icon name="user-circle" slot="prefix"></bq-icon>
       <span slot="helper-text">
         <bq-icon name="star"></bq-icon>
@@ -2135,8 +2436,10 @@ Use this style when you prefer a minimal look and the field's purpose is conveye
 
     ```jsx React icon="react" expandable
     import { BqIcon, BqOption, BqSelect } from "@beeq/react";
+    import "./styles.css";
 
     <BqSelect placeholder="Placeholder">
+      <span className="visually-hidden" slot="label">Choose an account</span>
       <BqIcon name="user-circle" slot="prefix" />
       <span slot="helper-text">
         <BqIcon name="star" />
@@ -2156,8 +2459,22 @@ Use this style when you prefer a minimal look and the field's purpose is conveye
       selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqOption, BqSelect],
+      styles: [`
+        .visually-hidden {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          padding: 0;
+          margin: -1px;
+          overflow: hidden;
+          clip: rect(0, 0, 0, 0);
+          white-space: nowrap;
+          border: 0;
+        }
+      `],
       template: `
         <bq-select placeholder="Placeholder">
+          <span class="visually-hidden" slot="label">Choose an account</span>
           <bq-icon name="user-circle" slot="prefix"></bq-icon>
           <span slot="helper-text">
             <bq-icon name="star"></bq-icon>
@@ -2179,6 +2496,7 @@ Use this style when you prefer a minimal look and the field's purpose is conveye
 
     <template>
       <BqSelect placeholder="Placeholder">
+        <span class="visually-hidden" slot="label">Choose an account</span>
         <BqIcon name="user-circle" slot="prefix" />
         <span slot="helper-text">
           <BqIcon name="star" />
@@ -2189,6 +2507,20 @@ Use this style when you prefer a minimal look and the field's purpose is conveye
         <BqOption value="3">Option 3</BqOption>
       </BqSelect>
     </template>
+
+    <style>
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    </style>
     ```
   </CodeGroup>
 </CodeLivePreview>
@@ -3261,14 +3593,17 @@ Call `preventDefault()` on the `bqInput` event to take full control of option fi
 
 ## Accessibility
 
-- **Built in:** the native `<input>` inside the control has `role="combobox"`, `aria-haspopup="listbox"`, `aria-expanded` (toggled when the panel opens and closes), and `aria-controls` pointing to the `bq-option-list` by `id`.
+- **Built in:** the native `<input>` inside the control has `role="combobox"`, `aria-haspopup` (`"listbox"` for flat options or `"tree"` for nested options), `aria-expanded` (toggled when the panel opens and closes), and `aria-controls` pointing to the options container by `id`.
 - **Built in:** `aria-disabled="true"` is applied on the input when `disabled` is set.
 - **Built in:** the component is form-associated via `ElementInternals`, so it works with native `<form>` elements, `required` validation, and `formResetCallback`.
 - **Built in:** keyboard navigation — `Tab` moves focus to the input; `Enter` / `Space` opens the panel; `ArrowDown` / `ArrowUp` move between options; `Enter` selects the focused option; `Escape` closes the panel.
 - **Built in:** in multi-select mode, `Backspace` on an empty input removes the most recently added tag.
-- **Your responsibility:** always provide a visible label via the `label` slot. The `aria-labelledby` on the combobox role relies on the label element being present.
+- **Built in:** nested multi-select changes the option container to a tree. `ArrowRight` expands a branch or moves to its first child; `ArrowLeft` collapses a branch or returns to its parent. `Enter` and `Space` select the focused option without changing expansion.
+- **Built in:** parent tree items expose checked, unchecked, or mixed state as their descendants are selected. The separate expand control has its own accessible label.
+- **Your responsibility:** provide text in the `label` slot. The component associates its native `<label>` with the combobox input through `for` and `id`. Use visually hidden text when the layout cannot show a visible label.
 - **Your responsibility:** when `validation-status` is `"error"`, populate the `helper-text` slot with a clear error description so `aria-describedby` can link the input to the explanation.
 - **Your responsibility:** if options are loaded asynchronously, provide a loading indicator in the panel slot so users know content is arriving.
+- **Your responsibility:** give every nested option a unique `value`. Values are used for selection state, form submission, tags, and the `selectionTree` event detail.
 
 ## API reference
 
@@ -3284,6 +3619,7 @@ Call `preventDefault()` on the `bqInput` event to take full control of option fi
 | `disabled` | `disabled` | If `true`, the select cannot be interacted with | `boolean` | `false` |
 | `disableScrollLock` | `disable-scroll-lock` | If `true`, the page body scroll will not be locked when the panel is open | `boolean` | `false` |
 | `distance` | `distance` | Gap in pixels between the panel and the input element | `number` | `8` |
+| `enableCheckboxes` | `enable-checkboxes` | If `true` with `multiple`, flat options render checkboxes. Nested multi-select options always render checkboxes | `boolean` | — |
 | `form` | `form` | The `id` of the `<form>` element this select belongs to | `string` | — |
 | `formValidationMessage` | `form-validation-message` | Native validation message used when `required` is set | `string` | — |
 | `keepOpenOnSelect` | `keep-open-on-select` | If `true`, the panel stays open after a selection | `boolean` | `false` |
@@ -3317,7 +3653,7 @@ Call `preventDefault()` on the `bqInput` event to take full control of option fi
 | `bqClear` | Emitted when the selected value has been cleared |
 | `bqFocus` | Emitted when the Select input receives focus |
 | `bqInput` | Emitted when the input value changes while typing; detail is `{ value: string \| number \| string[] }` |
-| `bqSelect` | Emitted when the selected value changes; detail is `{ value: string \| number \| string[]; item: HTMLBqOptionElement }` |
+| `bqSelect` | Emitted when the selected value changes. Detail includes `value` and `item`; nested multi-select also includes selected paths in `selectionTree` |
 
 ### Slots
 
@@ -3362,7 +3698,6 @@ Call `preventDefault()` on the `bqInput` event to take full control of option fi
   | `--bq-select--background-color` | Select background color | `var(--bq-ui--primary)` |
   | `--bq-select--border-color` | Select border color | `var(--bq-stroke--tertiary)` |
   | `--bq-select--border-color-focus` | Select border color on focus | `var(--bq-stroke--brand)` |
-  | `--bq-select--border-color-disabled` | Select border color when disabled | — |
   | `--bq-select--border-radius` | Select border radius | `var(--bq-radius--s)` |
   | `--bq-select--border-width` | Select border width | `var(--bq-stroke-s)` |
   | `--bq-select--border-style` | Select border style | `solid` |
