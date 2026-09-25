@@ -1,3 +1,31 @@
+## 1.15.0 (2026-09-25)
+
+### Features ⚡️
+
+- **Select:** add opt-in checkboxes for multiple selection ([#1802](https://github.com/Endava/BEEQ/pull/1802))
+- **Select:** add nested option support ([#1803](https://github.com/Endava/BEEQ/pull/1803))
+- **Select:** cascade nested multi-select values ([#1804](https://github.com/Endava/BEEQ/pull/1804))
+- **Select:** support accessible option keyboard navigation ([#1805](https://github.com/Endava/BEEQ/pull/1805))
+
+### Bug Fixes 🐞
+
+- **Badge:** preserve native slot property compatibility with React 19 ([#1797](https://github.com/Endava/BEEQ/pull/1797))
+
+### Chore ⚙️
+
+- **deps:** update angular ([#1788](https://github.com/Endava/BEEQ/pull/1788))
+- **deps:** update storybook to v10.6.0 ([#1789](https://github.com/Endava/BEEQ/pull/1789))
+- **deps:** update nx to v23.2.0 ([#1790](https://github.com/Endava/BEEQ/pull/1790))
+- **deps:** update stencil ([#1791](https://github.com/Endava/BEEQ/pull/1791))
+- **deps:** update react to v19.3.0 ([#1795](https://github.com/Endava/BEEQ/pull/1795))
+- **deps:** update types react to v19.3.0 ([#1796](https://github.com/Endava/BEEQ/pull/1796))
+- **deps:** update stencil ([#1798](https://github.com/Endava/BEEQ/pull/1798))
+- **deps:** update node.js to v24.21.0 ([#1799](https://github.com/Endava/BEEQ/pull/1799))
+
+### ❤️ Thank You
+
+- Dabiel Gonzalez-Ramos @dgonzalezr
+
 ## 1.14.0 (2026-08-19)
 
 ### Features ⚡️
