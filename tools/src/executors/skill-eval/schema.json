@@ -17,7 +17,7 @@
     },
     "agent": {
       "type": "string",
-      "enum": ["copilot", "claude"],
+      "enum": ["copilot", "claude", "codex"],
       "default": "copilot",
       "description": "Coding-agent CLI the suite's agent command runs."
     },

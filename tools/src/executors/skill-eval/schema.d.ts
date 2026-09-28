@@ -2,7 +2,7 @@
 /*                        BEEQ skill eval executor options                    */
 /* -------------------------------------------------------------------------- */
 
-type SkillEvalAgent = 'copilot' | 'claude';
+type SkillEvalAgent = 'copilot' | 'claude' | 'codex';
 type SkillEvalVariant = 'with-skill' | 'baseline';
 type SkillEvalGrader = 'auto' | 'deterministic' | 'all';
 type SkillEvalGraderProvider = 'anthropic' | 'openai' | 'gemini';

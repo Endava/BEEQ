@@ -1,12 +1,12 @@
 // biome-ignore-all lint/style/useNamingConvention: snake_case fields are defined by the skillgrade and agentskills.io formats.
-import { mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, readdirSync, readFileSync, readlinkSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 
-import { afterEach, beforeAll, beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { parse } from 'yaml';
 
-import { COMMANDS, materializeBlocks } from '../evals/agents/run.ts';
+import { COMMANDS, codexHome, materializeBlocks } from '../evals/agents/run.ts';
 import { grade, runCheck } from '../evals/graders/grade.ts';
 import { loadBeeqIndex, reviveIndex, serializeIndex } from '../evals/lib/beeq-index.ts';
 import {
@@ -329,9 +329,23 @@ describe('workspace helpers', () => {
 });
 
 describe('agent commands', () => {
+  let home: string;
+  let codexDir: string;
+
+  beforeEach(() => {
+    home = mkdtempSync(path.join(tmpdir(), 'beeq-skills-home-'));
+    codexDir = mkdtempSync(path.join(tmpdir(), 'beeq-skills-codex-'));
+  });
+
+  afterEach(() => {
+    vi.unstubAllEnvs();
+    rmSync(home, { recursive: true, force: true });
+    rmSync(codexDir, { recursive: true, force: true });
+  });
+
   it('should run Copilot without custom instructions and pass the model through', () => {
     // Act
-    const [command, args] = COMMANDS.copilot({ prompt: 'Do it', model: 'gpt-5' });
+    const { command, args } = COMMANDS.copilot({ prompt: 'Do it', model: 'gpt-5', home });
 
     // Assert
     expect(command).toBe('copilot');
@@ -340,11 +354,34 @@ describe('agent commands', () => {
 
   it('should run Claude with a strict MCP config', () => {
     // Act
-    const [, args] = COMMANDS.claude({ prompt: 'Do it' });
+    const { args } = COMMANDS.claude({ prompt: 'Do it', home });
 
     // Assert
     expect(args).toEqual(expect.arrayContaining(['--strict-mcp-config', '--permission-mode', 'acceptEdits']));
     expect(args).not.toContain('--model');
+  });
+
+  it('should run Codex in a throwaway home that links the user login', () => {
+    // Arrange
+    writeFileSync(path.join(codexDir, 'auth.json'), '{}');
+    vi.stubEnv('CODEX_HOME', codexDir);
+
+    // Act
+    const { command, args, env, stdin } = COMMANDS.codex({ prompt: 'Do it', model: 'gpt-5.5', home });
+
+    // Assert
+    expect(command).toBe('codex');
+    expect(args).toEqual(expect.arrayContaining(['exec', '--skip-git-repo-check', '--model', 'gpt-5.5']));
+    expect(args.at(-1)).toBe('-');
+    expect(stdin).toBe('Do it');
+    expect(env).toEqual({ CODEX_HOME: home });
+    expect(readlinkSync(path.join(home, 'auth.json'))).toBe(path.join(codexDir, 'auth.json'));
+  });
+
+  it('should refuse to run Codex without a login or an API key', () => {
+    // Act & Assert
+    expect(() => codexHome(home, { CODEX_HOME: codexDir })).toThrow(/codex login/);
+    expect(() => codexHome(home, { CODEX_HOME: codexDir, CODEX_API_KEY: 'k' })).not.toThrow();
   });
 });
 

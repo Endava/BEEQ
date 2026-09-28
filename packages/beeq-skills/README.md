@@ -30,7 +30,7 @@ pnpm exec nx run beeq-skills:eval -c smoke                 # 4 smoke tasks × 5 
 pnpm exec nx run beeq-skills:eval --eval=tooltip-truncation --agent=claude --model=claude-sonnet-4-5
 ```
 
-Configurations: `smoke` (tasks tagged `smoke`, 5 trials), `reliable` (15), `regression` (30). Without a configuration every task runs once. Useful options: `--agent` (`copilot` or `claude`), `--model`, `--variants`, `--filter=stack=react`, `--grader=deterministic`, `--threshold`. See `tools/src/executors/skill-eval/schema.json` for the rest.
+Configurations: `smoke` (tasks tagged `smoke`, 5 trials), `reliable` (15), `regression` (30). Without a configuration every task runs once. Useful options: `--agent` (`copilot`, `claude`, or `codex`), `--model`, `--variants`, `--filter=stack=react`, `--grader=deterministic`, `--threshold`. See `tools/src/executors/skill-eval/schema.json` for the rest.
 
 Every trial runs a real agent CLI, so it costs requests: 15 tasks × 2 variants is 30 agent runs per trial. The suite therefore runs only locally, on demand, with the CLI you are logged in to; CI runs only `--validate`, which starts no agent. Start with `--eval` or `-c smoke`.
 
@@ -47,7 +47,7 @@ pnpm exec nx run beeq-skills:eval --preview=cli                       # every va
 - `graders/grade.ts` (weight 0.7, deterministic): the agent wrote files, the SKILL.md Verify searches are clean, every BEEQ element, prop, event, part, and token exists in the component source, and the task's own `checks` pass.
 - `rubric.md` (weight 0.3, LLM): scored against the task's `criteria`. It runs only when `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, or `GEMINI_API_KEY` is set; otherwise the executor warns and grades deterministically.
 
-**Baseline hygiene.** The baseline must not see the skill any other way. `prepare.ts` refuses to run when a personal `beeq` skill exists in `~/.agents/skills`, `~/.copilot/skills`, or `~/.claude/skills`. The agent wrapper runs Copilot with `--no-custom-instructions` and the user's MCP servers disabled, and Claude with `--strict-mcp-config`.
+**Baseline hygiene.** The baseline must not see the skill any other way. `prepare.ts` refuses to run when a personal `beeq` skill exists in `~/.agents/skills`, `~/.copilot/skills`, or `~/.claude/skills`. The agent wrapper runs Copilot with `--no-custom-instructions` and the user's MCP servers disabled, Claude with `--strict-mcp-config`, and Codex with a throwaway `CODEX_HOME` that holds only a link to the user's `auth.json`, so Codex config, MCP servers, memories, `AGENTS.md`, plugins, and hooks stay out. Codex needs `codex login` or `CODEX_API_KEY`.
 
 ### Recorded baseline
 
@@ -91,7 +91,7 @@ The executor copies `evals/` to a temp folder outside the repo, fills `{{evals}}
 | `footer.md` | Appended to every instruction; `{{metadata.KEY}}` reads task metadata. |
 | `prepare.ts` | Runs first: writes `beeq-index.json` (the API index the grader reads) and one `fixtures/<stack>/` consumer project per stack: a `package.json`, plus an app shell with no BEEQ setup for React. Tasks copy the whole folder, and the grader ignores fixture files the agent left untouched. |
 | `solutions/<name>.sh` | Reference answer for `--validate`. Writes files, then `rm -- "$0"` so the grader sees only the answer. |
-| `agents/run.ts` | Runs Copilot or Claude in the workspace and prints the reply plus every file written. |
+| `agents/run.ts` | Runs Copilot, Claude, or Codex in the workspace and prints the reply plus every file written. |
 | `graders/grade.ts`, `lib/*.ts` | The deterministic grader and the BEEQ API index and rules it uses. |
 
 The `.ts` files run under Node's type stripping with no build step, so they use erasable syntax only and import siblings with `.ts` extensions. `nx run beeq-skills:typecheck` enforces both.

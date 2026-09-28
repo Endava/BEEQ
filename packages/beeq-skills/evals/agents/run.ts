@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // skillgrade `command` agent: reads the task prompt on stdin and runs a coding-agent CLI in the workspace.
-// Usage: node run.ts <copilot|claude> [--model <id>]
+// Usage: node run.ts <copilot|claude|codex> [--model <id>]
 //
 // skillgrade puts its grader script and rubric in the workspace (tests/, prompts/, environment/). They are
 // moved out while the agent runs, so it cannot read what it is graded on, and restored for the graders.
@@ -14,6 +14,7 @@ import {
   realpathSync,
   renameSync,
   rmSync,
+  symlinkSync,
   writeFileSync,
 } from 'node:fs';
 import { homedir, tmpdir } from 'node:os';
@@ -23,7 +24,10 @@ import { parseArgs } from 'node:util';
 
 import { collectFiles, formatFiles } from '../lib/workspace.ts';
 
-type AgentCommand = (input: { prompt: string; model?: string }) => [command: string, args: string[]];
+/** `home` is an empty folder, removed after the run, for agents that need a throwaway config home. */
+type AgentInput = { prompt: string; model?: string; home: string };
+type AgentRun = { command: string; args: string[]; env?: Record<string, string>; stdin?: string };
+type AgentCommand = (input: AgentInput) => AgentRun;
 
 const HIDDEN = ['tests', 'prompts', 'environment'];
 
@@ -34,10 +38,23 @@ function copilotMcpServers(): string[] {
   return Object.keys(JSON.parse(readFileSync(file, 'utf8')).mcpServers ?? {});
 }
 
+/**
+ * Turns `home` into a clean CODEX_HOME, so the user's config, MCP servers, memories, AGENTS.md, plugins, and
+ * hooks stay out of the run. `auth.json` is symlinked rather than copied: Codex rewrites it in place when it
+ * refreshes a ChatGPT login, and a stale copy would leave the real login with a spent refresh token.
+ */
+export function codexHome(home: string, env: NodeJS.ProcessEnv = process.env) {
+  const auth = path.join(env.CODEX_HOME ?? path.join(homedir(), '.codex'), 'auth.json');
+  if (existsSync(auth)) symlinkSync(auth, path.join(home, 'auth.json'));
+  else if (!env.CODEX_API_KEY)
+    throw new Error(`Codex has no login at ${auth}. Run "codex login" or set CODEX_API_KEY.`);
+  return home;
+}
+
 export const COMMANDS: Record<string, AgentCommand> = {
-  copilot: ({ prompt, model }) => [
-    'copilot',
-    [
+  copilot: ({ prompt, model }) => ({
+    command: 'copilot',
+    args: [
       '-p',
       prompt,
       '-s',
@@ -46,10 +63,10 @@ export const COMMANDS: Record<string, AgentCommand> = {
       ...copilotMcpServers().flatMap((name) => ['--disable-mcp-server', name]),
       ...(model ? ['--model', model] : []),
     ],
-  ],
-  claude: ({ prompt, model }) => [
-    'claude',
-    [
+  }),
+  claude: ({ prompt, model }) => ({
+    command: 'claude',
+    args: [
       '-p',
       prompt,
       '--output-format',
@@ -59,7 +76,26 @@ export const COMMANDS: Record<string, AgentCommand> = {
       'acceptEdits',
       ...(model ? ['--model', model] : []),
     ],
-  ],
+  }),
+  // The prompt goes on stdin (`-`) so a task that opens with a word like "review" is not read as a subcommand.
+  // Network access matches the other agents, which can fetch the beeq.design pages the skill verifies against.
+  codex: ({ prompt, model, home }) => ({
+    command: 'codex',
+    args: [
+      'exec',
+      '--skip-git-repo-check',
+      '--sandbox',
+      'workspace-write',
+      '-c',
+      'sandbox_workspace_write.network_access=true',
+      '--color',
+      'never',
+      ...(model ? ['--model', model] : []),
+      '-',
+    ],
+    env: { CODEX_HOME: codexHome(home) },
+    stdin: prompt,
+  }),
 };
 
 /** Writes fenced blocks whose info string names a file (```tsx src/App.tsx) into `dir`. */
@@ -83,31 +119,38 @@ const readStdin = async () => {
 
 type RunResult = { code: number; stdout: string; stderr: string; error: Error | null };
 
-const run = (command: string, args: string[], cwd: string) =>
+const run = ({ command, args, env, stdin }: AgentRun, cwd: string) =>
   new Promise<RunResult>((resolve) => {
-    execFile(command, args, { cwd, maxBuffer: 64 * 1024 * 1024 }, (error, stdout, stderr) => {
-      resolve({ code: error ? (typeof error.code === 'number' ? error.code : 1) : 0, stdout, stderr, error });
-    });
+    const child = execFile(
+      command,
+      args,
+      { cwd, env: { ...process.env, ...env }, maxBuffer: 64 * 1024 * 1024 },
+      (error, stdout, stderr) => {
+        resolve({ code: error ? (typeof error.code === 'number' ? error.code : 1) : 0, stdout, stderr, error });
+      },
+    );
+    child.stdin?.end(stdin ?? '');
   });
 
 async function main() {
   const { positionals, values } = parseArgs({ allowPositionals: true, options: { model: { type: 'string' } } });
   const [agent] = positionals;
-  if (!COMMANDS[agent]) throw new Error(`Unknown agent "${agent}". Use ${Object.keys(COMMANDS).join(' or ')}.`);
+  if (!COMMANDS[agent]) throw new Error(`Unknown agent "${agent}". Use ${Object.keys(COMMANDS).join(', ')}.`);
 
   const workspace = process.cwd();
   const prompt = await readStdin();
   const stash = mkdtempSync(path.join(tmpdir(), 'beeq-eval-stash-'));
+  const home = mkdtempSync(path.join(tmpdir(), 'beeq-eval-home-'));
   const hidden = HIDDEN.filter((entry) => existsSync(path.join(workspace, entry)));
 
   let result: RunResult;
   try {
     for (const entry of hidden) renameSync(path.join(workspace, entry), path.join(stash, entry));
-    const [command, args] = COMMANDS[agent]({ prompt, model: values.model });
-    result = await run(command, args, workspace);
+    result = await run(COMMANDS[agent]({ prompt, model: values.model, home }), workspace);
   } finally {
     for (const entry of hidden) renameSync(path.join(stash, entry), path.join(workspace, entry));
     rmSync(stash, { recursive: true, force: true });
+    rmSync(home, { recursive: true, force: true });
   }
 
   const reply = result.stdout.trim();
