@@ -166,6 +166,9 @@ describe('suite', () => {
     // Act & Assert
     expect(renderInstruction(task, 'Stack: {{metadata.stack}}.')).toBe('Build a thing.\n\nStack: react.');
     expect(() => renderInstruction(task, '{{metadata.missing}}')).toThrow('no metadata.missing');
+    expect(() => renderInstruction({ ...task, metadata: { stack: { name: 'react' } } }, '{{metadata.stack}}')).toThrow(
+      'metadata.stack must be a string, number, or boolean',
+    );
   });
 
   describe('buildEvalConfig', () => {

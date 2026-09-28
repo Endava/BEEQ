@@ -52,7 +52,7 @@ export function loadSuite(evalsDir: string): Suite {
   const taskFiles = existsSync(tasksDir)
     ? readdirSync(tasksDir)
         .filter((file) => /\.ya?ml$/.test(file))
-        .sort()
+        .sort((a, b) => a.localeCompare(b, 'en'))
     : [];
   if (taskFiles.length === 0) throw new Error(`No tasks in ${tasksDir}.`);
 
@@ -102,6 +102,9 @@ export function renderInstruction(task: SuiteTask, footer?: string) {
   const rendered = footer.replace(/\{\{metadata\.([\w-]+)\}\}/g, (_, key) => {
     const value = task.metadata?.[key];
     if (value === undefined) throw new Error(`Task "${task.name}" has no metadata.${key} for the footer.`);
+    if (typeof value !== 'string' && typeof value !== 'number' && typeof value !== 'boolean') {
+      throw new Error(`Task "${task.name}" metadata.${key} must be a string, number, or boolean for the footer.`);
+    }
     return String(value);
   });
   return `${task.instruction.trim()}\n\n${rendered}`;
@@ -129,6 +132,7 @@ export function buildEvalConfig(input: EvalConfigInput) {
   const defaults = substitute({ ...suite.base.defaults }, runtimeDir);
   const command = typeof defaults.command === 'string' ? defaults.command : undefined;
   if (!command) throw new Error(`${SUITE_FILES.base} needs defaults.command: the agent command to run.`);
+  const modelFlag = model ? ` --model ${model}` : '';
 
   const tasks = suite.tasks
     .filter((task) => !validate || suite.solutions.has(task.name))
@@ -162,7 +166,7 @@ export function buildEvalConfig(input: EvalConfigInput) {
       ...defaults,
       agent: 'command',
       provider: 'local',
-      command: `${command} ${agent}${model ? ` --model ${model}` : ''}`,
+      command: `${command} ${agent}${modelFlag}`,
       timeout: input.timeout,
       // biome-ignore lint/style/useNamingConvention: skillgrade eval.yaml field.
       ...(input.graderProvider ? { grader_provider: input.graderProvider } : {}),

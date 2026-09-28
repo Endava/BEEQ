@@ -18,6 +18,38 @@ function parseScalar(raw: string): string | boolean {
   return quoted ? quoted[2] : value;
 }
 
+const BLOCK_STYLES = new Set(['>', '|', '>-', '|-']);
+const isIndented = (line: string) => line.startsWith('  ');
+
+type Read<T> = { value: T; next: number };
+
+/** A folded (`>`) or literal (`|`) block: the indented or blank lines from `start`. */
+function readBlock(lines: string[], start: number, style: string): Read<string> {
+  let next = start;
+  while (next < lines.length && (isIndented(lines[next]) || lines[next].trim() === '')) next++;
+  const block = lines.slice(start, next).map((line) => line.trim());
+  const value = style === '|' ? block.join('\n').trim() : block.join(' ').replace(/\s+/g, ' ').trim();
+  return { value, next };
+}
+
+/** A nested map: the indented `key: value` lines from `start`. */
+function readMap(lines: string[], start: number): Read<Record<string, string | boolean>> {
+  const value: Record<string, string | boolean> = {};
+  let next = start;
+  for (; next < lines.length && isIndented(lines[next]); next++) {
+    const child = /^\s+([A-Za-z][\w-]*):\s*(.*)$/.exec(lines[next]);
+    if (child) value[child[1]] = parseScalar(child[2]);
+  }
+  return { value, next };
+}
+
+/** The value of a top-level key whose line ends with `rest`; block and map values continue on the lines from `start`. */
+function readValue(lines: string[], start: number, rest: string): Read<FrontmatterValue> {
+  if (BLOCK_STYLES.has(rest)) return readBlock(lines, start, rest[0]);
+  if (rest === '') return readMap(lines, start);
+  return { value: parseScalar(rest), next: start };
+}
+
 /**
  * Parses the YAML subset used by skill frontmatter: scalars, folded (`>`) and literal (`|`) blocks,
  * and one level of nested maps. `data` is `null` when the document has no frontmatter.
@@ -30,33 +62,13 @@ export function parseFrontmatter(text: string): Frontmatter {
   const data: Record<string, FrontmatterValue> = {};
   let i = 0;
 
-  const readBlock = (style: string) => {
-    const block: string[] = [];
-    while (i < lines.length && (lines[i].startsWith('  ') || lines[i].trim() === '')) {
-      block.push(lines[i].trim());
-      i++;
-    }
-    return style === '|' ? block.join('\n').trim() : block.join(' ').replace(/\s+/g, ' ').trim();
-  };
-
   while (i < lines.length) {
     const top = /^([A-Za-z][\w-]*):\s*(.*)$/.exec(lines[i]);
     i++;
-    if (!top) continue;
-
-    const [, key, rest] = top;
-    if (rest === '>' || rest === '|' || rest === '>-' || rest === '|-') {
-      data[key] = readBlock(rest[0]);
-    } else if (rest === '') {
-      const nested: Record<string, string | boolean> = {};
-      while (i < lines.length && lines[i].startsWith('  ')) {
-        const child = /^\s+([A-Za-z][\w-]*):\s*(.*)$/.exec(lines[i]);
-        if (child) nested[child[1]] = parseScalar(child[2]);
-        i++;
-      }
-      data[key] = nested;
-    } else {
-      data[key] = parseScalar(rest);
+    if (top) {
+      const { value, next } = readValue(lines, i, top[2]);
+      data[top[1]] = value;
+      i = next;
     }
   }
 
@@ -65,20 +77,33 @@ export function parseFrontmatter(text: string): Frontmatter {
 
 type Segment = { code: boolean; text: string };
 
+// A fenced block: an opening fence at the start of a line, up to the same fence on its own line.
+const FENCE_PATTERN = /(?<![^\n])[ \t]*(`{3,}|~{3,})[^\n]*\n[\s\S]*?\n[ \t]*\1[ \t]*(?![^\n])/g;
+const INLINE_CODE_PATTERN = /`[^`\n]+`/g;
+
+/** The first code match at or after `from`. A fence wins over inline code that starts at the same place. */
+function nextCode(markdown: string, from: number) {
+  let first: RegExpExecArray | null = null;
+  for (const pattern of [FENCE_PATTERN, INLINE_CODE_PATTERN]) {
+    pattern.lastIndex = from;
+    const match = pattern.exec(markdown);
+    if (match && (!first || match.index < first.index)) first = match;
+  }
+  return first;
+}
+
 /**
  * Splits markdown into code segments (fenced blocks and inline spans) and prose segments,
  * so link rewriting and MDX checks only touch prose.
  */
 export function splitCode(markdown: string): Segment[] {
   const segments: Segment[] = [];
-  const pattern = /(^|\n)[ \t]*(`{3,}|~{3,})[^\n]*\n[\s\S]*?\n[ \t]*\2[ \t]*(?=\n|$)|`[^`\n]+`/g;
   let last = 0;
 
-  for (const match of markdown.matchAll(pattern)) {
-    const start = (match.index ?? 0) + (match[1] ?? '').length;
-    const end = (match.index ?? 0) + match[0].length;
-    if (start > last) segments.push({ code: false, text: markdown.slice(last, start) });
-    segments.push({ code: true, text: markdown.slice(start, end) });
+  for (let match = nextCode(markdown, 0); match; match = nextCode(markdown, last)) {
+    const end = match.index + match[0].length;
+    if (match.index > last) segments.push({ code: false, text: markdown.slice(last, match.index) });
+    segments.push({ code: true, text: markdown.slice(match.index, end) });
     last = end;
   }
 

@@ -123,6 +123,6 @@ export function readReports(iterationDir: string, variant: SkillEvalVariant): Ev
   if (!existsSync(resultsDir)) return [];
   return readdirSync(resultsDir)
     .filter((file) => file.endsWith('.json'))
-    .sort()
+    .sort((a, b) => a.localeCompare(b, 'en'))
     .map((file) => JSON.parse(readFileSync(path.join(resultsDir, file), 'utf8')) as EvalReport);
 }

@@ -16,7 +16,8 @@ export function syncSkillsGenerator(tree: Tree): SyncGeneratorResult {
 
   const errors = validateSkills(files, SYNC_CONFIG);
   if (errors.length > 0) {
-    throw new Error(`Invalid skills in ${SYNC_CONFIG.sourceDir}:\n${errors.map((error) => `  - ${error}`).join('\n')}`);
+    const list = errors.map((error) => `  - ${error}`).join('\n');
+    throw new Error(`Invalid skills in ${SYNC_CONFIG.sourceDir}:\n${list}`);
   }
 
   const { expected, write, remove } = planSync(files, SYNC_CONFIG);

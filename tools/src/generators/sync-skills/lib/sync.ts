@@ -1,7 +1,14 @@
 import path from 'node:path';
 
 import { type SkillFiles, walkFiles } from './files.ts';
-import { type Frontmatter, findMdxUnsafe, findRelativeLinks, parseFrontmatter, rewriteLinks } from './markdown.ts';
+import {
+  type Frontmatter,
+  type FrontmatterValue,
+  findMdxUnsafe,
+  findRelativeLinks,
+  parseFrontmatter,
+  rewriteLinks,
+} from './markdown.ts';
 
 export type SyncConfig = {
   /** Source folder: one sub-folder per skill, plus loose files such as README.md. */
@@ -36,72 +43,76 @@ export const listSkills = (files: SkillFiles, config: SyncConfig = SYNC_CONFIG) 
 export const listReferences = (files: SkillFiles, skillDir: string) =>
   files.list(posix.join(skillDir, 'references')).filter((file) => file.endsWith('.md'));
 
+const nameErrors = (skillFile: string, name: FrontmatterValue | undefined, folder: string) => {
+  if (typeof name !== 'string' || !name) return [`${skillFile}: "name" is required.`];
+  if (!SKILL_NAME_PATTERN.test(name)) return [`${skillFile}: "name" must be lowercase kebab-case.`];
+  if (name !== folder) return [`${skillFile}: "name" (${name}) must match the folder (${folder}).`];
+  return [];
+};
+
+const descriptionErrors = (skillFile: string, description: FrontmatterValue | undefined) => {
+  if (typeof description !== 'string' || !description) return [`${skillFile}: "description" is required.`];
+  if (description.length > MAX_DESCRIPTION_LENGTH) {
+    return [`${skillFile}: "description" is ${description.length} characters (max ${MAX_DESCRIPTION_LENGTH}).`];
+  }
+  return [];
+};
+
+type SkillCheck = { files: SkillFiles; skillDir: string; skillFile: string; mdx: boolean };
+
+/** Why a link that resolves to `resolved` is broken, or `null` when it points to a file inside the skill. */
+function linkProblem({ files, skillDir, skillFile }: SkillCheck, resolved: string) {
+  if (resolved !== skillFile && !resolved.startsWith(`${skillDir}/`)) return 'points outside the skill folder';
+  if (files.read(resolved) === null) return 'does not resolve';
+  return null;
+}
+
+/** Checks one SKILL.md or reference file. Links found in SKILL.md are added to `linkedFromSkill`. */
+function docFileErrors(check: SkillCheck, file: string, linkedFromSkill: Set<string>) {
+  const errors: string[] = [];
+  const parsed = parseFrontmatter(check.files.read(file) ?? '');
+  const isSkill = file === check.skillFile;
+
+  if (!isSkill && (!parsed.data?.title || !parsed.data?.description)) {
+    errors.push(`${file}: "title" and "description" frontmatter are required.`);
+  }
+
+  for (const { target, line } of findRelativeLinks(parsed.body)) {
+    const resolved = posix.normalize(posix.join(posix.dirname(file), target.split('#')[0]));
+    const problem = linkProblem(check, resolved);
+    if (problem) errors.push(`${file}:${line}: link "${target}" ${problem}.`);
+    if (isSkill) linkedFromSkill.add(resolved);
+  }
+
+  if (check.mdx) {
+    for (const { char, line } of findMdxUnsafe(parsed.body)) {
+      errors.push(`${file}:${line}: "${char}" outside code breaks MDX; wrap it in backticks.`);
+    }
+  }
+  return errors;
+}
+
 /**
  * Validates one skill folder (workspace-relative). Returns human-readable errors; empty means valid.
  * `mdx` also checks that prose is safe to publish as MDX.
  */
 export function validateSkill(files: SkillFiles, skillDir: string, { mdx = true } = {}): string[] {
-  const errors: string[] = [];
   const skillFile = posix.join(skillDir, 'SKILL.md');
   const skillText = files.read(skillFile);
 
   if (skillText === null) return [`${skillFile} is missing.`];
 
   const { data } = parseFrontmatter(skillText);
-  const folder = posix.basename(skillDir);
+  const errors = data
+    ? [...nameErrors(skillFile, data.name, posix.basename(skillDir)), ...descriptionErrors(skillFile, data.description)]
+    : [`${skillFile}: missing frontmatter.`];
 
-  if (!data) {
-    errors.push(`${skillFile}: missing frontmatter.`);
-  } else {
-    if (typeof data.name !== 'string' || !data.name) {
-      errors.push(`${skillFile}: "name" is required.`);
-    } else if (!SKILL_NAME_PATTERN.test(data.name)) {
-      errors.push(`${skillFile}: "name" must be lowercase kebab-case.`);
-    } else if (data.name !== folder) {
-      errors.push(`${skillFile}: "name" (${data.name}) must match the folder (${folder}).`);
-    }
-
-    if (typeof data.description !== 'string' || !data.description) {
-      errors.push(`${skillFile}: "description" is required.`);
-    } else if (data.description.length > MAX_DESCRIPTION_LENGTH) {
-      errors.push(
-        `${skillFile}: "description" is ${data.description.length} characters (max ${MAX_DESCRIPTION_LENGTH}).`,
-      );
-    }
-  }
-
-  const docFiles = [
-    skillFile,
-    ...listReferences(files, skillDir).map((file) => posix.join(skillDir, 'references', file)),
-  ];
+  const references = listReferences(files, skillDir).map((file) => posix.join(skillDir, 'references', file));
+  const check: SkillCheck = { files, skillDir, skillFile, mdx };
   const linkedFromSkill = new Set<string>();
 
-  for (const file of docFiles) {
-    const parsed = parseFrontmatter(files.read(file) ?? '');
-    const isSkill = file === skillFile;
-
-    if (!isSkill && (!parsed.data?.title || !parsed.data?.description)) {
-      errors.push(`${file}: "title" and "description" frontmatter are required.`);
-    }
-
-    for (const { target, line } of findRelativeLinks(parsed.body)) {
-      const resolved = posix.normalize(posix.join(posix.dirname(file), target.split('#')[0]));
-      if (resolved !== skillFile && !resolved.startsWith(`${skillDir}/`)) {
-        errors.push(`${file}:${line}: link "${target}" points outside the skill folder.`);
-      } else if (files.read(resolved) === null) {
-        errors.push(`${file}:${line}: link "${target}" does not resolve.`);
-      }
-      if (isSkill) linkedFromSkill.add(resolved);
-    }
-
-    if (mdx) {
-      for (const { char, line } of findMdxUnsafe(parsed.body)) {
-        errors.push(`${file}:${line}: "${char}" outside code breaks MDX; wrap it in backticks.`);
-      }
-    }
-  }
-
-  for (const file of docFiles.slice(1)) {
+  for (const file of [skillFile, ...references]) errors.push(...docFileErrors(check, file, linkedFromSkill));
+  for (const file of references) {
     if (!linkedFromSkill.has(file)) errors.push(`${file}: not linked from SKILL.md.`);
   }
 
@@ -176,7 +187,7 @@ export function planSync(files: SkillFiles, config: SyncConfig = SYNC_CONFIG) {
       .filter((file) => file.endsWith('.mdx'))
       .map((file) => posix.join(config.docs.referencesDir, file)),
   ];
-  const remove = generated.filter((file) => !expected.has(file)).sort();
+  const remove = generated.filter((file) => !expected.has(file)).sort((a, b) => a.localeCompare(b, 'en'));
 
   return { expected, write, remove };
 }

@@ -91,9 +91,9 @@ export function buildBenchmark(
     };
   }
 
-  const names = [
-    ...new Set(variants.flatMap((variant) => (reports[variant] ?? []).map((report) => report.task))),
-  ].sort();
+  const names = [...new Set(variants.flatMap((variant) => (reports[variant] ?? []).map((report) => report.task)))].sort(
+    (a, b) => a.localeCompare(b, 'en'),
+  );
   const tasks = names.map((task) => {
     const row: Benchmark['tasks'][number] = { task };
     for (const variant of variants) {
@@ -116,7 +116,11 @@ export function buildBenchmark(
 }
 
 const cell = (summary?: TaskSummary) => (summary ? `${summary.reward.toFixed(2)} (${summary.trials})` : '-');
-const signed = (value?: number) => (value === undefined ? '-' : `${value >= 0 ? '+' : ''}${value.toFixed(2)}`);
+const signed = (value?: number) => {
+  if (value === undefined) return '-';
+  const sign = value >= 0 ? '+' : '';
+  return `${sign}${value.toFixed(2)}`;
+};
 
 /** A plain-text table of mean reward per task and variant. */
 export function formatBenchmark(benchmark: Benchmark): string {
