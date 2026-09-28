@@ -37,6 +37,7 @@ The side menu is a vertical navigation element that sits alongside a page or app
     - The menu reduces the visibility of primary content
     - The interface is focused on reading or content consumption
     - The layout is too narrow to support persistent navigation
+    - The rows do not navigate, such as a list of files or search results; use a native list styled with BEEQ tokens
   </Card>
 </CardGroup>
 
@@ -356,6 +357,12 @@ The default side menu is a versatile container for organizing and displaying nav
 ### Side menu item states
 
 `bq-side-menu-item` is a child component, not a standalone navigation pattern. Use it only inside `bq-side-menu`.
+
+Each item has three areas: a `bq-icon` in `slot="prefix"`, the label in the default slot, and a counter such as `bq-badge` in `slot="suffix"`. The item keeps its label on one line and truncates it with an ellipsis when the label is wider than the menu, so a row with an icon, a long name, and a count needs no truncation CSS of its own.
+
+<Note>
+  The full label appears in a tooltip only while the menu is collapsed. An expanded menu shows no tooltip for a truncated label, so keep labels short enough to read and show the complete name on the destination page.
+</Note>
 
 Within a side menu, items support default, active, hover, focus, disabled, and with-counter states.
 
@@ -2112,7 +2119,7 @@ The side menu renders its root surface as an `<aside>` and places menu items ins
 
 - **Landmark context** - include semantic heading text in the logo slot to communicate the menu purpose and where its content begins.
 - **Collapsed state** - communicate the expanded or collapsed state through the surrounding layout control when you add one.
-- **Icons** - validate icon meaning when collapsed navigation relies on icons to identify destinations.
+- **Icons** - validate icon meaning when collapsed navigation relies on icons to identify destinations. Add `aria-hidden="true"` to prefix icons: the label already names the item, and an unlabelled `bq-icon` adds its own `<name> icon` text to that name.
 - **Labels** - use unique labels that make sense without additional context. The item text feeds the collapsed tooltip content.
 - **Keyboard navigation** - side menu items support focus, click, <kbd>Enter</kbd>, and <kbd>Space</kbd> interaction through the underlying button.
 
@@ -2150,9 +2157,9 @@ The side menu renders its root surface as an `<aside>` and places menu items ins
 
 | Slot | Description |
 |---|---|
-| *(default)* | The content of the menu item |
-| `prefix` | The prefix part of the menu item |
-| `suffix` | The suffix part of the menu item |
+| *(default)* | The item label. It stays on one line and truncates with an ellipsis; while collapsed, it becomes the tooltip text |
+| `prefix` | Leading content, usually a `bq-icon` |
+| `suffix` | Trailing content, such as a `bq-badge` counter. Hidden while collapsed |
 
 ### Shadow parts
 
