@@ -18,12 +18,18 @@ export type RuleViolation = { id: string; severity: 'error' | 'review'; message:
 const stripMediaQueries = (code: string) => code.replace(/@(?:media|container)[^{]*\{/g, '{');
 
 // Layout dimensions have no BEEQ token; the grid foundations size containers and tracks in rem.
-const CSS_SIZING =
-  /(^|[\s{;"'`])((?:min-|max-)?(?:width|height|inline-size|block-size)|flex-basis|grid-template-(?:columns|rows)|grid-auto-(?:columns|rows))\s*:[^;{}\n"'`]*/g;
-const JS_SIZING =
-  /(^|[\s{,])((?:min|max)(?:Width|Height|InlineSize|BlockSize)|width|height|inlineSize|blockSize|flexBasis|gridTemplate(?:Columns|Rows)|gridAuto(?:Columns|Rows))\s*:\s*(['"`])(?:(?!\3).)*\3/g;
+// Each pattern keeps the leading character ($1) and the property ($2), and drops the value.
+const SIZING_PATTERNS = [
+  // CSS declarations.
+  /(^|[\s{;"'`])((?:min-|max-)?(?:width|height|inline-size|block-size))\s*:[^;{}\n"'`]*/g,
+  /(^|[\s{;"'`])(flex-basis|grid-(?:template|auto)-(?:columns|rows))\s*:[^;{}\n"'`]*/g,
+  // Style objects with string values.
+  /(^|[\s{,])((?:min|max)(?:Width|Height|InlineSize|BlockSize))\s*:\s*(['"`])(?:(?!\3).)*\3/g,
+  /(^|[\s{,])(width|height|inlineSize|blockSize)\s*:\s*(['"`])(?:(?!\3).)*\3/g,
+  /(^|[\s{,])(flexBasis|grid(?:Template|Auto)(?:Columns|Rows))\s*:\s*(['"`])(?:(?!\3).)*\3/g,
+];
 
-const stripSizing = (code: string) => code.replace(CSS_SIZING, '$1$2:').replace(JS_SIZING, '$1$2:');
+const stripSizing = (code: string) => SIZING_PATTERNS.reduce((text, pattern) => text.replace(pattern, '$1$2:'), code);
 
 /** CSS rule bodies whose selector ends on a bare `bq-*` host, e.g. `.row bq-button { … }`. */
 function hostVisualRules(code: string) {

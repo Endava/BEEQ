@@ -61,4 +61,20 @@ describe('findApiIssues', () => {
     // Act & Assert
     expect(findApiIssues(code, index)).toEqual([]);
   });
+
+  it('should skip strings inside JSX spreads and expressions', () => {
+    // Arrange
+    const code = '<BqButton {...{ label: "}" }} onBqClick={() => go("}")} made-up="x" />';
+
+    // Act & Assert
+    expect(findApiIssues(code, index).map((issue) => issue.name)).toEqual(['bq-button.made-up']);
+  });
+
+  it('should finish on an unterminated string inside an expression', () => {
+    // Arrange
+    const code = '<BqButton variant={"ghost}>Save</BqButton>';
+
+    // Act & Assert
+    expect(findApiIssues(code, index)).toEqual([]);
+  });
 });

@@ -24,8 +24,10 @@ export type CheckResult = { name: string; passed: boolean; message: string };
 
 const LANGUAGES: Record<string, string> = { htm: 'html', html: 'html' };
 
-const asList = <T>(value: T | T[] | undefined): T[] =>
-  value === undefined ? [] : Array.isArray(value) ? value : [value];
+const asList = <T>(value: T | T[] | undefined): T[] => {
+  if (value === undefined) return [];
+  return Array.isArray(value) ? value : [value];
+};
 
 /** One task-specific check: every `match` pattern is present and every `absent` pattern is not. */
 export function runCheck(check: TaskCheck, code: string): CheckResult {

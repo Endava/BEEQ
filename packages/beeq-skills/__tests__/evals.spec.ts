@@ -275,8 +275,8 @@ describe('workspace helpers', () => {
     const files = collectFiles(dir, path.join(dir, 'no-fixtures'));
 
     // Assert
-    expect(files.map((file) => file.path)).toEqual(['src/App.tsx', 'src/app.css']);
-    expect(formatFiles(files)).toBe('```tsx src/App.tsx\nexport {};\n```\n\n```css src/app.css\na {}\n```');
+    expect(files.map((file) => file.path)).toEqual(['src/app.css', 'src/App.tsx']);
+    expect(formatFiles(files)).toBe('```css src/app.css\na {}\n```\n\n```tsx src/App.tsx\nexport {};\n```');
   });
 
   it('should give the React fixture an app shell without BEEQ setup', () => {

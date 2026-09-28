@@ -71,7 +71,8 @@ export function packageJson(stack: string, beeqVersion: string) {
       range === 'beeq' ? beeqVersion : range,
     ]),
   );
-  return `${JSON.stringify({ name: `beeq-eval-${stack}`, private: true, type: 'module', dependencies }, null, 2)}\n`;
+  const manifest = { name: `beeq-eval-${stack}`, private: true, type: 'module', dependencies };
+  return `${JSON.stringify(manifest, null, 2)}\n`;
 }
 
 const PERSONAL_SKILL_DIRS = ['.agents/skills', '.copilot/skills', '.claude/skills'];
@@ -117,7 +118,7 @@ function isUntouchedFixture(relative: string, content: string, fixturesDir: stri
 export function collectFiles(dir: string, fixturesDir = FIXTURES_DIR) {
   const files: WorkspaceFile[] = [];
   const walk = (current: string) => {
-    for (const entry of readdirSync(current).sort()) {
+    for (const entry of readdirSync(current).sort((a, b) => a.localeCompare(b, 'en'))) {
       if (current === dir && IGNORED_ENTRIES.has(entry)) continue;
       if (entry === 'node_modules') continue;
       const file = path.join(current, entry);

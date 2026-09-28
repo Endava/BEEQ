@@ -82,7 +82,7 @@ export function loadBeeqIndex(repoRoot: string): BeeqIndex {
   return index;
 }
 
-const sorted = (values: Set<string>) => [...values].sort();
+const sorted = (values: Set<string>) => [...values].sort((a, b) => a.localeCompare(b, 'en'));
 
 /** Converts an index to plain JSON, so graders can load it without reading the BEEQ source. */
 export const serializeIndex = (index: BeeqIndex): SerializedIndex => ({
@@ -152,55 +152,56 @@ const GLOBAL_ATTRIBUTES = new Set([
   'ngFor',
 ]);
 
+const skipSpaces = (source: string, from: number) => {
+  let i = from;
+  while (/\s/.test(source[i] ?? '')) i++;
+  return i;
+};
+
+/** Returns the index after a closing quote, or the end of the source when the quote is never closed. */
+const skipQuoted = (source: string, from: number) => source.indexOf(source[from], from + 1) + 1 || source.length;
+
+/** Skips a `{…}` expression starting at `from`, such as `{...props}` or `={() => "}"}`. Strings inside are skipped whole. */
+function skipExpression(source: string, from: number) {
+  let i = from;
+  let depth = 0;
+  do {
+    const ch = source[i];
+    if (ch === '{') depth++;
+    else if (ch === '}') depth--;
+    if (ch === '"' || ch === "'" || ch === '`') i = skipQuoted(source, i);
+    else i++;
+  } while (depth > 0 && i < source.length);
+  return i;
+}
+
+/** Skips an attribute value starting at `from`: quoted, a `{…}` expression, or unquoted. */
+function skipValue(source: string, from: number) {
+  const first = source[from];
+  if (first === '"' || first === "'") return skipQuoted(source, from);
+  if (first === '{') return skipExpression(source, from);
+  let i = from;
+  while (i < source.length && !/[\s>]/.test(source[i])) i++;
+  return i;
+}
+
+const isTagEnd = (source: string, i: number) => source[i] === '>' || (source[i] === '/' && source[i + 1] === '>');
+
 /** Parses the attributes of an opening tag starting right after its name. Handles quotes and `{…}` expressions. */
 function readAttributes(source: string, start: number) {
   const attributes: string[] = [];
-  let i = start;
-  while (i < source.length) {
-    while (/\s/.test(source[i] ?? '')) i++;
-    if (source[i] === '>' || (source[i] === '/' && source[i + 1] === '>')) break;
-    if (i >= source.length) break;
-
-    if (source[i] === '{') {
-      // JSX spread, e.g. {...props}
-      let depth = 0;
-      do {
-        if (source[i] === '{') depth++;
-        else if (source[i] === '}') depth--;
-        i++;
-      } while (depth > 0 && i < source.length);
-      continue;
+  let i = skipSpaces(source, start);
+  while (i < source.length && !isTagEnd(source, i)) {
+    const name = source[i] === '{' ? undefined : /^[^\s=>/]+/.exec(source.slice(i))?.[0];
+    if (name) {
+      i = skipSpaces(source, i + name.length);
+      if (source[i] === '=') i = skipValue(source, skipSpaces(source, i + 1));
+      attributes.push(name);
+    } else {
+      // A JSX spread such as {...props}, or a stray character.
+      i = source[i] === '{' ? skipExpression(source, i) : i + 1;
     }
-
-    const nameMatch = /^[^\s=>/]+/.exec(source.slice(i));
-    if (!nameMatch) {
-      i++;
-      continue;
-    }
-    const name = nameMatch[0];
-    i += name.length;
-    while (/\s/.test(source[i] ?? '')) i++;
-
-    if (source[i] === '=') {
-      i++;
-      while (/\s/.test(source[i] ?? '')) i++;
-      const quote = source[i];
-      if (quote === '"' || quote === "'") {
-        i = source.indexOf(quote, i + 1) + 1 || source.length;
-      } else if (quote === '{') {
-        let depth = 0;
-        do {
-          const ch = source[i];
-          if (ch === '{') depth++;
-          else if (ch === '}') depth--;
-          else if (ch === '"' || ch === "'" || ch === '`') i = source.indexOf(ch, i + 1);
-          i++;
-        } while (depth > 0 && i < source.length && i > 0);
-      } else {
-        while (i < source.length && !/[\s>]/.test(source[i])) i++;
-      }
-    }
-    attributes.push(name);
+    i = skipSpaces(source, i);
   }
   return attributes;
 }
@@ -223,17 +224,27 @@ function classifyAttribute(raw: string): Attribute {
   return { kind: 'prop', name };
 }
 
-/**
- * Finds API mistakes in code: unknown `bq-*` elements, unknown props or events on known elements,
- * unknown `::part()` names, and unknown `--bq-*` tokens. `allow` is a list of `kind:name` strings.
- */
-export function findApiIssues(code: string, index: BeeqIndex, { allow = [] }: { allow?: string[] } = {}) {
-  const issues: ApiIssue[] = [];
-  const allowed = new Set(allow);
-  const report = (kind: ApiIssue['kind'], name: string, message: string) => {
-    if (!allowed.has(`${kind}:${name}`)) issues.push({ kind, name, message });
-  };
+type Report = (kind: ApiIssue['kind'], name: string, message: string) => void;
 
+const NATIVE_HANDLER = /^on(?:[a-z]+|[A-Z][a-zA-Z]*)$/;
+
+function checkAttribute(raw: string, component: BeeqComponent, report: Report) {
+  const attribute = classifyAttribute(raw);
+  const { tag } = component;
+  if (attribute.kind === 'event' && attribute.name.startsWith('bq') && !component.events.has(attribute.name)) {
+    report('event', `${tag}.${attribute.name}`, `${tag} has no ${attribute.name} event.`);
+  }
+  if (
+    attribute.kind === 'prop' &&
+    !component.props.has(kebabToCamel(attribute.name)) &&
+    !NATIVE_HANDLER.test(attribute.name)
+  ) {
+    report('prop', `${tag}.${attribute.name}`, `${tag} has no "${attribute.name}" property.`);
+  }
+}
+
+/** Unknown `bq-*` elements, and unknown props or events on known elements. */
+function checkElements(code: string, index: BeeqIndex, report: Report) {
   for (const match of code.matchAll(/<(bq-[a-z-]+|Bq[A-Z][A-Za-z]*)(?=[\s/>])/g)) {
     const [, element] = match;
     const tag = element.startsWith('bq-') ? element : index.pascalToTag.get(element);
@@ -242,32 +253,40 @@ export function findApiIssues(code: string, index: BeeqIndex, { allow = [] }: { 
       report('element', element, `<${element}> is not a BEEQ component.`);
       continue;
     }
-
-    for (const raw of readAttributes(code, match.index + match[0].length)) {
-      const attribute = classifyAttribute(raw);
-      if (attribute.kind === 'ignore') continue;
-      if (attribute.kind === 'event' && attribute.name.startsWith('bq') && !component.events.has(attribute.name)) {
-        report('event', `${tag}.${attribute.name}`, `${tag} has no ${attribute.name} event.`);
-      }
-      const isNativeHandler = /^on(?:[a-z]+|[A-Z][a-zA-Z]*)$/.test(attribute.name);
-      if (attribute.kind === 'prop' && !component.props.has(kebabToCamel(attribute.name)) && !isNativeHandler) {
-        report('prop', `${tag}.${attribute.name}`, `${tag} has no "${attribute.name}" property.`);
-      }
-    }
+    for (const raw of readAttributes(code, match.index + match[0].length)) checkAttribute(raw, component, report);
   }
+}
 
+function checkParts(code: string, index: BeeqIndex, report: Report) {
   for (const match of code.matchAll(/(bq-[a-z-]+)::part\(\s*([\w-]+)\s*\)/g)) {
     const [, tag, part] = match;
     const component = index.components.get(tag);
     if (component && !component.parts.has(part)) report('part', `${tag}::${part}`, `${tag} has no "${part}" part.`);
   }
+}
 
+function checkTokens(code: string, index: BeeqIndex, report: Report) {
   for (const match of code.matchAll(/--bq-[a-z0-9]+(?:-{1,2}[a-z0-9]+)*/g)) {
     const token = match[0];
     // Skip token families written as patterns, e.g. `--bq-spacing-*` or `--bq-text--{primary,secondary}`.
     if (/^-{0,2}[*{<]/.test(code.slice(match.index + token.length, match.index + token.length + 3))) continue;
     if (!index.tokens.has(token)) report('token', token, `${token} is not a BEEQ token or component CSS property.`);
   }
+}
 
+/**
+ * Finds API mistakes in code: unknown `bq-*` elements, unknown props or events on known elements,
+ * unknown `::part()` names, and unknown `--bq-*` tokens. `allow` is a list of `kind:name` strings.
+ */
+export function findApiIssues(code: string, index: BeeqIndex, { allow = [] }: { allow?: string[] } = {}) {
+  const issues: ApiIssue[] = [];
+  const allowed = new Set(allow);
+  const report: Report = (kind, name, message) => {
+    if (!allowed.has(`${kind}:${name}`)) issues.push({ kind, name, message });
+  };
+
+  checkElements(code, index, report);
+  checkParts(code, index, report);
+  checkTokens(code, index, report);
   return issues;
 }

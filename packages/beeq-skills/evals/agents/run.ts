@@ -5,7 +5,7 @@
 // skillgrade puts its grader script and rubric in the workspace (tests/, prompts/, environment/). They are
 // moved out while the agent runs, so it cannot read what it is graded on, and restored for the graders.
 // The reply is printed with every file the agent wrote, because the LLM rubric only sees this output.
-import { execFile } from 'node:child_process';
+import { type ExecFileException, execFile } from 'node:child_process';
 import {
   existsSync,
   mkdirSync,
@@ -119,6 +119,12 @@ const readStdin = async () => {
 
 type RunResult = { code: number; stdout: string; stderr: string; error: Error | null };
 
+/** The child's exit code: 0 on success, its numeric code when it exited, 1 when it could not start. */
+const exitCode = (error: ExecFileException | null) => {
+  if (!error) return 0;
+  return typeof error.code === 'number' ? error.code : 1;
+};
+
 const run = ({ command, args, env, stdin }: AgentRun, cwd: string) =>
   new Promise<RunResult>((resolve) => {
     const child = execFile(
@@ -126,7 +132,7 @@ const run = ({ command, args, env, stdin }: AgentRun, cwd: string) =>
       args,
       { cwd, env: { ...process.env, ...env }, maxBuffer: 64 * 1024 * 1024 },
       (error, stdout, stderr) => {
-        resolve({ code: error ? (typeof error.code === 'number' ? error.code : 1) : 0, stdout, stderr, error });
+        resolve({ code: exitCode(error), stdout, stderr, error });
       },
     );
     child.stdin?.end(stdin ?? '');
