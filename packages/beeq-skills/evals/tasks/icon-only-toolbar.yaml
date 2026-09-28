@@ -1,0 +1,17 @@
+name: icon-only-toolbar
+metadata:
+  stack: html
+  tags: [smoke, accessibility]
+instruction: >-
+  Add a text-editor toolbar with Bold, Italic, Underline, and Insert link buttons that show only
+  icons, no visible text.
+workspace:
+  - src: '{{evals}}/fixtures/html'
+    dest: .
+expected:
+  criteria: >-
+    Every icon-only button has an accessible name (the label prop, or an equivalent accessible
+    label) that describes its action. The toolbar is keyboard-reachable and grouped semantically.
+  checks:
+    - name: uses-only-icon
+      match: ['only-icon', '<bq-icon']

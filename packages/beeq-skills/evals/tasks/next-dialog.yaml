@@ -1,0 +1,20 @@
+name: next-dialog
+metadata:
+  stack: next
+  tags: [patterns]
+instruction: >-
+  In a Next.js App Router page, add a Publish button that opens a dialog asking the user to confirm
+  publishing the article, with Cancel and Publish actions.
+workspace:
+  - src: '{{evals}}/fixtures/next'
+    dest: .
+expected:
+  criteria: >-
+    Interactive BEEQ code runs in a client component; SSR-safe imports are used where the page
+    renders on the server. The dialog uses documented slots (title, content, footer) and methods or
+    props, and focus returns sensibly on close.
+  checks:
+    - name: client-boundary
+      match: '[''"]use client[''"]'
+    - name: dialog-methods
+      match: ['<BqDialog\b', '\.(show|hide)\(\)|\bopen=\{']

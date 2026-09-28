@@ -1,0 +1,20 @@
+name: angular-select
+metadata:
+  stack: angular
+  tags: [smoke, forms]
+instruction: >-
+  In an Angular reactive form, add a required country picker with five options. Users must pick from
+  the list and cannot type to filter it.
+workspace:
+  - src: '{{evals}}/fixtures/angular'
+    dest: .
+expected:
+  criteria: >-
+    The select is wired to the reactive form (BEEQ Angular value accessors or an explicit bqSelect
+    handler), shows a validation message when required and empty, and uses disable-search rather
+    than readonly.
+  checks:
+    - name: disables-search
+      match: 'disable-search|disableSearch'
+    - name: uses-select
+      match: ['<bq-select\b', '<bq-option\b']

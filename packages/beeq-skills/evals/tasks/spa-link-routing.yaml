@@ -1,0 +1,20 @@
+name: spa-link-routing
+metadata:
+  stack: react
+  tags: [patterns]
+instruction: >-
+  In a React Router app, render breadcrumb navigation Home > Projects > Current project. Each item
+  navigates client-side without a full page reload.
+workspace:
+  - src: '{{evals}}/fixtures/react'
+    dest: .
+expected:
+  criteria: >-
+    Items keep real hrefs so middle-click and open-in-new-tab work. Only plain left-clicks are
+    intercepted (modifier keys and non-primary buttons fall through) before calling the router. The
+    current page item is marked as current.
+  checks:
+    - name: keeps-href
+      match: '<BqBreadcrumbItem\b[^>]*\shref='
+    - name: intercepts-click
+      match: ['preventDefault\(\)', 'navigate\(']

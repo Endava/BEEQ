@@ -1,5 +1,4 @@
 ---
-# Generated from packages/beeq-skills/src/beeq. Edit the source, not this file.
 name: beeq
 description: >
   Builds, styles, and reviews UI with BEEQ, Endava's web-component design system. Use when code adds or
@@ -29,7 +28,7 @@ Three sources, three jobs:
 | Source | Owns |
 | --- | --- |
 | This skill and its references | Workflow, framework syntax, pitfalls, and checks |
-| [design-language.md](https://www.beeq.design/skill/references/design-language.md) | Visual language: tokens, themes, type, layout, shape, elevation, motion, states, sizes, icons, and tone |
+| [design-language.md](references/design-language.md) | Visual language: tokens, themes, type, layout, shape, elevation, motion, states, sizes, icons, and tone |
 | Component pages and the installed package | Exact APIs |
 
 ---
@@ -40,23 +39,23 @@ Three sources, three jobs:
 
 - **Installed versions**: the `@beeq/*` versions in `package.json`. The public docs describe the latest release.
 - **Theme and mode**: `bq-theme` and `bq-mode` on `<html>` or a scoped container, and any stylesheet overriding `--bq-*` tokens. That stylesheet **is** the project's theme; extend it.
-- **Setup**: where the BEEQ stylesheet is imported and the icon base path is set. When either is missing, adding it is part of the task: import `@beeq/core/dist/beeq/beeq.css` once, and add `<script data-beeq="https://cdn.jsdelivr.net/npm/@beeq/core/dist/beeq/svg/"></script>` to the HTML entry. Self-hosted SVGs with `setBasePath()` are for projects that need control over them; see [Setup](https://www.beeq.design/skill/references/frameworks.md#setup).
+- **Setup**: where the BEEQ stylesheet is imported and the icon base path is set. When either is missing, adding it is part of the task: import `@beeq/core/dist/beeq/beeq.css` once, and add `<script data-beeq="https://cdn.jsdelivr.net/npm/@beeq/core/dist/beeq/svg/"></script>` to the HTML entry. Self-hosted SVGs with `setBasePath()` are for projects that need control over them; see [Setup](references/frameworks.md#setup).
 - **House recipes**: wrapper components (`<AppButton>`, `styled(BqButton)`), shared form-field layouts, router-link patterns, and form-library bindings.
 - **Agent briefs**: the project's own `DESIGN.md`, `AGENTS.md`, `CLAUDE.md`, or `.github/copilot-instructions.md`.
 - **The nearest existing screen**: how it handles layout, navigation, spacing, and action placement.
 
 Precedence: **project conventions > BEEQ design language > this skill's defaults > your taste.**
 
-**Done when** you can name each item above, or state that it is absent. On a greenfield project, follow [Installation](https://www.beeq.design/getting-started/installation.md) and the target framework guide instead. Search commands, where customizations belong, and extending BEEQ without forking: [your-design-system.md](https://www.beeq.design/skill/references/your-design-system.md).
+**Done when** you can name each item above, or state that it is absent. On a greenfield project, follow [Installation](https://www.beeq.design/getting-started/installation.md) and the target framework guide instead. Search commands, where customizations belong, and extending BEEQ without forking: [your-design-system.md](references/your-design-system.md).
 
 ## 2. Name the stack and the scope
 
 The stack decides imports, prop casing, and event syntax (see [Framework essentials](#framework-essentials)). Then name the scope:
 
-- **A whole screen or app shell.** BEEQ ships no page-layout component or layout classes; the consumer owns the page grid. Build it with semantic HTML and CSS on BEEQ spacing and colour tokens, and place BEEQ components inside it (`bq-side-menu` for navigation, `bq-page-title` for the heading). Start from [patterns.md](https://www.beeq.design/skill/references/patterns.md).
+- **A whole screen or app shell.** BEEQ ships no page-layout component or layout classes; the consumer owns the page grid. Build it with semantic HTML and CSS on BEEQ spacing and colour tokens, and place BEEQ components inside it (`bq-side-menu` for navigation, `bq-page-title` for the heading). Start from [patterns.md](references/patterns.md).
 - **A piece of a screen**: a section, form, card, dialog body, or widget. Compose inside the existing layout and match the size, density, and emphasis of neighbouring controls.
 
-List the states that change a component's footprint: helper text, validation messages, loading, multiple selected values, open overlays. Spacing rhythm, host sizing, and the polish checklist: [layout-and-composition.md](https://www.beeq.design/skill/references/layout-and-composition.md).
+List the states that change a component's footprint: helper text, validation messages, loading, multiple selected values, open overlays. Spacing rhythm, host sizing, and the polish checklist: [layout-and-composition.md](references/layout-and-composition.md).
 
 **Done when** the stack, the scope, and the footprint-changing states are written down.
 
@@ -65,9 +64,9 @@ List the states that change a component's footprint: helper text, validation mes
 For every custom class, literal value, or hand-built control, walk down this ladder and stop at the first rung that does the job:
 
 1. **A house recipe** from step 1.
-2. **A BEEQ component**, chosen by the interaction people need rather than by visual resemblance. Compare the "When to use" guidance on the [component overview](https://www.beeq.design/components/overview.md). Commonly re-invented: a pill or label is `bq-tag` or `bq-badge`; a section rule is `bq-divider`; a coloured state dot with text is `bq-status`; a "nothing here yet" block is `bq-empty-state`; an inline message is `bq-alert`. Decision guide by intent, with required parent and child structures: [choosing-components.md](https://www.beeq.design/skill/references/choosing-components.md).
+2. **A BEEQ component**, chosen by the interaction people need rather than by visual resemblance. Compare the "When to use" guidance on the [component overview](https://www.beeq.design/components/overview.md). Commonly re-invented: a pill or label is `bq-tag` or `bq-badge`; a section rule is `bq-divider`; a coloured state dot with text is `bq-status`; a "nothing here yet" block is `bq-empty-state`; an inline message is `bq-alert`. Decision guide by intent, with required parent and child structures: [choosing-components.md](references/choosing-components.md).
 3. **A documented prop** (`variant`, `appearance`, `size`, `disabled`, `validation-status`). Start from defaults and omit props that repeat them.
-4. **A semantic token** for everything around the component: `--bq-spacing-*`, `--bq-background--*`, `--bq-text--*`, `--bq-stroke--*`, `--bq-radius--*`, `--bq-box-shadow--*`, `--bq-font-size--*`. BEEQ Tailwind utilities (`gap-m`, `bg-primary`) only when the project configures `@beeq/tailwindcss`. Token roles, safe pairings, and brand overrides: [theming.md](https://www.beeq.design/skill/references/theming.md).
+4. **A semantic token** for everything around the component: `--bq-spacing-*`, `--bq-background--*`, `--bq-text--*`, `--bq-stroke--*`, `--bq-radius--*`, `--bq-box-shadow--*`, `--bq-font-size--*`. BEEQ Tailwind utilities (`gap-m`, `bg-primary`) only when the project configures `@beeq/tailwindcss`. Token roles, safe pairings, and brand overrides: [theming.md](references/theming.md).
 5. **A documented component CSS custom property** on the host, such as `--bq-button--border-radius`.
 6. **A documented `::part()`** for exposed internal structure. Slotted children stay consumer-owned; style them as ordinary elements.
 7. **Scoped custom CSS** on tokens, only for requirements the API does not cover, leaving BEEQ's states and theme behaviour intact.
@@ -138,7 +137,7 @@ The same boundary holds for every `bq-*` element: consumer CSS positions and siz
 | Angular | `@beeq/angular/standalone` | `(bqChange)` | Forms need the matching value accessor. NgModule only in existing module-based apps. |
 | Vue and Nuxt | `@beeq/vue` | `@bqChange` | `v-model` only on documented components. Nuxt setup goes in a client-only plugin. |
 
-Read `event.detail` only when the component documents a payload. Forms bindings, method refs, routing, Angular and Vue examples, and setup troubleshooting: [frameworks.md](https://www.beeq.design/skill/references/frameworks.md).
+Read `event.detail` only when the component documents a payload. Forms bindings, method refs, routing, Angular and Vue examples, and setup troubleshooting: [frameworks.md](references/frameworks.md).
 
 ## 4. Verify
 
@@ -228,7 +227,7 @@ export function FormActions({ onCancel }: { onCancel: () => void }) {
 }
 ```
 
-Angular and Vue equivalents are in [frameworks.md](https://www.beeq.design/skill/references/frameworks.md).
+Angular and Vue equivalents are in [frameworks.md](references/frameworks.md).
 
 ## Documentation lookup order
 

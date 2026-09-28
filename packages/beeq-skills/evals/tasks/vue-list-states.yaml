@@ -1,0 +1,18 @@
+name: vue-list-states
+metadata:
+  stack: vue
+  tags: [patterns]
+instruction: >-
+  Build a Vue 3 component that fetches a list of invoices and shows the list, a loading state, an
+  empty state with a call to action, and an error state with a retry.
+workspace:
+  - src: '{{evals}}/fixtures/vue'
+    dest: .
+expected:
+  criteria: >-
+    All four states are distinct and reachable. Each state has a text cue, not colour alone. The
+    empty state explains what is missing and offers one action; the error explains what failed and
+    offers a retry. Vue event bindings use the bq-prefixed events.
+  checks:
+    - name: uses-state-components
+      match: ['<bq-(spinner|empty-state)\b', '<bq-(alert|empty-state|notification)\b']

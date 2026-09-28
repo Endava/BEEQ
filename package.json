@@ -33,6 +33,10 @@
     "clean:build": "pnpm dlx rimraf .stencil dist",
     "clean:modules": "pnpm dlx rimraf ./node_modules ./**/node_modules ./packages/**/node_modules",
     "docs:generate-beeq-mintlify-css": "node tools/scripts/generate-beeq-mintlify-css.mjs",
+    "skills:sync": "nx sync",
+    "skills:test": "nx run-many -t test typecheck -p beeq-skills tools",
+    "skills:eval": "nx run beeq-skills:eval",
+    "skills:eval:view": "nx run beeq-skills:eval --preview=browser",
     "g": "plop --cwd tools/src/generators/plop"
   },
   "dependencies": {

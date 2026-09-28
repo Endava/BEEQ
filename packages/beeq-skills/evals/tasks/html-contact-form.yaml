@@ -1,0 +1,20 @@
+name: html-contact-form
+metadata:
+  stack: html
+  tags: [forms]
+instruction: >-
+  Build a contact page with name, email, and message fields, a required consent checkbox, and a
+  Send button. Show an inline error under each invalid field when the user submits.
+workspace:
+  - src: '{{evals}}/fixtures/html'
+    dest: .
+expected:
+  criteria: >-
+    Every field has a visible label through the component's label slot or prop. Errors use the
+    components' validation status and helper text rather than colour alone. There is one primary
+    action.
+  checks:
+    - name: uses-form-controls
+      match: ['<bq-input', '<bq-textarea', '<bq-checkbox', '<bq-button']
+    - name: loads-stylesheet
+      match: '@beeq/core/dist/beeq/beeq\.css'

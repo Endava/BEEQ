@@ -1,0 +1,122 @@
+// The mechanical checks from the "Verify" step of src/beeq/SKILL.md, as code.
+// Every row of the SKILL.md "Searches" table must have a rule here with the same `label`
+// (enforced by __tests__/skill-structure.spec.ts).
+
+export type Rule = {
+  id: string;
+  label: string;
+  message: string;
+  test: (code: string) => string[];
+  /** Languages the rule applies to; every language when omitted. */
+  languages?: string[];
+  /** `review` hits are reported but do not fail. */
+  severity?: 'error' | 'review';
+};
+
+export type RuleViolation = { id: string; severity: 'error' | 'review'; message: string; hits: string[] };
+
+const stripMediaQueries = (code: string) => code.replace(/@(?:media|container)[^{]*\{/g, '{');
+
+/** CSS rule bodies whose selector ends on a bare `bq-*` host, e.g. `.row bq-button { … }`. */
+function hostVisualRules(code: string) {
+  const hits: string[] = [];
+  for (const match of code.matchAll(/([^{}]*?)\{([^{}]*)\}/g)) {
+    const selector = match[1].trim().split(',').pop()?.trim() ?? '';
+    if (!/(?:^|[\s>+~])bq-[a-z-]+$/.test(selector)) continue;
+    const visual = /(?:^|[;{\s])(background(?:-color)?|color|border(?:-[a-z]+)?|padding(?:-[a-z]+)?)\s*:/.exec(
+      match[2],
+    );
+    if (visual) hits.push(`${selector} { ${visual[1]}: … }`);
+  }
+  return hits;
+}
+
+export const RULES: Rule[] = [
+  {
+    id: 'hex',
+    label: 'Hex colours',
+    test: (code) => code.match(/#[0-9a-fA-F]{3,8}\b(?![-\w])/g) ?? [],
+    message: 'Hard-coded hex colour; use a semantic token.',
+  },
+  {
+    id: 'px-rem',
+    label: 'Pixel or rem literals',
+    test: (code) => stripMediaQueries(code).match(/(?<![\w-])\d*\.?\d+(?:px|rem)\b/g) ?? [],
+    message: 'Pixel or rem literal; use a spacing, radius, or font-size token.',
+  },
+  {
+    id: 'palette',
+    label: 'Palette primitives',
+    test: (code) => code.match(/--bq-(?:blue|grey|red|green|orange|yellow|purple|endava-[a-z]+)-\d+/g) ?? [],
+    message: 'Palette primitive in product CSS; use a semantic role token.',
+  },
+  {
+    id: 'self-closed',
+    label: 'Self-closed custom elements (HTML)',
+    languages: ['html'],
+    test: (code) => code.match(/<bq-[a-z-]+(?:\s[^<>]*)?\/>/g) ?? [],
+    message: 'Custom elements cannot self-close in HTML.',
+  },
+  {
+    id: 'parts',
+    label: 'Shadow parts',
+    severity: 'review',
+    test: (code) => code.match(/::part\([^)]*\)/g) ?? [],
+    message: 'Shadow part used; confirm it is documented and not a layout fix.',
+  },
+  {
+    id: 'host-visual',
+    label: 'Host visual rules',
+    test: hostVisualRules,
+    message: 'Visual property on a bq-* host; use a prop, CSS custom property, or part.',
+  },
+  {
+    id: 'emoji',
+    label: 'Emojis',
+    test: (code) => code.match(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/gu) ?? [],
+    message: 'Emoji used as an icon; use bq-icon.',
+  },
+  {
+    id: 'element-type-cast',
+    label: 'Type-erasing casts',
+    test: (code) => code.match(/as\s+ElementType\b/g) ?? [],
+    message: 'Type-erasing cast; wrap the BEEQ component directly.',
+  },
+  {
+    id: 'select-readonly',
+    label: 'Deprecated select usage',
+    test: (code) => code.match(/<(?:bq-select|BqSelect)\b[^>]*\sreadonly\b/g) ?? [],
+    message: 'readonly on bq-select is deprecated; use disable-search.',
+  },
+  {
+    id: 'bq-table',
+    label: 'Non-existent table element',
+    test: (code) => code.match(/<bq-table\b/g) ?? [],
+    message: 'BEEQ has no <bq-table>; use <table class="bq-table">.',
+  },
+];
+
+/**
+ * Runs every rule over `code`. `language` limits language-specific rules; `allow` skips rule ids.
+ * Rules with `severity: 'review'` are reported but do not count as failures.
+ */
+export function findRuleViolations(
+  code: string,
+  { language, allow = [] }: { language?: string; allow?: string[] } = {},
+) {
+  const violations: RuleViolation[] = [];
+  for (const rule of RULES) {
+    if (allow.includes(rule.id)) continue;
+    if (rule.languages && language && !rule.languages.includes(language)) continue;
+    const hits = rule.test(code);
+    if (hits.length) {
+      violations.push({
+        id: rule.id,
+        severity: rule.severity ?? 'error',
+        message: rule.message,
+        hits: [...new Set(hits)],
+      });
+    }
+  }
+  return violations;
+}

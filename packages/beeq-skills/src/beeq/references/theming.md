@@ -1,0 +1,95 @@
+---
+title: "Skill reference: theming BEEQ"
+description: How agents apply BEEQ themes and modes, choose semantic tokens, pair colours safely, and add product brand overrides without breaking dark mode.
+---
+
+This reference supports the [BEEQ agent skill](../SKILL.md). Read it when a task mentions a theme, brand colour, dark mode, or any `--bq-*` token.
+
+## The model
+
+BEEQ separates two decisions:
+
+| Decision | Attribute | Values | Class alternative |
+| --- | --- | --- | --- |
+| Identity | `bq-theme` | `beeq` (default), `endava`, or a custom theme name | `.beeq`, `.endava`, or your theme class |
+| Colour scheme | `bq-mode` | `light` (default), `dark` | `.light`, `.dark` |
+
+Set both on `html`. Modes can also be scoped to a region, for example a light section inside a dark page:
+
+```html
+<html bq-theme="endava" bq-mode="dark">
+  <body>
+    <section bq-mode="light">…</section>
+  </body>
+</html>
+```
+
+BEEQ does not read `prefers-color-scheme` and does not remember the user's choice. The app decides the default, offers a toggle, and persists the choice. See [Themes and modes](https://www.beeq.design/theming/themes-and-modes.md) for a working toggle.
+
+## Semantic tokens first
+
+Semantic tokens describe a role and resolve differently per theme and mode. Use them for everything in product CSS.
+
+| Role | Tokens |
+| --- | --- |
+| Brand and accent | `--bq-brand`, `--bq-brand-light`, `--bq-brand-dark`, `--bq-accent` (and light, dark) |
+| Feedback | `--bq-info`, `--bq-success`, `--bq-warning`, `--bq-danger` (each with light and dark) |
+| Backgrounds | `--bq-background--primary`, `--bq-background--secondary`, `--bq-background--tertiary`, `--bq-background--alt`, `--bq-background--inverse`, `--bq-background--brand`, `--bq-background--overlay` |
+| Text | `--bq-text--primary`, `--bq-text--secondary`, `--bq-text--inverse`, `--bq-text--alt`, `--bq-text--brand`, and feedback roles |
+| Icons | `--bq-icon--primary`, `--bq-icon--secondary`, and the same role set as text |
+| Strokes | `--bq-stroke--primary`, `--bq-stroke--secondary`, `--bq-stroke--tertiary`, brand and feedback roles |
+| UI fills | `--bq-ui--primary`, `--bq-ui--secondary`, `--bq-ui--brand`, and feedback roles with `-alt` variants |
+| Interaction | `--bq-focus`, `--bq-hover`, `--bq-active` |
+| Data visualisation | `--bq-data-01` to `--bq-data-12`, used in order |
+
+The full list lives in [Global CSS variables](https://www.beeq.design/theming/global-css-variables.md) and [Colors](https://www.beeq.design/foundations/colors.md).
+
+Palette primitives such as `--bq-blue-600` or `--bq-grey-100` do not change with the mode. Use them only inside a theme definition, to set a semantic token.
+
+## Safe pairings
+
+| Surface | Pair with |
+| --- | --- |
+| `--bq-background--primary` | `--bq-text--primary`; `--bq-text--secondary` for supporting copy |
+| `--bq-background--secondary` or `--bq-background--tertiary` | `--bq-text--primary` |
+| `--bq-background--inverse` | `--bq-text--inverse`, `--bq-icon--inverse` |
+| Feedback surfaces (`--bq-ui--success-alt` and similar) | The matching `--bq-text--*` and `--bq-icon--*` role, plus a written label |
+
+These pairs are a starting point, not a contrast guarantee. Check contrast in every active theme and mode after an override. Avoid `--bq-text--brand` for small body text on light surfaces.
+
+## Brand a product
+
+Create one theme file and scope it to a theme name. Set the base tokens from primitives; the semantic brand roles (`--bq-background--brand`, `--bq-text--brand`, `--bq-stroke--brand`, and others) already reference `--bq-brand`, so they follow.
+
+```css
+[bq-theme="acme"],
+.acme {
+  --bq-font-family: "Inter", sans-serif;
+  --bq-brand-light: var(--bq-blue-100);
+  --bq-brand: var(--bq-blue-600);
+  --bq-brand-dark: var(--bq-blue-1000);
+}
+```
+
+```html
+<html bq-theme="acme" bq-mode="light">
+```
+
+Two consequences to plan for:
+
+- **Set `bq-mode` explicitly with a custom theme.** BEEQ applies its default light roles when there is no theme attribute or when `bq-theme="beeq"`. With a custom theme name and no mode, the light roles are yours to define. Either always set `bq-mode`, or define the full light role set under `[bq-theme="acme"]:not([bq-mode])`.
+- **Override a role for both modes.** If you change `--bq-background--primary` for light mode, change it under `[bq-theme="acme"][bq-mode="dark"]` too, or dark mode keeps BEEQ's value.
+
+The [Custom theme](https://www.beeq.design/theming/custom-theme.md) guide lists every token to cover, including the selectors for class-based themes and the Tailwind setup.
+
+## Common mistakes
+
+| Mistake | Fix |
+| --- | --- |
+| Swapping stylesheets to change theme | Change the `bq-theme` attribute. |
+| Using `@media (prefers-color-scheme: dark)` to restyle components | Set `bq-mode` from the preference in JavaScript. |
+| Hard-coding `#fff` or `white` for a card background | `--bq-background--primary`, which becomes dark in dark mode. |
+| Overriding a token only for light mode | Override it under both mode selectors. |
+| A custom `bq-theme` with no `bq-mode` | Set `bq-mode`, or define the full light role set for the no-mode case. |
+| Overriding the same token in many component rules | Override it once in the theme file. |
+| Using the Endava theme without the Endava brand requirement | Default to `beeq` unless the project already uses `endava`. |

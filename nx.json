@@ -24,6 +24,10 @@
       "!{projectRoot}/jest.config.ts"
     ]
   },
+  "sync": {
+    "applyChanges": true,
+    "globalGenerators": ["@beeq/tools:sync-skills"]
+  },
   "targetDefaults": {
     "icons": { "cache": true },
     "stylelint": { "cache": true },

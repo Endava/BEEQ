@@ -1,0 +1,181 @@
+---
+title: "Skill reference: BEEQ framework integration"
+description: Framework-specific rules for agents using BEEQ in React, Next.js, Angular, Vue, Nuxt, and plain HTML, including events, forms, methods, typing, and routing.
+---
+
+This reference supports the [BEEQ agent skill](../SKILL.md). The framework guides own the full setup steps; this page collects the rules agents get wrong most often. Every BEEQ wrapper renders the same `bq-*` custom element, so component APIs are identical across frameworks. Only the syntax changes.
+
+## Syntax at a glance
+
+| Concern | HTML | React and Next.js | Angular (Standalone) | Vue |
+| --- | --- | --- | --- | --- |
+| Import | Script or bundler import of `@beeq/core` | `BqButton` from `@beeq/react` (`@beeq/react/ssr` in Next.js) | `BqButton` from `@beeq/angular/standalone` | `BqButton` from `@beeq/vue` |
+| Tag | `bq-button` | `BqButton` | `bq-button` | `BqButton` |
+| Prop | `only-icon` | `onlyIcon` | `[onlyIcon]="true"` or `only-icon` | `only-icon` or `:only-icon="true"` |
+| Event | `addEventListener('bqClick', …)` | `onBqClick={…}` | `(bqClick)="…"` | `@bqClick="…"` |
+| Payload | `event.detail` | `event.detail` | `$event.detail` | `event.detail` |
+| Slot | `slot="prefix"` | `slot="prefix"` | `slot="prefix"` | `slot="prefix"` |
+| Method | `el.show()` | `ref.current?.show()` | `@ViewChild` element ref | template `ref` |
+
+Read the updated value from `event.detail`, not `event.target.value`. Check each event's payload shape on the component page: `bq-input` sends `{ value, el }`, `bq-checkbox` and `bq-switch` send `{ checked }`, and `bq-button` sends the element itself.
+
+## Setup
+
+Every app needs two things, set up once. When the project lacks either, add it as part of the task:
+
+1. **Stylesheet.** Import `@beeq/core/dist/beeq/beeq.css` once, in the main stylesheet the entry file loads. Without it, components render unstyled.
+2. **Icons.** Tell BEEQ where the SVG files live. A bundled app has no usable default, so without this every `bq-icon` renders blank, including the icons inside other components.
+
+For icons, a `data-beeq` attribute pointing at the BEEQ SVGs on the CDN is the default. It is the right choice for prototypes, proofs of concept, and any project without its own icon setup: one line in the HTML entry (`index.html`, the Next.js root layout, or `app.head` in `nuxt.config`), no build changes, and no copied files. See [Setup via `data-beeq` attribute](https://www.beeq.design/guides/frameworks/html-web-components.md#setup-via-data-beeq-attribute).
+
+```html
+<script data-beeq="https://cdn.jsdelivr.net/npm/@beeq/core/dist/beeq/svg/"></script>
+```
+
+Use this script for CDN icons in every stack, React included; keep `setBasePath()` for self-hosted SVGs. Pin the version to match `package.json` when the app must not drift, for example `https://cdn.jsdelivr.net/npm/@beeq/core@1.15.0/dist/beeq/svg/`.
+
+Self-host the SVGs only when the project needs control over them: offline or intranet use, a strict content security policy, a curated icon subset, or a custom icon set. Copy them from `node_modules/@beeq/core/dist/beeq/svg` into the build output (with Vite, `vite-plugin-static-copy`; or copy only the icons you use into `public/`, keeping their file names), then call `setBasePath()` from `@beeq/core/dist/components` at startup with the URL they are served from. The [React guide](https://www.beeq.design/guides/frameworks/react.md) walks through both.
+
+## React
+
+Follow the [React guide](https://www.beeq.design/guides/frameworks/react.md).
+
+- Pass camelCase props: `debounceTime`, `justifyContent`, `disableSearch`.
+- Use `onBq…` handlers for BEEQ events. Native handlers such as `onClick` still receive native DOM events.
+- Call methods through a ref typed with the element interface:
+
+```tsx
+import { useRef } from 'react';
+import { BqButton, BqDialog } from '@beeq/react';
+
+export function DeleteProject() {
+  const dialogRef = useRef<HTMLBqDialogElement>(null);
+
+  return (
+    <>
+      <BqButton variant="danger" onBqClick={() => dialogRef.current?.show()}>
+        Delete project
+      </BqButton>
+      <BqDialog ref={dialogRef}>
+        <h2 slot="title">Delete this project?</h2>
+        <p>This removes the project and its history.</p>
+        <div slot="footer">
+          <BqButton appearance="secondary" onBqClick={() => dialogRef.current?.hide()}>
+            Cancel
+          </BqButton>
+          <BqButton variant="danger">Delete</BqButton>
+        </div>
+      </BqDialog>
+    </>
+  );
+}
+```
+
+- Import event types from `@beeq/core` when you extract handlers, for example `BqInputCustomEvent`.
+
+### Keep BEEQ types in wrappers
+
+Wrap the BEEQ component directly so its prop and event types survive:
+
+```tsx
+import { BqTooltip } from '@beeq/react';
+import type { ComponentProps } from 'react';
+import styled from 'styled-components';
+
+export const AppTooltip = styled(BqTooltip)`
+  min-width: 0;
+`;
+
+export type AppTooltipProps = ComponentProps<typeof BqTooltip>;
+```
+
+Do not cast the wrapper, for example `(BqTooltip ?? 'bq-tooltip') as ElementType`. The cast erases every BEEQ prop and event type.
+
+### Client-side routing
+
+Keep a real `href` so middle-click, modifier-click, and assistive technology still see a link. Intercept only plain left-clicks:
+
+```tsx
+import { BqButton } from '@beeq/react';
+import type { MouseEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+export function ProjectLink({ id }: { id: string }) {
+  const navigate = useNavigate();
+  const href = `/projects/${id}`;
+
+  const handleClick = (event: MouseEvent) => {
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    navigate(href);
+  };
+
+  return (
+    <BqButton appearance="link" href={href} onClick={handleClick}>
+      Open project
+    </BqButton>
+  );
+}
+```
+
+The same approach works for `bq-breadcrumb-item`. `bq-side-menu-item` has no `href`; navigate from its `bqClick` or the menu's `bqSelect` event.
+
+## Next.js
+
+Follow the [Next.js guide](https://www.beeq.design/guides/frameworks/next.md).
+
+- Import from `@beeq/react/ssr`. The standard `@beeq/react` wrapper marks every component `'use client'`, so it renders empty shells on the server.
+- Server components can render static BEEQ markup. Put event handlers and hooks in `'use client'` components.
+- Put the `data-beeq` script in the root layout. When the project self-hosts icons, call `setBasePath()` in a client component or effect; it is browser-only.
+
+## Angular
+
+Follow the [Angular guide](https://www.beeq.design/guides/frameworks/angular.md).
+
+- Import each component and value accessor into the standalone component's `imports`.
+- Generate NgModule code only for an existing module-based app.
+- Bind forms with the documented value accessors:
+
+| Component | Value accessor |
+| --- | --- |
+| `bq-checkbox`, `bq-switch` | `BooleanValueAccessor` |
+| `bq-input` (text) | Angular's default accessor, with `ngDefaultControl` on the element |
+| `bq-input` with `type="number"` | `NumericValueAccessor` |
+| `bq-textarea`, `bq-date-picker` | `TextValueAccessor` |
+| `bq-select` | `SelectValueAccessor` |
+| `bq-radio` | `RadioValueAccessor` |
+
+## Vue and Nuxt
+
+Follow the [Vue guide](https://www.beeq.design/guides/frameworks/vue.md).
+
+- Import PascalCase components from `@beeq/vue` and bind events with `@bqClick` or `@bqChange`.
+- `v-model` is supported only on these components:
+
+| Component | Bound prop |
+| --- | --- |
+| `BqCheckbox`, `BqSwitch` | `checked` |
+| `BqDatePicker`, `BqInput`, `BqRadioGroup`, `BqSelect`, `BqSlider`, `BqTextarea` | `value` |
+
+- Pair `v-model` with `@bqClear` on clearable inputs, or the ref keeps the old value after the user clears the field.
+- In Nuxt, add the `data-beeq` script through `app.head` in `nuxt.config`. When the project self-hosts icons, call `setBasePath()` from a `plugins/beeq.client.ts` plugin so it runs only in the browser.
+
+## HTML and Web Components
+
+Follow the [HTML and Web Components guide](https://www.beeq.design/guides/frameworks/html-web-components.md).
+
+- Close every element: `<bq-icon name="user"></bq-icon>`, never `<bq-icon name="user" />`.
+- Use attributes for static strings and element properties for booleans, numbers, arrays, and dynamic values.
+- Listen with `addEventListener('bqChange', (event) => …)`.
+- Configure icons with the `data-beeq` attribute on the module script; see [Setup](#setup).
+
+## Setup problems to rule out first
+
+| Symptom | Likely cause |
+| --- | --- |
+| Components render but look unstyled | The BEEQ stylesheet (`@beeq/core/dist/beeq/beeq.css`) is missing or loaded twice in conflicting order. See [Installation](https://www.beeq.design/getting-started/installation.md). |
+| Icons are blank | SVG files are not served, or the icon base path does not match the public URL. |
+| React events never fire | A kebab-case or native event name was used instead of `onBq…`. |
+| Hydration warnings in Next.js | `@beeq/react` was used instead of `@beeq/react/ssr`. |
+| Vue field keeps its value after clearing | `@bqClear` is not handled alongside `v-model`. |
+| Angular form control stays empty | The value accessor or `ngDefaultControl` is missing. |

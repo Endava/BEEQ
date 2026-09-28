@@ -1,0 +1,92 @@
+---
+title: "Skill reference: choosing BEEQ components"
+description: A decision guide for agents that picks BEEQ components by intent, lists required parent and child structures, and flags common mix-ups.
+---
+
+This reference supports the [BEEQ agent skill](../SKILL.md). Use it to narrow the choice, then confirm the winner on its component page before writing code. Each row links to the page that owns the final answer.
+
+Select by the interaction people need, not by visual resemblance. If two components look alike, the one whose "When to use" guidance matches the task wins.
+
+## Choose by intent
+
+### Actions and navigation
+
+| People need to… | Use | Not |
+| --- | --- | --- |
+| Trigger an action or submit a form | [`bq-button`](https://www.beeq.design/components/button.md) | A styled `div` or a link that does not navigate. |
+| Go to another page | `bq-button` with `href`, or a native link | A button that calls the router without an `href`. |
+| Open a short menu of actions or options from a trigger | [`bq-dropdown`](https://www.beeq.design/components/dropdown.md) with `bq-option-list` | `bq-select`, which is a form value. |
+| Move between sections of an application | [`bq-side-menu`](https://www.beeq.design/components/side-menu.md) with `bq-side-menu-item` | Tabs for top-level app navigation. |
+| Switch between peer views in the same context | [`bq-tab-group`](https://www.beeq.design/components/tab.md) with `bq-tab` | Tabs for a sequence the user must complete in order. |
+| Complete a sequence of steps | [`bq-steps`](https://www.beeq.design/components/steps.md) with `bq-step-item` | Tabs. |
+| See where they are in a hierarchy | [`bq-breadcrumb`](https://www.beeq.design/components/breadcrumb.md) with `bq-breadcrumb-item` | A row of links styled by hand. |
+
+### Form input
+
+| People need to… | Use | Not |
+| --- | --- | --- |
+| Enter short text, numbers, or email | [`bq-input`](https://www.beeq.design/components/input.md) | `bq-textarea`. |
+| Enter longer text | [`bq-textarea`](https://www.beeq.design/components/textarea.md) | `bq-input`. |
+| Pick one option from a long or compact list | [`bq-select`](https://www.beeq.design/components/select.md) with `bq-option` | Radios when there are many options. |
+| Pick one option from a few that should stay visible | [`bq-radio-group`](https://www.beeq.design/components/radio.md) with `bq-radio` | A select that hides a two-option choice. |
+| Pick several options | `bq-checkbox`, or `bq-select` with `multiple` | Several switches. |
+| Turn a setting on or off with an immediate effect | [`bq-switch`](https://www.beeq.design/components/switch.md) | A checkbox for an instant setting. |
+| Agree to or include one item in a form submission | [`bq-checkbox`](https://www.beeq.design/components/checkbox.md) | A switch. |
+| Pick a date or date range | [`bq-date-picker`](https://www.beeq.design/components/date-picker.md) | Three selects for day, month, and year. |
+| Pick a value on a continuous scale | [`bq-slider`](https://www.beeq.design/components/slider.md) | An input when precision matters more than the range. |
+
+### Feedback and status
+
+| People need to… | Use | Not |
+| --- | --- | --- |
+| Read an important message in context | [`bq-alert`](https://www.beeq.design/components/alert.md) | A toast that disappears before they read it. |
+| Get brief confirmation after an action | [`bq-toast`](https://www.beeq.design/components/toast.md) | An alert that shifts the layout. |
+| Notice an update that does not block work | [`bq-notification`](https://www.beeq.design/components/notification.md) | A dialog. |
+| Confirm, review, or complete a focused task | [`bq-dialog`](https://www.beeq.design/components/dialog.md) | A drawer for a blocking decision. |
+| Work with supporting content beside the main view | [`bq-drawer`](https://www.beeq.design/components/drawer.md) | A dialog that hides the context they need. |
+| Read brief supplementary help on hover or focus | [`bq-tooltip`](https://www.beeq.design/components/tooltip.md) | A tooltip for essential information or interactive content. |
+| See the state of an item | [`bq-status`](https://www.beeq.design/components/status.md) | A tag when nothing is clickable or removable. |
+| See a count or small label | [`bq-badge`](https://www.beeq.design/components/badge.md) | A tag. |
+| See, filter, or remove a category label | [`bq-tag`](https://www.beeq.design/components/tag.md) | A badge. |
+| Understand an empty or no-results view | [`bq-empty-state`](https://www.beeq.design/components/empty-state.md) | A lone line of grey text. |
+| Wait for work of known progress | [`bq-progress`](https://www.beeq.design/components/progress.md) | A spinner. |
+| Wait for work of unknown duration | [`bq-spinner`](https://www.beeq.design/components/spinner.md) | A progress bar that never moves. |
+
+### Content and structure
+
+| People need to… | Use | Not |
+| --- | --- | --- |
+| Read the page heading with context and actions | [`bq-page-title`](https://www.beeq.design/components/page-title.md) | A hand-built header row. |
+| Scan related content grouped in a container | [`bq-card`](https://www.beeq.design/components/card.md) | A `div` with a custom border and shadow. |
+| Expand and collapse sections | [`bq-accordion-group`](https://www.beeq.design/components/accordion.md) with `bq-accordion` | Custom disclosure markup. |
+| See a separation between regions | [`bq-divider`](https://www.beeq.design/components/divider.md) | A border on an empty element. |
+| Recognise a person or account | [`bq-avatar`](https://www.beeq.design/components/avatar.md) | An image with custom rounding. |
+| Understand an icon cue | [`bq-icon`](https://www.beeq.design/components/icon.md) with a Phosphor name | Emojis or inline SVG copied from elsewhere. |
+| Scan tabular data | A native `table` with the `bq-table` class ([Table](https://www.beeq.design/components/table.md)) | A `bq-table` element, which does not exist. |
+
+## Required parent and child structures
+
+These components only work in the documented structure. Read the component page for the full contract.
+
+| Parent | Children | Notes |
+| --- | --- | --- |
+| `bq-select` | `bq-option` | The select manages its internal option list. Do not add your own `bq-option-list`. |
+| `bq-dropdown` | A trigger in `slot="trigger"`, then `bq-option-list` with `bq-option`, optionally grouped in `bq-option-group` | The trigger is usually a `bq-button`. |
+| `bq-radio-group` | `bq-radio` | The group owns `name`, `value`, and `bqChange`. |
+| `bq-tab-group` | `bq-tab` | Each tab needs `tab-id` and `controls`. Render the panels yourself, each with the matching `id` and `role="tabpanel"`. |
+| `bq-steps` | `bq-step-item` | |
+| `bq-side-menu` | `bq-side-menu-item`, optional `slot="logo"` and `slot="footer"` | Items have no `href`; handle `bqClick` or `bqSelect` for navigation. |
+| `bq-breadcrumb` | `bq-breadcrumb-item` | Items take `href`; the last item is the current page. |
+| `bq-accordion-group` | `bq-accordion` | Use the group for coordinated expand behaviour. |
+
+## Common mix-ups
+
+- **Select versus dropdown.** `bq-select` holds a form value with a label and validation. `bq-dropdown` opens a menu of actions. If the choice is submitted with a form, use the select.
+- **Alert, notification, or toast.** Alerts sit inline where the problem is. Notifications announce updates without blocking. Toasts confirm what just happened and then leave. Never put the only copy of an error in a toast.
+- **Tag, badge, or status.** Status describes an item's state with a coloured marker and text. Badges show counts or tiny labels. Tags label categories and can be clickable or removable.
+- **Dialog or drawer.** Dialogs block until the user decides. Drawers keep the main view in reach.
+- **Switch or checkbox.** Switches take effect immediately. Checkboxes wait for a submit.
+
+## When BEEQ has nothing that fits
+
+Build the control from semantic HTML and BEEQ tokens, match the focus, disabled, and validation treatment of nearby BEEQ controls, and tell the user it is a custom element. Do not invent a `bq-*` tag or attribute.
