@@ -2,6 +2,8 @@
 name: doc-component
 description: Generate or complete a Mintlify MDX documentation page for a BEEQ component. Reads the component source to extract props, events, slots, shadow parts, and CSS variables, and follows the mandatory page structure from the documentation guidelines.
 argument-hint: Component name (e.g. "card") or path to the component tsx file, link to the component source file, or link to an existing incomplete documentation page.
+metadata:
+  internal: true
 ---
 
 # Write documentation for BEEQ components

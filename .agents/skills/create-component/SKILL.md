@@ -2,6 +2,8 @@
 name: create-component
 description: 'Create a new BEEQ StencilJS web component. Use for: scaffolding bq-* components, adding new design system elements, generating component files (TSX, SCSS, types, stories, tests). Follows BEEQ component structure, naming conventions, JSDoc requirements, Shadow DOM, and Nx monorepo placement under packages/beeq/src/components/.'
 argument-hint: 'Component name without the bq- prefix (e.g. "slider")'
+metadata:
+  internal: true
 ---
 
 # Create a BEEQ Component

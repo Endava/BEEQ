@@ -2,6 +2,8 @@
 name: fix-accessibility
 description: 'Audit and fix WCAG 2.1 Level AA accessibility issues in BEEQ StencilJS components. Use for: adding missing ARIA attributes, fixing keyboard navigation, managing focus, fixing color contrast issues, adding screen reader support, fixing role usage, and writing accessibility-related E2E tests for bq-* components.'
 argument-hint: 'Component name or path (e.g. "bq-button" or packages/beeq/src/components/button/bq-button.tsx)'
+metadata:
+  internal: true
 ---
 
 # Fix Accessibility in a BEEQ Component

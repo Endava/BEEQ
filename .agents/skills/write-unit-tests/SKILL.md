@@ -2,6 +2,8 @@
 name: write-unit-tests
 description: 'Write Vitest unit tests for BEEQ shared utilities. Use for: adding or fixing unit tests for helper functions, utilities, and pure logic in packages/beeq/src/shared/utils/. Follows AAA pattern, uses vi.fn()/vi.spyOn(), fake timers, and proper mock cleanup. Not for component E2E tests (use write-e2e-tests skill instead).'
 argument-hint: 'Utility name or file path (e.g. "debounce" or packages/beeq/src/shared/utils/debounce.ts)'
+metadata:
+  internal: true
 ---
 
 # Write BEEQ Unit Tests

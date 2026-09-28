@@ -2,6 +2,8 @@
 name: review-component
 description: 'Review a BEEQ StencilJS component against design system guidelines and project standards. Use for: code review of bq-* components, checking section order, naming conventions, JSDoc completeness, prop validation, event documentation, accessibility, styling practices, and test coverage. Returns a structured review with pass/fail per category and actionable fixes.'
 argument-hint: 'Path to the component tsx file (e.g. packages/beeq/src/components/button/bq-button.tsx)'
+metadata:
+  internal: true
 ---
 
 # Review a BEEQ Component
