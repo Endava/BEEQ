@@ -124,7 +124,7 @@ You can add BEEQ to an existing React project in a few steps:
           ```tsx src/main.tsx highlight={3,7} expandable
           import React from "react";
           import ReactDOM from "react-dom/client";
-          import { setBasePath } from "@beeq/core";
+          import { setBasePath } from "@beeq/core/dist/components";
           import App from "./App";
           import "./index.css";
 
@@ -147,7 +147,7 @@ You can add BEEQ to an existing React project in a few steps:
         If your project already serves icons from another location, you can point BEEQ there instead:
 
         ```ts
-        import { setBasePath } from "@beeq/core";
+        import { setBasePath } from "@beeq/core/dist/components";
 
         setBasePath("https://cdn.jsdelivr.net/npm/heroicons@2.1.5/24/outline");
         ```
@@ -172,7 +172,7 @@ You can add BEEQ to an existing React project in a few steps:
         For example, if you only need `caret-down.svg`, `hand-waving.svg`, `thumbs-up.svg`, `user.svg`, and `x-circle.svg`, copy those files to `public/svg` and call:
 
         ```ts
-        import { setBasePath } from "@beeq/core";
+        import { setBasePath } from "@beeq/core/dist/components";
 
         setBasePath("/svg");
         ```
@@ -262,7 +262,7 @@ You can add BEEQ to an existing React project in a few steps:
           ```tsx src/main.tsx focus={7} expandable
           import React from "react";
           import ReactDOM from "react-dom/client";
-          import { setBasePath } from "@beeq/core";
+          import { setBasePath } from "@beeq/core/dist/components";
           import App from "./App";
           import "./index.css";
 
