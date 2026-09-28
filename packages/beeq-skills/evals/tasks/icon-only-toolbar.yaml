@@ -11,7 +11,16 @@ workspace:
 expected:
   criteria: >-
     Every icon-only button has an accessible name (the label prop, or an equivalent accessible
-    label) that describes its action. The toolbar is keyboard-reachable and grouped semantically.
+    label) that describes its action. The toolbar is keyboard-reachable and grouped semantically
+    with role toolbar and a name. BEEQ loads from the CDN when the page has no build step, or from
+    the bundler entry files, never through /node_modules/ URLs in the HTML, and the icons are
+    configured so they render.
   checks:
     - name: uses-only-icon
       match: ['only-icon', '<bq-icon']
+    - name: toolbar-role
+      match: 'role="toolbar"'
+    - name: loads-beeq
+      match: '(cdn\.jsdelivr\.net/npm|unpkg\.com|esm\.sh)/@beeq/core(@[^/]+)?/dist/beeq/beeq\.esm\.js|defineCustomElements\('
+    - name: icon-base-path
+      match: 'setBasePath\(|data-beeq'

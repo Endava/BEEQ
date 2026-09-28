@@ -2,28 +2,32 @@
 # Reference answer for brand-button-override, used by `nx run beeq-skills:eval --validate`.
 set -euo pipefail
 mkdir -p src
-cat > src/brand.css <<'EOF'
-/* Brand colour set once on the semantic tokens, so buttons and every other BEEQ component follow it. */
+cat > src/brand.css <<'CSS'
+/* The base brand tokens, set once. Every brand role, hover and pressed fill included, derives from them. */
 :root {
-  --bq-ui--brand: #6B2FBA;
-  --bq-ui--brand-alt: color-mix(in srgb, var(--bq-ui--brand) 85%, black);
-  --bq-text--brand: var(--bq-ui--brand);
-  --bq-stroke--brand: var(--bq-ui--brand);
+  --bq-brand: #6B2FBA;
+  --bq-brand-light: color-mix(in srgb, var(--bq-brand) 15%, white);
+  --bq-brand-dark: color-mix(in srgb, var(--bq-brand) 60%, black);
+  --bq-focus: var(--bq-brand);
 }
-EOF
-cat > index.html <<'EOF'
+CSS
+cat > index.html <<'HTML'
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <title>Marketing</title>
-    <link rel="stylesheet" href="/node_modules/@beeq/core/dist/beeq/beeq.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@beeq/core/dist/beeq/beeq.css" />
     <link rel="stylesheet" href="/src/brand.css" />
-    <script type="module" src="/node_modules/@beeq/core/dist/beeq/beeq.esm.js"></script>
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/@beeq/core/dist/beeq/beeq.esm.js"
+      data-beeq="https://cdn.jsdelivr.net/npm/@beeq/core/dist/beeq/svg/"
+    ></script>
   </head>
   <body>
-    <bq-button variant="standard">Get started</bq-button>
+    <bq-button>Get started</bq-button>
   </body>
 </html>
-EOF
+HTML
 rm -- "$0"

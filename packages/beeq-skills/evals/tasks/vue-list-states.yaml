@@ -10,9 +10,18 @@ workspace:
     dest: .
 expected:
   criteria: >-
-    All four states are distinct and reachable. Each state has a text cue, not colour alone. The
-    empty state explains what is missing and offers one action; the error explains what failed and
-    offers a retry. Vue event bindings use the bq-prefixed events.
+    All four states are distinct and reachable. Loading uses a spinner with visible text. The empty
+    state and the error state both use bq-empty-state, because the list region has nothing else to
+    show: the empty state explains what is missing and offers one action; the error explains what
+    failed and offers a Retry button in its footer. bq-alert is not used as the error state for the
+    whole region. Each state has a text cue, not colour alone. Vue event bindings use the
+    bq-prefixed events.
   checks:
-    - name: uses-state-components
-      match: ['<bq-(spinner|empty-state)\b', '<bq-(alert|empty-state|notification)\b']
+    - name: loading-spinner
+      match: '<(bq-spinner|BqSpinner)\b'
+    - name: empty-and-error-states
+      match: '<(bq-empty-state|BqEmptyState)\b[\s\S]*<(bq-empty-state|BqEmptyState)\b'
+    - name: no-alert-error-state
+      absent: '<(bq-alert|BqAlert)\b'
+    - name: bq-events
+      match: '(@|v-on:)bq[A-Z]\w*='

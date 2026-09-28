@@ -32,7 +32,7 @@ pnpm exec nx run beeq-skills:eval --eval=tooltip-truncation --agent=claude --mod
 
 Configurations: `smoke` (tasks tagged `smoke`, 5 trials), `reliable` (15), `regression` (30). Without a configuration every task runs once. Useful options: `--agent` (`copilot` or `claude`), `--model`, `--variants`, `--filter=stack=react`, `--grader=deterministic`, `--threshold`. See `tools/src/executors/skill-eval/schema.json` for the rest.
 
-Every trial runs a real agent CLI, so it costs requests: 11 tasks × 2 variants is 22 agent runs per trial. Start with `--eval` or `-c smoke`.
+Every trial runs a real agent CLI, so it costs requests: 15 tasks × 2 variants is 30 agent runs per trial. Start with `--eval` or `-c smoke`.
 
 **Results** go to `tmp/skill-evals/iteration-N/`: one skillgrade folder per variant plus `benchmark.json`. To view them:
 

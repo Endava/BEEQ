@@ -1,14 +1,18 @@
 #!/usr/bin/env bash
 # Reference answer for icon-only-toolbar, used by `nx run beeq-skills:eval --validate`.
 set -euo pipefail
-cat > index.html <<'EOF'
+cat > index.html <<'HTML'
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <title>Editor</title>
-    <link rel="stylesheet" href="/node_modules/@beeq/core/dist/beeq/beeq.css" />
-    <script type="module" src="/node_modules/@beeq/core/dist/beeq/beeq.esm.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@beeq/core/dist/beeq/beeq.css" />
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/@beeq/core/dist/beeq/beeq.esm.js"
+      data-beeq="https://cdn.jsdelivr.net/npm/@beeq/core/dist/beeq/svg/"
+    ></script>
   </head>
   <body>
     <div role="toolbar" aria-label="Text formatting">
@@ -19,5 +23,5 @@ cat > index.html <<'EOF'
     </div>
   </body>
 </html>
-EOF
+HTML
 rm -- "$0"

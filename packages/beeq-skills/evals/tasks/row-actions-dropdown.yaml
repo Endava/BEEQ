@@ -1,0 +1,29 @@
+name: row-actions-dropdown
+metadata:
+  stack: react
+  tags: [patterns, selection]
+instruction: >-
+  In a React users table with name, email, and role columns, give each row a dropdown with Edit,
+  Duplicate, and Delete.
+workspace:
+  - src: '{{evals}}/fixtures/react'
+    dest: .
+expected:
+  criteria: >-
+    The dropdown runs actions rather than holding a form value, so each row uses BqDropdown with a
+    trigger in slot="trigger" and a BqOptionList of BqOption items, not BqSelect. Picking an option is
+    handled from the option list's bqSelect event. The trigger has an accessible name that says which
+    row it acts on, and Delete is distinguishable as destructive by more than colour. The table is a
+    native table with the bq-table class. The project imports the BEEQ stylesheet once and
+    configures icons.
+  checks:
+    - name: dropdown
+      match: ['<BqDropdown\b', '<BqOptionList\b', '<BqOption\b']
+    - name: trigger-slot
+      match: 'slot=["'']trigger'
+    - name: select-handler
+      match: 'onBqSelect='
+    - name: no-select
+      absent: '<BqSelect\b'
+    - name: native-table
+      match: '<table\b[^>]*\bclass(Name)?=["''{`][^>]*\bbq-table\b'

@@ -3,18 +3,25 @@ metadata:
   stack: next
   tags: [patterns]
 instruction: >-
-  In a Next.js App Router page, add a Publish button that opens a dialog asking the user to confirm
-  publishing the article, with Cancel and Publish actions.
+  In a Next.js App Router page for editing an article, show the article title and its Draft status
+  in the page header, with a Publish button there that opens a dialog asking the user to confirm
+  publishing, with Cancel and Publish actions. After publishing, the status reads Published.
 workspace:
   - src: '{{evals}}/fixtures/next'
     dest: .
 expected:
   criteria: >-
     Interactive BEEQ code runs in a client component; SSR-safe imports are used where the page
-    renders on the server. The dialog uses documented slots (title, content, footer) and methods or
-    props, and focus returns sensibly on close.
+    renders on the server. The page header is BqPageTitle, with the title as its content and the
+    status and Publish action in its slots, rather than a hand-built header and h1. The status is a
+    BqStatus with a text label. The dialog uses documented slots (title, content, footer) and
+    methods or props, and focus returns sensibly on close.
   checks:
     - name: client-boundary
       match: '[''"]use client[''"]'
     - name: dialog-methods
       match: ['<BqDialog\b', '\.(show|hide)\(\)|\bopen=\{']
+    - name: page-title
+      match: '<BqPageTitle\b'
+    - name: status
+      match: '<BqStatus\b'

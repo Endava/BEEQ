@@ -2,45 +2,43 @@
 # Reference answer for tooltip-truncation, used by `nx run beeq-skills:eval --validate`.
 set -euo pipefail
 mkdir -p src
-cat > src/ProjectList.tsx <<'EOF'
-import { BqBadge, BqIcon, BqTooltip } from '@beeq/react';
+cat > src/ProjectCard.tsx <<'EOF'
+import { BqBadge, BqCard, BqIcon, BqTooltip } from '@beeq/react';
 
-import './ProjectList.css';
+import './ProjectCard.css';
 
 type Project = { id: string; name: string; count: number };
 
-export function ProjectList({ projects }: { projects: Project[] }) {
+export function ProjectCard({ project }: { project: Project }) {
   return (
-    <ul className="project-list">
-      {projects.map((project) => (
-        <li key={project.id} className="project-row">
-          <BqIcon name="folder" aria-hidden="true" />
-          <BqTooltip className="project-row__tooltip" placement="right">
-            <span slot="trigger" className="project-row__name">
-              {project.name}
-            </span>
+    <BqCard>
+      <div className="project-card__header">
+        <BqIcon name="folder" aria-hidden="true" />
+        <BqTooltip className="project-card__tooltip">
+          <span slot="trigger" className="project-card__name">
             {project.name}
-          </BqTooltip>
-          <BqBadge>{project.count}</BqBadge>
-        </li>
-      ))}
-    </ul>
+          </span>
+          {project.name}
+        </BqTooltip>
+        <BqBadge>{project.count}</BqBadge>
+      </div>
+    </BqCard>
   );
 }
 EOF
-cat > src/ProjectList.css <<'EOF'
-.project-row {
+cat > src/ProjectCard.css <<'EOF'
+.project-card__header {
   display: flex;
   align-items: center;
   gap: var(--bq-spacing-s);
 }
 
-.project-row__tooltip {
+.project-card__tooltip {
   flex: 1;
   min-width: 0;
 }
 
-.project-row__name {
+.project-card__name {
   display: block;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -68,11 +66,11 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
 import './index.css';
-import { ProjectList } from './ProjectList';
+import { ProjectCard } from './ProjectCard';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <ProjectList projects={[{ id: '1', name: 'Customer analytics dashboard migration', count: 12 }]} />
+    <ProjectCard project={{ id: '1', name: 'Customer analytics dashboard migration', count: 12 }} />
   </StrictMode>,
 );
 EOF

@@ -1,0 +1,35 @@
+name: side-menu-navigation
+metadata:
+  stack: react
+  tags: [patterns]
+instruction: >-
+  In a React app, add a sidebar list of projects on the left. Each row shows an icon, the project
+  name (names can be long), and an open-issue count on the right. Selecting a row opens that
+  project by calling the openProject(id) function the app passes in, and the current project is
+  highlighted.
+workspace:
+  - src: '{{evals}}/fixtures/react'
+    dest: .
+expected:
+  criteria: >-
+    The rows navigate, so the answer uses BqSideMenu with one BqSideMenuItem per project rather than
+    a hand-built list. Each item puts a decorative, aria-hidden BqIcon in slot="prefix", the project
+    name as the item content, and a BqBadge count in slot="suffix". Long names rely on the item's
+    built-in truncation instead of custom truncation CSS or shadow-part overrides. The current
+    project's item is active, and selection is handled from the bqSelect or bqClick event, since
+    side menu items have no href. The project imports the BEEQ stylesheet once and configures icons.
+  checks:
+    - name: side-menu
+      match: ['<BqSideMenu\b', '<BqSideMenuItem\b']
+    - name: prefix-icon
+      match: '<BqIcon\b(?=[^>]*\bslot=.prefix)'
+    - name: suffix-badge
+      match: '<BqBadge\b(?=[^>]*\bslot=.suffix)'
+    - name: active-item
+      match: '<BqSideMenuItem\b[^>]*\bactive\b'
+    - name: select-handler
+      match: 'onBq(Select|Click)='
+    - name: decorative-icon
+      match: '<BqIcon\b[^>]*aria-hidden'
+    - name: no-part-override
+      absent: '::part\('

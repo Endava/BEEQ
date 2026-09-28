@@ -17,4 +17,4 @@ expected:
     - name: uses-form-controls
       match: ['<bq-input', '<bq-textarea', '<bq-checkbox', '<bq-button']
     - name: loads-stylesheet
-      match: '@beeq/core/dist/beeq/beeq\.css'
+      match: '@beeq/core(@[^/]+)?/dist/beeq/beeq\.css'

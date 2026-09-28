@@ -3,9 +3,9 @@ metadata:
   stack: react
   tags: [smoke, layout]
 instruction: >-
-  In a React sidebar list, each row shows an icon, a long project name, and a count badge on the
-  right. The name must truncate with an ellipsis when the sidebar is narrow, and hovering the name
-  shows the full name in a tooltip.
+  In a React dashboard, each project card has a header row with an icon, a long project name, and a
+  count badge on the right. The name must truncate with an ellipsis when the card is narrow, and
+  hovering the name shows the full name in a tooltip.
 workspace:
   - src: '{{evals}}/fixtures/react'
     dest: .
@@ -13,10 +13,11 @@ expected:
   criteria: >-
     Truncation (overflow hidden, ellipsis, nowrap) is applied to the consumer's own slotted text
     element, and the tooltip host is allowed to shrink with min-width 0 (or min-inline-size 0).
-    The tooltip's shadow parts are not overridden to fix layout. The project has no BEEQ setup
-    yet, so the answer imports the BEEQ stylesheet once and configures icons so the row icons
+    Each card is a BqCard, with the header row as the consumer's own markup inside it. The
+    tooltip's shadow parts are not overridden to fix layout. The project has no BEEQ setup
+    yet, so the answer imports the BEEQ stylesheet once and configures icons so the header icons
     render, preferably with a data-beeq script pointing at the BEEQ SVGs on the CDN; setBasePath
-    with self-hosted SVGs is also correct. The row icon is decorative and hidden from assistive
+    with self-hosted SVGs is also correct. The header icon is decorative and hidden from assistive
     technology rather than labelled.
   checks:
     - name: host-min-width
@@ -24,8 +25,10 @@ expected:
     - name: no-trigger-layout-override
       absent: '::part\(trigger\)\s*\{[^}]*(max-width|max-inline-size|display|min-width|min-inline-size)'
     - name: stylesheet
-      match: '@beeq/core/dist/beeq/beeq\.css'
+      match: '@beeq/core(@[^/]+)?/dist/beeq/beeq\.css'
     - name: icon-base-path
       match: 'setBasePath\(|data-beeq'
     - name: decorative-icon
       match: '<BqIcon[^>]*aria-hidden'
+    - name: uses-card
+      match: '<BqCard\b'
