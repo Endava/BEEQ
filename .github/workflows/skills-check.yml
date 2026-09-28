@@ -35,7 +35,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: 🛠 Setup Volta
-        uses: volta-cli/action@v5
+        uses: volta-cli/action@615a78f6c83e116339c53b94f3f82b4d6c0b7d18 # v5.0.0
 
       - name: 💫 Load and cache dependencies
         uses: ./.github/actions/cache-deps
@@ -51,11 +51,11 @@ jobs:
 
       - name: 📦 npx skills lists only public skills
         run: |
-          public=$(npx -y skills@1.7.0 add . --list 2>&1)
+          public=$(npx --yes --ignore-scripts skills@1.7.0 add . --list 2>&1)
           echo "$public"
           echo "$public" | grep -q "Found 1 skill" || { echo "::error::Expected exactly one public skill (beeq)."; exit 1; }
           echo "$public" | grep -qw "beeq" || { echo "::error::The beeq skill is not discoverable."; exit 1; }
 
           expected=$(( $(ls .agents/skills/*/SKILL.md | wc -l) + 1 ))
-          all=$(INSTALL_INTERNAL_SKILLS=1 npx -y skills@1.7.0 add . --list 2>&1)
+          all=$(INSTALL_INTERNAL_SKILLS=1 npx --yes --ignore-scripts skills@1.7.0 add . --list 2>&1)
           echo "$all" | grep -q "Found ${expected} skills" || { echo "::error::Expected ${expected} skills with INSTALL_INTERNAL_SKILLS=1."; exit 1; }
