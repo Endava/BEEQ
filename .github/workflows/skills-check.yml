@@ -1,18 +1,13 @@
 name: Skills check
 
+# CircleCI runs the Nx side: `nx sync:check` plus check, typecheck, test, and
+# eval-validate for beeq-skills and tools. This workflow covers what Nx cannot:
+# what `npx skills` finds when a consumer installs from this repo.
 on:
   pull_request:
     paths:
-      - 'packages/beeq-skills/**'
       - 'skills/**'
       - '.agents/skills/**'
-      - 'apps/beeq-docs/skill.md'
-      - 'apps/beeq-docs/skill/**'
-      - 'apps/beeq-docs/docs.json'
-      - 'tools/src/generators/sync-skills/**'
-      - 'tools/src/executors/skill-eval/**'
-      - 'packages/beeq/src/components/**'
-      - 'packages/beeq-tailwindcss/src/**'
       - '.github/workflows/skills-check.yml'
 
 permissions:
@@ -24,7 +19,7 @@ concurrency:
 
 jobs:
   check:
-    name: 🧩 Validate agent skills
+    name: 🧩 Check skill discovery
     runs-on: ubuntu-latest
     env:
       VOLTA_FEATURE_PNPM: 1
@@ -36,18 +31,6 @@ jobs:
 
       - name: 🛠 Setup Volta
         uses: volta-cli/action@615a78f6c83e116339c53b94f3f82b4d6c0b7d18 # v5.0.0
-
-      - name: 💫 Load and cache dependencies
-        uses: ./.github/actions/cache-deps
-
-      - name: 🔁 skills/ and the docs copies match packages/beeq-skills/src
-        run: pnpm exec nx sync:check
-
-      - name: 🧪 Skill tests and type check
-        run: pnpm skills:test
-
-      - name: ✅ Reference solutions score 1.0
-        run: pnpm exec nx run beeq-skills:eval --validate
 
       - name: 📦 npx skills lists only public skills
         run: |

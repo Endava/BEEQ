@@ -44,6 +44,13 @@
         "cwd": "tools"
       }
     },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "pnpm exec tsc -p tsconfig.lib.json --noEmit",
+        "cwd": "{projectRoot}"
+      }
+    },
     "lint": {
       "executor": "nx:run-commands",
       "options": {

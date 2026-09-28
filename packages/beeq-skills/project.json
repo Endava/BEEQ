@@ -51,9 +51,25 @@
         }
       }
     },
+    "eval-validate": {
+      "executor": "@beeq/tools:skill-eval",
+      "cache": true,
+      "inputs": [
+        "default",
+        "^default",
+        {
+          "externalDependencies": ["skillgrade"]
+        }
+      ],
+      "options": {
+        "skill": "skills/beeq",
+        "evalsDir": "packages/beeq-skills/evals",
+        "validate": true,
+        "outputPath": "tmp/skill-evals/validate"
+      }
+    },
     "typecheck": {
       "executor": "nx:run-commands",
-      "inputs": ["default", "^default"],
       "options": {
         "command": "pnpm exec tsc -p tsconfig.json",
         "cwd": "{projectRoot}"

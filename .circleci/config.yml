@@ -113,6 +113,11 @@ jobs:
       - run:
           name: 🧾 NX report
           command: pnpm exec nx report
+      # Nx skips the sync check when it runs tasks in CI, so it needs its own step.
+      # Runs before Nx Cloud starts so a stale workspace fails without starting agents.
+      - run:
+          name: 🔁 Check Nx sync generators
+          command: pnpm exec nx sync:check
       - nx/set-shas
       - run:
           name: ▶️ Start Nx Cloud CI Run
@@ -120,10 +125,17 @@ jobs:
       # Run all Nx commands
       - run:
           name: 🩺 Run Linter, Formatter, and Import Sorting
-          command: pnpm exec nx affected -t check --exclude='*,!tag:core' --parallel=3 --base=$NX_BASE --head=$NX_HEAD --verbose
+          command: pnpm exec nx affected -t check --exclude='*,!tag:core,!tag:skills,!tag:tools' --parallel=3 --base=$NX_BASE --head=$NX_HEAD --verbose
+      - run:
+          name: 🔠 Run Type Check
+          command: pnpm exec nx affected -t typecheck --exclude='*,!tag:core,!tag:skills,!tag:tools' --parallel=3 --base=$NX_BASE --head=$NX_HEAD --verbose
       - run:
           name: 🧰 Run Unit Tests
-          command: pnpm exec nx affected -t test --exclude='*,!tag:core' --parallel=3 --base=$NX_BASE --head=$NX_HEAD --verbose
+          command: pnpm exec nx affected -t test --exclude='*,!tag:core,!tag:skills,!tag:tools' --parallel=3 --base=$NX_BASE --head=$NX_HEAD --verbose
+      - run:
+          name: ✅ Validate Skill Eval Graders
+          # Runs each eval task's reference solution through the deterministic graders. No agent, no tokens.
+          command: pnpm exec nx affected -t eval-validate --exclude='*,!tag:skills' --base=$NX_BASE --head=$NX_HEAD --verbose
       - run:
           name: ⏳ Build Libraries
           command: pnpm exec nx affected -t build --exclude='*,!tag:publishable' --parallel=3 --base=$NX_BASE --head=$NX_HEAD --verbose

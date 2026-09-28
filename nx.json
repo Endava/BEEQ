@@ -47,6 +47,17 @@
       "cache": true,
       "inputs": ["default", "^default", "{workspaceRoot}/jest.preset.js"]
     },
+    "typecheck": {
+      "cache": true,
+      "inputs": [
+        "default",
+        "^default",
+        "{workspaceRoot}/tsconfig.base.json",
+        {
+          "externalDependencies": ["typescript"]
+        }
+      ]
+    },
     "prebuild": {
       "cache": true,
       "dependsOn": ["^build"],
