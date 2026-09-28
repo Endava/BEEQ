@@ -9,7 +9,7 @@ description: >
 license: Apache-2.0
 compatibility: Works with @beeq/core and the official React, Angular, and Vue wrappers in modern browsers, with or without a bundler.
 metadata:
-  version: "1.3"
+  version: "1.4"
   docs: "https://www.beeq.design"
   storybook: "https://storybook.beeq.design"
   source: "https://github.com/Endava/BEEQ"
@@ -40,7 +40,7 @@ Three sources, three jobs:
 
 - **Installed versions**: the `@beeq/*` versions in `package.json`. The public docs describe the latest release.
 - **Theme and mode**: `bq-theme` and `bq-mode` on `<html>` or a scoped container, and any stylesheet overriding `--bq-*` tokens. That stylesheet **is** the project's theme; extend it.
-- **Setup**: where the BEEQ stylesheet is imported and the icon base path is set. When either is missing, adding it is part of the task: import `@beeq/core/dist/beeq/beeq.css` once, and add `<script data-beeq="https://cdn.jsdelivr.net/npm/@beeq/core/dist/beeq/svg/"></script>` to the HTML entry. Self-hosted SVGs with `setBasePath()` are for projects that need control over them; see [Setup](references/frameworks.md#setup).
+- **Setup**: where the BEEQ stylesheet is imported and the icon base path is set. When either is missing, adding it is part of the task: import `@beeq/core/dist/beeq/beeq.css` once, and add `<script data-beeq="https://cdn.jsdelivr.net/npm/@beeq/core/dist/beeq/svg/"></script>` to the HTML entry. A plain HTML page with no build step links `beeq.css` and `beeq.esm.js` from the CDN; with a bundler, the entry files import them. HTML never links `/node_modules/` URLs. Self-hosted SVGs with `setBasePath()` are for projects that need control over them. All paths: [Setup](references/frameworks.md#setup).
 - **House recipes**: wrapper components (`<AppButton>`, `styled(BqButton)`), shared form-field layouts, router-link patterns, and form-library bindings.
 - **Agent briefs**: the project's own `DESIGN.md`, `AGENTS.md`, `CLAUDE.md`, or `.github/copilot-instructions.md`.
 - **The nearest existing screen**: how it handles layout, navigation, spacing, and action placement.
@@ -58,18 +58,20 @@ The stack decides imports, prop casing, and event syntax (see [Framework essenti
 
 List the states that change a component's footprint: helper text, validation messages, loading, multiple selected values, open overlays. Spacing rhythm, host sizing, and the polish checklist: [layout-and-composition.md](references/layout-and-composition.md).
 
-**Done when** the stack, the scope, and the footprint-changing states are written down.
+Then list every UI piece the request names or implies, and write down each piece's **job**: what people do with it and what it does to the page. It navigates, holds a value, runs an action, reports on content still on screen, stands in for a region with nothing to show, or blocks until a decision. The job picks the component through [choosing-components.md](references/choosing-components.md#name-each-pieces-job); the request's words are only clues. "Dropdown", "panel", "toggle", and "error" each name different components in different contexts, and a piece nobody named, such as the state after a failed save, still needs one. A job no component covers is semantic HTML on tokens; name it as such.
+
+**Done when** the stack, the scope, the footprint-changing states, and every piece with its job and its component (or "semantic HTML") are written down.
 
 ## 3. Build down the ladder
 
 For every custom class, literal value, or hand-built control, walk down this ladder and stop at the first rung that does the job:
 
 1. **A house recipe** from step 1.
-2. **A BEEQ component**, chosen by the interaction people need rather than by visual resemblance. Compare the "When to use" guidance on the [component overview](https://www.beeq.design/components/overview.md). Commonly re-invented: a pill or label is `bq-tag` or `bq-badge`; a section rule is `bq-divider`; a coloured state dot with text is `bq-status`; a "nothing here yet" block is `bq-empty-state`; an inline message is `bq-alert`. Decision guide by intent, with required parent and child structures: [choosing-components.md](references/choosing-components.md).
+2. **A BEEQ component**, chosen by the piece's job from step 2 rather than by its name or its look. Compare the "When to use" guidance on the [component overview](https://www.beeq.design/components/overview.md). Jobs agents most often hand-build: grouping related content in the page flow (`bq-card`); the page's heading with its context and actions (`bq-page-title`); an item's state (`bq-status`), count (`bq-badge`), or removable category (`bq-tag`); separating regions (`bq-divider`); a region with nothing to show, whether empty or failed to load (`bq-empty-state`); a message about content still on screen (`bq-alert`); rows that take people to another section (`bq-side-menu-item` inside `bq-side-menu`). The job questions, words that change meaning with context, and required parent and child structures: [choosing-components.md](references/choosing-components.md).
 3. **A documented prop** (`variant`, `appearance`, `size`, `disabled`, `validation-status`). Start from defaults and omit props that repeat them.
-4. **A semantic token** for everything around the component: `--bq-spacing-*`, `--bq-background--*`, `--bq-text--*`, `--bq-stroke--*`, `--bq-radius--*`, `--bq-box-shadow--*`, `--bq-font-size--*`. BEEQ Tailwind utilities (`gap-m`, `bg-primary`) only when the project configures `@beeq/tailwindcss`. Token roles, safe pairings, and brand overrides: [theming.md](references/theming.md).
-5. **A documented component CSS custom property** on the host, such as `--bq-button--border-radius`.
-6. **A documented `::part()`** for exposed internal structure. Slotted children stay consumer-owned; style them as ordinary elements.
+4. **A semantic token** for everything around the component: `--bq-spacing-*`, `--bq-background--*`, `--bq-text--*`, `--bq-stroke--*`, `--bq-radius--*`, `--bq-box-shadow--*`, `--bq-font-size--*`, `--bq-stroke-s` for border widths, and `--bq-font-family`, the only font-family token. Copy names from the exact list in [theming.md](references/theming.md#semantic-tokens-first); a guessed name resolves to nothing. `beeq.css` already sets the font, text colour, and background on `html` and `body`, so product CSS starts at layout. Layout dimensions have no token: size containers, grid tracks, and breakpoints as the [grid foundations](https://www.beeq.design/foundations/grid.md) do, in `rem`, with `ch` for a text measure; details in [layout-and-composition.md](references/layout-and-composition.md#layout-dimensions). BEEQ Tailwind utilities (`gap-m`, `bg-primary`) only when the project configures `@beeq/tailwindcss`. Safe pairings and brand overrides: [theming.md](references/theming.md).
+5. **A documented component CSS custom property** on the host, such as `--bq-button--border-radius` or `--bq-card--padding`. Padding, background, border, and radius are usually variables; check the component's CSS custom properties table first.
+6. **A documented `::part()`** for a property no variable covers. Slotted children stay consumer-owned; style them as ordinary elements.
 7. **Scoped custom CSS** on tokens, only for requirements the API does not cover, leaving BEEQ's states and theme behaviour intact.
 
 When BEEQ has no suitable component, use semantic native HTML styled with BEEQ tokens, and say so.
@@ -83,41 +85,43 @@ Each row pairs the common mistake with its replacement and the reason. Use the r
 | Instead of… | Do this | Why |
 | --- | --- | --- |
 | `<bq-input />` in HTML | `<bq-input></bq-input>` | Custom elements never self-close; the parser makes the following markup their children. |
-| Hex, `px`, or `rem` literals | `--bq-spacing-*`, `--bq-radius--*`, `--bq-font-size--*`, semantic colour tokens | Literals ignore the active theme and mode. |
+| Hex colours, or `px` and `rem` for spacing, radius, type, or border width | Semantic colour tokens, `--bq-spacing-*`, `--bq-radius--*`, `--bq-font-size--*`, `--bq-stroke-s` | Literals drift off the scale and ignore the active theme and mode. Layout dimensions (container widths, track minimums, breakpoints) have no token and stay in `rem`. |
 | Palette primitives (`--bq-blue-600`) in product CSS | Semantic tokens (`--bq-background--secondary`, `--bq-text--secondary`) | Semantic tokens re-resolve for dark mode and the Endava theme; primitives stay fixed. |
 | Guessing text colour on a coloured surface | A documented pairing, such as `--bq-background--inverse` with `--bq-text--inverse` | Mixed roles lose contrast in at least one theme. |
 | `background`, `color`, `border`, or `padding` on a `bq-*` host | A prop, then the component's CSS custom properties, then a documented `::part()` | The host is a wrapper; the visible surface lives in the shadow root. |
 | `::part()` overrides to fix truncation or flex sizing | `min-width: 0` (and a width, if needed) on the host; truncate the slotted element | Layout belongs to the host and the consumer's content. |
 | An icon-only `bq-button` with no name | `only-icon` plus `label` | An unnamed control is silent to screen readers; BEEQ warns in the console. |
-| Emojis or ad-hoc SVGs as icons | `bq-icon` with a [Phosphor](https://phosphoricons.com/) name; a `label` when it carries meaning, `aria-hidden="true"` on the host otherwise | Icons then follow size, colour, and theme. Without a `label`, `bq-icon` still announces `<name> icon`. |
+| Emojis or ad-hoc SVGs as icons | `bq-icon` with a [Phosphor](https://phosphoricons.com/) name; a `label` when the icon alone carries meaning, `aria-hidden="true"` on the host when visible text beside it says the same | Icons then follow size, colour, and theme. Without a `label`, `bq-icon` still announces `<name> icon`. |
 | Several primary buttons in one region | One `appearance="primary"`; others `secondary` or `text` | Equal emphasis erases hierarchy. |
 | `variant="danger"` for emphasis | `variant="danger"` for destructive actions only | Colour carries meaning. |
-| A `bq-button` without `href` that routes on click | Keep `href`; in the native `click` handler, `preventDefault()` on plain left-clicks, then route | A real link keeps modifier-clicks, middle-clicks, and assistive technology working. |
+| A native `onClick` on `bq-button` or `bq-breadcrumb-item` that routes, or a routing button with no `href` | Keep `href`; in the `bqClick` handler call `event.preventDefault()`, then route. Per-stack handlers: [frameworks.md](references/frameworks.md#client-side-routing) | `bqClick` is cancelable, and preventing it stops the link navigation. The kept `href` serves middle-click, open in new tab, and assistive technology. A native click is for a gap `bqClick` cannot cover, such as modifier-key clicks. |
+| `!important` or `::part()` to override a token or component variable | A normal declaration at the scope the change covers: `:root` or the theme for the app, a container for a region, the host for one component | Page CSS already beats the component's `:host` defaults, and custom properties inherit into the shadow root. `!important` blocks later theme and mode rules. |
+| `/node_modules/…` URLs in HTML | CDN links for a page with no build step; entry-file imports with a bundler | The production build does not ship `node_modules`. |
 | `readonly` on `bq-select` to block typing | `disable-search`, when the installed version has it | `readonly` is deprecated for that purpose. |
-| `<bq-table>` | A native `<table class="bq-table">` | BEEQ has no table element; sorting and pagination stay with the consumer. |
+| `<bq-table>`, or a native `<table>` without the `bq-table` class | `<table class="bq-table">` on every table, with `compact` or `bordered` when the data calls for it | BEEQ has no table element; the class carries the theme's header, row, and selected-row styles. Sorting and pagination stay with the consumer. |
 | Swapping stylesheets for themes | `bq-theme` for identity, `bq-mode` for light or dark | Separate attributes; persisting the choice is the app's job. |
 
-The most common layout complaint, a tooltip around truncated text in a flex row, resolved on the host and the slotted content:
+The most common layout complaint, a tooltip around truncated text in a flex row the consumer builds (a card header, a table cell), resolved on the host and the slotted content:
 
 ```html
-<div class="row">
+<div class="card-header">
   <bq-tooltip>
-    <span class="truncate" slot="trigger">A very long project name that must truncate</span>
-    A very long project name that must truncate
+    <span class="truncate" slot="trigger">A very long report title that must truncate</span>
+    A very long report title that must truncate
   </bq-tooltip>
 </div>
 
 <style>
-  .row {
+  .card-header {
     display: flex;
     gap: var(--bq-spacing-s);
   }
 
-  .row bq-tooltip {
+  .card-header bq-tooltip {
     min-width: 0;
   }
 
-  .row .truncate {
+  .card-header .truncate {
     display: block;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -126,19 +130,21 @@ The most common layout complaint, a tooltip around truncated text in a flex row,
 </style>
 ```
 
+Navigation rows skip this recipe: `bq-side-menu-item` truncates its own label, so put the icon in `slot="prefix"` and the count in `slot="suffix"`.
+
 The same boundary holds for every `bq-*` element: consumer CSS positions and sizes the host; everything visual goes through the documented API.
 
 ### Framework essentials
 
 | Stack | Import from | Props and events | Must know |
 | --- | --- | --- | --- |
-| HTML | `bq-*` elements from `@beeq/core` | kebab-case attributes; `addEventListener('bqChange', …)` | Load the stylesheet once; set icons with `data-beeq`. Also the path for legacy apps and unsupported frameworks. |
+| HTML | `bq-*` elements from `@beeq/core` | kebab-case attributes; `addEventListener('bqChange', …)` | No build step: link `beeq.css` and `beeq.esm.js` from the CDN. With a bundler: import the stylesheet and call `defineCustomElements()` in the entry files. Icons via `data-beeq` either way. Also the path for legacy apps and unsupported frameworks. |
 | React | `@beeq/react` | camelCase props (`onlyIcon`); `onBqChange` | Wrappers set **properties**, so reflected attributes appear only where the component reflects them. Type styled wrappers with `styled(BqTooltip)` and `ComponentProps<typeof BqTooltip>`, never a cast to `ElementType`. |
 | Next.js | `@beeq/react/ssr` | as React | The plain wrapper renders empty shells on the server. Run browser-only setup on the client. |
 | Angular | `@beeq/angular/standalone` | `(bqChange)` | Forms need the matching value accessor. NgModule only in existing module-based apps. |
 | Vue and Nuxt | `@beeq/vue` | `@bqChange` | `v-model` only on documented components. Nuxt setup goes in a client-only plugin. |
 
-Read `event.detail` only when the component documents a payload. Forms bindings, method refs, routing, Angular and Vue examples, and setup troubleshooting: [frameworks.md](references/frameworks.md).
+Bind each event on the element whose Events table lists it. Composite components split their events across parts: in a dropdown, `bqSelect` comes from `bq-option-list`, and `bq-dropdown` itself emits only `bqOpen`. A framework wrapper binds only the events its own component declares. Read `event.detail` only when the component documents a payload. Forms bindings, method refs, routing, Angular and Vue examples, and setup troubleshooting: [frameworks.md](references/frameworks.md).
 
 ## 4. Verify
 
@@ -149,7 +155,7 @@ The generated markup is a first draft. Models state these rules and then break t
 | Search for | Pattern | A hit means |
 | --- | --- | --- |
 | Hex colours | `#[0-9a-fA-F]{3,8}\b` | Replace with a semantic token. Only a theme override file keeps hex. |
-| Pixel or rem literals | `\d(px\|rem)\b` | Replace with `--bq-spacing-*`, `--bq-font-size--*`, `--bq-radius--*`, or `ch` for text measure. |
+| Pixel or rem literals | `\d(px\|rem)\b` | On spacing, radius, type, or border width, use the token. Widths, heights, and grid tracks may keep `rem`. |
 | Palette primitives | `--bq-(blue\|grey\|red\|green\|orange\|yellow\|purple\|endava-[a-z]+)-\d` | Replace with a semantic role token. |
 | Self-closed custom elements (HTML) | `<bq-[a-z-]+[^>]*/>` | Add the closing tag. |
 | Shadow parts | `::part\(` | Confirm the part is on the component's page; move layout fixes to the host. |
@@ -157,13 +163,18 @@ The generated markup is a first draft. Models state these rules and then break t
 | Emojis | `[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]` | Replace with `bq-icon`. |
 | Type-erasing casts | `as ElementType` | Wrap the BEEQ component directly. |
 | Deprecated select usage | `<(bq-select\|BqSelect)[^>]*\sreadonly` | Use `disable-search` or `disableSearch`. |
-| Non-existent table element | `<bq-table` | Use `<table class="bq-table">`. |
+| Table markup | `<(bq-)?table\b` | `<bq-table` does not exist; every native `<table>` carries `class="bq-table"`. |
+| Important declarations | `!important` | Remove it; set the value with a normal declaration at the scope the change covers. |
+| node_modules URLs (HTML) | `["'(]/?node_modules/` | Link the CDN when the page has no build step; import from the entry files with a bundler. |
+| Invented font tokens | `--bq-font-family-` | Use `--bq-font-family`, the only font-family token. |
+| Token separators | `--bq-(background\|text\|icon\|ui\|radius\|box-shadow\|font-size\|font-weight\|font-line-height)-[a-z0-9]` | Add the double dash: `--bq-font-size--s`, `--bq-text--secondary`. |
 
 **Checklist.** Judgment the searches cannot make:
 
 - [ ] Step 1's findings are honoured: version, theme files, house recipes, nearby screens.
+- [ ] Every piece, named or implied, uses the component its job calls for, even where the request's word suggests another. Anything hand-built is named in your reply with the reason.
 - [ ] The stylesheet is imported and the icon base path is set, each exactly once. You added them if the project lacked them.
-- [ ] Every name is **verified** against the component page, including `event.detail` shapes and parent/child structure.
+- [ ] Every name is **verified** against the component page, including which element emits each event, `event.detail` shapes, and parent/child structure.
 - [ ] Framework syntax matches the stack.
 - [ ] One primary action per region; `danger` only for destructive actions.
 - [ ] Every control has a visible label or accessible name.

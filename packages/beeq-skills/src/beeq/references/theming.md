@@ -28,23 +28,33 @@ BEEQ does not read `prefers-color-scheme` and does not remember the user's choic
 
 ## Semantic tokens first
 
-Semantic tokens describe a role and resolve differently per theme and mode. Use them for everything in product CSS.
+Semantic tokens describe a role and resolve differently per theme and mode. Use them for everything in product CSS. These are the exact names; a name not listed here or on the component page resolves to nothing, silently.
 
 | Role | Tokens |
 | --- | --- |
-| Brand and accent | `--bq-brand`, `--bq-brand-light`, `--bq-brand-dark`, `--bq-accent` (and light, dark) |
-| Feedback | `--bq-info`, `--bq-success`, `--bq-warning`, `--bq-danger` (each with light and dark) |
-| Backgrounds | `--bq-background--primary`, `--bq-background--secondary`, `--bq-background--tertiary`, `--bq-background--alt`, `--bq-background--inverse`, `--bq-background--brand`, `--bq-background--overlay` |
-| Text | `--bq-text--primary`, `--bq-text--secondary`, `--bq-text--inverse`, `--bq-text--alt`, `--bq-text--brand`, and feedback roles |
-| Icons | `--bq-icon--primary`, `--bq-icon--secondary`, and the same role set as text |
-| Strokes | `--bq-stroke--primary`, `--bq-stroke--secondary`, `--bq-stroke--tertiary`, brand and feedback roles |
-| UI fills | `--bq-ui--primary`, `--bq-ui--secondary`, `--bq-ui--brand`, and feedback roles with `-alt` variants |
+| Brand and accent | `--bq-brand`, `--bq-brand-light`, `--bq-brand-dark`, `--bq-accent`, `--bq-accent-light`, `--bq-accent-dark` |
+| Feedback | `--bq-{info,success,warning,danger}`, each with `-light` and `-dark` |
+| Backgrounds | `--bq-background--{primary,secondary,tertiary,alt,inverse,brand,overlay}` |
+| Text | `--bq-text--{primary,secondary,alt,inverse,brand,info,success,warning,danger}` |
+| Icons | `--bq-icon--{primary,secondary,alt,inverse,brand,info,success,warning,danger}` |
+| Strokes (colour) | `--bq-stroke--{primary,secondary,tertiary,alt,inverse,brand,brand-alt,info,success,warning,danger}` |
+| UI fills | `--bq-ui--{primary,secondary,tertiary,alt,inverse,brand,brand-alt,info,info-alt,success,success-alt,warning,warning-alt,danger,danger-alt}` |
 | Interaction | `--bq-focus`, `--bq-hover`, `--bq-active` |
 | Data visualisation | `--bq-data-01` to `--bq-data-12`, used in order |
+| Font | `--bq-font-family`, the only font-family token; `--bq-font-size--{xs,s,m,l,xl,xxl,xxl2,xxl3,xxl4,xxl5}`; `--bq-font-weight--{thin,light,regular,medium,semibold,bold}`; `--bq-font-line-height--{small,regular,large}` |
+| Spacing | `--bq-spacing-{xs3,xs2,xs,s,m,l,xl,xxl,xxl2,xxl3,xxl4}` |
+| Shape | `--bq-radius--{none,xs2,xs,s,m,l,full}`; stroke widths `--bq-stroke-s`, `--bq-stroke-m`, `--bq-stroke-l` |
+| Elevation | `--bq-box-shadow--{xs,s,m,l}` |
+
+Role and scale tokens take a double dash before the role or step: `--bq-text--secondary`, `--bq-font-size--s`, `--bq-radius--m`. A single dash belongs to spacing, stroke widths, data colours, and the brand and feedback colours with their `-light` and `-dark` variants. A border is `var(--bq-stroke-s) solid var(--bq-stroke--primary)`.
 
 The full list lives in [Global CSS variables](https://www.beeq.design/theming/global-css-variables.md) and [Colors](https://www.beeq.design/foundations/colors.md).
 
 Palette primitives such as `--bq-blue-600` or `--bq-grey-100` do not change with the mode. Use them only inside a theme definition, to set a semantic token.
+
+## What beeq.css already styles
+
+The stylesheet sets `font-family: var(--bq-font-family)` and `font-size: var(--bq-font-size--m)` on `html`, and `background-color: var(--bq-background--primary)`, `color: var(--bq-text--primary)`, and `line-height: var(--bq-font-line-height--regular)` on `body`. Pages inherit the active theme and mode from these rules, so product CSS starts at layout. Set a different surface or text role only on the element that needs it.
 
 ## Safe pairings
 
@@ -59,7 +69,24 @@ These pairs are a starting point, not a contrast guarantee. Check contrast in ev
 
 ## Brand a product
 
-Create one theme file and scope it to a theme name. Set the base tokens from primitives; the semantic brand roles (`--bq-background--brand`, `--bq-text--brand`, `--bq-stroke--brand`, and others) already reference `--bq-brand`, so they follow.
+### Change only the brand colour
+
+Set the base brand tokens once, on `:root`. BEEQ declares them inside `:where(:root)`, which has no specificity, so a plain `:root` rule wins without `!important`. Every brand role (`--bq-ui--brand`, `--bq-text--brand`, `--bq-stroke--brand`, `--bq-background--brand`, and the `-alt` roles) references them, and hover and pressed fills are mixed from those roles, so every component follows in both modes. `--bq-focus` is separate; point it at the brand so focus rings match.
+
+```css
+:root {
+  --bq-brand: #00857c;
+  --bq-brand-light: color-mix(in srgb, var(--bq-brand) 15%, white);
+  --bq-brand-dark: color-mix(in srgb, var(--bq-brand) 60%, black);
+  --bq-focus: var(--bq-brand);
+}
+```
+
+This file is the one place hex values belong. Check the contrast of text on the new brand fill in light and dark modes.
+
+### A custom theme
+
+For a full identity (font, brand, surfaces), create one theme file and scope it to a theme name. Set the base tokens from primitives; the semantic brand roles already reference `--bq-brand`, so they follow.
 
 ```css
 [bq-theme="acme"],
@@ -82,6 +109,23 @@ Two consequences to plan for:
 
 The [Custom theme](https://www.beeq.design/theming/custom-theme.md) guide lists every token to cover, including the selectors for class-based themes and the Tailwind setup.
 
+## Override scope
+
+Custom properties inherit into every shadow root, so set a token at the scope the change should cover, with a normal declaration:
+
+| Scope | Where to set it |
+| --- | --- |
+| The whole app | Base tokens (`--bq-brand`, `--bq-focus`, `--bq-font-family`) on `:root` or the theme selector |
+| One region | Role tokens (`--bq-ui--brand`, `--bq-text--brand`) on the region's container |
+| One component | Role tokens or the component's documented CSS custom properties on the host, such as `.cta-button { --bq-ui--brand: …; --bq-button--border-radius: var(--bq-radius--full); }` |
+
+A declaration from page CSS beats the component's own `:host` defaults, so these rules work without `!important` and without `::part()`. Two details decide the level:
+
+- Role tokens are declared by the mode selectors on `html`, such as `:root:not([bq-theme]):not([bq-mode])`, which outrank a plain `:root` rule. Change the base token for the whole app, and set roles only on a container or host below `html`.
+- A role resolves where it is declared, so a base token changed on a container does not reach roles computed on `html`. Below `html`, set the role itself.
+
+`!important` on a token blocks the theme and mode rules that should still apply later.
+
 ## Common mistakes
 
 | Mistake | Fix |
@@ -92,4 +136,8 @@ The [Custom theme](https://www.beeq.design/theming/custom-theme.md) guide lists 
 | Overriding a token only for light mode | Override it under both mode selectors. |
 | A custom `bq-theme` with no `bq-mode` | Set `bq-mode`, or define the full light role set for the no-mode case. |
 | Overriding the same token in many component rules | Override it once in the theme file. |
+| `!important` on a token or component variable | A normal declaration at the scope in [Override scope](#override-scope). |
+| `::part()` rules to recolour a component | The brand or role tokens; `::part()` is for structure the tokens cannot reach. |
+| Restating `font-family`, `color`, or `background-color` on `body` | Nothing; `beeq.css` already sets them from the active theme. |
+| Invented token names, such as a `-body` or `-heading` suffix on the font family | The exact names in [Semantic tokens first](#semantic-tokens-first). |
 | Using the Endava theme without the Endava brand requirement | Default to `beeq` unless the project already uses `endava`. |

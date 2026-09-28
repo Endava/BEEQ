@@ -33,6 +33,21 @@ Items that belong together sit closer than items that do not. If every gap is th
 
 With the BEEQ Tailwind preset, the same steps are available as utilities such as `gap-m`, `p-l`, and `mb-xl`.
 
+## Layout dimensions
+
+Spacing, radius, type, and stroke have tokens; the dimensions of the layout itself do not. Size them as the [grid foundations](https://www.beeq.design/foundations/grid.md) do:
+
+| Dimension | Use |
+| --- | --- |
+| Gutters, margins, container padding | `--bq-spacing-*` |
+| Columns that align or compare | `grid-template-columns: repeat(12, minmax(0, 1fr))`, with regions spanning columns |
+| Items that wrap, such as a card grid | `repeat(auto-fill, minmax(min(100%, 18rem), 1fr))`; `min(100%, …)` keeps one column from overflowing a narrow screen |
+| Container width | Fluid for product screens, tables, and dashboards. A `rem` `max-inline-size` with `margin-inline: auto` for focused tasks, forms, and review screens |
+| Reading width | A `max-inline-size` in `ch`, so long text keeps a readable line length |
+| Breakpoints | Media or container queries in `rem`, placed where the content gets cramped. BEEQ's device ranges (phones 576–768px, tablets 768–992px, desktop 992–1200px, large screens 1200–1920px) are guidance, not generated breakpoints |
+
+Size the container around a component rather than the component itself; see the next section.
+
 ## Size component hosts, not internals
 
 The host element is the thing that participates in your layout. Position and size it; leave its internals to the component.

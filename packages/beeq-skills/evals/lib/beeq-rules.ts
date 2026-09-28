@@ -17,6 +17,14 @@ export type RuleViolation = { id: string; severity: 'error' | 'review'; message:
 
 const stripMediaQueries = (code: string) => code.replace(/@(?:media|container)[^{]*\{/g, '{');
 
+// Layout dimensions have no BEEQ token; the grid foundations size containers and tracks in rem.
+const CSS_SIZING =
+  /(^|[\s{;"'`])((?:min-|max-)?(?:width|height|inline-size|block-size)|flex-basis|grid-template-(?:columns|rows)|grid-auto-(?:columns|rows))\s*:[^;{}\n"'`]*/g;
+const JS_SIZING =
+  /(^|[\s{,])((?:min|max)(?:Width|Height|InlineSize|BlockSize)|width|height|inlineSize|blockSize|flexBasis|gridTemplate(?:Columns|Rows)|gridAuto(?:Columns|Rows))\s*:\s*(['"`])(?:(?!\3).)*\3/g;
+
+const stripSizing = (code: string) => code.replace(CSS_SIZING, '$1$2:').replace(JS_SIZING, '$1$2:');
+
 /** CSS rule bodies whose selector ends on a bare `bq-*` host, e.g. `.row bq-button { … }`. */
 function hostVisualRules(code: string) {
   const hits: string[] = [];
@@ -41,8 +49,8 @@ export const RULES: Rule[] = [
   {
     id: 'px-rem',
     label: 'Pixel or rem literals',
-    test: (code) => stripMediaQueries(code).match(/(?<![\w-])\d*\.?\d+(?:px|rem)\b/g) ?? [],
-    message: 'Pixel or rem literal; use a spacing, radius, or font-size token.',
+    test: (code) => stripSizing(stripMediaQueries(code)).match(/(?<![\w-])\d*\.?\d+(?:px|rem)\b/g) ?? [],
+    message: 'Pixel or rem literal for spacing, radius, type, or stroke; use the token.',
   },
   {
     id: 'palette',
@@ -90,9 +98,40 @@ export const RULES: Rule[] = [
   },
   {
     id: 'bq-table',
-    label: 'Non-existent table element',
-    test: (code) => code.match(/<bq-table\b/g) ?? [],
-    message: 'BEEQ has no <bq-table>; use <table class="bq-table">.',
+    label: 'Table markup',
+    test: (code) => [
+      ...(code.match(/<bq-table\b/g) ?? []),
+      ...(code.match(/<table\b[^>]*>/g) ?? []).filter((tag) => !/\bbq-table\b/.test(tag)),
+    ],
+    message: 'BEEQ has no <bq-table>; every native <table> carries class="bq-table".',
+  },
+  {
+    id: 'important',
+    label: 'Important declarations',
+    test: (code) => code.match(/!important\b/g) ?? [],
+    message: '!important declaration; set the value with a normal declaration at the right scope.',
+  },
+  {
+    id: 'node-modules-url',
+    label: 'node_modules URLs (HTML)',
+    languages: ['html'],
+    test: (code) => code.match(/["'(]\/?node_modules\/[^"')\s]*/g) ?? [],
+    message: 'HTML links a node_modules URL; use the CDN or import from the bundler entry.',
+  },
+  {
+    id: 'font-family-token',
+    label: 'Invented font tokens',
+    test: (code) => code.match(/--bq-font-family-[\w-]*/g) ?? [],
+    message: '--bq-font-family is the only font-family token.',
+  },
+  {
+    id: 'token-separator',
+    label: 'Token separators',
+    test: (code) =>
+      code.match(
+        /--bq-(?:background|text|icon|ui|radius|box-shadow|font-size|font-weight|font-line-height)-[a-z0-9][\w-]*/g,
+      ) ?? [],
+    message: 'Role and scale tokens take a double dash, e.g. --bq-font-size--s, --bq-text--secondary.',
   },
 ];
 

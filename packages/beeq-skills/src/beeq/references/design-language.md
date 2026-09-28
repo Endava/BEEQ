@@ -94,7 +94,7 @@ Use the active theme font token instead of declaring a font family in consumer s
 | Weight | `--bq-font-weight--thin`, `--bq-font-weight--light`, `--bq-font-weight--regular`, `--bq-font-weight--medium`, `--bq-font-weight--semibold`, `--bq-font-weight--bold` |
 | Line height | `--bq-font-line-height--small`, `--bq-font-line-height--regular`, `--bq-font-line-height--large` |
 
-Reference `--bq-font-family` only. The Tailwind `font-outfit` and `font-poppins` aliases point to variables that the themes do not declare, so they are not part of the runtime contract.
+`--bq-font-family` is the only font-family token. The Tailwind `font-outfit` and `font-poppins` aliases point to variables that the themes do not declare, so they are not part of the runtime contract. `beeq.css` already applies the font family and `--bq-font-size--m` on `html`, and the text colour, background, and line height on `body`, so a page inherits the theme without restating them.
 
 ### Type hierarchy in use
 
@@ -158,7 +158,7 @@ The component host is what participates in consumer layout. Size and position th
 }
 ```
 
-Truncated text needs a way to read it in full, such as a tooltip or a detail view.
+Truncated text needs a way to read it in full, such as a tooltip or a detail view. Components that own a label, such as `bq-side-menu-item`, truncate it themselves; this recipe is for rows the consumer builds.
 
 ## Elevation & Depth
 
@@ -209,7 +209,8 @@ Components ship their own treatment for each state. Use the documented property 
 | Selected or active | `selected` on `bq-tag` and `bq-option`; `active` on `bq-tab` and `bq-side-menu-item`; `checked` on checkboxes, radios, and switches | Show one current item per navigation group. |
 | Non-searchable select | `disable-search` on `bq-select` | Use when people must pick from the list without typing. Do not use the deprecated `readonly` property for this. |
 | Empty | `bq-empty-state` | Say what is missing and offer one next step. |
-| Error in a region | `bq-alert` inline, next to the content that failed | Do not rely on a toast for errors people must act on. |
+| A region failed to load | `bq-empty-state` with a warning icon in `slot="thumbnail"` and a Retry button in `slot="footer"` | Say what failed and how to recover. |
+| Error about content still on screen | `bq-alert` inline, next to the content it is about | Do not rely on a toast for errors people must act on. |
 
 Hover, focus, and pressed states are built into interactive components. Do not override one of them without restyling the others, and never remove the focus indicator.
 
@@ -292,7 +293,7 @@ A short visual-composition guide, not an API inventory. Follow each linked page 
 | Reveal, group, or separate content | [`bq-accordion-group`](https://www.beeq.design/components/accordion.md), [`bq-card`](https://www.beeq.design/components/card.md), [`bq-divider`](https://www.beeq.design/components/divider.md) | Accordion group for related disclosures, Card to group content, Divider to separate regions. |
 | Show a temporary layer or contextual menu | [`bq-dialog`](https://www.beeq.design/components/dialog.md), [`bq-drawer`](https://www.beeq.design/components/drawer.md), [`bq-dropdown`](https://www.beeq.design/components/dropdown.md), [`bq-tooltip`](https://www.beeq.design/components/tooltip.md) | Dialog for a blocking decision, Drawer for supporting task content, Dropdown for contextual actions or options, Tooltip for brief supplementary help. |
 | Communicate feedback or progress | [`bq-alert`](https://www.beeq.design/components/alert.md), [`bq-notification`](https://www.beeq.design/components/notification.md), [`bq-toast`](https://www.beeq.design/components/toast.md), [`bq-progress`](https://www.beeq.design/components/progress.md), [`bq-spinner`](https://www.beeq.design/components/spinner.md) | Inline Alert, persistent Notification, temporary Toast; Progress when the amount of work is known, Spinner when it is not. |
-| Show state, metadata, or absence | [`bq-status`](https://www.beeq.design/components/status.md), [`bq-badge`](https://www.beeq.design/components/badge.md), [`bq-tag`](https://www.beeq.design/components/tag.md), [`bq-avatar`](https://www.beeq.design/components/avatar.md), [`bq-empty-state`](https://www.beeq.design/components/empty-state.md) | Status for an item's state, Badge for counts, Tag for labels that can be selected or removed, Avatar for a person or entity, Empty state for missing content. |
+| Show state, metadata, or absence | [`bq-status`](https://www.beeq.design/components/status.md), [`bq-badge`](https://www.beeq.design/components/badge.md), [`bq-tag`](https://www.beeq.design/components/tag.md), [`bq-avatar`](https://www.beeq.design/components/avatar.md), [`bq-empty-state`](https://www.beeq.design/components/empty-state.md) | Status for an item's state, Badge for counts, Tag for labels that can be selected or removed, Avatar for a person or entity, Empty state for missing content or a region that failed to load. |
 | Establish page identity | [`bq-page-title`](https://www.beeq.design/components/page-title.md) | Page heading with optional back action, subtitle, and actions. |
 | Present tabular values | [`.bq-table`](https://www.beeq.design/components/table.md) | Apply the documented class to semantic native table markup. It is not a data-grid abstraction. |
 

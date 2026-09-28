@@ -110,6 +110,117 @@ describe('grade', () => {
     expect(allowed.score).toBe(1);
   });
 
+  it('should flag node_modules URLs in HTML but not in bundler config', () => {
+    // Arrange
+    const html = file(
+      '<link rel="stylesheet" href="/node_modules/@beeq/core/dist/beeq/beeq.css" />',
+      'html',
+      'index.html',
+    );
+    const config = file(
+      "viteStaticCopy({ targets: [{ src: 'node_modules/@beeq/core/dist/beeq/svg/*' }] })",
+      'ts',
+      'vite.config.ts',
+    );
+
+    // Act
+    const fromHtml = grade({ files: [html], expected: {}, index });
+    const fromConfig = grade({ files: [config], expected: {}, index });
+
+    // Assert
+    expect(fromHtml.checks.find((check) => check.name === 'searches')?.message).toContain('node-modules-url');
+    expect(fromConfig.checks.find((check) => check.name === 'searches')?.passed).toBe(true);
+  });
+
+  it('should allow rem layout dimensions but flag px or rem spacing, stroke, and type', () => {
+    // Arrange
+    const css = file(
+      [
+        '.page { max-inline-size: 64rem; grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr)); }',
+        '.row { padding: 8px; border-width: 2px; line-height: 20px; }',
+      ].join('\n'),
+      'css',
+      'src/app.css',
+    );
+    const tsx = file(`<main style={{ maxWidth: '22rem', padding: '4px' }}>x</main>`);
+
+    // Act
+    const messages = [css, tsx].map(
+      (source) =>
+        grade({ files: [source], expected: {}, index }).checks.find((check) => check.name === 'searches')?.message,
+    );
+
+    // Assert
+    expect(messages[0]).toContain('8px');
+    expect(messages[0]).toContain('2px');
+    expect(messages[0]).toContain('20px');
+    expect(messages[0]).not.toMatch(/64rem|14rem/);
+    expect(messages[1]).toContain('4px');
+    expect(messages[1]).not.toContain('22rem');
+  });
+
+  it('should flag !important and invented font tokens in any file', () => {
+    // Arrange
+    const files = [
+      file(
+        ':root { --bq-ui--brand: var(--bq-brand) !important; font-family: var(--bq-font-family-body); }',
+        'css',
+        'src/app.css',
+      ),
+    ];
+
+    // Act
+    const result = grade({ files, expected: {}, index });
+
+    // Assert
+    const searches = result.checks.find((check) => check.name === 'searches');
+    expect(searches?.passed).toBe(false);
+    expect(searches?.message).toContain('important');
+    expect(searches?.message).toContain('font-family-token');
+  });
+
+  it('should flag single-dash role tokens but keep single-dash spacing, stroke, and colour variants', () => {
+    // Arrange
+    const flagged = file(
+      '.a { font-size: var(--bq-font-size-s); color: var(--bq-text-secondary); }',
+      'css',
+      'src/a.css',
+    );
+    const clean = file(
+      [
+        '.b { gap: var(--bq-spacing-s); border: var(--bq-stroke-s) solid var(--bq-stroke--primary); }',
+        '.c { color: var(--bq-danger-dark); font-size: var(--bq-font-size--s); border-radius: var(--bq-radius--m); }',
+      ].join('\n'),
+      'css',
+      'src/b.css',
+    );
+
+    // Act
+    const [flaggedSearches, cleanSearches] = [flagged, clean].map((source) =>
+      grade({ files: [source], expected: {}, index }).checks.find((check) => check.name === 'searches'),
+    );
+
+    // Assert
+    expect(flaggedSearches?.message).toContain('--bq-font-size-s');
+    expect(flaggedSearches?.message).toContain('--bq-text-secondary');
+    expect(cleanSearches?.passed).toBe(true);
+  });
+
+  it('should flag native tables without the bq-table class', () => {
+    // Arrange
+    const plain = file('<table className="users-table"><tbody /></table>');
+    const styled = file('<table className="bq-table compact"><tbody /></table>');
+
+    // Act
+    const [plainSearches, styledSearches] = [plain, styled].map((source) =>
+      grade({ files: [source], expected: {}, index }).checks.find((check) => check.name === 'searches'),
+    );
+
+    // Assert
+    expect(plainSearches?.message).toContain('bq-table');
+    expect(styledSearches?.passed).toBe(true);
+  });
+
   it('should fail api on an invented prop', () => {
     // Act
     const result = grade({ files: [file('<BqButton iconOnly>x</BqButton>')], expected: {}, index });

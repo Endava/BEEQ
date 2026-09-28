@@ -1,6 +1,6 @@
 ---
 title: "Skill reference: BEEQ framework integration"
-description: Framework-specific rules for agents using BEEQ in React, Next.js, Angular, Vue, Nuxt, and plain HTML, including events, forms, methods, typing, and routing.
+description: Framework-specific rules for agents using BEEQ in React, Next.js, Angular, Vue, Nuxt, and plain HTML, including setup, events, forms, methods, typing, and client-side routing.
 ---
 <!-- Generated from packages/beeq-skills/src/beeq/references/frameworks.md. Edit the source, not this file. -->
 
@@ -26,6 +26,36 @@ Every app needs two things, set up once. When the project lacks either, add it a
 
 1. **Stylesheet.** Import `@beeq/core/dist/beeq/beeq.css` once, in the main stylesheet the entry file loads. Without it, components render unstyled.
 2. **Icons.** Tell BEEQ where the SVG files live. A bundled app has no usable default, so without this every `bq-icon` renders blank, including the icons inside other components.
+
+A plain HTML app also registers the components itself; the framework wrappers do that for you. Pick the path by how the page is served:
+
+- **No build step** (a static `.html` file, a prototype, a CodePen): link the stylesheet and the ESM bundle from the CDN, with `data-beeq` on the script.
+
+  ```html
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@beeq/core/dist/beeq/beeq.css" />
+  <script
+    type="module"
+    src="https://cdn.jsdelivr.net/npm/@beeq/core/dist/beeq/beeq.esm.js"
+    data-beeq="https://cdn.jsdelivr.net/npm/@beeq/core/dist/beeq/svg/"
+  ></script>
+  ```
+
+- **A bundler** (Vite, Webpack, or similar in `package.json`): import from the entry files, and let `index.html` load only the entry script.
+
+  ```css
+  /* src/style.css */
+  @import "@beeq/core/dist/beeq/beeq.css";
+  ```
+
+  ```js
+  // src/main.js, loaded by <script type="module" src="/src/main.js"></script>
+  import { defineCustomElements } from '@beeq/core/dist/loader';
+  import './style.css';
+
+  defineCustomElements();
+  ```
+
+HTML never links a `/node_modules/…` URL. A dev server may answer it, but the production build does not ship `node_modules`, so the page loses its styles and components after deploy.
 
 For icons, a `data-beeq` attribute pointing at the BEEQ SVGs on the CDN is the default. It is the right choice for prototypes, proofs of concept, and any project without its own icon setup: one line in the HTML entry (`index.html`, the Next.js root layout, or `app.head` in `nuxt.config`), no build changes, and no copied files. See [Setup via `data-beeq` attribute](https://www.beeq.design/guides/frameworks/html-web-components.md#setup-via-data-beeq-attribute).
 
@@ -92,35 +122,6 @@ export type AppTooltipProps = ComponentProps<typeof BqTooltip>;
 
 Do not cast the wrapper, for example `(BqTooltip ?? 'bq-tooltip') as ElementType`. The cast erases every BEEQ prop and event type.
 
-### Client-side routing
-
-Keep a real `href` so middle-click, modifier-click, and assistive technology still see a link. Intercept only plain left-clicks:
-
-```tsx
-import { BqButton } from '@beeq/react';
-import type { MouseEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
-
-export function ProjectLink({ id }: { id: string }) {
-  const navigate = useNavigate();
-  const href = `/projects/${id}`;
-
-  const handleClick = (event: MouseEvent) => {
-    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-    event.preventDefault();
-    navigate(href);
-  };
-
-  return (
-    <BqButton appearance="link" href={href} onClick={handleClick}>
-      Open project
-    </BqButton>
-  );
-}
-```
-
-The same approach works for `bq-breadcrumb-item`. `bq-side-menu-item` has no `href`; navigate from its `bqClick` or the menu's `bqSelect` event.
-
 ## Next.js
 
 Follow the [Next.js guide](https://www.beeq.design/guides/frameworks/next.md).
@@ -168,13 +169,63 @@ Follow the [HTML and Web Components guide](https://www.beeq.design/guides/framew
 - Close every element: `<bq-icon name="user"></bq-icon>`, never `<bq-icon name="user" />`.
 - Use attributes for static strings and element properties for booleans, numbers, arrays, and dynamic values.
 - Listen with `addEventListener('bqChange', (event) => …)`.
-- Configure icons with the `data-beeq` attribute on the module script; see [Setup](#setup).
+- Load BEEQ from the CDN when the page has no build step, or from the entry files when it has a bundler, and configure icons with `data-beeq`; see [Setup](#setup).
+
+## Client-side routing
+
+`bq-button` and `bq-breadcrumb-item` are the components with an `href`. Keep a real `href` on them so middle-click, open in new tab, and assistive technology still see a link. Route from `bqClick`, which both emit as a cancelable event: `event.preventDefault()` stops the link navigation, then call the router.
+
+| Stack | Handler |
+| --- | --- |
+| React Router | `onBqClick={(event) => { event.preventDefault(); navigate(href); }}` with `useNavigate()` |
+| Next.js | The same, in a `'use client'` component, with `useRouter()` from `next/navigation` and `router.push(href)` |
+| Angular | `(bqClick)="go($event, href)"`, where `go` calls `event.preventDefault()` and `this.router.navigateByUrl(href)` |
+| Vue Router | `@bqClick="(event) => { event.preventDefault(); router.push(href); }"` with `useRouter()` |
+| Nuxt | As Vue, with `navigateTo(href)` |
+
+One handler factory keeps every link on the page consistent:
+
+```tsx
+import { BqBreadcrumb, BqBreadcrumbItem, BqButton } from '@beeq/react';
+import { useNavigate } from 'react-router-dom';
+
+type Crumb = { label: string; href?: string };
+
+export function BillingHeader({ trail }: { trail: Crumb[] }) {
+  const navigate = useNavigate();
+
+  const route = (href: string) => (event: CustomEvent) => {
+    event.preventDefault();
+    navigate(href);
+  };
+
+  return (
+    <header className="billing-header">
+      <BqBreadcrumb label="Breadcrumb">
+        {trail.map(({ label, href }) => (
+          <BqBreadcrumbItem key={label} href={href} onBqClick={href ? route(href) : undefined}>
+            {label}
+          </BqBreadcrumbItem>
+        ))}
+      </BqBreadcrumb>
+      <BqButton href="/settings/billing/new" onBqClick={route('/settings/billing/new')}>
+        Add payment method
+      </BqButton>
+    </header>
+  );
+}
+```
+
+The breadcrumb marks its last item as the current page, so that item needs no `href`. `bq-side-menu-item` has no `href`; navigate from its `bqClick` or the menu's `bqSelect` event, and move `active` to the current item.
+
+Middle-click fires `auxclick`, not `click`, so it opens the `href` in a new tab without reaching `bqClick`. `bqClick` carries the element, not the mouse event, so it cannot tell a Ctrl-click or Cmd-click from a plain one. Use a native click listener with a modifier-key check only when the product requires modifier-clicks to open new tabs, and say why in the code.
 
 ## Setup problems to rule out first
 
 | Symptom | Likely cause |
 | --- | --- |
 | Components render but look unstyled | The BEEQ stylesheet (`@beeq/core/dist/beeq/beeq.css`) is missing or loaded twice in conflicting order. See [Installation](https://www.beeq.design/getting-started/installation.md). |
+| Works in dev, unstyled or blank after build | The HTML links `/node_modules/…` URLs. Use the CDN or the bundler entry; see [Setup](#setup). |
 | Icons are blank | SVG files are not served, or the icon base path does not match the public URL. |
 | React events never fire | A kebab-case or native event name was used instead of `onBq…`. |
 | Hydration warnings in Next.js | `@beeq/react` was used instead of `@beeq/react/ssr`. |

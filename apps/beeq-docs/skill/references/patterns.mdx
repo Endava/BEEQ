@@ -1,6 +1,6 @@
 ---
 title: "Skill reference: BEEQ screen patterns"
-description: Ready-to-adapt HTML recipes for common screens built with BEEQ components and tokens, including an app shell, a settings form, a list with an empty state, and a confirmation dialog.
+description: Ready-to-adapt HTML recipes for common screens built with BEEQ components and tokens, including an app shell, a settings form, a list with loading, empty, and error states, a page header, and a confirmation dialog.
 hidden: true
 ---
 
@@ -75,7 +75,7 @@ BEEQ provides the menu; the grid around it is yours.
 Notes:
 
 - Side menu items have no `href`. Route from the item's `bqClick` event or the menu's `bqSelect` event, and move `active` to the current item.
-- Use the `collapse` prop with a labelled icon-only toggle for compact layouts; see [Side menu](https://www.beeq.design/components/side-menu.md).
+- Use the `collapse` prop with a labelled icon-only toggle for compact layouts; see [Side menu](https://www.beeq.design/components/side-menu.md). A collapsed item keeps its text for screen readers and shows it in a tooltip, so its prefix icon stays `aria-hidden="true"` in both states.
 - `min-inline-size: 0` on the content column lets wide tables and long text shrink instead of overflowing the grid.
 
 ## Settings form
@@ -112,7 +112,7 @@ Notes:
   .settings-form {
     display: grid;
     gap: var(--bq-spacing-m);
-    max-inline-size: 40rem;
+    max-inline-size: 60ch;
   }
 
   .settings-form__actions {
@@ -133,7 +133,7 @@ Notes:
 
 ## List with loading, empty, and error states
 
-Every data view needs all three states, not only the happy path.
+Every data view needs all three states, not only the happy path. When the load fails, the region has nothing to show, so the error is an empty state too: it says what failed and offers Retry as its one action.
 
 ```html
 <section class="project-list" aria-labelledby="projects-title" aria-busy="false">
@@ -143,11 +143,12 @@ Every data view needs all three states, not only the happy path.
   <bq-spinner text-position="right">Loading projects</bq-spinner>
 
   <!-- Error -->
-  <bq-alert type="error" open disable-close>
+  <bq-empty-state>
+    <bq-icon name="warning-circle" slot="thumbnail" size="80" color="icon--danger" aria-hidden="true"></bq-icon>
     Projects could not be loaded
     <span slot="body">Check your connection and try again.</span>
-    <bq-button slot="footer" appearance="secondary" size="small">Retry</bq-button>
-  </bq-alert>
+    <bq-button slot="footer" appearance="secondary">Retry</bq-button>
+  </bq-empty-state>
 
   <!-- Empty -->
   <bq-empty-state>
@@ -169,7 +170,44 @@ Notes:
 
 - Render one state at a time. Keep the heading in place so the section does not jump.
 - Set `aria-busy="true"` on the section while loading.
-- Keep the error inline with `bq-alert`. A toast alone disappears before people can act on it.
+- The error thumbnail replaces the default icon; its title and body carry the meaning, so the icon stays `aria-hidden`. A slotted icon sets its own `size`: match the empty state's `size`, which draws its default icon at 40 (small), 80 (medium, the default), or 180 (large).
+- Keep `bq-alert` for messages about content that is still on screen: a failed refresh above a stale list, a failed save, a partial failure. A toast alone disappears before people can act on it.
+
+## Page header
+
+`bq-page-title` renders the page's `h1`. Put metadata in `slot="sub-title"` and page actions in `slot="suffix"`.
+
+```html
+<bq-page-title>
+  <bq-button slot="back" appearance="link" only-icon label="Back to reports" href="/reports">
+    <bq-icon name="arrow-left" aria-hidden="true"></bq-icon>
+  </bq-button>
+  Q3 revenue forecast
+  <span slot="sub-title">Updated 2 hours ago</span>
+  <div class="page-actions" slot="suffix">
+    <bq-status type="info">In review</bq-status>
+    <bq-button appearance="secondary">Export</bq-button>
+    <bq-button>Approve</bq-button>
+  </div>
+</bq-page-title>
+
+<style>
+  .page-actions {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: end;
+    gap: var(--bq-spacing-s);
+  }
+</style>
+```
+
+Notes:
+
+- `bq-page-title` is a block that fills its container, and its suffix area grows beside the title. `flex-grow: 1` plus `justify-content: end` on the slotted wrapper pushes the actions to the inline end; the host needs no width rule.
+- Do not add another `h1` on the page. Headings inside the page start at `h2`.
+- A status or other state of the whole page sits in the suffix beside the actions; descriptive metadata sits in the sub-title.
+- One primary action in the suffix; secondary actions use `appearance="secondary"` or `text`.
 
 ## Confirm a destructive action
 
