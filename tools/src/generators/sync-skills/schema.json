@@ -1,0 +1,8 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "SyncSkills",
+  "title": "Sync BEEQ agent skills",
+  "description": "Validates the agent skills in packages/beeq-skills/src and regenerates the published copies: skills/ for `npx skills`, and the Mintlify docs pages for the beeq skill.",
+  "type": "object",
+  "properties": {}
+}
