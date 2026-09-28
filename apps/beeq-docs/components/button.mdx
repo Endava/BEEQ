@@ -877,7 +877,7 @@ Always provide a `label` so assistive technologies can announce the action corre
 |---|---|---|
 | `bqBlur` | Fires when the button loses focus | `CustomEvent<HTMLBqButtonElement>` |
 | `bqFocus` | Fires when the button receives focus | `CustomEvent<HTMLBqButtonElement>` |
-| `bqClick` | Fires when the button is clicked | `CustomEvent<HTMLBqButtonElement>` |
+| `bqClick` | Fires when the button is clicked. Cancelable: on a button with `href`, calling `event.preventDefault()` stops the link navigation, so a client-side router can take over | `CustomEvent<HTMLBqButtonElement>` |
 
 <Note>
   - In React, prefix events with `on`: `onBqClick`, `onBqFocus`, `onBqBlur`.
