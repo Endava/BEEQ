@@ -1,0 +1,61 @@
+name: Skills check
+
+on:
+  pull_request:
+    paths:
+      - 'packages/beeq-skills/**'
+      - 'skills/**'
+      - '.agents/skills/**'
+      - 'apps/beeq-docs/skill.md'
+      - 'apps/beeq-docs/skill/**'
+      - 'apps/beeq-docs/docs.json'
+      - 'tools/src/generators/sync-skills/**'
+      - 'tools/src/executors/skill-eval/**'
+      - 'packages/beeq/src/components/**'
+      - 'packages/beeq-tailwindcss/src/**'
+      - '.github/workflows/skills-check.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: skills-check-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: 🧩 Validate agent skills
+    runs-on: ubuntu-latest
+    env:
+      VOLTA_FEATURE_PNPM: 1
+      DISABLE_TELEMETRY: 1
+      NO_COLOR: 1
+    steps:
+      - name: 🛎 Checkout
+        uses: actions/checkout@v6
+
+      - name: 🛠 Setup Volta
+        uses: volta-cli/action@v5
+
+      - name: 💫 Load and cache dependencies
+        uses: ./.github/actions/cache-deps
+
+      - name: 🔁 skills/ and the docs copies match packages/beeq-skills/src
+        run: pnpm exec nx sync:check
+
+      - name: 🧪 Skill tests and type check
+        run: pnpm skills:test
+
+      - name: ✅ Reference solutions score 1.0
+        run: pnpm exec nx run beeq-skills:eval --validate
+
+      - name: 📦 npx skills lists only public skills
+        run: |
+          public=$(npx -y skills@1.7.0 add . --list 2>&1)
+          echo "$public"
+          echo "$public" | grep -q "Found 1 skill" || { echo "::error::Expected exactly one public skill (beeq)."; exit 1; }
+          echo "$public" | grep -qw "beeq" || { echo "::error::The beeq skill is not discoverable."; exit 1; }
+
+          expected=$(( $(ls .agents/skills/*/SKILL.md | wc -l) + 1 ))
+          all=$(INSTALL_INTERNAL_SKILLS=1 npx -y skills@1.7.0 add . --list 2>&1)
+          echo "$all" | grep -q "Found ${expected} skills" || { echo "::error::Expected ${expected} skills with INSTALL_INTERNAL_SKILLS=1."; exit 1; }
