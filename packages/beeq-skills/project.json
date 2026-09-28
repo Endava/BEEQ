@@ -35,6 +35,7 @@
         "agent": "copilot",
         "variants": ["with-skill", "baseline"],
         "trials": 1,
+        "threshold": 0.9,
         "outputPath": "tmp/skill-evals"
       },
       "configurations": {

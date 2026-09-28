@@ -49,6 +49,37 @@ pnpm exec nx run beeq-skills:eval --preview=cli                       # every va
 
 **Baseline hygiene.** The baseline must not see the skill any other way. `prepare.ts` refuses to run when a personal `beeq` skill exists in `~/.agents/skills`, `~/.copilot/skills`, or `~/.claude/skills`. The agent wrapper runs Copilot with `--no-custom-instructions` and the user's MCP servers disabled, and Claude with `--strict-mcp-config`.
 
+### Recorded baseline
+
+Full suite (`pnpm exec nx run beeq-skills:eval`), 2026-09-28, skill at `f8da1aef`: Copilot CLI with its default model, 1 trial per task, deterministic graders only.
+
+| | with-skill | baseline | delta |
+|---|---|---|---|
+| Mean reward | 0.99 (sd 0.04) | 0.69 (sd 0.20) | +0.30 |
+| Pass rate (reward ≥ 0.5) | 1.00 | 0.87 | +0.13 |
+
+| Task | with-skill | baseline | delta |
+|---|---|---|---|
+| `angular-select` | 1.00 | 1.00 | +0.00 |
+| `brand-button-override` | 1.00 | 0.71 | +0.29 |
+| `destructive-confirm` | 1.00 | 0.50 | +0.50 |
+| `details-panel-drawer` | 1.00 | 0.38 | +0.63 |
+| `endava-theme-dark` | 1.00 | 0.60 | +0.40 |
+| `html-contact-form` | 1.00 | 0.80 | +0.20 |
+| `icon-only-toolbar` | 1.00 | 0.57 | +0.43 |
+| `next-dialog` | 0.86 | 0.57 | +0.29 |
+| `react-settings-form` | 1.00 | 1.00 | +0.00 |
+| `row-actions-dropdown` | 1.00 | 0.88 | +0.13 |
+| `save-error-alert` | 1.00 | 0.57 | +0.43 |
+| `side-menu-navigation` | 1.00 | 0.80 | +0.20 |
+| `spa-link-routing` | 1.00 | 1.00 | +0.00 |
+| `tooltip-truncation` | 1.00 | 0.44 | +0.56 |
+| `vue-list-states` | 1.00 | 0.57 | +0.43 |
+
+`angular-select`, `react-settings-form`, and `spa-link-routing` score 1.00 in both variants, so under deterministic grading they catch regressions but do not show the skill's effect.
+
+The `eval` target's `threshold` is 0.9 (`project.json`): more than twice the with-skill spread below its mean, and it fails once the skill loses about a third of its lift over the baseline. It was set from Copilot runs, so record a baseline before reading another agent's pass or fail; `--threshold=0` reports without failing. After changing the skill or the tasks, rerun the full suite and update this section and the threshold together.
+
 ### Suite layout
 
 The executor copies `evals/` to a temp folder outside the repo, fills `{{evals}}` with that path, and writes one skillgrade `eval.yaml` per variant.
