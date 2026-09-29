@@ -44,6 +44,12 @@ export const EVALS_TOKEN = '{{evals}}';
 
 const MODEL_PATTERN = /^[\w.:/-]+$/;
 
+/**
+ * skillgrade runs graders in order and puts every earlier result in the LLM judge's prompt, where the
+ * judge echoes it. Running `llm_rubric` graders first keeps the rubric an independent score.
+ */
+const rubricFirst = (a: Grader, b: Grader) => Number(b.type === 'llm_rubric') - Number(a.type === 'llm_rubric');
+
 export function loadSuite(evalsDir: string): Suite {
   const basePath = path.join(evalsDir, SUITE_FILES.base);
   if (!existsSync(basePath)) throw new Error(`Missing ${SUITE_FILES.base} in ${evalsDir}.`);
@@ -138,9 +144,9 @@ export function buildEvalConfig(input: EvalConfigInput) {
     .filter((task) => !validate || suite.solutions.has(task.name))
     .map((source) => {
       const task = substitute(source, runtimeDir);
-      const graders = (task.graders ?? substitute(suite.base.graders ?? [], runtimeDir)).filter(
-        (grader) => input.llmRubric || grader.type !== 'llm_rubric',
-      );
+      const graders = (task.graders ?? substitute(suite.base.graders ?? [], runtimeDir))
+        .filter((grader) => input.llmRubric || grader.type !== 'llm_rubric')
+        .sort(rubricFirst);
       if (graders.length === 0) throw new Error(`Task "${task.name}" has no graders.`);
 
       const workspace = [...(task.workspace ?? [])];

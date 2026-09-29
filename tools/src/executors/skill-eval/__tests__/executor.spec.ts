@@ -1,7 +1,10 @@
 // biome-ignore-all lint/style/useNamingConvention: snake_case fields are defined by the skillgrade and agentskills.io formats.
 import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { createServer, type Server } from 'node:http';
+import type { AddressInfo } from 'node:net';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { parse } from 'yaml';
@@ -9,17 +12,21 @@ import { parse } from 'yaml';
 import {
   buildBenchmark,
   buildEvalConfig,
+  checkRubric,
   createRuntime,
   detectGraderProvider,
   type EvalReport,
   findIterationDir,
+  findRubricError,
   formatBenchmark,
+  INTERRUPTED,
   loadSuite,
   nextIterationDir,
   normalizeOptions,
   previewCommand,
   readReports,
   renderInstruction,
+  runNode,
   type Suite,
   skillgradeArgs,
   stat,
@@ -206,11 +213,35 @@ describe('suite', () => {
         instruction: 'Build a thing.\n\nStack: react.',
         workspace: [{ src: '/rt/fixtures/react/package.json', dest: 'package.json' }],
         graders: [
-          { type: 'deterministic', run: 'node "/rt/graders/grade.ts"' },
           { type: 'llm_rubric', rubric: '/rt/rubric.md' },
+          { type: 'deterministic', run: 'node "/rt/graders/grade.ts"' },
         ],
       });
       expect(config.tasks[0]).not.toHaveProperty('solution');
+    });
+
+    it('should run the rubric before the deterministic graders, so the judge never sees their scores', () => {
+      // Arrange
+      const [task] = suite.tasks;
+      const graders = [
+        { type: 'deterministic' as const, run: 'first' },
+        { type: 'deterministic' as const, run: 'second' },
+        { type: 'llm_rubric' as const, rubric: 'rubric' },
+      ];
+
+      // Act
+      const config = buildEvalConfig({
+        ...input,
+        suite: { ...suite, tasks: [{ ...task, graders }] },
+        variant: 'baseline',
+      });
+
+      // Assert
+      expect(config.tasks[0].graders.map((grader) => grader.run ?? grader.rubric)).toEqual([
+        'rubric',
+        'first',
+        'second',
+      ]);
     });
 
     it('should leave the skill out of the baseline and drop the rubric when it is off', () => {
@@ -408,5 +439,103 @@ describe('benchmark', () => {
       'mean reward  1.00        0.50      +0.50',
     ]);
     expect(formatBenchmark(one).split('\n')[0]).toBe('task         baseline');
+  });
+});
+
+describe('rubric errors', () => {
+  const report = (task: string, details: string): EvalReport => ({
+    task,
+    trials: [
+      {
+        reward: 0.7,
+        duration_ms: 1000,
+        input_tokens: 10,
+        output_tokens: 10,
+        grader_results: [
+          { grader_type: 'llm_rubric', score: 0, details },
+          { grader_type: 'deterministic', score: 1, details: 'Failed to parse LLM response: not a rubric' },
+        ],
+      },
+    ],
+  });
+
+  it('should find the first rubric the judge never scored', () => {
+    // Arrange
+    const reports = [
+      report('a', '1. The alert uses `type="danger"`, so criterion 1 failed.'),
+      report('b', 'OpenAI API returned HTTP 429: {"error":{"code":"insufficient_quota"}}'),
+      report('c', 'Missing OPENAI_API_KEY. Set the OPENAI_API_KEY environment variable.'),
+    ];
+
+    // Act & Assert
+    expect(findRubricError(reports)).toEqual({ task: 'b', details: expect.stringContaining('HTTP 429') });
+    expect(findRubricError([report('d', 'Anthropic API error: TypeError: fetch failed')])?.task).toBe('d');
+    expect(findRubricError([report('e', 'OpenAI API returned status 401')])?.task).toBe('e');
+    expect(findRubricError(reports.slice(0, 1))).toBeUndefined();
+  });
+});
+
+describe('checkRubric', () => {
+  const evalsDir = fileURLToPath(new URL('../../../../../packages/beeq-skills/evals', import.meta.url));
+  let server: Server;
+  let reply: { status: number; body: unknown };
+
+  beforeEach(async () => {
+    server = createServer((_request, response) => {
+      response.writeHead(reply.status, { 'content-type': 'application/json' });
+      response.end(JSON.stringify(reply.body));
+    });
+    await new Promise<void>((resolve) => server.listen(0, '127.0.0.1', resolve));
+  });
+
+  afterEach(async () => {
+    await new Promise((resolve) => server.close(resolve));
+  });
+
+  const env = () => ({
+    OPENAI_API_KEY: 'test-key',
+    OPENAI_BASE_URL: `http://127.0.0.1:${(server.address() as AddressInfo).port}/v1`,
+  });
+
+  it('should pass when the judge answers', async () => {
+    // Arrange
+    reply = { status: 200, body: { choices: [{ message: { content: '{"reasoning": "ok", "score": 1}' } }] } };
+
+    // Act & Assert
+    await expect(checkRubric(evalsDir, { provider: 'openai', model: 'test-model' }, env())).resolves.toMatchObject({
+      score: 1,
+    });
+  });
+
+  it('should fail with the API error before any agent runs', async () => {
+    // Arrange
+    reply = { status: 429, body: { error: { code: 'insufficient_quota' } } };
+
+    // Act & Assert
+    await expect(checkRubric(evalsDir, { provider: 'openai', model: 'test-model' }, env())).rejects.toThrow(
+      /no agent ran\. OpenAI API returned HTTP 429: .*insufficient_quota/,
+    );
+  });
+});
+
+describe('runNode', () => {
+  it('should stop the child and report it as interrupted when aborted', async () => {
+    // Arrange
+    const dir = mkdtempSync(path.join(tmpdir(), 'run-node-'));
+    writeFileSync(path.join(dir, 'wait.mjs'), 'setTimeout(() => {}, 30_000);');
+    const stop = new AbortController();
+
+    try {
+      // Act
+      const started = Date.now();
+      const exit = runNode(path.join(dir, 'wait.mjs'), [], { cwd: dir, signal: stop.signal });
+      setTimeout(() => stop.abort(), 100);
+
+      // Assert
+      await expect(exit).resolves.toBe(INTERRUPTED);
+      expect(Date.now() - started).toBeLessThan(5000);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
   });
 });

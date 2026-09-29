@@ -7,9 +7,11 @@ import {
   type Benchmark,
   buildBenchmark,
   buildEvalConfig,
+  checkRubric,
   createRuntime,
   type EvalReport,
   findIterationDir,
+  findRubricError,
   formatBenchmark,
   INTERRUPTED,
   loadSuite,
@@ -30,10 +32,12 @@ import type { SkillEvalExecutorSchema, SkillEvalVariant } from './schema.d.ts';
 /**
  * Runs a skillgrade eval suite with and without a skill and writes `benchmark.json`.
  *
- * 1. Copies the suite to a temp runtime folder and runs its `prepare.ts`.
- * 2. Writes one skillgrade `eval.yaml` per variant from `eval.base.yaml` and `tasks/*.yaml`.
- * 3. Runs skillgrade once per variant into `<outputPath>/iteration-N/<variant>/`.
- * 4. Aggregates the reports into `iteration-N/benchmark.json` and applies `threshold`.
+ * 1. With the LLM rubric on, sends the judge one short request, so a broken key, model, or quota fails first.
+ * 2. Copies the suite to a temp runtime folder and runs its `prepare.ts`.
+ * 3. Writes one skillgrade `eval.yaml` per variant from `eval.base.yaml` and `tasks/*.yaml`.
+ * 4. Runs skillgrade once per variant into `<outputPath>/iteration-N/<variant>/`, stopping at the first
+ *    rubric error.
+ * 5. Aggregates the reports into `iteration-N/benchmark.json` and applies `threshold`.
  */
 export const runExecutor: PromiseExecutor<SkillEvalExecutorSchema> = async (rawOptions, context: ExecutorContext) => {
   const options = normalizeOptions(rawOptions, context.root);
@@ -48,6 +52,7 @@ export const runExecutor: PromiseExecutor<SkillEvalExecutorSchema> = async (rawO
   if (options.notice) logger.warn(options.notice);
 
   try {
+    if (options.llmRubric && !options.list) await checkJudge(options);
     if (suite.prepare && !options.list) await prepare(run);
     const reports = await runVariants(run);
     if (options.list) return { success: true };
@@ -72,6 +77,12 @@ type Run = {
 
 type Reports = Partial<Record<SkillEvalVariant, EvalReport[]>>;
 
+/** Fails before any agent runs when the LLM judge cannot answer. */
+async function checkJudge({ evalsDir, graderProvider, graderModel }: NormalizedOptions) {
+  await checkRubric(evalsDir, { provider: graderProvider, model: graderModel });
+  logger.info(`LLM rubric: ${graderProvider} ${graderModel ?? '(skillgrade default model)'} answered.`);
+}
+
 /** Runs the suite's `prepare.ts` in the runtime folder. */
 async function prepare({ runtimeDir, options, root }: Run) {
   const code = await runNode(path.join(runtimeDir, SUITE_FILES.prepare), [], {
@@ -86,18 +97,53 @@ async function prepare({ runtimeDir, options, root }: Run) {
 }
 
 /** Runs skillgrade once per variant and reads back its reports (none when only listing tasks). */
-async function runVariants({ bin, suite, runtimeDir, iterationDir, options, root }: Run) {
+async function runVariants(run: Run) {
   const reports: Reports = {};
-  for (const variant of options.variants) {
-    const config = buildEvalConfig({ suite, runtimeDir, variant, ...options });
-    const variantDir = writeEvalConfig(runtimeDir, variant, config);
-
-    logger.info(`\n${options.validate ? 'validate' : variant} → ${path.relative(root, iterationDir)}`);
-    const code = await runNode(bin, skillgradeArgs({ ...options, outputDir: iterationDir }), { cwd: variantDir });
-    if (code !== 0) throw new Error(`skillgrade exited with ${code} for ${variant}.`);
-    if (!options.list) reports[variant] = readReports(iterationDir, variant);
+  for (const variant of run.options.variants) {
+    const variantReports = await runVariant(run, variant);
+    if (!run.options.list) reports[variant] = variantReports;
   }
   return reports;
+}
+
+/**
+ * Runs skillgrade for one variant. With the LLM rubric on, stops skillgrade at the first report whose rubric
+ * failed and throws, so the remaining variants never start.
+ */
+async function runVariant({ bin, suite, runtimeDir, iterationDir, options, root }: Run, variant: SkillEvalVariant) {
+  const variantDir = writeEvalConfig(runtimeDir, variant, buildEvalConfig({ suite, runtimeDir, variant, ...options }));
+  const watchRubric = options.llmRubric && !options.list;
+
+  logger.info(`\n${options.validate ? 'validate' : variant} → ${path.relative(root, iterationDir)}`);
+  const stop = new AbortController();
+  const watch = watchRubric ? watchReports(iterationDir, variant, stop) : undefined;
+  const code = await runNode(bin, skillgradeArgs({ ...options, outputDir: iterationDir }), {
+    cwd: variantDir,
+    signal: stop.signal,
+  }).finally(() => clearInterval(watch));
+
+  const reports = options.list ? [] : readReports(iterationDir, variant);
+  const rubricError = watchRubric ? findRubricError(reports) : undefined;
+  if (rubricError) {
+    const inFlight = stop.signal.aborted ? ' The agent trial that was running finishes on its own.' : '';
+    throw new Error(
+      `The LLM rubric failed on ${variant}/${rubricError.task}: ${rubricError.details}\n` +
+        `The run stopped, and its rewards leave out the rubric.${inFlight} Fix the grader and rerun.`,
+    );
+  }
+  if (code !== 0) throw new Error(`skillgrade exited with ${code} for ${variant}.`);
+  return reports;
+}
+
+/** Aborts `stop` once a report skillgrade has written for `variant` holds a rubric error. */
+function watchReports(iterationDir: string, variant: SkillEvalVariant, stop: AbortController) {
+  return setInterval(() => {
+    try {
+      if (findRubricError(readReports(iterationDir, variant))) stop.abort();
+    } catch {
+      // A report skillgrade is still writing does not parse yet; the next poll reads it.
+    }
+  }, 5000);
 }
 
 /** Logs each reference solution's reward. True when there is at least one and every one scores 1. */

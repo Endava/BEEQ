@@ -9,7 +9,7 @@ export type EvalReport = {
     duration_ms: number;
     input_tokens: number;
     output_tokens: number;
-    grader_results: { grader_type: string; score: number }[];
+    grader_results: { grader_type: string; score: number; details?: string }[];
   }[];
 };
 

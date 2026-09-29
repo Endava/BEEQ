@@ -82,14 +82,22 @@ export function resolveSkillgradeBin(evalsDir: string) {
 /** Exit code `runNode` reports when the child was stopped with SIGINT or SIGTERM. */
 export const INTERRUPTED = 130;
 
-export function runNode(script: string, args: string[], options: { cwd: string; env?: NodeJS.ProcessEnv }) {
+export function runNode(
+  script: string,
+  args: string[],
+  options: { cwd: string; env?: NodeJS.ProcessEnv; signal?: AbortSignal },
+) {
   return new Promise<number>((resolve, reject) => {
     const child = spawn(process.execPath, [script, ...args], {
       cwd: options.cwd,
       env: { ...process.env, ...options.env },
       stdio: 'inherit',
+      signal: options.signal,
     });
-    child.on('error', reject);
+    // Aborting kills the child with SIGTERM; `close` then reports it as interrupted.
+    child.on('error', (error) => {
+      if (!options.signal?.aborted) reject(error);
+    });
     child.on('close', (code, signal) =>
       resolve(code ?? (signal === 'SIGINT' || signal === 'SIGTERM' ? INTERRUPTED : 1)),
     );
