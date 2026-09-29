@@ -45,40 +45,44 @@ pnpm exec nx run beeq-skills:eval --preview=cli                       # every va
 **Grading.** Each trial's reward is the weighted mean of two graders:
 
 - `graders/grade.ts` (weight 0.7, deterministic): the agent wrote files, the SKILL.md Verify searches are clean, every BEEQ element, prop, event, part, and token exists in the component source, and the task's own `checks` pass.
-- `rubric.md` (weight 0.3, LLM): scored against the task's `criteria`. It runs only when `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, or `GEMINI_API_KEY` is set; otherwise the executor warns and grades deterministically.
+- `rubric.md` (weight 0.3, LLM): scored against the task's `criteria`. It runs only when `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, or `GEMINI_API_KEY` is set; otherwise the executor warns and grades deterministically. `--graderProvider` and `--graderModel` pick the judge. A failed rubric call (no credit, rate limit) scores 0 and the run carries on, capping every trial at 0.70, so check the first result's rubric details before leaving a long run going.
 
 **Baseline hygiene.** The baseline must not see the skill any other way. `prepare.ts` refuses to run when a personal `beeq` skill exists in `~/.agents/skills`, `~/.copilot/skills`, or `~/.claude/skills`. The agent wrapper runs Copilot with `--no-custom-instructions` and the user's MCP servers disabled, Claude with `--strict-mcp-config`, and Codex with a throwaway `CODEX_HOME` that holds only a link to the user's `auth.json`, so Codex config, MCP servers, memories, `AGENTS.md`, plugins, and hooks stay out. Codex needs `codex login` or `CODEX_API_KEY`.
 
 ### Recorded baseline
 
-Full suite (`pnpm exec nx run beeq-skills:eval`), 2026-09-28, skill at `f8da1aef`: Copilot CLI with its default model, 1 trial per task, deterministic graders only.
+Two full-suite runs with Copilot CLI's default model, 1 trial per task. The skill is the same in both (last changed in `1ed7522b`), so the gap between their with-skill means is run-to-run variance.
 
-| | with-skill | baseline | delta |
-|---|---|---|---|
-| Mean reward | 0.99 (sd 0.04) | 0.69 (sd 0.20) | +0.30 |
-| Pass rate (reward ≥ 0.5) | 1.00 | 0.87 | +0.13 |
+| Run | Graders | with-skill | baseline | delta | Pass rate (reward ≥ 0.5) |
+|---|---|---|---|---|---|
+| 2026-09-28, `f8da1aef` | deterministic | 0.99 (sd 0.04) | 0.69 (sd 0.20) | +0.30 | 1.00 vs 0.87 |
+| 2026-09-29, `15016f0d` | deterministic + rubric (OpenAI `gpt-4.1-mini`) | 0.96 (sd 0.08) | 0.76 (sd 0.18) | +0.21 | 1.00 vs 0.93 |
+
+The second run is `pnpm exec nx run beeq-skills:eval --grader=all --graderProvider=openai --graderModel=gpt-4.1-mini`. Its tasks:
 
 | Task | with-skill | baseline | delta |
 |---|---|---|---|
 | `angular-select` | 1.00 | 1.00 | +0.00 |
 | `brand-button-override` | 1.00 | 0.71 | +0.29 |
-| `destructive-confirm` | 1.00 | 0.50 | +0.50 |
-| `details-panel-drawer` | 1.00 | 0.38 | +0.63 |
-| `endava-theme-dark` | 1.00 | 0.60 | +0.40 |
-| `html-contact-form` | 1.00 | 0.80 | +0.20 |
-| `icon-only-toolbar` | 1.00 | 0.57 | +0.43 |
-| `next-dialog` | 0.86 | 0.57 | +0.29 |
-| `react-settings-form` | 1.00 | 1.00 | +0.00 |
-| `row-actions-dropdown` | 1.00 | 0.88 | +0.13 |
-| `save-error-alert` | 1.00 | 0.57 | +0.43 |
-| `side-menu-navigation` | 1.00 | 0.80 | +0.20 |
+| `destructive-confirm` | 1.00 | 1.00 | +0.00 |
+| `details-panel-drawer` | 1.00 | 0.38 | +0.62 |
+| `endava-theme-dark` | 1.00 | 0.68 | +0.33 |
+| `html-contact-form` | 1.00 | 0.68 | +0.33 |
+| `icon-only-toolbar` | 1.00 | 0.76 | +0.24 |
+| `next-dialog` | 1.00 | 0.63 | +0.38 |
+| `react-settings-form` | 1.00 | 0.81 | +0.18 |
+| `row-actions-dropdown` | 1.00 | 1.00 | +0.00 |
+| `save-error-alert` | 0.85 | 0.58 | +0.28 |
+| `side-menu-navigation` | 1.00 | 0.81 | +0.18 |
 | `spa-link-routing` | 1.00 | 1.00 | +0.00 |
-| `tooltip-truncation` | 1.00 | 0.44 | +0.56 |
-| `vue-list-states` | 1.00 | 0.57 | +0.43 |
+| `tooltip-truncation` | 0.89 | 0.60 | +0.29 |
+| `vue-list-states` | 0.71 | 0.72 | -0.01 |
 
-`angular-select`, `react-settings-form`, and `spa-link-routing` score 1.00 in both variants, so under deterministic grading they catch regressions but do not show the skill's effect.
+`angular-select` and `spa-link-routing` score 1.00 in both variants in both runs, so they catch regressions but do not show the skill's effect.
 
-The `eval` target's `threshold` is 0.9 (`project.json`): more than twice the with-skill spread below its mean, and it fails once the skill loses about a third of its lift over the baseline. It was set from Copilot runs, so record a baseline before reading another agent's pass or fail; `--threshold=0` reports without failing. After changing the skill or the tasks, rerun the full suite and update this section and the threshold together.
+The rubric is not an independent signal: skillgrade puts the deterministic results in the judge's prompt, and in this run the with-skill rubric scores matched them to within 0.02 on every task. On the baseline the judge was more lenient (0.81 against 0.73 deterministic), which raises the baseline mean. Compare runs only when they use the same graders and grader model.
+
+The `eval` target's `threshold` is 0.9 (`project.json`): 0.06 to 0.09 under the with-skill means, so it fails once the skill loses about 30% of its lift over the baseline. It was set from Copilot runs, so record a baseline before reading another agent's pass or fail; `--threshold=0` reports without failing. After changing the skill or the tasks, rerun the full suite and update this section and the threshold together.
 
 ### Suite layout
 
