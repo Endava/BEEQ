@@ -535,6 +535,19 @@ describe('checkRubric', () => {
     });
   });
 
+  it('should retry a rate limit', async () => {
+    // Arrange
+    reply = { status: 429, body: { error: { message: 'Rate limit reached. Please try again in 1ms.' } } };
+    server.once('request', () => {
+      reply = { status: 200, body: { choices: [{ message: { content: '{"reasoning": "ok", "score": 1}' } }] } };
+    });
+
+    // Act & Assert
+    await expect(checkRubric(evalsDir, { provider: 'openai', model: 'test-model' }, env())).resolves.toMatchObject({
+      score: 1,
+    });
+  });
+
   it('should fail with the API error before any agent runs', async () => {
     // Arrange
     reply = { status: 429, body: { error: { code: 'insufficient_quota' } } };
@@ -583,6 +596,29 @@ describe('runNode', () => {
     } finally {
       stdout.mockRestore();
       stderr.mockRestore();
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
+  it('should pass execArgv to the child', async () => {
+    // Arrange
+    const dir = mkdtempSync(path.join(tmpdir(), 'run-node-'));
+    writeFileSync(path.join(dir, 'hook.mjs'), 'globalThis.hooked = true;');
+    writeFileSync(path.join(dir, 'print.mjs'), 'console.log(String(globalThis.hooked));');
+    const stdout = vi.spyOn(process.stdout, 'write').mockReturnValue(true);
+
+    try {
+      // Act
+      await runNode(path.join(dir, 'print.mjs'), [], {
+        cwd: dir,
+        prefix: '> ',
+        execArgv: ['--import', path.join(dir, 'hook.mjs')],
+      });
+
+      // Assert
+      expect(stdout.mock.calls.map(([line]) => line)).toEqual(['> true\n']);
+    } finally {
+      stdout.mockRestore();
       rmSync(dir, { recursive: true, force: true });
     }
   });

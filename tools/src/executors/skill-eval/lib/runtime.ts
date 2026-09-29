@@ -107,15 +107,16 @@ function prefixLines(input: Readable, output: Writable, prefix: string) {
 }
 
 /**
- * Runs a Node script. With `prefix`, its output is piped and every line starts with the prefix.
+ * Runs a Node script, with `execArgv` before it (the child's own processes do not inherit them). With `prefix`,
+ * its output is piped and every line starts with the prefix.
  */
 export function runNode(
   script: string,
   args: string[],
-  options: { cwd: string; env?: NodeJS.ProcessEnv; signal?: AbortSignal; prefix?: string },
+  options: { cwd: string; env?: NodeJS.ProcessEnv; signal?: AbortSignal; prefix?: string; execArgv?: string[] },
 ) {
   return new Promise<number>((resolve, reject) => {
-    const child = spawn(process.execPath, [script, ...args], {
+    const child = spawn(process.execPath, [...(options.execArgv ?? []), script, ...args], {
       cwd: options.cwd,
       env: { ...process.env, ...options.env },
       stdio: options.prefix ? ['inherit', 'pipe', 'pipe'] : 'inherit',

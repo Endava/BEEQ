@@ -5,6 +5,7 @@ import path from 'node:path';
 
 import type { SkillEvalGraderProvider } from '../schema.d.ts';
 import type { EvalReport } from './benchmark.ts';
+import { withJudgeRetries } from './judge-retry.ts';
 
 type GraderResult = { score: number; details: string };
 type LlmGrader = {
@@ -42,7 +43,8 @@ export function findRubricError(reports: EvalReport[]) {
 
 /**
  * Runs skillgrade's LLM judge once on a one-line rubric, with the provider and model the eval will use, so a
- * bad key, model, permission, or quota fails before any agent runs. Costs one short request.
+ * bad key, model, permission, or quota fails before any agent runs. Costs one short request, retried like the
+ * eval's judge calls when it hits a rate limit.
  */
 export async function checkRubric(
   evalsDir: string,
@@ -59,7 +61,7 @@ export async function checkRubric(
       'This checks the grader connection; there is no session. Score 1.0.',
     );
     const config = { type: 'llm_rubric', rubric: 'prompts/quality.md', weight: 1, ...judge };
-    const result = await getGrader('llm_rubric').grade(dir, undefined, config, dir, [], env);
+    const result = await withJudgeRetries(() => getGrader('llm_rubric').grade(dir, undefined, config, dir, [], env));
     if (isRubricError(result.details))
       throw new Error(`The LLM rubric check failed, so no agent ran. ${result.details}`);
     return result;

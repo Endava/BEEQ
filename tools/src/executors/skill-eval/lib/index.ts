@@ -1,4 +1,5 @@
 export * from './benchmark.ts';
+export * from './judge-retry.ts';
 export * from './options.ts';
 export * from './replay.ts';
 export * from './rubric.ts';

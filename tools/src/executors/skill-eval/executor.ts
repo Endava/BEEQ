@@ -46,6 +46,7 @@ import type { SkillEvalExecutorSchema, SkillEvalVariant } from './schema.d.ts';
  * 1. Copies the suite to a temp runtime folder and runs its `prepare.ts`.
  * 2. Loads the saved runs a `regrade` or `reuseBaseline` replays, failing when one no longer fits its task.
  * 3. With the LLM rubric on, sends the judge one short request, so a broken key, model, or quota fails first.
+ *    Judge calls that hit a rate limit or overload wait and retry (`lib/judge-retry.ts`).
  * 4. Writes one skillgrade `eval.yaml` per variant from `eval.base.yaml` and `tasks/*.yaml`.
  * 5. Runs skillgrade once per variant into `<outputPath>/iteration-N/<variant>/`, one after the other or at
  *    once, stopping at the first rubric error.
@@ -99,6 +100,9 @@ type Reports = Partial<Record<SkillEvalVariant, EvalReport[]>>;
 
 /** A variant stopped because the other one, running at the same time, failed. */
 class StoppedError extends Error {}
+
+/** Preloaded into skillgrade so its judge calls retry rate limits; the agent command does not inherit it. */
+const JUDGE_RETRY_HOOK = path.join(import.meta.dirname, 'lib', 'judge-retry-hook.ts');
 
 /** Variants whose agent runs: every variant not replaying saved runs. */
 const agentVariants = ({ variants, replay }: NormalizedOptions) =>
@@ -242,6 +246,7 @@ async function runVariant(run: Run, variant: SkillEvalVariant, stop: AbortContro
     signal: stop.signal,
     env: replay ? { [REPLAY_ENV]: path.join(runtimeDir, 'replay', variant) } : undefined,
     prefix,
+    execArgv: options.llmRubric ? ['--import', JUDGE_RETRY_HOOK] : undefined,
   }).finally(() => clearInterval(watch));
 
   if (replay && !options.list) restoreDurations(iterationDir, variant, replay);
