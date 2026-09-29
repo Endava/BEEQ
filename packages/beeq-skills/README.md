@@ -66,38 +66,40 @@ pnpm exec nx run beeq-skills:eval --concurrent                # both variants at
 
 ### Recorded baseline
 
-Two full-suite runs with Copilot CLI's default model, 1 trial per task. The skill is the same in both (last changed in `1ed7522b`), so the gap between their with-skill means is run-to-run variance.
+Full-suite runs with Copilot CLI's default model, 1 trial per task. The last row is the reference: it is the only one with the current skill (last changed in `79680fb6`) and the current graders, so compare later runs with it. The first three rows used the skill as of `1ed7522b`. The third regrades the second's agent runs (`--regrade`) after the graders changed: the rubric scores blind, the API check rejects prop values a prop does not accept, and four more tasks check the stylesheet import. Compare runs only when they use the same graders, rubric, and grader model.
 
 | Run | Graders | with-skill | baseline | delta | Pass rate (reward ≥ 0.5) |
 |---|---|---|---|---|---|
 | 2026-09-28, `f8da1aef` | deterministic | 0.99 (sd 0.04) | 0.69 (sd 0.20) | +0.30 | 1.00 vs 0.87 |
 | 2026-09-29, `15016f0d` | deterministic + rubric (OpenAI `gpt-4.1-mini`) | 0.96 (sd 0.08) | 0.76 (sd 0.18) | +0.21 | 1.00 vs 0.93 |
+| 2026-09-29, `15016f0d` runs regraded at `e14478cc` | deterministic + blind rubric (OpenAI `gpt-4.1`) | 0.95 (sd 0.10) | 0.77 (sd 0.16) | +0.18 | 1.00 vs 0.93 |
+| 2026-09-29, `e14478cc` | deterministic + blind rubric (OpenAI `gpt-4.1`) | 0.98 (sd 0.04) | 0.70 (sd 0.17) | +0.28 | 1.00 vs 0.80 |
 
-The second run is `pnpm exec nx run beeq-skills:eval --grader=all --graderProvider=openai --graderModel=gpt-4.1-mini`. Its tasks:
+The last row is `pnpm exec nx run beeq-skills:eval --concurrent --grader=all --graderProvider=openai --graderModel=gpt-4.1`. Its tasks:
 
 | Task | with-skill | baseline | delta |
 |---|---|---|---|
 | `angular-select` | 1.00 | 1.00 | +0.00 |
-| `brand-button-override` | 1.00 | 0.71 | +0.29 |
-| `destructive-confirm` | 1.00 | 1.00 | +0.00 |
-| `details-panel-drawer` | 1.00 | 0.38 | +0.62 |
-| `endava-theme-dark` | 1.00 | 0.68 | +0.33 |
-| `html-contact-form` | 1.00 | 0.68 | +0.33 |
-| `icon-only-toolbar` | 1.00 | 0.76 | +0.24 |
-| `next-dialog` | 1.00 | 0.63 | +0.38 |
-| `react-settings-form` | 1.00 | 0.81 | +0.18 |
-| `row-actions-dropdown` | 1.00 | 1.00 | +0.00 |
-| `save-error-alert` | 0.85 | 0.58 | +0.28 |
-| `side-menu-navigation` | 1.00 | 0.81 | +0.18 |
-| `spa-link-routing` | 1.00 | 1.00 | +0.00 |
-| `tooltip-truncation` | 0.89 | 0.60 | +0.29 |
-| `vue-list-states` | 0.71 | 0.72 | -0.01 |
+| `brand-button-override` | 0.90 | 0.79 | +0.11 |
+| `destructive-confirm` | 1.00 | 0.65 | +0.35 |
+| `details-panel-drawer` | 1.00 | 0.54 | +0.46 |
+| `endava-theme-dark` | 1.00 | 0.72 | +0.28 |
+| `html-contact-form` | 1.00 | 0.86 | +0.14 |
+| `icon-only-toolbar` | 1.00 | 0.70 | +0.30 |
+| `next-dialog` | 1.00 | 0.41 | +0.59 |
+| `react-settings-form` | 0.86 | 0.86 | +0.00 |
+| `row-actions-dropdown` | 0.93 | 0.89 | +0.04 |
+| `save-error-alert` | 1.00 | 0.69 | +0.31 |
+| `side-menu-navigation` | 1.00 | 0.75 | +0.25 |
+| `spa-link-routing` | 1.00 | 0.47 | +0.53 |
+| `tooltip-truncation` | 1.00 | 0.66 | +0.34 |
+| `vue-list-states` | 1.00 | 0.47 | +0.54 |
 
-`angular-select` and `spa-link-routing` score 1.00 in both variants in both runs, so they catch regressions but do not show the skill's effect.
+`angular-select` scores 1.00 in both variants in every run, so it catches regressions but does not show the skill's effect. With 1 trial, a task's baseline score is a sample: `spa-link-routing` and `destructive-confirm` scored 1.00 in the earlier runs, and here the baseline bound a native `onClick` on breadcrumb items in one and hard-coded colours, sizes, and made-up tokens in the other.
 
-In the rubric-graded run the judge still saw the deterministic results: its with-skill scores matched them to within 0.02 on every task, and it was more lenient on the baseline (0.81 against 0.73 deterministic). Since these runs, the rubric runs first and scores blind, the API check rejects prop values a prop does not accept (the with-skill `save-error-alert` trial in the second run wrote `bq-alert type="danger"`), four more tasks check the stylesheet import, and the Angular fixture has an app shell. Rerun the suite before comparing these rows with later runs. Compare runs only when they use the same graders, rubric, and grader model.
+The with-skill trials lose points in three tasks. `react-settings-form` bound `onBqChange` on `BqSelect`, which emits `bqSelect`. `brand-button-override` set the brand role tokens on primary buttons only, a literal reading of the prompt, where the criteria expect `--bq-brand` on `:root`. `row-actions-dropdown` used a `BqSelect` for an inline role field; the row menu is a `BqDropdown`, but the `no-select` check flags any `BqSelect`. The judge scored all three 1.00: it scored every with-skill task 1.00 and the baseline 0.79, against 0.97 and 0.66 from the deterministic grader, so the deterministic checks carry most of the gap.
 
-The `eval` target's `threshold` is 0.9 (`project.json`): 0.06 to 0.09 under the with-skill means, so it fails once the skill loses about 30% of its lift over the baseline. It was set from Copilot runs, so record a baseline before reading another agent's pass or fail; `--threshold=0` reports without failing. After changing the skill or the tasks, rerun the full suite and update this section and the threshold together.
+The `eval` target's `threshold` is 0.9 (`project.json`): 0.05 to 0.09 under the with-skill means, so it fails once the skill loses about 30% of its lift over the baseline. It was set from Copilot runs, so record a baseline before reading another agent's pass or fail; `--threshold=0` reports without failing. After changing the skill or the tasks, rerun the full suite and update this section and the threshold together.
 
 ### Suite layout
 
