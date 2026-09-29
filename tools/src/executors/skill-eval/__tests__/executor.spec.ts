@@ -6,7 +6,7 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { parse } from 'yaml';
 
 import {
@@ -20,6 +20,7 @@ import {
   findRubricError,
   formatBenchmark,
   INTERRUPTED,
+  instructionEntry,
   loadSuite,
   nextIterationDir,
   normalizeOptions,
@@ -32,6 +33,7 @@ import {
   stat,
   substitute,
   writeEvalConfig,
+  writeInstructions,
 } from '../lib/index.ts';
 
 const write = (root: string, file: string, content: string) => {
@@ -117,6 +119,25 @@ describe('normalizeOptions', () => {
 
     // Assert
     expect(options).toMatchObject({ variants: ['baseline'], trials: 1, llmRubric: false });
+  });
+
+  it('should replay every variant for regrade and only the baseline for reuseBaseline', () => {
+    // Act
+    const regrade = normalizeOptions({ ...required, regrade: 3 }, '/repo', {});
+    const reuse = normalizeOptions({ ...required, reuseBaseline: 4, concurrent: true }, '/repo', {});
+
+    // Assert
+    expect(regrade).toMatchObject({ replay: { 'with-skill': 3, baseline: 3 }, concurrent: false });
+    expect(reuse).toMatchObject({ replay: { baseline: 4 }, concurrent: true });
+    expect(normalizeOptions(required, '/repo', {}).replay).toEqual({});
+  });
+
+  it('should reject replays that cannot work', () => {
+    expect(() => normalizeOptions({ ...required, regrade: 3, reuseBaseline: 3 }, '/repo', {})).toThrow(/not both/);
+    expect(() => normalizeOptions({ ...required, regrade: 3, validate: true }, '/repo', {})).toThrow(/validate/);
+    expect(() => normalizeOptions({ ...required, reuseBaseline: 3, variants: ['with-skill'] }, '/repo', {})).toThrow(
+      /needs the baseline variant/,
+    );
   });
 });
 
@@ -211,7 +232,10 @@ describe('suite', () => {
       expect(config.tasks[0]).toMatchObject({
         name: 'alpha',
         instruction: 'Build a thing.\n\nStack: react.',
-        workspace: [{ src: '/rt/fixtures/react/package.json', dest: 'package.json' }],
+        workspace: [
+          { src: '/rt/fixtures/react/package.json', dest: 'package.json' },
+          { src: '/rt/instructions/alpha.md', dest: 'prompts/instruction.md' },
+        ],
         graders: [
           { type: 'llm_rubric', rubric: '/rt/rubric.md' },
           { type: 'deterministic', run: 'node "/rt/graders/grade.ts"' },
@@ -369,6 +393,10 @@ describe('skillgradeArgs', () => {
     ]);
   });
 
+  it('should leave out trials for a replay, so each task runs once per saved run', () => {
+    expect(skillgradeArgs({ ...base, replay: true })).not.toContainEqual(expect.stringMatching(/^--trials/));
+  });
+
   it('should replace trials with --validate, and add --list', () => {
     expect(skillgradeArgs({ ...base, validate: true, list: true })).toEqual([
       '--agent=command',
@@ -518,7 +546,47 @@ describe('checkRubric', () => {
   });
 });
 
+describe('writeInstructions', () => {
+  it('should write each prompt where its workspace entry copies it from', () => {
+    // Arrange
+    const dir = mkdtempSync(path.join(tmpdir(), 'instructions-'));
+
+    try {
+      // Act
+      writeInstructions(dir, [{ name: 'alpha', instruction: 'Build a thing.' }]);
+
+      // Assert
+      expect(readFileSync(instructionEntry(dir, 'alpha').src, 'utf8')).toBe('Build a thing.');
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+});
+
 describe('runNode', () => {
+  it('should prefix every output line, keeping only the last redraw of a status line', async () => {
+    // Arrange
+    const dir = mkdtempSync(path.join(tmpdir(), 'run-node-'));
+    const script = String.raw`process.stdout.write('one\nwait\r\u001b[Kdone\n'); process.stderr.write('oops\n');`;
+    writeFileSync(path.join(dir, 'print.mjs'), script);
+    const stdout = vi.spyOn(process.stdout, 'write').mockReturnValue(true);
+    const stderr = vi.spyOn(process.stderr, 'write').mockReturnValue(true);
+
+    try {
+      // Act
+      const code = await runNode(path.join(dir, 'print.mjs'), [], { cwd: dir, prefix: '[baseline] ' });
+
+      // Assert
+      expect(code).toBe(0);
+      expect(stdout.mock.calls.map(([line]) => line)).toEqual(['[baseline] one\n', '[baseline] done\n']);
+      expect(stderr.mock.calls.map(([line]) => line)).toEqual(['[baseline] oops\n']);
+    } finally {
+      stdout.mockRestore();
+      stderr.mockRestore();
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
   it('should stop the child and report it as interrupted when aborted', async () => {
     // Arrange
     const dir = mkdtempSync(path.join(tmpdir(), 'run-node-'));

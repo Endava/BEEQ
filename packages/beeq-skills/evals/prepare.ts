@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Runs once in the suite's temp copy before any eval, called by the skill-eval executor with:
 //   SKILL_EVAL_WORKSPACE_ROOT  the BEEQ repo root
-//   SKILL_EVAL_VARIANTS        comma-separated variants about to run
+//   SKILL_EVAL_VARIANTS        comma-separated variants whose agent is about to run
 // Writes the files graders and tasks read, so nothing at eval time reads the repo.
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';

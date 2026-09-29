@@ -1,16 +1,29 @@
 // biome-ignore-all lint/style/useNamingConvention: snake_case fields are defined by the skillgrade and agentskills.io formats.
 import type { SkillEvalVariant } from '../schema.d.ts';
 
-/** The parts of a skillgrade `EvalReport` (one results/*.json file) the benchmark reads. */
+/** One skillgrade `session_log` entry; which fields are set depends on `type`. */
+export type SessionLogEntry = {
+  type: string;
+  instruction?: string;
+  command?: string;
+  stdout?: string;
+  stderr?: string;
+  exitCode?: number;
+};
+
+export type EvalTrial = {
+  reward: number;
+  duration_ms: number;
+  input_tokens: number;
+  output_tokens: number;
+  grader_results: { grader_type: string; score: number; details?: string }[];
+  session_log?: SessionLogEntry[];
+};
+
+/** The parts of a skillgrade `EvalReport` (one results/*.json file) the executor reads. */
 export type EvalReport = {
   task: string;
-  trials: {
-    reward: number;
-    duration_ms: number;
-    input_tokens: number;
-    output_tokens: number;
-    grader_results: { grader_type: string; score: number; details?: string }[];
-  }[];
+  trials: EvalTrial[];
 };
 
 type Stat = { mean: number; stddev: number };

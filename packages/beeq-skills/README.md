@@ -32,7 +32,7 @@ pnpm exec nx run beeq-skills:eval --eval=tooltip-truncation --agent=claude --mod
 
 Configurations: `smoke` (tasks tagged `smoke`, 5 trials), `reliable` (15), `regression` (30). Without a configuration every task runs once. Useful options: `--agent` (`copilot`, `claude`, or `codex`), `--model`, `--variants`, `--filter=stack=react`, `--grader=deterministic`, `--threshold`. See `tools/src/executors/skill-eval/schema.json` for the rest.
 
-Every trial runs a real agent CLI, so it costs requests: 15 tasks × 2 variants is 30 agent runs per trial. The suite therefore runs only locally, on demand, with the CLI you are logged in to; CI runs only `eval-validate`, which starts no agent. Start with `--eval` or `-c smoke`.
+Every trial runs a real agent CLI, so it costs requests: 15 tasks × 2 variants is 30 agent runs per trial. The suite therefore runs only locally, on demand, with the CLI you are logged in to; CI runs only `eval-validate`, which starts no agent. Start with `--eval` or `-c smoke`, and see [Rerunning for less](#rerunning-for-less) before repeating a run.
 
 **Results** go to `tmp/skill-evals/iteration-N/`: one skillgrade folder per variant plus `benchmark.json`. `eval-validate` writes to `tmp/skill-evals/validate/` instead, so a validation run never becomes the latest iteration. To view them:
 
@@ -48,6 +48,21 @@ pnpm exec nx run beeq-skills:eval --preview=cli                       # every va
 - `rubric.md` (weight 0.3, LLM): scored against the task's `criteria`. It runs only when `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, or `GEMINI_API_KEY` is set; otherwise the executor warns and grades deterministically. The executor runs it before the deterministic grader, because skillgrade shows the judge every earlier grader's result and a judge that sees them echoes them. `--graderProvider` and `--graderModel` pick the judge; use `gpt-4.1` or a stronger model, since `gpt-4.1-mini` reported attribute values the code did not contain. Before any agent runs, the executor sends the judge one short request, so a missing key, unknown model, or empty quota stops the run for the cost of that call. skillgrade scores a failed rubric call 0 and carries on, so the executor also watches each result as it lands and stops the run at the first rubric error; the agent trial already running finishes on its own.
 
 **Baseline hygiene.** The baseline must not see the skill any other way. `prepare.ts` refuses to run when a personal `beeq` skill exists in `~/.agents/skills`, `~/.copilot/skills`, or `~/.claude/skills`. The agent wrapper runs Copilot with `--no-custom-instructions` and the user's MCP servers disabled, Claude with `--strict-mcp-config`, and Codex with a throwaway `CODEX_HOME` that holds only a link to the user's `auth.json`, so Codex config, MCP servers, memories, `AGENTS.md`, plugins, and hooks stay out. Codex needs `codex login` or `CODEX_API_KEY`.
+
+### Rerunning for less
+
+Every trial report keeps the agent's output, and that output lists every file the grader reads, so a rerun can replay saved runs instead of running the agent:
+
+```bash
+pnpm exec nx run beeq-skills:eval --regrade=36 --grader=all   # no agent: both variants of iteration-36 through the current graders
+pnpm exec nx run beeq-skills:eval --reuseBaseline=36          # the agent runs with-skill only; the baseline replays iteration-36
+pnpm exec nx run beeq-skills:eval --concurrent                # both variants at once
+```
+
+- `--regrade=N` fits a change to a grader, the rubric, a task's `expected`, or the API index. It costs only the judge's calls, and none with `--grader=deterministic`. It cannot show a change in agent behaviour, so a skill change needs the agent.
+- `--reuseBaseline=N` fits a skill change: the baseline never sees the skill, so its runs stay valid while the prompts, fixtures, agent, and model stay the same. Pass the same `--model` to both runs, since the CLI's default model changes without notice.
+- A replay reruns every trial iteration N saved for each selected task, whatever `--trials` says. Before any agent or judge call, it fails when a selected task has no saved run in iteration N or its prompt changed, and a reuse also fails when iteration N ran another agent or model. `benchmark.json` records a hash of each task's prompt and workspace files under `metadata.inputs` (and the replayed iterations under `metadata.replayed`), and a replay fails when those hashes changed. Iterations from before the hashes only get the prompt check, with a warning. The fixtures pin the BEEQ version, so a version bump retires every saved run.
+- `--concurrent` runs one skillgrade process per variant and prefixes each output line with its variant. It about halves the wall time and doubles the agent requests in flight, so rate limits arrive sooner. A failure in either variant stops both.
 
 ### Recorded baseline
 
@@ -95,7 +110,7 @@ The executor copies `evals/` to a temp folder outside the repo, fills `{{evals}}
 | `footer.md` | Appended to every instruction; `{{metadata.KEY}}` reads task metadata. |
 | `prepare.ts` | Runs first: writes `beeq-index.json` (the API index the grader reads) and one `fixtures/<stack>/` consumer project per stack: a `package.json`, plus an app shell with no BEEQ setup for React and Angular. Tasks copy the whole folder, and the grader ignores fixture files the agent left untouched. |
 | `solutions/<name>.sh` | Reference answer for `eval-validate`. Writes files, then `rm -- "$0"` so the grader sees only the answer. |
-| `agents/run.ts` | Runs Copilot, Claude, or Codex in the workspace and prints the reply plus every file written. |
+| `agents/run.ts` | Runs Copilot, Claude, or Codex in the workspace and prints the reply plus every file written. It reads the prompt from `prompts/instruction.md`, which the executor adds to every workspace because skillgrade passes prompts through one shared `/tmp/.prompt.md` that concurrent variants overwrite. With `SKILL_EVAL_REPLAY` set, it replays a saved run instead: it writes back the files that run printed and prints its output. |
 | `graders/grade.ts`, `lib/*.ts` | The deterministic grader and the BEEQ API index and rules it uses. |
 
 The `.ts` files run under Node's type stripping with no build step, so they use erasable syntax only and import siblings with `.ts` extensions. `nx run beeq-skills:typecheck` enforces both.

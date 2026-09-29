@@ -1,12 +1,23 @@
 // biome-ignore-all lint/style/useNamingConvention: snake_case fields are defined by the skillgrade and agentskills.io formats.
-import { mkdtempSync, readdirSync, readFileSync, readlinkSync, rmSync, writeFileSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
+import {
+  existsSync,
+  mkdirSync,
+  mkdtempSync,
+  readdirSync,
+  readFileSync,
+  readlinkSync,
+  rmSync,
+  writeFileSync,
+} from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { parse } from 'yaml';
 
-import { COMMANDS, codexHome, materializeBlocks } from '../evals/agents/run.ts';
+import { COMMANDS, claimReplay, codexHome, materializeBlocks, replay } from '../evals/agents/run.ts';
 import { grade, runCheck } from '../evals/graders/grade.ts';
 import { loadBeeqIndex, reviveIndex, serializeIndex } from '../evals/lib/beeq-index.ts';
 import {
@@ -15,6 +26,7 @@ import {
   fixtureFiles,
   formatFiles,
   packageJson,
+  parseFiles,
   STACKS,
 } from '../evals/lib/workspace.ts';
 
@@ -279,6 +291,21 @@ describe('workspace helpers', () => {
     expect(formatFiles(files)).toBe('```css src/app.css\na {}\n```\n\n```tsx src/App.tsx\nexport {};\n```');
   });
 
+  it('should read back every file formatFiles printed, fences inside a file included', () => {
+    // Arrange
+    const files = [
+      { path: 'app/articles/[id]/page.tsx', lang: 'tsx', content: 'export default 1;\n' },
+      { path: 'README.md', lang: 'md', content: '# Setup\n```bash\nnpm i\n```' },
+      { path: 'src/empty.css', lang: 'css', content: '' },
+    ];
+
+    // Act
+    const parsed = parseFiles(`Reply.\n\n## Files written (3)\n\n${formatFiles(files)}\n`);
+
+    // Assert
+    expect(parsed).toEqual(files.map((file) => ({ path: file.path, content: file.content.trimEnd() })));
+  });
+
   it('should give the React fixture an app shell without BEEQ setup', () => {
     // Act
     const files = fixtureFiles('react', '1.2.3');
@@ -399,6 +426,80 @@ describe('agent commands', () => {
     // Act & Assert
     expect(() => codexHome(home, { CODEX_HOME: codexDir })).toThrow(/codex login/);
     expect(() => codexHome(home, { CODEX_HOME: codexDir, CODEX_API_KEY: 'k' })).not.toThrow();
+  });
+});
+
+describe('replay', () => {
+  let dir: string;
+  let workspace: string;
+
+  beforeEach(() => {
+    dir = mkdtempSync(path.join(tmpdir(), 'beeq-skills-replay-'));
+    workspace = path.join(dir, 'workspace');
+    mkdirSync(workspace);
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+    process.exitCode = undefined;
+    rmSync(dir, { recursive: true, force: true });
+  });
+
+  const saved = (stdout: string, exitCode = 0) => ({ stdout, stderr: '', exitCode });
+  const save = (prompt: string, trial: number, run: ReturnType<typeof saved>) => {
+    const taskDir = path.join(dir, 'replay', createHash('sha256').update(prompt).digest('hex'));
+    mkdirSync(taskDir, { recursive: true });
+    writeFileSync(path.join(taskDir, `${trial}.json`), JSON.stringify(run));
+  };
+  const reply = (text: string, files: string) => `${text}\n\n## Files written (1)\n\n${files}\n`;
+
+  it('should claim the saved runs of a prompt in trial order until none is left', () => {
+    // Arrange
+    for (const trial of [10, 2, 0]) save('Build it.', trial, saved(`trial ${trial}`));
+
+    // Act
+    const claimed = [0, 1, 2].map(() => claimReplay(path.join(dir, 'replay'), 'Build it.').stdout);
+
+    // Assert
+    expect(claimed).toEqual(['trial 0', 'trial 2', 'trial 10']);
+    expect(() => claimReplay(path.join(dir, 'replay'), 'Build it.')).toThrow(/No saved run left/);
+    expect(() => claimReplay(path.join(dir, 'replay'), 'Build something else.')).toThrow(/No saved run left/);
+  });
+
+  it('should write back only the files the run listed, and replay its output and exit code', () => {
+    // Arrange
+    const stdout = vi.spyOn(process.stdout, 'write').mockReturnValue(true);
+    const run = saved(reply('Try ```tsx src/Draft.tsx\ndraft\n```', '```tsx app/[id]/page.tsx\nfinal\n```'), 2);
+
+    // Act
+    replay(run, workspace);
+
+    // Assert
+    expect(readFileSync(path.join(workspace, 'app/[id]/page.tsx'), 'utf8')).toBe('final\n');
+    expect(existsSync(path.join(workspace, 'src/Draft.tsx'))).toBe(false);
+    expect(stdout).toHaveBeenCalledWith(run.stdout);
+    expect(process.exitCode).toBe(2);
+  });
+
+  it('should replay the run saved for the prompt file rather than stdin', () => {
+    // Arrange
+    save('From the file.', 0, saved(reply('Done.', '```html index.html\n<bq-button></bq-button>\n```')));
+    mkdirSync(path.join(workspace, 'prompts'));
+    writeFileSync(path.join(workspace, 'prompts/instruction.md'), 'From the file.');
+
+    // Act
+    const result = spawnSync(process.execPath, [path.join(evalsDir, 'agents/run.ts'), 'copilot'], {
+      cwd: workspace,
+      input: 'From stdin.',
+      env: { ...process.env, SKILL_EVAL_REPLAY: path.join(dir, 'replay') },
+      encoding: 'utf8',
+    });
+
+    // Assert
+    expect(result.stderr).toBe('');
+    expect(result.status).toBe(0);
+    expect(result.stdout).toContain('Done.');
+    expect(readFileSync(path.join(workspace, 'index.html'), 'utf8')).toBe('<bq-button></bq-button>\n');
   });
 });
 

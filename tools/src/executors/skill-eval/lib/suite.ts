@@ -1,4 +1,4 @@
-import { existsSync, readdirSync, readFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 
 import { parse } from 'yaml';
@@ -41,6 +41,28 @@ export const SUITE_FILES = {
 
 /** Placeholder for the absolute path of the suite's runtime copy. */
 export const EVALS_TOKEN = '{{evals}}';
+
+/** Where each task's prompt is copied in the workspace; see `instructionEntry`. */
+export const INSTRUCTION_FILE = 'prompts/instruction.md';
+
+/**
+ * The workspace entry that copies a task's prompt to `INSTRUCTION_FILE`. skillgrade hands every agent command
+ * its prompt through one shared `/tmp/.prompt.md`, which two variants running at once can overwrite for each
+ * other; the copy in the workspace cannot be.
+ */
+export const instructionEntry = (runtimeDir: string, task: string): WorkspaceEntry => ({
+  src: path.join(runtimeDir, 'instructions', `${task}.md`),
+  dest: INSTRUCTION_FILE,
+});
+
+/** Writes the prompt files `instructionEntry` points at. */
+export function writeInstructions(runtimeDir: string, tasks: { name: string; instruction: string }[]) {
+  for (const task of tasks) {
+    const { src } = instructionEntry(runtimeDir, task.name);
+    mkdirSync(path.dirname(src), { recursive: true });
+    writeFileSync(src, task.instruction);
+  }
+}
 
 const MODEL_PATTERN = /^[\w.:/-]+$/;
 
@@ -149,7 +171,7 @@ export function buildEvalConfig(input: EvalConfigInput) {
         .sort(rubricFirst);
       if (graders.length === 0) throw new Error(`Task "${task.name}" has no graders.`);
 
-      const workspace = [...(task.workspace ?? [])];
+      const workspace = [...(task.workspace ?? []), instructionEntry(runtimeDir, task.name)];
       let solution: string | undefined;
       if (validate) {
         solution = path.join(runtimeDir, suite.solutions.get(task.name) ?? '');
@@ -160,7 +182,7 @@ export function buildEvalConfig(input: EvalConfigInput) {
         ...task,
         instruction: renderInstruction(source, suite.footer),
         graders,
-        ...(workspace.length ? { workspace } : {}),
+        workspace,
         ...(solution ? { solution } : {}),
       };
     });

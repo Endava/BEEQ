@@ -110,6 +110,21 @@
       "minimum": 1,
       "description": "Iteration to preview. Defaults to the latest in outputPath."
     },
+    "regrade": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Regrade iteration N instead of running agents: replay each variant's saved agent runs from it through the current graders into a new iteration. For grader, rubric, and check changes. Fails when a selected task has no saved run or its prompt or workspace files changed."
+    },
+    "reuseBaseline": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Replay the baseline's saved agent runs from iteration N through the current graders, and run the agent only for with-skill. For skill changes. Fails when a selected task has no saved run, its prompt or workspace files changed, or iteration N used another agent or model."
+    },
+    "concurrent": {
+      "type": "boolean",
+      "default": false,
+      "description": "Run the variants at the same time, one skillgrade process each, with every output line prefixed by its variant. About halves a full run; doubles the agent requests in flight."
+    },
     "outputPath": {
       "type": "string",
       "default": "tmp/skill-evals",

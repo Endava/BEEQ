@@ -196,3 +196,12 @@ export function collectFiles(dir: string, fixturesDir = FIXTURES_DIR) {
 /** Files as fenced blocks whose info string is the language and path, as the grader and rubric expect. */
 export const formatFiles = (files: WorkspaceFile[]) =>
   files.map((file) => `\`\`\`${file.lang} ${file.path}\n${file.content.trimEnd()}\n\`\`\``).join('\n\n');
+
+/**
+ * Reads back the files `formatFiles` printed. A block ends at a closing fence followed by the next block or the
+ * end of the text, so fences inside a file's content stay part of it.
+ */
+export const parseFiles = (text: string): Omit<WorkspaceFile, 'lang'>[] =>
+  [...text.matchAll(/^```\S* ([^\n]+)\n([\s\S]*?)\n```(?=\n\n```\S* [^\n]+\n|\s*(?![\s\S]))/gm)].map(
+    ([, file, content]) => ({ path: file, content }),
+  );

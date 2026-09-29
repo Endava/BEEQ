@@ -66,6 +66,15 @@ type SkillEvalExecutorSchema = {
   /** Iteration to preview; the latest by default. */
   iteration?: number;
 
+  /** Regrade iteration N: replay its saved agent runs through the current graders instead of running agents. */
+  regrade?: number;
+
+  /** Replay the baseline's saved agent runs from iteration N, and run the agent only for with-skill. */
+  reuseBaseline?: number;
+
+  /** Run the variants at the same time. @default false */
+  concurrent?: boolean;
+
   /** @default 'tmp/skill-evals' */
   outputPath?: string;
 };

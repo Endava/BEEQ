@@ -3,6 +3,7 @@ import { cpSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, 
 import { createRequire } from 'node:module';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
+import type { Readable, Writable } from 'node:stream';
 
 import { stringify } from 'yaml';
 
@@ -82,18 +83,48 @@ export function resolveSkillgradeBin(evalsDir: string) {
 /** Exit code `runNode` reports when the child was stopped with SIGINT or SIGTERM. */
 export const INTERRUPTED = 130;
 
+const ERASE_LINE = '\u001b[K';
+
+/**
+ * Copies `input` to `output` line by line behind `prefix`. Keeps only what follows a line's last carriage
+ * return, and drops erase-line codes, so a redrawn status line prints once, prefixed.
+ */
+function prefixLines(input: Readable, output: Writable, prefix: string) {
+  const write = (line: string) => {
+    const text = line.endsWith('\r') ? line.slice(0, -1) : line;
+    output.write(`${prefix}${text.slice(text.lastIndexOf('\r') + 1).replaceAll(ERASE_LINE, '')}\n`);
+  };
+  let pending = '';
+  input.setEncoding('utf8');
+  input.on('data', (chunk: string) => {
+    const lines = `${pending}${chunk}`.split('\n');
+    pending = lines.pop() ?? '';
+    for (const line of lines) write(line);
+  });
+  input.on('end', () => {
+    if (pending) write(pending);
+  });
+}
+
+/**
+ * Runs a Node script. With `prefix`, its output is piped and every line starts with the prefix.
+ */
 export function runNode(
   script: string,
   args: string[],
-  options: { cwd: string; env?: NodeJS.ProcessEnv; signal?: AbortSignal },
+  options: { cwd: string; env?: NodeJS.ProcessEnv; signal?: AbortSignal; prefix?: string },
 ) {
   return new Promise<number>((resolve, reject) => {
     const child = spawn(process.execPath, [script, ...args], {
       cwd: options.cwd,
       env: { ...process.env, ...options.env },
-      stdio: 'inherit',
+      stdio: options.prefix ? ['inherit', 'pipe', 'pipe'] : 'inherit',
       signal: options.signal,
     });
+    if (options.prefix && child.stdout && child.stderr) {
+      prefixLines(child.stdout, process.stdout, options.prefix);
+      prefixLines(child.stderr, process.stderr, options.prefix);
+    }
     // Aborting kills the child with SIGTERM; `close` then reports it as interrupted.
     child.on('error', (error) => {
       if (!options.signal?.aborted) reject(error);
@@ -104,7 +135,10 @@ export function runNode(
   });
 }
 
-/** skillgrade CLI flags for a run. */
+/**
+ * skillgrade CLI flags for a run. A replay leaves out `--trials`, which would override the trial count each
+ * task takes from its saved runs.
+ */
 export function skillgradeArgs(options: {
   outputDir: string;
   trials: number;
@@ -113,12 +147,14 @@ export function skillgradeArgs(options: {
   filter: string[];
   validate: boolean;
   list: boolean;
+  replay?: boolean;
 }) {
+  const trials = options.replay ? [] : [`--trials=${options.trials}`];
   return [
     '--agent=command',
     '--provider=local',
     `--output=${options.outputDir}`,
-    ...(options.validate ? ['--validate'] : [`--trials=${options.trials}`, `--parallel=${options.parallel}`]),
+    ...(options.validate ? ['--validate'] : [...trials, `--parallel=${options.parallel}`]),
     ...(options.eval.length ? [`--eval=${options.eval.join(',')}`] : []),
     ...options.filter.map((filter) => `--filter=${filter}`),
     ...(options.list ? ['--list'] : []),
