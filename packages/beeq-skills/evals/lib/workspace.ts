@@ -201,7 +201,18 @@ export const formatFiles = (files: WorkspaceFile[]) =>
  * Reads back the files `formatFiles` printed. A block ends at a closing fence followed by the next block or the
  * end of the text, so fences inside a file's content stay part of it.
  */
-export const parseFiles = (text: string): Omit<WorkspaceFile, 'lang'>[] =>
-  [...text.matchAll(/^```\S* ([^\n]+)\n([\s\S]*?)\n```(?=\n\n```\S* [^\n]+\n|\s*(?![\s\S]))/gm)].map(
-    ([, file, content]) => ({ path: file, content }),
-  );
+export function parseFiles(text: string): Omit<WorkspaceFile, 'lang'>[] {
+  const open = /^```\S* ([^\n]+)\n/gm;
+  // A closing fence followed by the next file's opening fence or the end of the text.
+  const close = /\n```(?=\n\n```\S* [^\n]+\n|\s*$)/g;
+  const files: Omit<WorkspaceFile, 'lang'>[] = [];
+
+  for (let header = open.exec(text); header; header = open.exec(text)) {
+    close.lastIndex = open.lastIndex;
+    const end = close.exec(text);
+    if (!end) break;
+    files.push({ path: header[1], content: text.slice(open.lastIndex, end.index) });
+    open.lastIndex = close.lastIndex;
+  }
+  return files;
+}

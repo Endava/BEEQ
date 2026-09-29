@@ -22,7 +22,16 @@ export type Replay = {
   /** Task name → one saved run per trial. */
   runs: Map<string, SavedRun[]>;
   /** The source's `benchmark.json` metadata, when it has one. */
-  metadata?: Record<string, unknown>;
+  metadata?: ReplayMetadata;
+};
+
+/** The `benchmark.json` metadata a replay reads back. */
+export type ReplayMetadata = {
+  agent?: string;
+  model?: string;
+  trials?: number;
+  /** Variant → task → hash of the task's prompt and workspace files. */
+  inputs?: Partial<Record<SkillEvalVariant, Record<string, string>>>;
 };
 
 /** Environment variable that points the suite's agent command at the runs to replay. */
@@ -98,7 +107,7 @@ const savedInstruction = (trial: EvalTrial) =>
 function readMetadata(sourceDir: string) {
   const file = path.join(sourceDir, 'benchmark.json');
   if (!existsSync(file)) return undefined;
-  return (JSON.parse(readFileSync(file, 'utf8')) as { metadata?: Record<string, unknown> }).metadata;
+  return (JSON.parse(readFileSync(file, 'utf8')) as { metadata?: ReplayMetadata }).metadata;
 }
 
 function reportFiles(iterationDir: string, variant: SkillEvalVariant) {
@@ -139,8 +148,9 @@ export function loadReplay(sourceDir: string, variant: SkillEvalVariant, tasks: 
   );
   const problems = replayProblems(tasks, latest);
   if (problems.length) {
+    const list = problems.map((line) => `  - ${line}`).join('\n');
     throw new Error(
-      `Cannot replay ${variant} from ${path.basename(sourceDir)}:\n${problems.map((line) => `  - ${line}`).join('\n')}\n` +
+      `Cannot replay ${variant} from ${path.basename(sourceDir)}:\n${list}\n` +
         'Run those tasks with the agent, or leave them out with --eval or --filter.',
     );
   }
@@ -159,8 +169,7 @@ export function loadReplay(sourceDir: string, variant: SkillEvalVariant, tasks: 
 
 /** The task inputs `replay`'s source recorded for `variant`, limited to the tasks in `current`. */
 export function recordedInputs(replay: Replay, variant: SkillEvalVariant, current: Record<string, string>) {
-  const all = replay.metadata?.inputs as Partial<Record<SkillEvalVariant, Record<string, string>>> | undefined;
-  const inputs = all?.[variant] ?? {};
+  const inputs = replay.metadata?.inputs?.[variant] ?? {};
   return Object.fromEntries(Object.keys(current).flatMap((task) => (task in inputs ? [[task, inputs[task]]] : [])));
 }
 

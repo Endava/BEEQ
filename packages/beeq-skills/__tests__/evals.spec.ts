@@ -306,6 +306,17 @@ describe('workspace helpers', () => {
     expect(parsed).toEqual(files.map((file) => ({ path: file.path, content: file.content.trimEnd() })));
   });
 
+  it('should skip a last file whose closing fence is missing and return nothing without files', () => {
+    // Arrange
+    const printed = formatFiles([{ path: 'src/app.css', lang: 'css', content: 'a {}' }]);
+
+    // Act & Assert
+    expect(parseFiles(`${printed}\n\n\`\`\`tsx src/App.tsx\nexport`)).toEqual([
+      { path: 'src/app.css', content: 'a {}' },
+    ]);
+    expect(parseFiles('Reply.\n\n## Files written (0)\n')).toEqual([]);
+  });
+
   it('should give the React fixture an app shell without BEEQ setup', () => {
     // Act
     const files = fixtureFiles('react', '1.2.3');

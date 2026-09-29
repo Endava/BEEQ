@@ -62,7 +62,7 @@ const resendable = (input: Parameters<typeof fetch>[0], init?: RequestInit) =>
  */
 export function retryingFetch(
   inner: typeof fetch,
-  { maxWaitMs = MAX_WAIT_MS, stats = { retries: 0, pausedMs: 0 } as RetryStats } = {},
+  { maxWaitMs = MAX_WAIT_MS, stats = { retries: 0, pausedMs: 0 } }: { maxWaitMs?: number; stats?: RetryStats } = {},
 ): typeof fetch {
   let resumeAt = 0;
   const pause = (delay: number) => {
