@@ -33,3 +33,7 @@ expected:
       match: '<BqIcon\b[^>]*aria-hidden'
     - name: no-part-override
       absent: '::part\('
+    - name: stylesheet
+      match: '@beeq/core(@[^/]+)?/dist/beeq/beeq\.css'
+    - name: icon-base-path
+      match: 'setBasePath\(|data-beeq'

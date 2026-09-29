@@ -8,7 +8,12 @@ const STACK_DEPENDENCIES: Record<string, Record<string, string>> = {
   html: { vite: '^7.0.0' },
   react: { '@beeq/react': 'beeq', react: '^19.0.0', 'react-dom': '^19.0.0' },
   next: { '@beeq/react': 'beeq', next: '^15.0.0', react: '^19.0.0', 'react-dom': '^19.0.0' },
-  angular: { '@beeq/angular': 'beeq', '@angular/core': '^20.0.0', '@angular/forms': '^20.0.0' },
+  angular: {
+    '@beeq/angular': 'beeq',
+    '@angular/core': '^20.0.0',
+    '@angular/forms': '^20.0.0',
+    '@angular/platform-browser': '^20.0.0',
+  },
   vue: { '@beeq/vue': 'beeq', vue: '^3.5.0' },
 };
 
@@ -47,6 +52,59 @@ createRoot(document.getElementById('root')!).render(
 }
 `,
     'src/index.css': `body {
+  margin: 0;
+}
+`,
+  },
+  angular: {
+    'angular.json': `${JSON.stringify(
+      {
+        version: 1,
+        projects: {
+          app: {
+            projectType: 'application',
+            root: '',
+            sourceRoot: 'src',
+            architect: {
+              build: {
+                builder: '@angular/build:application',
+                options: { browser: 'src/main.ts', index: 'src/index.html', styles: ['src/styles.css'] },
+              },
+            },
+          },
+        },
+      },
+      null,
+      2,
+    )}\n`,
+    'src/index.html': `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>App</title>
+    <base href="/" />
+  </head>
+  <body>
+    <app-root></app-root>
+  </body>
+</html>
+`,
+    'src/main.ts': `import { bootstrapApplication } from '@angular/platform-browser';
+
+import { App } from './app/app';
+
+bootstrapApplication(App).catch((error) => console.error(error));
+`,
+    'src/app/app.ts': `import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  template: '<main></main>',
+})
+export class App {}
+`,
+    'src/styles.css': `body {
   margin: 0;
 }
 `,

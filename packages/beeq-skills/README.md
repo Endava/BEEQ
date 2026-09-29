@@ -44,8 +44,8 @@ pnpm exec nx run beeq-skills:eval --preview=cli                       # every va
 
 **Grading.** Each trial's reward is the weighted mean of two graders:
 
-- `graders/grade.ts` (weight 0.7, deterministic): the agent wrote files, the SKILL.md Verify searches are clean, every BEEQ element, prop, event, part, and token exists in the component source, and the task's own `checks` pass.
-- `rubric.md` (weight 0.3, LLM): scored against the task's `criteria`. It runs only when `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, or `GEMINI_API_KEY` is set; otherwise the executor warns and grades deterministically. `--graderProvider` and `--graderModel` pick the judge. A failed rubric call (no credit, rate limit) scores 0 and the run carries on, capping every trial at 0.70, so check the first result's rubric details before leaving a long run going.
+- `graders/grade.ts` (weight 0.7, deterministic): the agent wrote files, the SKILL.md Verify searches are clean, every BEEQ element, prop, event, part, and token exists in the component source, every literal value of a string-union prop (`type="error"`) is one the prop accepts, and the task's own `checks` pass.
+- `rubric.md` (weight 0.3, LLM): scored against the task's `criteria`. It runs only when `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, or `GEMINI_API_KEY` is set; otherwise the executor warns and grades deterministically. The executor runs it before the deterministic grader, because skillgrade shows the judge every earlier grader's result and a judge that sees them echoes them. `--graderProvider` and `--graderModel` pick the judge; use `gpt-4.1` or a stronger model, since `gpt-4.1-mini` reported attribute values the code did not contain. Before any agent runs, the executor sends the judge one short request, so a missing key, unknown model, or empty quota stops the run for the cost of that call. skillgrade scores a failed rubric call 0 and carries on, so the executor also watches each result as it lands and stops the run at the first rubric error; the agent trial already running finishes on its own.
 
 **Baseline hygiene.** The baseline must not see the skill any other way. `prepare.ts` refuses to run when a personal `beeq` skill exists in `~/.agents/skills`, `~/.copilot/skills`, or `~/.claude/skills`. The agent wrapper runs Copilot with `--no-custom-instructions` and the user's MCP servers disabled, Claude with `--strict-mcp-config`, and Codex with a throwaway `CODEX_HOME` that holds only a link to the user's `auth.json`, so Codex config, MCP servers, memories, `AGENTS.md`, plugins, and hooks stay out. Codex needs `codex login` or `CODEX_API_KEY`.
 
@@ -80,7 +80,7 @@ The second run is `pnpm exec nx run beeq-skills:eval --grader=all --graderProvid
 
 `angular-select` and `spa-link-routing` score 1.00 in both variants in both runs, so they catch regressions but do not show the skill's effect.
 
-The rubric is not an independent signal: skillgrade puts the deterministic results in the judge's prompt, and in this run the with-skill rubric scores matched them to within 0.02 on every task. On the baseline the judge was more lenient (0.81 against 0.73 deterministic), which raises the baseline mean. Compare runs only when they use the same graders and grader model.
+In the rubric-graded run the judge still saw the deterministic results: its with-skill scores matched them to within 0.02 on every task, and it was more lenient on the baseline (0.81 against 0.73 deterministic). Since these runs, the rubric runs first and scores blind, the API check rejects prop values a prop does not accept (the with-skill `save-error-alert` trial in the second run wrote `bq-alert type="danger"`), four more tasks check the stylesheet import, and the Angular fixture has an app shell. Rerun the suite before comparing these rows with later runs. Compare runs only when they use the same graders, rubric, and grader model.
 
 The `eval` target's `threshold` is 0.9 (`project.json`): 0.06 to 0.09 under the with-skill means, so it fails once the skill loses about 30% of its lift over the baseline. It was set from Copilot runs, so record a baseline before reading another agent's pass or fail; `--threshold=0` reports without failing. After changing the skill or the tasks, rerun the full suite and update this section and the threshold together.
 
@@ -93,7 +93,7 @@ The executor copies `evals/` to a temp folder outside the repo, fills `{{evals}}
 | `eval.base.yaml` | skillgrade `defaults` (the agent command) and the default `graders`. |
 | `tasks/<name>.yaml` | One skillgrade task. `name` must match the file name. |
 | `footer.md` | Appended to every instruction; `{{metadata.KEY}}` reads task metadata. |
-| `prepare.ts` | Runs first: writes `beeq-index.json` (the API index the grader reads) and one `fixtures/<stack>/` consumer project per stack: a `package.json`, plus an app shell with no BEEQ setup for React. Tasks copy the whole folder, and the grader ignores fixture files the agent left untouched. |
+| `prepare.ts` | Runs first: writes `beeq-index.json` (the API index the grader reads) and one `fixtures/<stack>/` consumer project per stack: a `package.json`, plus an app shell with no BEEQ setup for React and Angular. Tasks copy the whole folder, and the grader ignores fixture files the agent left untouched. |
 | `solutions/<name>.sh` | Reference answer for `eval-validate`. Writes files, then `rm -- "$0"` so the grader sees only the answer. |
 | `agents/run.ts` | Runs Copilot, Claude, or Codex in the workspace and prints the reply plus every file written. |
 | `graders/grade.ts`, `lib/*.ts` | The deterministic grader and the BEEQ API index and rules it uses. |

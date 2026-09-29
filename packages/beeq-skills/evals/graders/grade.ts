@@ -71,7 +71,7 @@ function apiCheck(code: string, index: BeeqIndex, allow: string[]): CheckResult 
   return {
     name: 'api',
     passed: unique.length === 0,
-    message: unique.length ? unique.map((issue) => issue.message).join(' ') : 'every BEEQ name exists',
+    message: unique.length ? unique.map((issue) => issue.message).join(' ') : 'every BEEQ name and prop value exists',
   };
 }
 

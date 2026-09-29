@@ -26,3 +26,7 @@ expected:
       absent: '<(BqDialog|bq-dialog)\b'
     - name: no-backdrop
       absent: '<(BqDrawer|bq-drawer)\b[^>]*enable-?[bB]ackdrop(?!="false)'
+    - name: stylesheet
+      match: '@beeq/core(@[^/]+)?/dist/beeq/beeq\.css'
+    - name: icon-base-path
+      match: 'setBasePath\(|data-beeq'

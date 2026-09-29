@@ -25,3 +25,5 @@ expected:
       match: '<bq-input\b[\s\S]*<bq-input\b'
     - name: no-empty-state
       absent: '<bq-empty-state\b'
+    - name: stylesheet
+      match: '@beeq/core(@[^/]+)?/dist/beeq/beeq\.css'

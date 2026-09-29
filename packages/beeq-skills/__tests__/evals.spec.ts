@@ -295,6 +295,23 @@ describe('workspace helpers', () => {
     expect(Object.keys(fixtureFiles('html', '1.2.3'))).toEqual(['package.json']);
   });
 
+  it('should give the Angular fixture an app shell without BEEQ setup', () => {
+    // Act
+    const files = fixtureFiles('angular', '1.2.3');
+
+    // Assert
+    expect(Object.keys(files).sort()).toEqual([
+      'angular.json',
+      'package.json',
+      'src/app/app.ts',
+      'src/index.html',
+      'src/main.ts',
+      'src/styles.css',
+    ]);
+    expect(JSON.parse(files['angular.json']).projects.app.architect.build.options.styles).toEqual(['src/styles.css']);
+    expect(Object.values(files).join('\n')).not.toMatch(/beeq\.css|data-beeq|setBasePath/);
+  });
+
   it('should skip fixture files the agent left untouched', () => {
     // Arrange
     const workspace = path.join(dir, 'workspace');
@@ -393,6 +410,9 @@ describe('serializeIndex', () => {
     // Assert
     expect(revived.components.get('bq-button')?.props.has('onlyIcon')).toBe(true);
     expect(revived.pascalToTag.get('BqTooltip')).toBe('bq-tooltip');
+    expect(revived.components.get('bq-alert')?.values.get('type')).toEqual(
+      index.components.get('bq-alert')?.values.get('type'),
+    );
     expect(revived.tokens).toEqual(index.tokens);
   });
 });
