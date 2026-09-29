@@ -7,7 +7,6 @@
   "targets": {
     "dev": {
       "executor": "nx:run-commands",
-      "syncGenerators": ["@beeq/tools:sync-skills"],
       "options": {
         "command": "pnpm dlx mintlify dev",
         "cwd": "apps/beeq-docs"
@@ -15,7 +14,6 @@
     },
     "build": {
       "executor": "nx:run-commands",
-      "syncGenerators": ["@beeq/tools:sync-skills"],
       "options": {
         "command": "pnpm dlx mintlify build",
         "cwd": "apps/beeq-docs"
@@ -24,7 +22,6 @@
     },
     "lint": {
       "executor": "nx:run-commands",
-      "syncGenerators": ["@beeq/tools:sync-skills"],
       "options": {
         "command": "pnpm dlx mintlify broken-links",
         "cwd": "apps/beeq-docs"

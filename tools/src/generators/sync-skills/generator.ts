@@ -9,7 +9,7 @@ import { planSync, SYNC_CONFIG, treeFiles, validateSkills } from './lib/index.ts
  * - `nx sync` (or any target listing it in `syncGenerators`) writes the changes.
  * - `nx sync:check` fails when a generated file is stale, which is how CI enforces it.
  *
- * Invalid sources throw, so a broken skill never reaches `skills/` or the docs site.
+ * Invalid sources throw, so a broken skill never reaches `skills/`.
  */
 export function syncSkillsGenerator(tree: Tree): SyncGeneratorResult {
   const files = treeFiles(tree);

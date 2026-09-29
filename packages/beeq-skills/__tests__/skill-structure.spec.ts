@@ -26,7 +26,7 @@ const skillFolders = (dir: string) =>
 
 describe('public skills (src/)', () => {
   it.each(skillFolders(source))('%s should pass validation', (folder) => {
-    expect(validateSkill(files, `${source}/${folder}`, { mdx: folder === SYNC_CONFIG.docs.skill })).toEqual([]);
+    expect(validateSkill(files, `${source}/${folder}`)).toEqual([]);
   });
 
   it.each(skillFolders(source))('%s should not be marked internal', (folder) => {
@@ -79,11 +79,5 @@ describe('SKILL.md searches', () => {
 
     // Assert
     expect(labels).toEqual(RULES.map((rule) => rule.label));
-  });
-});
-
-describe('docs site', () => {
-  it('should keep the skill pages out of the navigation', () => {
-    expect(read('apps/beeq-docs/docs.json')).not.toMatch(/"skill(?:\/|")/);
   });
 });

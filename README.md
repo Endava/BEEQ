@@ -218,10 +218,10 @@ pnpm exec nx run beeq:check -- --write
 
 ### Agent skills
 
-Edit a skill in `packages/beeq-skills/src/`, not the generated copies in `skills/` and `apps/beeq-docs/`. The pre-commit hook regenerates them, and CI fails when they are stale.
+Edit a skill in `packages/beeq-skills/src/`, not the generated copy in `skills/`. The pre-commit hook regenerates them, and CI fails when they are stale.
 
 ```bash
-pnpm skills:sync   # regenerate skills/ and the docs copies
+pnpm skills:sync   # regenerate skills/
 pnpm skills:test   # skill specs and type checks
 ```
 

@@ -1,5 +1,3 @@
-export const DOCS_ORIGIN = 'https://www.beeq.design';
-
 export type FrontmatterValue = string | boolean | Record<string, string | boolean>;
 
 export type Frontmatter = {
@@ -7,8 +5,6 @@ export type Frontmatter = {
   frontmatter: string;
   body: string;
 };
-
-export type LinkKind = 'skill' | 'reference';
 
 function parseScalar(raw: string): string | boolean {
   const value = raw.replace(/\s+#.*$/, '').trim();
@@ -94,7 +90,7 @@ function nextCode(markdown: string, from: number) {
 
 /**
  * Splits markdown into code segments (fenced blocks and inline spans) and prose segments,
- * so link rewriting and MDX checks only touch prose.
+ * so link checks only touch prose.
  */
 export function splitCode(markdown: string): Segment[] {
   const segments: Segment[] = [];
@@ -135,36 +131,3 @@ function scanProse<T>(markdown: string, pattern: RegExp, map: (match: RegExpMatc
 /** Lists relative markdown link targets found in prose, with 1-based line numbers. */
 export const findRelativeLinks = (markdown: string) =>
   scanProse(markdown, LINK_PATTERN, (match, line) => (isRelativeTarget(match[1]) ? { target: match[1], line } : null));
-
-/** Finds `<` and `{` in prose, which MDX would parse as JSX or expressions. */
-export const findMdxUnsafe = (markdown: string) =>
-  scanProse(markdown, /[<{]/g, (match, line) => ({ char: match[0], line }));
-
-/** Maps a relative link in the skill source to its published docs URL. */
-export function toDocsUrl(target: string, kind: LinkKind): string {
-  const [file, hash] = target.split('#');
-  const suffix = hash ? `#${hash}` : '';
-
-  if (kind === 'skill') {
-    const ref = /^(?:\.\/)?references\/([a-z0-9-]+)\.md$/.exec(file);
-    if (ref) return `${DOCS_ORIGIN}/skill/references/${ref[1]}.md${suffix}`;
-  } else {
-    if (file === '../SKILL.md') return `${DOCS_ORIGIN}/skill.md${suffix}`;
-    const ref = /^(?:\.\/)?([a-z0-9-]+)\.md$/.exec(file);
-    if (ref) return `${DOCS_ORIGIN}/skill/references/${ref[1]}.md${suffix}`;
-  }
-
-  throw new Error(`Cannot publish relative link "${target}" from a ${kind} file.`);
-}
-
-/** Rewrites every relative link in prose to its absolute docs URL. Code is left untouched. */
-export const rewriteLinks = (markdown: string, kind: LinkKind) =>
-  splitCode(markdown)
-    .map((segment) =>
-      segment.code
-        ? segment.text
-        : segment.text.replace(LINK_PATTERN, (whole, target) =>
-            isRelativeTarget(target) ? `](${toDocsUrl(target, kind)})` : whole,
-          ),
-    )
-    .join('');

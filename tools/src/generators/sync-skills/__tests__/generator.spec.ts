@@ -5,19 +5,13 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { syncSkillsGenerator } from '../generator';
 import {
   buildOutputs,
-  DOCS_ORIGIN,
-  findMdxUnsafe,
   findRelativeLinks,
   generatedNote,
-  type LinkKind,
   parseFrontmatter,
   planSync,
-  rewriteLinks,
   SYNC_CONFIG,
-  toDocsUrl,
   treeFiles,
   validateSkill,
-  validateSkills,
 } from '../lib';
 
 const SRC = SYNC_CONFIG.sourceDir;
@@ -87,47 +81,6 @@ describe('parseFrontmatter', () => {
   });
 });
 
-describe('toDocsUrl', () => {
-  it.each<[string, LinkKind, string]>([
-    ['references/theming.md', 'skill', `${DOCS_ORIGIN}/skill/references/theming.md`],
-    ['references/theming.md#tokens', 'skill', `${DOCS_ORIGIN}/skill/references/theming.md#tokens`],
-    ['frameworks.md', 'reference', `${DOCS_ORIGIN}/skill/references/frameworks.md`],
-    ['./frameworks.md', 'reference', `${DOCS_ORIGIN}/skill/references/frameworks.md`],
-    ['../SKILL.md', 'reference', `${DOCS_ORIGIN}/skill.md`],
-  ])('should map %s from a %s file', (target, kind, expected) => {
-    expect(toDocsUrl(target, kind)).toBe(expected);
-  });
-
-  it.each<[string, LinkKind]>([
-    ['../README.md', 'reference'],
-    ['theming.md', 'skill'],
-    ['assets/template.md', 'skill'],
-  ])('should reject %s from a %s file', (target, kind) => {
-    expect(() => toDocsUrl(target, kind)).toThrow(/Cannot publish/);
-  });
-});
-
-describe('rewriteLinks', () => {
-  it('should rewrite relative links and keep absolute links and anchors', () => {
-    // Act
-    const result = rewriteLinks(parseFrontmatter(SKILL).body, 'skill');
-
-    // Assert
-    expect(result).toContain(`[theming](${DOCS_ORIGIN}/skill/references/theming.md)`);
-    expect(result).toContain(`[frameworks](${DOCS_ORIGIN}/skill/references/frameworks.md#react)`);
-    expect(result).toContain('[the docs](https://www.beeq.design)');
-    expect(result).toContain('[below](#section)');
-  });
-
-  it('should leave links inside code untouched', () => {
-    // Arrange
-    const markdown = 'Inline `[a](references/x.md)` and\n\n```md\n[b](references/y.md)\n```\n';
-
-    // Act & Assert
-    expect(rewriteLinks(markdown, 'skill')).toBe(markdown);
-  });
-});
-
 describe('findRelativeLinks', () => {
   it('should report relative targets with line numbers, ignoring code', () => {
     // Arrange
@@ -138,24 +91,6 @@ describe('findRelativeLinks', () => {
       { target: 'a.md', line: 1 },
       { target: '../SKILL.md', line: 3 },
     ]);
-  });
-});
-
-describe('findMdxUnsafe', () => {
-  it('should flag < and { in prose', () => {
-    expect(findMdxUnsafe('Use <bq-input> here\nand {value}')).toEqual([
-      { char: '<', line: 1 },
-      { char: '{', line: 2 },
-    ]);
-  });
-
-  it('should allow < and { inside inline code, fenced code, and indented fences', () => {
-    // Arrange
-    const markdown =
-      'Use `<bq-input>` and `{x}`.\n\n```html\n<bq-input></bq-input>\n```\n\n1. Step\n\n   ```css\n   a { b: c; }\n   ```\n';
-
-    // Act & Assert
-    expect(findMdxUnsafe(markdown)).toEqual([]);
   });
 });
 
@@ -211,29 +146,6 @@ describe('validateSkill', () => {
       expect.stringContaining('points outside the skill folder'),
     );
   });
-
-  it('should report MDX-unsafe prose only when MDX checks are on', () => {
-    // Arrange
-    writeFixtureSkill();
-    tree.write(`${SKILL_DIR}/references/frameworks.md`, `${FRAMEWORKS}\nUse <BqButton> without backticks.\n`);
-
-    // Act
-    const withMdx = validateSkill(treeFiles(tree), SKILL_DIR);
-    const withoutMdx = validateSkill(treeFiles(tree), SKILL_DIR, { mdx: false });
-
-    // Assert
-    expect(withMdx).toContainEqual(expect.stringContaining('breaks MDX'));
-    expect(withoutMdx).toEqual([]);
-  });
-
-  it('should skip MDX checks for skills that are not published to the docs site', () => {
-    // Arrange
-    writeFixtureSkill();
-    tree.write(`${SRC}/other/SKILL.md`, '---\nname: other\ndescription: Other skill.\n---\n\nUse <x> freely.\n');
-
-    // Act & Assert
-    expect(validateSkills(treeFiles(tree))).toEqual([]);
-  });
 });
 
 describe('buildOutputs', () => {
@@ -251,39 +163,6 @@ describe('buildOutputs', () => {
     expect(skill).toContain('[theming](references/theming.md)');
     expect(output.get('skills/README.md')).toBe(`<!-- ${generatedNote(`${SRC}/README.md`)} -->\n\n# Agent skills\n`);
   });
-
-  it('should generate skill.md with a YAML note and absolute links', () => {
-    // Arrange
-    writeFixtureSkill();
-
-    // Act
-    const skill = buildOutputs(treeFiles(tree)).get('apps/beeq-docs/skill.md');
-
-    // Assert
-    expect(skill?.startsWith(`---\n# ${generatedNote(SKILL_DIR)}\nname: beeq\n`)).toBe(true);
-    expect(skill).toContain(`${DOCS_ORIGIN}/skill/references/theming.md`);
-  });
-
-  it('should generate one hidden .mdx page per reference with an MDX comment', () => {
-    // Arrange
-    writeFixtureSkill();
-
-    // Act
-    const output = buildOutputs(treeFiles(tree));
-    const theming = output.get('apps/beeq-docs/skill/references/theming.mdx');
-
-    // Assert
-    expect([...output.keys()].filter((file) => file.startsWith('apps/')).sort()).toEqual([
-      'apps/beeq-docs/skill.md',
-      'apps/beeq-docs/skill/references/frameworks.mdx',
-      'apps/beeq-docs/skill/references/theming.mdx',
-    ]);
-    expect(theming).toMatch(/^---\n[\s\S]*\nhidden: true\n---\n/);
-    expect(parseFrontmatter(theming ?? '').data?.hidden).toBe(true);
-    expect(theming).toContain(`{/* ${generatedNote(SKILL_DIR)} */}`);
-    expect(theming).toContain(`[the skill](${DOCS_ORIGIN}/skill.md)`);
-    expect(theming).toContain(`[frameworks](${DOCS_ORIGIN}/skill/references/frameworks.md)`);
-  });
 });
 
 describe('planSync', () => {
@@ -295,7 +174,7 @@ describe('planSync', () => {
     const { write, remove } = planSync(treeFiles(tree));
 
     // Assert
-    expect(write).toHaveLength(7);
+    expect(write).toHaveLength(4);
     expect(remove).toEqual([]);
   });
 
@@ -306,19 +185,15 @@ describe('planSync', () => {
 
     // Act
     const inSync = planSync(treeFiles(tree));
-    tree.write('apps/beeq-docs/skill/references/theming.mdx', 'hand edit');
-    tree.write('apps/beeq-docs/skill/references/removed.mdx', 'stale');
+    tree.write('skills/beeq/references/theming.md', 'hand edit');
     tree.write('skills/beeq/references/removed.md', 'stale');
     const drifted = planSync(treeFiles(tree));
 
     // Assert
     expect(inSync.write).toEqual([]);
     expect(inSync.remove).toEqual([]);
-    expect(drifted.write).toEqual(['apps/beeq-docs/skill/references/theming.mdx']);
-    expect(drifted.remove).toEqual([
-      'apps/beeq-docs/skill/references/removed.mdx',
-      'skills/beeq/references/removed.md',
-    ]);
+    expect(drifted.write).toEqual(['skills/beeq/references/theming.md']);
+    expect(drifted.remove).toEqual(['skills/beeq/references/removed.md']);
   });
 });
 
@@ -333,7 +208,6 @@ describe('syncSkillsGenerator', () => {
     // Assert
     expect(result.outOfSyncMessage).toContain('write  skills/beeq/SKILL.md');
     expect(tree.exists('skills/beeq/references/theming.md')).toBe(true);
-    expect(tree.exists('apps/beeq-docs/skill/references/theming.mdx')).toBe(true);
   });
 
   it('should delete stale files and return no message once in sync', () => {

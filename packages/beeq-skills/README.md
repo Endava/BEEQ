@@ -13,11 +13,13 @@ Contributor-only skills stay in `.agents/skills/` with `metadata.internal: true`
 
 ## Editing a skill
 
-1. Edit `src/beeq/`. Link between skill files with relative paths and to anything else with absolute URLs; the docs copies rewrite relative links to `beeq.design` URLs.
-2. Run `pnpm skills:sync` (`nx sync`). It writes `skills/beeq/**`, `apps/beeq-docs/skill.md`, and `apps/beeq-docs/skill/references/*.mdx`. The references stay MDX pages because Mintlify serves the raw `/skill/references/<name>.md` URLs the skill links to only for pages; the generator adds `hidden: true` so they stay out of site search, sitemaps, and Mintlify's AI context. Commit them with the source; the pre-commit hook runs the sync for you.
+1. Edit `src/beeq/`. Link between skill files with relative paths and to anything else with absolute URLs.
+2. Run `pnpm skills:sync` (`nx sync`). It writes `skills/beeq/**`. Commit it with the source; the pre-commit hook runs the sync for you.
 3. Run `pnpm skills:test`: the specs and type checks for `beeq-skills` and `tools`.
 
-CircleCI runs `nx sync:check`, then `check`, `typecheck`, and `test` for whichever of `beeq-skills` and `tools` a change affects, plus `eval-validate` when `beeq-skills` is affected. `nx sync:check` fails when a generated copy is stale. The generator also rejects invalid frontmatter, relative links that break or leave the skill folder, references not linked from `SKILL.md`, and MDX-unsafe characters in the docs skill.
+CircleCI runs `nx sync:check`, then `check`, `typecheck`, and `test` for whichever of `beeq-skills` and `tools` a change affects, plus `eval-validate` when `beeq-skills` is affected. `nx sync:check` fails when the generated copy is stale. The generator also rejects invalid frontmatter, relative links that break or leave the skill folder, and references not linked from `SKILL.md`.
+
+`apps/beeq-docs/skill.md` is a hand-written pointer to the skill in this repository, outside the sync. Keep it: without a custom `skill.md`, Mintlify generates its own skill from the docs and serves it at `https://www.beeq.design/skill.md`.
 
 ## Evals
 

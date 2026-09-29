@@ -7,8 +7,7 @@ Skills in this folder are public: consumers install them into their own projects
 | [`beeq`](beeq/SKILL.md) | Builds, styles, and reviews UI with BEEQ components, and carries the BEEQ design language. |
 
 ```bash
-npx skills add Endava/BEEQ --skill beeq            # latest
-npx skills add Endava/BEEQ#v1.15.0 --skill beeq    # pinned to a release
+npx skills add Endava/BEEQ --skill beeq
 ```
 
 Contributor skills for working on BEEQ itself live in [`.agents/skills/`](https://github.com/Endava/BEEQ/tree/main/.agents/skills). They carry `metadata.internal: true`, so the CLI hides them unless `INSTALL_INTERNAL_SKILLS=1` is set.

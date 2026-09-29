@@ -14,8 +14,7 @@ BEEQ documentation is built with [Mintlify](https://www.mintlify.com/), so the p
 | MCP server | `/mcp` | Let MCP-compatible tools search the published documentation. |
 | `llms.txt` | `/llms.txt` or `/.well-known/llms.txt` | Give AI tools a structured index of available documentation pages. |
 | `llms-full.txt` | `/llms-full.txt` or `/.well-known/llms-full.txt` | Give AI tools the full public documentation content in one file. |
-| `skill.md` | `/skill.md` | The BEEQ agent skill: how agents choose, verify, style, and review BEEQ components. Its references live under `/skill/references/`. |
-| Agent skills index | `/.well-known/agent-skills/index.json` | Let skill installers discover the BEEQ skill from the docs domain. |
+| `skill.md` | `/skill.md` | Point agents to the BEEQ agent skill in the BEEQ repository and how to install it. |
 | Markdown pages | Page URL with `.md` when supported by the docs host | Let tools read a specific page as Markdown instead of rendered HTML. |
 
 ## Install the BEEQ skill
@@ -28,19 +27,7 @@ Install it into your project with the [`skills` CLI](https://github.com/vercel-l
 npx skills add Endava/BEEQ --skill beeq
 ```
 
-Pin the skill to the BEEQ release your project uses, so its guidance matches your installed APIs:
-
-```bash
-npx skills add Endava/BEEQ#v1.15.0 --skill beeq
-```
-
-You can also install it from the docs domain:
-
-```bash
-npx skills add https://www.beeq.design
-```
-
-Commit the installed skill folder so everyone on the team, and every agent, gets the same guidance. To update it later, run the same command again.
+The skill is maintained in the BEEQ repository, in [`skills/beeq`](https://github.com/Endava/BEEQ/tree/main/skills/beeq). Commit the installed skill folder so everyone on the team, and every agent, gets the same guidance. To update it later, run the same command again.
 
 <Note>
   The skill is guidance, not an API reference. It tells agents to verify props, events, slots, and CSS custom properties against the component pages before using them.
