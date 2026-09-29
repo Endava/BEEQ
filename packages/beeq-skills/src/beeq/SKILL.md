@@ -93,6 +93,7 @@ Each row pairs the common mistake with its replacement and the reason. Use the r
 | Emojis or ad-hoc SVGs as icons | `bq-icon` with a [Phosphor](https://phosphoricons.com/) name; a `label` when the icon alone carries meaning, `aria-hidden="true"` on the host when visible text beside it says the same | Icons then follow size, colour, and theme. Without a `label`, `bq-icon` still announces `<name> icon`. |
 | Several primary buttons in one region | One `appearance="primary"`; others `secondary` or `text` | Equal emphasis erases hierarchy. |
 | `variant="danger"` for emphasis | `variant="danger"` for destructive actions only | Colour carries meaning. |
+| A value borrowed from another component or a token name, such as `<bq-alert type="danger">` | A value the prop's type lists on the component page. Status and feedback props take `error` (`type` on `bq-alert`, `bq-notification`, `bq-toast`, and `bq-progress`; `color` on `bq-tag`; `validation-status`); only `bq-button` `variant` and `bq-status` `type` take `danger` | An unlisted value falls back with only a console warning, so a failed save shows as an info alert. `--bq-*danger` tokens name colours, not prop values. |
 | A native `onClick` on `bq-button` or `bq-breadcrumb-item` that routes, or a routing button with no `href` | Keep `href`; in the `bqClick` handler call `event.preventDefault()`, then route. Per-stack handlers: [frameworks.md](references/frameworks.md#client-side-routing) | `bqClick` is cancelable, and preventing it stops the link navigation. The kept `href` serves middle-click, open in new tab, and assistive technology. A native click is for a gap `bqClick` cannot cover, such as modifier-key clicks. |
 | `!important` or `::part()` to override a token or component variable | A normal declaration at the scope the change covers: `:root` or the theme for the app, a container for a region, the host for one component | Page CSS already beats the component's `:host` defaults, and custom properties inherit into the shadow root. `!important` blocks later theme and mode rules. |
 | `/node_modules/…` URLs in HTML | CDN links for a page with no build step; entry-file imports with a bundler | The production build does not ship `node_modules`. |
@@ -140,7 +141,7 @@ The same boundary holds for every `bq-*` element: consumer CSS positions and siz
 | HTML | `bq-*` elements from `@beeq/core` | kebab-case attributes; `addEventListener('bqChange', …)` | No build step: link `beeq.css` and `beeq.esm.js` from the CDN. With a bundler: import the stylesheet and call `defineCustomElements()` in the entry files. Icons via `data-beeq` either way. Also the path for legacy apps and unsupported frameworks. |
 | React | `@beeq/react` | camelCase props (`onlyIcon`); `onBqChange` | Wrappers set **properties**, so reflected attributes appear only where the component reflects them. Type styled wrappers with `styled(BqTooltip)` and `ComponentProps<typeof BqTooltip>`, never a cast to `ElementType`. |
 | Next.js | `@beeq/react/ssr` | as React | The plain wrapper renders empty shells on the server. Run browser-only setup on the client. |
-| Angular | `@beeq/angular/standalone` | `(bqChange)` | Forms need the matching value accessor. NgModule only in existing module-based apps. |
+| Angular | `@beeq/angular/standalone` | `(bqChange)` | `beeq.css` goes in the global styles (`src/styles.css` or the `styles` array in `angular.json`), not a component's `styles`. Forms need the matching value accessor. NgModule only in existing module-based apps. |
 | Vue and Nuxt | `@beeq/vue` | `@bqChange` | `v-model` only on documented components. Nuxt setup goes in a client-only plugin. |
 
 Bind each event on the element whose Events table lists it. Composite components split their events across parts: in a dropdown, `bqSelect` comes from `bq-option-list`, and `bq-dropdown` itself emits only `bqOpen`. A framework wrapper binds only the events its own component declares. Read `event.detail` only when the component documents a payload. Forms bindings, method refs, routing, Angular and Vue examples, and setup troubleshooting: [frameworks.md](references/frameworks.md).
@@ -173,7 +174,7 @@ The generated markup is a first draft. Models state these rules and then break t
 - [ ] Step 1's findings are honoured: version, theme files, house recipes, nearby screens.
 - [ ] Every piece, named or implied, uses the component its job calls for, even where the request's word suggests another. Anything hand-built is named in your reply with the reason.
 - [ ] The stylesheet is imported and the icon base path is set, each exactly once. You added them if the project lacked them.
-- [ ] Every name is **verified** against the component page, including which element emits each event, `event.detail` shapes, and parent/child structure.
+- [ ] Every name and literal prop value is **verified** against the component page, including which element emits each event, `event.detail` shapes, and parent/child structure.
 - [ ] Framework syntax matches the stack.
 - [ ] One primary action per region; `danger` only for destructive actions.
 - [ ] Every control has a visible label or accessible name.

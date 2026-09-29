@@ -210,7 +210,7 @@ Components ship their own treatment for each state. Use the documented property 
 | Non-searchable select | `disable-search` on `bq-select` | Use when people must pick from the list without typing. Do not use the deprecated `readonly` property for this. |
 | Empty | `bq-empty-state` | Say what is missing and offer one next step. |
 | A region failed to load | `bq-empty-state` with a warning icon in `slot="thumbnail"` and a Retry button in `slot="footer"` | Say what failed and how to recover. |
-| Error about content still on screen | `bq-alert` inline, next to the content it is about | Do not rely on a toast for errors people must act on. |
+| Error about content still on screen | `bq-alert type="error"` inline, next to the content it is about | Do not rely on a toast for errors people must act on. |
 
 Hover, focus, and pressed states are built into interactive components. Do not override one of them without restyling the others, and never remove the focus indicator.
 

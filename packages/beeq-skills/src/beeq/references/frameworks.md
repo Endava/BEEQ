@@ -23,7 +23,7 @@ Read the updated value from `event.detail`, not `event.target.value`. Check each
 
 Every app needs two things, set up once. When the project lacks either, add it as part of the task:
 
-1. **Stylesheet.** Import `@beeq/core/dist/beeq/beeq.css` once, in the main stylesheet the entry file loads. Without it, components render unstyled.
+1. **Stylesheet.** Import `@beeq/core/dist/beeq/beeq.css` once, in the main stylesheet the entry file loads ([Angular](#angular) lists it in its global styles). Without it, components render unstyled.
 2. **Icons.** Tell BEEQ where the SVG files live. A bundled app has no usable default, so without this every `bq-icon` renders blank, including the icons inside other components.
 
 A plain HTML app also registers the components itself; the framework wrappers do that for you. Pick the path by how the page is served:
@@ -133,6 +133,8 @@ Follow the [Next.js guide](https://www.beeq.design/guides/frameworks/next.md).
 
 Follow the [Angular guide](https://www.beeq.design/guides/frameworks/angular.md).
 
+- Load the stylesheet once for the whole app: `@import "@beeq/core/dist/beeq/beeq.css";` in the global `src/styles.css`, or its `node_modules/…` path in the `styles` array of `angular.json`. A component's `styles` or `styleUrl` loads only with that component, and Angular scopes its selectors to it.
+- Put the `data-beeq` icon script in `src/index.html`.
 - Import each component and value accessor into the standalone component's `imports`.
 - Generate NgModule code only for an existing module-based app.
 - Bind forms with the documented value accessors:
