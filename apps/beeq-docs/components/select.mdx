@@ -2816,6 +2816,10 @@ Adding, replacing, or removing options preserves the text you are typing in both
 
 For async results, keep selected options in the list when you need their labels or tags to remain visible. Ignore stale responses in your request handler so an older search does not replace newer results.
 
+`bqFocus` and `bqBlur` track focus entering and leaving the whole Select. Moving between the input, options, and internal controls does not emit these events. Use `bqBlur` for field-level cleanup and call `reset(select.value)` to clear the search text without clearing the selection or remounting the control.
+
+These events no longer follow input-only focus changes. If your handler needs to respond when the native input itself gains or loses focus, listen to that input's native `focus` or `blur` event instead.
+
 <Tip>
   Set `debounce-time` to throttle how often `bqInput` fires while the user types — `300` ms is a good default for async requests.
 </Tip>
@@ -3653,9 +3657,9 @@ For async results, keep selected options in the list when you need their labels 
 
 | Event | Description |
 |---|---|
-| `bqBlur` | Emitted when the Select input loses focus |
+| `bqBlur` | Emitted when focus leaves the entire Select, including its input, options, and controls |
 | `bqClear` | Emitted when the selected value has been cleared |
-| `bqFocus` | Emitted when the Select input receives focus |
+| `bqFocus` | Emitted when focus enters the Select from outside the component |
 | `bqInput` | Emitted when the input value changes while typing; detail is `{ value: string \| number \| string[] }` |
 | `bqSelect` | Emitted when the selected value changes. Detail includes `value` and `item`; nested multi-select also includes selected paths in `selectionTree` |
 

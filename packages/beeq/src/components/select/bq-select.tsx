@@ -97,9 +97,9 @@ type TSelectDisplayTag = {
  *
  * @method clear - Method to be called to clear the selected value.
  *
- * @event bqBlur - The callback handler is emitted when the Select input loses focus.
+ * @event bqBlur - Emitted when focus leaves the entire Select, including its input, options, and controls.
  * @event bqClear - The callback handler is emitted when the selected value has been cleared.
- * @event bqFocus - A callback handler is emitted when the Select input has received focus.
+ * @event bqFocus - Emitted when focus enters the Select from outside the component.
  * @event bqSelect - The callback handler is emitted when the selected value has changed. Nested multi-select events include selected paths in `selectionTree`.
  *
  * @slot label - The label slot container.
@@ -178,6 +178,7 @@ export class BqSelect {
   private searchExpandedOptions = new Set<HTMLBqOptionElement>();
   private userExpandedOptions = new Map<HTMLBqOptionElement, boolean>();
   private reportedDuplicateOptionValues = new Set<string>();
+  private hasFocus = false;
   private hasWarnedUnsupportedNestedOptions = false;
   private isNormalizingValue = false;
 
@@ -351,13 +352,13 @@ export class BqSelect {
   // Requires JSDocs for public API documentation
   // ==============================================
 
-  /** Callback handler emitted when the Select input loses focus */
+  /** Emitted when focus leaves the entire Select, including its input, options, and controls. */
   @Event() bqBlur!: EventEmitter<HTMLBqSelectElement>;
 
   /** Callback handler emitted when the selected value has been cleared */
   @Event() bqClear!: EventEmitter<HTMLBqSelectElement>;
 
-  /** Callback handler emitted when the Select input has received focus */
+  /** Emitted when focus enters the Select from outside the component. */
   @Event() bqFocus!: EventEmitter<HTMLBqSelectElement>;
 
   /** Callback handler emitted when the selected value has changed. Nested multi-select also includes selected paths in `selectionTree`. */
@@ -385,6 +386,7 @@ export class BqSelect {
   }
 
   disconnectedCallback() {
+    this.hasFocus = false;
     this.debounceInput?.cancel();
     this.debounceQuery?.cancel();
     this.expansionObserver?.disconnect();
@@ -406,6 +408,29 @@ export class BqSelect {
   // Listeners
   // ==============
 
+  @Listen('focusin')
+  handleFocus(event: FocusEvent) {
+    if (this.disabled || this.hasFocus || this.isFocusWithinSelect(event.relatedTarget)) return;
+
+    this.hasFocus = true;
+    this.bqFocus.emit(this.el);
+  }
+
+  @Listen('focusout')
+  handleBlur(event: FocusEvent) {
+    if (!this.hasFocus || this.isFocusWithinSelect(event.relatedTarget)) return;
+
+    if (event.relatedTarget) {
+      this.emitBlur();
+      return;
+    }
+
+    // Selection can briefly clear focus before returning it to the input.
+    queueMicrotask(() => {
+      if (!this.el.matches(':focus-within')) this.emitBlur();
+    });
+  }
+
   @Listen('bqOpen', { capture: true })
   handleOpenChange(ev: CustomEvent<{ open: boolean }>) {
     if (!ev.composedPath().includes(this.el)) return;
@@ -419,9 +444,9 @@ export class BqSelect {
 
   @Listen('bqFocus', { capture: true })
   @Listen('bqBlur', { capture: true })
-  stopOptionFocusBlurPropagation(ev: CustomEvent) {
-    // Stop propagation of focus and blur events coming from the `bq-option` elements
-    if (isHTMLElement(ev.target, 'bq-select')) return;
+  stopChildFocusBlurPropagation(ev: CustomEvent) {
+    // Shadow DOM can retarget a child control's event to this Select.
+    if (ev.composedPath()[0] === this.el) return;
 
     if (this.hasNestedOptions && isHTMLElement(ev.target, 'bq-option')) {
       this.setActiveTreeOption(ev.target);
@@ -511,17 +536,13 @@ export class BqSelect {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private handleBlur = () => {
-    if (this.disabled) return;
+  private isFocusWithinSelect = (target: EventTarget | null) => target instanceof Node && this.el.contains(target);
 
-    this.bqBlur.emit(this.el);
-  };
+  private emitBlur = () => {
+    if (!this.hasFocus) return;
 
-  private handleFocus = () => {
-    if (this.disabled) return;
-
-    this.collapseInputSelection();
-    this.bqFocus.emit(this.el);
+    this.hasFocus = false;
+    if (!this.disabled) this.bqBlur.emit(this.el);
   };
 
   private handleSelect = (ev: CustomEvent<{ value: TSelectValue; item: HTMLBqOptionElement }>) => {
@@ -1523,8 +1544,7 @@ export class BqSelect {
                 form={this.form}
                 id={this.name || this.fallbackInputId}
                 name={this.name}
-                onBlur={this.handleBlur}
-                onFocus={this.handleFocus}
+                onFocus={this.collapseInputSelection}
                 onInput={this.handleInput}
                 onKeyDown={this.handleKeydown}
                 onSelect={this.collapseInputSelection}

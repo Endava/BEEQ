@@ -607,8 +607,8 @@ describe('bq-select', () => {
     const input = getInput(select);
 
     await userEvent.click(getControl(select));
-    input.dispatchEvent(new Event('focus'));
-    input.dispatchEvent(new Event('blur'));
+    input.dispatchEvent(new FocusEvent('focusin', { bubbles: true, composed: true }));
+    input.dispatchEvent(new FocusEvent('focusout', { bubbles: true, composed: true }));
     input.value = 'Option';
     input.dispatchEvent(new Event('input'));
     await select.clear();
@@ -623,18 +623,111 @@ describe('bq-select', () => {
   });
 
   it('should emit bqFocus and bqBlur events', async () => {
-    const { root, spyOnEvent, waitForChanges } = await render(<bq-select name="bq-select" />);
-    const select = root as HTMLBqSelectElement;
+    const { root, spyOnEvent, waitForChanges } = await render(
+      <div>
+        <button type="button">Outside</button>
+        <bq-select name="bq-select" />
+      </div>,
+    );
+    const select = root.querySelector<HTMLBqSelectElement>('bq-select');
 
     const bqFocus = spyOnEvent('bqFocus');
     const bqBlur = spyOnEvent('bqBlur');
     const input = getInput(select);
 
-    input.dispatchEvent(new Event('focus'));
-    input.dispatchEvent(new Event('blur'));
+    await userEvent.click(input);
+    await userEvent.click(root.querySelector<HTMLButtonElement>('button'));
     await waitForChanges();
 
     expect(bqFocus).toHaveReceivedEventTimes(1);
+    expect(bqBlur).toHaveReceivedEventTimes(1);
+    expect(bqFocus.events[0].detail).toBe(select);
+    expect(bqBlur.events[0].detail).toBe(select);
+
+    input.focus();
+    input.blur();
+    await waitForChanges();
+
+    expect(bqFocus).toHaveReceivedEventTimes(2);
+    expect(bqBlur).toHaveReceivedEventTimes(2);
+  });
+
+  it('should keep focus events scoped to the whole Select across shadow controls and checkboxes', async () => {
+    const { root, spyOnEvent, waitForChanges } = await render(
+      <div>
+        <button type="button">Outside</button>
+        <bq-select multiple enableCheckboxes name="bq-select" value={['alpha']}>
+          <bq-option value="alpha">Alpha</bq-option>
+          <bq-option value="beta">Beta</bq-option>
+        </bq-select>
+      </div>,
+    );
+    const select = root.querySelector<HTMLBqSelectElement>('bq-select');
+    const input = getInput(select);
+    const outside = root.querySelector<HTMLButtonElement>('button');
+    const bqFocus = spyOnEvent('bqFocus');
+    const bqBlur = spyOnEvent('bqBlur');
+    const option = select.querySelector<HTMLBqOptionElement>('bq-option[value="beta"]');
+
+    await userEvent.click(input);
+    await waitForChanges();
+    getClearButton(select).focus();
+    const tag = select.shadowRoot.querySelector<HTMLBqTagElement>('bq-tag');
+    const tagClose = tag.shadowRoot.querySelector<HTMLBqButtonElement>('bq-button');
+    tagClose.shadowRoot.querySelector<HTMLButtonElement>('button').focus();
+    getOptionCheckboxInput(option).focus();
+    input.focus();
+    await waitForChanges();
+
+    expect(bqFocus).toHaveReceivedEventTimes(1);
+    expect(bqBlur).toHaveReceivedEventTimes(0);
+    expect(select.shadowRoot.activeElement).toBe(input);
+
+    outside.focus();
+    await waitForChanges();
+    expect(bqBlur).toHaveReceivedEventTimes(1);
+
+    getOptionCheckboxInput(option).focus();
+    await waitForChanges();
+    expect(bqFocus).toHaveReceivedEventTimes(2);
+
+    outside.focus();
+    await waitForChanges();
+    expect(bqBlur).toHaveReceivedEventTimes(2);
+  });
+
+  it('should not emit focus events when moving between nested option controls', async () => {
+    const { root, spyOnEvent, waitForChanges } = await render(
+      <div>
+        <button type="button">Outside</button>
+        <bq-select multiple name="bq-select">
+          <bq-option expanded value="parent">
+            Parent
+            <bq-option slot="options" value="child">
+              Child
+            </bq-option>
+          </bq-option>
+        </bq-select>
+      </div>,
+    );
+    const select = root.querySelector<HTMLBqSelectElement>('bq-select');
+    const parent = select.querySelector<HTMLBqOptionElement>('bq-option[value="parent"]');
+    const child = select.querySelector<HTMLBqOptionElement>('bq-option[value="child"]');
+    const bqFocus = spyOnEvent('bqFocus');
+    const bqBlur = spyOnEvent('bqBlur');
+
+    await userEvent.click(getInput(select));
+    await waitForChanges();
+    getOptionExpandButtonControl(parent).focus();
+    getOptionCheckboxInput(child).focus();
+    getInput(select).focus();
+    await waitForChanges();
+
+    expect(bqFocus).toHaveReceivedEventTimes(1);
+    expect(bqBlur).toHaveReceivedEventTimes(0);
+
+    root.querySelector<HTMLButtonElement>('button').focus();
+    await waitForChanges();
     expect(bqBlur).toHaveReceivedEventTimes(1);
   });
 
@@ -715,6 +808,123 @@ describe('bq-select', () => {
   });
 
   describe.each([false, true])('dynamic search with multiple=%s', (multiple) => {
+    it('should support async option navigation and focus-leave cleanup without remounting', async () => {
+      const initialValue = multiple ? ['English'] : 'English';
+      const initialInputValue = multiple ? '' : 'English';
+      const selectedValue = multiple ? ['English', 'Spanish'] : 'Spanish';
+      const selectedInputValue = multiple ? '' : 'Spanish';
+      const selectedFormValue = multiple ? 'English,Spanish' : 'Spanish';
+      const { root, spyOnEvent, waitForChanges } = await render(
+        <form>
+          <button type="button">Outside</button>
+          <bq-select
+            multiple={multiple}
+            name="spoken-languages"
+            value={initialValue}
+            onBqInput={(event) => event.preventDefault()}
+          >
+            <bq-option hidden value="English">
+              English
+            </bq-option>
+          </bq-select>
+        </form>,
+      );
+      const form = root as HTMLFormElement;
+      const select = form.querySelector<HTMLBqSelectElement>('bq-select');
+      const input = getInput(select);
+      const english = select.querySelector<HTMLBqOptionElement>('bq-option');
+      const outside = form.querySelector<HTMLButtonElement>('button');
+      const resetSearch = vi.fn(() => select.reset(select.value));
+      const bqSelect = spyOnEvent('bqSelect');
+      const bqBlur = spyOnEvent('bqBlur');
+      const bqFocus = spyOnEvent('bqFocus');
+      select.addEventListener('bqBlur', () => {
+        void resetSearch();
+      });
+
+      await userEvent.click(input);
+      await userEvent.fill(input, 'Spanish');
+      const loading = createOption('loading', 'Loading...');
+      loading.disabled = true;
+      select.replaceChildren(english, loading);
+      await waitForChanges();
+      await waitForStable(root);
+
+      expect(input.value).toBe('Spanish');
+      expect(select.shadowRoot.activeElement).toBe(input);
+
+      const spanish = createOption('Spanish');
+      const spanishSpain = createOption('Spanish (Spain)');
+      select.replaceChildren(english, spanish, spanishSpain);
+      await waitForChanges();
+      await waitForStable(root);
+
+      await userEvent.keyboard('{ArrowDown}');
+      await waitForChanges();
+
+      expect(document.activeElement).toBe(spanish);
+      expect(select.open).toBe(true);
+      expect(input.value).toBe('Spanish');
+      expect(getInput(select)).toBe(input);
+      expect(form.querySelector('bq-select')).toBe(select);
+      expect(resetSearch).not.toHaveBeenCalled();
+      expect(bqBlur).toHaveReceivedEventTimes(0);
+      expect(bqFocus).toHaveReceivedEventTimes(1);
+      expect(new FormData(form).get('spoken-languages')).toBe('English');
+
+      await userEvent.keyboard('{ArrowDown}');
+      expect(document.activeElement).toBe(spanishSpain);
+      await userEvent.keyboard('{ArrowUp}');
+      expect(document.activeElement).toBe(spanish);
+      expect(resetSearch).not.toHaveBeenCalled();
+
+      await userEvent.click(outside);
+      await waitForChanges();
+      await waitForStable(root);
+
+      expect(resetSearch).toHaveBeenCalledTimes(1);
+      expect(bqBlur).toHaveReceivedEventTimes(1);
+      expect(document.activeElement).toBe(outside);
+      expect(select.open).toBe(false);
+      expect(input.value).toBe(initialInputValue);
+      expect(new FormData(form).get('spoken-languages')).toBe('English');
+
+      await userEvent.click(input);
+      await userEvent.fill(input, 'Spanish');
+      await userEvent.keyboard('{ArrowDown}');
+      await waitForChanges();
+      expect(document.activeElement).toBe(spanish);
+      expect(select.open).toBe(true);
+
+      await userEvent.keyboard('{Enter}');
+      await waitForChanges();
+      await waitForStable(root);
+
+      expect(select.value).toEqual(selectedValue);
+      expect(input.value).toBe(selectedInputValue);
+      expect(select.shadowRoot.activeElement).toBe(input);
+      expect(resetSearch).toHaveBeenCalledTimes(1);
+      expect(bqFocus).toHaveReceivedEventTimes(2);
+      expect(bqSelect).toHaveReceivedEventTimes(1);
+
+      await userEvent.fill(input, 'another query');
+      await userEvent.click(outside);
+      await waitForChanges();
+      await waitForStable(root);
+
+      expect(resetSearch).toHaveBeenCalledTimes(2);
+      expect(bqBlur).toHaveReceivedEventTimes(2);
+      expect(input.value).toBe(selectedInputValue);
+      expect(new FormData(form).get('spoken-languages')).toBe(selectedFormValue);
+      expect(form.querySelector('bq-select')).toBe(select);
+      expect(getInput(select)).toBe(input);
+
+      await select.clear();
+      await waitForChanges();
+      expect(input.value).toBe('');
+      expect(new FormData(form).get('spoken-languages')).toBe('');
+    });
+
     it.each([false, true])('should preserve async search text with a committed selection=%s', async (selected) => {
       const initialValues = selected ? ['initial'] : [];
       const value = multiple ? initialValues : initialValues.join(',');

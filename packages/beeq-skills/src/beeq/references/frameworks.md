@@ -23,6 +23,8 @@ Take each event's name and payload from the component page's Events table, and r
 - Lists emit `bqSelect`: `bq-select` and `bq-option-list` send `{ value, item }`, and `bq-side-menu` sends the selected item.
 - `bq-button` emits `bqClick` with the element itself.
 
+For `bq-select`, `bqFocus` and `bqBlur` track focus entering and leaving the whole control. Input-to-option navigation and moves between internal controls do not emit them. Clear an async search draft with `reset(el.value)` while keeping the Select mounted and its committed selection intact.
+
 ## Setup
 
 Every app needs two things, set up once. When the project lacks either, add it as part of the task:

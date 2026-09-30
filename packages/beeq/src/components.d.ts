@@ -2139,9 +2139,9 @@ export namespace Components {
      * @attr {"error" | "success" | "warning" | "none"} validation-status - The validation status of the Select input.
      * @attr {string | string[]} value - The select input value can be used to reset the field to a previous value.
      * @method clear - Method to be called to clear the selected value.
-     * @event bqBlur - The callback handler is emitted when the Select input loses focus.
+     * @event bqBlur - Emitted when focus leaves the entire Select, including its input, options, and controls.
      * @event bqClear - The callback handler is emitted when the selected value has been cleared.
-     * @event bqFocus - A callback handler is emitted when the Select input has received focus.
+     * @event bqFocus - Emitted when focus enters the Select from outside the component.
      * @event bqSelect - The callback handler is emitted when the selected value has changed. Nested multi-select events include selected paths in `selectionTree`.
      * @cssprop --bq-select--background-color - Select background color
      * @cssprop --bq-select--border-color - Select border color
@@ -4793,9 +4793,9 @@ declare global {
      * @attr {"error" | "success" | "warning" | "none"} validation-status - The validation status of the Select input.
      * @attr {string | string[]} value - The select input value can be used to reset the field to a previous value.
      * @method clear - Method to be called to clear the selected value.
-     * @event bqBlur - The callback handler is emitted when the Select input loses focus.
+     * @event bqBlur - Emitted when focus leaves the entire Select, including its input, options, and controls.
      * @event bqClear - The callback handler is emitted when the selected value has been cleared.
-     * @event bqFocus - A callback handler is emitted when the Select input has received focus.
+     * @event bqFocus - Emitted when focus enters the Select from outside the component.
      * @event bqSelect - The callback handler is emitted when the selected value has changed. Nested multi-select events include selected paths in `selectionTree`.
      * @cssprop --bq-select--background-color - Select background color
      * @cssprop --bq-select--border-color - Select border color
@@ -7786,9 +7786,9 @@ declare namespace LocalJSX {
      * @attr {"error" | "success" | "warning" | "none"} validation-status - The validation status of the Select input.
      * @attr {string | string[]} value - The select input value can be used to reset the field to a previous value.
      * @method clear - Method to be called to clear the selected value.
-     * @event bqBlur - The callback handler is emitted when the Select input loses focus.
+     * @event bqBlur - Emitted when focus leaves the entire Select, including its input, options, and controls.
      * @event bqClear - The callback handler is emitted when the selected value has been cleared.
-     * @event bqFocus - A callback handler is emitted when the Select input has received focus.
+     * @event bqFocus - Emitted when focus enters the Select from outside the component.
      * @event bqSelect - The callback handler is emitted when the selected value has changed. Nested multi-select events include selected paths in `selectionTree`.
      * @cssprop --bq-select--background-color - Select background color
      * @cssprop --bq-select--border-color - Select border color
@@ -7883,7 +7883,7 @@ declare namespace LocalJSX {
          */
         "name": string;
         /**
-          * Callback handler emitted when the Select input loses focus
+          * Emitted when focus leaves the entire Select, including its input, options, and controls.
          */
         "onBqBlur"?: (event: BqSelectCustomEvent<HTMLBqSelectElement>) => void;
         /**
@@ -7891,7 +7891,7 @@ declare namespace LocalJSX {
          */
         "onBqClear"?: (event: BqSelectCustomEvent<HTMLBqSelectElement>) => void;
         /**
-          * Callback handler emitted when the Select input has received focus
+          * Emitted when focus enters the Select from outside the component.
          */
         "onBqFocus"?: (event: BqSelectCustomEvent<HTMLBqSelectElement>) => void;
         /**
@@ -10518,9 +10518,9 @@ declare module "@stencil/core" {
              * @attr {"error" | "success" | "warning" | "none"} validation-status - The validation status of the Select input.
              * @attr {string | string[]} value - The select input value can be used to reset the field to a previous value.
              * @method clear - Method to be called to clear the selected value.
-             * @event bqBlur - The callback handler is emitted when the Select input loses focus.
+             * @event bqBlur - Emitted when focus leaves the entire Select, including its input, options, and controls.
              * @event bqClear - The callback handler is emitted when the selected value has been cleared.
-             * @event bqFocus - A callback handler is emitted when the Select input has received focus.
+             * @event bqFocus - Emitted when focus enters the Select from outside the component.
              * @event bqSelect - The callback handler is emitted when the selected value has changed. Nested multi-select events include selected paths in `selectionTree`.
              * @cssprop --bq-select--background-color - Select background color
              * @cssprop --bq-select--border-color - Select border color
