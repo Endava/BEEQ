@@ -25,6 +25,31 @@ CircleCI runs `nx sync:check`, then `check`, `typecheck`, and `test` for whichev
 
 The suite measures whether the skill improves agent output, following [agentskills.io](https://agentskills.io/skill-creation/evaluating-skills): each task runs with the skill (`with-skill`) and without it (`baseline`), and `benchmark.json` reports the reward delta.
 
+### Prerequisites
+
+| You need | For | Notes |
+|---|---|---|
+| The Node and pnpm versions pinned in the root `package.json` (`volta`), then `pnpm install` | Every eval target | A Unix shell (macOS, Linux, or WSL): the reference solutions are Bash scripts, and skillgrade creates its workspaces under `/tmp`. No build and no Docker: the grader reads the component source. |
+| An agent CLI on your `PATH`, logged in | `eval` | `copilot` (the default), `claude`, or `codex` (`codex login` or `CODEX_API_KEY`). Every trial spends that account's requests. |
+| No personal `beeq` skill | `eval` with the `baseline` variant | Remove it from `~/.agents/skills`, `~/.copilot/skills`, and `~/.claude/skills`, or the run stops. See [Baseline hygiene](#baseline-hygiene). |
+| A judge key: `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, or `GEMINI_API_KEY` | The LLM rubric; optional | Export it in the shell that runs Nx; the root `.env` is committed, so keep keys out of it. Without a key, `--grader=auto` (the default) warns and grades deterministically, and `--grader=all` stops. |
+
+`eval-validate` needs only the first row: it starts no agent and calls no judge.
+
+With a judge key, pass `--graderModel` too. Without it, skillgrade lists the provider's models at run time and picks a recent one, so the judge changes without notice, and a key without permission to list models fails there (OpenAI answers HTTP 403). The first key found (Anthropic, then OpenAI, then Gemini) sets the provider unless `--graderProvider` picks one. Use `gpt-4.1` or a stronger model: `gpt-4.1-mini` reported attribute values the code did not contain.
+
+The agents run unattended: Copilot with `--allow-all-tools`, Claude with `--permission-mode acceptEdits`, and Codex in its `workspace-write` sandbox with network access. They start in a temp workspace, but Copilot can run any shell command without asking, so run evals on a machine where that is acceptable.
+
+### How a run works
+
+1. The `eval` target runs the sync first, so `skills/beeq` matches `src/beeq` when the suite reads it.
+2. The executor copies `evals/` to a temp folder, and `prepare.ts` writes the API index and one fixture app per stack (see [Suite layout](#suite-layout)). With the rubric on, the executor then sends the judge one short request, so a missing key, unknown model, or empty quota stops the run for the cost of that call.
+3. For each task, variant, and trial, skillgrade copies the task's files into a `/tmp/skillgrade-*` workspace. For `with-skill` it also copies `skills/beeq` into the workspace's `.agents/skills/` and `.claude/skills/`; `baseline` gets no skill. `agents/run.ts` then runs the agent CLI on the task prompt, for up to 600 s (`--timeout`).
+4. The graders score the files the agent wrote (see [Grading](#grading)); the trial's reward is their weighted mean.
+5. `benchmark.json` reports each variant's mean reward and the delta. The target fails when the with-skill mean is below `threshold` (0.9, see [Recorded baseline](#recorded-baseline)).
+
+### Running
+
 ```bash
 pnpm exec nx run beeq-skills:eval-validate                # reference solutions must score 1.0; no agent, no cost
 pnpm exec nx run beeq-skills:eval --list                   # print the selected tasks
@@ -34,7 +59,7 @@ pnpm exec nx run beeq-skills:eval --eval=tooltip-truncation --agent=claude --mod
 
 Configurations: `smoke` (tasks tagged `smoke`, 5 trials), `reliable` (15), `regression` (30). Without a configuration every task runs once. Useful options: `--agent` (`copilot`, `claude`, or `codex`), `--model`, `--variants`, `--filter=stack=react`, `--grader=deterministic`, `--threshold`. See `tools/src/executors/skill-eval/schema.json` for the rest.
 
-Every trial runs a real agent CLI, so it costs requests: 15 tasks × 2 variants is 30 agent runs per trial. The suite therefore runs only locally, on demand, with the CLI you are logged in to; CI runs only `eval-validate`, which starts no agent. Start with `--eval` or `-c smoke`, and see [Rerunning for less](#rerunning-for-less) before repeating a run.
+Every trial runs a real agent CLI, so it costs requests: 15 tasks × 2 variants is 30 agent runs per trial, and the reference run below took about 45 minutes with `--concurrent`. The suite therefore runs only locally, on demand, with the CLI you are logged in to; CI runs only `eval-validate`, which starts no agent. Start with `--eval` or `-c smoke`, and see [Rerunning for less](#rerunning-for-less) before repeating a run. To compare a run with the [recorded baseline](#recorded-baseline), use its agent, model, and judge; the reference command is listed there.
 
 **Results** go to `tmp/skill-evals/iteration-N/`: one skillgrade folder per variant plus `benchmark.json`. `eval-validate` writes to `tmp/skill-evals/validate/` instead, so a validation run never becomes the latest iteration. To view them:
 
@@ -44,12 +69,16 @@ pnpm exec nx run beeq-skills:eval --preview=browser --variants=baseline --iterat
 pnpm exec nx run beeq-skills:eval --preview=cli                       # every variant, in the terminal
 ```
 
-**Grading.** Each trial's reward is the weighted mean of two graders:
+### Grading
+
+Each trial's reward is the weighted mean of two graders:
 
 - `graders/grade.ts` (weight 0.7, deterministic): the agent wrote files, the SKILL.md Verify searches are clean, every BEEQ element, prop, event, part, and token exists in the component source, every literal value of a string-union prop (`type="error"`) is one the prop accepts, and the task's own `checks` pass.
-- `rubric.md` (weight 0.3, LLM): scored against the task's `criteria`. It runs only when `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, or `GEMINI_API_KEY` is set; otherwise the executor warns and grades deterministically. The executor runs it before the deterministic grader, because skillgrade shows the judge every earlier grader's result and a judge that sees them echoes them. `--graderProvider` and `--graderModel` pick the judge; use `gpt-4.1` or a stronger model, since `gpt-4.1-mini` reported attribute values the code did not contain. Before any agent runs, the executor sends the judge one short request, so a missing key, unknown model, or empty quota stops the run for the cost of that call. A judge call that hits a rate limit or an overload (HTTP 429, 5xx, or 529) waits as long as the API asks, or backs off from 1 s, and retries for up to 90 s, so a regrade, which sends judge calls back to back, paces itself to the account's tokens-per-minute limit. A spent quota, or a limit that resets later than that, still stops the run. The retry is preloaded into skillgrade only, so the agent CLI's own API calls are untouched. skillgrade scores a failed rubric call 0 and carries on, so the executor also watches each result as it lands and stops the run at the first rubric error; the agent trial already running finishes on its own.
+- `rubric.md` (weight 0.3, LLM): scored against the task's `criteria`, only with a judge key (see [Prerequisites](#prerequisites)). The executor runs it before the deterministic grader, because skillgrade shows the judge every earlier grader's result and a judge that sees them echoes them. A judge call that hits a rate limit or an overload (HTTP 429, 5xx, or 529) waits as long as the API asks, or backs off from 1 s, and retries for up to 90 s, so a regrade, which sends judge calls back to back, paces itself to the account's tokens-per-minute limit. A spent quota, or a limit that resets later than that, still stops the run. The retry is preloaded into skillgrade only, so the agent CLI's own API calls are untouched. skillgrade scores a failed rubric call 0 and carries on, so the executor also watches each result as it lands and stops the run at the first rubric error; the agent trial already running finishes on its own.
 
-**Baseline hygiene.** The baseline must not see the skill any other way. `prepare.ts` refuses to run when a personal `beeq` skill exists in `~/.agents/skills`, `~/.copilot/skills`, or `~/.claude/skills`. The agent wrapper runs Copilot with `--no-custom-instructions` and the user's MCP servers disabled, Claude with `--strict-mcp-config`, and Codex with a throwaway `CODEX_HOME` that holds only a link to the user's `auth.json`, so Codex config, MCP servers, memories, `AGENTS.md`, plugins, and hooks stay out. Codex needs `codex login` or `CODEX_API_KEY`.
+### Baseline hygiene
+
+The baseline must not see the skill any other way. `prepare.ts` refuses to run when a personal `beeq` skill exists in `~/.agents/skills`, `~/.copilot/skills`, or `~/.claude/skills`. The agent wrapper runs Copilot with `--no-custom-instructions` and the user's MCP servers disabled, Claude with `--strict-mcp-config`, and Codex with a throwaway `CODEX_HOME` that holds only a link to the user's `auth.json`, so Codex config, MCP servers, memories, `AGENTS.md`, plugins, and hooks stay out. Other personal skills stay visible to Copilot and Claude in both variants: they affect both alike, but they make runs from different machines less comparable.
 
 ### Rerunning for less
 
@@ -61,14 +90,17 @@ pnpm exec nx run beeq-skills:eval --reuseBaseline=36          # the agent runs w
 pnpm exec nx run beeq-skills:eval --concurrent                # both variants at once
 ```
 
+- Saved runs live in `tmp/skill-evals/`, which git ignores, so replays work only on the machine that ran iteration N. A fresh clone starts with a full run.
 - `--regrade=N` fits a change to a grader, the rubric, a task's `expected`, or the API index. It costs only the judge's calls, and none with `--grader=deterministic`. It cannot show a change in agent behaviour, so a skill change needs the agent.
-- `--reuseBaseline=N` fits a skill change: the baseline never sees the skill, so its runs stay valid while the prompts, fixtures, agent, and model stay the same. Pass the same `--model` to both runs, since the CLI's default model changes without notice.
+- `--reuseBaseline=N` fits a skill change: the baseline never sees the skill, so its runs stay valid while the prompts, fixtures, agent, and model stay the same. It halves the agent requests, not the wall time: the with-skill runs take as long as they do in a `--concurrent` full run. Pass the same `--model` to both runs, since the CLI's default model changes without notice. The replayed baseline is rescored by this run's graders, so also pass iteration N's `--grader`, `--graderProvider`, and `--graderModel` to keep the result comparable with it.
 - A replay reruns every trial iteration N saved for each selected task, whatever `--trials` says. Before any agent or judge call, it fails when a selected task has no saved run in iteration N or its prompt changed, and a reuse also fails when iteration N ran another agent or model. `benchmark.json` records a hash of each task's prompt and workspace files under `metadata.inputs` (and the replayed iterations under `metadata.replayed`), and a replay fails when those hashes changed. Iterations from before the hashes only get the prompt check, with a warning. The fixtures pin the BEEQ version, so a version bump retires every saved run.
-- `--concurrent` runs one skillgrade process per variant and prefixes each output line with its variant. It about halves the wall time and doubles the agent requests in flight, so rate limits arrive sooner. A failure in either variant stops both.
+- `--concurrent` runs one skillgrade process per variant and prefixes each output line with its variant. It about halves the wall time and doubles the agent requests in flight, so rate limits arrive sooner. A failure in either variant stops both. With `--reuseBaseline` it saves only the few minutes the baseline replay takes.
 
 ### Recorded baseline
 
 Full-suite runs with Copilot CLI's default model, 1 trial per task. The last row is the reference: it is the only one with the current skill and the current graders, so compare later runs with it. The first three rows used the skill as of `1ed7522b`, the fourth as of `79680fb6`. The third regrades the second's agent runs (`--regrade`) after the graders changed: the rubric scores blind, the API check rejects prop values a prop does not accept, and four more tasks check the stylesheet import. The fifth reruns only the with-skill variant after the event-name fix in `SKILL.md` and `frameworks.md`; its baseline replays the fourth row's runs through the same graders (`--reuseBaseline`). Compare runs only when they use the same graders, rubric, and grader model.
+
+The with-skill and baseline columns are each variant's mean reward over all its trials, on the 0–1 scale from [Grading](#grading), with the standard deviation across trials. **Delta** is with-skill minus baseline: how many points the skill adds to an average trial, so the reference row's +0.28 means a trial scores 0.28 higher with the skill. A delta near 0 means the skill made no measurable difference. The pass rate is the share of trials that scored at least 0.5.
 
 | Run | Graders | with-skill | baseline | delta | Pass rate (reward ≥ 0.5) |
 |---|---|---|---|---|---|
@@ -78,7 +110,7 @@ Full-suite runs with Copilot CLI's default model, 1 trial per task. The last row
 | 2026-09-29, `e14478cc` | deterministic + blind rubric (OpenAI `gpt-4.1`) | 0.98 (sd 0.04) | 0.70 (sd 0.17) | +0.28 | 1.00 vs 0.80 |
 | 2026-09-30, with-skill after the event-name fix; baseline replayed from the row above | deterministic + blind rubric (OpenAI `gpt-4.1`) | 0.97 (sd 0.05) | 0.70 (sd 0.16) | +0.28 | 1.00 vs 0.87 |
 
-The last row is `pnpm exec nx run beeq-skills:eval --reuseBaseline=42 --grader=all --graderProvider=openai --graderModel=gpt-4.1`, where iteration-42 is the fourth row's run. Without saved runs, the full-run equivalent is the same command with `--concurrent` in place of `--reuseBaseline=42`. Its tasks:
+The last row is `pnpm exec nx run beeq-skills:eval --reuseBaseline=42 --grader=all --graderProvider=openai --graderModel=gpt-4.1`, where iteration-42 is the fourth row's run. Without saved runs, the full-run equivalent is the same command with `--concurrent` in place of `--reuseBaseline=42`. Its tasks, where each delta comes from one trial per variant and so moves more between runs than the run's delta:
 
 | Task | with-skill | baseline | delta |
 |---|---|---|---|
