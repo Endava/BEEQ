@@ -40,6 +40,12 @@ const setDropdownOpen = (select: HTMLBqSelectElement, open: boolean) => {
     }),
   );
 };
+const createOption = (value: string, label = value) => {
+  const option = document.createElement('bq-option');
+  option.value = value;
+  option.textContent = label;
+  return option;
+};
 
 afterEach(() => {
   vi.restoreAllMocks();
@@ -706,6 +712,359 @@ describe('bq-select', () => {
 
     expect(frontendOption.expanded).toBe(false);
     expect(frameworkOption.expanded).toBe(false);
+  });
+
+  describe.each([false, true])('dynamic search with multiple=%s', (multiple) => {
+    it.each([false, true])('should preserve async search text with a committed selection=%s', async (selected) => {
+      const initialValues = selected ? ['initial'] : [];
+      const value = multiple ? initialValues : initialValues.join(',');
+      const showLoading = (event: Event) => {
+        event.preventDefault();
+        const select = event.target as HTMLBqSelectElement;
+        const loading = createOption('loading', 'Loading...');
+        loading.disabled = true;
+        select.replaceChildren(loading);
+      };
+      const { root, spyOnEvent, waitForChanges } = await render(
+        <form>
+          <bq-select multiple={multiple} name="dynamic" value={value} onBqInput={showLoading}>
+            <bq-option value="initial">Initial</bq-option>
+          </bq-select>
+        </form>,
+      );
+      const form = root as HTMLFormElement;
+      const select = form.querySelector<HTMLBqSelectElement>('bq-select');
+      const input = getInput(select);
+      const bqInput = spyOnEvent('bqInput');
+      const bqSelect = spyOnEvent('bqSelect');
+      const bqClear = spyOnEvent('bqClear');
+
+      await userEvent.click(input);
+      await userEvent.fill(input, '  remote query  ');
+      await waitForStable(root);
+
+      expect(input.value).toBe('  remote query  ');
+      input.setSelectionRange(3, 7);
+      select.replaceChildren();
+      await waitForStable(root);
+      expect(input.value).toBe('  remote query  ');
+
+      const result = createOption('remote', 'Remote result');
+      select.append(createOption('initial', 'Initial updated'), result);
+      await waitForChanges();
+      await waitForStable(root);
+
+      expect(getInput(select)).toBe(input);
+      expect(input.value).toBe('  remote query  ');
+      expect(select.shadowRoot.activeElement).toBe(input);
+      expect(input.selectionStart).toBe(3);
+      expect(input.selectionEnd).toBe(7);
+      expect(select.value).toEqual(value);
+      expect(new FormData(form).get('dynamic')).toBe(selected ? 'initial' : '');
+      expect(form.checkValidity()).toBe(true);
+      expect(result.hidden).toBe(false);
+      expect(bqInput).toHaveReceivedEventTimes(1);
+      expect(bqSelect).toHaveReceivedEventTimes(0);
+      expect(bqClear).toHaveReceivedEventTimes(0);
+      expect(select.querySelectorAll('bq-option[selected]')).toHaveLength(initialValues.length);
+
+      await userEvent.click(getOptionSelectionControl(result));
+      await waitForStable(root);
+
+      const selectedValues = [...initialValues, 'remote'];
+      expect(input.value).toBe(multiple ? '' : 'Remote result');
+      expect(select.value).toEqual(multiple ? selectedValues : 'remote');
+      expect(bqSelect).toHaveReceivedEventTimes(1);
+    });
+
+    it('should preserve the latest query through appends, mutations, empty results and named slots', async () => {
+      const { root } = await render(
+        <bq-select multiple={multiple} name="dynamic" onBqInput={(event) => event.preventDefault()}>
+          <bq-option value="initial">Initial</bq-option>
+        </bq-select>,
+      );
+      const select = root as HTMLBqSelectElement;
+      const input = getInput(select);
+
+      await userEvent.click(input);
+      await userEvent.fill(input, 'older query');
+      await waitForStable(root);
+      await userEvent.fill(input, 'newer query');
+      await waitForStable(root);
+      input.setSelectionRange(2, 2);
+
+      const olderResult = createOption('older', 'Older response');
+      select.append(olderResult);
+      await waitForStable(root);
+      expect(input.value).toBe('newer query');
+
+      olderResult.value = 'changed';
+      await waitForStable(root);
+      const label = document.createElement('span');
+      label.slot = 'label';
+      label.textContent = 'Dynamic label';
+      select.append(label);
+      await waitForStable(root);
+
+      expect(input.value).toBe('newer query');
+      expect(input.selectionStart).toBe(2);
+      expect(input.selectionEnd).toBe(2);
+      expect(select.shadowRoot.activeElement).toBe(input);
+
+      const empty = createOption('empty', 'No results');
+      empty.disabled = true;
+      select.replaceChildren(empty);
+      await waitForStable(root);
+      expect(input.value).toBe('newer query');
+
+      await userEvent.clear(input);
+      await waitForStable(root);
+      select.replaceChildren(createOption('restored', 'Restored'));
+      await waitForStable(root);
+      expect(input.value).toBe('');
+    });
+
+    it('should preserve search text when options change before the input debounce expires', async () => {
+      const { root, spyOnEvent } = await render(
+        <bq-select debounceTime={250} multiple={multiple} name="dynamic" onBqInput={(event) => event.preventDefault()}>
+          <bq-option value="initial">Initial</bq-option>
+        </bq-select>,
+      );
+      const select = root as HTMLBqSelectElement;
+      const input = getInput(select);
+      const bqInput = spyOnEvent('bqInput');
+
+      await userEvent.click(input);
+      await userEvent.fill(input, 'pending query');
+      expect(bqInput).toHaveReceivedEventTimes(0);
+      select.replaceChildren(createOption('result', 'Result'));
+      await waitForStable(root);
+
+      expect(input.value).toBe('pending query');
+      await expect.poll(() => bqInput.events.length).toBe(1);
+      expect(bqInput.events[0].detail.value).toBe('pending query');
+    });
+
+    it('should clear search for reset, clear, form reset and programmatic value changes', async () => {
+      const value = multiple ? ['initial'] : 'initial';
+      const { root, waitForChanges } = await render(
+        <form>
+          <bq-select multiple={multiple} name="dynamic" value={value} onBqInput={(event) => event.preventDefault()}>
+            <bq-option value="initial">Initial</bq-option>
+            <bq-option value="remote">Remote</bq-option>
+          </bq-select>
+        </form>,
+      );
+      const form = root as HTMLFormElement;
+      const select = form.querySelector<HTMLBqSelectElement>('bq-select');
+      const input = getInput(select);
+
+      await userEvent.click(input);
+      await userEvent.fill(input, 'query');
+      await waitForStable(root);
+      await select.reset(select.value);
+      await waitForStable(root);
+      expect(input.value).toBe(multiple ? '' : 'Initial');
+
+      await userEvent.fill(input, 'query');
+      await waitForStable(root);
+      select.value = multiple ? ['remote'] : 'remote';
+      await waitForChanges();
+      await waitForStable(root);
+      expect(input.value).toBe(multiple ? '' : 'Remote');
+
+      await userEvent.fill(input, 'query');
+      await waitForStable(root);
+      form.reset();
+      await waitForStable(root);
+      expect(input.value).toBe('');
+      expect(new FormData(form).get('dynamic')).toBe('');
+
+      await userEvent.fill(input, 'query');
+      await waitForStable(root);
+      await select.clear();
+      await waitForStable(root);
+      expect(input.value).toBe('');
+    });
+
+    it('should cancel pending search work when explicitly cleared', async () => {
+      const { root, spyOnEvent } = await render(
+        <bq-select debounceTime={250} multiple={multiple} name="dynamic">
+          <bq-option value="initial">Initial</bq-option>
+        </bq-select>,
+      );
+      const select = root as HTMLBqSelectElement;
+      const input = getInput(select);
+      const bqInput = spyOnEvent('bqInput');
+
+      await userEvent.click(input);
+      await userEvent.fill(input, 'pending query');
+      await select.clear();
+      await sleep(300);
+      await waitForStable(root);
+
+      expect(input.value).toBe('');
+      expect(select.querySelectorAll('bq-option[hidden]')).toHaveLength(0);
+      expect(bqInput).toHaveReceivedEventTimes(0);
+    });
+
+    it('should retain built-in search text and filtering when options are appended', async () => {
+      const { root, waitForChanges } = await render(
+        <bq-select multiple={multiple} name="dynamic">
+          <bq-option value="alpha">Alpha</bq-option>
+          <bq-option value="beta">Beta</bq-option>
+        </bq-select>,
+      );
+      const select = root as HTMLBqSelectElement;
+      const input = getInput(select);
+
+      await userEvent.click(input);
+      await userEvent.fill(input, 'alp');
+      await waitForChanges();
+      select.append(createOption('alpine', 'Alpine'));
+      await waitForChanges();
+      await waitForStable(root);
+
+      expect(input.value).toBe('alp');
+      expect(select.querySelector('bq-option[value="alpha"]')).not.toHaveAttribute('hidden');
+      expect(select.querySelector('bq-option[value="beta"]')).toHaveAttribute('hidden');
+    });
+
+    it('should preserve a query after closing and blurring the input', async () => {
+      const { root, setProps, waitForChanges } = await render(
+        <bq-select multiple={multiple} name="dynamic" onBqInput={(event) => event.preventDefault()}>
+          <bq-option value="initial">Initial</bq-option>
+        </bq-select>,
+      );
+      const select = root as HTMLBqSelectElement;
+      const input = getInput(select);
+
+      await userEvent.click(input);
+      await userEvent.fill(input, 'query');
+      await waitForStable(root);
+      input.blur();
+      await setProps({ open: false });
+      select.replaceChildren(createOption('result', 'Result'));
+      await waitForChanges();
+      await waitForStable(root);
+
+      expect(input.value).toBe('query');
+      expect(getDropdown(select)).not.toHaveAttribute('open');
+    });
+
+    it('should end search when the selection mode changes', async () => {
+      const { root, setProps } = await render(
+        <bq-select
+          multiple={multiple}
+          name="dynamic"
+          value={multiple ? ['initial'] : 'initial'}
+          onBqInput={(event) => event.preventDefault()}
+        >
+          <bq-option value="initial">Initial</bq-option>
+        </bq-select>,
+      );
+      const select = root as HTMLBqSelectElement;
+      const input = getInput(select);
+
+      await userEvent.click(input);
+      await userEvent.fill(input, 'query');
+      await waitForStable(root);
+      await setProps({ multiple: !multiple });
+      await waitForStable(root);
+
+      expect(input.value).toBe(multiple ? 'Initial' : '');
+    });
+
+    it('should update idle selected labels when options are replaced', async () => {
+      const { root, waitForChanges } = await render(
+        <bq-select multiple={multiple} name="dynamic" value={multiple ? ['initial'] : 'initial'}>
+          <bq-option value="initial">Initial</bq-option>
+        </bq-select>,
+      );
+      const select = root as HTMLBqSelectElement;
+
+      select.replaceChildren(createOption('initial', 'Updated label'));
+      await waitForChanges();
+      await waitForStable(root);
+
+      expect(select.querySelector('bq-option')).toHaveAttribute('selected');
+      if (multiple) {
+        expect(select.shadowRoot.querySelector('bq-tag')?.textContent?.trim()).toBe('Updated label');
+        expect(getInput(select).value).toBe('');
+      } else {
+        expect(getInput(select).value).toBe('Updated label');
+      }
+    });
+  });
+
+  it('should restore the selected label when the same single-select option is selected again', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-select name="dynamic" value="initial" onBqInput={(event) => event.preventDefault()}>
+        <bq-option value="initial">Initial</bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const input = getInput(select);
+
+    await userEvent.click(input);
+    await userEvent.fill(input, 'query');
+    await waitForStable(root);
+    await userEvent.click(getOptionButton(select.querySelector<HTMLBqOptionElement>('bq-option')));
+    await waitForChanges();
+    await waitForStable(root);
+
+    expect(select.value).toBe('initial');
+    expect(input.value).toBe('Initial');
+  });
+
+  it('should not apply stale filtering after a consumer changes value inside bqInput', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-select
+        name="dynamic"
+        onBqInput={(event) => {
+          (event.target as HTMLBqSelectElement).value = 'initial';
+        }}
+      >
+        <bq-option value="initial">Initial</bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const input = getInput(select);
+
+    await userEvent.click(input);
+    await userEvent.fill(input, 'unmatched query');
+    await waitForChanges();
+    await waitForStable(root);
+
+    expect(input.value).toBe('Initial');
+    expect(select.querySelector('bq-option')).not.toHaveAttribute('hidden');
+  });
+
+  it('should retain search through nested value normalization and slot mutations', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-select multiple name="dynamic" value={['child']} onBqInput={(event) => event.preventDefault()}>
+        <bq-option value="child">Child</bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const input = getInput(select);
+    const parent = createOption('parent', 'Parent');
+    const child = createOption('child', 'Child');
+    parent.append(child);
+
+    await userEvent.click(input);
+    await userEvent.fill(input, 'query');
+    await waitForStable(root);
+    select.replaceChildren(parent);
+    await waitForStable(root);
+    child.slot = 'options';
+    await waitForChanges();
+    await waitForStable(root);
+
+    expect(input.value).toBe('query');
+    expect(select.value).toEqual(['parent', 'child']);
+    expect(input).toEqualAttribute('aria-haspopup', 'tree');
+    expect(getOptionCheckbox(child)).not.toBeNull();
   });
 
   it('should reset nested search visibility without expanding unmatched parents', async () => {

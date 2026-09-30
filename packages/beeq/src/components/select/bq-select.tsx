@@ -179,6 +179,7 @@ export class BqSelect {
   private userExpandedOptions = new Map<HTMLBqOptionElement, boolean>();
   private reportedDuplicateOptionValues = new Set<string>();
   private hasWarnedUnsupportedNestedOptions = false;
+  private isNormalizingValue = false;
 
   private fallbackInputId = 'select';
 
@@ -200,6 +201,7 @@ export class BqSelect {
   @State() hasNestedOptions = false;
   @State() hasPrefix = false;
   @State() hasSuffix = false;
+  @State() searchValue?: string;
 
   // Public Property API
   // ========================
@@ -305,6 +307,9 @@ export class BqSelect {
 
   @Watch('value')
   handleValueChange() {
+    if (this.isNormalizingValue) return;
+
+    this.resetSearch();
     this.syncOptionsAndValue();
   }
 
@@ -320,6 +325,7 @@ export class BqSelect {
 
   @Watch('multiple')
   handleMultipleChange(multiple: boolean, previousMultiple?: boolean) {
+    this.resetSearch();
     const optionStructure = this.getOptionStructure();
 
     if (!multiple && previousMultiple && optionStructure.hasNestedMarkup) {
@@ -471,9 +477,11 @@ export class BqSelect {
   async clear(): Promise<void> {
     if (this.disabled) return;
 
+    this.resetSearch();
     // Clear value and selected options
     this.value = this.multiple ? [] : '';
     this.selectedOptions = [];
+    this.syncOptionsAndValue();
 
     // Update form value and reset options visibility
     this.resetOptionsVisibility();
@@ -493,7 +501,9 @@ export class BqSelect {
   async reset(value: TSelectValue): Promise<void> {
     if (isNil(value)) return;
 
+    this.resetSearch();
     this.value = value;
+    this.syncOptionsAndValue();
   }
 
   // Local methods
@@ -517,6 +527,7 @@ export class BqSelect {
   private handleSelect = (ev: CustomEvent<{ value: TSelectValue; item: HTMLBqOptionElement }>) => {
     if (this.disabled) return;
 
+    this.resetSearch();
     if (this.multiple) {
       ev.stopPropagation();
     }
@@ -525,13 +536,12 @@ export class BqSelect {
 
     if (this.multiple) {
       const value = this.handleMultipleSelection(item);
-      // Clear the input value after selecting an item
-      this.inputElem.value = '';
       // If multiple selection is enabled, emit the selected items array instead of relying on
       // the option list to emit the value of the selected item
       this.emitSelect(item, value);
     } else {
       this.value = value;
+      this.syncOptionsAndValue();
     }
 
     this.resetOptionsVisibility();
@@ -669,18 +679,25 @@ export class BqSelect {
     if (this.disabled || this.isSearchDisabled) return;
 
     const { value } = ev.target as HTMLInputElement;
+    this.searchValue = value;
 
     this.debounceInput?.cancel();
 
     this.debounceInput = debounce(() => {
       const inputEvent = this.bqInput.emit({ value });
-      if (!inputEvent.defaultPrevented) {
+      if (!inputEvent.defaultPrevented && this.searchValue === value) {
         // Continue with search filtering only if the event wasn't prevented
         this.handleSearchFilter(value);
       }
     }, this.debounceTime);
 
     this.debounceInput();
+  };
+
+  private resetSearch = () => {
+    this.debounceInput?.cancel();
+    this.debounceQuery?.cancel();
+    this.searchValue = undefined;
   };
 
   private handleClearClick = (ev: CustomEvent) => {
@@ -709,6 +726,7 @@ export class BqSelect {
   private handleTagRemove = (item: HTMLBqOptionElement) => {
     if (this.disabled) return;
 
+    this.resetSearch();
     const value = this.removeMultipleSelection(item);
     this.emitSelect(item, value);
   };
@@ -1000,7 +1018,13 @@ export class BqSelect {
     const options = this.getActiveOptions(optionStructure);
 
     if (!this.hasSameValue(this.value, value)) {
-      this.value = value;
+      // Option normalization is not a consumer-initiated value change.
+      this.isNormalizingValue = true;
+      try {
+        this.value = value;
+      } finally {
+        this.isNormalizingValue = false;
+      }
     }
 
     this.syncUnsupportedNestedOptionsState(optionStructure);
@@ -1203,7 +1227,8 @@ export class BqSelect {
     const displayValue = checkedItem ? this.getOptionLabel(checkedItem) : '';
 
     this.displayValue = displayValue;
-    if (this.inputElem) this.inputElem.value = displayValue;
+    const inputValue = this.searchValue ?? displayValue;
+    if (this.inputElem && this.inputElem.value !== inputValue) this.inputElem.value = inputValue;
   };
 
   private getOptionLabel = (item: HTMLBqOptionElement) => {
@@ -1514,7 +1539,7 @@ export class BqSelect {
                 // Events
                 spellcheck={false}
                 type="text"
-                value={this.displayValue}
+                value={this.searchValue ?? this.displayValue}
               />
             </div>
             {/* Clear Button */}
