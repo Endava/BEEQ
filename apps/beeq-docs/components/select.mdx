@@ -2812,6 +2812,10 @@ Set `disable-clear` to hide the clear button and prevent one-click deselection. 
 
 Call `preventDefault()` on the `bqInput` event to take full control of option filtering. This lets you implement async filtering, loading states, empty-state messages, and matched-text highlighting entirely in your own code.
 
+Adding, replacing, or removing options preserves the text you are typing in both single- and multi-select. The search text is separate from `value`, which holds the committed selection. Selecting an option, clearing or resetting the field, or changing `value` programmatically replaces the search text with the selected label or an empty input.
+
+For async results, keep selected options in the list when you need their labels or tags to remain visible. Ignore stale responses in your request handler so an older search does not replace newer results.
+
 <Tip>
   Set `debounce-time` to throttle how often `bqInput` fires while the user types — `300` ms is a good default for async requests.
 </Tip>
