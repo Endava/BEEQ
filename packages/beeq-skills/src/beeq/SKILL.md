@@ -138,11 +138,11 @@ The same boundary holds for every `bq-*` element: consumer CSS positions and siz
 
 | Stack | Import from | Props and events | Must know |
 | --- | --- | --- | --- |
-| HTML | `bq-*` elements from `@beeq/core` | kebab-case attributes; `addEventListener('bqChange', …)` | No build step: link `beeq.css` and `beeq.esm.js` from the CDN. With a bundler: import the stylesheet and call `defineCustomElements()` in the entry files. Icons via `data-beeq` either way. Also the path for legacy apps and unsupported frameworks. |
-| React | `@beeq/react` | camelCase props (`onlyIcon`); `onBqChange` | Wrappers set **properties**, so reflected attributes appear only where the component reflects them. Type styled wrappers with `styled(BqTooltip)` and `ComponentProps<typeof BqTooltip>`, never a cast to `ElementType`. |
+| HTML | `bq-*` elements from `@beeq/core` | kebab-case attributes; `addEventListener('bqClick', …)` | No build step: link `beeq.css` and `beeq.esm.js` from the CDN. With a bundler: import the stylesheet and call `defineCustomElements()` in the entry files. Icons via `data-beeq` either way. Also the path for legacy apps and unsupported frameworks. |
+| React | `@beeq/react` | camelCase props (`onlyIcon`); `onBqClick` | Wrappers set **properties**, so reflected attributes appear only where the component reflects them. Type styled wrappers with `styled(BqTooltip)` and `ComponentProps<typeof BqTooltip>`, never a cast to `ElementType`. |
 | Next.js | `@beeq/react/ssr` | as React | The plain wrapper renders empty shells on the server. Run browser-only setup on the client. |
-| Angular | `@beeq/angular/standalone` | `(bqChange)` | `beeq.css` goes in the global styles (`src/styles.css` or the `styles` array in `angular.json`), not a component's `styles`. Forms need the matching value accessor. NgModule only in existing module-based apps. |
-| Vue and Nuxt | `@beeq/vue` | `@bqChange` | `v-model` only on documented components. Nuxt setup goes in a client-only plugin. |
+| Angular | `@beeq/angular/standalone` | `(bqClick)` | `beeq.css` goes in the global styles (`src/styles.css` or the `styles` array in `angular.json`), not a component's `styles`. Forms need the matching value accessor. NgModule only in existing module-based apps. |
+| Vue and Nuxt | `@beeq/vue` | `@bqClick` | `v-model` only on documented components. Nuxt setup goes in a client-only plugin. |
 
 Bind each event on the element whose Events table lists it. Composite components split their events across parts: in a dropdown, `bqSelect` comes from `bq-option-list`, and `bq-dropdown` itself emits only `bqOpen`. A framework wrapper binds only the events its own component declares. Read `event.detail` only when the component documents a payload. Forms bindings, method refs, routing, Angular and Vue examples, and setup troubleshooting: [frameworks.md](references/frameworks.md).
 

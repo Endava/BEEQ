@@ -17,7 +17,11 @@ This reference supports the [BEEQ agent skill](../SKILL.md). The framework guide
 | Slot | `slot="prefix"` | `slot="prefix"` | `slot="prefix"` | `slot="prefix"` |
 | Method | `el.show()` | `ref.current?.show()` | `@ViewChild` element ref | template `ref` |
 
-Read the updated value from `event.detail`, not `event.target.value`. Check each event's payload shape on the component page: `bq-input` sends `{ value, el }`, `bq-checkbox` and `bq-switch` send `{ checked }`, and `bq-button` sends the element itself.
+Take each event's name and payload from the component page's Events table, and read the updated value from `event.detail`, not `event.target.value`. Both differ by component:
+
+- Fields emit `bqChange`: `bq-input` sends `{ value, el }`, `bq-checkbox` and `bq-switch` send `{ checked }`.
+- Lists emit `bqSelect`: `bq-select` and `bq-option-list` send `{ value, item }`, and `bq-side-menu` sends the selected item.
+- `bq-button` emits `bqClick` with the element itself.
 
 ## Setup
 
@@ -152,7 +156,7 @@ Follow the [Angular guide](https://www.beeq.design/guides/frameworks/angular.md)
 
 Follow the [Vue guide](https://www.beeq.design/guides/frameworks/vue.md).
 
-- Import PascalCase components from `@beeq/vue` and bind events with `@bqClick` or `@bqChange`.
+- Import PascalCase components from `@beeq/vue`.
 - `v-model` is supported only on these components:
 
 | Component | Bound prop |
@@ -169,7 +173,6 @@ Follow the [HTML and Web Components guide](https://www.beeq.design/guides/framew
 
 - Close every element: `<bq-icon name="user"></bq-icon>`, never `<bq-icon name="user" />`.
 - Use attributes for static strings and element properties for booleans, numbers, arrays, and dynamic values.
-- Listen with `addEventListener('bqChange', (event) => …)`.
 - Load BEEQ from the CDN when the page has no build step, or from the entry files when it has a bundler, and configure icons with `data-beeq`; see [Setup](#setup).
 
 ## Client-side routing
@@ -229,6 +232,7 @@ Middle-click fires `auxclick`, not `click`, so it opens the `href` in a new tab 
 | Works in dev, unstyled or blank after build | The HTML links `/node_modules/…` URLs. Use the CDN or the bundler entry; see [Setup](#setup). |
 | Icons are blank | SVG files are not served, or the icon base path does not match the public URL. |
 | React events never fire | A kebab-case or native event name was used instead of `onBq…`. |
+| A BEEQ event handler never fires | The event name comes from another component, for example `bqChange` on `bq-select`, which emits `bqSelect`. Check the component's Events table. |
 | Hydration warnings in Next.js | `@beeq/react` was used instead of `@beeq/react/ssr`. |
 | Vue field keeps its value after clearing | `@bqClear` is not handled alongside `v-model`. |
 | Angular form control stays empty | The value accessor or `ngDefaultControl` is missing. |

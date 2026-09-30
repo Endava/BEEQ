@@ -68,7 +68,7 @@ pnpm exec nx run beeq-skills:eval --concurrent                # both variants at
 
 ### Recorded baseline
 
-Full-suite runs with Copilot CLI's default model, 1 trial per task. The last row is the reference: it is the only one with the current skill (last changed in `79680fb6`) and the current graders, so compare later runs with it. The first three rows used the skill as of `1ed7522b`. The third regrades the second's agent runs (`--regrade`) after the graders changed: the rubric scores blind, the API check rejects prop values a prop does not accept, and four more tasks check the stylesheet import. Compare runs only when they use the same graders, rubric, and grader model.
+Full-suite runs with Copilot CLI's default model, 1 trial per task. The last row is the reference: it is the only one with the current skill and the current graders, so compare later runs with it. The first three rows used the skill as of `1ed7522b`, the fourth as of `79680fb6`. The third regrades the second's agent runs (`--regrade`) after the graders changed: the rubric scores blind, the API check rejects prop values a prop does not accept, and four more tasks check the stylesheet import. The fifth reruns only the with-skill variant after the event-name fix in `SKILL.md` and `frameworks.md`; its baseline replays the fourth row's runs through the same graders (`--reuseBaseline`). Compare runs only when they use the same graders, rubric, and grader model.
 
 | Run | Graders | with-skill | baseline | delta | Pass rate (reward ≥ 0.5) |
 |---|---|---|---|---|---|
@@ -76,32 +76,33 @@ Full-suite runs with Copilot CLI's default model, 1 trial per task. The last row
 | 2026-09-29, `15016f0d` | deterministic + rubric (OpenAI `gpt-4.1-mini`) | 0.96 (sd 0.08) | 0.76 (sd 0.18) | +0.21 | 1.00 vs 0.93 |
 | 2026-09-29, `15016f0d` runs regraded at `e14478cc` | deterministic + blind rubric (OpenAI `gpt-4.1`) | 0.95 (sd 0.10) | 0.77 (sd 0.16) | +0.18 | 1.00 vs 0.93 |
 | 2026-09-29, `e14478cc` | deterministic + blind rubric (OpenAI `gpt-4.1`) | 0.98 (sd 0.04) | 0.70 (sd 0.17) | +0.28 | 1.00 vs 0.80 |
+| 2026-09-30, with-skill after the event-name fix; baseline replayed from the row above | deterministic + blind rubric (OpenAI `gpt-4.1`) | 0.97 (sd 0.05) | 0.70 (sd 0.16) | +0.28 | 1.00 vs 0.87 |
 
-The last row is `pnpm exec nx run beeq-skills:eval --concurrent --grader=all --graderProvider=openai --graderModel=gpt-4.1`. Its tasks:
+The last row is `pnpm exec nx run beeq-skills:eval --reuseBaseline=42 --grader=all --graderProvider=openai --graderModel=gpt-4.1`, where iteration-42 is the fourth row's run. Without saved runs, the full-run equivalent is the same command with `--concurrent` in place of `--reuseBaseline=42`. Its tasks:
 
 | Task | with-skill | baseline | delta |
 |---|---|---|---|
 | `angular-select` | 1.00 | 1.00 | +0.00 |
-| `brand-button-override` | 0.90 | 0.79 | +0.11 |
-| `destructive-confirm` | 1.00 | 0.65 | +0.35 |
-| `details-panel-drawer` | 1.00 | 0.54 | +0.46 |
+| `brand-button-override` | 1.00 | 0.80 | +0.20 |
+| `destructive-confirm` | 1.00 | 0.64 | +0.36 |
+| `details-panel-drawer` | 0.86 | 0.56 | +0.30 |
 | `endava-theme-dark` | 1.00 | 0.72 | +0.28 |
 | `html-contact-form` | 1.00 | 0.86 | +0.14 |
 | `icon-only-toolbar` | 1.00 | 0.70 | +0.30 |
-| `next-dialog` | 1.00 | 0.41 | +0.59 |
-| `react-settings-form` | 0.86 | 0.86 | +0.00 |
-| `row-actions-dropdown` | 0.93 | 0.89 | +0.04 |
-| `save-error-alert` | 1.00 | 0.69 | +0.31 |
-| `side-menu-navigation` | 1.00 | 0.75 | +0.25 |
-| `spa-link-routing` | 1.00 | 0.47 | +0.53 |
-| `tooltip-truncation` | 1.00 | 0.66 | +0.34 |
-| `vue-list-states` | 1.00 | 0.47 | +0.54 |
+| `next-dialog` | 0.90 | 0.41 | +0.49 |
+| `react-settings-form` | 1.00 | 0.86 | +0.14 |
+| `row-actions-dropdown` | 1.00 | 0.85 | +0.14 |
+| `save-error-alert` | 1.00 | 0.65 | +0.35 |
+| `side-menu-navigation` | 0.93 | 0.74 | +0.18 |
+| `spa-link-routing` | 1.00 | 0.53 | +0.47 |
+| `tooltip-truncation` | 0.88 | 0.63 | +0.24 |
+| `vue-list-states` | 1.00 | 0.49 | +0.51 |
 
-`angular-select` scores 1.00 in both variants in every run, so it catches regressions but does not show the skill's effect. With 1 trial, a task's baseline score is a sample: `spa-link-routing` and `destructive-confirm` scored 1.00 in the earlier runs, and here the baseline bound a native `onClick` on breadcrumb items in one and hard-coded colours, sizes, and made-up tokens in the other.
+`angular-select` scores 1.00 in both variants in every run, so it catches regressions but does not show the skill's effect. With 1 trial, a task's baseline score is a sample: `spa-link-routing` and `destructive-confirm` scored 1.00 in the earlier runs, and here the baseline bound a native `onClick` on breadcrumb items in one and hard-coded colours, sizes, and made-up tokens in the other. The judge adds its own noise: rescoring the same baseline runs moved single tasks by up to 0.06 (`spa-link-routing` from 0.47 to 0.53) and left the mean at 0.70.
 
-The with-skill trials lose points in three tasks. `react-settings-form` bound `onBqChange` on `BqSelect`, which emits `bqSelect`. `brand-button-override` set the brand role tokens on primary buttons only, a literal reading of the prompt, where the criteria expect `--bq-brand` on `:root`. `row-actions-dropdown` used a `BqSelect` for an inline role field; the row menu is a `BqDropdown`, but the `no-select` check flags any `BqSelect`. The judge scored all three 1.00: it scored every with-skill task 1.00 and the baseline 0.79, against 0.97 and 0.66 from the deterministic grader, so the deterministic checks carry most of the gap.
+The event-name fix held: `react-settings-form`, which bound `onBqChange` on `BqSelect` in the fourth row, now binds `onBqSelect` and scores 1.00. The with-skill trials lose points in four other tasks that scored 1.00 in the fourth row. The fix touched only event names, so these are one-trial samples rather than regressions, as were the fourth row's misses in `brand-button-override` and `row-actions-dropdown`, which score 1.00 here. `side-menu-navigation` and `tooltip-truncation` left a decorative `BqIcon` without `aria-hidden`. `details-panel-drawer` used a `2px` literal and an `appearance` prop that `bq-badge` does not have. `next-dialog` copied `inline-size: 100% !important` from the `bq-page-title` examples in the docs. The judge called that `!important` documented and scored `next-dialog` and `details-panel-drawer` 1.00: it scored the with-skill tasks 0.99 and the baseline 0.78, against 0.96 and 0.66 from the deterministic grader, so the deterministic checks carry most of the gap.
 
-The `eval` target's `threshold` is 0.9 (`project.json`): 0.05 to 0.09 under the with-skill means, so it fails once the skill loses about 30% of its lift over the baseline. It was set from Copilot runs, so record a baseline before reading another agent's pass or fail; `--threshold=0` reports without failing. After changing the skill or the tasks, rerun the full suite and update this section and the threshold together.
+The `eval` target's `threshold` is 0.9 (`project.json`): 0.05 to 0.09 under the with-skill means, so it fails once the skill loses about a quarter of its lift over the baseline. It was set from Copilot runs, so record a baseline before reading another agent's pass or fail; `--threshold=0` reports without failing. After changing the skill or the tasks, rerun the full suite and update this section and the threshold together.
 
 ### Suite layout
 
