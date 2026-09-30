@@ -124,7 +124,7 @@ The highest priority action in a view. Only one per screen or section.
 Primary also supports `ghost` and `danger` variants:
 
 - **Danger**: reserved for actions that may result in critical or irreversible consequences, such as deleting important data or confirming a high-risk operation.
-- **Ghost**: a more subtle style for for secondary or less prominent actions that don't require immediate attention.
+- **Ghost**: a more subtle style for secondary or less prominent actions that don't require immediate attention.
 
 <CodeLivePreview mode="shadow" code={`
   <bq-button>Primary standard</bq-button>
@@ -641,8 +641,6 @@ Use the `prefix` or `suffix` slot to add icons. Icons should reinforce the label
       standalone: true,
       imports: [BqButton, BqIcon],
       template: `
-        <!-- import { BqButton, BqIcon } from "@beeq/angular/standalone" -->
-
         <bq-button>
           <bq-icon name="arrow-circle-left" slot="prefix"></bq-icon>
           Go back
@@ -676,9 +674,9 @@ Use the `prefix` or `suffix` slot to add icons. Icons should reinforce the label
   </CodeGroup>
 </CodeLivePreview>
 
-### Icon-only buttons
+### Only-icon buttons
 
-Use icon-only buttons only for common, easily recognized actions.
+Use `only-icon` buttons only for common, easily recognized actions.
 Always provide a `label` so assistive technologies can announce the action correctly.
 
 <CodeLivePreview mode="shadow" code={`
@@ -877,7 +875,7 @@ Always provide a `label` so assistive technologies can announce the action corre
 |---|---|---|
 | `bqBlur` | Fires when the button loses focus | `CustomEvent<HTMLBqButtonElement>` |
 | `bqFocus` | Fires when the button receives focus | `CustomEvent<HTMLBqButtonElement>` |
-| `bqClick` | Fires when the button is clicked | `CustomEvent<HTMLBqButtonElement>` |
+| `bqClick` | Fires when the button is clicked. Cancelable: on a button with `href`, calling `event.preventDefault()` stops the link navigation, so a client-side router can take over | `CustomEvent<HTMLBqButtonElement>` |
 
 <Note>
   - In React, prefix events with `on`: `onBqClick`, `onBqFocus`, `onBqBlur`.

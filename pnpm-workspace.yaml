@@ -11,12 +11,15 @@ allowBuilds:
   '@parcel/watcher': false
   '@swc/core': true
   'core-js': true
+  'cpu-features': false
   'esbuild': false
   'less': false
   'lmdb': false
   'msgpackr-extract': false
   'nx': true
+  'protobufjs': false
   'rs-module-lexer': false
+  'ssh2': false
   'unrs-resolver': false
 
 overrides:

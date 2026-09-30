@@ -53,7 +53,7 @@
     // BEEQ already registered (e.g. client-side navigation) — skip the fade.
     html.classList.add('bq-loaded');
   } else {
-    customElements.whenDefined('bq-button').then(revealPage);
+    customElements.whenDefined('bq-button').then(revealPage, revealPage);
     setTimeout(revealPage, 6000); // Safety: reveal within 6 s if BEEQ fails to load.
   }
 })();

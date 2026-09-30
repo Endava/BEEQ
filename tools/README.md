@@ -189,3 +189,10 @@ pnpm exec nx run tools:test
 ```
 
 📖 More about Nx local executors: https://nx.dev/extending-nx/recipes/local-executors
+
+# Agent skills: sync generator and eval executor
+
+Two more local plugins serve the BEEQ agent skills in [`packages/beeq-skills`](../packages/beeq-skills/README.md), which documents both:
+
+- `@beeq/tools:sync-skills` (`src/generators/sync-skills/`) is an Nx sync generator. It validates the skill sources and writes the generated copy in `skills/`. `nx sync` applies it; `nx sync:check` fails when the copy is stale.
+- `@beeq/tools:skill-eval` (`src/executors/skill-eval/`) runs a [skillgrade](https://github.com/mgechev/skillgrade) suite with and without a skill and writes a `benchmark.json` comparing the two. Options are in its `schema.json`.

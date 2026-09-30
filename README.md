@@ -55,6 +55,16 @@ The BEEQ components are published to the NPM package manager registry. You can u
 - 📙 [How to use the `@beeq/vue` package](packages/beeq-vue/README.md)
 - 📓 [How to use the `@beeq/tailwindcss` preset](packages/beeq-tailwindcss/README.md)
 
+### AI agent skill 🤖
+
+The `beeq` agent skill teaches coding agents (GitHub Copilot, Claude Code, Cursor, and others) to choose, verify, style, and review BEEQ components. Install it into your project with the [`skills` CLI](https://github.com/vercel-labs/skills):
+
+```bash
+npx skills add Endava/BEEQ --skill beeq
+```
+
+See [AI tools](https://www.beeq.design/getting-started/ai-tools) for pinning the skill to a release, the MCP server, and `llms.txt`.
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Development 👨‍💻
@@ -70,8 +80,10 @@ The project has been structured as an [NX monorepo](https://nx.dev) :
   ├── 📁 beeq-react
   ├── 📁 beeq-vue
   ├── ...
+  ├── 📁 beeq-skills
   ├── 📁 beeq-tailwindcss
   ├── ...
+├── 📁 skills
 ├── 📁 tools
 ├── package.json
 ├── package-lock.json
@@ -84,6 +96,8 @@ where:
 - **[packages/beeq-react](./packages/beeq-react):** React.js-specific wrapper for BEEQ core library
 - **[packages/beeq-vue](./packages/beeq-vue):** Vue.js-specific wrapper for BEEQ core library
 - **[packages/beeq-tailwindcss](./packages/beeq-tailwindcss):** BEEQ's opinionated TailwindCSS configuration
+- **[packages/beeq-skills](./packages/beeq-skills):** Source, tests, and evals for the BEEQ agent skills (not published to npm)
+- **[skills](./skills):** The installable `beeq` skill, generated from `packages/beeq-skills`
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -199,6 +213,19 @@ pnpm exec nx run beeq:check
 # Autofix supported issues
 pnpm exec nx run beeq:check -- --write
 ```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### Agent skills
+
+Edit a skill in `packages/beeq-skills/src/`, not the generated copy in `skills/`. The pre-commit hook regenerates them, and CI fails when they are stale.
+
+```bash
+pnpm skills:sync   # regenerate skills/
+pnpm skills:test   # skill specs and type checks
+```
+
+The evals that measure the skill with real agents run locally only. See the [`beeq-skills` README](./packages/beeq-skills/README.md).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

@@ -2,6 +2,8 @@
 name: review-doc
 description: 'Audit a BEEQ Mintlify MDX documentation page against the documentation guidelines — component docs, non-component docs, CodeLivePreview behavior, code tab rules, source accuracy, tone, and accessibility guidance. Also supports temporary Zeroheight-to-Mintlify migration audits when explicitly requested or confirmed.'
 argument-hint: 'Component name (e.g. "card") or path to an .mdx file in apps/beeq-docs/'
+metadata:
+  internal: true
 ---
 
 # Review a BEEQ Documentation Page

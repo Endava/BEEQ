@@ -1,0 +1,23 @@
+name: spa-link-routing
+metadata:
+  stack: react
+  tags: [patterns]
+instruction: >-
+  In a React Router app, render breadcrumb navigation Home > Projects > Current project. Each item
+  navigates client-side without a full page reload.
+workspace:
+  - src: '{{evals}}/fixtures/react'
+    dest: .
+expected:
+  criteria: >-
+    Items keep real hrefs so middle-click and open-in-new-tab work. Navigation is intercepted from
+    the items' cancelable bqClick event: event.preventDefault() stops the link navigation, then the
+    router navigates. A native onClick on the items appears only with a stated reason that bqClick
+    cannot cover, such as modifier-key handling. The last item is the current page.
+  checks:
+    - name: keeps-href
+      match: '<BqBreadcrumbItem\b[^>]*\shref='
+    - name: intercepts-bq-click
+      match: ['onBqClick=', 'preventDefault\(\)', 'navigate\(']
+    - name: no-native-click
+      absent: '<BqBreadcrumbItem\b[^>]*\sonClick='

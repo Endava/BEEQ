@@ -33,6 +33,10 @@
     "clean:build": "pnpm dlx rimraf .stencil dist",
     "clean:modules": "pnpm dlx rimraf ./node_modules ./**/node_modules ./packages/**/node_modules",
     "docs:generate-beeq-mintlify-css": "node tools/scripts/generate-beeq-mintlify-css.mjs",
+    "skills:sync": "nx sync",
+    "skills:test": "nx run-many -t test typecheck -p beeq-skills tools",
+    "skills:eval": "nx run beeq-skills:eval",
+    "skills:eval:view": "nx run beeq-skills:eval --preview=browser",
     "g": "plop --cwd tools/src/generators/plop"
   },
   "dependencies": {
@@ -117,6 +121,7 @@
     "postcss-preset-env": "11.3.0",
     "postcss-url": "10.1.3",
     "react-syntax-highlighter": "15.6.1",
+    "skillgrade": "0.3.0",
     "stencil-tailwind-plugin": "1.8.0",
     "storybook": "10.6.0",
     "stylelint": "17.13.0",
@@ -130,7 +135,8 @@
     "vite-plugin-turbosnap": "1.0.3",
     "vite-tsconfig-paths": "6.1.1",
     "vitest": "4.1.5",
-    "vue": "3.5.33"
+    "vue": "3.5.33",
+    "yaml": "2.9.1"
   },
   "engines": {
     "node": ">=22.0.0",

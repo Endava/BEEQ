@@ -2,6 +2,8 @@
 name: write-stories
 description: 'Write Storybook stories and MDX docs for BEEQ web components. Use for: adding or updating Storybook stories, writing MDX documentation pages, adding argTypes and controls for component props/events, creating story variants for all component states. Uses @storybook/web-components-vite and lit-html templates. Files live at packages/beeq/src/components/<name>/_storybook/.'
 argument-hint: 'Component name (e.g. "bq-button") or path to the component tsx file'
+metadata:
+  internal: true
 ---
 
 # Write BEEQ Storybook Stories

@@ -1,0 +1,19 @@
+name: endava-theme-dark
+metadata:
+  stack: html
+  tags: [theming]
+instruction: >-
+  Set up the app shell to use the Endava brand, with a switch in the header that toggles between
+  light and dark mode and remembers the user's choice.
+workspace:
+  - src: '{{evals}}/fixtures/html'
+    dest: .
+expected:
+  criteria: >-
+    Theme and mode are separate attributes; the toggle only changes bq-mode. The choice is persisted
+    (for example in localStorage) and applied before or at first render. No stylesheet swapping.
+  checks:
+    - name: sets-theme
+      match: 'bq-theme\s*=\s*["'']endava["'']|setAttribute\(\s*["'']bq-theme["'']\s*,\s*["'']endava["'']'
+    - name: toggles-mode
+      match: ['bq-mode', '<bq-switch']

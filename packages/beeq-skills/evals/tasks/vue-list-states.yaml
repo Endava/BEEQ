@@ -1,0 +1,27 @@
+name: vue-list-states
+metadata:
+  stack: vue
+  tags: [patterns]
+instruction: >-
+  Build a Vue 3 component that fetches a list of invoices and shows the list, a loading state, an
+  empty state with a call to action, and an error state with a retry.
+workspace:
+  - src: '{{evals}}/fixtures/vue'
+    dest: .
+expected:
+  criteria: >-
+    All four states are distinct and reachable. Loading uses a spinner with visible text. The empty
+    state and the error state both use bq-empty-state, because the list region has nothing else to
+    show: the empty state explains what is missing and offers one action; the error explains what
+    failed and offers a Retry button in its footer. bq-alert is not used as the error state for the
+    whole region. Each state has a text cue, not colour alone. Vue event bindings use the
+    bq-prefixed events.
+  checks:
+    - name: loading-spinner
+      match: '<(bq-spinner|BqSpinner)\b'
+    - name: empty-and-error-states
+      match: '<(bq-empty-state|BqEmptyState)\b[\s\S]*<(bq-empty-state|BqEmptyState)\b'
+    - name: no-alert-error-state
+      absent: '<(bq-alert|BqAlert)\b'
+    - name: bq-events
+      match: '(@|v-on:)bq[A-Z]\w*='

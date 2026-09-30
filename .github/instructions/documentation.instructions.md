@@ -200,9 +200,9 @@ Always pass the mode explicitly:
 <CodeLivePreview mode="iframe" height="12rem" code={`...`} />
 ```
 
-Use iframe mode whenever an example includes layout behavior, scripts, overlays, popovers, fixed or absolute positioning, responsive containers, page-like composition, or anything that could conflict with the Mintlify documentation shell. When using iframe mode, always include an explicit `height` and use `removePadding` when preview padding would hide the real layout behavior.
+Use iframe mode whenever an example includes layout behavior, scripts, overlays, popovers, fixed or absolute positioning, responsive containers, page-like composition, global token overrides on `:root`, or anything that could conflict with the Mintlify documentation shell. When using iframe mode, always include an explicit `height` (it sets the frame's height) and use `removePadding` when preview padding would hide the real layout behavior.
 
-Shadow mode is still allowed for small, component-local examples that will not disrupt the Mintlify page and do not need full document isolation. In shadow mode, `CodeLivePreview` injects the `code` prop into a **shadow root** attached to the `.preview` div. `beeq.css` is loaded inside the shadow root automatically, and CSS custom properties (`--bq-*`) inherit through the shadow boundary so design tokens and dark/light mode work without changes.
+Shadow mode is still allowed for small, component-local examples that will not disrupt the Mintlify page and do not need full document isolation. In shadow mode, `CodeLivePreview` injects the `code` prop into a **shadow root** attached to the `.preview` div. `beeq.css` is loaded inside the shadow root automatically, and CSS custom properties (`--bq-*`) inherit through the shadow boundary so design tokens and dark/light mode work without changes. Role tokens arrive already resolved: the docs page computes `--bq-ui--brand: var(--bq-brand)` and the other roles on its own `<html>`, and `:root` matches nothing inside a shadow root. A snippet that sets a base token such as `--bq-brand`, on `:root`, `:host`, or an element, therefore never reaches components that read the roles. Show global token overrides in iframe mode, where the snippet's `:root` is the frame's document root.
 
 ### CSS inside shadow mode — use `:host`
 

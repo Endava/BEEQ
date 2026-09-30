@@ -2,6 +2,8 @@
 name: write-e2e-tests
 description: 'Write E2E tests for BEEQ StencilJS components using @stencil/vitest in browser mode (Playwright/Chromium). Use for: adding or fixing E2E tests, covering props, events, slots, methods, keyboard interactions, accessibility attributes, and CSS custom properties for bq-* components. Files live at packages/beeq/src/components/<name>/__tests__/bq-<name>.e2e.tsx.'
 argument-hint: 'Component name (e.g. "bq-button") or path to the component tsx file'
+metadata:
+  internal: true
 ---
 
 # Write BEEQ E2E Tests

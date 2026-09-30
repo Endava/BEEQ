@@ -55,7 +55,7 @@ Import the BEEQ stylesheet **once** in your application’s main CSS or SCSS fil
 ```
 
 <Tip>
-  If you use Sass or another CSS preprocessor, keep the full file extension in the import path (for example `beeq.css`, not `beeq`).
+  In a Sass or Less file, keep the `.css` extension so the line stays a plain CSS import that your bundler resolves. Without it, Less can't find the file and Sass falls back to its deprecated `@import`.
 </Tip>
 
 For CDN-based HTML pages without a bundler, link the stylesheet in your document instead — see [HTML / Web Components](/guides/frameworks/html-web-components).
@@ -80,3 +80,5 @@ Open the guide for your stack under **Frameworks** in the sidebar:
 - [HTML / Web Components](/guides/frameworks/html-web-components)
 
 Once BEEQ is running, browse the [Components](/components) and review [Theming](/theming/themes-and-modes) if you need brand customization.
+
+If you build with a coding agent, install the BEEQ skill so it follows the same setup and component APIs. See [AI tools](/getting-started/ai-tools#install-the-beeq-skill).

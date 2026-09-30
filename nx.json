@@ -24,6 +24,10 @@
       "!{projectRoot}/jest.config.ts"
     ]
   },
+  "sync": {
+    "applyChanges": true,
+    "globalGenerators": ["@beeq/tools:sync-skills"]
+  },
   "targetDefaults": {
     "icons": { "cache": true },
     "stylelint": { "cache": true },
@@ -42,6 +46,17 @@
     "test": {
       "cache": true,
       "inputs": ["default", "^default", "{workspaceRoot}/jest.preset.js"]
+    },
+    "typecheck": {
+      "cache": true,
+      "inputs": [
+        "default",
+        "^default",
+        "{workspaceRoot}/tsconfig.base.json",
+        {
+          "externalDependencies": ["typescript"]
+        }
+      ]
     },
     "prebuild": {
       "cache": true,

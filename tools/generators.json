@@ -1,0 +1,9 @@
+{
+  "generators": {
+    "sync-skills": {
+      "factory": "./src/generators/sync-skills/generator",
+      "schema": "./src/generators/sync-skills/schema.json",
+      "description": "Regenerates skills/ and the docs skill pages from packages/beeq-skills/src"
+    }
+  }
+}

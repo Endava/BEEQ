@@ -1,0 +1,29 @@
+name: brand-button-override
+metadata:
+  stack: html
+  tags: [smoke, theming]
+instruction: >-
+  Our marketing site needs primary buttons in our brand purple (#6B2FBA) instead of the default
+  blue, while keeping hover and focus states consistent.
+workspace:
+  - src: '{{evals}}/fixtures/html'
+    dest: .
+expected:
+  criteria: >-
+    The colour is set once on the base brand token (--bq-brand, with its light and dark variants)
+    at root or theme scope, or in a custom theme, so every BEEQ component picks it up, rather than
+    restyling individual buttons or their shadow parts. Hover follows from the brand roles, and
+    --bq-focus points at the brand so focus rings match. Overrides are normal declarations, with no
+    !important.
+  allow_rules: [hex]
+  checks:
+    - name: overrides-base-token
+      match: '--bq-brand\s*:\s*#6B2FBA'
+      flags: i
+    - name: focus-follows
+      match: '--bq-focus\s*:'
+    - name: no-host-background
+      absent: 'bq-button[^{]*\{[^}]*background(-color)?\s*:'
+      flags: i
+    - name: no-part-override
+      absent: '::part\('

@@ -1,0 +1,8 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "SyncSkills",
+  "title": "Sync BEEQ agent skills",
+  "description": "Validates the agent skills in packages/beeq-skills/src and regenerates skills/, the published copy that `npx skills` installs.",
+  "type": "object",
+  "properties": {}
+}

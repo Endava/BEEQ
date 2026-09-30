@@ -113,7 +113,8 @@ export const CodeLivePreview = ({ code, children, height, removePadding = false,
       iframe.style.width = '100%';
       iframe.style.border = '0';
       iframe.style.display = 'block';
-      iframe.style.minHeight = height ?? '0px';
+      // Without an explicit height the iframe falls back to the browser default of 150px.
+      iframe.style.height = height ?? '';
       iframe.setAttribute('title', 'Live code preview');
       iframe.setAttribute('loading', 'lazy');
       iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin');

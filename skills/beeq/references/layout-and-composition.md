@@ -1,0 +1,166 @@
+---
+title: "Skill reference: layout and composition with BEEQ"
+description: How agents lay out screens around BEEQ components, size component hosts, style components through their documented API, and finish the result.
+---
+<!-- Generated from packages/beeq-skills/src/beeq/references/layout-and-composition.md. Edit the source, not this file. -->
+
+This reference supports the [BEEQ agent skill](../SKILL.md). Read it to make a screen look designed rather than assembled, and before you write any CSS that touches a `bq-*` element.
+
+## What BEEQ provides and what you own
+
+| BEEQ provides | The consuming app owns |
+| --- | --- |
+| Components with their own internal spacing, states, and focus rings | The page grid, section spacing, and responsive behaviour |
+| Semantic tokens for spacing, colour, radius, stroke, shadow, and type | How those tokens are applied to product surfaces |
+| Optional Tailwind utilities through `@beeq/tailwindcss` | Whether the project uses Tailwind at all |
+| [Grid guidance](https://www.beeq.design/foundations/grid.md) | Any grid CSS; BEEQ does not ship grid classes |
+
+There is no page-layout component and no layout utility class set. Write layout CSS yourself, using tokens.
+
+## Spacing rhythm
+
+Use the [spacing scale](https://www.beeq.design/foundations/spacing.md) and pick one step per relationship, then repeat it:
+
+| Relationship | Start with |
+| --- | --- |
+| Icon to label, tag to tag | `--bq-spacing-xs` or `--bq-spacing-s` |
+| Field to field in a form | `--bq-spacing-m` |
+| Group to group inside a card or section | `--bq-spacing-l` |
+| Section to section on a page | `--bq-spacing-xl` or `--bq-spacing-xxl` |
+| Page gutter | `--bq-spacing-l` on narrow screens, `--bq-spacing-xl` or larger on wide screens |
+
+Items that belong together sit closer than items that do not. If every gap is the same, nothing is grouped.
+
+With the BEEQ Tailwind preset, the same steps are available as utilities such as `gap-m`, `p-l`, and `mb-xl`.
+
+## Layout dimensions
+
+Spacing, radius, type, and stroke have tokens; the dimensions of the layout itself do not. Size them as the [grid foundations](https://www.beeq.design/foundations/grid.md) do:
+
+| Dimension | Use |
+| --- | --- |
+| Gutters, margins, container padding | `--bq-spacing-*` |
+| Columns that align or compare | `grid-template-columns: repeat(12, minmax(0, 1fr))`, with regions spanning columns |
+| Items that wrap, such as a card grid | `repeat(auto-fill, minmax(min(100%, 18rem), 1fr))`; `min(100%, …)` keeps one column from overflowing a narrow screen |
+| Container width | Fluid for product screens, tables, and dashboards. A `rem` `max-inline-size` with `margin-inline: auto` for focused tasks, forms, and review screens |
+| Reading width | A `max-inline-size` in `ch`, so long text keeps a readable line length |
+| Breakpoints | Media or container queries in `rem`, placed where the content gets cramped. BEEQ's device ranges (phones 576–768px, tablets 768–992px, desktop 992–1200px, large screens 1200–1920px) are guidance, not generated breakpoints |
+
+Size the container around a component rather than the component itself; see the next section.
+
+## Size component hosts, not internals
+
+The host element is the thing that participates in your layout. Position and size it; leave its internals to the component.
+
+- `bq-input`, `bq-select`, and `bq-card` hosts are block-level and fill their container. Constrain the container, not the component.
+- `bq-button` is inline by default. Use the `block` prop for a full-width button instead of CSS.
+- A `bq-*` host that is a flex item and must shrink below its content width needs `min-width: 0` on the host.
+- Content you place in a slot is yours. Truncate, wrap, or style it as an ordinary element.
+
+```css
+/* A row where the label truncates and the action keeps its size. */
+.list-row {
+  display: flex;
+  align-items: center;
+  gap: var(--bq-spacing-s);
+}
+
+.list-row bq-tooltip {
+  flex: 1;
+  min-width: 0;
+}
+
+.list-row .truncate {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+```
+
+```html
+<div class="list-row">
+  <bq-tooltip>
+    <span class="truncate" slot="trigger">Quarterly revenue forecast for the EMEA region</span>
+    Quarterly revenue forecast for the EMEA region
+  </bq-tooltip>
+  <bq-button appearance="text" size="small">Open</bq-button>
+</div>
+```
+
+## Style components through their API
+
+Walk this order and stop at the first step that works. Look each item up on the component page; do not guess.
+
+1. **Prop.** `appearance`, `variant`, `size`, `border`, `type`, and similar props select supported treatments.
+2. **Component CSS custom property.** Set it on the host through a scoped selector for a local change.
+3. **Documented part.** Use `::part()` for exposed internals that no prop or variable covers.
+4. **Scoped custom CSS.** Only for layout and requirements the API does not cover.
+
+```css
+/* 1. Prefer a prop: <bq-button border="full">. */
+
+/* 2. Component CSS variable for a local adjustment. */
+.toolbar bq-button {
+  --bq-button--border-radius: var(--bq-radius--full);
+}
+
+/* 3. A documented part, when nothing else reaches it. */
+.summary bq-status::part(text) {
+  font-weight: var(--bq-font-weight--semibold);
+}
+```
+
+Rules that keep overrides safe:
+
+- Never set `background`, `color`, `border`, or `padding` on a `bq-*` host. The visible surface is in the shadow root.
+- Never override states (hover, focus, disabled, invalid) without restyling all of them. A half-overridden component looks broken in some state.
+- Never remove or replace a focus ring with a border alone.
+- Keep overrides scoped to a class on a container. A global `bq-button { … }` rule changes every button in the product.
+
+See the [styling guide](https://www.beeq.design/guides/styles.md) and [component CSS variables](https://www.beeq.design/theming/component-css-variables.md).
+
+## Surfaces and colour
+
+Build product surfaces from semantic tokens so they follow the theme and mode:
+
+| Surface | Background | Text |
+| --- | --- | --- |
+| Page | `--bq-background--primary` | `--bq-text--primary`, `--bq-text--secondary` for supporting copy |
+| Grouped region or sidebar | `--bq-background--secondary` | `--bq-text--primary` |
+| Nested region | `--bq-background--tertiary` | `--bq-text--primary` |
+| Inverted band | `--bq-background--inverse` | `--bq-text--inverse` |
+
+Use `--bq-stroke--primary` with `--bq-stroke-s` for ordinary separation, or a `bq-divider`. Use `--bq-box-shadow--s` for resting cards and larger shadows only for floating layers. See [colors](https://www.beeq.design/foundations/colors.md) and [shadows](https://www.beeq.design/foundations/shadows.md).
+
+## Typography
+
+BEEQ's global stylesheet styles `h1` to `h6`, body text, and helper classes such as `.display` and `.caption`. Use real heading elements in order, and let them inherit the theme's font. Use `--bq-font-size--*` and `--bq-font-weight--*` tokens for custom text, and keep body copy at the default size. See [typography](https://www.beeq.design/foundations/typography.md).
+
+## Icons
+
+- Use `bq-icon` with a [Phosphor](https://phosphoricons.com/) icon name. Check the icon exists before using it.
+- Set `size` in pixels and `weight` for the Phosphor style.
+- `color` takes a token name without the `--bq-` prefix, such as `icon--brand` or `text--danger`.
+- An icon that conveys meaning needs a `label`. Every other icon is decorative, including one beside visible text that says the same thing; put `aria-hidden="true"` on the `bq-icon` host. An unlabelled `bq-icon` still announces `<name> icon`, and only `aria-hidden` removes it.
+- Put icons inside buttons and inputs through their `prefix` and `suffix` slots.
+
+## Accessibility in composition
+
+- Every interactive control needs a visible label or an accessible name. Icon-only buttons use `only-icon` with `label`.
+- Keep DOM order equal to reading order when layouts reflow. Do not reorder visually with `order` or grid placement in a way that changes meaning.
+- Never use colour, shadow, or motion as the only indicator of state. Pair `bq-status` and alert types with text.
+- Do not hide disabled actions without explaining what the user needs to do.
+- Tooltips hold supplementary text only. Anything essential belongs in visible text or helper text.
+- Check contrast after any token override in every active theme and mode.
+
+## Polish checklist
+
+- [ ] One clear primary action per region; secondary actions use `secondary` or `text` appearance.
+- [ ] Spacing uses a small number of repeated steps, with tighter gaps inside groups than between them.
+- [ ] Form fields share one width and align to the same edge.
+- [ ] Action rows align consistently (for example, right-aligned in forms and dialogs).
+- [ ] Long text wraps or truncates deliberately, and truncated text has a way to read it in full.
+- [ ] Empty, loading, and error states exist for every data view.
+- [ ] Surfaces use semantic background tokens, and nothing is hard-coded to a light-mode colour.
+- [ ] The screen was checked at a narrow and a wide width, in light and dark modes, when rendering is available.

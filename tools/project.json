@@ -1,47 +1,22 @@
 {
   "name": "tools",
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "packages/tools/src",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "tools/src",
   "projectType": "library",
-  "tags": ["internal", "nonpublisable", "tools"],
+  "tags": ["internal", "nonpublishable", "tools"],
   "targets": {
-    "build": {
-      "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": ".",
-        "main": "packages/tools/src/index.ts",
-        "tsConfig": "packages/tools/tsconfig.lib.json",
-        "assets": [
-          "packages/tools/*.md",
-          {
-            "input": "./packages/tools/src",
-            "glob": "**/!(*.ts)",
-            "output": "./src"
-          },
-          {
-            "input": "./packages/tools/src",
-            "glob": "**/*.d.ts",
-            "output": "./src"
-          },
-          {
-            "input": "./packages/tools",
-            "glob": "generators.json",
-            "output": "."
-          },
-          {
-            "input": "./packages/tools",
-            "glob": "executors.json",
-            "output": "."
-          }
-        ]
-      }
-    },
     "test": {
       "executor": "nx:run-commands",
       "options": {
         "command": "pnpm exec vitest run",
-        "cwd": "tools"
+        "cwd": "{projectRoot}"
+      }
+    },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "pnpm exec tsc -p tsconfig.lib.json --noEmit",
+        "cwd": "{projectRoot}"
       }
     },
     "lint": {

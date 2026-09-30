@@ -11,10 +11,10 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
   <img className="hidden dark:block" src="/components/images/empty-state/empty-state-overview-dark.svg" alt="BEEQ Empty-state component overview" />
 </Frame>
 
-Empty states appear when a section, page, or workflow has nothing to show yet. A good empty state explains the situation, reduces uncertainty, and helps people recover by pointing them toward the next meaningful action.
+Empty states appear when a section, page, or workflow has nothing to show, whether no content exists yet or it failed to load. A good empty state explains the situation, reduces uncertainty, and helps people recover by pointing them toward the next meaningful action.
 
 <Note>
-  Use empty states when the absence of content is meaningful and persistent enough to deserve guidance. If content is only loading or momentarily unavailable, use a loading or error pattern instead.
+  Use empty states when the absence of content is meaningful enough to deserve guidance, including a region that failed to load and needs a retry. While content is still loading, use a spinner or skeleton instead.
 </Note>
 
 ## When to use
@@ -28,6 +28,7 @@ Empty states appear when a section, page, or workflow has nothing to show yet. A
     - A page or section has no data yet and people need orientation
     - A first-time experience needs guidance before content exists
     - The interface should explain what is missing and what action can create content
+    - Content failed to load and the region has nothing else to show, so people need to know what failed and how to retry
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
@@ -35,7 +36,7 @@ Empty states appear when a section, page, or workflow has nothing to show yet. A
       Do not use empty states when
     </span>
     - Content is still loading and a spinner or skeleton is more accurate
-    - The issue is a temporary system problem that should be communicated as an error state
+    - The message is about content that is still on screen, such as a failed save or stale data; use an alert instead
     - The page already contains enough surrounding guidance to explain what is happening
   </Card>
 </CardGroup>
@@ -460,6 +461,82 @@ Use the footer when the empty state should help people recover immediately. Pref
 <Warning>
   Do not overload an empty state with many equal-priority actions. If people need several next steps, pick the primary recovery path and move secondary options elsewhere.
 </Warning>
+
+### Error with retry
+
+When content fails to load and the region has nothing else to show, the failure is the region's state. Replace the default icon with a warning icon, say what failed and what people can do, and offer **Retry** as the single action. Keep [Alert](/components/alert) for messages about content that is still on screen, such as a failed save or stale data.
+
+<CodeLivePreview mode="iframe" height="22rem" code={`
+  <bq-empty-state>
+    <bq-icon name="warning-circle" slot="thumbnail" size="80" color="icon--danger" aria-hidden="true"></bq-icon>
+    Invoices could not be loaded
+    <span slot="body">Check your connection and try again.</span>
+    <bq-button slot="footer" appearance="secondary">Retry</bq-button>
+  </bq-empty-state>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-empty-state>
+      <bq-icon name="warning-circle" slot="thumbnail" size="80" color="icon--danger" aria-hidden="true"></bq-icon>
+      Invoices could not be loaded
+      <span slot="body">Check your connection and try again.</span>
+      <bq-button slot="footer" appearance="secondary">Retry</bq-button>
+    </bq-empty-state>
+    ```
+
+    ```jsx React icon="react" expandable
+    import { BqButton, BqEmptyState, BqIcon } from "@beeq/react";
+
+    <BqEmptyState>
+      <BqIcon name="warning-circle" slot="thumbnail" size={80} color="icon--danger" aria-hidden="true" />
+      Invoices could not be loaded
+      <span slot="body">Check your connection and try again.</span>
+      <BqButton slot="footer" appearance="secondary" onBqClick={retry}>
+        Retry
+      </BqButton>
+    </BqEmptyState>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqButton, BqEmptyState, BqIcon } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqButton, BqEmptyState, BqIcon],
+      template: `
+        <bq-empty-state>
+          <bq-icon name="warning-circle" slot="thumbnail" size="80" color="icon--danger" aria-hidden="true"></bq-icon>
+          Invoices could not be loaded
+          <span slot="body">Check your connection and try again.</span>
+          <bq-button slot="footer" appearance="secondary" (bqClick)="retry()">Retry</bq-button>
+        </bq-empty-state>
+      `,
+    })
+    export class AppComponent {
+      retry() {}
+    }
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqButton, BqEmptyState, BqIcon } from "@beeq/vue";
+
+    const retry = () => {};
+    </script>
+
+    <template>
+      <BqEmptyState>
+        <BqIcon name="warning-circle" slot="thumbnail" size="80" color="icon--danger" aria-hidden="true" />
+        Invoices could not be loaded
+        <span slot="body">Check your connection and try again.</span>
+        <BqButton slot="footer" appearance="secondary" @bqClick="retry">Retry</BqButton>
+      </BqEmptyState>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
 
 ### Sizes
 
