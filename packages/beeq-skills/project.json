@@ -12,6 +12,7 @@
       "inputs": [
         "default",
         "{workspaceRoot}/skills/**/*",
+        "{workspaceRoot}/apps/beeq-docs/skill.md",
         "{workspaceRoot}/.agents/skills/**/*",
         "{workspaceRoot}/packages/beeq/src/components/**/*.tsx",
         "{workspaceRoot}/packages/beeq-tailwindcss/src/**/*",

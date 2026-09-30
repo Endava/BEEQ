@@ -81,3 +81,21 @@ describe('SKILL.md searches', () => {
     expect(labels).toEqual(RULES.map((rule) => rule.label));
   });
 });
+
+describe('docs site skill.md', () => {
+  // Without a custom skill.md, Mintlify generates its own skill from the docs and serves it at /skill.md.
+  const pointer = read('apps/beeq-docs/skill.md');
+
+  it('should point agents to the repository skill and its install command', () => {
+    expect(pointer).toContain('npx skills add Endava/BEEQ --skill beeq');
+    expect(pointer).toContain('https://raw.githubusercontent.com/Endava/BEEQ/main/skills/beeq/SKILL.md');
+  });
+
+  it('should keep the frontmatter of the beeq skill', () => {
+    // Act
+    const expected = parseFrontmatter(read(`${source}/beeq/SKILL.md`)).frontmatter;
+
+    // Assert: copy the frontmatter of src/beeq/SKILL.md to apps/beeq-docs/skill.md if this fails.
+    expect(parseFrontmatter(pointer).frontmatter).toBe(expected);
+  });
+});

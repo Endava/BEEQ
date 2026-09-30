@@ -19,7 +19,7 @@ Contributor-only skills stay in `.agents/skills/` with `metadata.internal: true`
 
 CircleCI runs `nx sync:check`, then `check`, `typecheck`, and `test` for whichever of `beeq-skills` and `tools` a change affects, plus `eval-validate` when `beeq-skills` is affected. `nx sync:check` fails when the generated copy is stale. The generator also rejects invalid frontmatter, relative links that break or leave the skill folder, and references not linked from `SKILL.md`.
 
-`apps/beeq-docs/skill.md` is a hand-written pointer to the skill in this repository, outside the sync. Keep it: without a custom `skill.md`, Mintlify generates its own skill from the docs and serves it at `https://www.beeq.design/skill.md`.
+`apps/beeq-docs/skill.md` is a hand-written pointer to the skill in this repository, outside the sync. Keep it: without a custom `skill.md`, Mintlify generates its own skill from the docs and serves it at `https://www.beeq.design/skill.md`. Its frontmatter is a copy of `src/beeq/SKILL.md`'s, and `pnpm skills:test` fails until a frontmatter change is copied to it.
 
 ## Evals
 

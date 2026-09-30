@@ -1,14 +1,18 @@
 ---
-# Hand-written pointer. The skill lives in packages/beeq-skills/src/beeq and installs from the BEEQ repository.
 name: beeq
 description: >
-  Entry point to the BEEQ agent skill for Endava's web-component design system. Use when code adds or
-  changes `bq-*` elements or `@beeq/react`, `@beeq/angular`, or `@beeq/vue` components, sets up BEEQ, or
-  applies a BEEQ theme, mode, or `--bq-*` token.
+  Builds, styles, and reviews UI with BEEQ, Endava's web-component design system. Use when code adds or
+  changes `bq-*` elements or `@beeq/react`, `@beeq/angular`, or `@beeq/vue` components; sets up BEEQ in a
+  project; applies a BEEQ theme, mode, or `--bq-*` token; customizes a component with props, CSS custom
+  properties, or `::part()`; troubleshoots a BEEQ component that looks unstyled or misbehaves; or reviews
+  BEEQ code for API accuracy, accessibility, and design-system fit.
 license: Apache-2.0
+compatibility: Works with @beeq/core and the official React, Angular, and Vue wrappers in modern browsers, with or without a bundler.
 metadata:
+  version: "1.4"
   docs: "https://www.beeq.design"
-  source: "https://github.com/Endava/BEEQ/tree/main/skills/beeq"
+  storybook: "https://storybook.beeq.design"
+  source: "https://github.com/Endava/BEEQ"
 ---
 
 # BEEQ agent skill
