@@ -11,6 +11,11 @@ import { parseValue, serializeValue } from './selection';
  * input, or the visible selection. Returns `undefined` when normalization
  * leaves an empty string, so callers can distinguish "no value" from "empty
  * string value".
+ *
+ * @param raw Raw serialized picker value.
+ * @param type Selection mode represented by the value.
+ * @param precision Precision used by the serialized tokens.
+ * @returns The canonical serialized value, or `undefined` when it is empty.
  */
 export const normalizeValue = (
   raw: string | undefined,
@@ -21,7 +26,12 @@ export const normalizeValue = (
   return serialized === '' ? undefined : serialized;
 };
 
-/** Whether a value string is present and non-empty — used to drive UI affordances. */
+/**
+ * Checks whether a value string is present and non-empty.
+ *
+ * @param value Value string to inspect.
+ * @returns `true` when the value is defined and non-empty.
+ */
 export const computeHasValue = (value: string | undefined): boolean => isDefined(value) && `${value}`.length > 0;
 
 /**
@@ -33,6 +43,13 @@ export const computeHasValue = (value: string | undefined): boolean => isDefined
  * (the first day of the month / January 1st for coarser precisions), so
  * `Intl.DateTimeFormat(locale, formatOptions)` produces the right label
  * whether the user asked for `{ year: 'numeric' }` or `{ dateStyle: 'full' }`.
+ *
+ * @param value Serialized picker value to display.
+ * @param type Selection mode represented by the value.
+ * @param locale Locale used for display formatting.
+ * @param formatOptions Consumer date formatting options.
+ * @param precision Precision used by the serialized tokens.
+ * @returns The formatted display value, or `undefined` when there is no displayable value.
  */
 export const computeDisplayDate = (
   value: string | undefined,

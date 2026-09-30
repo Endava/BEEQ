@@ -7,8 +7,8 @@ type FormValidityOptions = {
   required?: boolean;
   /** Current field value */
   value?: string | string[] | number;
-  /** Reference to the input element */
-  inputElem?: HTMLInputElement | HTMLTextAreaElement;
+  /** Reference to the element that receives native validation focus. */
+  inputElem?: HTMLElement;
   /** Custom validation message */
   validationMessage?: string;
   /** Default validation message */
@@ -23,7 +23,7 @@ type FormValidityOptions = {
  * @param options.internals - The ElementInternals instance
  * @param {boolean} options.required - Whether the field is required
  * @param {string | string[] | number} options.value - The current field value
- * @param {HTMLInputElement | HTMLTextAreaElement} options.inputElem - The input element
+ * @param {HTMLElement} options.inputElem - The element that receives validation focus
  * @param {string} options.validationMessage - The custom validation message
  * @param {string} options.defaultMessage - The default validation message
  */

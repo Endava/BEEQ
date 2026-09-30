@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { advanceFocusedMonth, advanceFocusedYear, getGridColumns } from '../helper/navigation';
+import { advanceFocusedMonth, advanceFocusedYear, getGridColumns } from '../navigation';
 
 describe('advanceFocusedMonth', () => {
   it('advances within the same year', () => {

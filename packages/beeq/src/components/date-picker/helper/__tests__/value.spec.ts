@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { computeDisplayDate, computeHasValue, normalizeValue } from '../helper/value';
+import { computeDisplayDate, computeHasValue, normalizeValue } from '../value';
 
 describe('normalizeValue', () => {
   it('returns undefined for undefined input', () => {

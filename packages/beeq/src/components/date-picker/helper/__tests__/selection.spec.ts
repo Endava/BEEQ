@@ -9,7 +9,7 @@ import {
   isSelected,
   parseValue,
   serializeValue,
-} from '../helper/selection';
+} from '../selection';
 
 describe('parseValue', () => {
   it('returns [] for empty/missing input', () => {
