@@ -153,10 +153,16 @@ BEEQ relies on CSS custom properties to maintain a consistent visual system acro
 }
 ```
 
-<CodeLivePreview mode="shadow" code={`
+<CodeLivePreview mode="iframe" height="6rem" removePadding code={`
   <style>
-    bq-button::part(button) {
-      --bq-ui--brand: var(--bq-orange-600) !important;
+    :root {
+      --bq-brand: var(--bq-orange-600);
+    }
+
+    body {
+      display: grid;
+      place-items: center;
+      padding: var(--bq-spacing-l);
     }
   </style>
 
