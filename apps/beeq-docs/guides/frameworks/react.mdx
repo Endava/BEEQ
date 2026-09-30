@@ -78,7 +78,7 @@ You can add BEEQ to an existing React project in a few steps:
     </CodeGroup>
 
     <Tip>
-      If you use Sass or another CSS preprocessor, keep the full file extension in the import path.
+      In a Sass or Less file, keep the `.css` extension so the line stays a plain CSS import that your bundler resolves. Without it, Less can't find the file and Sass falls back to its deprecated `@import`.
     </Tip>
   </Step>
 
