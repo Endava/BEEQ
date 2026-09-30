@@ -21,7 +21,7 @@ import {
   startOfDay,
   startOfMonth,
   toISO,
-} from '../helper/calendar';
+} from '../calendar';
 
 describe('parseISO', () => {
   it('returns null for invalid or missing input', () => {

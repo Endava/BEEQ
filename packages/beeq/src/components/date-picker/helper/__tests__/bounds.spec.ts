@@ -8,7 +8,7 @@ import {
   isMonthWithinBounds,
   isYearWithinBounds,
   padBound,
-} from '../helper/bounds';
+} from '../bounds';
 
 describe('bounds — boundYear', () => {
   it.each([

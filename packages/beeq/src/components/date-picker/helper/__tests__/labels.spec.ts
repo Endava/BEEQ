@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { getHeaderLabel, getHeaderTitleLabel, getNextLabel, getPreviousLabel } from '../helper/labels';
+import { getHeaderLabel, getHeaderTitleLabel, getNextLabel, getPreviousLabel } from '../labels';
 
 describe('getHeaderLabel', () => {
   it('returns a localized "Month Year" for a single days view', () => {
