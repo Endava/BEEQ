@@ -2608,6 +2608,8 @@ Select this variant when you don't need additional helper text, giving users a s
 
 Set `disable-search` to keep the option panel usable while blocking any typing in the input. Users can still open the panel, browse options, and pick a value, but they cannot filter the list by typing. Use it when the option set is short enough to scan and you want to prevent free-text input from shrinking the visible options.
 
+Keyboard focus alone keeps the panel closed. Press ArrowDown or ArrowUp to open it and move to an option.
+
 <Note>
   The `readonly` attribute currently has the same effect and is now **deprecated** — use `disable-search` instead. In a future major release, `readonly` will prevent changing the selected value rather than disabling filtering.
 </Note>
@@ -2812,6 +2814,8 @@ Set `disable-clear` to hide the clear button and prevent one-click deselection. 
 
 Call `preventDefault()` on the `bqInput` event to take full control of option filtering. This lets you implement async filtering, loading states, empty-state messages, and matched-text highlighting entirely in your own code.
 
+Keyboard focus alone keeps the panel closed. With search enabled, typing opens it after the debounced `bqInput` event. Calling `preventDefault()` on that event stops automatic opening as well as built-in filtering. Set `open` yourself when your custom flow needs to show the panel.
+
 Adding, replacing, or removing options preserves the text you are typing in both single- and multi-select. The search text is separate from `value`, which holds the committed selection. Selecting an option, clearing or resetting the field, or changing `value` programmatically replaces the search text with the selected label or an empty input.
 
 For async results, keep selected options in the list when you need their labels or tags to remain visible. Ignore stale responses in your request handler so an older search does not replace newer results.
@@ -2894,6 +2898,7 @@ These events no longer follow input-only focus changes. If your handler needs to
 
       select.addEventListener('bqInput', async function(ev) {
         ev.preventDefault();
+        select.open = true;
         const query = ev.detail.value;
 
         removeTempOpts();
@@ -3001,6 +3006,7 @@ These events no longer follow input-only focus changes. If your handler needs to
 
       select.addEventListener('bqInput', async (ev) => {
         ev.preventDefault();
+        select.open = true;
         const query = ev.detail.value;
 
         removeTempOpts();
@@ -3076,6 +3082,7 @@ These events no longer follow input-only focus changes. If your handler needs to
 
       const handleInput = async (event: BqSelectCustomEvent<{ value: string }>) => {
         event.preventDefault();
+        event.target.open = true;
         const query = event.detail.value;
 
         if (!query) {
@@ -3200,6 +3207,7 @@ These events no longer follow input-only focus changes. If your handler needs to
 
       handleInput(event: BqSelectCustomEvent<{ value: string }>): void {
         event.preventDefault();
+        event.target.open = true;
         const query = event.detail.value;
 
         if (!query) {
@@ -3277,6 +3285,7 @@ These events no longer follow input-only focus changes. If your handler needs to
 
     async function handleInput(event) {
       event.preventDefault();
+      event.target.open = true;
       const query = event.detail.value;
 
       if (!query) {

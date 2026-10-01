@@ -26,6 +26,8 @@ Take each event's name and payload from the component page's Events table, and r
 
 For `bq-select`, `bqFocus` and `bqBlur` track focus entering and leaving the whole control. Input-to-option navigation and moves between internal controls do not emit them. Clear an async search draft with `reset(el.value)` while keeping the Select mounted and its committed selection intact.
 
+Canceling `bqInput` for custom Select filtering also cancels automatic panel opening while typing. Set `el.open = true` explicitly when your handler needs to show loading states or search results.
+
 ## Setup
 
 Every app needs two things, set up once. When the project lacks either, add it as part of the task:

@@ -660,10 +660,6 @@ export class BqSelect {
     }, this.debounceTime);
 
     this.debounceQuery();
-
-    // The panel will close once a selection is made
-    // so we need to make sure it's open when the user is typing and the query is not empty
-    this.open = true;
   };
 
   private handleKeydown = (ev: KeyboardEvent) => {
@@ -707,7 +703,7 @@ export class BqSelect {
     this.debounceInput = debounce(() => {
       const inputEvent = this.bqInput.emit({ value });
       if (!inputEvent.defaultPrevented && this.searchValue === value) {
-        // Continue with search filtering only if the event wasn't prevented
+        this.open = true;
         this.handleSearchFilter(value);
       }
     }, this.debounceTime);

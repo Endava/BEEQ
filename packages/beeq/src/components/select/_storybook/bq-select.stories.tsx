@@ -774,6 +774,7 @@ export const CustomFiltering: Story = {
       event.preventDefault();
 
       const select = event.target as HTMLBqSelectElement;
+      select.open = true;
       const query = event.detail.value;
 
       // Remove loading/no-results states if they exist
@@ -875,7 +876,7 @@ export const CustomFiltering: Story = {
         <p class="text-secondary">
           This example demonstrates custom filtering of options with loading states and visibility toggling. It uses the
           <code>bqInput</code> (with <code>event.preventDefault()</code>) and <code>bqSelect</code> events to handle the
-          input and selection events.
+          input and selection events. The handler opens the panel explicitly so keyboard searches also show their results.
         </p>
         <pre>
           <code class="language-javascript rounded-m">
@@ -884,6 +885,7 @@ export const CustomFiltering: Story = {
 
             function handleInput(event) {
               event.preventDefault();
+              event.target.open = true;
               ...
             }
           </code>

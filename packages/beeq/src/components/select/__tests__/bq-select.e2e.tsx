@@ -758,25 +758,244 @@ describe('bq-select', () => {
     expect(betaOption.hidden).toBe(true);
   });
 
-  it('should expand collapsed parents when a nested option matches the search', async () => {
+  describe.each([false, true])('keyboard search with multiple=%s', (multiple) => {
+    it.each([
+      false,
+      true,
+    ])('should show matching keyboard search results with external filtering=%s', async (external) => {
+      const { root, spyOnEvent, waitForChanges } = await render(
+        <div>
+          <button type="button">Before select</button>
+          <bq-select
+            multiple={multiple}
+            name="keyboard-search"
+            onBqInput={(event) => {
+              if (!external) return;
+              event.preventDefault();
+              event.target.open = true;
+            }}
+          >
+            <bq-option value="English">English</bq-option>
+            <bq-option value="Spanish">Spanish</bq-option>
+          </bq-select>
+        </div>,
+      );
+      const select = root.querySelector<HTMLBqSelectElement>('bq-select');
+      const input = getInput(select);
+      const english = select.querySelector<HTMLBqOptionElement>('bq-option[value="English"]');
+      let spanish = select.querySelector<HTMLBqOptionElement>('bq-option[value="Spanish"]');
+      const bqInput = spyOnEvent('bqInput');
+      const bqFocus = spyOnEvent('bqFocus');
+      const bqBlur = spyOnEvent('bqBlur');
+
+      await userEvent.click(root.querySelector<HTMLButtonElement>('button'));
+      await userEvent.tab();
+      await waitForChanges();
+
+      expect(select.shadowRoot.activeElement).toBe(input);
+      expect(select.open).toBe(false);
+      expect(getDropdown(select).open).toBe(false);
+      expect(input).toEqualAttribute('aria-expanded', 'false');
+      expect(bqFocus).toHaveReceivedEventTimes(1);
+
+      await userEvent.keyboard('Span');
+      await waitForChanges();
+      await waitForStable(root);
+
+      expect(select.open).toBe(true);
+      expect(getDropdown(select).open).toBe(true);
+      expect(input).toEqualAttribute('aria-expanded', 'true');
+      expect(input.value).toBe('Span');
+      expect(select.shadowRoot.activeElement).toBe(input);
+      expect(english.hidden).toBe(!external);
+      expect(spanish.hidden).toBe(false);
+      expect(bqInput.events.at(-1).detail).toEqual({ value: 'Span' });
+
+      if (external) {
+        spanish = createOption('Spanish');
+        select.replaceChildren(spanish);
+        await waitForChanges();
+        await waitForStable(root);
+      }
+
+      expect(select.open).toBe(true);
+      expect(getInput(select)).toBe(input);
+      expect(input.value).toBe('Span');
+
+      await userEvent.keyboard('{ArrowDown}');
+      await waitForChanges();
+
+      expect(document.activeElement).toBe(spanish);
+      expect(select.open).toBe(true);
+      expect(input.value).toBe('Span');
+      expect(bqFocus).toHaveReceivedEventTimes(1);
+      expect(bqBlur).toHaveReceivedEventTimes(0);
+    });
+
+    it('should let canceled keyboard searches control opening after async results arrive', async () => {
+      const { root, spyOnEvent, waitForChanges } = await render(
+        <div>
+          <button type="button">Before select</button>
+          <bq-select
+            multiple={multiple}
+            name="controlled-keyboard-search"
+            onBqInput={(event) => event.preventDefault()}
+          >
+            <bq-option value="English">English</bq-option>
+          </bq-select>
+        </div>,
+      );
+      const select = root.querySelector<HTMLBqSelectElement>('bq-select');
+      const input = getInput(select);
+      const bqInput = spyOnEvent('bqInput');
+      const bqFocus = spyOnEvent('bqFocus');
+      const bqBlur = spyOnEvent('bqBlur');
+
+      await userEvent.click(root.querySelector<HTMLButtonElement>('button'));
+      await userEvent.tab();
+      await userEvent.keyboard('Span');
+      await waitForChanges();
+      await waitForStable(root);
+
+      expect(select.open).toBe(false);
+      expect(getDropdown(select).open).toBe(false);
+      expect(input).toEqualAttribute('aria-expanded', 'false');
+      expect(input.value).toBe('Span');
+      expect(bqInput.events.at(-1).detail).toEqual({ value: 'Span' });
+      expect(select.querySelector<HTMLBqOptionElement>('bq-option').hidden).toBe(false);
+
+      const spanish = createOption('Spanish');
+      select.replaceChildren(spanish);
+      await waitForChanges();
+      await waitForStable(root);
+
+      expect(select.open).toBe(false);
+      expect(input.value).toBe('Span');
+
+      select.open = true;
+      await waitForChanges();
+      await waitForStable(root);
+
+      expect(select.open).toBe(true);
+      expect(getDropdown(select).open).toBe(true);
+      expect(input).toEqualAttribute('aria-expanded', 'true');
+      expect(getInput(select)).toBe(input);
+      expect(select.shadowRoot.activeElement).toBe(input);
+
+      await userEvent.keyboard('{ArrowDown}');
+      await waitForChanges();
+
+      expect(document.activeElement).toBe(spanish);
+      expect(input.value).toBe('Span');
+      expect(bqFocus).toHaveReceivedEventTimes(1);
+      expect(bqBlur).toHaveReceivedEventTimes(0);
+    });
+
+    it('should open after an uncanceled debounced keyboard search event', async () => {
+      const { root, spyOnEvent, waitForChanges } = await render(
+        <div>
+          <button type="button">Before select</button>
+          <bq-select debounceTime={1000} multiple={multiple} name="debounced-keyboard-search">
+            <bq-option value="Spanish">Spanish</bq-option>
+          </bq-select>
+        </div>,
+      );
+      const select = root.querySelector<HTMLBqSelectElement>('bq-select');
+      const input = getInput(select);
+      const bqInput = spyOnEvent('bqInput');
+
+      await userEvent.click(root.querySelector<HTMLButtonElement>('button'));
+      await userEvent.tab();
+      await waitForChanges();
+      expect(select.open).toBe(false);
+
+      await userEvent.keyboard('S');
+      await waitForChanges();
+
+      expect(select.open).toBe(false);
+      expect(bqInput).toHaveReceivedEventTimes(0);
+
+      await expect.poll(() => bqInput.events.length, { timeout: 3000 }).toBe(1);
+      await waitForChanges();
+
+      expect(select.open).toBe(true);
+      expect(getDropdown(select).open).toBe(true);
+      expect(input).toEqualAttribute('aria-expanded', 'true');
+      expect(input.value).toBe('S');
+      expect(select.shadowRoot.activeElement).toBe(input);
+      expect(bqInput.events[0].detail).toEqual({ value: 'S' });
+    });
+
+    it.each(['ArrowDown', 'ArrowUp'])('should keep disableSearch closed on Tab focus until %s', async (key) => {
+      const { root, spyOnEvent, waitForChanges } = await render(
+        <div>
+          <button type="button">Before select</button>
+          <bq-select disableSearch multiple={multiple} name="non-searchable-keyboard">
+            <bq-option value="English">English</bq-option>
+            <bq-option value="Spanish">Spanish</bq-option>
+          </bq-select>
+        </div>,
+      );
+      const select = root.querySelector<HTMLBqSelectElement>('bq-select');
+      const input = getInput(select);
+      const optionValue = key === 'ArrowDown' ? 'English' : 'Spanish';
+      const expectedOption = select.querySelector<HTMLBqOptionElement>(`bq-option[value="${optionValue}"]`);
+      const bqInput = spyOnEvent('bqInput');
+      const bqFocus = spyOnEvent('bqFocus');
+      const bqBlur = spyOnEvent('bqBlur');
+
+      await userEvent.click(root.querySelector<HTMLButtonElement>('button'));
+      await userEvent.tab();
+      await waitForChanges();
+
+      expect(select.shadowRoot.activeElement).toBe(input);
+      expect(input.readOnly).toBe(true);
+      expect(select.open).toBe(false);
+      expect(getDropdown(select).open).toBe(false);
+      expect(input).toEqualAttribute('aria-expanded', 'false');
+
+      await userEvent.keyboard('Span');
+      await waitForChanges();
+
+      expect(input.value).toBe('');
+      expect(select.open).toBe(false);
+      expect(bqInput).toHaveReceivedEventTimes(0);
+
+      await userEvent.keyboard(`{${key}}`);
+      await waitForChanges();
+      await waitForStable(root);
+
+      expect(document.activeElement).toBe(expectedOption);
+      expect(select.open).toBe(true);
+      expect(getDropdown(select).open).toBe(true);
+      expect(input).toEqualAttribute('aria-expanded', 'true');
+      expect(bqFocus).toHaveReceivedEventTimes(1);
+      expect(bqBlur).toHaveReceivedEventTimes(0);
+    });
+  });
+
+  it('should open and expand collapsed parents when typing a nested search after Tab focus', async () => {
     const { root, waitForChanges } = await render(
-      <bq-select multiple name="bq-select">
-        <bq-option value="frontend">
-          Frontend
-          <bq-option slot="options" value="framework">
-            Framework
-            <bq-option slot="options" value="react">
-              React
-            </bq-option>
-            <bq-option slot="options" value="stencil">
-              Stencil
+      <div>
+        <button type="button">Before select</button>
+        <bq-select multiple name="bq-select">
+          <bq-option value="frontend">
+            Frontend
+            <bq-option slot="options" value="framework">
+              Framework
+              <bq-option slot="options" value="react">
+                React
+              </bq-option>
+              <bq-option slot="options" value="stencil">
+                Stencil
+              </bq-option>
             </bq-option>
           </bq-option>
-        </bq-option>
-        <bq-option value="backend">Backend</bq-option>
-      </bq-select>,
+          <bq-option value="backend">Backend</bq-option>
+        </bq-select>
+      </div>,
     );
-    const select = root as HTMLBqSelectElement;
+    const select = root.querySelector<HTMLBqSelectElement>('bq-select');
     const input = getInput(select);
     const frontendOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="frontend"]');
     const frameworkOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="framework"]');
@@ -786,10 +1005,17 @@ describe('bq-select', () => {
 
     expect(frontendOption.expanded).toBe(false);
 
-    await userEvent.click(input);
-    await userEvent.fill(input, 'rea');
+    await userEvent.click(root.querySelector<HTMLButtonElement>('button'));
+    await userEvent.tab();
+    await waitForChanges();
+    expect(select.shadowRoot.activeElement).toBe(input);
+    expect(select.open).toBe(false);
+
+    await userEvent.keyboard('rea');
     await waitForChanges();
 
+    expect(select.open).toBe(true);
+    expect(input).toEqualAttribute('aria-expanded', 'true');
     expect(frontendOption.expanded).toBe(true);
     expect(frameworkOption.expanded).toBe(true);
     expect(getOptionExpandButtonControl(frontendOption)).toEqualAttribute('aria-expanded', 'true');
