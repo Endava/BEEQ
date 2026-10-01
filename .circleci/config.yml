@@ -23,14 +23,10 @@ commands:
   setup-node:
     steps:
       - run:
-          name: 🛠 Setup Volta
+          name: 🛠 Setup Mise
           command: |
-            export VOLTA_FEATURE_PNPM=1
-            curl https://get.volta.sh | bash
-            echo 'export VOLTA_FEATURE_PNPM=1' >> $BASH_ENV
-            echo 'export VOLTA_HOME=$HOME/.volta' >> $BASH_ENV
-            echo 'export PATH=$VOLTA_HOME/bin:$PATH' >> $BASH_ENV
-            source $BASH_ENV
+            ./bin/mise install
+            ./bin/mise env --shell bash >> "$BASH_ENV"
       - run:
           name: 🔎 Check Node and PNPM versions
           command: |
@@ -51,9 +47,8 @@ commands:
       - restore_cache:
           name: 💫 Restore node_modules cache
           keys:
-            - node-modules-{{ arch }}-{{ checksum "package.json" }}-{{ checksum "pnpm-lock.yaml" }}
-            - node-modules-{{ arch }}-
-            - node-modules-
+            - node-modules-{{ arch }}-{{ checksum "mise.toml" }}-{{ checksum "package.json" }}-{{ checksum "pnpm-lock.yaml" }}
+            - node-modules-{{ arch }}-{{ checksum "mise.toml" }}-
 
       # Install dependencies with network access but prefer offline when possible
       - run:
@@ -76,7 +71,7 @@ commands:
       # Save the node_modules cache
       - save_cache:
           name: 💾 Save node_modules cache
-          key: node-modules-{{ arch }}-{{ checksum "package.json" }}-{{ checksum "pnpm-lock.yaml" }}
+          key: node-modules-{{ arch }}-{{ checksum "mise.toml" }}-{{ checksum "package.json" }}-{{ checksum "pnpm-lock.yaml" }}
           paths:
             - ./node_modules
             - ./packages/beeq/node_modules
@@ -121,7 +116,7 @@ jobs:
       - nx/set-shas
       - run:
           name: ▶️ Start Nx Cloud CI Run
-          command: pnpm dlx nx-cloud start-ci-run --distribute-on="3 linux-medium-plus-js" --with-env-vars="NX_VERBOSE_LOGGING NX_BRANCH"
+          command: pnpm dlx nx-cloud start-ci-run --distribute-on="3 linux-medium-plus-mise" --with-env-vars="NX_VERBOSE_LOGGING NX_BRANCH"
       # Run all Nx commands
       - run:
           name: 🩺 Run Linter, Formatter, and Import Sorting
@@ -169,6 +164,7 @@ jobs:
     environment: *env-vars
     steps:
       - checkout
+      - setup-node
       - attach_workspace:
           at: .
       - run:

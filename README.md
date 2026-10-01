@@ -85,8 +85,9 @@ The project has been structured as an [NX monorepo](https://nx.dev) :
   ├── ...
 ├── 📁 skills
 ├── 📁 tools
+├── mise.toml
 ├── package.json
-├── package-lock.json
+├── pnpm-lock.yaml
 ```
 
 where:
@@ -103,17 +104,16 @@ where:
 
 ### Dependencies 📡
 
-We recommend the use of [Volta](https://volta.sh/) to manage Node and NPM versions. The [installation process](https://docs.volta.sh/guide/getting-started) is pretty straightforward, and as referenced on their official site:
+We use [mise](https://mise.jdx.dev/) to manage the Node and pnpm versions pinned in [`mise.toml`](./mise.toml). Keep the pnpm version in sync with the `packageManager` field in [`package.json`](./package.json).
 
-> [!TIP]
-> With Volta, you can select a Node engine once and then stop worrying about it. You can switch between projects and stop having to manually switch between Nodes.
+You can either [install mise globally](#option-1-global-mise) or [use the repository's workspace mise](#option-2-workspace-mise). Both options select Node and pnpm from the same `mise.toml`; a global mise installation is not required for the workspace option.
 
-Once you have Volta installed, whenever you change to the BEEQ folder locally, it will switch to the right Node and NPM versions [pinned in the `package.json`](./package.json#L177).
+You can use another version manager, but use the pinned versions for consistent results. The minimum supported versions in `package.json` are:
 
-Volta is not mandatory, you can still use any Node/NPM setup that fits you most, just keep in mind that you'll need:
+- [NodeJS](https://nodejs.org/en/download/) v22 or higher
+- [PNPM](https://pnpm.io/installation) v11 or higher
 
-- [NodeJS](https://nodejs.org/en/download/) v18.x or higher
-- [PNPM](https://pnpm.io/installation) v10 or higher
+CircleCI and Nx Cloud agents use the wrapper; GitHub Actions uses the pinned mise action. The agent setup is defined in [`.nx/workflows/agents.yaml`](./.nx/workflows/agents.yaml).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -129,14 +129,81 @@ git checkout main
 
 ### Installation ⚙️
 
-Simply run:
+Choose one of the following options and run the setup commands from the repository root.
+
+#### Option 1: Global mise
+
+Install mise globally following its [getting-started guide](https://mise.jdx.dev/getting-started.html). If you already use mise, you can keep your existing installation; its version does not have to match the repository wrapper.
+
+Activate mise in your interactive shell. For Zsh:
 
 ```bash
-pnpm i --frozen-lockfile
+eval "$(mise activate zsh)"
+```
+
+For Bash:
+
+```bash
+eval "$(mise activate bash)"
+```
+
+Add the appropriate activation command to `~/.zshrc` or `~/.bashrc` to enable it in future terminals. Activation updates the tools on PATH as you change directories.
+
+Then trust the repository configuration, install the pinned tools, and start the project:
+
+```bash
+mise trust
+mise install
+pnpm install --frozen-lockfile
 # Make sure to build first the project before starting it
 pnpm build
 pnpm start
 ```
+
+This option uses mise's normal user-level installation directories, not the repository's `.mise/` directory.
+
+#### Option 2: Workspace mise
+
+Use the committed [`bin/mise`](./bin/mise) wrapper without installing mise globally. It downloads the mise version pinned by the wrapper and installs Node, pnpm, and caches in the ignored `.mise/` directory. You do not need mise, Node, or pnpm preinstalled.
+
+The wrapper requires Bash (use WSL on Windows), curl or wget, CA certificates, tar, and sha256sum or shasum.
+
+Install the workspace tools:
+
+```bash
+./bin/mise install
+```
+
+You can run each command through the wrapper without changing your shell environment:
+
+```bash
+./bin/mise exec -- pnpm install --frozen-lockfile
+# Make sure to build first the project before starting it
+./bin/mise exec -- pnpm build
+./bin/mise exec -- pnpm start
+```
+
+Alternatively, load the workspace tools into your current shell to use plain `pnpm` commands. For Zsh:
+
+```bash
+eval "$(./bin/mise env --shell zsh)"
+```
+
+For Bash:
+
+```bash
+eval "$(./bin/mise env --shell bash)"
+```
+
+Then run:
+
+```bash
+pnpm install --frozen-lockfile
+pnpm build
+pnpm start
+```
+
+This loads the environment once; it does not enable directory-change hooks or shell aliases. Repeat it in each new shell. Continue using `./bin/mise` for mise commands so they use the workspace installation rather than a global one.
 
 Start coding 😃!
 

@@ -1,0 +1,29 @@
+launch-templates:
+  linux-medium-plus-mise:
+    resource-class: 'docker_linux_amd64/medium+'
+    image: 'ubuntu22.04-node24.14-v1'
+    init-steps:
+      - name: Checkout
+        uses: 'nrwl/nx-cloud-workflows/v6/workflow-steps/checkout/main.yaml'
+      - name: Install Node and pnpm with mise
+        script: |
+          set -eu
+          ./bin/mise install
+          tool_path="$(./bin/mise exec -- printenv PATH)"
+          printf 'PATH=%s\n' "$tool_path" >> "$NX_CLOUD_ENV"
+      - name: Restore Node Modules Cache
+        uses: 'nrwl/nx-cloud-workflows/v6/workflow-steps/cache/main.yaml'
+        inputs:
+          key: 'mise.toml|package.json|pnpm-lock.yaml|patches/**|.yarn/patches/**'
+          paths: 'node_modules'
+          base-branch: 'main'
+      - name: Restore Browser Binary Cache
+        uses: 'nrwl/nx-cloud-workflows/v6/workflow-steps/cache/main.yaml'
+        inputs:
+          key: 'pnpm-lock.yaml|"browsers"'
+          paths: '../.cache/Cypress'
+          base-branch: 'main'
+      - name: Install Node Modules
+        uses: 'nrwl/nx-cloud-workflows/v6/workflow-steps/install-node-modules/main.yaml'
+      - name: Install Browsers (if needed)
+        uses: 'nrwl/nx-cloud-workflows/v6/workflow-steps/install-browsers/main.yaml'

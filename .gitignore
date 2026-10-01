@@ -14,6 +14,9 @@ tmp/**
 .vitest-attachments
 www
 
+# Local mise installation, tools, and caches
+/.mise/
+
 # source files to ignore
 .angular
 master.zip
