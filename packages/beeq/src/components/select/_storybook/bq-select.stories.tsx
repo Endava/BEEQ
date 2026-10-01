@@ -4,6 +4,7 @@ import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 import { useArgs } from 'storybook/preview-api';
 
+import { skipSnapshotParameters } from '../../../../.storybook/chromatic-parameters';
 import { INPUT_VALIDATION } from '../../input/bq-input.types';
 import mdx from './bq-select.mdx';
 
@@ -657,6 +658,100 @@ export const WithForm: Story = {
   },
 };
 
+export const AsyncOptions: Story = {
+  args: { 'debounce-time': 200 },
+  parameters: { ...skipSnapshotParameters },
+  render: (args: Args) => {
+    const requests = new WeakMap<HTMLBqSelectElement, number>();
+    const createOption = (value: string, label: string, disabled = false) => {
+      const option = document.createElement('bq-option');
+      option.value = value;
+      option.textContent = label;
+      option.disabled = disabled;
+      return option;
+    };
+    const replaceOptions = (select: HTMLBqSelectElement, options: typeof defaultOptionsData, message?: string) => {
+      const selectedValues = new Set(Array.isArray(select.value) ? select.value : [select.value]);
+      const selectedOptions = defaultOptionsData.filter((option) => selectedValues.has(option.value));
+      const resultOptions = options.filter((option) => !selectedValues.has(option.value));
+      const nodes = [...selectedOptions, ...resultOptions].map((option) => createOption(option.value, option.label));
+      if (message) nodes.push(createOption('status', message, true));
+      select.querySelectorAll('bq-option').forEach((option) => {
+        option.remove();
+      });
+      select.append(...nodes);
+    };
+    const invalidateRequest = (select: HTMLBqSelectElement) => {
+      const request = (requests.get(select) || 0) + 1;
+      requests.set(select, request);
+      return request;
+    };
+    const handleInput = async (event: CustomEvent<{ value: string }>) => {
+      event.preventDefault();
+      args.bqInput(event);
+      const select = event.target as HTMLBqSelectElement;
+      const request = invalidateRequest(select);
+      const query = event.detail.value.trim().toLowerCase();
+      select.open = true;
+
+      if (!query) {
+        replaceOptions(select, defaultOptionsData);
+        return;
+      }
+
+      replaceOptions(select, [], 'Loading...');
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      if (!select.isConnected || requests.get(select) !== request) return;
+
+      const matches = defaultOptionsData.filter(
+        (option) => option.label.toLowerCase().includes(query) || option.value.includes(query),
+      );
+      replaceOptions(select, matches, matches.length ? undefined : 'No results found');
+    };
+    const restoreOptions = (event: Event) => {
+      const select = event.target as HTMLBqSelectElement;
+      invalidateRequest(select);
+      replaceOptions(select, defaultOptionsData);
+    };
+
+    return html`
+      <p class="m-be-l text-text-secondary">
+        Search for "swim" or "pizza" to replace the options after a simulated request.
+        Search for "unknown" to show an empty result. The query stays in the input while options change.
+        Deleting all text clears a single selection; deleting the multiple-select search keeps selected activities.
+      </p>
+      <div class="grid gap-l md:grid-cols-2">
+        ${[false, true].map(
+          (multiple) => html`
+            <bq-select
+              debounce-time=${args['debounce-time']}
+              name=${multiple ? 'async-multiple' : 'async-single'}
+              ?multiple=${multiple}
+              placeholder="Search activities..."
+              same-width
+              @bqInput=${handleInput}
+              @bqSelect=${(event) => {
+                restoreOptions(event);
+                args.bqSelect(event);
+              }}
+              @bqClear=${(event) => {
+                restoreOptions(event);
+                args.bqClear(event);
+              }}
+            >
+              <label slot="label">${multiple ? 'Multiple activities' : 'Single activity'}</label>
+              <span slot="helper-text">Results load after 500 ms. Selected activities stay available.</span>
+              ${defaultOptionsData
+                .slice(0, 3)
+                .map((option) => html`<bq-option value=${option.value}>${option.label}</bq-option>`)}
+            </bq-select>
+          `,
+        )}
+      </div>
+    `;
+  },
+};
+
 export const CustomFiltering: Story = {
   render: (args: Args) => {
     // Simulate an API call with a delay
@@ -680,6 +775,7 @@ export const CustomFiltering: Story = {
       event.preventDefault();
 
       const select = event.target as HTMLBqSelectElement;
+      select.open = true;
       const query = event.detail.value;
 
       // Remove loading/no-results states if they exist
@@ -781,7 +877,7 @@ export const CustomFiltering: Story = {
         <p class="text-secondary">
           This example demonstrates custom filtering of options with loading states and visibility toggling. It uses the
           <code>bqInput</code> (with <code>event.preventDefault()</code>) and <code>bqSelect</code> events to handle the
-          input and selection events.
+          input and selection events. The handler opens the panel explicitly so keyboard searches also show their results.
         </p>
         <pre>
           <code class="language-javascript rounded-m">
@@ -790,6 +886,7 @@ export const CustomFiltering: Story = {
 
             function handleInput(event) {
               event.preventDefault();
+              event.target.open = true;
               ...
             }
           </code>

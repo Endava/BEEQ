@@ -45,9 +45,9 @@ The select input component lets users choose from a predefined list, commonly us
 
 | Event      | Description                                                                                                                        | Type                                                    |
 | ---------- | ---------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
-| `bqBlur`   | Callback handler emitted when the Select input loses focus                                                                         | `CustomEvent<HTMLBqSelectElement>`                      |
+| `bqBlur`   | Emitted when focus leaves the entire Select, including its input, options, and controls.                                           | `CustomEvent<HTMLBqSelectElement>`                      |
 | `bqClear`  | Callback handler emitted when the selected value has been cleared                                                                  | `CustomEvent<HTMLBqSelectElement>`                      |
-| `bqFocus`  | Callback handler emitted when the Select input has received focus                                                                  | `CustomEvent<HTMLBqSelectElement>`                      |
+| `bqFocus`  | Emitted when focus enters the Select from outside the component.                                                                   | `CustomEvent<HTMLBqSelectElement>`                      |
 | `bqInput`  | Callback handler emitted when the Select input changes its value while typing                                                      | `CustomEvent<{ value: string \| number \| string[]; }>` |
 | `bqSelect` | Callback handler emitted when the selected value has changed. Nested multi-select also includes selected paths in `selectionTree`. | `CustomEvent<TSelectChangeDetail>`                      |
 

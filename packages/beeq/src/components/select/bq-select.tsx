@@ -97,9 +97,9 @@ type TSelectDisplayTag = {
  *
  * @method clear - Method to be called to clear the selected value.
  *
- * @event bqBlur - The callback handler is emitted when the Select input loses focus.
+ * @event bqBlur - Emitted when focus leaves the entire Select, including its input, options, and controls.
  * @event bqClear - The callback handler is emitted when the selected value has been cleared.
- * @event bqFocus - A callback handler is emitted when the Select input has received focus.
+ * @event bqFocus - Emitted when focus enters the Select from outside the component.
  * @event bqSelect - The callback handler is emitted when the selected value has changed. Nested multi-select events include selected paths in `selectionTree`.
  *
  * @slot label - The label slot container.
@@ -178,7 +178,9 @@ export class BqSelect {
   private searchExpandedOptions = new Set<HTMLBqOptionElement>();
   private userExpandedOptions = new Map<HTMLBqOptionElement, boolean>();
   private reportedDuplicateOptionValues = new Set<string>();
+  private hasFocus = false;
   private hasWarnedUnsupportedNestedOptions = false;
+  private isNormalizingValue = false;
 
   private fallbackInputId = 'select';
 
@@ -200,6 +202,7 @@ export class BqSelect {
   @State() hasNestedOptions = false;
   @State() hasPrefix = false;
   @State() hasSuffix = false;
+  @State() searchValue?: string;
 
   // Public Property API
   // ========================
@@ -305,6 +308,9 @@ export class BqSelect {
 
   @Watch('value')
   handleValueChange() {
+    if (this.isNormalizingValue) return;
+
+    this.resetSearch();
     this.syncOptionsAndValue();
   }
 
@@ -320,6 +326,7 @@ export class BqSelect {
 
   @Watch('multiple')
   handleMultipleChange(multiple: boolean, previousMultiple?: boolean) {
+    this.resetSearch();
     const optionStructure = this.getOptionStructure();
 
     if (!multiple && previousMultiple && optionStructure.hasNestedMarkup) {
@@ -345,13 +352,13 @@ export class BqSelect {
   // Requires JSDocs for public API documentation
   // ==============================================
 
-  /** Callback handler emitted when the Select input loses focus */
+  /** Emitted when focus leaves the entire Select, including its input, options, and controls. */
   @Event() bqBlur!: EventEmitter<HTMLBqSelectElement>;
 
   /** Callback handler emitted when the selected value has been cleared */
   @Event() bqClear!: EventEmitter<HTMLBqSelectElement>;
 
-  /** Callback handler emitted when the Select input has received focus */
+  /** Emitted when focus enters the Select from outside the component. */
   @Event() bqFocus!: EventEmitter<HTMLBqSelectElement>;
 
   /** Callback handler emitted when the selected value has changed. Nested multi-select also includes selected paths in `selectionTree`. */
@@ -379,6 +386,7 @@ export class BqSelect {
   }
 
   disconnectedCallback() {
+    this.hasFocus = false;
     this.debounceInput?.cancel();
     this.debounceQuery?.cancel();
     this.expansionObserver?.disconnect();
@@ -400,6 +408,29 @@ export class BqSelect {
   // Listeners
   // ==============
 
+  @Listen('focusin')
+  handleFocus(event: FocusEvent) {
+    if (this.disabled || this.hasFocus || this.isFocusWithinSelect(event.relatedTarget)) return;
+
+    this.hasFocus = true;
+    this.bqFocus.emit(this.el);
+  }
+
+  @Listen('focusout')
+  handleBlur(event: FocusEvent) {
+    if (!this.hasFocus || this.isFocusWithinSelect(event.relatedTarget)) return;
+
+    if (event.relatedTarget) {
+      this.emitBlur();
+      return;
+    }
+
+    // Selection can briefly clear focus before returning it to the input.
+    queueMicrotask(() => {
+      if (!this.el.matches(':focus-within')) this.emitBlur();
+    });
+  }
+
   @Listen('bqOpen', { capture: true })
   handleOpenChange(ev: CustomEvent<{ open: boolean }>) {
     if (!ev.composedPath().includes(this.el)) return;
@@ -413,9 +444,9 @@ export class BqSelect {
 
   @Listen('bqFocus', { capture: true })
   @Listen('bqBlur', { capture: true })
-  stopOptionFocusBlurPropagation(ev: CustomEvent) {
-    // Stop propagation of focus and blur events coming from the `bq-option` elements
-    if (isHTMLElement(ev.target, 'bq-select')) return;
+  stopChildFocusBlurPropagation(ev: CustomEvent) {
+    // Shadow DOM can retarget a child control's event to this Select.
+    if (ev.composedPath()[0] === this.el) return;
 
     if (this.hasNestedOptions && isHTMLElement(ev.target, 'bq-option')) {
       this.setActiveTreeOption(ev.target);
@@ -425,8 +456,19 @@ export class BqSelect {
   }
 
   @Listen('keydown', { capture: true })
-  handleOptionNavigation(event: KeyboardEvent) {
-    if (!this.open || !this.isOptionNavigationKey(event.key)) return;
+  handlePanelKeydown(event: KeyboardEvent) {
+    if (!this.open) return;
+
+    if (event.key === 'Escape' || event.key === 'Esc') {
+      event.preventDefault();
+      event.stopPropagation();
+      this.pendingOptionFocus = undefined;
+      this.focusInput();
+      this.open = false;
+      return;
+    }
+
+    if (!this.isOptionNavigationKey(event.key)) return;
     if (event.composedPath().some((target) => isHTMLElement(target, 'bq-button'))) return;
 
     const option = event.composedPath().find((target) => isHTMLElement(target, 'bq-option'));
@@ -471,9 +513,11 @@ export class BqSelect {
   async clear(): Promise<void> {
     if (this.disabled) return;
 
+    this.resetSearch();
     // Clear value and selected options
     this.value = this.multiple ? [] : '';
     this.selectedOptions = [];
+    this.syncOptionsAndValue();
 
     // Update form value and reset options visibility
     this.resetOptionsVisibility();
@@ -493,7 +537,9 @@ export class BqSelect {
   async reset(value: TSelectValue): Promise<void> {
     if (isNil(value)) return;
 
+    this.resetSearch();
     this.value = value;
+    this.syncOptionsAndValue();
   }
 
   // Local methods
@@ -501,22 +547,19 @@ export class BqSelect {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private handleBlur = () => {
-    if (this.disabled) return;
+  private isFocusWithinSelect = (target: EventTarget | null) => target instanceof Node && this.el.contains(target);
 
-    this.bqBlur.emit(this.el);
-  };
+  private emitBlur = () => {
+    if (!this.hasFocus) return;
 
-  private handleFocus = () => {
-    if (this.disabled) return;
-
-    this.collapseInputSelection();
-    this.bqFocus.emit(this.el);
+    this.hasFocus = false;
+    if (!this.disabled) this.bqBlur.emit(this.el);
   };
 
   private handleSelect = (ev: CustomEvent<{ value: TSelectValue; item: HTMLBqOptionElement }>) => {
     if (this.disabled) return;
 
+    this.resetSearch();
     if (this.multiple) {
       ev.stopPropagation();
     }
@@ -525,13 +568,12 @@ export class BqSelect {
 
     if (this.multiple) {
       const value = this.handleMultipleSelection(item);
-      // Clear the input value after selecting an item
-      this.inputElem.value = '';
       // If multiple selection is enabled, emit the selected items array instead of relying on
       // the option list to emit the value of the selected item
       this.emitSelect(item, value);
     } else {
       this.value = value;
+      this.syncOptionsAndValue();
     }
 
     this.resetOptionsVisibility();
@@ -594,14 +636,7 @@ export class BqSelect {
 
     const trimmedValue = value?.trim();
     if (!trimmedValue) {
-      // For multi-select, just reset options visibility without clearing selections
-      // This prevents backspace from removing selected tags when only clearing search text
-      if (this.multiple) {
-        this.resetOptionsVisibility();
-        return;
-      }
-
-      this.clear();
+      this.resetOptionsVisibility();
       return;
     }
 
@@ -629,10 +664,6 @@ export class BqSelect {
     }, this.debounceTime);
 
     this.debounceQuery();
-
-    // The panel will close once a selection is made
-    // so we need to make sure it's open when the user is typing and the query is not empty
-    this.open = true;
   };
 
   private handleKeydown = (ev: KeyboardEvent) => {
@@ -669,18 +700,30 @@ export class BqSelect {
     if (this.disabled || this.isSearchDisabled) return;
 
     const { value } = ev.target as HTMLInputElement;
+    // Selection clearing is independent of cancelable search filtering.
+    if (!this.multiple && !value.trim() && isDefined(this.value)) {
+      this.clear();
+    }
+
+    this.searchValue = value;
 
     this.debounceInput?.cancel();
 
     this.debounceInput = debounce(() => {
       const inputEvent = this.bqInput.emit({ value });
-      if (!inputEvent.defaultPrevented) {
-        // Continue with search filtering only if the event wasn't prevented
+      if (!inputEvent.defaultPrevented && this.searchValue === value) {
+        this.open = true;
         this.handleSearchFilter(value);
       }
     }, this.debounceTime);
 
     this.debounceInput();
+  };
+
+  private resetSearch = () => {
+    this.debounceInput?.cancel();
+    this.debounceQuery?.cancel();
+    this.searchValue = undefined;
   };
 
   private handleClearClick = (ev: CustomEvent) => {
@@ -709,6 +752,7 @@ export class BqSelect {
   private handleTagRemove = (item: HTMLBqOptionElement) => {
     if (this.disabled) return;
 
+    this.resetSearch();
     const value = this.removeMultipleSelection(item);
     this.emitSelect(item, value);
   };
@@ -1000,7 +1044,13 @@ export class BqSelect {
     const options = this.getActiveOptions(optionStructure);
 
     if (!this.hasSameValue(this.value, value)) {
-      this.value = value;
+      // Option normalization is not a consumer-initiated value change.
+      this.isNormalizingValue = true;
+      try {
+        this.value = value;
+      } finally {
+        this.isNormalizingValue = false;
+      }
     }
 
     this.syncUnsupportedNestedOptionsState(optionStructure);
@@ -1203,7 +1253,8 @@ export class BqSelect {
     const displayValue = checkedItem ? this.getOptionLabel(checkedItem) : '';
 
     this.displayValue = displayValue;
-    if (this.inputElem) this.inputElem.value = displayValue;
+    const inputValue = this.searchValue ?? displayValue;
+    if (this.inputElem && this.inputElem.value !== inputValue) this.inputElem.value = inputValue;
   };
 
   private getOptionLabel = (item: HTMLBqOptionElement) => {
@@ -1498,8 +1549,7 @@ export class BqSelect {
                 form={this.form}
                 id={this.name || this.fallbackInputId}
                 name={this.name}
-                onBlur={this.handleBlur}
-                onFocus={this.handleFocus}
+                onFocus={this.collapseInputSelection}
                 onInput={this.handleInput}
                 onKeyDown={this.handleKeydown}
                 onSelect={this.collapseInputSelection}
@@ -1514,7 +1564,7 @@ export class BqSelect {
                 // Events
                 spellcheck={false}
                 type="text"
-                value={this.displayValue}
+                value={this.searchValue ?? this.displayValue}
               />
             </div>
             {/* Clear Button */}
