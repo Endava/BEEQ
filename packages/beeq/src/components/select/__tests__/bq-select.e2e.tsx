@@ -2546,6 +2546,260 @@ describe('bq-select', () => {
     await waitForChanges();
 
     expect(getDropdown(select)).not.toHaveAttribute('open');
+    expect(select.shadowRoot.activeElement).toBe(getInput(select));
+  });
+
+  describe.each([false, true])('keyboard dismissal with multiple=%s', (multiple) => {
+    it('should restore input focus on Escape before and after selecting a dynamic option', async () => {
+      const { root, spyOnEvent, waitForChanges } = await render(
+        <div>
+          <button type="button">Before select</button>
+          <bq-select
+            keepOpenOnSelect
+            multiple={multiple}
+            name="keyboard-dismissal"
+            onBqInput={(event) => event.preventDefault()}
+          />
+        </div>,
+      );
+      const select = root.querySelector<HTMLBqSelectElement>('bq-select');
+      const input = getInput(select);
+      const bqFocus = spyOnEvent('bqFocus');
+      const bqBlur = spyOnEvent('bqBlur');
+      const parentEscape = vi.fn();
+      root.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') parentEscape();
+      });
+
+      await userEvent.click(root.querySelector<HTMLButtonElement>('button'));
+      await userEvent.tab();
+      await userEvent.keyboard('Spanish');
+      await waitForChanges();
+      await waitForStable(root);
+
+      expect(select.open).toBe(false);
+      expect(input.value).toBe('Spanish');
+
+      const spanish = createOption('Spanish');
+      select.replaceChildren(spanish);
+      await waitForChanges();
+      await waitForStable(root);
+      await userEvent.keyboard('{ArrowDown}');
+      await waitForChanges();
+      await waitForStable(root);
+
+      expect(document.activeElement).toBe(spanish);
+      expect(select.open).toBe(true);
+
+      await userEvent.keyboard('{Escape}');
+      await waitForChanges();
+      await waitForStable(root);
+
+      expect(select.open).toBe(false);
+      expect(getDropdown(select).open).toBe(false);
+      expect(input).toEqualAttribute('aria-expanded', 'false');
+      expect(select.shadowRoot.activeElement).toBe(input);
+      expect(getInput(select)).toBe(input);
+      expect(input.value).toBe('Spanish');
+      expect(bqFocus).toHaveReceivedEventTimes(1);
+      expect(bqBlur).toHaveReceivedEventTimes(0);
+      expect(parentEscape).not.toHaveBeenCalled();
+
+      await userEvent.keyboard('{ArrowDown}');
+      await waitForChanges();
+      expect(document.activeElement).toBe(spanish);
+
+      await userEvent.keyboard('{Enter}');
+      await waitForChanges();
+      await waitForStable(root);
+
+      expect(select.open).toBe(true);
+      expect(select.value).toEqual(multiple ? ['Spanish'] : 'Spanish');
+      expect(select.shadowRoot.activeElement).toBe(input);
+
+      await userEvent.keyboard('{Escape}');
+      await waitForChanges();
+      await waitForStable(root);
+
+      expect(select.open).toBe(false);
+      expect(select.shadowRoot.activeElement).toBe(input);
+      expect(input.value).toBe(multiple ? '' : 'Spanish');
+      expect(select.value).toEqual(multiple ? ['Spanish'] : 'Spanish');
+      expect(bqFocus).toHaveReceivedEventTimes(1);
+      expect(bqBlur).toHaveReceivedEventTimes(0);
+      expect(parentEscape).not.toHaveBeenCalled();
+
+      await userEvent.keyboard('{Escape}');
+
+      expect(parentEscape).toHaveBeenCalledTimes(1);
+      expect(select.shadowRoot.activeElement).toBe(input);
+    });
+  });
+
+  it.each([
+    'parent',
+    'child',
+  ])('should restore input focus on Escape after selecting a nested %s in a drawer', async (focusTarget) => {
+    const { root, spyOnEvent, waitForChanges } = await render(
+      <bq-drawer closeOnEsc>
+        <button type="button">Before select</button>
+        <bq-select
+          keepOpenOnSelect
+          multiple
+          name="programming-languages"
+          onBqInput={(event) => event.preventDefault()}
+        />
+      </bq-drawer>,
+    );
+    const drawer = root as HTMLBqDrawerElement;
+    const select = root.querySelector<HTMLBqSelectElement>('bq-select');
+    const input = getInput(select);
+    const bqFocus = spyOnEvent('bqFocus');
+    const bqBlur = spyOnEvent('bqBlur');
+    const bqClose = spyOnEvent('bqClose');
+    await drawer.show();
+    await waitForChanges();
+    await waitForStable(select);
+
+    await userEvent.click(root.querySelector<HTMLButtonElement>('button'));
+    await userEvent.tab();
+    await userEvent.keyboard('JavaScript');
+    await waitForChanges();
+    await waitForStable(select);
+
+    expect(select.shadowRoot.activeElement).toBe(input);
+    expect(select.open).toBe(false);
+    expect(input.value).toBe('JavaScript');
+
+    const parent = createOption('JavaScript');
+    const child = createOption('Advanced');
+    child.slot = 'options';
+    parent.append(child);
+    select.replaceChildren(parent);
+    await waitForChanges();
+    await waitForStable(select);
+    await userEvent.keyboard('{ArrowDown}');
+    await waitForChanges();
+    await waitForStable(select);
+
+    expect(document.activeElement).toBe(parent);
+
+    if (focusTarget === 'child') {
+      await userEvent.keyboard('{ArrowRight}');
+      await waitForChanges();
+      await waitForStable(child);
+      await userEvent.keyboard('{ArrowDown}');
+      await waitForChanges();
+    }
+
+    const focusedOption = focusTarget === 'child' ? child : parent;
+    expect(document.activeElement).toBe(focusedOption);
+
+    await userEvent.keyboard('{Enter}');
+    await waitForChanges();
+    await waitForStable(select);
+
+    expect(select.open).toBe(true);
+    expect(document.activeElement).toBe(focusedOption);
+    expect(select.value).toEqual(['JavaScript', 'Advanced']);
+
+    await userEvent.keyboard('{Escape}');
+    await waitForChanges();
+    await waitForStable(select);
+
+    expect(select.open).toBe(false);
+    expect(getDropdown(select).open).toBe(false);
+    expect(input).toEqualAttribute('aria-expanded', 'false');
+    expect(select.shadowRoot.activeElement).toBe(input);
+    expect(getInput(select)).toBe(input);
+    expect(input.value).toBe('');
+    expect(select.value).toEqual(['JavaScript', 'Advanced']);
+    expect(drawer.open).toBe(true);
+    expect(bqFocus).toHaveReceivedEventTimes(1);
+    expect(bqBlur).toHaveReceivedEventTimes(0);
+    expect(bqClose).toHaveReceivedEventTimes(0);
+
+    await userEvent.keyboard('{ArrowDown}');
+    await waitForChanges();
+
+    expect(select.open).toBe(true);
+    expect(document.activeElement).toBe(parent);
+    expect(bqBlur).toHaveReceivedEventTimes(0);
+  });
+
+  it('should discard pending option focus when Escape cancels opening before render', async () => {
+    const { root, spyOnEvent, waitForChanges } = await render(
+      <div>
+        <button type="button">Before select</button>
+        <bq-select name="pending-keyboard-dismissal">
+          <bq-option value="Spanish">Spanish</bq-option>
+        </bq-select>
+      </div>,
+    );
+    const select = root.querySelector<HTMLBqSelectElement>('bq-select');
+    const input = getInput(select);
+    const bqBlur = spyOnEvent('bqBlur');
+
+    await userEvent.click(root.querySelector<HTMLButtonElement>('button'));
+    await userEvent.tab();
+    await waitForChanges();
+
+    // Dispatch together so Escape precedes the opening render.
+    for (const key of ['ArrowDown', 'Escape']) {
+      input.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true, composed: true, cancelable: true }));
+    }
+    await waitForChanges();
+
+    expect(select.open).toBe(false);
+    expect(select.shadowRoot.activeElement).toBe(input);
+
+    await userEvent.keyboard('S');
+    await waitForChanges();
+    await waitForStable(root);
+
+    expect(select.open).toBe(true);
+    expect(input.value).toBe('S');
+    expect(select.shadowRoot.activeElement).toBe(input);
+    expect(bqBlur).toHaveReceivedEventTimes(0);
+  });
+
+  it('should not restore input focus when Tab or an outside click dismisses the panel', async () => {
+    const { root, spyOnEvent, waitForChanges } = await render(
+      <div>
+        <button type="button">Outside select</button>
+        <bq-select name="keyboard-dismissal">
+          <bq-option value="Spanish">Spanish</bq-option>
+        </bq-select>
+      </div>,
+    );
+    const select = root.querySelector<HTMLBqSelectElement>('bq-select');
+    const input = getInput(select);
+    const outside = root.querySelector<HTMLButtonElement>('button');
+    const bqBlur = spyOnEvent('bqBlur');
+
+    await userEvent.click(input);
+    await waitForChanges();
+    expect(select.open).toBe(true);
+
+    await userEvent.tab({ shift: true });
+    await waitForChanges();
+    await waitForStable(root);
+
+    expect(select.open).toBe(false);
+    expect(document.activeElement).toBe(outside);
+    expect(bqBlur).toHaveReceivedEventTimes(1);
+
+    await userEvent.click(input);
+    await waitForChanges();
+    expect(select.open).toBe(true);
+
+    await userEvent.click(outside);
+    await waitForChanges();
+    await waitForStable(root);
+
+    expect(select.open).toBe(false);
+    expect(document.activeElement).toBe(outside);
+    expect(bqBlur).toHaveReceivedEventTimes(2);
   });
 
   it('should render a custom suffix icon via the suffix slot', async () => {

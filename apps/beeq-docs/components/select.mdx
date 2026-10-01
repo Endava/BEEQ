@@ -3613,7 +3613,7 @@ These events no longer follow input-only focus changes. If your handler needs to
 - **Built in:** the native `<input>` inside the control has `role="combobox"`, `aria-haspopup` (`"listbox"` for flat options or `"tree"` for nested options), `aria-expanded` (toggled when the panel opens and closes), and `aria-controls` pointing to the options container by `id`.
 - **Built in:** `aria-disabled="true"` is applied on the input when `disabled` is set.
 - **Built in:** the component is form-associated via `ElementInternals`, so it works with native `<form>` elements, `required` validation, and `formResetCallback`.
-- **Built in:** keyboard navigation — `Tab` moves focus to the input; `Enter` / `Space` opens the panel; `ArrowDown` / `ArrowUp` move between options; `Enter` selects the focused option; `Escape` closes the panel.
+- **Built in:** keyboard navigation — `Tab` moves focus to the input; `Enter` / `Space` opens the panel; `ArrowDown` / `ArrowUp` move between options; `Enter` selects the focused option; `Escape` closes the panel and returns focus to the input without changing the selection.
 - **Built in:** in multi-select mode, `Backspace` on an empty input removes the most recently added tag.
 - **Built in:** nested multi-select changes the option container to a tree. `ArrowRight` expands a branch or moves to its first child; `ArrowLeft` collapses a branch or returns to its parent. `Enter` and `Space` select the focused option without changing expansion.
 - **Built in:** parent tree items expose checked, unchecked, or mixed state as their descendants are selected. The separate expand control has its own accessible label.

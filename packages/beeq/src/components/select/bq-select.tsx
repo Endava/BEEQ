@@ -456,8 +456,19 @@ export class BqSelect {
   }
 
   @Listen('keydown', { capture: true })
-  handleOptionNavigation(event: KeyboardEvent) {
-    if (!this.open || !this.isOptionNavigationKey(event.key)) return;
+  handlePanelKeydown(event: KeyboardEvent) {
+    if (!this.open) return;
+
+    if (event.key === 'Escape' || event.key === 'Esc') {
+      event.preventDefault();
+      event.stopPropagation();
+      this.pendingOptionFocus = undefined;
+      this.focusInput();
+      this.open = false;
+      return;
+    }
+
+    if (!this.isOptionNavigationKey(event.key)) return;
     if (event.composedPath().some((target) => isHTMLElement(target, 'bq-button'))) return;
 
     const option = event.composedPath().find((target) => isHTMLElement(target, 'bq-option'));
