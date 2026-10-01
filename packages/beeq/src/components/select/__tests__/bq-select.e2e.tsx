@@ -576,6 +576,264 @@ describe('bq-select', () => {
     expect(new FormData(form).get('skills')).toBe('');
   });
 
+  describe.each([false, true])('text deletion with custom filtering=%s', (customFiltering) => {
+    it.each([
+      0, 1000,
+    ])('should clear a single selection on text deletion with debounceTime=%s', async (debounceTime) => {
+      const { root, spyOnEvent, waitForChanges } = await render(
+        <form>
+          <button type="button">Before select</button>
+          <bq-select
+            debounceTime={debounceTime}
+            formValidationMessage="Choose an activity"
+            name="activity"
+            required
+            value="running"
+            onBqInput={(event) => {
+              if (customFiltering) event.preventDefault();
+            }}
+          >
+            <bq-option value="running">Running</bq-option>
+            <bq-option hidden value="swimming">
+              Swimming
+            </bq-option>
+          </bq-select>
+        </form>,
+      );
+      const form = root as HTMLFormElement;
+      const select = form.querySelector<HTMLBqSelectElement>('bq-select');
+      const input = getInput(select);
+      const running = select.querySelector<HTMLBqOptionElement>('bq-option[value="running"]');
+      const swimming = select.querySelector<HTMLBqOptionElement>('bq-option[value="swimming"]');
+      const bqClear = spyOnEvent('bqClear');
+      const bqInput = spyOnEvent('bqInput');
+      const bqSelect = spyOnEvent('bqSelect');
+      const bqBlur = spyOnEvent('bqBlur');
+
+      await userEvent.click(form.querySelector<HTMLButtonElement>('button'));
+      await userEvent.tab();
+      await waitForChanges();
+
+      expect(input.value).toBe('Running');
+      expect(running.selected).toBe(true);
+      expect(new FormData(form).get('activity')).toBe('running');
+      expect(form.checkValidity()).toBe(true);
+      expect(select.open).toBe(false);
+
+      input.select();
+      await userEvent.keyboard('{Backspace}');
+      await waitForChanges();
+
+      expect(select.value).toBe('');
+      expect(input.value).toBe('');
+      expect(running.selected).toBe(false);
+      expect(select.querySelectorAll('bq-option[selected]')).toHaveLength(0);
+      expect(swimming.hidden).toBe(false);
+      expect(new FormData(form).get('activity')).toBe('');
+      expect(form.checkValidity()).toBe(false);
+      expect(getInput(select)).toBe(input);
+      expect(select.shadowRoot.activeElement).toBe(input);
+      expect(bqClear).toHaveReceivedEventTimes(1);
+      expect(bqClear.events[0].detail).toBe(select);
+      expect(bqSelect).toHaveReceivedEventTimes(0);
+      expect(bqBlur).toHaveReceivedEventTimes(0);
+
+      if (debounceTime) {
+        expect(bqInput).toHaveReceivedEventTimes(0);
+        expect(select.open).toBe(false);
+      }
+
+      await expect.poll(() => bqInput.events.length, { timeout: 3000 }).toBe(1);
+      await waitForChanges();
+
+      expect(bqInput.events[0].detail).toEqual({ value: '' });
+      expect(select.open).toBe(!customFiltering);
+      expect(getDropdown(select).open).toBe(!customFiltering);
+      expect(bqClear).toHaveReceivedEventTimes(1);
+      expect(select.shadowRoot.activeElement).toBe(input);
+
+      await userEvent.keyboard('S');
+      await expect.poll(() => bqInput.events.length, { timeout: 3000 }).toBe(2);
+      await userEvent.keyboard('{Backspace}');
+      await expect.poll(() => bqInput.events.length, { timeout: 3000 }).toBe(3);
+      await waitForChanges();
+
+      expect(input.value).toBe('');
+      expect(select.value).toBe('');
+      expect(bqClear).toHaveReceivedEventTimes(1);
+      expect(bqBlur).toHaveReceivedEventTimes(0);
+    });
+
+    it('should retain a single selection while editing nonempty search text', async () => {
+      const { root, spyOnEvent, waitForChanges } = await render(
+        <bq-select
+          name="activity"
+          value="running"
+          onBqInput={(event) => {
+            if (customFiltering) event.preventDefault();
+          }}
+        >
+          <bq-option value="running">Running</bq-option>
+          <bq-option value="swimming">Swimming</bq-option>
+        </bq-select>,
+      );
+      const select = root as HTMLBqSelectElement;
+      const input = getInput(select);
+      const bqClear = spyOnEvent('bqClear');
+
+      await userEvent.click(input);
+      input.setSelectionRange(input.value.length, input.value.length);
+      await userEvent.keyboard('{Backspace}');
+      await waitForChanges();
+
+      expect(input.value).toBe('Runnin');
+      expect(select.value).toBe('running');
+      expect(select.querySelector<HTMLBqOptionElement>('bq-option[value="running"]').selected).toBe(true);
+      expect(bqClear).toHaveReceivedEventTimes(0);
+
+      await userEvent.fill(input, 'Swim');
+      await waitForChanges();
+      await waitForStable(root);
+
+      expect(input.value).toBe('Swim');
+      expect(select.value).toBe('running');
+      expect(bqClear).toHaveReceivedEventTimes(0);
+    });
+
+    it('should retain multiple selections when deleting only the search text', async () => {
+      const { root, spyOnEvent, waitForChanges } = await render(
+        <form>
+          <bq-select
+            multiple
+            name="activities"
+            value={['running']}
+            onBqInput={(event) => {
+              if (customFiltering) event.preventDefault();
+            }}
+          >
+            <bq-option value="running">Running</bq-option>
+            <bq-option value="swimming">Swimming</bq-option>
+          </bq-select>
+        </form>,
+      );
+      const form = root as HTMLFormElement;
+      const select = form.querySelector<HTMLBqSelectElement>('bq-select');
+      const input = getInput(select);
+      const bqClear = spyOnEvent('bqClear');
+      const bqSelect = spyOnEvent('bqSelect');
+
+      await userEvent.click(input);
+      await userEvent.fill(input, 'Swim');
+      await waitForChanges();
+      input.select();
+      await userEvent.keyboard('{Backspace}');
+      await waitForChanges();
+      await waitForStable(root);
+
+      expect(input.value).toBe('');
+      expect(select.value).toEqual(['running']);
+      expect(select.querySelector<HTMLBqOptionElement>('bq-option[value="running"]').selected).toBe(true);
+      expect(select.shadowRoot.querySelectorAll('bq-tag')).toHaveLength(1);
+      expect(new FormData(form).get('activities')).toBe('running');
+      expect(select.shadowRoot.activeElement).toBe(input);
+      expect(bqClear).toHaveReceivedEventTimes(0);
+      expect(bqSelect).toHaveReceivedEventTimes(0);
+    });
+  });
+
+  it('should synchronize controlled single-selection state through bqClear when search text is deleted', async () => {
+    let selectedValue = 'running';
+    const { root, spyOnEvent, waitForChanges } = await render(
+      <bq-select
+        name="activity"
+        value={selectedValue}
+        onBqClear={(event) => {
+          selectedValue = String(event.detail.value);
+        }}
+        onBqInput={(event) => {
+          event.preventDefault();
+          event.target.open = true;
+        }}
+      >
+        <bq-option value="running">Running</bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const input = getInput(select);
+    const bqClear = spyOnEvent('bqClear');
+
+    await userEvent.click(input);
+    input.select();
+    await userEvent.keyboard('{Delete}');
+    await waitForChanges();
+    await waitForStable(root);
+
+    expect(selectedValue).toBe('');
+    expect(bqClear).toHaveReceivedEventTimes(1);
+    expect(select.open).toBe(true);
+
+    select.replaceChildren(createOption('running', 'Running'));
+    select.value = selectedValue;
+    await waitForChanges();
+    await waitForStable(root);
+
+    expect(select.value).toBe('');
+    expect(input.value).toBe('');
+    expect(select.querySelector<HTMLBqOptionElement>('bq-option').selected).toBe(false);
+    expect(select.shadowRoot.activeElement).toBe(input);
+  });
+
+  it('should clear a single value on whitespace-only input even with custom filtering and disableClear', async () => {
+    const { root, spyOnEvent, waitForChanges } = await render(
+      <bq-select disableClear name="activity" value="running" onBqInput={(event) => event.preventDefault()}>
+        <bq-option value="running">Running</bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const input = getInput(select);
+    const bqClear = spyOnEvent('bqClear');
+    const bqInput = spyOnEvent('bqInput');
+
+    await userEvent.click(input);
+    await userEvent.fill(input, '   ');
+    await waitForChanges();
+
+    expect(select.value).toBe('');
+    expect(select.querySelector<HTMLBqOptionElement>('bq-option').selected).toBe(false);
+    expect(bqClear).toHaveReceivedEventTimes(1);
+    expect(bqInput.events[0].detail).toEqual({ value: '   ' });
+    expect(select.shadowRoot.activeElement).toBe(input);
+  });
+
+  it('should cancel stale debounced input after deletion without losing the new empty search event', async () => {
+    const { root, spyOnEvent, waitForChanges } = await render(
+      <bq-select debounceTime={1000} name="activity" value="running" onBqInput={(event) => event.preventDefault()}>
+        <bq-option value="running">Running</bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const input = getInput(select);
+    const bqClear = spyOnEvent('bqClear');
+    const bqInput = spyOnEvent('bqInput');
+
+    await userEvent.click(input);
+    await userEvent.fill(input, 'Swim');
+    await userEvent.clear(input);
+    await waitForChanges();
+
+    expect(select.value).toBe('');
+    expect(bqClear).toHaveReceivedEventTimes(1);
+    expect(bqInput).toHaveReceivedEventTimes(0);
+
+    await expect.poll(() => bqInput.events.length, { timeout: 3000 }).toBe(1);
+    await sleep(1100);
+
+    expect(bqInput).toHaveReceivedEventTimes(1);
+    expect(bqInput.events[0].detail).toEqual({ value: '' });
+    expect(input.value).toBe('');
+    expect(select.shadowRoot.activeElement).toBe(input);
+  });
+
   it('should render with panel options opened', async () => {
     const { root } = await render(
       <bq-select name="bq-select" open>

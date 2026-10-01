@@ -28,6 +28,8 @@ For `bq-select`, `bqFocus` and `bqBlur` track focus entering and leaving the who
 
 Canceling `bqInput` for custom Select filtering also cancels automatic panel opening while typing. Set `el.open = true` explicitly when your handler needs to show loading states or search results.
 
+Deleting all text or leaving only whitespace in a searchable single-select immediately clears its committed selection and emits `bqClear` if a selection existed, even when `bqInput` is canceled or debounced. Handle `bqClear` (`onBqClear` in React) to clear controlled application/form state and the async query; its detail is the Select element. Nonempty search drafts preserve the selection, and deleting multi-select search text preserves selected tags.
+
 ## Setup
 
 Every app needs two things, set up once. When the project lacks either, add it as part of the task:

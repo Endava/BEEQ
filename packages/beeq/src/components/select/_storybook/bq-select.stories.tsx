@@ -718,6 +718,7 @@ export const AsyncOptions: Story = {
       <p class="m-be-l text-text-secondary">
         Search for "swim" or "pizza" to replace the options after a simulated request.
         Search for "unknown" to show an empty result. The query stays in the input while options change.
+        Deleting all text clears a single selection; deleting the multiple-select search keeps selected activities.
       </p>
       <div class="grid gap-l md:grid-cols-2">
         ${[false, true].map(

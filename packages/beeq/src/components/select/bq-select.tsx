@@ -636,14 +636,7 @@ export class BqSelect {
 
     const trimmedValue = value?.trim();
     if (!trimmedValue) {
-      // For multi-select, just reset options visibility without clearing selections
-      // This prevents backspace from removing selected tags when only clearing search text
-      if (this.multiple) {
-        this.resetOptionsVisibility();
-        return;
-      }
-
-      this.clear();
+      this.resetOptionsVisibility();
       return;
     }
 
@@ -707,6 +700,11 @@ export class BqSelect {
     if (this.disabled || this.isSearchDisabled) return;
 
     const { value } = ev.target as HTMLInputElement;
+    // Selection clearing is independent of cancelable search filtering.
+    if (!this.multiple && !value.trim() && isDefined(this.value)) {
+      this.clear();
+    }
+
     this.searchValue = value;
 
     this.debounceInput?.cancel();
