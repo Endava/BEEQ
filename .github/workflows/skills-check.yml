@@ -9,6 +9,8 @@ on:
       - 'skills/**'
       - '.agents/skills/**'
       - '.github/workflows/skills-check.yml'
+      - 'mise.toml'
+      - 'package.json'
 
 permissions:
   contents: read
@@ -22,15 +24,16 @@ jobs:
     name: 🧩 Check skill discovery
     runs-on: ubuntu-latest
     env:
-      VOLTA_FEATURE_PNPM: 1
       DISABLE_TELEMETRY: 1
       NO_COLOR: 1
     steps:
       - name: 🛎 Checkout
         uses: actions/checkout@v6
 
-      - name: 🛠 Setup Volta
-        uses: volta-cli/action@615a78f6c83e116339c53b94f3f82b4d6c0b7d18 # v5.0.0
+      - name: 🛠 Setup mise
+        uses: jdx/mise-action@7a4e45a543138629540c9a1616d08632b893e492 # v5.0.1
+        with:
+          version: '2026.9.18'
 
       - name: 📦 npx skills lists only public skills
         run: |

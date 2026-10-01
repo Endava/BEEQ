@@ -29,7 +29,7 @@ The suite measures whether the skill improves agent output, following [agentskil
 
 | You need | For | Notes |
 |---|---|---|
-| The Node and pnpm versions pinned in the root `package.json` (`volta`), then `pnpm install` | Every eval target | A Unix shell (macOS, Linux, or WSL): the reference solutions are Bash scripts, and skillgrade creates its workspaces under `/tmp`. No build and no Docker: the grader reads the component source. |
+| The Node and pnpm versions pinned in the root [`mise.toml`](../../mise.toml), installed through the [project setup](../../README.md) | Every eval target | Load mise's environment into your shell or prefix commands with `./bin/mise exec --` from the repository root. A Unix shell (macOS, Linux, or WSL) is required: the reference solutions are Bash scripts, and skillgrade creates its workspaces under `/tmp`. No build and no Docker: the grader reads the component source. |
 | An agent CLI on your `PATH`, logged in | `eval` | `copilot` (the default), `claude`, or `codex` (`codex login` or `CODEX_API_KEY`). Every trial spends that account's requests. |
 | No personal `beeq` skill | `eval` with the `baseline` variant | Remove it from `~/.agents/skills`, `~/.copilot/skills`, and `~/.claude/skills`, or the run stops. See [Baseline hygiene](#baseline-hygiene). |
 | A judge key: `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, or `GEMINI_API_KEY` | The LLM rubric; optional | Export it in the shell that runs Nx; the root `.env` is committed, so keep keys out of it. Without a key, `--grader=auto` (the default) warns and grades deterministically, and `--grader=all` stops. |
