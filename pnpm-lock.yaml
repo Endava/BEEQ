@@ -344,8 +344,8 @@ importers:
         specifier: 1.1.0
         version: 1.1.0
       '@wc-toolkit/type-parser':
-        specifier: 1.2.1
-        version: 1.2.1
+        specifier: 1.3.1
+        version: 1.3.1
       autoprefixer:
         specifier: 10.4.24
         version: 10.4.24(postcss@8.5.23)
@@ -4369,8 +4369,8 @@ packages:
   '@wc-toolkit/jsdoc-tags@1.1.0':
     resolution: {integrity: sha512-7MHpQ3FtRNJBJONMChkfIWxOWy1rvDtwOJJ4ubeGJBUEj2hp8Xy/9G8GqqNvPGzp38haAfdMcmwx6rySu4AAqg==}
 
-  '@wc-toolkit/type-parser@1.2.1':
-    resolution: {integrity: sha512-UebshmN3QJA2e32Pyz0yMWOpRA4jn+6e2QwglsVTViAdOKVHrgNtqKlLSX4tLHT+8/+NXXptqNH7rfacltFGrA==}
+  '@wc-toolkit/type-parser@1.3.1':
+    resolution: {integrity: sha512-xmRf9B3L37IO7HXSf/37Uv1xWlsA3GluslA4Ao8S0pFFlo5qEwrlgsnBxcxtnSh36zkoLC7p8VpW5dvRNbk8vg==}
 
   '@web/config-loader@0.1.3':
     resolution: {integrity: sha512-XVKH79pk4d3EHRhofete8eAnqto1e8mCRAqPV00KLNFzCWSe8sWmLnqKCqkPNARC6nksMaGrATnA5sPDRllMpQ==}
@@ -13176,7 +13176,7 @@ snapshots:
 
   '@wc-toolkit/jsdoc-tags@1.1.0': {}
 
-  '@wc-toolkit/type-parser@1.2.1': {}
+  '@wc-toolkit/type-parser@1.3.1': {}
 
   '@web/config-loader@0.1.3':
     dependencies:
