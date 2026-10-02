@@ -1,0 +1,32 @@
+name: Renovate
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: renovate
+  cancel-in-progress: false
+
+jobs:
+  renovate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Run Renovate
+        uses: renovatebot/github-action@6d26fcf0275dc65624cbc3d51fe78bc773f98321 # v46.3.6
+        with:
+          token: ${{ secrets.RENOVATE_TOKEN }}
+          renovate-version: 44.125.1
+        env:
+          RENOVATE_PLATFORM: github
+          RENOVATE_REPOSITORIES: Endava/BEEQ
+          RENOVATE_IGNORE_PR_AUTHOR: 'true'
+          RENOVATE_GIT_AUTHOR: 'Renovate <328492+dgonzalezr@users.noreply.github.com>'
+          RENOVATE_DRY_RUN: full
+          LOG_LEVEL: debug
