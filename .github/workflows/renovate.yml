@@ -28,5 +28,4 @@ jobs:
           RENOVATE_REPOSITORIES: Endava/BEEQ
           RENOVATE_IGNORE_PR_AUTHOR: 'true'
           RENOVATE_GIT_AUTHOR: 'Renovate <328492+dgonzalezr@users.noreply.github.com>'
-          RENOVATE_DRY_RUN: full
           LOG_LEVEL: debug
