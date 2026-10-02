@@ -341,8 +341,8 @@ importers:
         specifier: 1.0.2
         version: 1.0.2(@custom-elements-manifest/analyzer@0.11.0)
       '@wc-toolkit/jsdoc-tags':
-        specifier: 1.1.0
-        version: 1.1.0
+        specifier: 1.2.1
+        version: 1.2.1
       '@wc-toolkit/type-parser':
         specifier: 1.3.1
         version: 1.3.1
@@ -4354,8 +4354,8 @@ packages:
     peerDependencies:
       '@custom-elements-manifest/analyzer': 0.11.0
 
-  '@wc-toolkit/jsdoc-tags@1.1.0':
-    resolution: {integrity: sha512-7MHpQ3FtRNJBJONMChkfIWxOWy1rvDtwOJJ4ubeGJBUEj2hp8Xy/9G8GqqNvPGzp38haAfdMcmwx6rySu4AAqg==}
+  '@wc-toolkit/jsdoc-tags@1.2.1':
+    resolution: {integrity: sha512-O58tdyiKcTiVCeacGBPZ2lulY7EoTbLay1YlmsXxTOU1UgPxTwGpi5USWXbkstr1HZgWmPjEiIVEyL+3ABBaAg==}
 
   '@wc-toolkit/type-parser@1.3.1':
     resolution: {integrity: sha512-xmRf9B3L37IO7HXSf/37Uv1xWlsA3GluslA4Ao8S0pFFlo5qEwrlgsnBxcxtnSh36zkoLC7p8VpW5dvRNbk8vg==}
@@ -12919,7 +12919,7 @@ snapshots:
       '@custom-elements-manifest/analyzer': 0.11.0
       execa: 9.6.1
 
-  '@wc-toolkit/jsdoc-tags@1.1.0': {}
+  '@wc-toolkit/jsdoc-tags@1.2.1': {}
 
   '@wc-toolkit/type-parser@1.3.1': {}
 
