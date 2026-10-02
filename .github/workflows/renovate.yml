@@ -26,6 +26,7 @@ jobs:
         env:
           RENOVATE_PLATFORM: github
           RENOVATE_REPOSITORIES: Endava/BEEQ
-          RENOVATE_IGNORE_PR_AUTHOR: 'true'
-          RENOVATE_GIT_AUTHOR: 'Renovate <328492+dgonzalezr@users.noreply.github.com>'
+          RENOVATE_GIT_AUTHOR: BEEQ <en-beeq@users.noreply.github.com>
+          RENOVATE_GIT_PRIVATE_KEY: ${{ secrets.RENOVATE_GIT_PRIVATE_KEY }}
+          RENOVATE_GIT_PRIVATE_KEY_PASSPHRASE: ${{ secrets.RENOVATE_GIT_PRIVATE_KEY_PASSPHRASE }}
           LOG_LEVEL: debug
