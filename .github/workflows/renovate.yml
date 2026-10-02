@@ -2,6 +2,8 @@ name: Renovate
 
 on:
   workflow_dispatch:
+  issues:
+    types: [edited]
 
 permissions:
   contents: read
@@ -12,6 +14,15 @@ concurrency:
 
 jobs:
   renovate:
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      (
+        github.event.issue.title == 'Dependency Dashboard' &&
+        github.event.issue.state == 'open' &&
+        github.event.issue.user.login == 'en-beeq' &&
+        contains(fromJSON(vars.RENOVATE_APPROVERS), github.actor) &&
+        contains(github.event.issue.body, 'approve-branch=')
+      )
     runs-on: ubuntu-latest
     timeout-minutes: 55
     steps:
