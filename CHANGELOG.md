@@ -1,3 +1,38 @@
+## 1.16.0 (2026-10-02)
+
+### Features ⚡️
+
+- **AI Skill:** add an installable BEEQ agent skill with evals ([#1808](https://github.com/Endava/BEEQ/pull/1808))
+
+### Bug Fixes 🐞
+
+- **Datepicker:** improve accessibility and manual entry regardless type variant ([#1787](https://github.com/Endava/BEEQ/pull/1787))
+- **Select:** preserve async search and keyboard focus ([#1809](https://github.com/Endava/BEEQ/pull/1809))
+
+### Chore ⚙️
+
+- **ci:** add GitHub Action Renovate workflow for automated dependency updates ([da0184af](https://github.com/Endava/BEEQ/commit/da0184af))
+- **ci:** remove dry-run from GitHub Renovate workflow ([a01d802f](https://github.com/Endava/BEEQ/commit/a01d802f))
+- **ci:** update Renovate workflow configuration for BEEQ authentication ([4549ae19](https://github.com/Endava/BEEQ/commit/4549ae19))
+- **ci:** add issue trigger and approval conditions to Renovate workflow ([2106396f](https://github.com/Endava/BEEQ/commit/2106396f))
+- **deps:** update dependency @angular/router to v22.2.0 [security] ([#1810](https://github.com/Endava/BEEQ/pull/1810))
+- **deps:** update dependency chromatic to v18 ([#1816](https://github.com/Endava/BEEQ/pull/1816))
+- **deps:** update actions/checkout action to v7 ([#1815](https://github.com/Endava/BEEQ/pull/1815))
+- **deps:** update actions/cache action to v6 ([#1814](https://github.com/Endava/BEEQ/pull/1814))
+- **deps:** update dependency @wc-toolkit/type-parser to v1.3.1 ([#1813](https://github.com/Endava/BEEQ/pull/1813))
+- **deps:** update dependency @stencil/core to v4.45.1 ([#1812](https://github.com/Endava/BEEQ/pull/1812))
+- **deps:** update dependency vitest to v4.1.11 [security] ([#1792](https://github.com/Endava/BEEQ/pull/1792))
+- **deps:** update angular to v22.2.1 ([8f4a537e](https://github.com/Endava/BEEQ/commit/8f4a537e))
+- **deps:** update dependency @wc-toolkit/jsdoc-tags to v1.2.1 ([#1817](https://github.com/Endava/BEEQ/pull/1817))
+- **deps:** update dependency autoprefixer to v10.6.1 ([#1819](https://github.com/Endava/BEEQ/pull/1819))
+- **workspace:** migrate from volta to mise ([#1811](https://github.com/Endava/BEEQ/pull/1811))
+
+### ❤️ Thank You
+
+- BEEQ @en-beeq
+- BEEQ Design System @en-beeq
+- Dabiel Gonzalez-Ramos @dgonzalezr
+
 ## 1.15.0 (2026-09-25)
 
 ### Features ⚡️
