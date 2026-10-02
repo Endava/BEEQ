@@ -39,3 +39,5 @@ overrides:
 minimumReleaseAgeExclude:
   - '@stencil/vitest@1.13.2'
   - vitest-environment-stencil@1.13.2
+  - '@angular-devkit/architect@0.2202.1'
+  - '@angular/cli@22.2.1'
