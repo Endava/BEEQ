@@ -4,6 +4,25 @@ description: New features, bug fixes, and improvements to the BEEQ Design System
 rss: true
 ---
 
+<Update label="v1.16.1" description="October 2026">
+  This patch release fixes how the [**Datepicker**](/components/date-picker) handles partially typed dates when the input loses focus.
+
+  ### Bug Fixes 🐞
+
+  - **Datepicker:** mark incomplete typed dates as invalid on blur until you correct or clear them ([#1826](https://github.com/Endava/BEEQ/pull/1826)).
+  - **Storybook:** improve custom event action details ([39b49632](https://github.com/Endava/BEEQ/commit/39b49632)).
+
+  ### Chore ⚙️
+
+  - **ci:** enhance Renovate configuration and workflow automation ([d5cd69d0](https://github.com/Endava/BEEQ/commit/d5cd69d0)).
+  - **nx:** disable `preserveMatchingDependencyRanges` in version configuration ([f3e21a4e](https://github.com/Endava/BEEQ/commit/f3e21a4e)).
+  - Dependency bumps: Nx → v23.2.1 ([#1821](https://github.com/Endava/BEEQ/pull/1821)), Angular ([#1822](https://github.com/Endava/BEEQ/pull/1822)), Chromatic ([#1823](https://github.com/Endava/BEEQ/pull/1823)), Playwright → v1.63.0 ([#1824](https://github.com/Endava/BEEQ/pull/1824)), pnpm → v12.9.0 ([#1825](https://github.com/Endava/BEEQ/pull/1825)).
+
+  ### ❤️ Thank You
+
+  - [Dabiel Gonzalez-Ramos](https://github.com/dgonzalezr)
+</Update>
+
 <Update label="v1.16.0" description="October 2026">
   This release introduces an installable [**BEEQ agent skill**](/getting-started/ai-tools#install-the-beeq-skill) that teaches coding agents how to build with BEEQ. It also improves [**Datepicker**](/components/date-picker) accessibility and manual entry, and fixes async search and keyboard focus in the [**Select**](/components/select) component.
 
