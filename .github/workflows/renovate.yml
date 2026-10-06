@@ -2,8 +2,17 @@ name: Renovate
 
 on:
   workflow_dispatch:
+
+  schedule:
+    # Monday at 00:00 UTC; this falls within Renovate's 02:00-06:00
+    # Europe/Bucharest schedule in both standard and daylight time.
+    - cron: '0 0 * * 1'
+
   issues:
     types: [edited]
+
+  pull_request:
+    types: [closed]
 
 permissions:
   contents: read
@@ -16,6 +25,12 @@ jobs:
   renovate:
     if: >
       github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'schedule' ||
+      (
+        github.event_name == 'pull_request' &&
+        github.event.pull_request.merged == true &&
+        startsWith(github.event.pull_request.title, 'chore(deps):')
+      ) ||
       (
         github.event.issue.title == 'Dependency Dashboard' &&
         github.event.issue.state == 'open' &&

@@ -11,7 +11,7 @@
   /**
     * Controls how many branches Renovate can create concurrently
     */
-  "branchConcurrentLimit": 3,
+  "branchConcurrentLimit": 8,
   /**
    * Prefix to use for all branch names made by Renovate
    */
@@ -19,7 +19,7 @@
   /**
     * Controls how many commits Renovate can create per hour
     */
-  "commitHourlyLimit": 1,
+  "commitHourlyLimit": 3,
   /**
    * Configuring dependencyDashboard to true will lead
    * to the creation of a "Dependency Dashboard" issue within the repository
@@ -39,7 +39,7 @@
   /**
    * Skip any package file whose path matches one of these
    */
-  "ignorePaths": ["packages/**/package.json", "tools/package.json"],
+  "ignorePaths": ["tools/package.json"],
   /**
    * Labels to set in the Pull Request.
    */
@@ -78,6 +78,10 @@
       "matchPackageNames": ["@commitlint/{/,}**"]
     },
     {
+      "groupName": "Chromatic",
+      "matchPackageNames": ["@chromatic-com/storybook", "chromatic"]
+    },
+    {
       "groupName": "Floating-UI",
       "matchPackageNames": ["@floating-ui{/,}**"]
     },
@@ -111,11 +115,11 @@
     },
     {
       "groupName": "Stylelint",
-      "matchPackageNames": ["stylelint{/,}**"]
+      "matchPackageNames": ["stylelint{/,}**", "stylelint-config-standard", "stylelint-config-standard-scss"]
     },
     {
       "groupName": "Swc",
-      "matchPackageNames": ["@swc{/,}**"]
+      "matchPackageNames": ["@swc{/,}**", "@swc-node/register"]
     },
     {
       "groupName": "Types React",
@@ -125,6 +129,18 @@
       "groupName": "Typescript",
       "allowedVersions": "<6.1.0",
       "matchPackageNames": ["typescript{/,}**"]
+    },
+    {
+      "groupName": "Vitest",
+      "matchPackageNames": ["vitest", "@vitest/**", "playwright", "mcr.microsoft.com/playwright"]
+    },
+    /**
+     * Preserve SemVer ranges in package workspace manifests.
+     * The root package.json continues to use the global pin strategy.
+     */
+    {
+      "matchFileNames": ["packages/**/package.json"],
+      "rangeStrategy": "replace"
     },
     /**
      * Ignore zone.js updates for v0.17.0 and above
@@ -151,11 +167,11 @@
   /**
     * Controls how many PRs Renovate can create concurrently
     */
-  "prConcurrentLimit": 3,
+  "prConcurrentLimit": 8,
   /**
     * Controls how many PRs Renovate can create per hour
     */
-  "prHourlyLimit": 1,
+  "prHourlyLimit": 3,
   /**
    * Determines how to modify or update existing ranges.
    * pin = convert ranges to exact versions, e.g. ^1.0.0 -> 1.1.0
