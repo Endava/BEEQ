@@ -19,13 +19,14 @@ import { isDefined } from '../../shared/utils';
  *
  * @attr {string} href - If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered.
  * @attr {string} target - Where to display the link in the browser context. Relevant only if `href` is set.
- * @attr {string} rel - Where to display the link in the browser context. Relevant only if `href` is set.
+ * @attr {string} rel - Link relationships. Currently not forwarded to the native anchor.
  *
  * @event bqFocus - Handler to be called when item is focused
  * @event bqClick - Handler to be called when item is clicked
  * @event bqBlur - Handler to be called when item loses focus
  *
  * @slot - The default slot is used to add content to the breadcrumb item.
+ * @slot separator - Per-item separator content, normally populated by bq-breadcrumb.
  *
  * @part base - The component wrapper container
  * @part content - The `span` tag that wraps the content item
@@ -76,7 +77,7 @@ export class BqBreadcrumbItem {
   /** Where to display the link in the browser context. Relevant only if `href` is set. */
   @Prop({ reflect: true }) target: '_blank' | '_parent' | '_self' | '_top';
 
-  /** Where to display the link in the browser context. Relevant only if `href` is set. */
+  /** Link relationships. Currently not forwarded to the native anchor. */
   @Prop({ reflect: true }) rel: string = 'noreferrer noopener';
 
   // Prop lifecycle events

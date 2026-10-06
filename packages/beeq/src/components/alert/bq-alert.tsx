@@ -68,7 +68,6 @@ import { ALERT_TYPE } from './bq-alert.types';
  * @cssprop --bq-alert--content-footer-gap - The alert content and footer gap
  * @cssprop --bq-alert--title-body-gap - The alert title and body gap
  *
- * @cssprop --bq-alert--border-color - The alert border color
  * @cssprop --bq-alert--border-style - The alert border style
  * @cssprop --bq-alert--border-width - The alert border width
  *
@@ -89,6 +88,7 @@ import { ALERT_TYPE } from './bq-alert.types';
  *
  * @cssprop --bq-alert--padding - The alert padding
  * @cssprop --bq-alert--min-width - The alert min width
+ * @cssprop --bq-alert--z-index - The stacking order of a sticky alert. No default is declared.
  */
 @Component({
   tag: 'bq-alert',

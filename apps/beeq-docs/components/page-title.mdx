@@ -175,8 +175,8 @@ Use a back action when the page is part of a flow or nested navigation path.
     }
   </style>
     <bq-page-title>
-      <bq-button appearance="link" slot="back" only-icon>
-        <bq-icon color="text--primary" name="arrow-left" weight="bold" title="Navigate back to the previous page"></bq-icon>
+      <bq-button appearance="link" slot="back" label="Go back" only-icon>
+        <bq-icon color="text--primary" name="arrow-left-bold" aria-hidden="true"></bq-icon>
       </bq-button>
       Title
     </bq-page-title>
@@ -185,8 +185,8 @@ Use a back action when the page is part of a flow or nested navigation path.
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-page-title>
-      <bq-button appearance="link" slot="back" only-icon>
-        <bq-icon color="text--primary" name="arrow-left" weight="bold" title="Navigate back to the previous page"></bq-icon>
+      <bq-button appearance="link" slot="back" label="Go back" only-icon>
+        <bq-icon color="text--primary" name="arrow-left-bold" aria-hidden="true"></bq-icon>
       </bq-button>
       Title
     </bq-page-title>
@@ -196,8 +196,8 @@ Use a back action when the page is part of a flow or nested navigation path.
     import { BqButton, BqIcon, BqPageTitle } from "@beeq/react";
 
     <BqPageTitle>
-      <BqButton appearance="link" slot="back" onlyIcon>
-        <BqIcon color="text--primary" name="arrow-left" weight="bold" title="Navigate back to the previous page" />
+      <BqButton appearance="link" slot="back" label="Go back" onlyIcon>
+        <BqIcon color="text--primary" name="arrow-left-bold" aria-hidden="true" />
       </BqButton>
       Title
     </BqPageTitle>
@@ -213,8 +213,8 @@ Use a back action when the page is part of a flow or nested navigation path.
       imports: [BqPageTitle, BqButton, BqIcon],
       template: `
         <bq-page-title>
-          <bq-button appearance="link" slot="back" only-icon>
-            <bq-icon color="text--primary" name="arrow-left" weight="bold" title="Navigate back to the previous page"></bq-icon>
+          <bq-button appearance="link" slot="back" label="Go back" only-icon>
+            <bq-icon color="text--primary" name="arrow-left-bold" aria-hidden="true"></bq-icon>
           </bq-button>
           Title
         </bq-page-title>
@@ -230,8 +230,8 @@ Use a back action when the page is part of a flow or nested navigation path.
 
     <template>
       <BqPageTitle>
-        <BqButton appearance="link" slot="back" onlyIcon>
-          <BqIcon color="text--primary" name="arrow-left" weight="bold" title="Navigate back to the previous page" />
+        <BqButton appearance="link" slot="back" label="Go back" onlyIcon>
+          <BqIcon color="text--primary" name="arrow-left-bold" aria-hidden="true" />
         </BqButton>
         Title
       </BqPageTitle>
@@ -252,8 +252,8 @@ Add a subtitle when people need a little more context before acting.
     }
   </style>
     <bq-page-title>
-      <bq-button appearance="link" slot="back" only-icon>
-        <bq-icon color="text--primary" name="arrow-left" weight="bold" title="Navigate back to the previous page"></bq-icon>
+      <bq-button appearance="link" slot="back" label="Go back" only-icon>
+        <bq-icon color="text--primary" name="arrow-left-bold" aria-hidden="true"></bq-icon>
       </bq-button>
       Title
       <div slot="sub-title">Sub-title</div>
@@ -263,8 +263,8 @@ Add a subtitle when people need a little more context before acting.
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-page-title>
-      <bq-button appearance="link" slot="back" only-icon>
-        <bq-icon color="text--primary" name="arrow-left" weight="bold" title="Navigate back to the previous page"></bq-icon>
+      <bq-button appearance="link" slot="back" label="Go back" only-icon>
+        <bq-icon color="text--primary" name="arrow-left-bold" aria-hidden="true"></bq-icon>
       </bq-button>
       Title
       <div slot="sub-title">Sub-title</div>
@@ -275,8 +275,8 @@ Add a subtitle when people need a little more context before acting.
     import { BqButton, BqIcon, BqPageTitle } from "@beeq/react";
 
     <BqPageTitle>
-      <BqButton appearance="link" slot="back" onlyIcon>
-        <BqIcon color="text--primary" name="arrow-left" weight="bold" title="Navigate back to the previous page" />
+      <BqButton appearance="link" slot="back" label="Go back" onlyIcon>
+        <BqIcon color="text--primary" name="arrow-left-bold" aria-hidden="true" />
       </BqButton>
       Title
       <div slot="sub-title">Sub-title</div>
@@ -293,8 +293,8 @@ Add a subtitle when people need a little more context before acting.
       imports: [BqPageTitle, BqButton, BqIcon],
       template: `
         <bq-page-title>
-          <bq-button appearance="link" slot="back" only-icon>
-            <bq-icon color="text--primary" name="arrow-left" weight="bold" title="Navigate back to the previous page"></bq-icon>
+          <bq-button appearance="link" slot="back" label="Go back" only-icon>
+            <bq-icon color="text--primary" name="arrow-left-bold" aria-hidden="true"></bq-icon>
           </bq-button>
           Title
           <div slot="sub-title">Sub-title</div>
@@ -311,8 +311,8 @@ Add a subtitle when people need a little more context before acting.
 
     <template>
       <BqPageTitle>
-        <BqButton appearance="link" slot="back" onlyIcon>
-          <BqIcon color="text--primary" name="arrow-left" weight="bold" title="Navigate back to the previous page" />
+        <BqButton appearance="link" slot="back" label="Go back" onlyIcon>
+          <BqIcon color="text--primary" name="arrow-left-bold" aria-hidden="true" />
         </BqButton>
         Title
         <div slot="sub-title">Sub-title</div>
@@ -445,17 +445,17 @@ Use the suffix slot when the title area needs page-level actions such as edit or
     }
   </style>
     <bq-page-title>
-      <bq-button appearance="link" slot="back" only-icon>
-        <bq-icon color="text--primary" name="arrow-left" weight="bold" title="Navigate back to the previous page"></bq-icon>
+      <bq-button appearance="link" slot="back" label="Go back" only-icon>
+        <bq-icon color="text--primary" name="arrow-left-bold" aria-hidden="true"></bq-icon>
       </bq-button>
       Title
       <div slot="sub-title">Sub-title</div>
       <div slot="suffix">
-        <bq-button appearance="text" size="small" only-icon>
-          <bq-icon name="pencil-simple-bold" color="text--brand" aria-label="Edit"></bq-icon>
+        <bq-button appearance="text" size="small" label="Edit" only-icon>
+          <bq-icon name="pencil-simple-bold" color="text--brand" aria-hidden="true"></bq-icon>
         </bq-button>
-        <bq-button appearance="text" size="small" only-icon>
-          <bq-icon name="download-simple-bold" color="text--brand" aria-label="Download"></bq-icon>
+        <bq-button appearance="text" size="small" label="Download" only-icon>
+          <bq-icon name="download-simple-bold" color="text--brand" aria-hidden="true"></bq-icon>
         </bq-button>
       </div>
     </bq-page-title>
@@ -478,17 +478,17 @@ Use the suffix slot when the title area needs page-level actions such as edit or
 
     ```html HTML icon="html5" expandable
     <bq-page-title>
-      <bq-button appearance="link" slot="back" only-icon>
-        <bq-icon color="text--primary" name="arrow-left" weight="bold" title="Navigate back to the previous page"></bq-icon>
+      <bq-button appearance="link" slot="back" label="Go back" only-icon>
+        <bq-icon color="text--primary" name="arrow-left-bold" aria-hidden="true"></bq-icon>
       </bq-button>
       Title
       <div slot="sub-title">Sub-title</div>
       <div slot="suffix">
-        <bq-button appearance="text" size="small" only-icon>
-          <bq-icon name="pencil-simple-bold" color="text--brand" aria-label="Edit"></bq-icon>
+        <bq-button appearance="text" size="small" label="Edit" only-icon>
+          <bq-icon name="pencil-simple-bold" color="text--brand" aria-hidden="true"></bq-icon>
         </bq-button>
-        <bq-button appearance="text" size="small" only-icon>
-          <bq-icon name="download-simple-bold" color="text--brand" aria-label="Download"></bq-icon>
+        <bq-button appearance="text" size="small" label="Download" only-icon>
+          <bq-icon name="download-simple-bold" color="text--brand" aria-hidden="true"></bq-icon>
         </bq-button>
       </div>
     </bq-page-title>
@@ -499,17 +499,17 @@ Use the suffix slot when the title area needs page-level actions such as edit or
     import "./styles.css";
 
     <BqPageTitle>
-      <BqButton appearance="link" slot="back" onlyIcon>
-        <BqIcon color="text--primary" name="arrow-left" weight="bold" title="Navigate back to the previous page" />
+      <BqButton appearance="link" slot="back" label="Go back" onlyIcon>
+        <BqIcon color="text--primary" name="arrow-left-bold" aria-hidden="true" />
       </BqButton>
       Title
       <div slot="sub-title">Sub-title</div>
       <div slot="suffix">
-        <BqButton appearance="text" size="small" onlyIcon>
-          <BqIcon name="pencil-simple-bold" color="text--brand" aria-label="Edit" />
+        <BqButton appearance="text" size="small" label="Edit" onlyIcon>
+          <BqIcon name="pencil-simple-bold" color="text--brand" aria-hidden="true" />
         </BqButton>
-        <BqButton appearance="text" size="small" onlyIcon>
-          <BqIcon name="download-simple-bold" color="text--brand" aria-label="Download" />
+        <BqButton appearance="text" size="small" label="Download" onlyIcon>
+          <BqIcon name="download-simple-bold" color="text--brand" aria-hidden="true" />
         </BqButton>
       </div>
     </BqPageTitle>
@@ -525,17 +525,17 @@ Use the suffix slot when the title area needs page-level actions such as edit or
       imports: [BqPageTitle, BqButton, BqIcon],
       template: `
         <bq-page-title>
-          <bq-button appearance="link" slot="back" only-icon>
-            <bq-icon color="text--primary" name="arrow-left" weight="bold" title="Navigate back to the previous page"></bq-icon>
+          <bq-button appearance="link" slot="back" label="Go back" only-icon>
+            <bq-icon color="text--primary" name="arrow-left-bold" aria-hidden="true"></bq-icon>
           </bq-button>
           Title
           <div slot="sub-title">Sub-title</div>
           <div slot="suffix">
-            <bq-button appearance="text" size="small" only-icon>
-              <bq-icon name="pencil-simple-bold" color="text--brand" aria-label="Edit"></bq-icon>
+            <bq-button appearance="text" size="small" label="Edit" only-icon>
+              <bq-icon name="pencil-simple-bold" color="text--brand" aria-hidden="true"></bq-icon>
             </bq-button>
-            <bq-button appearance="text" size="small" only-icon>
-              <bq-icon name="download-simple-bold" color="text--brand" aria-label="Download"></bq-icon>
+            <bq-button appearance="text" size="small" label="Download" only-icon>
+              <bq-icon name="download-simple-bold" color="text--brand" aria-hidden="true"></bq-icon>
             </bq-button>
           </div>
         </bq-page-title>
@@ -564,17 +564,17 @@ Use the suffix slot when the title area needs page-level actions such as edit or
 
     <template>
       <BqPageTitle>
-        <BqButton appearance="link" slot="back" onlyIcon>
-          <BqIcon color="text--primary" name="arrow-left" weight="bold" title="Navigate back to the previous page" />
+        <BqButton appearance="link" slot="back" label="Go back" onlyIcon>
+          <BqIcon color="text--primary" name="arrow-left-bold" aria-hidden="true" />
         </BqButton>
         Title
         <div slot="sub-title">Sub-title</div>
         <div slot="suffix">
-          <BqButton appearance="text" size="small" onlyIcon>
-            <BqIcon name="pencil-simple-bold" color="text--brand" aria-label="Edit" />
+          <BqButton appearance="text" size="small" label="Edit" onlyIcon>
+            <BqIcon name="pencil-simple-bold" color="text--brand" aria-hidden="true" />
           </BqButton>
-          <BqButton appearance="text" size="small" onlyIcon>
-            <BqIcon name="download-simple-bold" color="text--brand" aria-label="Download" />
+          <BqButton appearance="text" size="small" label="Download" onlyIcon>
+            <BqIcon name="download-simple-bold" color="text--brand" aria-hidden="true" />
           </BqButton>
         </div>
       </BqPageTitle>
@@ -662,7 +662,7 @@ Use the suffix slot when the title area needs page-level actions such as edit or
 ## Accessibility
 
 - Only one `h1` may exist per page. Do not place `bq-page-title` inside panels, cards, drawers, or any context where it would render alongside another `h1`.
-- When using an icon-only back button, add `role="img"` and a descriptive `title` attribute to `bq-icon` (e.g., `title="Navigate back to the previous page"`) so screen readers announce the icon's purpose rather than its name.
+- For icon-only back and suffix buttons, set `label` on `bq-button` so the inner native button has an accessible name. Set `aria-hidden="true"` on its decorative icon; a `title` or `aria-label` on the `bq-icon` host does not label the button.
 - `bq-page-title` renders the main title inside an `h1`, so the default slot should contain the primary heading for the page.
 - Back and suffix content are slotted, so their accessibility depends on what you place there. Use real buttons or links with clear accessible names.
 - The subtitle is additional context, not a replacement for the title. Keep the main heading understandable on its own.
@@ -714,7 +714,7 @@ Use the suffix slot when the title area needs page-level actions such as edit or
 </Expandable>
 
 <Note>
-  The CSS custom properties for `bq-page-title` use shorthand names (e.g., `--paddingY`, `--title-fontWeight`) rather than the `--bq-*` prefix convention used by other BEEQ components. Set these variables directly on the `bq-page-title` element or a wrapping ancestor.
+  The CSS custom properties for `bq-page-title` use shorthand names (e.g., `--paddingY`, `--title-fontWeight`) rather than the `--bq-*` prefix convention used by other BEEQ components. Set these variables directly on the `bq-page-title` element. Values set on an ancestor are overridden by the component's `:host` defaults.
 </Note>
 
 <Tip>

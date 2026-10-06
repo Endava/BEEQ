@@ -43,7 +43,7 @@ import {
  * @event bqBlur - Handler to be called when item loses focus.
  * @event bqFocus - Handler to be called when item is focused.
  * @event bqClick - Handler to be called when item is clicked.
- * @event bqEnter - Handler to be called on enter key press.
+ * @event bqEnter - Emitted when Enter or Space activates a focused option. Checkbox control activation emits bqClick instead.
  *
  * @slot prefix - The prefix content to be displayed before the label.
  * @slot - The label content to be displayed.
@@ -169,7 +169,7 @@ export class BqOption {
   /** Handler to be called when item is clicked */
   @Event() bqClick: EventEmitter<HTMLBqOptionElement>;
 
-  /** Handler to be called on enter key press */
+  /** Emitted when Enter or Space activates a focused option. Checkbox control activation emits bqClick instead. */
   @Event() bqEnter: EventEmitter<HTMLBqOptionElement>;
 
   // Component lifecycle events

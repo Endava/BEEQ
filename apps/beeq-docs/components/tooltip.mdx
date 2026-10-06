@@ -130,7 +130,7 @@ By default the tooltip appears **above** the trigger on hover. Tooltip content g
 
 <Tip>
   You can **use any element as the trigger, but for accessibility reasons, it should be something that can receive keyboard focus** (e.g., a button, link, or input).
-  If you need to attach a tooltip to a non-focusable element like an icon, set `display-on="click"` so keyboard and touch users can still access the content.
+  If you need to attach a tooltip to a non-focusable element like an icon, set `display-on="click"` so touch users can access the content. The trigger wrapper is not focusable, so keyboard users still need a focusable trigger such as a button.
 </Tip>
 
 ### Placement
@@ -330,7 +330,7 @@ Set `display-on="click"` when the trigger element is not naturally focusable (e.
     </script>
 
     <template>
-      <BqTooltip display-on="click">
+      <BqTooltip displayOn="click">
         Click again or press Esc to close
         <BqButton slot="trigger">Click me</BqButton>
       </BqTooltip>
@@ -399,7 +399,7 @@ Use `always-visible` to keep the tooltip permanently displayed regardless of use
     </script>
 
     <template>
-      <BqTooltip always-visible>
+      <BqTooltip alwaysVisible>
         I'm always here
         <BqButton slot="trigger">Trigger</BqButton>
       </BqTooltip>
@@ -646,8 +646,8 @@ All five tooltip events support `preventDefault()`. Calling it inside a handler 
     <div style="display:flex;flex-direction:column;align-items:center">
       <bq-switch id="lock-switch" name="lock-switch" inner-label="icon">
         Click to lock/unlock hover
-        <bq-icon slot="icon-on" name="lock" size="16"></bq-icon>
-        <bq-icon slot="icon-off" name="lock-open" size="16"></bq-icon>
+        <bq-icon slot="icon-on" name="lock" size="16" aria-hidden="true"></bq-icon>
+        <bq-icon slot="icon-off" name="lock-open" size="16" aria-hidden="true"></bq-icon>
       </bq-switch>
       <p id="status" style="font-size:14px;margin:0;">Unlocked — hover opens the tooltip normally</p>
     </div>
@@ -694,51 +694,97 @@ All five tooltip events support `preventDefault()`. Calling it inside a handler 
       <bq-button slot="trigger">Hover me</bq-button>
     </bq-tooltip>
 
-    <bq-checkbox id="lock-check">Click to lock/unlock hover</bq-checkbox>
+    <bq-switch id="lock-switch" name="lock-switch" inner-label="icon">
+      Click to lock/unlock hover
+      <bq-icon slot="icon-on" name="lock" size="16" aria-hidden="true"></bq-icon>
+      <bq-icon slot="icon-off" name="lock-open" size="16" aria-hidden="true"></bq-icon>
+    </bq-switch>
+    <p id="status">Unlocked — hover opens the tooltip normally</p>
 
     <script>
-      const tooltip = document.getElementById('my-tooltip');
-      const lockCheck = document.getElementById('lock-lock-check');
-      let locked = false;
+      (() => {
+        const tooltip = document.getElementById('my-tooltip');
+        const lockSwitch = document.getElementById('lock-switch');
+        const status = document.getElementById('status');
+        let locked = false;
 
-      lockCheck.addEventListener('bqChange', (e) => {
-        locked = e.detail.checked;
-      });
+        lockSwitch.addEventListener('bqChange', (e) => {
+          locked = e.detail.checked;
+          status.textContent = locked
+            ? 'Locked — hover will not open the tooltip'
+            : 'Unlocked — hover opens the tooltip normally';
+        });
 
-      tooltip.addEventListener('bqHoverIn', (e) => {
-        if (locked) e.preventDefault();
-      });
+        tooltip.addEventListener('bqHoverIn', (e) => {
+          if (locked) {
+            e.preventDefault();
+            status.textContent = 'bqHoverIn fired → preventDefault() called → panel suppressed ✓';
+          }
+        });
 
-      tooltip.addEventListener('bqFocusIn', (e) => {
-        if (locked) e.preventDefault();
-      });
+        tooltip.addEventListener('bqHoverOut', () => {
+          if (!locked) status.textContent = 'Unlocked — hover opens the tooltip normally';
+        });
+
+        tooltip.addEventListener('bqFocusIn', (e) => {
+          if (locked) {
+            e.preventDefault();
+            status.textContent = 'bqFocusIn fired → preventDefault() called → panel toggle suppressed ✓';
+          }
+        });
+      })();
     </script>
     ```
 
     ```jsx React icon="react" expandable
-    import { useRef, useState } from "react";
-    import { BqButton, BqTooltip, BqSwitch } from "@beeq/react";
+    import { useState } from "react";
+    import { BqButton, BqIcon, BqTooltip, BqSwitch } from "@beeq/react";
 
     export function PreventDefaultTooltip() {
       const [locked, setLocked] = useState(false);
+      const [status, setStatus] = useState("Unlocked — hover opens the tooltip normally");
 
       const handleHoverIn = (e) => {
-        if (locked) e.preventDefault();
+        if (locked) {
+          e.preventDefault();
+          setStatus("bqHoverIn fired → preventDefault() called → panel suppressed ✓");
+        }
       };
 
       const handleFocusIn = (e) => {
-        if (locked) e.preventDefault();
+        if (locked) {
+          e.preventDefault();
+          setStatus("bqFocusIn fired → preventDefault() called → panel toggle suppressed ✓");
+        }
       };
 
       return (
         <div>
-          <BqTooltip onBqHoverIn={handleHoverIn} onBqFocusIn={handleFocusIn}>
+          <BqTooltip
+            onBqHoverIn={handleHoverIn}
+            onBqFocusIn={handleFocusIn}
+            onBqHoverOut={() => {
+              if (!locked) setStatus("Unlocked — hover opens the tooltip normally");
+            }}
+          >
             You can only see me when unlocked!
             <BqButton slot="trigger">Hover me</BqButton>
           </BqTooltip>
-          <BqSwitch onBqChange={(e) => setLocked(e.detail.checked)}>
+          <BqSwitch
+            name="lock-switch"
+            innerLabel="icon"
+            onBqChange={(e) => {
+              setLocked(e.detail.checked);
+              setStatus(e.detail.checked
+                ? "Locked — hover will not open the tooltip"
+                : "Unlocked — hover opens the tooltip normally");
+            }}
+          >
             Click to lock/unlock hover
+            <BqIcon slot="icon-on" name="lock" size={16} aria-hidden="true" />
+            <BqIcon slot="icon-off" name="lock-open" size={16} aria-hidden="true" />
           </BqSwitch>
+          <p>{status}</p>
         </div>
       );
     }
@@ -746,29 +792,56 @@ All five tooltip events support `preventDefault()`. Calling it inside a handler 
 
     ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
-    import { BqButton, BqSwitch, BqTooltip } from "@beeq/angular/standalone";
+    import { BqButton, BqIcon, BqSwitch, BqTooltip } from "@beeq/angular/standalone";
 
     @Component({
       selector: "app-root",
       standalone: true,
-      imports: [BqButton, BqSwitch, BqTooltip],
+      imports: [BqButton, BqIcon, BqSwitch, BqTooltip],
       template: `
-        <bq-tooltip (bqHoverIn)="onHoverIn($event)" (bqFocusIn)="onFocusIn($event)">
+        <bq-tooltip
+          (bqHoverIn)="onHoverIn($event)"
+          (bqFocusIn)="onFocusIn($event)"
+          (bqHoverOut)="onHoverOut()"
+        >
           You can only see me when unlocked!
           <bq-button slot="trigger">Hover me</bq-button>
         </bq-tooltip>
-        <bq-switch (bqChange)="locked = $event.detail.checked">Lock tooltip</bq-switch>
+        <bq-switch name="lock-switch" inner-label="icon" (bqChange)="onLockChange($event.detail.checked)">
+          Click to lock/unlock hover
+          <bq-icon slot="icon-on" name="lock" size="16" aria-hidden="true"></bq-icon>
+          <bq-icon slot="icon-off" name="lock-open" size="16" aria-hidden="true"></bq-icon>
+        </bq-switch>
+        <p>{{ status }}</p>
       `
     })
     export class AppComponent {
       locked = false;
+      status = "Unlocked — hover opens the tooltip normally";
+
+      onLockChange(checked: boolean): void {
+        this.locked = checked;
+        this.status = checked
+          ? "Locked — hover will not open the tooltip"
+          : "Unlocked — hover opens the tooltip normally";
+      }
 
       onHoverIn(event: CustomEvent): void {
-        if (this.locked) event.preventDefault();
+        if (this.locked) {
+          event.preventDefault();
+          this.status = "bqHoverIn fired → preventDefault() called → panel suppressed ✓";
+        }
       }
 
       onFocusIn(event: CustomEvent): void {
-        if (this.locked) event.preventDefault();
+        if (this.locked) {
+          event.preventDefault();
+          this.status = "bqFocusIn fired → preventDefault() called → panel toggle suppressed ✓";
+        }
+      }
+
+      onHoverOut(): void {
+        if (!this.locked) this.status = "Unlocked — hover opens the tooltip normally";
       }
     }
     ```
@@ -776,27 +849,48 @@ All five tooltip events support `preventDefault()`. Calling it inside a handler 
     ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { ref } from "vue";
-    import { BqButton, BqTooltip, BqSwitch } from "@beeq/vue";
+    import { BqButton, BqIcon, BqTooltip, BqSwitch } from "@beeq/vue";
 
     const locked = ref(false);
+    const status = ref("Unlocked — hover opens the tooltip normally");
+
+    const onLockChange = (checked: boolean) => {
+      locked.value = checked;
+      status.value = checked
+        ? "Locked — hover will not open the tooltip"
+        : "Unlocked — hover opens the tooltip normally";
+    };
 
     const handleHoverIn = (e: CustomEvent) => {
-      if (locked.value) e.preventDefault();
+      if (locked.value) {
+        e.preventDefault();
+        status.value = "bqHoverIn fired → preventDefault() called → panel suppressed ✓";
+      }
     };
 
     const handleFocusIn = (e: CustomEvent) => {
-      if (locked.value) e.preventDefault();
+      if (locked.value) {
+        e.preventDefault();
+        status.value = "bqFocusIn fired → preventDefault() called → panel toggle suppressed ✓";
+      }
+    };
+
+    const handleHoverOut = () => {
+      if (!locked.value) status.value = "Unlocked — hover opens the tooltip normally";
     };
     </script>
 
     <template>
-      <BqTooltip @bqHoverIn="handleHoverIn" @bqFocusIn="handleFocusIn">
+      <BqTooltip @bqHoverIn="handleHoverIn" @bqFocusIn="handleFocusIn" @bqHoverOut="handleHoverOut">
         You can only see me when unlocked!
         <BqButton slot="trigger">Hover me</BqButton>
       </BqTooltip>
-      <BqSwitch @bqChange="locked = $event.detail.checked">
+      <BqSwitch name="lock-switch" innerLabel="icon" @bqChange="onLockChange($event.detail.checked)">
         Click to lock/unlock hover
+        <BqIcon slot="icon-on" name="lock" :size="16" aria-hidden="true" />
+        <BqIcon slot="icon-off" name="lock-open" :size="16" aria-hidden="true" />
       </BqSwitch>
+      <p>{{ status }}</p>
     </template>
     ```
   </CodeGroup>
@@ -892,7 +986,7 @@ Add `hide-arrow` to remove the directional pointer. Use this when the tooltip is
       </BqTooltip>
 
       <!-- No arrow -->
-      <BqTooltip hide-arrow>
+      <BqTooltip hideArrow>
         Without arrow
         <BqButton slot="trigger">No arrow</BqButton>
       </BqTooltip>
@@ -957,7 +1051,7 @@ Set `same-width` to match the tooltip panel width to the trigger element. Useful
     </script>
 
     <template>
-      <BqTooltip same-width>
+      <BqTooltip sameWidth>
         Same width as trigger, even if content is shorter or longer
         <BqButton slot="trigger">Same width as trigger</BqButton>
       </BqTooltip>
@@ -1147,9 +1241,9 @@ The `distance` prop controls the gap in pixels between the trigger and the toolt
 
 - **Not the only source of truth** — tooltips are hidden by default and not guaranteed to be seen by all users. Never place critical instructions, error messages, or required form guidance inside a tooltip.
 - **Keyboard accessible** — when `display-on` is `hover` (default), the tooltip also opens on focus so keyboard users can access the content by tabbing to the trigger. Pressing <kbd>Esc</kbd> (click mode) or moving focus away closes it.
-- **Screen reader support** — the panel sets `aria-hidden` when not visible and is announced when shown. Use the `trigger` slot with a naturally focusable element (button, link, input) so the tooltip is reachable via keyboard.
-- **Avoid hover-only for non-focusable triggers** — for elements that cannot receive keyboard focus, use `display-on="click"` to ensure touch and keyboard users can still trigger the tooltip.
-- **WCAG 1.4.13 (Content on Hover or Focus)** — revealed content must be dismissible (via <kbd>Esc</kbd>), hoverable (pointer can move over the panel), and persistent (does not close while the pointer is over it).
+- **Screen reader support** — the panel has `role="tooltip"` and toggles `aria-hidden` with visibility. The component does not create an `aria-describedby` association or live region, so showing the panel does not guarantee an announcement. Give the trigger an understandable accessible name and keep essential guidance in visible text.
+- **Use focusable triggers** — the tooltip does not make its trigger focusable. `display-on="click"` helps touch users, but keyboard users can only reach the tooltip through a focusable trigger such as a button.
+- **WCAG 1.4.13 (Content on Hover or Focus)** — hover-mode tooltips close when the pointer leaves the trigger or focus moves away, and the panel itself is not hoverable. <kbd>Esc</kbd> dismisses only click-mode tooltips. Keep tooltip content short and non-essential, and use `display-on="click"` when users need time to read it.
 
 ## API reference
 
@@ -1206,7 +1300,7 @@ The `distance` prop controls the gap in pixels between the trigger and the toolt
 
 ### CSS custom properties
 
-<Expandable title="CSS variables" defaultOpen={false}>
+<Expandable title="CSS variables" defaultOpen={true}>
   | Variable                         | Description               | Default                              |
   | -------------------------------- | ------------------------- | ------------------------------------ |
   | `--bq-tooltip--background-color` | Tooltip background color  | `var(--bq-ui--inverse)`              |

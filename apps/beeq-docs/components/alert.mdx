@@ -1368,7 +1368,6 @@ Set `auto-dismiss` to hide the alert automatically after a delay. Use `time` to 
   | `--bq-alert--border-warning` | Border color for warning alerts | `var(--bq-stroke--warning)` |
   | `--bq-alert--border-error` | Border color for error alerts | `var(--bq-stroke--danger)` |
   | `--bq-alert--border-default` | Border color for default alerts | `var(--bq-stroke--secondary)` |
-  | `--bq-alert--border-color` | Alert border color | `undefined` |
   | `--bq-alert--border-width` | Alert border width | `var(--bq-stroke-s)` |
   | `--bq-alert--border-style` | Alert border style | `solid` |
   | `--bq-alert--icon-color-info` | Icon color for info alerts | `var(--bq-icon--brand)` |
@@ -1378,7 +1377,12 @@ Set `auto-dismiss` to hide the alert automatically after a delay. Use `time` to 
   | `--bq-alert--icon-color-default` | Icon color for default alerts | `var(--bq-icon--primary)` |
   | `--bq-alert--padding` | Alert padding | `var(--bq-spacing-s)` |
   | `--bq-alert--min-width` | Alert minimum width | `320px` |
+  | `--bq-alert--z-index` | Stacking order of a sticky alert | No declared default |
 </Expandable>
+
+<Note>
+  Set `--bq-alert--z-index` on the alert when your page needs an explicit stacking order. Without an override, the sticky alert's `z-index` computes to `auto`. Use the type-specific `--bq-alert--border-*` variables to customize its border color.
+</Note>
 
 <Tip>
   Learn more about [styling with shadow parts](/guides/styles#component-shadow-dom-parts) and [CSS custom properties](/guides/styles#global-css-custom-properties).

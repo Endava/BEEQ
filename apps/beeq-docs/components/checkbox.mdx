@@ -380,7 +380,7 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
     }
   </style>
 
-  <div>
+  <div class="checkbox-group">
     <bq-checkbox name="all-interests" value="all" background-on-hover>
       Interests
     </bq-checkbox>
@@ -401,7 +401,7 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
   <script>
     (() => {
       customElements.whenDefined('bq-checkbox').then(() => {
-        const checkboxGroup = previewRoot?.querySelector('div');
+        const checkboxGroup = previewRoot?.querySelector('.checkbox-group');
         const allInterestCheckbox = checkboxGroup?.querySelector('bq-checkbox[name="all-interests"]');
         const interestCheckboxes = Array.from(checkboxGroup?.querySelectorAll('bq-checkbox[name="interest"]') ?? []);
 
@@ -434,45 +434,37 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
 `}>
   <CodeGroup>
     ```js JavaScript icon="js" expandable
-    const allCheckboxChange = (event) => {
-      const interestCheckboxes = Array.from(
-        previewRoot.querySelectorAll('bq-checkbox[name="interest"]'),
-      );
+    (() => {
+      customElements.whenDefined('bq-checkbox').then(() => {
+        const checkboxGroup = document.querySelector('.checkbox-group');
+        const allInterestCheckbox = checkboxGroup.querySelector('bq-checkbox[name="all-interests"]');
+        const interestCheckboxes = Array.from(checkboxGroup.querySelectorAll('bq-checkbox[name="interest"]'));
 
-      interestCheckboxes.forEach((interestCheckbox) => {
-        interestCheckbox.checked = event.detail.checked;
+        const syncParentCheckbox = () => {
+          const checkedCount = interestCheckboxes.filter((checkbox) => checkbox.checked).length;
+          allInterestCheckbox.indeterminate =
+            checkedCount > 0 && checkedCount < interestCheckboxes.length;
+          allInterestCheckbox.checked = checkedCount === interestCheckboxes.length;
+        };
+
+        const syncChildrenCheckboxes = (event) => {
+          interestCheckboxes.forEach((checkbox) => {
+            checkbox.checked = event.detail.checked;
+          });
+          allInterestCheckbox.indeterminate = false;
+        };
+
+        syncParentCheckbox();
+        allInterestCheckbox.addEventListener('bqChange', syncChildrenCheckboxes);
+        interestCheckboxes.forEach((checkbox) => {
+          checkbox.addEventListener('bqChange', syncParentCheckbox);
+        });
       });
-    };
-
-    const interestCheckboxChange = () => {
-      const allInterestCheckbox = previewRoot.querySelector('bq-checkbox[name="all-interests"]');
-      if (!allInterestCheckbox) return;
-
-      const interestCheckboxes = previewRoot.querySelectorAll('bq-checkbox[name="interest"]');
-      const onlyChecked = previewRoot.querySelectorAll(
-        'bq-checkbox[name="interest"][checked]',
-      ).length;
-
-      allInterestCheckbox.indeterminate =
-        onlyChecked > 0 && onlyChecked < interestCheckboxes.length;
-      allInterestCheckbox.checked = onlyChecked === interestCheckboxes.length;
-    };
-
-    const allInterestCheckbox = previewRoot.querySelector('bq-checkbox[name="all-interests"]');
-    const interestCheckboxes = Array.from(
-      previewRoot.querySelectorAll('bq-checkbox[name="interest"]'),
-    );
-
-    allInterestCheckbox?.addEventListener('bqChange', allCheckboxChange);
-    interestCheckboxes.forEach((checkbox) => {
-      checkbox.addEventListener('bqChange', interestCheckboxChange);
-    });
-
-    interestCheckboxChange();
+    })();
     ```
 
     ```html HTML icon="html5" expandable
-    <div>
+    <div class="checkbox-group">
       <bq-checkbox name="all-interests" value="all" background-on-hover>
         Interests
       </bq-checkbox>
@@ -515,7 +507,7 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
       };
 
       return (
-        <div>
+        <div className="checkbox-group">
           <BqCheckbox
             backgroundOnHover
             checked={allChecked}
@@ -576,7 +568,7 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
       standalone: true,
       imports: [BqCheckbox],
       template: `
-        <div>
+        <div class="checkbox-group">
           <bq-checkbox
             background-on-hover
             [checked]="allChecked"
@@ -665,7 +657,7 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
     </script>
 
     <template>
-      <div>
+      <div class="checkbox-group">
         <BqCheckbox
           backgroundOnHover
           :checked="allChecked"
@@ -720,6 +712,10 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
 
 `bq-checkbox` participates in native forms. A checked checkbox submits `"on"` for its `name`; an unchecked checkbox is omitted from `FormData`. Use `required` for consent or confirmation choices that must be selected before submission.
 
+<Note>
+  The live preview runs in an iframe sandbox that does not allow native form submission. Its Submit button uses `type="button"` and `bqClick` to validate the form and display `FormData` without submitting it. The copyable examples use native `type="submit"` buttons for normal application forms.
+</Note>
+
 <CodeLivePreview mode="iframe" height="20rem" removePadding code={`
   <style>
     body {
@@ -750,15 +746,14 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
 
   <form class="checkbox-form" id="checkbox-form">
     <bq-checkbox
-      form-validation-message="Please accept the terms and conditions"
+      form-validation-message="Accept the terms to continue"
       name="termsAccepted"
-      value="terms"
       required
     >
       By clicking here, I state that I have read and understood the terms and conditions
     </bq-checkbox>
     <div class="checkbox-form__actions">
-      <bq-button appearance="secondary" type="reset">Cancel</bq-button>
+      <bq-button appearance="secondary" type="reset">Reset</bq-button>
       <bq-button type="button">Submit</bq-button>
     </div>
     <pre class="checkbox-form__output" id="checkbox-output">{}</pre>

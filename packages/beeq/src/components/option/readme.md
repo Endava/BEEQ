@@ -29,12 +29,12 @@ It can be an element of the navigation system that allows users to select differ
 
 ## Events
 
-| Event     | Description                                | Type                               |
-| --------- | ------------------------------------------ | ---------------------------------- |
-| `bqBlur`  | Handler to be called when item loses focus | `CustomEvent<HTMLBqOptionElement>` |
-| `bqClick` | Handler to be called when item is clicked  | `CustomEvent<HTMLBqOptionElement>` |
-| `bqEnter` | Handler to be called on enter key press    | `CustomEvent<HTMLBqOptionElement>` |
-| `bqFocus` | Handler to be called when item is focused  | `CustomEvent<HTMLBqOptionElement>` |
+| Event     | Description                                                                                                | Type                               |
+| --------- | ---------------------------------------------------------------------------------------------------------- | ---------------------------------- |
+| `bqBlur`  | Handler to be called when item loses focus                                                                 | `CustomEvent<HTMLBqOptionElement>` |
+| `bqClick` | Handler to be called when item is clicked                                                                  | `CustomEvent<HTMLBqOptionElement>` |
+| `bqEnter` | Emitted when Enter or Space activates a focused option. Checkbox control activation emits bqClick instead. | `CustomEvent<HTMLBqOptionElement>` |
+| `bqFocus` | Handler to be called when item is focused                                                                  | `CustomEvent<HTMLBqOptionElement>` |
 
 
 ## Slots

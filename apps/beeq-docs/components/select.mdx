@@ -2832,7 +2832,7 @@ These events no longer follow input-only focus changes. If your handler needs to
   Set `debounce-time` to throttle how often `bqInput` fires while the user types — `300` ms is a good default for async requests.
 </Tip>
 
-<CodeLivePreview mode="shadow" code={`
+<CodeLivePreview mode="shadow" code={String.raw`
   <bq-select id="custom-select" placeholder="Search options..." debounce-time="300">
     <label slot="label">Custom filtering</label>
     <bq-option value="running" display-value="Running" data-label="Running" data-icon="sneaker-move">
@@ -3059,7 +3059,7 @@ These events no longer follow input-only focus changes. If your handler needs to
     </script>
     ```
 
-    ```jsx React icon="react" expandable
+    ```tsx React icon="react" expandable
     import { useState } from 'react';
     import type { BqSelectCustomEvent } from '@beeq/core';
     import { BqIcon, BqOption, BqSelect, BqSpinner } from '@beeq/react';
@@ -3076,7 +3076,8 @@ These events no longer follow input-only focus changes. If your handler needs to
     ];
 
     function highlight(text: string, query: string) {
-      return text.replace(new RegExp(`(${query})`, 'gi'), '<b>$1</b>');
+      const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      return text.replace(new RegExp(`(${escaped})`, 'gi'), '<b>$1</b>');
     }
 
     export default function App() {
@@ -3221,6 +3222,7 @@ These events no longer follow input-only focus changes. If your handler needs to
 
         this.isLoading = true;
         const q = query.toLowerCase();
+        const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
         setTimeout(() => {
           this.isLoading = false;
@@ -3228,7 +3230,7 @@ These events no longer follow input-only focus changes. If your handler needs to
             .filter((o) => o.label.toLowerCase().includes(q))
             .map((o) => ({
               ...o,
-              label: o.label.replace(new RegExp(`(${query})`, 'gi'), '<b>$1</b>'),
+              label: o.label.replace(new RegExp(`(${escaped})`, 'gi'), '<b>$1</b>'),
             }));
         }, 300);
       }
@@ -3284,7 +3286,8 @@ These events no longer follow input-only focus changes. If your handler needs to
     const isLoading = ref(false);
 
     function highlight(text, query) {
-      return text.replace(new RegExp(`(${query})`, 'gi'), '<b>$1</b>');
+      const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      return text.replace(new RegExp(`(${escaped})`, 'gi'), '<b>$1</b>');
     }
 
     async function handleInput(event) {
@@ -3321,6 +3324,10 @@ These events no longer follow input-only focus changes. If your handler needs to
 ### Form integration
 
 `bq-select` is form-associated, so it participates in native submission, reset, and required validation. Use `name` for the submitted key, `required` for browser validation, and `form-validation-message` for a custom native validation message.
+
+<Note>
+  The live preview runs in an iframe sandbox that does not allow native form submission. Its Submit button uses `type="button"` and `bqClick` to validate the form and display `FormData` without submitting it. The copyable examples use native `type="submit"` buttons for normal application forms.
+</Note>
 
 <CodeLivePreview mode="iframe" height="27rem" removePadding code={`
   <style>
@@ -3617,14 +3624,18 @@ These events no longer follow input-only focus changes. If your handler needs to
 - **Built in:** the native `<input>` inside the control has `role="combobox"`, `aria-haspopup` (`"listbox"` for flat options or `"tree"` for nested options), `aria-expanded` (toggled when the panel opens and closes), and `aria-controls` pointing to the options container by `id`.
 - **Built in:** `aria-disabled="true"` is applied on the input when `disabled` is set.
 - **Built in:** the component is form-associated via `ElementInternals`, so it works with native `<form>` elements, `required` validation, and `formResetCallback`.
-- **Built in:** keyboard navigation — `Tab` moves focus to the input; `Enter` / `Space` opens the panel; `ArrowDown` / `ArrowUp` move between options; `Enter` selects the focused option; `Escape` closes the panel and returns focus to the input without changing the selection.
+- **Built in:** keyboard navigation — `Tab` moves focus to the input without opening the panel; `ArrowDown` / `ArrowUp` open the panel and move focus to the first or last option; while the panel is open, `ArrowDown` / `ArrowUp` move between options and `Home` / `End` jump to the first or last option; `Enter` or `Space` selects the focused option; `Escape` closes the panel and returns focus to the input without changing the selection.
 - **Built in:** in multi-select mode, `Backspace` on an empty input removes the most recently added tag.
 - **Built in:** nested multi-select changes the option container to a tree. `ArrowRight` expands a branch or moves to its first child; `ArrowLeft` collapses a branch or returns to its parent. `Enter` and `Space` select the focused option without changing expansion.
-- **Built in:** parent tree items expose checked, unchecked, or mixed state as their descendants are selected. The separate expand control has its own accessible label.
+- **Built in:** parent tree items expose checked, unchecked, or mixed state as their descendants are selected, and `aria-expanded` communicates whether a branch is open. The separate visual expand button is hidden from assistive technology and removed from the Tab order; keyboard users expand and collapse the focused tree item with the arrow keys.
 - **Your responsibility:** provide text in the `label` slot. The component associates its native `<label>` with the combobox input through `for` and `id`. Use visually hidden text when the layout cannot show a visible label.
-- **Your responsibility:** when `validation-status` is `"error"`, populate the `helper-text` slot with a clear error description so `aria-describedby` can link the input to the explanation.
-- **Your responsibility:** if options are loaded asynchronously, provide a loading indicator in the panel slot so users know content is arriving.
+- **Your responsibility:** when `validation-status` is `"error"`, populate the `helper-text` slot with a clear error description. The component does not set `aria-describedby` or `aria-invalid` on the input, so do not rely on color alone to communicate the error.
+- **Your responsibility:** if options are loaded asynchronously, show a disabled loading option in the default slot, as in the custom filtering example. `panel` is a shadow part for styling, not a slot.
 - **Your responsibility:** give every nested option a unique `value`. Values are used for selection state, form submission, tags, and the `selectionTree` event detail.
+
+<Warning>
+  The internal label currently sets `aria-label` from the technical `name` value, or `"select"` when no name is supplied. This may override the slotted label in accessible-name computation and is tracked in [the Select follow-up issue](https://github.com/Endava/BEEQ/issues/1832). Provide meaningful label text and verify the computed combobox name in your supported browsers and assistive technologies.
+</Warning>
 
 ## API reference
 

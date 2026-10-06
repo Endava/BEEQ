@@ -232,72 +232,74 @@ A simple list of options inside a `bq-option-list`. Each option carries a `value
 
 ### Nested parent
 
-Use `expanded` on the parent and place child options in its `options` slot. Give every option in the branch a unique `value`.
+Use `expanded` on the parent and place child options in its `options` slot. Give every option in the branch a unique `value`, and use a multiple `bq-select` so the options have a tree container and managed keyboard navigation.
 
 <Note>
-  This example focuses on the parent-child relationship. In a nested multiple [Select](/components/select), Select manages checkbox, selected, and indeterminate states.
+  A nested multiple [Select](/components/select) manages checkbox, selected, and indeterminate states. `bq-option-list` alone defaults to a listbox and is not the parent for nested tree items.
 </Note>
 
-<CodeLivePreview mode="shadow" code={`
+<CodeLivePreview mode="iframe" height="22rem" removePadding code={`
   <style>
-    :host {
-      align-items: stretch !important;
-      flex-direction: column !important;
-      justify-content: flex-start !important;
+    body {
+      padding: var(--bq-spacing-l);
     }
   </style>
 
-  <bq-option-list>
+  <bq-select name="skills" multiple open keep-open-on-select>
+    <label slot="label">Skills</label>
     <bq-option expanded value="frontend">
       Frontend
       <span slot="expand-label">2 levels</span>
       <bq-option slot="options" value="frontend:react">React</bq-option>
       <bq-option slot="options" value="frontend:vue">Vue</bq-option>
     </bq-option>
-  </bq-option-list>
+  </bq-select>
 `}>
   <CodeGroup>
     ```html HTML icon="html5" expandable
-    <bq-option-list>
+    <bq-select name="skills" multiple open keep-open-on-select>
+      <label slot="label">Skills</label>
       <bq-option expanded value="frontend">
         Frontend
         <span slot="expand-label">2 levels</span>
         <bq-option slot="options" value="frontend:react">React</bq-option>
         <bq-option slot="options" value="frontend:vue">Vue</bq-option>
       </bq-option>
-    </bq-option-list>
+    </bq-select>
     ```
 
     ```tsx React icon="react" expandable
-    import { BqOption, BqOptionList } from "@beeq/react";
+    import { BqOption, BqSelect } from "@beeq/react";
 
-    <BqOptionList>
+    <BqSelect name="skills" multiple open keepOpenOnSelect>
+      <label slot="label">Skills</label>
       <BqOption expanded value="frontend">
         Frontend
         <span slot="expand-label">2 levels</span>
         <BqOption slot="options" value="frontend:react">React</BqOption>
         <BqOption slot="options" value="frontend:vue">Vue</BqOption>
       </BqOption>
-    </BqOptionList>
+    </BqSelect>
     ```
 
     ```ts Angular icon="angular" expandable
     import { Component } from "@angular/core";
-    import { BqOption, BqOptionList } from "@beeq/angular/standalone";
+    import { BqOption, BqSelect } from "@beeq/angular/standalone";
 
     @Component({
       selector: "app-root",
       standalone: true,
-      imports: [BqOption, BqOptionList],
+      imports: [BqOption, BqSelect],
       template: `
-        <bq-option-list>
+        <bq-select name="skills" multiple open keep-open-on-select>
+          <label slot="label">Skills</label>
           <bq-option expanded value="frontend">
             Frontend
             <span slot="expand-label">2 levels</span>
             <bq-option slot="options" value="frontend:react">React</bq-option>
             <bq-option slot="options" value="frontend:vue">Vue</bq-option>
           </bq-option>
-        </bq-option-list>
+        </bq-select>
       `,
     })
     export class NestedOptionComponent {}
@@ -305,18 +307,19 @@ Use `expanded` on the parent and place child options in its `options` slot. Give
 
     ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
-    import { BqOption, BqOptionList } from "@beeq/vue";
+    import { BqOption, BqSelect } from "@beeq/vue";
     </script>
 
     <template>
-      <BqOptionList>
+      <BqSelect name="skills" multiple open keepOpenOnSelect>
+        <label slot="label">Skills</label>
         <BqOption expanded value="frontend">
           Frontend
           <span slot="expand-label">2 levels</span>
           <BqOption slot="options" value="frontend:react">React</BqOption>
           <BqOption slot="options" value="frontend:vue">Vue</BqOption>
         </BqOption>
-      </BqOptionList>
+      </BqSelect>
     </template>
     ```
   </CodeGroup>
@@ -1174,7 +1177,7 @@ As a developer, you are responsible for:
 |---|---|---|
 | `bqBlur` | Emitted when the option loses focus | `CustomEvent<HTMLBqOptionElement>` |
 | `bqClick` | Emitted when the option is clicked | `CustomEvent<HTMLBqOptionElement>` |
-| `bqEnter` | Emitted when Enter is pressed while the option is focused | `CustomEvent<HTMLBqOptionElement>` |
+| `bqEnter` | Emitted when Enter or Space activates a focused option. Activation through its checkbox control emits `bqClick` instead | `CustomEvent<HTMLBqOptionElement>` |
 | `bqFocus` | Emitted when the option receives focus | `CustomEvent<HTMLBqOptionElement>` |
 
 ### Slots

@@ -175,7 +175,6 @@ Use `type="range"` when users need a start and end date. Set `months="2"` so bot
     months="2"
     months-per-view="months"
     name="travel-dates"
-    placeholder="Select departure and return dates"
     type="range"
   >
     <label slot="label">Depart - Return dates</label>
@@ -187,7 +186,6 @@ Use `type="range"` when users need a start and end date. Set `months="2"` so bot
       months="2"
       months-per-view="months"
       name="travel-dates"
-      placeholder="Select departure and return dates"
       type="range"
     >
       <label slot="label">Depart - Return dates</label>
@@ -201,7 +199,6 @@ Use `type="range"` when users need a start and end date. Set `months="2"` so bot
       months={2}
       monthsPerView="months"
       name="travel-dates"
-      placeholder="Select departure and return dates"
       type="range"
     >
       <label slot="label">Depart - Return dates</label>
@@ -221,7 +218,6 @@ Use `type="range"` when users need a start and end date. Set `months="2"` so bot
           months="2"
           months-per-view="months"
           name="travel-dates"
-          placeholder="Select departure and return dates"
           type="range"
         >
           <label slot="label">Depart - Return dates</label>
@@ -241,7 +237,6 @@ Use `type="range"` when users need a start and end date. Set `months="2"` so bot
         :months="2"
         monthsPerView="months"
         name="travel-dates"
-        placeholder="Select departure and return dates"
         type="range"
       >
         <label slot="label">Depart - Return dates</label>
@@ -263,7 +258,6 @@ Use `type="multi"` when users need to pick several non-consecutive dates. Unlike
   <bq-date-picker
     months="2"
     name="training-dates"
-    placeholder="Select training session dates"
     type="multi"
     value="2026-05-08 2026-05-22 2026-06-04"
   >
@@ -275,7 +269,6 @@ Use `type="multi"` when users need to pick several non-consecutive dates. Unlike
     <bq-date-picker
       months="2"
       name="training-dates"
-      placeholder="Select training session dates"
       type="multi"
       value="2026-05-08 2026-05-22 2026-06-04"
     >
@@ -289,7 +282,6 @@ Use `type="multi"` when users need to pick several non-consecutive dates. Unlike
     <BqDatePicker
       months={2}
       name="training-dates"
-      placeholder="Select training session dates"
       type="multi"
       value="2026-05-08 2026-05-22 2026-06-04"
     >
@@ -309,7 +301,6 @@ Use `type="multi"` when users need to pick several non-consecutive dates. Unlike
         <bq-date-picker
           months="2"
           name="training-dates"
-          placeholder="Select training session dates"
           type="multi"
           value="2026-05-08 2026-05-22 2026-06-04"
         >
@@ -329,7 +320,6 @@ Use `type="multi"` when users need to pick several non-consecutive dates. Unlike
       <BqDatePicker
         :months="2"
         name="training-dates"
-        placeholder="Select training session dates"
         type="multi"
         value="2026-05-08 2026-05-22 2026-06-04"
       >
@@ -527,13 +517,13 @@ Use `initial-view` with day precision when people need to start their search fro
 Use `disabled` when the date field should not be interactive, such as when access is restricted based on user permissions or form state.
 
 <CodeLivePreview mode="shadow" code={`
-  <bq-date-picker disabled name="disabled-date" placeholder="Select a date" value="2026-05-25">
+  <bq-date-picker disabled name="disabled-date" value="2026-05-25">
     <label slot="label">Departure date</label>
   </bq-date-picker>
 `}>
   <CodeGroup>
     ```html HTML icon="html5"
-    <bq-date-picker disabled name="disabled-date" placeholder="Select a date" value="2026-05-25">
+    <bq-date-picker disabled name="disabled-date" value="2026-05-25">
       <label slot="label">Departure date</label>
     </bq-date-picker>
     ```
@@ -541,7 +531,7 @@ Use `disabled` when the date field should not be interactive, such as when acces
     ```jsx React icon="react"
     import { BqDatePicker } from "@beeq/react";
 
-    <BqDatePicker disabled name="disabled-date" placeholder="Select a date" value="2026-05-25">
+    <BqDatePicker disabled name="disabled-date" value="2026-05-25">
       <label slot="label">Departure date</label>
     </BqDatePicker>
     ```
@@ -555,7 +545,7 @@ Use `disabled` when the date field should not be interactive, such as when acces
       standalone: true,
       imports: [BqDatePicker],
       template: `
-        <bq-date-picker disabled name="disabled-date" placeholder="Select a date" value="2026-05-25">
+        <bq-date-picker disabled name="disabled-date" value="2026-05-25">
           <label slot="label">Departure date</label>
         </bq-date-picker>
       `
@@ -569,7 +559,7 @@ Use `disabled` when the date field should not be interactive, such as when acces
     </script>
 
     <template>
-      <BqDatePicker disabled name="disabled-date" placeholder="Select a date" value="2026-05-25">
+      <BqDatePicker disabled name="disabled-date" value="2026-05-25">
         <label slot="label">Departure date</label>
       </BqDatePicker>
     </template>
@@ -1158,7 +1148,7 @@ Use `isDateDisallowed` to make specific dates unavailable for selection. This is
 `}>
   <CodeGroup>
     ```js JavaScript icon="js"
-    const datePickerElem = previewRoot.querySelector('bq-date-picker[name="disallowed-dates"]');
+    const datePickerElem = document.querySelector('bq-date-picker[name="disallowed-dates"]');
     const disallowedDates = ['2026-12-01', '2026-12-25', '2026-12-26'];
 
     datePickerElem.isDateDisallowed = (date) => {
@@ -1280,7 +1270,7 @@ Use numeric `formatOptions` to set the segment order and separators. The compone
 `}>
   <CodeGroup>
     ```js JavaScript icon="js" expandable
-    const datePickerElem = previewRoot.querySelector('bq-date-picker[name="formatted-date"]');
+    const datePickerElem = document.querySelector('bq-date-picker[name="formatted-date"]');
 
     datePickerElem.formatOptions = {
       year: 'numeric',
@@ -1379,6 +1369,12 @@ Use numeric `formatOptions` to set the segment order and separators. The compone
 
 `bq-date-picker` submits its current date value with the form. Use `required` and `form-validation-message` when the date is mandatory; the custom message also applies to invalid typed values and out-of-bounds dates.
 
+<Warning>
+  A non-empty incomplete segment draft becomes invalid when focus leaves the segmented field, even when the picker is optional. The draft stays visible and the last committed `value` is preserved, but native form validation blocks submission until you complete a valid date, choose a valid calendar date, or clear the field.
+</Warning>
+
+When focus leaves the segmented field, complete dates outside `min` or `max` are clamped to the nearest bound. Complete inverted ranges are displayed in chronological order. Invalid or incomplete drafts are not generally reverted to the previous displayed date.
+
 <CodeLivePreview mode="iframe" height="30rem" removePadding code={`
   <style>
     body {
@@ -1411,7 +1407,6 @@ Use numeric `formatOptions` to set the segment order and separators. The compone
     <bq-date-picker
       form-validation-message="Choose a start date"
       name="startDate"
-      placeholder="Select a date"
       required
     >
       <label slot="label">Start date</label>
@@ -1458,7 +1453,6 @@ Use numeric `formatOptions` to set the segment order and separators. The compone
       <bq-date-picker
         form-validation-message="Choose a start date"
         name="startDate"
-        placeholder="Select a date"
         required
       >
         <label slot="label">Start date</label>
@@ -1503,7 +1497,6 @@ Use numeric `formatOptions` to set the segment order and separators. The compone
           <BqDatePicker
             formValidationMessage="Choose a start date"
             name="startDate"
-            placeholder="Select a date"
             required
           >
             <label slot="label">Start date</label>
@@ -1529,7 +1522,6 @@ Use numeric `formatOptions` to set the segment order and separators. The compone
           <bq-date-picker
             form-validation-message="Choose a start date"
             name="startDate"
-            placeholder="Select a date"
             required
           >
             <label slot="label">Start date</label>
@@ -1567,7 +1559,6 @@ Use numeric `formatOptions` to set the segment order and separators. The compone
         <BqDatePicker
           formValidationMessage="Choose a start date"
           name="startDate"
-          placeholder="Select a date"
           required
         >
           <label slot="label">Start date</label>
@@ -1720,7 +1711,7 @@ Use numeric `formatOptions` to set the segment order and separators. The compone
 |---|---|
 | `label` | Label content for the field |
 | `prefix` | Optional prefix content inside the control |
-| `suffix` | Optional suffix content inside the control |
+| `suffix` | Replaces the icon inside the calendar trigger button; defaults to a calendar icon. Use `calendarButtonLabel` to name the button |
 | `clear-icon` | Replaces the default clear icon |
 
 ### Shadow parts
