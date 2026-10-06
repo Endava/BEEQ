@@ -114,7 +114,7 @@
     "npm-run-all2": "9.0.2",
     "nx": "23.2.1",
     "nx-stylelint": "19.0.0",
-    "playwright": "1.61.1",
+    "playwright": "1.63.0",
     "plop": "4.0.1",
     "postcss": "8.5.23",
     "postcss-import": "16.1.1",
