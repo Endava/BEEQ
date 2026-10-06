@@ -245,6 +245,8 @@ export class BqDatePicker {
 
   /** Sticky flag: last typed input couldn't be parsed. Cleared on next successful commit or `clear()`. */
   private hasBadInput: boolean = false;
+  /** Keeps a non-empty partial draft invalid after blur until it is corrected or cleared. */
+  private hasBlurredIncompleteDraft: boolean = false;
 
   /** Source of the current panel opening, used to preserve the appropriate focus target. */
   private activeOpenSource: 'input' | 'trigger' | 'programmatic' = 'programmatic';
@@ -451,6 +453,7 @@ export class BqDatePicker {
     }
 
     this.hasBadInput = false;
+    this.hasBlurredIncompleteDraft = false;
     const isSegmentDraftCommit = this.isCommittingSegmentDraft;
     this.isCommittingSegmentDraft = false;
     if (!isSegmentDraftCommit) this.syncDerivedFromValue();
@@ -690,6 +693,9 @@ export class BqDatePicker {
   private handleBlur = (): void => {
     if (this.disabled) return;
 
+    const { hasPartialGroup } = this.getSegmentDraftState();
+    this.hasBlurredIncompleteDraft = hasPartialGroup;
+    this.syncSegmentDraftValue();
     this.bqBlur.emit(this.el);
   };
 
@@ -1027,7 +1033,8 @@ export class BqDatePicker {
   private syncSegmentDraftValue = (): void => {
     const { hasDisallowedValue, hasInvalidValue, hasPartialGroup, selection, values } = this.getSegmentDraftState();
 
-    this.hasBadInput = hasInvalidValue || hasDisallowedValue;
+    if (this.hasBlurredIncompleteDraft && !hasPartialGroup) this.hasBlurredIncompleteDraft = false;
+    this.hasBadInput = hasInvalidValue || hasDisallowedValue || (this.hasBlurredIncompleteDraft && hasPartialGroup);
 
     this.syncValidity();
 

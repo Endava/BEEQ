@@ -1998,6 +1998,36 @@ describe('bq-date-picker', () => {
     expectSegmentsAriaInvalid(datePicker, 'true');
   });
 
+  it('should block form submission when an incomplete date draft is blurred and clear invalidity when corrected', async () => {
+    const { root, waitForChanges } = await render(
+      <form>
+        <bq-date-picker name="date-picker" type="single" value="2026-09-09" />
+        <button type="button">Leave date field</button>
+      </form>,
+    );
+    const form = root as HTMLFormElement;
+    const datePicker = form.querySelector<HTMLBqDatePickerElement>('bq-date-picker');
+    const leaveFieldButton = form.querySelector<HTMLButtonElement>('button');
+    if (!datePicker || !leaveFieldButton) throw new Error('Expected date picker and leave-field button');
+
+    await typeSegment(datePicker, 'year', '206');
+    leaveFieldButton.focus();
+    await waitForChanges();
+
+    expect(datePicker.value).toBe('2026-09-09');
+    expect(datePicker.matches(':state(invalid)')).toBe(true);
+    expect(form.checkValidity()).toBe(false);
+    expectSegmentsAriaInvalid(datePicker, 'true');
+
+    await typeSegment(datePicker, 'year', '6');
+    await waitForChanges();
+
+    expect(datePicker.value).toBe('2066-09-09');
+    expect(datePicker.matches(':state(invalid)')).toBe(false);
+    expect(form.checkValidity()).toBe(true);
+    expectSegmentsAriaInvalid(datePicker, 'false');
+  });
+
   it('should expose the custom `formValidationMessage` for bounds errors', async () => {
     const setValiditySpy = vi.spyOn(ElementInternals.prototype, 'setValidity');
     const { root, waitForChanges } = await render(
