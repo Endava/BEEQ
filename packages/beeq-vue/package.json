@@ -1,12 +1,12 @@
 {
   "name": "@beeq/vue",
-  "version": "1.16.0",
+  "version": "1.16.1",
   "license": "Apache-2.0",
   "description": "Vue specific wrapper for BEEQ Design System components",
   "main": "./src/index.js",
   "types": "./src/index.d.ts",
   "dependencies": {
-    "@beeq/core": "^1.15.0",
+    "@beeq/core": "^1.16.1",
     "@stencil/vue-output-target": "^0.14.0"
   },
   "peerDependencies": {

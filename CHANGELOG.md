@@ -1,3 +1,26 @@
+## 1.16.1 (2026-10-06)
+
+### Bug Fixes 🐞
+
+- **date picker:** invalidate incomplete drafts on blur ([#1826](https://github.com/Endava/BEEQ/pull/1826))
+- **storybook:** improve custom event action details ([39b49632](https://github.com/Endava/BEEQ/commit/39b49632))
+
+### Chore ⚙️
+
+- **ci:** enhance Renovate configuration and workflow automation ([d5cd69d0](https://github.com/Endava/BEEQ/commit/d5cd69d0))
+- **deps:** update nx to v23.2.1 ([#1821](https://github.com/Endava/BEEQ/pull/1821))
+- **deps:** update angular ([#1822](https://github.com/Endava/BEEQ/pull/1822))
+- **deps:** update chromatic ([#1823](https://github.com/Endava/BEEQ/pull/1823))
+- **deps:** update dependency playwright to v1.63.0 ([#1824](https://github.com/Endava/BEEQ/pull/1824))
+- **deps:** update pnpm to v12.9.0 ([#1825](https://github.com/Endava/BEEQ/pull/1825))
+- **nx:** disable preserveMatchingDependencyRanges in version configuration ([f3e21a4e](https://github.com/Endava/BEEQ/commit/f3e21a4e))
+
+### ❤️ Thank You
+
+- BEEQ @en-beeq
+- BEEQ Design System @en-beeq
+- Dabiel Gonzalez-Ramos @dgonzalezr
+
 ## 1.16.0 (2026-10-02)
 
 ### Features ⚡️
