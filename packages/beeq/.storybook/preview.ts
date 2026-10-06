@@ -12,6 +12,63 @@ import customElements from './custom-elements.json';
 
 setCustomElementsManifest(customElements);
 
+// Storybook's Actions panel serializes the CustomEvent object passed to each
+// inferred event handler. `detail` is normally inherited and non-enumerable,
+// so add a readable snapshot without changing the event seen by consumers.
+const customElementsWithEvents = customElements as unknown as {
+  modules: Array<{ declarations: Array<{ events?: Array<{ name: string }> }> }>;
+};
+const componentEventNames = new Set(
+  customElementsWithEvents.modules.flatMap((module) =>
+    module.declarations.flatMap((declaration) => declaration.events?.map((event) => event.name) ?? []),
+  ),
+);
+
+const toActionPayload = (value: unknown, seen = new WeakSet<object>()): unknown => {
+  if (value instanceof Element) {
+    return {
+      tagName: value.tagName.toLowerCase(),
+      ...(value.id && { id: value.id }),
+      ...(typeof value.className === 'string' && value.className && { className: value.className }),
+    };
+  }
+
+  if (Array.isArray(value)) {
+    if (seen.has(value)) return '[Circular]';
+    seen.add(value);
+    return value.map((item) => toActionPayload(item, seen));
+  }
+
+  if (value && typeof value === 'object') {
+    if (seen.has(value)) return '[Circular]';
+    seen.add(value);
+
+    return Object.fromEntries(
+      Object.entries(value)
+        .filter(([key, item]) => !key.startsWith('s-') && !key.startsWith('__') && typeof item !== 'function')
+        .map(([key, item]) => [key, toActionPayload(item, seen)]),
+    );
+  }
+
+  return value;
+};
+
+for (const eventName of componentEventNames) {
+  document.addEventListener(
+    eventName,
+    (event) => {
+      if (event instanceof CustomEvent) {
+        Object.defineProperty(event, 'detailPayload', {
+          configurable: true,
+          enumerable: true,
+          value: toActionPayload(event.detail),
+        });
+      }
+    },
+    true,
+  );
+}
+
 // Extend the DocsContainerProps to include the userGlobals
 interface ExtendedDocsContainerProps extends DocsContainerProps {
   context: DocsContainerProps['context'] & {
