@@ -134,6 +134,7 @@
     },
     "version": {
       "conventionalCommits": true,
+      "preserveMatchingDependencyRanges": false,
       "versionPrefix": "^"
     },
     "releaseTag": {
