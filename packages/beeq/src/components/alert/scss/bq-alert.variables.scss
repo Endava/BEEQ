@@ -9,7 +9,6 @@
    * @prop --bq-alert--content-footer-gap: The alert content and footer gap
    * @prop --bq-alert--title-body-gap: The alert title and body gap
 
-   * @prop --bq-alert--border-color: The alert border color
    * @prop --bq-alert--border-style: The alert border style
    * @prop --bq-alert--border-width: The alert border width
 
@@ -30,6 +29,7 @@
 
    * @prop --bq-alert--padding: The alert padding
    * @prop --bq-alert--min-width: The alert min width
+   * @prop --bq-alert--z-index: The stacking order of a sticky alert. No default is declared.
    */
 
   --bq-alert--background: theme(colors.ui.secondary);

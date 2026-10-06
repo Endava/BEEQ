@@ -14,7 +14,7 @@ The Breadcrumb Item helps users understand their current location within a websi
 | Property | Attribute | Description                                                                                                          | Type                                         | Default                 |
 | -------- | --------- | -------------------------------------------------------------------------------------------------------------------- | -------------------------------------------- | ----------------------- |
 | `href`   | `href`    | If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered. | `string`                                     | `undefined`             |
-| `rel`    | `rel`     | Where to display the link in the browser context. Relevant only if `href` is set.                                    | `string`                                     | `'noreferrer noopener'` |
+| `rel`    | `rel`     | Link relationships. Currently not forwarded to the native anchor.                                                    | `string`                                     | `'noreferrer noopener'` |
 | `target` | `target`  | Where to display the link in the browser context. Relevant only if `href` is set.                                    | `"_blank" \| "_parent" \| "_self" \| "_top"` | `undefined`             |
 
 
@@ -29,10 +29,10 @@ The Breadcrumb Item helps users understand their current location within a websi
 
 ## Slots
 
-| Slot          | Description                                                     |
-| ------------- | --------------------------------------------------------------- |
-|               | The default slot is used to add content to the breadcrumb item. |
-| `"separator"` |                                                                 |
+| Slot          | Description                                                      |
+| ------------- | ---------------------------------------------------------------- |
+|               | The default slot is used to add content to the breadcrumb item.  |
+| `"separator"` | Per-item separator content, normally populated by bq-breadcrumb. |
 
 
 ## Shadow Parts

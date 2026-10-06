@@ -476,8 +476,12 @@ Icons next to labels help users recognize categories at a glance. Use `size="16"
 | Property | Attribute | Description | Type | Default |
 |---|---|---|---|---|
 | `href` | `href` | If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered | `string` | `undefined` |
-| `rel` | `rel` | Where to display the link in the browser context. Relevant only if `href` is set | `string` | `'noreferrer noopener'` |
+| `rel` | `rel` | Link relationships. Currently not forwarded to the native anchor | `string` | `'noreferrer noopener'` |
 | `target` | `target` | Where to display the link in the browser context. Relevant only if `href` is set | `'_blank'` \| `'_parent'` \| `'_self'` \| `'_top'` | `undefined` |
+
+<Warning>
+  `bq-breadcrumb-item` currently ignores custom `rel` values. Its inner link uses `rel="noreferrer noopener"` when `target` is set, and no `rel` otherwise. This behavior is tracked in [the Breadcrumb follow-up issue](https://github.com/Endava/BEEQ/issues/1829).
+</Warning>
 
 ### Events
 
@@ -503,8 +507,9 @@ Events are emitted by `bq-breadcrumb-item`.
 | Slot | Description |
 |---|---|
 | *(default)* | The default slot is used to add content to the breadcrumb item |
+| `separator` | Per-item separator content, normally populated by `bq-breadcrumb`. Use the parent component's `separator` slot for a consistent trail-wide separator |
 
-### CSS parts
+### Shadow parts
 
 #### `bq-breadcrumb`
 

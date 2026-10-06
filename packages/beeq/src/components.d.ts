@@ -251,7 +251,6 @@ export namespace Components {
      * @cssprop --bq-alert--border-radius - The alert border radius
      * @cssprop --bq-alert--content-footer-gap - The alert content and footer gap
      * @cssprop --bq-alert--title-body-gap - The alert title and body gap
-     * @cssprop --bq-alert--border-color - The alert border color
      * @cssprop --bq-alert--border-style - The alert border style
      * @cssprop --bq-alert--border-width - The alert border width
      * @cssprop --bq-alert--background-info - The alert background color for info type
@@ -268,6 +267,7 @@ export namespace Components {
      * @cssprop --bq-alert--icon-color-error - The alert icon color for error type
      * @cssprop --bq-alert--padding - The alert padding
      * @cssprop --bq-alert--min-width - The alert min width
+     * @cssprop --bq-alert--z-index - The stacking order of a sticky alert. No default is declared.
      */
     interface BqAlert {
         /**
@@ -455,7 +455,7 @@ export namespace Components {
      * @status stable
      * @attr {string} href - If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered.
      * @attr {string} target - Where to display the link in the browser context. Relevant only if `href` is set.
-     * @attr {string} rel - Where to display the link in the browser context. Relevant only if `href` is set.
+     * @attr {string} rel - Link relationships. Currently not forwarded to the native anchor.
      * @event bqFocus - Handler to be called when item is focused
      * @event bqClick - Handler to be called when item is clicked
      * @event bqBlur - Handler to be called when item loses focus
@@ -482,7 +482,7 @@ export namespace Components {
          */
         "href": string;
         /**
-          * Where to display the link in the browser context. Relevant only if `href` is set.
+          * Link relationships. Currently not forwarded to the native anchor.
           * @default 'noreferrer noopener'
          */
         "rel": string;
@@ -1665,7 +1665,7 @@ export namespace Components {
      * @event bqBlur - Handler to be called when item loses focus.
      * @event bqFocus - Handler to be called when item is focused.
      * @event bqClick - Handler to be called when item is clicked.
-     * @event bqEnter - Handler to be called on enter key press.
+     * @event bqEnter - Emitted when Enter or Space activates a focused option. Checkbox control activation emits bqClick instead.
      * @cssprop --bq-option--background - background color
      * @cssprop --bq-option--font-size - font size
      * @cssprop --bq-option--border-color - border color
@@ -3567,7 +3567,6 @@ declare global {
      * @cssprop --bq-alert--border-radius - The alert border radius
      * @cssprop --bq-alert--content-footer-gap - The alert content and footer gap
      * @cssprop --bq-alert--title-body-gap - The alert title and body gap
-     * @cssprop --bq-alert--border-color - The alert border color
      * @cssprop --bq-alert--border-style - The alert border style
      * @cssprop --bq-alert--border-width - The alert border width
      * @cssprop --bq-alert--background-info - The alert background color for info type
@@ -3584,6 +3583,7 @@ declare global {
      * @cssprop --bq-alert--icon-color-error - The alert icon color for error type
      * @cssprop --bq-alert--padding - The alert padding
      * @cssprop --bq-alert--min-width - The alert min width
+     * @cssprop --bq-alert--z-index - The stacking order of a sticky alert. No default is declared.
      */
     interface HTMLBqAlertElement extends Components.BqAlert, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqAlertElementEventMap>(type: K, listener: (this: HTMLBqAlertElement, ev: BqAlertCustomEvent<HTMLBqAlertElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -3713,7 +3713,7 @@ declare global {
      * @status stable
      * @attr {string} href - If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered.
      * @attr {string} target - Where to display the link in the browser context. Relevant only if `href` is set.
-     * @attr {string} rel - Where to display the link in the browser context. Relevant only if `href` is set.
+     * @attr {string} rel - Link relationships. Currently not forwarded to the native anchor.
      * @event bqFocus - Handler to be called when item is focused
      * @event bqClick - Handler to be called when item is clicked
      * @event bqBlur - Handler to be called when item loses focus
@@ -4460,7 +4460,7 @@ declare global {
      * @event bqBlur - Handler to be called when item loses focus.
      * @event bqFocus - Handler to be called when item is focused.
      * @event bqClick - Handler to be called when item is clicked.
-     * @event bqEnter - Handler to be called on enter key press.
+     * @event bqEnter - Emitted when Enter or Space activates a focused option. Checkbox control activation emits bqClick instead.
      * @cssprop --bq-option--background - background color
      * @cssprop --bq-option--font-size - font size
      * @cssprop --bq-option--border-color - border color
@@ -5759,7 +5759,6 @@ declare namespace LocalJSX {
      * @cssprop --bq-alert--border-radius - The alert border radius
      * @cssprop --bq-alert--content-footer-gap - The alert content and footer gap
      * @cssprop --bq-alert--title-body-gap - The alert title and body gap
-     * @cssprop --bq-alert--border-color - The alert border color
      * @cssprop --bq-alert--border-style - The alert border style
      * @cssprop --bq-alert--border-width - The alert border width
      * @cssprop --bq-alert--background-info - The alert background color for info type
@@ -5776,6 +5775,7 @@ declare namespace LocalJSX {
      * @cssprop --bq-alert--icon-color-error - The alert icon color for error type
      * @cssprop --bq-alert--padding - The alert padding
      * @cssprop --bq-alert--min-width - The alert min width
+     * @cssprop --bq-alert--z-index - The stacking order of a sticky alert. No default is declared.
      */
     interface BqAlert {
         /**
@@ -5971,7 +5971,7 @@ declare namespace LocalJSX {
      * @status stable
      * @attr {string} href - If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered.
      * @attr {string} target - Where to display the link in the browser context. Relevant only if `href` is set.
-     * @attr {string} rel - Where to display the link in the browser context. Relevant only if `href` is set.
+     * @attr {string} rel - Link relationships. Currently not forwarded to the native anchor.
      * @event bqFocus - Handler to be called when item is focused
      * @event bqClick - Handler to be called when item is clicked
      * @event bqBlur - Handler to be called when item loses focus
@@ -6010,7 +6010,7 @@ declare namespace LocalJSX {
          */
         "onBqFocus"?: (event: BqBreadcrumbItemCustomEvent<HTMLBqBreadcrumbItemElement>) => void;
         /**
-          * Where to display the link in the browser context. Relevant only if `href` is set.
+          * Link relationships. Currently not forwarded to the native anchor.
           * @default 'noreferrer noopener'
          */
         "rel"?: string;
@@ -7280,7 +7280,7 @@ declare namespace LocalJSX {
      * @event bqBlur - Handler to be called when item loses focus.
      * @event bqFocus - Handler to be called when item is focused.
      * @event bqClick - Handler to be called when item is clicked.
-     * @event bqEnter - Handler to be called on enter key press.
+     * @event bqEnter - Emitted when Enter or Space activates a focused option. Checkbox control activation emits bqClick instead.
      * @cssprop --bq-option--background - background color
      * @cssprop --bq-option--font-size - font size
      * @cssprop --bq-option--border-color - border color
@@ -7338,7 +7338,7 @@ declare namespace LocalJSX {
          */
         "onBqClick"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
         /**
-          * Handler to be called on enter key press
+          * Emitted when Enter or Space activates a focused option. Checkbox control activation emits bqClick instead.
          */
         "onBqEnter"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
         /**
@@ -9617,7 +9617,6 @@ declare module "@stencil/core" {
              * @cssprop --bq-alert--border-radius - The alert border radius
              * @cssprop --bq-alert--content-footer-gap - The alert content and footer gap
              * @cssprop --bq-alert--title-body-gap - The alert title and body gap
-             * @cssprop --bq-alert--border-color - The alert border color
              * @cssprop --bq-alert--border-style - The alert border style
              * @cssprop --bq-alert--border-width - The alert border width
              * @cssprop --bq-alert--background-info - The alert background color for info type
@@ -9634,6 +9633,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-alert--icon-color-error - The alert icon color for error type
              * @cssprop --bq-alert--padding - The alert padding
              * @cssprop --bq-alert--min-width - The alert min width
+             * @cssprop --bq-alert--z-index - The stacking order of a sticky alert. No default is declared.
              */
             "bq-alert": LocalJSX.IntrinsicElements["bq-alert"] & JSXBase.HTMLAttributes<HTMLBqAlertElement>;
             /**
@@ -9730,7 +9730,7 @@ declare module "@stencil/core" {
              * @status stable
              * @attr {string} href - If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered.
              * @attr {string} target - Where to display the link in the browser context. Relevant only if `href` is set.
-             * @attr {string} rel - Where to display the link in the browser context. Relevant only if `href` is set.
+             * @attr {string} rel - Link relationships. Currently not forwarded to the native anchor.
              * @event bqFocus - Handler to be called when item is focused
              * @event bqClick - Handler to be called when item is clicked
              * @event bqBlur - Handler to be called when item loses focus
@@ -10277,7 +10277,7 @@ declare module "@stencil/core" {
              * @event bqBlur - Handler to be called when item loses focus.
              * @event bqFocus - Handler to be called when item is focused.
              * @event bqClick - Handler to be called when item is clicked.
-             * @event bqEnter - Handler to be called on enter key press.
+             * @event bqEnter - Emitted when Enter or Space activates a focused option. Checkbox control activation emits bqClick instead.
              * @cssprop --bq-option--background - background color
              * @cssprop --bq-option--font-size - font size
              * @cssprop --bq-option--border-color - border color

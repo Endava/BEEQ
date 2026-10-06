@@ -61,7 +61,7 @@ Tables organize information into rows and columns so people can compare values, 
   </Card>
 
   <Card title="Bordered layout">
-    Use `.bordered` when each cell needs an explicit boundary, such as in financial or spreadsheet-style tables where column delineation helps readability.
+    Add the `bordered` modifier to a table that already has the `bq-table` class when each cell needs an explicit boundary, such as in financial or spreadsheet-style tables.
   </Card>
 
   <Card title="Large datasets">
@@ -106,7 +106,7 @@ A table is built from standard HTML sectioning and cell elements. Each part has 
   </CardTile>
 
   <CardTile title="Bordered">
-    Adding `.bordered` draws a full border around every cell and the table itself. Use this when column delineation is critical for data clarity, such as financial or spreadsheet-style tables.
+    A table with `class="bq-table bordered"` uses separate cell borders and an outer border. Use this when column delineation is critical for data clarity, such as financial or spreadsheet-style tables.
   </CardTile>
 </CardGroup>
 
@@ -120,7 +120,7 @@ A table is built from standard HTML sectioning and cell elements. Each part has 
 
 The default table applies base typography, header and cell padding, and row separators. Add the `bq-table` class to any standard `<table>` element to activate the styles.
 
-<CodeLivePreview mode="iframe" height="16rem" removePadding code={`
+<CodeLivePreview mode="iframe" height="18rem" removePadding code={`
   <style>
     body {
       padding: var(--bq-spacing-m);
@@ -128,11 +128,12 @@ The default table applies base typography, header and cell padding, and row sepa
   </style>
 
   <table class="bq-table">
+    <caption>Account balances</caption>
     <thead>
       <tr>
-        <th>Name</th>
-        <th>Status</th>
-        <th>Amount</th>
+        <th scope="col">Name</th>
+        <th scope="col">Status</th>
+        <th scope="col">Amount</th>
       </tr>
     </thead>
     <tbody>
@@ -157,11 +158,12 @@ The default table applies base typography, header and cell padding, and row sepa
   <CodeGroup>
     ```html HTML icon="html5" expandable
     <table class="bq-table">
+      <caption>Account balances</caption>
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Status</th>
-          <th>Amount</th>
+          <th scope="col">Name</th>
+          <th scope="col">Status</th>
+          <th scope="col">Amount</th>
         </tr>
       </thead>
       <tbody>
@@ -186,11 +188,12 @@ The default table applies base typography, header and cell padding, and row sepa
 
     ```jsx React icon="react" expandable
     <table className="bq-table">
+      <caption>Account balances</caption>
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Status</th>
-          <th>Amount</th>
+          <th scope="col">Name</th>
+          <th scope="col">Status</th>
+          <th scope="col">Amount</th>
         </tr>
       </thead>
       <tbody>
@@ -222,11 +225,12 @@ The default table applies base typography, header and cell padding, and row sepa
       imports: [],
       template: `
         <table class="bq-table">
+          <caption>Account balances</caption>
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Status</th>
-              <th>Amount</th>
+              <th scope="col">Name</th>
+              <th scope="col">Status</th>
+              <th scope="col">Amount</th>
             </tr>
           </thead>
           <tbody>
@@ -255,11 +259,12 @@ The default table applies base typography, header and cell padding, and row sepa
     ```vue Vue icon="vuejs" expandable
     <template>
       <table class="bq-table">
+        <caption>Account balances</caption>
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Status</th>
-            <th>Amount</th>
+            <th scope="col">Name</th>
+            <th scope="col">Status</th>
+            <th scope="col">Amount</th>
           </tr>
         </thead>
         <tbody>
@@ -291,7 +296,7 @@ The default table applies base typography, header and cell padding, and row sepa
 
 Add the `selected` class to a `<tr>` to highlight the active record. Use this when a row selection drives a side panel, detail view, or other contextual UI.
 
-<CodeLivePreview mode="iframe" height="16rem" removePadding code={`
+<CodeLivePreview mode="iframe" height="18rem" removePadding code={`
   <style>
     body {
       padding: var(--bq-spacing-m);
@@ -299,11 +304,12 @@ Add the `selected` class to a `<tr>` to highlight the active record. Use this wh
   </style>
 
   <table class="bq-table">
+    <caption>Account balances</caption>
     <thead>
       <tr>
-        <th>Name</th>
-        <th>Status</th>
-        <th>Amount</th>
+        <th scope="col">Name</th>
+        <th scope="col">Status</th>
+        <th scope="col">Amount</th>
       </tr>
     </thead>
     <tbody>
@@ -328,11 +334,12 @@ Add the `selected` class to a `<tr>` to highlight the active record. Use this wh
   <CodeGroup>
     ```html HTML icon="html5" expandable
     <table class="bq-table">
+      <caption>Account balances</caption>
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Status</th>
-          <th>Amount</th>
+          <th scope="col">Name</th>
+          <th scope="col">Status</th>
+          <th scope="col">Amount</th>
         </tr>
       </thead>
       <tbody>
@@ -357,11 +364,12 @@ Add the `selected` class to a `<tr>` to highlight the active record. Use this wh
 
     ```jsx React icon="react" expandable
     <table className="bq-table">
+      <caption>Account balances</caption>
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Status</th>
-          <th>Amount</th>
+          <th scope="col">Name</th>
+          <th scope="col">Status</th>
+          <th scope="col">Amount</th>
         </tr>
       </thead>
       <tbody>
@@ -393,11 +401,12 @@ Add the `selected` class to a `<tr>` to highlight the active record. Use this wh
       imports: [],
       template: `
         <table class="bq-table">
+          <caption>Account balances</caption>
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Status</th>
-              <th>Amount</th>
+              <th scope="col">Name</th>
+              <th scope="col">Status</th>
+              <th scope="col">Amount</th>
             </tr>
           </thead>
           <tbody>
@@ -426,11 +435,12 @@ Add the `selected` class to a `<tr>` to highlight the active record. Use this wh
     ```vue Vue icon="vuejs" expandable
     <template>
       <table class="bq-table">
+        <caption>Account balances</caption>
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Status</th>
-            <th>Amount</th>
+            <th scope="col">Name</th>
+            <th scope="col">Status</th>
+            <th scope="col">Amount</th>
           </tr>
         </thead>
         <tbody>
@@ -460,7 +470,7 @@ Add the `selected` class to a `<tr>` to highlight the active record. Use this wh
 
 Add the `compact` class to the `<table>` to reduce cell and header padding. This is useful in dense, data-heavy interfaces where vertical space is at a premium.
 
-<CodeLivePreview mode="iframe" height="16rem" removePadding code={`
+<CodeLivePreview mode="iframe" height="18rem" removePadding code={`
   <style>
     body {
       padding: var(--bq-spacing-m);
@@ -468,11 +478,12 @@ Add the `compact` class to the `<table>` to reduce cell and header padding. This
   </style>
 
   <table class="bq-table compact">
+    <caption>Account balances</caption>
     <thead>
       <tr>
-        <th>Name</th>
-        <th>Status</th>
-        <th>Amount</th>
+        <th scope="col">Name</th>
+        <th scope="col">Status</th>
+        <th scope="col">Amount</th>
       </tr>
     </thead>
     <tbody>
@@ -497,11 +508,12 @@ Add the `compact` class to the `<table>` to reduce cell and header padding. This
   <CodeGroup>
     ```html HTML icon="html5" expandable
     <table class="bq-table compact">
+      <caption>Account balances</caption>
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Status</th>
-          <th>Amount</th>
+          <th scope="col">Name</th>
+          <th scope="col">Status</th>
+          <th scope="col">Amount</th>
         </tr>
       </thead>
       <tbody>
@@ -526,11 +538,12 @@ Add the `compact` class to the `<table>` to reduce cell and header padding. This
 
     ```jsx React icon="react" expandable
     <table className="bq-table compact">
+      <caption>Account balances</caption>
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Status</th>
-          <th>Amount</th>
+          <th scope="col">Name</th>
+          <th scope="col">Status</th>
+          <th scope="col">Amount</th>
         </tr>
       </thead>
       <tbody>
@@ -562,11 +575,12 @@ Add the `compact` class to the `<table>` to reduce cell and header padding. This
       imports: [],
       template: `
         <table class="bq-table compact">
+          <caption>Account balances</caption>
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Status</th>
-              <th>Amount</th>
+              <th scope="col">Name</th>
+              <th scope="col">Status</th>
+              <th scope="col">Amount</th>
             </tr>
           </thead>
           <tbody>
@@ -595,11 +609,12 @@ Add the `compact` class to the `<table>` to reduce cell and header padding. This
     ```vue Vue icon="vuejs" expandable
     <template>
       <table class="bq-table compact">
+        <caption>Account balances</caption>
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Status</th>
-            <th>Amount</th>
+            <th scope="col">Name</th>
+            <th scope="col">Status</th>
+            <th scope="col">Amount</th>
           </tr>
         </thead>
         <tbody>
@@ -627,9 +642,9 @@ Add the `compact` class to the `<table>` to reduce cell and header padding. This
 
 ### Bordered
 
-Add the `bordered` class to draw explicit borders around each cell and the table itself. Use this when strong column delineation helps users parse the data.
+Add `bordered` alongside `bq-table` to draw borders around each cell and the table itself. This modifier switches to separate cell borders with zero spacing; `bordered` alone does not enable BEEQ table styles.
 
-<CodeLivePreview mode="iframe" height="16rem" removePadding code={`
+<CodeLivePreview mode="iframe" height="18rem" removePadding code={`
   <style>
     body {
       padding: var(--bq-spacing-m);
@@ -637,11 +652,12 @@ Add the `bordered` class to draw explicit borders around each cell and the table
   </style>
 
   <table class="bq-table bordered">
+    <caption>Account balances</caption>
     <thead>
       <tr>
-        <th>Name</th>
-        <th>Status</th>
-        <th>Amount</th>
+        <th scope="col">Name</th>
+        <th scope="col">Status</th>
+        <th scope="col">Amount</th>
       </tr>
     </thead>
     <tbody>
@@ -666,11 +682,12 @@ Add the `bordered` class to draw explicit borders around each cell and the table
   <CodeGroup>
     ```html HTML icon="html5" expandable
     <table class="bq-table bordered">
+      <caption>Account balances</caption>
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Status</th>
-          <th>Amount</th>
+          <th scope="col">Name</th>
+          <th scope="col">Status</th>
+          <th scope="col">Amount</th>
         </tr>
       </thead>
       <tbody>
@@ -695,11 +712,12 @@ Add the `bordered` class to draw explicit borders around each cell and the table
 
     ```jsx React icon="react" expandable
     <table className="bq-table bordered">
+      <caption>Account balances</caption>
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Status</th>
-          <th>Amount</th>
+          <th scope="col">Name</th>
+          <th scope="col">Status</th>
+          <th scope="col">Amount</th>
         </tr>
       </thead>
       <tbody>
@@ -731,11 +749,12 @@ Add the `bordered` class to draw explicit borders around each cell and the table
       imports: [],
       template: `
         <table class="bq-table bordered">
+          <caption>Account balances</caption>
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Status</th>
-              <th>Amount</th>
+              <th scope="col">Name</th>
+              <th scope="col">Status</th>
+              <th scope="col">Amount</th>
             </tr>
           </thead>
           <tbody>
@@ -764,11 +783,12 @@ Add the `bordered` class to draw explicit borders around each cell and the table
     ```vue Vue icon="vuejs" expandable
     <template>
       <table class="bq-table bordered">
+        <caption>Account balances</caption>
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Status</th>
-            <th>Amount</th>
+            <th scope="col">Name</th>
+            <th scope="col">Status</th>
+            <th scope="col">Amount</th>
           </tr>
         </thead>
         <tbody>
@@ -1044,7 +1064,7 @@ BEEQ does not ship a pagination, sorting, filtering, or virtualization component
       <tbody id="rows"></tbody>
     </table>
 
-    <div class="pager" aria-label="Pagination">
+    <div class="pager">
       <div class="pager__size">
         <span class="pager__status">Displaying</span>
         <bq-select id="size" value="5" disable-clear disable-search same-width>
@@ -1121,7 +1141,7 @@ BEEQ does not ship a pagination, sorting, filtering, or virtualization component
             </tbody>
           </table>
 
-          <div className="pager" aria-label="Pagination">
+          <div className="pager">
             <div className="pager__size">
               <span className="pager__status">Displaying</span>
               <BqSelect
@@ -1190,6 +1210,7 @@ BEEQ does not ship a pagination, sorting, filtering, or virtualization component
     import { BqButton, BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqButton, BqIcon, BqOption, BqSelect],
       styleUrl: "./styles.css",
@@ -1214,7 +1235,7 @@ BEEQ does not ship a pagination, sorting, filtering, or virtualization component
           </tbody>
         </table>
 
-        <div class="pager" aria-label="Pagination">
+        <div class="pager">
           <div class="pager__size">
             <span class="pager__status">Displaying</span>
             <bq-select
@@ -1354,7 +1375,7 @@ BEEQ does not ship a pagination, sorting, filtering, or virtualization component
         </tbody>
       </table>
 
-      <div class="pager" aria-label="Pagination">
+      <div class="pager">
         <div class="pager__size">
           <span class="pager__status">Displaying</span>
           <BqSelect
@@ -1508,7 +1529,7 @@ The table pattern is CSS-only. There is no custom element. Apply these classes t
 |---|---|---|
 | `bq-table` | `<table>` | **Required.** Activates all BEEQ table styles |
 | `compact` | `<table>` | Reduces cell and header padding for dense layouts |
-| `bordered` | `<table>` | Draws explicit borders around every cell and the table |
+| `bordered` | `<table class="bq-table">` | Modifier that uses separate cell borders with zero spacing and an outer table border |
 | `selected` | `<tr>` | Highlights the row as the active or selected record |
 | `bq-table--container` | `<div>` | Responsive wrapper that enables horizontal scrolling |
 

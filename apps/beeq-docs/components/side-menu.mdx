@@ -1283,14 +1283,14 @@ Use the footer slot for supplementary actions, links, or information at the bott
     </bq-side-menu-item>
 
     <div slot="footer">
-      <bq-button appearance="text" only-icon>
-        <bq-icon name="bell"></bq-icon>
+      <bq-button appearance="text" label="Notifications" only-icon>
+        <bq-icon name="bell" aria-hidden="true"></bq-icon>
       </bq-button>
-      <bq-button appearance="text" only-icon>
-        <bq-icon name="chats-circle"></bq-icon>
+      <bq-button appearance="text" label="Messages" only-icon>
+        <bq-icon name="chats-circle" aria-hidden="true"></bq-icon>
       </bq-button>
-      <bq-button appearance="text" only-icon>
-        <bq-icon name="sliders"></bq-icon>
+      <bq-button appearance="text" label="Settings" only-icon>
+        <bq-icon name="sliders" aria-hidden="true"></bq-icon>
       </bq-button>
     </div>
   </bq-side-menu>
@@ -1346,14 +1346,14 @@ Use the footer slot for supplementary actions, links, or information at the bott
       </bq-side-menu-item>
 
       <div slot="footer">
-        <bq-button appearance="text" only-icon>
-          <bq-icon name="bell"></bq-icon>
+        <bq-button appearance="text" label="Notifications" only-icon>
+          <bq-icon name="bell" aria-hidden="true"></bq-icon>
         </bq-button>
-        <bq-button appearance="text" only-icon>
-          <bq-icon name="chats-circle"></bq-icon>
+        <bq-button appearance="text" label="Messages" only-icon>
+          <bq-icon name="chats-circle" aria-hidden="true"></bq-icon>
         </bq-button>
-        <bq-button appearance="text" only-icon>
-          <bq-icon name="sliders"></bq-icon>
+        <bq-button appearance="text" label="Settings" only-icon>
+          <bq-icon name="sliders" aria-hidden="true"></bq-icon>
         </bq-button>
       </div>
     </bq-side-menu>
@@ -1392,14 +1392,14 @@ Use the footer slot for supplementary actions, links, or information at the bott
       </BqSideMenuItem>
 
       <div slot="footer">
-        <BqButton appearance="text" onlyIcon>
-          <BqIcon name="bell"></BqIcon>
+        <BqButton appearance="text" label="Notifications" onlyIcon>
+          <BqIcon name="bell" aria-hidden="true"></BqIcon>
         </BqButton>
-        <BqButton appearance="text" onlyIcon>
-          <BqIcon name="chats-circle"></BqIcon>
+        <BqButton appearance="text" label="Messages" onlyIcon>
+          <BqIcon name="chats-circle" aria-hidden="true"></BqIcon>
         </BqButton>
-        <BqButton appearance="text" onlyIcon>
-          <BqIcon name="sliders"></BqIcon>
+        <BqButton appearance="text" label="Settings" onlyIcon>
+          <BqIcon name="sliders" aria-hidden="true"></BqIcon>
         </BqButton>
       </div>
     </BqSideMenu>
@@ -1442,14 +1442,14 @@ Use the footer slot for supplementary actions, links, or information at the bott
           </bq-side-menu-item>
 
           <div slot="footer">
-            <bq-button appearance="text" only-icon>
-              <bq-icon name="bell"></bq-icon>
+            <bq-button appearance="text" label="Notifications" only-icon>
+              <bq-icon name="bell" aria-hidden="true"></bq-icon>
             </bq-button>
-            <bq-button appearance="text" only-icon>
-              <bq-icon name="chats-circle"></bq-icon>
+            <bq-button appearance="text" label="Messages" only-icon>
+              <bq-icon name="chats-circle" aria-hidden="true"></bq-icon>
             </bq-button>
-            <bq-button appearance="text" only-icon>
-              <bq-icon name="sliders"></bq-icon>
+            <bq-button appearance="text" label="Settings" only-icon>
+              <bq-icon name="sliders" aria-hidden="true"></bq-icon>
             </bq-button>
           </div>
         </bq-side-menu>
@@ -1513,14 +1513,14 @@ Use the footer slot for supplementary actions, links, or information at the bott
       </BqSideMenu>
 
       <div slot="footer">
-        <BqButton appearance="text" onlyIcon>
-          <BqIcon name="bell"></BqIcon>
+        <BqButton appearance="text" label="Notifications" onlyIcon>
+          <BqIcon name="bell" aria-hidden="true"></BqIcon>
         </BqButton>
-        <BqButton appearance="text" onlyIcon>
-          <BqIcon name="chats-circle"></BqIcon>
+        <BqButton appearance="text" label="Messages" onlyIcon>
+          <BqIcon name="chats-circle" aria-hidden="true"></BqIcon>
         </BqButton>
-        <BqButton appearance="text" onlyIcon>
-          <BqIcon name="sliders"></BqIcon>
+        <BqButton appearance="text" label="Settings" onlyIcon>
+          <BqIcon name="sliders" aria-hidden="true"></BqIcon>
         </BqButton>
       </div>
     </template>
@@ -2119,10 +2119,15 @@ Wire your app control to the side menu state so the button can expand and collap
 
 The side menu renders its root surface as an `<aside>` and places menu items inside a `<nav>`. Each `bq-side-menu-item` renders as a focusable button with `role="menuitem"`, and the `disabled` property maps to `aria-disabled="true"` and `tabindex="-1"`.
 
+<Warning>
+  The items currently expose `role="menuitem"` without a `menu` or `menubar` parent. This source defect is tracked in [the Side Menu follow-up issue](https://github.com/Endava/BEEQ/issues/1831). The component uses native button Tab navigation, not the composite ARIA menu keyboard pattern.
+</Warning>
+
 - **Landmark context** - include semantic heading text in the logo slot to communicate the menu purpose and where its content begins.
 - **Collapsed state** - communicate the expanded or collapsed state through the surrounding layout control when you add one.
 - **Icons** - validate icon meaning when collapsed navigation relies on icons to identify destinations. Add `aria-hidden="true"` to prefix icons: the label already names the item, and an unlabelled `bq-icon` adds its own `<name> icon` text to that name.
 - **Labels** - use unique labels that make sense without additional context. The item text feeds the collapsed tooltip content.
+- **Footer actions** - give every icon-only `bq-button` a meaningful `label` and hide its decorative icon from assistive technology.
 - **Keyboard navigation** - side menu items support focus, click, <kbd>Enter</kbd>, and <kbd>Space</kbd> interaction through the underlying button.
 
 ## API reference

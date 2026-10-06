@@ -844,9 +844,9 @@ Always provide a `label` so assistive technologies can announce the action corre
 
 - **Use descriptive labels** — labeling buttons properly lets users know what will happen, reduces errors, and increases confidence.
 - **Icon-only buttons** — always set the `label` prop to provide a text alternative for assistive technologies.
-- **Keyboard navigation** — buttons are focusable and activated with <kbd>Enter</kbd> or <kbd>Space</kbd> by default.
-- **Avoid disabled states** — disabled buttons are invisible to screen readers. Where possible, keep the button discoverable and explain what is required to proceed.
-- **Correct semantics** — use `<bq-button>` for actions and links for navigation.
+- **Keyboard navigation** — enabled buttons are activated with <kbd>Enter</kbd> or <kbd>Space</kbd>. When `href` is set, the component renders a native link, activated with <kbd>Enter</kbd>; <kbd>Space</kbd> does not activate it.
+- **Disabled states** — `disabled` sets `aria-disabled="true"`, removes the control from the Tab order, and prevents activation. Native buttons also receive `disabled`. Disabled controls are not necessarily hidden from screen readers; explain nearby what is required to proceed.
+- **Correct semantics** — omit `href` for actions and set `href` for navigation. `appearance="link"` changes styling only; it does not turn a button into a link.
 
 ## API reference
 
