@@ -743,13 +743,13 @@ Always provide a `label` so assistive technologies can announce the action corre
     </script>
 
     <template>
-      <BqButton only-icon label="Notifications">
+      <BqButton onlyIcon label="Notifications">
         <BqIcon name="bell-ringing" />
       </BqButton>
-      <BqButton only-icon variant="ghost" label="Notifications">
+      <BqButton onlyIcon variant="ghost" label="Notifications">
         <BqIcon name="bell-ringing" />
       </BqButton>
-      <BqButton only-icon appearance="secondary" label="Notifications">
+      <BqButton onlyIcon appearance="secondary" label="Notifications">
         <BqIcon name="bell-ringing" />
       </BqButton>
     </template>
@@ -908,15 +908,15 @@ Always provide a `label` so assistive technologies can announce the action corre
   | `--bq-button--border-color` | Border color | `transparent` |
   | `--bq-button--border-radius` | Border radius | `var(--bq-radius--m)` |
   | `--bq-button--border-style` | Border style | `solid` |
-  | `--bq-button--border-width` | Border width | `0` |
-  | `--bq-button--small-paddingX` | Small size padding block | `var(--bq-spacing-xs)` |
-  | `--bq-button--small-paddingY` | Small size padding inline | `var(--bq-spacing-xs2)` |
+  | `--bq-button--border-width` | Border width | `var(--bq-stroke-m)` |
+  | `--bq-button--small-paddingX` | Small size padding inline | `var(--bq-spacing-xs)` |
+  | `--bq-button--small-paddingY` | Small size padding block | `calc(var(--bq-spacing-xs2) - var(--bq-button--border-width))` |
   | `--bq-button--small-font-size` | Small size font size | `var(--bq-font-size--m)` |
-  | `--bq-button--medium-paddingX` | Medium size padding block | `var(--bq-spacing-m)` |
-  | `--bq-button--medium-paddingY` | Medium size padding inline | `var(--bq-spacing-s)` |
+  | `--bq-button--medium-paddingX` | Medium size padding inline | `var(--bq-spacing-m)` |
+  | `--bq-button--medium-paddingY` | Medium size padding block | `calc(var(--bq-spacing-s) - var(--bq-button--border-width))` |
   | `--bq-button--medium-font-size` | Medium size font size | `var(--bq-font-size--m)` |
-  | `--bq-button--large-paddingX` | Large size padding block | `var(--bq-spacing-l)` |
-  | `--bq-button--large-paddingY` | Large size padding inline | `var(--bq-spacing-m)` |
+  | `--bq-button--large-paddingX` | Large size padding inline | `var(--bq-spacing-l)` |
+  | `--bq-button--large-paddingY` | Large size padding block | `calc(var(--bq-spacing-m) - var(--bq-button--border-width))` |
   | `--bq-button--large-font-size` | Large size font size | `var(--bq-font-size--m)` |
 </Expandable>
 

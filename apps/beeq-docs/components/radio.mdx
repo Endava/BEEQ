@@ -443,7 +443,7 @@ Add the `fieldset` attribute to render a visible border and legend around the gr
 
 ### Background on hover
 
-Set `background-on-hover` on the group (or on individual `bq-radio` elements) to show a filled highlight on the label row when the user hovers. This increases the perceived click area in spacious layouts.
+Set `background-on-hover` on the group to show a filled highlight on every label row when the user hovers. Inside a group, `bq-radio-group` overrides the value set on individual `bq-radio` elements. This increases the perceived click area in spacious layouts.
 
 <CodeLivePreview mode="shadow" code={`
   <bq-radio-group name="group" value="option1" background-on-hover>
@@ -808,7 +808,7 @@ Set `background-on-hover` on the group (or on individual `bq-radio` elements) to
 
 ## Accessibility
 
-- **Built in:** `bq-radio-group` renders as a `<fieldset>` (when `fieldset` is set) with a `<legend>` linked to the `label` slot, giving screen readers a proper group label for the set.
+- **Built in:** `bq-radio-group` always renders a `<fieldset>` with a `<legend>` that holds the `label` slot, giving screen readers a proper group label for the set. The `fieldset` property only adds the visible border.
 - **Built in:** each `bq-radio` native `<input type="radio">` carries `aria-checked`, `aria-disabled`, and `aria-labelledby` pointing to its visible label element.
 - **Built in:** arrow-key navigation is handled by the group — `ArrowDown` / `ArrowRight` move to the next radio, `ArrowUp` / `ArrowLeft` move to the previous one, wrapping at the ends. This matches the ARIA radio group keyboard pattern.
 - **Built in:** only one radio in the group receives `tabindex="0"` at a time (the selected or first enabled option), keeping the tab stop count low.
@@ -827,7 +827,7 @@ Set `background-on-hover` on the group (or on individual `bq-radio` elements) to
 | `disabled` | `disabled` | If `true`, the radio input is disabled | `boolean` | `false` |
 | `formId` | `form-id` | The ID of the `<form>` element the radio is associated with | `string` | — |
 | `name` | `name` | Name of the form control, submitted as part of a name/value pair | `string` | — |
-| `required` | `required` | If `true`, the user must select a value before the form can be submitted | `boolean` | `false` |
+| `required` | `required` | If `true`, the user must select a value before the form can be submitted | `boolean` | — |
 | `value` | `value` | The string value of the radio, submitted with the form | `string` | — |
 
 ### `bq-radio-group` properties
@@ -895,7 +895,7 @@ Set `background-on-hover` on the group (or on individual `bq-radio` elements) to
 
 | Part | Description |
 |---|---|
-| `base` | The `<fieldset>` or `<div>` wrapper that contains the label and all radio inputs |
+| `base` | The `<fieldset>` wrapper that contains the label and all radio inputs |
 | `label` | The `<legend>` that holds the group label slot content |
 | `group` | The `<div>` that lays out the radio inputs |
 

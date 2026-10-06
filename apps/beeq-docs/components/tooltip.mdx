@@ -130,7 +130,7 @@ By default the tooltip appears **above** the trigger on hover. Tooltip content g
 
 <Tip>
   You can **use any element as the trigger, but for accessibility reasons, it should be something that can receive keyboard focus** (e.g., a button, link, or input).
-  If you need to attach a tooltip to a non-focusable element like an icon, set `display-on="click"` so keyboard and touch users can still access the content.
+  If you need to attach a tooltip to a non-focusable element like an icon, set `display-on="click"` so touch users can access the content. The trigger wrapper is not focusable, so keyboard users still need a focusable trigger such as a button.
 </Tip>
 
 ### Placement
@@ -330,7 +330,7 @@ Set `display-on="click"` when the trigger element is not naturally focusable (e.
     </script>
 
     <template>
-      <BqTooltip display-on="click">
+      <BqTooltip displayOn="click">
         Click again or press Esc to close
         <BqButton slot="trigger">Click me</BqButton>
       </BqTooltip>
@@ -399,7 +399,7 @@ Use `always-visible` to keep the tooltip permanently displayed regardless of use
     </script>
 
     <template>
-      <BqTooltip always-visible>
+      <BqTooltip alwaysVisible>
         I'm always here
         <BqButton slot="trigger">Trigger</BqButton>
       </BqTooltip>
@@ -698,7 +698,7 @@ All five tooltip events support `preventDefault()`. Calling it inside a handler 
 
     <script>
       const tooltip = document.getElementById('my-tooltip');
-      const lockCheck = document.getElementById('lock-lock-check');
+      const lockCheck = document.getElementById('lock-check');
       let locked = false;
 
       lockCheck.addEventListener('bqChange', (e) => {
@@ -892,7 +892,7 @@ Add `hide-arrow` to remove the directional pointer. Use this when the tooltip is
       </BqTooltip>
 
       <!-- No arrow -->
-      <BqTooltip hide-arrow>
+      <BqTooltip hideArrow>
         Without arrow
         <BqButton slot="trigger">No arrow</BqButton>
       </BqTooltip>
@@ -957,7 +957,7 @@ Set `same-width` to match the tooltip panel width to the trigger element. Useful
     </script>
 
     <template>
-      <BqTooltip same-width>
+      <BqTooltip sameWidth>
         Same width as trigger, even if content is shorter or longer
         <BqButton slot="trigger">Same width as trigger</BqButton>
       </BqTooltip>
@@ -1148,8 +1148,8 @@ The `distance` prop controls the gap in pixels between the trigger and the toolt
 - **Not the only source of truth** — tooltips are hidden by default and not guaranteed to be seen by all users. Never place critical instructions, error messages, or required form guidance inside a tooltip.
 - **Keyboard accessible** — when `display-on` is `hover` (default), the tooltip also opens on focus so keyboard users can access the content by tabbing to the trigger. Pressing <kbd>Esc</kbd> (click mode) or moving focus away closes it.
 - **Screen reader support** — the panel sets `aria-hidden` when not visible and is announced when shown. Use the `trigger` slot with a naturally focusable element (button, link, input) so the tooltip is reachable via keyboard.
-- **Avoid hover-only for non-focusable triggers** — for elements that cannot receive keyboard focus, use `display-on="click"` to ensure touch and keyboard users can still trigger the tooltip.
-- **WCAG 1.4.13 (Content on Hover or Focus)** — revealed content must be dismissible (via <kbd>Esc</kbd>), hoverable (pointer can move over the panel), and persistent (does not close while the pointer is over it).
+- **Use focusable triggers** — the tooltip does not make its trigger focusable. `display-on="click"` helps touch users, but keyboard users can only reach the tooltip through a focusable trigger such as a button.
+- **WCAG 1.4.13 (Content on Hover or Focus)** — hover-mode tooltips close when the pointer leaves the trigger or focus moves away, and the panel itself is not hoverable. <kbd>Esc</kbd> dismisses only click-mode tooltips. Keep tooltip content short and non-essential, and use `display-on="click"` when users need time to read it.
 
 ## API reference
 
@@ -1206,7 +1206,7 @@ The `distance` prop controls the gap in pixels between the trigger and the toolt
 
 ### CSS custom properties
 
-<Expandable title="CSS variables" defaultOpen={false}>
+<Expandable title="CSS variables" defaultOpen={true}>
   | Variable                         | Description               | Default                              |
   | -------------------------------- | ------------------------- | ------------------------------------ |
   | `--bq-tooltip--background-color` | Tooltip background color  | `var(--bq-ui--inverse)`              |

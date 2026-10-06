@@ -1392,13 +1392,13 @@ Use the footer slot for supplementary actions, links, or information at the bott
       </BqSideMenuItem>
 
       <div slot="footer">
-        <BqButton appearance="text" only-icon>
+        <BqButton appearance="text" onlyIcon>
           <BqIcon name="bell"></BqIcon>
         </BqButton>
-        <BqButton appearance="text" only-icon>
+        <BqButton appearance="text" onlyIcon>
           <BqIcon name="chats-circle"></BqIcon>
         </BqButton>
-        <BqButton appearance="text" only-icon>
+        <BqButton appearance="text" onlyIcon>
           <BqIcon name="sliders"></BqIcon>
         </BqButton>
       </div>
@@ -1513,14 +1513,14 @@ Use the footer slot for supplementary actions, links, or information at the bott
       </BqSideMenu>
 
       <div slot="footer">
-        <BqButton appearance="text" only-icon>
-          <BqIcon name="bell"></bq-icon>
+        <BqButton appearance="text" onlyIcon>
+          <BqIcon name="bell"></BqIcon>
         </BqButton>
-        <BqButton appearance="text" only-icon>
-          <BqIcon name="chats-circle"></bq-icon>
+        <BqButton appearance="text" onlyIcon>
+          <BqIcon name="chats-circle"></BqIcon>
         </BqButton>
-        <BqButton appearance="text" only-icon>
-          <BqIcon name="sliders"></bq-icon>
+        <BqButton appearance="text" onlyIcon>
+          <BqIcon name="sliders"></BqIcon>
         </BqButton>
       </div>
     </template>
@@ -1755,22 +1755,24 @@ Wire your app control to the side menu state so the button can expand and collap
     </main>
 
     <script>
-      const sideMenu = document.querySelector('.app-menu');
-      const collapseButton = document.querySelector('bq-button[data-action="collapse"]');
-      if (!sideMenu || !collapseButton) return;
+      (() => {
+        const sideMenu = document.querySelector('.app-menu');
+        const collapseButton = document.querySelector('bq-button[data-action="collapse"]');
+        if (!sideMenu || !collapseButton) return;
 
-      // Keep the icon-only button accessible as the menu state changes.
-      const syncButtonLabel = () => {
-        const isCollapsed = sideMenu.hasAttribute('collapse');
-        collapseButton.setAttribute('label', isCollapsed ? 'Expand side menu' : 'Collapse side menu');
-      };
+        // Keep the icon-only button accessible as the menu state changes.
+        const syncButtonLabel = () => {
+          const isCollapsed = sideMenu.hasAttribute('collapse');
+          collapseButton.setAttribute('label', isCollapsed ? 'Expand side menu' : 'Collapse side menu');
+        };
 
-      collapseButton.addEventListener('bqClick', async () => {
-        await sideMenu.toggleCollapse();
+        collapseButton.addEventListener('bqClick', async () => {
+          await sideMenu.toggleCollapse();
+          syncButtonLabel();
+        });
+
         syncButtonLabel();
-      });
-
-      syncButtonLabel();
+      })();
     </script>
     ```
 
@@ -2176,8 +2178,7 @@ The side menu renders its root surface as an `<aside>` and places menu items ins
 
 | Part | Description |
 |---|---|
-| `base` | The component wrapper container inside the shadow DOM |
-| `label` | The label slot |
+| `base` | The native `<button>` element (`role="menuitem"`) of the menu item |
 | `panel` | The `<div>` container that holds the tooltip content when the side menu is collapsed |
 | `prefix` | The prefix slot |
 | `suffix` | The suffix slot |
@@ -2218,21 +2219,23 @@ The side menu renders its root surface as an `<aside>` and places menu items ins
 
 | Variable | Description | Default |
 |---|---|---|
-| `--bq-side-menu--bg-color` | Side menu background color | `var(--bq-background--primary)` |
-| `--bq-side-menu--brand-color` | Side menu logo color | `var(--bq-background--brand)` |
+| `--bq-side-menu--bg-color` | Side menu background color | `var(--bq-ui--primary)` |
+| `--bq-side-menu--brand-color` | Side menu logo color | `var(--bq-ui--brand)` |
 | `--bq-side-menu--border-color` | Side menu border color | `var(--bq-stroke--primary)` |
 | `--bq-side-menu--footer-box-shadow` | Side menu footer box shadow | `0 -10px 12px -12px var(--bq-background--tertiary)` |
 
 #### `bq-side-menu-item`
 
-| Variable | Description | Default |
-|---|---|---|
-| `--bq-side-menu-item--bg-default` | Side menu item default background color | `transparent` |
-| `--bq-side-menu-item--bg-active` | Side menu item active background color | `var(--bq-ui--brand-alt)` |
-| `--bq-side-menu-item--text-default` | Side menu item default text color | `var(--bq-text--primary)` |
-| `--bq-side-menu-item--text-active` | Side menu item active text color | `var(--bq-text--brand)` |
-| `--bq-side-menu-item--paddingX` | Side menu item horizontal padding | `var(--bq-spacing-l)` |
-| `--bq-side-menu-item--paddingY` | Side menu item vertical padding | `var(--bq-spacing-m)` |
+<Expandable title="CSS variables" defaultOpen={true}>
+  | Variable | Description | Default |
+  |---|---|---|
+  | `--bq-side-menu-item--bg-default` | Side menu item default background color | `transparent` |
+  | `--bq-side-menu-item--bg-active` | Side menu item active background color | `var(--bq-ui--brand-alt)` |
+  | `--bq-side-menu-item--text-default` | Side menu item default text color | `var(--bq-text--primary)` |
+  | `--bq-side-menu-item--text-active` | Side menu item active text color | `var(--bq-text--brand)` |
+  | `--bq-side-menu-item--paddingX` | Side menu item horizontal padding | `var(--bq-spacing-l)` |
+  | `--bq-side-menu-item--paddingY` | Side menu item vertical padding | `var(--bq-spacing-m)` |
+</Expandable>
 
 <Tip>
   Learn more about [styling with shadow parts](/guides/styles) and [CSS custom properties](/theming/component-css-variables).
