@@ -96,7 +96,7 @@ commands:
 jobs:
   main:
     docker:
-      - image: mcr.microsoft.com/playwright:v1.61.1-noble
+      - image: mcr.microsoft.com/playwright:v1.63.0-noble
     resource_class: large
     environment: *env-vars
     steps:
