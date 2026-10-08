@@ -203,11 +203,18 @@ export class BqTextarea {
   handleValueChange() {
     if (!this.textarea) return;
 
-    if (this.maxlength && this.value?.length >= this.maxlength) {
-      // If the value is longer than the maxlength, we need to truncate it
-      this.value = this.value?.substring(0, this.maxlength);
-      this.textarea.value = this.value ?? '';
+    if (this.maxlength && this.value?.length > this.maxlength) {
+      // Truncate the value; the reassignment re-runs this watcher to sync the native textarea
+      this.value = this.value.substring(0, this.maxlength);
+      return;
     }
+
+    // Keep the native textarea in sync with programmatic value changes (even after user edits)
+    const nextValue = this.value ?? '';
+    if (this.textarea.value !== nextValue) {
+      this.textarea.value = nextValue;
+    }
+    this.autoResize();
 
     this.setFormValue(this.value);
     this.updateFormValidity();
@@ -252,6 +259,10 @@ export class BqTextarea {
     this.handleValueChange();
   }
 
+  disconnectedCallback() {
+    this.debounceBqInput?.cancel();
+  }
+
   formAssociatedCallback() {
     this.setFormValue(this.value);
     this.updateFormValidity();
@@ -280,9 +291,9 @@ export class BqTextarea {
   // =======================================================
 
   private get numberOfCharacters() {
-    if (!this.maxlength || !this.textarea) return 0;
+    if (!this.maxlength) return 0;
 
-    return this.value?.length;
+    return this.value?.length ?? 0;
   }
 
   private handleBlur = () => {
@@ -302,8 +313,6 @@ export class BqTextarea {
 
     if (!isHTMLElement(ev.target, 'textarea')) return;
     this.value = ev.target.value;
-    this.setFormValue(this.value);
-    this.updateFormValidity();
 
     this.bqChange.emit({ value: this.value, el: this.el });
   };
@@ -320,8 +329,6 @@ export class BqTextarea {
       this.bqInput.emit({ value: this.value, el: this.el });
     }, this.debounceTime);
     this.debounceBqInput();
-
-    this.autoResize();
   };
 
   private autoResize = () => {
@@ -331,7 +338,11 @@ export class BqTextarea {
     if (!inputElem) return;
 
     inputElem.style.height = 'auto';
-    inputElem.style.height = `${inputElem.scrollHeight}px`;
+    // A hidden textarea (e.g. inside a closed dialog) reports 0; keep the `rows` height instead
+    const { scrollHeight } = inputElem;
+    if (scrollHeight > 0) {
+      inputElem.style.height = `${scrollHeight}px`;
+    }
   };
 
   private handleSlotChange = () => {
@@ -363,7 +374,6 @@ export class BqTextarea {
 
   private clearSelection = () => {
     this.value = '';
-    this.textarea.value = this.value;
   };
 
   // render() function
@@ -411,10 +421,9 @@ export class BqTextarea {
           required={this.required}
           rows={this.rows}
           spellcheck={this.spellcheck}
+          value={this.value}
           wrap={this.wrap}
-        >
-          {this.value}
-        </textarea>
+        />
         <div
           class={{
             'bq-textarea__helper flex items-center justify-between': true,
@@ -436,7 +445,7 @@ export class BqTextarea {
             class={{ 'bq-textarea__helper--counter [fontVariant:tabular-nums]': true, '!hidden': !this.maxlength }}
             part="helper-counter"
           >
-            {this.numberOfCharacters ?? 0}/{this.maxlength}
+            {this.numberOfCharacters}/{this.maxlength}
           </span>
         </div>
       </div>

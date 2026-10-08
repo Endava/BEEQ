@@ -122,6 +122,100 @@ describe('bq-textarea', () => {
     expect(nativeTextarea.value).toBe(value.substring(0, maxlength));
   });
 
+  it('should show the initial value count in the counter', async () => {
+    const value = 'Hello';
+    const maxlength = 100;
+    const { root } = await render(
+      <bq-textarea maxlength={maxlength} value={value} name="textarea" placeholder="Placeholder..." />,
+    );
+    const counterElem = root.shadowRoot.querySelector<HTMLElement>('.bq-textarea__helper--counter');
+
+    expect(counterElem.innerText).toBe(`${value.length}/${maxlength}`);
+  });
+
+  it('should display programmatic value changes after the user types', async () => {
+    const maxlength = 200;
+    const { root, waitForChanges } = await render(
+      <bq-textarea maxlength={maxlength} name="textarea" placeholder="Placeholder..." />,
+    );
+    const textareaElem = root as HTMLBqTextareaElement;
+    const nativeTextarea = root.shadowRoot.querySelector<HTMLTextAreaElement>('.bq-textarea__input');
+    const counterElem = root.shadowRoot.querySelector<HTMLElement>('.bq-textarea__helper--counter');
+
+    textareaElem.value = 'First value set from code';
+    await waitForChanges();
+    await userEvent.type(nativeTextarea, 'ddd');
+    await waitForChanges();
+    expect(textareaElem.value).toBe('First value set from codeddd');
+
+    const nextValue = 'Second value';
+    textareaElem.value = nextValue;
+    await waitForChanges();
+
+    expect(nativeTextarea.value).toBe(nextValue);
+    expect(counterElem.innerText).toBe(`${nextValue.length}/${maxlength}`);
+
+    textareaElem.value = '';
+    await waitForChanges();
+
+    expect(nativeTextarea.value).toBe('');
+    expect(counterElem.innerText).toBe(`0/${maxlength}`);
+  });
+
+  it('should truncate a programmatic value longer than maxlength after the user types', async () => {
+    const maxlength = 10;
+    const { root, waitForChanges } = await render(
+      <bq-textarea maxlength={maxlength} name="textarea" placeholder="Placeholder..." />,
+    );
+    const textareaElem = root as HTMLBqTextareaElement;
+    const nativeTextarea = root.shadowRoot.querySelector<HTMLTextAreaElement>('.bq-textarea__input');
+
+    await userEvent.type(nativeTextarea, 'abc');
+    await waitForChanges();
+
+    textareaElem.value = 'Lorem ipsum dolor sit amet';
+    await waitForChanges();
+
+    expect(textareaElem.value).toBe('Lorem ipsu');
+    expect(nativeTextarea.value).toBe('Lorem ipsu');
+  });
+
+  it('should grow to fit a programmatic value when auto-grow is enabled', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-textarea auto-grow rows={2} name="textarea" placeholder="Placeholder..." />,
+    );
+    const textareaElem = root as HTMLBqTextareaElement;
+    const nativeTextarea = root.shadowRoot.querySelector<HTMLTextAreaElement>('.bq-textarea__input');
+    const initialHeight = nativeTextarea.getBoundingClientRect().height;
+
+    textareaElem.value = Array.from({ length: 10 }, (_, i) => `Line ${i + 1}`).join('\n');
+    await waitForChanges();
+
+    expect(nativeTextarea.getBoundingClientRect().height).toBeGreaterThan(initialHeight);
+  });
+
+  it('should clear the visible text on form reset after the user types', async () => {
+    const { root, waitForChanges } = await render(
+      <form>
+        <bq-textarea name="notes" placeholder="Placeholder..." />
+      </form>,
+    );
+    const form = root as HTMLFormElement;
+    const textareaElem = form.querySelector('bq-textarea');
+    const nativeTextarea = textareaElem.shadowRoot.querySelector<HTMLTextAreaElement>('.bq-textarea__input');
+
+    await userEvent.type(nativeTextarea, 'Hello');
+    await waitForChanges();
+    expect(new FormData(form).get('notes')).toBe('Hello');
+
+    form.reset();
+    await waitForChanges();
+
+    expect(textareaElem.value).toBe('');
+    expect(nativeTextarea.value).toBe('');
+    expect(new FormData(form).get('notes')).toBeNull();
+  });
+
   it('should emit bqFocus and bqBlur events', async () => {
     const { root, spyOnEvent, waitForChanges } = await render(
       <bq-textarea name="textarea" placeholder="Placeholder..." />,
