@@ -1540,7 +1540,7 @@ export namespace Components {
          */
         "validationStatus": TInputValidation;
         /**
-          * The input value, it can be used to reset the input to a previous value
+          * The input value, it can be used to reset the input to a previous value. User-entered number values are numbers; empty or incomplete numeric input and Clear use an empty string.
          */
         "value": TInputValue;
     }
@@ -7101,7 +7101,7 @@ declare namespace LocalJSX {
          */
         "onBqBlur"?: (event: BqInputCustomEvent<HTMLBqInputElement>) => void;
         /**
-          * Callback handler emitted when the input value has changed and the input loses focus. This handler is called whenever the user finishes typing or pasting text into the input field and then clicks outside of the input field.
+          * Callback handler emitted when the input value has changed and the input loses focus. This handler is called whenever the user finishes typing or pasting text into the input field and then clicks outside of the input field. Numeric input emits a number when complete and an empty string when empty or incomplete.
          */
         "onBqChange"?: (event: BqInputCustomEvent<{ value: string | number | string[]; el: HTMLBqInputElement }>) => void;
         /**
@@ -7113,7 +7113,7 @@ declare namespace LocalJSX {
          */
         "onBqFocus"?: (event: BqInputCustomEvent<HTMLBqInputElement>) => void;
         /**
-          * Callback handler emitted when the input value changes. This handler is called whenever the user types or pastes text into the input field.
+          * Callback handler emitted when the input value changes. This handler is called whenever the user types or pastes text into the input field. Numeric input emits a number when complete and an empty string when empty or incomplete.
          */
         "onBqInput"?: (event: BqInputCustomEvent<{ value: string | number | string[]; el: HTMLBqInputElement }>) => void;
         /**
@@ -7151,7 +7151,7 @@ declare namespace LocalJSX {
          */
         "validationStatus"?: TInputValidation;
         /**
-          * The input value, it can be used to reset the input to a previous value
+          * The input value, it can be used to reset the input to a previous value. User-entered number values are numbers; empty or incomplete numeric input and Clear use an empty string.
          */
         "value"?: TInputValue;
     }

@@ -1500,6 +1500,10 @@ Use this variant when the field does not require supplementary guidance.
 
 `bq-input` submits its current string value with the form. Combine `name`, `required`, and `form-validation-message` when the field must pass native validation before submission.
 
+For `type="number"`, user-entered values are numbers in `value`, `bqInput.detail.value`, and `bqChange.detail.value`. Deleting all contents or using Clear sets the value to `''` and submits an empty string, not `"0"`. A deliberate numeric `0` satisfies `required` and supports the Clear action when clearing is enabled.
+
+An incomplete numeric entry, such as `-`, can also expose `''` while you type because the native number input has no complete numeric value yet. Check for `''` before converting event values to numbers so an empty optional filter does not become a zero bound.
+
 <CodeLivePreview mode="iframe" height="20.5rem" removePadding code={`
   <style>
     body {
