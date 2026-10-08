@@ -61,6 +61,10 @@ Tooltips provide supplemental context about an element without cluttering the in
 
 Use tooltips for short contextual help attached to a specific control or value. Keep content brief, avoid placing essential instructions only inside a tooltip, and make sure the trigger remains understandable without the tooltip.
 
+Open tooltips follow their trigger automatically when it moves, including during CSS animations or changes to a parent layout. You do not need to call a repositioning method.
+
+Movement tracking runs while the tooltip is open. On pages with many tooltips, keep only the ones you need open: use `hide()` or set `visible` to `false` to stop tracking. For an `always-visible` tooltip, remove that setting first. Hiding an open tooltip with CSS alone does not stop its tracking.
+
 ## Usage
 
 ### Default

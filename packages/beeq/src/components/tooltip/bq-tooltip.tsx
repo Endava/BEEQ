@@ -325,7 +325,8 @@ export class BqTooltip {
     if (this.supportsPopover && !this.panel.matches(':popover-open')) {
       this.panel.showPopover();
     }
-    this.floatingUI?.start();
+    // Frame tracking also detects movement of zero-sized and animated triggers.
+    this.floatingUI?.start({ animationFrame: true });
   };
 
   private hideTooltip = () => {

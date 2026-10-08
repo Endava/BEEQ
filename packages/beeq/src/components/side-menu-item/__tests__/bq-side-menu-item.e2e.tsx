@@ -181,4 +181,34 @@ describe('bq-side-menu-item', () => {
     expect(getMenuButton(item)).toHaveClass('is-collapsed');
     expect(tooltip?.textContent?.trim()).toContain('Menu item label');
   });
+
+  it('should retain focus-triggered right positioning after movement and remove the tooltip on expansion', async () => {
+    const { root, setProps, waitForChanges } = await render(
+      <bq-side-menu-item collapse style={{ display: 'block', width: '64px', margin: '100px' }}>
+        Dashboard
+      </bq-side-menu-item>,
+    );
+    const item = root as HTMLBqSideMenuItemElement;
+    const tooltip = item.shadowRoot.querySelector<HTMLBqTooltipElement>('bq-tooltip');
+    const panel = tooltip.shadowRoot.querySelector<HTMLElement>('[part="panel"]');
+    const trigger = tooltip.shadowRoot.querySelector<HTMLElement>('[part="trigger"]');
+    const getOffset = () => Math.abs(panel.getBoundingClientRect().left - trigger.getBoundingClientRect().right - 10);
+
+    getMenuButton(item).focus();
+    await waitForChanges();
+    await expect.poll(getOffset).toBeLessThanOrEqual(2);
+    expect(panel).toEqualAttribute('aria-hidden', 'false');
+    expect(tooltip).toEqualAttribute('exportparts', 'trigger, panel');
+    item.style.transform = 'translateX(40px)';
+    await expect.poll(getOffset).toBeLessThanOrEqual(2);
+    expect(getComputedStyle(panel).visibility).toBe('visible');
+    getMenuButton(item).blur();
+    await waitForChanges();
+    expect(panel).toEqualAttribute('aria-hidden', 'true');
+
+    await setProps({ collapse: false });
+    expect(item.shadowRoot.querySelector('bq-tooltip')).toBeNull();
+    expect(tooltip.isConnected).toBe(false);
+    expect(getMenuButton(item)).not.toHaveClass('is-collapsed');
+  });
 });

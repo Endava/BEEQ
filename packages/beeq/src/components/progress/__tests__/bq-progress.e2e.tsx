@@ -9,6 +9,11 @@ const getTooltip = (element: HTMLBqProgressElement) =>
   element.shadowRoot?.querySelector<HTMLBqTooltipElement>('bq-tooltip');
 const getIndeterminate = (element: HTMLBqProgressElement) =>
   element.shadowRoot?.querySelector<HTMLDivElement>('[part="indeterminate"]');
+const getAlignmentError = (element: HTMLBqProgressElement) => {
+  const bar = getProgressBar(element).getBoundingClientRect();
+  const panel = getTooltip(element).shadowRoot.querySelector<HTMLElement>('[part="panel"]').getBoundingClientRect();
+  return Math.abs(panel.left + panel.width / 2 - (bar.left + (bar.width * element.value) / 100));
+};
 
 describe('bq-progress', () => {
   afterEach(() => {
@@ -70,6 +75,34 @@ describe('bq-progress', () => {
     const tooltip = root as HTMLBqProgressElement;
 
     expect(getTooltip(tooltip)).toBeNull();
+  });
+
+  it('should follow the progress endpoint after value and width changes', async () => {
+    const { root, setProps } = await render(
+      <bq-progress enableTooltip value={20} style={{ width: '60vw', margin: '100px auto', display: 'block' }} />,
+    );
+    const progress = root as HTMLBqProgressElement;
+
+    for (const value of [20, 50, 80, 30]) {
+      await setProps({ value });
+      await expect.poll(() => getAlignmentError(progress)).toBeLessThanOrEqual(2);
+      const tooltip = getTooltip(progress);
+      const panel = tooltip.shadowRoot.querySelector<HTMLElement>('[part="panel"]');
+      expect(panel).toEqualAttribute('aria-hidden', 'false');
+      expect(getComputedStyle(panel).visibility).toBe('visible');
+      expect(tooltip.textContent.trim()).toBe(String(value));
+    }
+    progress.style.width = '40vw';
+    await expect.poll(() => getAlignmentError(progress)).toBeLessThanOrEqual(2);
+
+    const tooltip = getTooltip(progress);
+    await setProps({ indeterminate: true });
+    expect(getTooltip(progress)).toBeNull();
+    expect(tooltip.isConnected).toBe(false);
+    await setProps({ indeterminate: false });
+    await expect.poll(() => getAlignmentError(progress)).toBeLessThanOrEqual(2);
+    await setProps({ enableTooltip: false });
+    expect(getTooltip(progress)).toBeNull();
   });
 
   it('should render the error type styles', async () => {
