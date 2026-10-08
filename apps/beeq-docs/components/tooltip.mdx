@@ -61,6 +61,10 @@ Tooltips provide supplemental context about an element without cluttering the in
 
 Use tooltips for short contextual help attached to a specific control or value. Keep content brief, avoid placing essential instructions only inside a tooltip, and make sure the trigger remains understandable without the tooltip.
 
+Open tooltips follow their trigger automatically when it moves, including during CSS animations or changes to a parent layout. You do not need to call a repositioning method.
+
+Movement tracking runs while the tooltip is open. On pages with many tooltips, keep only the ones you need open: use `hide()` or set `visible` to `false` to stop tracking. For an `always-visible` tooltip, remove that setting first. Hiding an open tooltip with CSS alone does not stop its tracking.
+
 ## Usage
 
 ### Default
@@ -1243,6 +1247,7 @@ The `distance` prop controls the gap in pixels between the trigger and the toolt
 - **Keyboard accessible** — when `display-on` is `hover` (default), the tooltip also opens on focus so keyboard users can access the content by tabbing to the trigger. Pressing <kbd>Esc</kbd> (click mode) or moving focus away closes it.
 - **Screen reader support** — the panel has `role="tooltip"` and toggles `aria-hidden` with visibility. The component does not create an `aria-describedby` association or live region, so showing the panel does not guarantee an announcement. Give the trigger an understandable accessible name and keep essential guidance in visible text.
 - **Use focusable triggers** — the tooltip does not make its trigger focusable. `display-on="click"` helps touch users, but keyboard users can only reach the tooltip through a focusable trigger such as a button.
+- **Preserve control semantics** — the trigger wrapper delegates events without adding a role or a tab stop. The slotted control keeps its accessible name, existing descriptions, and native keyboard activation. Do not turn the wrapper into another button or point a light-DOM `aria-describedby` at the panel inside the tooltip's shadow root; that ID reference cannot cross the shadow boundary.
 - **WCAG 1.4.13 (Content on Hover or Focus)** — hover-mode tooltips close when the pointer leaves the trigger or focus moves away, and the panel itself is not hoverable. <kbd>Esc</kbd> dismisses only click-mode tooltips. Keep tooltip content short and non-essential, and use `display-on="click"` when users need time to read it.
 
 ## API reference

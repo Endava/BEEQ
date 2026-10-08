@@ -49,7 +49,8 @@ export default meta;
 
 type Story = StoryObj;
 
-const Template = (args: Args) => html` <div class="is-96">${SliderTemplate(args)}</div> `;
+const Template = (args: Args) =>
+  html`<div class="is-[calc(100vw_-_var(--bq-spacing-xxl3))] max-w-screen-md">${SliderTemplate(args)}</div>`;
 
 const SliderTemplate = (args: Args) => html`
   <bq-slider
@@ -197,7 +198,7 @@ export const WithForm: Story = {
     return html`
       <link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/styles/night-owl.min.css" />
       <div class="grid auto-cols-auto grid-cols-1 gap-y-l sm:grid-cols-2 sm:gap-x-l">
-        <bq-card>
+        <bq-card class="[&::part(wrapper)]:bg-primary">
           <h4 class="m-be-m">Taxi information</h4>
           <form class="flex flex-col gap-y-m" @submit=${handleFormSubmit}>
             <label class="flex items-center gap-x-s"> Number of seats </label>

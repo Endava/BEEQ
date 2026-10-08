@@ -1,4 +1,5 @@
 import {
+  type AutoUpdateOptions,
   arrow,
   autoUpdate,
   computePosition,
@@ -70,12 +71,13 @@ export class FloatingUI {
   /**
    * Opens the `autoUpdate` subscription so the panel keeps tracking the
    * trigger through scroll, resize, layout and ancestor changes. No-op if
-   * the subscription is already running.
+   * the subscription is already running. Tracking options apply when starting
+   * a subscription; omitted options retain Floating UI's defaults.
    */
-  start(): void {
+  start(options?: AutoUpdateOptions): void {
     if (this.cleanup) return;
 
-    this.cleanup = autoUpdate(this.trigger, this.panel, () => void this.reposition());
+    this.cleanup = autoUpdate(this.trigger, this.panel, () => void this.reposition(), options);
   }
 
   /**

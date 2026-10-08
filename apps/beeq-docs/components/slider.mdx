@@ -77,6 +77,8 @@ Every slider supports five states: **default**, **hover**, **focus**, **active**
 
 Use `enable-value-indicator` to show the numeric value beside the track at all times. This is appropriate when the exact number matters to the user, such as a temperature, percentage, or step count. Use `enable-tooltip` when you want feedback only while the user is actively dragging, keeping the interface clean at rest. Pair it with `tooltip-always-visible` to keep the tooltip permanently visible.
 
+Tooltips stay aligned with their thumbs when the value or slider width changes. Transient tooltips stop tracking while idle; permanently visible tooltips continue tracking movement. Use transient tooltips when a page contains many sliders and their values do not need to stay visible.
+
 ### Width
 
 The slider fills its container's available width. Constrain the width of its parent container to control how large the track appears — a very short track makes precise selection difficult.
