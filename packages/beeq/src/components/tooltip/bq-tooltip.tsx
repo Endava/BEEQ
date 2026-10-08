@@ -168,6 +168,7 @@ export class BqTooltip {
   // =====================================
 
   componentDidLoad() {
+    this.setTriggerListeners('addEventListener');
     // Promote the panel to the top layer when the Popover API is available.
     // This escapes containing blocks created by ancestor `transform`,
     // `filter`, `contain`, `will-change`, etc., which is the root cause of
@@ -208,11 +209,13 @@ export class BqTooltip {
   }
 
   connectedCallback() {
+    this.setTriggerListeners('addEventListener');
     if (!this.floatingUI || (!this.visible && !this.alwaysVisible)) return;
     this.showTooltip();
   }
 
   disconnectedCallback() {
+    this.setTriggerListeners('removeEventListener');
     this.floatingUI?.stop();
   }
 
@@ -274,6 +277,17 @@ export class BqTooltip {
   // Internal business logic.
   // These methods cannot be called from the host element.
   // =======================================================
+
+  private setTriggerListeners = (action: 'addEventListener' | 'removeEventListener') => {
+    if (!this.trigger) return;
+
+    // Delegate native control events without making the slot container a second control.
+    this.trigger[action]('click', this.handleTriggerOnClick);
+    this.trigger[action]('focusin', this.handleTriggerFocusin);
+    this.trigger[action]('focusout', this.handleTriggerFocusout);
+    this.trigger[action]('mouseenter', this.handleTriggerMouseOver);
+    this.trigger[action]('mouseleave', this.handleTriggerMouseLeave);
+  };
 
   private handleTriggerMouseOver = async () => {
     if (this.displayOn !== 'hover') return;
@@ -354,21 +368,8 @@ export class BqTooltip {
     return (
       <div class="bq-tooltip relative" part="base">
         {/* TRIGGER */}
-        {/**
-         * NOTE: We could use a native HTML button as trigger container, but it causes issues with
-         * certain interactive elements inside the trigger slot (e.g., buttons, links, inputs...).
-         * This is because nested interactive elements are not allowed inside a button.
-         * Also, that will force the user to focus twice to reach the inner interactive element.
-         */}
-        {/** biome-ignore lint/a11y/noStaticElementInteractions: bypass the "Static Elements should not be interactive." rule */}
-        {/** biome-ignore lint/a11y/useKeyWithClickEvents: bypass the "Enforce to have the onClick mouse event with the onKeyUp, the onKeyDown, or the onKeyPress keyboard event." rule */}
         <div
           class="bq-tooltip--trigger"
-          onClick={this.handleTriggerOnClick}
-          onFocusin={this.handleTriggerFocusin}
-          onFocusout={this.handleTriggerFocusout}
-          onMouseEnter={this.handleTriggerMouseOver}
-          onMouseLeave={this.handleTriggerMouseLeave}
           part="trigger"
           ref={(el: HTMLDivElement) => {
             this.trigger = el;

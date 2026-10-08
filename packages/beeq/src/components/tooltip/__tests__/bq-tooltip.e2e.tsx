@@ -71,6 +71,97 @@ describe('bq-tooltip', () => {
     expect(root.querySelector('bq-tooltip')).toHaveShadowRoot();
   });
 
+  it.each([
+    'native',
+    'beeq',
+  ] as const)('should retain %s trigger semantics and native keyboard activation', async (kind) => {
+    const { root, unmount, waitForChanges } = await render(
+      <div style={{ padding: '100px' }}>
+        <button data-before type="button">
+          Before
+        </button>
+        <bq-tooltip displayOn="click">
+          Save your changes
+          {kind === 'native' ? (
+            <button slot="trigger" type="button" aria-describedby="save-description">
+              Save
+            </button>
+          ) : (
+            <bq-button slot="trigger">Save</bq-button>
+          )}
+        </bq-tooltip>
+        <span id="save-description" hidden>
+          Existing save guidance
+        </span>
+        <button data-after type="button">
+          After
+        </button>
+      </div>,
+    );
+    unmountFn = unmount;
+    const tooltip = root.querySelector('bq-tooltip');
+    const wrapper = getTrigger(tooltip);
+    const slotted = tooltip.querySelector<HTMLElement>('[slot="trigger"]');
+    const button = kind === 'native' ? slotted : slotted.shadowRoot.querySelector<HTMLButtonElement>('button');
+    const click = vi.fn();
+    const handleClick = (event: Event) => {
+      if (event.target === tooltip) click();
+    };
+    tooltip.addEventListener('bqClick', handleClick);
+
+    expect(wrapper).not.toHaveAttribute('role');
+    expect(wrapper).not.toHaveAttribute('tabindex');
+    expect(getPanel(tooltip)).toEqualAttribute('role', 'tooltip');
+    root.querySelector<HTMLButtonElement>('[data-before]').focus();
+    await userEvent.keyboard('{Tab}');
+    expect(kind === 'native' ? document.activeElement : slotted.shadowRoot.activeElement).toBe(button);
+    const { frameTree } = await cdp().send('Page.getFrameTree');
+    const frame = frameTree.childFrames.find((child) => child.frame.name === 'vitest-iframe');
+    const { nodes } = await cdp().send('Accessibility.getFullAXTree', { frameId: frame.frame.id });
+    const controls = nodes.filter((node) => node.role?.value === 'button' && node.name?.value === 'Save');
+    expect(controls).toHaveLength(1);
+    if (kind === 'native') expect(controls[0].description?.value).toBe('Existing save guidance');
+
+    await userEvent.keyboard('{Enter}');
+    await waitForChanges();
+    expectPanelVisibility(getPanel(tooltip), true);
+    await userEvent.keyboard(' ');
+    await waitForChanges();
+    expectPanelVisibility(getPanel(tooltip), false);
+    expect(click).toHaveBeenCalledTimes(2);
+    expect(kind === 'native' ? document.activeElement : slotted.shadowRoot.activeElement).toBe(button);
+    if (kind === 'native') expect(button).toEqualAttribute('aria-describedby', 'save-description');
+
+    await userEvent.keyboard('{Tab}');
+    expect(document.activeElement).toBe(root.querySelector('[data-after]'));
+    tooltip.removeEventListener('bqClick', handleClick);
+  });
+
+  it('should remove delegated trigger listeners on disconnect and restore them once on reconnect', async () => {
+    const { root, unmount, waitForChanges } = await render(mkTooltip());
+    unmountFn = unmount;
+    const tooltip = root.querySelector('bq-tooltip');
+    tooltip.displayOn = 'click';
+    await waitForChanges();
+    const wrapper = getTrigger(tooltip);
+    const click = vi.fn();
+    tooltip.addEventListener('bqClick', click);
+
+    tooltip.remove();
+    wrapper.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    expect(click).not.toHaveBeenCalled();
+
+    for (let cycle = 0; cycle < 3; cycle++) {
+      root.append(tooltip);
+      wrapper.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      await waitForChanges();
+      expect(click).toHaveBeenCalledTimes(cycle + 1);
+      await tooltip.hide();
+      tooltip.remove();
+    }
+    tooltip.removeEventListener('bqClick', click);
+  });
+
   it('should be hidden by default', async () => {
     const { root, unmount } = await render(mkTooltip());
     unmountFn = unmount;
