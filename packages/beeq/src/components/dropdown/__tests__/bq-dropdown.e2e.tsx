@@ -195,4 +195,69 @@ describe('bq-dropdown', () => {
     expect(panel).toHaveAttribute('same-width');
     expect(panel.style.getPropertyValue('--bq-panel--height')).toBe('240px');
   });
+
+  describe('single open panel', () => {
+    it('should close an open dropdown when another one opens programmatically', async () => {
+      const { root, waitForChanges } = await render(
+        <div>
+          <bq-dropdown id="dropdown-a">
+            <bq-button slot="trigger">Open A</bq-button>
+            <div>Panel A</div>
+          </bq-dropdown>
+          <bq-dropdown id="dropdown-b">
+            <bq-button slot="trigger">Open B</bq-button>
+            <div>Panel B</div>
+          </bq-dropdown>
+        </div>,
+      );
+      const dropdownA = root.querySelector<HTMLBqDropdownElement>('#dropdown-a');
+      const dropdownB = root.querySelector<HTMLBqDropdownElement>('#dropdown-b');
+
+      dropdownA.open = true;
+      await waitForChanges();
+      dropdownB.open = true;
+      await waitForChanges();
+
+      expect(dropdownA.open).toBe(false);
+      expect(dropdownB.open).toBe(true);
+      expect(getDropdownPanelHost(dropdownA)).not.toHaveAttribute('open');
+    });
+
+    it('should keep the parent dropdown open when a nested dropdown opens', async () => {
+      const { root, waitForChanges } = await render(
+        <bq-dropdown id="parent">
+          <bq-button slot="trigger">Open parent</bq-button>
+          <bq-dropdown id="child">
+            <bq-button slot="trigger">Open child</bq-button>
+            <div>Child panel</div>
+          </bq-dropdown>
+        </bq-dropdown>,
+      );
+      const parent = root as HTMLBqDropdownElement;
+      const child = root.querySelector<HTMLBqDropdownElement>('#child');
+
+      parent.open = true;
+      await waitForChanges();
+      child.open = true;
+      await waitForChanges();
+
+      expect(parent.open).toBe(true);
+      expect(child.open).toBe(true);
+    });
+
+    it('should ignore `bqOpen` events that are not emitted by a dropdown', async () => {
+      const { root, waitForChanges } = await render(
+        <bq-dropdown open>
+          <bq-button slot="trigger">Open</bq-button>
+          <div>Panel</div>
+        </bq-dropdown>,
+      );
+      const dropdown = root as HTMLBqDropdownElement;
+
+      document.body.dispatchEvent(new CustomEvent('bqOpen', { bubbles: true, composed: true, detail: { open: true } }));
+      await waitForChanges();
+
+      expect(dropdown.open).toBe(true);
+    });
+  });
 });
