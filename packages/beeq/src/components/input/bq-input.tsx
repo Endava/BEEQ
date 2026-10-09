@@ -240,7 +240,10 @@ export class BqInput {
    */
   @Prop({ reflect: true }) validationStatus: TInputValidation = 'none';
 
-  /** The input value, it can be used to reset the input to a previous value */
+  /**
+   * The input value, it can be used to reset the input to a previous value.
+   * User-entered number values are numbers; empty or incomplete numeric input and Clear use an empty string.
+   */
   @Prop({ reflect: true, mutable: true }) value: TInputValue;
 
   // Prop lifecycle events
@@ -255,7 +258,7 @@ export class BqInput {
       return;
     }
 
-    this.hasValue = isDefined(value);
+    this.hasValue = value === 0 || isDefined(value);
     internals.setFormValue(!isNil(value) ? `${value}` : undefined);
     this.updateFormValidity();
   }
@@ -275,6 +278,7 @@ export class BqInput {
   /**
    * Callback handler emitted when the input value has changed and the input loses focus.
    * This handler is called whenever the user finishes typing or pasting text into the input field and then clicks outside of the input field.
+   * Numeric input emits a number when complete and an empty string when empty or incomplete.
    */
   @Event() bqChange!: EventEmitter<{ value: string | number | string[]; el: HTMLBqInputElement }>;
 
@@ -287,6 +291,7 @@ export class BqInput {
   /**
    * Callback handler emitted when the input value changes.
    * This handler is called whenever the user types or pastes text into the input field.
+   * Numeric input emits a number when complete and an empty string when empty or incomplete.
    */
   @Event() bqInput!: EventEmitter<{ value: string | number | string[]; el: HTMLBqInputElement }>;
 
@@ -340,13 +345,18 @@ export class BqInput {
     this.bqFocus.emit(this.el);
   };
 
+  private getInputValue = (input: HTMLInputElement): string | number => {
+    const { value } = input;
+    return this.type === 'number' && value !== '' ? Number(value) : value;
+  };
+
   private handleInput = (ev: Event) => {
     if (this.disabled) return;
 
     this.debounceBqInput?.cancel();
 
     if (!isHTMLElement(ev.target, 'input')) return;
-    this.value = this.type === 'number' ? Number(ev.target.value) : ev.target.value;
+    this.value = this.getInputValue(ev.target);
 
     this.debounceBqInput = debounce(() => {
       this.bqInput.emit({ value: this.value, el: this.el });
@@ -358,7 +368,7 @@ export class BqInput {
     if (this.disabled) return;
 
     if (!isHTMLElement(ev.target, 'input')) return;
-    this.value = this.type === 'number' ? Number(ev.target.value) : ev.target.value;
+    this.value = this.getInputValue(ev.target);
     // Update form value and validity
     this.setFormValue(`${this.value}`);
     this.updateFormValidity();
@@ -401,14 +411,14 @@ export class BqInput {
     // Clear the validity state
     internals?.states.clear();
 
-    if (required && (!value || value.toString().trim() === '')) {
+    if (required && (isNil(value) || value.toString().trim() === '')) {
       // Set validity state to invalid
       internals?.states.add('invalid');
       internals?.setValidity({ valueMissing: true }, formValidationMessage || 'This field is required', inputElem);
       return;
     }
 
-    // Set validity state to valid if textarea has value or is not required
+    // Set validity state to valid if input has value or is not required
     internals?.states.add('valid');
     internals?.setValidity({});
   };
@@ -488,7 +498,7 @@ export class BqInput {
             required={this.required}
             step={this.step}
             type={this.type}
-            value={this.value}
+            value={this.value?.toString() ?? ''}
           />
           {/* Clear Button */}
           {this.hasValue && !this.disabled && !this.disableClear && (

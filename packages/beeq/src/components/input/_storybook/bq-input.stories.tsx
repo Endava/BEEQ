@@ -168,6 +168,18 @@ export const Value: Story = {
   },
 };
 
+export const Numeric: Story = {
+  render: Template,
+  args: {
+    type: 'number',
+    inputmode: 'numeric',
+    min: 0,
+    step: 1,
+    value: 0,
+    required: true,
+  },
+};
+
 export const Prefix: Story = {
   render: Template,
   args: {
