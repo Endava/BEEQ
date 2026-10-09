@@ -395,6 +395,73 @@ describe('bq-select', () => {
     expect(bqSelect).toHaveReceivedEventTimes(2);
   });
 
+  it.each([
+    { multiple: false, enableCheckboxes: false, keepOpenOnSelect: false },
+    { multiple: true, enableCheckboxes: false, keepOpenOnSelect: true },
+    { multiple: true, enableCheckboxes: true, keepOpenOnSelect: true },
+    { multiple: true, enableCheckboxes: true, keepOpenOnSelect: false },
+  ])('should select from row padding with $multiple/$enableCheckboxes/$keepOpenOnSelect', async (props) => {
+    const { root, spyOnEvent, waitForChanges } = await render(
+      <form>
+        <bq-select name="choice" {...props}>
+          <bq-option style={{ '--bq-option--padding-start': '24px' }} value="one">
+            Option one
+          </bq-option>
+        </bq-select>
+      </form>,
+    );
+    const select = root.querySelector<HTMLBqSelectElement>('bq-select');
+    const option = root.querySelector<HTMLBqOptionElement>('bq-option');
+    const row = option.shadowRoot.querySelector<HTMLElement>('[part="item"]');
+
+    await userEvent.click(getControl(select));
+    await waitForChanges();
+    await waitForStable(root);
+
+    await userEvent.click(getOptionSelectionControl(option));
+    await waitForChanges();
+    const panelOpenAfterContentClick = getDropdown(select).open;
+    await select.reset(props.multiple ? [] : '');
+    await waitForChanges();
+    if (!panelOpenAfterContentClick) {
+      await userEvent.click(getControl(select));
+      await waitForChanges();
+    }
+    const bqSelect = spyOnEvent('bqSelect');
+
+    const rect = row.getBoundingClientRect();
+    const position = { x: 2, y: rect.height / 2 };
+    expect(option.shadowRoot.elementFromPoint(rect.left + position.x, rect.top + position.y)).toBe(
+      getOptionSelectionControl(option),
+    );
+    await userEvent.click(row, { position });
+    await waitForChanges();
+
+    expect(select.value).toEqual(props.multiple ? ['one'] : 'one');
+    expect(option).toHaveAttribute('selected');
+    expect(new FormData(root as HTMLFormElement).get('choice')).toBe('one');
+    expect(bqSelect).toHaveReceivedEventTimes(1);
+    expect(bqSelect.events[0].detail.item).toBe(option);
+    expect(bqSelect.events[0].detail.value).toEqual(select.value);
+    expect(getDropdown(select).open).toBe(panelOpenAfterContentClick);
+    expect(select.shadowRoot.activeElement).toBe(getInput(select));
+    expect(select.shadowRoot.querySelectorAll('bq-tag')).toHaveLength(Number(props.multiple));
+    expect(getOptionCheckboxInput(option)?.checked).toBe(props.enableCheckboxes ? true : undefined);
+
+    if (!panelOpenAfterContentClick) {
+      await userEvent.click(getControl(select));
+      await waitForChanges();
+    }
+    await userEvent.click(row, { position });
+    await waitForChanges();
+
+    expect(bqSelect).toHaveReceivedEventTimes(2);
+    expect(select.value).toEqual(props.multiple ? [] : 'one');
+    expect(option.selected).toBe(!props.multiple);
+    expect(select.shadowRoot.querySelectorAll('bq-tag')).toHaveLength(0);
+    expect(getOptionCheckboxInput(option)?.checked).toBe(props.enableCheckboxes ? false : undefined);
+  });
+
   it('should select a checkbox option with Enter and Space', async () => {
     const { root, setProps, spyOnEvent, waitForChanges } = await render(
       <bq-select name="bq-select" keepOpenOnSelect multiple enableCheckboxes>
@@ -2032,6 +2099,56 @@ describe('bq-select', () => {
     expect(frontendOption).not.toHaveAttribute('selected');
     expect(reactOption).not.toHaveAttribute('selected');
     expect(select.value).toEqual([]);
+    expect(bqSelect).toHaveReceivedEventTimes(2);
+  });
+
+  it('should preserve cascading and expansion when clicking nested row padding', async () => {
+    const { root, spyOnEvent, waitForChanges } = await render(
+      <bq-select multiple name="skills" keepOpenOnSelect>
+        <bq-option expanded value="frontend">
+          Frontend
+          <bq-option slot="options" value="react">
+            React
+          </bq-option>
+          <bq-option slot="options" value="stencil">
+            Stencil
+          </bq-option>
+        </bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const parent = root.querySelector<HTMLBqOptionElement>('bq-option[value="frontend"]');
+    const child = root.querySelector<HTMLBqOptionElement>('bq-option[value="react"]');
+    const bqSelect = spyOnEvent('bqSelect');
+
+    await userEvent.click(getControl(select));
+    await waitForChanges();
+    await waitForStable(root);
+
+    for (const [index, option] of [parent, child].entries()) {
+      const row = option.shadowRoot.querySelector<HTMLElement>('[part="item"]');
+      const rect = row.getBoundingClientRect();
+      const position = { x: 2, y: rect.height / 2 };
+      expect(option.shadowRoot.elementFromPoint(rect.left + position.x, rect.top + position.y)).toBe(row);
+      await userEvent.click(row, { position });
+      await waitForChanges();
+
+      expect(bqSelect).toHaveReceivedEventTimes(index + 1);
+      expect(bqSelect.events[index].detail.item).toBe(option);
+      expect(document.activeElement).toBe(option);
+    }
+
+    expect(select.value).toEqual(['frontend', 'stencil']);
+    expect(getOptionCheckboxInput(parent).indeterminate).toBe(true);
+    expect(bqSelect.events[1].detail.selectionTree).toEqual([
+      { value: 'frontend', children: [{ value: 'stencil', children: [] }] },
+    ]);
+
+    await userEvent.click(getOptionExpandButtonControl(parent));
+    await waitForChanges();
+
+    expect(parent.expanded).toBe(false);
+    expect(select.value).toEqual(['frontend', 'stencil']);
     expect(bqSelect).toHaveReceivedEventTimes(2);
   });
 

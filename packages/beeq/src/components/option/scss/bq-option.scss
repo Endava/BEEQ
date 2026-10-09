@@ -47,6 +47,19 @@
   border-style: var(--bq-option--border-style);
 }
 
+.bq-option__item--flat {
+  @apply p-0;
+}
+
+.bq-option__item--flat > .bq-option {
+  @apply cursor-inherit;
+}
+
+.bq-option__item--flat > .bq-option,
+.bq-option__item--flat > .bq-option__checkbox::part(base) {
+  @apply pe-[--bq-option--padding-end] ps-[--bq-option--padding-start] p-b-[--bq-option--paddingY];
+}
+
 :host(:focus) .bq-option__item {
   @apply focus;
 }

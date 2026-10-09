@@ -614,7 +614,7 @@ export class BqOption {
         role={this.isTreeItem ? 'treeitem' : 'option'}
         tabindex={this.isTreeItem && !this.isDisabledOrHidden ? String(this.treeTabIndex) : undefined}
       >
-        <div class="bq-option__item" part="item">
+        <div class={{ 'bq-option__item': true, 'bq-option__item--flat': !this.isTreeItem }} part="item">
           {this.renderSelectionControl()}
           {this.renderSelectionSummary()}
           {this.shouldRenderNestedOptions && this.hasOptions && this.renderExpandButton()}
