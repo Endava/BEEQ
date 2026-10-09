@@ -1045,6 +1045,137 @@ describe('bq-date-picker', () => {
     );
   });
 
+  describe('single open panel', () => {
+    const renderTwoPickers = async () => {
+      const { root } = await render(
+        <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+          <bq-date-picker id="picker-a" name="picker-a" value="2026-05-15" />
+          <bq-date-picker id="picker-b" name="picker-b" value="2026-05-15" />
+        </div>,
+      );
+      const pickerA = root.querySelector<HTMLBqDatePickerElement>('#picker-a');
+      const pickerB = root.querySelector<HTMLBqDatePickerElement>('#picker-b');
+      if (!pickerA || !pickerB) throw new Error('Expected both date pickers');
+      await waitForStable(root);
+
+      return { root, pickerA, pickerB };
+    };
+
+    it('should close other date pickers when a date segment is clicked', async () => {
+      const { root, pickerA, pickerB } = await renderTwoPickers();
+
+      await userEvent.click(getSegment(pickerA, 'day') as HTMLElement);
+      await waitForStable(root);
+      expect(pickerA.open).toBe(true);
+
+      await userEvent.click(getSegment(pickerB, 'day') as HTMLElement);
+      await waitForStable(root);
+
+      expect(pickerA.open).toBe(false);
+      expect(pickerB.open).toBe(true);
+      expect(getDropdownPanel(pickerA)).not.toHaveAttribute('open');
+      expect(getDropdownPanel(pickerB)).toHaveAttribute('open');
+    });
+
+    it('should close other date pickers when the calendar button is clicked', async () => {
+      const { root, pickerA, pickerB } = await renderTwoPickers();
+
+      await userEvent.click(getCalendarTriggerButton(pickerA) as HTMLButtonElement);
+      await waitForStable(root);
+      expect(pickerA.open).toBe(true);
+
+      await userEvent.click(getCalendarTriggerButton(pickerB) as HTMLButtonElement);
+      await waitForStable(root);
+      await waitForSelectionAnnouncement();
+
+      expect(pickerA.open).toBe(false);
+      expect(pickerB.open).toBe(true);
+      // Closing A must not steal focus from B's panel.
+      expect(document.activeElement).toBe(pickerB);
+    });
+
+    it('should close other date pickers when one is opened from the keyboard', async () => {
+      const { root, pickerA, pickerB } = await renderTwoPickers();
+
+      await userEvent.click(getSegment(pickerA, 'day') as HTMLElement);
+      await waitForStable(root);
+      expect(pickerA.open).toBe(true);
+
+      getSegment(pickerB, 'day')?.focus();
+      await userEvent.keyboard('{Alt>}{ArrowDown}{/Alt}');
+      await waitForStable(root);
+
+      expect(pickerA.open).toBe(false);
+      expect(pickerB.open).toBe(true);
+    });
+
+    it('should close an open select when a date segment is clicked, and vice versa', async () => {
+      const { root } = await render(
+        <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+          <bq-select name="select" placeholder="Select">
+            <bq-option value="one">One</bq-option>
+          </bq-select>
+          <bq-date-picker name="picker" value="2026-05-15" />
+        </div>,
+      );
+      const select = root.querySelector<HTMLBqSelectElement>('bq-select');
+      const picker = root.querySelector<HTMLBqDatePickerElement>('bq-date-picker');
+      const selectInput = select?.shadowRoot?.querySelector<HTMLInputElement>('[part="input"]');
+      if (!select || !picker || !selectInput) throw new Error('Expected select and date picker');
+      await waitForStable(root);
+
+      await userEvent.click(selectInput);
+      await waitForStable(root);
+      expect(select.open).toBe(true);
+
+      await userEvent.click(getSegment(picker, 'day') as HTMLElement);
+      await waitForStable(root);
+      expect(select.open).toBe(false);
+      expect(picker.open).toBe(true);
+
+      await userEvent.click(selectInput);
+      await waitForStable(root);
+      expect(picker.open).toBe(false);
+      expect(select.open).toBe(true);
+    });
+
+    it('should keep the panel open when a date segment of an open picker is clicked', async () => {
+      const { root, pickerA } = await renderTwoPickers();
+
+      await userEvent.click(getSegment(pickerA, 'day') as HTMLElement);
+      await waitForStable(root);
+      await userEvent.click(getSegment(pickerA, 'month') as HTMLElement);
+      await waitForStable(root);
+
+      expect(pickerA.open).toBe(true);
+      expect(getDropdownPanel(pickerA)).toHaveAttribute('open');
+    });
+
+    it('should toggle the panel once per calendar button click', async () => {
+      const { root, pickerA } = await renderTwoPickers();
+      const trigger = getCalendarTriggerButton(pickerA) as HTMLButtonElement;
+
+      await userEvent.click(trigger);
+      await waitForStable(root);
+      expect(pickerA.open).toBe(true);
+
+      await userEvent.click(trigger);
+      await waitForStable(root);
+      expect(pickerA.open).toBe(false);
+    });
+
+    it('should let date segment clicks reach host click listeners', async () => {
+      const { root, pickerA } = await renderTwoPickers();
+      const onClick = vi.fn();
+      pickerA.addEventListener('click', onClick);
+
+      await userEvent.click(getSegment(pickerA, 'day') as HTMLElement);
+      await waitForStable(root);
+
+      expect(onClick).toHaveBeenCalledTimes(1);
+    });
+  });
+
   it('should move to the previous month when the previous button is clicked', async () => {
     const { root, waitForChanges } = await render(
       <bq-date-picker name="date-picker" locale="en-GB" open value="2026-05-15" />,

@@ -1642,6 +1642,7 @@ When focus leaves the segmented field, complete dates outside `min` or `max` are
 - The component announces a completed selection when focus enters the field, after a calendar selection, and announces the current calendar month, year, or year range after previous/next navigation.
 - Press `Alt`+`ArrowDown`, or Tab to the calendar icon and press `Enter` or `Space`, to open the panel. Calendar-trigger activation moves focus into its active date cell; the arrow keys navigate calendar cells and `Escape` closes the panel.
 - Clicking the segmented field opens the calendar while keeping segment focus. Clicking the calendar icon opens the panel and moves focus into it. Selecting a value from the panel returns focus to the first segment.
+- Opening the calendar closes any other open date picker, select, or dropdown panel, so only one panel stays open at a time.
 - Calendar days and months expose localized full names to assistive technology. Always provide a visible label through the `label` slot so the field and calendar dialog have a programmatic name.
 - Validation states should never rely on color alone. Pair `validationStatus` with visible error text so screen reader users receive the same feedback as sighted users.
 - Keep `locale`, `first-day-of-week`, and display formatting aligned with user expectations so typed input and visible values remain understandable for all users.

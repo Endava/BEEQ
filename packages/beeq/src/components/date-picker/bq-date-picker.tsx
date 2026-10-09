@@ -7,8 +7,10 @@ import {
   getDateMask,
   getTodayISO,
   hasSlotContent,
+  isEventHandled,
   isEventTargetChildOfElement,
   isNil,
+  markEventHandled,
   updateFormValidity,
   validatePropValue,
 } from '../../shared/utils';
@@ -559,9 +561,13 @@ export class BqDatePicker {
       }
 
       if (this.activeOpenSource !== 'input') {
-        requestAnimationFrame(() =>
-          this.triggerBtnElem?.shadowRoot?.querySelector<HTMLButtonElement>('button')?.focus(),
-        );
+        requestAnimationFrame(() => {
+          // Don't steal focus from another control the user moved to (e.g. another picker that opened).
+          const { activeElement } = this.el.getRootNode() as Document | ShadowRoot;
+          if (activeElement && activeElement !== document.body && activeElement !== this.el) return;
+
+          this.triggerBtnElem?.shadowRoot?.querySelector<HTMLButtonElement>('button')?.focus();
+        });
       }
       return;
     }
@@ -884,6 +890,8 @@ export class BqDatePicker {
 
   /** Routes control-surface clicks to the active segment without hijacking action buttons. */
   private handleControlClick = (ev: MouseEvent): void => {
+    // Segment clicks are already handled before bubbling up to the control.
+    if (isEventHandled(ev)) return;
     if (ev.composedPath().some((target) => target instanceof HTMLElement && target.tagName === 'BQ-BUTTON')) return;
 
     this.handleSegmentsClick(ev);
@@ -953,7 +961,9 @@ export class BqDatePicker {
   private handleSegmentControlClick = (ev: MouseEvent): void => {
     if (this.disabled) return;
 
-    ev.stopPropagation();
+    // Let the click keep propagating so other panels can close on outside click,
+    // but stop bq-dropdown from toggling: clicking the field only ever opens it.
+    markEventHandled(ev);
 
     if (this.open) return;
 
@@ -1968,7 +1978,8 @@ export class BqDatePicker {
               disabled={this.disabled}
               exportparts="button"
               label={this.calendarButtonLabel}
-              onClick={(ev: MouseEvent) => ev.stopPropagation()}
+              // `handleTriggerClick` toggles the panel; keep bq-dropdown from toggling it again.
+              onClick={(ev: MouseEvent) => markEventHandled(ev)}
               onBqClick={this.handleTriggerClick}
               onlyIcon
               part={`${CALENDAR_PARTS.button} ${CALENDAR_PARTS.suffix} ${CALENDAR_PARTS.calendarTrigger}`}

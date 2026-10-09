@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { isEventTargetChildOfElement } from '..';
+import { isEventHandled, isEventTargetChildOfElement, markEventHandled } from '..';
 
 describe(isEventTargetChildOfElement.name, () => {
   it('should return true when the event target is the host element itself', () => {
@@ -31,5 +31,23 @@ describe(isEventTargetChildOfElement.name, () => {
     outside.dispatchEvent(event);
 
     expect(isEventTargetChildOfElement(event, host)).toBe(false);
+  });
+});
+
+describe(markEventHandled.name, () => {
+  it('should mark only the given event as handled', () => {
+    const event = new Event('click');
+    const other = new Event('click');
+
+    markEventHandled(event);
+
+    expect(isEventHandled(event)).toBe(true);
+    expect(isEventHandled(other)).toBe(false);
+  });
+});
+
+describe(isEventHandled.name, () => {
+  it('should return false for an event that was not marked', () => {
+    expect(isEventHandled(new Event('click'))).toBe(false);
   });
 });
