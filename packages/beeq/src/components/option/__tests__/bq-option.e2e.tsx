@@ -16,6 +16,7 @@ const getNestedOptions = (option: HTMLBqOptionElement) =>
   option.shadowRoot?.querySelector<HTMLElement>('[part="options"]');
 const getSelectionSummary = (option: HTMLBqOptionElement) =>
   option.shadowRoot?.querySelector<HTMLElement>('[part="selection-summary"]');
+const getOptionRow = (option: HTMLBqOptionElement) => option.shadowRoot?.querySelector<HTMLElement>('[part="item"]');
 
 describe('bq-option', () => {
   it('should render', async () => {
@@ -70,6 +71,136 @@ describe('bq-option', () => {
     expect(bqFocus).toHaveReceivedEventTimes(0);
     expect(bqBlur).toHaveReceivedEventTimes(0);
     expect(bqClick).toHaveReceivedEventTimes(1);
+  });
+
+  describe.each([
+    { checkbox: false, dir: 'ltr' },
+    { checkbox: true, dir: 'ltr' },
+    { checkbox: false, dir: 'rtl' },
+    { checkbox: true, dir: 'rtl' },
+  ])('row padding (checkbox=$checkbox, dir=$dir)', ({ checkbox, dir }) => {
+    it('should preserve row and content geometry when padding moves to the native control', async () => {
+      const { root } = await render(
+        <bq-option
+          checkbox={checkbox}
+          dir={dir}
+          style={{
+            '--bq-option--padding-start': '24px',
+            '--bq-option--padding-end': '16px',
+            '--bq-option--paddingY': '12px',
+            width: '320px',
+          }}
+        >
+          <span slot="prefix">Prefix</span>
+          Option label
+          <span slot="suffix">Suffix</span>
+        </bq-option>,
+      );
+      await waitForStable(root);
+      const getGeometry = () =>
+        ['item', 'prefix', 'label', 'suffix'].map((part) => {
+          const { x, y, width, height } = root.shadowRoot.querySelector(`[part="${part}"]`).getBoundingClientRect();
+          return { x, y, width, height };
+        });
+      const wrapperPadding = document.createElement('style');
+      wrapperPadding.textContent = `
+        .bq-option__item--flat {
+          padding-block: var(--bq-option--paddingY);
+          padding-inline: var(--bq-option--padding-start) var(--bq-option--padding-end);
+        }
+        .bq-option__item--flat > .bq-option,
+        .bq-option__item--flat > .bq-option__checkbox::part(base) {
+          padding: 0;
+        }
+      `;
+      root.shadowRoot.append(wrapperPadding);
+      const geometry = getGeometry();
+      wrapperPadding.remove();
+
+      expect(getGeometry()).toEqual(geometry);
+    });
+
+    it.each(['top', 'bottom', 'start', 'end'] as const)('should activate from %s padding once', async (edge) => {
+      const { root, spyOnEvent, waitForChanges } = await render(
+        <bq-option
+          checkbox={checkbox}
+          dir={dir}
+          style={{
+            '--bq-option--padding-start': '24px',
+            '--bq-option--padding-end': '16px',
+            '--bq-option--paddingY': '12px',
+            width: '320px',
+          }}
+          value="option"
+        >
+          <span slot="prefix">Prefix</span>
+          Option label
+          <span slot="suffix">Suffix</span>
+        </bq-option>,
+      );
+      const option = root as HTMLBqOptionElement;
+      const row = getOptionRow(option);
+      const bqClick = spyOnEvent('bqClick');
+      const bqFocus = spyOnEvent('bqFocus');
+      await waitForStable(root);
+
+      const rect = row.getBoundingClientRect();
+      const positions = {
+        top: { x: rect.width / 2, y: 2 },
+        bottom: { x: rect.width / 2, y: rect.height - 2 },
+        start: { x: dir === 'rtl' ? rect.width - 2 : 2, y: rect.height / 2 },
+        end: { x: dir === 'rtl' ? 2 : rect.width - 2, y: rect.height / 2 },
+      };
+      const position = positions[edge];
+      const control = option.shadowRoot.querySelector<HTMLElement>('[part="base"]');
+      expect(option.shadowRoot.elementFromPoint(rect.left + position.x, rect.top + position.y)).toBe(control);
+
+      await userEvent.click(row, { position });
+      await waitForChanges();
+
+      expect(bqClick).toHaveReceivedEventTimes(1);
+      expect(bqClick.events[0].detail).toBe(option);
+      expect(bqFocus).toHaveReceivedEventTimes(1);
+      if (checkbox) {
+        const control = getOptionCheckbox(option);
+        expect(control.shadowRoot.activeElement).toBe(getCheckboxInput(control));
+      } else {
+        expect(option.shadowRoot.activeElement).toBe(option.shadowRoot.querySelector('button[part="base"]'));
+      }
+      if (checkbox) expect((getCheckboxInput(getOptionCheckbox(option)) as HTMLInputElement).checked).toBe(true);
+
+      await userEvent.click(row, { position });
+      await waitForChanges();
+
+      expect(bqClick).toHaveReceivedEventTimes(2);
+      if (checkbox) expect((getCheckboxInput(getOptionCheckbox(option)) as HTMLInputElement).checked).toBe(false);
+    });
+  });
+
+  it.each([false, true])('should ignore disabled and hidden row activation (checkbox=%s)', async (checkbox) => {
+    const { root, setProps, spyOnEvent, waitForChanges } = await render(
+      <bq-option checkbox={checkbox} disabled value="option">
+        Option label
+      </bq-option>,
+    );
+    const row = getOptionRow(root as HTMLBqOptionElement);
+    const bqClick = spyOnEvent('bqClick');
+    const disabledControl = checkbox
+      ? getCheckboxBase(getOptionCheckbox(root as HTMLBqOptionElement))
+      : root.shadowRoot.querySelector('button[part="base"]');
+    expect(getComputedStyle(disabledControl).cursor).toBe('not-allowed');
+
+    await userEvent.click(row, { position: { x: 2, y: row.getBoundingClientRect().height / 2 } });
+    await waitForChanges();
+    expect(bqClick).toHaveReceivedEventTimes(0);
+
+    await setProps({ disabled: false, hidden: true });
+    const control = checkbox
+      ? (getCheckboxInput(getOptionCheckbox(root as HTMLBqOptionElement)) as HTMLInputElement)
+      : root.shadowRoot.querySelector<HTMLButtonElement>('button[part="base"]');
+    control.click();
+    await waitForChanges();
+    expect(bqClick).toHaveReceivedEventTimes(0);
   });
 
   it('should be keyboard accessible', async () => {
