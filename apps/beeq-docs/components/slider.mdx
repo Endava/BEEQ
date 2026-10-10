@@ -852,14 +852,14 @@ As a developer you are responsible for:
 | `step` | `step` | Increment between selectable values; selected values are rounded to the nearest multiple of `step` | `number` | `1` |
 | `tooltipAlwaysVisible` | `tooltip-always-visible` | If true, the tooltip is permanently visible; requires `enable-tooltip` to be set | `boolean` | `false` |
 | `type` | `type` | Slider variant — `single` for one handle, `range` for two handles | `'single' \| 'range'` | `'single'` |
-| `value` | `value` | Current value. A number for `single` type (e.g. `30`); a two-element array string for `range` type (e.g. `"[20,70]"`). In React and Vue, pass the array directly: `value={[20, 70]}`. | `number \| [number, number] \| string` | — |
+| `value` | `value` | Current value. A number for `single` type (e.g. `30`); a two-element array string for `range` type (e.g. `"[20,70]"`). In React and Vue, pass the array directly: `value={[20, 70]}`. | `number \| number[] \| string` | — |
 
 ### Events
 
 | Event | Description | Type |
 |---|---|---|
 | `bqBlur` | Emitted when the slider loses focus | `CustomEvent<HTMLBqSliderElement>` |
-| `bqChange` | Emitted when the slider value changes | `CustomEvent<{ value: number \| [number, number]; el: HTMLBqSliderElement }>` |
+| `bqChange` | Emitted when the slider value changes | `CustomEvent<{ value: number \| number[]; el: HTMLBqSliderElement }>` |
 | `bqFocus` | Emitted when the slider gains focus | `CustomEvent<HTMLBqSliderElement>` |
 
 ### Slots
