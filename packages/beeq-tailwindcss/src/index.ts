@@ -157,8 +157,9 @@ export default {
     ColorMix,
     LogicalProperties,
     BeeqThemeSwapper({
+      // Every theme/mode selector is wrapped in :where() (zero specificity), so source order decides precedence
       themes: [
-        // Base theme - always uses :where() for low specificity
+        // Base theme
         {
           name: 'base',
           selectors: [':root'],
