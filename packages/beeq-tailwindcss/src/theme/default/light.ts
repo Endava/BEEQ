@@ -95,7 +95,7 @@ export const DefaultLightTheme = {
   /*                                   States                                   */
   /* -------------------------------------------------------------------------- */
   // !Note: hover and active are only used as a base to mix the state colors (20%)
-  'bq-hover': '#bcbfc5',
-  'bq-active': '#444546',
+  'bq-hover': '#444546',
+  'bq-active': '#1f2026',
   'bq-focus': 'var(--bq-brand-strong)',
 };

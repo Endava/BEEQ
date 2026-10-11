@@ -12,7 +12,7 @@ export const DefaultDarkTheme = {
   'bq-background--secondary': 'var(--bq-neutral-950)',
   'bq-background--tertiary': 'var(--bq-neutral-800)',
   'bq-background--alt': 'var(--bq-neutral-700)',
-  'bq-background--inverse': 'var(--bq-neutral-600)',
+  'bq-background--inverse': 'var(--bq-neutral-100)',
   'bq-background--brand': 'var(--bq-brand)',
   'bq-background--overlay': 'var(--bq-neutral-900)', // with opacity: 60%
   /* -------------------------------------------------------------------------- */
@@ -75,7 +75,7 @@ export const DefaultDarkTheme = {
   /** Neutral */
   'bq-ui--primary': 'var(--bq-neutral-900)',
   'bq-ui--secondary': 'var(--bq-neutral-950)',
-  'bq-ui--tertiary': 'var(--bq-neutral-700)',
+  'bq-ui--tertiary': 'var(--bq-neutral-500)',
   'bq-ui--inverse': 'var(--bq-neutral-100)',
   'bq-ui--alt': 'var(--bq-neutral-950)',
   /** Intents: solid fill and subtle tint (`-alt`) */
