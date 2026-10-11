@@ -7,8 +7,16 @@ const workspaceRoot = path.resolve(import.meta.dirname, '../..');
 const sourcePath = path.join(workspaceRoot, 'packages/beeq/dist/beeq/beeq.css');
 const outputPath = path.join(workspaceRoot, 'apps/beeq-docs/beeq-mintlify.css');
 
-const isThemeSelector = (selector) => {
+// Theme selectors are wrapped in `:where()` (zero specificity), so match against the inner selector
+const unwrapWhere = (selector) => {
   const value = selector.trim();
+  const match = /^:where\((.*)\)$/.exec(value);
+
+  return match ? match[1].trim() : value;
+};
+
+const isThemeSelector = (selector) => {
+  const value = unwrapWhere(selector);
 
   return (
     value === ':root' ||
