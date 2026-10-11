@@ -23,7 +23,7 @@ export const DefaultDarkTheme = {
   /** Alternative */
   'bq-icon--alt': 'var(--bq-white)',
   /** Feedback */
-  'bq-icon--info': 'var(--bq-brand)',
+  'bq-icon--info': 'var(--bq-info)',
   'bq-icon--success': 'var(--bq-success)',
   'bq-icon--warning': 'var(--bq-warning)',
   'bq-icon--danger': 'var(--bq-danger)',
@@ -49,7 +49,7 @@ export const DefaultDarkTheme = {
   /** Danger */
   'bq-stroke--danger': 'var(--bq-danger)',
   /** Info */
-  'bq-stroke--info': 'var(--bq-brand)',
+  'bq-stroke--info': 'var(--bq-info)',
   /* -------------------------------------------------------------------------- */
   /*                                 Text colors                                */
   /* -------------------------------------------------------------------------- */
@@ -64,7 +64,7 @@ export const DefaultDarkTheme = {
   /** Alternative */
   'bq-text--alt': 'var(--bq-white)',
   /** Feedback */
-  'bq-text--info': 'var(--bq-brand)',
+  'bq-text--info': 'var(--bq-info)',
   'bq-text--success': 'var(--bq-success)',
   'bq-text--warning': 'var(--bq-warning)',
   'bq-text--danger': 'var(--bq-danger)',
@@ -94,8 +94,8 @@ export const DefaultDarkTheme = {
   'bq-ui--danger': 'var(--bq-danger)',
   'bq-ui--danger-alt': 'var(--bq-danger-dark)',
   /** Info */
-  'bq-ui--info': 'var(--bq-brand)',
-  'bq-ui--info-alt': 'var(--bq-brand-dark)',
+  'bq-ui--info': 'var(--bq-info)',
+  'bq-ui--info-alt': 'var(--bq-info-dark)',
   /* -------------------------------------------------------------------------- */
   /*                                   States:                                  */
   /* -------------------------------------------------------------------------- */

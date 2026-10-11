@@ -22,7 +22,7 @@ export const DefaultLightTheme = {
   /** Brand */
   'bq-icon--brand': 'var(--bq-brand)',
   /** Feedback */
-  'bq-icon--info': 'var(--bq-brand)',
+  'bq-icon--info': 'var(--bq-info)',
   'bq-icon--success': 'var(--bq-success)',
   'bq-icon--warning': 'var(--bq-warning)',
   'bq-icon--danger': 'var(--bq-danger)',
@@ -48,7 +48,7 @@ export const DefaultLightTheme = {
   /** Danger */
   'bq-stroke--danger': 'var(--bq-danger)',
   /** Info */
-  'bq-stroke--info': 'var(--bq-brand)',
+  'bq-stroke--info': 'var(--bq-info)',
   /* -------------------------------------------------------------------------- */
   /*                                 Text colors                                */
   /* -------------------------------------------------------------------------- */
@@ -63,7 +63,7 @@ export const DefaultLightTheme = {
   /** Alternative */
   'bq-text--alt': 'var(--bq-white)',
   /** Feedback */
-  'bq-text--info': 'var(--bq-brand)',
+  'bq-text--info': 'var(--bq-info)',
   'bq-text--success': 'var(--bq-success)',
   'bq-text--warning': 'var(--bq-warning)',
   'bq-text--danger': 'var(--bq-danger)',
@@ -93,8 +93,8 @@ export const DefaultLightTheme = {
   'bq-ui--danger': 'var(--bq-danger)',
   'bq-ui--danger-alt': 'var(--bq-danger-light)',
   /** Info */
-  'bq-ui--info': 'var(--bq-brand)',
-  'bq-ui--info-alt': 'var(--bq-brand-light)',
+  'bq-ui--info': 'var(--bq-info)',
+  'bq-ui--info-alt': 'var(--bq-info-light)',
   /* -------------------------------------------------------------------------- */
   /*                                   States:                                  */
   /* -------------------------------------------------------------------------- */

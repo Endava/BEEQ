@@ -35,9 +35,9 @@ export const DefaultRootTheme = {
   'bq-warning': 'var(--bq-gold-600)',
   'bq-warning-dark': 'var(--bq-gold-1000)',
   // Info
-  'bq-info-light': 'var(--bq-iris-100)',
-  'bq-info': 'var(--bq-iris-600)',
-  'bq-info-dark': 'var(--bq-iris-1000)',
+  'bq-info-light': 'var(--bq-blue-100)',
+  'bq-info': 'var(--bq-blue-600)',
+  'bq-info-dark': 'var(--bq-blue-1000)',
   // Focus
   'bq-focus': 'var(--bq-iris-600)',
   // Data
