@@ -7,6 +7,22 @@ import { getTextContent } from '../../../shared/utils/slot';
 
 const getInput = (element: HTMLBqRadioElement) => element.shadowRoot?.querySelector<HTMLInputElement>('input');
 
+/** Resolves a CSS color value (e.g. `var(--bq-ui--brand)`) to its computed `rgb()` form */
+const resolveColor = (value: string): string => {
+  const probe = document.createElement('div');
+  probe.style.color = value;
+  document.body.appendChild(probe);
+  const { color } = getComputedStyle(probe);
+  probe.remove();
+  return color;
+};
+
+/** Waits for any running CSS transition inside the element's shadow root to finish */
+const waitForTransitions = async (element: Element) => {
+  const animations = element.shadowRoot?.getAnimations() ?? [];
+  await Promise.all(animations.map((animation) => animation.finished));
+};
+
 describe('bq-radio', () => {
   it('should render', async () => {
     const { root } = await render(<bq-radio name="test-option" value="test-value" />);
@@ -226,5 +242,76 @@ describe('bq-radio', () => {
     const style = computedStyle('bq-radio >>> [part="base"]', ['height', 'gap', 'borderRadius']);
 
     expect(style).toEqual({ height: '40px', gap: '8px', borderRadius: '8px' });
+  });
+
+  it('should map the color variables to the theme role tokens', async () => {
+    const { root } = await render(<bq-radio name="option" value="1" />);
+
+    const hostStyle = getComputedStyle(root);
+    const expectedRoles = {
+      '--bq-radio--background-color': '--bq-ui--primary',
+      '--bq-radio--border-color': '--bq-stroke--tertiary',
+      '--bq-radio--border-color-checked': '--bq-icon--brand',
+      '--bq-radio--dot-color-checked': '--bq-ui--brand',
+      '--bq-radio--label-text-color': '--bq-text--primary',
+    };
+
+    for (const [componentVar, roleVar] of Object.entries(expectedRoles)) {
+      expect(hostStyle.getPropertyValue(componentVar).trim()).toBe(hostStyle.getPropertyValue(roleVar).trim());
+    }
+  });
+
+  it('should paint the unchecked state with the color variables', async () => {
+    const { root } = await render(
+      <bq-radio name="option" value="1">
+        Option 1
+      </bq-radio>,
+    );
+
+    await waitForStable(root);
+    await waitForTransitions(root);
+
+    expect(computedStyle('bq-radio >>> [part="radio"]', ['backgroundColor', 'borderTopColor'])).toEqual({
+      backgroundColor: resolveColor('var(--bq-ui--primary)'),
+      borderTopColor: resolveColor('var(--bq-stroke--tertiary)'),
+    });
+    expect(computedStyle('bq-radio >>> [part="label"]', ['color']).color).toBe(resolveColor('var(--bq-text--primary)'));
+  });
+
+  it('should paint the checked state with the color variables', async () => {
+    const { root } = await render(
+      <bq-radio checked name="option" value="1">
+        Option 1
+      </bq-radio>,
+    );
+
+    await waitForStable(root);
+    await waitForTransitions(root);
+
+    expect(computedStyle('bq-radio >>> [part="radio"]', ['borderTopColor']).borderTopColor).toBe(
+      resolveColor('var(--bq-icon--brand)'),
+    );
+    expect(computedStyle('bq-radio >>> .bq-radio__checked', ['backgroundColor']).backgroundColor).toBe(
+      resolveColor('var(--bq-ui--brand)'),
+    );
+  });
+
+  it('should allow overriding the checked color variables', async () => {
+    const { root } = await render(
+      <bq-radio
+        checked
+        name="option"
+        style={{ '--bq-radio--border-color-checked': 'rgb(1, 2, 3)', '--bq-radio--dot-color-checked': 'rgb(4, 5, 6)' }}
+        value="1"
+      >
+        Option 1
+      </bq-radio>,
+    );
+
+    await waitForStable(root);
+    await waitForTransitions(root);
+
+    expect(computedStyle('bq-radio >>> [part="radio"]', ['borderTopColor']).borderTopColor).toBe('rgb(1, 2, 3)');
+    expect(computedStyle('bq-radio >>> .bq-radio__checked', ['backgroundColor']).backgroundColor).toBe('rgb(4, 5, 6)');
   });
 });

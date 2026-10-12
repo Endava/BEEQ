@@ -5,10 +5,18 @@
 :host {
   /**
    * @prop --bq-radio--background-color - Radio background color
+   * @prop --bq-radio--border-color - Radio border color
+   * @prop --bq-radio--border-color-checked - Radio border color when checked
    * @prop --bq-radio--border-width - Radio border width
+   * @prop --bq-radio--dot-color-checked - Radio inner dot color when checked
+   * @prop --bq-radio--label-text-color - Radio label text color
    * @prop --bq-radio--size - Radio size
    */
-  --bq-radio--background-color: theme(backgroundColor.ui.primary);
+  --bq-radio--background-color: var(--bq-ui--primary);
+  --bq-radio--border-color: var(--bq-stroke--tertiary);
+  --bq-radio--border-color-checked: var(--bq-icon--brand);
   --bq-radio--border-width: theme(borderWidth.m);
+  --bq-radio--dot-color-checked: var(--bq-ui--brand);
+  --bq-radio--label-text-color: var(--bq-text--primary);
   --bq-radio--size: 24px;
 }

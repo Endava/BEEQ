@@ -1982,7 +1982,11 @@ export namespace Components {
      * @event bqFocus - Handler to be called when the radio gets focused
      * @event bqKeyDown - The handler is to be called when the radio key is pressed
      * @cssprop --bq-radio--background-color - Radio background color
+     * @cssprop --bq-radio--border-color - Radio border color
+     * @cssprop --bq-radio--border-color-checked - Radio border color when checked
      * @cssprop --bq-radio--border-width - Radio border width
+     * @cssprop --bq-radio--dot-color-checked - Radio inner dot color when checked
+     * @cssprop --bq-radio--label-text-color - Radio label text color
      * @cssprop --bq-radio--size - Radio size
      */
     interface BqRadio {
@@ -4746,7 +4750,11 @@ declare global {
      * @event bqFocus - Handler to be called when the radio gets focused
      * @event bqKeyDown - The handler is to be called when the radio key is pressed
      * @cssprop --bq-radio--background-color - Radio background color
+     * @cssprop --bq-radio--border-color - Radio border color
+     * @cssprop --bq-radio--border-color-checked - Radio border color when checked
      * @cssprop --bq-radio--border-width - Radio border width
+     * @cssprop --bq-radio--dot-color-checked - Radio inner dot color when checked
+     * @cssprop --bq-radio--label-text-color - Radio label text color
      * @cssprop --bq-radio--size - Radio size
      */
     interface HTMLBqRadioElement extends Components.BqRadio, HTMLStencilElement {
@@ -7721,7 +7729,11 @@ declare namespace LocalJSX {
      * @event bqFocus - Handler to be called when the radio gets focused
      * @event bqKeyDown - The handler is to be called when the radio key is pressed
      * @cssprop --bq-radio--background-color - Radio background color
+     * @cssprop --bq-radio--border-color - Radio border color
+     * @cssprop --bq-radio--border-color-checked - Radio border color when checked
      * @cssprop --bq-radio--border-width - Radio border width
+     * @cssprop --bq-radio--dot-color-checked - Radio inner dot color when checked
+     * @cssprop --bq-radio--label-text-color - Radio label text color
      * @cssprop --bq-radio--size - Radio size
      */
     interface BqRadio {
@@ -10612,7 +10624,11 @@ declare module "@stencil/core" {
              * @event bqFocus - Handler to be called when the radio gets focused
              * @event bqKeyDown - The handler is to be called when the radio key is pressed
              * @cssprop --bq-radio--background-color - Radio background color
+             * @cssprop --bq-radio--border-color - Radio border color
+             * @cssprop --bq-radio--border-color-checked - Radio border color when checked
              * @cssprop --bq-radio--border-width - Radio border width
+             * @cssprop --bq-radio--dot-color-checked - Radio inner dot color when checked
+             * @cssprop --bq-radio--label-text-color - Radio label text color
              * @cssprop --bq-radio--size - Radio size
              */
             "bq-radio": LocalJSX.IntrinsicElements["bq-radio"] & JSXBase.HTMLAttributes<HTMLBqRadioElement>;
