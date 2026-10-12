@@ -7,12 +7,18 @@
    * @prop --bq-input--background-color - Input background color
    * @prop --bq-input--border-color - Input border color
    * @prop --bq-input--border-color-focus - Input border color on focus
+   * @prop --bq-input--border-color-danger - Input border color when the validation status is `error`
+   * @prop --bq-input--border-color-success - Input border color when the validation status is `success`
+   * @prop --bq-input--border-color-warning - Input border color when the validation status is `warning`
    * @prop --bq-input--border-radius - Input border radius
    * @prop --bq-input--border-width - Input border width
    * @prop --bq-input--border-style - Input border style
    * @prop --bq-input--gap - Gap between input content and prefix/suffix
    * @prop --bq-input--helper-margin-top - Helper text margin top
    * @prop --bq-input--helper-text-color - Helper text color
+   * @prop --bq-input--helper-text-color-danger - Helper text color when the validation status is `error`
+   * @prop --bq-input--helper-text-color-success - Helper text color when the validation status is `success`
+   * @prop --bq-input--helper-text-color-warning - Helper text color when the validation status is `warning`
    * @prop --bq-input--helper-text-size - Helper text size
    * @prop --bq-input--icon-size - Icon size to use in prefix/suffix and clear button
    * @prop --bq-input--label-margin-bottom - Input label margin bottom
@@ -29,6 +35,9 @@
 
   --bq-input--border-color: theme(stroke.tertiary);
   --bq-input--border-color-focus: theme(stroke.brand);
+  --bq-input--border-color-danger: var(--bq-stroke--danger);
+  --bq-input--border-color-success: var(--bq-stroke--success);
+  --bq-input--border-color-warning: var(--bq-stroke--warning);
   --bq-input--border-radius: theme(borderRadius.s);
   --bq-input--border-width: theme(borderWidth.s);
   --bq-input--border-style: solid;
@@ -38,6 +47,9 @@
   --bq-input--helper-margin-top: theme(spacing.xs);
   --bq-input--helper-text-size: theme(fontSize.s);
   --bq-input--helper-text-color: theme(textColor.primary);
+  --bq-input--helper-text-color-danger: var(--bq-text--danger);
+  --bq-input--helper-text-color-success: var(--bq-text--success);
+  --bq-input--helper-text-color-warning: var(--bq-text--warning);
 
   --bq-input--icon-size: 24px;
 

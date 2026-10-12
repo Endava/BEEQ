@@ -68,12 +68,18 @@ import type { TInputType, TInputValidation, TInputValue } from './bq-input.types
  * @cssprop --bq-input--background-color - Input background color
  * @cssprop --bq-input--border-color - Input border color
  * @cssprop --bq-input--border-color-focus - Input border color on focus
+ * @cssprop --bq-input--border-color-danger - Input border color when the validation status is `error`
+ * @cssprop --bq-input--border-color-success - Input border color when the validation status is `success`
+ * @cssprop --bq-input--border-color-warning - Input border color when the validation status is `warning`
  * @cssprop --bq-input--border-radius - Input border radius
  * @cssprop --bq-input--border-width - Input border width
  * @cssprop --bq-input--border-style - Input border style
  * @cssprop --bq-input--gap - Gap between input content and prefix/suffix
  * @cssprop --bq-input--helper-margin-top - Helper text margin top
  * @cssprop --bq-input--helper-text-color - Helper text color
+ * @cssprop --bq-input--helper-text-color-danger - Helper text color when the validation status is `error`
+ * @cssprop --bq-input--helper-text-color-success - Helper text color when the validation status is `success`
+ * @cssprop --bq-input--helper-text-color-warning - Helper text color when the validation status is `warning`
  * @cssprop --bq-input--helper-text-size - Helper text size
  * @cssprop --bq-input--icon-size - Icon size to use in prefix/suffix and clear button
  * @cssprop --bq-input--label-margin-bottom - Input label margin bottom
