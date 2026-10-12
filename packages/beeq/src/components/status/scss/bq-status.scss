@@ -6,26 +6,26 @@
   }
 
   &.success::part(base) {
-    --bq-badge--background-color: theme(backgroundColor.ui.success);
+    --bq-badge--background-color: var(--bq-status--dot-color-success);
   }
 
   &.danger::part(base) {
-    --bq-badge--background-color: theme(backgroundColor.ui.danger);
+    --bq-badge--background-color: var(--bq-status--dot-color-danger);
   }
 
   &.neutral::part(base) {
-    --bq-badge--background-color: theme(backgroundColor.ui.secondary);
+    --bq-badge--background-color: var(--bq-status--dot-color-neutral);
   }
 
   &.alert::part(base) {
-    --bq-badge--background-color: theme(backgroundColor.ui.warning);
+    --bq-badge--background-color: var(--bq-status--dot-color-alert);
   }
 
   &.info::part(base) {
-    --bq-badge--background-color: theme(backgroundColor.ui.brand);
+    --bq-badge--background-color: var(--bq-status--dot-color-info);
   }
 }
 
 .bq-status__text ::slotted(*) {
-  @apply text-s font-medium leading-regular text-primary p-b-0 p-i-0 m-b-0 m-i-0;
+  @apply text-s font-medium leading-regular text-[color:--bq-status--text-color] p-b-0 p-i-0 m-b-0 m-i-0;
 }

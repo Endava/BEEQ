@@ -2541,6 +2541,12 @@ export namespace Components {
      * @dependency bq-badge
      * @attr {"alert" | "danger" | "info" | "neutral" | "success"} type - It defines the type of status to display.
      * @cssprop --bq-status-circ - Status circle size.
+     * @cssprop --bq-status--dot-color-alert - Status circle color when type is 'alert'.
+     * @cssprop --bq-status--dot-color-danger - Status circle color when type is 'danger'.
+     * @cssprop --bq-status--dot-color-info - Status circle color when type is 'info'.
+     * @cssprop --bq-status--dot-color-neutral - Status circle color when type is 'neutral'.
+     * @cssprop --bq-status--dot-color-success - Status circle color when type is 'success'.
+     * @cssprop --bq-status--text-color - Status text color.
      */
     interface BqStatus {
         /**
@@ -5021,6 +5027,12 @@ declare global {
      * @dependency bq-badge
      * @attr {"alert" | "danger" | "info" | "neutral" | "success"} type - It defines the type of status to display.
      * @cssprop --bq-status-circ - Status circle size.
+     * @cssprop --bq-status--dot-color-alert - Status circle color when type is 'alert'.
+     * @cssprop --bq-status--dot-color-danger - Status circle color when type is 'danger'.
+     * @cssprop --bq-status--dot-color-info - Status circle color when type is 'info'.
+     * @cssprop --bq-status--dot-color-neutral - Status circle color when type is 'neutral'.
+     * @cssprop --bq-status--dot-color-success - Status circle color when type is 'success'.
+     * @cssprop --bq-status--text-color - Status text color.
      */
     interface HTMLBqStatusElement extends Components.BqStatus, HTMLStencilElement {
     }
@@ -8229,6 +8241,12 @@ declare namespace LocalJSX {
      * @dependency bq-badge
      * @attr {"alert" | "danger" | "info" | "neutral" | "success"} type - It defines the type of status to display.
      * @cssprop --bq-status-circ - Status circle size.
+     * @cssprop --bq-status--dot-color-alert - Status circle color when type is 'alert'.
+     * @cssprop --bq-status--dot-color-danger - Status circle color when type is 'danger'.
+     * @cssprop --bq-status--dot-color-info - Status circle color when type is 'info'.
+     * @cssprop --bq-status--dot-color-neutral - Status circle color when type is 'neutral'.
+     * @cssprop --bq-status--dot-color-success - Status circle color when type is 'success'.
+     * @cssprop --bq-status--text-color - Status text color.
      */
     interface BqStatus {
         /**
@@ -10677,6 +10695,12 @@ declare module "@stencil/core" {
              * @dependency bq-badge
              * @attr {"alert" | "danger" | "info" | "neutral" | "success"} type - It defines the type of status to display.
              * @cssprop --bq-status-circ - Status circle size.
+             * @cssprop --bq-status--dot-color-alert - Status circle color when type is 'alert'.
+             * @cssprop --bq-status--dot-color-danger - Status circle color when type is 'danger'.
+             * @cssprop --bq-status--dot-color-info - Status circle color when type is 'info'.
+             * @cssprop --bq-status--dot-color-neutral - Status circle color when type is 'neutral'.
+             * @cssprop --bq-status--dot-color-success - Status circle color when type is 'success'.
+             * @cssprop --bq-status--text-color - Status text color.
              */
             "bq-status": LocalJSX.IntrinsicElements["bq-status"] & JSXBase.HTMLAttributes<HTMLBqStatusElement>;
             /**
