@@ -265,6 +265,7 @@ export namespace Components {
      * @cssprop --bq-alert--icon-color-success - The alert icon color for success type
      * @cssprop --bq-alert--icon-color-warning - The alert icon color for warning type
      * @cssprop --bq-alert--icon-color-error - The alert icon color for error type
+     * @cssprop --bq-alert--text-color - The alert text color
      * @cssprop --bq-alert--padding - The alert padding
      * @cssprop --bq-alert--min-width - The alert min width
      * @cssprop --bq-alert--z-index - The stacking order of a sticky alert. No default is declared.
@@ -3581,6 +3582,7 @@ declare global {
      * @cssprop --bq-alert--icon-color-success - The alert icon color for success type
      * @cssprop --bq-alert--icon-color-warning - The alert icon color for warning type
      * @cssprop --bq-alert--icon-color-error - The alert icon color for error type
+     * @cssprop --bq-alert--text-color - The alert text color
      * @cssprop --bq-alert--padding - The alert padding
      * @cssprop --bq-alert--min-width - The alert min width
      * @cssprop --bq-alert--z-index - The stacking order of a sticky alert. No default is declared.
@@ -5773,6 +5775,7 @@ declare namespace LocalJSX {
      * @cssprop --bq-alert--icon-color-success - The alert icon color for success type
      * @cssprop --bq-alert--icon-color-warning - The alert icon color for warning type
      * @cssprop --bq-alert--icon-color-error - The alert icon color for error type
+     * @cssprop --bq-alert--text-color - The alert text color
      * @cssprop --bq-alert--padding - The alert padding
      * @cssprop --bq-alert--min-width - The alert min width
      * @cssprop --bq-alert--z-index - The stacking order of a sticky alert. No default is declared.
@@ -9631,6 +9634,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-alert--icon-color-success - The alert icon color for success type
              * @cssprop --bq-alert--icon-color-warning - The alert icon color for warning type
              * @cssprop --bq-alert--icon-color-error - The alert icon color for error type
+             * @cssprop --bq-alert--text-color - The alert text color
              * @cssprop --bq-alert--padding - The alert padding
              * @cssprop --bq-alert--min-width - The alert min width
              * @cssprop --bq-alert--z-index - The stacking order of a sticky alert. No default is declared.

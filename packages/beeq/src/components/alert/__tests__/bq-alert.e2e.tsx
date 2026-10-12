@@ -2,6 +2,18 @@ import { h } from '@stencil/core';
 import { describe, expect, it, render } from '@stencil/vitest';
 import { userEvent } from 'vitest/browser';
 
+import { computedStyle } from '../../../shared/test-utils/computedStyle';
+
+/** Resolves a CSS color value (e.g. `var(--bq-icon--info)`) to its computed `rgb()` form */
+const resolveColor = (value: string): string => {
+  const probe = document.createElement('div');
+  probe.style.color = value;
+  document.body.appendChild(probe);
+  const { color } = getComputedStyle(probe);
+  probe.remove();
+  return color;
+};
+
 describe('bq-alert', () => {
   it('should render', async () => {
     const { root } = await render(<bq-alert />);
@@ -248,5 +260,58 @@ describe('bq-alert', () => {
 
     expect(root).toEqualAttribute('aria-hidden', 'true');
     expect(root).toHaveClass('is-hidden');
+  });
+
+  it('should use the info role tokens (not brand) for the info type', async () => {
+    const { root } = await render(
+      <bq-alert open type="info">
+        Alert title
+      </bq-alert>,
+    );
+
+    const hostStyle = getComputedStyle(root);
+    expect(hostStyle.getPropertyValue('--bq-alert--background-info').trim()).toBe(
+      hostStyle.getPropertyValue('--bq-ui--info-alt').trim(),
+    );
+    expect(hostStyle.getPropertyValue('--bq-alert--border-info').trim()).toBe(
+      hostStyle.getPropertyValue('--bq-stroke--info').trim(),
+    );
+    expect(hostStyle.getPropertyValue('--bq-alert--icon-color-info').trim()).toBe(
+      hostStyle.getPropertyValue('--bq-icon--info').trim(),
+    );
+
+    const wrapperStyle = computedStyle('bq-alert >>> [part="wrapper"]', ['backgroundColor', 'borderTopColor']);
+    const iconStyle = computedStyle('bq-alert >>> [part="icon-outline"]', ['color']);
+
+    expect(wrapperStyle).toEqual({
+      backgroundColor: resolveColor('var(--bq-ui--info-alt)'),
+      borderTopColor: resolveColor('var(--bq-stroke--info)'),
+    });
+    expect(iconStyle.color).toBe(resolveColor('var(--bq-icon--info)'));
+    expect(iconStyle.color).not.toBe(resolveColor('var(--bq-icon--brand)'));
+  });
+
+  it('should use the text color variable for the title and body', async () => {
+    const { root } = await render(
+      <bq-alert open type="success">
+        Alert title<span slot="body">You have a new alert message</span>
+      </bq-alert>,
+    );
+
+    expect(getComputedStyle(root).getPropertyValue('--bq-alert--text-color').trim()).toBe(
+      getComputedStyle(root).getPropertyValue('--bq-text--primary').trim(),
+    );
+    expect(computedStyle('bq-alert >>> [part="title"]', ['color']).color).toBe(resolveColor('var(--bq-text--primary)'));
+  });
+
+  it('should allow overriding the text color variable', async () => {
+    await render(
+      <bq-alert open style={{ '--bq-alert--text-color': 'rgb(1, 2, 3)' }} type="success">
+        Alert title<span slot="body">You have a new alert message</span>
+      </bq-alert>,
+    );
+
+    expect(computedStyle('bq-alert >>> [part="title"]', ['color']).color).toBe('rgb(1, 2, 3)');
+    expect(computedStyle('bq-alert >>> [part="body"]', ['color']).color).toBe('rgb(1, 2, 3)');
   });
 });

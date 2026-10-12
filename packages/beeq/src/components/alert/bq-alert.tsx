@@ -86,6 +86,8 @@ import { ALERT_TYPE } from './bq-alert.types';
  * @cssprop --bq-alert--icon-color-warning - The alert icon color for warning type
  * @cssprop --bq-alert--icon-color-error - The alert icon color for error type
  *
+ * @cssprop --bq-alert--text-color - The alert text color
+ *
  * @cssprop --bq-alert--padding - The alert padding
  * @cssprop --bq-alert--min-width - The alert min width
  * @cssprop --bq-alert--z-index - The stacking order of a sticky alert. No default is declared.
@@ -346,7 +348,7 @@ export class BqAlert {
               {/* TITLE */}
               <div
                 class={{
-                  'title-font font-semibold text-primary leading-regular': true,
+                  'title-font font-semibold leading-regular': true,
                   'flex items-center': this.sticky,
                 }}
                 part="title"
@@ -355,7 +357,7 @@ export class BqAlert {
               </div>
               {/* BODY */}
               <div
-                class={{ 'text-primary text-s leading-regular': true, '!hidden': !this.hasContent }}
+                class={{ 'text-s leading-regular': true, '!hidden': !this.hasContent }}
                 part="body"
                 ref={(div) => {
                   this.bodyElem = div;
