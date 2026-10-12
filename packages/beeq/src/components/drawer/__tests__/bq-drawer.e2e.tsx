@@ -6,6 +6,15 @@ import { getTextContent } from '../../../shared/utils/slot';
 const getDrawerPanel = (drawer: HTMLBqDrawerElement) =>
   drawer.shadowRoot?.querySelector<HTMLDivElement>('[part="panel"]');
 
+const resolveColor = (value: string) => {
+  const probe = document.createElement('span');
+  probe.style.color = value;
+  document.body.appendChild(probe);
+  const { color } = getComputedStyle(probe);
+  probe.remove();
+  return color;
+};
+
 beforeEach(() => {
   // !Note: Remove once the deprecated `placement` prop is removed from bq-drawer
   vi.spyOn(console, 'warn').mockImplementation(() => {});
@@ -201,6 +210,43 @@ describe('bq-drawer', () => {
     const { root } = await render(<bq-drawer enableBackdrop open />);
 
     expect(root.shadowRoot?.querySelector('[part="backdrop"]')).not.toBeNull();
+  });
+
+  it('should use the colour custom properties', async () => {
+    const { root } = await render(
+      <bq-drawer open>
+        <div slot="title">Drawer Title</div>
+      </bq-drawer>,
+    );
+    const drawer = root as HTMLBqDrawerElement;
+
+    await waitForStable(root);
+
+    const panelStyle = getComputedStyle(getDrawerPanel(drawer));
+    const titleStyle = getComputedStyle(drawer.shadowRoot?.querySelector<HTMLElement>('[part="title"]'));
+
+    expect(panelStyle.backgroundColor).toBe(resolveColor('var(--bq-ui--primary)'));
+    expect(panelStyle.color).toBe(resolveColor('var(--bq-text--primary)'));
+    expect(titleStyle.color).toBe(resolveColor('var(--bq-text--primary)'));
+  });
+
+  it('should apply custom colour overrides', async () => {
+    const { root } = await render(
+      <bq-drawer
+        open
+        style={{ '--bq-drawer--background': 'rgb(255, 0, 0)', '--bq-drawer--text-color': 'rgb(0, 0, 255)' }}
+      >
+        <div slot="title">Drawer Title</div>
+      </bq-drawer>,
+    );
+    const drawer = root as HTMLBqDrawerElement;
+
+    await waitForStable(root);
+
+    const panelStyle = getComputedStyle(getDrawerPanel(drawer));
+
+    expect(panelStyle.backgroundColor).toBe('rgb(255, 0, 0)');
+    expect(panelStyle.color).toBe('rgb(0, 0, 255)');
   });
 
   it('should not close on outside click when closeOnClickOutside is true', async () => {

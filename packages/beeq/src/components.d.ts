@@ -1199,11 +1199,13 @@ export namespace Components {
      * @event bqOpen - Callback handler to be called when the drawer is opened.
      * @event bqAfterOpen - Callback handler to be called after the drawer has been opened.
      * @event bqAfterClose - Callback handler to be called after the drawer has been closed.
+     * @cssprop --bq-drawer--background - Background color of the drawer panel
      * @cssprop --bq-drawer--backgroundBackdrop - Background color of the backdrop
      * @cssprop --bq-drawer--gap - Gap between the drawer and the viewport
      * @cssprop --bq-drawer--width - Width of the drawer
      * @cssprop --bq-drawer--paddingX - Padding left and right of the drawer
      * @cssprop --bq-drawer--paddingY - Padding top and bottom of the drawer
+     * @cssprop --bq-drawer--text-color - Text color of the drawer panel
      * @cssprop --bq-drawer--zIndex - Z-index of the drawer component
      */
     interface BqDrawer {
@@ -4290,11 +4292,13 @@ declare global {
      * @event bqOpen - Callback handler to be called when the drawer is opened.
      * @event bqAfterOpen - Callback handler to be called after the drawer has been opened.
      * @event bqAfterClose - Callback handler to be called after the drawer has been closed.
+     * @cssprop --bq-drawer--background - Background color of the drawer panel
      * @cssprop --bq-drawer--backgroundBackdrop - Background color of the backdrop
      * @cssprop --bq-drawer--gap - Gap between the drawer and the viewport
      * @cssprop --bq-drawer--width - Width of the drawer
      * @cssprop --bq-drawer--paddingX - Padding left and right of the drawer
      * @cssprop --bq-drawer--paddingY - Padding top and bottom of the drawer
+     * @cssprop --bq-drawer--text-color - Text color of the drawer panel
      * @cssprop --bq-drawer--zIndex - Z-index of the drawer component
      */
     interface HTMLBqDrawerElement extends Components.BqDrawer, HTMLStencilElement {
@@ -7010,11 +7014,13 @@ declare namespace LocalJSX {
      * @event bqOpen - Callback handler to be called when the drawer is opened.
      * @event bqAfterOpen - Callback handler to be called after the drawer has been opened.
      * @event bqAfterClose - Callback handler to be called after the drawer has been closed.
+     * @cssprop --bq-drawer--background - Background color of the drawer panel
      * @cssprop --bq-drawer--backgroundBackdrop - Background color of the backdrop
      * @cssprop --bq-drawer--gap - Gap between the drawer and the viewport
      * @cssprop --bq-drawer--width - Width of the drawer
      * @cssprop --bq-drawer--paddingX - Padding left and right of the drawer
      * @cssprop --bq-drawer--paddingY - Padding top and bottom of the drawer
+     * @cssprop --bq-drawer--text-color - Text color of the drawer panel
      * @cssprop --bq-drawer--zIndex - Z-index of the drawer component
      */
     interface BqDrawer {
@@ -10438,11 +10444,13 @@ declare module "@stencil/core" {
              * @event bqOpen - Callback handler to be called when the drawer is opened.
              * @event bqAfterOpen - Callback handler to be called after the drawer has been opened.
              * @event bqAfterClose - Callback handler to be called after the drawer has been closed.
+             * @cssprop --bq-drawer--background - Background color of the drawer panel
              * @cssprop --bq-drawer--backgroundBackdrop - Background color of the backdrop
              * @cssprop --bq-drawer--gap - Gap between the drawer and the viewport
              * @cssprop --bq-drawer--width - Width of the drawer
              * @cssprop --bq-drawer--paddingX - Padding left and right of the drawer
              * @cssprop --bq-drawer--paddingY - Padding top and bottom of the drawer
+             * @cssprop --bq-drawer--text-color - Text color of the drawer panel
              * @cssprop --bq-drawer--zIndex - Z-index of the drawer component
              */
             "bq-drawer": LocalJSX.IntrinsicElements["bq-drawer"] & JSXBase.HTMLAttributes<HTMLBqDrawerElement>;

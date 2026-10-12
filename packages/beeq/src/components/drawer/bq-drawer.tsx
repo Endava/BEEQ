@@ -59,11 +59,13 @@ import { DRAWER_PLACEMENT, DRAWER_POSITIONS } from './bq-drawer.types';
  * @part body - The `<main>` that holds the drawer body content.
  * @part footer - The `<footer>` that holds footer content.
  *
+ * @cssprop --bq-drawer--background - Background color of the drawer panel
  * @cssprop --bq-drawer--backgroundBackdrop - Background color of the backdrop
  * @cssprop --bq-drawer--gap - Gap between the drawer and the viewport
  * @cssprop --bq-drawer--width - Width of the drawer
  * @cssprop --bq-drawer--paddingX - Padding left and right of the drawer
  * @cssprop --bq-drawer--paddingY - Padding top and bottom of the drawer
+ * @cssprop --bq-drawer--text-color - Text color of the drawer panel
  * @cssprop --bq-drawer--zIndex - Z-index of the drawer component
  */
 @Component({
@@ -322,7 +324,7 @@ export class BqDrawer {
         >
           <header class="flex items-center" part="header">
             <h2
-              class="flex-1 items-center justify-between font-bold text-primary text-xl leading-regular"
+              class="flex-1 items-center justify-between font-bold text-xl leading-regular"
               id="bq-drawer__title"
               part="title"
             >
