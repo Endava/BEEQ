@@ -345,6 +345,7 @@ export namespace Components {
      * @cssprop --bq-avatar--border-color - Avatar border color
      * @cssprop --bq-avatar--border-style - Avatar border style
      * @cssprop --bq-avatar--border-width - Avatar border width
+     * @cssprop --bq-avatar--text-color - Avatar initials text color
      * @cssprop --bq-avatar--border-radius-circle - Avatar border radius for circle & any size
      * @cssprop --bq-avatar--border-radius-squareXs - Avatar border radius for square & size xsmall
      * @cssprop --bq-avatar--border-radius-squareS - Avatar border radius for square & size small
@@ -3755,6 +3756,7 @@ declare global {
      * @cssprop --bq-avatar--border-color - Avatar border color
      * @cssprop --bq-avatar--border-style - Avatar border style
      * @cssprop --bq-avatar--border-width - Avatar border width
+     * @cssprop --bq-avatar--text-color - Avatar initials text color
      * @cssprop --bq-avatar--border-radius-circle - Avatar border radius for circle & any size
      * @cssprop --bq-avatar--border-radius-squareXs - Avatar border radius for square & size xsmall
      * @cssprop --bq-avatar--border-radius-squareS - Avatar border radius for square & size small
@@ -6111,6 +6113,7 @@ declare namespace LocalJSX {
      * @cssprop --bq-avatar--border-color - Avatar border color
      * @cssprop --bq-avatar--border-style - Avatar border style
      * @cssprop --bq-avatar--border-width - Avatar border width
+     * @cssprop --bq-avatar--text-color - Avatar initials text color
      * @cssprop --bq-avatar--border-radius-circle - Avatar border radius for circle & any size
      * @cssprop --bq-avatar--border-radius-squareXs - Avatar border radius for square & size xsmall
      * @cssprop --bq-avatar--border-radius-squareS - Avatar border radius for square & size small
@@ -10042,6 +10045,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-avatar--border-color - Avatar border color
              * @cssprop --bq-avatar--border-style - Avatar border style
              * @cssprop --bq-avatar--border-width - Avatar border width
+             * @cssprop --bq-avatar--text-color - Avatar initials text color
              * @cssprop --bq-avatar--border-radius-circle - Avatar border radius for circle & any size
              * @cssprop --bq-avatar--border-radius-squareXs - Avatar border radius for square & size xsmall
              * @cssprop --bq-avatar--border-radius-squareS - Avatar border radius for square & size small

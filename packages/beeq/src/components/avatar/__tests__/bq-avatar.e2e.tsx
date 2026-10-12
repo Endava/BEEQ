@@ -3,6 +3,15 @@ import { describe, expect, it, render, waitForStable } from '@stencil/vitest';
 
 import { computedStyle } from '../../../shared/test-utils/computedStyle';
 
+const resolveColor = (value: string) => {
+  const probe = document.createElement('span');
+  probe.style.color = value;
+  document.body.appendChild(probe);
+  const { color } = getComputedStyle(probe);
+  probe.remove();
+  return color;
+};
+
 describe('bq-avatar', () => {
   it('should render', async () => {
     const { root } = await render(<bq-avatar />);
@@ -101,5 +110,28 @@ describe('bq-avatar', () => {
     expect(smallSquareStyle).toEqual({ borderRadius: '8px', height: '32px', width: '32px' });
     expect(mediumSquareStyle).toEqual({ borderRadius: '12px', height: '48px', width: '48px' });
     expect(largeSquareStyle).toEqual({ borderRadius: '12px', height: '64px', width: '64px' });
+  });
+
+  it('should use the colour custom properties', async () => {
+    const { root } = await render(<bq-avatar initials="JS" />);
+
+    await waitForStable(root);
+
+    const baseStyle = computedStyle('bq-avatar >>> [part="base"]', ['backgroundColor', 'borderColor']);
+    const textStyle = computedStyle('bq-avatar >>> [part="text"]', ['color']);
+
+    expect(baseStyle).toEqual({
+      backgroundColor: resolveColor('var(--bq-ui--alt)'),
+      borderColor: resolveColor('var(--bq-stroke--tertiary)'),
+    });
+    expect(textStyle.color).toBe(resolveColor('var(--bq-text--primary)'));
+  });
+
+  it('should apply a custom text colour', async () => {
+    const { root } = await render(<bq-avatar initials="JS" style={{ '--bq-avatar--text-color': 'rgb(255, 0, 0)' }} />);
+
+    await waitForStable(root);
+
+    expect(computedStyle('bq-avatar >>> [part="text"]', ['color']).color).toBe('rgb(255, 0, 0)');
   });
 });

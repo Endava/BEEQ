@@ -44,6 +44,8 @@ import { AVATAR_SHAPE, AVATAR_SIZE } from './bq-avatar.types';
  * @cssprop --bq-avatar--border-style - Avatar border style
  * @cssprop --bq-avatar--border-width - Avatar border width
  *
+ * @cssprop --bq-avatar--text-color - Avatar initials text color
+ *
  * @cssprop --bq-avatar--border-radius-circle - Avatar border radius for circle & any size
  * @cssprop --bq-avatar--border-radius-squareXs - Avatar border radius for square & size xsmall
  * @cssprop --bq-avatar--border-radius-squareS - Avatar border radius for square & size small
@@ -199,7 +201,7 @@ export class BqAvatar {
         >
           {this.initials && (
             <span
-              class="bs-full is-full absolute inset-bs-0 start-0 inline-flex items-center justify-center font-bold text-primary"
+              class="bs-full is-full absolute inset-bs-0 start-0 inline-flex items-center justify-center font-bold text-[color:--bq-avatar--text-color]"
               part="text"
             >
               {this.trimmedInitials}
