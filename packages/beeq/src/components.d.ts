@@ -1351,6 +1351,7 @@ export namespace Components {
      * @status stable
      * @dependency bq-icon
      * @attr {"large" | "medium" | "small"} size - The size of the empty state component
+     * @cssprop --bq-empty-state--text-color - The text color of the title and body content
      */
     interface BqEmptyState {
         /**
@@ -4391,6 +4392,7 @@ declare global {
      * @status stable
      * @dependency bq-icon
      * @attr {"large" | "medium" | "small"} size - The size of the empty state component
+     * @cssprop --bq-empty-state--text-color - The text color of the title and body content
      */
     interface HTMLBqEmptyStateElement extends Components.BqEmptyState, HTMLStencilElement {
     }
@@ -7190,6 +7192,7 @@ declare namespace LocalJSX {
      * @status stable
      * @dependency bq-icon
      * @attr {"large" | "medium" | "small"} size - The size of the empty state component
+     * @cssprop --bq-empty-state--text-color - The text color of the title and body content
      */
     interface BqEmptyState {
         /**
@@ -10526,6 +10529,7 @@ declare module "@stencil/core" {
              * @status stable
              * @dependency bq-icon
              * @attr {"large" | "medium" | "small"} size - The size of the empty state component
+             * @cssprop --bq-empty-state--text-color - The text color of the title and body content
              */
             "bq-empty-state": LocalJSX.IntrinsicElements["bq-empty-state"] & JSXBase.HTMLAttributes<HTMLBqEmptyStateElement>;
             /**

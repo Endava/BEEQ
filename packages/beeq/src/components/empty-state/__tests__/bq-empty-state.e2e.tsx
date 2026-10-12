@@ -3,6 +3,15 @@ import { afterEach, describe, expect, it, render, vi, waitForStable } from '@ste
 
 import { getTextContent } from '../../../shared/utils/slot';
 
+const resolveColor = (value: string) => {
+  const probe = document.createElement('span');
+  probe.style.color = value;
+  document.body.appendChild(probe);
+  const { color } = getComputedStyle(probe);
+  probe.remove();
+  return color;
+};
+
 describe('bq-empty-state', () => {
   it('should render', async () => {
     const { root } = await render(<bq-empty-state />);
@@ -102,5 +111,34 @@ describe('bq-empty-state', () => {
     const icon = root.shadowRoot?.querySelector<HTMLBqIconElement>('[part="icon"]');
     expect(icon).not.toBeNull();
     expect(icon?.name).toBe('database');
+  });
+  it('should use the default text colour for the title and body', async () => {
+    const { root } = await render(
+      <bq-empty-state>
+        Title
+        <span slot="body">Body</span>
+      </bq-empty-state>,
+    );
+
+    await waitForStable(root);
+
+    const expected = resolveColor('var(--bq-text--primary)');
+    const title = root.shadowRoot?.querySelector<HTMLElement>('[part="title"]');
+    const body = root.shadowRoot?.querySelector<HTMLElement>('[part="body"]');
+
+    expect(getComputedStyle(title).color).toBe(expected);
+    expect(getComputedStyle(body).color).toBe(expected);
+  });
+
+  it('should apply a custom text colour', async () => {
+    const { root } = await render(
+      <bq-empty-state style={{ '--bq-empty-state--text-color': 'rgb(255, 0, 0)' }}>Title</bq-empty-state>,
+    );
+
+    await waitForStable(root);
+
+    const title = root.shadowRoot?.querySelector<HTMLElement>('[part="title"]');
+
+    expect(getComputedStyle(title).color).toBe('rgb(255, 0, 0)');
   });
 });

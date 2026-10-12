@@ -29,6 +29,8 @@ import { EMPTY_STATE_SIZE, SIZE_TO_VALUE_MAP } from './bq-empty-state.types';
  * @part thumbnail - The container `<div>` that wraps the thumbnail element
  * @part title - The container `<div>` that wraps the empty state title content
  * @part wrapper - The wrapper container `<div>` of the element inside the shadow DOM
+ *
+ * @cssprop --bq-empty-state--text-color - The text color of the title and body content
  */
 
 @Component({
@@ -130,7 +132,7 @@ export class BqEmptyState {
         </div>
         <div
           class={{
-            'font-bold text-primary leading-regular': true,
+            'font-bold text-[color:--bq-empty-state--text-color] leading-regular': true,
             'text-m': this.size === 'small',
             'text-l': this.size === 'medium',
             'text-xxl2': this.size === 'large',
@@ -144,7 +146,7 @@ export class BqEmptyState {
         </div>
         <div
           class={{
-            'font-normal leading-regular': true,
+            'font-normal text-[color:--bq-empty-state--text-color] leading-regular': true,
             'text-s': this.size === 'small',
             'text-m': this.size === 'medium',
             'text-l': this.size === 'large',
