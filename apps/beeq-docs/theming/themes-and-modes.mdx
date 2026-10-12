@@ -532,16 +532,16 @@ Here is a working example showing how to read the user's preferred color scheme 
 
 ## Endava theme
 
-The `endava` theme follows the Endava brand portal. It keeps the brand's colors wherever they meet [WCAG 2.1 Level AA](/foundations/colors#accessibility), and uses a nearby shade where they don't.
+The `endava` theme follows the [Endava brand portal](https://brand.endava.com/visual/colours) and the Endava brand guide. It keeps the brand's colors wherever they meet [WCAG 2.1 Level AA](/foundations/colors#accessibility), and uses a nearby shade where they don't.
 
 - **Brand and accent:** Red Orange `#FF5640` is the brand fill. Accent aliases the brand, so `--bq-accent-*` matches `--bq-brand-*`.
 - **Brand text:** `--bq-brand-strong` is `#C33600` (light mode text, icons, strokes, and focus). `--bq-brand-bright` is `#FF8979` (dark mode).
 - **Neutrals and info:** Solid Blue `#192B37` is the darkest neutral (`--bq-neutral-950`), `--bq-black`, and the info color in light mode. In dark mode, info is white (`--bq-info-bright`).
 - **Dark mode fills:** info, success, warning, and danger fills use their `-bright` step, with Solid Blue as the on-color.
-- **Data colors:** come from the brand portal palette.
+- **Data colors:** come from the brand portal palette. The brand asks for primary colors and Solid Blue shades first, so start charts with `--bq-data-01` (Red Orange), `--bq-data-11` (Solid Blue), `--bq-data-12` (white), and `--bq-neutral-*` shades. Add `--bq-data-02` to `--bq-data-10` only when you need more series.
 
 <Warning>
-  White text on Red Orange is **3.15:1**, below the 4.5:1 minimum for normal text. BEEQ keeps it for `--bq-text--on-brand` and `--bq-text--on-accent` to match the brand, so only use it for large text (24px, or 18.66px bold) and non-text UI elements. If your product needs 4.5:1 on brand fills, switch the fills to the strong step:
+  White text on Red Orange is **3.15:1**, below the 4.5:1 minimum for normal text. BEEQ keeps it for `--bq-text--on-brand` and `--bq-text--on-accent` to match the brand, so only use it for large text (24px, or 18.66px bold) and non-text UI elements. The brand guide applies the same limit and excludes Solid Blue on Red Orange, so white is the only on-color the brand allows. If your product needs 4.5:1 on brand fills, switch the fills to the strong step:
 
   ```css
   :root[bq-theme="endava"] {
@@ -557,10 +557,10 @@ The `endava` theme follows the Endava brand portal. It keeps the brand's colors 
   In the Endava theme, use `--bq-text--secondary` only on `--bq-background--primary`, `--bq-background--secondary`, `--bq-ui--primary`, and `--bq-ui--secondary`. On other surfaces, such as `--bq-ui--tertiary` or the intent tints, it can fall below 4.5:1.
 </Note>
 
-### Where BEEQ differs from the brand kit
+### Where BEEQ differs from the brand
 
 <Accordion title="Deviation log">
-| Brand kit value | BEEQ value | Reason |
+| Brand value | BEEQ value | Reason |
 | --- | --- | --- |
 | Light brand text `#E03E00` | `--bq-brand-strong` `#C33600` | `#E03E00` is 4.32:1 on white. |
 | Dark brand text Red Orange | `--bq-brand-bright` `#FF8979` | Red Orange is 3.40:1 on the dark secondary surface. |
@@ -571,6 +571,9 @@ The `endava` theme follows the Endava brand portal. It keeps the brand's colors 
 | Hover and active colors | `color-mix()` with `--bq-hover` / `--bq-active` | Same state model as the default theme. |
 | Disabled colors | Opacity set per component | Same state model as the default theme. |
 | Dark secondary / tertiary surfaces Blue 80 / Blue 60 | Blue 90 `#30404B` / Blue 80 `#47555F` | Secondary text fails on Blue 60. |
+| Shades only for Solid Blue | Red Orange tints and shades (`--bq-brand-light`, `-dark`, `-strong`, `-bright`) | Brand text needs darker or lighter shades to reach 4.5:1, and selected states need a subtle tint. |
+| Red Orange icons | `--bq-icon--brand` uses `--bq-brand-strong` (light) and `--bq-brand-bright` (dark) | Red Orange is 2.61:1 on Blue 10 and 2.81:1 on the light brand tint, below the 3:1 minimum for icons. |
+| White on Red Orange only for call-to-action boxes and large text | White on all brand fills, including small button labels | Solid Blue on Red Orange is excluded by the brand, so white is the only brand on-color. See the warning above. |
 | Illustration accent colors | Not included | The brand portal limits them to illustrations. |
 </Accordion>
 
