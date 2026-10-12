@@ -539,6 +539,7 @@ The `endava` theme follows the [Endava brand portal](https://brand.endava.com/vi
 - **Neutrals:** Solid Blue `#192B37` is the darkest neutral (`--bq-neutral-950`) and `--bq-black`.
 - **Info:** uses the endava.com accent blues so it stays distinct from neutral UI. Mid Blue `#417191` is the light mode fill, `#3B6684` is light mode text, and `#9DCFF0` (a tint of Bright Blue `#68B5E8`) is dark mode text and fill.
 - **Dark mode fills:** info, success, warning, and danger fills use their `-bright` step, with Solid Blue as the on-color.
+- **Signal colors:** dark mode success and warning use the brand guide's dark Positive `#3DD17B` and Warning `#F99C11` for text, icons, strokes, and fills. Light mode signal colors and dark danger use nearby shades, listed in the deviation log.
 - **Data colors:** come from the brand portal palette. The brand asks for primary colors and Solid Blue shades first, so start charts with `--bq-data-01` (Red Orange), `--bq-data-11` (Solid Blue), `--bq-data-12` (white), and `--bq-neutral-*` shades. Add `--bq-data-02` to `--bq-data-10` only when you need more series.
 
 <Warning>
@@ -567,7 +568,6 @@ The `endava` theme follows the [Endava brand portal](https://brand.endava.com/vi
 | Dark brand text Red Orange (endava.com) | `--bq-brand-bright` `#FF5640`, same as the brand | Brand fidelity over contrast: 4.62:1 on the base surface, but 3.40:1 on raised surfaces and 3.77:1 on the brand tint, so AA for large text only there (APCA Lc 35–41). Override `--bq-brand-bright` with `#FF8979` for 4.5:1 on every dark surface. |
 | Warning text `#C77905` | `--bq-warning-strong` `#975C04` | `#C77905` is 3.41:1 on white. |
 | Light warning fill `#EB9410` | Warning fill `#F99C11` in light mode | Solid Blue on `#EB9410` drops to 4.33:1 when active. |
-| Dark success and warning `#3DD17B` / `#F99C11` | `--bq-success-bright` `#6EDC9C` / `--bq-warning-bright` `#FBBA58` (25% / 30% white tints), for dark text, icons, strokes, and fills | WCAG passes, but on Blue 90 they reach only APCA Lc 55 / 51, below the Lc 60 minimum for body text. |
 | Light success fill `#2D9C5B` | Success fill `#26864E` | Neither white (3.49:1) nor Solid Blue (4.17:1) passes on `#2D9C5B`. |
 | Light success / warning borders `#2D9C5B` / `#EB9410` | `--bq-stroke--success` / `--bq-stroke--warning` use the strong step (`#1D633A` / `#975C04`) | On Blue 10, `#2D9C5B` is 2.89:1 and `#EB9410` is 1.98:1, below the 3:1 minimum for borders. |
 | Dark danger `#E84641` | `--bq-danger-bright` `#F6B5B3` (60% white tint) | `#E84641` is 3.73:1 on Solid Blue and fails as a fill with either on-color. `#F6B5B3` also reaches APCA Lc 60 on Blue 90. |

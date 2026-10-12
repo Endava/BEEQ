@@ -141,14 +141,14 @@ The base step is tuned to be recognizable as a fill, not to be readable as text.
         <Color.Item name="success" value="#26864e" />
         <Color.Item name="success-dark" value="#1f4943" />
         <Color.Item name="success-strong" value="#1d633a" />
-        <Color.Item name="success-bright" value="#6edc9c" />
+        <Color.Item name="success-bright" value="#3dd17b" />
       </Color.Row>
       <Color.Row title="Warning">
         <Color.Item name="warning-light" value="#fdf4e7" />
         <Color.Item name="warning" value="#f99c11" />
         <Color.Item name="warning-dark" value="#413f30" />
         <Color.Item name="warning-strong" value="#975c04" />
-        <Color.Item name="warning-bright" value="#fbba58" />
+        <Color.Item name="warning-bright" value="#f99c11" />
       </Color.Row>
       <Color.Row title="Danger">
         <Color.Item name="danger-light" value="#fbeceb" />
@@ -617,6 +617,7 @@ Some pairs are deliberately outside these guarantees:
 - `--bq-stroke--primary` is decorative and `--bq-stroke--secondary` marks subtle or disabled borders, so neither carries the 3:1 non-text requirement. Use `--bq-stroke--tertiary` for borders that identify an interactive control.
 - In the Endava theme, `--bq-text--secondary` is only legible on `primary` and `secondary` surfaces. Don't place it on `--bq-background--tertiary` or `--bq-background--alt`.
 - In the Endava theme, dark-mode `--bq-text--brand` and `--bq-text--accent` are Red Orange (`#FF5640`), as on [endava.com](https://www.endava.com). They meet 4.5:1 only on `--bq-background--primary` and `--bq-ui--primary`. On `--bq-background--secondary`, `--bq-ui--secondary` (3.40:1), and the brand tint `--bq-ui--brand-alt` (3.77:1), they meet AA for large text (24px, or 18.66px bold) only. If you need AA for regular text there, override `--bq-brand-bright` with `#FF8979`.
+- In the Endava theme, dark-mode `--bq-text--success` (`#3DD17B`) and `--bq-text--warning` (`#F99C11`) use the brand guide's dark signal colours. They meet 4.5:1 on every dark surface but reach only APCA Lc 51–57. For APCA Lc 60, override `--bq-success-bright` with `#6EDC9C` and `--bq-warning-bright` with `#FBBA58`.
 
 <Warning>
   **Endava brand fills are a large-text exception.** White on Endava Red Orange (`#FF5640`) is **3.15:1**, so `--bq-text--on-brand` and `--bq-text--on-accent` meet AA only for large text (24px, or 18.66px bold) and non-text UI. Keep labels on Endava brand fills large, or darken the fill for your app:
