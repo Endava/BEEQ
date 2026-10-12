@@ -28,7 +28,8 @@
   &.is-checked,
   &.is-indeterminate {
     &:not(.is-disabled):hover .bq-checkbox__checkbox {
-      @apply bg-hover-ui-brand border-hover-brand;
+      @apply bg-[color-mix(in_srgb,_var(--bq-checkbox--background-color-checked),_var(--bq-hover)_20%)];
+      @apply border-[color:color-mix(in_srgb,_var(--bq-checkbox--border-color-checked),_var(--bq-hover)_20%)];
     }
   }
 }
@@ -46,7 +47,7 @@
   &:checked,
   &:indeterminate {
     ~ .bq-checkbox__checkbox {
-      @apply border-brand bg-ui-brand;
+      @apply border-[color:--bq-checkbox--border-color-checked] bg-[--bq-checkbox--background-color-checked];
     }
   }
 
@@ -67,7 +68,7 @@
 
 // Checkbox square icon `DEFAULT` state (not checked/indeterminate, not hover, not disabled)
 .bq-checkbox__checkbox {
-  @apply bg-[--bq-checkbox--background-color] rounded-[--bq-checkbox--border-radius] border-[length:--bq-checkbox--border-width] border-solid border-[color:--bq-icon--primary];
+  @apply bg-[--bq-checkbox--background-color] rounded-[--bq-checkbox--border-radius] border-[length:--bq-checkbox--border-width] border-solid border-[color:--bq-checkbox--border-color];
 }
 
 .bq-checkbox__checkbox,

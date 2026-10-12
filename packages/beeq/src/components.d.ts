@@ -677,8 +677,13 @@ export namespace Components {
      * @event bqFocus - Handler to be called when the checkbox gets focus
      * @event bqBlur - Handler to be called when the checkbox loses focus
      * @cssprop --bq-checkbox--background-color - Checkbox background color
+     * @cssprop --bq-checkbox--background-color-checked - Checkbox background color when checked or indeterminate
+     * @cssprop --bq-checkbox--border-color - Checkbox border color
+     * @cssprop --bq-checkbox--border-color-checked - Checkbox border color when checked or indeterminate
      * @cssprop --bq-checkbox--border-radius - Checkbox border radius
      * @cssprop --bq-checkbox--border-width - Checkbox border width
+     * @cssprop --bq-checkbox--icon-color-checked - Checkbox check and indeterminate mark color
+     * @cssprop --bq-checkbox--label-text-color - Checkbox label text color
      * @cssprop --bq-checkbox--size - Checkbox size
      */
     interface BqCheckbox {
@@ -3931,8 +3936,13 @@ declare global {
      * @event bqFocus - Handler to be called when the checkbox gets focus
      * @event bqBlur - Handler to be called when the checkbox loses focus
      * @cssprop --bq-checkbox--background-color - Checkbox background color
+     * @cssprop --bq-checkbox--background-color-checked - Checkbox background color when checked or indeterminate
+     * @cssprop --bq-checkbox--border-color - Checkbox border color
+     * @cssprop --bq-checkbox--border-color-checked - Checkbox border color when checked or indeterminate
      * @cssprop --bq-checkbox--border-radius - Checkbox border radius
      * @cssprop --bq-checkbox--border-width - Checkbox border width
+     * @cssprop --bq-checkbox--icon-color-checked - Checkbox check and indeterminate mark color
+     * @cssprop --bq-checkbox--label-text-color - Checkbox label text color
      * @cssprop --bq-checkbox--size - Checkbox size
      */
     interface HTMLBqCheckboxElement extends Components.BqCheckbox, HTMLStencilElement {
@@ -6319,8 +6329,13 @@ declare namespace LocalJSX {
      * @event bqFocus - Handler to be called when the checkbox gets focus
      * @event bqBlur - Handler to be called when the checkbox loses focus
      * @cssprop --bq-checkbox--background-color - Checkbox background color
+     * @cssprop --bq-checkbox--background-color-checked - Checkbox background color when checked or indeterminate
+     * @cssprop --bq-checkbox--border-color - Checkbox border color
+     * @cssprop --bq-checkbox--border-color-checked - Checkbox border color when checked or indeterminate
      * @cssprop --bq-checkbox--border-radius - Checkbox border radius
      * @cssprop --bq-checkbox--border-width - Checkbox border width
+     * @cssprop --bq-checkbox--icon-color-checked - Checkbox check and indeterminate mark color
+     * @cssprop --bq-checkbox--label-text-color - Checkbox label text color
      * @cssprop --bq-checkbox--size - Checkbox size
      */
     interface BqCheckbox {
@@ -10001,8 +10016,13 @@ declare module "@stencil/core" {
              * @event bqFocus - Handler to be called when the checkbox gets focus
              * @event bqBlur - Handler to be called when the checkbox loses focus
              * @cssprop --bq-checkbox--background-color - Checkbox background color
+             * @cssprop --bq-checkbox--background-color-checked - Checkbox background color when checked or indeterminate
+             * @cssprop --bq-checkbox--border-color - Checkbox border color
+             * @cssprop --bq-checkbox--border-color-checked - Checkbox border color when checked or indeterminate
              * @cssprop --bq-checkbox--border-radius - Checkbox border radius
              * @cssprop --bq-checkbox--border-width - Checkbox border width
+             * @cssprop --bq-checkbox--icon-color-checked - Checkbox check and indeterminate mark color
+             * @cssprop --bq-checkbox--label-text-color - Checkbox label text color
              * @cssprop --bq-checkbox--size - Checkbox size
              */
             "bq-checkbox": LocalJSX.IntrinsicElements["bq-checkbox"] & JSXBase.HTMLAttributes<HTMLBqCheckboxElement>;
