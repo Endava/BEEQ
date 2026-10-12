@@ -567,7 +567,7 @@ describe('bq-slider', () => {
       '--bq-slider--progress-color': '--bq-ui--brand',
       '--bq-slider--thumb-background': '--bq-ui--primary',
       '--bq-slider--thumb-border-color': '--bq-stroke--brand',
-      '--bq-slider--trackarea-color': '--bq-ui--secondary',
+      '--bq-slider--trackarea-color': '--bq-ui--tertiary',
     };
 
     for (const [componentVar, roleVar] of Object.entries(expectedRoles)) {
@@ -581,7 +581,7 @@ describe('bq-slider', () => {
     await waitForStable(root);
 
     expect(computedStyle('bq-slider >>> span[part="track-area"]', ['backgroundColor']).backgroundColor).toBe(
-      resolveColor('var(--bq-ui--secondary)'),
+      resolveColor('var(--bq-ui--tertiary)'),
     );
     expect(computedStyle('bq-slider >>> span[part="progress-area"]', ['backgroundColor']).backgroundColor).toBe(
       resolveColor('var(--bq-ui--brand)'),
