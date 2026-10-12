@@ -15,9 +15,9 @@
    * @prop --bq-panel--width - Panel width
    * @prop --bq-panel-z-index - Panel z-index applied when opened
    */
-  --bq-panel--background: theme(backgroundColor.ui.primary);
+  --bq-panel--background: var(--bq-ui--primary);
 
-  --bq-panel--border-color: theme(stroke.transparent);
+  --bq-panel--border-color: transparent;
   --bq-panel--border-radius: theme(borderRadius.s);
   --bq-panel--border-style: none;
   --bq-panel--border-width: unset;
