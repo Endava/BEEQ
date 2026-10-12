@@ -19,7 +19,8 @@
 
   // Hover state
   @apply [&:not(.disabled)]:hover:cursor-pointer;
-  @apply [&:not(.disabled,.active)]:hover:text-m [&:not(.disabled,.active)]:hover:bg-hover-ui-alt [&:not(.disabled,.active)]:hover:text-hover-primary;
+  @apply [&:not(.disabled,.active)]:hover:text-m [&:not(.disabled,.active)]:hover:bg-[color-mix(in_srgb,_var(--bq-side-menu-item--bg-hover),_var(--bq-hover)_20%)];
+  @apply [&:not(.disabled,.active)]:hover:text-[color:color-mix(in_srgb,_var(--bq-side-menu-item--text-hover),_var(--bq-hover)_20%)];
 }
 
 .bq-side-menu__item.active {
