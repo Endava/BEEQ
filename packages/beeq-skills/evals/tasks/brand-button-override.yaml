@@ -10,18 +10,18 @@ workspace:
     dest: .
 expected:
   criteria: >-
-    The colour is set once on the base brand token (--bq-brand, with its light and dark variants)
-    at root or theme scope, or in a custom theme, so every BEEQ component picks it up, rather than
-    restyling individual buttons or their shadow parts. Hover follows from the brand roles, and
-    --bq-focus points at the brand so focus rings match. Overrides are normal declarations, with no
-    !important.
+    The colour is set once on the brand intent (--bq-brand, with its -light, -dark, -strong, and
+    -bright steps, plus --bq-text--on-brand for the label on the fill) at root or theme scope, or in a
+    custom theme, so every BEEQ component picks it up, rather than restyling individual buttons or
+    their shadow parts. Hover follows from the brand roles, and focus rings follow -strong and
+    -bright. Overrides are normal declarations, with no !important.
   allow_rules: [hex]
   checks:
     - name: overrides-base-token
       match: '--bq-brand\s*:\s*#6B2FBA'
       flags: i
-    - name: focus-follows
-      match: '--bq-focus\s*:'
+    - name: sets-foreground-steps
+      match: ['--bq-brand-strong\s*:', '--bq-brand-bright\s*:']
     - name: no-host-background
       absent: 'bq-button[^{]*\{[^}]*background(-color)?\s*:'
       flags: i

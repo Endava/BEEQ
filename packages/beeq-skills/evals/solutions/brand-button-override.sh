@@ -3,12 +3,14 @@
 set -euo pipefail
 mkdir -p src
 cat > src/brand.css <<'CSS'
-/* The base brand tokens, set once. Every brand role, hover and pressed fill included, derives from them. */
+/* The brand intent, set once. Every brand role, focus ring, hover and pressed fill included, derives from it. */
 :root {
   --bq-brand: #6B2FBA;
   --bq-brand-light: color-mix(in srgb, var(--bq-brand) 15%, white);
   --bq-brand-dark: color-mix(in srgb, var(--bq-brand) 60%, black);
-  --bq-focus: var(--bq-brand);
+  --bq-brand-strong: color-mix(in srgb, var(--bq-brand) 80%, black);
+  --bq-brand-bright: color-mix(in srgb, var(--bq-brand) 50%, white);
+  --bq-text--on-brand: var(--bq-white);
 }
 CSS
 cat > index.html <<'HTML'
