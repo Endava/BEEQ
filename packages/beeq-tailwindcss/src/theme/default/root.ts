@@ -20,7 +20,7 @@ export const DefaultRootTheme = {
    * - base: solid fill (read by `ui--{intent}`)
    * - `-dark`: subtle tint for dark mode (read by `ui--{intent}-alt`)
    * - `-strong`: text, icon and stroke on light surfaces (>= 4.5:1)
-   * - `-bright`: text, icon and stroke on dark surfaces (>= 4.5:1)
+   * - `-bright`: text, icon and stroke on dark surfaces (>= 4.5:1 and APCA Lc >= 60)
    * The focus ring color lives at mode level (`--bq-focus`).
    */
   // Brand
@@ -28,37 +28,37 @@ export const DefaultRootTheme = {
   'bq-brand': 'var(--bq-iris-600)',
   'bq-brand-dark': 'var(--bq-iris-1000)',
   'bq-brand-strong': 'var(--bq-iris-600)',
-  'bq-brand-bright': 'var(--bq-iris-400)',
+  'bq-brand-bright': 'var(--bq-iris-300)',
   // Accent
   'bq-accent-light': 'var(--bq-purple-100)',
   'bq-accent': 'var(--bq-purple-600)',
   'bq-accent-dark': 'var(--bq-purple-1000)',
   'bq-accent-strong': 'var(--bq-purple-600)',
-  'bq-accent-bright': 'var(--bq-purple-400)',
+  'bq-accent-bright': 'var(--bq-purple-300)',
   // Success
   'bq-success-light': 'var(--bq-teal-100)',
   'bq-success': 'var(--bq-teal-600)',
   'bq-success-dark': 'var(--bq-teal-1000)',
   'bq-success-strong': 'var(--bq-teal-800)',
-  'bq-success-bright': 'var(--bq-teal-500)',
+  'bq-success-bright': 'var(--bq-teal-400)',
   // Danger
   'bq-danger-light': 'var(--bq-red-100)',
   'bq-danger': 'var(--bq-red-600)',
   'bq-danger-dark': 'var(--bq-red-1000)',
   'bq-danger-strong': 'var(--bq-red-700)',
-  'bq-danger-bright': 'var(--bq-red-400)',
+  'bq-danger-bright': 'var(--bq-red-300)',
   // Warning
   'bq-warning-light': 'var(--bq-gold-100)',
   'bq-warning': 'var(--bq-gold-600)',
   'bq-warning-dark': 'var(--bq-gold-1000)',
   'bq-warning-strong': 'var(--bq-gold-800)',
-  'bq-warning-bright': 'var(--bq-gold-500)',
+  'bq-warning-bright': 'var(--bq-gold-400)',
   // Info
   'bq-info-light': 'var(--bq-blue-100)',
   'bq-info': 'var(--bq-blue-600)',
   'bq-info-dark': 'var(--bq-blue-1000)',
   'bq-info-strong': 'var(--bq-blue-700)',
-  'bq-info-bright': 'var(--bq-blue-400)',
+  'bq-info-bright': 'var(--bq-blue-300)',
   // Data
   'bq-data-01': 'var(--bq-brand)',
   'bq-data-02': 'var(--bq-purple-600)',

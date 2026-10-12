@@ -88,6 +88,32 @@ export const contrastRatio = (foreground: string, background: string): number =>
   return (lighter + 0.05) / (darker + 0.05);
 };
 
+/** APCA screen luminance (APCA-W3 0.0.98G-4g), soft-clamped near black */
+const apcaLuminance = (color: string): number => {
+  const { r, g, b } = parseHex(color);
+  const [yr, yg, yb] = [r, g, b].map((channel) => (channel / 255) ** 2.4);
+  const y = 0.2126729 * yr + 0.7151522 * yg + 0.072175 * yb;
+  // biome-ignore lint/suspicious/noApproximativeNumericConstant: 1.414 is the APCA spec's clamp exponent, not √2
+  return y >= 0.022 ? y : y + (0.022 - y) ** 1.414;
+};
+
+/**
+ * APCA lightness contrast (Lc), APCA-W3 0.0.98G-4g. Positive for dark text on light backgrounds,
+ * negative for light text on dark backgrounds. Compare `Math.abs()` against the Lc thresholds.
+ */
+export const apcaContrast = (text: string, background: string): number => {
+  const yText = apcaLuminance(text);
+  const yBackground = apcaLuminance(background);
+  if (Math.abs(yBackground - yText) < 0.0005) return 0;
+
+  if (yBackground > yText) {
+    const sapc = (yBackground ** 0.56 - yText ** 0.57) * 1.14;
+    return sapc < 0.1 ? 0 : (sapc - 0.027) * 100;
+  }
+  const sapc = (yBackground ** 0.65 - yText ** 0.62) * 1.14;
+  return sapc > -0.1 ? 0 : (sapc + 0.027) * 100;
+};
+
 /**
  * Replicates `color-mix(in srgb, <fill>, <base> <percentage>%)`, i.e. what `blendColor()` emits for hover/active.
  * Linear interpolation of the gamma-encoded sRGB channels (0–255), rounded to integers.

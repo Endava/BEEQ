@@ -226,7 +226,7 @@ export const CSS_COLORS = {
   '--bq-endava-orange-100': '#ffeeec',
   '--bq-endava-orange-200': '#ffddd9',
   '--bq-endava-orange-300': '#ffc4bc',
-  '--bq-endava-orange-400': '#ffaaa0',
+  '--bq-endava-orange-400': '#ffb3a9', // 45% Red Orange, dark mode brand text (APCA Lc >= 60 on Blue 90)
   '--bq-endava-orange-500': '#ff8979',
   '--bq-endava-orange-600': '#ff5640', // Red Orange
   '--bq-endava-orange-700': '#e03e00',
@@ -235,6 +235,7 @@ export const CSS_COLORS = {
   '--bq-endava-orange-1000': '#423339',
   /** Endava Positive (success): sparse ramp ordered by lightness */
   '--bq-endava-positive-100': '#eaf5ef',
+  '--bq-endava-positive-300': '#6edc9c', // 25% white tint of 400, dark mode text (APCA Lc >= 60)
   '--bq-endava-positive-400': '#3dd17b',
   '--bq-endava-positive-500': '#2d9c5b',
   '--bq-endava-positive-600': '#26864e',
@@ -242,6 +243,7 @@ export const CSS_COLORS = {
   '--bq-endava-positive-1000': '#1f4943',
   /** Endava Warning: sparse ramp ordered by lightness */
   '--bq-endava-warning-100': '#fdf4e7',
+  '--bq-endava-warning-300': '#fbba58', // 30% white tint of 400, dark mode text (APCA Lc >= 60)
   '--bq-endava-warning-400': '#f99c11',
   '--bq-endava-warning-500': '#eb9410',
   '--bq-endava-warning-700': '#c77905',
@@ -249,11 +251,22 @@ export const CSS_COLORS = {
   '--bq-endava-warning-1000': '#413f30',
   /** Endava Negative (danger): sparse ramp ordered by lightness */
   '--bq-endava-negative-100': '#fbeceb',
+  '--bq-endava-negative-200': '#f6b5b3', // 60% white tint of 400, dark mode text (APCA Lc >= 60)
   '--bq-endava-negative-300': '#f2958f',
   '--bq-endava-negative-400': '#e84641',
   '--bq-endava-negative-500': '#d4403b',
   '--bq-endava-negative-800': '#a72925',
   '--bq-endava-negative-1000': '#3e3039',
+  /**
+   * Endava Info: built from the endava.com accent blues Mid Blue (600) and Bright Blue (400),
+   * so info stays distinct from the neutral Solid Blue shades. Sparse ramp ordered by lightness.
+   */
+  '--bq-endava-info-100': '#ecf1f4', // 10% Mid Blue on white
+  '--bq-endava-info-300': '#9dcff0', // 35% white tint of 400, dark mode text and fill (APCA Lc >= 60)
+  '--bq-endava-info-400': '#68b5e8', // Bright Blue
+  '--bq-endava-info-600': '#417191', // Mid Blue
+  '--bq-endava-info-700': '#3b6684', // 85% Mid Blue + 15% Solid Blue, text on light surfaces
+  '--bq-endava-info-1000': '#29475a', // 20% Bright Blue on Solid Blue
   /** Endava data visualisation colors */
   '--bq-endava-data-blue': '#5899c4',
   '--bq-endava-data-yellow': '#cf820e',

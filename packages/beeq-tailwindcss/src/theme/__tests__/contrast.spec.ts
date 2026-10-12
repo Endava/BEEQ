@@ -4,6 +4,7 @@ import { CSS_COLORS, DECLARATIVE_COLORS } from '../colors';
 import { DefaultDarkTheme, DefaultLightTheme, DefaultRootTheme } from '../default';
 import { EndavaDarkTheme, EndavaLightTheme, EndavaRootTheme } from '../endava';
 import {
+  apcaContrast,
   contrastRatio,
   createResolver,
   mergeTokenMaps,
@@ -39,6 +40,8 @@ type Intent = (typeof INTENTS)[number];
 const STATE_MIX_PERCENTAGE = 20;
 const TEXT_MIN = 4.5;
 const NON_TEXT_MIN = 3;
+/** APCA Lc 60: minimum for regular-weight content text; WCAG 2 overrates light text on dark surfaces */
+const APCA_TEXT_MIN = 60;
 
 const buildCombo = (
   name: ComboName,
@@ -97,6 +100,11 @@ const TEXT_PAIRS: Pair[] = [
   ...INTENTS.flatMap((intent) => [...TEXT_SURFACES, `ui--${intent}-alt`].map((bg) => ({ fg: `text--${intent}`, bg }))),
   ...['ui--inverse', 'background--inverse'].map((bg) => ({ fg: 'text--inverse', bg })),
 ];
+
+/** APCA Lc ≥ 60 for dark-mode intent text (`-bright`), on neutral surfaces and on the intent's own tint */
+const DARK_INTENT_TEXT_PAIRS: Pair[] = INTENTS.flatMap((intent) =>
+  [...TEXT_SURFACES, `ui--${intent}-alt`].map((bg) => ({ fg: `text--${intent}`, bg })),
+);
 
 /** WCAG 1.4.3: content on solid intent fills ≥ 4.5:1, at rest, hover and active */
 const ON_FILL_PAIRS: Pair[] = INTENTS.map((intent) => ({ fg: `text--on-${intent}`, bg: `ui--${intent}` }));
@@ -302,6 +310,14 @@ describe('token resolver helpers', () => {
     expect(contrastRatio('#ff5640', '#ffffff')).toBeCloseTo(contrastRatio('#ffffff', '#ff5640'), 10);
   });
 
+  it('should compute APCA lightness contrast (Lc)', () => {
+    expect(apcaContrast('#888888', '#ffffff')).toBeCloseTo(63.06, 1);
+    expect(apcaContrast('#ffffff', '#888888')).toBeCloseTo(-68.54, 1);
+    expect(apcaContrast('#000000', '#ffffff')).toBeCloseTo(106.04, 1);
+    expect(apcaContrast('#ffffff', '#000000')).toBeCloseTo(-107.88, 1);
+    expect(apcaContrast('#123456', '#123456')).toBe(0);
+  });
+
   it('should mix colors like color-mix(in srgb, fill, base pct%)', () => {
     expect(mix('#ffffff', '#000000', 20)).toBe('#cccccc');
     expect(mix('#FFF', '#000', 0)).toBe('#ffffff');
@@ -366,6 +382,16 @@ describe.each(COMBOS)('$name', (combo) => {
       const bgHex = resolver.resolve(cssVar(bg));
 
       expect(contrastRatio(fgHex, bgHex), formatPair(fg, fgHex, bg, bgHex)).toBeGreaterThanOrEqual(TEXT_MIN);
+    });
+  });
+
+  describe.runIf(combo.mode === 'dark')(`intent text APCA Lc ≥ ${APCA_TEXT_MIN}`, () => {
+    it.each(DARK_INTENT_TEXT_PAIRS)('$fg on $bg', ({ fg, bg }) => {
+      const fgHex = resolver.resolve(cssVar(fg));
+      const bgHex = resolver.resolve(cssVar(bg));
+      const lc = Math.abs(apcaContrast(fgHex, bgHex));
+
+      expect(lc, `${fg} (${fgHex}) on ${bg} (${bgHex}) = Lc ${lc.toFixed(1)}`).toBeGreaterThanOrEqual(APCA_TEXT_MIN);
     });
   });
 

@@ -57,7 +57,7 @@ export const EndavaDarkTheme = {
   'bq-text--secondary': 'var(--bq-neutral-400)',
   'bq-text--inverse': 'var(--bq-neutral-950)',
   'bq-text--alt': 'var(--bq-white)', // @deprecated Use `--bq-text--on-{intent}` for content on solid fills
-  /** Intents: `-bright` variant, legible on dark surfaces (>= 4.5:1) */
+  /** Intents: `-bright` variant, legible on dark surfaces (>= 4.5:1 and APCA Lc >= 60) */
   'bq-text--brand': 'var(--bq-brand-bright)',
   'bq-text--accent': 'var(--bq-accent-bright)',
   'bq-text--info': 'var(--bq-info-bright)',
