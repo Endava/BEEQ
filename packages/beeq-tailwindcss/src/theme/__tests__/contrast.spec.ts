@@ -152,6 +152,24 @@ const EXPECTED_EXCEPTION_COUNT = 4;
 const findException = (combo: ComboName, { fg, bg }: Pair) =>
   CONTRAST_EXCEPTIONS.find((entry) => entry.combo === combo && entry.fg === fg && entry.bg === bg);
 
+/**
+ * Accepted APCA exceptions. Each entry lowers the dark-mode Lc minimum for one intent text role on every surface.
+ * WCAG 1.4.3 (4.5:1) is still enforced for these roles by the text pairs.
+ */
+type ApcaException = { combo: ComboName; fg: string; min: number; reason: string };
+
+const ENDAVA_DARK_BRAND_TEXT =
+  'Endava brand fidelity: endava.com uses Red Orange for dark brand text; BEEQ uses the closest tint that passes 4.5:1 on every surface (#FF8979, Lc 48–56, above the Lc 45 large-text floor). Documented in the Endava deviation log.';
+
+const APCA_EXCEPTIONS: ApcaException[] = [
+  { combo: 'endava-dark', fg: 'text--brand', min: 45, reason: ENDAVA_DARK_BRAND_TEXT },
+  { combo: 'endava-dark', fg: 'text--accent', min: 45, reason: ENDAVA_DARK_BRAND_TEXT },
+];
+const EXPECTED_APCA_EXCEPTION_COUNT = 2;
+
+const findApcaException = (combo: ComboName, fg: string) =>
+  APCA_EXCEPTIONS.find((entry) => entry.combo === combo && entry.fg === fg);
+
 const resolveFill = (resolver: TokenResolver, bg: string, state: FillState) => {
   const fill = resolver.resolve(cssVar(bg));
   return state === 'rest' ? fill : mix(fill, resolver.resolve(cssVar(state)), STATE_MIX_PERCENTAGE);
@@ -373,6 +391,28 @@ describe('contrast exception allowlist', () => {
   });
 });
 
+describe('APCA exception allowlist', () => {
+  it('should not grow silently', () => {
+    expect(APCA_EXCEPTIONS).toHaveLength(EXPECTED_APCA_EXCEPTION_COUNT);
+  });
+
+  it.each(APCA_EXCEPTIONS)('$combo: $fg should be a tested dark intent text role with a reason', (entry) => {
+    expect(DARK_INTENT_TEXT_PAIRS.map(({ fg }) => fg)).toContain(entry.fg);
+    expect(entry.reason.length).toBeGreaterThan(0);
+  });
+
+  it.each(APCA_EXCEPTIONS)('$combo: $fg should still need the exception on background--primary', (entry) => {
+    const { resolver } = COMBOS.find(({ name }) => name === entry.combo)!;
+    const fgHex = resolver.resolve(cssVar(entry.fg));
+    const bgHex = resolver.resolve(cssVar('background--primary'));
+
+    expect(
+      Math.abs(apcaContrast(fgHex, bgHex)),
+      `${entry.fg} reaches Lc ${APCA_TEXT_MIN}, remove the exception`,
+    ).toBeLessThan(APCA_TEXT_MIN);
+  });
+});
+
 describe.each(COMBOS)('$name', (combo) => {
   const { resolver } = combo;
 
@@ -390,8 +430,9 @@ describe.each(COMBOS)('$name', (combo) => {
       const fgHex = resolver.resolve(cssVar(fg));
       const bgHex = resolver.resolve(cssVar(bg));
       const lc = Math.abs(apcaContrast(fgHex, bgHex));
+      const min = findApcaException(combo.name, fg)?.min ?? APCA_TEXT_MIN;
 
-      expect(lc, `${fg} (${fgHex}) on ${bg} (${bgHex}) = Lc ${lc.toFixed(1)}`).toBeGreaterThanOrEqual(APCA_TEXT_MIN);
+      expect(lc, `${fg} (${fgHex}) on ${bg} (${bgHex}) = Lc ${lc.toFixed(1)}`).toBeGreaterThanOrEqual(min);
     });
   });
 

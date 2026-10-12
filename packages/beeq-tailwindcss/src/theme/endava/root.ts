@@ -26,7 +26,7 @@ export const EndavaRootTheme = {
   'bq-brand': 'var(--bq-endava-orange-600)',
   'bq-brand-dark': 'var(--bq-endava-orange-1000)',
   'bq-brand-strong': 'var(--bq-endava-orange-800)',
-  'bq-brand-bright': 'var(--bq-endava-orange-400)',
+  'bq-brand-bright': 'var(--bq-endava-orange-500)',
   // Accent
   'bq-accent-light': 'var(--bq-brand-light)',
   'bq-accent': 'var(--bq-brand)',
