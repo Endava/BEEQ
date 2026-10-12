@@ -133,7 +133,7 @@ const NON_TEXT_PAIRS: Pair[] = [
  */
 
 /**
- * Accepted contrast exceptions. Each entry lowers the minimum for one on-fill pair (rest, hover and active).
+ * Accepted contrast exceptions. Each entry lowers the minimum for one text pair, or one on-fill pair (rest, hover and active).
  * The list is pinned by `EXPECTED_EXCEPTION_COUNT` so it cannot grow silently.
  */
 type ContrastException = { combo: ComboName; fg: string; bg: string; min: number; reason: string };
@@ -141,29 +141,38 @@ type ContrastException = { combo: ComboName; fg: string; bg: string; min: number
 const ENDAVA_WHITE_ON_RED_ORANGE =
   'Endava brand fidelity: white on Red Orange #FF5640 (≈3.15:1). Passes AA for large text only; decided with the user and documented in the Endava theme docs.';
 
+const ENDAVA_DARK_RED_ORANGE_TEXT =
+  'Endava brand fidelity: dark brand text is Red Orange #FF5640, as on endava.com. 4.62:1 on the base surface, but 3.40:1 on raised surfaces and 3.77:1 on the brand tint (AA for large text only). Decided with the user and documented in the Endava deviation log.';
+
 const CONTRAST_EXCEPTIONS: ContrastException[] = [
   { combo: 'endava-light', fg: 'text--on-brand', bg: 'ui--brand', min: 3, reason: ENDAVA_WHITE_ON_RED_ORANGE },
   { combo: 'endava-light', fg: 'text--on-accent', bg: 'ui--accent', min: 3, reason: ENDAVA_WHITE_ON_RED_ORANGE },
   { combo: 'endava-dark', fg: 'text--on-brand', bg: 'ui--brand', min: 3, reason: ENDAVA_WHITE_ON_RED_ORANGE },
   { combo: 'endava-dark', fg: 'text--on-accent', bg: 'ui--accent', min: 3, reason: ENDAVA_WHITE_ON_RED_ORANGE },
+  ...(['brand', 'accent'] as const).flatMap((intent) =>
+    ['background--secondary', 'ui--secondary', `ui--${intent}-alt`].map((bg) => ({
+      combo: 'endava-dark' as const,
+      fg: `text--${intent}`,
+      bg,
+      min: 3,
+      reason: ENDAVA_DARK_RED_ORANGE_TEXT,
+    })),
+  ),
 ];
-const EXPECTED_EXCEPTION_COUNT = 4;
+const EXPECTED_EXCEPTION_COUNT = 10;
 
 const findException = (combo: ComboName, { fg, bg }: Pair) =>
   CONTRAST_EXCEPTIONS.find((entry) => entry.combo === combo && entry.fg === fg && entry.bg === bg);
 
 /**
  * Accepted APCA exceptions. Each entry lowers the dark-mode Lc minimum for one intent text role on every surface.
- * WCAG 1.4.3 (4.5:1) is still enforced for these roles by the text pairs.
+ * WCAG 1.4.3 is still enforced for these roles by the text pairs (and their contrast exceptions).
  */
 type ApcaException = { combo: ComboName; fg: string; min: number; reason: string };
 
-const ENDAVA_DARK_BRAND_TEXT =
-  'Endava brand fidelity: endava.com uses Red Orange for dark brand text; BEEQ uses the closest tint that passes 4.5:1 on every surface (#FF8979, Lc 48–56, above the Lc 45 large-text floor). Documented in the Endava deviation log.';
-
 const APCA_EXCEPTIONS: ApcaException[] = [
-  { combo: 'endava-dark', fg: 'text--brand', min: 45, reason: ENDAVA_DARK_BRAND_TEXT },
-  { combo: 'endava-dark', fg: 'text--accent', min: 45, reason: ENDAVA_DARK_BRAND_TEXT },
+  { combo: 'endava-dark', fg: 'text--brand', min: 35, reason: ENDAVA_DARK_RED_ORANGE_TEXT },
+  { combo: 'endava-dark', fg: 'text--accent', min: 35, reason: ENDAVA_DARK_RED_ORANGE_TEXT },
 ];
 const EXPECTED_APCA_EXCEPTION_COUNT = 2;
 
@@ -373,8 +382,8 @@ describe('contrast exception allowlist', () => {
     expect(CONTRAST_EXCEPTIONS).toHaveLength(EXPECTED_EXCEPTION_COUNT);
   });
 
-  it.each(CONTRAST_EXCEPTIONS)('$combo: $fg on $bg should be a tested on-fill pair with a reason', (entry) => {
-    expect(ON_FILL_PAIRS).toContainEqual({ fg: entry.fg, bg: entry.bg });
+  it.each(CONTRAST_EXCEPTIONS)('$combo: $fg on $bg should be a tested text or on-fill pair with a reason', (entry) => {
+    expect([...TEXT_PAIRS, ...ON_FILL_PAIRS]).toContainEqual({ fg: entry.fg, bg: entry.bg });
     expect(entry.reason.length).toBeGreaterThan(0);
     expect(entry.min).toBeGreaterThanOrEqual(NON_TEXT_MIN);
   });
@@ -420,8 +429,9 @@ describe.each(COMBOS)('$name', (combo) => {
     it.each(TEXT_PAIRS)('$fg on $bg', ({ fg, bg }) => {
       const fgHex = resolver.resolve(cssVar(fg));
       const bgHex = resolver.resolve(cssVar(bg));
+      const min = findException(combo.name, { fg, bg })?.min ?? TEXT_MIN;
 
-      expect(contrastRatio(fgHex, bgHex), formatPair(fg, fgHex, bg, bgHex)).toBeGreaterThanOrEqual(TEXT_MIN);
+      expect(contrastRatio(fgHex, bgHex), formatPair(fg, fgHex, bg, bgHex)).toBeGreaterThanOrEqual(min);
     });
   });
 

@@ -227,7 +227,7 @@ export const CSS_COLORS = {
   '--bq-endava-orange-200': '#ffddd9',
   '--bq-endava-orange-300': '#ffc4bc',
   '--bq-endava-orange-400': '#ffaaa0',
-  '--bq-endava-orange-500': '#ff8979', // dark mode brand text (closest to Red Orange with 4.5:1 on every dark surface)
+  '--bq-endava-orange-500': '#ff8979',
   '--bq-endava-orange-600': '#ff5640', // Red Orange
   '--bq-endava-orange-700': '#e03e00',
   '--bq-endava-orange-800': '#c33600',
