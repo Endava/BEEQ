@@ -1,6 +1,18 @@
 import { h } from '@stencil/core';
 import { describe, expect, it, render, waitForStable } from '@stencil/vitest';
 
+import { computedStyle } from '../../../shared/test-utils/computedStyle';
+
+/** Resolves a CSS color value (e.g. `var(--bq-icon--info)`) to its computed `rgb()` form */
+const resolveColor = (value: string): string => {
+  const probe = document.createElement('div');
+  probe.style.color = value;
+  document.body.appendChild(probe);
+  const { color } = getComputedStyle(probe);
+  probe.remove();
+  return color;
+};
+
 describe('bq-notification', () => {
   it('should render', async () => {
     const { root } = await render(<bq-notification />);
@@ -197,5 +209,37 @@ describe('bq-notification', () => {
 
     expect(root).toEqualAttribute('aria-hidden', 'true');
     expect(root).toHaveClass('is-hidden');
+  });
+
+  it('should map the icon color variables to the icon role tokens', async () => {
+    const { root } = await render(<bq-notification open>Notification title</bq-notification>);
+
+    const hostStyle = getComputedStyle(root);
+    const roles = {
+      error: 'danger',
+      info: 'info',
+      neutral: 'primary',
+      success: 'success',
+      warning: 'warning',
+    };
+
+    Object.entries(roles).forEach(([type, role]) => {
+      expect(hostStyle.getPropertyValue(`--bq-notification--icon-color-${type}`).trim()).toBe(
+        hostStyle.getPropertyValue(`--bq-icon--${role}`).trim(),
+      );
+    });
+  });
+
+  it('should use the info icon token (not brand) for `type="info"`', async () => {
+    await render(
+      <bq-notification open type="info">
+        Notification title
+      </bq-notification>,
+    );
+
+    const { color } = computedStyle('bq-notification >>> [part="icon-outline"]', ['color']);
+
+    expect(color).toBe(resolveColor('var(--bq-icon--info)'));
+    expect(color).not.toBe(resolveColor('var(--bq-icon--brand)'));
   });
 });
