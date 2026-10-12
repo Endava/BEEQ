@@ -408,7 +408,7 @@ export namespace Components {
      */
     interface BqBadge {
         /**
-          * Badge background color. The value should be a valid value of the palette color
+          * Badge background color. The value should be a valid value of the palette color. When it changes, set a matching `textColor` (e.g. `text--on-success` for `ui--success`) so the content stays legible.
          */
         "backgroundColor"?: string;
         /**
@@ -5994,7 +5994,7 @@ declare namespace LocalJSX {
      */
     interface BqBadge {
         /**
-          * Badge background color. The value should be a valid value of the palette color
+          * Badge background color. The value should be a valid value of the palette color. When it changes, set a matching `textColor` (e.g. `text--on-success` for `ui--success`) so the content stays legible.
          */
         "backgroundColor"?: string;
         /**

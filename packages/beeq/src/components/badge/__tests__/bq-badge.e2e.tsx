@@ -4,6 +4,16 @@ import { afterEach, describe, expect, it, render, vi, waitForStable } from '@ste
 import { computedStyle } from '../../../shared/test-utils/computedStyle';
 import { getTextContent } from '../../../shared/utils/slot';
 
+/** Resolves a CSS color value (e.g. `var(--bq-ui--danger)`) to its computed `rgb()` form */
+const resolveColor = (value: string): string => {
+  const probe = document.createElement('div');
+  probe.style.color = value;
+  document.body.appendChild(probe);
+  const { color } = getComputedStyle(probe);
+  probe.remove();
+  return color;
+};
+
 afterEach(() => {
   vi.restoreAllMocks();
 });
@@ -65,6 +75,26 @@ describe('bq-badge', () => {
 
     expect(root.style.getPropertyValue('--bq-badge--background-color')).toBe('var(--bq-ui--success)');
     expect(root.style.getPropertyValue('--bq-badge--text-color')).toBe('var(--bq-text--inverse)');
+  });
+
+  it('should use the on-danger text color on the default danger background', async () => {
+    const { root } = await render(<bq-badge>2</bq-badge>);
+
+    await waitForStable(root);
+
+    const hostStyle = getComputedStyle(root);
+    expect(hostStyle.getPropertyValue('--bq-badge--background-color').trim()).toBe(
+      hostStyle.getPropertyValue('--bq-ui--danger').trim(),
+    );
+    expect(hostStyle.getPropertyValue('--bq-badge--text-color').trim()).toBe(
+      hostStyle.getPropertyValue('--bq-text--on-danger').trim(),
+    );
+
+    const style = computedStyle('bq-badge >>> .bq-badge', ['backgroundColor', 'color']);
+    expect(style).toEqual({
+      backgroundColor: resolveColor('var(--bq-ui--danger)'),
+      color: resolveColor('var(--bq-text--on-danger)'),
+    });
   });
 
   it('should handle invalid size values', async () => {
