@@ -1851,6 +1851,7 @@ export namespace Components {
      * ```
      * @documentation https://storybook.beeq.design/?path=/docs/components-page-title--overview
      * @status stable
+     * @cssprop --bq-page-title--divider-color - Page title divider (border end) color, used by `--subtitle-borderBlockEnd`
      * @cssprop --paddingY - Padding top and bottom of the page title wrapper
      * @cssprop --subtitle-borderBlockEnd - Page title border end color
      * @cssprop --subtitle-fontWeight - Page title font weight for subtitle
@@ -4742,6 +4743,7 @@ declare global {
      * ```
      * @documentation https://storybook.beeq.design/?path=/docs/components-page-title--overview
      * @status stable
+     * @cssprop --bq-page-title--divider-color - Page title divider (border end) color, used by `--subtitle-borderBlockEnd`
      * @cssprop --paddingY - Padding top and bottom of the page title wrapper
      * @cssprop --subtitle-borderBlockEnd - Page title border end color
      * @cssprop --subtitle-fontWeight - Page title font weight for subtitle
@@ -7740,6 +7742,7 @@ declare namespace LocalJSX {
      * ```
      * @documentation https://storybook.beeq.design/?path=/docs/components-page-title--overview
      * @status stable
+     * @cssprop --bq-page-title--divider-color - Page title divider (border end) color, used by `--subtitle-borderBlockEnd`
      * @cssprop --paddingY - Padding top and bottom of the page title wrapper
      * @cssprop --subtitle-borderBlockEnd - Page title border end color
      * @cssprop --subtitle-fontWeight - Page title font weight for subtitle
@@ -10779,6 +10782,7 @@ declare module "@stencil/core" {
              * ```
              * @documentation https://storybook.beeq.design/?path=/docs/components-page-title--overview
              * @status stable
+             * @cssprop --bq-page-title--divider-color - Page title divider (border end) color, used by `--subtitle-borderBlockEnd`
              * @cssprop --paddingY - Padding top and bottom of the page title wrapper
              * @cssprop --subtitle-borderBlockEnd - Page title border end color
              * @cssprop --subtitle-fontWeight - Page title font weight for subtitle
