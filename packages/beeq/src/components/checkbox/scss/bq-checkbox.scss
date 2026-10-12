@@ -11,12 +11,9 @@
 .bq-checkbox {
   @apply box-border inline-flex cursor-pointer select-none rounded-s transition-colors duration-300 ease-in-out p-b-xs p-i-xs;
 
-  // Default hover state
-  &:not(.is-checked),
-  &:not(.is-indeterminate) {
-    &:not(.is-disabled):hover .bq-checkbox__checkbox {
-      @apply border-hover-brand;
-    }
+  // Default hover state (unchecked only, so the checked border keeps matching its fill)
+  &:not(.is-checked, .is-indeterminate, .is-disabled):hover .bq-checkbox__checkbox {
+    @apply border-[color:color-mix(in_srgb,_var(--bq-checkbox--border-color-checked),_var(--bq-hover)_20%)];
   }
 
   // Display background on hover (if enabled)
@@ -39,7 +36,7 @@
   &:focus,
   &:focus-visible {
     ~ .bq-checkbox__checkbox {
-      @apply focus border-brand;
+      @apply focus border-[color:--bq-checkbox--border-color-checked];
     }
   }
 
