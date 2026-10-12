@@ -2913,6 +2913,7 @@ export namespace Components {
      * @attr {string} size - The size of the tab
      * @attr {string} value - A string representing the id of the selected tab.
      * @event bqChange - Handler to be called when the tab value changes
+     * @cssprop --bq-tab-group--border-color - Color of the divider line along the tabs
      */
     interface BqTabGroup {
         /**
@@ -5381,6 +5382,7 @@ declare global {
      * @attr {string} size - The size of the tab
      * @attr {string} value - A string representing the id of the selected tab.
      * @event bqChange - Handler to be called when the tab value changes
+     * @cssprop --bq-tab-group--border-color - Color of the divider line along the tabs
      */
     interface HTMLBqTabGroupElement extends Components.BqTabGroup, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqTabGroupElementEventMap>(type: K, listener: (this: HTMLBqTabGroupElement, ev: BqTabGroupCustomEvent<HTMLBqTabGroupElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -8797,6 +8799,7 @@ declare namespace LocalJSX {
      * @attr {string} size - The size of the tab
      * @attr {string} value - A string representing the id of the selected tab.
      * @event bqChange - Handler to be called when the tab value changes
+     * @cssprop --bq-tab-group--border-color - Color of the divider line along the tabs
      */
     interface BqTabGroup {
         /**
@@ -11151,6 +11154,7 @@ declare module "@stencil/core" {
              * @attr {string} size - The size of the tab
              * @attr {string} value - A string representing the id of the selected tab.
              * @event bqChange - Handler to be called when the tab value changes
+             * @cssprop --bq-tab-group--border-color - Color of the divider line along the tabs
              */
             "bq-tab-group": LocalJSX.IntrinsicElements["bq-tab-group"] & JSXBase.HTMLAttributes<HTMLBqTabGroupElement>;
             /**

@@ -34,6 +34,8 @@ import { TAB_ORIENTATION, TAB_PLACEMENT, TAB_SIZE } from '../tab/bq-tab.types';
  *
  * @part base - The HTML div wrapper inside the shadow DOM.
  * @part tabs - The HTML div used to hold the tab buttons.
+ *
+ * @cssprop --bq-tab-group--border-color - Color of the divider line along the tabs
  */
 @Component({
   tag: 'bq-tab-group',

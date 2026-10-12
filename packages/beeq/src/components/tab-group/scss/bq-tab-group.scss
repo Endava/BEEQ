@@ -2,6 +2,8 @@
 /*                                Tab styles                               */
 /* -------------------------------------------------------------------------- */
 
+@import './bq-tab-group.variables';
+
 :host {
   @apply block;
 }
@@ -10,7 +12,7 @@
   @apply relative;
 
   &::after {
-    @apply absolute flex border-0 border-solid border-primary content-empty;
+    @apply absolute flex border-0 border-solid border-[color:--bq-tab-group--border-color] content-empty;
   }
 
   &--horizontal-start,
