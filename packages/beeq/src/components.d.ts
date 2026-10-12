@@ -2827,11 +2827,13 @@ export namespace Components {
      * @method vClick - Simulate a click event on the native `<button>` HTML element used under the hood
      * @method vFocus - Sets focus on the native `<button>` HTML element used under the hood
      * @method vBlur - Remove focus from the native `<button>` HTML element used under the hood
+     * @cssprop --bq-tab--background-hover - Background base colour of the hover state (mixed with `--bq-hover` on hover)
      * @cssprop --bq-tab--font-size - Font size
      * @cssprop --bq-tab--font-weight - Font weight
      * @cssprop --bq-tab--icon-size-large - Icon size for large tab
      * @cssprop --bq-tab--icon-size-medium - Icon size for medium tab
      * @cssprop --bq-tab--icon-size-small - Icon size for small tab
+     * @cssprop --bq-tab--indicator-color - Color of the active tab indicator
      * @cssprop --bq-tab--label-icon-gap - Gap between label and icon
      * @cssprop --bq-tab--line-height - Line height
      * @cssprop --bq-tab--padding-horizontal-large - Horizontal padding for large tab
@@ -2840,6 +2842,9 @@ export namespace Components {
      * @cssprop --bq-tab--padding-vertical-large - Vertical padding for large tab
      * @cssprop --bq-tab--padding-vertical-medium - Vertical padding for medium tab
      * @cssprop --bq-tab--padding-vertical-small - Vertical padding for small tab
+     * @cssprop --bq-tab--text-color - Text color
+     * @cssprop --bq-tab--text-color-active - Text color of the active tab
+     * @cssprop --bq-tab--text-color-hover - Text base colour of the hover state (mixed with `--bq-hover` on hover)
      */
     interface BqTab {
         /**
@@ -5320,11 +5325,13 @@ declare global {
      * @method vClick - Simulate a click event on the native `<button>` HTML element used under the hood
      * @method vFocus - Sets focus on the native `<button>` HTML element used under the hood
      * @method vBlur - Remove focus from the native `<button>` HTML element used under the hood
+     * @cssprop --bq-tab--background-hover - Background base colour of the hover state (mixed with `--bq-hover` on hover)
      * @cssprop --bq-tab--font-size - Font size
      * @cssprop --bq-tab--font-weight - Font weight
      * @cssprop --bq-tab--icon-size-large - Icon size for large tab
      * @cssprop --bq-tab--icon-size-medium - Icon size for medium tab
      * @cssprop --bq-tab--icon-size-small - Icon size for small tab
+     * @cssprop --bq-tab--indicator-color - Color of the active tab indicator
      * @cssprop --bq-tab--label-icon-gap - Gap between label and icon
      * @cssprop --bq-tab--line-height - Line height
      * @cssprop --bq-tab--padding-horizontal-large - Horizontal padding for large tab
@@ -5333,6 +5340,9 @@ declare global {
      * @cssprop --bq-tab--padding-vertical-large - Vertical padding for large tab
      * @cssprop --bq-tab--padding-vertical-medium - Vertical padding for medium tab
      * @cssprop --bq-tab--padding-vertical-small - Vertical padding for small tab
+     * @cssprop --bq-tab--text-color - Text color
+     * @cssprop --bq-tab--text-color-active - Text color of the active tab
+     * @cssprop --bq-tab--text-color-hover - Text base colour of the hover state (mixed with `--bq-hover` on hover)
      */
     interface HTMLBqTabElement extends Components.BqTab, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqTabElementEventMap>(type: K, listener: (this: HTMLBqTabElement, ev: BqTabCustomEvent<HTMLBqTabElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -8698,11 +8708,13 @@ declare namespace LocalJSX {
      * @method vClick - Simulate a click event on the native `<button>` HTML element used under the hood
      * @method vFocus - Sets focus on the native `<button>` HTML element used under the hood
      * @method vBlur - Remove focus from the native `<button>` HTML element used under the hood
+     * @cssprop --bq-tab--background-hover - Background base colour of the hover state (mixed with `--bq-hover` on hover)
      * @cssprop --bq-tab--font-size - Font size
      * @cssprop --bq-tab--font-weight - Font weight
      * @cssprop --bq-tab--icon-size-large - Icon size for large tab
      * @cssprop --bq-tab--icon-size-medium - Icon size for medium tab
      * @cssprop --bq-tab--icon-size-small - Icon size for small tab
+     * @cssprop --bq-tab--indicator-color - Color of the active tab indicator
      * @cssprop --bq-tab--label-icon-gap - Gap between label and icon
      * @cssprop --bq-tab--line-height - Line height
      * @cssprop --bq-tab--padding-horizontal-large - Horizontal padding for large tab
@@ -8711,6 +8723,9 @@ declare namespace LocalJSX {
      * @cssprop --bq-tab--padding-vertical-large - Vertical padding for large tab
      * @cssprop --bq-tab--padding-vertical-medium - Vertical padding for medium tab
      * @cssprop --bq-tab--padding-vertical-small - Vertical padding for small tab
+     * @cssprop --bq-tab--text-color - Text color
+     * @cssprop --bq-tab--text-color-active - Text color of the active tab
+     * @cssprop --bq-tab--text-color-hover - Text base colour of the hover state (mixed with `--bq-hover` on hover)
      */
     interface BqTab {
         /**
@@ -11096,11 +11111,13 @@ declare module "@stencil/core" {
              * @method vClick - Simulate a click event on the native `<button>` HTML element used under the hood
              * @method vFocus - Sets focus on the native `<button>` HTML element used under the hood
              * @method vBlur - Remove focus from the native `<button>` HTML element used under the hood
+             * @cssprop --bq-tab--background-hover - Background base colour of the hover state (mixed with `--bq-hover` on hover)
              * @cssprop --bq-tab--font-size - Font size
              * @cssprop --bq-tab--font-weight - Font weight
              * @cssprop --bq-tab--icon-size-large - Icon size for large tab
              * @cssprop --bq-tab--icon-size-medium - Icon size for medium tab
              * @cssprop --bq-tab--icon-size-small - Icon size for small tab
+             * @cssprop --bq-tab--indicator-color - Color of the active tab indicator
              * @cssprop --bq-tab--label-icon-gap - Gap between label and icon
              * @cssprop --bq-tab--line-height - Line height
              * @cssprop --bq-tab--padding-horizontal-large - Horizontal padding for large tab
@@ -11109,6 +11126,9 @@ declare module "@stencil/core" {
              * @cssprop --bq-tab--padding-vertical-large - Vertical padding for large tab
              * @cssprop --bq-tab--padding-vertical-medium - Vertical padding for medium tab
              * @cssprop --bq-tab--padding-vertical-small - Vertical padding for small tab
+             * @cssprop --bq-tab--text-color - Text color
+             * @cssprop --bq-tab--text-color-active - Text color of the active tab
+             * @cssprop --bq-tab--text-color-hover - Text base colour of the hover state (mixed with `--bq-hover` on hover)
              */
             "bq-tab": LocalJSX.IntrinsicElements["bq-tab"] & JSXBase.HTMLAttributes<HTMLBqTabElement>;
             /**
