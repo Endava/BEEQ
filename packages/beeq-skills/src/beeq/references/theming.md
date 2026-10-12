@@ -97,7 +97,7 @@ Each colour family has one job. Pair a fill with the foreground made for it.
 
 Feedback also needs a written label, never colour alone. These pairs pass WCAG AA in the built-in themes; check contrast in every active theme and mode after an override.
 
-**Endava exception.** In the Endava theme, `--bq-text--on-brand` and `--bq-text--on-accent` are white on Red Orange: 3.15:1. That meets 3:1 for large or bold text and UI glyphs, not 4.5:1 for small text. Keep content on Endava brand fills large or bold, or override the pair if the product needs 4.5:1.
+**Endava exception.** In the Endava theme, `--bq-text--on-brand` and `--bq-text--on-accent` are white on Red Orange: 3.15:1. That meets 3:1 for large text (24px, or 18.66px bold) and UI glyphs, not 4.5:1 for normal text. Keep text on Endava brand fills large, or override the pair if the product needs 4.5:1.
 
 ## Hover and pressed states
 

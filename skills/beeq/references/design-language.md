@@ -56,7 +56,7 @@ Intents set the hue per theme; roles (`--bq-text--*`, `--bq-ui--*`, and the rest
 | Inverted fill | `--bq-ui--inverse` with `--bq-text--inverse` |
 | Borders | `--bq-stroke--tertiary` for interactive boundaries; `--bq-stroke--primary` for decorative separators |
 
-These pairs pass WCAG AA in the built-in themes, with one accepted exception: Endava's `--bq-text--on-brand` (white on Red Orange, 3.15:1) meets 3:1 only, so keep text on Endava brand fills large or bold. They are not a guarantee for arbitrary overrides: check contrast in every active theme and mode after changing a token.
+These pairs pass WCAG AA in the built-in themes, with one accepted exception: Endava's `--bq-text--on-brand` (white on Red Orange, 3.15:1) meets 3:1 only, so keep text on Endava brand fills large (24px, or 18.66px bold). They are not a guarantee for arbitrary overrides: check contrast in every active theme and mode after changing a token.
 
 ### Primitive palette escape hatch
 
