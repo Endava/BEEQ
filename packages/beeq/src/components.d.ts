@@ -471,6 +471,7 @@ export namespace Components {
      * @cssprop --bq-breadcrumb-item--text-color-current - Text color of the current breadcrumb item (active)
      * @cssprop --bq-breadcrumb-item--text-size - Text size of the breadcrumb item
      * @cssprop --bq-breadcrumb-item--text-size-separator - Text size of the breadcrumb item separator
+     * @cssprop --bq-breadcrumb-item--separator-color - Color of the breadcrumb item separator
      * @cssprop --bq-breadcrumb-item--padding-start - Padding start of the breadcrumb item
      * @cssprop --bq-breadcrumb-item--padding-end - Padding end of the breadcrumb item
      * @cssprop --bq-breadcrumb-item--paddingY - Padding top and bottom of the breadcrumb item
@@ -3840,6 +3841,7 @@ declare global {
      * @cssprop --bq-breadcrumb-item--text-color-current - Text color of the current breadcrumb item (active)
      * @cssprop --bq-breadcrumb-item--text-size - Text size of the breadcrumb item
      * @cssprop --bq-breadcrumb-item--text-size-separator - Text size of the breadcrumb item separator
+     * @cssprop --bq-breadcrumb-item--separator-color - Color of the breadcrumb item separator
      * @cssprop --bq-breadcrumb-item--padding-start - Padding start of the breadcrumb item
      * @cssprop --bq-breadcrumb-item--padding-end - Padding end of the breadcrumb item
      * @cssprop --bq-breadcrumb-item--paddingY - Padding top and bottom of the breadcrumb item
@@ -6209,6 +6211,7 @@ declare namespace LocalJSX {
      * @cssprop --bq-breadcrumb-item--text-color-current - Text color of the current breadcrumb item (active)
      * @cssprop --bq-breadcrumb-item--text-size - Text size of the breadcrumb item
      * @cssprop --bq-breadcrumb-item--text-size-separator - Text size of the breadcrumb item separator
+     * @cssprop --bq-breadcrumb-item--separator-color - Color of the breadcrumb item separator
      * @cssprop --bq-breadcrumb-item--padding-start - Padding start of the breadcrumb item
      * @cssprop --bq-breadcrumb-item--padding-end - Padding end of the breadcrumb item
      * @cssprop --bq-breadcrumb-item--paddingY - Padding top and bottom of the breadcrumb item
@@ -10079,6 +10082,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-breadcrumb-item--text-color-current - Text color of the current breadcrumb item (active)
              * @cssprop --bq-breadcrumb-item--text-size - Text size of the breadcrumb item
              * @cssprop --bq-breadcrumb-item--text-size-separator - Text size of the breadcrumb item separator
+             * @cssprop --bq-breadcrumb-item--separator-color - Color of the breadcrumb item separator
              * @cssprop --bq-breadcrumb-item--padding-start - Padding start of the breadcrumb item
              * @cssprop --bq-breadcrumb-item--padding-end - Padding end of the breadcrumb item
              * @cssprop --bq-breadcrumb-item--paddingY - Padding top and bottom of the breadcrumb item
