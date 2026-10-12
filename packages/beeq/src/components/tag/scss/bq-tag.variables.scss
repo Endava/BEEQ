@@ -16,10 +16,38 @@
    * @prop --bq-tag--medium-gap - Tag medium gap between content
    * @prop --bq-tag--medium-padding-x - Tag medium padding horizontal
    * @prop --bq-tag--medium-padding-y - Tag medium padding vertical
+   * @prop --bq-tag--text-color - Tag text color
+   * @prop --bq-tag--background-selected - Tag background color when it is clickable and selected
+   * @prop --bq-tag--text-selected - Tag text color when it is clickable and selected
+   * @prop --bq-tag--background-error-filled - Tag background color for the error color and filled variant
+   * @prop --bq-tag--text-error-filled - Tag text color for the error color and filled variant
+   * @prop --bq-tag--background-error-outline - Tag background color for the error color and outline variant
+   * @prop --bq-tag--text-error-outline - Tag text color for the error color and outline variant
+   * @prop --bq-tag--border-error-outline - Tag border color for the error color and outline variant
+   * @prop --bq-tag--background-gray-filled - Tag background color for the gray color and filled variant
+   * @prop --bq-tag--text-gray-filled - Tag text color for the gray color and filled variant
+   * @prop --bq-tag--background-gray-outline - Tag background color for the gray color and outline variant
+   * @prop --bq-tag--text-gray-outline - Tag text color for the gray color and outline variant
+   * @prop --bq-tag--border-gray-outline - Tag border color for the gray color and outline variant
+   * @prop --bq-tag--background-info-filled - Tag background color for the info color and filled variant
+   * @prop --bq-tag--text-info-filled - Tag text color for the info color and filled variant
+   * @prop --bq-tag--background-info-outline - Tag background color for the info color and outline variant
+   * @prop --bq-tag--text-info-outline - Tag text color for the info color and outline variant
+   * @prop --bq-tag--border-info-outline - Tag border color for the info color and outline variant
+   * @prop --bq-tag--background-success-filled - Tag background color for the success color and filled variant
+   * @prop --bq-tag--text-success-filled - Tag text color for the success color and filled variant
+   * @prop --bq-tag--background-success-outline - Tag background color for the success color and outline variant
+   * @prop --bq-tag--text-success-outline - Tag text color for the success color and outline variant
+   * @prop --bq-tag--border-success-outline - Tag border color for the success color and outline variant
+   * @prop --bq-tag--background-warning-filled - Tag background color for the warning color and filled variant
+   * @prop --bq-tag--text-warning-filled - Tag text color for the warning color and filled variant
+   * @prop --bq-tag--background-warning-outline - Tag background color for the warning color and outline variant
+   * @prop --bq-tag--text-warning-outline - Tag text color for the warning color and outline variant
+   * @prop --bq-tag--border-warning-outline - Tag border color for the warning color and outline variant
    */
-  --bq-tag--background-color: theme(backgroundColor.ui.secondary);
+  --bq-tag--background-color: var(--bq-ui--secondary);
 
-  --bq-tag--border-color: theme(colors.transparent);
+  --bq-tag--border-color: transparent;
   --bq-tag--border-radius: theme(borderRadius.s);
   --bq-tag--border-style: solid;
   --bq-tag--border-width: theme(borderWidth.s);
@@ -32,4 +60,39 @@
   --bq-tag--medium-gap: theme(spacing.xs);
   --bq-tag--medium-padding-x: calc(var(--bq-spacing-s) - var(--bq-tag--border-width));
   --bq-tag--medium-padding-y: calc(var(--bq-spacing-xs2) - var(--bq-tag--border-width));
+
+  --bq-tag--text-color: var(--bq-text--primary);
+
+  --bq-tag--background-selected: var(--bq-ui--brand);
+  --bq-tag--text-selected: var(--bq-text--on-brand);
+
+  --bq-tag--background-error-filled: var(--bq-ui--danger);
+  --bq-tag--text-error-filled: var(--bq-text--on-danger);
+  --bq-tag--background-error-outline: var(--bq-ui--danger-alt);
+  --bq-tag--text-error-outline: var(--bq-text--danger);
+  --bq-tag--border-error-outline: var(--bq-stroke--danger);
+
+  --bq-tag--background-gray-filled: var(--bq-ui--inverse);
+  --bq-tag--text-gray-filled: var(--bq-text--inverse);
+  --bq-tag--background-gray-outline: var(--bq-ui--primary);
+  --bq-tag--text-gray-outline: var(--bq-text--primary);
+  --bq-tag--border-gray-outline: var(--bq-stroke--tertiary);
+
+  --bq-tag--background-info-filled: var(--bq-ui--info);
+  --bq-tag--text-info-filled: var(--bq-text--on-info);
+  --bq-tag--background-info-outline: var(--bq-ui--info-alt);
+  --bq-tag--text-info-outline: var(--bq-text--info);
+  --bq-tag--border-info-outline: var(--bq-stroke--info);
+
+  --bq-tag--background-success-filled: var(--bq-ui--success);
+  --bq-tag--text-success-filled: var(--bq-text--on-success);
+  --bq-tag--background-success-outline: var(--bq-ui--success-alt);
+  --bq-tag--text-success-outline: var(--bq-text--success);
+  --bq-tag--border-success-outline: var(--bq-stroke--success);
+
+  --bq-tag--background-warning-filled: var(--bq-ui--warning);
+  --bq-tag--text-warning-filled: var(--bq-text--on-warning);
+  --bq-tag--background-warning-outline: var(--bq-ui--warning-alt);
+  --bq-tag--text-warning-outline: var(--bq-text--warning);
+  --bq-tag--border-warning-outline: var(--bq-stroke--warning);
 }

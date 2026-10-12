@@ -2933,6 +2933,34 @@ export namespace Components {
      * @cssprop --bq-tag--medium-gap - Tag medium gap between content
      * @cssprop --bq-tag--medium-padding-x - Tag medium padding horizontal
      * @cssprop --bq-tag--medium-padding-y - Tag medium padding vertical
+     * @cssprop --bq-tag--text-color - Tag text color
+     * @cssprop --bq-tag--background-selected - Tag background color when it is clickable and selected
+     * @cssprop --bq-tag--text-selected - Tag text color when it is clickable and selected
+     * @cssprop --bq-tag--background-error-filled - Tag background color for the error color and filled variant
+     * @cssprop --bq-tag--text-error-filled - Tag text color for the error color and filled variant
+     * @cssprop --bq-tag--background-error-outline - Tag background color for the error color and outline variant
+     * @cssprop --bq-tag--text-error-outline - Tag text color for the error color and outline variant
+     * @cssprop --bq-tag--border-error-outline - Tag border color for the error color and outline variant
+     * @cssprop --bq-tag--background-gray-filled - Tag background color for the gray color and filled variant
+     * @cssprop --bq-tag--text-gray-filled - Tag text color for the gray color and filled variant
+     * @cssprop --bq-tag--background-gray-outline - Tag background color for the gray color and outline variant
+     * @cssprop --bq-tag--text-gray-outline - Tag text color for the gray color and outline variant
+     * @cssprop --bq-tag--border-gray-outline - Tag border color for the gray color and outline variant
+     * @cssprop --bq-tag--background-info-filled - Tag background color for the info color and filled variant
+     * @cssprop --bq-tag--text-info-filled - Tag text color for the info color and filled variant
+     * @cssprop --bq-tag--background-info-outline - Tag background color for the info color and outline variant
+     * @cssprop --bq-tag--text-info-outline - Tag text color for the info color and outline variant
+     * @cssprop --bq-tag--border-info-outline - Tag border color for the info color and outline variant
+     * @cssprop --bq-tag--background-success-filled - Tag background color for the success color and filled variant
+     * @cssprop --bq-tag--text-success-filled - Tag text color for the success color and filled variant
+     * @cssprop --bq-tag--background-success-outline - Tag background color for the success color and outline variant
+     * @cssprop --bq-tag--text-success-outline - Tag text color for the success color and outline variant
+     * @cssprop --bq-tag--border-success-outline - Tag border color for the success color and outline variant
+     * @cssprop --bq-tag--background-warning-filled - Tag background color for the warning color and filled variant
+     * @cssprop --bq-tag--text-warning-filled - Tag text color for the warning color and filled variant
+     * @cssprop --bq-tag--background-warning-outline - Tag background color for the warning color and outline variant
+     * @cssprop --bq-tag--text-warning-outline - Tag text color for the warning color and outline variant
+     * @cssprop --bq-tag--border-warning-outline - Tag border color for the warning color and outline variant
      */
     interface BqTag {
         /**
@@ -5306,6 +5334,34 @@ declare global {
      * @cssprop --bq-tag--medium-gap - Tag medium gap between content
      * @cssprop --bq-tag--medium-padding-x - Tag medium padding horizontal
      * @cssprop --bq-tag--medium-padding-y - Tag medium padding vertical
+     * @cssprop --bq-tag--text-color - Tag text color
+     * @cssprop --bq-tag--background-selected - Tag background color when it is clickable and selected
+     * @cssprop --bq-tag--text-selected - Tag text color when it is clickable and selected
+     * @cssprop --bq-tag--background-error-filled - Tag background color for the error color and filled variant
+     * @cssprop --bq-tag--text-error-filled - Tag text color for the error color and filled variant
+     * @cssprop --bq-tag--background-error-outline - Tag background color for the error color and outline variant
+     * @cssprop --bq-tag--text-error-outline - Tag text color for the error color and outline variant
+     * @cssprop --bq-tag--border-error-outline - Tag border color for the error color and outline variant
+     * @cssprop --bq-tag--background-gray-filled - Tag background color for the gray color and filled variant
+     * @cssprop --bq-tag--text-gray-filled - Tag text color for the gray color and filled variant
+     * @cssprop --bq-tag--background-gray-outline - Tag background color for the gray color and outline variant
+     * @cssprop --bq-tag--text-gray-outline - Tag text color for the gray color and outline variant
+     * @cssprop --bq-tag--border-gray-outline - Tag border color for the gray color and outline variant
+     * @cssprop --bq-tag--background-info-filled - Tag background color for the info color and filled variant
+     * @cssprop --bq-tag--text-info-filled - Tag text color for the info color and filled variant
+     * @cssprop --bq-tag--background-info-outline - Tag background color for the info color and outline variant
+     * @cssprop --bq-tag--text-info-outline - Tag text color for the info color and outline variant
+     * @cssprop --bq-tag--border-info-outline - Tag border color for the info color and outline variant
+     * @cssprop --bq-tag--background-success-filled - Tag background color for the success color and filled variant
+     * @cssprop --bq-tag--text-success-filled - Tag text color for the success color and filled variant
+     * @cssprop --bq-tag--background-success-outline - Tag background color for the success color and outline variant
+     * @cssprop --bq-tag--text-success-outline - Tag text color for the success color and outline variant
+     * @cssprop --bq-tag--border-success-outline - Tag border color for the success color and outline variant
+     * @cssprop --bq-tag--background-warning-filled - Tag background color for the warning color and filled variant
+     * @cssprop --bq-tag--text-warning-filled - Tag text color for the warning color and filled variant
+     * @cssprop --bq-tag--background-warning-outline - Tag background color for the warning color and outline variant
+     * @cssprop --bq-tag--text-warning-outline - Tag text color for the warning color and outline variant
+     * @cssprop --bq-tag--border-warning-outline - Tag border color for the warning color and outline variant
      */
     interface HTMLBqTagElement extends Components.BqTag, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqTagElementEventMap>(type: K, listener: (this: HTMLBqTagElement, ev: BqTagCustomEvent<HTMLBqTagElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -8651,6 +8707,34 @@ declare namespace LocalJSX {
      * @cssprop --bq-tag--medium-gap - Tag medium gap between content
      * @cssprop --bq-tag--medium-padding-x - Tag medium padding horizontal
      * @cssprop --bq-tag--medium-padding-y - Tag medium padding vertical
+     * @cssprop --bq-tag--text-color - Tag text color
+     * @cssprop --bq-tag--background-selected - Tag background color when it is clickable and selected
+     * @cssprop --bq-tag--text-selected - Tag text color when it is clickable and selected
+     * @cssprop --bq-tag--background-error-filled - Tag background color for the error color and filled variant
+     * @cssprop --bq-tag--text-error-filled - Tag text color for the error color and filled variant
+     * @cssprop --bq-tag--background-error-outline - Tag background color for the error color and outline variant
+     * @cssprop --bq-tag--text-error-outline - Tag text color for the error color and outline variant
+     * @cssprop --bq-tag--border-error-outline - Tag border color for the error color and outline variant
+     * @cssprop --bq-tag--background-gray-filled - Tag background color for the gray color and filled variant
+     * @cssprop --bq-tag--text-gray-filled - Tag text color for the gray color and filled variant
+     * @cssprop --bq-tag--background-gray-outline - Tag background color for the gray color and outline variant
+     * @cssprop --bq-tag--text-gray-outline - Tag text color for the gray color and outline variant
+     * @cssprop --bq-tag--border-gray-outline - Tag border color for the gray color and outline variant
+     * @cssprop --bq-tag--background-info-filled - Tag background color for the info color and filled variant
+     * @cssprop --bq-tag--text-info-filled - Tag text color for the info color and filled variant
+     * @cssprop --bq-tag--background-info-outline - Tag background color for the info color and outline variant
+     * @cssprop --bq-tag--text-info-outline - Tag text color for the info color and outline variant
+     * @cssprop --bq-tag--border-info-outline - Tag border color for the info color and outline variant
+     * @cssprop --bq-tag--background-success-filled - Tag background color for the success color and filled variant
+     * @cssprop --bq-tag--text-success-filled - Tag text color for the success color and filled variant
+     * @cssprop --bq-tag--background-success-outline - Tag background color for the success color and outline variant
+     * @cssprop --bq-tag--text-success-outline - Tag text color for the success color and outline variant
+     * @cssprop --bq-tag--border-success-outline - Tag border color for the success color and outline variant
+     * @cssprop --bq-tag--background-warning-filled - Tag background color for the warning color and filled variant
+     * @cssprop --bq-tag--text-warning-filled - Tag text color for the warning color and filled variant
+     * @cssprop --bq-tag--background-warning-outline - Tag background color for the warning color and outline variant
+     * @cssprop --bq-tag--text-warning-outline - Tag text color for the warning color and outline variant
+     * @cssprop --bq-tag--border-warning-outline - Tag border color for the warning color and outline variant
      */
     interface BqTag {
         /**
@@ -10886,6 +10970,34 @@ declare module "@stencil/core" {
              * @cssprop --bq-tag--medium-gap - Tag medium gap between content
              * @cssprop --bq-tag--medium-padding-x - Tag medium padding horizontal
              * @cssprop --bq-tag--medium-padding-y - Tag medium padding vertical
+             * @cssprop --bq-tag--text-color - Tag text color
+             * @cssprop --bq-tag--background-selected - Tag background color when it is clickable and selected
+             * @cssprop --bq-tag--text-selected - Tag text color when it is clickable and selected
+             * @cssprop --bq-tag--background-error-filled - Tag background color for the error color and filled variant
+             * @cssprop --bq-tag--text-error-filled - Tag text color for the error color and filled variant
+             * @cssprop --bq-tag--background-error-outline - Tag background color for the error color and outline variant
+             * @cssprop --bq-tag--text-error-outline - Tag text color for the error color and outline variant
+             * @cssprop --bq-tag--border-error-outline - Tag border color for the error color and outline variant
+             * @cssprop --bq-tag--background-gray-filled - Tag background color for the gray color and filled variant
+             * @cssprop --bq-tag--text-gray-filled - Tag text color for the gray color and filled variant
+             * @cssprop --bq-tag--background-gray-outline - Tag background color for the gray color and outline variant
+             * @cssprop --bq-tag--text-gray-outline - Tag text color for the gray color and outline variant
+             * @cssprop --bq-tag--border-gray-outline - Tag border color for the gray color and outline variant
+             * @cssprop --bq-tag--background-info-filled - Tag background color for the info color and filled variant
+             * @cssprop --bq-tag--text-info-filled - Tag text color for the info color and filled variant
+             * @cssprop --bq-tag--background-info-outline - Tag background color for the info color and outline variant
+             * @cssprop --bq-tag--text-info-outline - Tag text color for the info color and outline variant
+             * @cssprop --bq-tag--border-info-outline - Tag border color for the info color and outline variant
+             * @cssprop --bq-tag--background-success-filled - Tag background color for the success color and filled variant
+             * @cssprop --bq-tag--text-success-filled - Tag text color for the success color and filled variant
+             * @cssprop --bq-tag--background-success-outline - Tag background color for the success color and outline variant
+             * @cssprop --bq-tag--text-success-outline - Tag text color for the success color and outline variant
+             * @cssprop --bq-tag--border-success-outline - Tag border color for the success color and outline variant
+             * @cssprop --bq-tag--background-warning-filled - Tag background color for the warning color and filled variant
+             * @cssprop --bq-tag--text-warning-filled - Tag text color for the warning color and filled variant
+             * @cssprop --bq-tag--background-warning-outline - Tag background color for the warning color and outline variant
+             * @cssprop --bq-tag--text-warning-outline - Tag text color for the warning color and outline variant
+             * @cssprop --bq-tag--border-warning-outline - Tag border color for the warning color and outline variant
              */
             "bq-tag": LocalJSX.IntrinsicElements["bq-tag"] & JSXBase.HTMLAttributes<HTMLBqTagElement>;
             /**
