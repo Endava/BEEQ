@@ -1249,7 +1249,7 @@ Set `validation-status` to `error`, `warning`, or `success` to communicate the s
 ### Developer responsibilities
 
 - Always provide content in the `label` slot. The label is the primary source of the accessible name for the textarea. Do not rely on `placeholder` — it disappears once the user starts typing.
-- When using `validation-status`, pair it with a `helper-text` message that explains the issue. Screen readers announce the helper text to users so they know what to correct.
+- When using `validation-status`, pair it with a `helper-text` message that explains the issue. The helper text is not programmatically linked to the textarea (no `aria-describedby`), so keep the message next to the field and make the recovery step explicit.
 - When the textarea is `disabled`, it is removed from the tab order and excluded from form submission. Communicate the reason for disabling through surrounding text.
 - A `readonly` textarea remains focusable and its value is included in form submissions. Use it when you want users to see but not edit a value.
 - The `bqChange` event fires when the user changes the value and then blurs the field. The `bqInput` event fires on every keystroke. Use `debounce-time` to throttle `bqInput` for performance-sensitive scenarios such as live search.

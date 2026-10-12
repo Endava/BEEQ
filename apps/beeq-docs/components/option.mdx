@@ -1142,7 +1142,7 @@ Set `hidden` on an option to remove it from the visible list and the accessibili
 For flat options, `bq-option` sets `role="option"` and exposes `aria-selected`. In a nested `bq-select`, the Select switches the option to `role="treeitem"` and manages the relationship with its tree container.
 
 - `aria-selected` communicates the selected state for a flat option.
-- Nested checkbox options expose `aria-checked` as `"true"`, `"false"`, or `"mixed"` for a partial branch.
+- Checkbox options inside a `bq-select` (nested, or flat with `enable-checkboxes`) expose `aria-checked` instead of `aria-selected`, as `"true"`, `"false"`, or `"mixed"` for a partial branch.
 - Nested parents expose `aria-expanded`, and their child container uses `role="group"` while it is visible.
 - `aria-disabled` is always present on the host. It is `"true"` when `disabled` or `hidden` is true.
 - `aria-hidden="true"` removes a hidden option from the accessibility tree.
