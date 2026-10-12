@@ -252,7 +252,7 @@ describe('bq-radio', () => {
       '--bq-radio--background-color': '--bq-ui--primary',
       '--bq-radio--border-color': '--bq-stroke--tertiary',
       '--bq-radio--border-color-checked': '--bq-icon--brand',
-      '--bq-radio--dot-color-checked': '--bq-ui--brand',
+      '--bq-radio--dot-color-checked': '--bq-icon--brand',
       '--bq-radio--label-text-color': '--bq-text--primary',
     };
 
