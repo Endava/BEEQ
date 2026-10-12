@@ -3098,11 +3098,17 @@ export namespace Components {
      * @cssprop --bq-textarea--background-color - Textarea background color
      * @cssprop --bq-textarea--border-color - Textarea border color
      * @cssprop --bq-textarea--border-color-focus - Textarea border color on focus
+     * @cssprop --bq-textarea--border-color-danger - Textarea border color when the validation status is `error`
+     * @cssprop --bq-textarea--border-color-success - Textarea border color when the validation status is `success`
+     * @cssprop --bq-textarea--border-color-warning - Textarea border color when the validation status is `warning`
      * @cssprop --bq-textarea--border-radius - Textarea border radius
      * @cssprop --bq-textarea--border-width - Textarea border width
      * @cssprop --bq-textarea--border-style - Textarea border style
      * @cssprop --bq-textarea--helper-margin-top - Textarea helper text margin top
      * @cssprop --bq-textarea--helper-text-color - Textarea helper text color
+     * @cssprop --bq-textarea--helper-text-color-danger - Helper text color when the validation status is `error`
+     * @cssprop --bq-textarea--helper-text-color-success - Helper text color when the validation status is `success`
+     * @cssprop --bq-textarea--helper-text-color-warning - Helper text color when the validation status is `warning`
      * @cssprop --bq-textarea--helper-text-size - Textarea helper text size
      * @cssprop --bq-textarea--label-margin-bottom - Textarea label margin bottom
      * @cssprop --bq-textarea--label-text-color - Textarea label text color
@@ -5511,11 +5517,17 @@ declare global {
      * @cssprop --bq-textarea--background-color - Textarea background color
      * @cssprop --bq-textarea--border-color - Textarea border color
      * @cssprop --bq-textarea--border-color-focus - Textarea border color on focus
+     * @cssprop --bq-textarea--border-color-danger - Textarea border color when the validation status is `error`
+     * @cssprop --bq-textarea--border-color-success - Textarea border color when the validation status is `success`
+     * @cssprop --bq-textarea--border-color-warning - Textarea border color when the validation status is `warning`
      * @cssprop --bq-textarea--border-radius - Textarea border radius
      * @cssprop --bq-textarea--border-width - Textarea border width
      * @cssprop --bq-textarea--border-style - Textarea border style
      * @cssprop --bq-textarea--helper-margin-top - Textarea helper text margin top
      * @cssprop --bq-textarea--helper-text-color - Textarea helper text color
+     * @cssprop --bq-textarea--helper-text-color-danger - Helper text color when the validation status is `error`
+     * @cssprop --bq-textarea--helper-text-color-success - Helper text color when the validation status is `success`
+     * @cssprop --bq-textarea--helper-text-color-warning - Helper text color when the validation status is `warning`
      * @cssprop --bq-textarea--helper-text-size - Textarea helper text size
      * @cssprop --bq-textarea--label-margin-bottom - Textarea label margin bottom
      * @cssprop --bq-textarea--label-text-color - Textarea label text color
@@ -8970,11 +8982,17 @@ declare namespace LocalJSX {
      * @cssprop --bq-textarea--background-color - Textarea background color
      * @cssprop --bq-textarea--border-color - Textarea border color
      * @cssprop --bq-textarea--border-color-focus - Textarea border color on focus
+     * @cssprop --bq-textarea--border-color-danger - Textarea border color when the validation status is `error`
+     * @cssprop --bq-textarea--border-color-success - Textarea border color when the validation status is `success`
+     * @cssprop --bq-textarea--border-color-warning - Textarea border color when the validation status is `warning`
      * @cssprop --bq-textarea--border-radius - Textarea border radius
      * @cssprop --bq-textarea--border-width - Textarea border width
      * @cssprop --bq-textarea--border-style - Textarea border style
      * @cssprop --bq-textarea--helper-margin-top - Textarea helper text margin top
      * @cssprop --bq-textarea--helper-text-color - Textarea helper text color
+     * @cssprop --bq-textarea--helper-text-color-danger - Helper text color when the validation status is `error`
+     * @cssprop --bq-textarea--helper-text-color-success - Helper text color when the validation status is `success`
+     * @cssprop --bq-textarea--helper-text-color-warning - Helper text color when the validation status is `warning`
      * @cssprop --bq-textarea--helper-text-size - Textarea helper text size
      * @cssprop --bq-textarea--label-margin-bottom - Textarea label margin bottom
      * @cssprop --bq-textarea--label-text-color - Textarea label text color
@@ -11213,11 +11231,17 @@ declare module "@stencil/core" {
              * @cssprop --bq-textarea--background-color - Textarea background color
              * @cssprop --bq-textarea--border-color - Textarea border color
              * @cssprop --bq-textarea--border-color-focus - Textarea border color on focus
+             * @cssprop --bq-textarea--border-color-danger - Textarea border color when the validation status is `error`
+             * @cssprop --bq-textarea--border-color-success - Textarea border color when the validation status is `success`
+             * @cssprop --bq-textarea--border-color-warning - Textarea border color when the validation status is `warning`
              * @cssprop --bq-textarea--border-radius - Textarea border radius
              * @cssprop --bq-textarea--border-width - Textarea border width
              * @cssprop --bq-textarea--border-style - Textarea border style
              * @cssprop --bq-textarea--helper-margin-top - Textarea helper text margin top
              * @cssprop --bq-textarea--helper-text-color - Textarea helper text color
+             * @cssprop --bq-textarea--helper-text-color-danger - Helper text color when the validation status is `error`
+             * @cssprop --bq-textarea--helper-text-color-success - Helper text color when the validation status is `success`
+             * @cssprop --bq-textarea--helper-text-color-warning - Helper text color when the validation status is `warning`
              * @cssprop --bq-textarea--helper-text-size - Textarea helper text size
              * @cssprop --bq-textarea--label-margin-bottom - Textarea label margin bottom
              * @cssprop --bq-textarea--label-text-color - Textarea label text color

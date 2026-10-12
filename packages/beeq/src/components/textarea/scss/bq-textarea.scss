@@ -47,32 +47,35 @@
 /* ------------------------------- Validations ------------------------------- */
 
 .bq-textarea__input.validation-error {
-  @apply border-danger [&:not(.disabled):not(:focus-within)]:hover:border-hover-danger;
+  @apply border-[color:--bq-textarea--border-color-danger];
+  @apply [&:not(.disabled):not(:focus-within)]:hover:border-[color:color-mix(in_srgb,_var(--bq-textarea--border-color-danger),_var(--bq-hover)_20%)];
 
   &:not(.disabled):focus-within {
-    --bq-ring-color-focus: theme(stroke.danger);
+    --bq-ring-color-focus: var(--bq-textarea--border-color-danger);
 
-    @apply border-active-danger;
+    @apply border-[color:color-mix(in_srgb,_var(--bq-textarea--border-color-danger),_var(--bq-active)_20%)];
   }
 }
 
 .bq-textarea__input.validation-success {
-  @apply border-success [&:not(.disabled):not(:focus-within)]:hover:border-hover-success;
+  @apply border-[color:--bq-textarea--border-color-success];
+  @apply [&:not(.disabled):not(:focus-within)]:hover:border-[color:color-mix(in_srgb,_var(--bq-textarea--border-color-success),_var(--bq-hover)_20%)];
 
   &:not(.disabled):focus-within {
-    --bq-ring-color-focus: theme(stroke.success);
+    --bq-ring-color-focus: var(--bq-textarea--border-color-success);
 
-    @apply border-active-success;
+    @apply border-[color:color-mix(in_srgb,_var(--bq-textarea--border-color-success),_var(--bq-active)_20%)];
   }
 }
 
 .bq-textarea__input.validation-warning {
-  @apply border-warning [&:not(.disabled):not(:focus-within)]:hover:border-hover-warning;
+  @apply border-[color:--bq-textarea--border-color-warning];
+  @apply [&:not(.disabled):not(:focus-within)]:hover:border-[color:color-mix(in_srgb,_var(--bq-textarea--border-color-warning),_var(--bq-hover)_20%)];
 
   &:not(.disabled):focus-within {
-    --bq-ring-color-focus: theme(stroke.warning);
+    --bq-ring-color-focus: var(--bq-textarea--border-color-warning);
 
-    @apply border-active-warning;
+    @apply border-[color:color-mix(in_srgb,_var(--bq-textarea--border-color-warning),_var(--bq-active)_20%)];
   }
 }
 
@@ -87,15 +90,15 @@
 /* ------------------------------- Validations ------------------------------ */
 
 .bq-textarea__helper.validation-error {
-  @apply text-danger;
+  @apply text-[color:--bq-textarea--helper-text-color-danger];
 }
 
 .bq-textarea__helper.validation-success {
-  @apply text-success;
+  @apply text-[color:--bq-textarea--helper-text-color-success];
 }
 
 .bq-textarea__helper.validation-warning {
-  @apply text-warning;
+  @apply text-[color:--bq-textarea--helper-text-color-warning];
 }
 
 /* ----------------------------- Helper counter ----------------------------- */

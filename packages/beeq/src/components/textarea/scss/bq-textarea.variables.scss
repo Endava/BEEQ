@@ -7,11 +7,17 @@
    * @prop --bq-textarea--background-color - Textarea background color
    * @prop --bq-textarea--border-color - Textarea border color
    * @prop --bq-textarea--border-color-focus - Textarea border color on focus
+   * @prop --bq-textarea--border-color-danger - Textarea border color when the validation status is `error`
+   * @prop --bq-textarea--border-color-success - Textarea border color when the validation status is `success`
+   * @prop --bq-textarea--border-color-warning - Textarea border color when the validation status is `warning`
    * @prop --bq-textarea--border-radius - Textarea border radius
    * @prop --bq-textarea--border-width - Textarea border width
    * @prop --bq-textarea--border-style - Textarea border style
    * @prop --bq-textarea--helper-margin-top - Textarea helper text margin top
    * @prop --bq-textarea--helper-text-color - Textarea helper text color
+   * @prop --bq-textarea--helper-text-color-danger - Helper text color when the validation status is `error`
+   * @prop --bq-textarea--helper-text-color-success - Helper text color when the validation status is `success`
+   * @prop --bq-textarea--helper-text-color-warning - Helper text color when the validation status is `warning`
    * @prop --bq-textarea--helper-text-size - Textarea helper text size
    * @prop --bq-textarea--label-margin-bottom - Textarea label margin bottom
    * @prop --bq-textarea--label-text-color - Textarea label text color
@@ -27,6 +33,9 @@
 
   --bq-textarea--border-color: theme(stroke.tertiary);
   --bq-textarea--border-color-focus: theme(stroke.brand);
+  --bq-textarea--border-color-danger: var(--bq-stroke--danger);
+  --bq-textarea--border-color-success: var(--bq-stroke--success);
+  --bq-textarea--border-color-warning: var(--bq-stroke--warning);
   --bq-textarea--border-radius: theme(borderRadius.s);
   --bq-textarea--border-width: theme(borderWidth.s);
   --bq-textarea--border-style: solid;
@@ -34,6 +43,9 @@
   --bq-textarea--helper-margin-top: theme(spacing.xs);
   --bq-textarea--helper-text-size: theme(fontSize.s);
   --bq-textarea--helper-text-color: theme(textColor.primary);
+  --bq-textarea--helper-text-color-danger: var(--bq-text--danger);
+  --bq-textarea--helper-text-color-success: var(--bq-text--success);
+  --bq-textarea--helper-text-color-warning: var(--bq-text--warning);
 
   --bq-textarea--label-margin-bottom: theme(spacing.xs);
   --bq-textarea--label-text-size: theme(fontSize.s);
