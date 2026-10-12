@@ -792,6 +792,12 @@ import { BqTab, BqTabGroup } from "@beeq/vue";
 | `base` | The outer `<div>` wrapper |
 | `tabs` | The `<div role="tablist">` holding all tab buttons |
 
+#### CSS custom properties
+
+| Variable | Description | Default |
+|---|---|---|
+| `--bq-tab-group--border-color` | Color of the divider line along the tabs | `var(--bq-stroke--primary)` |
+
 ---
 
 ### `bq-tab`
@@ -848,6 +854,11 @@ import { BqTab, BqTabGroup } from "@beeq/vue";
 
 | Variable | Description | Default |
 |---|---|---|
+| `--bq-tab--background-hover` | Base colour of the hover state background (mixed with `--bq-hover`) | `var(--bq-ui--primary)` |
+| `--bq-tab--indicator-color` | Color of the active tab indicator | `var(--bq-ui--brand)` |
+| `--bq-tab--text-color` | Text color of the tab label | `var(--bq-text--primary)` |
+| `--bq-tab--text-color-active` | Text color of the active tab label | `var(--bq-text--brand)` |
+| `--bq-tab--text-color-hover` | Base colour of the hover state text (mixed with `--bq-hover`) | `var(--bq-text--brand)` |
 | `--bq-tab--font-size` | Font size of the tab label | `var(--bq-font-size--m)` |
 | `--bq-tab--font-weight` | Font weight of the tab label | `var(--bq-font-weight--medium)` |
 | `--bq-tab--line-height` | Line height of the tab label | `var(--bq-font-line-height--regular)` |

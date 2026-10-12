@@ -905,11 +905,17 @@ Set `background-on-hover` on the group to show a filled highlight on every label
 
 ### CSS custom properties
 
-| Variable | Description | Default |
-|---|---|---|
-| `--bq-radio--background-color` | Background color of the radio control | `var(--bq-ui--primary)` |
-| `--bq-radio--size` | Size (width and height) of the radio control circle | `24px` |
-| `--bq-radio--border-width` | Border width of the radio control ring | `var(--bq-stroke-m)` |
+<Expandable title="CSS variables" defaultOpen={true}>
+  | Variable | Description | Default |
+  |---|---|---|
+  | `--bq-radio--background-color` | Background color of the radio control | `var(--bq-ui--primary)` |
+  | `--bq-radio--border-color` | Border color of the radio control ring | `var(--bq-stroke--tertiary)` |
+  | `--bq-radio--border-color-checked` | Border color of the radio control ring when checked | `var(--bq-icon--brand)` |
+  | `--bq-radio--dot-color-checked` | Inner dot color when checked | `var(--bq-ui--brand)` |
+  | `--bq-radio--label-text-color` | Label text color | `var(--bq-text--primary)` |
+  | `--bq-radio--size` | Size (width and height) of the radio control circle | `24px` |
+  | `--bq-radio--border-width` | Border width of the radio control ring | `var(--bq-stroke-m)` |
+</Expandable>
 
 <Tip>
   Learn more about [styling with shadow parts](/guides/styles#component-shadow-dom-parts) and [CSS custom properties](/guides/styles#global-css-custom-properties).

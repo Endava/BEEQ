@@ -883,13 +883,18 @@ As a developer you are responsible for:
 
 ### CSS custom properties
 
-| Variable | Description | Default |
-|---|---|---|
-| `--bq-slider--size` | Height of the track and progress area | `4px` |
-| `--bq-slider--border-radius` | Border radius of the track and progress area | `var(--bq-radius--xs)` |
-| `--bq-slider--thumb-size` | Size of the draggable thumb on hover | `13px` |
-| `--bq-slider--progress-color` | Background color of the filled progress segment | `var(--bq-ui--brand)` |
-| `--bq-slider--trackarea-color` | Background color of the unfilled track area | `var(--bq-ui--secondary)` |
+<Expandable title="CSS variables" defaultOpen={true}>
+  | Variable | Description | Default |
+  |---|---|---|
+  | `--bq-slider--size` | Height of the track and progress area | `4px` |
+  | `--bq-slider--border-radius` | Border radius of the track and progress area | `var(--bq-radius--xs)` |
+  | `--bq-slider--thumb-size` | Size of the draggable thumb on hover | `13px` |
+  | `--bq-slider--thumb-background` | Background color of the draggable thumb | `var(--bq-ui--primary)` |
+  | `--bq-slider--thumb-border-color` | Border color of the draggable thumb | `var(--bq-stroke--brand)` |
+  | `--bq-slider--progress-color` | Background color of the filled progress segment | `var(--bq-ui--brand)` |
+  | `--bq-slider--trackarea-color` | Background color of the unfilled track area | `var(--bq-ui--secondary)` |
+  | `--bq-slider--label-color` | Text color of the value indicator (label) | `var(--bq-text--primary)` |
+</Expandable>
 
 <Tip>
   Learn more about [styling with shadow parts](/guides/styles) and [CSS custom properties](/theming/global-css-variables).

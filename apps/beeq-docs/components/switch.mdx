@@ -987,12 +987,21 @@ Use `full-width` with `reverse-order` and `justify-content="space-between"` to b
 
 ### CSS custom properties
 
-| Variable | Description | Default |
-|---|---|---|
-| `--bq-switch--height` | Height of the switch track | `24px` |
-| `--bq-switch--width` | Width of the switch track | `44px` |
-| `--bq-switch--dot-size` | Diameter of the sliding dot | `calc(var(--bq-switch--height) - (var(--bq-spacing-xs2) * 2))` |
-| `--bq-switch--justify-content` | Space distribution between the control and label | `start` |
+<Expandable title="CSS variables" defaultOpen={true}>
+  | Variable | Description | Default |
+  |---|---|---|
+  | `--bq-switch--height` | Height of the switch track | `24px` |
+  | `--bq-switch--width` | Width of the switch track | `44px` |
+  | `--bq-switch--dot-size` | Diameter of the sliding dot | `calc(var(--bq-switch--height) - (var(--bq-spacing-xs2) * 2))` |
+  | `--bq-switch--dot-color` | Color of the sliding dot | `var(--bq-ui--primary)` |
+  | `--bq-switch--dot-color-checked` | Color of the sliding dot when checked | `var(--bq-text--on-brand)` |
+  | `--bq-switch--icon-color` | Color of the inner icon when unchecked | `var(--bq-icon--inverse)` |
+  | `--bq-switch--icon-color-checked` | Color of the inner icon when checked | `var(--bq-text--on-brand)` |
+  | `--bq-switch--label-text-color` | Label text color | `var(--bq-text--primary)` |
+  | `--bq-switch--track-color` | Track color | `var(--bq-ui--tertiary)` |
+  | `--bq-switch--track-color-checked` | Track color when checked | `var(--bq-ui--brand)` |
+  | `--bq-switch--justify-content` | Space distribution between the control and label | `start` |
+</Expandable>
 
 <Tip>
   Learn more about [styling with shadow parts](/guides/styles) and [CSS custom properties](/theming/global-css-variables).

@@ -702,8 +702,9 @@ Use the suffix slot when the title area needs page-level actions such as edit or
 <Expandable title="CSS variables" defaultOpen={true}>
   | Variable | Description | Default |
   |---|---|---|
+  | `--bq-page-title--divider-color` | Color of the divider below the page title area, used by `--subtitle-borderBlockEnd` | `var(--bq-stroke--primary)` |
   | `--paddingY` | Vertical padding of the page title wrapper | `var(--bq-spacing-xl)` |
-  | `--subtitle-borderBlockEnd` | Border below the page title area | `1px solid var(--bq-stroke--primary)` |
+  | `--subtitle-borderBlockEnd` | Border below the page title area | `1px solid var(--bq-page-title--divider-color)` |
   | `--subtitle-fontWeight` | Subtitle font weight | `var(--bq-font-weight--medium)` |
   | `--subtitle-textColor` | Subtitle text color | `var(--bq-text--secondary)` |
   | `--subtitle-textSize` | Subtitle font size | `var(--bq-font-size--l)` |
@@ -714,7 +715,7 @@ Use the suffix slot when the title area needs page-level actions such as edit or
 </Expandable>
 
 <Note>
-  The CSS custom properties for `bq-page-title` use shorthand names (e.g., `--paddingY`, `--title-fontWeight`) rather than the `--bq-*` prefix convention used by other BEEQ components. Set these variables directly on the `bq-page-title` element. Values set on an ancestor are overridden by the component's `:host` defaults.
+  Except for `--bq-page-title--divider-color`, the CSS custom properties for `bq-page-title` use shorthand names (e.g., `--paddingY`, `--title-fontWeight`) rather than the `--bq-*` prefix convention used by other BEEQ components. Set these variables directly on the `bq-page-title` element. Values set on an ancestor are overridden by the component's `:host` defaults.
 </Note>
 
 <Tip>
