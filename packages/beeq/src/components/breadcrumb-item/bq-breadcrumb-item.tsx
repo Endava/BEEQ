@@ -156,7 +156,7 @@ export class BqBreadcrumbItem {
           </span>
         </TagElem>
         {/* @internal use only */}
-        <span class="breadcrumb-separator" part="separator">
+        <span aria-hidden="true" class="breadcrumb-separator" part="separator">
           <slot name="separator"></slot>
         </span>
       </div>

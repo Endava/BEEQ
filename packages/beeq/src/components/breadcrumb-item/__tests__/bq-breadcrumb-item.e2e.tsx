@@ -73,6 +73,14 @@ describe('bq-breadcrumb-item', () => {
     expect(element?.tagName.toLowerCase()).toBe('a');
   });
 
+  it('should hide the separator from assistive technology', async () => {
+    const { root } = await render(<bq-breadcrumb-item>Home</bq-breadcrumb-item>);
+
+    const separator = root.shadowRoot.querySelector('[part="separator"]');
+
+    expect(separator).toEqualAttribute('aria-hidden', 'true');
+  });
+
   it('should apply `target` and `rel` to anchor items', async () => {
     const { root } = await render(
       <bq-breadcrumb-item href="https://example.com/" rel="external" target="_blank">
