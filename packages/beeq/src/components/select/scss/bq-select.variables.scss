@@ -7,12 +7,18 @@
    * @prop --bq-select--background-color - Select background color
    * @prop --bq-select--border-color - Select border color
    * @prop --bq-select--border-color-focus - Select border color on focus
+   * @prop --bq-select--border-color-danger - Select border color when the validation status is `error`
+   * @prop --bq-select--border-color-success - Select border color when the validation status is `success`
+   * @prop --bq-select--border-color-warning - Select border color when the validation status is `warning`
    * @prop --bq-select--border-radius - Select border radius
    * @prop --bq-select--border-width - Select border width
    * @prop --bq-select--border-style - Select border style
    * @prop --bq-select--gap - Gap between Select content and prefix/suffix
    * @prop --bq-select--helper-margin-top - Helper text margin top
    * @prop --bq-select--helper-text-color - Helper text color
+   * @prop --bq-select--helper-text-color-danger - Helper text color when the validation status is `error`
+   * @prop --bq-select--helper-text-color-success - Helper text color when the validation status is `success`
+   * @prop --bq-select--helper-text-color-warning - Helper text color when the validation status is `warning`
    * @prop --bq-select--helper-text-size - Helper text size
    * @prop --bq-select--icon-size - Icon size to use in prefix/suffix and clear button
    * @prop --bq-select--label-margin-bottom - Select label margin bottom
@@ -29,6 +35,9 @@
 
   --bq-select--border-color: theme(stroke.tertiary);
   --bq-select--border-color-focus: theme(stroke.brand);
+  --bq-select--border-color-danger: var(--bq-stroke--danger);
+  --bq-select--border-color-success: var(--bq-stroke--success);
+  --bq-select--border-color-warning: var(--bq-stroke--warning);
   --bq-select--border-radius: theme(borderRadius.s);
   --bq-select--border-width: theme(borderWidth.s);
   --bq-select--border-style: solid;
@@ -38,6 +47,9 @@
   --bq-select--helper-margin-top: theme(spacing.xs);
   --bq-select--helper-text-size: theme(fontSize.s);
   --bq-select--helper-text-color: theme(textColor.primary);
+  --bq-select--helper-text-color-danger: var(--bq-text--danger);
+  --bq-select--helper-text-color-success: var(--bq-text--success);
+  --bq-select--helper-text-color-warning: var(--bq-text--warning);
 
   --bq-select--icon-size: 24px;
 
