@@ -1,6 +1,6 @@
 ---
 title: Colors
-description: BEEQ's color system is built in two tiers — a raw primitive palette and semantic tokens that name colors by their intended role, not their appearance.
+description: BEEQ's color system resolves every color through four layers — primitives, theme-level intents, mode roles, and component variables — so components stay legible in every theme and mode.
 ---
 
 <Frame className="px-4 py-4" caption="BEEQ colors overview — a snapshot of some tokens from the color palette">
@@ -19,110 +19,231 @@ description: BEEQ's color system is built in two tiers — a raw primitive palet
 Color in BEEQ serves communication, not decoration. The system gives every color a clear role — brand identity, feedback, hierarchy, or data — so interfaces stay consistent across products and themes.
 
 <Note>
-  Always reach for a **semantic token** (`--bq-text--primary`, `--bq-background--brand`, etc.) rather than a raw primitive value. Semantic tokens adapt automatically to light and dark mode. Primitives do not.
+  Always reach for a **mode role** (`--bq-text--primary`, `--bq-ui--brand`, etc.) rather than a raw primitive value. Mode roles adapt automatically to the active theme and to light and dark mode. Primitives do not.
 </Note>
 
 ## Color architecture
 
-BEEQ organizes color in two tiers that work together:
+BEEQ resolves every color through four layers. Each layer only references the layer above it, so a change at the top flows through every role, component, and mode below.
 
-<CardGroup cols={2}>
-  <Card title="Primitive palette" icon="palette">
-    The raw color values. Named by hue and numeric scale (`--bq-iris-600`, `--bq-grey-200`), these are the actual hex values. Use them **only** when defining a custom theme or creating new semantic tokens — not in component code.
-  </Card>
-  <Card title="Semantic tokens" icon="tag">
-    The application layer. Named by role (`--bq-background--primary`, `--bq-text--brand`), these tokens point to primitives and flip automatically between light and dark values. **These are what you use in day-to-day design and development.**
-  </Card>
-</CardGroup>
+| Layer | Examples | Defined per | What it's for |
+|---|---|---|---|
+| **1. Primitives** | `--bq-iris-600`, `--bq-grey-800`, `--bq-endava-orange-600` | Palette | Raw hex values. Pick from them when you define a theme. |
+| **2. Root semantics** | `--bq-brand`, `--bq-brand-strong`, `--bq-info`, `--bq-neutral-800`, `--bq-white`, `--bq-black` | Theme (`bq-theme`) | The theme's intents and neutrals. Change these to rebrand. |
+| **3. Mode roles** | `--bq-background--primary`, `--bq-text--brand`, `--bq-ui--brand`, `--bq-text--on-brand`, `--bq-focus` | Theme × mode (`bq-mode`) | What you style UI with. Each role maps to a root semantic and flips between light and dark. |
+| **4. Component variables** | `--bq-button--primary-background`, `--bq-alert--background-info` | Component | Per-component hooks. Each defaults to a mode role. |
+
+For example, the primary button fill in the BEEQ theme resolves like this:
+
+```text
+--bq-iris-600 → --bq-brand → --bq-ui--brand → --bq-button--primary-background → <bq-button>
+```
+
+BEEQ components only read mode roles and component variables — never primitives or root semantics directly. Mode roles in turn only reference root semantics, which is why rebranding the root layer is enough to restyle every component in both modes.
 
 ---
 
 ## Color palette
 
-### Brand
+The palette on this page is the **root semantics** layer — the colors each theme assigns to its intents, neutrals, and data series. Every color is shown for both built-in themes. To switch themes in your app, see [Themes and modes](/theming/themes-and-modes).
 
-The brand color anchors primary actions, interactive states, and brand surfaces. Three stops cover the full light-to-dark range.
+### Intent scale
 
-<Color variant="compact">
-  <Color.Item name="bq-brand-light" value="#e9f0ff" />
-  <Color.Item name="bq-brand" value="#4f46e5" />
-  <Color.Item name="bq-brand-dark" value="#181545" />
-</Color>
+BEEQ has six intents: **brand**, **accent**, **info**, **success**, **warning**, and **danger**. Every intent ships five steps, and each step has a single job:
 
-### Accent
+| Step | Token | Job | Used by |
+|---|---|---|---|
+| Light | `--bq-{intent}-light` | Subtle tint in light mode | `--bq-ui--{intent}-alt` |
+| Base | `--bq-{intent}` | Solid fill | `--bq-ui--{intent}` |
+| Dark | `--bq-{intent}-dark` | Subtle tint in dark mode | `--bq-ui--{intent}-alt` |
+| Strong | `--bq-{intent}-strong` | Text, icons, and strokes on light surfaces | `--bq-text--{intent}`, `--bq-icon--{intent}`, `--bq-stroke--{intent}` in light mode |
+| Bright | `--bq-{intent}-bright` | Text, icons, and strokes on dark surfaces | `--bq-text--{intent}`, `--bq-icon--{intent}`, `--bq-stroke--{intent}` in dark mode |
 
-The accent color is reserved for white-label customization. It is not applied in the default BEEQ theme.
+The base step is tuned to be recognizable as a fill, not to be readable as text. That's why intent text never uses the base step: `-strong` and `-bright` are the steps that reach **4.5:1** on neutral surfaces and on the matching `-alt` tint. When a base color is already dark enough, `-strong` points to the same primitive — the BEEQ brand is one example.
 
-<Color variant="compact">
-  <Color.Item name="bq-accent-light" value="#efebf8" />
-  <Color.Item name="bq-accent" value="#6538be" />
-  <Color.Item name="bq-accent-dark" value="#140b26" />
-</Color>
+- **Brand** anchors primary actions, selection, and brand surfaces.
+- **Accent** is a secondary brand color for white-label themes. BEEQ components don't use it; the Endava theme aliases it to brand.
+- **Info** communicates neutral, informational feedback. It's a separate intent and never resolves through brand.
+- **Success**, **warning**, and **danger** communicate feedback states. Never use them for decoration or branding.
+
+<Tabs>
+  <Tab title="BEEQ theme">
+    <Color variant="table">
+      <Color.Row title="Brand">
+        <Color.Item name="brand-light" value="#e9f0ff" />
+        <Color.Item name="brand" value="#4f46e5" />
+        <Color.Item name="brand-dark" value="#181545" />
+        <Color.Item name="brand-strong" value="#4f46e5" />
+        <Color.Item name="brand-bright" value="#8691f8" />
+      </Color.Row>
+      <Color.Row title="Accent">
+        <Color.Item name="accent-light" value="#efebf8" />
+        <Color.Item name="accent" value="#6538be" />
+        <Color.Item name="accent-dark" value="#140b26" />
+        <Color.Item name="accent-strong" value="#6538be" />
+        <Color.Item name="accent-bright" value="#a388d8" />
+      </Color.Row>
+      <Color.Row title="Info">
+        <Color.Item name="info-light" value="#e7f0fd" />
+        <Color.Item name="info" value="#156eeb" />
+        <Color.Item name="info-dark" value="#04162f" />
+        <Color.Item name="info-strong" value="#1158bc" />
+        <Color.Item name="info-bright" value="#73a8f3" />
+      </Color.Row>
+      <Color.Row title="Success">
+        <Color.Item name="success-light" value="#e5f7f5" />
+        <Color.Item name="success" value="#00b49d" />
+        <Color.Item name="success-dark" value="#00241f" />
+        <Color.Item name="success-strong" value="#006c5e" />
+        <Color.Item name="success-bright" value="#33c3b1" />
+      </Color.Row>
+      <Color.Row title="Warning">
+        <Color.Item name="warning-light" value="#fbf4ec" />
+        <Color.Item name="warning" value="#d99048" />
+        <Color.Item name="warning-dark" value="#2b1d0e" />
+        <Color.Item name="warning-strong" value="#82562b" />
+        <Color.Item name="warning-bright" value="#e1a66d" />
+      </Color.Row>
+      <Color.Row title="Danger">
+        <Color.Item name="danger-light" value="#fce7ea" />
+        <Color.Item name="danger" value="#e1172f" />
+        <Color.Item name="danger-dark" value="#2d0509" />
+        <Color.Item name="danger-strong" value="#b41226" />
+        <Color.Item name="danger-bright" value="#ed7482" />
+      </Color.Row>
+    </Color>
+  </Tab>
+  <Tab title="Endava theme">
+    <Color variant="table">
+      <Color.Row title="Brand">
+        <Color.Item name="brand-light" value="#ffeeec" />
+        <Color.Item name="brand" value="#ff5640" />
+        <Color.Item name="brand-dark" value="#423339" />
+        <Color.Item name="brand-strong" value="#c33600" />
+        <Color.Item name="brand-bright" value="#ff8979" />
+      </Color.Row>
+      <Color.Row title="Accent">
+        <Color.Item name="accent-light" value="#ffeeec" />
+        <Color.Item name="accent" value="#ff5640" />
+        <Color.Item name="accent-dark" value="#423339" />
+        <Color.Item name="accent-strong" value="#c33600" />
+        <Color.Item name="accent-bright" value="#ff8979" />
+      </Color.Row>
+      <Color.Row title="Info">
+        <Color.Item name="info-light" value="#e8eaeb" />
+        <Color.Item name="info" value="#192b37" />
+        <Color.Item name="info-dark" value="#30404b" />
+        <Color.Item name="info-strong" value="#192b37" />
+        <Color.Item name="info-bright" value="#ffffff" />
+      </Color.Row>
+      <Color.Row title="Success">
+        <Color.Item name="success-light" value="#eaf5ef" />
+        <Color.Item name="success" value="#26864e" />
+        <Color.Item name="success-dark" value="#1f4943" />
+        <Color.Item name="success-strong" value="#1d633a" />
+        <Color.Item name="success-bright" value="#3dd17b" />
+      </Color.Row>
+      <Color.Row title="Warning">
+        <Color.Item name="warning-light" value="#fdf4e7" />
+        <Color.Item name="warning" value="#f99c11" />
+        <Color.Item name="warning-dark" value="#413f30" />
+        <Color.Item name="warning-strong" value="#975c04" />
+        <Color.Item name="warning-bright" value="#f99c11" />
+      </Color.Row>
+      <Color.Row title="Danger">
+        <Color.Item name="danger-light" value="#fbeceb" />
+        <Color.Item name="danger" value="#d4403b" />
+        <Color.Item name="danger-dark" value="#3e3039" />
+        <Color.Item name="danger-strong" value="#a72925" />
+        <Color.Item name="danger-bright" value="#f2958f" />
+      </Color.Row>
+    </Color>
+  </Tab>
+</Tabs>
+
+Each swatch name maps to a CSS custom property with the `--bq-` prefix — for example, `brand-strong` is `--bq-brand-strong`.
 
 ### Neutral
 
-The neutral scale underpins surfaces, text, borders, and icons. `bq-neutral-*` tokens are direct aliases of the grey primitive scale.
+The neutral scale underpins surfaces, text, borders, and icons. `--bq-white` and `--bq-black` complete it. In the BEEQ theme the neutrals alias the grey primitives; in the Endava theme they're the Endava Solid Blue shades, and `--bq-neutral-950` and `--bq-black` are Solid Blue itself.
 
-<Color variant="compact">
-  <Color.Item name="bq-neutral-50" value="#f6f6f8" />
-  <Color.Item name="bq-neutral-100" value="#f1f2f4" />
-  <Color.Item name="bq-neutral-200" value="#e7e8eb" />
-  <Color.Item name="bq-neutral-300" value="#caccd2" />
-  <Color.Item name="bq-neutral-400" value="#a6aab3" />
-  <Color.Item name="bq-neutral-500" value="#898e99" />
-  <Color.Item name="bq-neutral-600" value="#646a77" />
-  <Color.Item name="bq-neutral-700" value="#3f4350" />
-  <Color.Item name="bq-neutral-800" value="#2a2c35" />
-  <Color.Item name="bq-neutral-900" value="#1c1d23" />
-  <Color.Item name="bq-neutral-950" value="#15161a" />
-  <Color.Item name="bq-neutral-1000" value="#0d0e11" />
-</Color>
-
-### System colors
-
-System colors communicate success, caution, error, and information. Each role has three stops — light (tinted background), main, and dark — for composing surfaces, text, and icons. Never use them for decoration or branding.
-
-<Color variant="compact">
-  <Color.Item name="bq-success-light" value="#e5f7f5" />
-  <Color.Item name="bq-success" value="#00b49d" />
-  <Color.Item name="bq-success-dark" value="#00241f" />
-  <Color.Item name="bq-warning-light" value="#fbf4ec" />
-  <Color.Item name="bq-warning" value="#d99048" />
-  <Color.Item name="bq-warning-dark" value="#2b1d0e" />
-  <Color.Item name="bq-danger-light" value="#fce7ea" />
-  <Color.Item name="bq-danger" value="#e1172f" />
-  <Color.Item name="bq-danger-dark" value="#2d0509" />
-  <Color.Item name="bq-info-light" value="#e9f0ff" />
-  <Color.Item name="bq-info" value="#4f46e5" />
-  <Color.Item name="bq-info-dark" value="#181545" />
-</Color>
-
-### Focus
-
-The focus color is applied to keyboard focus rings across all interactive components.
-
-<Color variant="compact">
-  <Color.Item name="bq-focus" value="#4f46e5" />
-</Color>
+<Tabs>
+  <Tab title="BEEQ theme">
+    <Color variant="compact">
+      <Color.Item name="bq-white" value="#ffffff" />
+      <Color.Item name="bq-neutral-50" value="#f6f6f8" />
+      <Color.Item name="bq-neutral-100" value="#f1f2f4" />
+      <Color.Item name="bq-neutral-200" value="#e7e8eb" />
+      <Color.Item name="bq-neutral-300" value="#caccd2" />
+      <Color.Item name="bq-neutral-400" value="#a6aab3" />
+      <Color.Item name="bq-neutral-500" value="#898e99" />
+      <Color.Item name="bq-neutral-600" value="#646a77" />
+      <Color.Item name="bq-neutral-700" value="#3f4350" />
+      <Color.Item name="bq-neutral-800" value="#2a2c35" />
+      <Color.Item name="bq-neutral-900" value="#1c1d23" />
+      <Color.Item name="bq-neutral-950" value="#15161a" />
+      <Color.Item name="bq-neutral-1000" value="#0d0e11" />
+      <Color.Item name="bq-black" value="#060708" />
+    </Color>
+  </Tab>
+  <Tab title="Endava theme">
+    <Color variant="compact">
+      <Color.Item name="bq-white" value="#ffffff" />
+      <Color.Item name="bq-neutral-50" value="#f6f7f7" />
+      <Color.Item name="bq-neutral-100" value="#e8eaeb" />
+      <Color.Item name="bq-neutral-200" value="#d1d5d7" />
+      <Color.Item name="bq-neutral-300" value="#babfc3" />
+      <Color.Item name="bq-neutral-400" value="#a3aaaf" />
+      <Color.Item name="bq-neutral-500" value="#8c959b" />
+      <Color.Item name="bq-neutral-600" value="#758087" />
+      <Color.Item name="bq-neutral-700" value="#5e6a73" />
+      <Color.Item name="bq-neutral-800" value="#47555f" />
+      <Color.Item name="bq-neutral-900" value="#30404b" />
+      <Color.Item name="bq-neutral-950" value="#192b37" />
+      <Color.Item name="bq-neutral-1000" value="#14222c" />
+      <Color.Item name="bq-black" value="#192b37" />
+    </Color>
+  </Tab>
+</Tabs>
 
 ### Data colors
 
-A curated set of 12 perceptually distinct hues for charts, graphs, and data-driven visualizations. Use them in sequence — `bq-data-01` first — to maintain legibility as more series are added.
+A curated set of 12 distinct hues for charts, graphs, and data-driven visualizations. Use them in sequence — `bq-data-01` first — to maintain legibility as more series are added. `bq-data-01` always follows the theme's brand color.
 
-<Color variant="compact">
-  <Color.Item name="bq-data-01" value="#4f46e5" />
-  <Color.Item name="bq-data-02" value="#6538be" />
-  <Color.Item name="bq-data-03" value="#de1395" />
-  <Color.Item name="bq-data-04" value="#1eb3db" />
-  <Color.Item name="bq-data-05" value="#00b49d" />
-  <Color.Item name="bq-data-06" value="#dc6726" />
-  <Color.Item name="bq-data-07" value="#f2d412" />
-  <Color.Item name="bq-data-08" value="#e1172f" />
-  <Color.Item name="bq-data-09" value="#156eeb" />
-  <Color.Item name="bq-data-10" value="#646a77" />
-  <Color.Item name="bq-data-11" value="#060708" />
-  <Color.Item name="bq-data-12" value="#ffffff" />
-</Color>
+<Tabs>
+  <Tab title="BEEQ theme">
+    <Color variant="compact">
+      <Color.Item name="bq-data-01" value="#4f46e5" />
+      <Color.Item name="bq-data-02" value="#6538be" />
+      <Color.Item name="bq-data-03" value="#de1395" />
+      <Color.Item name="bq-data-04" value="#1eb3db" />
+      <Color.Item name="bq-data-05" value="#00b49d" />
+      <Color.Item name="bq-data-06" value="#dc6726" />
+      <Color.Item name="bq-data-07" value="#f2d412" />
+      <Color.Item name="bq-data-08" value="#e1172f" />
+      <Color.Item name="bq-data-09" value="#156eeb" />
+      <Color.Item name="bq-data-10" value="#646a77" />
+      <Color.Item name="bq-data-11" value="#060708" />
+      <Color.Item name="bq-data-12" value="#ffffff" />
+    </Color>
+  </Tab>
+  <Tab title="Endava theme">
+    <Color variant="compact">
+      <Color.Item name="bq-data-01" value="#ff5640" />
+      <Color.Item name="bq-data-02" value="#5899c4" />
+      <Color.Item name="bq-data-03" value="#cf820e" />
+      <Color.Item name="bq-data-04" value="#30a661" />
+      <Color.Item name="bq-data-05" value="#8684bf" />
+      <Color.Item name="bq-data-06" value="#7b9922" />
+      <Color.Item name="bq-data-07" value="#998f63" />
+      <Color.Item name="bq-data-08" value="#7c94a6" />
+      <Color.Item name="bq-data-09" value="#3e9c8f" />
+      <Color.Item name="bq-data-10" value="#5e6a73" />
+      <Color.Item name="bq-data-11" value="#192b37" />
+      <Color.Item name="bq-data-12" value="#ffffff" />
+    </Color>
+  </Tab>
+</Tabs>
 
 <Tip>
   The full primitive palette — all hue scales grouped by color — is available in the [Primitive color scales](#primitive-color-scales) reference section below.
@@ -130,11 +251,11 @@ A curated set of 12 perceptually distinct hues for charts, graphs, and data-driv
 
 ---
 
-## Semantic tokens
+## Mode roles
 
-Semantic tokens are the building blocks of every BEEQ component. They abstract the "what" (raw hex) from the "why" (intended role), so the same design token automatically resolves to the correct light or dark value without manual overrides.
+Mode roles are the building blocks of every BEEQ component. They abstract the "what" (raw hex) from the "why" (intended role), so the same token resolves to the right value for the active theme and mode without manual overrides.
 
-Each group below shows both the light and dark values side by side. Click any swatch to copy the CSS custom property name.
+The swatches show the BEEQ theme in the current docs mode — click any swatch to copy the CSS custom property name. The tables list the root semantic each role points to, without the `--bq-` prefix, for both themes and modes.
 
 ### Background
 
@@ -145,32 +266,37 @@ Use background tokens for page surfaces, cards, modals, drawers, and overlays.
   <Color.Item name="--bq-background--secondary" value={{ light: "var(--bq-neutral-100)", dark: "var(--bq-neutral-950)" }} />
   <Color.Item name="--bq-background--tertiary" value={{ light: "var(--bq-neutral-200)", dark: "var(--bq-neutral-800)" }} />
   <Color.Item name="--bq-background--alt" value={{ light: "var(--bq-neutral-300)", dark: "var(--bq-neutral-700)" }} />
-  <Color.Item name="--bq-background--inverse" value={{ light: "var(--bq-neutral-900)", dark: "var(--bq-neutral-600)" }} />
+  <Color.Item name="--bq-background--inverse" value={{ light: "var(--bq-neutral-900)", dark: "var(--bq-neutral-100)" }} />
   <Color.Item name="--bq-background--brand" value="var(--bq-brand)" />
   <Color.Item name="--bq-background--overlay" value="var(--bq-neutral-900)" />
 </Color>
 
-| Token | Light primitive | Dark primitive | When to use |
-|---|---|---|---|
-| `--bq-background--primary` | `var(--bq-white)` | `var(--bq-neutral-1000)` | Main page canvas |
-| `--bq-background--secondary` | `var(--bq-neutral-100)` | `var(--bq-neutral-950)` | Panels, sidebars, elevated cards |
-| `--bq-background--tertiary` | `var(--bq-neutral-200)` | `var(--bq-neutral-800)` | Nested sections within cards |
-| `--bq-background--alt` | `var(--bq-neutral-300)` | `var(--bq-neutral-700)` | Hover states on secondary surfaces |
-| `--bq-background--inverse` | `var(--bq-neutral-900)` | `var(--bq-neutral-600)` | Dark banners on light backgrounds |
-| `--bq-background--brand` | `var(--bq-brand)` | `var(--bq-brand)` | Brand callouts, primary action areas |
-| `--bq-background--overlay` | `var(--bq-neutral-900) / 60%` | `var(--bq-neutral-900) / 60%` | Modal scrims, drawer overlays |
+| Token | BEEQ light | BEEQ dark | Endava light | Endava dark | When to use |
+|---|---|---|---|---|---|
+| `--bq-background--primary` | `white` | `neutral-1000` | `white` | `neutral-950` | Main page canvas |
+| `--bq-background--secondary` | `neutral-100` | `neutral-950` | `neutral-100` | `neutral-900` | Panels, sidebars, elevated cards |
+| `--bq-background--tertiary` | `neutral-200` | `neutral-800` | `neutral-300` | `neutral-800` | Nested sections within cards |
+| `--bq-background--alt` | `neutral-300` | `neutral-700` | `neutral-200` | `neutral-700` | Alternative surfaces |
+| `--bq-background--inverse` | `neutral-900` | `neutral-100` | `neutral-950` | `white` | Inverted banners and surfaces |
+| `--bq-background--brand` | `brand` | `brand` | `brand` | `brand` | Brand callouts and surfaces |
+| `--bq-background--overlay` | `neutral-900` | `neutral-900` | `neutral-950` | `neutral-1000` | Modal scrims and drawer overlays, applied with 60% opacity |
 
 ### UI elements
 
-Use UI tokens for interactive component fills — buttons, toggles, chips, selects, and other small shapes.
+Use UI tokens for component fills — buttons, toggles, chips, selects, badges, and other small shapes.
 
 <Color variant="compact">
   <Color.Item name="--bq-ui--primary" value={{ light: "var(--bq-white)", dark: "var(--bq-neutral-900)" }} />
   <Color.Item name="--bq-ui--secondary" value={{ light: "var(--bq-neutral-100)", dark: "var(--bq-neutral-950)" }} />
-  <Color.Item name="--bq-ui--tertiary" value={{ light: "var(--bq-neutral-500)", dark: "var(--bq-neutral-700)" }} />
+  <Color.Item name="--bq-ui--tertiary" value="var(--bq-neutral-500)" />
   <Color.Item name="--bq-ui--inverse" value={{ light: "var(--bq-neutral-900)", dark: "var(--bq-neutral-100)" }} />
+  <Color.Item name="--bq-ui--alt" value={{ light: "var(--bq-neutral-50)", dark: "var(--bq-neutral-950)" }} />
   <Color.Item name="--bq-ui--brand" value="var(--bq-brand)" />
   <Color.Item name="--bq-ui--brand-alt" value={{ light: "var(--bq-brand-light)", dark: "var(--bq-brand-dark)" }} />
+  <Color.Item name="--bq-ui--accent" value="var(--bq-accent)" />
+  <Color.Item name="--bq-ui--accent-alt" value={{ light: "var(--bq-accent-light)", dark: "var(--bq-accent-dark)" }} />
+  <Color.Item name="--bq-ui--info" value="var(--bq-info)" />
+  <Color.Item name="--bq-ui--info-alt" value={{ light: "var(--bq-info-light)", dark: "var(--bq-info-dark)" }} />
   <Color.Item name="--bq-ui--success" value="var(--bq-success)" />
   <Color.Item name="--bq-ui--success-alt" value={{ light: "var(--bq-success-light)", dark: "var(--bq-success-dark)" }} />
   <Color.Item name="--bq-ui--warning" value="var(--bq-warning)" />
@@ -179,22 +305,96 @@ Use UI tokens for interactive component fills — buttons, toggles, chips, selec
   <Color.Item name="--bq-ui--danger-alt" value={{ light: "var(--bq-danger-light)", dark: "var(--bq-danger-dark)" }} />
 </Color>
 
-| Token | Light primitive | Dark primitive | When to use |
-|---|---|---|---|
-| `--bq-ui--primary` | `var(--bq-white)` | `var(--bq-neutral-900)` | Default component fill — buttons, cards |
-| `--bq-ui--secondary` | `var(--bq-neutral-100)` | `var(--bq-neutral-950)` | Secondary fill — input backgrounds, toggles |
-| `--bq-ui--tertiary` | `var(--bq-neutral-500)` | `var(--bq-neutral-700)` | Disabled states, placeholder fills |
-| `--bq-ui--inverse` | `var(--bq-neutral-900)` | `var(--bq-neutral-100)` | Inverted fill — dark-on-light component fills |
-| `--bq-ui--brand` | `var(--bq-brand)` | `var(--bq-brand)` | Primary brand buttons, key call-to-action fills |
-| `--bq-ui--brand-alt` | `var(--bq-brand-light)` | `var(--bq-brand-dark)` | Low-emphasis brand fills, badge backgrounds |
-| `--bq-ui--success` | `var(--bq-success)` | `var(--bq-success)` | Success state fills |
-| `--bq-ui--success-alt` | `var(--bq-success-light)` | `var(--bq-success-dark)` | Success tinted backgrounds, alert fills |
-| `--bq-ui--warning` | `var(--bq-warning)` | `var(--bq-warning)` | Warning state fills |
-| `--bq-ui--warning-alt` | `var(--bq-warning-light)` | `var(--bq-warning-dark)` | Warning tinted backgrounds, caution alert fills |
-| `--bq-ui--danger` | `var(--bq-danger)` | `var(--bq-danger)` | Destructive button fills, error states |
-| `--bq-ui--danger-alt` | `var(--bq-danger-light)` | `var(--bq-danger-dark)` | Danger tinted backgrounds, error alert fills |
+| Token | BEEQ light | BEEQ dark | Endava light | Endava dark | When to use |
+|---|---|---|---|---|---|
+| `--bq-ui--primary` | `white` | `neutral-900` | `white` | `neutral-950` | Default component fill — inputs, cards |
+| `--bq-ui--secondary` | `neutral-100` | `neutral-950` | `neutral-100` | `neutral-900` | Secondary fill — toggles, hover bases |
+| `--bq-ui--tertiary` | `neutral-500` | `neutral-500` | `neutral-500` | `neutral-500` | Unselected control tracks and indicators |
+| `--bq-ui--inverse` | `neutral-900` | `neutral-100` | `neutral-950` | `white` | Inverted fills such as tooltips |
+| `--bq-ui--alt` | `neutral-50` | `neutral-950` | `neutral-50` | `neutral-900` | Subtle alternative fill |
 
-The `*-alt` variants are tinted backgrounds — use them for low-emphasis states such as badge fills or alert backgrounds.
+Intent fills follow the same rule for every intent:
+
+| Token | Light mode | Dark mode | When to use |
+|---|---|---|---|
+| `--bq-ui--{intent}` | `{intent}` | `{intent}` — Endava uses `{intent}-bright` for info, success, warning, and danger | Solid fill. Pair with `--bq-text--on-{intent}`. |
+| `--bq-ui--{intent}-alt` | `{intent}-light` | `{intent}-dark` | Subtle tint for badges, alerts, and selected rows. Pair with `--bq-text--{intent}`. |
+
+`{intent}` is one of `brand`, `accent`, `info`, `success`, `warning`, or `danger`.
+
+### Text
+
+Use text tokens for all typographic content — headings, body copy, labels, captions. Never apply a raw hex value to text.
+
+<Color variant="compact">
+  <Color.Item name="--bq-text--primary" value={{ light: "var(--bq-neutral-800)", dark: "var(--bq-neutral-100)" }} />
+  <Color.Item name="--bq-text--secondary" value={{ light: "var(--bq-neutral-600)", dark: "var(--bq-neutral-400)" }} />
+  <Color.Item name="--bq-text--inverse" value={{ light: "var(--bq-neutral-50)", dark: "var(--bq-neutral-800)" }} />
+  <Color.Item name="--bq-text--brand" value={{ light: "var(--bq-brand-strong)", dark: "var(--bq-brand-bright)" }} />
+  <Color.Item name="--bq-text--accent" value={{ light: "var(--bq-accent-strong)", dark: "var(--bq-accent-bright)" }} />
+  <Color.Item name="--bq-text--info" value={{ light: "var(--bq-info-strong)", dark: "var(--bq-info-bright)" }} />
+  <Color.Item name="--bq-text--success" value={{ light: "var(--bq-success-strong)", dark: "var(--bq-success-bright)" }} />
+  <Color.Item name="--bq-text--warning" value={{ light: "var(--bq-warning-strong)", dark: "var(--bq-warning-bright)" }} />
+  <Color.Item name="--bq-text--danger" value={{ light: "var(--bq-danger-strong)", dark: "var(--bq-danger-bright)" }} />
+</Color>
+
+| Token | BEEQ light | BEEQ dark | Endava light | Endava dark | When to use |
+|---|---|---|---|---|---|
+| `--bq-text--primary` | `neutral-800` | `neutral-100` | `neutral-950` | `white` | Headings, body copy, labels |
+| `--bq-text--secondary` | `neutral-600` | `neutral-400` | `neutral-700` | `neutral-400` | Supporting text, captions, placeholders |
+| `--bq-text--inverse` | `neutral-50` | `neutral-800` | `white` | `neutral-950` | Text on `--bq-ui--inverse` and `--bq-background--inverse` |
+| `--bq-text--{intent}` | `{intent}-strong` | `{intent}-bright` | `{intent}-strong` | `{intent}-bright` | Branded links, feedback messages, intent labels |
+| `--bq-text--alt` | `white` | `white` | `white` | `white` | **Deprecated.** Use `--bq-text--on-{intent}` for content on solid fills. |
+
+### On-color text
+
+On-color tokens set the text and icon color on a solid intent fill. Each one is tuned to its `--bq-ui--{intent}` fill — white on dark fills, `--bq-black` on light fills — so the pair stays legible at rest, on hover, and when active.
+
+<Color variant="compact">
+  <Color.Item name="--bq-text--on-brand" value="var(--bq-white)" />
+  <Color.Item name="--bq-text--on-accent" value="var(--bq-white)" />
+  <Color.Item name="--bq-text--on-info" value="var(--bq-white)" />
+  <Color.Item name="--bq-text--on-success" value="var(--bq-black)" />
+  <Color.Item name="--bq-text--on-warning" value="var(--bq-black)" />
+  <Color.Item name="--bq-text--on-danger" value="var(--bq-white)" />
+</Color>
+
+| Token | BEEQ light | BEEQ dark | Endava light | Endava dark | Pairs with |
+|---|---|---|---|---|---|
+| `--bq-text--on-brand` | `white` | `white` | `white` | `white` | `--bq-ui--brand` |
+| `--bq-text--on-accent` | `white` | `white` | `white` | `white` | `--bq-ui--accent` |
+| `--bq-text--on-info` | `white` | `white` | `white` | `black` | `--bq-ui--info` |
+| `--bq-text--on-success` | `black` | `black` | `white` | `black` | `--bq-ui--success` |
+| `--bq-text--on-warning` | `black` | `black` | `black` | `black` | `--bq-ui--warning` |
+| `--bq-text--on-danger` | `white` | `white` | `white` | `black` | `--bq-ui--danger` |
+
+<Warning>
+  Treat a fill and its on-color as a pair. If you override `--bq-ui--{intent}` or `--bq-{intent}`, check `--bq-text--on-{intent}` against the new fill and override it too when needed.
+</Warning>
+
+### Icons
+
+Use icon tokens for SVG fills. Pair each icon token with the text token of the same context — for example, `--bq-icon--danger` alongside `--bq-text--danger`. Icons need **3:1** against their surface.
+
+<Color variant="compact">
+  <Color.Item name="--bq-icon--primary" value={{ light: "var(--bq-neutral-800)", dark: "var(--bq-neutral-100)" }} />
+  <Color.Item name="--bq-icon--secondary" value={{ light: "var(--bq-neutral-600)", dark: "var(--bq-neutral-400)" }} />
+  <Color.Item name="--bq-icon--inverse" value={{ light: "var(--bq-neutral-50)", dark: "var(--bq-neutral-800)" }} />
+  <Color.Item name="--bq-icon--brand" value={{ light: "var(--bq-brand-strong)", dark: "var(--bq-brand-bright)" }} />
+  <Color.Item name="--bq-icon--accent" value={{ light: "var(--bq-accent-strong)", dark: "var(--bq-accent-bright)" }} />
+  <Color.Item name="--bq-icon--info" value={{ light: "var(--bq-info-strong)", dark: "var(--bq-info-bright)" }} />
+  <Color.Item name="--bq-icon--success" value={{ light: "var(--bq-success-strong)", dark: "var(--bq-success-bright)" }} />
+  <Color.Item name="--bq-icon--warning" value={{ light: "var(--bq-warning-strong)", dark: "var(--bq-warning-bright)" }} />
+  <Color.Item name="--bq-icon--danger" value={{ light: "var(--bq-danger-strong)", dark: "var(--bq-danger-bright)" }} />
+</Color>
+
+| Token | BEEQ light | BEEQ dark | Endava light | Endava dark | When to use |
+|---|---|---|---|---|---|
+| `--bq-icon--primary` | `neutral-800` | `neutral-100` | `neutral-950` | `white` | Default icon fill |
+| `--bq-icon--secondary` | `neutral-600` | `neutral-400` | `neutral-700` | `neutral-400` | Subdued icons |
+| `--bq-icon--inverse` | `neutral-50` | `neutral-800` | `white` | `neutral-950` | Icons on inverted surfaces |
+| `--bq-icon--{intent}` | `{intent}-strong` | `{intent}-bright` | `{intent}-strong` | `{intent}-bright` | Brand and feedback icons |
+| `--bq-icon--alt` | `white` | `white` | `white` | `white` | **Deprecated.** Use `--bq-text--on-{intent}` for icons on solid fills. |
 
 ### Stroke
 
@@ -205,74 +405,93 @@ Use stroke tokens for borders, dividers, and outlines.
   <Color.Item name="--bq-stroke--secondary" value={{ light: "var(--bq-neutral-600)", dark: "var(--bq-neutral-700)" }} />
   <Color.Item name="--bq-stroke--tertiary" value={{ light: "var(--bq-neutral-900)", dark: "var(--bq-neutral-400)" }} />
   <Color.Item name="--bq-stroke--inverse" value={{ light: "var(--bq-white)", dark: "var(--bq-neutral-950)" }} />
-  <Color.Item name="--bq-stroke--brand" value="var(--bq-brand)" />
-  <Color.Item name="--bq-stroke--success" value="var(--bq-success)" />
-  <Color.Item name="--bq-stroke--warning" value="var(--bq-warning)" />
-  <Color.Item name="--bq-stroke--danger" value="var(--bq-danger)" />
+  <Color.Item name="--bq-stroke--alt" value={{ light: "var(--bq-neutral-50)", dark: "var(--bq-neutral-1000)" }} />
+  <Color.Item name="--bq-stroke--brand" value={{ light: "var(--bq-brand-strong)", dark: "var(--bq-brand-bright)" }} />
+  <Color.Item name="--bq-stroke--brand-alt" value={{ light: "var(--bq-brand-light)", dark: "var(--bq-brand-dark)" }} />
+  <Color.Item name="--bq-stroke--accent" value={{ light: "var(--bq-accent-strong)", dark: "var(--bq-accent-bright)" }} />
+  <Color.Item name="--bq-stroke--info" value={{ light: "var(--bq-info-strong)", dark: "var(--bq-info-bright)" }} />
+  <Color.Item name="--bq-stroke--success" value={{ light: "var(--bq-success-strong)", dark: "var(--bq-success-bright)" }} />
+  <Color.Item name="--bq-stroke--warning" value={{ light: "var(--bq-warning-strong)", dark: "var(--bq-warning-bright)" }} />
+  <Color.Item name="--bq-stroke--danger" value={{ light: "var(--bq-danger-strong)", dark: "var(--bq-danger-bright)" }} />
 </Color>
 
-| Token | Light primitive | Dark primitive | When to use |
-|---|---|---|---|
-| `--bq-stroke--primary` | `var(--bq-neutral-200)` | `var(--bq-neutral-900)` | Default borders, dividers, separators |
-| `--bq-stroke--secondary` | `var(--bq-neutral-600)` | `var(--bq-neutral-700)` | Emphasis borders, selected outlines |
-| `--bq-stroke--tertiary` | `var(--bq-neutral-900)` | `var(--bq-neutral-400)` | High-contrast borders |
-| `--bq-stroke--inverse` | `var(--bq-white)` | `var(--bq-neutral-950)` | Borders on inverted or dark surfaces |
-| `--bq-stroke--brand` | `var(--bq-brand)` | `var(--bq-brand)` | Focus rings, brand-highlighted outlines |
-| `--bq-stroke--success` | `var(--bq-success)` | `var(--bq-success)` | Success state borders, valid field outlines |
-| `--bq-stroke--warning` | `var(--bq-warning)` | `var(--bq-warning)` | Warning state borders |
-| `--bq-stroke--danger` | `var(--bq-danger)` | `var(--bq-danger)` | Error state borders, invalid field outlines |
+| Token | BEEQ light | BEEQ dark | Endava light | Endava dark | When to use |
+|---|---|---|---|---|---|
+| `--bq-stroke--primary` | `neutral-200` | `neutral-900` | `neutral-200` | `neutral-800` | Decorative dividers and separators |
+| `--bq-stroke--secondary` | `neutral-600` | `neutral-700` | `neutral-400` | `neutral-600` | Subtle or disabled borders |
+| `--bq-stroke--tertiary` | `neutral-900` | `neutral-400` | `neutral-950` | `white` | Interactive control borders — inputs, checkboxes, radios |
+| `--bq-stroke--inverse` | `white` | `neutral-950` | `white` | `neutral-950` | Borders on inverted surfaces |
+| `--bq-stroke--alt` | `neutral-50` | `neutral-1000` | `neutral-100` | `neutral-900` | Subtle borders on alternative surfaces |
+| `--bq-stroke--brand-alt` | `brand-light` | `brand-dark` | `brand-light` | `brand-dark` | Low-emphasis brand borders, such as around `--bq-ui--brand-alt` |
+| `--bq-stroke--{intent}` | `{intent}-strong` | `{intent}-bright` | `{intent}-strong` | `{intent}-bright` | Selected, valid, warning, and invalid borders |
 
-### Text
+### States
 
-Use text tokens for all typographic content — headings, body copy, labels, captions. Never apply a raw hex value to text.
+State tokens drive hover, pressed, and focus feedback. They're mode roles, so they follow the active theme and mode.
 
-<Color variant="compact">
-  <Color.Item name="--bq-text--primary" value={{ light: "var(--bq-neutral-800)", dark: "var(--bq-neutral-100)" }} />
-  <Color.Item name="--bq-text--secondary" value={{ light: "var(--bq-neutral-600)", dark: "var(--bq-neutral-400)" }} />
-  <Color.Item name="--bq-text--inverse" value={{ light: "var(--bq-neutral-50)", dark: "var(--bq-neutral-800)" }} />
-  <Color.Item name="--bq-text--brand" value="var(--bq-brand)" />
-  <Color.Item name="--bq-text--success" value="var(--bq-success)" />
-  <Color.Item name="--bq-text--warning" value="var(--bq-warning)" />
-  <Color.Item name="--bq-text--danger" value="var(--bq-danger)" />
-  <Color.Item name="--bq-text--info" value="var(--bq-brand)" />
-</Color>
+| Token | Value | When to use |
+|---|---|---|
+| `--bq-hover` | `#444546` | Mixing base for hover states — never painted directly |
+| `--bq-active` | `#1f2026` | Mixing base for pressed states — never painted directly |
+| `--bq-focus` | `brand-strong` (light), `brand-bright` (dark) | Keyboard focus outlines |
 
-| Token | Light primitive | Dark primitive | When to use |
-|---|---|---|---|
-| `--bq-text--primary` | `var(--bq-neutral-800)` | `var(--bq-neutral-100)` | Main headings, body copy, labels |
-| `--bq-text--secondary` | `var(--bq-neutral-600)` | `var(--bq-neutral-400)` | Supporting text, captions, placeholders |
-| `--bq-text--inverse` | `var(--bq-neutral-50)` | `var(--bq-neutral-800)` | Text on dark/inverted backgrounds |
-| `--bq-text--brand` | `var(--bq-brand)` | `var(--bq-brand)` | Branded links, highlighted labels |
-| `--bq-text--success` | `var(--bq-success)` | `var(--bq-success)` | Confirmation messages, positive feedback |
-| `--bq-text--warning` | `var(--bq-warning)` | `var(--bq-warning)` | Caution text, in-progress states |
-| `--bq-text--danger` | `var(--bq-danger)` | `var(--bq-danger)` | Error messages, destructive confirmations |
-| `--bq-text--info` | `var(--bq-brand)` | `var(--bq-brand)` | Informational callouts |
+Hover and active colors are derived where they're used, by mixing the rest color with the state base at 20%:
 
-### Icons
+```css
+.my-action:hover {
+  background-color: color-mix(in srgb, var(--bq-ui--brand), var(--bq-hover) 20%);
+}
 
-Use icon tokens for SVG fills. Pair each icon token with the text or background token of the same semantic context — e.g. use `--bq-icon--danger` alongside `--bq-text--danger`.
+.my-action:active {
+  background-color: color-mix(in srgb, var(--bq-ui--brand), var(--bq-active) 20%);
+}
+```
 
-<Color variant="compact">
-  <Color.Item name="--bq-icon--primary" value={{ light: "var(--bq-neutral-800)", dark: "var(--bq-neutral-100)" }} />
-  <Color.Item name="--bq-icon--secondary" value={{ light: "var(--bq-neutral-600)", dark: "var(--bq-neutral-400)" }} />
-  <Color.Item name="--bq-icon--inverse" value={{ light: "var(--bq-neutral-50)", dark: "var(--bq-neutral-800)" }} />
-  <Color.Item name="--bq-icon--brand" value="var(--bq-brand)" />
-  <Color.Item name="--bq-icon--success" value="var(--bq-success)" />
-  <Color.Item name="--bq-icon--warning" value="var(--bq-warning)" />
-  <Color.Item name="--bq-icon--danger" value="var(--bq-danger)" />
-  <Color.Item name="--bq-icon--info" value="var(--bq-brand)" />
-</Color>
+BEEQ components work the same way: component variables hold the rest color, and the stylesheet applies the mix. Override the rest color and the hover and active states follow. A `*-hover` component variable only exists when the hover state starts from a different color than the rest state — for example, `--bq-option--background-hover` defaults to `--bq-ui--secondary` — and it holds that base role, not a pre-mixed value.
 
-| Token | Light primitive | Dark primitive | When to use |
-|---|---|---|---|
-| `--bq-icon--primary` | `var(--bq-neutral-800)` | `var(--bq-neutral-100)` | Default icon fill |
-| `--bq-icon--secondary` | `var(--bq-neutral-600)` | `var(--bq-neutral-400)` | Subdued icons, decorative marks |
-| `--bq-icon--inverse` | `var(--bq-neutral-50)` | `var(--bq-neutral-800)` | Icons on dark/inverted surfaces |
-| `--bq-icon--brand` | `var(--bq-brand)` | `var(--bq-brand)` | Brand-highlighted icons |
-| `--bq-icon--success` | `var(--bq-success)` | `var(--bq-success)` | Success state icons |
-| `--bq-icon--warning` | `var(--bq-warning)` | `var(--bq-warning)` | Warning state icons |
-| `--bq-icon--danger` | `var(--bq-danger)` | `var(--bq-danger)` | Danger/error state icons |
-| `--bq-icon--info` | `var(--bq-brand)` | `var(--bq-brand)` | Informational icons |
+---
+
+## Usage rules
+
+Every family has one job. Pairing tokens from the same row keeps contrast within the tested ranges.
+
+| Family | Use it for | Pair it with |
+|---|---|---|
+| `--bq-background--*` | Page and container surfaces | `--bq-text--primary`, `--bq-text--secondary`, `--bq-text--{intent}`, and the matching icon tokens |
+| `--bq-ui--*` | Component fills | Solid `--bq-ui--{intent}` → `--bq-text--on-{intent}`. Tint `--bq-ui--{intent}-alt` → `--bq-text--{intent}`, `--bq-icon--{intent}`, `--bq-stroke--{intent}`. `--bq-ui--inverse` → `--bq-text--inverse`. |
+| `--bq-text--*` | Typography | `--bq-text--{intent}` only on neutral surfaces (`primary`, `secondary`) or the matching `-alt` tint — never on a solid fill |
+| `--bq-text--on-*` | Text and icons on a solid intent fill | Its own `--bq-ui--{intent}` only. Change both together. |
+| `--bq-icon--*` | SVG fills | The same surfaces as text. Needs 3:1. |
+| `--bq-stroke--*` | Borders and outlines | `tertiary` for interactive control boundaries (3:1). `primary` is decorative only. `secondary` is for subtle or disabled borders. |
+| `--bq-hover`, `--bq-active` | State mixing | `color-mix()` with a rest color only |
+| `--bq-focus` | Focus outlines | Any surface. Override it on its own when your brand color is too light to read as an outline. |
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mb-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-up" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+
+    - Use mode roles for all component and layout styling
+    - Put `--bq-text--on-{intent}` on solid `--bq-ui--{intent}` fills
+    - Use `--bq-text--{intent}` on neutral surfaces and `-alt` tints
+    - Use data colors (`data-01` → `data-12`) for all chart series
+    - Check every custom color pair for contrast, including hover and active
+  </Card>
+  <Card>
+    <span className="flex items-center mb-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-down" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+
+    - Hard-code hex values in component styles — always use a token
+    - Put intent text (`--bq-text--brand`) on a solid intent fill
+    - Use the brand color as a large background surface; it creates visual overload
+    - Apply feedback colors (success, warning, danger) for decoration or branding
+    - Rely on color alone to communicate state or meaning
+  </Card>
+</CardGroup>
 
 ---
 
@@ -280,7 +499,7 @@ Use icon tokens for SVG fills. Pair each icon token with the text or background 
 
 ### CSS custom properties
 
-Every token is a native CSS custom property. Apply semantic tokens directly to any element:
+Every token is a native CSS custom property. Apply mode roles directly to any element:
 
 ```css
 .card {
@@ -294,12 +513,13 @@ Every token is a native CSS custom property. Apply semantic tokens directly to a
   color: var(--bq-text--success);
 }
 
-.icon--danger {
-  fill: var(--bq-icon--danger);
+.tag--brand {
+  background-color: var(--bq-ui--brand);
+  color: var(--bq-text--on-brand);
 }
 ```
 
-Primitive values are equally accessible when you need a specific scale step — for example, building a gradient or a custom illustration:
+Primitive values are available when you need a specific scale step — for example, building a gradient or a custom illustration:
 
 ```css
 .hero-gradient {
@@ -313,7 +533,7 @@ Primitive values are equally accessible when you need a specific scale step — 
 
 ### Tailwind CSS
 
-Add `@beeq/tailwindcss` to your project to use BEEQ's semantic tokens as Tailwind utility classes.
+Add `@beeq/tailwindcss` to your project to use BEEQ's mode roles as Tailwind utility classes.
 
 **Tailwind v3** — add it as a preset in `tailwind.config.ts`:
 
@@ -339,31 +559,32 @@ export default {
 @plugin "@beeq/tailwindcss";
 ```
 
-Once set up, all semantic tokens are available as utility classes:
+Once set up, all mode roles are available as utility classes:
 
 | Category | Tailwind prefix | Example class |
 |---|---|---|
 | Background | `bg-` | `bg-primary`, `bg-brand`, `bg-inverse` |
-| Text | `text-` | `text-primary`, `text-secondary`, `text-danger` |
-| Border | `border-` | `border-primary`, `border-brand`, `border-danger` |
+| Text | `text-` | `text-primary`, `text-secondary`, `text-danger`, `text-info` |
+| On-color text | `text-on-*` | `text-on-brand`, `text-on-success`, `text-on-danger` |
+| Border | `border-` | `border-tertiary`, `border-brand`, `border-brand-alt` |
 | Icon fill | `fill-` | `fill-primary`, `fill-brand`, `fill-success` |
-| UI fill | `bg-ui-*` | `bg-ui-brand`, `bg-ui-success`, `bg-ui-danger-alt` |
+| UI fill | `bg-ui-*` | `bg-ui-brand`, `bg-ui-info`, `bg-ui-danger-alt` |
 | Data fill | `bg-data-*` | `bg-data-01`, `bg-data-05` |
 
 Primitive hues are also available as standard Tailwind color utilities:
 
 ```html
-<!-- Semantic tokens (recommended) -->
+<!-- Mode roles (recommended) -->
 <div class="bg-primary text-primary border border-primary">…</div>
 <p class="text-secondary">Supporting text</p>
 <span class="text-danger">Error message</span>
 
-<!-- Brand badge using semantic tokens -->
-<span class="bg-ui-brand text-alt rounded-full px-s py-xs2 text-s font-semibold">
+<!-- Brand badge: solid fill + its on-color -->
+<span class="bg-ui-brand text-on-brand rounded-full px-s py-xs2 text-s font-semibold">
   New
 </span>
 
-<!-- Success state -->
+<!-- Success state: tint + intent text -->
 <div class="bg-ui-success-alt border border-success text-success rounded-s p-m">
   Changes saved successfully.
 </div>
@@ -372,38 +593,7 @@ Primitive hues are also available as standard Tailwind color utilities:
 <span class="bg-iris-100 text-iris-800">Custom highlight</span>
 ```
 
-To apply a custom brand, override the CSS custom properties in your stylesheet — the utility classes resolve to whatever the CSS variables point to. See [Overriding tokens — CSS](#overriding-tokens-—-css) in the Theming section below.
-
----
-
-## Color guidelines
-
-<CardGroup cols={2}>
-  <Card>
-    <span className="flex items-center mb-2 text-lg font-medium" role="heading">
-      <Icon className="mr-2" icon="thumbs-up" iconType="solid" size={20} color="var(--bq-stroke--success)" />
-      Do
-    </span>
-
-    - Use semantic tokens for all component and layout styling
-    - Apply `--bq-background--brand` to primary action surfaces
-    - Use system tokens (`--bq-text--danger`, `--bq-ui--success`) for feedback states
-    - Use data colors (`data-01` → `data-12`) for all chart series
-    - Test every custom color combination for sufficient contrast
-  </Card>
-  <Card>
-    <span className="flex items-center mb-2 text-lg font-medium" role="heading">
-      <Icon className="mr-2" icon="thumbs-down" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
-      Don't
-    </span>
-
-    - Hard-code hex values in component styles — always use a token
-    - Use the brand color as a large background surface; it creates visual overload
-    - Apply system colors (success, warning, danger) for decoration or branding
-    - Mix more than 4–5 hues in a single view
-    - Rely on color alone to communicate state or meaning
-  </Card>
-</CardGroup>
+To apply a custom brand, override the CSS custom properties in your stylesheet — the utility classes resolve to whatever the CSS variables point to. See [Theming and customization](#theming-and-customization) below.
 
 ---
 
@@ -411,25 +601,38 @@ To apply a custom brand, override the CSS custom properties in your stylesheet �
 
 Color alone must never be the only way information is communicated. Always pair color with text labels, icons, or patterns.
 
-BEEQ semantic tokens are designed to meet **WCAG 2.1 Level AA** contrast requirements when used as documented:
+BEEQ's mode roles meet **WCAG 2.1 Level AA** contrast when you pair them as described in [Usage rules](#usage-rules). An automated contrast test resolves every pair below in all four combinations — BEEQ and Endava, light and dark — and fails the build if a pair drops under its minimum.
 
-| Token pair | Use context | Contrast ratio |
+| Foreground | Surfaces | Minimum |
 |---|---|---|
-| `--bq-text--primary` on `--bq-background--primary` | Body text, headings | ≥ 7:1 (AAA) |
-| `--bq-text--secondary` on `--bq-background--primary` | Supporting text, labels | ≥ 4.5:1 (AA) |
-| `--bq-text--inverse` on `--bq-background--inverse` | Inverted surfaces | ≥ 7:1 (AAA) |
-| `--bq-text--brand` on `--bq-background--primary` | Large text, UI labels only | ≥ 3:1 |
-| `--bq-text--danger` on `--bq-background--primary` | Error text | ≥ 4.5:1 (AA) |
+| `--bq-text--primary`, `--bq-text--secondary` | `--bq-background--primary`, `--bq-background--secondary`, `--bq-ui--primary`, `--bq-ui--secondary` | 4.5:1 |
+| `--bq-text--{intent}` | The four neutral surfaces above and `--bq-ui--{intent}-alt` | 4.5:1 |
+| `--bq-text--inverse` | `--bq-ui--inverse`, `--bq-background--inverse` | 4.5:1 |
+| `--bq-text--on-{intent}` | `--bq-ui--{intent}` at rest, hover, and active | 4.5:1 |
+| `--bq-icon--primary`, `--bq-icon--secondary`, `--bq-icon--{intent}`, `--bq-stroke--tertiary`, `--bq-stroke--{intent}`, `--bq-focus` | `--bq-background--primary`, `--bq-ui--primary` | 3:1 |
+| `--bq-ui--tertiary` | `--bq-ui--primary` | 3:1 |
+
+Some pairs are deliberately outside these guarantees:
+
+- `--bq-stroke--primary` is decorative and `--bq-stroke--secondary` marks subtle or disabled borders, so neither carries the 3:1 non-text requirement. Use `--bq-stroke--tertiary` for borders that identify an interactive control.
+- In the Endava theme, `--bq-text--secondary` is only legible on `primary` and `secondary` surfaces. Don't place it on `--bq-background--tertiary` or `--bq-background--alt`.
 
 <Warning>
-  `--bq-text--brand` on white does not meet AA for small body text. Use it only for large text (18px+ or 14px+ bold) or non-text UI elements.
+  **Endava brand fills are a large-text exception.** White on Endava Red Orange (`#FF5640`) is **3.15:1**, so `--bq-text--on-brand` and `--bq-text--on-accent` meet AA only for large text (24px, or 18.66px bold) and non-text UI. Keep labels on Endava brand fills large, or darken the fill for your app:
+
+  ```css
+  :root[bq-theme="endava"] {
+    --bq-ui--brand: var(--bq-brand-strong);
+    --bq-ui--accent: var(--bq-accent-strong);
+  }
+  ```
+
+  With `--bq-brand-strong` (`#C33600`), white text reaches 5.46:1 at rest, and more on hover and active.
 </Warning>
 
 <Tip>
-  Verify custom color pairings with the [WebAIM Contrast Checker](https://webaim.org/resources/contrastchecker/) or the [APCA Contrast Calculator](https://www.myndex.com/APCA/) before shipping. The `mint a11y` CLI command can also flag contrast issues in your documentation automatically.
+  Verify custom color pairings with the [WebAIM Contrast Checker](https://webaim.org/resources/contrastchecker/) or the [APCA Contrast Calculator](https://www.myndex.com/APCA/) before shipping. For solid fills, check the hover and active mixes too.
 </Tip>
-
-When customizing a theme, ensure the full semantic token set is re-validated against WCAG 2.1 AA. Changing a single primitive alias can affect dozens of tokens simultaneously.
 
 ---
 
@@ -439,45 +642,32 @@ When customizing a theme, ensure the full semantic token set is re-validated aga
   **Designers:** need to build a custom palette for a client project before applying it in Figma? See [Building your color palette](/getting-started/for-designers#building-your-color-palette).
 </Note>
 
-All BEEQ components read colors from CSS custom properties. Overriding those properties is the **one universal mechanism** for applying a custom brand — no library modifications needed, and it works regardless of your styling tool.
+All BEEQ components read colors from CSS custom properties. Overriding those properties is the **one universal mechanism** for applying a custom brand — no library modifications needed, and it works regardless of your styling tool. BEEQ declares its theme and mode tokens inside `:where()`, so they have zero specificity and any plain selector in your stylesheet wins.
 
-If your project also uses Tailwind, adding `@beeq/tailwindcss` makes your own utility classes (`bg-brand`, `text-primary`, etc.) resolve to the same tokens. The two approaches are independent and complementary — the Tailwind integration does not replace CSS overrides, it builds on top of them.
-
-### Overriding tokens — CSS
-
-Set your brand values in your own stylesheet. Every BEEQ component picks them up automatically:
+Rebrand at the root layer and set the whole intent scale, plus the on-color for the new fill:
 
 ```css
 /* your-theme.css */
 :root {
-  --bq-brand: #0ea5e9;
   --bq-brand-light: #e0f2fe;
+  --bq-brand: #0369a1;
   --bq-brand-dark: #0c4a6e;
+  --bq-brand-strong: #0369a1;
+  --bq-brand-bright: #7dd3fc;
 
-  /* Adjust system colors if needed */
-  --bq-success: #16a34a;
-  --bq-success-light: #dcfce7;
-  --bq-success-dark: #14532d;
+  --bq-text--on-brand: var(--bq-white);
 }
 ```
 
-Scope overrides to a specific selector for themed sections or multi-brand layouts:
+If your project also uses Tailwind, adding `@beeq/tailwindcss` makes your own utility classes (`bg-brand`, `text-primary`, etc.) resolve to the same tokens. The two approaches are independent and complementary — the Tailwind integration does not replace CSS overrides, it builds on top of them.
 
-```css
-[data-theme="acme"] {
-  --bq-brand: #f97316;
-  --bq-brand-light: #fff7ed;
-  --bq-brand-dark: #431407;
-}
-```
-
-This works identically whether you use plain CSS, Sass, PostCSS, or Tailwind's `@layer`.
+For per-mode, per-section, and per-component overrides, and a contrast checklist for custom brands, see [Custom theme](/theming/custom-theme).
 
 ---
 
 ## Primitive color scales
 
-The complete raw hue scales — grouped by color, not by meaning. Each step is available as `var(--bq-{hue}-{scale})`. Use these when tracing which raw value backs a semantic token or when defining a custom theme.
+The complete raw hue scales — grouped by color, not by meaning. Each step is available as `var(--bq-{hue}-{scale})`. Use these when tracing which raw value backs a root semantic or when defining a custom theme.
 
 <Color variant="table">
   <Color.Row title="Blue">
@@ -685,6 +875,61 @@ The complete raw hue scales — grouped by color, not by meaning. Each step is a
     <Color.Item name="yellow-800" value="var(--bq-yellow-800)" />
     <Color.Item name="yellow-900" value="var(--bq-yellow-900)" />
     <Color.Item name="yellow-1000" value="var(--bq-yellow-1000)" />
+  </Color.Row>
+</Color>
+
+The Endava theme draws from its own `--bq-endava-*` primitives, named after the Endava brand palette. Some scales only include the steps the theme uses.
+
+<Color variant="table">
+  <Color.Row title="Endava Orange">
+    <Color.Item name="endava-orange-100" value="var(--bq-endava-orange-100)" />
+    <Color.Item name="endava-orange-200" value="var(--bq-endava-orange-200)" />
+    <Color.Item name="endava-orange-300" value="var(--bq-endava-orange-300)" />
+    <Color.Item name="endava-orange-400" value="var(--bq-endava-orange-400)" />
+    <Color.Item name="endava-orange-500" value="var(--bq-endava-orange-500)" />
+    <Color.Item name="endava-orange-600" value="var(--bq-endava-orange-600)" />
+    <Color.Item name="endava-orange-700" value="var(--bq-endava-orange-700)" />
+    <Color.Item name="endava-orange-800" value="var(--bq-endava-orange-800)" />
+    <Color.Item name="endava-orange-900" value="var(--bq-endava-orange-900)" />
+    <Color.Item name="endava-orange-1000" value="var(--bq-endava-orange-1000)" />
+  </Color.Row>
+  <Color.Row title="Endava Grey">
+    <Color.Item name="endava-grey-50" value="var(--bq-endava-grey-50)" />
+    <Color.Item name="endava-grey-100" value="var(--bq-endava-grey-100)" />
+    <Color.Item name="endava-grey-200" value="var(--bq-endava-grey-200)" />
+    <Color.Item name="endava-grey-300" value="var(--bq-endava-grey-300)" />
+    <Color.Item name="endava-grey-400" value="var(--bq-endava-grey-400)" />
+    <Color.Item name="endava-grey-500" value="var(--bq-endava-grey-500)" />
+    <Color.Item name="endava-grey-600" value="var(--bq-endava-grey-600)" />
+    <Color.Item name="endava-grey-700" value="var(--bq-endava-grey-700)" />
+    <Color.Item name="endava-grey-800" value="var(--bq-endava-grey-800)" />
+    <Color.Item name="endava-grey-900" value="var(--bq-endava-grey-900)" />
+    <Color.Item name="endava-grey-950" value="var(--bq-endava-grey-950)" />
+    <Color.Item name="endava-grey-1000" value="var(--bq-endava-grey-1000)" />
+  </Color.Row>
+  <Color.Row title="Endava Positive">
+    <Color.Item name="endava-positive-100" value="var(--bq-endava-positive-100)" />
+    <Color.Item name="endava-positive-400" value="var(--bq-endava-positive-400)" />
+    <Color.Item name="endava-positive-500" value="var(--bq-endava-positive-500)" />
+    <Color.Item name="endava-positive-600" value="var(--bq-endava-positive-600)" />
+    <Color.Item name="endava-positive-800" value="var(--bq-endava-positive-800)" />
+    <Color.Item name="endava-positive-1000" value="var(--bq-endava-positive-1000)" />
+  </Color.Row>
+  <Color.Row title="Endava Negative">
+    <Color.Item name="endava-negative-100" value="var(--bq-endava-negative-100)" />
+    <Color.Item name="endava-negative-300" value="var(--bq-endava-negative-300)" />
+    <Color.Item name="endava-negative-400" value="var(--bq-endava-negative-400)" />
+    <Color.Item name="endava-negative-500" value="var(--bq-endava-negative-500)" />
+    <Color.Item name="endava-negative-800" value="var(--bq-endava-negative-800)" />
+    <Color.Item name="endava-negative-1000" value="var(--bq-endava-negative-1000)" />
+  </Color.Row>
+  <Color.Row title="Endava Warning">
+    <Color.Item name="endava-warning-100" value="var(--bq-endava-warning-100)" />
+    <Color.Item name="endava-warning-400" value="var(--bq-endava-warning-400)" />
+    <Color.Item name="endava-warning-500" value="var(--bq-endava-warning-500)" />
+    <Color.Item name="endava-warning-700" value="var(--bq-endava-warning-700)" />
+    <Color.Item name="endava-warning-800" value="var(--bq-endava-warning-800)" />
+    <Color.Item name="endava-warning-1000" value="var(--bq-endava-warning-1000)" />
   </Color.Row>
 </Color>
 
