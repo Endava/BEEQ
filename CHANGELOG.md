@@ -1,3 +1,17 @@
+## 1.16.2 (2026-10-12)
+
+### Bug Fixes 🐞
+
+- **Date picker:** close other open panels when opening ([#1841](https://github.com/Endava/BEEQ/pull/1841))
+- **Input number:** preserve empty numeric values and accept zero ([#1840](https://github.com/Endava/BEEQ/pull/1840))
+- **Option:** make option padding clickable ([#1842](https://github.com/Endava/BEEQ/pull/1842))
+- **Textarea:** sync visible value with programmatic changes ([#1839](https://github.com/Endava/BEEQ/pull/1839))
+- **Tooltip:** restore tracking for moving hosts ([#1838](https://github.com/Endava/BEEQ/pull/1838))
+
+### ❤️ Thank You
+
+- Dabiel Gonzalez-Ramos @dgonzalezr
+
 ## 1.16.1 (2026-10-06)
 
 ### Bug Fixes 🐞
