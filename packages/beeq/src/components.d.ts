@@ -1943,6 +1943,9 @@ export namespace Components {
      * @cssprop --bq-progress-bar--height - The progress bars height
      * @cssprop --bq-progress-bar--indeterminateWidth - The progress bar width when its indeterminate
      * @cssprop --bq-progress-bar--indicatorColor - The progress bar color (inside the track area)
+     * @cssprop --bq-progress-bar--indicatorColor-error - The progress bar color (inside the track area) when `type="error"`
+     * @cssprop --bq-progress-bar--label-color - The label text color
+     * @cssprop --bq-progress-bar--label-color-error - The label text color when `type="error"`
      * @cssprop --bq-progress-bar--trackColor - The progress bar track area (the grey one)
      */
     interface BqProgress {
@@ -4802,6 +4805,9 @@ declare global {
      * @cssprop --bq-progress-bar--height - The progress bars height
      * @cssprop --bq-progress-bar--indeterminateWidth - The progress bar width when its indeterminate
      * @cssprop --bq-progress-bar--indicatorColor - The progress bar color (inside the track area)
+     * @cssprop --bq-progress-bar--indicatorColor-error - The progress bar color (inside the track area) when `type="error"`
+     * @cssprop --bq-progress-bar--label-color - The label text color
+     * @cssprop --bq-progress-bar--label-color-error - The label text color when `type="error"`
      * @cssprop --bq-progress-bar--trackColor - The progress bar track area (the grey one)
      */
     interface HTMLBqProgressElement extends Components.BqProgress, HTMLStencilElement {
@@ -7822,6 +7828,9 @@ declare namespace LocalJSX {
      * @cssprop --bq-progress-bar--height - The progress bars height
      * @cssprop --bq-progress-bar--indeterminateWidth - The progress bar width when its indeterminate
      * @cssprop --bq-progress-bar--indicatorColor - The progress bar color (inside the track area)
+     * @cssprop --bq-progress-bar--indicatorColor-error - The progress bar color (inside the track area) when `type="error"`
+     * @cssprop --bq-progress-bar--label-color - The label text color
+     * @cssprop --bq-progress-bar--label-color-error - The label text color when `type="error"`
      * @cssprop --bq-progress-bar--trackColor - The progress bar track area (the grey one)
      */
     interface BqProgress {
@@ -10819,6 +10828,9 @@ declare module "@stencil/core" {
              * @cssprop --bq-progress-bar--height - The progress bars height
              * @cssprop --bq-progress-bar--indeterminateWidth - The progress bar width when its indeterminate
              * @cssprop --bq-progress-bar--indicatorColor - The progress bar color (inside the track area)
+             * @cssprop --bq-progress-bar--indicatorColor-error - The progress bar color (inside the track area) when `type="error"`
+             * @cssprop --bq-progress-bar--label-color - The label text color
+             * @cssprop --bq-progress-bar--label-color-error - The label text color when `type="error"`
              * @cssprop --bq-progress-bar--trackColor - The progress bar track area (the grey one)
              */
             "bq-progress": LocalJSX.IntrinsicElements["bq-progress"] & JSXBase.HTMLAttributes<HTMLBqProgressElement>;
