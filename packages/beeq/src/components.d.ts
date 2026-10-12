@@ -2451,6 +2451,9 @@ export namespace Components {
      * @cssprop --bq-slider--thumb-size - Slider hover thumb size
      * @cssprop --bq-slider--progress-color - Slider progress background color
      * @cssprop --bq-slider--trackarea-color - Slider track background color
+     * @cssprop --bq-slider--thumb-background - Slider thumb background color
+     * @cssprop --bq-slider--thumb-border-color - Slider thumb border color
+     * @cssprop --bq-slider--label-color - Slider value indicator (label) text color
      */
     interface BqSlider {
         /**
@@ -5050,6 +5053,9 @@ declare global {
      * @cssprop --bq-slider--thumb-size - Slider hover thumb size
      * @cssprop --bq-slider--progress-color - Slider progress background color
      * @cssprop --bq-slider--trackarea-color - Slider track background color
+     * @cssprop --bq-slider--thumb-background - Slider thumb background color
+     * @cssprop --bq-slider--thumb-border-color - Slider thumb border color
+     * @cssprop --bq-slider--label-color - Slider value indicator (label) text color
      */
     interface HTMLBqSliderElement extends Components.BqSlider, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqSliderElementEventMap>(type: K, listener: (this: HTMLBqSliderElement, ev: BqSliderCustomEvent<HTMLBqSliderElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -8247,6 +8253,9 @@ declare namespace LocalJSX {
      * @cssprop --bq-slider--thumb-size - Slider hover thumb size
      * @cssprop --bq-slider--progress-color - Slider progress background color
      * @cssprop --bq-slider--trackarea-color - Slider track background color
+     * @cssprop --bq-slider--thumb-background - Slider thumb background color
+     * @cssprop --bq-slider--thumb-border-color - Slider thumb border color
+     * @cssprop --bq-slider--label-color - Slider value indicator (label) text color
      */
     interface BqSlider {
         /**
@@ -10848,6 +10857,9 @@ declare module "@stencil/core" {
              * @cssprop --bq-slider--thumb-size - Slider hover thumb size
              * @cssprop --bq-slider--progress-color - Slider progress background color
              * @cssprop --bq-slider--trackarea-color - Slider track background color
+             * @cssprop --bq-slider--thumb-background - Slider thumb background color
+             * @cssprop --bq-slider--thumb-border-color - Slider thumb border color
+             * @cssprop --bq-slider--label-color - Slider value indicator (label) text color
              */
             "bq-slider": LocalJSX.IntrinsicElements["bq-slider"] & JSXBase.HTMLAttributes<HTMLBqSliderElement>;
             /**
