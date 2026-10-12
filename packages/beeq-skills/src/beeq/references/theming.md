@@ -123,7 +123,7 @@ Set the brand intent once, on `:root`: all five steps and the text that sits on 
   --bq-brand-light: color-mix(in srgb, var(--bq-brand) 15%, white);
   --bq-brand-dark: color-mix(in srgb, var(--bq-brand) 60%, black);
   --bq-brand-strong: color-mix(in srgb, var(--bq-brand) 80%, black);
-  --bq-brand-bright: color-mix(in srgb, var(--bq-brand) 50%, white);
+  --bq-brand-bright: color-mix(in srgb, var(--bq-brand) 35%, white);
   --bq-text--on-brand: var(--bq-white);
 }
 ```
@@ -131,7 +131,7 @@ Set the brand intent once, on `:root`: all five steps and the text that sits on 
 This file is the one place hex values belong. Before you ship a new brand, check:
 
 - `--bq-brand-strong` reaches 4.5:1 on `--bq-background--primary`, `--bq-ui--secondary`, and `--bq-brand-light`.
-- `--bq-brand-bright` reaches 4.5:1 on the dark-mode surfaces and on `--bq-brand-dark`.
+- `--bq-brand-bright` reaches 4.5:1 and APCA Lc 60 on the dark-mode surfaces and on `--bq-brand-dark`.
 - `--bq-text--on-brand` reaches 4.5:1 on `--bq-brand`, and on its hover and pressed mixes.
 
 ### A custom theme
@@ -146,7 +146,7 @@ For a full identity (font, brand, surfaces), create one theme file and scope it 
   --bq-brand: var(--bq-blue-600);
   --bq-brand-dark: var(--bq-blue-1000);
   --bq-brand-strong: var(--bq-blue-700);
-  --bq-brand-bright: var(--bq-blue-400);
+  --bq-brand-bright: var(--bq-blue-300);
   --bq-text--on-brand: var(--bq-white);
 }
 ```

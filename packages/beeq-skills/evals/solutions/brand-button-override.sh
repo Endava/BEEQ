@@ -9,7 +9,7 @@ cat > src/brand.css <<'CSS'
   --bq-brand-light: color-mix(in srgb, var(--bq-brand) 15%, white);
   --bq-brand-dark: color-mix(in srgb, var(--bq-brand) 60%, black);
   --bq-brand-strong: color-mix(in srgb, var(--bq-brand) 80%, black);
-  --bq-brand-bright: color-mix(in srgb, var(--bq-brand) 50%, white);
+  --bq-brand-bright: color-mix(in srgb, var(--bq-brand) 35%, white);
   --bq-text--on-brand: var(--bq-white);
 }
 CSS
