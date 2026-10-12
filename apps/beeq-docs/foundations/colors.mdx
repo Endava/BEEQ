@@ -72,42 +72,42 @@ The base step is tuned to be recognizable as a fill, not to be readable as text.
       <Color.Row title="Brand">
         <Color.Item name="brand-light" value="#e9f0ff" />
         <Color.Item name="brand" value="#4f46e5" />
-        <Color.Item name="brand-dark" value="#181545" />
+        <Color.Item name="brand-dark" value="#1f1b59" />
         <Color.Item name="brand-strong" value="#4f46e5" />
         <Color.Item name="brand-bright" value="#b2c0fe" />
       </Color.Row>
       <Color.Row title="Accent">
         <Color.Item name="accent-light" value="#efebf8" />
         <Color.Item name="accent" value="#6538be" />
-        <Color.Item name="accent-dark" value="#140b26" />
+        <Color.Item name="accent-dark" value="#1e1139" />
         <Color.Item name="accent-strong" value="#6538be" />
         <Color.Item name="accent-bright" value="#c1afe5" />
       </Color.Row>
       <Color.Row title="Info">
         <Color.Item name="info-light" value="#e7f0fd" />
         <Color.Item name="info" value="#156eeb" />
-        <Color.Item name="info-dark" value="#04162f" />
+        <Color.Item name="info-dark" value="#062147" />
         <Color.Item name="info-strong" value="#1158bc" />
         <Color.Item name="info-bright" value="#a1c5f7" />
       </Color.Row>
       <Color.Row title="Success">
         <Color.Item name="success-light" value="#e5f7f5" />
         <Color.Item name="success" value="#00b49d" />
-        <Color.Item name="success-dark" value="#00241f" />
+        <Color.Item name="success-dark" value="#00362f" />
         <Color.Item name="success-strong" value="#006c5e" />
         <Color.Item name="success-bright" value="#66d2c4" />
       </Color.Row>
       <Color.Row title="Warning">
         <Color.Item name="warning-light" value="#fbf4ec" />
         <Color.Item name="warning" value="#d99048" />
-        <Color.Item name="warning-dark" value="#2b1d0e" />
+        <Color.Item name="warning-dark" value="#412c16" />
         <Color.Item name="warning-strong" value="#82562b" />
         <Color.Item name="warning-bright" value="#e8bc91" />
       </Color.Row>
       <Color.Row title="Danger">
         <Color.Item name="danger-light" value="#fce7ea" />
         <Color.Item name="danger" value="#e1172f" />
-        <Color.Item name="danger-dark" value="#2d0509" />
+        <Color.Item name="danger-dark" value="#44070e" />
         <Color.Item name="danger-strong" value="#b41226" />
         <Color.Item name="danger-bright" value="#f3a2ac" />
       </Color.Row>
@@ -263,23 +263,23 @@ Use background tokens for page surfaces, cards, modals, drawers, and overlays.
 
 <Color variant="compact">
   <Color.Item name="--bq-background--primary" value={{ light: "var(--bq-white)", dark: "var(--bq-neutral-1000)" }} />
-  <Color.Item name="--bq-background--secondary" value={{ light: "var(--bq-neutral-100)", dark: "var(--bq-neutral-950)" }} />
+  <Color.Item name="--bq-background--secondary" value={{ light: "var(--bq-neutral-100)", dark: "var(--bq-neutral-900)" }} />
   <Color.Item name="--bq-background--tertiary" value={{ light: "var(--bq-neutral-200)", dark: "var(--bq-neutral-800)" }} />
   <Color.Item name="--bq-background--alt" value={{ light: "var(--bq-neutral-300)", dark: "var(--bq-neutral-700)" }} />
   <Color.Item name="--bq-background--inverse" value={{ light: "var(--bq-neutral-900)", dark: "var(--bq-neutral-100)" }} />
   <Color.Item name="--bq-background--brand" value="var(--bq-brand)" />
-  <Color.Item name="--bq-background--overlay" value="var(--bq-neutral-900)" />
+  <Color.Item name="--bq-background--overlay" value={{ light: "var(--bq-neutral-900)", dark: "var(--bq-neutral-1000)" }} />
 </Color>
 
 | Token | BEEQ light | BEEQ dark | Endava light | Endava dark | When to use |
 |---|---|---|---|---|---|
 | `--bq-background--primary` | `white` | `neutral-1000` | `white` | `neutral-950` | Main page canvas |
-| `--bq-background--secondary` | `neutral-100` | `neutral-950` | `neutral-100` | `neutral-900` | Panels, sidebars, elevated cards |
+| `--bq-background--secondary` | `neutral-100` | `neutral-900` | `neutral-100` | `neutral-900` | Panels, sidebars, elevated cards |
 | `--bq-background--tertiary` | `neutral-200` | `neutral-800` | `neutral-300` | `neutral-800` | Nested sections within cards |
 | `--bq-background--alt` | `neutral-300` | `neutral-700` | `neutral-200` | `neutral-700` | Alternative surfaces |
 | `--bq-background--inverse` | `neutral-900` | `neutral-100` | `neutral-950` | `white` | Inverted banners and surfaces |
 | `--bq-background--brand` | `brand` | `brand` | `brand` | `brand` | Brand callouts and surfaces |
-| `--bq-background--overlay` | `neutral-900` | `neutral-900` | `neutral-950` | `neutral-1000` | Modal scrims and drawer overlays, applied with 60% opacity |
+| `--bq-background--overlay` | `neutral-900` | `neutral-1000` | `neutral-950` | `neutral-1000` | Modal scrims and drawer overlays, applied with 60% opacity |
 
 ### UI elements
 
@@ -287,10 +287,10 @@ Use UI tokens for component fills — buttons, toggles, chips, selects, badges, 
 
 <Color variant="compact">
   <Color.Item name="--bq-ui--primary" value={{ light: "var(--bq-white)", dark: "var(--bq-neutral-900)" }} />
-  <Color.Item name="--bq-ui--secondary" value={{ light: "var(--bq-neutral-100)", dark: "var(--bq-neutral-950)" }} />
+  <Color.Item name="--bq-ui--secondary" value={{ light: "var(--bq-neutral-100)", dark: "var(--bq-neutral-800)" }} />
   <Color.Item name="--bq-ui--tertiary" value="var(--bq-neutral-500)" />
   <Color.Item name="--bq-ui--inverse" value={{ light: "var(--bq-neutral-900)", dark: "var(--bq-neutral-100)" }} />
-  <Color.Item name="--bq-ui--alt" value={{ light: "var(--bq-neutral-50)", dark: "var(--bq-neutral-950)" }} />
+  <Color.Item name="--bq-ui--alt" value={{ light: "var(--bq-neutral-50)", dark: "var(--bq-neutral-800)" }} />
   <Color.Item name="--bq-ui--brand" value="var(--bq-brand)" />
   <Color.Item name="--bq-ui--brand-alt" value={{ light: "var(--bq-brand-light)", dark: "var(--bq-brand-dark)" }} />
   <Color.Item name="--bq-ui--accent" value="var(--bq-accent)" />
@@ -308,10 +308,10 @@ Use UI tokens for component fills — buttons, toggles, chips, selects, badges, 
 | Token | BEEQ light | BEEQ dark | Endava light | Endava dark | When to use |
 |---|---|---|---|---|---|
 | `--bq-ui--primary` | `white` | `neutral-900` | `white` | `neutral-950` | Default component fill — inputs, cards |
-| `--bq-ui--secondary` | `neutral-100` | `neutral-950` | `neutral-100` | `neutral-900` | Secondary fill — toggles, hover bases |
+| `--bq-ui--secondary` | `neutral-100` | `neutral-800` | `neutral-100` | `neutral-900` | Secondary fill — toggles, hover bases |
 | `--bq-ui--tertiary` | `neutral-500` | `neutral-500` | `neutral-500` | `neutral-500` | Unselected control tracks and indicators |
 | `--bq-ui--inverse` | `neutral-900` | `neutral-100` | `neutral-950` | `white` | Inverted fills such as tooltips |
-| `--bq-ui--alt` | `neutral-50` | `neutral-950` | `neutral-50` | `neutral-900` | Subtle alternative fill |
+| `--bq-ui--alt` | `neutral-50` | `neutral-800` | `neutral-50` | `neutral-900` | Subtle alternative fill |
 
 Intent fills follow the same rule for every intent:
 
@@ -401,7 +401,7 @@ Use icon tokens for SVG fills. Pair each icon token with the text token of the s
 Use stroke tokens for borders, dividers, and outlines.
 
 <Color variant="compact">
-  <Color.Item name="--bq-stroke--primary" value={{ light: "var(--bq-neutral-200)", dark: "var(--bq-neutral-900)" }} />
+  <Color.Item name="--bq-stroke--primary" value={{ light: "var(--bq-neutral-200)", dark: "var(--bq-neutral-800)" }} />
   <Color.Item name="--bq-stroke--secondary" value={{ light: "var(--bq-neutral-600)", dark: "var(--bq-neutral-700)" }} />
   <Color.Item name="--bq-stroke--tertiary" value={{ light: "var(--bq-neutral-900)", dark: "var(--bq-neutral-400)" }} />
   <Color.Item name="--bq-stroke--inverse" value={{ light: "var(--bq-white)", dark: "var(--bq-neutral-950)" }} />
@@ -417,7 +417,7 @@ Use stroke tokens for borders, dividers, and outlines.
 
 | Token | BEEQ light | BEEQ dark | Endava light | Endava dark | When to use |
 |---|---|---|---|---|---|
-| `--bq-stroke--primary` | `neutral-200` | `neutral-900` | `neutral-200` | `neutral-800` | Decorative dividers and separators |
+| `--bq-stroke--primary` | `neutral-200` | `neutral-800` | `neutral-200` | `neutral-800` | Decorative dividers and separators |
 | `--bq-stroke--secondary` | `neutral-600` | `neutral-700` | `neutral-400` | `neutral-600` | Subtle or disabled borders |
 | `--bq-stroke--tertiary` | `neutral-900` | `neutral-400` | `neutral-950` | `white` | Interactive control borders — inputs, checkboxes, radios |
 | `--bq-stroke--inverse` | `white` | `neutral-950` | `white` | `neutral-950` | Borders on inverted surfaces |
@@ -615,6 +615,7 @@ BEEQ's mode roles meet **WCAG 2.1 Level AA** contrast when you pair them as desc
 Some pairs are deliberately outside these guarantees:
 
 - `--bq-stroke--primary` is decorative and `--bq-stroke--secondary` marks subtle or disabled borders, so neither carries the 3:1 non-text requirement. Use `--bq-stroke--tertiary` for borders that identify an interactive control.
+- In the BEEQ theme, dark-mode `--bq-text--accent` and `--bq-text--danger` reach APCA Lc 59.5 and 59.8 on `--bq-ui--secondary`, just under Lc 60. They still meet about 7:1.
 - In the Endava theme, `--bq-text--secondary` is only legible on `primary` and `secondary` surfaces. Don't place it on `--bq-background--tertiary` or `--bq-background--alt`.
 - In the Endava theme, dark-mode `--bq-text--brand` and `--bq-text--accent` are Red Orange (`#FF5640`), as on [endava.com](https://www.endava.com). They meet 4.5:1 only on `--bq-background--primary` and `--bq-ui--primary`. On `--bq-background--secondary`, `--bq-ui--secondary` (3.40:1), and the brand tint `--bq-ui--brand-alt` (3.77:1), they meet AA for large text (24px, or 18.66px bold) only. If you need AA for regular text there, override `--bq-brand-bright` with `#FF8979`.
 - In the Endava theme, dark-mode `--bq-text--success` (`#3DD17B`) and `--bq-text--warning` (`#F99C11`) use the brand guide's dark signal colours. They meet 4.5:1 on every dark surface but reach only APCA Lc 51–57. For APCA Lc 60, override `--bq-success-bright` with `#6EDC9C` and `--bq-warning-bright` with `#FBBA58`.
@@ -682,6 +683,7 @@ The complete raw hue scales — grouped by color, not by meaning. Each step is a
     <Color.Item name="blue-700" value="var(--bq-blue-700)" />
     <Color.Item name="blue-800" value="var(--bq-blue-800)" />
     <Color.Item name="blue-900" value="var(--bq-blue-900)" />
+    <Color.Item name="blue-950" value="var(--bq-blue-950)" />
     <Color.Item name="blue-1000" value="var(--bq-blue-1000)" />
   </Color.Row>
   <Color.Row title="Corai">
@@ -718,6 +720,7 @@ The complete raw hue scales — grouped by color, not by meaning. Each step is a
     <Color.Item name="gold-700" value="var(--bq-gold-700)" />
     <Color.Item name="gold-800" value="var(--bq-gold-800)" />
     <Color.Item name="gold-900" value="var(--bq-gold-900)" />
+    <Color.Item name="gold-950" value="var(--bq-gold-950)" />
     <Color.Item name="gold-1000" value="var(--bq-gold-1000)" />
   </Color.Row>
   <Color.Row title="Green">
@@ -768,6 +771,7 @@ The complete raw hue scales — grouped by color, not by meaning. Each step is a
     <Color.Item name="iris-700" value="var(--bq-iris-700)" />
     <Color.Item name="iris-800" value="var(--bq-iris-800)" />
     <Color.Item name="iris-900" value="var(--bq-iris-900)" />
+    <Color.Item name="iris-950" value="var(--bq-iris-950)" />
     <Color.Item name="iris-1000" value="var(--bq-iris-1000)" />
   </Color.Row>
   <Color.Row title="Lime">
@@ -816,6 +820,7 @@ The complete raw hue scales — grouped by color, not by meaning. Each step is a
     <Color.Item name="purple-700" value="var(--bq-purple-700)" />
     <Color.Item name="purple-800" value="var(--bq-purple-800)" />
     <Color.Item name="purple-900" value="var(--bq-purple-900)" />
+    <Color.Item name="purple-950" value="var(--bq-purple-950)" />
     <Color.Item name="purple-1000" value="var(--bq-purple-1000)" />
   </Color.Row>
   <Color.Row title="Red">
@@ -828,6 +833,7 @@ The complete raw hue scales — grouped by color, not by meaning. Each step is a
     <Color.Item name="red-700" value="var(--bq-red-700)" />
     <Color.Item name="red-800" value="var(--bq-red-800)" />
     <Color.Item name="red-900" value="var(--bq-red-900)" />
+    <Color.Item name="red-950" value="var(--bq-red-950)" />
     <Color.Item name="red-1000" value="var(--bq-red-1000)" />
   </Color.Row>
   <Color.Row title="Sky">
@@ -852,6 +858,7 @@ The complete raw hue scales — grouped by color, not by meaning. Each step is a
     <Color.Item name="teal-700" value="var(--bq-teal-700)" />
     <Color.Item name="teal-800" value="var(--bq-teal-800)" />
     <Color.Item name="teal-900" value="var(--bq-teal-900)" />
+    <Color.Item name="teal-950" value="var(--bq-teal-950)" />
     <Color.Item name="teal-1000" value="var(--bq-teal-1000)" />
   </Color.Row>
   <Color.Row title="Volcano">
