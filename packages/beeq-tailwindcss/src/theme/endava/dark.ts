@@ -1,3 +1,5 @@
+import { DARK_BOX_SHADOWS } from '../shadows';
+
 /**
  * Endava theme, dark mode roles.
  * Neutrals are the Endava Solid Blue shades (`--bq-neutral-950` is Solid Blue).
@@ -93,6 +95,10 @@ export const EndavaDarkTheme = {
   'bq-ui--warning-alt': 'var(--bq-warning-dark)',
   'bq-ui--danger': 'var(--bq-danger-bright)',
   'bq-ui--danger-alt': 'var(--bq-danger-dark)',
+  /* -------------------------------------------------------------------------- */
+  /*                                Box shadows                                 */
+  /* -------------------------------------------------------------------------- */
+  ...DARK_BOX_SHADOWS,
   /* -------------------------------------------------------------------------- */
   /*                                   States                                   */
   /* -------------------------------------------------------------------------- */

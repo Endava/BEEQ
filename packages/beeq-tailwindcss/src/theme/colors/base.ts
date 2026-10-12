@@ -13,6 +13,7 @@ export const CSS_COLORS = {
   '--bq-blue-700': '#1158bc',
   '--bq-blue-800': '#0d428d',
   '--bq-blue-900': '#082c5e',
+  '--bq-blue-950': '#062147', // Dark-mode intent tint (900/1000 midpoint)
   '--bq-blue-1000': '#04162f',
   /** Corai */
   '--bq-corai-100': '#fff2f2',
@@ -46,6 +47,7 @@ export const CSS_COLORS = {
   '--bq-gold-700': '#ae733a',
   '--bq-gold-800': '#82562b',
   '--bq-gold-900': '#573a1d',
+  '--bq-gold-950': '#412c16', // Dark-mode intent tint (900/1000 midpoint)
   '--bq-gold-1000': '#2b1d0e',
   /** Green */
   '--bq-green-100': '#e8f8ef',
@@ -92,6 +94,7 @@ export const CSS_COLORS = {
   '--bq-iris-700': '#413abd',
   '--bq-iris-800': '#332e95',
   '--bq-iris-900': '#26216d',
+  '--bq-iris-950': '#1f1b59', // Dark-mode intent tint (900/1000 midpoint)
   '--bq-iris-1000': '#181545',
   /** Lime */
   '--bq-lime-100': '#f5fae8',
@@ -139,6 +142,7 @@ export const CSS_COLORS = {
   '--bq-purple-700': '#512d98',
   '--bq-purple-800': '#3d2272',
   '--bq-purple-900': '#28164c',
+  '--bq-purple-950': '#1e1139', // Dark-mode intent tint (900/1000 midpoint)
   '--bq-purple-1000': '#140b26',
   /** Red */
   '--bq-red-100': '#fce7ea',
@@ -150,6 +154,7 @@ export const CSS_COLORS = {
   '--bq-red-700': '#b41226',
   '--bq-red-800': '#870e1c',
   '--bq-red-900': '#5a0913',
+  '--bq-red-950': '#44070e', // Dark-mode intent tint (900/1000 midpoint)
   '--bq-red-1000': '#2d0509',
   /** Sky */
   '--bq-sky-100': '#eff4fb',
@@ -172,6 +177,7 @@ export const CSS_COLORS = {
   '--bq-teal-700': '#00907e',
   '--bq-teal-800': '#006c5e',
   '--bq-teal-900': '#00483f',
+  '--bq-teal-950': '#00362f', // Dark-mode intent tint (900/1000 midpoint)
   '--bq-teal-1000': '#00241f',
   /** Volcano */
   '--bq-volcano-100': '#feede7',

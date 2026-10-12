@@ -1,3 +1,5 @@
+import { LIGHT_BOX_SHADOWS } from '../shadows';
+
 export const DefaultRootTheme = {
   'bq-white': '#ffffff',
   'bq-black': '#060708',
@@ -26,37 +28,37 @@ export const DefaultRootTheme = {
   // Brand
   'bq-brand-light': 'var(--bq-iris-100)',
   'bq-brand': 'var(--bq-iris-600)',
-  'bq-brand-dark': 'var(--bq-iris-1000)',
+  'bq-brand-dark': 'var(--bq-iris-950)',
   'bq-brand-strong': 'var(--bq-iris-600)',
   'bq-brand-bright': 'var(--bq-iris-300)',
   // Accent
   'bq-accent-light': 'var(--bq-purple-100)',
   'bq-accent': 'var(--bq-purple-600)',
-  'bq-accent-dark': 'var(--bq-purple-1000)',
+  'bq-accent-dark': 'var(--bq-purple-950)',
   'bq-accent-strong': 'var(--bq-purple-600)',
   'bq-accent-bright': 'var(--bq-purple-300)',
   // Success
   'bq-success-light': 'var(--bq-teal-100)',
   'bq-success': 'var(--bq-teal-600)',
-  'bq-success-dark': 'var(--bq-teal-1000)',
+  'bq-success-dark': 'var(--bq-teal-950)',
   'bq-success-strong': 'var(--bq-teal-800)',
   'bq-success-bright': 'var(--bq-teal-400)',
   // Danger
   'bq-danger-light': 'var(--bq-red-100)',
   'bq-danger': 'var(--bq-red-600)',
-  'bq-danger-dark': 'var(--bq-red-1000)',
+  'bq-danger-dark': 'var(--bq-red-950)',
   'bq-danger-strong': 'var(--bq-red-700)',
   'bq-danger-bright': 'var(--bq-red-300)',
   // Warning
   'bq-warning-light': 'var(--bq-gold-100)',
   'bq-warning': 'var(--bq-gold-600)',
-  'bq-warning-dark': 'var(--bq-gold-1000)',
+  'bq-warning-dark': 'var(--bq-gold-950)',
   'bq-warning-strong': 'var(--bq-gold-800)',
   'bq-warning-bright': 'var(--bq-gold-400)',
   // Info
   'bq-info-light': 'var(--bq-blue-100)',
   'bq-info': 'var(--bq-blue-600)',
-  'bq-info-dark': 'var(--bq-blue-1000)',
+  'bq-info-dark': 'var(--bq-blue-950)',
   'bq-info-strong': 'var(--bq-blue-700)',
   'bq-info-bright': 'var(--bq-blue-300)',
   // Data
@@ -80,11 +82,8 @@ export const DefaultRootTheme = {
   'bq-radius--m': '0.75rem', // 12px
   'bq-radius--l': '1.5rem', // 24px
   'bq-radius--full': '9999px',
-  // Box Shadow
-  'bq-box-shadow--xs': '0 2px 0 rgba(0, 0, 0, 0.016)',
-  'bq-box-shadow--s': '0 8px 24px rgba(0, 0, 0, 0.04)',
-  'bq-box-shadow--m': '0 10px 48px -16px rgba(0, 0, 0, 0.12)',
-  'bq-box-shadow--l': '0 20px 58px -16px rgba(0, 0, 0, 0.16)',
+  // Box Shadow (light values; mode objects override them)
+  ...LIGHT_BOX_SHADOWS,
   // Fonts
   'bq-font-family': "'Outfit', sans-serif",
   'bq-font-size--xs': '0.75rem', // 12px

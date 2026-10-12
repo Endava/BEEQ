@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { CSS_COLORS, DECLARATIVE_COLORS } from '../colors';
 import { DefaultDarkTheme, DefaultLightTheme, DefaultRootTheme } from '../default';
 import { EndavaDarkTheme, EndavaLightTheme, EndavaRootTheme } from '../endava';
+import { DARK_BOX_SHADOWS, LIGHT_BOX_SHADOWS } from '../shadows';
 import {
   apcaContrast,
   contrastRatio,
@@ -43,6 +44,9 @@ const NON_TEXT_MIN = 3;
 /** APCA Lc 60: minimum for regular-weight content text; WCAG 2 overrates light text on dark surfaces */
 const APCA_TEXT_MIN = 60;
 
+/** Elevation shadows live in the mode objects but are not colors; they are checked separately */
+const isShadowToken = (key: string) => key.startsWith('--bq-box-shadow--');
+
 const buildCombo = (
   name: ComboName,
   theme: Combo['theme'],
@@ -54,7 +58,9 @@ const buildCombo = (
   theme,
   mode,
   root: mergeTokenMaps(...roots),
-  modeTokens: mergeTokenMaps(modeObjects[modeObjects.length - 1]),
+  modeTokens: Object.fromEntries(
+    Object.entries(mergeTokenMaps(modeObjects[modeObjects.length - 1])).filter(([key]) => !isShadowToken(key)),
+  ),
   resolver: createResolver(
     mergeTokenMaps(CSS_COLORS, roots[0], modeObjects[0], ...roots.slice(1), ...modeObjects.slice(1)),
   ),
@@ -173,13 +179,18 @@ type ApcaException = { combo: ComboName; fg: string; min: number; reason: string
 const ENDAVA_DARK_SIGNAL_TEXT =
   'Endava brand fidelity: the brand guide reserves Positive #3DD17B and Warning #F99C11 for dark backgrounds and forbids other values. Both pass WCAG 4.5:1 on every dark surface, but reach only APCA Lc 51–57 (above the Lc 45 large-text floor). Decided with the user and documented in the Endava deviation log.';
 
+const DEFAULT_DARK_RAISED_SURFACE_TEXT =
+  'Default dark raised surfaces (`ui--secondary`, grey-800) are lifted for visible layering. Accent (purple-300) and danger (red-300) text reach Lc 59.5 and 59.8 there (about 7:1 WCAG); a lighter 200 tint would wash out the hue.';
+
 const APCA_EXCEPTIONS: ApcaException[] = [
+  { combo: 'default-dark', fg: 'text--accent', min: 59, reason: DEFAULT_DARK_RAISED_SURFACE_TEXT },
+  { combo: 'default-dark', fg: 'text--danger', min: 59, reason: DEFAULT_DARK_RAISED_SURFACE_TEXT },
   { combo: 'endava-dark', fg: 'text--brand', min: 35, reason: ENDAVA_DARK_RED_ORANGE_TEXT },
   { combo: 'endava-dark', fg: 'text--accent', min: 35, reason: ENDAVA_DARK_RED_ORANGE_TEXT },
   { combo: 'endava-dark', fg: 'text--success', min: 50, reason: ENDAVA_DARK_SIGNAL_TEXT },
   { combo: 'endava-dark', fg: 'text--warning', min: 50, reason: ENDAVA_DARK_SIGNAL_TEXT },
 ];
-const EXPECTED_APCA_EXCEPTION_COUNT = 4;
+const EXPECTED_APCA_EXCEPTION_COUNT = 6;
 
 const findApcaException = (combo: ComboName, fg: string) =>
   APCA_EXCEPTIONS.find((entry) => entry.combo === combo && entry.fg === fg);
@@ -535,6 +546,28 @@ describe('mode role parity', () => {
     COMBOS.flatMap(({ name, modeTokens }) => REQUIRED_MODE_ROLES.map((role) => ({ name, role, modeTokens }))),
   )('$name should define $role', ({ role, modeTokens }) => {
     expect(modeTokens[cssVar(role)]).toBeDefined();
+  });
+});
+
+describe('mode box shadows', () => {
+  it.each(COMBOS)('$name should use the $mode shadow set', ({ name, mode }) => {
+    const expected = mode === 'dark' ? DARK_BOX_SHADOWS : LIGHT_BOX_SHADOWS;
+
+    for (const [key, value] of Object.entries(expected)) {
+      expect(MODE_OBJECTS[name][key]).toBe(value);
+    }
+  });
+
+  it('should keep the light shadows as the root fallback', () => {
+    for (const [key, value] of Object.entries(LIGHT_BOX_SHADOWS)) {
+      expect(DefaultRootTheme[key as keyof typeof DefaultRootTheme]).toBe(value);
+    }
+  });
+
+  it('should give dark elevated shadows an edge ring from the decorative stroke', () => {
+    for (const key of ['bq-box-shadow--s', 'bq-box-shadow--m', 'bq-box-shadow--l'] as const) {
+      expect(DARK_BOX_SHADOWS[key]).toMatch(/^0 0 0 1px var\(--bq-stroke--primary\), /);
+    }
   });
 });
 

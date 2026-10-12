@@ -1,3 +1,5 @@
+import { DARK_BOX_SHADOWS } from '../shadows';
+
 /**
  * BEEQ default theme, dark mode roles.
  *
@@ -9,12 +11,12 @@ export const DefaultDarkTheme = {
   /*                             Background colors                              */
   /* -------------------------------------------------------------------------- */
   'bq-background--primary': 'var(--bq-neutral-1000)',
-  'bq-background--secondary': 'var(--bq-neutral-950)',
+  'bq-background--secondary': 'var(--bq-neutral-900)',
   'bq-background--tertiary': 'var(--bq-neutral-800)',
   'bq-background--alt': 'var(--bq-neutral-700)',
   'bq-background--inverse': 'var(--bq-neutral-100)',
   'bq-background--brand': 'var(--bq-brand)',
-  'bq-background--overlay': 'var(--bq-neutral-900)', // with opacity: 60%
+  'bq-background--overlay': 'var(--bq-neutral-1000)', // with opacity: 60%
   /* -------------------------------------------------------------------------- */
   /*                                Icons colors                                */
   /* -------------------------------------------------------------------------- */
@@ -34,7 +36,7 @@ export const DefaultDarkTheme = {
   /*                               Stroke colors                                */
   /* -------------------------------------------------------------------------- */
   /** Neutral */
-  'bq-stroke--primary': 'var(--bq-neutral-900)', // Decorative dividers and separators
+  'bq-stroke--primary': 'var(--bq-neutral-800)', // Decorative dividers and separators
   'bq-stroke--secondary': 'var(--bq-neutral-700)', // Subtle or disabled borders
   'bq-stroke--tertiary': 'var(--bq-neutral-400)', // Interactive control borders (>= 3:1)
   'bq-stroke--inverse': 'var(--bq-neutral-950)',
@@ -74,10 +76,10 @@ export const DefaultDarkTheme = {
   /* -------------------------------------------------------------------------- */
   /** Neutral */
   'bq-ui--primary': 'var(--bq-neutral-900)',
-  'bq-ui--secondary': 'var(--bq-neutral-950)',
+  'bq-ui--secondary': 'var(--bq-neutral-800)',
   'bq-ui--tertiary': 'var(--bq-neutral-500)',
   'bq-ui--inverse': 'var(--bq-neutral-100)',
-  'bq-ui--alt': 'var(--bq-neutral-950)',
+  'bq-ui--alt': 'var(--bq-neutral-800)',
   /** Intents: solid fill and subtle tint (`-alt`) */
   'bq-ui--brand': 'var(--bq-brand)',
   'bq-ui--brand-alt': 'var(--bq-brand-dark)',
@@ -91,6 +93,10 @@ export const DefaultDarkTheme = {
   'bq-ui--warning-alt': 'var(--bq-warning-dark)',
   'bq-ui--danger': 'var(--bq-danger)',
   'bq-ui--danger-alt': 'var(--bq-danger-dark)',
+  /* -------------------------------------------------------------------------- */
+  /*                                Box shadows                                 */
+  /* -------------------------------------------------------------------------- */
+  ...DARK_BOX_SHADOWS,
   /* -------------------------------------------------------------------------- */
   /*                                   States                                   */
   /* -------------------------------------------------------------------------- */
