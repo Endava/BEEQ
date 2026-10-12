@@ -38,7 +38,7 @@ export const EndavaRootTheme = {
   'bq-success': 'var(--bq-endava-positive-600)',
   'bq-success-dark': 'var(--bq-endava-positive-1000)',
   'bq-success-strong': 'var(--bq-endava-positive-800)',
-  'bq-success-bright': 'var(--bq-endava-positive-300)',
+  'bq-success-bright': 'var(--bq-endava-positive-400)', // Guide dark Positive
   // Danger
   'bq-danger-light': 'var(--bq-endava-negative-100)',
   'bq-danger': 'var(--bq-endava-negative-500)',
@@ -50,7 +50,7 @@ export const EndavaRootTheme = {
   'bq-warning': 'var(--bq-endava-warning-400)',
   'bq-warning-dark': 'var(--bq-endava-warning-1000)',
   'bq-warning-strong': 'var(--bq-endava-warning-800)',
-  'bq-warning-bright': 'var(--bq-endava-warning-300)',
+  'bq-warning-bright': 'var(--bq-endava-warning-400)', // Guide dark Warning
   // Info
   'bq-info-light': 'var(--bq-endava-info-100)',
   'bq-info': 'var(--bq-endava-info-600)',

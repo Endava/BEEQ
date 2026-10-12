@@ -170,11 +170,16 @@ const findException = (combo: ComboName, { fg, bg }: Pair) =>
  */
 type ApcaException = { combo: ComboName; fg: string; min: number; reason: string };
 
+const ENDAVA_DARK_SIGNAL_TEXT =
+  'Endava brand fidelity: the brand guide reserves Positive #3DD17B and Warning #F99C11 for dark backgrounds and forbids other values. Both pass WCAG 4.5:1 on every dark surface, but reach only APCA Lc 51–57 (above the Lc 45 large-text floor). Decided with the user and documented in the Endava deviation log.';
+
 const APCA_EXCEPTIONS: ApcaException[] = [
   { combo: 'endava-dark', fg: 'text--brand', min: 35, reason: ENDAVA_DARK_RED_ORANGE_TEXT },
   { combo: 'endava-dark', fg: 'text--accent', min: 35, reason: ENDAVA_DARK_RED_ORANGE_TEXT },
+  { combo: 'endava-dark', fg: 'text--success', min: 50, reason: ENDAVA_DARK_SIGNAL_TEXT },
+  { combo: 'endava-dark', fg: 'text--warning', min: 50, reason: ENDAVA_DARK_SIGNAL_TEXT },
 ];
-const EXPECTED_APCA_EXCEPTION_COUNT = 2;
+const EXPECTED_APCA_EXCEPTION_COUNT = 4;
 
 const findApcaException = (combo: ComboName, fg: string) =>
   APCA_EXCEPTIONS.find((entry) => entry.combo === combo && entry.fg === fg);
@@ -410,15 +415,16 @@ describe('APCA exception allowlist', () => {
     expect(entry.reason.length).toBeGreaterThan(0);
   });
 
-  it.each(APCA_EXCEPTIONS)('$combo: $fg should still need the exception on background--primary', (entry) => {
+  it.each(APCA_EXCEPTIONS)('$combo: $fg should still need the exception on a tested surface', (entry) => {
     const { resolver } = COMBOS.find(({ name }) => name === entry.combo)!;
     const fgHex = resolver.resolve(cssVar(entry.fg));
-    const bgHex = resolver.resolve(cssVar('background--primary'));
+    const lowestLc = Math.min(
+      ...DARK_INTENT_TEXT_PAIRS.filter(({ fg }) => fg === entry.fg).map(({ bg }) =>
+        Math.abs(apcaContrast(fgHex, resolver.resolve(cssVar(bg)))),
+      ),
+    );
 
-    expect(
-      Math.abs(apcaContrast(fgHex, bgHex)),
-      `${entry.fg} reaches Lc ${APCA_TEXT_MIN}, remove the exception`,
-    ).toBeLessThan(APCA_TEXT_MIN);
+    expect(lowestLc, `${entry.fg} reaches Lc ${APCA_TEXT_MIN}, remove the exception`).toBeLessThan(APCA_TEXT_MIN);
   });
 });
 

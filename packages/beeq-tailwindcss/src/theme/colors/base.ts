@@ -235,7 +235,7 @@ export const CSS_COLORS = {
   '--bq-endava-orange-1000': '#423339',
   /** Endava Positive (success): sparse ramp ordered by lightness */
   '--bq-endava-positive-100': '#eaf5ef',
-  '--bq-endava-positive-300': '#6edc9c', // 25% white tint of 400, dark mode text (APCA Lc >= 60)
+  '--bq-endava-positive-300': '#6edc9c', // 25% white tint of 400: optional dark text override for APCA Lc >= 60
   '--bq-endava-positive-400': '#3dd17b',
   '--bq-endava-positive-500': '#2d9c5b',
   '--bq-endava-positive-600': '#26864e',
@@ -243,7 +243,7 @@ export const CSS_COLORS = {
   '--bq-endava-positive-1000': '#1f4943',
   /** Endava Warning: sparse ramp ordered by lightness */
   '--bq-endava-warning-100': '#fdf4e7',
-  '--bq-endava-warning-300': '#fbba58', // 30% white tint of 400, dark mode text (APCA Lc >= 60)
+  '--bq-endava-warning-300': '#fbba58', // 30% white tint of 400: optional dark text override for APCA Lc >= 60
   '--bq-endava-warning-400': '#f99c11',
   '--bq-endava-warning-500': '#eb9410',
   '--bq-endava-warning-700': '#c77905',
