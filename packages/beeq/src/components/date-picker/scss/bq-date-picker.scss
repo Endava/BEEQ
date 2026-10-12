@@ -103,11 +103,11 @@
 
 /* ------------------------------- Validation ------------------------------- */
 
-// Validation states rules:
-// - Idle:     border = stroke-{state}
-// - Hover:    border = color-mix(stroke-{state}, hover 20%)   → border-hover-{state}
-// - Focus:    border = color-mix(stroke-{state}, active 20%)  → border-active-{state}
-//             ring   = stroke-{state}
+// Validation states rules ({state} = --bq-date-picker--border-color-{danger|success|warning}):
+// - Idle:     border = {state}
+// - Hover:    border = color-mix({state}, hover 20%)
+// - Focus:    border = color-mix({state}, active 20%)
+//             ring   = {state}
 %dp-validation-state {
   --bq-date-picker--border-color: var(--bq-date-picker--validation-color);
 
@@ -123,19 +123,19 @@
 }
 
 .bq-date-picker__control.validation-error {
-  --bq-date-picker--validation-color: var(--bq-stroke--danger);
+  --bq-date-picker--validation-color: var(--bq-date-picker--border-color-danger);
 
   @extend %dp-validation-state;
 }
 
 .bq-date-picker__control.validation-success {
-  --bq-date-picker--validation-color: var(--bq-stroke--success);
+  --bq-date-picker--validation-color: var(--bq-date-picker--border-color-success);
 
   @extend %dp-validation-state;
 }
 
 .bq-date-picker__control.validation-warning {
-  --bq-date-picker--validation-color: var(--bq-stroke--warning);
+  --bq-date-picker--validation-color: var(--bq-date-picker--border-color-warning);
 
   @extend %dp-validation-state;
 }

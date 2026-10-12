@@ -806,6 +806,9 @@ export namespace Components {
      * @cssprop --bq-date-picker--border-color - Input border color.
      * @cssprop --bq-date-picker--border-color-disabled - Border color when disabled.
      * @cssprop --bq-date-picker--border-color-focus - Border color on focus.
+     * @cssprop --bq-date-picker--border-color-danger - Border color when the validation status is `error`.
+     * @cssprop --bq-date-picker--border-color-success - Border color when the validation status is `success`.
+     * @cssprop --bq-date-picker--border-color-warning - Border color when the validation status is `warning`.
      * @cssprop --bq-date-picker--border-radius - Input border radius.
      * @cssprop --bq-date-picker--border-style - Border style.
      * @cssprop --bq-date-picker--border-width - Border width.
@@ -4065,6 +4068,9 @@ declare global {
      * @cssprop --bq-date-picker--border-color - Input border color.
      * @cssprop --bq-date-picker--border-color-disabled - Border color when disabled.
      * @cssprop --bq-date-picker--border-color-focus - Border color on focus.
+     * @cssprop --bq-date-picker--border-color-danger - Border color when the validation status is `error`.
+     * @cssprop --bq-date-picker--border-color-success - Border color when the validation status is `success`.
+     * @cssprop --bq-date-picker--border-color-warning - Border color when the validation status is `warning`.
      * @cssprop --bq-date-picker--border-radius - Input border radius.
      * @cssprop --bq-date-picker--border-style - Border style.
      * @cssprop --bq-date-picker--border-width - Border width.
@@ -6526,6 +6532,9 @@ declare namespace LocalJSX {
      * @cssprop --bq-date-picker--border-color - Input border color.
      * @cssprop --bq-date-picker--border-color-disabled - Border color when disabled.
      * @cssprop --bq-date-picker--border-color-focus - Border color on focus.
+     * @cssprop --bq-date-picker--border-color-danger - Border color when the validation status is `error`.
+     * @cssprop --bq-date-picker--border-color-success - Border color when the validation status is `success`.
+     * @cssprop --bq-date-picker--border-color-warning - Border color when the validation status is `warning`.
      * @cssprop --bq-date-picker--border-radius - Input border radius.
      * @cssprop --bq-date-picker--border-style - Border style.
      * @cssprop --bq-date-picker--border-width - Border width.
@@ -10189,6 +10198,9 @@ declare module "@stencil/core" {
              * @cssprop --bq-date-picker--border-color - Input border color.
              * @cssprop --bq-date-picker--border-color-disabled - Border color when disabled.
              * @cssprop --bq-date-picker--border-color-focus - Border color on focus.
+             * @cssprop --bq-date-picker--border-color-danger - Border color when the validation status is `error`.
+             * @cssprop --bq-date-picker--border-color-success - Border color when the validation status is `success`.
+             * @cssprop --bq-date-picker--border-color-warning - Border color when the validation status is `warning`.
              * @cssprop --bq-date-picker--border-radius - Input border radius.
              * @cssprop --bq-date-picker--border-style - Border style.
              * @cssprop --bq-date-picker--border-width - Border width.
