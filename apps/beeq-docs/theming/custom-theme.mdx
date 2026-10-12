@@ -5,7 +5,7 @@ description: This guide walks you through creating and applying a custom theme a
 
 import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 
-To create a custom theme, define your own set of CSS variables that override the base theme variables and declarative colors for both light and dark modes.
+To create a custom theme, override BEEQ's root semantics — the brand, intent, and neutral colors — with your own values. BEEQ's light and dark mode roles already point to those root tokens, so every component picks up your palette in both modes. Override individual mode roles only where your palette needs a different mapping.
 
 <Note>
   Namespace your theme using the `bq-theme` attribute (e.g., `bq-theme="my-custom-theme"`) or a matching CSS class (e.g., `.my-custom-theme`).
@@ -16,8 +16,8 @@ To create a custom theme, define your own set of CSS variables that override the
 ## Step-by-step guide
 
 <Steps>
-  <Step title="Define base theme variables">
-    Create a CSS file for your custom theme (e.g., `custom-theme.css`) and set the base design tokens:
+  <Step title="Define root semantics">
+    Create a CSS file for your custom theme (e.g., `custom-theme.css`) and set the root tokens. Give each intent you change all five steps — see [Intent scale](/foundations/colors#intent-scale) for what each step is used for:
 
     ```css
     [bq-theme="my-custom-theme"],
@@ -25,174 +25,55 @@ To create a custom theme, define your own set of CSS variables that override the
       /* Override font family */
       --bq-font-family: 'Inter', sans-serif;
 
-      /* Define brand colors using any primitive color from the palette */
-      --bq-brand-light: var(--bq-blue-100);
-      --bq-brand:       var(--bq-blue-600);
-      --bq-brand-dark:  var(--bq-blue-1000);
+      /* Brand: tint, fill, dark tint, and the two text-safe steps */
+      --bq-brand-light:  var(--bq-purple-100);
+      --bq-brand:        var(--bq-purple-600);
+      --bq-brand-dark:   var(--bq-purple-1000);
+      --bq-brand-strong: var(--bq-purple-600); /* text, icons, strokes on light surfaces */
+      --bq-brand-bright: var(--bq-purple-400); /* text, icons, strokes on dark surfaces */
 
-      /* Define accent colors */
-      --bq-accent-light: var(--bq-purple-100);
-      --bq-accent:       var(--bq-purple-600);
-      --bq-accent-dark:  var(--bq-purple-1000);
-
-      /* Override neutral scale if needed */
+      /* Override the neutral scale if needed */
       --bq-neutral-50:  var(--bq-grey-50);
       --bq-neutral-100: var(--bq-grey-100);
       /* ... continue with other neutrals ... */
 
-      /* Define semantic colors */
-      --bq-success: var(--bq-teal-600);
-      --bq-danger:  var(--bq-red-600);
-      --bq-warning: var(--bq-gold-600);
-      --bq-info:    var(--bq-blue-600);
-      --bq-focus:   var(--bq-blue-600);
-
-      /* Interactive state overlays */
-      --bq-state--hover:  rgba(0, 0, 0, 0.08);  /* Subtle hover overlay (light mode) */
-      --bq-state--active: rgba(0, 0, 0, 0.12); /* Pressed state overlay (light mode) */
+      /* Repeat the five steps for accent, info, success, warning, or danger
+         to change them. Intents you don't set keep BEEQ's values. */
     }
     ```
 
     <Tip>
-      Override `--bq-state--hover` and `--bq-state--active` for each mode. In dark mode, use light
-      overlays (e.g. `rgba(255, 255, 255, 0.1)`) instead of dark ones.
+      Don't set `--bq-focus` here. Focus is a mode role that defaults to `--bq-brand-strong` in light mode and `--bq-brand-bright` in dark mode, so it follows your brand automatically.
     </Tip>
   </Step>
 
-  <Step title="Define light mode theme">
-    Define the declarative color tokens for the light mode:
+  <Step title="Adjust mode roles (optional)">
+    Override mode roles only where the defaults don't fit your palette. The most common cases are the on-color of a solid fill, the focus color, and neutral surfaces:
 
     ```css
+    /* Light mode */
     [bq-theme="my-custom-theme"]:not([bq-mode]),    /* Default — no mode specified */
     [bq-theme="my-custom-theme"][bq-mode="light"],  /* Explicit light mode (via attributes) */
     .my-custom-theme:not([bq-mode]),                /* Default — no mode (via CSS class) */
     .my-custom-theme.light {                        /* Explicit light mode (via CSS classes) */
-
-      /* Background colors */
-      --bq-background--primary:   var(--bq-white);
-      --bq-background--secondary: var(--bq-neutral-100);
-      --bq-background--tertiary:  var(--bq-neutral-200);
-      --bq-background--alt:       var(--bq-neutral-300);
-      --bq-background--inverse:   var(--bq-neutral-900);
-      --bq-background--brand:     var(--bq-brand);
-      --bq-background--overlay:   var(--bq-neutral-900);
-
-      /* Icon colors */
-      --bq-icon--primary:   var(--bq-neutral-800);
-      --bq-icon--secondary: var(--bq-neutral-600);
-      --bq-icon--inverse:   var(--bq-neutral-50);
-      --bq-icon--brand:     var(--bq-brand);
-      --bq-icon--alt:       var(--bq-white);
-      --bq-icon--info:      var(--bq-info);
-      --bq-icon--success:   var(--bq-success);
-      --bq-icon--warning:   var(--bq-warning);
-      --bq-icon--danger:    var(--bq-danger);
-
-      /* Stroke colors */
-      --bq-stroke--primary:   var(--bq-neutral-200);
-      --bq-stroke--secondary: var(--bq-neutral-600);
-      --bq-stroke--tertiary:  var(--bq-neutral-900);
-      --bq-stroke--inverse:   var(--bq-white);
-      --bq-stroke--brand:     var(--bq-brand);
-      --bq-stroke--alt:       var(--bq-neutral-50);
-      --bq-stroke--success:   var(--bq-success);
-      --bq-stroke--warning:   var(--bq-warning);
-      --bq-stroke--danger:    var(--bq-danger);
-
-      /* Text colors */
-      --bq-text--primary:   var(--bq-neutral-800);
-      --bq-text--secondary: var(--bq-neutral-600);
-      --bq-text--inverse:   var(--bq-neutral-50);
-      --bq-text--brand:     var(--bq-brand);
-      --bq-text--alt:       var(--bq-white);
-      --bq-text--info:      var(--bq-info);
-      --bq-text--success:   var(--bq-success);
-      --bq-text--warning:   var(--bq-warning);
-      --bq-text--danger:    var(--bq-danger);
-
-      /* UI colors */
-      --bq-ui--primary:      var(--bq-white);
-      --bq-ui--secondary:    var(--bq-neutral-100);
-      --bq-ui--tertiary:     var(--bq-neutral-500);
-      --bq-ui--inverse:      var(--bq-neutral-900);
-      --bq-ui--brand:        var(--bq-brand);
-      --bq-ui--brand-alt:    var(--bq-brand-light);
-      --bq-ui--alt:          var(--bq-neutral-50);
-      --bq-ui--success:      var(--bq-success);
-      --bq-ui--success-alt:  var(--bq-success-light);
-      --bq-ui--warning:      var(--bq-warning);
-      --bq-ui--warning-alt:  var(--bq-warning-light);
-      --bq-ui--danger:       var(--bq-danger);
-      --bq-ui--danger-alt:   var(--bq-danger-light);
+      --bq-text--on-brand: var(--bq-white);
+      --bq-focus:          var(--bq-brand-strong);
     }
-    ```
-  </Step>
 
-  <Step title="Define dark mode theme">
-    Define the declarative color tokens for the dark mode:
-
-    ```css
+    /* Dark mode */
     [bq-theme="my-custom-theme"][bq-mode="dark"],  /* Explicit dark mode (via attributes) */
     .my-custom-theme.dark {                        /* Explicit dark mode (via CSS classes) */
-
-      /* Background colors */
-      --bq-background--primary:   var(--bq-neutral-1000);
-      --bq-background--secondary: var(--bq-neutral-950);
-      --bq-background--tertiary:  var(--bq-neutral-800);
-      --bq-background--alt:       var(--bq-neutral-700);
-      --bq-background--inverse:   var(--bq-neutral-600);
-      --bq-background--brand:     var(--bq-brand);
-      --bq-background--overlay:   var(--bq-neutral-900);
-
-      /* Icon colors */
-      --bq-icon--primary:   var(--bq-neutral-100);
-      --bq-icon--secondary: var(--bq-neutral-400);
-      --bq-icon--inverse:   var(--bq-neutral-800);
-      --bq-icon--brand:     var(--bq-brand);
-      --bq-icon--alt:       var(--bq-white);
-      --bq-icon--info:      var(--bq-info);
-      --bq-icon--success:   var(--bq-success);
-      --bq-icon--warning:   var(--bq-warning);
-      --bq-icon--danger:    var(--bq-danger);
-
-      /* Stroke colors */
-      --bq-stroke--primary:   var(--bq-neutral-900);
-      --bq-stroke--secondary: var(--bq-neutral-700);
-      --bq-stroke--tertiary:  var(--bq-neutral-400);
-      --bq-stroke--inverse:   var(--bq-neutral-950);
-      --bq-stroke--brand:     var(--bq-brand);
-      --bq-stroke--alt:       var(--bq-neutral-1000);
-      --bq-stroke--success:   var(--bq-success);
-      --bq-stroke--warning:   var(--bq-warning);
-      --bq-stroke--danger:    var(--bq-danger);
-
-      /* Text colors */
-      --bq-text--primary:   var(--bq-neutral-100);
-      --bq-text--secondary: var(--bq-neutral-400);
-      --bq-text--inverse:   var(--bq-neutral-800);
-      --bq-text--brand:     var(--bq-brand);
-      --bq-text--alt:       var(--bq-white);
-      --bq-text--info:      var(--bq-info);
-      --bq-text--success:   var(--bq-success);
-      --bq-text--warning:   var(--bq-warning);
-      --bq-text--danger:    var(--bq-danger);
-
-      /* UI colors */
-      --bq-ui--primary:      var(--bq-neutral-900);
-      --bq-ui--secondary:    var(--bq-neutral-950);
-      --bq-ui--tertiary:     var(--bq-neutral-700);
-      --bq-ui--inverse:      var(--bq-neutral-100);
-      --bq-ui--brand:        var(--bq-brand);
-      --bq-ui--brand-alt:    var(--bq-brand-dark);
-      --bq-ui--alt:          var(--bq-neutral-950);
-      --bq-ui--success:      var(--bq-success);
-      --bq-ui--success-alt:  var(--bq-success-dark);
-      --bq-ui--warning:      var(--bq-warning);
-      --bq-ui--warning-alt:  var(--bq-warning-dark);
-      --bq-ui--danger:       var(--bq-danger);
-      --bq-ui--danger-alt:   var(--bq-danger-dark);
+      --bq-background--primary: var(--bq-neutral-1000);
+      --bq-text--on-brand:      var(--bq-white);
+      --bq-focus:               var(--bq-brand-bright);
     }
     ```
+
+    The full list of mode roles and their defaults is in [Colors → Mode roles](/foundations/colors#mode-roles). Hover and active colors aren't roles you set per component: BEEQ mixes them from the rest color with `--bq-hover` and `--bq-active`, so they follow your overrides.
+
+    <Warning>
+      BEEQ applies its light mode roles to `[bq-mode="light"]` and `.light`, and to `:root` only when no `bq-theme` (or `bq-theme="beeq"`) is set. With a custom `bq-theme`, always set `bq-mode` as well.
+    </Warning>
   </Step>
 
   <Step title="Apply your custom theme">
@@ -331,8 +212,6 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
       --bq-info: #3b82f6;
       --bq-info-dark: #1e3a8a;
 
-      --bq-focus: #00d9c4;
-
       --bq-white: #ffffff;
       --bq-black: #000000;
 
@@ -354,117 +233,120 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
 
     :host([bq-theme="techflow"]),
     :host(.techflow) {
-
-      --bq-background--primary: #030712;
-      --bq-background--secondary: #0f172a;
-      --bq-background--tertiary: #1f2937;
-      --bq-background--alt: #374151;
-      --bq-background--inverse: #f9fafb;
-      --bq-background--brand: #009b88;
-      --bq-background--overlay: rgba(0, 0, 0, 0.7);
-      --bq-icon--primary: #f3f4f6;
-      --bq-icon--secondary: #9ca3af;
-      --bq-icon--inverse: #1f2937;
-      --bq-icon--brand: #00d9c4;
-      --bq-icon--alt: #ffffff;
-      --bq-icon--info: #60a5fa;
-      --bq-icon--success: #34d399;
-      --bq-icon--warning: #fbbf24;
-      --bq-icon--danger: #f87171;
-      --bq-stroke--primary: #374151;
-      --bq-stroke--secondary: #4b5563;
-      --bq-stroke--tertiary: #9ca3af;
-      --bq-stroke--inverse: #0f172a;
-      --bq-stroke--brand: #00d9c4;
-      --bq-stroke--alt: #1f2937;
-      --bq-stroke--success: #34d399;
-      --bq-stroke--warning: #fbbf24;
-      --bq-stroke--danger: #f87171;
-      --bq-text--primary: #f9fafb;
-      --bq-text--secondary: #9ca3af;
-      --bq-text--inverse: #1f2937;
-      --bq-text--brand: #00d9c4;
-      --bq-text--alt: #ffffff;
-      --bq-text--info: #60a5fa;
-      --bq-text--success: #34d399;
-      --bq-text--warning: #fbbf24;
-      --bq-text--danger: #f87171;
-      --bq-ui--primary: #1f2937;
-      --bq-ui--secondary: #374151;
-      --bq-ui--tertiary: #4b5563;
-      --bq-ui--inverse: #f9fafb;
-      --bq-ui--brand: #00d9c4;
-      --bq-ui--brand-alt: #009b88;
-      --bq-ui--alt: #0f172a;
-      --bq-ui--success: #34d399;
-      --bq-ui--success-alt: #10b981;
-      --bq-ui--warning: #fbbf24;
-      --bq-ui--warning-alt: #f59e0b;
-      --bq-ui--danger: #f87171;
-      --bq-ui--danger-alt: #ef4444;
-
-      --bq-state--hover: rgba(255, 255, 255, 0.1);
-      --bq-state--active: rgba(255, 255, 255, 0.15);
+      --bq-background--primary:   #ffffff;
+      --bq-background--secondary: #f9fafb;
+      --bq-background--tertiary:  #f3f4f6;
+      --bq-background--alt:       #e5e7eb;
+      --bq-background--inverse:   #111827;
+      --bq-background--brand:     #a8f0e6;
+      --bq-background--overlay:   rgba(0, 0, 0, 0.5);
+      --bq-icon--primary:   #1f2937;
+      --bq-icon--secondary: #6b7280;
+      --bq-icon--inverse:   #f9fafb;
+      --bq-icon--brand:     #00836e;
+      --bq-icon--info:      #1d4ed8;
+      --bq-icon--success:   #047857;
+      --bq-icon--warning:   #92400e;
+      --bq-icon--danger:    #b91c1c;
+      --bq-stroke--primary:   #e5e7eb;
+      --bq-stroke--secondary: #d1d5db;
+      --bq-stroke--tertiary:  #9ca3af;
+      --bq-stroke--inverse:   #ffffff;
+      --bq-stroke--brand:     #00836e;
+      --bq-stroke--alt:       #f3f4f6;
+      --bq-stroke--success:   #047857;
+      --bq-stroke--warning:   #92400e;
+      --bq-stroke--danger:    #b91c1c;
+      --bq-text--primary:   #111827;
+      --bq-text--secondary: #6b7280;
+      --bq-text--inverse:   #f9fafb;
+      --bq-text--brand:     #00836e;
+      --bq-text--info:      #1d4ed8;
+      --bq-text--success:   #047857;
+      --bq-text--warning:   #92400e;
+      --bq-text--danger:    #b91c1c;
+      --bq-ui--primary:     #ffffff;
+      --bq-ui--secondary:   #f3f4f6;
+      --bq-ui--tertiary:    #e5e7eb;
+      --bq-ui--inverse:     #111827;
+      --bq-ui--brand:       #00836e;
+      --bq-ui--brand-alt:   #a8f0e6;
+      --bq-ui--alt:         #f9fafb;
+      --bq-ui--success:     #047857;
+      --bq-ui--success-alt: #a1e4cb;
+      --bq-ui--warning:     #92400e;
+      --bq-ui--warning-alt: #fef3c7;
+      --bq-ui--danger:      #b91c1c;
+      --bq-ui--danger-alt:  #fecaca;
+      --bq-ui--info:         #1d4ed8;
+      --bq-ui--info-alt:     #bfdbfe;
+      --bq-stroke--info:     #1d4ed8;
+      --bq-text--on-brand:   #ffffff;
+      --bq-text--on-info:    #ffffff;
+      --bq-text--on-success: #ffffff;
+      --bq-text--on-warning: #ffffff;
+      --bq-text--on-danger:  #ffffff;
+      --bq-focus:            #00836e;
     }
 
     /* TechFlow — Dark mode declarative tokens */
 
     :host([bq-theme="techflow"][bq-mode="dark"]),
     :host(.techflow.dark) {
-      --bq-background--primary: #ffffff;
-      --bq-background--secondary: #f9fafb;
-      --bq-background--tertiary: #f3f4f6;
-      --bq-background--alt: #e5e7eb;
-      --bq-background--inverse: #111827;
-      --bq-background--brand: #a8f0e6;
-      --bq-background--overlay: rgba(0, 0, 0, 0.5);
-
-      --bq-icon--primary: #1f2937;
-      --bq-icon--secondary: #6b7280;
-      --bq-icon--inverse: #f9fafb;
-      --bq-icon--brand: #00836e;
-      --bq-icon--alt: #ffffff;
-      --bq-icon--info: #1d4ed8;
-      --bq-icon--success: #047857;
-      --bq-icon--warning: #92400e;
-      --bq-icon--danger: #b91c1c;
-
-      --bq-stroke--primary: #e5e7eb;
-      --bq-stroke--secondary: #d1d5db;
-      --bq-stroke--tertiary: #9ca3af;
-      --bq-stroke--inverse: #ffffff;
-      --bq-stroke--brand: #00836e;
-      --bq-stroke--alt: #f3f4f6;
-      --bq-stroke--success: #047857;
-      --bq-stroke--warning: #92400e;
-      --bq-stroke--danger: #b91c1c;
-
-      --bq-text--primary: #111827;
-      --bq-text--secondary: #6b7280;
-      --bq-text--inverse: #f9fafb;
-      --bq-text--brand: #00836e;
-      --bq-text--alt: #ffffff;
-      --bq-text--info: #1d4ed8;
-      --bq-text--success: #047857;
-      --bq-text--warning: #92400e;
-      --bq-text--danger: #b91c1c;
-
-      --bq-ui--primary: #ffffff;
-      --bq-ui--secondary: #f3f4f6;
-      --bq-ui--tertiary: #e5e7eb;
-      --bq-ui--inverse: #111827;
-      --bq-ui--brand: #00d9c4;
-      --bq-ui--brand-alt: #a8f0e6;
-      --bq-ui--alt: #f9fafb;
-      --bq-ui--success: #05b981;
-      --bq-ui--success-alt: #a1e4cb;
-      --bq-ui--warning: #f59e0b;
-      --bq-ui--warning-alt: #fef3c7;
-      --bq-ui--danger: #ef4444;
-      --bq-ui--danger-alt: #fecaca;
-
-      --bq-state--hover: rgba(0, 0, 0, 0.08);
-      --bq-state--active: rgba(0, 0, 0, 0.12);
+      --bq-background--primary:   #030712;
+      --bq-background--secondary: #0f172a;
+      --bq-background--tertiary:  #1f2937;
+      --bq-background--alt:       #374151;
+      --bq-background--inverse:   #f9fafb;
+      --bq-background--brand:     #009b88;
+      --bq-background--overlay:   rgba(0, 0, 0, 0.7);
+      --bq-icon--primary:   #f3f4f6;
+      --bq-icon--secondary: #9ca3af;
+      --bq-icon--inverse:   #1f2937;
+      --bq-icon--brand:     #00d9c4;
+      --bq-icon--info:      #60a5fa;
+      --bq-icon--success:   #34d399;
+      --bq-icon--warning:   #fbbf24;
+      --bq-icon--danger:    #f87171;
+      --bq-stroke--primary:   #374151;
+      --bq-stroke--secondary: #4b5563;
+      --bq-stroke--tertiary:  #9ca3af;
+      --bq-stroke--inverse:   #0f172a;
+      --bq-stroke--brand:     #00d9c4;
+      --bq-stroke--alt:       #1f2937;
+      --bq-stroke--success:   #34d399;
+      --bq-stroke--warning:   #fbbf24;
+      --bq-stroke--danger:    #f87171;
+      --bq-text--primary:   #f9fafb;
+      --bq-text--secondary: #9ca3af;
+      --bq-text--inverse:   #1f2937;
+      --bq-text--brand:     #00d9c4;
+      --bq-text--info:      #60a5fa;
+      --bq-text--success:   #34d399;
+      --bq-text--warning:   #fbbf24;
+      --bq-text--danger:    #f87171;
+      --bq-ui--primary:     #1f2937;
+      --bq-ui--secondary:   #374151;
+      --bq-ui--tertiary:    #4b5563;
+      --bq-ui--inverse:     #f9fafb;
+      --bq-ui--brand:       #00d9c4;
+      --bq-ui--brand-alt:   #009b88;
+      --bq-ui--alt:         #0f172a;
+      --bq-ui--success:     #34d399;
+      --bq-ui--success-alt: #10b981;
+      --bq-ui--warning:     #fbbf24;
+      --bq-ui--warning-alt: #f59e0b;
+      --bq-ui--danger:      #f87171;
+      --bq-ui--danger-alt:  #ef4444;
+      --bq-ui--info:         #60a5fa;
+      --bq-ui--info-alt:     #172554;
+      --bq-stroke--info:     #60a5fa;
+      --bq-text--on-brand:   #030712;
+      --bq-text--on-info:    #030712;
+      --bq-text--on-success: #030712;
+      --bq-text--on-warning: #030712;
+      --bq-text--on-danger:  #030712;
+      --bq-focus:            #00d9c4;
     }
 
     :host {
@@ -620,7 +502,6 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
       --bq-info-light:    #bfdbfe;
       --bq-info:          #3b82f6;
       --bq-info-dark:     #1e3a8a;
-      --bq-focus:         #00836e;
       --bq-white:         #ffffff;
       --bq-black:         #000000;
       --bq-neutral-50:    #f9fafb;
@@ -655,7 +536,6 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
       --bq-icon--secondary: #6b7280;
       --bq-icon--inverse:   #f9fafb;
       --bq-icon--brand:     #00836e;
-      --bq-icon--alt:       #ffffff;
       --bq-icon--info:      #1d4ed8;
       --bq-icon--success:   #047857;
       --bq-icon--warning:   #92400e;
@@ -673,7 +553,6 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
       --bq-text--secondary: #6b7280;
       --bq-text--inverse:   #f9fafb;
       --bq-text--brand:     #00836e;
-      --bq-text--alt:       #ffffff;
       --bq-text--info:      #1d4ed8;
       --bq-text--success:   #047857;
       --bq-text--warning:   #92400e;
@@ -691,8 +570,15 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
       --bq-ui--warning-alt: #fef3c7;
       --bq-ui--danger:      #b91c1c;
       --bq-ui--danger-alt:  #fecaca;
-      --bq-state--hover:    rgba(0, 0, 0, 0.08);
-      --bq-state--active:   rgba(0, 0, 0, 0.12);
+      --bq-ui--info:         #1d4ed8;
+      --bq-ui--info-alt:     #bfdbfe;
+      --bq-stroke--info:     #1d4ed8;
+      --bq-text--on-brand:   #ffffff;
+      --bq-text--on-info:    #ffffff;
+      --bq-text--on-success: #ffffff;
+      --bq-text--on-warning: #ffffff;
+      --bq-text--on-danger:  #ffffff;
+      --bq-focus:            #00836e;
     }
 
     /* -------------------------------------------------------------------------- */
@@ -711,7 +597,6 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
       --bq-icon--secondary: #9ca3af;
       --bq-icon--inverse:   #1f2937;
       --bq-icon--brand:     #00d9c4;
-      --bq-icon--alt:       #ffffff;
       --bq-icon--info:      #60a5fa;
       --bq-icon--success:   #34d399;
       --bq-icon--warning:   #fbbf24;
@@ -729,7 +614,6 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
       --bq-text--secondary: #9ca3af;
       --bq-text--inverse:   #1f2937;
       --bq-text--brand:     #00d9c4;
-      --bq-text--alt:       #ffffff;
       --bq-text--info:      #60a5fa;
       --bq-text--success:   #34d399;
       --bq-text--warning:   #fbbf24;
@@ -747,8 +631,15 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
       --bq-ui--warning-alt: #f59e0b;
       --bq-ui--danger:      #f87171;
       --bq-ui--danger-alt:  #ef4444;
-      --bq-state--hover:    rgba(255, 255, 255, 0.10);
-      --bq-state--active:   rgba(255, 255, 255, 0.15);
+      --bq-ui--info:         #60a5fa;
+      --bq-ui--info-alt:     #172554;
+      --bq-stroke--info:     #60a5fa;
+      --bq-text--on-brand:   #030712;
+      --bq-text--on-info:    #030712;
+      --bq-text--on-success: #030712;
+      --bq-text--on-warning: #030712;
+      --bq-text--on-danger:  #030712;
+      --bq-focus:            #00d9c4;
     }
     ```
 
@@ -1019,7 +910,6 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
           --bq-info-light:    #bfdbfe;
           --bq-info:          #3b82f6;
           --bq-info-dark:     #1e3a8a;
-          --bq-focus:         #00836e;
           --bq-white:         #ffffff;
           --bq-black:         #000000;
           --bq-neutral-50:    #f9fafb;
@@ -1054,7 +944,6 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
           --bq-icon--secondary: #6b7280;
           --bq-icon--inverse:   #f9fafb;
           --bq-icon--brand:     #00836e;
-          --bq-icon--alt:       #ffffff;
           --bq-icon--info:      #1d4ed8;
           --bq-icon--success:   #047857;
           --bq-icon--warning:   #92400e;
@@ -1072,7 +961,6 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
           --bq-text--secondary: #6b7280;
           --bq-text--inverse:   #f9fafb;
           --bq-text--brand:     #00836e;
-          --bq-text--alt:       #ffffff;
           --bq-text--info:      #1d4ed8;
           --bq-text--success:   #047857;
           --bq-text--warning:   #92400e;
@@ -1090,8 +978,15 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
           --bq-ui--warning-alt: #fef3c7;
           --bq-ui--danger:      #b91c1c;
           --bq-ui--danger-alt:  #fecaca;
-          --bq-state--hover:    rgba(0, 0, 0, 0.08);
-          --bq-state--active:   rgba(0, 0, 0, 0.12);
+          --bq-ui--info:         #1d4ed8;
+          --bq-ui--info-alt:     #bfdbfe;
+          --bq-stroke--info:     #1d4ed8;
+          --bq-text--on-brand:   #ffffff;
+          --bq-text--on-info:    #ffffff;
+          --bq-text--on-success: #ffffff;
+          --bq-text--on-warning: #ffffff;
+          --bq-text--on-danger:  #ffffff;
+          --bq-focus:            #00836e;
         }
 
         /* -------------------------------------------------------------------------- */
@@ -1110,7 +1005,6 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
           --bq-icon--secondary: #9ca3af;
           --bq-icon--inverse:   #1f2937;
           --bq-icon--brand:     #00d9c4;
-          --bq-icon--alt:       #ffffff;
           --bq-icon--info:      #60a5fa;
           --bq-icon--success:   #34d399;
           --bq-icon--warning:   #fbbf24;
@@ -1128,7 +1022,6 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
           --bq-text--secondary: #9ca3af;
           --bq-text--inverse:   #1f2937;
           --bq-text--brand:     #00d9c4;
-          --bq-text--alt:       #ffffff;
           --bq-text--info:      #60a5fa;
           --bq-text--success:   #34d399;
           --bq-text--warning:   #fbbf24;
@@ -1146,8 +1039,15 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
           --bq-ui--warning-alt: #f59e0b;
           --bq-ui--danger:      #f87171;
           --bq-ui--danger-alt:  #ef4444;
-          --bq-state--hover:    rgba(255, 255, 255, 0.10);
-          --bq-state--active:   rgba(255, 255, 255, 0.15);
+          --bq-ui--info:         #60a5fa;
+          --bq-ui--info-alt:     #172554;
+          --bq-stroke--info:     #60a5fa;
+          --bq-text--on-brand:   #030712;
+          --bq-text--on-info:    #030712;
+          --bq-text--on-success: #030712;
+          --bq-text--on-warning: #030712;
+          --bq-text--on-danger:  #030712;
+          --bq-focus:            #00d9c4;
         }
       `],
     })
@@ -1274,7 +1174,6 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
         --bq-info-light:    #bfdbfe;
         --bq-info:          #3b82f6;
         --bq-info-dark:     #1e3a8a;
-        --bq-focus:         #00836e;
         --bq-white:         #ffffff;
         --bq-black:         #000000;
         --bq-neutral-50:    #f9fafb;
@@ -1309,7 +1208,6 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
         --bq-icon--secondary: #6b7280;
         --bq-icon--inverse:   #f9fafb;
         --bq-icon--brand:     #00836e;
-        --bq-icon--alt:       #ffffff;
         --bq-icon--info:      #1d4ed8;
         --bq-icon--success:   #047857;
         --bq-icon--warning:   #92400e;
@@ -1327,7 +1225,6 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
         --bq-text--secondary: #6b7280;
         --bq-text--inverse:   #f9fafb;
         --bq-text--brand:     #00836e;
-        --bq-text--alt:       #ffffff;
         --bq-text--info:      #1d4ed8;
         --bq-text--success:   #047857;
         --bq-text--warning:   #92400e;
@@ -1345,8 +1242,15 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
         --bq-ui--warning-alt: #fef3c7;
         --bq-ui--danger:      #b91c1c;
         --bq-ui--danger-alt:  #fecaca;
-        --bq-state--hover:    rgba(0, 0, 0, 0.08);
-        --bq-state--active:   rgba(0, 0, 0, 0.12);
+        --bq-ui--info:         #1d4ed8;
+        --bq-ui--info-alt:     #bfdbfe;
+        --bq-stroke--info:     #1d4ed8;
+        --bq-text--on-brand:   #ffffff;
+        --bq-text--on-info:    #ffffff;
+        --bq-text--on-success: #ffffff;
+        --bq-text--on-warning: #ffffff;
+        --bq-text--on-danger:  #ffffff;
+        --bq-focus:            #00836e;
       }
 
       /* -------------------------------------------------------------------------- */
@@ -1365,7 +1269,6 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
         --bq-icon--secondary: #9ca3af;
         --bq-icon--inverse:   #1f2937;
         --bq-icon--brand:     #00d9c4;
-        --bq-icon--alt:       #ffffff;
         --bq-icon--info:      #60a5fa;
         --bq-icon--success:   #34d399;
         --bq-icon--warning:   #fbbf24;
@@ -1383,7 +1286,6 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
         --bq-text--secondary: #9ca3af;
         --bq-text--inverse:   #1f2937;
         --bq-text--brand:     #00d9c4;
-        --bq-text--alt:       #ffffff;
         --bq-text--info:      #60a5fa;
         --bq-text--success:   #34d399;
         --bq-text--warning:   #fbbf24;
@@ -1401,10 +1303,122 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
         --bq-ui--warning-alt: #f59e0b;
         --bq-ui--danger:      #f87171;
         --bq-ui--danger-alt:  #ef4444;
-        --bq-state--hover:    rgba(255, 255, 255, 0.10);
-        --bq-state--active:   rgba(255, 255, 255, 0.15);
+        --bq-ui--info:         #60a5fa;
+        --bq-ui--info-alt:     #172554;
+        --bq-stroke--info:     #60a5fa;
+        --bq-text--on-brand:   #030712;
+        --bq-text--on-info:    #030712;
+        --bq-text--on-success: #030712;
+        --bq-text--on-warning: #030712;
+        --bq-text--on-danger:  #030712;
+        --bq-focus:            #00d9c4;
       }
     </style>
     ```
   </CodeGroup>
 </CodeLivePreview>
+
+<Note>
+  TechFlow sets explicit hex values for each mode role, including the on-colors (`--bq-text--on-*`) and `--bq-focus`, so each solid fill has a matching on-color. If your theme sets roles explicitly, run the [contrast checklist](#contrast-checklist-for-custom-brands) on each pair.
+</Note>
+
+---
+
+## How overrides work
+
+BEEQ wraps every theme and mode selector in `:where()`, for example `:where([bq-mode="dark"])`. `:where()` has zero specificity, so any selector you write — `:root`, `.promo`, `[bq-theme="my-custom-theme"]`, or a component tag — wins over BEEQ's defaults, whichever stylesheet loads first. You don't need `!important` or extra selector weight.
+
+<Note>
+  Mode roles reference root semantics (e.g., `--bq-ui--brand: var(--bq-brand)`), and CSS resolves `var()` on the element that declares the role. Roles are declared on the theme/mode element, usually `<html>`, so overriding a root semantic deeper in the tree doesn't re-derive the roles below it. Override the role itself in that case.
+</Note>
+
+### Override levels
+
+Pick the narrowest level that covers your change:
+
+<Tabs>
+  <Tab title="Global">
+    Change root semantics on `:root` (or your theme selector). Every mode role that points to them updates in both modes:
+
+    ```css
+    :root {
+      --bq-brand-light:  #e0f2fe;
+      --bq-brand:        #0369a1;
+      --bq-brand-dark:   #0c4a6e;
+      --bq-brand-strong: #0369a1;
+      --bq-brand-bright: #7dd3fc;
+    }
+    ```
+
+    A mode role set on `:root` (e.g., `--bq-text--on-brand`) applies in **both** modes. Use the per-mode level if light and dark need different values.
+  </Tab>
+  <Tab title="Per mode">
+    Override a mode role for one mode only:
+
+    ```css
+    [bq-mode="dark"] {
+      --bq-ui--brand:       var(--bq-brand-bright);
+      --bq-text--on-brand:  var(--bq-neutral-1000);
+    }
+    ```
+  </Tab>
+  <Tab title="Subtree">
+    Override **mode roles** on a container to restyle everything inside it:
+
+    ```css
+    .promo {
+      --bq-ui--brand:      var(--bq-purple-600);
+      --bq-text--on-brand: var(--bq-white);
+    }
+    ```
+
+    <Warning>
+      Setting a root semantic such as `--bq-brand` on `.promo` doesn't change `--bq-ui--brand` inside it, because the role was already resolved on the root element. Override the roles directly, or set `bq-mode` on the container so BEEQ re-declares the roles there.
+    </Warning>
+  </Tab>
+  <Tab title="Component">
+    Use a component's own CSS variables for a one-off change. They're listed in each component's **Styling** section:
+
+    ```css
+    bq-alert {
+      --bq-alert--background-info: var(--bq-ui--info-alt);
+    }
+    ```
+  </Tab>
+</Tabs>
+
+<Tip>
+  `CodeLivePreview` in `shadow` mode can't show `:root` overrides. Use `mode="iframe"` when you preview global overrides in these docs.
+</Tip>
+
+---
+
+## Contrast checklist for custom brands
+
+BEEQ's own themes are checked by an automated contrast test. When you bring your own colors, check these pairs in **both** modes before you ship. All ratios follow [WCAG 2.1 Level AA](https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html).
+
+| Pair | Minimum |
+| --- | --- |
+| `--bq-{intent}-strong` (light mode) and `--bq-{intent}-bright` (dark mode) on `--bq-background--primary`, `--bq-background--secondary`, `--bq-ui--primary`, `--bq-ui--secondary` | 4.5:1 |
+| `--bq-text--{intent}` on its tint, `--bq-ui--{intent}-alt` | 4.5:1 |
+| `--bq-text--on-{intent}` on `--bq-ui--{intent}` at rest | 4.5:1 |
+| `--bq-text--on-{intent}` on the hover and active mixes of `--bq-ui--{intent}` (20% `--bq-hover` / `--bq-active`) | 4.5:1 |
+| `--bq-text--primary` and `--bq-text--secondary` on primary and secondary surfaces | 4.5:1 |
+| Icons, `--bq-stroke--tertiary`, `--bq-stroke--{intent}`, and `--bq-focus` on `--bq-background--primary` and `--bq-ui--primary` | 3:1 |
+
+<Tip>
+  Mid-tone brand colors often can't reach 4.5:1 with white **and** stay readable on hover. If white text on your brand fill fails, either use a darker step for the fill in light mode (e.g., `--bq-ui--brand: var(--bq-brand-strong)`) or pick a dark on-color. Then check the hover and active mixes again — they shift the fill toward a dark neutral.
+</Tip>
+
+---
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Colors" icon="palette" href="/foundations/colors">
+    Layers, intent scale, mode roles, and usage rules.
+  </Card>
+  <Card title="Themes and modes" icon="circle-half-stroke" href="/theming/themes-and-modes">
+    Switch between built-in themes and light/dark modes.
+  </Card>
+</CardGroup>

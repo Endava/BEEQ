@@ -145,18 +145,26 @@ const nativeButton = bqButton?.shadowRoot?.querySelector('[part="button"]');
 
 ## Global CSS custom properties
 
-BEEQ relies on CSS custom properties to maintain a consistent visual system across components. A single global token like `--bq-brand` cascades through colours, focus rings, borders, and related states — so overriding it at the root level changes the look of your whole product at once:
+BEEQ relies on CSS custom properties to maintain a consistent visual system across components. Global color tokens like the `--bq-brand-*` scale cascade through fills, text, focus rings, borders, and related states — so overriding them at the root level changes the look of your whole product at once. Set all five steps of the scale: the base step colors fills, while `-strong` and `-bright` color text, icons, borders, and focus rings in light and dark mode (see [Intent scale](/foundations/colors#intent-scale)):
 
 ```css
 :root {
-  --bq-brand: var(--bq-orange-600);
+  --bq-brand-light:  var(--bq-orange-100);
+  --bq-brand:        var(--bq-orange-700);
+  --bq-brand-dark:   var(--bq-orange-1000);
+  --bq-brand-strong: var(--bq-orange-700);
+  --bq-brand-bright: var(--bq-orange-400);
 }
 ```
 
 <CodeLivePreview mode="iframe" height="6rem" removePadding code={`
   <style>
     :root {
-      --bq-brand: var(--bq-orange-600);
+      --bq-brand-light:  var(--bq-orange-100);
+      --bq-brand:        var(--bq-orange-700);
+      --bq-brand-dark:   var(--bq-orange-1000);
+      --bq-brand-strong: var(--bq-orange-700);
+      --bq-brand-bright: var(--bq-orange-400);
     }
 
     body {
@@ -173,7 +181,11 @@ BEEQ relies on CSS custom properties to maintain a consistent visual system acro
   <CodeGroup>
     ```css styles.css icon="css"
     :root {
-      --bq-brand: var(--bq-orange-600);
+      --bq-brand-light:  var(--bq-orange-100);
+      --bq-brand:        var(--bq-orange-700);
+      --bq-brand-dark:   var(--bq-orange-1000);
+      --bq-brand-strong: var(--bq-orange-700);
+      --bq-brand-bright: var(--bq-orange-400);
     }
     ```
 
@@ -207,7 +219,11 @@ BEEQ relies on CSS custom properties to maintain a consistent visual system acro
       `,
       styles: [`
         :root {
-          --bq-brand: var(--bq-orange-600);
+          --bq-brand-light:  var(--bq-orange-100);
+          --bq-brand:        var(--bq-orange-700);
+          --bq-brand-dark:   var(--bq-orange-1000);
+          --bq-brand-strong: var(--bq-orange-700);
+          --bq-brand-bright: var(--bq-orange-400);
         }
       `],
     })
@@ -225,7 +241,11 @@ BEEQ relies on CSS custom properties to maintain a consistent visual system acro
 
     <style>
       :root {
-        --bq-brand: var(--bq-orange-600);
+        --bq-brand-light:  var(--bq-orange-100);
+        --bq-brand:        var(--bq-orange-700);
+        --bq-brand-dark:   var(--bq-orange-1000);
+        --bq-brand-strong: var(--bq-orange-700);
+        --bq-brand-bright: var(--bq-orange-400);
       }
     </style>
     ```
@@ -533,7 +553,7 @@ Not every component exposes the same CSS variables or parts. When a component do
 
 <CardGroup cols={2}>
   <Card title="Start with global tokens" icon="check" iconType="solid" color="var(--bq-stroke--success)">
-    When a change should apply across the whole product, override a global token like `--bq-brand`. One change cascades through every component that derives from it.
+    When a change should apply across the whole product, override global tokens like the `--bq-brand-*` scale. One change cascades through every component that derives from it.
   </Card>
   <Card title="Avoid per-component overrides for global decisions" icon="xmark" iconType="solid" color="var(--bq-stroke--danger)">
     Repeating the same CSS variable on every component instance makes the theme harder to update and easy to get out of sync.

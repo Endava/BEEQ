@@ -530,6 +530,52 @@ Here is a working example showing how to read the user's preferred color scheme 
 
 ---
 
+## Endava theme
+
+The `endava` theme follows the Endava brand portal. It keeps the brand's colors wherever they meet [WCAG 2.1 Level AA](/foundations/colors#accessibility), and uses a nearby shade where they don't.
+
+- **Brand and accent:** Red Orange `#FF5640` is the brand fill. Accent aliases the brand, so `--bq-accent-*` matches `--bq-brand-*`.
+- **Brand text:** `--bq-brand-strong` is `#C33600` (light mode text, icons, strokes, and focus). `--bq-brand-bright` is `#FF8979` (dark mode).
+- **Neutrals and info:** Solid Blue `#192B37` is the darkest neutral (`--bq-neutral-950`), `--bq-black`, and the info color in light mode. In dark mode, info is white (`--bq-info-bright`).
+- **Dark mode fills:** info, success, warning, and danger fills use their `-bright` step, with Solid Blue as the on-color.
+- **Data colors:** come from the brand portal palette.
+
+<Warning>
+  White text on Red Orange is **3.15:1**, below the 4.5:1 minimum for normal text. BEEQ keeps it for `--bq-text--on-brand` and `--bq-text--on-accent` to match the brand, so only use it for large text (24px, or 18.66px bold) and non-text UI elements. If your product needs 4.5:1 on brand fills, switch the fills to the strong step:
+
+  ```css
+  :root[bq-theme="endava"] {
+    --bq-ui--brand:  var(--bq-brand-strong);
+    --bq-ui--accent: var(--bq-accent-strong);
+  }
+  ```
+
+  White on `#C33600` is 5.46:1 at rest, 6.36:1 on hover, and 7.01:1 on active.
+</Warning>
+
+<Note>
+  In the Endava theme, use `--bq-text--secondary` only on `--bq-background--primary`, `--bq-background--secondary`, `--bq-ui--primary`, and `--bq-ui--secondary`. On other surfaces, such as `--bq-ui--tertiary` or the intent tints, it can fall below 4.5:1.
+</Note>
+
+### Where BEEQ differs from the brand kit
+
+<Accordion title="Deviation log">
+| Brand kit value | BEEQ value | Reason |
+| --- | --- | --- |
+| Light brand text `#E03E00` | `--bq-brand-strong` `#C33600` | `#E03E00` is 4.32:1 on white. |
+| Dark brand text Red Orange | `--bq-brand-bright` `#FF8979` | Red Orange is 3.40:1 on the dark secondary surface. |
+| Warning text `#C77905` | `--bq-warning-strong` `#975C04` | `#C77905` is 3.41:1 on white. |
+| Light warning fill `#EB9410` | Warning fill `#F99C11` in both modes | Solid Blue on `#EB9410` drops to 4.33:1 when active. |
+| Light success fill `#2D9C5B` | Success fill `#26864E` | Neither white (3.49:1) nor Solid Blue (4.17:1) passes on `#2D9C5B`. |
+| Dark danger `#E84641` | `--bq-danger-bright` `#F2958F` | `#E84641` is 3.73:1 on Solid Blue and fails as a fill with either on-color. |
+| Hover and active colors | `color-mix()` with `--bq-hover` / `--bq-active` | Same state model as the default theme. |
+| Disabled colors | Opacity set per component | Same state model as the default theme. |
+| Dark secondary / tertiary surfaces Blue 80 / Blue 60 | Blue 90 `#30404B` / Blue 80 `#47555F` | Secondary text fails on Blue 60. |
+| Illustration accent colors | Not included | The brand portal limits them to illustrations. |
+</Accordion>
+
+---
+
 ## Next steps
 
 <CardGroup cols={2}>

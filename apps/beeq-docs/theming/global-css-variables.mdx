@@ -3,7 +3,11 @@ title: Global CSS Variables
 description: Find out about every global CSS variable that BEEQ offers and their uses.
 ---
 
-Global CSS variables are the foundation of the BEEQ theme system. They cover brand colors, neutrals, typography, spacing, radius, shadows, and strokes. On top of these base variables, semantic tokens map each value to a specific role in the UI — backgrounds, text, borders, icons, UI elements, and interactive states — and automatically adapt to light and dark mode.
+Global CSS variables are the foundation of the BEEQ theme system. They cover brand colors, neutrals, typography, spacing, radius, shadows, and strokes. On top of these base variables, mode roles map each value to a specific role in the UI — backgrounds, text, borders, icons, UI elements, and interactive states — and automatically adapt to light and dark mode.
+
+<Tip>
+  For how the color layers fit together, the default values in each theme and mode, and which tokens to pair, see [Colors](/foundations/colors).
+</Tip>
 
 <Note>
   Base variables are the foundation of your theme and should be set at the root level for global consistency. See the [Custom Theme](/theming/custom-theme) page for details on overriding them.
@@ -13,50 +17,59 @@ Global CSS variables are the foundation of the BEEQ theme system. They cover bra
 
 ## Base theme variables
 
-Base variables define the raw design values for your theme. They are set once at the root level and consumed by the declarative color variables above them.
+Base variables define the raw design values for your theme. They are set once at the root level and consumed by the [declarative color variables](#declarative-color-variables) below.
 
-### Brand & accent colors
+### Intent colors
 
-Your primary brand identity and the secondary highlight color.
-
-```css
---bq-brand-light:  /* Light variant of brand color */
---bq-brand:        /* Main brand color */
---bq-brand-dark:   /* Dark variant of brand color */
-
---bq-accent-light: /* Light variant of accent color */
---bq-accent:       /* Main accent color */
---bq-accent-dark:  /* Dark variant of accent color */
-```
-
-### State colors
-
-Used to convey meaning in the UI for actions and states such as success, danger, warning, and info.
+Each intent — brand, accent, info, success, warning, and danger — has the same five-step scale. See [Intent scale](/foundations/colors#intent-scale) for what each step is for.
 
 ```css
-/* Success — for positive actions and states */
---bq-success-light: /* Light success color */
---bq-success:       /* Main success color */
---bq-success-dark:  /* Dark success color */
+/* Brand — your primary brand identity */
+--bq-brand-light:  /* Light tint (light mode backgrounds) */
+--bq-brand:        /* Main fill color */
+--bq-brand-dark:   /* Dark tint (dark mode backgrounds) */
+--bq-brand-strong: /* Text, icons, and strokes on light surfaces */
+--bq-brand-bright: /* Text, icons, and strokes on dark surfaces */
 
-/* Danger — for errors and destructive actions */
---bq-danger-light:  /* Light danger color */
---bq-danger:        /* Main danger color */
---bq-danger-dark:   /* Dark danger color */
+/* Accent — secondary highlight color */
+--bq-accent-light:
+--bq-accent:
+--bq-accent-dark:
+--bq-accent-strong:
+--bq-accent-bright:
 
-/* Warning — for cautionary messages */
---bq-warning-light: /* Light warning color */
---bq-warning:       /* Main warning color */
---bq-warning-dark:  /* Dark warning color */
+/* Info — informational messages */
+--bq-info-light:
+--bq-info:
+--bq-info-dark:
+--bq-info-strong:
+--bq-info-bright:
 
-/* Info — for informational messages */
---bq-info-light:    /* Light info color */
---bq-info:          /* Main info color */
---bq-info-dark:     /* Dark info color */
+/* Success — positive actions and states */
+--bq-success-light:
+--bq-success:
+--bq-success-dark:
+--bq-success-strong:
+--bq-success-bright:
 
-/* Focus — for focus indicators */
---bq-focus:         /* Focus ring color */
+/* Warning — cautionary messages */
+--bq-warning-light:
+--bq-warning:
+--bq-warning-dark:
+--bq-warning-strong:
+--bq-warning-bright:
+
+/* Danger — errors and destructive actions */
+--bq-danger-light:
+--bq-danger:
+--bq-danger-dark:
+--bq-danger-strong:
+--bq-danger-bright:
 ```
+
+<Note>
+  The focus ring color, `--bq-focus`, isn't a base variable. It's a mode role that defaults to `--bq-brand-strong` in light mode and `--bq-brand-bright` in dark mode. See [State colors](#state-colors).
+</Note>
 
 ### Neutral colors
 
@@ -220,7 +233,7 @@ The stroke width scale defines standard border widths.
 
 ## Declarative color variables
 
-Semantic tokens are used throughout the components and change based on the theme mode (light/dark). Always prefer these over primitive values.
+Mode roles are used throughout the components and change based on the mode (light/dark). Always prefer these over base or primitive values. In the lists below, `{intent}` stands for `brand`, `accent`, `info`, `success`, `warning`, or `danger`.
 
 ### Background colors
 
@@ -244,12 +257,8 @@ Used for SVG icons and graphical elements.
 --bq-icon--primary:   /* Primary icon color */
 --bq-icon--secondary: /* Secondary icon color */
 --bq-icon--inverse:   /* Inverse icon color */
---bq-icon--brand:     /* Brand-colored icons */
---bq-icon--alt:       /* Alternative icon color */
---bq-icon--info:      /* Informational icons */
---bq-icon--success:   /* Success state icons */
---bq-icon--warning:   /* Warning state icons */
---bq-icon--danger:    /* Error/danger icons */
+--bq-icon--{intent}:  /* Intent-colored icons on surfaces (strong/bright step) */
+--bq-icon--alt:       /* Deprecated — use --bq-text--on-{intent} for icons on solid fills */
 ```
 
 ### Border colors
@@ -261,11 +270,9 @@ Used for borders and outlines around UI elements.
 --bq-stroke--secondary: /* Secondary border color */
 --bq-stroke--tertiary:  /* Tertiary border color */
 --bq-stroke--inverse:   /* Inverse border color */
---bq-stroke--brand:     /* Brand-colored borders */
 --bq-stroke--alt:       /* Alternative border color */
---bq-stroke--success:   /* Success state borders */
---bq-stroke--warning:   /* Warning state borders */
---bq-stroke--danger:    /* Error/danger borders */
+--bq-stroke--{intent}:  /* Intent-colored borders (strong/bright step) */
+--bq-stroke--brand-alt: /* Subtle brand border */
 ```
 
 ### Text colors
@@ -276,12 +283,21 @@ Used for typography and text elements.
 --bq-text--primary:   /* Primary text color */
 --bq-text--secondary: /* Secondary text color (muted) */
 --bq-text--inverse:   /* Inverse text color (on dark backgrounds) */
---bq-text--brand:     /* Brand-colored text */
---bq-text--alt:       /* Alternative text color */
---bq-text--info:      /* Informational text */
---bq-text--success:   /* Success state text */
---bq-text--warning:   /* Warning state text */
---bq-text--danger:    /* Error/danger text */
+--bq-text--{intent}:  /* Intent-colored text on surfaces and tints (strong/bright step) */
+--bq-text--alt:       /* Deprecated — use --bq-text--on-{intent} for text on solid fills */
+```
+
+### On-color text
+
+Used for text and icons placed on a solid intent fill (`--bq-ui--{intent}`). Always pair each fill with its own on-color.
+
+```css
+--bq-text--on-brand:   /* Content on --bq-ui--brand */
+--bq-text--on-accent:  /* Content on --bq-ui--accent */
+--bq-text--on-info:    /* Content on --bq-ui--info */
+--bq-text--on-success: /* Content on --bq-ui--success */
+--bq-text--on-warning: /* Content on --bq-ui--warning */
+--bq-text--on-danger:  /* Content on --bq-ui--danger */
 ```
 
 ### UI colors
@@ -293,28 +309,25 @@ Used for small UI elements like buttons, tags, and badges.
 --bq-ui--secondary:    /* Secondary UI element color */
 --bq-ui--tertiary:     /* Tertiary UI element color */
 --bq-ui--inverse:      /* Inverse UI element color */
---bq-ui--brand:        /* Brand-colored UI elements */
---bq-ui--brand-alt:    /* Alternative brand UI color */
 --bq-ui--alt:          /* Alternative UI color */
---bq-ui--success:      /* Success state UI color */
---bq-ui--success-alt:  /* Alternative success UI color */
---bq-ui--warning:      /* Warning state UI color */
---bq-ui--warning-alt:  /* Alternative warning UI color */
---bq-ui--danger:       /* Danger state UI color */
---bq-ui--danger-alt:   /* Alternative danger UI color */
+--bq-ui--{intent}:     /* Solid intent fill — pair with --bq-text--on-{intent} */
+--bq-ui--{intent}-alt: /* Intent tint — pair with --bq-text--{intent} */
 ```
 
 ### State colors
 
-Used for interactive states like hover and active. They blend with a base color using the CSS [`color-mix()`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/color-mix) function for better visual feedback.
+Used for interactive states. Hover and active colors aren't separate tokens per element: components blend the rest color with `--bq-hover` or `--bq-active` using the CSS [`color-mix()`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/color-mix) function.
 
 ```css
-/* Example usage */
-/* color-mix(in srgb, var(--bq-ui--primary) 80%, var(--bq-state--hover) 20%) */
+--bq-hover:  /* Hover blend color */
+--bq-active: /* Active/pressed blend color */
+--bq-focus:  /* Focus ring color */
 
---bq-state--hover:  /* Hover state blend color */
---bq-state--active: /* Active/pressed state blend color */
+/* Example usage */
+background-color: color-mix(in srgb, var(--bq-ui--brand), var(--bq-hover) 20%);
 ```
+
+See [States](/foundations/colors#states) for how components derive hover and active colors.
 
 ---
 
