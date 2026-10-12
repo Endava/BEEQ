@@ -2712,6 +2712,13 @@ export namespace Components {
      * @cssprop --bq-switch--justify-content - Switch justify content
      * @cssprop --bq-switch--width - Switch width
      * @cssprop --bq-switch--dot-size - Switch dot size
+     * @cssprop --bq-switch--dot-color - Switch dot color
+     * @cssprop --bq-switch--dot-color-checked - Switch dot color when checked
+     * @cssprop --bq-switch--icon-color - Switch inner icon color (unchecked)
+     * @cssprop --bq-switch--icon-color-checked - Switch inner icon color when checked
+     * @cssprop --bq-switch--label-text-color - Switch label text color
+     * @cssprop --bq-switch--track-color - Switch track color
+     * @cssprop --bq-switch--track-color-checked - Switch track color when checked
      */
     interface BqSwitch {
         /**
@@ -5220,6 +5227,13 @@ declare global {
      * @cssprop --bq-switch--justify-content - Switch justify content
      * @cssprop --bq-switch--width - Switch width
      * @cssprop --bq-switch--dot-size - Switch dot size
+     * @cssprop --bq-switch--dot-color - Switch dot color
+     * @cssprop --bq-switch--dot-color-checked - Switch dot color when checked
+     * @cssprop --bq-switch--icon-color - Switch inner icon color (unchecked)
+     * @cssprop --bq-switch--icon-color-checked - Switch inner icon color when checked
+     * @cssprop --bq-switch--label-text-color - Switch label text color
+     * @cssprop --bq-switch--track-color - Switch track color
+     * @cssprop --bq-switch--track-color-checked - Switch track color when checked
      */
     interface HTMLBqSwitchElement extends Components.BqSwitch, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqSwitchElementEventMap>(type: K, listener: (this: HTMLBqSwitchElement, ev: BqSwitchCustomEvent<HTMLBqSwitchElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -8517,6 +8531,13 @@ declare namespace LocalJSX {
      * @cssprop --bq-switch--justify-content - Switch justify content
      * @cssprop --bq-switch--width - Switch width
      * @cssprop --bq-switch--dot-size - Switch dot size
+     * @cssprop --bq-switch--dot-color - Switch dot color
+     * @cssprop --bq-switch--dot-color-checked - Switch dot color when checked
+     * @cssprop --bq-switch--icon-color - Switch inner icon color (unchecked)
+     * @cssprop --bq-switch--icon-color-checked - Switch inner icon color when checked
+     * @cssprop --bq-switch--label-text-color - Switch label text color
+     * @cssprop --bq-switch--track-color - Switch track color
+     * @cssprop --bq-switch--track-color-checked - Switch track color when checked
      */
     interface BqSwitch {
         /**
@@ -10953,6 +10974,13 @@ declare module "@stencil/core" {
              * @cssprop --bq-switch--justify-content - Switch justify content
              * @cssprop --bq-switch--width - Switch width
              * @cssprop --bq-switch--dot-size - Switch dot size
+             * @cssprop --bq-switch--dot-color - Switch dot color
+             * @cssprop --bq-switch--dot-color-checked - Switch dot color when checked
+             * @cssprop --bq-switch--icon-color - Switch inner icon color (unchecked)
+             * @cssprop --bq-switch--icon-color-checked - Switch inner icon color when checked
+             * @cssprop --bq-switch--label-text-color - Switch label text color
+             * @cssprop --bq-switch--track-color - Switch track color
+             * @cssprop --bq-switch--track-color-checked - Switch track color when checked
              */
             "bq-switch": LocalJSX.IntrinsicElements["bq-switch"] & JSXBase.HTMLAttributes<HTMLBqSwitchElement>;
             /**

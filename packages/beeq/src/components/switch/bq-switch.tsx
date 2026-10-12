@@ -51,6 +51,13 @@ import type { TSwitchInnerLabel, TSwitchJustifyContent } from './bq-switch.types
  * @cssprop --bq-switch--justify-content - Switch justify content
  * @cssprop --bq-switch--width - Switch width
  * @cssprop --bq-switch--dot-size - Switch dot size
+ * @cssprop --bq-switch--dot-color - Switch dot color
+ * @cssprop --bq-switch--dot-color-checked - Switch dot color when checked
+ * @cssprop --bq-switch--icon-color - Switch inner icon color (unchecked)
+ * @cssprop --bq-switch--icon-color-checked - Switch inner icon color when checked
+ * @cssprop --bq-switch--label-text-color - Switch label text color
+ * @cssprop --bq-switch--track-color - Switch track color
+ * @cssprop --bq-switch--track-color-checked - Switch track color when checked
  */
 @Component({
   tag: 'bq-switch',
@@ -294,15 +301,15 @@ export class BqSwitch {
           />
           {/* Control */}
           <div
-            class="bq-switch--control bs-[--bq-switch--height] is-[--bq-switch--width] relative box-border flex justify-between rounded-full bg-ui-tertiary p-b-xs2 p-i-xs2 transition duration-300 group-[&.is-checked]:bg-ui-brand"
+            class="bq-switch--control bs-[--bq-switch--height] is-[--bq-switch--width] relative box-border flex justify-between rounded-full bg-[--bq-switch--track-color] p-b-xs2 p-i-xs2 transition duration-300 group-[&.is-checked]:bg-[--bq-switch--track-color-checked]"
             part="control"
           >
-            <slot class="text-icon-alt" name="icon-on">
+            <slot class="text-[--bq-switch--icon-color-checked]" name="icon-on">
               {this.innerLabel === 'icon' && (
                 <bq-icon class="bq-switch--control__icon on" name="check" part="icon-on" title="On" />
               )}
             </slot>
-            <slot class="text-icon-inverse" name="icon-off">
+            <slot class="text-[--bq-switch--icon-color]" name="icon-off">
               {this.innerLabel === 'icon' && (
                 <bq-icon class="bq-switch--control__icon off" name="x" part="icon-off" title="Off" />
               )}
@@ -313,7 +320,7 @@ export class BqSwitch {
           {/* Label */}
           <span
             class={{
-              'bq-switch--label font-medium text-m text-primary leading-regular transition-colors duration-300': true,
+              'bq-switch--label font-medium text-[--bq-switch--label-text-color] text-m leading-regular transition-colors duration-300': true,
               'ms-s': this.hasLabel && !this.reverseOrder,
               'me-s': this.hasLabel && this.reverseOrder,
             }}

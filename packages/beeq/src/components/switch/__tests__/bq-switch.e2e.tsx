@@ -2,6 +2,7 @@ import { h } from '@stencil/core';
 import { afterEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
 import { userEvent } from 'vitest/browser';
 
+import { computedStyle } from '../../../shared/test-utils/computedStyle';
 import { getTextContent } from '../../../shared/utils/slot';
 
 const getSwitchInput = (switchElement: HTMLBqSwitchElement) =>
@@ -9,6 +10,22 @@ const getSwitchInput = (switchElement: HTMLBqSwitchElement) =>
 
 const getSwitchBase = (switchElement: HTMLBqSwitchElement) =>
   switchElement.shadowRoot?.querySelector<HTMLLabelElement>('[part="base"]');
+
+/** Resolves a CSS color value (e.g. `var(--bq-ui--brand)`) to its computed `rgb()` form */
+const resolveColor = (value: string): string => {
+  const probe = document.createElement('div');
+  probe.style.color = value;
+  document.body.appendChild(probe);
+  const { color } = getComputedStyle(probe);
+  probe.remove();
+  return color;
+};
+
+/** Waits for any running CSS transition inside the element's shadow root to finish */
+const waitForTransitions = async (element: Element) => {
+  const animations = element.shadowRoot?.getAnimations() ?? [];
+  await Promise.all(animations.map((animation) => animation.finished));
+};
 
 afterEach(() => {
   vi.restoreAllMocks();
@@ -197,5 +214,85 @@ describe('bq-switch', () => {
 
     expect(switchElement.checked).toBe(false);
     expect(form.checkValidity()).toBe(false);
+  });
+
+  it('should map the color variables to the theme role tokens', async () => {
+    const { root } = await render(<bq-switch name="bq-switch" />);
+
+    const hostStyle = getComputedStyle(root);
+    const expectedRoles = {
+      '--bq-switch--dot-color': '--bq-ui--primary',
+      '--bq-switch--dot-color-checked': '--bq-text--on-brand',
+      '--bq-switch--icon-color': '--bq-icon--inverse',
+      '--bq-switch--icon-color-checked': '--bq-text--on-brand',
+      '--bq-switch--label-text-color': '--bq-text--primary',
+      '--bq-switch--track-color': '--bq-ui--tertiary',
+      '--bq-switch--track-color-checked': '--bq-ui--brand',
+    };
+
+    for (const [componentVar, roleVar] of Object.entries(expectedRoles)) {
+      expect(hostStyle.getPropertyValue(componentVar).trim()).toBe(hostStyle.getPropertyValue(roleVar).trim());
+    }
+  });
+
+  it('should paint the unchecked state with the color variables', async () => {
+    const { root } = await render(
+      <bq-switch name="bq-switch" innerLabel="icon">
+        Label
+      </bq-switch>,
+    );
+
+    await waitForStable(root);
+    await waitForTransitions(root);
+
+    expect(computedStyle('bq-switch >>> [part="control"]', ['backgroundColor']).backgroundColor).toBe(
+      resolveColor('var(--bq-ui--tertiary)'),
+    );
+    expect(computedStyle('bq-switch >>> [part="dot"]', ['backgroundColor']).backgroundColor).toBe(
+      resolveColor('var(--bq-ui--primary)'),
+    );
+    expect(computedStyle('bq-switch >>> slot[name="icon-off"]', ['color']).color).toBe(
+      resolveColor('var(--bq-icon--inverse)'),
+    );
+    expect(computedStyle('bq-switch >>> [part="label"]', ['color']).color).toBe(
+      resolveColor('var(--bq-text--primary)'),
+    );
+  });
+
+  it('should paint the checked state with the on-brand color variables', async () => {
+    const { root } = await render(
+      <bq-switch checked name="bq-switch" innerLabel="icon">
+        Label
+      </bq-switch>,
+    );
+
+    await waitForStable(root);
+    await waitForTransitions(root);
+
+    expect(computedStyle('bq-switch >>> [part="control"]', ['backgroundColor']).backgroundColor).toBe(
+      resolveColor('var(--bq-ui--brand)'),
+    );
+    expect(computedStyle('bq-switch >>> [part="dot"]', ['backgroundColor']).backgroundColor).toBe(
+      resolveColor('var(--bq-text--on-brand)'),
+    );
+    expect(computedStyle('bq-switch >>> slot[name="icon-on"]', ['color']).color).toBe(
+      resolveColor('var(--bq-text--on-brand)'),
+    );
+  });
+
+  it('should allow overriding the track and dot color variables', async () => {
+    const { root } = await render(
+      <bq-switch
+        checked
+        name="bq-switch"
+        style={{ '--bq-switch--track-color-checked': 'rgb(1, 2, 3)', '--bq-switch--dot-color-checked': 'rgb(4, 5, 6)' }}
+      />,
+    );
+
+    await waitForStable(root);
+    await waitForTransitions(root);
+
+    expect(computedStyle('bq-switch >>> [part="control"]', ['backgroundColor']).backgroundColor).toBe('rgb(1, 2, 3)');
+    expect(computedStyle('bq-switch >>> [part="dot"]', ['backgroundColor']).backgroundColor).toBe('rgb(4, 5, 6)');
   });
 });
