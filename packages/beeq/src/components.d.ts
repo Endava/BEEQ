@@ -2622,12 +2622,23 @@ export namespace Components {
      * @event bqClick - Callback handler emitted when the step item is clicked
      * @event bqFocus - Callback handler emitted when the step item is focused
      * @event bqBlur - Callback handler emitted when the step item loses focus
+     * @cssprop --bq-step-item--background-hover - Background base colour of the step item hover state (mixed with `--bq-hover` on hover)
+     * @cssprop --bq-step-item--description-color - Text color of the description
      * @cssprop --bq-step-item--prefix-color - Color of the prefix icon
      * @cssprop --bq-step-item--prefix-color-current - Color of the prefix icon when current
      * @cssprop --bq-step-item--prefix-color-completed - Color of the prefix icon when completed
      * @cssprop --bq-step-item--prefix-color-error - Color of the prefix icon when error
      * @cssprop --bq-step-item--prefix-num-size - Size of the prefix number
      * @cssprop --bq-step-item--prefix-num-bg-color - Background color of the prefix number
+     * @cssprop --bq-step-item--prefix-num-bg-color-current - Background color of the prefix number when current
+     * @cssprop --bq-step-item--prefix-num-bg-color-completed - Background color of the prefix number when completed
+     * @cssprop --bq-step-item--prefix-num-bg-color-error - Background color of the prefix number when error
+     * @cssprop --bq-step-item--prefix-num-text-color - Text color of the prefix number
+     * @cssprop --bq-step-item--prefix-num-text-color-current - Text color of the prefix number when current
+     * @cssprop --bq-step-item--prefix-num-text-color-completed - Text color of the prefix number when completed
+     * @cssprop --bq-step-item--prefix-num-text-color-error - Text color of the prefix number when error
+     * @cssprop --bq-step-item--title-color - Text color of the title
+     * @cssprop --bq-step-item--title-color-current - Text color of the title when current
      */
     interface BqStepItem {
         /**
@@ -5205,12 +5216,23 @@ declare global {
      * @event bqClick - Callback handler emitted when the step item is clicked
      * @event bqFocus - Callback handler emitted when the step item is focused
      * @event bqBlur - Callback handler emitted when the step item loses focus
+     * @cssprop --bq-step-item--background-hover - Background base colour of the step item hover state (mixed with `--bq-hover` on hover)
+     * @cssprop --bq-step-item--description-color - Text color of the description
      * @cssprop --bq-step-item--prefix-color - Color of the prefix icon
      * @cssprop --bq-step-item--prefix-color-current - Color of the prefix icon when current
      * @cssprop --bq-step-item--prefix-color-completed - Color of the prefix icon when completed
      * @cssprop --bq-step-item--prefix-color-error - Color of the prefix icon when error
      * @cssprop --bq-step-item--prefix-num-size - Size of the prefix number
      * @cssprop --bq-step-item--prefix-num-bg-color - Background color of the prefix number
+     * @cssprop --bq-step-item--prefix-num-bg-color-current - Background color of the prefix number when current
+     * @cssprop --bq-step-item--prefix-num-bg-color-completed - Background color of the prefix number when completed
+     * @cssprop --bq-step-item--prefix-num-bg-color-error - Background color of the prefix number when error
+     * @cssprop --bq-step-item--prefix-num-text-color - Text color of the prefix number
+     * @cssprop --bq-step-item--prefix-num-text-color-current - Text color of the prefix number when current
+     * @cssprop --bq-step-item--prefix-num-text-color-completed - Text color of the prefix number when completed
+     * @cssprop --bq-step-item--prefix-num-text-color-error - Text color of the prefix number when error
+     * @cssprop --bq-step-item--title-color - Text color of the title
+     * @cssprop --bq-step-item--title-color-current - Text color of the title when current
      */
     interface HTMLBqStepItemElement extends Components.BqStepItem, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqStepItemElementEventMap>(type: K, listener: (this: HTMLBqStepItemElement, ev: BqStepItemCustomEvent<HTMLBqStepItemElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -8508,12 +8530,23 @@ declare namespace LocalJSX {
      * @event bqClick - Callback handler emitted when the step item is clicked
      * @event bqFocus - Callback handler emitted when the step item is focused
      * @event bqBlur - Callback handler emitted when the step item loses focus
+     * @cssprop --bq-step-item--background-hover - Background base colour of the step item hover state (mixed with `--bq-hover` on hover)
+     * @cssprop --bq-step-item--description-color - Text color of the description
      * @cssprop --bq-step-item--prefix-color - Color of the prefix icon
      * @cssprop --bq-step-item--prefix-color-current - Color of the prefix icon when current
      * @cssprop --bq-step-item--prefix-color-completed - Color of the prefix icon when completed
      * @cssprop --bq-step-item--prefix-color-error - Color of the prefix icon when error
      * @cssprop --bq-step-item--prefix-num-size - Size of the prefix number
      * @cssprop --bq-step-item--prefix-num-bg-color - Background color of the prefix number
+     * @cssprop --bq-step-item--prefix-num-bg-color-current - Background color of the prefix number when current
+     * @cssprop --bq-step-item--prefix-num-bg-color-completed - Background color of the prefix number when completed
+     * @cssprop --bq-step-item--prefix-num-bg-color-error - Background color of the prefix number when error
+     * @cssprop --bq-step-item--prefix-num-text-color - Text color of the prefix number
+     * @cssprop --bq-step-item--prefix-num-text-color-current - Text color of the prefix number when current
+     * @cssprop --bq-step-item--prefix-num-text-color-completed - Text color of the prefix number when completed
+     * @cssprop --bq-step-item--prefix-num-text-color-error - Text color of the prefix number when error
+     * @cssprop --bq-step-item--title-color - Text color of the title
+     * @cssprop --bq-step-item--title-color-current - Text color of the title when current
      */
     interface BqStepItem {
         /**
@@ -11049,12 +11082,23 @@ declare module "@stencil/core" {
              * @event bqClick - Callback handler emitted when the step item is clicked
              * @event bqFocus - Callback handler emitted when the step item is focused
              * @event bqBlur - Callback handler emitted when the step item loses focus
+             * @cssprop --bq-step-item--background-hover - Background base colour of the step item hover state (mixed with `--bq-hover` on hover)
+             * @cssprop --bq-step-item--description-color - Text color of the description
              * @cssprop --bq-step-item--prefix-color - Color of the prefix icon
              * @cssprop --bq-step-item--prefix-color-current - Color of the prefix icon when current
              * @cssprop --bq-step-item--prefix-color-completed - Color of the prefix icon when completed
              * @cssprop --bq-step-item--prefix-color-error - Color of the prefix icon when error
              * @cssprop --bq-step-item--prefix-num-size - Size of the prefix number
              * @cssprop --bq-step-item--prefix-num-bg-color - Background color of the prefix number
+             * @cssprop --bq-step-item--prefix-num-bg-color-current - Background color of the prefix number when current
+             * @cssprop --bq-step-item--prefix-num-bg-color-completed - Background color of the prefix number when completed
+             * @cssprop --bq-step-item--prefix-num-bg-color-error - Background color of the prefix number when error
+             * @cssprop --bq-step-item--prefix-num-text-color - Text color of the prefix number
+             * @cssprop --bq-step-item--prefix-num-text-color-current - Text color of the prefix number when current
+             * @cssprop --bq-step-item--prefix-num-text-color-completed - Text color of the prefix number when completed
+             * @cssprop --bq-step-item--prefix-num-text-color-error - Text color of the prefix number when error
+             * @cssprop --bq-step-item--title-color - Text color of the title
+             * @cssprop --bq-step-item--title-color-current - Text color of the title when current
              */
             "bq-step-item": LocalJSX.IntrinsicElements["bq-step-item"] & JSXBase.HTMLAttributes<HTMLBqStepItemElement>;
             /**
