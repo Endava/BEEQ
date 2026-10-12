@@ -120,14 +120,14 @@ The base step is tuned to be recognizable as a fill, not to be readable as text.
         <Color.Item name="brand" value="#ff5640" />
         <Color.Item name="brand-dark" value="#423339" />
         <Color.Item name="brand-strong" value="#c33600" />
-        <Color.Item name="brand-bright" value="#ffb3a9" />
+        <Color.Item name="brand-bright" value="#ff8979" />
       </Color.Row>
       <Color.Row title="Accent">
         <Color.Item name="accent-light" value="#ffeeec" />
         <Color.Item name="accent" value="#ff5640" />
         <Color.Item name="accent-dark" value="#423339" />
         <Color.Item name="accent-strong" value="#c33600" />
-        <Color.Item name="accent-bright" value="#ffb3a9" />
+        <Color.Item name="accent-bright" value="#ff8979" />
       </Color.Row>
       <Color.Row title="Info">
         <Color.Item name="info-light" value="#ecf1f4" />
@@ -616,6 +616,7 @@ Some pairs are deliberately outside these guarantees:
 
 - `--bq-stroke--primary` is decorative and `--bq-stroke--secondary` marks subtle or disabled borders, so neither carries the 3:1 non-text requirement. Use `--bq-stroke--tertiary` for borders that identify an interactive control.
 - In the Endava theme, `--bq-text--secondary` is only legible on `primary` and `secondary` surfaces. Don't place it on `--bq-background--tertiary` or `--bq-background--alt`.
+- In the Endava theme, dark-mode `--bq-text--brand` and `--bq-text--accent` (`#FF8979`) stay close to the Red Orange used on [endava.com](https://www.endava.com). They meet 4.5:1 on every surface above but reach only APCA Lc 48–56, so use them for links, labels, and bold text rather than long passages.
 
 <Warning>
   **Endava brand fills are a large-text exception.** White on Endava Red Orange (`#FF5640`) is **3.15:1**, so `--bq-text--on-brand` and `--bq-text--on-accent` meet AA only for large text (24px, or 18.66px bold) and non-text UI. Keep labels on Endava brand fills large, or darken the fill for your app:
