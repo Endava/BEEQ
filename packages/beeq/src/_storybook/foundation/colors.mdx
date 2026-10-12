@@ -19,6 +19,11 @@ import { capitalize, getVariableValue } from './helper';
       They represent the cornerstone of our visual identity and is carefully selected to reflect our brand's essence and values.
       Use the brand color judiciously to create a strong and cohesive visual language.
 
+      Every intent (brand, accent, success, danger, warning and info) ships five steps, each with a single job:
+      `-light` is the subtle tint in light mode, the base step is the solid fill, `-dark` is the subtle tint in dark mode,
+      `-strong` is text, icon and stroke on light surfaces, and `-bright` is text, icon and stroke on dark surfaces.
+      Components never read these steps directly; they read the mode roles below (`--bq-text--brand`, `--bq-ui--success-alt`, ...).
+
       {Object.entries({ brand }).map(([name, values]) => (
         <ColorItem name={name} values={values} />
       ))}
@@ -50,13 +55,25 @@ import { capitalize, getVariableValue } from './helper';
 
       These are used to create a consistent and harmonious visual language across the interface. They are used to create a clear distinction between different elements and to guide the user through the interface.
 
-      {Object.entries({ ui, text, icon, stroke }).map(([name, values]) => (
+      {[
+        ['UI', ui],
+        ['UI intents', uiIntents],
+        ['Text', text],
+        ['Text intents', textIntents],
+        ['Text on intent fills', textOnIntents],
+        ['Icon', icon],
+        ['Icon intents', iconIntents],
+        ['Stroke', stroke],
+        ['Stroke intents', strokeIntents],
+        ['Interaction states', states],
+      ].map(([name, values]) => (
         <ColorItem name={name} values={values} />
       ))}
 
       <Subtitle>System colors</Subtitle>
 
       System colors are used to convey information to the user. They are used to indicate the status of an action or to provide feedback to the user.
+      Info is its own intent and never depends on brand, so rebranding a theme doesn't change informational messages.
 
       {Object.entries({ success, danger, warning, info }).map(([name, values]) => (
         <ColorItem name={name} values={values} />
@@ -97,17 +114,26 @@ export const ColorItem = ({ name, values }) => (
   </div>
 );
 
-export const brand = ['bq-brand-light', 'bq-brand', 'bq-brand-dark'];
-export const accent = ['bq-accent-light', 'bq-accent', 'bq-accent-dark'];
+const intentSteps = (intent) => ['light', '', 'dark', 'strong', 'bright'].map((step) => (step ? `bq-${intent}-${step}` : `bq-${intent}`));
+const intents = ['brand', 'accent', 'info', 'success', 'warning', 'danger'];
+
+export const brand = intentSteps('brand');
+export const accent = intentSteps('accent');
 export const background = ['bq-background--primary', 'bq-background--secondary', 'bq-background--tertiary', 'bq-background--alt', 'bq-background--inverse', 'bq-background--brand', 'bq-background--overlay'];
-export const ui = ['bq-ui--primary', 'bq-ui--secondary', 'bq-ui--tertiary', 'bq-ui--inverse', 'bq-ui--brand', 'bq-ui--brand-alt', 'bq-ui--alt'];
-export const text = ['bq-text--primary', 'bq-text--secondary', 'bq-text--inverse', 'bq-text--brand', 'bq-text--alt'];
-export const icon = ['bq-icon--primary', 'bq-icon--alt', 'bq-icon--secondary', 'bq-icon--inverse', 'bq-icon--brand'];
-export const stroke = ['bq-stroke--primary', 'bq-stroke--secondary', 'bq-stroke--tertiary', 'bq-stroke--inverse', 'bq-stroke--brand', 'bq-stroke--alt'];
-export const success = ['bq-success-light', 'bq-success', 'bq-success-dark'];
-export const danger = ['bq-danger-light', 'bq-danger', 'bq-danger-dark'];
-export const warning = ['bq-warning-light', 'bq-warning', 'bq-warning-dark'];
-export const info = ['bq-info-light', 'bq-info', 'bq-info-dark'];
+export const ui = ['bq-ui--primary', 'bq-ui--secondary', 'bq-ui--tertiary', 'bq-ui--inverse', 'bq-ui--alt'];
+export const uiIntents = intents.flatMap((intent) => [`bq-ui--${intent}`, `bq-ui--${intent}-alt`]);
+export const text = ['bq-text--primary', 'bq-text--secondary', 'bq-text--inverse', 'bq-text--alt'];
+export const textIntents = intents.map((intent) => `bq-text--${intent}`);
+export const textOnIntents = intents.map((intent) => `bq-text--on-${intent}`);
+export const icon = ['bq-icon--primary', 'bq-icon--alt', 'bq-icon--secondary', 'bq-icon--inverse'];
+export const iconIntents = intents.map((intent) => `bq-icon--${intent}`);
+export const stroke = ['bq-stroke--primary', 'bq-stroke--secondary', 'bq-stroke--tertiary', 'bq-stroke--inverse', 'bq-stroke--alt'];
+export const strokeIntents = [...intents.map((intent) => `bq-stroke--${intent}`), 'bq-stroke--brand-alt'];
+export const states = ['bq-hover', 'bq-active', 'bq-focus'];
+export const success = intentSteps('success');
+export const danger = intentSteps('danger');
+export const warning = intentSteps('warning');
+export const info = intentSteps('info');
 export const whiteBlack = ['bq-white', 'bq-black'];
 export const neutral = ['bq-neutral-50', 'bq-neutral-100', 'bq-neutral-200', 'bq-neutral-300', 'bq-neutral-400', 'bq-neutral-500', 'bq-neutral-600', 'bq-neutral-700', 'bq-neutral-800', 'bq-neutral-900', 'bq-neutral-950', 'bq-neutral-1000'];
 export const data = ['bq-data-01', 'bq-data-02', 'bq-data-03', 'bq-data-04', 'bq-data-05', 'bq-data-06', 'bq-data-07', 'bq-data-08', 'bq-data-09', 'bq-data-10', 'bq-data-11', 'bq-data-12'];
