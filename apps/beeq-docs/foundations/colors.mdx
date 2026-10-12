@@ -622,12 +622,12 @@ Some pairs are deliberately outside these guarantees:
 
   ```css
   :root[bq-theme="endava"] {
-    --bq-ui--brand: var(--bq-brand-strong);
-    --bq-ui--accent: var(--bq-accent-strong);
+    --bq-ui--brand: #d63b10;
+    --bq-ui--accent: #d63b10;
   }
   ```
 
-  With `--bq-brand-strong` (`#C33600`), white text reaches 5.46:1 at rest, and more on hover and active.
+  `#D63B10` is the brand-contrast orange used on [endava.com](https://www.endava.com). White text on it reaches 4.67:1 at rest, and more on hover and active. For more contrast, use `var(--bq-brand-strong)` (`#C33600`, 5.46:1).
 </Warning>
 
 <Tip>

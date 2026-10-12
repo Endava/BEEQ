@@ -541,16 +541,16 @@ The `endava` theme follows the [Endava brand portal](https://brand.endava.com/vi
 - **Data colors:** come from the brand portal palette. The brand asks for primary colors and Solid Blue shades first, so start charts with `--bq-data-01` (Red Orange), `--bq-data-11` (Solid Blue), `--bq-data-12` (white), and `--bq-neutral-*` shades. Add `--bq-data-02` to `--bq-data-10` only when you need more series.
 
 <Warning>
-  White text on Red Orange is **3.15:1**, below the 4.5:1 minimum for normal text. BEEQ keeps it for `--bq-text--on-brand` and `--bq-text--on-accent` to match the brand, so only use it for large text (24px, or 18.66px bold) and non-text UI elements. The brand guide applies the same limit and excludes Solid Blue on Red Orange, so white is the only on-color the brand allows. If your product needs 4.5:1 on brand fills, switch the fills to the strong step:
+  White text on Red Orange is **3.15:1**, below the 4.5:1 minimum for normal text. BEEQ keeps it for `--bq-text--on-brand` and `--bq-text--on-accent` to match the brand, so only use it for large text (24px, or 18.66px bold) and non-text UI elements. The brand guide applies the same limit and excludes Solid Blue on Red Orange, so white is the only on-color the brand allows. If your product needs 4.5:1 on brand fills, use the darker brand-contrast orange from [endava.com](https://www.endava.com):
 
   ```css
   :root[bq-theme="endava"] {
-    --bq-ui--brand:  var(--bq-brand-strong);
-    --bq-ui--accent: var(--bq-accent-strong);
+    --bq-ui--brand:  #d63b10;
+    --bq-ui--accent: #d63b10;
   }
   ```
 
-  White on `#C33600` is 5.46:1 at rest, 6.36:1 on hover, and 7.01:1 on active.
+  White on `#D63B10` is 4.67:1 at rest, 5.61:1 on hover, and 6.16:1 on active. For more contrast, use `var(--bq-brand-strong)` (`#C33600`) instead: 5.46:1 at rest, 6.36:1 on hover, and 7.01:1 on active.
 </Warning>
 
 <Note>
