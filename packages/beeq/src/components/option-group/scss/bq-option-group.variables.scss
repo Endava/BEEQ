@@ -14,7 +14,7 @@
   * @prop --bq-option-group--label-text-padding-end - option group text within label padding start
   * @prop --bq-option-group--container-padding-start - option group container padding start
   */
-  --bq-option-group--background: theme(backgroundColor.ui.primary);
+  --bq-option-group--background: var(--bq-ui--primary);
   --bq-option-group--font-size: theme(fontSize.s);
   --bq-option-group--line-height: theme(lineHeight.regular);
 
