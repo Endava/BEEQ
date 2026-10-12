@@ -2564,6 +2564,7 @@ export namespace Components {
      * @cssprop --bq-spinner--medium-text-fontSize - Spinner medium text font size
      * @cssprop --bq-spinner--small-text-fontSize - Spinner small text font size
      * @cssprop --bq-spinner--text-lineHeight - Spinner text line height
+     * @cssprop --bq-spinner--text-color - Spinner text color
      */
     interface BqSpinner {
         /**
@@ -5171,6 +5172,7 @@ declare global {
      * @cssprop --bq-spinner--medium-text-fontSize - Spinner medium text font size
      * @cssprop --bq-spinner--small-text-fontSize - Spinner small text font size
      * @cssprop --bq-spinner--text-lineHeight - Spinner text line height
+     * @cssprop --bq-spinner--text-color - Spinner text color
      */
     interface HTMLBqSpinnerElement extends Components.BqSpinner, HTMLStencilElement {
     }
@@ -8484,6 +8486,7 @@ declare namespace LocalJSX {
      * @cssprop --bq-spinner--medium-text-fontSize - Spinner medium text font size
      * @cssprop --bq-spinner--small-text-fontSize - Spinner small text font size
      * @cssprop --bq-spinner--text-lineHeight - Spinner text line height
+     * @cssprop --bq-spinner--text-color - Spinner text color
      */
     interface BqSpinner {
         /**
@@ -11064,6 +11067,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-spinner--medium-text-fontSize - Spinner medium text font size
              * @cssprop --bq-spinner--small-text-fontSize - Spinner small text font size
              * @cssprop --bq-spinner--text-lineHeight - Spinner text line height
+             * @cssprop --bq-spinner--text-color - Spinner text color
              */
             "bq-spinner": LocalJSX.IntrinsicElements["bq-spinner"] & JSXBase.HTMLAttributes<HTMLBqSpinnerElement>;
             /**

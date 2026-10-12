@@ -44,6 +44,7 @@ import { SPINNER_SIZE, SPINNER_TEXT_POSITION } from './bq-spinner.types';
  * @cssprop --bq-spinner--medium-text-fontSize - Spinner medium text font size
  * @cssprop --bq-spinner--small-text-fontSize - Spinner small text font size
  * @cssprop --bq-spinner--text-lineHeight - Spinner text line height
+ * @cssprop --bq-spinner--text-color - Spinner text color
  */
 @Component({
   tag: 'bq-spinner',
@@ -232,7 +233,7 @@ export class BqSpinner {
         </span>
         <span
           class={{
-            'bq-spinner--text font-medium text-primary leading-regular': true,
+            'bq-spinner--text font-medium text-[color:--bq-spinner--text-color] leading-regular': true,
             '!hidden': !this.isTextDisplayed,
           }}
           part="text"
