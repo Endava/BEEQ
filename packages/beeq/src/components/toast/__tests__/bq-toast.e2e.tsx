@@ -3,6 +3,16 @@ import { describe, expect, it, render } from '@stencil/vitest';
 
 import { computedStyle } from '../../../shared/test-utils/computedStyle';
 
+/** Resolves a CSS color value (e.g. `var(--bq-icon--info)`) to its computed `rgb()` form */
+const resolveColor = (value: string): string => {
+  const probe = document.createElement('div');
+  probe.style.color = value;
+  document.body.appendChild(probe);
+  const { color } = getComputedStyle(probe);
+  probe.remove();
+  return color;
+};
+
 describe('bq-toast', () => {
   it('should render', async () => {
     const { root } = await render(<bq-toast />);
@@ -166,5 +176,42 @@ describe('bq-toast', () => {
 
     expect(toast).toEqualAttribute('aria-hidden', 'true');
     expect(toast).toEqualAttribute('hidden', 'true');
+  });
+
+  it('should map the icon color variables to the icon role tokens', async () => {
+    const { root } = await render(<bq-toast>Text</bq-toast>);
+
+    const hostStyle = getComputedStyle(root);
+    const roles = {
+      alert: 'warning',
+      custom: 'primary',
+      error: 'danger',
+      info: 'info',
+      loading: 'brand',
+      success: 'success',
+    };
+
+    Object.entries(roles).forEach(([type, role]) => {
+      expect(hostStyle.getPropertyValue(`--bq-toast--icon-color-${type}`).trim()).toBe(
+        hostStyle.getPropertyValue(`--bq-icon--${role}`).trim(),
+      );
+    });
+  });
+
+  it('should use the info icon token (not brand) for `type="info"`', async () => {
+    await render(<bq-toast type="info">Text</bq-toast>);
+
+    const { color } = computedStyle('bq-toast >>> [part="icon"]', ['color']);
+
+    expect(color).toBe(resolveColor('var(--bq-icon--info)'));
+    expect(color).not.toBe(resolveColor('var(--bq-icon--brand)'));
+  });
+
+  it('should use the brand icon token for `type="loading"`', async () => {
+    await render(<bq-toast type="loading">Text</bq-toast>);
+
+    const { color } = computedStyle('bq-toast >>> [part="icon"]', ['color']);
+
+    expect(color).toBe(resolveColor('var(--bq-icon--brand)'));
   });
 });
