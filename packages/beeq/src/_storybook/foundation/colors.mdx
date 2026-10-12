@@ -114,8 +114,8 @@ export const ColorItem = ({ name, values }) => (
   </div>
 );
 
-const intentSteps = (intent) => ['light', '', 'dark', 'strong', 'bright'].map((step) => (step ? `bq-${intent}-${step}` : `bq-${intent}`));
-const intents = ['brand', 'accent', 'info', 'success', 'warning', 'danger'];
+export const intentSteps = (intent) => ['light', '', 'dark', 'strong', 'bright'].map((step) => (step ? `bq-${intent}-${step}` : `bq-${intent}`));
+export const intents = ['brand', 'accent', 'info', 'success', 'warning', 'danger'];
 
 export const brand = intentSteps('brand');
 export const accent = intentSteps('accent');
