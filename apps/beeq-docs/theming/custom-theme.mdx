@@ -30,7 +30,7 @@ To create a custom theme, override BEEQ's root semantics — the brand, intent, 
       --bq-brand:        var(--bq-purple-600);
       --bq-brand-dark:   var(--bq-purple-1000);
       --bq-brand-strong: var(--bq-purple-600); /* text, icons, strokes on light surfaces */
-      --bq-brand-bright: var(--bq-purple-400); /* text, icons, strokes on dark surfaces */
+      --bq-brand-bright: var(--bq-purple-300); /* text, icons, strokes on dark surfaces */
 
       /* Override the neutral scale if needed */
       --bq-neutral-50:  var(--bq-grey-50);
@@ -1401,6 +1401,7 @@ BEEQ's own themes are checked by an automated contrast test. When you bring your
 | --- | --- |
 | `--bq-{intent}-strong` (light mode) and `--bq-{intent}-bright` (dark mode) on `--bq-background--primary`, `--bq-background--secondary`, `--bq-ui--primary`, `--bq-ui--secondary` | 4.5:1 |
 | `--bq-text--{intent}` on its tint, `--bq-ui--{intent}-alt` | 4.5:1 |
+| `--bq-{intent}-bright` on the dark surfaces above and on `--bq-ui--{intent}-alt` | APCA Lc 60 |
 | `--bq-text--on-{intent}` on `--bq-ui--{intent}` at rest | 4.5:1 |
 | `--bq-text--on-{intent}` on the hover and active mixes of `--bq-ui--{intent}` (20% `--bq-hover` / `--bq-active`) | 4.5:1 |
 | `--bq-text--primary` and `--bq-text--secondary` on primary and secondary surfaces | 4.5:1 |

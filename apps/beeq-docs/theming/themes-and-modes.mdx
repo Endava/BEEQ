@@ -535,8 +535,9 @@ Here is a working example showing how to read the user's preferred color scheme 
 The `endava` theme follows the [Endava brand portal](https://brand.endava.com/visual/colours), the Endava brand guide, and the color tokens used on [endava.com](https://www.endava.com). It keeps the brand's colors wherever they meet [WCAG 2.1 Level AA](/foundations/colors#accessibility), and uses a nearby shade where they don't.
 
 - **Brand and accent:** Red Orange `#FF5640` is the brand fill. Accent aliases the brand, so `--bq-accent-*` matches `--bq-brand-*`.
-- **Brand text:** `--bq-brand-strong` is `#C33600` (light mode text, icons, strokes, and focus). `--bq-brand-bright` is `#FF8979` (dark mode).
-- **Neutrals and info:** Solid Blue `#192B37` is the darkest neutral (`--bq-neutral-950`), `--bq-black`, and the info color in light mode. In dark mode, info is white (`--bq-info-bright`).
+- **Brand text:** `--bq-brand-strong` is `#C33600` (light mode text, icons, strokes, and focus). `--bq-brand-bright` is `#FFB3A9` (dark mode).
+- **Neutrals:** Solid Blue `#192B37` is the darkest neutral (`--bq-neutral-950`) and `--bq-black`.
+- **Info:** uses the endava.com accent blues so it stays distinct from neutral UI. Mid Blue `#417191` is the light mode fill, `#3B6684` is light mode text, and `#9DCFF0` (a tint of Bright Blue `#68B5E8`) is dark mode text and fill.
 - **Dark mode fills:** info, success, warning, and danger fills use their `-bright` step, with Solid Blue as the on-color.
 - **Data colors:** come from the brand portal palette. The brand asks for primary colors and Solid Blue shades first, so start charts with `--bq-data-01` (Red Orange), `--bq-data-11` (Solid Blue), `--bq-data-12` (white), and `--bq-neutral-*` shades. Add `--bq-data-02` to `--bq-data-10` only when you need more series.
 
@@ -563,19 +564,21 @@ The `endava` theme follows the [Endava brand portal](https://brand.endava.com/vi
 | Brand value | BEEQ value | Reason |
 | --- | --- | --- |
 | Light brand text `#E03E00` (kit), `#D63B10` (endava.com) | `--bq-brand-strong` `#C33600` | `#E03E00` is 4.32:1 on white. `#D63B10` passes on white (4.67:1) but not on Blue 10 (3.87:1) or the brand tint (4.16:1), where BEEQ also shows brand text. |
-| Dark brand text Red Orange | `--bq-brand-bright` `#FF8979` | Red Orange is 3.40:1 on the dark secondary surface. |
+| Dark brand text Red Orange | `--bq-brand-bright` `#FFB3A9` (45% Red Orange tint) | Red Orange is 3.40:1 on the dark secondary surface. Lighter tints up to `#FFAAA0` pass WCAG but stay under APCA Lc 60 on Blue 90. |
 | Warning text `#C77905` | `--bq-warning-strong` `#975C04` | `#C77905` is 3.41:1 on white. |
-| Light warning fill `#EB9410` | Warning fill `#F99C11` in both modes | Solid Blue on `#EB9410` drops to 4.33:1 when active. |
+| Light warning fill `#EB9410` | Warning fill `#F99C11` in light mode | Solid Blue on `#EB9410` drops to 4.33:1 when active. |
+| Dark success and warning `#3DD17B` / `#F99C11` | `--bq-success-bright` `#6EDC9C` / `--bq-warning-bright` `#FBBA58` (25% / 30% white tints), for dark text, icons, strokes, and fills | WCAG passes, but on Blue 90 they reach only APCA Lc 55 / 51, below the Lc 60 minimum for body text. |
 | Light success fill `#2D9C5B` | Success fill `#26864E` | Neither white (3.49:1) nor Solid Blue (4.17:1) passes on `#2D9C5B`. |
 | Light success / warning borders `#2D9C5B` / `#EB9410` | `--bq-stroke--success` / `--bq-stroke--warning` use the strong step (`#1D633A` / `#975C04`) | On Blue 10, `#2D9C5B` is 2.89:1 and `#EB9410` is 1.98:1, below the 3:1 minimum for borders. |
-| Dark danger `#E84641` | `--bq-danger-bright` `#F2958F` | `#E84641` is 3.73:1 on Solid Blue and fails as a fill with either on-color. |
+| Dark danger `#E84641` | `--bq-danger-bright` `#F6B5B3` (60% white tint) | `#E84641` is 3.73:1 on Solid Blue and fails as a fill with either on-color. `#F6B5B3` also reaches APCA Lc 60 on Blue 90. |
 | Hover and active colors | `color-mix()` with `--bq-hover` / `--bq-active` | Same state model as the default theme. |
 | Disabled colors | Opacity set per component | Same state model as the default theme. |
 | Dark secondary / tertiary surfaces Blue 80 / Blue 60 | Blue 90 `#30404B` / Blue 80 `#47555F` | Secondary text fails on Blue 60. |
 | Shades only for Solid Blue | Red Orange tints and shades (`--bq-brand-light`, `-dark`, `-strong`, `-bright`) | Brand text needs darker or lighter shades to reach 4.5:1, and selected states need a subtle tint. |
 | Red Orange icons | `--bq-icon--brand` uses `--bq-brand-strong` (light) and `--bq-brand-bright` (dark) | Red Orange is 2.61:1 on Blue 10 and 2.81:1 on the light brand tint, below the 3:1 minimum for icons. |
 | White on Red Orange only for call-to-action boxes and large text | White on all brand fills, including small button labels | Solid Blue on Red Orange is excluded by the brand, so white is the only brand on-color. See the warning above. |
-| Illustration accent colors | Not included | The brand portal limits them to illustrations. |
+| Info icon and text Solid Blue (light) / white (dark), from the kit and endava.com | `--bq-info-*` built from the endava.com accent blues: Mid Blue `#417191` (light fill), `#3B6684` (light text), `#9DCFF0` (dark text and fill) | Solid Blue and white are also the neutral colors, so info alerts, notifications, and tags looked neutral. |
+| Illustration accent colors | Only Mid Blue and Bright Blue, for info | The brand portal limits them to illustrations. BEEQ uses the two blues for info only; the other accent colors are not included. |
 </Accordion>
 
 ---
