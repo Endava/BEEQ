@@ -1,6 +1,6 @@
 import { h } from '@stencil/core';
-import { afterEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
-import { userEvent } from 'vitest/browser';
+import { afterEach, beforeEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
+import { cdp, userEvent } from 'vitest/browser';
 
 import { computedStyle } from '../../../shared/test-utils/computedStyle';
 import { getTextContent } from '../../../shared/utils/slot';
@@ -8,8 +8,38 @@ import { getTextContent } from '../../../shared/utils/slot';
 const getButtonElement = (button: HTMLBqButtonElement) =>
   button.shadowRoot?.querySelector<HTMLAnchorElement | HTMLButtonElement>('[part="button"]');
 
+/** Resolves a CSS color value (e.g. `var(--bq-ui--brand)`) to its computed `rgb()` form */
+const resolveColor = (value: string): string => {
+  const probe = document.createElement('div');
+  probe.style.color = value;
+  document.body.appendChild(probe);
+  const { color } = getComputedStyle(probe);
+  probe.remove();
+  return color;
+};
+
+/** Waits for any running CSS transition inside the element's shadow root to finish */
+const waitForTransitions = async (element: Element) => {
+  const animations = element.shadowRoot?.getAnimations() ?? [];
+  await Promise.all(animations.map((animation) => animation.finished));
+};
+
 afterEach(() => {
   vi.restoreAllMocks();
+});
+
+// Hover/click tests leave the Playwright cursor where they finished, so a freshly rendered element can
+// render under it and pick up `:hover` styles. Before each test, park the cursor in the bottom-right corner
+// of the top-level page (CDP coordinates), which lies outside the scaled test iframe.
+const movePointerOff = () =>
+  cdp().send('Input.dispatchMouseEvent', {
+    type: 'mouseMoved',
+    x: window.top.innerWidth - 1,
+    y: window.top.innerHeight - 1,
+  });
+
+beforeEach(async () => {
+  await movePointerOff();
 });
 
 describe('bq-button', () => {
@@ -352,5 +382,103 @@ describe('bq-button', () => {
     expect(smallGhost.height).toBe(smallDefault.height);
     expect(mediumGhost.height).toBe(mediumDefault.height);
     expect(largeGhost.height).toBe(largeDefault.height);
+  });
+
+  it('should map the color variables to the theme role tokens', async () => {
+    const { root } = await render(<bq-button>Button</bq-button>);
+
+    const hostStyle = getComputedStyle(root);
+    const expectedRoles = {
+      '--bq-button--primary-background': '--bq-ui--brand',
+      '--bq-button--primary-text-color': '--bq-text--on-brand',
+      '--bq-button--primary-border-color-ghost': '--bq-stroke--brand',
+      '--bq-button--primary-text-color-ghost': '--bq-text--brand',
+      '--bq-button--primary-background-danger': '--bq-ui--danger',
+      '--bq-button--primary-text-color-danger': '--bq-text--on-danger',
+      '--bq-button--secondary-background': '--bq-ui--secondary',
+      '--bq-button--secondary-text-color': '--bq-text--primary',
+      '--bq-button--secondary-border-color-ghost': '--bq-stroke--tertiary',
+      '--bq-button--secondary-text-color-ghost': '--bq-text--primary',
+      '--bq-button--link-text-color': '--bq-text--brand',
+      '--bq-button--text-text-color': '--bq-text--primary',
+    };
+
+    for (const [componentVar, roleVar] of Object.entries(expectedRoles)) {
+      expect(hostStyle.getPropertyValue(componentVar).trim()).toBe(hostStyle.getPropertyValue(roleVar).trim());
+    }
+  });
+
+  it('should paint each appearance and variant with its color variables', async () => {
+    const { root } = await render(
+      <div>
+        <bq-button id="primary">Button</bq-button>
+        <bq-button id="primary-ghost" variant="ghost">
+          Button
+        </bq-button>
+        <bq-button id="primary-danger" variant="danger">
+          Button
+        </bq-button>
+        <bq-button id="secondary" appearance="secondary">
+          Button
+        </bq-button>
+        <bq-button id="secondary-ghost" appearance="secondary" variant="ghost">
+          Button
+        </bq-button>
+        <bq-button id="link" appearance="link">
+          Button
+        </bq-button>
+        <bq-button id="text" appearance="text">
+          Button
+        </bq-button>
+      </div>,
+    );
+
+    await waitForStable(root);
+    const buttons = Array.from(root.querySelectorAll<HTMLBqButtonElement>('bq-button'));
+    await Promise.all(buttons.map((button) => waitForTransitions(button)));
+
+    const styleProps = ['backgroundColor', 'color', 'borderTopColor'] as const;
+
+    expect(computedStyle('#primary >>> [part="button"]', ['backgroundColor', 'color'])).toEqual({
+      backgroundColor: resolveColor('var(--bq-ui--brand)'),
+      color: resolveColor('var(--bq-text--on-brand)'),
+    });
+    expect(computedStyle('#primary-ghost >>> [part="button"]', ['color', 'borderTopColor'])).toEqual({
+      color: resolveColor('var(--bq-text--brand)'),
+      borderTopColor: resolveColor('var(--bq-stroke--brand)'),
+    });
+    expect(computedStyle('#primary-danger >>> [part="button"]', ['backgroundColor', 'color'])).toEqual({
+      backgroundColor: resolveColor('var(--bq-ui--danger)'),
+      color: resolveColor('var(--bq-text--on-danger)'),
+    });
+    expect(computedStyle('#secondary >>> [part="button"]', ['backgroundColor', 'color'])).toEqual({
+      backgroundColor: resolveColor('var(--bq-ui--secondary)'),
+      color: resolveColor('var(--bq-text--primary)'),
+    });
+    expect(computedStyle('#secondary-ghost >>> [part="button"]', styleProps)).toEqual({
+      backgroundColor: 'rgba(0, 0, 0, 0)',
+      color: resolveColor('var(--bq-text--primary)'),
+      borderTopColor: resolveColor('var(--bq-stroke--tertiary)'),
+    });
+    expect(computedStyle('#link >>> [part="button"]', ['color']).color).toBe(resolveColor('var(--bq-text--brand)'));
+    expect(computedStyle('#text >>> [part="button"]', ['color']).color).toBe(resolveColor('var(--bq-text--primary)'));
+  });
+
+  it('should allow overriding the color variables', async () => {
+    const { root } = await render(
+      <bq-button
+        style={{ '--bq-button--primary-background': 'rgb(1, 2, 3)', '--bq-button--primary-text-color': 'rgb(4, 5, 6)' }}
+      >
+        Button
+      </bq-button>,
+    );
+
+    await waitForStable(root);
+    await waitForTransitions(root);
+
+    expect(computedStyle('bq-button >>> [part="button"]', ['backgroundColor', 'color'])).toEqual({
+      backgroundColor: 'rgb(1, 2, 3)',
+      color: 'rgb(4, 5, 6)',
+    });
   });
 });

@@ -40,15 +40,15 @@
 /* -------------------------------------------------------------------------- */
 
 .bq-button--primary {
-  @apply bg-ui-brand text-alt;
+  @apply bg-[--bq-button--primary-background] text-[--bq-button--primary-text-color];
   // Primary `HOVER` state
-  @apply hover:enabled:bg-hover-ui-brand;
+  @apply hover:enabled:bg-[color-mix(in_srgb,_var(--bq-button--primary-background),_var(--bq-hover)_20%)];
   // Primary `ACTIVE` state
-  @apply active:enabled:bg-active-ui-brand active:enabled:hover:bg-active-ui-brand;
+  @apply active:enabled:bg-[color-mix(in_srgb,_var(--bq-button--primary-background),_var(--bq-active)_20%)] active:enabled:hover:bg-[color-mix(in_srgb,_var(--bq-button--primary-background),_var(--bq-active)_20%)];
 }
 
 .bq-button--primary.ghost {
-  @apply [--bq-button--border-color:var(--bq-stroke--brand)] bg-transparent text-brand;
+  @apply border-[color:--bq-button--primary-border-color-ghost] bg-transparent text-[--bq-button--primary-text-color-ghost];
   // Primary `HOVER` state
   @apply hover:enabled:bg-hover-ui-primary;
   // Primary `ACTIVE` state
@@ -56,23 +56,23 @@
 }
 
 .bq-button--primary.danger {
-  @apply bg-ui-danger text-alt;
+  @apply bg-[--bq-button--primary-background-danger] text-[--bq-button--primary-text-color-danger];
   // Primary `HOVER` state
-  @apply hover:enabled:bg-hover-ui-danger;
+  @apply hover:enabled:bg-[color-mix(in_srgb,_var(--bq-button--primary-background-danger),_var(--bq-hover)_20%)];
   // Primary `ACTIVE` state
-  @apply active:enabled:bg-active-ui-danger active:enabled:hover:bg-active-ui-danger;
+  @apply active:enabled:bg-[color-mix(in_srgb,_var(--bq-button--primary-background-danger),_var(--bq-active)_20%)] active:enabled:hover:bg-[color-mix(in_srgb,_var(--bq-button--primary-background-danger),_var(--bq-active)_20%)];
 }
 
 .bq-button--secondary {
-  @apply bg-ui-secondary text-primary;
+  @apply bg-[--bq-button--secondary-background] text-[--bq-button--secondary-text-color];
   // Secondary `HOVER` state
-  @apply hover:enabled:bg-hover-ui-secondary;
+  @apply hover:enabled:bg-[color-mix(in_srgb,_var(--bq-button--secondary-background),_var(--bq-hover)_20%)];
   // Secondary `ACTIVE` state
-  @apply active:enabled:bg-active-ui-secondary active:enabled:hover:bg-active-ui-secondary;
+  @apply active:enabled:bg-[color-mix(in_srgb,_var(--bq-button--secondary-background),_var(--bq-active)_20%)] active:enabled:hover:bg-[color-mix(in_srgb,_var(--bq-button--secondary-background),_var(--bq-active)_20%)];
 }
 
 .bq-button--secondary.ghost {
-  @apply [--bq-button--border-color:var(--bq-stroke--tertiary)] bg-transparent text-primary;
+  @apply border-[color:--bq-button--secondary-border-color-ghost] bg-transparent text-[--bq-button--secondary-text-color-ghost];
   // Secondary `HOVER` state
   @apply hover:enabled:bg-hover-ui-secondary;
   // Secondary `ACTIVE` state
@@ -80,7 +80,7 @@
 }
 
 .bq-button--link {
-  @apply cursor-pointer bg-transparent text-brand no-underline;
+  @apply cursor-pointer bg-transparent text-[--bq-button--link-text-color] no-underline;
   // Primary `HOVER` state
   @apply [&:not(.disabled)]:hover:bg-hover-ui-primary;
   // Primary `ACTIVE` state
@@ -92,7 +92,7 @@
 }
 
 .bq-button--text {
-  @apply bg-transparent text-primary;
+  @apply bg-transparent text-[--bq-button--text-text-color];
   // Primary `HOVER` state
   @apply hover:enabled:bg-hover-ui-primary;
   // Primary `ACTIVE` state

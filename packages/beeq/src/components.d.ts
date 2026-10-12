@@ -533,6 +533,18 @@ export namespace Components {
      * @cssprop --bq-button--large-paddingX - Button large padding block (top and bottom)
      * @cssprop --bq-button--large-paddingY - Button large padding inline (left and right)
      * @cssprop --bq-button--large-font-size - Button large font size
+     * @cssprop --bq-button--primary-background - Primary button background color
+     * @cssprop --bq-button--primary-text-color - Primary button text color
+     * @cssprop --bq-button--primary-border-color-ghost - Primary ghost button border color
+     * @cssprop --bq-button--primary-text-color-ghost - Primary ghost button text color
+     * @cssprop --bq-button--primary-background-danger - Primary danger button background color
+     * @cssprop --bq-button--primary-text-color-danger - Primary danger button text color
+     * @cssprop --bq-button--secondary-background - Secondary button background color
+     * @cssprop --bq-button--secondary-text-color - Secondary button text color
+     * @cssprop --bq-button--secondary-border-color-ghost - Secondary ghost button border color
+     * @cssprop --bq-button--secondary-text-color-ghost - Secondary ghost button text color
+     * @cssprop --bq-button--link-text-color - Link button text color
+     * @cssprop --bq-button--text-text-color - Text button text color
      */
     interface BqButton {
         /**
@@ -3830,6 +3842,18 @@ declare global {
      * @cssprop --bq-button--large-paddingX - Button large padding block (top and bottom)
      * @cssprop --bq-button--large-paddingY - Button large padding inline (left and right)
      * @cssprop --bq-button--large-font-size - Button large font size
+     * @cssprop --bq-button--primary-background - Primary button background color
+     * @cssprop --bq-button--primary-text-color - Primary button text color
+     * @cssprop --bq-button--primary-border-color-ghost - Primary ghost button border color
+     * @cssprop --bq-button--primary-text-color-ghost - Primary ghost button text color
+     * @cssprop --bq-button--primary-background-danger - Primary danger button background color
+     * @cssprop --bq-button--primary-text-color-danger - Primary danger button text color
+     * @cssprop --bq-button--secondary-background - Secondary button background color
+     * @cssprop --bq-button--secondary-text-color - Secondary button text color
+     * @cssprop --bq-button--secondary-border-color-ghost - Secondary ghost button border color
+     * @cssprop --bq-button--secondary-text-color-ghost - Secondary ghost button text color
+     * @cssprop --bq-button--link-text-color - Link button text color
+     * @cssprop --bq-button--text-text-color - Text button text color
      */
     interface HTMLBqButtonElement extends Components.BqButton, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqButtonElementEventMap>(type: K, listener: (this: HTMLBqButtonElement, ev: BqButtonCustomEvent<HTMLBqButtonElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -6131,6 +6155,18 @@ declare namespace LocalJSX {
      * @cssprop --bq-button--large-paddingX - Button large padding block (top and bottom)
      * @cssprop --bq-button--large-paddingY - Button large padding inline (left and right)
      * @cssprop --bq-button--large-font-size - Button large font size
+     * @cssprop --bq-button--primary-background - Primary button background color
+     * @cssprop --bq-button--primary-text-color - Primary button text color
+     * @cssprop --bq-button--primary-border-color-ghost - Primary ghost button border color
+     * @cssprop --bq-button--primary-text-color-ghost - Primary ghost button text color
+     * @cssprop --bq-button--primary-background-danger - Primary danger button background color
+     * @cssprop --bq-button--primary-text-color-danger - Primary danger button text color
+     * @cssprop --bq-button--secondary-background - Secondary button background color
+     * @cssprop --bq-button--secondary-text-color - Secondary button text color
+     * @cssprop --bq-button--secondary-border-color-ghost - Secondary ghost button border color
+     * @cssprop --bq-button--secondary-text-color-ghost - Secondary ghost button text color
+     * @cssprop --bq-button--link-text-color - Link button text color
+     * @cssprop --bq-button--text-text-color - Text button text color
      */
     interface BqButton {
         /**
@@ -9899,6 +9935,18 @@ declare module "@stencil/core" {
              * @cssprop --bq-button--large-paddingX - Button large padding block (top and bottom)
              * @cssprop --bq-button--large-paddingY - Button large padding inline (left and right)
              * @cssprop --bq-button--large-font-size - Button large font size
+             * @cssprop --bq-button--primary-background - Primary button background color
+             * @cssprop --bq-button--primary-text-color - Primary button text color
+             * @cssprop --bq-button--primary-border-color-ghost - Primary ghost button border color
+             * @cssprop --bq-button--primary-text-color-ghost - Primary ghost button text color
+             * @cssprop --bq-button--primary-background-danger - Primary danger button background color
+             * @cssprop --bq-button--primary-text-color-danger - Primary danger button text color
+             * @cssprop --bq-button--secondary-background - Secondary button background color
+             * @cssprop --bq-button--secondary-text-color - Secondary button text color
+             * @cssprop --bq-button--secondary-border-color-ghost - Secondary ghost button border color
+             * @cssprop --bq-button--secondary-text-color-ghost - Secondary ghost button text color
+             * @cssprop --bq-button--link-text-color - Link button text color
+             * @cssprop --bq-button--text-text-color - Text button text color
              */
             "bq-button": LocalJSX.IntrinsicElements["bq-button"] & JSXBase.HTMLAttributes<HTMLBqButtonElement>;
             /**
