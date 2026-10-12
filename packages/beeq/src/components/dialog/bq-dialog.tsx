@@ -70,6 +70,8 @@ import { DIALOG_FOOTER_APPEARANCE, DIALOG_SIZE } from './bq-dialog.types';
  * @cssprop --bq-dialog--background - Dialog background color
  * @cssprop --bq-dialog--background-backdrop - Dialog backdrop background color
  * @cssprop --bq-dialog--box-shadow - Dialog box shadow
+ * @cssprop --bq-dialog--footer-background - Dialog footer background color (`highlight` footer appearance)
+ * @cssprop --bq-dialog--text-color - Dialog text color
  * @cssprop --bq-dialog--border-color - Dialog border color
  * @cssprop --bq-dialog--border-style - Dialog border style
  * @cssprop --bq-dialog--border-width - Dialog border width
@@ -366,7 +368,7 @@ export class BqDialog {
           class={{
             '!hidden': !this.hasFooter,
             'bq-dialog--footer': this.hasFooter,
-            '!p-b-s bg-ui-alt': this.footerAppearance === 'highlight',
+            '!p-b-s bg-[--bq-dialog--footer-background]': this.footerAppearance === 'highlight',
           }}
           part="footer"
           ref={(footerElem) => {

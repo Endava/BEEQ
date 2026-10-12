@@ -1033,6 +1033,8 @@ export namespace Components {
      * @cssprop --bq-dialog--background - Dialog background color
      * @cssprop --bq-dialog--background-backdrop - Dialog backdrop background color
      * @cssprop --bq-dialog--box-shadow - Dialog box shadow
+     * @cssprop --bq-dialog--footer-background - Dialog footer background color (`highlight` footer appearance)
+     * @cssprop --bq-dialog--text-color - Dialog text color
      * @cssprop --bq-dialog--border-color - Dialog border color
      * @cssprop --bq-dialog--border-style - Dialog border style
      * @cssprop --bq-dialog--border-width - Dialog border width
@@ -4201,6 +4203,8 @@ declare global {
      * @cssprop --bq-dialog--background - Dialog background color
      * @cssprop --bq-dialog--background-backdrop - Dialog backdrop background color
      * @cssprop --bq-dialog--box-shadow - Dialog box shadow
+     * @cssprop --bq-dialog--footer-background - Dialog footer background color (`highlight` footer appearance)
+     * @cssprop --bq-dialog--text-color - Dialog text color
      * @cssprop --bq-dialog--border-color - Dialog border color
      * @cssprop --bq-dialog--border-style - Dialog border style
      * @cssprop --bq-dialog--border-width - Dialog border width
@@ -6840,6 +6844,8 @@ declare namespace LocalJSX {
      * @cssprop --bq-dialog--background - Dialog background color
      * @cssprop --bq-dialog--background-backdrop - Dialog backdrop background color
      * @cssprop --bq-dialog--box-shadow - Dialog box shadow
+     * @cssprop --bq-dialog--footer-background - Dialog footer background color (`highlight` footer appearance)
+     * @cssprop --bq-dialog--text-color - Dialog text color
      * @cssprop --bq-dialog--border-color - Dialog border color
      * @cssprop --bq-dialog--border-style - Dialog border style
      * @cssprop --bq-dialog--border-width - Dialog border width
@@ -10377,6 +10383,8 @@ declare module "@stencil/core" {
              * @cssprop --bq-dialog--background - Dialog background color
              * @cssprop --bq-dialog--background-backdrop - Dialog backdrop background color
              * @cssprop --bq-dialog--box-shadow - Dialog box shadow
+             * @cssprop --bq-dialog--footer-background - Dialog footer background color (`highlight` footer appearance)
+             * @cssprop --bq-dialog--text-color - Dialog text color
              * @cssprop --bq-dialog--border-color - Dialog border color
              * @cssprop --bq-dialog--border-style - Dialog border style
              * @cssprop --bq-dialog--border-width - Dialog border width
