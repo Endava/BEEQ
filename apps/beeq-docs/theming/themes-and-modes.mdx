@@ -532,7 +532,7 @@ Here is a working example showing how to read the user's preferred color scheme 
 
 ## Endava theme
 
-The `endava` theme follows the [Endava brand portal](https://brand.endava.com/visual/colours) and the Endava brand guide. It keeps the brand's colors wherever they meet [WCAG 2.1 Level AA](/foundations/colors#accessibility), and uses a nearby shade where they don't.
+The `endava` theme follows the [Endava brand portal](https://brand.endava.com/visual/colours), the Endava brand guide, and the color tokens used on [endava.com](https://www.endava.com). It keeps the brand's colors wherever they meet [WCAG 2.1 Level AA](/foundations/colors#accessibility), and uses a nearby shade where they don't.
 
 - **Brand and accent:** Red Orange `#FF5640` is the brand fill. Accent aliases the brand, so `--bq-accent-*` matches `--bq-brand-*`.
 - **Brand text:** `--bq-brand-strong` is `#C33600` (light mode text, icons, strokes, and focus). `--bq-brand-bright` is `#FF8979` (dark mode).
@@ -562,7 +562,7 @@ The `endava` theme follows the [Endava brand portal](https://brand.endava.com/vi
 <Accordion title="Deviation log">
 | Brand value | BEEQ value | Reason |
 | --- | --- | --- |
-| Light brand text `#E03E00` | `--bq-brand-strong` `#C33600` | `#E03E00` is 4.32:1 on white. |
+| Light brand text `#E03E00` (kit), `#D63B10` (endava.com) | `--bq-brand-strong` `#C33600` | `#E03E00` is 4.32:1 on white. `#D63B10` passes on white (4.67:1) but not on Blue 10 (3.87:1) or the brand tint (4.16:1), where BEEQ also shows brand text. |
 | Dark brand text Red Orange | `--bq-brand-bright` `#FF8979` | Red Orange is 3.40:1 on the dark secondary surface. |
 | Warning text `#C77905` | `--bq-warning-strong` `#975C04` | `#C77905` is 3.41:1 on white. |
 | Light warning fill `#EB9410` | Warning fill `#F99C11` in both modes | Solid Blue on `#EB9410` drops to 4.33:1 when active. |
