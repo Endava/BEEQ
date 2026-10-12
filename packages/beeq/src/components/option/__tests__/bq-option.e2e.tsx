@@ -1,6 +1,6 @@
 import { h } from '@stencil/core';
-import { describe, expect, it, render, waitForStable } from '@stencil/vitest';
-import { userEvent } from 'vitest/browser';
+import { beforeEach, describe, expect, it, render, waitForStable } from '@stencil/vitest';
+import { cdp, userEvent } from 'vitest/browser';
 
 import { getTextContent } from '../../../shared/utils/slot';
 
@@ -17,6 +17,36 @@ const getNestedOptions = (option: HTMLBqOptionElement) =>
 const getSelectionSummary = (option: HTMLBqOptionElement) =>
   option.shadowRoot?.querySelector<HTMLElement>('[part="selection-summary"]');
 const getOptionRow = (option: HTMLBqOptionElement) => option.shadowRoot?.querySelector<HTMLElement>('[part="item"]');
+
+/** Resolves a CSS color value (e.g. `var(--bq-text--brand)`) to its computed `rgb()` form */
+const resolveColor = (value: string): string => {
+  const probe = document.createElement('div');
+  probe.style.color = value;
+  document.body.appendChild(probe);
+  const { color } = getComputedStyle(probe);
+  probe.remove();
+  return color;
+};
+
+/** Waits for any running CSS transition inside the element's shadow root to finish */
+const waitForTransitions = async (element: Element) => {
+  const animations = element.shadowRoot?.getAnimations() ?? [];
+  await Promise.all(animations.map((animation) => animation.finished));
+};
+
+// Hover/click tests leave the Playwright cursor where they finished, so a freshly rendered element can
+// render under it and pick up `:hover` styles. Before each test, park the cursor in the bottom-right corner
+// of the top-level page (CDP coordinates), which lies outside the scaled test iframe.
+const movePointerOff = () =>
+  cdp().send('Input.dispatchMouseEvent', {
+    type: 'mouseMoved',
+    x: window.top.innerWidth - 1,
+    y: window.top.innerHeight - 1,
+  });
+
+beforeEach(async () => {
+  await movePointerOff();
+});
 
 describe('bq-option', () => {
   it('should render', async () => {
@@ -586,5 +616,56 @@ describe('bq-option', () => {
     expect(getTextContent(expandLabelSlot, { recurse: true })).toBe('2 levels');
     expect(getExpandButton(option)?.onlyIcon).toBe(false);
     expect(getExpandButtonControl(option)).toEqualAttribute('aria-label', 'Expand Parent');
+  });
+
+  it('should use the text and background color variables', async () => {
+    const { root } = await render(
+      <div>
+        <bq-option value="a">Option A</bq-option>
+        <bq-option value="b" selected>
+          Option B
+        </bq-option>
+      </div>,
+    );
+
+    const optionStyle = getComputedStyle(root.querySelector('bq-option'));
+    expect(optionStyle.getPropertyValue('--bq-option--background').trim()).toBe(
+      optionStyle.getPropertyValue('--bq-ui--primary').trim(),
+    );
+    expect(optionStyle.getPropertyValue('--bq-option--background-selected').trim()).toBe(
+      optionStyle.getPropertyValue('--bq-ui--brand-alt').trim(),
+    );
+    expect(optionStyle.getPropertyValue('--bq-option--text-color').trim()).toBe(
+      optionStyle.getPropertyValue('--bq-text--primary').trim(),
+    );
+    expect(optionStyle.getPropertyValue('--bq-option--text-color-selected').trim()).toBe(
+      optionStyle.getPropertyValue('--bq-text--brand').trim(),
+    );
+
+    const [option, selectedOption] = Array.from(root.querySelectorAll('bq-option'));
+    await Promise.all([waitForTransitions(option), waitForTransitions(selectedOption)]);
+
+    const itemStyle = getComputedStyle(option.shadowRoot.querySelector('[part="item"]'));
+    const selectedItemStyle = getComputedStyle(selectedOption.shadowRoot.querySelector('[part="item"]'));
+
+    expect(itemStyle.backgroundColor).toBe(resolveColor('var(--bq-ui--primary)'));
+    expect(itemStyle.color).toBe(resolveColor('var(--bq-text--primary)'));
+    expect(selectedItemStyle.backgroundColor).toBe(resolveColor('var(--bq-ui--brand-alt)'));
+    expect(selectedItemStyle.color).toBe(resolveColor('var(--bq-text--brand)'));
+  });
+
+  it('should mix the hover base background with the hover overlay', async () => {
+    const { root } = await render(<bq-option value="a">Option A</bq-option>);
+
+    const hostStyle = getComputedStyle(root);
+    expect(hostStyle.getPropertyValue('--bq-option--background-hover').trim()).toBe(
+      hostStyle.getPropertyValue('--bq-ui--secondary').trim(),
+    );
+
+    const item = root.shadowRoot.querySelector<HTMLElement>('[part="item"]');
+    await userEvent.hover(item);
+
+    const expectedBackground = resolveColor('color-mix(in srgb, var(--bq-ui--secondary), var(--bq-hover) 20%)');
+    await expect.poll(() => getComputedStyle(item).backgroundColor).toBe(expectedBackground);
   });
 });

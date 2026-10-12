@@ -1694,7 +1694,14 @@ export namespace Components {
      * @event bqClick - Handler to be called when item is clicked.
      * @event bqEnter - Emitted when Enter or Space activates a focused option. Checkbox control activation emits bqClick instead.
      * @cssprop --bq-option--background - background color
+     * @cssprop --bq-option--background-hover - background base colour of the hover state (mixed with `--bq-hover` on hover)
+     * @cssprop --bq-option--background-selected - background color when selected
+     * @cssprop --bq-option--expand-text-color-hover - expand control text color on hover
      * @cssprop --bq-option--font-size - font size
+     * @cssprop --bq-option--selection-summary-color - nested selection summary text color
+     * @cssprop --bq-option--text-color - text color
+     * @cssprop --bq-option--text-color-selected - text color when selected
+     * @cssprop --bq-option--tree-line-color - color of the lines connecting nested options
      * @cssprop --bq-option--border-color - border color
      * @cssprop --bq-option--border-style - border style
      * @cssprop --bq-option--border-width - border width
@@ -4582,7 +4589,14 @@ declare global {
      * @event bqClick - Handler to be called when item is clicked.
      * @event bqEnter - Emitted when Enter or Space activates a focused option. Checkbox control activation emits bqClick instead.
      * @cssprop --bq-option--background - background color
+     * @cssprop --bq-option--background-hover - background base colour of the hover state (mixed with `--bq-hover` on hover)
+     * @cssprop --bq-option--background-selected - background color when selected
+     * @cssprop --bq-option--expand-text-color-hover - expand control text color on hover
      * @cssprop --bq-option--font-size - font size
+     * @cssprop --bq-option--selection-summary-color - nested selection summary text color
+     * @cssprop --bq-option--text-color - text color
+     * @cssprop --bq-option--text-color-selected - text color when selected
+     * @cssprop --bq-option--tree-line-color - color of the lines connecting nested options
      * @cssprop --bq-option--border-color - border color
      * @cssprop --bq-option--border-style - border style
      * @cssprop --bq-option--border-width - border width
@@ -7495,7 +7509,14 @@ declare namespace LocalJSX {
      * @event bqClick - Handler to be called when item is clicked.
      * @event bqEnter - Emitted when Enter or Space activates a focused option. Checkbox control activation emits bqClick instead.
      * @cssprop --bq-option--background - background color
+     * @cssprop --bq-option--background-hover - background base colour of the hover state (mixed with `--bq-hover` on hover)
+     * @cssprop --bq-option--background-selected - background color when selected
+     * @cssprop --bq-option--expand-text-color-hover - expand control text color on hover
      * @cssprop --bq-option--font-size - font size
+     * @cssprop --bq-option--selection-summary-color - nested selection summary text color
+     * @cssprop --bq-option--text-color - text color
+     * @cssprop --bq-option--text-color-selected - text color when selected
+     * @cssprop --bq-option--tree-line-color - color of the lines connecting nested options
      * @cssprop --bq-option--border-color - border color
      * @cssprop --bq-option--border-style - border style
      * @cssprop --bq-option--border-width - border width
@@ -10585,7 +10606,14 @@ declare module "@stencil/core" {
              * @event bqClick - Handler to be called when item is clicked.
              * @event bqEnter - Emitted when Enter or Space activates a focused option. Checkbox control activation emits bqClick instead.
              * @cssprop --bq-option--background - background color
+             * @cssprop --bq-option--background-hover - background base colour of the hover state (mixed with `--bq-hover` on hover)
+             * @cssprop --bq-option--background-selected - background color when selected
+             * @cssprop --bq-option--expand-text-color-hover - expand control text color on hover
              * @cssprop --bq-option--font-size - font size
+             * @cssprop --bq-option--selection-summary-color - nested selection summary text color
+             * @cssprop --bq-option--text-color - text color
+             * @cssprop --bq-option--text-color-selected - text color when selected
+             * @cssprop --bq-option--tree-line-color - color of the lines connecting nested options
              * @cssprop --bq-option--border-color - border color
              * @cssprop --bq-option--border-style - border style
              * @cssprop --bq-option--border-width - border width
