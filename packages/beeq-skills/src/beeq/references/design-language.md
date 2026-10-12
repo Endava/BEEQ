@@ -31,14 +31,17 @@ Use primitive hue tokens only when defining a custom theme or a genuinely missin
 
 | Role | CSS variables |
 | --- | --- |
-| Brand and accent | `--bq-brand-light`, `--bq-brand`, `--bq-brand-dark`; `--bq-accent-light`, `--bq-accent`, `--bq-accent-dark` |
-| Feedback | `--bq-info-light`, `--bq-info`, `--bq-info-dark`; `--bq-success-light`, `--bq-success`, `--bq-success-dark`; `--bq-warning-light`, `--bq-warning`, `--bq-warning-dark`; `--bq-danger-light`, `--bq-danger`, `--bq-danger-dark` |
+| Brand and accent | `--bq-brand`, `--bq-accent`, each with `-light`, `-dark`, `-strong`, and `-bright` |
+| Feedback | `--bq-info`, `--bq-success`, `--bq-warning`, `--bq-danger`, each with `-light`, `-dark`, `-strong`, and `-bright` |
 | Backgrounds | `--bq-background--primary`, `--bq-background--secondary`, `--bq-background--tertiary`, `--bq-background--alt`, `--bq-background--inverse`, `--bq-background--brand`, `--bq-background--overlay` |
-| Text and icons | `--bq-text--{primary,secondary,inverse,alt,brand,info,success,warning,danger}`; `--bq-icon--{primary,secondary,inverse,alt,brand,info,success,warning,danger}` |
-| Strokes | `--bq-stroke--{primary,secondary,tertiary,inverse,alt,brand,brand-alt,info,success,warning,danger}` |
-| UI surfaces | `--bq-ui--{primary,secondary,tertiary,inverse,alt,brand,brand-alt,info,info-alt,success,success-alt,warning,warning-alt,danger,danger-alt}` |
+| Text and icons | `--bq-text--{primary,secondary,inverse,brand,accent,info,success,warning,danger}`; `--bq-icon--{primary,secondary,inverse,brand,accent,info,success,warning,danger}` |
+| Text on a solid fill | `--bq-text--on-{brand,accent,info,success,warning,danger}`, paired with the matching `--bq-ui--{intent}` |
+| Strokes | `--bq-stroke--{primary,secondary,tertiary,inverse,alt,brand,brand-alt,accent,info,success,warning,danger}` |
+| UI surfaces | `--bq-ui--{primary,secondary,tertiary,inverse,alt}`; `--bq-ui--{brand,accent,info,success,warning,danger}`, each with `-alt` |
 | Focus and interaction | `--bq-focus`, `--bq-hover`, `--bq-active`; the `focus` helper from `@beeq/tailwindcss` accepts optional `--bq-ring-width`, `--bq-ring-color-focus`, and `--bq-ring-offset-width` overrides |
 | Data visualisation | `--bq-data-01` through `--bq-data-12`, in sequence |
+
+Intents set the hue per theme; roles (`--bq-text--*`, `--bq-ui--*`, and the rest) pick an intent step per mode; components read only roles. `-strong` is the intent's foreground on light surfaces and `-bright` its foreground on dark surfaces. Info is its own intent and never borrows brand. `--bq-text--alt` and `--bq-icon--alt` are deprecated; use `--bq-text--on-{intent}`. The full model, override levels, and contrast checks: [theming.md](theming.md).
 
 ### Common color pairings
 
@@ -47,9 +50,12 @@ Use primitive hue tokens only when defining a custom theme or a genuinely missin
 | Main page content | `var(--bq-background--primary)` with `var(--bq-text--primary)`; use `var(--bq-text--secondary)` for supporting copy |
 | Grouped or nested content | `var(--bq-background--secondary)` for panels or sidebars, then `var(--bq-background--tertiary)` for nested sections |
 | Inverted region | `var(--bq-background--inverse)` with `var(--bq-text--inverse)` |
-| Feedback | Matching `--bq-ui--*-alt`, `--bq-text--*`, and `--bq-icon--*` roles; include a written state label |
+| Subtle feedback | `--bq-ui--{intent}-alt` with the matching `--bq-text--{intent}`, `--bq-icon--{intent}`, and `--bq-stroke--{intent}`; include a written state label |
+| Solid fill | `--bq-ui--{intent}` with `--bq-text--on-{intent}`; change both together |
+| Inverted fill | `--bq-ui--inverse` with `--bq-text--inverse` |
+| Borders | `--bq-stroke--tertiary` for interactive boundaries; `--bq-stroke--primary` for decorative separators |
 
-These are starting pairs, not a guarantee for arbitrary overrides. Check contrast in every active theme, especially after changing a semantic token. Do not use `--bq-text--brand` as small body text on a light background.
+These pairs pass WCAG AA in the built-in themes, with one accepted exception: Endava's `--bq-text--on-brand` (white on Red Orange, 3.15:1) meets 3:1 only, so keep text on Endava brand fills large or bold. They are not a guarantee for arbitrary overrides: check contrast in every active theme and mode after changing a token.
 
 ### Primitive palette escape hatch
 
@@ -119,7 +125,7 @@ Use native CSS Grid for page structure and BEEQ spacing tokens for gutters and m
 | Spacing | `--bq-spacing-xs3`, `--bq-spacing-xs2`, `--bq-spacing-xs`, `--bq-spacing-s`, `--bq-spacing-m`, `--bq-spacing-l`, `--bq-spacing-xl`, `--bq-spacing-xxl`, `--bq-spacing-xxl2`, `--bq-spacing-xxl3`, `--bq-spacing-xxl4` |
 | Viewport-height layout | Tailwind `h-dynamic-vh` maps to `100dvh` |
 | Direction-aware layout | Use `bs-*`, `is-*`, `border-{bl,bs,be,i,is,ie}-*`, `p-{b,bs,be,i}-*`, `m-{b,bs,be,i}-*`, and `inset-{b,bs,be,i,is,ie}-*` rather than physical left/right values when direction can change |
-| Hover and active blends | Use `bg-{hover,active}-*`, `border-{hover,active}-*`, `text-{hover,active}-*`, and `stroke-{hover,active}-*`; they blend the selected token with `--bq-hover` or `--bq-active` |
+| Hover and active blends | Use `bg-{hover,active}-*`, `border-{hover,active}-*`, `text-{hover,active}-*`, and `stroke-{hover,active}-*`; they blend the selected token with `--bq-hover` or `--bq-active`. In plain CSS, mix at the point of use: `color-mix(in srgb, var(--bq-ui--secondary), var(--bq-hover) 20%)` |
 
 The utilities in this table require the `@beeq/tailwindcss` preset. Without it, use the CSS variables directly.
 
@@ -246,7 +252,7 @@ Start every component at its default size. Change size to match density across a
 BEEQ components ship with keyboard support, focus management, and ARIA roles. The consuming layout has to preserve them.
 
 - **Contrast.** Aim for WCAG 2.1 AA: 4.5:1 for body text and 3:1 for large text, icons, and control boundaries. Recheck after any token override, in every theme and mode.
-- **Focus.** Keep the built-in focus indicator visible. For custom focusable elements, use the `--bq-focus` colour so focus looks the same everywhere.
+- **Focus.** Keep the built-in focus indicator visible. For custom focusable elements, use the `--bq-focus` colour so focus looks the same everywhere. It follows `--bq-brand-strong` in light mode and `--bq-brand-bright` in dark mode.
 - **Names.** Every control needs a visible label or an accessible name.
 - **Order.** Keep DOM order equal to reading and focus order when layouts reflow.
 - **Non-colour cues.** Pair every colour-coded state with text or an icon.
