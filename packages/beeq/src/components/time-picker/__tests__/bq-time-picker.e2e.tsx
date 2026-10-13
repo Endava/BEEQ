@@ -25,6 +25,11 @@ const getSegmentText = (tp: HTMLBqTimePickerElement) =>
 const getColumn = (tp: HTMLBqTimePickerElement, field: TField) =>
   tp.shadowRoot?.querySelector<HTMLElement>(`[data-column="${field}"]`);
 
+const getColumnHeader = (tp: HTMLBqTimePickerElement, field: TField) => {
+  const headerId = getColumn(tp, field)?.getAttribute('aria-labelledby');
+  return headerId ? tp.shadowRoot?.getElementById(headerId) : undefined;
+};
+
 const getColumnFields = (tp: HTMLBqTimePickerElement) =>
   Array.from(tp.shadowRoot?.querySelectorAll<HTMLElement>('[data-column]') ?? []).map((column) =>
     column.getAttribute('data-column'),
@@ -376,10 +381,55 @@ describe('bq-time-picker', () => {
     const panel = tp.shadowRoot?.querySelector('[part="container"]');
     expect(panel).toEqualAttribute('role', 'dialog');
     expect(getColumn(tp, 'hour')).toEqualAttribute('role', 'listbox');
-    expect(getColumn(tp, 'hour')).toEqualAttribute('aria-label', 'Hours');
+    expect(getColumn(tp, 'hour')).toEqualAttribute('aria-labelledby', getColumnHeader(tp, 'hour')?.id);
     expect(getSelectedOption(tp, 'hour')?.dataset.value).toBe('9');
     expect(getSelectedOption(tp, 'hour')).toEqualAttribute('tabindex', '0');
     expect(getOption(tp, 'hour', 10)).toEqualAttribute('tabindex', '-1');
+  });
+
+  it.each([
+    ['en-US', ['hour', 'minute', 'second', 'AM/PM']],
+    ['de-DE', ['Stunde', 'Minute', 'Sekunde']],
+  ])('should render a localized header above each column for `%s`', async (locale, headers) => {
+    const { root, waitForChanges } = await render(
+      <bq-time-picker locale={locale} name="time" precision="second" value="09:30:00" />,
+    );
+    const tp = root as HTMLBqTimePickerElement;
+    await openPanel(tp, waitForChanges);
+
+    const fields: TField[] = ['hour', 'minute', 'second', 'dayPeriod'];
+    const rendered = fields.map((field) => getColumnHeader(tp, field)?.textContent).filter(Boolean);
+    expect(rendered).toEqual(headers);
+  });
+
+  it('should keep the column headers in place while the columns scroll', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-time-picker
+        name="time"
+        style={{ '--bq-time-picker--column-header-text-color': 'rgb(255, 0, 0)' }}
+        value="09:30"
+      />,
+    );
+    const tp = root as HTMLBqTimePickerElement;
+    await openPanel(tp, waitForChanges);
+    await settle();
+
+    const column = getColumn(tp, 'minute');
+    const header = getColumnHeader(tp, 'minute');
+    expect(header).toEqualAttribute('part', 'column-header');
+    expect(column?.contains(header ?? null)).toBe(false);
+    expect(getComputedStyle(header as HTMLElement).color).toBe('rgb(255, 0, 0)');
+
+    const headerTop = header?.getBoundingClientRect().top;
+    column?.scrollTo({ top: 0, behavior: 'auto' });
+    column?.scrollTo({ top: 400, behavior: 'auto' });
+    await settle();
+
+    expect(column?.scrollTop).toBeGreaterThan(0);
+    expect(header?.getBoundingClientRect().top).toBe(headerTop);
+    expect((header as HTMLElement).getBoundingClientRect().bottom).toBeLessThanOrEqual(
+      (column as HTMLElement).getBoundingClientRect().top,
+    );
   });
 
   it('should open the panel from the clock trigger and focus the first column', async () => {
@@ -999,6 +1049,7 @@ describe('bq-time-picker', () => {
       'container',
       'columns',
       'column',
+      'column-header',
       'option',
       'option-selected',
       'footer',

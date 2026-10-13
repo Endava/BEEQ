@@ -83,28 +83,29 @@ A promise that resolves once the value has been cleared.
 
 ## Shadow Parts
 
-| Part                | Description                                                      |
-| ------------------- | ---------------------------------------------------------------- |
-| `"base"`            | The component's base wrapper.                                    |
-| `"button"`          | Any button rendered by the component.                            |
-| `"clear-btn"`       | The clear button.                                                |
-| `"column"`          | A scrollable list of options (hours, minutes, seconds or AM/PM). |
-| `"columns"`         | The wrapper of the panel columns.                                |
-| `"confirm-btn"`     | The confirm (OK) button.                                         |
-| `"container"`       | The panel content wrapper.                                       |
-| `"control"`         | The field control wrapper.                                       |
-| `"footer"`          | The panel footer.                                                |
-| `"input"`           | The segmented time field group.                                  |
-| `"label"`           | The label slot container.                                        |
-| `"now-btn"`         | The "Now" button.                                                |
-| `"option"`          | An option inside a column.                                       |
-| `"option-selected"` | The selected option of a column.                                 |
-| `"panel"`           | The dropdown panel container.                                    |
-| `"prefix"`          | The prefix slot container.                                       |
-| `"segment"`         | An editable hour, minute, second or AM/PM segment.               |
-| `"segment-literal"` | A locale-derived separator between time segments.                |
-| `"suffix"`          | The clock trigger button that hosts the suffix slot.             |
-| `"time-trigger"`    | The clock icon trigger button.                                   |
+| Part                | Description                                                            |
+| ------------------- | ---------------------------------------------------------------------- |
+| `"base"`            | The component's base wrapper.                                          |
+| `"button"`          | Any button rendered by the component.                                  |
+| `"clear-btn"`       | The clear button.                                                      |
+| `"column"`          | A scrollable list of options (hours, minutes, seconds or AM/PM).       |
+| `"column-header"`   | The header above a column. It stays in place while the column scrolls. |
+| `"columns"`         | The wrapper of the panel columns.                                      |
+| `"confirm-btn"`     | The confirm (OK) button.                                               |
+| `"container"`       | The panel content wrapper.                                             |
+| `"control"`         | The field control wrapper.                                             |
+| `"footer"`          | The panel footer.                                                      |
+| `"input"`           | The segmented time field group.                                        |
+| `"label"`           | The label slot container.                                              |
+| `"now-btn"`         | The "Now" button.                                                      |
+| `"option"`          | An option inside a column.                                             |
+| `"option-selected"` | The selected option of a column.                                       |
+| `"panel"`           | The dropdown panel container.                                          |
+| `"prefix"`          | The prefix slot container.                                             |
+| `"segment"`         | An editable hour, minute, second or AM/PM segment.                     |
+| `"segment-literal"` | A locale-derived separator between time segments.                      |
+| `"suffix"`          | The clock trigger button that hosts the suffix slot.                   |
+| `"time-trigger"`    | The clock icon trigger button.                                         |
 
 
 ## Dependencies

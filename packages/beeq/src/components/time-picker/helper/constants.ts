@@ -20,6 +20,7 @@ export const TIME_PICKER_PARTS = {
   container: 'container',
   columns: 'columns',
   column: 'column',
+  columnHeader: 'column-header',
   option: 'option',
   optionSelected: 'option-selected',
   footer: 'footer',

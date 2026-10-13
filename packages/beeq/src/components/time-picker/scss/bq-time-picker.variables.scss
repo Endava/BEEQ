@@ -15,6 +15,7 @@
    * @prop --bq-time-picker--border-style - Time picker border style
    * @prop --bq-time-picker--border-width - Time picker border width
    * @prop --bq-time-picker--column-gap - Space between the panel columns
+   * @prop --bq-time-picker--column-header-text-color - Text color of the column headers
    * @prop --bq-time-picker--column-height - Height of the scrollable panel columns
    * @prop --bq-time-picker--column-width - Width of a panel column
    * @prop --bq-time-picker--divider-color - Color of the lines between the panel columns and above the footer
@@ -47,6 +48,7 @@
   --bq-time-picker--border-width: 1px;
 
   --bq-time-picker--column-gap: var(--bq-spacing-xs2);
+  --bq-time-picker--column-header-text-color: var(--bq-text--secondary);
   --bq-time-picker--column-height: 15rem;
   --bq-time-picker--column-width: 3.5rem;
   --bq-time-picker--divider-color: var(--bq-stroke--primary);

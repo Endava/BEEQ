@@ -3193,6 +3193,7 @@ export namespace Components {
      * @cssprop --bq-time-picker--border-style - Border style.
      * @cssprop --bq-time-picker--border-width - Border width.
      * @cssprop --bq-time-picker--column-gap - Space between the panel columns.
+     * @cssprop --bq-time-picker--column-header-text-color - Text color of the column headers.
      * @cssprop --bq-time-picker--column-height - Height of the scrollable panel columns.
      * @cssprop --bq-time-picker--column-width - Width of a panel column.
      * @cssprop --bq-time-picker--divider-color - Color of the lines between the panel columns and above the footer.
@@ -5689,6 +5690,7 @@ declare global {
      * @cssprop --bq-time-picker--border-style - Border style.
      * @cssprop --bq-time-picker--border-width - Border width.
      * @cssprop --bq-time-picker--column-gap - Space between the panel columns.
+     * @cssprop --bq-time-picker--column-header-text-color - Text color of the column headers.
      * @cssprop --bq-time-picker--column-height - Height of the scrollable panel columns.
      * @cssprop --bq-time-picker--column-width - Width of a panel column.
      * @cssprop --bq-time-picker--divider-color - Color of the lines between the panel columns and above the footer.
@@ -9266,6 +9268,7 @@ declare namespace LocalJSX {
      * @cssprop --bq-time-picker--border-style - Border style.
      * @cssprop --bq-time-picker--border-width - Border width.
      * @cssprop --bq-time-picker--column-gap - Space between the panel columns.
+     * @cssprop --bq-time-picker--column-header-text-color - Text color of the column headers.
      * @cssprop --bq-time-picker--column-height - Height of the scrollable panel columns.
      * @cssprop --bq-time-picker--column-width - Width of a panel column.
      * @cssprop --bq-time-picker--divider-color - Color of the lines between the panel columns and above the footer.
@@ -11593,6 +11596,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-time-picker--border-style - Border style.
              * @cssprop --bq-time-picker--border-width - Border width.
              * @cssprop --bq-time-picker--column-gap - Space between the panel columns.
+             * @cssprop --bq-time-picker--column-header-text-color - Text color of the column headers.
              * @cssprop --bq-time-picker--column-height - Height of the scrollable panel columns.
              * @cssprop --bq-time-picker--column-width - Width of a panel column.
              * @cssprop --bq-time-picker--divider-color - Color of the lines between the panel columns and above the footer.

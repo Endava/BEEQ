@@ -260,8 +260,30 @@
 
 .bq-time-picker__columns {
   display: flex;
-  gap: var(--bq-time-picker--column-gap);
-  padding: var(--bq-spacing-xs);
+}
+
+.bq-time-picker__column-group {
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+
+  & + & {
+    border-inline-start: 1px solid var(--bq-time-picker--divider-color);
+  }
+}
+
+// The header sits outside the scrolling list, so it stays in place while the column scrolls.
+.bq-time-picker__column-header {
+  overflow: hidden;
+  padding: var(--bq-spacing-xs) var(--bq-spacing-xs2);
+  border-block-end: 1px solid var(--bq-time-picker--divider-color);
+  color: var(--bq-time-picker--column-header-text-color);
+  font-size: var(--bq-font-size--xs);
+  font-weight: var(--bq-font-weight--medium);
+  text-align: center;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .bq-time-picker__column {
@@ -271,6 +293,7 @@
   gap: var(--bq-spacing-xs3);
   inline-size: var(--bq-time-picker--column-width);
   block-size: var(--bq-time-picker--column-height);
+  margin: var(--bq-spacing-xs) var(--bq-time-picker--column-gap);
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-gutter: stable;
@@ -288,10 +311,12 @@
     content: none;
   }
 
-  & + & {
-    border-inline-start: 1px solid var(--bq-time-picker--divider-color);
-    padding-inline-start: var(--bq-time-picker--column-gap);
-    inline-size: calc(var(--bq-time-picker--column-width) + var(--bq-time-picker--column-gap) + 1px);
+  .bq-time-picker__column-group:first-child > & {
+    margin-inline-start: var(--bq-spacing-xs);
+  }
+
+  .bq-time-picker__column-group:last-child > & {
+    margin-inline-end: var(--bq-spacing-xs);
   }
 }
 

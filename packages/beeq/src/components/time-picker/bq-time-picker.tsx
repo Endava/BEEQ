@@ -45,7 +45,7 @@ import {
   getTimeValidityFlags,
   type TTimeConstraints,
 } from './helper/constraints';
-import { formatTime, TIME_FIELD_LABELS } from './helper/labels';
+import { formatTime, getColumnHeaders, TIME_FIELD_LABELS } from './helper/labels';
 import {
   applyColumnPick,
   getColumnOptions,
@@ -166,6 +166,7 @@ type TOpenSource = 'input' | 'keyboard' | 'trigger' | 'programmatic';
  * @part container - The panel content wrapper.
  * @part columns - The wrapper of the panel columns.
  * @part column - A scrollable list of options (hours, minutes, seconds or AM/PM).
+ * @part column-header - The header above a column. It stays in place while the column scrolls.
  * @part option - An option inside a column.
  * @part option-selected - The selected option of a column.
  * @part footer - The panel footer.
@@ -183,6 +184,7 @@ type TOpenSource = 'input' | 'keyboard' | 'trigger' | 'programmatic';
  * @cssprop --bq-time-picker--border-style - Border style.
  * @cssprop --bq-time-picker--border-width - Border width.
  * @cssprop --bq-time-picker--column-gap - Space between the panel columns.
+ * @cssprop --bq-time-picker--column-header-text-color - Text color of the column headers.
  * @cssprop --bq-time-picker--column-height - Height of the scrollable panel columns.
  * @cssprop --bq-time-picker--column-width - Width of a panel column.
  * @cssprop --bq-time-picker--divider-color - Color of the lines between the panel columns and above the footer.
@@ -218,6 +220,7 @@ export class BqTimePicker {
   /** Source of the current panel opening, used to decide where focus goes. */
   private activeOpenSource: TOpenSource = 'programmatic';
 
+  private cachedColumnHeaders?: { key: TTimeMask; value: Record<TTimeMaskField, string> };
   private cachedConstraints?: { key: string; value: TTimeConstraints };
   private cachedMask?: { key: string; value: TTimeMask };
 
@@ -560,6 +563,15 @@ export class BqTimePicker {
       this.cachedMask = { key, value: getTimeMask(this.locale, this.precision, hourCycle) };
     }
     return this.cachedMask.value;
+  }
+
+  /** Localized column headers, memoized by the mask they belong to. */
+  private get columnHeaders(): Record<TTimeMaskField, string> {
+    const { mask } = this;
+    if (this.cachedColumnHeaders?.key !== mask) {
+      this.cachedColumnHeaders = { key: mask, value: getColumnHeaders(this.locale, mask.dayPeriods) };
+    }
+    return this.cachedColumnHeaders.value;
   }
 
   private get forcedHourCycle(): TTimeHourCycle | undefined {
@@ -1244,36 +1256,42 @@ export class BqTimePicker {
   private renderColumn = (column: TTimeMaskField, selected: TPartialTime): JSX.Element => {
     const options = getColumnOptions(column, this.getColumnContext(selected));
     const tabStop = options.find((option) => option.selected) ?? options.find((option) => !option.disabled);
+    const headerId = `bq-time-picker__column-header-${column}`;
 
     return (
-      <div
-        aria-label={TIME_FIELD_LABELS[column]}
-        class="bq-time-picker__column"
-        data-column={column}
-        onKeyDown={(ev) => this.handleColumnKeyDown(ev, column, options)}
-        part={TIME_PICKER_PARTS.column}
-        role="listbox"
-      >
-        {options.map((option) => (
-          // biome-ignore lint/a11y/useKeyWithClickEvents: keyboard selection is handled by the listbox keydown handler.
-          // biome-ignore lint/a11y/useFocusableInteractive: Stencil uses the lowercase `tabindex` attribute, which Biome doesn't recognise.
-          <div
-            aria-disabled={option.disabled ? 'true' : 'false'}
-            aria-selected={option.selected ? 'true' : 'false'}
-            class={{
-              'bq-time-picker__option': true,
-              'is-disabled': option.disabled,
-              'is-selected': option.selected,
-            }}
-            data-value={`${option.value}`}
-            onClick={() => this.handleOptionClick(column, option)}
-            part={`${TIME_PICKER_PARTS.option}${option.selected ? ` ${TIME_PICKER_PARTS.optionSelected}` : ''}`}
-            role="option"
-            tabindex={option === tabStop ? 0 : -1}
-          >
-            {option.label}
-          </div>
-        ))}
+      <div class="bq-time-picker__column-group">
+        <div class="bq-time-picker__column-header" id={headerId} part={TIME_PICKER_PARTS.columnHeader}>
+          {this.columnHeaders[column]}
+        </div>
+        <div
+          aria-labelledby={headerId}
+          class="bq-time-picker__column"
+          data-column={column}
+          onKeyDown={(ev) => this.handleColumnKeyDown(ev, column, options)}
+          part={TIME_PICKER_PARTS.column}
+          role="listbox"
+        >
+          {options.map((option) => (
+            // biome-ignore lint/a11y/useKeyWithClickEvents: keyboard selection is handled by the listbox keydown handler.
+            // biome-ignore lint/a11y/useFocusableInteractive: Stencil uses the lowercase `tabindex` attribute, which Biome doesn't recognise.
+            <div
+              aria-disabled={option.disabled ? 'true' : 'false'}
+              aria-selected={option.selected ? 'true' : 'false'}
+              class={{
+                'bq-time-picker__option': true,
+                'is-disabled': option.disabled,
+                'is-selected': option.selected,
+              }}
+              data-value={`${option.value}`}
+              onClick={() => this.handleOptionClick(column, option)}
+              part={`${TIME_PICKER_PARTS.option}${option.selected ? ` ${TIME_PICKER_PARTS.optionSelected}` : ''}`}
+              role="option"
+              tabindex={option === tabStop ? 0 : -1}
+            >
+              {option.label}
+            </div>
+          ))}
+        </div>
       </div>
     );
   };
