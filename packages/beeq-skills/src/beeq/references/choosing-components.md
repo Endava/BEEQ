@@ -25,7 +25,7 @@ When no row fits the job, BEEQ has no component for it; see [When BEEQ has nothi
 
 | The request says… | When the job is… | Use |
 | --- | --- | --- |
-| dropdown, picker | A value the form submits | `bq-select`; `bq-date-picker` for a date |
+| dropdown, picker | A value the form submits | `bq-select`; `bq-date-picker` for a date; `bq-time-picker` for a time of day |
 | | A menu of actions from a trigger | `bq-dropdown` with `bq-option-list` |
 | menu | Actions or options from a trigger | `bq-dropdown` |
 | | Moving between sections of the app | `bq-side-menu` |
@@ -88,6 +88,7 @@ When no row fits the job, BEEQ has no component for it; see [When BEEQ has nothi
 | Turn a setting on or off with an immediate effect | [`bq-switch`](https://www.beeq.design/components/switch.md) | A checkbox for an instant setting. |
 | Agree to or include one item in a form submission | [`bq-checkbox`](https://www.beeq.design/components/checkbox.md) | A switch. |
 | Pick a date or date range | [`bq-date-picker`](https://www.beeq.design/components/date-picker.md) | Three selects for day, month, and year. |
+| Pick a time of day | [`bq-time-picker`](https://www.beeq.design/components/time-picker.md) | Separate selects for hours and minutes, or `bq-input` with a time pattern. |
 | Pick a value on a continuous scale | [`bq-slider`](https://www.beeq.design/components/slider.md) | An input when precision matters more than the range. |
 
 ### Feedback and status

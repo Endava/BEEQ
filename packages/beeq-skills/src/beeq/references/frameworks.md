@@ -154,7 +154,7 @@ Follow the [Angular guide](https://www.beeq.design/guides/frameworks/angular.md)
 | `bq-checkbox`, `bq-switch` | `BooleanValueAccessor` |
 | `bq-input` (text) | Angular's default accessor, with `ngDefaultControl` on the element |
 | `bq-input` with `type="number"` | `NumericValueAccessor` |
-| `bq-textarea`, `bq-date-picker` | `TextValueAccessor` |
+| `bq-textarea`, `bq-date-picker`, `bq-time-picker` | `TextValueAccessor` |
 | `bq-select` | `SelectValueAccessor` |
 | `bq-radio` | `RadioValueAccessor` |
 
@@ -168,7 +168,7 @@ Follow the [Vue guide](https://www.beeq.design/guides/frameworks/vue.md).
 | Component | Bound prop |
 | --- | --- |
 | `BqCheckbox`, `BqSwitch` | `checked` |
-| `BqDatePicker`, `BqInput`, `BqRadioGroup`, `BqSelect`, `BqSlider`, `BqTextarea` | `value` |
+| `BqDatePicker`, `BqInput`, `BqRadioGroup`, `BqSelect`, `BqSlider`, `BqTextarea`, `BqTimePicker` | `value` |
 
 - Pair `v-model` with `@bqClear` on clearable inputs, or the ref keeps the old value after the user clears the field.
 - In Nuxt, add the `data-beeq` script through `app.head` in `nuxt.config`. When the project self-hosts icons, call `setBasePath()` from a `plugins/beeq.client.ts` plugin so it runs only in the browser.
