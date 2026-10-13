@@ -15,9 +15,8 @@ const sourcePath = await (async () => {
       return candidate;
     } catch {}
   }
-  throw new Error(
-    `beeq.css not found. Run \`pnpm nx run beeq:build\` first. Looked in:\n${sourceCandidates.map((c) => `- ${path.relative(workspaceRoot, c)}`).join('\n')}`,
-  );
+  const searchedPaths = sourceCandidates.map((candidate) => path.relative(workspaceRoot, candidate)).join('\n- ');
+  throw new Error(`beeq.css not found. Run \`pnpm nx run beeq:build\` first. Looked in:\n- ${searchedPaths}`);
 })();
 const outputPath = path.join(workspaceRoot, 'apps/beeq-docs/beeq-mintlify.css');
 
