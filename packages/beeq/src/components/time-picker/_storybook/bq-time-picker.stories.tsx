@@ -3,8 +3,13 @@ import { html, nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 import { skipSnapshotParameters } from '../../../../.storybook/chromatic-parameters';
-import { INPUT_VALIDATION } from '../../input/bq-input.types';
-import { HOUR_FORMAT, TIME_PRECISION } from '../bq-time-picker.types';
+import {
+  FLOATING_PLACEMENT,
+  FLOATING_STRATEGY,
+  HOUR_FORMAT,
+  INPUT_VALIDATION,
+  TIME_PRECISION,
+} from '../bq-time-picker.types';
 import mdx from './bq-time-picker.mdx';
 
 const meta: Meta = {
@@ -35,30 +40,14 @@ const meta: Meta = {
     'now-button-label': { control: 'text' },
     open: { control: 'boolean' },
     'panel-height': { control: 'text' },
-    placement: {
-      control: 'select',
-      options: [
-        'top',
-        'top-start',
-        'top-end',
-        'bottom',
-        'bottom-start',
-        'bottom-end',
-        'right',
-        'right-start',
-        'right-end',
-        'left',
-        'left-start',
-        'left-end',
-      ],
-    },
+    placement: { control: 'select', options: [...FLOATING_PLACEMENT] },
     precision: { control: 'select', options: [...TIME_PRECISION] },
     readonly: { control: 'boolean' },
     'require-confirm': { control: 'boolean' },
     required: { control: 'boolean' },
     'second-step': { control: 'number' },
     skidding: { control: 'number' },
-    strategy: { control: 'select', options: ['fixed', 'absolute'] },
+    strategy: { control: 'select', options: [...FLOATING_STRATEGY] },
     'time-button-label': { control: 'text' },
     'validation-status': { control: 'select', options: [...INPUT_VALIDATION] },
     value: { control: 'text' },

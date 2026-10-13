@@ -103,7 +103,7 @@ A promise that resolves once the value has been cleared.
 | `"prefix"`          | The prefix slot container.                                       |
 | `"segment"`         | An editable hour, minute, second or AM/PM segment.               |
 | `"segment-literal"` | A locale-derived separator between time segments.                |
-| `"suffix"`          | The suffix slot container.                                       |
+| `"suffix"`          | The clock trigger button that hosts the suffix slot.             |
 | `"time-trigger"`    | The clock icon trigger button.                                   |
 
 

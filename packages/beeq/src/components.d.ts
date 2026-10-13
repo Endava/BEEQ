@@ -33,7 +33,7 @@ import { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq
 import { TTabOrientation, TTabPlacement, TTabSize } from "./components/tab/bq-tab.types";
 import { TTagBorderRadius, TTagColor, TTagSize, TTagVariant } from "./components/tag/bq-tag.types";
 import { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq-textarea.types";
-import { TFloatingStrategy as TFloatingStrategy1, THourFormat, TTimePrecision } from "./components/time-picker/bq-time-picker.types";
+import { TFloatingStrategy as TFloatingStrategy1, THourFormat, TInputValidation as TInputValidation1, TTimePrecision } from "./components/time-picker/bq-time-picker.types";
 import { TToastBorderRadius, TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
 export { TAccordionAppearance, TAccordionSize } from "./components/accordion/bq-accordion.types";
 export { TAlertBorderRadius, TAlertType } from "./components/alert/bq-alert.types";
@@ -63,7 +63,7 @@ export { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq
 export { TTabOrientation, TTabPlacement, TTabSize } from "./components/tab/bq-tab.types";
 export { TTagBorderRadius, TTagColor, TTagSize, TTagVariant } from "./components/tag/bq-tag.types";
 export { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq-textarea.types";
-export { TFloatingStrategy as TFloatingStrategy1, THourFormat, TTimePrecision } from "./components/time-picker/bq-time-picker.types";
+export { TFloatingStrategy as TFloatingStrategy1, THourFormat, TInputValidation as TInputValidation1, TTimePrecision } from "./components/time-picker/bq-time-picker.types";
 export { TToastBorderRadius, TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
 export namespace Components {
     /**
@@ -3177,7 +3177,7 @@ export namespace Components {
      * @attr {string} time-button-label - The aria-label of the clock trigger button.
      * @attr {"error" | "none" | "success" | "warning"} validation-status - Validation state.
      * @attr {string} value - The selected time in 24-hour format: `HH:mm` (`HH:00` at hour precision) or `HH:mm:ss`.
-     * @method clear - Clears the selected value.
+     * @method clear() - Clears the selected value.
      * @event bqBlur - Emitted when the field loses focus.
      * @event bqChange - Emitted when the value is committed or cleared.
      * @event bqClear - Emitted when the value is cleared.
@@ -3353,7 +3353,7 @@ export namespace Components {
           * Validation state applied to the field.
           * @default 'none'
          */
-        "validationStatus": TInputValidation;
+        "validationStatus": TInputValidation1;
         /**
           * The selected time, in 24-hour format: `HH:mm` (`HH:00` at hour precision) or `HH:mm:ss` at second precision.
          */
@@ -5669,7 +5669,7 @@ declare global {
      * @attr {string} time-button-label - The aria-label of the clock trigger button.
      * @attr {"error" | "none" | "success" | "warning"} validation-status - Validation state.
      * @attr {string} value - The selected time in 24-hour format: `HH:mm` (`HH:00` at hour precision) or `HH:mm:ss`.
-     * @method clear - Clears the selected value.
+     * @method clear() - Clears the selected value.
      * @event bqBlur - Emitted when the field loses focus.
      * @event bqChange - Emitted when the value is committed or cleared.
      * @event bqClear - Emitted when the value is cleared.
@@ -9242,7 +9242,7 @@ declare namespace LocalJSX {
      * @attr {string} time-button-label - The aria-label of the clock trigger button.
      * @attr {"error" | "none" | "success" | "warning"} validation-status - Validation state.
      * @attr {string} value - The selected time in 24-hour format: `HH:mm` (`HH:00` at hour precision) or `HH:mm:ss`.
-     * @method clear - Clears the selected value.
+     * @method clear() - Clears the selected value.
      * @event bqBlur - Emitted when the field loses focus.
      * @event bqChange - Emitted when the value is committed or cleared.
      * @event bqClear - Emitted when the value is cleared.
@@ -9429,7 +9429,7 @@ declare namespace LocalJSX {
           * Validation state applied to the field.
           * @default 'none'
          */
-        "validationStatus"?: TInputValidation;
+        "validationStatus"?: TInputValidation1;
         /**
           * The selected time, in 24-hour format: `HH:mm` (`HH:00` at hour precision) or `HH:mm:ss` at second precision.
          */
@@ -11565,7 +11565,7 @@ declare module "@stencil/core" {
              * @attr {string} time-button-label - The aria-label of the clock trigger button.
              * @attr {"error" | "none" | "success" | "warning"} validation-status - Validation state.
              * @attr {string} value - The selected time in 24-hour format: `HH:mm` (`HH:00` at hour precision) or `HH:mm:ss`.
-             * @method clear - Clears the selected value.
+             * @method clear() - Clears the selected value.
              * @event bqBlur - Emitted when the field loses focus.
              * @event bqChange - Emitted when the value is committed or cleared.
              * @event bqClear - Emitted when the value is cleared.

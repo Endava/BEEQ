@@ -4,6 +4,7 @@ export {
   type TFloatingPlacement,
   type TFloatingStrategy,
 } from '../date-picker/bq-date-picker.types';
+export { INPUT_VALIDATION, type TInputValidation } from '../input/bq-input.types';
 
 /**
  * The smallest unit edited and submitted by the time picker.

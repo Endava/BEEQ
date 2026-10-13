@@ -22,15 +22,16 @@ import {
   updateSegment,
   validatePropValue,
 } from '../../shared/utils';
-import { INPUT_VALIDATION, type TInputValidation } from '../input/bq-input.types';
 import {
   FLOATING_PLACEMENT,
   FLOATING_STRATEGY,
   HOUR_FORMAT,
+  INPUT_VALIDATION,
   type TDayPeriod,
   type TFloatingStrategy,
   type THourFormat,
   TIME_PRECISION,
+  type TInputValidation,
   type TPartialTime,
   type TTime,
   type TTimeOption,
@@ -138,7 +139,7 @@ type TOpenSource = 'input' | 'keyboard' | 'trigger' | 'programmatic';
  * @attr {"error" | "none" | "success" | "warning"} validation-status - Validation state.
  * @attr {string} value - The selected time in 24-hour format: `HH:mm` (`HH:00` at hour precision) or `HH:mm:ss`.
  *
- * @method clear - Clears the selected value.
+ * @method clear() - Clears the selected value.
  *
  * @event bqBlur - Emitted when the field loses focus.
  * @event bqChange - Emitted when the value is committed or cleared.
@@ -154,7 +155,7 @@ type TOpenSource = 'input' | 'keyboard' | 'trigger' | 'programmatic';
  * @part label - The label slot container.
  * @part control - The field control wrapper.
  * @part prefix - The prefix slot container.
- * @part suffix - The suffix slot container.
+ * @part suffix - The clock trigger button that hosts the suffix slot.
  * @part input - The segmented time field group.
  * @part segment - An editable hour, minute, second or AM/PM segment.
  * @part segment-literal - A locale-derived separator between time segments.
@@ -430,14 +431,6 @@ export class BqTimePicker {
     this.checkHourFormat();
   }
 
-  /** `hour-format` is optional, so an invalid value falls back to the locale clock instead of a default. */
-  private checkHourFormat() {
-    if (this.hourFormat === undefined || HOUR_FORMAT.includes(this.hourFormat)) return;
-
-    console.warn(`[BQ-TIME-PICKER] Please notice that "hourFormat" should be one of ${HOUR_FORMAT.join('|')}`);
-    this.hourFormat = undefined;
-  }
-
   @Watch('open')
   handleOpen(open: boolean) {
     if (open && (this.disabled || this.readonly)) {
@@ -546,6 +539,14 @@ export class BqTimePicker {
   // Internal business logic.
   // These methods cannot be called from the host element.
   // =======================================================
+
+  /** `hour-format` is optional, so an invalid value falls back to the locale clock instead of a default. */
+  private checkHourFormat = (): void => {
+    if (this.hourFormat === undefined || HOUR_FORMAT.includes(this.hourFormat)) return;
+
+    console.warn(`[BQ-TIME-PICKER] Please notice that "hourFormat" should be one of ${HOUR_FORMAT.join('|')}`);
+    this.hourFormat = undefined;
+  };
 
   /** Locale- and precision-aware segment mask, memoized by its inputs. */
   private get mask(): TTimeMask {
@@ -1153,11 +1154,13 @@ export class BqTimePicker {
   // -----------------
 
   /** Resolves the visible text and the spinbutton range/value of a segment. */
-  private getSegmentSpinValue(segment: TTimeSegment): {
+  private getSegmentSpinValue = (
+    segment: TTimeSegment,
+  ): {
     display: string;
     range?: [number, number];
     valueNow?: number;
-  } {
+  } => {
     const { dayPeriods, hourCycle } = this.mask;
     if (segment.field === 'dayPeriod') {
       return { display: segment.value ? dayPeriods[segment.value === 'pm' ? 1 : 0] : '' };
@@ -1168,7 +1171,7 @@ export class BqTimePicker {
     const isComplete = segment.value.length === segment.maxLength;
     const valueNow = isComplete && numeric >= range[0] && numeric <= range[1] ? numeric : undefined;
     return { display: segment.value, range, valueNow };
-  }
+  };
 
   private renderSegment = (group: TTimeSegmentGroup, index: number): JSX.Element => {
     const segment = group.segments[index];
