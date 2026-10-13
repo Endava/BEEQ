@@ -183,6 +183,7 @@
 }
 
 .bq-time-picker__mask-description,
+.bq-time-picker__error-description,
 .bq-time-picker__announcement {
   position: absolute;
   inline-size: 1px;
@@ -318,6 +319,11 @@
   &.is-selected {
     background-color: var(--bq-time-picker--option-background-selected);
     color: var(--bq-time-picker--option-text-selected);
+  }
+
+  // The focus outline shares the selected background color, so an inner ring keeps focus visible.
+  &.is-selected:focus-visible {
+    box-shadow: inset 0 0 0 4px var(--bq-time-picker--option-text-selected);
   }
 
   &.is-disabled {

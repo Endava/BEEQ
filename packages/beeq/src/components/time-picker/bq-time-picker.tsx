@@ -253,6 +253,7 @@ export class BqTimePicker {
 
   @State() activeSegment?: TTimeSegmentKey;
   @State() announcement = '';
+  @State() constraintErrorMessage?: string;
   @State() hasConstraintError = false;
   @State() hasLabel = false;
   @State() hasPrefix = false;
@@ -1119,6 +1120,7 @@ export class BqTimePicker {
 
     if (Object.keys(flags).length === 0) {
       this.hasConstraintError = !this.internals.validity.valid;
+      this.constraintErrorMessage = this.hasConstraintError ? this.internals.validationMessage : undefined;
       return;
     }
 
@@ -1130,6 +1132,7 @@ export class BqTimePicker {
       this.segmentContainerElem,
     );
     this.hasConstraintError = true;
+    this.constraintErrorMessage = this.internals.validationMessage;
   };
 
   /** Announces the committed time once when focus enters the field. */
@@ -1181,6 +1184,7 @@ export class BqTimePicker {
         aria-invalid={isInvalid ? 'true' : 'false'}
         aria-label={TIME_FIELD_LABELS[segment.field]}
         aria-readonly={this.readonly ? 'true' : undefined}
+        aria-required={this.required ? 'true' : undefined}
         aria-valuemax={range?.[1]}
         aria-valuemin={range?.[0]}
         aria-valuenow={valueNow}
@@ -1322,6 +1326,8 @@ export class BqTimePicker {
     const id = this.name || DEFAULT_INPUT_ID;
     const labelId = `bq-time-picker__label-${id}`;
     const maskDescriptionId = `bq-time-picker__mask-${id}`;
+    const errorDescriptionId = `bq-time-picker__error-${id}`;
+    const hasErrorDescription = this.hasConstraintError && !!this.constraintErrorMessage;
 
     return (
       <div class="bq-time-picker" part={TIME_PICKER_PARTS.base}>
@@ -1378,7 +1384,7 @@ export class BqTimePicker {
             </span>
 
             <div
-              aria-describedby={maskDescriptionId}
+              aria-describedby={hasErrorDescription ? `${maskDescriptionId} ${errorDescriptionId}` : maskDescriptionId}
               aria-disabled={this.disabled ? 'true' : 'false'}
               aria-labelledby={this.hasLabel ? labelId : undefined}
               class="bq-time-picker__segments"
@@ -1393,6 +1399,11 @@ export class BqTimePicker {
             <span class="bq-time-picker__mask-description" id={maskDescriptionId}>
               Expected format: {this.mask.template}
             </span>
+            {hasErrorDescription && (
+              <span class="bq-time-picker__error-description" id={errorDescriptionId}>
+                {this.constraintErrorMessage}
+              </span>
+            )}
             <span aria-atomic="true" aria-live="polite" class="bq-time-picker__announcement" role="status">
               {this.announcement}
             </span>

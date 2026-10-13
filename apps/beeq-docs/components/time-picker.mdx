@@ -1293,7 +1293,7 @@ When focus leaves the field, complete times outside `min` or `max` are clamped t
 ## Accessibility
 
 - `bq-time-picker` is form-associated and delegates focus, so it participates in native forms and moves focus into its segmented field when the component receives focus.
-- The segmented field is a labelled `group` described by the expected format. Each hour, minute, second, and AM/PM control is a `spinbutton` with its own label, limits, value text, and roving tabindex.
+- The segmented field is a labelled `group` described by the expected format and, when a constraint fails, by the validation message. Each hour, minute, second, and AM/PM control is a `spinbutton` with its own label, limits, value text, and roving tabindex, and exposes `aria-required` when the field is required.
 - Each segment sets `aria-invalid="true"` for `validationStatus="error"` and native constraint failures, such as a missing required value or an incomplete, out-of-range, or off-step time. `aria-readonly` and `aria-disabled` reflect the `readonly` and `disabled` states.
 - The panel carries `role="dialog"` and is labelled via `aria-labelledby` when a label is present, or by its built-in "Time picker" label otherwise. The panel isn't modal.
 - Each column is a labelled `listbox`. Options expose `aria-selected`, and options outside `min`, `max`, or the steps expose `aria-disabled="true"`.
