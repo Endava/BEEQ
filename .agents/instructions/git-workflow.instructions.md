@@ -1,9 +1,8 @@
 ---
 description: BEEQ contribution conventions — branching strategy, commit message format, PR rules, merge checklist, and breaking change / deprecation patterns. Apply when writing commits, drafting PRs, or generating changelogs.
-applyTo: '**/*,!{.nx,.stencil,.volta,node_modules,dist,tmp}/**/*'
 ---
 
-# Contributing to BEEQ
+# Git Workflow
 
 Full details are in [CONTRIBUTING.md](../../CONTRIBUTING.md). This file distils the rules the AI needs to enforce or apply automatically.
 
@@ -11,19 +10,19 @@ Full details are in [CONTRIBUTING.md](../../CONTRIBUTING.md). This file distils 
 
 ## Branch naming
 
-Branch directly from `main`. Prefix must match the commit type:
+Branch directly from `main`. The prefix must be one of those enforced by `.husky/branch-name.sh` (`<prefix>/<kebab-case-name>`):
 
 | Prefix | When to use |
 |---|---|
 | `feat/<name>` | New feature or component |
-| `fix/<name>` | Bug fix |
-| `hotfix/<name>` | Production hotfix |
+| `fix/<name>` | Bug fix, including hotfixes |
 | `docs/<name>` | Documentation-only changes |
 | `test/<name>` | Test additions or fixes |
 | `refactor/<name>` | Code change with no behavior change |
 | `perf/<name>` | Performance improvement |
 | `chore/<name>` | Build process, tooling, or auxiliary changes |
 | `style/<name>` | Formatting or whitespace — no logic change |
+| `revert/<name>`, `ci/<name>`, `build/<name>` | Reverts, CI changes, build-system changes |
 
 Use kebab-case for `<name>`. Examples: `feat/bq-slider`, `fix/bq-input-validation`.
 
@@ -43,7 +42,7 @@ Follow [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/):
 
 ### Rules
 
-- **type**: one of `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `chore`
+- **type**: one of the `type-enum` values in `.commitlintrc.ts` (source of truth)
 - **scope**: the component or package affected — use the `bq-<name>` or `<component name>` or `<package name>` (e.g. `bq-button`, `beeq-react`, `beeq-tailwindcss`)
 - **subject**: imperative mood, lowercase first letter, no trailing period, ≤ 72 characters total for the first line
 - For documentation-only commits, append `[ci skip]` to the subject
@@ -111,7 +110,7 @@ and has been removed. Update all usages to the `checked` property/attribute.
 ```
 
 3. Update the adapter packages (`beeq-angular`, `beeq-react`, `beeq-vue`) if the prop name or event signature changed
-4. Add a migration entry to `CHANGELOG.md`
+4. Leave `CHANGELOG.md` alone; the `BREAKING CHANGE:` footer becomes its migration entry
 
 ---
 

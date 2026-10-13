@@ -1,6 +1,6 @@
 ---
 name: create-component
-description: 'Create a new BEEQ StencilJS web component. Use for: scaffolding bq-* components, adding new design system elements, generating component files (TSX, SCSS, types, stories, tests). Follows BEEQ component structure, naming conventions, JSDoc requirements, Shadow DOM, and Nx monorepo placement under packages/beeq/src/components/.'
+description: 'Scaffold a new BEEQ `bq-*` StencilJS component with `pnpm g`, then implement the TSX, types, SCSS and JSDoc. Use when creating a component from scratch or resuming an in-progress scaffold. For tests, stories or docs use the write-* and doc-component skills.'
 argument-hint: 'Component name without the bq- prefix (e.g. "slider")'
 metadata:
   internal: true
@@ -17,7 +17,7 @@ metadata:
 ## Before You Start
 
 1. Read the instruction files for this task:
-   - [StencilJS instructions](../../instructions/stenciljs.instructions.md)
+   - [Components instructions](../../instructions/components.instructions.md)
    - [Styles instructions](../../instructions/styles.instructions.md)
    - [Accessibility instructions](../../instructions/accessibility.instructions.md)
 2. Pick a similar existing component as a reference:
@@ -38,69 +38,20 @@ Answer the prompts: component name (no `bq-` prefix), whether to add styling, st
 
 ### 2. Implement the component (`bq-<name>.tsx`)
 
-Follow the **exact section order** — do not reorder:
-
-```
-1. Own Properties          (private fields, element refs like prefixElem)
-2. @Element()              (host HTML element reference)
-3. @State()                (alphabetical, inlined decorator)
-4. @Prop()                 (public API, reflect: true for styling-related props)
-5. @Watch()                (prop lifecycle validators)
-6. @Event()                (with full JSDoc; EventEmitter<T>)
-7. Component lifecycle     (connectedCallback → componentWillLoad → componentDidLoad → disconnectedCallback)
-8. @Listen()               (event listeners)
-9. Public @Method()        (async, with full JSDoc)
-10. Private local methods  (private arrow functions, e.g. private handleClick = () => {})
-11. render()               (always last)
-```
-
-When defining boolean props, match the type to the intended API shape:
-- Use `prop: boolean = false` when the prop is conceptually required in the component API and strict TypeScript initialization should guarantee a boolean value internally.
-- Use `prop?: boolean` when `undefined` is meaningful in the public API; in that case, do not also assign `= false`.
+Follow the section order, naming and prop rules in the [components instructions](../../instructions/components.instructions.md). Do not reorder sections.
 
 ### 3. Create the types file (`bq-<name>.types.ts`)
 
-Export type aliases and `const` arrays so both the component and Storybook can use them:
+Only when the component has typed props. Export type aliases and `const` arrays so the component (`@Watch` validators) and Storybook can share them:
 
 ```ts
 export type TMyComponentSize = 'small' | 'medium' | 'large';
 export const MY_COMPONENT_SIZE = ['small', 'medium', 'large'] as const;
 ```
 
-Only create this file if the component has typed props. The constant array is used in `@Watch` validators.
-
 ### 4. Write the component-level JSDoc block
 
-Place above `@Component({})`. Every component **must** include:
-
-```ts
-/**
- * One-line description of what the component does.
- *
- * @example How to use it
- * ```html
- * <bq-name prop="value">Label</bq-name>
- * ```
- *
- * @documentation https://www.beeq.design/...
- * @status progress | stable | deprecated
- *
- * @dependency bq-icon  (list every consumed bq-* component)
- *
- * @attr {type} attr-name - Description (one per @Prop, use kebab-case)
- *
- * @event bqChange - Description (one per @Event)
- *
- * @method methodName() - Description (one per public @Method)
- *
- * @slot - Default slot description
- * @slot name - Named slot description
- *
- * @part part-name - Element description (one per shadow part)
- *
- * @cssprop --bq-name--property - Description (one per CSS custom property)
- */
-```
+Use the JSDoc template in the components instructions. List every prop, event, method, slot, part and CSS custom property.
 
 ### 5. Style the component (`scss/bq-<name>.scss`)
 
@@ -129,18 +80,3 @@ Verify that the build passes without errors:
 ```bash
 pnpm exec nx run beeq:build
 ```
-
-## Key Rules
-
-| Rule | Detail |
-|---|---|
-| Tag | `bq-<name>` — kebab-case, `bq-` prefix |
-| Class | `Bq<Name>` — PascalCase |
-| Events | camelCase, `bq` prefix (e.g. `bqClick`, `bqChange`) |
-| Private | `private` keyword — never `#` (not supported by Stencil) |
-| Local methods | Must be private arrow functions |
-| Public methods | Must be `async` |
-| Boolean props | Use `prop: boolean = false` for required booleans; use `prop?: boolean` only when `undefined` is part of the API, and do not combine it with `= false` |
-| Prop validation | Use `validatePropValue()` from `../../shared/utils` + `@Watch()` |
-| Form components | Use `@AttachInternals()` + `formAssociated: true` |
-| Focus delegation | Use `shadow: { delegatesFocus: true }` for interactive elements |

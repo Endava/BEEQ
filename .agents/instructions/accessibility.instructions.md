@@ -28,8 +28,10 @@ Follow WCAG 2.1 Level AA standards across all `bq-*` components.
   - `aria-checked` — for checkboxes, radios, toggles
   - `aria-disabled` — in addition to `disabled` where needed
   - `aria-invalid` + `aria-describedby` — for form validation errors
+  - `aria-required` — for required fields
   - `aria-busy` — for loading states
   - `aria-hidden="true"` — for decorative/redundant elements (icons with visible labels)
+- Roles by pattern: `dialog` + `aria-modal="true"`, `alert`/`status` for notifications, `tooltip` paired with `aria-describedby`, `tablist`/`tab`/`tabpanel`, `menu`/`menuitem`, `listbox`/`option`
 
 ## Keyboard Navigation
 
@@ -48,6 +50,7 @@ Follow WCAG 2.1 Level AA standards across all `bq-*` components.
 
 ## Focus Management
 
+- Keep focus after a state change (submit, close); never lose it
 - Use `shadow: { delegatesFocus: true }` in `@Component({})` for components wrapping native inputs
 - On dialog/drawer open: move focus to the first focusable element inside
 - On dialog/drawer close: return focus to the trigger element
@@ -58,9 +61,13 @@ Follow WCAG 2.1 Level AA standards across all `bq-*` components.
 - Text: minimum 4.5:1 contrast ratio (3:1 for large text ≥18pt or ≥14pt bold)
 - Focus indicators: minimum 3:1 contrast against adjacent colors
 - Never convey information by color alone — pair with icon, text, or pattern
+- Respect `prefers-reduced-motion` for animations and transitions (`@media (prefers-reduced-motion: reduce)`)
+- Images that carry content have meaningful `alt`; decorative images use `alt=""`
+- Do not skip heading levels inside complex components
 
 ## Live Regions
 
 - Use `role="alert"` (assertive) for error messages and critical notifications
 - Use `role="status"` (polite) for non-critical status updates
 - Set `role` on the static element; do not change it dynamically
+- Announce dynamic content changes through an `aria-live` region or `role="status"` / `role="alert"`

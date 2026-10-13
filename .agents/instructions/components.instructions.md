@@ -1,5 +1,5 @@
 ---
-description: Enforces strict StencilJS component structure, naming, and documentation rules for all components in the design system. Ensures consistency, maintainability, and best practices across the codebase, following the BEEQ Design System and Nx monorepo guidelines.
+description: Enforces strict StencilJS component structure, naming, and documentation rules for all components in the design system. Ensures consistency, maintainability, and best practices across the codebase, following the BEEQ Design System guidelines.
 applyTo: packages/beeq/src/components/**/*.tsx
 ---
 
@@ -94,38 +94,57 @@ export class BqComponentName {
    - Public methods must be async
    - Local methods should be private and use arrow functions
 
-## Component Implementation
+## Props, Validation and Forms
 
-- Always use the @Element() decorator to access the component's DOM element
-- Use the @Listen() decorator for event handling
-- Implement proper lazy loading strategies
-- Use proper slot patterns
-- Follow proper event handling patterns
-- Use proper component composition patterns
-- Follow proper shadow DOM encapsulation patterns
-- Implement proper form association
-- Use proper custom element registry patterns
+- Boolean props: use `prop: boolean = false` when the prop is conceptually required and should always be a boolean internally. Use `prop?: boolean` only when `undefined` is meaningful in the public API, and do not also assign `= false`.
+- Validate prop values with `validatePropValue()` from `../../shared/utils` inside a `@Watch()`. Back it with a `const` array exported from `bq-<name>.types.ts` (e.g. `MY_COMPONENT_SIZE`), shared with Storybook.
+- Form-associated components use `@AttachInternals()` and `formAssociated: true`.
+- Use `reflect: true` for props that drive styling.
 
-## Component State Management
+## Component JSDoc Block
 
-- Use proper state management patterns
-- Follow proper prop management
-- Implement proper event handling
-- Use proper lifecycle hooks
-- Follow proper update patterns
+Place above `@Component({})`. Every component includes:
 
-## Component Performance
+```ts
+/**
+ * One-line description of what the component does.
+ *
+ * @example How to use it
+ * ```html
+ * <bq-name prop="value">Label</bq-name>
+ * ```
+ *
+ * @documentation https://www.beeq.design/...
+ * @status progress | stable | deprecated
+ *
+ * @dependency bq-icon  (list every consumed bq-* component)
+ * @attr {type} attr-name - Description (one per @Prop, kebab-case)
+ * @event bqChange - Description (one per @Event)
+ * @method methodName() - Description (one per public @Method)
+ * @slot - Default slot description
+ * @slot name - Named slot description
+ * @part part-name - Element description (one per shadow part)
+ * @cssprop --bq-name--property - Description (one per CSS custom property)
+ */
+```
 
-- Implement proper lazy loading
-- Use proper code splitting
-- Follow proper bundle optimization
-- Implement proper resource loading
-- Use proper rendering optimization
+## Code Conventions
 
-## Component Documentation
+- Use early returns to avoid nested conditions.
+- Prefer conditional classes (e.g. `classNames`) over ternary operators in class attributes.
+- Prefix event handler functions with `handle` (e.g. `handleClick`, `handleKeyDown`).
+- Use `kebab-case` for file names, `ALL_CAPS` for constants and enum values, and a `T` prefix for type parameters (e.g. `TKey`).
+- Do not use `#` for private properties or methods; Stencil does not support it. Use the `private` keyword.
+- Use `@Element()` to access the host element and `@Listen()` for host-level event handling.
+- Use `shadow: { delegatesFocus: true }` when wrapping native inputs.
 
-- Document component usage
-- Provide proper examples
-- Include proper API documentation
-- Document proper integration patterns
-- Include proper migration guides
+## Project Structure
+
+- Scaffold new components with `pnpm g` (Plop generators in `tools/src/generators/plop`); do not create the files by hand.
+- Projects are grouped by Nx tags: `core`, `publishable`, `wrapper`, `preset`, `skills`. Use them with `--exclude='*,!tag:<name>'` (see `AGENTS.md`).
+
+## Scope of Changes
+
+- Analyze the code before changing it. If its purpose is unclear, ask before proceeding.
+- Only modify the sections related to the task.
+- If you spot a refactor that would clearly improve performance, scalability, efficiency or readability, do not apply it. List it at the end of your response with the file, the benefit and a rough effort so the user can decide.

@@ -1,6 +1,6 @@
 ---
 name: write-stories
-description: 'Write Storybook stories and MDX docs for BEEQ web components. Use for: adding or updating Storybook stories, writing MDX documentation pages, adding argTypes and controls for component props/events, creating story variants for all component states. Uses @storybook/web-components-vite and lit-html templates. Files live at packages/beeq/src/components/<name>/_storybook/.'
+description: 'Write Storybook stories and MDX for a `bq-*` component: argTypes, controls and variants for every state. Use when adding or updating a component''s stories. Files live in the component''s `_storybook/` folder.'
 argument-hint: 'Component name (e.g. "bq-button") or path to the component tsx file'
 metadata:
   internal: true
@@ -129,9 +129,6 @@ The `.mdx` file should import and use `<Stories />` and `<ArgTypes />` from `@st
 ## Running Storybook
 
 ```bash
-# Run Storybook locally
-pnpm start
-
-# Build Storybook for production
-pnpm build
+pnpm start             # run locally
+pnpm build:storybook   # production build
 ```
