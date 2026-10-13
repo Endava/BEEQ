@@ -196,6 +196,7 @@ type TOpenSource = 'input' | 'keyboard' | 'trigger' | 'programmatic';
  * @cssprop --bq-time-picker--option-background-hover - Hover background of a column option.
  * @cssprop --bq-time-picker--option-background-selected - Background of the selected column option.
  * @cssprop --bq-time-picker--option-height - Height of a column option.
+ * @cssprop --bq-time-picker--option-width - Width of a column option.
  * @cssprop --bq-time-picker--option-radius - Border radius of a column option.
  * @cssprop --bq-time-picker--option-text-selected - Text color of the selected column option.
  * @cssprop --bq-time-picker--padding-end - Field padding end.

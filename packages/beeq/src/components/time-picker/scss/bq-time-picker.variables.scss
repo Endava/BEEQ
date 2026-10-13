@@ -27,6 +27,7 @@
    * @prop --bq-time-picker--option-background-hover - Hover background of a column option
    * @prop --bq-time-picker--option-background-selected - Background of the selected column option
    * @prop --bq-time-picker--option-height - Height of a column option
+   * @prop --bq-time-picker--option-width - Width of a column option
    * @prop --bq-time-picker--option-radius - Border radius of a column option
    * @prop --bq-time-picker--option-text-selected - Text color of the selected column option
    * @prop --bq-time-picker--padding-end - Field padding end
@@ -63,6 +64,7 @@
   --bq-time-picker--option-background-hover: var(--bq-ui--secondary);
   --bq-time-picker--option-background-selected: var(--bq-ui--brand);
   --bq-time-picker--option-height: 2.5rem;
+  --bq-time-picker--option-width: 3rem;
   --bq-time-picker--option-radius: var(--bq-radius--xs);
   // `--bq-text--alt` is the fallback for themes that predate the `--bq-text--on-{intent}` roles.
   --bq-time-picker--option-text-selected: var(--bq-text--on-brand, var(--bq-text--alt));

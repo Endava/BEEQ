@@ -297,7 +297,7 @@
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-gutter: stable;
-  scrollbar-width: thin;
+  scrollbar-width: none;
 
   .bq-time-picker__column-group:first-child > & {
     margin-inline-start: var(--bq-spacing-xs);
@@ -313,6 +313,8 @@
   flex: none;
   align-items: center;
   justify-content: center;
+  align-self: center;
+  inline-size: var(--bq-time-picker--option-width);
   block-size: var(--bq-time-picker--option-height);
   padding: 0;
   border: none;
@@ -331,17 +333,12 @@
 
   &:focus-visible {
     outline: 2px solid var(--bq-time-picker--border-color-focus);
-    outline-offset: -2px;
+    outline-offset: 1px;
   }
 
   &.is-selected {
     background-color: var(--bq-time-picker--option-background-selected);
     color: var(--bq-time-picker--option-text-selected);
-  }
-
-  // The focus outline shares the selected background color, so an inner ring keeps focus visible.
-  &.is-selected:focus-visible {
-    box-shadow: inset 0 0 0 4px var(--bq-time-picker--option-text-selected);
   }
 
   &[aria-disabled="true"] {
