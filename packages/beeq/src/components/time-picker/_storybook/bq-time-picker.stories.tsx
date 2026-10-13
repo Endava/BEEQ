@@ -334,6 +334,8 @@ export const WithForm: Story = {
     };
 
     return html`
+      <link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/styles/night-owl.min.css" />
+
       <div class="grid auto-cols-auto grid-cols-1 gap-y-l sm:grid-cols-2 sm:gap-x-l">
         <bq-card>
           <h4 class="m-be-m">Book a meeting room</h4>
@@ -362,9 +364,30 @@ export const WithForm: Story = {
         </bq-card>
         <bq-card class="[&::part(wrapper)]:h-full">
           <h4 class="m-be-m">Form data</h4>
-          <pre><code id="time-picker-form-data" class="rounded-s">{ // submit the form to see the data here }</code></pre>
+          <div class="language-javascript overflow-x-scroll whitespace-pre rounded-s">
+            // Handle form submit<br />
+            const form = ev.target as HTMLFormElement;<br />
+            const formData = new FormData(form);<br />
+            const formValues = Object.fromEntries(formData.entries());
+          </div>
+          <pre>
+            <code id="time-picker-form-data" class="rounded-s">
+              { // submit the form to see the data here }
+            </code>
+          </pre>
         </bq-card>
       </div>
+      <script type="module">
+        import hljs from 'https://unpkg.com/@highlightjs/cdn-assets@11.10.0/es/highlight.min.js';
+        import javascript from 'https://unpkg.com/@highlightjs/cdn-assets@11.10.0/es/languages/javascript.min.js';
+
+        hljs.registerLanguage('javascript', javascript);
+        hljs.highlightAll();
+
+        document.querySelectorAll('div.language-javascript').forEach((block) => {
+          hljs.highlightElement(block);
+        });
+      </script>
     `;
   },
 };
