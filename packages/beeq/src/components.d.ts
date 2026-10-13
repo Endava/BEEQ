@@ -3186,12 +3186,16 @@ export namespace Components {
      * @cssprop --bq-time-picker--border-color - Field border color.
      * @cssprop --bq-time-picker--border-color-disabled - Border color when disabled.
      * @cssprop --bq-time-picker--border-color-focus - Border color on focus.
+     * @cssprop --bq-time-picker--border-color-danger - Border color when the validation status is `error`.
+     * @cssprop --bq-time-picker--border-color-success - Border color when the validation status is `success`.
+     * @cssprop --bq-time-picker--border-color-warning - Border color when the validation status is `warning`.
      * @cssprop --bq-time-picker--border-radius - Field border radius.
      * @cssprop --bq-time-picker--border-style - Border style.
      * @cssprop --bq-time-picker--border-width - Border width.
      * @cssprop --bq-time-picker--column-gap - Space between the panel columns.
      * @cssprop --bq-time-picker--column-height - Height of the scrollable panel columns.
      * @cssprop --bq-time-picker--column-width - Width of a panel column.
+     * @cssprop --bq-time-picker--divider-color - Color of the lines between the panel columns and above the footer.
      * @cssprop --bq-time-picker--gap - Gap between the field content and prefix/suffix.
      * @cssprop --bq-time-picker--icon-size - Size of the icons used in prefix/suffix/clear.
      * @cssprop --bq-time-picker--label-margin-bottom - Space below the label.
@@ -5678,12 +5682,16 @@ declare global {
      * @cssprop --bq-time-picker--border-color - Field border color.
      * @cssprop --bq-time-picker--border-color-disabled - Border color when disabled.
      * @cssprop --bq-time-picker--border-color-focus - Border color on focus.
+     * @cssprop --bq-time-picker--border-color-danger - Border color when the validation status is `error`.
+     * @cssprop --bq-time-picker--border-color-success - Border color when the validation status is `success`.
+     * @cssprop --bq-time-picker--border-color-warning - Border color when the validation status is `warning`.
      * @cssprop --bq-time-picker--border-radius - Field border radius.
      * @cssprop --bq-time-picker--border-style - Border style.
      * @cssprop --bq-time-picker--border-width - Border width.
      * @cssprop --bq-time-picker--column-gap - Space between the panel columns.
      * @cssprop --bq-time-picker--column-height - Height of the scrollable panel columns.
      * @cssprop --bq-time-picker--column-width - Width of a panel column.
+     * @cssprop --bq-time-picker--divider-color - Color of the lines between the panel columns and above the footer.
      * @cssprop --bq-time-picker--gap - Gap between the field content and prefix/suffix.
      * @cssprop --bq-time-picker--icon-size - Size of the icons used in prefix/suffix/clear.
      * @cssprop --bq-time-picker--label-margin-bottom - Space below the label.
@@ -9251,12 +9259,16 @@ declare namespace LocalJSX {
      * @cssprop --bq-time-picker--border-color - Field border color.
      * @cssprop --bq-time-picker--border-color-disabled - Border color when disabled.
      * @cssprop --bq-time-picker--border-color-focus - Border color on focus.
+     * @cssprop --bq-time-picker--border-color-danger - Border color when the validation status is `error`.
+     * @cssprop --bq-time-picker--border-color-success - Border color when the validation status is `success`.
+     * @cssprop --bq-time-picker--border-color-warning - Border color when the validation status is `warning`.
      * @cssprop --bq-time-picker--border-radius - Field border radius.
      * @cssprop --bq-time-picker--border-style - Border style.
      * @cssprop --bq-time-picker--border-width - Border width.
      * @cssprop --bq-time-picker--column-gap - Space between the panel columns.
      * @cssprop --bq-time-picker--column-height - Height of the scrollable panel columns.
      * @cssprop --bq-time-picker--column-width - Width of a panel column.
+     * @cssprop --bq-time-picker--divider-color - Color of the lines between the panel columns and above the footer.
      * @cssprop --bq-time-picker--gap - Gap between the field content and prefix/suffix.
      * @cssprop --bq-time-picker--icon-size - Size of the icons used in prefix/suffix/clear.
      * @cssprop --bq-time-picker--label-margin-bottom - Space below the label.
@@ -11574,12 +11586,16 @@ declare module "@stencil/core" {
              * @cssprop --bq-time-picker--border-color - Field border color.
              * @cssprop --bq-time-picker--border-color-disabled - Border color when disabled.
              * @cssprop --bq-time-picker--border-color-focus - Border color on focus.
+             * @cssprop --bq-time-picker--border-color-danger - Border color when the validation status is `error`.
+             * @cssprop --bq-time-picker--border-color-success - Border color when the validation status is `success`.
+             * @cssprop --bq-time-picker--border-color-warning - Border color when the validation status is `warning`.
              * @cssprop --bq-time-picker--border-radius - Field border radius.
              * @cssprop --bq-time-picker--border-style - Border style.
              * @cssprop --bq-time-picker--border-width - Border width.
              * @cssprop --bq-time-picker--column-gap - Space between the panel columns.
              * @cssprop --bq-time-picker--column-height - Height of the scrollable panel columns.
              * @cssprop --bq-time-picker--column-width - Width of a panel column.
+             * @cssprop --bq-time-picker--divider-color - Color of the lines between the panel columns and above the footer.
              * @cssprop --bq-time-picker--gap - Gap between the field content and prefix/suffix.
              * @cssprop --bq-time-picker--icon-size - Size of the icons used in prefix/suffix/clear.
              * @cssprop --bq-time-picker--label-margin-bottom - Space below the label.

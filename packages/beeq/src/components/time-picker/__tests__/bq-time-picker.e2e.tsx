@@ -1020,6 +1020,38 @@ describe('bq-time-picker', () => {
     expect(getComputedStyle(control).borderTopColor).toBe('rgb(255, 0, 0)');
   });
 
+  it('should color the validation border through the component variable', async () => {
+    const { root } = await render(
+      <bq-time-picker
+        name="time"
+        style={{ '--bq-time-picker--border-color-danger': 'rgb(0, 128, 0)' }}
+        validationStatus="error"
+      />,
+    );
+    const tp = root as HTMLBqTimePickerElement;
+    await waitForStable(root);
+
+    const control = tp.shadowRoot?.querySelector<HTMLElement>('[part="control"]');
+    expect(getComputedStyle(control).borderTopColor).toBe('rgb(0, 128, 0)');
+  });
+
+  it.each([
+    ['`--bq-text--on-brand`', 'rgb(4, 5, 6)', 'rgb(4, 5, 6)'],
+    ['the `--bq-text--alt` fallback', 'initial', 'rgb(1, 2, 3)'],
+  ])('should color the selected option with %s', async (_, onBrand, expected) => {
+    const { root, waitForChanges } = await render(
+      <bq-time-picker
+        name="time"
+        style={{ '--bq-text--alt': 'rgb(1, 2, 3)', '--bq-text--on-brand': onBrand }}
+        value="09:30"
+      />,
+    );
+    const tp = root as HTMLBqTimePickerElement;
+    await openPanel(tp, waitForChanges);
+
+    expect(getComputedStyle(getSelectedOption(tp, 'hour')).color).toBe(expected);
+  });
+
   /* --------------------------------- Events ---------------------------------- */
 
   it('should emit focus and blur events from the segmented field', async () => {

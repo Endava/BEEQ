@@ -1405,12 +1405,16 @@ When focus leaves the field, complete times outside `min` or `max` are clamped t
   | `--bq-time-picker--border-color` | Time picker border color | `var(--bq-stroke--tertiary)` |
   | `--bq-time-picker--border-color-disabled` | Time picker border color when disabled | `var(--bq-stroke--secondary)` |
   | `--bq-time-picker--border-color-focus` | Time picker border color on focus | `var(--bq-stroke--brand)` |
+  | `--bq-time-picker--border-color-danger` | Time picker border color when the validation status is `error` | `var(--bq-stroke--danger)` |
+  | `--bq-time-picker--border-color-success` | Time picker border color when the validation status is `success` | `var(--bq-stroke--success)` |
+  | `--bq-time-picker--border-color-warning` | Time picker border color when the validation status is `warning` | `var(--bq-stroke--warning)` |
   | `--bq-time-picker--border-radius` | Time picker border radius | `var(--bq-radius--s)` |
   | `--bq-time-picker--border-style` | Time picker border style | `solid` |
   | `--bq-time-picker--border-width` | Time picker border width | `1px` |
   | `--bq-time-picker--column-gap` | Space between the panel columns | `var(--bq-spacing-xs2)` |
   | `--bq-time-picker--column-height` | Height of the scrollable panel columns | `15rem` |
   | `--bq-time-picker--column-width` | Width of a panel column | `3.5rem` |
+  | `--bq-time-picker--divider-color` | Color of the lines between the panel columns and above the footer | `var(--bq-stroke--secondary)` |
   | `--bq-time-picker--gap` | Gap between field content and prefix/suffix | `var(--bq-spacing-xs)` |
   | `--bq-time-picker--icon-size` | Prefix/suffix/clear icon size | `1.5rem` |
   | `--bq-time-picker--label-margin-bottom` | Space below the label | `var(--bq-spacing-xs)` |
@@ -1420,7 +1424,7 @@ When focus leaves the field, complete times outside `min` or `max` are clamped t
   | `--bq-time-picker--option-background-selected` | Background of the selected column option | `var(--bq-ui--brand)` |
   | `--bq-time-picker--option-height` | Height of a column option | `2.5rem` |
   | `--bq-time-picker--option-radius` | Border radius of a column option | `var(--bq-radius--xs)` |
-  | `--bq-time-picker--option-text-selected` | Text color of the selected column option | `var(--bq-text--alt)` |
+  | `--bq-time-picker--option-text-selected` | Text color of the selected column option | `var(--bq-text--on-brand, var(--bq-text--alt))` |
   | `--bq-time-picker--padding-end` | Field padding end | `var(--bq-spacing-m)` |
   | `--bq-time-picker--padding-start` | Field padding start | `var(--bq-spacing-m)` |
   | `--bq-time-picker--paddingY` | Field vertical padding | `var(--bq-spacing-s)` |

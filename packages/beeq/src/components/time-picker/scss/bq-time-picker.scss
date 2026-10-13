@@ -116,19 +116,19 @@
 }
 
 .bq-time-picker__control.validation-error {
-  --bq-time-picker--validation-color: var(--bq-stroke--danger);
+  --bq-time-picker--validation-color: var(--bq-time-picker--border-color-danger);
 
   @extend %tp-validation-state;
 }
 
 .bq-time-picker__control.validation-success {
-  --bq-time-picker--validation-color: var(--bq-stroke--success);
+  --bq-time-picker--validation-color: var(--bq-time-picker--border-color-success);
 
   @extend %tp-validation-state;
 }
 
 .bq-time-picker__control.validation-warning {
-  --bq-time-picker--validation-color: var(--bq-stroke--warning);
+  --bq-time-picker--validation-color: var(--bq-time-picker--border-color-warning);
 
   @extend %tp-validation-state;
 }
@@ -289,7 +289,7 @@
   }
 
   & + & {
-    border-inline-start: 1px solid var(--bq-stroke--secondary);
+    border-inline-start: 1px solid var(--bq-time-picker--divider-color);
     padding-inline-start: var(--bq-time-picker--column-gap);
     inline-size: calc(var(--bq-time-picker--column-width) + var(--bq-time-picker--column-gap) + 1px);
   }
@@ -338,7 +338,7 @@
   justify-content: space-between;
   gap: var(--bq-spacing-s);
   padding: var(--bq-spacing-xs) var(--bq-spacing-s);
-  border-block-start: 1px solid var(--bq-stroke--secondary);
+  border-block-start: 1px solid var(--bq-time-picker--divider-color);
 }
 
 .bq-time-picker__confirm {
