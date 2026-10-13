@@ -872,6 +872,29 @@ describe('bq-time-picker', () => {
     expect(submitSpy).not.toHaveBeenCalled();
   });
 
+  it('should focus a segment when the form reports the error, so blurring it dismisses the message', async () => {
+    const { root, waitForChanges } = await render(
+      <form>
+        <bq-time-picker name="time" required />
+        <button type="button">Outside</button>
+      </form>,
+    );
+    const form = root as HTMLFormElement;
+    const tp = form.querySelector<HTMLBqTimePickerElement>('bq-time-picker');
+    await waitForChanges();
+
+    expect(form.reportValidity()).toBe(false);
+    await waitForChanges();
+
+    const focused = tp.shadowRoot.activeElement as HTMLElement;
+    expect(document.activeElement).toBe(tp);
+    expect(focused).toHaveAttribute('role', 'spinbutton');
+    expect(focused.dataset.segmentField).toBe('hour');
+
+    form.querySelector('button').focus();
+    expect(tp.shadowRoot.activeElement).toBeNull();
+  });
+
   it('should block form submission when the value is out of range', async () => {
     const { root, waitForChanges } = await render(
       <form>

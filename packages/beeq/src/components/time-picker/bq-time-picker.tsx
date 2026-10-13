@@ -615,6 +615,18 @@ export class BqTimePicker {
     return !this.disabled && !this.readonly;
   }
 
+  /**
+   * Segment the browser focuses when it reports the error on submit. It must be focusable:
+   * the browser dismisses its validation message when the anchor loses focus.
+   */
+  private get validationAnchor(): HTMLElement | undefined {
+    return (
+      this.segmentContainerElem?.querySelector<HTMLElement>('[role="spinbutton"][tabindex="0"]') ??
+      this.segmentContainerElem?.querySelector<HTMLElement>('[role="spinbutton"]') ??
+      this.segmentContainerElem
+    );
+  }
+
   // Segments
   // --------
 
@@ -1149,7 +1161,7 @@ export class BqTimePicker {
       internals: this.internals,
       required: this.required,
       value: this.value,
-      inputElem: this.segmentContainerElem,
+      inputElem: this.validationAnchor,
       validationMessage: this.formValidationMessage,
       defaultMessage: 'Please, input or select a valid time',
     });
@@ -1168,7 +1180,7 @@ export class BqTimePicker {
     this.internals.setValidity(
       flags,
       this.formValidationMessage ?? defaultValidityMessage(flags),
-      this.segmentContainerElem,
+      this.validationAnchor,
     );
     this.hasConstraintError = true;
     this.constraintErrorMessage = this.internals.validationMessage;
