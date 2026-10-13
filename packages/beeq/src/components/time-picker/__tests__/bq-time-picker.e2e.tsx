@@ -89,6 +89,7 @@ describe('bq-time-picker', () => {
 
     tp.precision = 'second';
     await waitForChanges();
+    await waitForStable(root);
 
     expect(getSegmentFields(tp)).toEqual(['hour', 'minute', 'second']);
     expect(getSegmentText(tp)).toBe('hh:mm:ss');
@@ -110,6 +111,7 @@ describe('bq-time-picker', () => {
 
     tp.precision = 'hour';
     await waitForChanges();
+    await waitForStable(root);
 
     expect(tp.value).toBe('09:00');
   });
@@ -120,6 +122,7 @@ describe('bq-time-picker', () => {
 
     tp.value = '25:99';
     await waitForChanges();
+    await waitForStable(root);
 
     expect(tp.value).toBeUndefined();
     expect(getSegmentText(tp)).toBe('hh:mm');
@@ -168,6 +171,7 @@ describe('bq-time-picker', () => {
 
     tp.hourFormat = '12';
     await waitForChanges();
+    await waitForStable(root);
 
     expect(getSegmentFields(tp)).toEqual(['hour', 'minute', 'dayPeriod']);
   });
@@ -496,7 +500,7 @@ describe('bq-time-picker', () => {
     await settle();
 
     expect(tp.open).toBe(false);
-    expect(tp.shadowRoot?.activeElement?.getAttribute('role')).toBe('spinbutton');
+    expect(tp.shadowRoot?.activeElement).toEqualAttribute('role', 'spinbutton');
   });
 
   it('should pick the focused option and close the panel with Enter', async () => {
@@ -664,6 +668,7 @@ describe('bq-time-picker', () => {
     tp.disableClear = false;
     tp.value = undefined;
     await waitForChanges();
+    await waitForStable(root);
 
     expect(getClearButton(tp)).toBeNull();
   });
@@ -722,6 +727,19 @@ describe('bq-time-picker', () => {
     expect(data.has('break')).toBe(false);
   });
 
+  it('should associate with a form through the `form` attribute', async () => {
+    const { root, waitForChanges } = await render(
+      <div>
+        <form id="schedule" />
+        <bq-time-picker form="schedule" name="start" value="09:30" />
+      </div>,
+    );
+    const form = root.querySelector<HTMLFormElement>('#schedule');
+    await waitForChanges();
+
+    expect(new FormData(form).get('start')).toBe('09:30');
+  });
+
   it('should restore the initial value on form reset', async () => {
     const { root, waitForChanges } = await render(
       <form>
@@ -773,6 +791,233 @@ describe('bq-time-picker', () => {
     await waitForChanges();
 
     expect(form.checkValidity()).toBe(true);
+  });
+
+  /* ------------------------------ Props and API ------------------------------ */
+
+  it('should reflect its props to attributes', async () => {
+    const { root } = await render(
+      <bq-time-picker
+        clearButtonLabel="Reset"
+        disableClear
+        name="time"
+        precision="second"
+        required
+        timeButtonLabel="Choose time"
+        validationStatus="warning"
+        value="09:30:15"
+      />,
+    );
+    const tp = root as HTMLBqTimePickerElement;
+
+    expect(tp).toEqualAttribute('clear-button-label', 'Reset');
+    expect(tp).toHaveAttribute('disable-clear');
+    expect(tp).toEqualAttribute('name', 'time');
+    expect(tp).toEqualAttribute('precision', 'second');
+    expect(tp).toHaveAttribute('required');
+    expect(tp).toEqualAttribute('time-button-label', 'Choose time');
+    expect(tp).toEqualAttribute('validation-status', 'warning');
+    expect(tp).toEqualAttribute('value', '09:30:15');
+  });
+
+  it('should fall back to the defaults when given invalid prop values', async () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
+    const { root } = await render(
+      <bq-time-picker
+        hourFormat={'13' as never}
+        name="time"
+        placement={'middle' as never}
+        precision={'millisecond' as never}
+        strategy={'sticky' as never}
+        validationStatus={'danger' as never}
+      />,
+    );
+    const tp = root as HTMLBqTimePickerElement;
+    await waitForStable(root);
+
+    expect(tp.hourFormat).toBeUndefined();
+    expect(tp.placement).toBe('bottom-end');
+    expect(tp.precision).toBe('minute');
+    expect(tp.strategy).toBe('fixed');
+    expect(tp.validationStatus).toBe('none');
+    expect(warn).toHaveBeenCalled();
+  });
+
+  it('should name the clear and clock buttons with the label props', async () => {
+    const { root } = await render(
+      <bq-time-picker clearButtonLabel="Reset time" name="time" timeButtonLabel="Choose a time" value="09:30" />,
+    );
+    const tp = root as HTMLBqTimePickerElement;
+    await waitForStable(root);
+
+    expect(getInnerButton(tp, 'clear-btn')).toEqualAttribute('aria-label', 'Reset time');
+    expect(getInnerButton(tp, 'time-trigger')).toEqualAttribute('aria-label', 'Choose a time');
+  });
+
+  it('should apply the `validation-status` to the control and segments', async () => {
+    const { root, waitForChanges } = await render(<bq-time-picker name="time" validationStatus="success" />);
+    const tp = root as HTMLBqTimePickerElement;
+    const control = tp.shadowRoot?.querySelector('[part="control"]');
+
+    expect(control).toHaveClass('validation-success');
+    expect(getSegment(tp, 'hour')).toEqualAttribute('aria-invalid', 'false');
+
+    tp.validationStatus = 'error';
+    await waitForChanges();
+    await waitForStable(root);
+
+    expect(control).toHaveClass('validation-error');
+    expect(getSegment(tp, 'hour')).toEqualAttribute('aria-invalid', 'true');
+  });
+
+  it('should only render second options matching the `second-step`', async () => {
+    const { root, waitForChanges } = await render(<bq-time-picker name="time" precision="second" secondStep={15} />);
+    const tp = root as HTMLBqTimePickerElement;
+    await openPanel(tp, waitForChanges);
+
+    const seconds = Array.from(getColumn(tp, 'second')?.querySelectorAll<HTMLElement>('[role="option"]') ?? []).map(
+      (option) => option.dataset.value,
+    );
+    expect(seconds).toEqual(['0', '15', '30', '45']);
+  });
+
+  it('should forward the floating props to the dropdown', async () => {
+    const { root } = await render(
+      <bq-time-picker
+        distance={12}
+        name="time"
+        panelHeight="200px"
+        placement="top-start"
+        skidding={4}
+        strategy="absolute"
+      />,
+    );
+    const tp = root as HTMLBqTimePickerElement;
+    const dropdown = tp.shadowRoot?.querySelector<HTMLBqDropdownElement>('bq-dropdown');
+
+    expect(dropdown?.distance).toBe(12);
+    expect(dropdown?.panelHeight).toBe('200px');
+    expect(dropdown?.placement).toBe('top-start');
+    expect(dropdown?.skidding).toBe(4);
+    expect(dropdown?.strategy).toBe('absolute');
+  });
+
+  /* ------------------------------ Accessibility ------------------------------ */
+
+  it('should mark the segments as required when `required`', async () => {
+    const { root, waitForChanges } = await render(<bq-time-picker name="time" />);
+    const tp = root as HTMLBqTimePickerElement;
+
+    expect(getSegment(tp, 'hour')).not.toHaveAttribute('aria-required');
+
+    tp.required = true;
+    await waitForChanges();
+    await waitForStable(root);
+
+    expect(getSegment(tp, 'hour')).toEqualAttribute('aria-required', 'true');
+    expect(getSegment(tp, 'minute')).toEqualAttribute('aria-required', 'true');
+  });
+
+  it('should describe the field with the validation message when a constraint fails', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-time-picker formValidationMessage="Pick a time during office hours" min="09:00" name="time" />,
+    );
+    const tp = root as HTMLBqTimePickerElement;
+    const group = tp.shadowRoot?.querySelector<HTMLElement>('[part="input"]');
+
+    expect(group).toEqualAttribute('aria-describedby', 'bq-time-picker__mask-time');
+
+    tp.value = '08:00';
+    await waitForChanges();
+    await waitForStable(root);
+
+    expect(group).toEqualAttribute('aria-describedby', 'bq-time-picker__mask-time bq-time-picker__error-time');
+    expect(tp.shadowRoot?.getElementById('bq-time-picker__error-time')).toEqualText('Pick a time during office hours');
+
+    tp.value = '10:00';
+    await waitForChanges();
+    await waitForStable(root);
+
+    expect(group).toEqualAttribute('aria-describedby', 'bq-time-picker__mask-time');
+    expect(tp.shadowRoot?.getElementById('bq-time-picker__error-time')).toBeNull();
+  });
+
+  /* ------------------------------ Slots and parts ---------------------------- */
+
+  it('should render the label and prefix slot content', async () => {
+    const { root } = await render(
+      <bq-time-picker name="time">
+        <span slot="label">Start time</span>
+        <span slot="prefix">At</span>
+      </bq-time-picker>,
+    );
+    const tp = root as HTMLBqTimePickerElement;
+    await waitForStable(root);
+
+    const label = tp.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="label"]');
+    const prefix = tp.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="prefix"]');
+    expect(label?.assignedElements()[0]).toEqualText('Start time');
+    expect(prefix?.assignedElements()[0]).toEqualText('At');
+    expect(tp.shadowRoot?.querySelector('[part="input"]')).toEqualAttribute(
+      'aria-labelledby',
+      'bq-time-picker__label-time',
+    );
+  });
+
+  it('should render custom suffix and clear-icon slot content', async () => {
+    const { root } = await render(
+      <bq-time-picker name="time" value="09:30">
+        <bq-icon name="alarm" slot="suffix" />
+        <bq-icon name="trash" slot="clear-icon" />
+      </bq-time-picker>,
+    );
+    const tp = root as HTMLBqTimePickerElement;
+    await waitForStable(root);
+
+    const suffix = tp.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="suffix"]');
+    const clearIcon = tp.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="clear-icon"]');
+    expect(suffix?.assignedElements()[0]).toEqualAttribute('name', 'alarm');
+    expect(clearIcon?.assignedElements()[0]).toEqualAttribute('name', 'trash');
+  });
+
+  it('should expose its shadow parts', async () => {
+    const { root, waitForChanges } = await render(<bq-time-picker name="time" value="09:30" />);
+    const tp = root as HTMLBqTimePickerElement;
+    await openPanel(tp, waitForChanges);
+
+    const parts = [
+      'base',
+      'label',
+      'control',
+      'prefix',
+      'suffix',
+      'input',
+      'segment',
+      'segment-literal',
+      'clear-btn',
+      'time-trigger',
+      'container',
+      'columns',
+      'column',
+      'option',
+      'option-selected',
+      'footer',
+      'now-btn',
+    ];
+    for (const part of parts) {
+      expect(tp.shadowRoot?.querySelector(`[part~="${part}"]`), part).not.toBeNull();
+    }
+  });
+
+  it('should apply the CSS custom properties', async () => {
+    const { root } = await render(
+      <bq-time-picker name="time" style={{ '--bq-time-picker--border-color': 'rgb(255, 0, 0)' }} />,
+    );
+    const tp = root as HTMLBqTimePickerElement;
+    await waitForStable(root);
+
+    const control = tp.shadowRoot?.querySelector<HTMLElement>('[part="control"]');
+    expect(getComputedStyle(control).borderTopColor).toBe('rgb(255, 0, 0)');
   });
 
   /* --------------------------------- Events ---------------------------------- */
