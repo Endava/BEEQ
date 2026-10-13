@@ -1,0 +1,341 @@
+/* -------------------------------------------------------------------------- */
+/*                            Time picker styles                              */
+/*                    Native SCSS — no Tailwind utilities.                    */
+/* -------------------------------------------------------------------------- */
+
+@import './bq-time-picker.variables';
+
+:host {
+  display: block;
+  inline-size: 100%;
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Hide the label / prefix wrappers when their slots have no content. */
+.bq-time-picker__label.is-hidden,
+.bq-time-picker__prefix.is-hidden {
+  display: none;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                    Label                                   */
+/* -------------------------------------------------------------------------- */
+
+.bq-time-picker__label {
+  display: flex;
+  align-items: center;
+  gap: var(--bq-time-picker--gap);
+  margin-block-end: var(--bq-time-picker--label-margin-bottom);
+  color: var(--bq-time-picker--label-text-color);
+  font-size: var(--bq-time-picker--label-text-size);
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                Dropdown                                    */
+/* -------------------------------------------------------------------------- */
+
+.bq-time-picker__dropdown {
+  display: block;
+  inline-size: 100%;
+
+  &::part(panel) {
+    --bq-panel--width: max-content;
+
+    inline-size: max-content;
+    max-inline-size: min(calc(100vw - 2rem), 100vw);
+    padding: 0;
+    block-size: auto;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/*                               Field control                                */
+/* -------------------------------------------------------------------------- */
+
+.bq-time-picker__control {
+  display: flex;
+  align-items: center;
+  inline-size: 100%;
+  padding-block: var(--bq-time-picker--paddingY);
+  padding-inline: var(--bq-time-picker--padding-start) var(--bq-time-picker--padding-end);
+  border: var(--bq-time-picker--border-width) var(--bq-time-picker--border-style)
+    var(--bq-time-picker--border-color);
+  border-radius: var(--bq-time-picker--border-radius);
+  background-color: var(--bq-time-picker--background-color);
+  color: var(--bq-time-picker--text-color);
+  font-size: var(--bq-time-picker--text-size);
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+  user-select: none;
+
+  &:not(.is-disabled, :focus-within, .is-open):hover {
+    border-color: color-mix(in srgb, var(--bq-time-picker--border-color-focus), var(--bq-hover) 20%);
+  }
+
+  // The ring is drawn via outline so it respects the focus token.
+  &:not(.is-disabled):is(:focus-within, .is-open) {
+    --bq-ring-width: 1px;
+    --bq-ring-offset-width: 0;
+    --bq-ring-color-focus: var(--bq-focus);
+
+    border-color: var(--bq-focus);
+    outline: var(--bq-ring-width) solid var(--bq-ring-color-focus);
+    outline-offset: var(--bq-ring-offset-width);
+  }
+
+  &.is-disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    --bq-time-picker--border-color: var(--bq-time-picker--border-color-disabled);
+  }
+
+  &.is-readonly .bq-time-picker__segment {
+    cursor: default;
+  }
+}
+
+/* ------------------------------- Validation ------------------------------- */
+
+%tp-validation-state {
+  --bq-time-picker--border-color: var(--bq-time-picker--validation-color);
+
+  &:not(.is-disabled, :focus-within, .is-open):hover {
+    border-color: color-mix(in srgb, var(--bq-time-picker--validation-color), var(--bq-hover) 20%);
+  }
+
+  &:not(.is-disabled):is(:focus-within, .is-open) {
+    --bq-ring-color-focus: var(--bq-time-picker--validation-color);
+
+    border-color: color-mix(in srgb, var(--bq-time-picker--validation-color), var(--bq-active) 20%);
+  }
+}
+
+.bq-time-picker__control.validation-error {
+  --bq-time-picker--validation-color: var(--bq-stroke--danger);
+
+  @extend %tp-validation-state;
+}
+
+.bq-time-picker__control.validation-success {
+  --bq-time-picker--validation-color: var(--bq-stroke--success);
+
+  @extend %tp-validation-state;
+}
+
+.bq-time-picker__control.validation-warning {
+  --bq-time-picker--validation-color: var(--bq-stroke--warning);
+
+  @extend %tp-validation-state;
+}
+
+/* --------------------------- Segmented field ----------------------------- */
+
+.bq-time-picker__segments {
+  display: flex;
+  align-items: center;
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  color: inherit;
+  font: inherit;
+  overflow: auto hidden;
+  scrollbar-width: none;
+  white-space: nowrap;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.bq-time-picker__segment {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+  cursor: text;
+  font-variant-numeric: tabular-nums;
+  outline: none;
+  padding-inline: var(--bq-spacing-xs3);
+  text-align: center;
+  white-space: nowrap;
+
+  &.is-empty {
+    color: var(--bq-time-picker--text-placeholder-color);
+  }
+}
+
+.bq-time-picker__segments:focus-within .bq-time-picker__segment.is-active {
+  border-radius: var(--bq-radius--xs);
+  background-color: color-mix(in srgb, var(--bq-focus), transparent 88%);
+}
+
+.bq-time-picker__segment-literal {
+  display: inline-flex;
+  align-items: center;
+  color: inherit;
+  pointer-events: none;
+  user-select: none;
+  white-space: pre;
+}
+
+.bq-time-picker__mask-description,
+.bq-time-picker__announcement {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* -------------------------- Prefix --------------------------------------- */
+
+.bq-time-picker__prefix {
+  display: inline-flex;
+  align-items: center;
+  color: var(--bq-time-picker--text-color);
+  pointer-events: none;
+  margin-inline-end: var(--bq-time-picker--gap);
+
+  bq-icon {
+    display: inline-flex;
+    font-size: var(--bq-time-picker--icon-size);
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                   Actions                                  */
+/* -------------------------------------------------------------------------- */
+
+// Shared styles for the clear and clock trigger buttons rendered inside the control.
+%tp-action-button {
+  margin-inline-start: var(--bq-time-picker--gap);
+
+  &::part(button) {
+    --bq-ring-width: initial;
+    --bq-ring-offset-width: initial;
+
+    border: none;
+    padding: 0;
+  }
+
+  bq-icon {
+    display: flex;
+  }
+}
+
+// The clear button is only rendered when the picker has a value;
+// it stays hidden until the control is hovered, focused, or the panel is open.
+.bq-time-picker__clear {
+  @extend %tp-action-button;
+
+  display: none;
+}
+
+.bq-time-picker__control:is(:hover, :focus-within, .is-open):not(.is-disabled) .bq-time-picker__clear {
+  display: inline-flex;
+}
+
+.bq-time-picker__trigger {
+  @extend %tp-action-button;
+
+  display: inline-flex;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                   Panel                                    */
+/* -------------------------------------------------------------------------- */
+
+.bq-time-picker__panel {
+  display: flex;
+  flex-direction: column;
+  color: var(--bq-time-picker--text-color);
+  background-color: var(--bq-time-picker--background-color);
+}
+
+.bq-time-picker__columns {
+  display: flex;
+  gap: var(--bq-time-picker--column-gap);
+  padding: var(--bq-spacing-xs);
+}
+
+.bq-time-picker__column {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--bq-spacing-xs3);
+  inline-size: var(--bq-time-picker--column-width);
+  block-size: var(--bq-time-picker--column-height);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+
+  // Lets the last options scroll up to the top of the column.
+  &::after {
+    content: '';
+    flex: none;
+    block-size: calc(var(--bq-time-picker--column-height) - var(--bq-time-picker--option-height));
+  }
+
+  & + & {
+    border-inline-start: 1px solid var(--bq-stroke--secondary);
+    padding-inline-start: var(--bq-time-picker--column-gap);
+    inline-size: calc(var(--bq-time-picker--column-width) + var(--bq-time-picker--column-gap) + 1px);
+  }
+}
+
+.bq-time-picker__option {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  block-size: var(--bq-time-picker--option-height);
+  border-radius: var(--bq-time-picker--option-radius);
+  cursor: pointer;
+  font-variant-numeric: tabular-nums;
+  transition: background-color 150ms ease, color 150ms ease;
+  user-select: none;
+
+  &:hover:not(.is-disabled, .is-selected) {
+    background-color: var(--bq-time-picker--option-background-hover);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--bq-time-picker--border-color-focus);
+    outline-offset: -2px;
+  }
+
+  &.is-selected {
+    background-color: var(--bq-time-picker--option-background-selected);
+    color: var(--bq-time-picker--option-text-selected);
+  }
+
+  &.is-disabled {
+    cursor: not-allowed;
+    opacity: 0.35;
+  }
+}
+
+.bq-time-picker__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--bq-spacing-s);
+  padding: var(--bq-spacing-xs) var(--bq-spacing-s);
+  border-block-start: 1px solid var(--bq-stroke--secondary);
+}
+
+.bq-time-picker__confirm {
+  margin-inline-start: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bq-time-picker__control,
+  .bq-time-picker__option {
+    transition: none;
+  }
+}

@@ -1,0 +1,66 @@
+/* -------------------------------------------------------------------------- */
+/*                      Time picker custom properties                         */
+/* -------------------------------------------------------------------------- */
+
+:host {
+  /**
+   * @prop --bq-time-picker--background-color - Time picker background color
+   * @prop --bq-time-picker--border-color - Time picker border color
+   * @prop --bq-time-picker--border-color-disabled - Time picker border color when disabled
+   * @prop --bq-time-picker--border-color-focus - Time picker border color on focus
+   * @prop --bq-time-picker--border-radius - Time picker border radius
+   * @prop --bq-time-picker--border-style - Time picker border style
+   * @prop --bq-time-picker--border-width - Time picker border width
+   * @prop --bq-time-picker--column-gap - Space between the panel columns
+   * @prop --bq-time-picker--column-height - Height of the scrollable panel columns
+   * @prop --bq-time-picker--column-width - Width of a panel column
+   * @prop --bq-time-picker--gap - Gap between field content and prefix/suffix
+   * @prop --bq-time-picker--icon-size - Prefix/suffix/clear icon size
+   * @prop --bq-time-picker--label-margin-bottom - Space below the label
+   * @prop --bq-time-picker--label-text-color - Label text color
+   * @prop --bq-time-picker--label-text-size - Label text size
+   * @prop --bq-time-picker--option-background-hover - Hover background of a column option
+   * @prop --bq-time-picker--option-background-selected - Background of the selected column option
+   * @prop --bq-time-picker--option-height - Height of a column option
+   * @prop --bq-time-picker--option-radius - Border radius of a column option
+   * @prop --bq-time-picker--option-text-selected - Text color of the selected column option
+   * @prop --bq-time-picker--padding-end - Field padding end
+   * @prop --bq-time-picker--padding-start - Field padding start
+   * @prop --bq-time-picker--paddingY - Field vertical padding
+   * @prop --bq-time-picker--text-color - Field text color
+   * @prop --bq-time-picker--text-placeholder-color - Placeholder text color
+   * @prop --bq-time-picker--text-size - Field text size
+   */
+  --bq-time-picker--background-color: var(--bq-ui--primary);
+  --bq-time-picker--border-color: var(--bq-stroke--tertiary);
+  --bq-time-picker--border-color-disabled: var(--bq-stroke--secondary);
+  --bq-time-picker--border-color-focus: var(--bq-stroke--brand);
+  --bq-time-picker--border-radius: var(--bq-radius--s);
+  --bq-time-picker--border-style: solid;
+  --bq-time-picker--border-width: 1px;
+
+  --bq-time-picker--column-gap: var(--bq-spacing-xs2);
+  --bq-time-picker--column-height: 15rem;
+  --bq-time-picker--column-width: 3.5rem;
+
+  --bq-time-picker--gap: var(--bq-spacing-xs);
+  --bq-time-picker--icon-size: 1.5rem;
+
+  --bq-time-picker--label-margin-bottom: var(--bq-spacing-xs);
+  --bq-time-picker--label-text-color: var(--bq-text--primary);
+  --bq-time-picker--label-text-size: 0.875rem;
+
+  --bq-time-picker--option-background-hover: var(--bq-ui--secondary);
+  --bq-time-picker--option-background-selected: var(--bq-ui--brand);
+  --bq-time-picker--option-height: 2.5rem;
+  --bq-time-picker--option-radius: var(--bq-radius--xs);
+  --bq-time-picker--option-text-selected: var(--bq-text--alt);
+
+  --bq-time-picker--padding-end: var(--bq-spacing-m);
+  --bq-time-picker--padding-start: var(--bq-spacing-m);
+  --bq-time-picker--paddingY: var(--bq-spacing-s);
+
+  --bq-time-picker--text-color: var(--bq-text--primary);
+  --bq-time-picker--text-placeholder-color: var(--bq-text--secondary);
+  --bq-time-picker--text-size: 1rem;
+}

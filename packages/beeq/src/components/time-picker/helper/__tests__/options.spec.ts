@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
 
+import type { TTimeOption } from '../../bq-time-picker.types';
 import { createTimeConstraints } from '../constraints';
-import { applyColumnPick, getColumnOptions, resolvePartialTime } from '../options';
+import { applyColumnPick, getColumnOptions, moveColumnOption, resolvePartialTime, stepColumnOption } from '../options';
 
 const dayPeriods = ['AM', 'PM'] as const;
 
@@ -98,5 +99,72 @@ describe('applyColumnPick', () => {
   it('updates one field of the draft', () => {
     expect(applyColumnPick({ hour: 9, minute: 15 }, 'minute', 30)).toEqual({ hour: 9, minute: 30 });
     expect(applyColumnPick({ hour: 9 }, 'dayPeriod', 'pm')).toEqual({ hour: 9, dayPeriod: 'pm' });
+  });
+});
+
+const option = (value: TTimeOption['value'], disabled = false): TTimeOption => ({
+  value,
+  label: `${value}`,
+  disabled,
+  selected: false,
+});
+
+describe('stepColumnOption', () => {
+  const minutes = [option(0, true), option(15), option(30, true), option(45)];
+
+  it('returns the first or last enabled option for an empty field', () => {
+    expect(stepColumnOption(minutes, undefined, 1, 'minute', 'h23')?.value).toBe(15);
+    expect(stepColumnOption(minutes, undefined, -1, 'minute', 'h23')?.value).toBe(45);
+  });
+
+  it('skips disabled options and wraps around', () => {
+    expect(stepColumnOption(minutes, 15, 1, 'minute', 'h23')?.value).toBe(45);
+    expect(stepColumnOption(minutes, 45, 1, 'minute', 'h23')?.value).toBe(15);
+    expect(stepColumnOption(minutes, 15, -1, 'minute', 'h23')?.value).toBe(45);
+  });
+
+  it('steps off-grid values to the closest enabled option', () => {
+    expect(stepColumnOption(minutes, 20, 1, 'minute', 'h23')?.value).toBe(45);
+    expect(stepColumnOption(minutes, 20, -1, 'minute', 'h23')?.value).toBe(15);
+  });
+
+  it('orders 12-hour options with 12 first', () => {
+    const hours = [option(12), option(1), option(2)];
+    expect(stepColumnOption(hours, 12, 1, 'hour', 'h12')?.value).toBe(1);
+    expect(stepColumnOption(hours, 12, -1, 'hour', 'h12')?.value).toBe(2);
+  });
+
+  it('toggles day periods', () => {
+    const periods = [option('am'), option('pm')];
+    expect(stepColumnOption(periods, 'am', 1, 'dayPeriod', 'h12')?.value).toBe('pm');
+    expect(stepColumnOption(periods, 'pm', 1, 'dayPeriod', 'h12')?.value).toBe('am');
+  });
+
+  it('returns undefined when every option is disabled', () => {
+    expect(stepColumnOption([option(0, true)], 0, 1, 'minute', 'h23')).toBeUndefined();
+  });
+});
+
+describe('moveColumnOption', () => {
+  const values = Array.from({ length: 12 }, (_, index) => option(index * 5, index === 1));
+
+  it('moves to the adjacent enabled option without wrapping', () => {
+    expect(moveColumnOption(values, 0, 'next', 'minute', 'h23')?.value).toBe(10);
+    expect(moveColumnOption(values, 55, 'next', 'minute', 'h23')?.value).toBe(55);
+    expect(moveColumnOption(values, 0, 'previous', 'minute', 'h23')?.value).toBe(0);
+  });
+
+  it('moves by a page', () => {
+    expect(moveColumnOption(values, 0, 'pageNext', 'minute', 'h23')?.value).toBe(30);
+    expect(moveColumnOption(values, 55, 'pagePrevious', 'minute', 'h23')?.value).toBe(30);
+  });
+
+  it('jumps to the first and last enabled options', () => {
+    expect(moveColumnOption(values, 30, 'first', 'minute', 'h23')?.value).toBe(0);
+    expect(moveColumnOption(values, 30, 'last', 'minute', 'h23')?.value).toBe(55);
+  });
+
+  it('starts from the first enabled option when nothing is selected', () => {
+    expect(moveColumnOption(values, undefined, 'next', 'minute', 'h23')?.value).toBe(0);
   });
 });

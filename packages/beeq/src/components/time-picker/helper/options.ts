@@ -179,3 +179,81 @@ export const applyColumnPick = (
   column: TTimeMaskField,
   value: number | TDayPeriod,
 ): TPartialTime => ({ ...partial, [column]: value });
+
+/** Position of a value in a column, so that `12 AM`/`12 PM` sort before `1`. */
+const getOptionOrder = (value: number | TDayPeriod, column: TTimeMaskField, hourCycle: TTimeHourCycle): number => {
+  if (value === 'am') return 0;
+  if (value === 'pm') return 1;
+  return column === 'hour' && hourCycle === 'h12' ? value % 12 : value;
+};
+
+/**
+ * Finds the next enabled option of a column in one direction, wrapping around the ends.
+ * Values off the step grid step to the closest enabled option in that direction.
+ *
+ * @param options Column options, in display order.
+ * @param current Current value, or `undefined` when the field is empty.
+ * @param direction `1` for the next option, `-1` for the previous one.
+ * @param column Column the options belong to.
+ * @param hourCycle Hour cycle used by the mask.
+ * @returns The next enabled option, or `undefined` when every option is disabled.
+ */
+export const stepColumnOption = (
+  options: TTimeOption[],
+  current: number | TDayPeriod | undefined,
+  direction: 1 | -1,
+  column: TTimeMaskField,
+  hourCycle: TTimeHourCycle,
+): TTimeOption | undefined => {
+  const enabled = options.filter((option) => !option.disabled);
+  const firstOption = enabled[0];
+  const lastOption = enabled[enabled.length - 1];
+  if (current === undefined) return direction === 1 ? firstOption : lastOption;
+
+  const order = getOptionOrder(current, column, hourCycle);
+  const orderOf = (option: TTimeOption) => getOptionOrder(option.value, column, hourCycle);
+  if (direction === 1) return enabled.find((option) => orderOf(option) > order) ?? firstOption;
+  return [...enabled].reverse().find((option) => orderOf(option) < order) ?? lastOption;
+};
+
+/** Keyboard moves supported inside a panel column. */
+export type TColumnMove = 'next' | 'previous' | 'pageNext' | 'pagePrevious' | 'first' | 'last';
+
+/** Number of options skipped by PageUp/PageDown. */
+const COLUMN_PAGE_SIZE = 5;
+
+const COLUMN_MOVE_DELTAS: Record<'next' | 'previous' | 'pageNext' | 'pagePrevious', number> = {
+  next: 1,
+  previous: -1,
+  pageNext: COLUMN_PAGE_SIZE,
+  pagePrevious: -COLUMN_PAGE_SIZE,
+};
+
+/**
+ * Finds the enabled option reached by a keyboard move inside a panel column, without wrapping.
+ *
+ * @param options Column options, in display order.
+ * @param current Currently selected value, or `undefined` when none is selected.
+ * @param move Keyboard move.
+ * @param column Column the options belong to.
+ * @param hourCycle Hour cycle used by the mask.
+ * @returns The target option, or `undefined` when every option is disabled.
+ */
+export const moveColumnOption = (
+  options: TTimeOption[],
+  current: number | TDayPeriod | undefined,
+  move: TColumnMove,
+  column: TTimeMaskField,
+  hourCycle: TTimeHourCycle,
+): TTimeOption | undefined => {
+  const enabled = options.filter((option) => !option.disabled);
+  const lastIndex = enabled.length - 1;
+  if (move === 'first') return enabled[0];
+  if (move === 'last') return enabled[lastIndex];
+
+  const delta = COLUMN_MOVE_DELTAS[move];
+  const index = enabled.findIndex((option) => option.value === current);
+  if (index === -1) return stepColumnOption(options, current, delta > 0 ? 1 : -1, column, hourCycle);
+
+  return enabled[Math.min(lastIndex, Math.max(0, index + delta))];
+};

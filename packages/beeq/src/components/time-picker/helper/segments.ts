@@ -1,6 +1,7 @@
 import {
   createSegmentGroup,
   padSegmentValue,
+  type TSegment,
   type TSegmentGroup,
   type TSegmentKey,
   type TTimeHourCycle,
@@ -12,6 +13,7 @@ import { to12Hour, to24Hour } from './time';
 
 export type TTimeSegmentGroup = TSegmentGroup<TTimeMaskField>;
 export type TTimeSegmentKey = TSegmentKey<TTimeMaskField>;
+export type TTimeSegment = TSegment<TTimeMaskField>;
 
 /** Every time segment holds two characters; the day period stores the canonical `am`/`pm` token. */
 const TIME_SEGMENT_MAX_LENGTHS: Record<TTimeMaskField, number> = {

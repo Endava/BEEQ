@@ -70,6 +70,7 @@ Buttons are designed for users to take action on a page or a screen.
  - [bq-option](../option)
  - [bq-select](../select)
  - [bq-tag](../tag)
+ - [bq-time-picker](../time-picker)
 
 ### Depends on
 
@@ -88,6 +89,7 @@ graph TD;
   bq-option --> bq-button
   bq-select --> bq-button
   bq-tag --> bq-button
+  bq-time-picker --> bq-button
   style bq-button fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

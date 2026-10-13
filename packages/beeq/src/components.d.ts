@@ -33,6 +33,7 @@ import { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq
 import { TTabOrientation, TTabPlacement, TTabSize } from "./components/tab/bq-tab.types";
 import { TTagBorderRadius, TTagColor, TTagSize, TTagVariant } from "./components/tag/bq-tag.types";
 import { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq-textarea.types";
+import { TFloatingStrategy as TFloatingStrategy1, THourFormat, TTimePrecision } from "./components/time-picker/bq-time-picker.types";
 import { TToastBorderRadius, TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
 export { TAccordionAppearance, TAccordionSize } from "./components/accordion/bq-accordion.types";
 export { TAlertBorderRadius, TAlertType } from "./components/alert/bq-alert.types";
@@ -62,6 +63,7 @@ export { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq
 export { TTabOrientation, TTabPlacement, TTabSize } from "./components/tab/bq-tab.types";
 export { TTagBorderRadius, TTagColor, TTagSize, TTagVariant } from "./components/tag/bq-tag.types";
 export { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq-textarea.types";
+export { TFloatingStrategy as TFloatingStrategy1, THourFormat, TTimePrecision } from "./components/time-picker/bq-time-picker.types";
 export { TToastBorderRadius, TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
 export namespace Components {
     /**
@@ -3131,6 +3133,233 @@ export namespace Components {
         "wrap": TTextareaWrap;
     }
     /**
+     * The Time Picker lets users enter a time of day by typing into locale-ordered,
+     * keyboard-editable segments or by picking hours, minutes, seconds and AM/PM
+     * from scrollable columns in a dropdown panel.
+     * @example How to use it
+     * ```html
+     * <bq-time-picker name="meeting-time" value="14:30">
+     * <label slot="label">Meeting time</label>
+     * </bq-time-picker>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/0727e1-time-picker
+     * @status experimental
+     * @dependency bq-button
+     * @dependency bq-dropdown
+     * @dependency bq-icon
+     * @attr {boolean} autofocus - If `true`, the Time picker field will be focused on component render.
+     * @attr {string} clear-button-label - The clear button aria label.
+     * @attr {string} confirm-button-label - The label of the panel confirm (OK) button.
+     * @attr {boolean} disable-clear - If `true`, the clear button won't be displayed.
+     * @attr {boolean} disable-now - If `true`, the panel "Now" button won't be displayed.
+     * @attr {boolean} disabled - Indicates whether the Time picker is disabled or not.
+     * @attr {number} distance - Represents the distance between the panel and the field.
+     * @attr {string} form - The form ID the field belongs to.
+     * @attr {string} form-validation-message - Custom native form validation message.
+     * @attr {"12" | "24"} hour-format - Forces a 12-hour or 24-hour clock. Defaults to the locale's clock.
+     * @attr {number} hour-step - Step between selectable hours.
+     * @attr {Intl.LocalesArgument} locale - Locale used for the field layout, day period labels and the default clock.
+     * @attr {string} max - Latest selectable time (`HH:mm` or `HH:mm:ss`).
+     * @attr {string} min - Earliest selectable time (`HH:mm` or `HH:mm:ss`).
+     * @attr {number} minute-step - Step between selectable minutes.
+     * @attr {string} name - The Time picker name.
+     * @attr {string} now-button-label - The label of the panel "Now" button.
+     * @attr {boolean} open - If `true`, the panel is visible.
+     * @attr {string} panel-height - Overrides the height of the panel.
+     * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Placement of the panel.
+     * @attr {"hour" | "minute" | "second"} precision - The smallest unit edited and submitted.
+     * @attr {boolean} readonly - If `true`, the value can be read and submitted but not changed.
+     * @attr {boolean} require-confirm - If `true`, panel picks are a draft until confirmed with the OK button or Enter.
+     * @attr {boolean} required - Whether a value must be entered before submitting the form.
+     * @attr {number} second-step - Step between selectable seconds.
+     * @attr {number} skidding - Skidding between the panel and the field.
+     * @attr {"fixed" | "absolute"} strategy - Positioning strategy for the panel.
+     * @attr {string} time-button-label - The aria-label of the clock trigger button.
+     * @attr {"error" | "none" | "success" | "warning"} validation-status - Validation state.
+     * @attr {string} value - The selected time in 24-hour format: `HH:mm` (`HH:00` at hour precision) or `HH:mm:ss`.
+     * @method clear - Clears the selected value.
+     * @event bqBlur - Emitted when the field loses focus.
+     * @event bqChange - Emitted when the value is committed or cleared.
+     * @event bqClear - Emitted when the value is cleared.
+     * @event bqFocus - Emitted when the field receives focus.
+     * @cssprop --bq-time-picker--background-color - Field background color.
+     * @cssprop --bq-time-picker--border-color - Field border color.
+     * @cssprop --bq-time-picker--border-color-disabled - Border color when disabled.
+     * @cssprop --bq-time-picker--border-color-focus - Border color on focus.
+     * @cssprop --bq-time-picker--border-radius - Field border radius.
+     * @cssprop --bq-time-picker--border-style - Border style.
+     * @cssprop --bq-time-picker--border-width - Border width.
+     * @cssprop --bq-time-picker--column-gap - Space between the panel columns.
+     * @cssprop --bq-time-picker--column-height - Height of the scrollable panel columns.
+     * @cssprop --bq-time-picker--column-width - Width of a panel column.
+     * @cssprop --bq-time-picker--gap - Gap between the field content and prefix/suffix.
+     * @cssprop --bq-time-picker--icon-size - Size of the icons used in prefix/suffix/clear.
+     * @cssprop --bq-time-picker--label-margin-bottom - Space below the label.
+     * @cssprop --bq-time-picker--label-text-color - Label text color.
+     * @cssprop --bq-time-picker--label-text-size - Label text size.
+     * @cssprop --bq-time-picker--option-background-hover - Hover background of a column option.
+     * @cssprop --bq-time-picker--option-background-selected - Background of the selected column option.
+     * @cssprop --bq-time-picker--option-height - Height of a column option.
+     * @cssprop --bq-time-picker--option-radius - Border radius of a column option.
+     * @cssprop --bq-time-picker--option-text-selected - Text color of the selected column option.
+     * @cssprop --bq-time-picker--padding-end - Field padding end.
+     * @cssprop --bq-time-picker--padding-start - Field padding start.
+     * @cssprop --bq-time-picker--paddingY - Field vertical padding.
+     * @cssprop --bq-time-picker--text-color - Field text color.
+     * @cssprop --bq-time-picker--text-placeholder-color - Placeholder text color.
+     * @cssprop --bq-time-picker--text-size - Field text size.
+     */
+    interface BqTimePicker {
+        /**
+          * If `true`, the Time picker field will be focused on component render.
+          * @default false
+         */
+        "autofocus": boolean;
+        /**
+          * Clears the selected value and any pending validation state. Emits `bqClear`. No-op when the component is disabled or read-only.
+          * @returns A promise that resolves once the value has been cleared.
+         */
+        "clear": () => Promise<void>;
+        /**
+          * The clear button aria label.
+          * @default 'Clear value'
+         */
+        "clearButtonLabel": string;
+        /**
+          * The label of the panel confirm (OK) button.
+          * @default 'OK'
+         */
+        "confirmButtonLabel": string;
+        /**
+          * If `true`, the clear button won't be displayed.
+          * @default false
+         */
+        "disableClear": boolean;
+        /**
+          * If `true`, the panel "Now" button won't be displayed.
+          * @default false
+         */
+        "disableNow": boolean;
+        /**
+          * Indicates whether the Time picker is disabled or not.
+          * @default false
+         */
+        "disabled": boolean;
+        /**
+          * Distance (gutter) between the Time picker panel and the field.
+          * @default 8
+         */
+        "distance": number;
+        /**
+          * The ID of the form the field belongs to.
+         */
+        "form"?: string;
+        /**
+          * Native form validation message.
+         */
+        "formValidationMessage"?: string;
+        /**
+          * Forces a 12-hour (`"12"`) or 24-hour (`"24"`) clock. When unset, the clock of the `locale` is used.
+         */
+        "hourFormat"?: THourFormat;
+        /**
+          * Step between selectable hours.
+          * @default 1
+         */
+        "hourStep": number;
+        /**
+          * Locale used for the field layout, the day period labels and the default clock.
+          * @default 'en-GB'
+         */
+        "locale": Intl.LocalesArgument;
+        /**
+          * Latest selectable time, in 24-hour format (`HH:mm` or `HH:mm:ss`). Ignored, together with `min`, when it is earlier than `min`.
+         */
+        "max"?: string;
+        /**
+          * Earliest selectable time, in 24-hour format (`HH:mm` or `HH:mm:ss`). Ignored, together with `max`, when it is later than `max`.
+         */
+        "min"?: string;
+        /**
+          * Step between selectable minutes.
+          * @default 1
+         */
+        "minuteStep": number;
+        /**
+          * The Time picker name.
+         */
+        "name": string;
+        /**
+          * The label of the panel "Now" button.
+          * @default 'Now'
+         */
+        "nowButtonLabel": string;
+        /**
+          * If `true`, the panel is visible.
+          * @default false
+         */
+        "open": boolean;
+        /**
+          * Overrides the height of the Time picker panel.
+          * @default 'auto'
+         */
+        "panelHeight"?: string;
+        /**
+          * Position of the Time picker panel.
+          * @default 'bottom-end'
+         */
+        "placement": Placement;
+        /**
+          * The smallest unit edited and submitted. - `hour`   → `HH:00` - `minute` → `HH:mm` (default) - `second` → `HH:mm:ss`
+          * @default 'minute'
+         */
+        "precision": TTimePrecision;
+        /**
+          * If `true`, the value can be read and submitted but not changed.
+          * @default false
+         */
+        "readonly": boolean;
+        /**
+          * If `true`, picks made in the panel (including "Now") are a draft until confirmed with the OK button or Enter. Escape or an outside click discards the draft.
+          * @default false
+         */
+        "requireConfirm": boolean;
+        /**
+          * Whether a value must be entered before submitting the form.
+          * @default false
+         */
+        "required": boolean;
+        /**
+          * Step between selectable seconds.
+          * @default 1
+         */
+        "secondStep": number;
+        /**
+          * Skidding between the panel and the field.
+          * @default 0
+         */
+        "skidding": number;
+        /**
+          * Positioning strategy for the panel.
+          * @default 'fixed'
+         */
+        "strategy": TFloatingStrategy1;
+        /**
+          * The aria-label of the clock trigger button.
+          * @default 'Open time picker'
+         */
+        "timeButtonLabel": string;
+        /**
+          * Validation state applied to the field.
+          * @default 'none'
+         */
+        "validationStatus": TInputValidation;
+        /**
+          * The selected time, in 24-hour format: `HH:mm` (`HH:00` at hour precision) or `HH:mm:ss` at second precision.
+         */
+        "value"?: string;
+    }
+    /**
      * Toasts are time-based components used to display short messages.
      * Commonly used for errors, confirmations, or progress updates.
      * @example How to use it
@@ -3393,6 +3622,10 @@ export interface BqTagCustomEvent<T> extends CustomEvent<T> {
 export interface BqTextareaCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqTextareaElement;
+}
+export interface BqTimePickerCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqTimePickerElement;
 }
 export interface BqToastCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -5385,6 +5618,103 @@ declare global {
         prototype: HTMLBqTextareaElement;
         new (): HTMLBqTextareaElement;
     };
+    interface HTMLBqTimePickerElementEventMap {
+        "bqBlur": HTMLBqTimePickerElement;
+        "bqChange": { value: string | undefined; el: HTMLElement };
+        "bqClear": HTMLBqTimePickerElement;
+        "bqFocus": HTMLBqTimePickerElement;
+    }
+    /**
+     * The Time Picker lets users enter a time of day by typing into locale-ordered,
+     * keyboard-editable segments or by picking hours, minutes, seconds and AM/PM
+     * from scrollable columns in a dropdown panel.
+     * @example How to use it
+     * ```html
+     * <bq-time-picker name="meeting-time" value="14:30">
+     * <label slot="label">Meeting time</label>
+     * </bq-time-picker>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/0727e1-time-picker
+     * @status experimental
+     * @dependency bq-button
+     * @dependency bq-dropdown
+     * @dependency bq-icon
+     * @attr {boolean} autofocus - If `true`, the Time picker field will be focused on component render.
+     * @attr {string} clear-button-label - The clear button aria label.
+     * @attr {string} confirm-button-label - The label of the panel confirm (OK) button.
+     * @attr {boolean} disable-clear - If `true`, the clear button won't be displayed.
+     * @attr {boolean} disable-now - If `true`, the panel "Now" button won't be displayed.
+     * @attr {boolean} disabled - Indicates whether the Time picker is disabled or not.
+     * @attr {number} distance - Represents the distance between the panel and the field.
+     * @attr {string} form - The form ID the field belongs to.
+     * @attr {string} form-validation-message - Custom native form validation message.
+     * @attr {"12" | "24"} hour-format - Forces a 12-hour or 24-hour clock. Defaults to the locale's clock.
+     * @attr {number} hour-step - Step between selectable hours.
+     * @attr {Intl.LocalesArgument} locale - Locale used for the field layout, day period labels and the default clock.
+     * @attr {string} max - Latest selectable time (`HH:mm` or `HH:mm:ss`).
+     * @attr {string} min - Earliest selectable time (`HH:mm` or `HH:mm:ss`).
+     * @attr {number} minute-step - Step between selectable minutes.
+     * @attr {string} name - The Time picker name.
+     * @attr {string} now-button-label - The label of the panel "Now" button.
+     * @attr {boolean} open - If `true`, the panel is visible.
+     * @attr {string} panel-height - Overrides the height of the panel.
+     * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Placement of the panel.
+     * @attr {"hour" | "minute" | "second"} precision - The smallest unit edited and submitted.
+     * @attr {boolean} readonly - If `true`, the value can be read and submitted but not changed.
+     * @attr {boolean} require-confirm - If `true`, panel picks are a draft until confirmed with the OK button or Enter.
+     * @attr {boolean} required - Whether a value must be entered before submitting the form.
+     * @attr {number} second-step - Step between selectable seconds.
+     * @attr {number} skidding - Skidding between the panel and the field.
+     * @attr {"fixed" | "absolute"} strategy - Positioning strategy for the panel.
+     * @attr {string} time-button-label - The aria-label of the clock trigger button.
+     * @attr {"error" | "none" | "success" | "warning"} validation-status - Validation state.
+     * @attr {string} value - The selected time in 24-hour format: `HH:mm` (`HH:00` at hour precision) or `HH:mm:ss`.
+     * @method clear - Clears the selected value.
+     * @event bqBlur - Emitted when the field loses focus.
+     * @event bqChange - Emitted when the value is committed or cleared.
+     * @event bqClear - Emitted when the value is cleared.
+     * @event bqFocus - Emitted when the field receives focus.
+     * @cssprop --bq-time-picker--background-color - Field background color.
+     * @cssprop --bq-time-picker--border-color - Field border color.
+     * @cssprop --bq-time-picker--border-color-disabled - Border color when disabled.
+     * @cssprop --bq-time-picker--border-color-focus - Border color on focus.
+     * @cssprop --bq-time-picker--border-radius - Field border radius.
+     * @cssprop --bq-time-picker--border-style - Border style.
+     * @cssprop --bq-time-picker--border-width - Border width.
+     * @cssprop --bq-time-picker--column-gap - Space between the panel columns.
+     * @cssprop --bq-time-picker--column-height - Height of the scrollable panel columns.
+     * @cssprop --bq-time-picker--column-width - Width of a panel column.
+     * @cssprop --bq-time-picker--gap - Gap between the field content and prefix/suffix.
+     * @cssprop --bq-time-picker--icon-size - Size of the icons used in prefix/suffix/clear.
+     * @cssprop --bq-time-picker--label-margin-bottom - Space below the label.
+     * @cssprop --bq-time-picker--label-text-color - Label text color.
+     * @cssprop --bq-time-picker--label-text-size - Label text size.
+     * @cssprop --bq-time-picker--option-background-hover - Hover background of a column option.
+     * @cssprop --bq-time-picker--option-background-selected - Background of the selected column option.
+     * @cssprop --bq-time-picker--option-height - Height of a column option.
+     * @cssprop --bq-time-picker--option-radius - Border radius of a column option.
+     * @cssprop --bq-time-picker--option-text-selected - Text color of the selected column option.
+     * @cssprop --bq-time-picker--padding-end - Field padding end.
+     * @cssprop --bq-time-picker--padding-start - Field padding start.
+     * @cssprop --bq-time-picker--paddingY - Field vertical padding.
+     * @cssprop --bq-time-picker--text-color - Field text color.
+     * @cssprop --bq-time-picker--text-placeholder-color - Placeholder text color.
+     * @cssprop --bq-time-picker--text-size - Field text size.
+     */
+    interface HTMLBqTimePickerElement extends Components.BqTimePicker, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLBqTimePickerElementEventMap>(type: K, listener: (this: HTMLBqTimePickerElement, ev: BqTimePickerCustomEvent<HTMLBqTimePickerElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLBqTimePickerElementEventMap>(type: K, listener: (this: HTMLBqTimePickerElement, ev: BqTimePickerCustomEvent<HTMLBqTimePickerElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLBqTimePickerElement: {
+        prototype: HTMLBqTimePickerElement;
+        new (): HTMLBqTimePickerElement;
+    };
     interface HTMLBqToastElementEventMap {
         "bqHide": HTMLBqToastElement;
         "bqShow": HTMLBqToastElement;
@@ -5537,6 +5867,7 @@ declare global {
         "bq-tab-group": HTMLBqTabGroupElement;
         "bq-tag": HTMLBqTagElement;
         "bq-textarea": HTMLBqTextareaElement;
+        "bq-time-picker": HTMLBqTimePickerElement;
         "bq-toast": HTMLBqToastElement;
         "bq-tooltip": HTMLBqTooltipElement;
     }
@@ -8867,6 +9198,244 @@ declare namespace LocalJSX {
         "wrap"?: TTextareaWrap;
     }
     /**
+     * The Time Picker lets users enter a time of day by typing into locale-ordered,
+     * keyboard-editable segments or by picking hours, minutes, seconds and AM/PM
+     * from scrollable columns in a dropdown panel.
+     * @example How to use it
+     * ```html
+     * <bq-time-picker name="meeting-time" value="14:30">
+     * <label slot="label">Meeting time</label>
+     * </bq-time-picker>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/0727e1-time-picker
+     * @status experimental
+     * @dependency bq-button
+     * @dependency bq-dropdown
+     * @dependency bq-icon
+     * @attr {boolean} autofocus - If `true`, the Time picker field will be focused on component render.
+     * @attr {string} clear-button-label - The clear button aria label.
+     * @attr {string} confirm-button-label - The label of the panel confirm (OK) button.
+     * @attr {boolean} disable-clear - If `true`, the clear button won't be displayed.
+     * @attr {boolean} disable-now - If `true`, the panel "Now" button won't be displayed.
+     * @attr {boolean} disabled - Indicates whether the Time picker is disabled or not.
+     * @attr {number} distance - Represents the distance between the panel and the field.
+     * @attr {string} form - The form ID the field belongs to.
+     * @attr {string} form-validation-message - Custom native form validation message.
+     * @attr {"12" | "24"} hour-format - Forces a 12-hour or 24-hour clock. Defaults to the locale's clock.
+     * @attr {number} hour-step - Step between selectable hours.
+     * @attr {Intl.LocalesArgument} locale - Locale used for the field layout, day period labels and the default clock.
+     * @attr {string} max - Latest selectable time (`HH:mm` or `HH:mm:ss`).
+     * @attr {string} min - Earliest selectable time (`HH:mm` or `HH:mm:ss`).
+     * @attr {number} minute-step - Step between selectable minutes.
+     * @attr {string} name - The Time picker name.
+     * @attr {string} now-button-label - The label of the panel "Now" button.
+     * @attr {boolean} open - If `true`, the panel is visible.
+     * @attr {string} panel-height - Overrides the height of the panel.
+     * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Placement of the panel.
+     * @attr {"hour" | "minute" | "second"} precision - The smallest unit edited and submitted.
+     * @attr {boolean} readonly - If `true`, the value can be read and submitted but not changed.
+     * @attr {boolean} require-confirm - If `true`, panel picks are a draft until confirmed with the OK button or Enter.
+     * @attr {boolean} required - Whether a value must be entered before submitting the form.
+     * @attr {number} second-step - Step between selectable seconds.
+     * @attr {number} skidding - Skidding between the panel and the field.
+     * @attr {"fixed" | "absolute"} strategy - Positioning strategy for the panel.
+     * @attr {string} time-button-label - The aria-label of the clock trigger button.
+     * @attr {"error" | "none" | "success" | "warning"} validation-status - Validation state.
+     * @attr {string} value - The selected time in 24-hour format: `HH:mm` (`HH:00` at hour precision) or `HH:mm:ss`.
+     * @method clear - Clears the selected value.
+     * @event bqBlur - Emitted when the field loses focus.
+     * @event bqChange - Emitted when the value is committed or cleared.
+     * @event bqClear - Emitted when the value is cleared.
+     * @event bqFocus - Emitted when the field receives focus.
+     * @cssprop --bq-time-picker--background-color - Field background color.
+     * @cssprop --bq-time-picker--border-color - Field border color.
+     * @cssprop --bq-time-picker--border-color-disabled - Border color when disabled.
+     * @cssprop --bq-time-picker--border-color-focus - Border color on focus.
+     * @cssprop --bq-time-picker--border-radius - Field border radius.
+     * @cssprop --bq-time-picker--border-style - Border style.
+     * @cssprop --bq-time-picker--border-width - Border width.
+     * @cssprop --bq-time-picker--column-gap - Space between the panel columns.
+     * @cssprop --bq-time-picker--column-height - Height of the scrollable panel columns.
+     * @cssprop --bq-time-picker--column-width - Width of a panel column.
+     * @cssprop --bq-time-picker--gap - Gap between the field content and prefix/suffix.
+     * @cssprop --bq-time-picker--icon-size - Size of the icons used in prefix/suffix/clear.
+     * @cssprop --bq-time-picker--label-margin-bottom - Space below the label.
+     * @cssprop --bq-time-picker--label-text-color - Label text color.
+     * @cssprop --bq-time-picker--label-text-size - Label text size.
+     * @cssprop --bq-time-picker--option-background-hover - Hover background of a column option.
+     * @cssprop --bq-time-picker--option-background-selected - Background of the selected column option.
+     * @cssprop --bq-time-picker--option-height - Height of a column option.
+     * @cssprop --bq-time-picker--option-radius - Border radius of a column option.
+     * @cssprop --bq-time-picker--option-text-selected - Text color of the selected column option.
+     * @cssprop --bq-time-picker--padding-end - Field padding end.
+     * @cssprop --bq-time-picker--padding-start - Field padding start.
+     * @cssprop --bq-time-picker--paddingY - Field vertical padding.
+     * @cssprop --bq-time-picker--text-color - Field text color.
+     * @cssprop --bq-time-picker--text-placeholder-color - Placeholder text color.
+     * @cssprop --bq-time-picker--text-size - Field text size.
+     */
+    interface BqTimePicker {
+        /**
+          * If `true`, the Time picker field will be focused on component render.
+          * @default false
+         */
+        "autofocus"?: boolean;
+        /**
+          * The clear button aria label.
+          * @default 'Clear value'
+         */
+        "clearButtonLabel"?: string;
+        /**
+          * The label of the panel confirm (OK) button.
+          * @default 'OK'
+         */
+        "confirmButtonLabel"?: string;
+        /**
+          * If `true`, the clear button won't be displayed.
+          * @default false
+         */
+        "disableClear"?: boolean;
+        /**
+          * If `true`, the panel "Now" button won't be displayed.
+          * @default false
+         */
+        "disableNow"?: boolean;
+        /**
+          * Indicates whether the Time picker is disabled or not.
+          * @default false
+         */
+        "disabled"?: boolean;
+        /**
+          * Distance (gutter) between the Time picker panel and the field.
+          * @default 8
+         */
+        "distance"?: number;
+        /**
+          * The ID of the form the field belongs to.
+         */
+        "form"?: string;
+        /**
+          * Native form validation message.
+         */
+        "formValidationMessage"?: string;
+        /**
+          * Forces a 12-hour (`"12"`) or 24-hour (`"24"`) clock. When unset, the clock of the `locale` is used.
+         */
+        "hourFormat"?: THourFormat;
+        /**
+          * Step between selectable hours.
+          * @default 1
+         */
+        "hourStep"?: number;
+        /**
+          * Locale used for the field layout, the day period labels and the default clock.
+          * @default 'en-GB'
+         */
+        "locale"?: Intl.LocalesArgument;
+        /**
+          * Latest selectable time, in 24-hour format (`HH:mm` or `HH:mm:ss`). Ignored, together with `min`, when it is earlier than `min`.
+         */
+        "max"?: string;
+        /**
+          * Earliest selectable time, in 24-hour format (`HH:mm` or `HH:mm:ss`). Ignored, together with `max`, when it is later than `max`.
+         */
+        "min"?: string;
+        /**
+          * Step between selectable minutes.
+          * @default 1
+         */
+        "minuteStep"?: number;
+        /**
+          * The Time picker name.
+         */
+        "name": string;
+        /**
+          * The label of the panel "Now" button.
+          * @default 'Now'
+         */
+        "nowButtonLabel"?: string;
+        /**
+          * Callback handler emitted when the field loses focus.
+         */
+        "onBqBlur"?: (event: BqTimePickerCustomEvent<HTMLBqTimePickerElement>) => void;
+        /**
+          * Callback handler emitted when the value is committed or cleared.
+         */
+        "onBqChange"?: (event: BqTimePickerCustomEvent<{ value: string | undefined; el: HTMLElement }>) => void;
+        /**
+          * Callback handler emitted when the value is cleared.
+         */
+        "onBqClear"?: (event: BqTimePickerCustomEvent<HTMLBqTimePickerElement>) => void;
+        /**
+          * Callback handler emitted when the field receives focus.
+         */
+        "onBqFocus"?: (event: BqTimePickerCustomEvent<HTMLBqTimePickerElement>) => void;
+        /**
+          * If `true`, the panel is visible.
+          * @default false
+         */
+        "open"?: boolean;
+        /**
+          * Overrides the height of the Time picker panel.
+          * @default 'auto'
+         */
+        "panelHeight"?: string;
+        /**
+          * Position of the Time picker panel.
+          * @default 'bottom-end'
+         */
+        "placement"?: Placement;
+        /**
+          * The smallest unit edited and submitted. - `hour`   → `HH:00` - `minute` → `HH:mm` (default) - `second` → `HH:mm:ss`
+          * @default 'minute'
+         */
+        "precision"?: TTimePrecision;
+        /**
+          * If `true`, the value can be read and submitted but not changed.
+          * @default false
+         */
+        "readonly"?: boolean;
+        /**
+          * If `true`, picks made in the panel (including "Now") are a draft until confirmed with the OK button or Enter. Escape or an outside click discards the draft.
+          * @default false
+         */
+        "requireConfirm"?: boolean;
+        /**
+          * Whether a value must be entered before submitting the form.
+          * @default false
+         */
+        "required"?: boolean;
+        /**
+          * Step between selectable seconds.
+          * @default 1
+         */
+        "secondStep"?: number;
+        /**
+          * Skidding between the panel and the field.
+          * @default 0
+         */
+        "skidding"?: number;
+        /**
+          * Positioning strategy for the panel.
+          * @default 'fixed'
+         */
+        "strategy"?: TFloatingStrategy1;
+        /**
+          * The aria-label of the clock trigger button.
+          * @default 'Open time picker'
+         */
+        "timeButtonLabel"?: string;
+        /**
+          * Validation state applied to the field.
+          * @default 'none'
+         */
+        "validationStatus"?: TInputValidation;
+        /**
+          * The selected time, in 24-hour format: `HH:mm` (`HH:00` at hour precision) or `HH:mm:ss` at second precision.
+         */
+        "value"?: string;
+    }
+    /**
      * Toasts are time-based components used to display short messages.
      * Commonly used for errors, confirmations, or progress updates.
      * @example How to use it
@@ -9419,6 +9988,38 @@ declare namespace LocalJSX {
         "value": string;
         "wrap": TTextareaWrap;
     }
+    interface BqTimePickerAttributes {
+        "autofocus": boolean;
+        "clearButtonLabel": string;
+        "confirmButtonLabel": string;
+        "disableClear": boolean;
+        "disableNow": boolean;
+        "disabled": boolean;
+        "distance": number;
+        "form": string;
+        "formValidationMessage": string;
+        "hourFormat": THourFormat;
+        "hourStep": number;
+        "locale": Intl.LocalesArgument;
+        "max": string;
+        "min": string;
+        "minuteStep": number;
+        "name": string;
+        "nowButtonLabel": string;
+        "open": boolean;
+        "panelHeight": string;
+        "placement": Placement;
+        "precision": TTimePrecision;
+        "readonly": boolean;
+        "requireConfirm": boolean;
+        "required": boolean;
+        "secondStep": number;
+        "skidding": number;
+        "strategy": TFloatingStrategy;
+        "timeButtonLabel": string;
+        "validationStatus": TInputValidation;
+        "value": string;
+    }
     interface BqToastAttributes {
         "border": TToastBorderRadius;
         "type": TToastType;
@@ -9478,6 +10079,7 @@ declare namespace LocalJSX {
         "bq-tab-group": Omit<BqTabGroup, keyof BqTabGroupAttributes> & { [K in keyof BqTabGroup & keyof BqTabGroupAttributes]?: BqTabGroup[K] } & { [K in keyof BqTabGroup & keyof BqTabGroupAttributes as `attr:${K}`]?: BqTabGroupAttributes[K] } & { [K in keyof BqTabGroup & keyof BqTabGroupAttributes as `prop:${K}`]?: BqTabGroup[K] };
         "bq-tag": Omit<BqTag, keyof BqTagAttributes> & { [K in keyof BqTag & keyof BqTagAttributes]?: BqTag[K] } & { [K in keyof BqTag & keyof BqTagAttributes as `attr:${K}`]?: BqTagAttributes[K] } & { [K in keyof BqTag & keyof BqTagAttributes as `prop:${K}`]?: BqTag[K] };
         "bq-textarea": Omit<BqTextarea, keyof BqTextareaAttributes> & { [K in keyof BqTextarea & keyof BqTextareaAttributes]?: BqTextarea[K] } & { [K in keyof BqTextarea & keyof BqTextareaAttributes as `attr:${K}`]?: BqTextareaAttributes[K] } & { [K in keyof BqTextarea & keyof BqTextareaAttributes as `prop:${K}`]?: BqTextarea[K] } & OneOf<"name", BqTextarea["name"], BqTextareaAttributes["name"]> & OneOf<"placeholder", BqTextarea["placeholder"], BqTextareaAttributes["placeholder"]>;
+        "bq-time-picker": Omit<BqTimePicker, keyof BqTimePickerAttributes> & { [K in keyof BqTimePicker & keyof BqTimePickerAttributes]?: BqTimePicker[K] } & { [K in keyof BqTimePicker & keyof BqTimePickerAttributes as `attr:${K}`]?: BqTimePickerAttributes[K] } & { [K in keyof BqTimePicker & keyof BqTimePickerAttributes as `prop:${K}`]?: BqTimePicker[K] } & OneOf<"name", BqTimePicker["name"], BqTimePickerAttributes["name"]>;
         "bq-toast": Omit<BqToast, keyof BqToastAttributes> & { [K in keyof BqToast & keyof BqToastAttributes]?: BqToast[K] } & { [K in keyof BqToast & keyof BqToastAttributes as `attr:${K}`]?: BqToastAttributes[K] } & { [K in keyof BqToast & keyof BqToastAttributes as `prop:${K}`]?: BqToast[K] };
         "bq-tooltip": Omit<BqTooltip, keyof BqTooltipAttributes> & { [K in keyof BqTooltip & keyof BqTooltipAttributes]?: BqTooltip[K] } & { [K in keyof BqTooltip & keyof BqTooltipAttributes as `attr:${K}`]?: BqTooltipAttributes[K] } & { [K in keyof BqTooltip & keyof BqTooltipAttributes as `prop:${K}`]?: BqTooltip[K] };
     }
@@ -10918,6 +11520,84 @@ declare module "@stencil/core" {
              * @cssprop --bq-textarea--text-placeholder-color - Textarea placeholder text color
              */
             "bq-textarea": LocalJSX.IntrinsicElements["bq-textarea"] & JSXBase.HTMLAttributes<HTMLBqTextareaElement>;
+            /**
+             * The Time Picker lets users enter a time of day by typing into locale-ordered,
+             * keyboard-editable segments or by picking hours, minutes, seconds and AM/PM
+             * from scrollable columns in a dropdown panel.
+             * @example How to use it
+             * ```html
+             * <bq-time-picker name="meeting-time" value="14:30">
+             * <label slot="label">Meeting time</label>
+             * </bq-time-picker>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/0727e1-time-picker
+             * @status experimental
+             * @dependency bq-button
+             * @dependency bq-dropdown
+             * @dependency bq-icon
+             * @attr {boolean} autofocus - If `true`, the Time picker field will be focused on component render.
+             * @attr {string} clear-button-label - The clear button aria label.
+             * @attr {string} confirm-button-label - The label of the panel confirm (OK) button.
+             * @attr {boolean} disable-clear - If `true`, the clear button won't be displayed.
+             * @attr {boolean} disable-now - If `true`, the panel "Now" button won't be displayed.
+             * @attr {boolean} disabled - Indicates whether the Time picker is disabled or not.
+             * @attr {number} distance - Represents the distance between the panel and the field.
+             * @attr {string} form - The form ID the field belongs to.
+             * @attr {string} form-validation-message - Custom native form validation message.
+             * @attr {"12" | "24"} hour-format - Forces a 12-hour or 24-hour clock. Defaults to the locale's clock.
+             * @attr {number} hour-step - Step between selectable hours.
+             * @attr {Intl.LocalesArgument} locale - Locale used for the field layout, day period labels and the default clock.
+             * @attr {string} max - Latest selectable time (`HH:mm` or `HH:mm:ss`).
+             * @attr {string} min - Earliest selectable time (`HH:mm` or `HH:mm:ss`).
+             * @attr {number} minute-step - Step between selectable minutes.
+             * @attr {string} name - The Time picker name.
+             * @attr {string} now-button-label - The label of the panel "Now" button.
+             * @attr {boolean} open - If `true`, the panel is visible.
+             * @attr {string} panel-height - Overrides the height of the panel.
+             * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Placement of the panel.
+             * @attr {"hour" | "minute" | "second"} precision - The smallest unit edited and submitted.
+             * @attr {boolean} readonly - If `true`, the value can be read and submitted but not changed.
+             * @attr {boolean} require-confirm - If `true`, panel picks are a draft until confirmed with the OK button or Enter.
+             * @attr {boolean} required - Whether a value must be entered before submitting the form.
+             * @attr {number} second-step - Step between selectable seconds.
+             * @attr {number} skidding - Skidding between the panel and the field.
+             * @attr {"fixed" | "absolute"} strategy - Positioning strategy for the panel.
+             * @attr {string} time-button-label - The aria-label of the clock trigger button.
+             * @attr {"error" | "none" | "success" | "warning"} validation-status - Validation state.
+             * @attr {string} value - The selected time in 24-hour format: `HH:mm` (`HH:00` at hour precision) or `HH:mm:ss`.
+             * @method clear - Clears the selected value.
+             * @event bqBlur - Emitted when the field loses focus.
+             * @event bqChange - Emitted when the value is committed or cleared.
+             * @event bqClear - Emitted when the value is cleared.
+             * @event bqFocus - Emitted when the field receives focus.
+             * @cssprop --bq-time-picker--background-color - Field background color.
+             * @cssprop --bq-time-picker--border-color - Field border color.
+             * @cssprop --bq-time-picker--border-color-disabled - Border color when disabled.
+             * @cssprop --bq-time-picker--border-color-focus - Border color on focus.
+             * @cssprop --bq-time-picker--border-radius - Field border radius.
+             * @cssprop --bq-time-picker--border-style - Border style.
+             * @cssprop --bq-time-picker--border-width - Border width.
+             * @cssprop --bq-time-picker--column-gap - Space between the panel columns.
+             * @cssprop --bq-time-picker--column-height - Height of the scrollable panel columns.
+             * @cssprop --bq-time-picker--column-width - Width of a panel column.
+             * @cssprop --bq-time-picker--gap - Gap between the field content and prefix/suffix.
+             * @cssprop --bq-time-picker--icon-size - Size of the icons used in prefix/suffix/clear.
+             * @cssprop --bq-time-picker--label-margin-bottom - Space below the label.
+             * @cssprop --bq-time-picker--label-text-color - Label text color.
+             * @cssprop --bq-time-picker--label-text-size - Label text size.
+             * @cssprop --bq-time-picker--option-background-hover - Hover background of a column option.
+             * @cssprop --bq-time-picker--option-background-selected - Background of the selected column option.
+             * @cssprop --bq-time-picker--option-height - Height of a column option.
+             * @cssprop --bq-time-picker--option-radius - Border radius of a column option.
+             * @cssprop --bq-time-picker--option-text-selected - Text color of the selected column option.
+             * @cssprop --bq-time-picker--padding-end - Field padding end.
+             * @cssprop --bq-time-picker--padding-start - Field padding start.
+             * @cssprop --bq-time-picker--paddingY - Field vertical padding.
+             * @cssprop --bq-time-picker--text-color - Field text color.
+             * @cssprop --bq-time-picker--text-placeholder-color - Placeholder text color.
+             * @cssprop --bq-time-picker--text-size - Field text size.
+             */
+            "bq-time-picker": LocalJSX.IntrinsicElements["bq-time-picker"] & JSXBase.HTMLAttributes<HTMLBqTimePickerElement>;
             /**
              * Toasts are time-based components used to display short messages.
              * Commonly used for errors, confirmations, or progress updates.
