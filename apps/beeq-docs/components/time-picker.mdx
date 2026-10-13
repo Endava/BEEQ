@@ -69,7 +69,7 @@ The time picker pairs a labeled, segmented field with a panel of columns, one pe
 | **3** | Clear button | Removes the current value; hidden with `disable-clear` |
 | **4** | Clock trigger | Opens the panel; its icon can be replaced with the `suffix` slot |
 | **5** | Panel | The surface that holds the columns and the footer actions |
-| **6** | Column | A scrollable list of options for one time unit |
+| **6** | Column | A scrollable list of options for one time unit, under a header that names it and stays in place while the list scrolls |
 | **7** | Selected option | The current hour, minute, second, or period, shown with selected styling |
 | **8** | Now button | Picks the current time, rounded down to the step; hidden with `disable-now` |
 | **9** | OK button | Confirms the selection and closes the panel |
@@ -355,7 +355,7 @@ By default, the clock follows `locale`: `en-US` uses a 12-hour clock with an AM/
 
 ### Locale
 
-Use `locale` to set the segment order, separators, AM/PM labels, and default clock. Some locales place the period before the hour, and the panel columns follow the same order.
+Use `locale` to set the segment order, separators, AM/PM labels, column headers, and default clock. Some locales place the period before the hour, and the panel columns follow the same order.
 
 <CodeLivePreview mode="shadow" code={`
   <style>
@@ -1296,7 +1296,7 @@ When focus leaves the field, complete times outside `min` or `max` are clamped t
 - The segmented field is a labelled `group` described by the expected format and, when a constraint fails, by the validation message. Each hour, minute, second, and AM/PM control is a `spinbutton` with its own label, limits, value text, and roving tabindex, and exposes `aria-required` when the field is required.
 - Each segment sets `aria-invalid="true"` for `validationStatus="error"` and native constraint failures, such as a missing required value or an incomplete, out-of-range, or off-step time. `aria-readonly` and `aria-disabled` reflect the `readonly` and `disabled` states.
 - The panel carries `role="dialog"` and is labelled via `aria-labelledby` when a label is present, or by its built-in "Time picker" label otherwise. The panel isn't modal.
-- Each column is a labelled `listbox`. Options expose `aria-selected`, and options outside `min`, `max`, or the steps expose `aria-disabled="true"`.
+- Each column is a `listbox` labelled by its visible header (`aria-labelledby`), so the spoken name matches what people see. Options expose `aria-selected`, and options outside `min`, `max`, or the steps expose `aria-disabled="true"`.
 - The component announces the selected time, or that no time is selected, when focus enters the field.
 - Press `Alt`+`ArrowDown` in the field, or Tab to the clock icon and press `Enter` or `Space`, to open the panel and move focus into it. Clicking the field opens the panel while keeping focus on the segment.
 - In the panel, `ArrowUp` and `ArrowDown` move between options, `Home` and `End` jump to the first or last option, `PageUp` and `PageDown` move faster, and `ArrowLeft` and `ArrowRight` switch columns. `Enter` or `Space` picks an option, and `Escape` closes the panel and returns focus to the field.
@@ -1390,6 +1390,7 @@ When focus leaves the field, complete times outside `min` or `max` are clamped t
 | `container` | Panel content wrapper |
 | `columns` | Wrapper of the panel columns |
 | `column` | Scrollable list of options (hours, minutes, seconds, or AM/PM) |
+| `column-header` | Header above a column; it stays in place while the column scrolls |
 | `option` | Any option inside a column |
 | `option-selected` | Selected option of a column |
 | `footer` | Panel footer |
@@ -1412,9 +1413,10 @@ When focus leaves the field, complete times outside `min` or `max` are clamped t
   | `--bq-time-picker--border-style` | Time picker border style | `solid` |
   | `--bq-time-picker--border-width` | Time picker border width | `1px` |
   | `--bq-time-picker--column-gap` | Space between the panel columns | `var(--bq-spacing-xs2)` |
+  | `--bq-time-picker--column-header-text-color` | Text color of the column headers | `var(--bq-text--secondary)` |
   | `--bq-time-picker--column-height` | Height of the scrollable panel columns | `15rem` |
   | `--bq-time-picker--column-width` | Width of a panel column | `3.5rem` |
-  | `--bq-time-picker--divider-color` | Color of the lines between the panel columns and above the footer | `var(--bq-stroke--secondary)` |
+  | `--bq-time-picker--divider-color` | Color of the lines between the panel columns and above the footer | `var(--bq-stroke--primary)` |
   | `--bq-time-picker--gap` | Gap between field content and prefix/suffix | `var(--bq-spacing-xs)` |
   | `--bq-time-picker--icon-size` | Prefix/suffix/clear icon size | `1.5rem` |
   | `--bq-time-picker--label-margin-bottom` | Space below the label | `var(--bq-spacing-xs)` |
