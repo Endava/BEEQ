@@ -1,0 +1,1445 @@
+---
+title: Time Picker
+description: "Time pickers help users enter or select a time of day as hours, minutes, and seconds, with locale-aware formatting and fewer entry errors."
+---
+
+import { CardTile } from "/snippets/CardTile.jsx";
+import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
+
+<Frame className="px-4 py-4" caption="Time-picker component overview">
+  <img className="block dark:hidden" src="/components/images/time-picker/time-picker-overview-light.svg" alt="BEEQ Time-picker component overview" />
+  <img className="hidden dark:block" src="/components/images/time-picker/time-picker-overview-dark.svg" alt="BEEQ Time-picker component overview" />
+</Frame>
+
+Time pickers combine locale-ordered hour, minute, and second segments with a panel of scrollable columns. People can type a time directly or pick it from the panel, and the component keeps the value in a predictable 24-hour format.
+
+<Note>
+  Use a time picker when people need to set a time of day. To pick a date and a time together, pair it with a [date picker](/components/date-picker). For a short list of fixed slots, such as three delivery windows, a [select](/components/select) or radio group is clearer.
+</Note>
+
+## When to use
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-up" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Use time pickers when
+    </span>
+    - People need to set a specific time of day, such as a meeting start or an alarm
+    - The time must follow local conventions, like a 12- or 24-hour clock
+    - You need to limit times with business hours or fixed intervals
+    - Typing and picking should both be quick and error-free
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-down" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Do not use time pickers when
+    </span>
+    - Only a handful of fixed time slots are available
+    - People need to enter a duration longer than a day
+    - The value is a relative time, like "in 2 hours"
+    - An approximate time of day, like "morning", is enough
+  </Card>
+</CardGroup>
+
+## Patterns
+
+<CardGroup cols={2}>
+  <CardTile title="Instant selection">
+    Each pick in the panel updates the value right away. Use it for most forms, where a time is easy to change later.
+  </CardTile>
+  <CardTile title="Confirmed selection">
+    With `require-confirm`, panel picks stay a draft until people press OK or `Enter`. Use it when a new time triggers a costly change, such as rescheduling a booking.
+  </CardTile>
+</CardGroup>
+
+## Anatomy
+
+<Frame className="px-4 py-4" caption="Time-picker component anatomy">
+  <img className="block dark:hidden" src="/components/images/time-picker/time-picker-anatomy-light.svg" alt="BEEQ Time-picker component anatomy" />
+  <img className="hidden dark:block" src="/components/images/time-picker/time-picker-anatomy-dark.svg" alt="BEEQ Time-picker component anatomy" />
+</Frame>
+
+The time picker pairs a labeled, segmented field with a panel of columns, one per time unit. Keep the label specific and let the locale decide the segment order and clock.
+
+| Part | Element | Description |
+|---|---|---|
+| **1** | Label | Describes which time the field asks for (`label` slot) |
+| **2** | Time segments | The hour, minute, second, and AM/PM controls people focus and edit, ordered for the active locale |
+| **3** | Clear button | Removes the current value; hidden with `disable-clear` |
+| **4** | Clock trigger | Opens the panel; its icon can be replaced with the `suffix` slot |
+| **5** | Panel | The surface that holds the columns and the footer actions |
+| **6** | Column | A scrollable list of options for one time unit |
+| **7** | Selected option | The current hour, minute, second, or period, shown with selected styling |
+| **8** | Now button | Picks the current time, rounded down to the step; hidden with `disable-now` |
+| **9** | OK button | Confirms the selection and closes the panel |
+
+## Design guidelines
+
+<Steps>
+  <Step title="Pick the right precision">
+    Start with the default `minute` precision. Use `hour` for coarse slots, such as opening hours, and `second` only when seconds matter, such as lap times or logs.
+  </Step>
+  <Step title="Let the locale drive the format">
+    Set `locale` to the product locale, so segment order, separators, AM/PM labels, and the clock match what people expect. Override with `hour-format` only when the product requires a specific clock.
+  </Step>
+  <Step title="Constrain the choices">
+    Apply `min`, `max`, and step values when business rules are known. Options outside the rules are disabled in the panel, and typed values are clamped when focus leaves the field.
+  </Step>
+</Steps>
+
+<Note>
+  Use steps that divide evenly into the unit, such as 5, 10, 15, or 30 minutes, so the options stay predictable and easy to scan.
+</Note>
+
+<Tip>
+  Keep the clock trigger visible. It signals that a panel is available and gives pointer users a faster way to pick a time.
+</Tip>
+
+## Usage
+
+### Default
+
+Use the default configuration when people need to set an hour and minute. Click the field or the clock icon to open the panel, or type the time directly.
+
+<Note>
+  The `value` attribute, `min`, and `max` always use a 24-hour wire format, whatever the display: `HH:mm` at minute precision, `HH:00` at hour precision, and `HH:mm:ss` at second precision.
+
+  A locale-derived format hint, such as `hh:mm`, shows the expected layout before entry starts. On focus, one segment is active. Type digits to replace that segment, use `ArrowLeft` and `ArrowRight` to move, `Home` and `End` to reach the first or last segment, `ArrowUp` and `ArrowDown` to change a value, and `Backspace` or `Delete` to clear a segment. For AM/PM, type `A` or `P`. Paste is not supported.
+</Note>
+
+<CodeLivePreview mode="shadow" code={`
+  <bq-time-picker name="meeting-time">
+    <label slot="label">Meeting time</label>
+  </bq-time-picker>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-time-picker name="meeting-time">
+      <label slot="label">Meeting time</label>
+    </bq-time-picker>
+    ```
+
+    ```jsx React icon="react"
+    import { BqTimePicker } from "@beeq/react";
+
+    <BqTimePicker name="meeting-time">
+      <label slot="label">Meeting time</label>
+    </BqTimePicker>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqTimePicker } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqTimePicker],
+      template: `
+        <bq-time-picker name="meeting-time">
+          <label slot="label">Meeting time</label>
+        </bq-time-picker>
+      `
+    })
+    export class DefaultTimePickerComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqTimePicker } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqTimePicker name="meeting-time">
+        <label slot="label">Meeting time</label>
+      </BqTimePicker>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+## Options
+
+### Precision
+
+Use `precision` to choose the smallest unit people edit and submit. The field and the panel only show the matching segments and columns.
+
+<CodeLivePreview mode="shadow" code={`
+  <style>
+    :host {
+      justify-content: flex-start !important;
+      position: relative;
+      width: 100%;
+      z-index: 11;
+    }
+  </style>
+
+  <bq-time-picker name="opening-hour" precision="hour" value="09:00">
+    <label slot="label">Opening hour</label>
+  </bq-time-picker>
+
+  <bq-time-picker name="start-time" value="09:30">
+    <label slot="label">Start time</label>
+  </bq-time-picker>
+
+  <bq-time-picker name="lap-time" precision="second" value="09:30:15">
+    <label slot="label">Lap time</label>
+  </bq-time-picker>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <bq-time-picker name="opening-hour" precision="hour" value="09:00">
+      <label slot="label">Opening hour</label>
+    </bq-time-picker>
+
+    <bq-time-picker name="start-time" value="09:30">
+      <label slot="label">Start time</label>
+    </bq-time-picker>
+
+    <bq-time-picker name="lap-time" precision="second" value="09:30:15">
+      <label slot="label">Lap time</label>
+    </bq-time-picker>
+    ```
+
+    ```jsx React icon="react" expandable
+    import { BqTimePicker } from "@beeq/react";
+
+    <>
+      <BqTimePicker name="opening-hour" precision="hour" value="09:00">
+        <label slot="label">Opening hour</label>
+      </BqTimePicker>
+
+      <BqTimePicker name="start-time" value="09:30">
+        <label slot="label">Start time</label>
+      </BqTimePicker>
+
+      <BqTimePicker name="lap-time" precision="second" value="09:30:15">
+        <label slot="label">Lap time</label>
+      </BqTimePicker>
+    </>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqTimePicker } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqTimePicker],
+      template: `
+        <bq-time-picker name="opening-hour" precision="hour" value="09:00">
+          <label slot="label">Opening hour</label>
+        </bq-time-picker>
+
+        <bq-time-picker name="start-time" value="09:30">
+          <label slot="label">Start time</label>
+        </bq-time-picker>
+
+        <bq-time-picker name="lap-time" precision="second" value="09:30:15">
+          <label slot="label">Lap time</label>
+        </bq-time-picker>
+      `
+    })
+    export class TimePickerPrecisionComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqTimePicker } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqTimePicker name="opening-hour" precision="hour" value="09:00">
+        <label slot="label">Opening hour</label>
+      </BqTimePicker>
+
+      <BqTimePicker name="start-time" value="09:30">
+        <label slot="label">Start time</label>
+      </BqTimePicker>
+
+      <BqTimePicker name="lap-time" precision="second" value="09:30:15">
+        <label slot="label">Lap time</label>
+      </BqTimePicker>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### 12-hour and 24-hour clock
+
+By default, the clock follows `locale`: `en-US` uses a 12-hour clock with an AM/PM segment, while `en-GB` uses a 24-hour clock. Set `hour-format` to `"12"` or `"24"` to force one clock regardless of the locale. The submitted `value` stays in 24-hour format.
+
+<CodeLivePreview mode="shadow" code={`
+  <style>
+    :host {
+      justify-content: flex-start !important;
+      position: relative;
+      width: 100%;
+      z-index: 11;
+    }
+  </style>
+
+  <bq-time-picker hour-format="12" name="alarm-12h" value="14:30">
+    <label slot="label">12-hour clock</label>
+  </bq-time-picker>
+
+  <bq-time-picker hour-format="24" locale="en-US" name="alarm-24h" value="14:30">
+    <label slot="label">24-hour clock</label>
+  </bq-time-picker>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-time-picker hour-format="12" name="alarm-12h" value="14:30">
+      <label slot="label">12-hour clock</label>
+    </bq-time-picker>
+
+    <bq-time-picker hour-format="24" locale="en-US" name="alarm-24h" value="14:30">
+      <label slot="label">24-hour clock</label>
+    </bq-time-picker>
+    ```
+
+    ```jsx React icon="react" expandable
+    import { BqTimePicker } from "@beeq/react";
+
+    <>
+      <BqTimePicker hourFormat="12" name="alarm-12h" value="14:30">
+        <label slot="label">12-hour clock</label>
+      </BqTimePicker>
+
+      <BqTimePicker hourFormat="24" locale="en-US" name="alarm-24h" value="14:30">
+        <label slot="label">24-hour clock</label>
+      </BqTimePicker>
+    </>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqTimePicker } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqTimePicker],
+      template: `
+        <bq-time-picker hour-format="12" name="alarm-12h" value="14:30">
+          <label slot="label">12-hour clock</label>
+        </bq-time-picker>
+
+        <bq-time-picker hour-format="24" locale="en-US" name="alarm-24h" value="14:30">
+          <label slot="label">24-hour clock</label>
+        </bq-time-picker>
+      `
+    })
+    export class TimePickerHourFormatComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqTimePicker } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqTimePicker hourFormat="12" name="alarm-12h" value="14:30">
+        <label slot="label">12-hour clock</label>
+      </BqTimePicker>
+
+      <BqTimePicker hourFormat="24" locale="en-US" name="alarm-24h" value="14:30">
+        <label slot="label">24-hour clock</label>
+      </BqTimePicker>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Locale
+
+Use `locale` to set the segment order, separators, AM/PM labels, and default clock. Some locales place the period before the hour, and the panel columns follow the same order.
+
+<CodeLivePreview mode="shadow" code={`
+  <style>
+    :host {
+      justify-content: flex-start !important;
+      position: relative;
+      width: 100%;
+      z-index: 11;
+    }
+  </style>
+
+  <bq-time-picker locale="en-US" name="time-us" value="14:30">
+    <label slot="label">English (US)</label>
+  </bq-time-picker>
+
+  <bq-time-picker locale="de-DE" name="time-de" value="14:30">
+    <label slot="label">Deutsch</label>
+  </bq-time-picker>
+
+  <bq-time-picker locale="ko-KR" name="time-ko" value="14:30">
+    <label slot="label">한국어</label>
+  </bq-time-picker>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <bq-time-picker locale="en-US" name="time-us" value="14:30">
+      <label slot="label">English (US)</label>
+    </bq-time-picker>
+
+    <bq-time-picker locale="de-DE" name="time-de" value="14:30">
+      <label slot="label">Deutsch</label>
+    </bq-time-picker>
+
+    <bq-time-picker locale="ko-KR" name="time-ko" value="14:30">
+      <label slot="label">한국어</label>
+    </bq-time-picker>
+    ```
+
+    ```jsx React icon="react" expandable
+    import { BqTimePicker } from "@beeq/react";
+
+    <>
+      <BqTimePicker locale="en-US" name="time-us" value="14:30">
+        <label slot="label">English (US)</label>
+      </BqTimePicker>
+
+      <BqTimePicker locale="de-DE" name="time-de" value="14:30">
+        <label slot="label">Deutsch</label>
+      </BqTimePicker>
+
+      <BqTimePicker locale="ko-KR" name="time-ko" value="14:30">
+        <label slot="label">한국어</label>
+      </BqTimePicker>
+    </>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqTimePicker } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqTimePicker],
+      template: `
+        <bq-time-picker locale="en-US" name="time-us" value="14:30">
+          <label slot="label">English (US)</label>
+        </bq-time-picker>
+
+        <bq-time-picker locale="de-DE" name="time-de" value="14:30">
+          <label slot="label">Deutsch</label>
+        </bq-time-picker>
+
+        <bq-time-picker locale="ko-KR" name="time-ko" value="14:30">
+          <label slot="label">한국어</label>
+        </bq-time-picker>
+      `
+    })
+    export class TimePickerLocaleComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqTimePicker } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqTimePicker locale="en-US" name="time-us" value="14:30">
+        <label slot="label">English (US)</label>
+      </BqTimePicker>
+
+      <BqTimePicker locale="de-DE" name="time-de" value="14:30">
+        <label slot="label">Deutsch</label>
+      </BqTimePicker>
+
+      <BqTimePicker locale="ko-KR" name="time-ko" value="14:30">
+        <label slot="label">한국어</label>
+      </BqTimePicker>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Minimum and maximum time
+
+Use `min` and `max` to set the earliest and latest selectable times. Options outside the range are disabled in the panel, and the "Now" button is disabled when the current time is out of range. If `min` is later than `max`, both are ignored.
+
+<CodeLivePreview mode="shadow" code={`
+  <bq-time-picker max="17:30" min="09:00" name="office-hours" value="10:00">
+    <label slot="label">Office hours</label>
+  </bq-time-picker>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-time-picker max="17:30" min="09:00" name="office-hours" value="10:00">
+      <label slot="label">Office hours</label>
+    </bq-time-picker>
+    ```
+
+    ```jsx React icon="react"
+    import { BqTimePicker } from "@beeq/react";
+
+    <BqTimePicker max="17:30" min="09:00" name="office-hours" value="10:00">
+      <label slot="label">Office hours</label>
+    </BqTimePicker>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqTimePicker } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqTimePicker],
+      template: `
+        <bq-time-picker max="17:30" min="09:00" name="office-hours" value="10:00">
+          <label slot="label">Office hours</label>
+        </bq-time-picker>
+      `
+    })
+    export class TimePickerMinMaxComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqTimePicker } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqTimePicker max="17:30" min="09:00" name="office-hours" value="10:00">
+        <label slot="label">Office hours</label>
+      </BqTimePicker>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Steps
+
+Use `hour-step`, `minute-step`, and `second-step` to show options at fixed intervals. Typed values that fall between steps are kept but flagged as invalid, and "Now" rounds down to the nearest step.
+
+<CodeLivePreview mode="shadow" code={`
+  <bq-time-picker minute-step="15" name="slot-time" value="10:15">
+    <label slot="label">Appointment slot</label>
+  </bq-time-picker>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-time-picker minute-step="15" name="slot-time" value="10:15">
+      <label slot="label">Appointment slot</label>
+    </bq-time-picker>
+    ```
+
+    ```jsx React icon="react"
+    import { BqTimePicker } from "@beeq/react";
+
+    <BqTimePicker minuteStep={15} name="slot-time" value="10:15">
+      <label slot="label">Appointment slot</label>
+    </BqTimePicker>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqTimePicker } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqTimePicker],
+      template: `
+        <bq-time-picker [minuteStep]="15" name="slot-time" value="10:15">
+          <label slot="label">Appointment slot</label>
+        </bq-time-picker>
+      `
+    })
+    export class TimePickerStepsComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqTimePicker } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqTimePicker :minuteStep="15" name="slot-time" value="10:15">
+        <label slot="label">Appointment slot</label>
+      </BqTimePicker>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Require confirmation
+
+With `require-confirm`, panel picks, including "Now", stay a draft until people press OK or `Enter`. `Escape`, an outside click, or moving focus away discards the draft. Values typed in the field are always committed right away.
+
+<CodeLivePreview mode="shadow" code={`
+  <bq-time-picker name="departure-time" require-confirm value="08:45">
+    <label slot="label">Departure time</label>
+  </bq-time-picker>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-time-picker name="departure-time" require-confirm value="08:45">
+      <label slot="label">Departure time</label>
+    </bq-time-picker>
+    ```
+
+    ```jsx React icon="react"
+    import { BqTimePicker } from "@beeq/react";
+
+    <BqTimePicker name="departure-time" requireConfirm value="08:45">
+      <label slot="label">Departure time</label>
+    </BqTimePicker>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqTimePicker } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqTimePicker],
+      template: `
+        <bq-time-picker name="departure-time" require-confirm value="08:45">
+          <label slot="label">Departure time</label>
+        </bq-time-picker>
+      `
+    })
+    export class TimePickerConfirmComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqTimePicker } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqTimePicker name="departure-time" requireConfirm value="08:45">
+        <label slot="label">Departure time</label>
+      </BqTimePicker>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Without the Now button
+
+Set `disable-now` to hide the "Now" button when the current time isn't a meaningful choice, such as for reminders set for later in the day. The OK button is always shown.
+
+<CodeLivePreview mode="shadow" code={`
+  <bq-time-picker disable-now name="reminder-time" value="18:00">
+    <label slot="label">Reminder time</label>
+  </bq-time-picker>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-time-picker disable-now name="reminder-time" value="18:00">
+      <label slot="label">Reminder time</label>
+    </bq-time-picker>
+    ```
+
+    ```jsx React icon="react"
+    import { BqTimePicker } from "@beeq/react";
+
+    <BqTimePicker disableNow name="reminder-time" value="18:00">
+      <label slot="label">Reminder time</label>
+    </BqTimePicker>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqTimePicker } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqTimePicker],
+      template: `
+        <bq-time-picker disable-now name="reminder-time" value="18:00">
+          <label slot="label">Reminder time</label>
+        </bq-time-picker>
+      `
+    })
+    export class TimePickerWithoutNowComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqTimePicker } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqTimePicker disableNow name="reminder-time" value="18:00">
+        <label slot="label">Reminder time</label>
+      </BqTimePicker>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Prefix and suffix
+
+Use the `prefix` slot to add context before the value. The `suffix` slot replaces the clock icon inside the trigger button, so update `time-button-label` to keep the button name accurate.
+
+<CodeLivePreview mode="shadow" code={`
+  <style>
+    :host {
+      justify-content: flex-start !important;
+      position: relative;
+      width: 100%;
+      z-index: 11;
+    }
+  </style>
+
+  <bq-time-picker name="wake-up" value="07:00">
+    <label slot="label">Wake-up alarm</label>
+    <bq-icon name="alarm" slot="prefix"></bq-icon>
+  </bq-time-picker>
+
+  <bq-time-picker name="timer-end" time-button-label="Choose end time" value="07:20">
+    <label slot="label">Timer ends</label>
+    <bq-icon name="clock-countdown" slot="suffix"></bq-icon>
+  </bq-time-picker>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <bq-time-picker name="wake-up" value="07:00">
+      <label slot="label">Wake-up alarm</label>
+      <bq-icon name="alarm" slot="prefix"></bq-icon>
+    </bq-time-picker>
+
+    <bq-time-picker name="timer-end" time-button-label="Choose end time" value="07:20">
+      <label slot="label">Timer ends</label>
+      <bq-icon name="clock-countdown" slot="suffix"></bq-icon>
+    </bq-time-picker>
+    ```
+
+    ```jsx React icon="react" expandable
+    import { BqIcon, BqTimePicker } from "@beeq/react";
+
+    <>
+      <BqTimePicker name="wake-up" value="07:00">
+        <label slot="label">Wake-up alarm</label>
+        <BqIcon name="alarm" slot="prefix" />
+      </BqTimePicker>
+
+      <BqTimePicker name="timer-end" timeButtonLabel="Choose end time" value="07:20">
+        <label slot="label">Timer ends</label>
+        <BqIcon name="clock-countdown" slot="suffix" />
+      </BqTimePicker>
+    </>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqIcon, BqTimePicker } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqIcon, BqTimePicker],
+      template: `
+        <bq-time-picker name="wake-up" value="07:00">
+          <label slot="label">Wake-up alarm</label>
+          <bq-icon name="alarm" slot="prefix"></bq-icon>
+        </bq-time-picker>
+
+        <bq-time-picker name="timer-end" time-button-label="Choose end time" value="07:20">
+          <label slot="label">Timer ends</label>
+          <bq-icon name="clock-countdown" slot="suffix"></bq-icon>
+        </bq-time-picker>
+      `
+    })
+    export class TimePickerPrefixSuffixComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqIcon, BqTimePicker } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqTimePicker name="wake-up" value="07:00">
+        <label slot="label">Wake-up alarm</label>
+        <BqIcon name="alarm" slot="prefix" />
+      </BqTimePicker>
+
+      <BqTimePicker name="timer-end" timeButtonLabel="Choose end time" value="07:20">
+        <label slot="label">Timer ends</label>
+        <BqIcon name="clock-countdown" slot="suffix" />
+      </BqTimePicker>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Without the clear button
+
+Set `disable-clear` to hide the clear button when the field should always hold a value.
+
+<CodeLivePreview mode="shadow" code={`
+  <bq-time-picker disable-clear name="check-in" value="15:00">
+    <label slot="label">Check-in time</label>
+  </bq-time-picker>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-time-picker disable-clear name="check-in" value="15:00">
+      <label slot="label">Check-in time</label>
+    </bq-time-picker>
+    ```
+
+    ```jsx React icon="react"
+    import { BqTimePicker } from "@beeq/react";
+
+    <BqTimePicker disableClear name="check-in" value="15:00">
+      <label slot="label">Check-in time</label>
+    </BqTimePicker>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqTimePicker } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqTimePicker],
+      template: `
+        <bq-time-picker disable-clear name="check-in" value="15:00">
+          <label slot="label">Check-in time</label>
+        </bq-time-picker>
+      `
+    })
+    export class TimePickerDisableClearComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqTimePicker } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqTimePicker disableClear name="check-in" value="15:00">
+        <label slot="label">Check-in time</label>
+      </BqTimePicker>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Disabled and read-only
+
+Use `disabled` when the time isn't available for editing and shouldn't be submitted. Use `readonly` when people should see and submit the value but not change it: the segments stay focusable, and the panel doesn't open.
+
+<CodeLivePreview mode="shadow" code={`
+  <style>
+    :host {
+      justify-content: flex-start !important;
+      position: relative;
+      width: 100%;
+      z-index: 11;
+    }
+  </style>
+
+  <bq-time-picker disabled name="disabled-time" value="12:00">
+    <label slot="label">Disabled</label>
+  </bq-time-picker>
+
+  <bq-time-picker name="readonly-time" readonly value="12:00">
+    <label slot="label">Read-only</label>
+  </bq-time-picker>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-time-picker disabled name="disabled-time" value="12:00">
+      <label slot="label">Disabled</label>
+    </bq-time-picker>
+
+    <bq-time-picker name="readonly-time" readonly value="12:00">
+      <label slot="label">Read-only</label>
+    </bq-time-picker>
+    ```
+
+    ```jsx React icon="react" expandable
+    import { BqTimePicker } from "@beeq/react";
+
+    <>
+      <BqTimePicker disabled name="disabled-time" value="12:00">
+        <label slot="label">Disabled</label>
+      </BqTimePicker>
+
+      <BqTimePicker name="readonly-time" readonly value="12:00">
+        <label slot="label">Read-only</label>
+      </BqTimePicker>
+    </>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqTimePicker } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqTimePicker],
+      template: `
+        <bq-time-picker disabled name="disabled-time" value="12:00">
+          <label slot="label">Disabled</label>
+        </bq-time-picker>
+
+        <bq-time-picker name="readonly-time" readonly value="12:00">
+          <label slot="label">Read-only</label>
+        </bq-time-picker>
+      `
+    })
+    export class TimePickerStatesComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqTimePicker } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqTimePicker disabled name="disabled-time" value="12:00">
+        <label slot="label">Disabled</label>
+      </BqTimePicker>
+
+      <BqTimePicker name="readonly-time" readonly value="12:00">
+        <label slot="label">Read-only</label>
+      </BqTimePicker>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Validation states
+
+Use `validation-status` when the field should show immediate visual feedback after validation.
+
+<CodeLivePreview mode="shadow" code={`
+  <style>
+    :host {
+      justify-content: flex-start !important;
+      position: relative;
+      width: 100%;
+      z-index: 11;
+    }
+  </style>
+
+  <bq-time-picker name="time-error" validation-status="error" value="07:15">
+    <label slot="label">Error</label>
+  </bq-time-picker>
+
+  <bq-time-picker name="time-warning" validation-status="warning" value="07:15">
+    <label slot="label">Warning</label>
+  </bq-time-picker>
+
+  <bq-time-picker name="time-success" validation-status="success" value="07:15">
+    <label slot="label">Success</label>
+  </bq-time-picker>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <bq-time-picker name="time-error" validation-status="error" value="07:15">
+      <label slot="label">Error</label>
+    </bq-time-picker>
+
+    <bq-time-picker name="time-warning" validation-status="warning" value="07:15">
+      <label slot="label">Warning</label>
+    </bq-time-picker>
+
+    <bq-time-picker name="time-success" validation-status="success" value="07:15">
+      <label slot="label">Success</label>
+    </bq-time-picker>
+    ```
+
+    ```jsx React icon="react" expandable
+    import { BqTimePicker } from "@beeq/react";
+
+    <>
+      <BqTimePicker name="time-error" validationStatus="error" value="07:15">
+        <label slot="label">Error</label>
+      </BqTimePicker>
+
+      <BqTimePicker name="time-warning" validationStatus="warning" value="07:15">
+        <label slot="label">Warning</label>
+      </BqTimePicker>
+
+      <BqTimePicker name="time-success" validationStatus="success" value="07:15">
+        <label slot="label">Success</label>
+      </BqTimePicker>
+    </>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqTimePicker } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqTimePicker],
+      template: `
+        <bq-time-picker name="time-error" validation-status="error" value="07:15">
+          <label slot="label">Error</label>
+        </bq-time-picker>
+
+        <bq-time-picker name="time-warning" validation-status="warning" value="07:15">
+          <label slot="label">Warning</label>
+        </bq-time-picker>
+
+        <bq-time-picker name="time-success" validation-status="success" value="07:15">
+          <label slot="label">Success</label>
+        </bq-time-picker>
+      `
+    })
+    export class TimePickerValidationComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqTimePicker } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqTimePicker name="time-error" validationStatus="error" value="07:15">
+        <label slot="label">Error</label>
+      </BqTimePicker>
+
+      <BqTimePicker name="time-warning" validationStatus="warning" value="07:15">
+        <label slot="label">Warning</label>
+      </BqTimePicker>
+
+      <BqTimePicker name="time-success" validationStatus="success" value="07:15">
+        <label slot="label">Success</label>
+      </BqTimePicker>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Form integration
+
+`bq-time-picker` submits its current value with the form, in 24-hour format. Use `required` and `form-validation-message` when the time is mandatory; the custom message also applies to incomplete, out-of-range, and off-step values.
+
+<Warning>
+  A partly filled field becomes invalid when focus leaves it, even when the picker is optional. The draft stays visible and the last committed `value` is preserved, but native form validation blocks submission until people complete the time, pick one from the panel, or clear the field.
+</Warning>
+
+When focus leaves the field, complete times outside `min` or `max` are clamped to the nearest bound. A disabled time picker is excluded from form data; a read-only one is still submitted.
+
+<CodeLivePreview mode="iframe" height="30rem" removePadding code={`
+  <style>
+    body {
+      padding: var(--bq-spacing-l);
+    }
+
+    .time-form {
+      display: grid;
+      gap: var(--bq-spacing-m);
+    }
+
+    .time-form__actions {
+      display: flex;
+      gap: var(--bq-spacing-s);
+      justify-content: flex-end;
+    }
+
+    .time-form__output {
+      margin: 0;
+      padding: var(--bq-spacing-s);
+      border: var(--bq-stroke-s) solid var(--bq-stroke--tertiary);
+      border-radius: var(--bq-radius--s);
+      background: var(--bq-ui--secondary);
+      color: var(--bq-text--primary);
+      white-space: pre-wrap;
+    }
+  </style>
+
+  <form class="time-form" id="time-form">
+    <bq-time-picker
+      form-validation-message="Choose a start time"
+      name="startTime"
+      required
+    >
+      <label slot="label">Start time</label>
+    </bq-time-picker>
+    <div class="time-form__actions">
+      <bq-button appearance="secondary" type="reset">Reset</bq-button>
+      <bq-button type="button">Submit</bq-button>
+    </div>
+    <pre class="time-form__output" id="time-output">{}</pre>
+  </form>
+
+  <script>
+    (() => {
+      const form = previewRoot.querySelector('#time-form');
+      const output = previewRoot.querySelector('#time-output');
+      const submitButton = form.querySelector('bq-button[type="button"]');
+
+      const showFormData = () => {
+        if (!form.reportValidity()) return;
+        output.textContent = JSON.stringify(Object.fromEntries(new FormData(form).entries()), null, 2);
+      };
+
+      submitButton?.addEventListener('bqClick', (event) => {
+        event.preventDefault();
+        showFormData();
+      });
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        showFormData();
+      });
+
+      form.addEventListener('reset', () => {
+        requestAnimationFrame(() => {
+          output.textContent = '{}';
+        });
+      });
+    })();
+  </script>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <form id="time-form">
+      <bq-time-picker
+        form-validation-message="Choose a start time"
+        name="startTime"
+        required
+      >
+        <label slot="label">Start time</label>
+      </bq-time-picker>
+      <bq-button appearance="secondary" type="reset">Reset</bq-button>
+      <bq-button type="submit">Submit</bq-button>
+      <pre id="time-output">{}</pre>
+    </form>
+
+    <script>
+      const form = document.querySelector('#time-form');
+      const output = document.querySelector('#time-output');
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        output.textContent = JSON.stringify(Object.fromEntries(new FormData(form).entries()), null, 2);
+      });
+
+      form.addEventListener('reset', () => {
+        requestAnimationFrame(() => {
+          output.textContent = '{}';
+        });
+      });
+    </script>
+    ```
+
+    ```tsx React icon="react" expandable
+    import { useState } from "react";
+    import { BqButton, BqTimePicker } from "@beeq/react";
+
+    export default function TimePickerForm() {
+      const [data, setData] = useState("{}");
+
+      return (
+        <form
+          onReset={() => setData("{}")}
+          onSubmit={(event) => {
+            event.preventDefault();
+            setData(JSON.stringify(Object.fromEntries(new FormData(event.currentTarget).entries()), null, 2));
+          }}
+        >
+          <BqTimePicker
+            formValidationMessage="Choose a start time"
+            name="startTime"
+            required
+          >
+            <label slot="label">Start time</label>
+          </BqTimePicker>
+          <BqButton appearance="secondary" type="reset">Reset</BqButton>
+          <BqButton type="submit">Submit</BqButton>
+          <pre>{data}</pre>
+        </form>
+      );
+    }
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqButton, BqTimePicker } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqButton, BqTimePicker],
+      template: `
+        <form (reset)="data = '{}'" (submit)="handleSubmit($event)">
+          <bq-time-picker
+            form-validation-message="Choose a start time"
+            name="startTime"
+            required
+          >
+            <label slot="label">Start time</label>
+          </bq-time-picker>
+          <bq-button appearance="secondary" type="reset">Reset</bq-button>
+          <bq-button type="submit">Submit</bq-button>
+          <pre>{{ data }}</pre>
+        </form>
+      `,
+    })
+    export class TimePickerFormComponent {
+      data = "{}";
+
+      handleSubmit(event: SubmitEvent): void {
+        event.preventDefault();
+        this.data = JSON.stringify(Object.fromEntries(new FormData(event.target as HTMLFormElement).entries()), null, 2);
+      }
+    }
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { ref } from "vue";
+    import { BqButton, BqTimePicker } from "@beeq/vue";
+
+    const data = ref("{}");
+
+    function handleSubmit(event: Event) {
+      data.value = JSON.stringify(Object.fromEntries(new FormData(event.target as HTMLFormElement).entries()), null, 2);
+    }
+    </script>
+
+    <template>
+      <form @reset="data = '{}'" @submit.prevent="handleSubmit">
+        <BqTimePicker
+          formValidationMessage="Choose a start time"
+          name="startTime"
+          required
+        >
+          <label slot="label">Start time</label>
+        </BqTimePicker>
+        <BqButton appearance="secondary" type="reset">Reset</BqButton>
+        <BqButton type="submit">Submit</BqButton>
+        <pre>{{ data }}</pre>
+      </form>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Write labels that name the moment, such as "Departure time" or "Meeting starts", so people know which time they are setting.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not rely on the format hint alone to explain the field. Always provide a visible label.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Match `precision` to the task. Most scheduling needs hours and minutes only; add seconds only for durations or precise logs.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not ask for seconds when nobody will use them. Every extra segment adds typing and scanning effort.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Set `min`, `max`, and step values when business rules are known, so unavailable times are disabled before people pick them.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not force a 12- or 24-hour clock unless the product requires it. Let `locale` choose the clock people expect.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Use `require-confirm` when a picked time triggers an expensive or irreversible action, such as rescheduling a booking.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not use a time picker for durations longer than a day or for picking a date and time together.
+  </Card>
+</CardGroup>
+
+## Accessibility
+
+- `bq-time-picker` is form-associated and delegates focus, so it participates in native forms and moves focus into its segmented field when the component receives focus.
+- The segmented field is a labelled `group` described by the expected format. Each hour, minute, second, and AM/PM control is a `spinbutton` with its own label, limits, value text, and roving tabindex.
+- Each segment sets `aria-invalid="true"` for `validationStatus="error"` and native constraint failures, such as a missing required value or an incomplete, out-of-range, or off-step time. `aria-readonly` and `aria-disabled` reflect the `readonly` and `disabled` states.
+- The panel carries `role="dialog"` and is labelled via `aria-labelledby` when a label is present, or by its built-in "Time picker" label otherwise. The panel isn't modal.
+- Each column is a labelled `listbox`. Options expose `aria-selected`, and options outside `min`, `max`, or the steps expose `aria-disabled="true"`.
+- The component announces the selected time, or that no time is selected, when focus enters the field.
+- Press `Alt`+`ArrowDown` in the field, or Tab to the clock icon and press `Enter` or `Space`, to open the panel and move focus into it. Clicking the field opens the panel while keeping focus on the segment.
+- In the panel, `ArrowUp` and `ArrowDown` move between options, `Home` and `End` jump to the first or last option, `PageUp` and `PageDown` move faster, and `ArrowLeft` and `ArrowRight` switch columns. `Enter` or `Space` picks an option, and `Escape` closes the panel and returns focus to the field.
+- In `readonly` mode the segments stay focusable so screen reader users can read the value, but they can't be edited and the panel doesn't open.
+- Always provide a visible label through the `label` slot, so the field and the panel dialog have a programmatic name.
+- Validation states should never rely on color alone. Pair `validationStatus` with visible error text so screen reader users receive the same feedback as sighted users.
+
+## API reference
+
+### Properties
+
+| Property | Attribute | Description | Type | Default |
+|---|---|---|---|---|
+| `autofocus` | `autofocus` | If `true`, the Time picker field will be focused on component render | `boolean` | `false` |
+| `clearButtonLabel` | `clear-button-label` | The clear button aria label | `string` | `"Clear value"` |
+| `confirmButtonLabel` | `confirm-button-label` | The label of the panel confirm (OK) button | `string` | `"OK"` |
+| `disableClear` | `disable-clear` | If `true`, the clear button won't be displayed | `boolean` | `false` |
+| `disableNow` | `disable-now` | If `true`, the panel "Now" button won't be displayed | `boolean` | `false` |
+| `disabled` | `disabled` | Indicates whether the Time picker is disabled or not | `boolean` | `false` |
+| `distance` | `distance` | Distance (gutter) between the Time picker panel and the field | `number` | `8` |
+| `form` | `form` | The ID of the form the field belongs to | `string` | `undefined` |
+| `formValidationMessage` | `form-validation-message` | Native form validation message | `string` | `undefined` |
+| `hourFormat` | `hour-format` | Forces a 12-hour (`"12"`) or 24-hour (`"24"`) clock. When unset, the clock of the `locale` is used | `"12" \| "24"` | `undefined` |
+| `hourStep` | `hour-step` | Step between selectable hours | `number` | `1` |
+| `locale` | `locale` | Locale used for the field layout, the day period labels and the default clock | `Locale \| readonly (string \| Locale)[] \| string` | `"en-GB"` |
+| `max` | `max` | Latest selectable time, in 24-hour format (`HH:mm` or `HH:mm:ss`). Ignored, together with `min`, when it is earlier than `min` | `string` | `undefined` |
+| `min` | `min` | Earliest selectable time, in 24-hour format (`HH:mm` or `HH:mm:ss`). Ignored, together with `max`, when it is later than `max` | `string` | `undefined` |
+| `minuteStep` | `minute-step` | Step between selectable minutes | `number` | `1` |
+| `name` | `name` | Name submitted with the form data (required) | `string` | `undefined` |
+| `nowButtonLabel` | `now-button-label` | The label of the panel "Now" button | `string` | `"Now"` |
+| `open` | `open` | If `true`, the panel is visible | `boolean` | `false` |
+| `panelHeight` | `panel-height` | Overrides the height of the Time picker panel | `string` | `"auto"` |
+| `placement` | `placement` | Position of the Time picker panel | `"bottom" \| "bottom-end" \| "bottom-start" \| "left" \| "left-end" \| "left-start" \| "right" \| "right-end" \| "right-start" \| "top" \| "top-end" \| "top-start"` | `"bottom-end"` |
+| `precision` | `precision` | Smallest unit edited and submitted: `hour` → `HH:00`, `minute` → `HH:mm`, `second` → `HH:mm:ss` | `"hour" \| "minute" \| "second"` | `"minute"` |
+| `readonly` | `readonly` | If `true`, the value can be read and submitted but not changed | `boolean` | `false` |
+| `requireConfirm` | `require-confirm` | If `true`, picks made in the panel (including "Now") are a draft until confirmed with the OK button or Enter. Escape or an outside click discards the draft | `boolean` | `false` |
+| `required` | `required` | Whether a value must be entered before submitting the form | `boolean` | `false` |
+| `secondStep` | `second-step` | Step between selectable seconds | `number` | `1` |
+| `skidding` | `skidding` | Skidding between the panel and the field | `number` | `0` |
+| `strategy` | `strategy` | Positioning strategy for the panel | `"absolute" \| "fixed"` | `"fixed"` |
+| `timeButtonLabel` | `time-button-label` | The aria-label of the clock trigger button | `string` | `"Open time picker"` |
+| `validationStatus` | `validation-status` | Validation state applied to the field | `"error" \| "none" \| "success" \| "warning"` | `"none"` |
+| `value` | `value` | The selected time, in 24-hour format: `HH:mm` (`HH:00` at hour precision) or `HH:mm:ss` at second precision | `string` | `undefined` |
+
+### Events
+
+| Event | Description | Type |
+|---|---|---|
+| `bqBlur` | Fired when the field loses focus | `CustomEvent<HTMLBqTimePickerElement>` |
+| `bqChange` | Fired when the value is committed or cleared | `CustomEvent<{ value: string; el: HTMLElement }>` |
+| `bqClear` | Fired when the value is cleared | `CustomEvent<HTMLBqTimePickerElement>` |
+| `bqFocus` | Fired when the field receives focus | `CustomEvent<HTMLBqTimePickerElement>` |
+
+<Note>
+  - In React, prefix events with `on`: `onBqBlur`, `onBqChange`, `onBqClear`, `onBqFocus`.
+  - In Angular, use the event binding syntax: `(bqBlur)`, `(bqChange)`, `(bqClear)`, `(bqFocus)`.
+  - In Vue, use the `@` shorthand: `@bqBlur`, `@bqChange`, `@bqClear`, `@bqFocus`.
+</Note>
+
+### Methods
+
+| Method | Description | Signature |
+|---|---|---|
+| `clear()` | Clears the value and any pending validation state, then emits `bqClear`. Does nothing when the component is disabled or read-only | `clear() => Promise<void>` |
+
+### Slots
+
+| Slot | Description |
+|---|---|
+| `label` | Label displayed above the field |
+| `prefix` | Optional content rendered before the value |
+| `suffix` | Replaces the icon inside the clock trigger button; defaults to a clock icon. Use `timeButtonLabel` to name the button |
+| `clear-icon` | Replaces the default clear icon |
+
+### Shadow parts
+
+| Part | Description |
+|---|---|
+| `base` | Base wrapper for the component |
+| `label` | Label slot container |
+| `control` | Field control wrapper |
+| `prefix` | Prefix slot container |
+| `suffix` | Suffix slot container |
+| `input` | Segmented time field group |
+| `segment` | Editable hour, minute, second, or AM/PM segment |
+| `segment-literal` | Locale-derived separator between time segments |
+| `clear-btn` | Clear button |
+| `time-trigger` | Clock icon trigger button |
+| `button` | Any button rendered by the component |
+| `panel` | Dropdown panel container |
+| `container` | Panel content wrapper |
+| `columns` | Wrapper of the panel columns |
+| `column` | Scrollable list of options (hours, minutes, seconds, or AM/PM) |
+| `option` | Any option inside a column |
+| `option-selected` | Selected option of a column |
+| `footer` | Panel footer |
+| `now-btn` | "Now" button |
+| `confirm-btn` | Confirm (OK) button |
+
+### CSS custom properties
+
+<Expandable title="CSS variables" defaultOpen={false}>
+  | Variable | Description | Default |
+  |---|---|---|
+  | `--bq-time-picker--background-color` | Time picker background color | `var(--bq-ui--primary)` |
+  | `--bq-time-picker--border-color` | Time picker border color | `var(--bq-stroke--tertiary)` |
+  | `--bq-time-picker--border-color-disabled` | Time picker border color when disabled | `var(--bq-stroke--secondary)` |
+  | `--bq-time-picker--border-color-focus` | Time picker border color on focus | `var(--bq-stroke--brand)` |
+  | `--bq-time-picker--border-radius` | Time picker border radius | `var(--bq-radius--s)` |
+  | `--bq-time-picker--border-style` | Time picker border style | `solid` |
+  | `--bq-time-picker--border-width` | Time picker border width | `1px` |
+  | `--bq-time-picker--column-gap` | Space between the panel columns | `var(--bq-spacing-xs2)` |
+  | `--bq-time-picker--column-height` | Height of the scrollable panel columns | `15rem` |
+  | `--bq-time-picker--column-width` | Width of a panel column | `3.5rem` |
+  | `--bq-time-picker--gap` | Gap between field content and prefix/suffix | `var(--bq-spacing-xs)` |
+  | `--bq-time-picker--icon-size` | Prefix/suffix/clear icon size | `1.5rem` |
+  | `--bq-time-picker--label-margin-bottom` | Space below the label | `var(--bq-spacing-xs)` |
+  | `--bq-time-picker--label-text-color` | Label text color | `var(--bq-text--primary)` |
+  | `--bq-time-picker--label-text-size` | Label text size | `0.875rem` |
+  | `--bq-time-picker--option-background-hover` | Hover background of a column option | `var(--bq-ui--secondary)` |
+  | `--bq-time-picker--option-background-selected` | Background of the selected column option | `var(--bq-ui--brand)` |
+  | `--bq-time-picker--option-height` | Height of a column option | `2.5rem` |
+  | `--bq-time-picker--option-radius` | Border radius of a column option | `var(--bq-radius--xs)` |
+  | `--bq-time-picker--option-text-selected` | Text color of the selected column option | `var(--bq-text--alt)` |
+  | `--bq-time-picker--padding-end` | Field padding end | `var(--bq-spacing-m)` |
+  | `--bq-time-picker--padding-start` | Field padding start | `var(--bq-spacing-m)` |
+  | `--bq-time-picker--paddingY` | Field vertical padding | `var(--bq-spacing-s)` |
+  | `--bq-time-picker--text-color` | Field text color | `var(--bq-text--primary)` |
+  | `--bq-time-picker--text-placeholder-color` | Placeholder text color | `var(--bq-text--secondary)` |
+  | `--bq-time-picker--text-size` | Field text size | `1rem` |
+</Expandable>
+
+<Tip>
+  Learn more about [styling with shadow parts](/guides/styles#component-shadow-dom-parts) and [CSS custom properties](/guides/styles#global-css-custom-properties).
+</Tip>
+
+## Resources
+
+<CardGroup cols={2}>
+  <Card horizontal title="Interactive playground" icon="code" href="https://storybook.beeq.design/?path=/story/components-time-picker--default">
+    Explore time picker variants, constraints, locales, and panel behavior in Storybook.
+  </Card>
+  <Card horizontal title="Source code" icon="github" href="https://github.com/Endava/BEEQ/tree/main/packages/beeq/src/components/time-picker">
+    Browse the component implementation, styles, and tests on GitHub.
+  </Card>
+</CardGroup>

@@ -171,7 +171,8 @@ export const CodeLivePreview = ({ code, children, height, removePadding = false,
         bq-dropdown::part(panel),
         bq-panel::part(panel),
         bq-select::part(panel),
-        bq-date-picker::part(panel) { z-index: 9999; }
+        bq-date-picker::part(panel),
+        bq-time-picker::part(panel) { z-index: 9999; }
         bq-tooltip::part(panel) { position: absolute; }
       `);
       shadowRoot.adoptedStyleSheets = [fixSheet];
