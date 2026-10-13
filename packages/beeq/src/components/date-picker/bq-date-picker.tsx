@@ -4,6 +4,7 @@ import type { JSX } from '@stencil/core/internal';
 
 import type { Placement } from '../../services/interfaces';
 import {
+  appendSegmentDigit,
   getDateMask,
   getTodayISO,
   hasSlotContent,
@@ -851,7 +852,7 @@ export class BqDatePicker {
     const segment = getDateSegment(this.segmentGroups, key);
     if (!segment) return;
 
-    const nextValue = segment.value.length >= segment.maxLength ? ev.key : `${segment.value}${ev.key}`;
+    const nextValue = appendSegmentDigit(segment, ev.key);
     this.segmentGroups = updateDateSegment(this.segmentGroups, key, nextValue);
     this.syncSegmentDraftValue();
 

@@ -1,26 +1,32 @@
-import type { TDateMask, TDateMaskField } from '../../../shared/utils';
+import {
+  createSegmentGroup,
+  getAdjacentSegmentKey as getAdjacentKey,
+  getFirstEmptySegmentKey as getFirstEmptyKey,
+  getSegmentKeys as getKeys,
+  getSegment,
+  getSegmentGroupBoundaryKey,
+  getSegmentGroupValues,
+  isSegmentComplete,
+  padSegmentValue,
+  stepSegment,
+  type TDateMask,
+  type TDateMaskField,
+  type TSegment,
+  type TSegmentGroup,
+  type TSegmentKey,
+  updateSegment,
+} from '../../../shared/utils';
 import type { TDatePickerType, TDatePrecision } from '../bq-date-picker.types';
 import { parseValue } from './selection';
 
 /** A single locale-derived numeric field within an editable date group. */
-export type TDateSegment = {
-  field: TDateMaskField;
-  maxLength: number;
-  placeholder: string;
-  value: string;
-};
+export type TDateSegment = TSegment<TDateMaskField>;
 
 /** One editable date token, used as a date, range endpoint, or multi-date entry. */
-export type TDateSegmentGroup = {
-  id: number;
-  segments: TDateSegment[];
-};
+export type TDateSegmentGroup = TSegmentGroup<TDateMaskField>;
 
 /** Stable address for the focused or updated segment across component renders. */
-export type TDateSegmentKey = {
-  field: TDateMaskField;
-  groupId: number;
-};
+export type TDateSegmentKey = TSegmentKey<TDateMaskField>;
 
 /**
  * Returns the inclusive numeric range for a date segment.
@@ -54,18 +60,8 @@ const getISOValues = (iso: string): Record<TDateMaskField, string> => ({
  * @param iso Optional full ISO value used to prefill the segments.
  * @returns The editable segment group.
  */
-const createSegmentGroup = (id: number, mask: TDateMask, iso?: string): TDateSegmentGroup => {
-  const values = iso ? getISOValues(iso) : undefined;
-  return {
-    id,
-    segments: mask.segments.map((segment) => ({
-      field: segment.field,
-      maxLength: segment.placeholder.length,
-      placeholder: segment.placeholder,
-      value: values?.[segment.field] ?? '',
-    })),
-  };
-};
+const createDateSegmentGroup = (id: number, mask: TDateMask, iso?: string): TDateSegmentGroup =>
+  createSegmentGroup(id, mask.segments, iso ? getISOValues(iso) : undefined);
 
 /**
  * Builds locale-ordered editable segment groups from the current canonical
@@ -86,17 +82,17 @@ export const getDateSegmentGroups = (
   const selection = parseValue(value, type, precision);
 
   if (type === 'range') {
-    return [createSegmentGroup(0, mask, selection[0]), createSegmentGroup(1, mask, selection[1])];
+    return [createDateSegmentGroup(0, mask, selection[0]), createDateSegmentGroup(1, mask, selection[1])];
   }
 
   if (type === 'multi') {
     return [
-      ...selection.map((iso, index) => createSegmentGroup(index, mask, iso)),
-      createSegmentGroup(selection.length, mask),
+      ...selection.map((iso, index) => createDateSegmentGroup(index, mask, iso)),
+      createDateSegmentGroup(selection.length, mask),
     ];
   }
 
-  return [createSegmentGroup(0, mask, selection[0])];
+  return [createDateSegmentGroup(0, mask, selection[0])];
 };
 
 /**
@@ -107,7 +103,7 @@ export const getDateSegmentGroups = (
  * @returns The matching segment, or `undefined` when absent.
  */
 export const getDateSegment = (groups: TDateSegmentGroup[], key: TDateSegmentKey): TDateSegment | undefined =>
-  groups.find((group) => group.id === key.groupId)?.segments.find((segment) => segment.field === key.field);
+  getSegment(groups, key);
 
 /**
  * Finds the first incomplete segment in visual order for initial focus placement.
@@ -115,13 +111,8 @@ export const getDateSegment = (groups: TDateSegmentGroup[], key: TDateSegmentKey
  * @param groups Editable groups to inspect.
  * @returns The first empty segment key, or `undefined` when all segments have values.
  */
-export const getFirstEmptySegmentKey = (groups: TDateSegmentGroup[]): TDateSegmentKey | undefined => {
-  for (const group of groups) {
-    const segment = group.segments.find((item) => !item.value);
-    if (segment) return { groupId: group.id, field: segment.field };
-  }
-  return undefined;
-};
+export const getFirstEmptySegmentKey = (groups: TDateSegmentGroup[]): TDateSegmentKey | undefined =>
+  getFirstEmptyKey(groups);
 
 /**
  * Flattens visual groups into the roving-focus navigation order.
@@ -129,8 +120,7 @@ export const getFirstEmptySegmentKey = (groups: TDateSegmentGroup[]): TDateSegme
  * @param groups Editable groups to flatten.
  * @returns Segment keys in visual navigation order.
  */
-export const getSegmentKeys = (groups: TDateSegmentGroup[]): TDateSegmentKey[] =>
-  groups.flatMap((group) => group.segments.map((segment) => ({ groupId: group.id, field: segment.field })));
+export const getSegmentKeys = (groups: TDateSegmentGroup[]): TDateSegmentKey[] => getKeys(groups);
 
 /**
  * Moves one segment backward or forward, including across date-group boundaries.
@@ -144,12 +134,7 @@ export const getAdjacentSegmentKey = (
   groups: TDateSegmentGroup[],
   current: TDateSegmentKey,
   direction: -1 | 1,
-): TDateSegmentKey | undefined => {
-  const keys = getSegmentKeys(groups);
-  const index = keys.findIndex((key) => key.groupId === current.groupId && key.field === current.field);
-  if (index === -1) return undefined;
-  return keys[index + direction];
-};
+): TDateSegmentKey | undefined => getAdjacentKey(groups, current, direction);
 
 /**
  * Gets the first or last segment key within a date group.
@@ -161,10 +146,7 @@ export const getAdjacentSegmentKey = (
 export const getDateSegmentGroupBoundaryKey = (
   group: TDateSegmentGroup | undefined,
   boundary: 'start' | 'end',
-): TDateSegmentKey | undefined => {
-  const segment = boundary === 'start' ? group?.segments[0] : group?.segments[group.segments.length - 1];
-  return segment && group ? { groupId: group.id, field: segment.field } : undefined;
-};
+): TDateSegmentKey | undefined => getSegmentGroupBoundaryKey(group, boundary);
 
 /**
  * Finds the next complete group produced by stepping a field to an allowed ISO date.
@@ -183,7 +165,7 @@ export const getNextAvailableDateSegmentGroups = (
   precision: TDatePrecision,
   isDateAllowed: (iso: string) => boolean,
 ): TDateSegmentGroup[] | undefined => {
-  const segment = getDateSegment(groups, key);
+  const segment = getSegment(groups, key);
   if (!segment) return undefined;
 
   const [min, max] = getSegmentValueRange(segment.field);
@@ -192,7 +174,7 @@ export const getNextAvailableDateSegmentGroups = (
     candidate >= min && candidate <= max;
     candidate += direction
   ) {
-    const nextGroups = updateDateSegment(groups, key, `${candidate}`.padStart(segment.maxLength, '0'));
+    const nextGroups = updateSegment(groups, key, padSegmentValue(candidate, segment.maxLength));
     const group = nextGroups.find((item) => item.id === key.groupId);
     const value = group ? getDateSegmentGroupValue(group, precision) : undefined;
     const [iso] = parseValue(value, 'single', precision);
@@ -214,16 +196,7 @@ export const getNextPartialDateSegmentGroups = (
   groups: TDateSegmentGroup[],
   key: TDateSegmentKey,
   direction: -1 | 1,
-): TDateSegmentGroup[] | undefined => {
-  const segment = getDateSegment(groups, key);
-  if (!segment) return undefined;
-
-  const [min, max] = getSegmentValueRange(segment.field);
-  const candidate = Number(segment.value) + direction;
-  if (candidate < min || candidate > max) return undefined;
-
-  return updateDateSegment(groups, key, `${candidate}`.padStart(segment.maxLength, '0'));
-};
+): TDateSegmentGroup[] | undefined => stepSegment(groups, key, direction, getSegmentValueRange(key.field));
 
 /**
  * Converts a complete visual group into its canonical precision-aware ISO token.
@@ -233,19 +206,15 @@ export const getNextPartialDateSegmentGroups = (
  * @returns The serialized ISO token, or `undefined` when required segments are incomplete.
  */
 export const getDateSegmentGroupValue = (group: TDateSegmentGroup, precision: TDatePrecision): string | undefined => {
-  const values = Object.fromEntries(group.segments.map((segment) => [segment.field, segment.value])) as Partial<
-    Record<TDateMaskField, string>
-  >;
+  const values = getSegmentGroupValues(group);
   /**
    * Checks whether a field has a value that fills its mask width.
    *
    * @param field Segment field to inspect.
    * @returns `true` when the segment exists and is complete.
    */
-  const isComplete = (field: TDateMaskField): boolean => {
-    const segment = group.segments.find((item) => item.field === field);
-    return Boolean(segment && segment.value.length === segment.maxLength);
-  };
+  const isComplete = (field: TDateMaskField): boolean =>
+    isSegmentComplete(group.segments.find((item) => item.field === field));
   if (!isComplete('year')) return undefined;
   if (precision !== 'year' && !isComplete('month')) return undefined;
   if (precision === 'day' && !isComplete('day')) return undefined;
@@ -267,13 +236,4 @@ export const updateDateSegment = (
   groups: TDateSegmentGroup[],
   key: TDateSegmentKey,
   value: string,
-): TDateSegmentGroup[] =>
-  groups.map((group) => {
-    if (group.id !== key.groupId) return group;
-    return {
-      ...group,
-      segments: group.segments.map((segment) =>
-        segment.field === key.field ? { ...segment, value: value.slice(0, segment.maxLength) } : segment,
-      ),
-    };
-  });
+): TDateSegmentGroup[] => updateSegment(groups, key, value);
