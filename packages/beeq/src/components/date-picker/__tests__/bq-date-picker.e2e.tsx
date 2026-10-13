@@ -1127,18 +1127,23 @@ describe('bq-date-picker', () => {
     });
 
     it('should close other date pickers when one is opened from the keyboard', async () => {
-      const { root, pickerA, pickerB } = await renderTwoPickers();
+      const { pickerA, pickerB } = await renderTwoPickers();
+      const segmentA = getSegment(pickerA, 'day') as HTMLElement;
+      const segmentB = getSegment(pickerB, 'day') as HTMLElement;
 
-      await userEvent.click(getSegment(pickerA, 'day') as HTMLElement);
-      await waitForStable(root);
+      await userEvent.click(segmentA);
       expect(pickerA.open).toBe(true);
+      // A segment click re-focuses the segment a few frames later; let it land so it can't pull focus back from B.
+      await vi.waitFor(() => expect(pickerA.shadowRoot?.activeElement).toBe(segmentA));
 
-      getSegment(pickerB, 'day')?.focus();
+      segmentB.focus();
       await userEvent.keyboard('{Alt>}{ArrowDown}{/Alt}');
-      await waitForStable(root);
 
-      expect(pickerA.open).toBe(false);
-      expect(pickerB.open).toBe(true);
+      // Closing A waits for B's dropdown to render and emit `bqOpen`.
+      await vi.waitFor(() => {
+        expect(pickerB.open).toBe(true);
+        expect(pickerA.open).toBe(false);
+      });
     });
 
     it('should close an open select when a date segment is clicked, and vice versa', async () => {
