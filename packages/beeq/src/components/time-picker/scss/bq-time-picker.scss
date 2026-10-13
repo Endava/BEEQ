@@ -299,18 +299,6 @@
   scrollbar-gutter: stable;
   scrollbar-width: thin;
 
-  // Lets the last options scroll up to the top of the column.
-  &::after {
-    content: '';
-    flex: none;
-    block-size: calc(var(--bq-time-picker--column-height) - var(--bq-time-picker--option-height));
-  }
-
-  // AM/PM fits in the column, so keep both options visible.
-  &[data-column='dayPeriod']::after {
-    content: none;
-  }
-
   .bq-time-picker__column-group:first-child > & {
     margin-inline-start: var(--bq-spacing-xs);
   }

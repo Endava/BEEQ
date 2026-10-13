@@ -239,6 +239,8 @@ export class BqTimePicker {
 
   private labelElem?: HTMLElement;
   private panelElem?: HTMLElement;
+  /** Keeps the selected options visible once the panel gets its final size. */
+  private panelResizeObserver?: ResizeObserver;
 
   /** Source to apply to the next open transition initiated by this component. */
   private pendingOpenSource?: Exclude<TOpenSource, 'programmatic'>;
@@ -480,6 +482,11 @@ export class BqTimePicker {
   // Ordered by their natural call order
   // =====================================
 
+  connectedCallback() {
+    // Reconnects the observer when the element is moved in the DOM; on first load the panel isn't rendered yet.
+    this.observePanelSize();
+  }
+
   componentWillLoad() {
     this.checkPropValues();
     this.value = normalizeTimeValue(this.value, this.precision);
@@ -491,12 +498,17 @@ export class BqTimePicker {
     this.handleSlotChange();
     this.syncValidity();
     if (this.autofocus) this.focusActiveSegment();
+    this.observePanelSize();
     // `@Watch('open')` doesn't run for the initial prop value.
     if (this.open) this.handleOpen(true);
   }
 
   formAssociatedCallback() {
     this.syncValidity();
+  }
+
+  disconnectedCallback() {
+    this.panelResizeObserver?.disconnect();
   }
 
   formResetCallback() {
@@ -995,6 +1007,16 @@ export class BqTimePicker {
     this.syncDerivedFromValue();
   };
 
+  /** Re-runs the selection scroll when the panel is shown or resized, since it is hidden when the scroll first runs. */
+  private observePanelSize = (): void => {
+    if (!this.panelElem || typeof ResizeObserver === 'undefined') return;
+
+    this.panelResizeObserver ??= new ResizeObserver(() => {
+      if (this.open) this.scrollSelectionIntoView('auto');
+    });
+    this.panelResizeObserver.observe(this.panelElem);
+  };
+
   /** Moves focus to the tab stop of a column. */
   private focusColumn = (column: TTimeMaskField): void => {
     requestAnimationFrame(() => {
@@ -1005,47 +1027,47 @@ export class BqTimePicker {
   };
 
   /**
-   * Scrolls the selected option of each column into view once the panel has rendered.
+   * Scrolls each column just enough to keep its selected option visible once the panel has rendered.
    *
-   * @param alignTop Aligns selected options to the top of their column (used when the panel opens).
-   * @param focusColumn Column whose tab stop receives focus. When `alignTop` is set and no column is
+   * @param isOpening Whether the panel is opening.
+   * @param focusColumn Column whose tab stop receives focus. When the panel opens and no column is
    * given, the first column receives focus unless the panel was opened from the field.
    */
-  private scrollColumnsToSelection = (alignTop: boolean, focusColumn?: TTimeMaskField): void => {
-    const shouldFocusFirst = alignTop && this.activeOpenSource !== 'input';
+  private scrollColumnsToSelection = (isOpening: boolean, focusColumn?: TTimeMaskField): void => {
+    const shouldFocusFirst = isOpening && this.activeOpenSource !== 'input';
     const behavior: ScrollBehavior = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
       ? 'auto'
       : 'smooth';
 
     requestAnimationFrame(() => {
-      const columns: HTMLElement[] = this.panelElem
-        ? Array.from(this.panelElem.querySelectorAll<HTMLElement>('[data-column]'))
-        : [];
-      for (const columnElem of columns) {
-        const optionElem: HTMLElement | null = columnElem.querySelector('[role="option"][tabindex="0"]');
-        if (optionElem) this.scrollOptionIntoView(columnElem, optionElem, alignTop, behavior);
-      }
+      this.scrollSelectionIntoView(behavior);
 
       const column = focusColumn ?? (shouldFocusFirst ? this.mask.segments[0]?.field : undefined);
       if (column) this.focusColumn(column);
     });
   };
 
-  /** Uses `scrollTop` instead of `scrollIntoView` so the page and the floating panel don't move. */
-  private scrollOptionIntoView = (
-    columnElem: HTMLElement,
-    optionElem: HTMLElement,
-    alignTop: boolean,
-    behavior: ScrollBehavior,
-  ): void => {
+  private scrollSelectionIntoView = (behavior: ScrollBehavior): void => {
+    const columns: HTMLElement[] = this.panelElem
+      ? Array.from(this.panelElem.querySelectorAll<HTMLElement>('[data-column]'))
+      : [];
+    for (const columnElem of columns) {
+      const optionElem: HTMLElement | null = columnElem.querySelector('[role="option"][tabindex="0"]');
+      if (optionElem) this.scrollOptionIntoView(columnElem, optionElem, behavior);
+    }
+  };
+
+  /**
+   * Scrolls a column just enough to show the option.
+   * Uses `scrollTop` instead of `scrollIntoView` so the page and the floating panel don't move.
+   */
+  private scrollOptionIntoView = (columnElem: HTMLElement, optionElem: HTMLElement, behavior: ScrollBehavior): void => {
     const top = optionElem.offsetTop;
     const bottom = top + optionElem.offsetHeight;
     const { scrollTop, clientHeight } = columnElem;
+    // The panel is still hidden or being laid out; the resize observer retries once it has its size.
+    if (clientHeight < optionElem.offsetHeight) return;
 
-    if (alignTop) {
-      columnElem.scrollTo({ top, behavior });
-      return;
-    }
     if (top < scrollTop) columnElem.scrollTo({ top, behavior });
     else if (bottom > scrollTop + clientHeight) columnElem.scrollTo({ top: bottom - clientHeight, behavior });
   };

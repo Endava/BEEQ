@@ -524,6 +524,30 @@ describe('bq-time-picker', () => {
     expect(bqChange).toHaveReceivedEventTimes(4);
   });
 
+  it.each([
+    ['09:30:15', { hour: '9', minute: '30', second: '15' }],
+    ['23:59:59', { hour: '23', minute: '59', second: '59' }],
+  ])('should keep the selected options of `%s` visible without empty space below the last option', async (value, selected) => {
+    const { root, waitForChanges } = await render(<bq-time-picker name="time" precision="second" value={value} />);
+    const tp = root as HTMLBqTimePickerElement;
+    await openPanel(tp, waitForChanges);
+    await new Promise((resolve) => setTimeout(resolve, 600));
+
+    for (const [field, optionValue] of Object.entries(selected) as [TField, string][]) {
+      const column = getColumn(tp, field) as HTMLElement;
+      const options = column.querySelectorAll<HTMLElement>('[role="option"]');
+      const last = options[options.length - 1];
+      const option = getSelectedOption(tp, field) as HTMLElement;
+      const frame = column.getBoundingClientRect();
+      const rect = option.getBoundingClientRect();
+
+      expect(option.dataset.value).toBe(optionValue);
+      expect(column.scrollHeight - (last.offsetTop + last.offsetHeight)).toBeLessThanOrEqual(1);
+      expect(rect.top).toBeGreaterThanOrEqual(frame.top - 1);
+      expect(rect.bottom).toBeLessThanOrEqual(frame.bottom + 1);
+    }
+  });
+
   it('should render options as buttons that only react once to Space', async () => {
     const { root, spyOnEvent, waitForChanges } = await render(<bq-time-picker name="time" value="09:30" />);
     const tp = root as HTMLBqTimePickerElement;
