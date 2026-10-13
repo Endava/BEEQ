@@ -351,10 +351,10 @@ describe('bq-time-picker', () => {
     await openPanel(tp, waitForChanges);
 
     expect(getOption(tp, 'hour', 8)).toEqualAttribute('aria-disabled', 'true');
-    expect(getOption(tp, 'hour', 9)).toEqualAttribute('aria-disabled', 'false');
+    expect(getOption(tp, 'hour', 9)).not.toHaveAttribute('aria-disabled');
     expect(getOption(tp, 'hour', 18)).toEqualAttribute('aria-disabled', 'true');
     expect(getOption(tp, 'minute', 0)).toEqualAttribute('aria-disabled', 'true');
-    expect(getOption(tp, 'minute', 30)).toEqualAttribute('aria-disabled', 'false');
+    expect(getOption(tp, 'minute', 30)).not.toHaveAttribute('aria-disabled');
   });
 
   it('should only render options matching the steps', async () => {
@@ -522,6 +522,29 @@ describe('bq-time-picker', () => {
     await waitForChanges();
     expect(tp.value).toBe('00:30');
     expect(bqChange).toHaveReceivedEventTimes(4);
+  });
+
+  it('should render options as buttons that only react once to Space', async () => {
+    const { root, spyOnEvent, waitForChanges } = await render(<bq-time-picker name="time" value="09:30" />);
+    const tp = root as HTMLBqTimePickerElement;
+    const bqChange = spyOnEvent('bqChange');
+    await openPanel(tp, waitForChanges);
+
+    const option = getOption(tp, 'minute', 30);
+    expect(option?.tagName).toBe('BUTTON');
+    expect(option).toEqualAttribute('type', 'button');
+    expect(option).toEqualAttribute('role', 'option');
+
+    getOption(tp, 'minute', 30)?.focus();
+    await userEvent.keyboard('{ArrowDown}');
+    await waitForChanges();
+    await userEvent.keyboard(' ');
+    await waitForChanges();
+
+    // A native click on the last column would close the panel, so it must stay open.
+    expect(tp.open).toBe(true);
+    expect(tp.value).toBe('09:31');
+    expect(bqChange).toHaveReceivedEventTimes(1);
   });
 
   it('should move focus between columns with ArrowLeft and ArrowRight', async () => {

@@ -1272,24 +1272,24 @@ export class BqTimePicker {
           role="listbox"
         >
           {options.map((option) => (
-            // biome-ignore lint/a11y/useKeyWithClickEvents: keyboard selection is handled by the listbox keydown handler.
-            // biome-ignore lint/a11y/useFocusableInteractive: Stencil uses the lowercase `tabindex` attribute, which Biome doesn't recognise.
-            <div
-              aria-disabled={option.disabled ? 'true' : 'false'}
+            // Options can't contain focusable children, so the button itself takes the `option` role.
+            // Disabled options keep `aria-disabled` instead of `disabled` so assistive tech still lists them.
+            <button
+              aria-disabled={option.disabled ? 'true' : undefined}
               aria-selected={option.selected ? 'true' : 'false'}
               class={{
                 'bq-time-picker__option': true,
-                'is-disabled': option.disabled,
                 'is-selected': option.selected,
               }}
               data-value={`${option.value}`}
               onClick={() => this.handleOptionClick(column, option)}
               part={`${TIME_PICKER_PARTS.option}${option.selected ? ` ${TIME_PICKER_PARTS.optionSelected}` : ''}`}
               role="option"
-              tabindex={option === tabStop ? 0 : -1}
+              tabIndex={option === tabStop ? 0 : -1}
+              type="button"
             >
               {option.label}
-            </div>
+            </button>
           ))}
         </div>
       </div>
