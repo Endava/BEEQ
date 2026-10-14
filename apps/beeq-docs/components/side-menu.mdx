@@ -2121,11 +2121,9 @@ Wire your app control to the side menu state so the button can expand and collap
 
 ## Accessibility
 
-The side menu renders its root surface as an `<aside>` and places menu items inside a `<nav>`. Each `bq-side-menu-item` renders as a focusable button with `role="menuitem"`, and the `disabled` property maps to `aria-disabled="true"` and `tabindex="-1"`.
+The side menu renders its root surface as an `<aside>` and places menu items inside a `<nav>`. Each `bq-side-menu-item` renders as a native `<button>` with no explicit ARIA role, so it exposes the `button` role inside the `<nav>` landmark, and the `disabled` property maps to `aria-disabled="true"` and `tabindex="-1"`.
 
-<Warning>
-  The items currently expose `role="menuitem"` without a `menu` or `menubar` parent. This source defect is tracked in [the Side Menu follow-up issue](https://github.com/Endava/BEEQ/issues/1831). The component uses native button Tab navigation, not the composite ARIA menu keyboard pattern.
-</Warning>
+The component uses native button Tab navigation, not the composite ARIA menu keyboard pattern, so the items are not exposed as `menuitem` elements.
 
 - **Landmark context** - include semantic heading text in the logo slot to communicate the menu purpose and where its content begins.
 - **Collapsed state** - communicate the expanded or collapsed state through the surrounding layout control when you add one.
@@ -2187,7 +2185,7 @@ The side menu renders its root surface as an `<aside>` and places menu items ins
 
 | Part | Description |
 |---|---|
-| `base` | The native `<button>` element (`role="menuitem"`) of the menu item |
+| `base` | The native `<button>` element of the menu item |
 | `panel` | The `<div>` container that holds the tooltip content when the side menu is collapsed |
 | `prefix` | The prefix slot |
 | `suffix` | The suffix slot |

@@ -172,7 +172,6 @@ export class BqSideMenuItem {
       onClick={this.handleClick}
       onFocus={this.handleFocus}
       part="base"
-      role="menuitem"
       slot="trigger"
       tabindex={this.disabled ? -1 : 0}
       type="button"

@@ -1,6 +1,6 @@
 import { h } from '@stencil/core';
 import { afterEach, beforeEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
-import { cdp, userEvent } from 'vitest/browser';
+import { cdp, page, userEvent } from 'vitest/browser';
 
 import { getTextContent } from '../../../shared/utils/slot';
 
@@ -187,11 +187,93 @@ describe('bq-side-menu-item', () => {
     expect(getTextContent(slotElement, { recurse: true })).toBe('Suffix');
   });
 
-  it('should expose role menuitem for accessibility', async () => {
-    const { root } = await render(<bq-side-menu-item>Menu item label</bq-side-menu-item>);
-    const item = root as HTMLBqSideMenuItemElement;
+  describe('accessibility', () => {
+    it('should not set an explicit role so the native button semantics apply', async () => {
+      const { root } = await render(<bq-side-menu-item>Menu item label</bq-side-menu-item>);
+      const button = getMenuButton(root as HTMLBqSideMenuItemElement);
 
-    expect(getMenuButton(item)).toEqualAttribute('role', 'menuitem');
+      expect(button.tagName).toBe('BUTTON');
+      expect(button).not.toHaveAttribute('role');
+      expect(button).toEqualAttribute('type', 'button');
+    });
+
+    it('should expose navigation buttons with accessible names inside the nav landmark', async () => {
+      const { root } = await render(
+        <bq-side-menu>
+          <bq-side-menu-item active>Home</bq-side-menu-item>
+          <bq-side-menu-item>Settings</bq-side-menu-item>
+        </bq-side-menu>,
+      );
+      const items = Array.from(root.querySelectorAll<HTMLBqSideMenuItemElement>('bq-side-menu-item'));
+
+      expect(root.shadowRoot?.querySelector('nav[part="nav"]')).not.toBeNull();
+      expect(root.querySelector('[role="menu"], [role="menubar"]')).toBeNull();
+      expect(items.map((item) => item.textContent?.trim())).toEqual(['Home', 'Settings']);
+      items.forEach((item) => {
+        expect(getMenuButton(item)).not.toHaveAttribute('role');
+      });
+      await expect.element(page.getByRole('button', { name: 'Home' })).toBeInTheDocument();
+      await expect.element(page.getByRole('button', { name: 'Settings' })).toBeInTheDocument();
+      expect(page.getByRole('menuitem').elements()).toHaveLength(0);
+    });
+
+    it('should skip disabled items in the Tab order and activate the next one with the keyboard', async () => {
+      const { root, waitForChanges } = await render(
+        <bq-side-menu>
+          <bq-side-menu-item>Home</bq-side-menu-item>
+          <bq-side-menu-item disabled>Reports</bq-side-menu-item>
+          <bq-side-menu-item>Settings</bq-side-menu-item>
+        </bq-side-menu>,
+      );
+      const [home, reports, settings] = Array.from(
+        root.querySelectorAll<HTMLBqSideMenuItemElement>('bq-side-menu-item'),
+      );
+
+      expect(getMenuButton(reports)).toEqualAttribute('aria-disabled', 'true');
+      expect(getMenuButton(home)).toEqualAttribute('aria-disabled', 'false');
+
+      await userEvent.tab();
+      expect(home.shadowRoot?.activeElement).toBe(getMenuButton(home));
+
+      await userEvent.tab();
+      expect(settings.shadowRoot?.activeElement).toBe(getMenuButton(settings));
+      expect(reports.shadowRoot?.activeElement).toBeNull();
+
+      await userEvent.keyboard('{Enter}');
+      await waitForChanges();
+
+      expect(getMenuButton(settings)).toHaveClass('active');
+      expect(getMenuButton(reports)).not.toHaveClass('active');
+    });
+
+    it('should keep the native button semantics and keyboard activation when collapsed', async () => {
+      const { root, waitForChanges } = await render(
+        <bq-side-menu collapse>
+          <bq-side-menu-item>
+            <bq-icon name="house" slot="prefix" aria-hidden="true" />
+            Home
+          </bq-side-menu-item>
+        </bq-side-menu>,
+      );
+      const item = root.querySelector<HTMLBqSideMenuItemElement>('bq-side-menu-item');
+
+      await waitForStable(item);
+
+      const button = getMenuButton(item);
+
+      expect(item.shadowRoot?.querySelector('bq-tooltip')).not.toBeNull();
+      expect(button.tagName).toBe('BUTTON');
+      expect(button).not.toHaveAttribute('role');
+      expect(item.textContent).toContain('Home');
+
+      await userEvent.tab();
+      expect(item.shadowRoot?.activeElement).toBe(button);
+
+      await userEvent.keyboard(' ');
+      await waitForChanges();
+
+      expect(button).toHaveClass('active');
+    });
   });
 
   it('should render collapsed state in isolation', async () => {
