@@ -9,6 +9,7 @@
   "targets": {
     "prebuild": {
       "executor": "nx:run-commands",
+      "cache": false,
       "options": {
         "commands": ["tsx packages/beeq-angular/scripts/patch-value-accessor-event-targets.ts"]
       }
