@@ -83,7 +83,7 @@
       "executor": "nx:run-commands",
       "outputs": ["{projectRoot}/.storybook/assets/css"],
       "options": {
-        "command": "pnpm exec tailwindcss -i packages/beeq/src/global/styles/default.scss -o packages/beeq/.storybook/assets/css/stories.css --postcss ./postcss.config.js --watch"
+        "command": "pnpm exec tailwindcss -i packages/beeq/.storybook/tailwind.css -o packages/beeq/.storybook/assets/css/stories.css --postcss ./postcss.config.js --watch"
       },
       "continuous": true
     },
@@ -91,7 +91,7 @@
       "executor": "nx:run-commands",
       "outputs": ["{projectRoot}/.storybook/assets/css"],
       "options": {
-        "command": "pnpm exec tailwindcss -i packages/beeq/src/global/styles/default.scss -o packages/beeq/.storybook/assets/css/stories.css --postcss ./postcss.config.js --minify"
+        "command": "pnpm exec tailwindcss -i packages/beeq/.storybook/tailwind.css -o packages/beeq/.storybook/assets/css/stories.css --postcss ./postcss.config.js --minify"
       }
     },
     "icons": {
