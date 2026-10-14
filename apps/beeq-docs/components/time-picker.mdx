@@ -60,19 +60,20 @@ Time pickers combine locale-ordered hour, minute, and second segments with a pan
   <img className="hidden dark:block" src="/components/images/time-picker/time-picker-anatomy-dark.svg" alt="BEEQ Time-picker component anatomy" />
 </Frame>
 
-The time picker pairs a labeled, segmented field with a panel of columns, one per time unit. Keep the label specific and let the locale decide the segment order and labels.
+The time picker pairs a labeled, segmented field with a panel of columns, one per time unit. The example uses `second` precision, a 12-hour clock, and a prefix icon to show every part. Keep the label specific and let the locale decide the segment order and labels.
 
 | Part | Element | Description |
 |---|---|---|
 | **1** | Label | Describes which time the field asks for (`label` slot) |
-| **2** | Time segments | The hour, minute, second, and AM/PM controls people focus and edit, ordered for the active locale |
-| **3** | Clear button | Removes the current value; hidden with `disable-clear` |
-| **4** | Clock trigger | Opens the panel; its icon can be replaced with the `suffix` slot |
-| **5** | Panel | The surface that holds the columns and the footer actions |
-| **6** | Column | A scrollable list of options for one time unit, under a header that names it and stays in place while the list scrolls |
-| **7** | Selected option | The current hour, minute, second, or period, shown with selected styling |
-| **8** | Now button | Picks the current time, rounded down to the step; hidden with `disable-now` |
-| **9** | OK button | Confirms the selection and closes the panel |
+| **2** | Prefix | Optional icon or text before the time segments (`prefix` slot) |
+| **3** | Time segments | The hour, minute, second, and AM/PM controls people focus and edit, ordered for the active locale |
+| **4** | Clear button | Removes the current value; hidden with `disable-clear` |
+| **5** | Clock trigger | Opens the panel; its icon can be replaced with the `suffix` slot |
+| **6** | Panel | The surface that holds the columns and the footer actions |
+| **7** | Column | A scrollable list of options for one time unit, under a header that names it and stays in place while the list scrolls |
+| **8** | Selected option | The current hour, minute, second, or period, shown with selected styling |
+| **9** | Now button | Picks the current time, rounded down to the step; hidden with `disable-now` |
+| **10** | OK button | Confirms the selection and closes the panel |
 
 ## Design guidelines
 
