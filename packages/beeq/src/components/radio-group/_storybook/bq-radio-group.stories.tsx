@@ -2,6 +2,7 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
+import { fn } from 'storybook/test';
 
 import { RADIO_GROUP_ORIENTATION } from '../bq-radio-group.types';
 import mdx from './bq-radio-group.mdx';
@@ -24,12 +25,10 @@ const meta: Meta = {
     required: { control: 'boolean' },
     'required-validation-message': { control: 'text' },
     value: { control: 'text' },
-    // Events
-    bqChange: { action: 'bqChange' },
     // These events comes from the radio element children, not the radio group
-    bqFocus: { action: 'bqFocus', table: { disable: true } },
-    bqBlur: { action: 'bqBlur', table: { disable: true } },
-    bqClick: { action: 'bqClick', table: { disable: true } },
+    bqFocus: { table: { disable: true } },
+    bqBlur: { table: { disable: true } },
+    bqClick: { table: { disable: true } },
     // Not part of the component
     label: { control: 'text', table: { disable: true } },
     children: { control: 'text', table: { disable: true } },
@@ -50,6 +49,11 @@ const meta: Meta = {
       <bq-radio value="option2"> Radio option 2 </bq-radio>
       <bq-radio value="option3"> Radio option 3 </bq-radio>
     `,
+    // Events
+    bqChange: fn(),
+    bqFocus: fn(),
+    bqBlur: fn(),
+    bqClick: fn(),
   },
 };
 export default meta;

@@ -3,6 +3,7 @@ import { html, nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 import { useArgs } from 'storybook/preview-api';
+import { fn } from 'storybook/test';
 
 import { skipSnapshotParameters } from '../../../../.storybook/chromatic-parameters';
 import { INPUT_VALIDATION } from '../../input/bq-input.types';
@@ -59,12 +60,6 @@ const meta: Meta = {
     strategy: { control: 'select', options: ['fixed', 'absolute'] },
     'validation-status': { control: 'select', options: [...INPUT_VALIDATION] },
     value: { control: 'object' },
-    // Events
-    bqBlur: { action: 'bqBlur' },
-    bqClear: { action: 'bqClear' },
-    bqFocus: { action: 'bqFocus' },
-    bqSelect: { action: 'bqSelect' },
-    bqInput: { action: 'bqInput' },
     // Not part of the public API, so we don't want to expose it in the docs
     noLabel: { control: 'boolean', table: { disable: true } },
     hasLabelTooltip: { control: 'boolean', table: { disable: true } },
@@ -138,6 +133,12 @@ const meta: Meta = {
         Ice-cream
       </bq-option>
     `,
+    // Events
+    bqBlur: fn(),
+    bqClear: fn(),
+    bqFocus: fn(),
+    bqSelect: fn(),
+    bqInput: fn(),
   },
 };
 export default meta;

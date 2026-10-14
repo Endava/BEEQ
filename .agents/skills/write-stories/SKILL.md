@@ -31,6 +31,7 @@ Always import from `@storybook/web-components-vite` (not `@storybook/web-compone
 import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, nothing } from 'lit-html';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js'; // only if dynamic HTML needed
+import { fn } from 'storybook/test';
 
 import { isChromatic, skipSnapshotParameters } from '../../../../.storybook/chromatic-parameters';
 import { BQ_COMPONENT_PROP_CONST } from '../bq-<name>.types';
@@ -47,10 +48,6 @@ const meta: Meta = {
     size: { control: 'select', options: [...BQ_COMPONENT_SIZE] },
     disabled: { control: 'boolean' },
     value: { control: 'text' },
-    // @Event() actions
-    bqChange: { action: 'bqChange' },
-    bqFocus:  { action: 'bqFocus' },
-    bqBlur:   { action: 'bqBlur' },
     // Slot / story-only controls (hide from docs table)
     slotContent: { control: 'text', table: { disable: true } },
   },
@@ -58,12 +55,20 @@ const meta: Meta = {
     size: 'medium',
     disabled: false,
     value: undefined,
+    // @Event() handlers: use fn(), never `argTypes: { bqX: { action: 'bqX' } }`
+    bqChange: fn(),
+    bqFocus: fn(),
+    bqBlur: fn(),
   },
 };
 export default meta;
 
 type Story = StoryObj;
 ```
+
+## Event Actions
+
+Declare every `@Event()` as `args: { bqX: fn() }` (from `storybook/test`) and bind it with `@bqX=${args.bqX}`. Do not use `argTypes: { bqX: { action: 'bqX' } }`: Storybook wraps those actions in mocks, so the Actions panel logs every event twice after a control change.
 
 ## Template Pattern
 

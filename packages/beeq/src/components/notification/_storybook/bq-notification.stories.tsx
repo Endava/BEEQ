@@ -1,5 +1,6 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, nothing } from 'lit-html';
+import { fn } from 'storybook/test';
 
 import { getRandomFromArray } from '../../../shared/utils';
 import { NOTIFICATION_BORDER_RADIUS, NOTIFICATION_TYPE } from '../bq-notification.types';
@@ -21,11 +22,6 @@ const meta: Meta = {
     open: { control: 'boolean' },
     time: { control: 'number' },
     type: { control: 'select', options: [...NOTIFICATION_TYPE] },
-    // Events
-    bqShow: { action: 'bqOpen' },
-    bqHide: { action: 'bqClose' },
-    bqAfterOpen: { action: 'bqAfterOpen' },
-    bqAfterClose: { action: 'bqAfterClose' },
     // Not part of the component API, but used for the story
     customIcon: { control: 'boolean', table: { disable: true } },
   },
@@ -39,6 +35,11 @@ const meta: Meta = {
     type: 'info',
     // Not part of the component API, but used for the story
     customIcon: false,
+    // Events
+    bqShow: fn(),
+    bqHide: fn(),
+    bqAfterOpen: fn(),
+    bqAfterClose: fn(),
   },
 };
 export default meta;
