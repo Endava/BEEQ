@@ -3,6 +3,8 @@ import { Component, Element, Event, h, Prop } from '@stencil/core';
 
 import { isDefined } from '../../shared/utils';
 
+const SAFE_REL_TOKENS = ['noreferrer', 'noopener'];
+
 /**
  * The Breadcrumb Item helps users understand their current location within a website or application's hierarchical structure.
  *
@@ -19,7 +21,7 @@ import { isDefined } from '../../shared/utils';
  *
  * @attr {string} href - If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered.
  * @attr {string} target - Where to display the link in the browser context. Relevant only if `href` is set.
- * @attr {string} rel - Link relationships. Currently not forwarded to the native anchor.
+ * @attr {string} rel - Space-separated link relationship types (e.g. `external`, `nofollow`) applied to the inner `<a>`. Relevant only if `href` is set. When `target` is set, `noreferrer` and `noopener` are always added.
  *
  * @event bqFocus - Handler to be called when item is focused
  * @event bqClick - Handler to be called when item is clicked
@@ -78,8 +80,11 @@ export class BqBreadcrumbItem {
   /** Where to display the link in the browser context. Relevant only if `href` is set. */
   @Prop({ reflect: true }) target: '_blank' | '_parent' | '_self' | '_top';
 
-  /** Link relationships. Currently not forwarded to the native anchor. */
-  @Prop({ reflect: true }) rel: string = 'noreferrer noopener';
+  /**
+   * Space-separated link relationship types (e.g. `external`, `nofollow`) applied to the inner `<a>`.
+   * Relevant only if `href` is set. When `target` is set, `noreferrer` and `noopener` are always added.
+   */
+  @Prop({ reflect: true }) rel?: string;
 
   // Prop lifecycle events
   // =======================
@@ -124,6 +129,18 @@ export class BqBreadcrumbItem {
     this.bqFocus.emit(this.el);
   };
 
+  // Custom `rel` tokens are kept and the safety tokens are merged in whenever `target` is set
+  private getRel = (): string | undefined => {
+    const tokens = (this.rel ?? '').split(/\s+/).filter(Boolean);
+    if (this.target) {
+      SAFE_REL_TOKENS.forEach((safeToken) => {
+        if (!tokens.some((token) => token.toLowerCase() === safeToken)) tokens.push(safeToken);
+      });
+    }
+
+    return tokens.length ? tokens.join(' ') : undefined;
+  };
+
   private onClick = (event: MouseEvent): void => {
     const bqClickEvent = this.bqClick.emit(this.el);
     if (!bqClickEvent.defaultPrevented) return;
@@ -148,7 +165,7 @@ export class BqBreadcrumbItem {
           onClick={this.onClick}
           onFocus={this.onFocus}
           part="item"
-          rel={isLink && this.target ? 'noreferrer noopener' : undefined}
+          rel={isLink ? this.getRel() : undefined}
           target={isLink ? this.target : undefined}
         >
           <span class="flex items-center gap-xs2" part="content">

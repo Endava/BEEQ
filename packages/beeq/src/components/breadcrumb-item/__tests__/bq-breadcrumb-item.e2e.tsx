@@ -81,7 +81,51 @@ describe('bq-breadcrumb-item', () => {
     expect(separator).toEqualAttribute('aria-hidden', 'true');
   });
 
-  it('should apply `target` and `rel` to anchor items', async () => {
+  it('should apply `target` to anchor items', async () => {
+    const { root } = await render(
+      <bq-breadcrumb-item href="https://example.com/" target="_blank">
+        Home
+      </bq-breadcrumb-item>,
+    );
+
+    const element = root.shadowRoot?.querySelector<HTMLAnchorElement>('.breadcrumb-item');
+
+    expect(element.target).toBe('_blank');
+  });
+
+  it('should use `noreferrer noopener` by default when `target` is set and `rel` is not provided', async () => {
+    const { root } = await render(
+      <bq-breadcrumb-item href="https://example.com/" target="_blank">
+        Home
+      </bq-breadcrumb-item>,
+    );
+
+    const element = root.shadowRoot?.querySelector<HTMLAnchorElement>('.breadcrumb-item');
+
+    expect(element.rel).toBe('noreferrer noopener');
+  });
+
+  it('should not set `rel` when neither `rel` nor `target` is provided', async () => {
+    const { root } = await render(<bq-breadcrumb-item href="https://example.com/">Home</bq-breadcrumb-item>);
+
+    const element = root.shadowRoot?.querySelector<HTMLAnchorElement>('.breadcrumb-item');
+
+    expect(element).not.toHaveAttribute('rel');
+  });
+
+  it('should apply a custom `rel` without `target`', async () => {
+    const { root } = await render(
+      <bq-breadcrumb-item href="https://example.com/" rel="nofollow">
+        Home
+      </bq-breadcrumb-item>,
+    );
+
+    const element = root.shadowRoot?.querySelector<HTMLAnchorElement>('.breadcrumb-item');
+
+    expect(element.rel).toBe('nofollow');
+  });
+
+  it('should merge the safety tokens with a custom `rel` when `target` is set', async () => {
     const { root } = await render(
       <bq-breadcrumb-item href="https://example.com/" rel="external" target="_blank">
         Home
@@ -91,7 +135,50 @@ describe('bq-breadcrumb-item', () => {
     const element = root.shadowRoot?.querySelector<HTMLAnchorElement>('.breadcrumb-item');
 
     expect(element.target).toBe('_blank');
-    expect(element.rel).toBe('noreferrer noopener');
+    expect(element.rel).toBe('external noreferrer noopener');
+  });
+
+  it('should not duplicate safety tokens already present in `rel`', async () => {
+    const { root } = await render(
+      <bq-breadcrumb-item href="https://example.com/" rel="  NoOpener   nofollow " target="_blank">
+        Home
+      </bq-breadcrumb-item>,
+    );
+
+    const element = root.shadowRoot?.querySelector<HTMLAnchorElement>('.breadcrumb-item');
+
+    expect(Array.from(element.relList, (token) => token.toLowerCase()).sort()).toEqual([
+      'nofollow',
+      'noopener',
+      'noreferrer',
+    ]);
+  });
+
+  it('should update the anchor `rel` when the prop changes', async () => {
+    const { root, setProps } = await render(
+      <bq-breadcrumb-item href="https://example.com/" rel="external">
+        Home
+      </bq-breadcrumb-item>,
+    );
+    const element = root.shadowRoot?.querySelector<HTMLAnchorElement>('.breadcrumb-item');
+
+    await setProps({ rel: 'nofollow' });
+
+    expect(element.rel).toBe('nofollow');
+  });
+
+  it('should not apply `rel` or `target` to the `button` rendered for non-link items', async () => {
+    const { root } = await render(
+      <bq-breadcrumb-item rel="external" target="_blank">
+        Home
+      </bq-breadcrumb-item>,
+    );
+
+    const element = root.shadowRoot?.querySelector('.breadcrumb-item');
+
+    expect(element?.tagName.toLowerCase()).toBe('button');
+    expect(element).not.toHaveAttribute('rel');
+    expect(element).not.toHaveAttribute('target');
   });
 
   it('should emit focus, click, and blur events', async () => {
@@ -124,6 +211,22 @@ describe('bq-breadcrumb-item', () => {
     expect(bqClick).toHaveReceivedEventTimes(1);
     expect(nativeClick.defaultPrevented).toBe(true);
     expect(clickHandler).toHaveBeenCalledOnce();
+  });
+
+  it('should keep `rel` on the anchor when bqClick is canceled', async () => {
+    const { root } = await render(
+      <bq-breadcrumb-item href="#destination" rel="nofollow" target="_blank">
+        Home
+      </bq-breadcrumb-item>,
+    );
+    const anchor = root.shadowRoot.querySelector<HTMLAnchorElement>('.breadcrumb-item');
+    const nativeClick = new MouseEvent('click', { bubbles: true, cancelable: true, composed: true });
+
+    root.addEventListener('bqClick', (event) => event.preventDefault(), { once: true });
+    anchor.dispatchEvent(nativeClick);
+
+    expect(nativeClick.defaultPrevented).toBe(true);
+    expect(anchor.rel).toBe('nofollow noreferrer noopener');
   });
 
   it('should use the text and separator color variables', async () => {
