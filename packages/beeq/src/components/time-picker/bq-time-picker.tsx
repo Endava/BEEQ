@@ -587,7 +587,7 @@ export class BqTimePicker {
   /** Labels set through `labels`, completed with the locale names and English defaults. Memoized by their inputs. */
   private get resolvedLabels(): Required<TTimePickerLabels> {
     const { labels, mask } = this;
-    if (this.cachedLabels?.labels !== labels || this.cachedLabels.mask !== mask) {
+    if (!this.cachedLabels || this.cachedLabels.labels !== labels || this.cachedLabels.mask !== mask) {
       const parsed = parseLabels(labels);
       if (isString(labels) && labels.trim() && !parsed) {
         console.warn('[BqTimePicker] `labels` must be a JSON object. The default labels are used.', labels);
