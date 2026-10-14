@@ -1,6 +1,7 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { fn } from 'storybook/test';
 
 import mdx from './bq-breadcrumb.mdx';
 
@@ -15,9 +16,9 @@ const meta: Meta = {
   argTypes: {
     'aria-label': { control: 'text' },
     // Event handlers
-    bqBlur: { action: 'bqBlur', table: { disable: true } },
-    bqClick: { action: 'bqClick', table: { disable: true } },
-    bqFocus: { action: 'bqFocus', table: { disable: true } },
+    bqBlur: { table: { disable: true } },
+    bqClick: { table: { disable: true } },
+    bqFocus: { table: { disable: true } },
     // Not part of the public API, so we don't want to expose it in the docs
     text: { control: 'text', table: { disable: true } },
     htmlNode: { control: 'object', table: { disable: true } },
@@ -28,6 +29,10 @@ const meta: Meta = {
     text: 'text',
     htmlNode: '',
     useLinks: false,
+    // Events
+    bqBlur: fn(),
+    bqClick: fn(),
+    bqFocus: fn(),
   },
 };
 export default meta;

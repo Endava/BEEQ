@@ -1,6 +1,7 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { fn } from 'storybook/test';
 
 import mdx from './bq-option.mdx';
 
@@ -24,13 +25,8 @@ const meta: Meta = {
     'selected-count-label': { control: 'text' },
     'show-selection-summary': { control: 'boolean' },
     value: { control: 'text' },
-    // Event handlers
-    bqBlur: { action: 'bqBlur' },
-    bqFocus: { action: 'bqFocus' },
-    bqClick: { action: 'bqClick' },
-    bqEnter: { action: 'bqEnter' },
     // Event handler of the parent component (bq-option-list)
-    bqSelect: { action: 'bqSelect', table: { disable: true } },
+    bqSelect: { table: { disable: true } },
     // Not part of the public API, so we don't want to expose it in the docs
     children: { control: 'text', table: { disable: true } },
     nestedChildren: { control: 'text', table: { disable: true } },
@@ -52,6 +48,12 @@ const meta: Meta = {
     value: undefined,
     iconPrefix: undefined,
     iconSuffix: undefined,
+    // Events
+    bqBlur: fn(),
+    bqFocus: fn(),
+    bqClick: fn(),
+    bqEnter: fn(),
+    bqSelect: fn(),
   },
 };
 export default meta;

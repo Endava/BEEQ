@@ -1,6 +1,7 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { fn } from 'storybook/test';
 
 import mdx from './bq-slider.mdx';
 
@@ -25,10 +26,6 @@ const meta: Meta = {
     step: { control: 'number' },
     type: { control: 'inline-radio', options: ['single', 'range'] },
     value: { control: 'object' },
-    // Events
-    bqBlur: { action: 'bqBlur' },
-    bqChange: { action: 'bqChange' },
-    bqFocus: { action: 'bqFocus' },
   },
   args: {
     'debounce-time': 0,
@@ -43,6 +40,10 @@ const meta: Meta = {
     step: 1,
     type: 'single',
     value: undefined,
+    // Events
+    bqBlur: fn(),
+    bqChange: fn(),
+    bqFocus: fn(),
   },
 };
 export default meta;
