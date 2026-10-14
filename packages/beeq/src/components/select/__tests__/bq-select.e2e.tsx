@@ -57,6 +57,40 @@ const setDropdownOpen = (select: HTMLBqSelectElement, open: boolean) => {
     }),
   );
 };
+/**
+ * Resolves the accessible name of the select's native input from Chromium's accessibility tree.
+ * The test runs inside an iframe, so the CDP evaluation (top-level page) reaches the input through it.
+ */
+const getAccessibleName = async (select: HTMLBqSelectElement): Promise<string> => {
+  const probe = `bq-ax-${Math.random().toString(36).slice(2)}`;
+  const input = getInput(select);
+  input?.setAttribute('data-ax-probe', probe);
+
+  const client = cdp();
+  try {
+    const { result } = await client.send('Runtime.evaluate', {
+      expression: `(() => {
+        const find = (root) => {
+          for (const el of root.querySelectorAll('*')) {
+            if (el.getAttribute('data-ax-probe') === '${probe}') return el;
+            const found = (el.shadowRoot && find(el.shadowRoot)) || (el.contentDocument && find(el.contentDocument));
+            if (found) return found;
+          }
+          return null;
+        };
+        return find(document);
+      })()`,
+    });
+    const { nodes } = await client.send('Accessibility.getPartialAXTree', {
+      objectId: result.objectId,
+      fetchRelatives: false,
+    });
+    return nodes[0]?.name?.value ?? '';
+  } finally {
+    input?.removeAttribute('data-ax-probe');
+  }
+};
+
 const createOption = (value: string, label = value) => {
   const option = document.createElement('bq-option');
   option.value = value;
@@ -3342,5 +3376,146 @@ describe('bq-select', () => {
 
     expect(computedStyle('bq-select >>> [part="control"]', ['borderTopColor']).borderTopColor).toBe('rgb(1, 2, 3)');
     expect(computedStyle('bq-select >>> [part="helper-text"]', ['color']).color).toBe('rgb(4, 5, 6)');
+  });
+
+  describe('accessible name', () => {
+    it('should name the combobox with the slotted label, not the form name', async () => {
+      const { root } = await render(
+        <bq-select name="supportPlan">
+          {/* biome-ignore lint/a11y/noLabelWithoutControl: reproduces the slotted label markup used in the docs */}
+          <label slot="label">Support plan</label>
+          <bq-option value="standard">Standard</bq-option>
+        </bq-select>,
+      );
+      const select = root as HTMLBqSelectElement;
+
+      await waitForStable(root);
+
+      const label = select.shadowRoot?.querySelector('.bq-select__label');
+
+      expect(label).not.toHaveAttribute('aria-label');
+      expect(getInput(select).name).toBe('supportPlan');
+      expect(await getAccessibleName(select)).toBe('Support plan');
+    });
+
+    it('should name the combobox with the slotted label when there is no name', async () => {
+      const { root } = await render(
+        <bq-select>
+          <span slot="label">Country</span>
+          <bq-option value="es">Spain</bq-option>
+        </bq-select>,
+      );
+      const select = root as HTMLBqSelectElement;
+
+      await waitForStable(root);
+
+      expect(select.shadowRoot?.querySelector('.bq-select__label')).not.toHaveAttribute('aria-label');
+      expect(await getAccessibleName(select)).toBe('Country');
+    });
+
+    it('should name the combobox with a visually hidden label', async () => {
+      const { root } = await render(
+        <bq-select name="hiddenLabel">
+          <span
+            slot="label"
+            style={{
+              position: 'absolute',
+              width: '1px',
+              height: '1px',
+              overflow: 'hidden',
+              clip: 'rect(0, 0, 0, 0)',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            Hidden label
+          </span>
+          <bq-option value="a">A</bq-option>
+        </bq-select>,
+      );
+      const select = root as HTMLBqSelectElement;
+
+      await waitForStable(root);
+
+      expect(await getAccessibleName(select)).toBe('Hidden label');
+    });
+
+    it('should update the accessible name when the label content changes', async () => {
+      const { root } = await render(
+        <bq-select name="dynamic">
+          <span slot="label">Before</span>
+          <bq-option value="a">A</bq-option>
+        </bq-select>,
+      );
+      const select = root as HTMLBqSelectElement;
+
+      await waitForStable(root);
+      expect(await getAccessibleName(select)).toBe('Before');
+
+      select.querySelector('[slot="label"]').textContent = 'After';
+      await waitForStable(root);
+
+      expect(await getAccessibleName(select)).toBe('After');
+    });
+
+    it('should name each combobox with its own label across multiple instances', async () => {
+      const { root } = await render(
+        <div>
+          <bq-select name="shared">
+            <span slot="label">First</span>
+            <bq-option value="a">A</bq-option>
+          </bq-select>
+          <bq-select name="shared">
+            <span slot="label">Second</span>
+            <bq-option value="b">B</bq-option>
+          </bq-select>
+          <bq-select>
+            <span slot="label">Third</span>
+            <bq-option value="c">C</bq-option>
+          </bq-select>
+          <bq-select>
+            <span slot="label">Fourth</span>
+            <bq-option value="d">D</bq-option>
+          </bq-select>
+        </div>,
+      );
+      const selects = Array.from(root.querySelectorAll('bq-select'));
+
+      await waitForStable(selects[selects.length - 1]);
+
+      const names = await Promise.all(selects.map((select) => getAccessibleName(select)));
+
+      expect(names).toEqual(['First', 'Second', 'Third', 'Fourth']);
+    });
+
+    it('should not derive an accessible name from the form name when there is no label', async () => {
+      const { root } = await render(
+        <bq-select name="supportPlan">
+          <bq-option value="standard">Standard</bq-option>
+        </bq-select>,
+      );
+      const select = root as HTMLBqSelectElement;
+
+      await waitForStable(root);
+
+      expect(select.shadowRoot?.querySelector('.bq-select__label')).not.toHaveAttribute('aria-label');
+      expect(await getAccessibleName(select)).not.toContain('supportPlan');
+    });
+
+    it('should keep the form name as the submission key', async () => {
+      const { root } = await render(
+        <form>
+          <bq-select name="supportPlan" value="standard">
+            <span slot="label">Support plan</span>
+            <bq-option value="standard">Standard</bq-option>
+          </bq-select>
+        </form>,
+      );
+      const select = root.querySelector('bq-select');
+
+      await waitForStable(select);
+
+      expect(getInput(select).name).toBe('supportPlan');
+      expect(select.value).toBe('standard');
+    });
   });
 });
