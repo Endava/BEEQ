@@ -1352,9 +1352,48 @@ export class BqTimePicker {
     );
   };
 
+  /**
+   * Read-only minute column shown on a 24-hour clock at hour precision,
+   * so the panel reads as a time (`HH:00`) instead of a single list of numbers.
+   */
+  private renderFixedMinuteColumn = (selected: TPartialTime): JSX.Element => {
+    const headerId = 'bq-time-picker__column-header-minute';
+    const isSelected = selected.hour !== undefined;
+
+    return (
+      <div class="bq-time-picker__column-group">
+        <div class="bq-time-picker__column-header" id={headerId} part={TIME_PICKER_PARTS.columnHeader}>
+          {this.columnHeaders.minute}
+        </div>
+        <div
+          aria-disabled="true"
+          aria-labelledby={headerId}
+          class="bq-time-picker__column"
+          data-column="minute"
+          part={TIME_PICKER_PARTS.column}
+          role="listbox"
+        >
+          <button
+            aria-disabled="true"
+            aria-selected={isSelected ? 'true' : 'false'}
+            class={{ 'bq-time-picker__option': true, 'is-selected': isSelected }}
+            data-value="0"
+            part={`${TIME_PICKER_PARTS.option}${isSelected ? ` ${TIME_PICKER_PARTS.optionSelected}` : ''}`}
+            role="option"
+            tabIndex={-1}
+            type="button"
+          >
+            00
+          </button>
+        </div>
+      </div>
+    );
+  };
+
   private renderPanel = (labelId: string): JSX.Element => {
     const selected = this.panelPartial;
     const canPickNow = this.isInteractive && !!getNowTime(this.constraints);
+    const showFixedMinute = this.precision === 'hour' && this.hourFormat !== '12';
 
     return (
       <div
@@ -1368,7 +1407,10 @@ export class BqTimePicker {
         role="dialog"
       >
         <div class="bq-time-picker__columns" part={TIME_PICKER_PARTS.columns}>
-          {this.mask.segments.map(({ field }) => this.renderColumn(field, selected))}
+          {this.mask.segments.map(({ field }) => [
+            this.renderColumn(field, selected),
+            showFixedMinute && field === 'hour' && this.renderFixedMinuteColumn(selected),
+          ])}
         </div>
         <div class="bq-time-picker__footer" part={TIME_PICKER_PARTS.footer}>
           {!this.disableNow && (

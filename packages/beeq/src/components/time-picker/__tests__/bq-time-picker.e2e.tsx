@@ -491,6 +491,37 @@ describe('bq-time-picker', () => {
     expect(bqChange).toHaveReceivedEventTimes(1);
   });
 
+  it('should show a fixed minute column on a 24-hour clock at hour precision', async () => {
+    const { root, waitForChanges } = await render(<bq-time-picker name="time" precision="hour" value="14:00" />);
+    const tp = root as HTMLBqTimePickerElement;
+    await openPanel(tp, waitForChanges);
+
+    const minuteColumn = getColumn(tp, 'minute');
+    const options = minuteColumn?.querySelectorAll<HTMLElement>('[role="option"]') ?? [];
+    expect(getColumnHeader(tp, 'minute')?.textContent).toBe('minute');
+    expect(minuteColumn).toEqualAttribute('aria-disabled', 'true');
+    expect(options).toHaveLength(1);
+    expect(options[0]).toEqualText('00');
+    expect(options[0]).toEqualAttribute('aria-disabled', 'true');
+    expect(options[0]).toEqualAttribute('aria-selected', 'true');
+    expect(options[0]).toEqualAttribute('tabindex', '-1');
+
+    options[0].click();
+    await waitForChanges();
+    expect(tp.value).toBe('14:00');
+    expect(tp.open).toBe(true);
+
+    getSelectedOption(tp, 'hour')?.focus();
+    await userEvent.keyboard('{ArrowRight}');
+    await waitForChanges();
+    expect(tp.shadowRoot?.activeElement).toBe(getSelectedOption(tp, 'hour'));
+
+    tp.hourFormat = '12';
+    await waitForChanges();
+    expect(getColumn(tp, 'minute')).toBeNull();
+    expect(getColumn(tp, 'dayPeriod')).not.toBeNull();
+  });
+
   it('should close the panel after picking from the precision column', async () => {
     const { root, waitForChanges } = await render(<bq-time-picker name="time" value="09:30" />);
     const tp = root as HTMLBqTimePickerElement;
