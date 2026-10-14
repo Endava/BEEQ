@@ -26,7 +26,7 @@ Time pickers combine locale-ordered hour, minute, and second segments with a pan
       Use time pickers when
     </span>
     - People need to set a specific time of day, such as a meeting start or an alarm
-    - The time must follow local conventions, like a 12- or 24-hour clock
+    - The time must follow local conventions, like segment order and AM/PM labels
     - You need to limit times with business hours or fixed intervals
     - Typing and picking should both be quick and error-free
   </Card>
@@ -60,7 +60,7 @@ Time pickers combine locale-ordered hour, minute, and second segments with a pan
   <img className="hidden dark:block" src="/components/images/time-picker/time-picker-anatomy-dark.svg" alt="BEEQ Time-picker component anatomy" />
 </Frame>
 
-The time picker pairs a labeled, segmented field with a panel of columns, one per time unit. Keep the label specific and let the locale decide the segment order and clock.
+The time picker pairs a labeled, segmented field with a panel of columns, one per time unit. Keep the label specific and let the locale decide the segment order and labels.
 
 | Part | Element | Description |
 |---|---|---|
@@ -81,7 +81,7 @@ The time picker pairs a labeled, segmented field with a panel of columns, one pe
     Start with the default `minute` precision. Use `hour` for coarse slots, such as opening hours, and `second` only when seconds matter, such as lap times or logs.
   </Step>
   <Step title="Let the locale drive the format">
-    Set `locale` to the product locale, so segment order, separators, AM/PM labels, and the clock match what people expect. Override with `hour-format` only when the product requires a specific clock.
+    Set `locale` to the product locale, so segment order, separators, and AM/PM labels match what people expect. The clock is 24-hour by default; set `hour-format="12"` when people expect a 12-hour clock.
   </Step>
   <Step title="Constrain the choices">
     Apply `min`, `max`, and step values when business rules are known. Options outside the rules are disabled in the panel, and typed values are clamped when focus leaves the field.
@@ -269,7 +269,7 @@ Use `precision` to choose the smallest unit people edit and submit. The field an
 
 ### 12-hour and 24-hour clock
 
-By default, the clock follows `locale`: `en-US` uses a 12-hour clock with an AM/PM segment, while `en-GB` uses a 24-hour clock. Set `hour-format` to `"12"` or `"24"` to force one clock regardless of the locale. The submitted `value` stays in 24-hour format.
+The clock is 24-hour by default, whatever the `locale`. Set `hour-format="12"` for a 12-hour clock with an AM/PM segment. The submitted `value` stays in 24-hour format.
 
 <CodeLivePreview mode="shadow" code={`
   <style>
@@ -285,7 +285,7 @@ By default, the clock follows `locale`: `en-US` uses a 12-hour clock with an AM/
     <label slot="label">12-hour clock</label>
   </bq-time-picker>
 
-  <bq-time-picker hour-format="24" locale="en-US" name="alarm-24h" value="14:30">
+  <bq-time-picker name="alarm-24h" value="14:30">
     <label slot="label">24-hour clock</label>
   </bq-time-picker>
 `}>
@@ -295,7 +295,7 @@ By default, the clock follows `locale`: `en-US` uses a 12-hour clock with an AM/
       <label slot="label">12-hour clock</label>
     </bq-time-picker>
 
-    <bq-time-picker hour-format="24" locale="en-US" name="alarm-24h" value="14:30">
+    <bq-time-picker name="alarm-24h" value="14:30">
       <label slot="label">24-hour clock</label>
     </bq-time-picker>
     ```
@@ -308,7 +308,7 @@ By default, the clock follows `locale`: `en-US` uses a 12-hour clock with an AM/
         <label slot="label">12-hour clock</label>
       </BqTimePicker>
 
-      <BqTimePicker hourFormat="24" locale="en-US" name="alarm-24h" value="14:30">
+      <BqTimePicker name="alarm-24h" value="14:30">
         <label slot="label">24-hour clock</label>
       </BqTimePicker>
     </>
@@ -327,7 +327,7 @@ By default, the clock follows `locale`: `en-US` uses a 12-hour clock with an AM/
           <label slot="label">12-hour clock</label>
         </bq-time-picker>
 
-        <bq-time-picker hour-format="24" locale="en-US" name="alarm-24h" value="14:30">
+        <bq-time-picker name="alarm-24h" value="14:30">
           <label slot="label">24-hour clock</label>
         </bq-time-picker>
       `
@@ -345,7 +345,7 @@ By default, the clock follows `locale`: `en-US` uses a 12-hour clock with an AM/
         <label slot="label">12-hour clock</label>
       </BqTimePicker>
 
-      <BqTimePicker hourFormat="24" locale="en-US" name="alarm-24h" value="14:30">
+      <BqTimePicker name="alarm-24h" value="14:30">
         <label slot="label">24-hour clock</label>
       </BqTimePicker>
     </template>
@@ -355,7 +355,7 @@ By default, the clock follows `locale`: `en-US` uses a 12-hour clock with an AM/
 
 ### Locale
 
-Use `locale` to set the segment order, separators, AM/PM labels, column headers, and default clock. Some locales place the period before the hour, and the panel columns follow the same order.
+Use `locale` to set the segment order, separators, AM/PM labels, and column headers. Some locales place the period before the hour, and the panel columns follow the same order. The examples set `hour-format="12"` where the locale usually shows a 12-hour clock.
 
 <CodeLivePreview mode="shadow" code={`
   <style>
@@ -367,7 +367,7 @@ Use `locale` to set the segment order, separators, AM/PM labels, column headers,
     }
   </style>
 
-  <bq-time-picker locale="en-US" name="time-us" value="14:30">
+  <bq-time-picker hour-format="12" locale="en-US" name="time-us" value="14:30">
     <label slot="label">English (US)</label>
   </bq-time-picker>
 
@@ -375,13 +375,13 @@ Use `locale` to set the segment order, separators, AM/PM labels, column headers,
     <label slot="label">Deutsch</label>
   </bq-time-picker>
 
-  <bq-time-picker locale="ko-KR" name="time-ko" value="14:30">
+  <bq-time-picker hour-format="12" locale="ko-KR" name="time-ko" value="14:30">
     <label slot="label">한국어</label>
   </bq-time-picker>
 `}>
   <CodeGroup>
     ```html HTML icon="html5" expandable
-    <bq-time-picker locale="en-US" name="time-us" value="14:30">
+    <bq-time-picker hour-format="12" locale="en-US" name="time-us" value="14:30">
       <label slot="label">English (US)</label>
     </bq-time-picker>
 
@@ -389,7 +389,7 @@ Use `locale` to set the segment order, separators, AM/PM labels, column headers,
       <label slot="label">Deutsch</label>
     </bq-time-picker>
 
-    <bq-time-picker locale="ko-KR" name="time-ko" value="14:30">
+    <bq-time-picker hour-format="12" locale="ko-KR" name="time-ko" value="14:30">
       <label slot="label">한국어</label>
     </bq-time-picker>
     ```
@@ -398,7 +398,7 @@ Use `locale` to set the segment order, separators, AM/PM labels, column headers,
     import { BqTimePicker } from "@beeq/react";
 
     <>
-      <BqTimePicker locale="en-US" name="time-us" value="14:30">
+      <BqTimePicker hourFormat="12" locale="en-US" name="time-us" value="14:30">
         <label slot="label">English (US)</label>
       </BqTimePicker>
 
@@ -406,7 +406,7 @@ Use `locale` to set the segment order, separators, AM/PM labels, column headers,
         <label slot="label">Deutsch</label>
       </BqTimePicker>
 
-      <BqTimePicker locale="ko-KR" name="time-ko" value="14:30">
+      <BqTimePicker hourFormat="12" locale="ko-KR" name="time-ko" value="14:30">
         <label slot="label">한국어</label>
       </BqTimePicker>
     </>
@@ -421,7 +421,7 @@ Use `locale` to set the segment order, separators, AM/PM labels, column headers,
       standalone: true,
       imports: [BqTimePicker],
       template: `
-        <bq-time-picker locale="en-US" name="time-us" value="14:30">
+        <bq-time-picker hour-format="12" locale="en-US" name="time-us" value="14:30">
           <label slot="label">English (US)</label>
         </bq-time-picker>
 
@@ -429,7 +429,7 @@ Use `locale` to set the segment order, separators, AM/PM labels, column headers,
           <label slot="label">Deutsch</label>
         </bq-time-picker>
 
-        <bq-time-picker locale="ko-KR" name="time-ko" value="14:30">
+        <bq-time-picker hour-format="12" locale="ko-KR" name="time-ko" value="14:30">
           <label slot="label">한국어</label>
         </bq-time-picker>
       `
@@ -443,7 +443,7 @@ Use `locale` to set the segment order, separators, AM/PM labels, column headers,
     </script>
 
     <template>
-      <BqTimePicker locale="en-US" name="time-us" value="14:30">
+      <BqTimePicker hourFormat="12" locale="en-US" name="time-us" value="14:30">
         <label slot="label">English (US)</label>
       </BqTimePicker>
 
@@ -451,7 +451,7 @@ Use `locale` to set the segment order, separators, AM/PM labels, column headers,
         <label slot="label">Deutsch</label>
       </BqTimePicker>
 
-      <BqTimePicker locale="ko-KR" name="time-ko" value="14:30">
+      <BqTimePicker hourFormat="12" locale="ko-KR" name="time-ko" value="14:30">
         <label slot="label">한국어</label>
       </BqTimePicker>
     </template>
@@ -1272,7 +1272,7 @@ When focus leaves the field, complete times outside `min` or `max` are clamped t
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Do not force a 12- or 24-hour clock unless the product requires it. Let `locale` choose the clock people expect.
+    Do not mix clocks across a product. Pick the `hour-format` your audience expects and use it for every time picker.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
@@ -1319,9 +1319,9 @@ When focus leaves the field, complete times outside `min` or `max` are clamped t
 | `distance` | `distance` | Distance (gutter) between the Time picker panel and the field | `number` | `8` |
 | `form` | `form` | The ID of the form the field belongs to | `string` | `undefined` |
 | `formValidationMessage` | `form-validation-message` | Native form validation message | `string` | `undefined` |
-| `hourFormat` | `hour-format` | Forces a 12-hour (`"12"`) or 24-hour (`"24"`) clock. When unset, the clock of the `locale` is used | `"12" \| "24"` | `undefined` |
+| `hourFormat` | `hour-format` | The clock used by the field and the panel: 24-hour (`"24"`) or 12-hour with an AM/PM period (`"12"`). It doesn't depend on the `locale` | `"12" \| "24"` | `"24"` |
 | `hourStep` | `hour-step` | Step between selectable hours | `number` | `1` |
-| `locale` | `locale` | Locale used for the field layout, the day period labels and the default clock | `Locale \| readonly (string \| Locale)[] \| string` | `"en-GB"` |
+| `locale` | `locale` | Locale used for the field layout, separators, column headers and day period labels. The clock is set by `hour-format` | `Locale \| readonly (string \| Locale)[] \| string` | `"en-GB"` |
 | `max` | `max` | Latest selectable time, in 24-hour format (`HH:mm` or `HH:mm:ss`). Ignored, together with `min`, when it is earlier than `min` | `string` | `undefined` |
 | `min` | `min` | Earliest selectable time, in 24-hour format (`HH:mm` or `HH:mm:ss`). Ignored, together with `max`, when it is later than `max` | `string` | `undefined` |
 | `minuteStep` | `minute-step` | Step between selectable minutes | `number` | `1` |
