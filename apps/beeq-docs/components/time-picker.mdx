@@ -49,7 +49,7 @@ Time pickers combine locale-ordered hour, minute, and second segments with a pan
     Each pick in the panel updates the value right away. Use it for most forms, where a time is easy to change later.
   </CardTile>
   <CardTile title="Confirmed selection">
-    With `require-confirm`, panel picks stay a draft until people press OK or `Enter`. Use it when a new time triggers a costly change, such as rescheduling a booking.
+    With `require-confirm`, panel picks stay a draft in the panel, and the field keeps the current time until people press OK or `Enter`. Use it when a new time triggers a costly change, such as rescheduling a booking.
   </CardTile>
 </CardGroup>
 
@@ -1332,7 +1332,7 @@ When focus leaves the field, complete times outside `min` or `max` are clamped t
 | `placement` | `placement` | Position of the Time picker panel | `"bottom" \| "bottom-end" \| "bottom-start" \| "left" \| "left-end" \| "left-start" \| "right" \| "right-end" \| "right-start" \| "top" \| "top-end" \| "top-start"` | `"bottom-end"` |
 | `precision` | `precision` | Smallest unit edited and submitted: `hour` → `HH:00`, `minute` → `HH:mm`, `second` → `HH:mm:ss` | `"hour" \| "minute" \| "second"` | `"minute"` |
 | `readonly` | `readonly` | If `true`, the value can be read and submitted but not changed | `boolean` | `false` |
-| `requireConfirm` | `require-confirm` | If `true`, picks made in the panel (including "Now") are a draft until confirmed with the OK button or Enter. Escape or an outside click discards the draft | `boolean` | `false` |
+| `requireConfirm` | `require-confirm` | If `true`, picks made in the panel (including "Now") are a draft until confirmed with the OK button or Enter. The field keeps showing the committed value until then. Escape or an outside click discards the draft | `boolean` | `false` |
 | `required` | `required` | Whether a value must be entered before submitting the form | `boolean` | `false` |
 | `secondStep` | `second-step` | Step between selectable seconds | `number` | `1` |
 | `skidding` | `skidding` | Skidding between the panel and the field | `number` | `0` |
@@ -1345,10 +1345,10 @@ When focus leaves the field, complete times outside `min` or `max` are clamped t
 
 | Event | Description | Type |
 |---|---|---|
-| `bqBlur` | Fired when the field loses focus | `CustomEvent<HTMLBqTimePickerElement>` |
+| `bqBlur` | Fired when focus leaves the Time picker. Moving focus between the field and the panel does not fire it | `CustomEvent<HTMLBqTimePickerElement>` |
 | `bqChange` | Fired when the value is committed or cleared | `CustomEvent<{ value: string; el: HTMLElement }>` |
 | `bqClear` | Fired when the value is cleared | `CustomEvent<HTMLBqTimePickerElement>` |
-| `bqFocus` | Fired when the field receives focus | `CustomEvent<HTMLBqTimePickerElement>` |
+| `bqFocus` | Fired when focus enters the Time picker. Moving focus between the field and the panel does not fire it | `CustomEvent<HTMLBqTimePickerElement>` |
 
 <Note>
   - In React, prefix events with `on`: `onBqBlur`, `onBqChange`, `onBqClear`, `onBqFocus`.
