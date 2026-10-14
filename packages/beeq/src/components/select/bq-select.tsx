@@ -1488,7 +1488,6 @@ export class BqSelect {
       <div class="bq-select" part="base">
         {/* Label */}
         <label
-          aria-label={this.name || this.fallbackInputId}
           class={{ 'bq-select__label': true, '!hidden': !this.hasLabel }}
           htmlFor={this.name || this.fallbackInputId}
           id={labelId}
