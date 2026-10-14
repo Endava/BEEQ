@@ -476,12 +476,12 @@ Icons next to labels help users recognize categories at a glance. Use `size="16"
 | Property | Attribute | Description | Type | Default |
 |---|---|---|---|---|
 | `href` | `href` | If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered | `string` | `undefined` |
-| `rel` | `rel` | Link relationships. Currently not forwarded to the native anchor | `string` | `'noreferrer noopener'` |
+| `rel` | `rel` | Space-separated link relationship types (e.g. `external`, `nofollow`) applied to the inner `<a>`. Relevant only if `href` is set. When `target` is set, `noreferrer` and `noopener` are always added | `string` | `undefined` |
 | `target` | `target` | Where to display the link in the browser context. Relevant only if `href` is set | `'_blank'` \| `'_parent'` \| `'_self'` \| `'_top'` | `undefined` |
 
-<Warning>
-  `bq-breadcrumb-item` currently ignores custom `rel` values. Its inner link uses `rel="noreferrer noopener"` when `target` is set, and no `rel` otherwise. This behavior is tracked in [the Breadcrumb follow-up issue](https://github.com/Endava/BEEQ/issues/1829).
-</Warning>
+<Note>
+  When `target` is set, `bq-breadcrumb-item` merges `noreferrer` and `noopener` into the `rel` value you provide, so `rel="external"` with `target="_blank"` renders `rel="external noreferrer noopener"`. Without `target`, only your `rel` value is applied.
+</Note>
 
 ### Events
 

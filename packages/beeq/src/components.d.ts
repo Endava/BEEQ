@@ -460,7 +460,7 @@ export namespace Components {
      * @status stable
      * @attr {string} href - If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered.
      * @attr {string} target - Where to display the link in the browser context. Relevant only if `href` is set.
-     * @attr {string} rel - Link relationships. Currently not forwarded to the native anchor.
+     * @attr {string} rel - Space-separated link relationship types (e.g. `external`, `nofollow`) applied to the inner `<a>`. Relevant only if `href` is set. When `target` is set, `noreferrer` and `noopener` are always added.
      * @event bqFocus - Handler to be called when item is focused
      * @event bqClick - Handler to be called when item is clicked
      * @event bqBlur - Handler to be called when item loses focus
@@ -488,10 +488,9 @@ export namespace Components {
          */
         "href": string;
         /**
-          * Link relationships. Currently not forwarded to the native anchor.
-          * @default 'noreferrer noopener'
+          * Space-separated link relationship types (e.g. `external`, `nofollow`) applied to the inner `<a>`. Relevant only if `href` is set. When `target` is set, `noreferrer` and `noopener` are always added.
          */
-        "rel": string;
+        "rel"?: string;
         /**
           * Where to display the link in the browser context. Relevant only if `href` is set.
          */
@@ -3846,7 +3845,7 @@ declare global {
      * @status stable
      * @attr {string} href - If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered.
      * @attr {string} target - Where to display the link in the browser context. Relevant only if `href` is set.
-     * @attr {string} rel - Link relationships. Currently not forwarded to the native anchor.
+     * @attr {string} rel - Space-separated link relationship types (e.g. `external`, `nofollow`) applied to the inner `<a>`. Relevant only if `href` is set. When `target` is set, `noreferrer` and `noopener` are always added.
      * @event bqFocus - Handler to be called when item is focused
      * @event bqClick - Handler to be called when item is clicked
      * @event bqBlur - Handler to be called when item loses focus
@@ -6232,7 +6231,7 @@ declare namespace LocalJSX {
      * @status stable
      * @attr {string} href - If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered.
      * @attr {string} target - Where to display the link in the browser context. Relevant only if `href` is set.
-     * @attr {string} rel - Link relationships. Currently not forwarded to the native anchor.
+     * @attr {string} rel - Space-separated link relationship types (e.g. `external`, `nofollow`) applied to the inner `<a>`. Relevant only if `href` is set. When `target` is set, `noreferrer` and `noopener` are always added.
      * @event bqFocus - Handler to be called when item is focused
      * @event bqClick - Handler to be called when item is clicked
      * @event bqBlur - Handler to be called when item loses focus
@@ -6272,8 +6271,7 @@ declare namespace LocalJSX {
          */
         "onBqFocus"?: (event: BqBreadcrumbItemCustomEvent<HTMLBqBreadcrumbItemElement>) => void;
         /**
-          * Link relationships. Currently not forwarded to the native anchor.
-          * @default 'noreferrer noopener'
+          * Space-separated link relationship types (e.g. `external`, `nofollow`) applied to the inner `<a>`. Relevant only if `href` is set. When `target` is set, `noreferrer` and `noopener` are always added.
          */
         "rel"?: string;
         /**
@@ -10119,7 +10117,7 @@ declare module "@stencil/core" {
              * @status stable
              * @attr {string} href - If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered.
              * @attr {string} target - Where to display the link in the browser context. Relevant only if `href` is set.
-             * @attr {string} rel - Link relationships. Currently not forwarded to the native anchor.
+             * @attr {string} rel - Space-separated link relationship types (e.g. `external`, `nofollow`) applied to the inner `<a>`. Relevant only if `href` is set. When `target` is set, `noreferrer` and `noopener` are always added.
              * @event bqFocus - Handler to be called when item is focused
              * @event bqClick - Handler to be called when item is clicked
              * @event bqBlur - Handler to be called when item loses focus
