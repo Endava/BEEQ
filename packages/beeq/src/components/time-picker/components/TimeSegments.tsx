@@ -51,6 +51,8 @@ export type TTimeSegmentsProps = {
 };
 
 type TTimeSegmentProps = Omit<TTimeSegmentsProps, 'group' | 'mask'> & {
+  /** Virtual DOM key, set when the component is rendered in a list. */
+  key?: string;
   groupId: number;
   segment: TTimeSegment;
   hourCycle: TTimeHourCycle;
@@ -99,6 +101,7 @@ const TimeSegment: FunctionalComponent<TTimeSegmentProps> = ({
       data-group-id={`${groupId}`}
       data-segment-field={segment.field}
       inputmode={segment.field === 'dayPeriod' ? 'text' : 'numeric'}
+      key={segment.field}
       onBlur={onSegmentBlur}
       onClick={(ev) => onSegmentClick(key, ev)}
       onFocus={onSegmentFocus}
@@ -113,9 +116,9 @@ const TimeSegment: FunctionalComponent<TTimeSegmentProps> = ({
 };
 
 /** Locale literal (separator, prefix or suffix) between the segments. Hidden from assistive tech. */
-const SegmentLiteral: FunctionalComponent<{ text: string }> = ({ text }) =>
+const SegmentLiteral: FunctionalComponent<{ key: string; text: string }> = ({ key, text }) =>
   text ? (
-    <span aria-hidden="true" class="bq-time-picker__segment-literal" part={TIME_PICKER_PARTS.segmentLiteral}>
+    <span aria-hidden="true" class="bq-time-picker__segment-literal" key={key} part={TIME_PICKER_PARTS.segmentLiteral}>
       {text}
     </span>
   ) : null;
@@ -126,10 +129,13 @@ export const TimeSegments: FunctionalComponent<TTimeSegmentsProps> = ({ group, m
 
   const { template, segments, hourCycle } = mask;
   return [
-    <SegmentLiteral text={template.slice(0, segments[0]?.start ?? 0)} />,
+    <SegmentLiteral key="literal-start" text={template.slice(0, segments[0]?.start ?? 0)} />,
     ...group.segments.flatMap((segment, index) => [
-      <TimeSegment {...state} groupId={group.id} hourCycle={hourCycle} segment={segment} />,
-      <SegmentLiteral text={template.slice(segments[index].end, segments[index + 1]?.start)} />,
+      <TimeSegment {...state} groupId={group.id} hourCycle={hourCycle} key={segment.field} segment={segment} />,
+      <SegmentLiteral
+        key={`literal-${segment.field}`}
+        text={template.slice(segments[index].end, segments[index + 1]?.start)}
+      />,
     ]),
   ];
 };

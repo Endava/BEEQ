@@ -17,7 +17,7 @@ const ColumnShell: FunctionalComponent<TColumnShellProps> = ({ field, label, dis
   const headerId = `bq-time-picker__column-header-${field}`;
 
   return (
-    <div class="bq-time-picker__column-group">
+    <div class="bq-time-picker__column-group" key={field}>
       <div class="bq-time-picker__column-header" id={headerId} part={TIME_PICKER_PARTS.columnHeader}>
         {label}
       </div>
@@ -39,6 +39,8 @@ const ColumnShell: FunctionalComponent<TColumnShellProps> = ({ field, label, dis
 };
 
 type TColumnOptionProps = {
+  /** Virtual DOM key, set when the component is rendered in a list. */
+  key?: string;
   value: number | TDayPeriod;
   label: string;
   selected: boolean;
@@ -74,6 +76,8 @@ const ColumnOption: FunctionalComponent<TColumnOptionProps> = ({
 );
 
 export type TTimeColumnProps = {
+  /** Virtual DOM key, set when the component is rendered in a list. */
+  key?: string;
   /** Time field listed by the column. */
   field: TTimeMaskField;
   /** Column header text, also the listbox accessible name. */
@@ -101,6 +105,7 @@ export const TimeColumn: FunctionalComponent<TTimeColumnProps> = ({
       {options.map((option) => (
         <ColumnOption
           disabled={option.disabled}
+          key={`${option.value}`}
           label={option.label}
           onClick={() => onOptionClick(option)}
           selected={option.selected}
@@ -113,6 +118,8 @@ export const TimeColumn: FunctionalComponent<TTimeColumnProps> = ({
 };
 
 export type TFixedMinuteColumnProps = {
+  /** Virtual DOM key, set when the component is rendered in a list. */
+  key?: string;
   /** Column header text. */
   label: string;
   /** Whether an hour is selected, which selects the fixed `00` minute too. */

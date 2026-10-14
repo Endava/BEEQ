@@ -1204,13 +1204,18 @@ export class BqTimePicker {
             return [
               <TimeColumn
                 field={field}
+                key={field}
                 label={this.getFieldLabel(field)}
                 onKeyDown={(ev) => this.handleColumnKeyDown(ev, field, options)}
                 onOptionClick={(option) => this.handleOptionClick(field, option)}
                 options={options}
               />,
               showFixedMinute && field === 'hour' && (
-                <FixedMinuteColumn label={this.resolvedLabels.minute} selected={selected.hour !== undefined} />
+                <FixedMinuteColumn
+                  key="fixed-minute"
+                  label={this.resolvedLabels.minute}
+                  selected={selected.hour !== undefined}
+                />
               ),
             ];
           })}
