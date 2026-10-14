@@ -1,6 +1,6 @@
 import { h } from '@stencil/core';
-import { afterEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
-import { userEvent } from 'vitest/browser';
+import { afterEach, beforeEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
+import { cdp, userEvent } from 'vitest/browser';
 
 import { getTodayISO } from '../../../shared/utils';
 import { getTextContent } from '../../../shared/utils/slot';
@@ -96,8 +96,38 @@ const waitForSelectionAnnouncement = async (): Promise<void> => {
   await waitForSegmentFocus();
 };
 
+/** Resolves a CSS color value (e.g. `var(--bq-stroke--danger)`) to its computed `rgb()` form */
+const resolveColor = (value: string): string => {
+  const probe = document.createElement('div');
+  probe.style.color = value;
+  document.body.appendChild(probe);
+  const { color } = getComputedStyle(probe);
+  probe.remove();
+  return color;
+};
+
+/** Waits for any running CSS transition inside the element's shadow root to finish */
+const waitForTransitions = async (element: Element) => {
+  const animations = element.shadowRoot?.getAnimations() ?? [];
+  await Promise.all(animations.map((animation) => animation.finished));
+};
+
 afterEach(() => {
   vi.restoreAllMocks();
+});
+
+// Hover/click tests leave the Playwright cursor where they finished, so a freshly rendered element can
+// render under it and pick up `:hover` styles. Before each test, park the cursor in the bottom-right corner
+// of the top-level page (CDP coordinates), which lies outside the scaled test iframe.
+const movePointerOff = () =>
+  cdp().send('Input.dispatchMouseEvent', {
+    type: 'mouseMoved',
+    x: window.top.innerWidth - 1,
+    y: window.top.innerHeight - 1,
+  });
+
+beforeEach(async () => {
+  await movePointerOff();
 });
 
 describe('bq-date-picker', () => {
@@ -860,6 +890,8 @@ describe('bq-date-picker', () => {
     const clearButton = getClearButton(datePicker)?.shadowRoot?.querySelector<HTMLButtonElement>('button');
     if (!clearButton) throw new Error('Expected clear button');
 
+    // The clear button is only displayed while the control is hovered or focused
+    await userEvent.hover(datePicker.shadowRoot?.querySelector<HTMLElement>('.bq-date-picker__control'));
     await userEvent.click(clearButton);
     await waitForSegmentFocus();
 
@@ -1095,18 +1127,23 @@ describe('bq-date-picker', () => {
     });
 
     it('should close other date pickers when one is opened from the keyboard', async () => {
-      const { root, pickerA, pickerB } = await renderTwoPickers();
+      const { pickerA, pickerB } = await renderTwoPickers();
+      const segmentA = getSegment(pickerA, 'day') as HTMLElement;
+      const segmentB = getSegment(pickerB, 'day') as HTMLElement;
 
-      await userEvent.click(getSegment(pickerA, 'day') as HTMLElement);
-      await waitForStable(root);
+      await userEvent.click(segmentA);
       expect(pickerA.open).toBe(true);
+      // A segment click re-focuses the segment a few frames later; let it land so it can't pull focus back from B.
+      await vi.waitFor(() => expect(pickerA.shadowRoot?.activeElement).toBe(segmentA));
 
-      getSegment(pickerB, 'day')?.focus();
+      segmentB.focus();
       await userEvent.keyboard('{Alt>}{ArrowDown}{/Alt}');
-      await waitForStable(root);
 
-      expect(pickerA.open).toBe(false);
-      expect(pickerB.open).toBe(true);
+      // Closing A waits for B's dropdown to render and emit `bqOpen`.
+      await vi.waitFor(() => {
+        expect(pickerB.open).toBe(true);
+        expect(pickerA.open).toBe(false);
+      });
     });
 
     it('should close an open select when a date segment is clicked, and vice versa', async () => {
@@ -2256,5 +2293,79 @@ describe('bq-date-picker', () => {
     await setProps({ required: false });
     await waitForChanges();
     expect(datePicker.matches(':state(invalid)')).toBe(true);
+  });
+
+  it('should map the color variables to the theme role tokens', async () => {
+    const { root } = await render(<bq-date-picker name="date-picker" />);
+
+    const hostStyle = getComputedStyle(root);
+    const expectedRoles = {
+      '--bq-date-picker--border-color-danger': '--bq-stroke--danger',
+      '--bq-date-picker--border-color-success': '--bq-stroke--success',
+      '--bq-date-picker--border-color-warning': '--bq-stroke--warning',
+      '--bq-date-picker--view-cell-text-selected': '--bq-text--on-brand',
+    };
+
+    for (const [componentVar, roleVar] of Object.entries(expectedRoles)) {
+      expect(hostStyle.getPropertyValue(componentVar).trim()).toBe(hostStyle.getPropertyValue(roleVar).trim());
+    }
+  });
+
+  it('should paint the control border with the validation color variables', async () => {
+    const { root, setProps } = await render(<bq-date-picker name="date-picker" />);
+    const statuses = { error: 'danger', success: 'success', warning: 'warning' } as const;
+
+    for (const [validationStatus, role] of Object.entries(statuses)) {
+      await setProps({ validationStatus });
+      await waitForStable(root);
+      await waitForTransitions(root);
+
+      const control = root.shadowRoot?.querySelector<HTMLElement>('[part="control"]');
+      expect(getComputedStyle(control).borderTopColor).toBe(resolveColor(`var(--bq-stroke--${role})`));
+    }
+  });
+
+  it('should allow overriding the validation border color variables', async () => {
+    const { root } = await render(
+      <bq-date-picker
+        name="date-picker"
+        validationStatus="warning"
+        style={{ '--bq-date-picker--border-color-warning': 'rgb(1, 2, 3)' }}
+      />,
+    );
+
+    await waitForStable(root);
+    await waitForTransitions(root);
+
+    const control = root.shadowRoot?.querySelector<HTMLElement>('[part="control"]');
+    expect(getComputedStyle(control).borderTopColor).toBe('rgb(1, 2, 3)');
+  });
+
+  it('should paint the selected day with the on-brand text color', async () => {
+    const { root } = await render(<bq-date-picker name="date-picker" open value="2026-05-15" />);
+    const datePicker = root as HTMLBqDatePickerElement;
+
+    await waitForStable(root);
+    await waitForTransitions(root);
+
+    expect(getComputedStyle(getDayButton(datePicker, '2026-05-15')).color).toBe(
+      resolveColor('var(--bq-text--on-brand)'),
+    );
+  });
+
+  it('should paint the range start and end days with the on-brand text color', async () => {
+    const { root } = await render(
+      <bq-date-picker name="date-picker" open type="range" value="2026-05-15/2026-05-20" />,
+    );
+    const datePicker = root as HTMLBqDatePickerElement;
+    const onBrand = resolveColor('var(--bq-text--on-brand)');
+
+    await waitForStable(root);
+    await waitForTransitions(root);
+
+    expect(getDayButton(datePicker, '2026-05-15')).toHaveClass('is-range-start');
+    expect(getDayButton(datePicker, '2026-05-20')).toHaveClass('is-range-end');
+    expect(getComputedStyle(getDayButton(datePicker, '2026-05-15')).color).toBe(onBrand);
+    expect(getComputedStyle(getDayButton(datePicker, '2026-05-20')).color).toBe(onBrand);
   });
 });

@@ -49,6 +49,9 @@ import type { TSliderType, TSliderValue } from './bq-slider.types';
  * @cssprop --bq-slider--thumb-size - Slider hover thumb size
  * @cssprop --bq-slider--progress-color - Slider progress background color
  * @cssprop --bq-slider--trackarea-color - Slider track background color
+ * @cssprop --bq-slider--thumb-background - Slider thumb background color
+ * @cssprop --bq-slider--thumb-border-color - Slider thumb border color
+ * @cssprop --bq-slider--label-color - Slider value indicator (label) text color
  */
 @Component({
   tag: 'bq-slider',
@@ -341,7 +344,7 @@ export class BqSlider {
     return (
       <span
         class={{
-          [`${css} is-fit min-is-8 box-content block font-medium text-primary text-s leading-regular [font-variant:tabular-nums]`]: true,
+          [`${css} is-fit min-is-8 box-content block font-medium text-[--bq-slider--label-color] text-s leading-regular [font-variant:tabular-nums]`]: true,
           hidden: position === 'start' ? !this.enableValueIndicator : !this.enableValueIndicator || !this.isRangeType,
         }}
         part={`label-${position}`}

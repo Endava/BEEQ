@@ -1,6 +1,6 @@
 import { h } from '@stencil/core';
-import { afterEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
-import { userEvent } from 'vitest/browser';
+import { afterEach, beforeEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
+import { cdp, userEvent } from 'vitest/browser';
 
 import { getTextContent } from '../../../shared/utils/slot';
 
@@ -10,6 +10,35 @@ afterEach(() => {
 
 const getMenuButton = (item: HTMLBqSideMenuItemElement) =>
   item.shadowRoot?.querySelector<HTMLButtonElement>('[part="base"]');
+
+const resolveColor = (value: string) => {
+  const probe = document.createElement('span');
+  probe.style.color = value;
+  document.body.appendChild(probe);
+  const { color } = getComputedStyle(probe);
+  probe.remove();
+  return color;
+};
+
+/** Waits for any running CSS transition inside the element's shadow root to finish */
+const waitForTransitions = async (element: Element) => {
+  const animations = element.shadowRoot?.getAnimations() ?? [];
+  await Promise.all(animations.map((animation) => animation.finished));
+};
+
+// Hover/click tests leave the Playwright cursor where they finished, so a freshly rendered element can
+// render under it and pick up `:hover` styles. Before each test, park the cursor in the bottom-right corner
+// of the top-level page (CDP coordinates), which lies outside the scaled test iframe.
+const movePointerOff = () =>
+  cdp().send('Input.dispatchMouseEvent', {
+    type: 'mouseMoved',
+    x: window.top.innerWidth - 1,
+    y: window.top.innerHeight - 1,
+  });
+
+beforeEach(async () => {
+  await movePointerOff();
+});
 
 describe('bq-side-menu-item', () => {
   it('should render', async () => {
@@ -210,5 +239,78 @@ describe('bq-side-menu-item', () => {
     expect(item.shadowRoot.querySelector('bq-tooltip')).toBeNull();
     expect(tooltip.isConnected).toBe(false);
     expect(getMenuButton(item)).not.toHaveClass('is-collapsed');
+  });
+
+  it('should use the default colour custom properties', async () => {
+    const { root } = await render(<bq-side-menu-item>Menu item label</bq-side-menu-item>);
+    const item = root as HTMLBqSideMenuItemElement;
+
+    await waitForStable(root);
+    await waitForTransitions(root);
+
+    const style = getComputedStyle(getMenuButton(item));
+
+    expect(style.color).toBe(resolveColor('var(--bq-text--primary)'));
+    expect(style.backgroundColor).toBe('rgba(0, 0, 0, 0)');
+  });
+
+  it('should apply the active colour custom properties', async () => {
+    const { root } = await render(<bq-side-menu-item active>Menu item label</bq-side-menu-item>);
+    const item = root as HTMLBqSideMenuItemElement;
+
+    await waitForStable(root);
+    await waitForTransitions(root);
+
+    const style = getComputedStyle(getMenuButton(item));
+
+    expect(style.color).toBe(resolveColor('var(--bq-text--brand)'));
+    expect(style.backgroundColor).toBe(resolveColor('var(--bq-ui--brand-alt)'));
+  });
+
+  it('should apply the hover colour custom properties', async () => {
+    const { root } = await render(<bq-side-menu-item>Menu item label</bq-side-menu-item>);
+    const item = root as HTMLBqSideMenuItemElement;
+
+    await waitForStable(root);
+
+    // The hover vars hold the base roles only; the SCSS mixes them with `--bq-hover`
+    const hostStyle = getComputedStyle(item);
+    expect(hostStyle.getPropertyValue('--bq-side-menu-item--bg-hover').trim()).toBe(
+      hostStyle.getPropertyValue('--bq-ui--alt').trim(),
+    );
+    expect(hostStyle.getPropertyValue('--bq-side-menu-item--text-hover').trim()).toBe(
+      hostStyle.getPropertyValue('--bq-text--primary').trim(),
+    );
+
+    await userEvent.hover(getMenuButton(item));
+
+    const expectedBackground = resolveColor('color-mix(in srgb, var(--bq-ui--alt), var(--bq-hover) 20%)');
+    const expectedText = resolveColor('color-mix(in srgb, var(--bq-text--primary), var(--bq-hover) 20%)');
+
+    await expect.poll(() => getComputedStyle(getMenuButton(item)).backgroundColor).toBe(expectedBackground);
+    await expect.poll(() => getComputedStyle(getMenuButton(item)).color).toBe(expectedText);
+  });
+
+  it('should consume custom hover colour overrides', async () => {
+    const { root } = await render(
+      <bq-side-menu-item
+        style={{
+          '--bq-side-menu-item--bg-hover': 'rgb(255, 0, 0)',
+          '--bq-side-menu-item--text-hover': 'rgb(0, 0, 255)',
+        }}
+      >
+        Menu item label
+      </bq-side-menu-item>,
+    );
+    const item = root as HTMLBqSideMenuItemElement;
+
+    await waitForStable(root);
+    await userEvent.hover(getMenuButton(item));
+
+    const expectedBackground = resolveColor('color-mix(in srgb, rgb(255, 0, 0), var(--bq-hover) 20%)');
+    const expectedText = resolveColor('color-mix(in srgb, rgb(0, 0, 255), var(--bq-hover) 20%)');
+
+    await expect.poll(() => getComputedStyle(getMenuButton(item)).backgroundColor).toBe(expectedBackground);
+    await expect.poll(() => getComputedStyle(getMenuButton(item)).color).toBe(expectedText);
   });
 });

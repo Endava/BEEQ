@@ -132,12 +132,18 @@ type TSelectDisplayTag = {
  * @cssprop --bq-select--background-color - Select background color
  * @cssprop --bq-select--border-color - Select border color
  * @cssprop --bq-select--border-color-focus - Select border color on focus
+ * @cssprop --bq-select--border-color-danger - Select border color when the validation status is `error`
+ * @cssprop --bq-select--border-color-success - Select border color when the validation status is `success`
+ * @cssprop --bq-select--border-color-warning - Select border color when the validation status is `warning`
  * @cssprop --bq-select--border-radius - Select border radius
  * @cssprop --bq-select--border-width - Select border width
  * @cssprop --bq-select--border-style - Select border style
  * @cssprop --bq-select--gap - Gap between Select content and prefix/suffix
  * @cssprop --bq-select--helper-margin-top - Helper text margin top
  * @cssprop --bq-select--helper-text-color - Helper text color
+ * @cssprop --bq-select--helper-text-color-danger - Helper text color when the validation status is `error`
+ * @cssprop --bq-select--helper-text-color-success - Helper text color when the validation status is `success`
+ * @cssprop --bq-select--helper-text-color-warning - Helper text color when the validation status is `warning`
  * @cssprop --bq-select--helper-text-size - Helper text size
  * @cssprop --bq-select--icon-size - Icon size to use in prefix/suffix and clear button
  * @cssprop --bq-select--label-margin-bottom - Select label margin bottom

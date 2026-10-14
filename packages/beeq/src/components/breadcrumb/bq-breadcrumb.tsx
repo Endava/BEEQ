@@ -179,7 +179,7 @@ export class BqBreadcrumb {
               this.separatorSlotElem = element;
             }}
           >
-            <span class="is-3 flex items-center justify-center text-ui-tertiary" part="separator">
+            <span class="is-3 flex items-center justify-center" part="separator">
               /
             </span>
           </slot>

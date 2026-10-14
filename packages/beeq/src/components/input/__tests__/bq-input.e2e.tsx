@@ -1,6 +1,24 @@
 import { h } from '@stencil/core';
-import { afterEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
-import { userEvent } from 'vitest/browser';
+import { afterEach, beforeEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
+import { cdp, userEvent } from 'vitest/browser';
+
+import { computedStyle } from '../../../shared/test-utils/computedStyle';
+
+/** Resolves a CSS color value (e.g. `var(--bq-stroke--danger)`) to its computed `rgb()` form */
+const resolveColor = (value: string): string => {
+  const probe = document.createElement('div');
+  probe.style.color = value;
+  document.body.appendChild(probe);
+  const { color } = getComputedStyle(probe);
+  probe.remove();
+  return color;
+};
+
+/** Waits for any running CSS transition inside the element's shadow root to finish */
+const waitForTransitions = async (element: Element) => {
+  const animations = element.shadowRoot?.getAnimations() ?? [];
+  await Promise.all(animations.map((animation) => animation.finished));
+};
 
 const getInput = (el: HTMLBqInputElement) => el.shadowRoot?.querySelector<HTMLInputElement>('[part="input"]');
 const getClearButton = (el: HTMLBqInputElement) =>
@@ -8,6 +26,20 @@ const getClearButton = (el: HTMLBqInputElement) =>
 
 afterEach(() => {
   vi.restoreAllMocks();
+});
+
+// Hover/click tests leave the Playwright cursor where they finished, so a freshly rendered element can
+// render under it and pick up `:hover` styles. Before each test, park the cursor in the bottom-right corner
+// of the top-level page (CDP coordinates), which lies outside the scaled test iframe.
+const movePointerOff = () =>
+  cdp().send('Input.dispatchMouseEvent', {
+    type: 'mouseMoved',
+    x: window.top.innerWidth - 1,
+    y: window.top.innerHeight - 1,
+  });
+
+beforeEach(async () => {
+  await movePointerOff();
 });
 
 describe('bq-input', () => {
@@ -573,5 +605,63 @@ describe('bq-input', () => {
     await vi.waitFor(() => {
       expect(onInput).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ detail: { value: '', el: host } }));
     });
+  });
+
+  it('should map the validation color variables to the theme role tokens', async () => {
+    const { root } = await render(<bq-input name="bq-input" />);
+
+    const hostStyle = getComputedStyle(root);
+
+    for (const status of ['danger', 'success', 'warning']) {
+      expect(hostStyle.getPropertyValue(`--bq-input--border-color-${status}`).trim()).toBe(
+        hostStyle.getPropertyValue(`--bq-stroke--${status}`).trim(),
+      );
+      expect(hostStyle.getPropertyValue(`--bq-input--helper-text-color-${status}`).trim()).toBe(
+        hostStyle.getPropertyValue(`--bq-text--${status}`).trim(),
+      );
+    }
+  });
+
+  it('should paint the border and helper text with the validation color variables', async () => {
+    const { root, setProps } = await render(
+      <bq-input name="bq-input">
+        <span slot="helper-text">Helper text</span>
+      </bq-input>,
+    );
+    const statuses = { error: 'danger', success: 'success', warning: 'warning' } as const;
+
+    for (const [validationStatus, role] of Object.entries(statuses)) {
+      await setProps({ validationStatus });
+      await waitForStable(root);
+      await waitForTransitions(root);
+
+      expect(computedStyle('bq-input >>> [part="control"]', ['borderTopColor']).borderTopColor).toBe(
+        resolveColor(`var(--bq-stroke--${role})`),
+      );
+      expect(computedStyle('bq-input >>> [part="helper-text"]', ['color']).color).toBe(
+        resolveColor(`var(--bq-text--${role})`),
+      );
+    }
+  });
+
+  it('should allow overriding the validation color variables', async () => {
+    const { root } = await render(
+      <bq-input
+        name="bq-input"
+        validationStatus="error"
+        style={{
+          '--bq-input--border-color-danger': 'rgb(1, 2, 3)',
+          '--bq-input--helper-text-color-danger': 'rgb(4, 5, 6)',
+        }}
+      >
+        <span slot="helper-text">Helper text</span>
+      </bq-input>,
+    );
+
+    await waitForStable(root);
+    await waitForTransitions(root);
+
+    expect(computedStyle('bq-input >>> [part="control"]', ['borderTopColor']).borderTopColor).toBe('rgb(1, 2, 3)');
+    expect(computedStyle('bq-input >>> [part="helper-text"]', ['color']).color).toBe('rgb(4, 5, 6)');
   });
 });

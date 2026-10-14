@@ -27,14 +27,19 @@
    * @prop --bq-accordion--filled-collapsed-background: Accordion filled collapsed header background
    * @prop --bq-accordion--filled-collapsed-text-color: Accordion filled collapsed header text color
    * @prop --bq-accordion--filled-expanded-background: Accordion filled expanded header background
-   * @prop --bq-accordion--filled-expanded-collapsed-hover: Accordion filled expanded header color on hover
+   * @prop --bq-accordion--filled-expanded-collapsed-hover: Base colour of the filled expanded header hover state (mixed with `--bq-hover` on hover)
    * @prop --bq-accordion--filled-expanded-text-color: Accordion filled expanded header text color
    *
    * @prop --bq-accordion--ghost-collapsed-background: Accordion ghost collapsed header background
    * @prop --bq-accordion--ghost-collapsed-text-color: Accordion ghost collapsed header text color
    * @prop --bq-accordion--ghost-expanded-background: Accordion ghost expanded header background
-   * @prop --bq-accordion--ghost-expanded-collapsed-hover: Accordion ghost expanded header color on hover
+   * @prop --bq-accordion--ghost-expanded-collapsed-hover: Base colour of the ghost header hover state, collapsed and expanded (mixed with `--bq-hover` on hover)
    * @prop --bq-accordion--ghost-expanded-text-color: Accordion ghost expanded header text color
+   *
+   * @prop --bq-accordion--icon-color: Accordion expand and collapse icon color
+   *
+   * @prop --bq-accordion--panel-background: Accordion panel background
+   * @prop --bq-accordion--panel-text-color: Accordion panel text color
    *
    * @prop --bq-accordion--panel-filled-border-color: Accordion filled panel border color
    * @prop --bq-accordion--panel-filled-border-style: Accordion filled panel border style
@@ -68,25 +73,32 @@
   --bq-accordion--medium-gap: theme(spacing.m);
   --bq-accordion--medium-radius: theme(borderRadius.m);
 
-  --bq-accordion--collapsed-border-color: theme(borderColor.transparent);
+  --bq-accordion--collapsed-border-color: transparent;
   --bq-accordion--collapsed-border-style: none;
   --bq-accordion--collapsed-border-width: unset;
 
-  --bq-accordion--expanded-border-color: theme(borderColor.transparent);
+  --bq-accordion--expanded-border-color: transparent;
   --bq-accordion--expanded-border-style: none;
   --bq-accordion--expanded-border-width: unset;
 
-  --bq-accordion--filled-collapsed-background: theme(backgroundColor.ui.secondary);
-  --bq-accordion--filled-collapsed-text-color: theme(textColor.primary);
-  --bq-accordion--filled-expanded-background: theme(backgroundColor.ui.brand-alt);
-  --bq-accordion--filled-expanded-text-color: theme(textColor.primary);
+  --bq-accordion--filled-collapsed-background: var(--bq-ui--secondary);
+  --bq-accordion--filled-collapsed-text-color: var(--bq-text--primary);
+  --bq-accordion--filled-expanded-background: var(--bq-ui--brand-alt);
+  --bq-accordion--filled-expanded-collapsed-hover: var(--bq-ui--secondary);
+  --bq-accordion--filled-expanded-text-color: var(--bq-text--primary);
 
-  --bq-accordion--ghost-collapsed-background: theme(backgroundColor.transparent);
-  --bq-accordion--ghost-collapsed-text-color: theme(textColor.primary);
-  --bq-accordion--ghost-expanded-background: theme(backgroundColor.transparent);
-  --bq-accordion--ghost-expanded-text-color: theme(textColor.brand);
+  --bq-accordion--ghost-collapsed-background: transparent;
+  --bq-accordion--ghost-collapsed-text-color: var(--bq-text--primary);
+  --bq-accordion--ghost-expanded-background: transparent;
+  --bq-accordion--ghost-expanded-collapsed-hover: var(--bq-ui--secondary);
+  --bq-accordion--ghost-expanded-text-color: var(--bq-text--brand);
 
-  --bq-accordion--panel-filled-border-color: theme(borderColor.primary);
+  --bq-accordion--icon-color: var(--bq-text--primary);
+
+  --bq-accordion--panel-background: var(--bq-ui--primary);
+  --bq-accordion--panel-text-color: var(--bq-text--primary);
+
+  --bq-accordion--panel-filled-border-color: var(--bq-stroke--primary);
   --bq-accordion--panel-filled-border-style: solid;
   --bq-accordion--panel-filled-border-width: theme(borderWidth.s);
   --bq-accordion--panel-small-filled-padding-y: theme(spacing.s);
@@ -96,7 +108,7 @@
   --bq-accordion--panel-medium-filled-padding-start: theme(spacing.m);
   --bq-accordion--panel-medium-filled-padding-end: theme(spacing.m);
 
-  --bq-accordion--panel-ghost-border-color: theme(borderColor.transparent);
+  --bq-accordion--panel-ghost-border-color: transparent;
   --bq-accordion--panel-ghost-border-style: none;
   --bq-accordion--panel-ghost-border-width: unset;
   --bq-accordion--panel-small-ghost-padding-y: theme(spacing.s);

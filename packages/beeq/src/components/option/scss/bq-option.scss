@@ -36,13 +36,13 @@
 }
 
 :host([selected]) .bq-option__checkbox::part(label) {
-  @apply text-brand;
+  @apply text-[color:--bq-option--text-color-selected];
 }
 
 .bq-option__item {
-  @apply flex cursor-pointer items-center rounded-[--bq-option--border-radius] bg-[--bq-option--background] shadow-[shadow:--bq-option--box-shadow];
+  @apply flex cursor-pointer items-center rounded-[--bq-option--border-radius] bg-[--bq-option--background] text-[color:--bq-option--text-color] shadow-[shadow:--bq-option--box-shadow];
   @apply border-[length:--bq-option--border-width] border-[color:--bq-option--border-color] transition-colors duration-150 ease-in-out;
-  @apply pe-[--bq-option--padding-end] ps-[--bq-option--padding-start] p-b-[--bq-option--paddingY] hover:bg-hover-ui-secondary focus-within:focus;
+  @apply pe-[--bq-option--padding-end] ps-[--bq-option--padding-start] p-b-[--bq-option--paddingY] hover:bg-[color-mix(in_srgb,_var(--bq-option--background-hover),_var(--bq-hover)_20%)] focus-within:focus;
 
   border-style: var(--bq-option--border-style);
 }
@@ -69,7 +69,7 @@
 }
 
 :host([selected]) .bq-option__item {
-  @apply bg-ui-brand-alt text-brand;
+  @apply bg-[--bq-option--background-selected] text-[color:--bq-option--text-color-selected];
 }
 
 .bq-option__item > .bq-option,
@@ -85,11 +85,11 @@
   --bq-button--border-radius: var(--bq-radius--s);
   --bq-button--small-font-size: var(--bq-font-size--xs);
 
-  @apply text-inherit enabled:hover:bg-transparent enabled:hover:text-brand;
+  @apply text-inherit enabled:hover:bg-transparent enabled:hover:text-[color:--bq-option--expand-text-color-hover];
 }
 
 .bq-option__selection-summary {
-  @apply ms-s shrink-0 text-s text-secondary;
+  @apply ms-s shrink-0 text-s text-[color:--bq-option--selection-summary-color];
 }
 
 .bq-option__options {
@@ -107,8 +107,8 @@
   inset-inline-start: calc(-1 * var(--bq-option--padding-start));
   block-size: 50%;
   inline-size: var(--bq-option--padding-start);
-  border-block-end: 1px solid var(--bq-stroke--primary);
-  border-inline-start: 1px solid var(--bq-stroke--primary);
+  border-block-end: 1px solid var(--bq-option--tree-line-color);
+  border-inline-start: 1px solid var(--bq-option--tree-line-color);
   margin-inline-start: -1px;
 }
 
@@ -118,6 +118,6 @@
   inset-block-start: 50%;
   inset-inline-start: calc(-1 * var(--bq-option--padding-start));
   block-size: calc(50% + var(--bq-option-group--gapY-list));
-  border-inline-start: 1px solid var(--bq-stroke--primary);
+  border-inline-start: 1px solid var(--bq-option--tree-line-color);
   margin-inline-start: -1px;
 }

@@ -11,6 +11,16 @@ afterEach(async () => {
   await cdp().send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: 0, y: 0 });
 });
 
+/** Resolves a CSS color value (e.g. `var(--bq-ui--brand)`) to its computed `rgb()` form */
+const resolveColor = (value: string): string => {
+  const probe = document.createElement('div');
+  probe.style.color = value;
+  document.body.appendChild(probe);
+  const { color } = getComputedStyle(probe);
+  probe.remove();
+  return color;
+};
+
 const renderWithSpace = (template: Parameters<typeof render>[0]) =>
   render(template, {
     clearStage: true,
@@ -546,5 +556,51 @@ describe('bq-slider', () => {
     expect(label).toEqual({ fontSize: '14px', fontWeight: '500', marginInlineEnd: '8px' });
     expect(track).toEqual({ borderRadius: '4px', height: '4px' });
     expect(progress).toEqual({ borderRadius: '4px', height: '4px' });
+  });
+
+  it('should map the color variables to the theme role tokens', async () => {
+    const { root } = await render(<bq-slider value={30} />);
+
+    const hostStyle = getComputedStyle(root);
+    const expectedRoles = {
+      '--bq-slider--label-color': '--bq-text--primary',
+      '--bq-slider--progress-color': '--bq-ui--brand',
+      '--bq-slider--thumb-background': '--bq-ui--primary',
+      '--bq-slider--thumb-border-color': '--bq-stroke--brand',
+      '--bq-slider--trackarea-color': '--bq-ui--tertiary',
+    };
+
+    for (const [componentVar, roleVar] of Object.entries(expectedRoles)) {
+      expect(hostStyle.getPropertyValue(componentVar).trim()).toBe(hostStyle.getPropertyValue(roleVar).trim());
+    }
+  });
+
+  it('should paint the track, progress, and labels with the color variables', async () => {
+    const { root } = await render(<bq-slider enableValueIndicator type="range" value="[20,60]" />);
+
+    await waitForStable(root);
+
+    expect(computedStyle('bq-slider >>> span[part="track-area"]', ['backgroundColor']).backgroundColor).toBe(
+      resolveColor('var(--bq-ui--tertiary)'),
+    );
+    expect(computedStyle('bq-slider >>> span[part="progress-area"]', ['backgroundColor']).backgroundColor).toBe(
+      resolveColor('var(--bq-ui--brand)'),
+    );
+    expect(computedStyle('bq-slider >>> span[part="label-start"]', ['color']).color).toBe(
+      resolveColor('var(--bq-text--primary)'),
+    );
+    expect(computedStyle('bq-slider >>> span[part="label-end"]', ['color']).color).toBe(
+      resolveColor('var(--bq-text--primary)'),
+    );
+  });
+
+  it('should allow overriding the label color variable', async () => {
+    const { root } = await render(
+      <bq-slider enableValueIndicator value={30} style={{ '--bq-slider--label-color': 'rgb(1, 2, 3)' }} />,
+    );
+
+    await waitForStable(root);
+
+    expect(computedStyle('bq-slider >>> span[part="label-start"]', ['color']).color).toBe('rgb(1, 2, 3)');
   });
 });

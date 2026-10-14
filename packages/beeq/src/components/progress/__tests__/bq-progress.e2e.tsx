@@ -9,6 +9,14 @@ const getTooltip = (element: HTMLBqProgressElement) =>
   element.shadowRoot?.querySelector<HTMLBqTooltipElement>('bq-tooltip');
 const getIndeterminate = (element: HTMLBqProgressElement) =>
   element.shadowRoot?.querySelector<HTMLDivElement>('[part="indeterminate"]');
+const resolveColor = (value: string) => {
+  const probe = document.createElement('span');
+  probe.style.color = value;
+  document.body.appendChild(probe);
+  const { color } = getComputedStyle(probe);
+  probe.remove();
+  return color;
+};
 const getAlignmentError = (element: HTMLBqProgressElement) => {
   const bar = getProgressBar(element).getBoundingClientRect();
   const panel = getTooltip(element).shadowRoot.querySelector<HTMLElement>('[part="panel"]').getBoundingClientRect();
@@ -112,8 +120,47 @@ describe('bq-progress', () => {
     await waitForStable(bqProgress);
 
     expect(getProgressBar(bqProgress)).toHaveClass('progress-bar__error');
-    expect(getLabel(bqProgress)).toHaveClass('text-danger');
-    expect(bqProgress.style.getPropertyValue('--bq-progress-bar--indicatorColor')).toBe('var(--bq-ui--danger)');
+    expect(getComputedStyle(getLabel(bqProgress)).color).toBe(resolveColor('var(--bq-text--danger)'));
+    // The public indicator colour must not be mutated by the error type
+    expect(bqProgress.style.getPropertyValue('--bq-progress-bar--indicatorColor')).toBe('');
+  });
+
+  it('should use the default label and indicator colours', async () => {
+    const { root } = await render(<bq-progress indeterminate label />);
+    const bqProgress = root as HTMLBqProgressElement;
+
+    await waitForStable(bqProgress);
+
+    expect(getComputedStyle(getLabel(bqProgress)).color).toBe(resolveColor('var(--bq-text--primary)'));
+    expect(getComputedStyle(getIndeterminate(bqProgress)).backgroundColor).toBe(resolveColor('var(--bq-ui--brand)'));
+  });
+
+  it('should use the error indicator colour for the indeterminate error state', async () => {
+    const { root } = await render(<bq-progress indeterminate type="error" />);
+    const bqProgress = root as HTMLBqProgressElement;
+
+    await waitForStable(bqProgress);
+
+    expect(getComputedStyle(getIndeterminate(bqProgress)).backgroundColor).toBe(resolveColor('var(--bq-ui--danger)'));
+  });
+
+  it('should apply custom error colour overrides', async () => {
+    const { root } = await render(
+      <bq-progress
+        indeterminate
+        style={{
+          '--bq-progress-bar--indicatorColor-error': 'rgb(255, 0, 0)',
+          '--bq-progress-bar--label-color-error': 'rgb(0, 0, 255)',
+        }}
+        type="error"
+      />,
+    );
+    const bqProgress = root as HTMLBqProgressElement;
+
+    await waitForStable(bqProgress);
+
+    expect(getComputedStyle(getIndeterminate(bqProgress)).backgroundColor).toBe('rgb(255, 0, 0)');
+    expect(getComputedStyle(getLabel(bqProgress)).color).toBe('rgb(0, 0, 255)');
   });
 
   it('should render the large thickness styles', async () => {

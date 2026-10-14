@@ -5,6 +5,20 @@
 :host {
   /**
    * @prop --bq-status-circ - Status circle size
+   * @prop --bq-status--dot-color-alert - Status circle color when type is 'alert'
+   * @prop --bq-status--dot-color-danger - Status circle color when type is 'danger'
+   * @prop --bq-status--dot-color-info - Status circle color when type is 'info'
+   * @prop --bq-status--dot-color-neutral - Status circle color when type is 'neutral'
+   * @prop --bq-status--dot-color-success - Status circle color when type is 'success'
+   * @prop --bq-status--text-color - Status text color
    */
   --bq-status-circle--size: 12px;
+
+  --bq-status--dot-color-alert: var(--bq-icon--warning);
+  --bq-status--dot-color-danger: var(--bq-icon--danger);
+  --bq-status--dot-color-info: var(--bq-icon--info);
+  --bq-status--dot-color-neutral: var(--bq-icon--secondary);
+  --bq-status--dot-color-success: var(--bq-icon--success);
+
+  --bq-status--text-color: var(--bq-text--primary);
 }

@@ -7,10 +7,16 @@
    * @prop --bq-progress-bar--height - The progress bars height
    * @prop --bq-progress-bar--indeterminateWidth - The progress bar width when its indeterminate
    * @prop --bq-progress-bar--indicatorColor - The progress bar color (inside the track area)
+   * @prop --bq-progress-bar--indicatorColor-error - The progress bar color (inside the track area) when `type="error"`
+   * @prop --bq-progress-bar--label-color - The label text color
+   * @prop --bq-progress-bar--label-color-error - The label text color when `type="error"`
    * @prop --bq-progress-bar--trackColor - The progress bar track area (the grey one)
    */
   --bq-progress-bar--height: theme(height.1);
   --bq-progress-bar--indeterminateWidth: 25%;
-  --bq-progress-bar--indicatorColor: theme(backgroundColor.ui.brand);
-  --bq-progress-bar--trackColor: theme(backgroundColor.ui.secondary);
+  --bq-progress-bar--indicatorColor: var(--bq-ui--brand);
+  --bq-progress-bar--indicatorColor-error: var(--bq-ui--danger);
+  --bq-progress-bar--label-color: var(--bq-text--primary);
+  --bq-progress-bar--label-color-error: var(--bq-text--danger);
+  --bq-progress-bar--trackColor: var(--bq-ui--secondary);
 }

@@ -669,12 +669,17 @@ Use `indeterminate` when the task is active but the exact completion point canno
 
 ### CSS custom properties
 
-| Variable | Description | Default |
-|---|---|---|
-| `--bq-progress-bar--height` | The progress bar height | `0.25rem` |
-| `--bq-progress-bar--indeterminateWidth` | The width of the moving indicator when indeterminate | `25%` |
-| `--bq-progress-bar--indicatorColor` | The filled indicator color | `var(--bq-ui--brand)` |
-| `--bq-progress-bar--trackColor` | The track color | `var(--bq-ui--secondary)` |
+<Expandable title="CSS variables" defaultOpen={true}>
+  | Variable | Description | Default |
+  |---|---|---|
+  | `--bq-progress-bar--height` | The progress bar height | `0.25rem` |
+  | `--bq-progress-bar--indeterminateWidth` | The width of the moving indicator when indeterminate | `25%` |
+  | `--bq-progress-bar--indicatorColor` | The filled indicator color | `var(--bq-ui--brand)` |
+  | `--bq-progress-bar--indicatorColor-error` | The filled indicator color when `type="error"` | `var(--bq-ui--danger)` |
+  | `--bq-progress-bar--label-color` | The label text color | `var(--bq-text--primary)` |
+  | `--bq-progress-bar--label-color-error` | The label text color when `type="error"` | `var(--bq-text--danger)` |
+  | `--bq-progress-bar--trackColor` | The track color | `var(--bq-ui--secondary)` |
+</Expandable>
 
 <Tip>
   Learn more about [styling with shadow parts](/guides/styles#component-shadow-dom-parts) and [CSS custom properties](/guides/styles#global-css-custom-properties).

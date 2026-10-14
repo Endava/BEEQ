@@ -1,7 +1,16 @@
 import { h } from '@stencil/core';
-import { describe, expect, it, render } from '@stencil/vitest';
+import { describe, expect, it, render, waitForStable } from '@stencil/vitest';
 
 import { getTextContent } from '../../../shared/utils/slot';
+
+const resolveColor = (value: string) => {
+  const probe = document.createElement('span');
+  probe.style.color = value;
+  document.body.appendChild(probe);
+  const { color } = getComputedStyle(probe);
+  probe.remove();
+  return color;
+};
 
 describe('bq-page-title', () => {
   it('should render', async () => {
@@ -72,5 +81,35 @@ describe('bq-page-title', () => {
 
     const suffixSlot = root.shadowRoot?.querySelector('slot[name="suffix"]');
     expect(suffixSlot).not.toBeNull();
+  });
+  it('should use the default colours', async () => {
+    const { root } = await render(
+      <bq-page-title>
+        Title
+        <span slot="sub-title">Sub-title</span>
+      </bq-page-title>,
+    );
+
+    await waitForStable(root);
+
+    const base = root.shadowRoot?.querySelector<HTMLElement>('[part="base"]');
+    const title = root.shadowRoot?.querySelector<HTMLElement>('[part="title"]');
+    const subTitle = root.shadowRoot?.querySelector<HTMLElement>('[part="sub-title"]');
+
+    expect(getComputedStyle(base).borderBlockEndColor).toBe(resolveColor('var(--bq-stroke--primary)'));
+    expect(getComputedStyle(title).color).toBe(resolveColor('var(--bq-text--primary)'));
+    expect(getComputedStyle(subTitle).color).toBe(resolveColor('var(--bq-text--secondary)'));
+  });
+
+  it('should apply a custom divider colour', async () => {
+    const { root } = await render(
+      <bq-page-title style={{ '--bq-page-title--divider-color': 'rgb(255, 0, 0)' }}>Title</bq-page-title>,
+    );
+
+    await waitForStable(root);
+
+    const base = root.shadowRoot?.querySelector<HTMLElement>('[part="base"]');
+
+    expect(getComputedStyle(base).borderBlockEndColor).toBe('rgb(255, 0, 0)');
   });
 });

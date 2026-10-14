@@ -20,6 +20,7 @@
  * @prop --bq-table--header-padding-inline: Header padding inline
  * @prop --bq-table--row-selected-bg: Row selected background
  * @prop --bq-table--row-selected-border: Row selected border
+ * @prop --bq-table--text-color: Table header and cell text color
  */
 .bq-table {
   --bq-table--border-color: var(--bq-stroke--primary);
@@ -34,6 +35,7 @@
   --bq-table--header-padding-inline: var(--bq-spacing-m); // 16px
   --bq-table--row-selected-bg: var(--bq-ui--brand-alt);
   --bq-table--row-selected-border: var(--bq-stroke--brand);
+  --bq-table--text-color: var(--bq-text--primary);
 
   @apply overflow-hidden text-s is-full [&:not(.bordered)]:border-collapse;
 
@@ -65,7 +67,7 @@
   }
 
   th {
-    @apply relative text-start font-semibold text-primary p-b-[--bq-table--header-padding-block] p-i-[--bq-table--header-padding-inline];
+    @apply relative text-start font-semibold text-[color:--bq-table--text-color] p-b-[--bq-table--header-padding-block] p-i-[--bq-table--header-padding-inline];
   }
 
   /* Table body styles */
@@ -76,7 +78,7 @@
   }
 
   td {
-    @apply relative text-start text-primary p-b-[--bq-table--cell-padding-block] p-i-[--bq-table--cell-padding-inline];
+    @apply relative text-start text-[color:--bq-table--text-color] p-b-[--bq-table--cell-padding-block] p-i-[--bq-table--cell-padding-inline];
   }
 
   /* Styling for selected row */
@@ -97,11 +99,11 @@
 
   /* Bordered table style */
   &.bordered {
-    @apply border-separate border-spacing-0 border-s border-primary;
+    @apply border-separate border-spacing-0 border-s border-[color:--bq-table--border-color];
 
     th,
     td {
-      @apply border-s border-solid border-primary;
+      @apply border-s border-solid border-[color:--bq-table--border-color];
     }
 
     thead th:first-child {

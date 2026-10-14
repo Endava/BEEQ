@@ -59,7 +59,9 @@ Follow WCAG 2.1 Level AA standards across all `bq-*` components.
 ## Color & Contrast
 
 - Text: minimum 4.5:1 contrast ratio (3:1 for large text ≥18pt or ≥14pt bold)
-- Focus indicators: minimum 3:1 contrast against adjacent colors
+- Dark mode intent text (`--bq-text--{intent}`) must also reach APCA Lc 60, because WCAG 2 overrates light text on dark surfaces
+- Non-text (icons, meaningful borders, focus indicators): minimum 3:1 against adjacent colors. Decorative dividers (`--bq-stroke--primary`) and disabled borders are exempt
+- Build color pairs from mode roles (see the [styles](styles.instructions.md) guidelines). Their contrast is verified in every theme and mode by the [token contrast spec](../../packages/beeq-tailwindcss/src/theme/__tests__/contrast.spec.ts); a component that pairs roles the spec does not cover must be checked by hand in all four theme × mode combinations
 - Never convey information by color alone — pair with icon, text, or pattern
 - Respect `prefers-reduced-motion` for animations and transitions (`@media (prefers-reduced-motion: reduce)`)
 - Images that carry content have meaningful `alt`; decorative images use `alt=""`

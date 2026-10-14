@@ -6,6 +6,15 @@ import { getTextContent } from '../../../shared/utils/slot';
 const getDialogPanel = (dialog: HTMLBqDialogElement) =>
   dialog.shadowRoot?.querySelector<HTMLDialogElement>('[part="dialog"]');
 
+const resolveColor = (value: string) => {
+  const probe = document.createElement('span');
+  probe.style.color = value;
+  document.body.appendChild(probe);
+  const { color } = getComputedStyle(probe);
+  probe.remove();
+  return color;
+};
+
 afterEach(() => {
   vi.restoreAllMocks();
 });
@@ -179,6 +188,40 @@ describe('bq-dialog', () => {
 
     expect(dialog.size).toBe('large');
     expect(warnSpy).toHaveBeenCalledWith('[BQ-DIALOG] Please notice that "size" should be one of small|medium|large');
+  });
+
+  it('should use the colour custom properties', async () => {
+    const { root } = await render(
+      <bq-dialog footerAppearance="highlight">
+        <h3 slot="title">Dialog Title</h3>
+        <div slot="footer">Footer</div>
+      </bq-dialog>,
+    );
+    const dialog = root as HTMLBqDialogElement;
+
+    await waitForStable(root);
+
+    const panelStyle = getComputedStyle(getDialogPanel(dialog));
+    const footer = dialog.shadowRoot?.querySelector<HTMLElement>('[part="footer"]');
+
+    expect(panelStyle.backgroundColor).toBe(resolveColor('var(--bq-ui--primary)'));
+    expect(panelStyle.color).toBe(resolveColor('var(--bq-text--primary)'));
+    expect(getComputedStyle(footer).backgroundColor).toBe(resolveColor('var(--bq-ui--alt)'));
+  });
+
+  it('should apply a custom footer background', async () => {
+    const { root } = await render(
+      <bq-dialog footerAppearance="highlight" style={{ '--bq-dialog--footer-background': 'rgb(255, 0, 0)' }}>
+        <div slot="footer">Footer</div>
+      </bq-dialog>,
+    );
+    const dialog = root as HTMLBqDialogElement;
+
+    await waitForStable(root);
+
+    const footer = dialog.shadowRoot?.querySelector<HTMLElement>('[part="footer"]');
+
+    expect(getComputedStyle(footer).backgroundColor).toBe('rgb(255, 0, 0)');
   });
 
   it('should not show when bqOpen is defaultPrevented', async () => {

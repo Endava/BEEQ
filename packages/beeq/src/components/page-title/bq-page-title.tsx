@@ -38,6 +38,7 @@ import { hasSlotContent } from '../../shared/utils';
  * @part suffix - The `<div>` page title element that acts as suffix slot container.
  * @part sub-title - The `<div>` page title element that acts as sub-title slot container.
  *
+ * @cssprop --bq-page-title--divider-color - Page title divider (border end) color, used by `--subtitle-borderBlockEnd`
  * @cssprop --paddingY - Padding top and bottom of the page title wrapper
  * @cssprop --subtitle-borderBlockEnd - Page title border end color
  * @cssprop --subtitle-fontWeight - Page title font weight for subtitle

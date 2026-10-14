@@ -7,6 +7,16 @@ import { getTextContent } from '../../../shared/utils/slot';
 const generatedSeparators = (item: HTMLBqBreadcrumbItemElement) =>
   Array.from(item.children).filter((element) => element.matches('[slot="separator"]'));
 
+/** Resolves a CSS color value (e.g. `var(--bq-text--brand)`) to its computed `rgb()` form */
+const resolveColor = (value: string): string => {
+  const probe = document.createElement('div');
+  probe.style.color = value;
+  document.body.appendChild(probe);
+  const { color } = getComputedStyle(probe);
+  probe.remove();
+  return color;
+};
+
 afterEach(() => {
   vi.restoreAllMocks();
 });
@@ -254,5 +264,23 @@ describe('bq-breadcrumb', () => {
 
     expect(items[0]).toEqualAttribute('aria-current', '');
     expect(items[1]).toEqualAttribute('aria-current', 'page');
+  });
+
+  it('should color the default separator with the separator color variable', async () => {
+    const { root } = await render(
+      <bq-breadcrumb>
+        <bq-breadcrumb-item>Home</bq-breadcrumb-item>
+        <bq-breadcrumb-item>Application Center</bq-breadcrumb-item>
+      </bq-breadcrumb>,
+    );
+
+    await waitForStable(root);
+
+    const [firstItem] = Array.from(root.querySelectorAll('bq-breadcrumb-item'));
+    const [separator] = generatedSeparators(firstItem);
+
+    expect(separator).toBeDefined();
+    expect(separator.classList.contains('text-ui-tertiary')).toBe(false);
+    expect(getComputedStyle(separator).color).toBe(resolveColor('var(--bq-ui--tertiary)'));
   });
 });

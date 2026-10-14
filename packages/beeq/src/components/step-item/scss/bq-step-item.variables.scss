@@ -4,18 +4,42 @@
 
 :host {
   /**
+   * @prop --bq-step-item--background-hover - Background base colour of the step item hover state (mixed with `--bq-hover` on hover)
+   * @prop --bq-step-item--description-color - Text color of the description
    * @prop --bq-step-item--prefix-color - Color of the prefix icon
    * @prop --bq-step-item--prefix-color-current - Color of the prefix icon when current
    * @prop --bq-step-item--prefix-color-completed - Color of the prefix icon when completed
    * @prop --bq-step-item--prefix-color-error - Color of the prefix icon when error
    * @prop --bq-step-item--prefix-num-size - Size of the prefix number
    * @prop --bq-step-item--prefix-num-bg-color - Background color of the prefix number
+   * @prop --bq-step-item--prefix-num-bg-color-current - Background color of the prefix number when current
+   * @prop --bq-step-item--prefix-num-bg-color-completed - Background color of the prefix number when completed
+   * @prop --bq-step-item--prefix-num-bg-color-error - Background color of the prefix number when error
+   * @prop --bq-step-item--prefix-num-text-color - Text color of the prefix number
+   * @prop --bq-step-item--prefix-num-text-color-current - Text color of the prefix number when current
+   * @prop --bq-step-item--prefix-num-text-color-completed - Text color of the prefix number when completed
+   * @prop --bq-step-item--prefix-num-text-color-error - Text color of the prefix number when error
+   * @prop --bq-step-item--title-color - Text color of the title
+   * @prop --bq-step-item--title-color-current - Text color of the title when current
    */
-  --bq-step-item--prefix-color: theme(stroke.icon.secondary);
-  --bq-step-item--prefix-color-current: theme(stroke.icon.brand);
-  --bq-step-item--prefix-color-completed: theme(stroke.icon.success);
-  --bq-step-item--prefix-color-error: theme(stroke.icon.danger);
+  --bq-step-item--background-hover: var(--bq-ui--secondary);
+
+  --bq-step-item--prefix-color: var(--bq-icon--secondary);
+  --bq-step-item--prefix-color-current: var(--bq-icon--brand);
+  --bq-step-item--prefix-color-completed: var(--bq-icon--success);
+  --bq-step-item--prefix-color-error: var(--bq-icon--danger);
 
   --bq-step-item--prefix-num-size: theme(spacing.xl);
-  --bq-step-item--prefix-num-bg-color: theme(backgroundColor.ui.secondary);
+  --bq-step-item--prefix-num-bg-color: var(--bq-ui--secondary);
+  --bq-step-item--prefix-num-bg-color-current: var(--bq-ui--brand);
+  --bq-step-item--prefix-num-bg-color-completed: var(--bq-ui--success-alt);
+  --bq-step-item--prefix-num-bg-color-error: var(--bq-ui--danger-alt);
+  --bq-step-item--prefix-num-text-color: var(--bq-text--primary);
+  --bq-step-item--prefix-num-text-color-current: var(--bq-text--on-brand);
+  --bq-step-item--prefix-num-text-color-completed: var(--bq-text--success);
+  --bq-step-item--prefix-num-text-color-error: var(--bq-text--danger);
+
+  --bq-step-item--title-color: var(--bq-text--primary);
+  --bq-step-item--title-color-current: var(--bq-text--brand);
+  --bq-step-item--description-color: var(--bq-text--secondary);
 }

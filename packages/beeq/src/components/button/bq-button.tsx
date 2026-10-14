@@ -67,6 +67,18 @@ import { BUTTON_APPEARANCE, BUTTON_SIZE, BUTTON_TYPE, BUTTON_VARIANT } from './b
  * @cssprop --bq-button--large-paddingX - Button large padding block (top and bottom)
  * @cssprop --bq-button--large-paddingY - Button large padding inline (left and right)
  * @cssprop --bq-button--large-font-size - Button large font size
+ * @cssprop --bq-button--primary-background - Primary button background color
+ * @cssprop --bq-button--primary-text-color - Primary button text color
+ * @cssprop --bq-button--primary-border-color-ghost - Primary ghost button border color
+ * @cssprop --bq-button--primary-text-color-ghost - Primary ghost button text color
+ * @cssprop --bq-button--primary-background-danger - Primary danger button background color
+ * @cssprop --bq-button--primary-text-color-danger - Primary danger button text color
+ * @cssprop --bq-button--secondary-background - Secondary button background color
+ * @cssprop --bq-button--secondary-text-color - Secondary button text color
+ * @cssprop --bq-button--secondary-border-color-ghost - Secondary ghost button border color
+ * @cssprop --bq-button--secondary-text-color-ghost - Secondary ghost button text color
+ * @cssprop --bq-button--link-text-color - Link button text color
+ * @cssprop --bq-button--text-text-color - Text button text color
  */
 @Component({
   tag: 'bq-button',

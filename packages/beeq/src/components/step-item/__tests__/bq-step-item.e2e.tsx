@@ -4,6 +4,16 @@ import { userEvent } from 'vitest/browser';
 
 import { getTextContent } from '../../../shared/utils/slot';
 
+/** Resolves a CSS color value (e.g. `var(--bq-text--brand)`) to its computed `rgb()` form */
+const resolveColor = (value: string): string => {
+  const probe = document.createElement('div');
+  probe.style.color = value;
+  document.body.appendChild(probe);
+  const { color } = getComputedStyle(probe);
+  probe.remove();
+  return color;
+};
+
 afterEach(() => {
   vi.restoreAllMocks();
 });
@@ -264,5 +274,97 @@ describe('bq-step-item', () => {
     const divider = stepItem.shadowRoot?.querySelector<HTMLBqDividerElement>('bq-divider');
 
     expect(divider).toEqualAttribute('stroke-color', 'stroke--brand');
+  });
+
+  it('should use the title and description color variables', async () => {
+    const { root } = await render(
+      <bq-step-item status="current">
+        Title
+        <span slot="description">Description</span>
+      </bq-step-item>,
+    );
+
+    const hostStyle = getComputedStyle(root);
+    expect(hostStyle.getPropertyValue('--bq-step-item--title-color-current').trim()).toBe(
+      hostStyle.getPropertyValue('--bq-text--brand').trim(),
+    );
+    expect(hostStyle.getPropertyValue('--bq-step-item--description-color').trim()).toBe(
+      hostStyle.getPropertyValue('--bq-text--secondary').trim(),
+    );
+
+    const title = getComputedStyle(root.shadowRoot.querySelector('[part="title"]'));
+    const description = getComputedStyle(root.shadowRoot.querySelector('[part="description"]'));
+    const slottedDescription = getComputedStyle(root.querySelector('[slot="description"]'));
+
+    expect(title.color).toBe(resolveColor('var(--bq-text--brand)'));
+    expect(description.color).toBe(resolveColor('var(--bq-text--secondary)'));
+    expect(slottedDescription.opacity).toBe('1');
+  });
+
+  it('should use the primary title color when not current', async () => {
+    const { root } = await render(<bq-step-item status="default">Title</bq-step-item>);
+
+    const title = getComputedStyle(root.shadowRoot.querySelector('[part="title"]'));
+    expect(title.color).toBe(resolveColor('var(--bq-text--primary)'));
+  });
+
+  it('should use the on-brand text color for the current numeric prefix', async () => {
+    const { root } = await render(
+      <bq-step-item status="current" type="numeric">
+        <span slot="prefix">1</span>
+        Title
+      </bq-step-item>,
+    );
+
+    const hostStyle = getComputedStyle(root);
+    expect(hostStyle.getPropertyValue('--bq-step-item--prefix-num-bg-color-current').trim()).toBe(
+      hostStyle.getPropertyValue('--bq-ui--brand').trim(),
+    );
+    expect(hostStyle.getPropertyValue('--bq-step-item--prefix-num-text-color-current').trim()).toBe(
+      hostStyle.getPropertyValue('--bq-text--on-brand').trim(),
+    );
+
+    const prefix = getComputedStyle(root.shadowRoot.querySelector('.bq-step-item__prefix'));
+    expect(prefix.backgroundColor).toBe(resolveColor('var(--bq-ui--brand)'));
+    expect(prefix.color).toBe(resolveColor('var(--bq-text--on-brand)'));
+  });
+
+  it('should use the status colors for the completed and error numeric prefix', async () => {
+    const { root } = await render(
+      <div>
+        <bq-step-item status="completed" type="numeric">
+          <span slot="prefix">1</span>
+          Completed
+        </bq-step-item>
+        <bq-step-item status="error" type="numeric">
+          <span slot="prefix">2</span>
+          Error
+        </bq-step-item>
+      </div>,
+    );
+
+    const [completed, error] = Array.from(root.querySelectorAll('bq-step-item'));
+    const completedPrefix = getComputedStyle(completed.shadowRoot.querySelector('.bq-step-item__prefix'));
+    const errorPrefix = getComputedStyle(error.shadowRoot.querySelector('.bq-step-item__prefix'));
+
+    expect(completedPrefix.backgroundColor).toBe(resolveColor('var(--bq-ui--success-alt)'));
+    expect(completedPrefix.color).toBe(resolveColor('var(--bq-text--success)'));
+    expect(errorPrefix.backgroundColor).toBe(resolveColor('var(--bq-ui--danger-alt)'));
+    expect(errorPrefix.color).toBe(resolveColor('var(--bq-text--danger)'));
+  });
+
+  it('should mix the hover base background with the hover overlay', async () => {
+    const { root } = await render(<bq-step-item status="default">Title</bq-step-item>);
+
+    const hostStyle = getComputedStyle(root);
+    expect(hostStyle.getPropertyValue('--bq-step-item--background-hover').trim()).toBe(
+      hostStyle.getPropertyValue('--bq-ui--secondary').trim(),
+    );
+
+    const base = root.shadowRoot.querySelector<HTMLElement>('[part="base"]');
+    await userEvent.hover(base);
+
+    const expectedBackground = resolveColor('color-mix(in srgb, var(--bq-ui--secondary), var(--bq-hover) 20%)');
+    await expect.poll(() => getComputedStyle(base).backgroundColor).toBe(expectedBackground);
   });
 });

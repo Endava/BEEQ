@@ -37,6 +37,9 @@ import { PROGRESS_BORDER_SHAPE, PROGRESS_THICKNESS, PROGRESS_TYPE } from './bq-p
  * @cssprop --bq-progress-bar--height - The progress bars height
  * @cssprop --bq-progress-bar--indeterminateWidth - The progress bar width when its indeterminate
  * @cssprop --bq-progress-bar--indicatorColor - The progress bar color (inside the track area)
+ * @cssprop --bq-progress-bar--indicatorColor-error - The progress bar color (inside the track area) when `type="error"`
+ * @cssprop --bq-progress-bar--label-color - The label text color
+ * @cssprop --bq-progress-bar--label-color-error - The label text color when `type="error"`
  * @cssprop --bq-progress-bar--trackColor - The progress bar track area (the grey one)
  */
 @Component({
@@ -141,7 +144,6 @@ export class BqProgress {
   render() {
     const style = {
       ...(this.thickness === 'large' && { '--bq-progress-bar--height': 'var(--bq-spacing-xs)' }),
-      ...(this.type === 'error' && { '--bq-progress-bar--indicatorColor': 'var(--bq-ui--danger)' }),
     };
 
     return (
@@ -172,7 +174,9 @@ export class BqProgress {
             {this.indeterminate && (
               <div
                 class={{
-                  'progress-bar__indeterminate bs-[--bq-progress-bar--height] is-[--bq-progress-bar--indeterminateWidth] absolute bg-[--bq-progress-bar--indicatorColor]': true,
+                  'progress-bar__indeterminate bs-[--bq-progress-bar--height] is-[--bq-progress-bar--indeterminateWidth] absolute': true,
+                  'bg-[--bq-progress-bar--indicatorColor]': this.type !== 'error',
+                  'bg-[--bq-progress-bar--indicatorColor-error]': this.type === 'error',
                   'rounded-full': this.borderShape === 'rounded',
                 }}
                 part="indeterminate"
@@ -183,8 +187,8 @@ export class BqProgress {
             aria-hidden={!this.label || this.indeterminate ? 'true' : 'false'}
             class={{
               'ms-xs font-medium leading-regular': true,
-              'text-primary': this.type !== 'error',
-              'text-danger': this.type === 'error',
+              'text-[color:--bq-progress-bar--label-color]': this.type !== 'error',
+              'text-[color:--bq-progress-bar--label-color-error]': this.type === 'error',
               'is-0 invisible ms-0': !this.label || this.indeterminate,
             }}
             part="label"

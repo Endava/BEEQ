@@ -4,6 +4,7 @@
 
 :host {
   /**
+   * @prop --bq-page-title--divider-color - Page title divider (border end) color, used by `--subtitle-borderBlockEnd`
    * @prop --paddingY - Padding top and bottom of the page title wrapper
    * @prop --subtitle-borderBlockEnd - Page title border end color
    * @prop --subtitle-fontWeight - Page title font weight for subtitle
@@ -14,14 +15,15 @@
    * @prop --title-textColor - Page title color for title
    * @prop --title-textSize - Page title text size for title
    */
+  --bq-page-title--divider-color: var(--bq-stroke--primary);
   /* stylelint-disable custom-property-pattern */
   --paddingY: theme(spacing.xl);
-  --subtitle-borderBlockEnd: 1px solid theme(stroke.primary);
+  --subtitle-borderBlockEnd: 1px solid var(--bq-page-title--divider-color);
   --subtitle-fontWeight: theme(fontWeight.medium);
-  --subtitle-textColor: theme(textColor.secondary);
+  --subtitle-textColor: var(--bq-text--secondary);
   --subtitle-textSize: theme(fontSize.l);
   --title-fontWeight: theme(fontWeight.bold);
   --title-lineHeight: theme(lineHeight.regular);
-  --title-textColor: theme(textColor.primary);
+  --title-textColor: var(--bq-text--primary);
   --title-textSize: theme(fontSize.xxl);
 }

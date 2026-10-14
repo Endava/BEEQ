@@ -109,13 +109,16 @@ export namespace Components {
      * @cssprop --bq-accordion--filled-collapsed-background - Accordion filled collapsed header background
      * @cssprop --bq-accordion--filled-collapsed-text-color - Accordion filled collapsed header text color
      * @cssprop --bq-accordion--filled-expanded-background - Accordion filled expanded header background
-     * @cssprop --bq-accordion--filled-expanded-collapsed-hover - Accordion filled expanded header color on hover
+     * @cssprop --bq-accordion--filled-expanded-collapsed-hover - Base colour of the filled expanded header hover state (mixed with `--bq-hover` on hover)
      * @cssprop --bq-accordion--filled-expanded-text-color - Accordion filled expanded header text color
      * @cssprop --bq-accordion--ghost-collapsed-background - Accordion ghost collapsed header background
      * @cssprop --bq-accordion--ghost-collapsed-text-color - Accordion ghost collapsed header text color
      * @cssprop --bq-accordion--ghost-expanded-background - Accordion ghost expanded header background
-     * @cssprop --bq-accordion--ghost-expanded-collapsed-hover - Accordion ghost expanded header color on hover
+     * @cssprop --bq-accordion--ghost-expanded-collapsed-hover - Base colour of the ghost header hover state, collapsed and expanded (mixed with `--bq-hover` on hover)
      * @cssprop --bq-accordion--ghost-expanded-text-color - Accordion ghost expanded header text color
+     * @cssprop --bq-accordion--icon-color - Accordion expand and collapse icon color
+     * @cssprop --bq-accordion--panel-background - Accordion panel background
+     * @cssprop --bq-accordion--panel-text-color - Accordion panel text color
      * @cssprop --bq-accordion--panel-filled-border-color - Accordion filled panel border color
      * @cssprop --bq-accordion--panel-filled-border-style - Accordion filled panel border style
      * @cssprop --bq-accordion--panel-filled-border-width - Accordion filled panel border width
@@ -265,6 +268,7 @@ export namespace Components {
      * @cssprop --bq-alert--icon-color-success - The alert icon color for success type
      * @cssprop --bq-alert--icon-color-warning - The alert icon color for warning type
      * @cssprop --bq-alert--icon-color-error - The alert icon color for error type
+     * @cssprop --bq-alert--text-color - The alert text color
      * @cssprop --bq-alert--padding - The alert padding
      * @cssprop --bq-alert--min-width - The alert min width
      * @cssprop --bq-alert--z-index - The stacking order of a sticky alert. No default is declared.
@@ -341,6 +345,7 @@ export namespace Components {
      * @cssprop --bq-avatar--border-color - Avatar border color
      * @cssprop --bq-avatar--border-style - Avatar border style
      * @cssprop --bq-avatar--border-width - Avatar border width
+     * @cssprop --bq-avatar--text-color - Avatar initials text color
      * @cssprop --bq-avatar--border-radius-circle - Avatar border radius for circle & any size
      * @cssprop --bq-avatar--border-radius-squareXs - Avatar border radius for square & size xsmall
      * @cssprop --bq-avatar--border-radius-squareS - Avatar border radius for square & size small
@@ -407,7 +412,7 @@ export namespace Components {
      */
     interface BqBadge {
         /**
-          * Badge background color. The value should be a valid value of the palette color
+          * Badge background color. The value should be a valid value of the palette color. When it changes, set a matching `textColor` (e.g. `text--on-success` for `ui--success`) so the content stays legible.
          */
         "backgroundColor"?: string;
         /**
@@ -470,6 +475,7 @@ export namespace Components {
      * @cssprop --bq-breadcrumb-item--text-color-current - Text color of the current breadcrumb item (active)
      * @cssprop --bq-breadcrumb-item--text-size - Text size of the breadcrumb item
      * @cssprop --bq-breadcrumb-item--text-size-separator - Text size of the breadcrumb item separator
+     * @cssprop --bq-breadcrumb-item--separator-color - Color of the breadcrumb item separator
      * @cssprop --bq-breadcrumb-item--padding-start - Padding start of the breadcrumb item
      * @cssprop --bq-breadcrumb-item--padding-end - Padding end of the breadcrumb item
      * @cssprop --bq-breadcrumb-item--paddingY - Padding top and bottom of the breadcrumb item
@@ -532,6 +538,18 @@ export namespace Components {
      * @cssprop --bq-button--large-paddingX - Button large padding block (top and bottom)
      * @cssprop --bq-button--large-paddingY - Button large padding inline (left and right)
      * @cssprop --bq-button--large-font-size - Button large font size
+     * @cssprop --bq-button--primary-background - Primary button background color
+     * @cssprop --bq-button--primary-text-color - Primary button text color
+     * @cssprop --bq-button--primary-border-color-ghost - Primary ghost button border color
+     * @cssprop --bq-button--primary-text-color-ghost - Primary ghost button text color
+     * @cssprop --bq-button--primary-background-danger - Primary danger button background color
+     * @cssprop --bq-button--primary-text-color-danger - Primary danger button text color
+     * @cssprop --bq-button--secondary-background - Secondary button background color
+     * @cssprop --bq-button--secondary-text-color - Secondary button text color
+     * @cssprop --bq-button--secondary-border-color-ghost - Secondary ghost button border color
+     * @cssprop --bq-button--secondary-text-color-ghost - Secondary ghost button text color
+     * @cssprop --bq-button--link-text-color - Link button text color
+     * @cssprop --bq-button--text-text-color - Text button text color
      */
     interface BqButton {
         /**
@@ -664,8 +682,13 @@ export namespace Components {
      * @event bqFocus - Handler to be called when the checkbox gets focus
      * @event bqBlur - Handler to be called when the checkbox loses focus
      * @cssprop --bq-checkbox--background-color - Checkbox background color
+     * @cssprop --bq-checkbox--background-color-checked - Checkbox background color when checked or indeterminate
+     * @cssprop --bq-checkbox--border-color - Checkbox border color
+     * @cssprop --bq-checkbox--border-color-checked - Checkbox border color when checked or indeterminate
      * @cssprop --bq-checkbox--border-radius - Checkbox border radius
      * @cssprop --bq-checkbox--border-width - Checkbox border width
+     * @cssprop --bq-checkbox--icon-color-checked - Checkbox check and indeterminate mark color
+     * @cssprop --bq-checkbox--label-text-color - Checkbox label text color
      * @cssprop --bq-checkbox--size - Checkbox size
      */
     interface BqCheckbox {
@@ -788,6 +811,9 @@ export namespace Components {
      * @cssprop --bq-date-picker--border-color - Input border color.
      * @cssprop --bq-date-picker--border-color-disabled - Border color when disabled.
      * @cssprop --bq-date-picker--border-color-focus - Border color on focus.
+     * @cssprop --bq-date-picker--border-color-danger - Border color when the validation status is `error`.
+     * @cssprop --bq-date-picker--border-color-success - Border color when the validation status is `success`.
+     * @cssprop --bq-date-picker--border-color-warning - Border color when the validation status is `warning`.
      * @cssprop --bq-date-picker--border-radius - Input border radius.
      * @cssprop --bq-date-picker--border-style - Border style.
      * @cssprop --bq-date-picker--border-width - Border width.
@@ -1008,6 +1034,8 @@ export namespace Components {
      * @cssprop --bq-dialog--background - Dialog background color
      * @cssprop --bq-dialog--background-backdrop - Dialog backdrop background color
      * @cssprop --bq-dialog--box-shadow - Dialog box shadow
+     * @cssprop --bq-dialog--footer-background - Dialog footer background color (`highlight` footer appearance)
+     * @cssprop --bq-dialog--text-color - Dialog text color
      * @cssprop --bq-dialog--border-color - Dialog border color
      * @cssprop --bq-dialog--border-style - Dialog border style
      * @cssprop --bq-dialog--border-width - Dialog border width
@@ -1174,11 +1202,13 @@ export namespace Components {
      * @event bqOpen - Callback handler to be called when the drawer is opened.
      * @event bqAfterOpen - Callback handler to be called after the drawer has been opened.
      * @event bqAfterClose - Callback handler to be called after the drawer has been closed.
+     * @cssprop --bq-drawer--background - Background color of the drawer panel
      * @cssprop --bq-drawer--backgroundBackdrop - Background color of the backdrop
      * @cssprop --bq-drawer--gap - Gap between the drawer and the viewport
      * @cssprop --bq-drawer--width - Width of the drawer
      * @cssprop --bq-drawer--paddingX - Padding left and right of the drawer
      * @cssprop --bq-drawer--paddingY - Padding top and bottom of the drawer
+     * @cssprop --bq-drawer--text-color - Text color of the drawer panel
      * @cssprop --bq-drawer--zIndex - Z-index of the drawer component
      */
     interface BqDrawer {
@@ -1321,6 +1351,7 @@ export namespace Components {
      * @status stable
      * @dependency bq-icon
      * @attr {"large" | "medium" | "small"} size - The size of the empty state component
+     * @cssprop --bq-empty-state--text-color - The text color of the title and body content
      */
     interface BqEmptyState {
         /**
@@ -1417,12 +1448,18 @@ export namespace Components {
      * @cssprop --bq-input--background-color - Input background color
      * @cssprop --bq-input--border-color - Input border color
      * @cssprop --bq-input--border-color-focus - Input border color on focus
+     * @cssprop --bq-input--border-color-danger - Input border color when the validation status is `error`
+     * @cssprop --bq-input--border-color-success - Input border color when the validation status is `success`
+     * @cssprop --bq-input--border-color-warning - Input border color when the validation status is `warning`
      * @cssprop --bq-input--border-radius - Input border radius
      * @cssprop --bq-input--border-width - Input border width
      * @cssprop --bq-input--border-style - Input border style
      * @cssprop --bq-input--gap - Gap between input content and prefix/suffix
      * @cssprop --bq-input--helper-margin-top - Helper text margin top
      * @cssprop --bq-input--helper-text-color - Helper text color
+     * @cssprop --bq-input--helper-text-color-danger - Helper text color when the validation status is `error`
+     * @cssprop --bq-input--helper-text-color-success - Helper text color when the validation status is `success`
+     * @cssprop --bq-input--helper-text-color-warning - Helper text color when the validation status is `warning`
      * @cssprop --bq-input--helper-text-size - Helper text size
      * @cssprop --bq-input--icon-size - Icon size to use in prefix/suffix and clear button
      * @cssprop --bq-input--label-margin-bottom - Input label margin bottom
@@ -1667,7 +1704,14 @@ export namespace Components {
      * @event bqClick - Handler to be called when item is clicked.
      * @event bqEnter - Emitted when Enter or Space activates a focused option. Checkbox control activation emits bqClick instead.
      * @cssprop --bq-option--background - background color
+     * @cssprop --bq-option--background-hover - background base colour of the hover state (mixed with `--bq-hover` on hover)
+     * @cssprop --bq-option--background-selected - background color when selected
+     * @cssprop --bq-option--expand-text-color-hover - expand control text color on hover
      * @cssprop --bq-option--font-size - font size
+     * @cssprop --bq-option--selection-summary-color - nested selection summary text color
+     * @cssprop --bq-option--text-color - text color
+     * @cssprop --bq-option--text-color-selected - text color when selected
+     * @cssprop --bq-option--tree-line-color - color of the lines connecting nested options
      * @cssprop --bq-option--border-color - border color
      * @cssprop --bq-option--border-style - border style
      * @cssprop --bq-option--border-width - border width
@@ -1807,6 +1851,7 @@ export namespace Components {
      * ```
      * @documentation https://storybook.beeq.design/?path=/docs/components-page-title--overview
      * @status stable
+     * @cssprop --bq-page-title--divider-color - Page title divider (border end) color, used by `--subtitle-borderBlockEnd`
      * @cssprop --paddingY - Padding top and bottom of the page title wrapper
      * @cssprop --subtitle-borderBlockEnd - Page title border end color
      * @cssprop --subtitle-fontWeight - Page title font weight for subtitle
@@ -1901,6 +1946,9 @@ export namespace Components {
      * @cssprop --bq-progress-bar--height - The progress bars height
      * @cssprop --bq-progress-bar--indeterminateWidth - The progress bar width when its indeterminate
      * @cssprop --bq-progress-bar--indicatorColor - The progress bar color (inside the track area)
+     * @cssprop --bq-progress-bar--indicatorColor-error - The progress bar color (inside the track area) when `type="error"`
+     * @cssprop --bq-progress-bar--label-color - The label text color
+     * @cssprop --bq-progress-bar--label-color-error - The label text color when `type="error"`
      * @cssprop --bq-progress-bar--trackColor - The progress bar track area (the grey one)
      */
     interface BqProgress {
@@ -1964,7 +2012,11 @@ export namespace Components {
      * @event bqFocus - Handler to be called when the radio gets focused
      * @event bqKeyDown - The handler is to be called when the radio key is pressed
      * @cssprop --bq-radio--background-color - Radio background color
+     * @cssprop --bq-radio--border-color - Radio border color
+     * @cssprop --bq-radio--border-color-checked - Radio border color when checked
      * @cssprop --bq-radio--border-width - Radio border width
+     * @cssprop --bq-radio--dot-color-checked - Radio inner dot color when checked
+     * @cssprop --bq-radio--label-text-color - Radio label text color
      * @cssprop --bq-radio--size - Radio size
      */
     interface BqRadio {
@@ -2146,12 +2198,18 @@ export namespace Components {
      * @cssprop --bq-select--background-color - Select background color
      * @cssprop --bq-select--border-color - Select border color
      * @cssprop --bq-select--border-color-focus - Select border color on focus
+     * @cssprop --bq-select--border-color-danger - Select border color when the validation status is `error`
+     * @cssprop --bq-select--border-color-success - Select border color when the validation status is `success`
+     * @cssprop --bq-select--border-color-warning - Select border color when the validation status is `warning`
      * @cssprop --bq-select--border-radius - Select border radius
      * @cssprop --bq-select--border-width - Select border width
      * @cssprop --bq-select--border-style - Select border style
      * @cssprop --bq-select--gap - Gap between Select content and prefix/suffix
      * @cssprop --bq-select--helper-margin-top - Helper text margin top
      * @cssprop --bq-select--helper-text-color - Helper text color
+     * @cssprop --bq-select--helper-text-color-danger - Helper text color when the validation status is `error`
+     * @cssprop --bq-select--helper-text-color-success - Helper text color when the validation status is `success`
+     * @cssprop --bq-select--helper-text-color-warning - Helper text color when the validation status is `warning`
      * @cssprop --bq-select--helper-text-size - Helper text size
      * @cssprop --bq-select--icon-size - Icon size to use in prefix/suffix and clear button
      * @cssprop --bq-select--label-margin-bottom - Select label margin bottom
@@ -2378,8 +2436,10 @@ export namespace Components {
      * @event bqFocus - Handler to be called when the button is clicked.
      * @cssprop --bq-side-menu-item--bg-default - Side menu item default background color
      * @cssprop --bq-side-menu-item--bg-active - Side menu item active background color
+     * @cssprop --bq-side-menu-item--bg-hover - Base colour of the hover background (mixed with `--bq-hover` on hover)
      * @cssprop --bq-side-menu-item--text-default - Side menu item default text color
      * @cssprop --bq-side-menu-item--text-active - Side menu item active text color
+     * @cssprop --bq-side-menu-item--text-hover - Base colour of the hover text (mixed with `--bq-hover` on hover)
      * @cssprop --bq-side-menu-item--paddingX - Side menu item vertical padding
      * @cssprop --bq-side-menu-item--paddingY - Side menu item horizontal padding
      */
@@ -2429,6 +2489,9 @@ export namespace Components {
      * @cssprop --bq-slider--thumb-size - Slider hover thumb size
      * @cssprop --bq-slider--progress-color - Slider progress background color
      * @cssprop --bq-slider--trackarea-color - Slider track background color
+     * @cssprop --bq-slider--thumb-background - Slider thumb background color
+     * @cssprop --bq-slider--thumb-border-color - Slider thumb border color
+     * @cssprop --bq-slider--label-color - Slider value indicator (label) text color
      */
     interface BqSlider {
         /**
@@ -2511,6 +2574,7 @@ export namespace Components {
      * @cssprop --bq-spinner--medium-text-fontSize - Spinner medium text font size
      * @cssprop --bq-spinner--small-text-fontSize - Spinner small text font size
      * @cssprop --bq-spinner--text-lineHeight - Spinner text line height
+     * @cssprop --bq-spinner--text-color - Spinner text color
      */
     interface BqSpinner {
         /**
@@ -2540,6 +2604,12 @@ export namespace Components {
      * @dependency bq-badge
      * @attr {"alert" | "danger" | "info" | "neutral" | "success"} type - It defines the type of status to display.
      * @cssprop --bq-status-circ - Status circle size.
+     * @cssprop --bq-status--dot-color-alert - Status circle color when type is 'alert'.
+     * @cssprop --bq-status--dot-color-danger - Status circle color when type is 'danger'.
+     * @cssprop --bq-status--dot-color-info - Status circle color when type is 'info'.
+     * @cssprop --bq-status--dot-color-neutral - Status circle color when type is 'neutral'.
+     * @cssprop --bq-status--dot-color-success - Status circle color when type is 'success'.
+     * @cssprop --bq-status--text-color - Status text color.
      */
     interface BqStatus {
         /**
@@ -2569,12 +2639,23 @@ export namespace Components {
      * @event bqClick - Callback handler emitted when the step item is clicked
      * @event bqFocus - Callback handler emitted when the step item is focused
      * @event bqBlur - Callback handler emitted when the step item loses focus
+     * @cssprop --bq-step-item--background-hover - Background base colour of the step item hover state (mixed with `--bq-hover` on hover)
+     * @cssprop --bq-step-item--description-color - Text color of the description
      * @cssprop --bq-step-item--prefix-color - Color of the prefix icon
      * @cssprop --bq-step-item--prefix-color-current - Color of the prefix icon when current
      * @cssprop --bq-step-item--prefix-color-completed - Color of the prefix icon when completed
      * @cssprop --bq-step-item--prefix-color-error - Color of the prefix icon when error
      * @cssprop --bq-step-item--prefix-num-size - Size of the prefix number
      * @cssprop --bq-step-item--prefix-num-bg-color - Background color of the prefix number
+     * @cssprop --bq-step-item--prefix-num-bg-color-current - Background color of the prefix number when current
+     * @cssprop --bq-step-item--prefix-num-bg-color-completed - Background color of the prefix number when completed
+     * @cssprop --bq-step-item--prefix-num-bg-color-error - Background color of the prefix number when error
+     * @cssprop --bq-step-item--prefix-num-text-color - Text color of the prefix number
+     * @cssprop --bq-step-item--prefix-num-text-color-current - Text color of the prefix number when current
+     * @cssprop --bq-step-item--prefix-num-text-color-completed - Text color of the prefix number when completed
+     * @cssprop --bq-step-item--prefix-num-text-color-error - Text color of the prefix number when error
+     * @cssprop --bq-step-item--title-color - Text color of the title
+     * @cssprop --bq-step-item--title-color-current - Text color of the title when current
      */
     interface BqStepItem {
         /**
@@ -2684,6 +2765,13 @@ export namespace Components {
      * @cssprop --bq-switch--justify-content - Switch justify content
      * @cssprop --bq-switch--width - Switch width
      * @cssprop --bq-switch--dot-size - Switch dot size
+     * @cssprop --bq-switch--dot-color - Switch dot color
+     * @cssprop --bq-switch--dot-color-checked - Switch dot color when checked
+     * @cssprop --bq-switch--icon-color - Switch inner icon color (unchecked)
+     * @cssprop --bq-switch--icon-color-checked - Switch inner icon color when checked
+     * @cssprop --bq-switch--label-text-color - Switch label text color
+     * @cssprop --bq-switch--track-color - Switch track color
+     * @cssprop --bq-switch--track-color-checked - Switch track color when checked
      */
     interface BqSwitch {
         /**
@@ -2774,11 +2862,13 @@ export namespace Components {
      * @method vClick - Simulate a click event on the native `<button>` HTML element used under the hood
      * @method vFocus - Sets focus on the native `<button>` HTML element used under the hood
      * @method vBlur - Remove focus from the native `<button>` HTML element used under the hood
+     * @cssprop --bq-tab--background-hover - Background base colour of the hover state (mixed with `--bq-hover` on hover)
      * @cssprop --bq-tab--font-size - Font size
      * @cssprop --bq-tab--font-weight - Font weight
      * @cssprop --bq-tab--icon-size-large - Icon size for large tab
      * @cssprop --bq-tab--icon-size-medium - Icon size for medium tab
      * @cssprop --bq-tab--icon-size-small - Icon size for small tab
+     * @cssprop --bq-tab--indicator-color - Color of the active tab indicator
      * @cssprop --bq-tab--label-icon-gap - Gap between label and icon
      * @cssprop --bq-tab--line-height - Line height
      * @cssprop --bq-tab--padding-horizontal-large - Horizontal padding for large tab
@@ -2787,6 +2877,9 @@ export namespace Components {
      * @cssprop --bq-tab--padding-vertical-large - Vertical padding for large tab
      * @cssprop --bq-tab--padding-vertical-medium - Vertical padding for medium tab
      * @cssprop --bq-tab--padding-vertical-small - Vertical padding for small tab
+     * @cssprop --bq-tab--text-color - Text color
+     * @cssprop --bq-tab--text-color-active - Text color of the active tab
+     * @cssprop --bq-tab--text-color-hover - Text base colour of the hover state (mixed with `--bq-hover` on hover)
      */
     interface BqTab {
         /**
@@ -2855,6 +2948,7 @@ export namespace Components {
      * @attr {string} size - The size of the tab
      * @attr {string} value - A string representing the id of the selected tab.
      * @event bqChange - Handler to be called when the tab value changes
+     * @cssprop --bq-tab-group--border-color - Color of the divider line along the tabs
      */
     interface BqTabGroup {
         /**
@@ -2926,6 +3020,34 @@ export namespace Components {
      * @cssprop --bq-tag--medium-gap - Tag medium gap between content
      * @cssprop --bq-tag--medium-padding-x - Tag medium padding horizontal
      * @cssprop --bq-tag--medium-padding-y - Tag medium padding vertical
+     * @cssprop --bq-tag--text-color - Tag text color
+     * @cssprop --bq-tag--background-selected - Tag background color when it is clickable and selected
+     * @cssprop --bq-tag--text-selected - Tag text color when it is clickable and selected
+     * @cssprop --bq-tag--background-error-filled - Tag background color for the error color and filled variant
+     * @cssprop --bq-tag--text-error-filled - Tag text color for the error color and filled variant
+     * @cssprop --bq-tag--background-error-outline - Tag background color for the error color and outline variant
+     * @cssprop --bq-tag--text-error-outline - Tag text color for the error color and outline variant
+     * @cssprop --bq-tag--border-error-outline - Tag border color for the error color and outline variant
+     * @cssprop --bq-tag--background-gray-filled - Tag background color for the gray color and filled variant
+     * @cssprop --bq-tag--text-gray-filled - Tag text color for the gray color and filled variant
+     * @cssprop --bq-tag--background-gray-outline - Tag background color for the gray color and outline variant
+     * @cssprop --bq-tag--text-gray-outline - Tag text color for the gray color and outline variant
+     * @cssprop --bq-tag--border-gray-outline - Tag border color for the gray color and outline variant
+     * @cssprop --bq-tag--background-info-filled - Tag background color for the info color and filled variant
+     * @cssprop --bq-tag--text-info-filled - Tag text color for the info color and filled variant
+     * @cssprop --bq-tag--background-info-outline - Tag background color for the info color and outline variant
+     * @cssprop --bq-tag--text-info-outline - Tag text color for the info color and outline variant
+     * @cssprop --bq-tag--border-info-outline - Tag border color for the info color and outline variant
+     * @cssprop --bq-tag--background-success-filled - Tag background color for the success color and filled variant
+     * @cssprop --bq-tag--text-success-filled - Tag text color for the success color and filled variant
+     * @cssprop --bq-tag--background-success-outline - Tag background color for the success color and outline variant
+     * @cssprop --bq-tag--text-success-outline - Tag text color for the success color and outline variant
+     * @cssprop --bq-tag--border-success-outline - Tag border color for the success color and outline variant
+     * @cssprop --bq-tag--background-warning-filled - Tag background color for the warning color and filled variant
+     * @cssprop --bq-tag--text-warning-filled - Tag text color for the warning color and filled variant
+     * @cssprop --bq-tag--background-warning-outline - Tag background color for the warning color and outline variant
+     * @cssprop --bq-tag--text-warning-outline - Tag text color for the warning color and outline variant
+     * @cssprop --bq-tag--border-warning-outline - Tag border color for the warning color and outline variant
      */
     interface BqTag {
         /**
@@ -3020,11 +3142,17 @@ export namespace Components {
      * @cssprop --bq-textarea--background-color - Textarea background color
      * @cssprop --bq-textarea--border-color - Textarea border color
      * @cssprop --bq-textarea--border-color-focus - Textarea border color on focus
+     * @cssprop --bq-textarea--border-color-danger - Textarea border color when the validation status is `error`
+     * @cssprop --bq-textarea--border-color-success - Textarea border color when the validation status is `success`
+     * @cssprop --bq-textarea--border-color-warning - Textarea border color when the validation status is `warning`
      * @cssprop --bq-textarea--border-radius - Textarea border radius
      * @cssprop --bq-textarea--border-width - Textarea border width
      * @cssprop --bq-textarea--border-style - Textarea border style
      * @cssprop --bq-textarea--helper-margin-top - Textarea helper text margin top
      * @cssprop --bq-textarea--helper-text-color - Textarea helper text color
+     * @cssprop --bq-textarea--helper-text-color-danger - Helper text color when the validation status is `error`
+     * @cssprop --bq-textarea--helper-text-color-success - Helper text color when the validation status is `success`
+     * @cssprop --bq-textarea--helper-text-color-warning - Helper text color when the validation status is `warning`
      * @cssprop --bq-textarea--helper-text-size - Textarea helper text size
      * @cssprop --bq-textarea--label-margin-bottom - Textarea label margin bottom
      * @cssprop --bq-textarea--label-text-color - Textarea label text color
@@ -3457,13 +3585,16 @@ declare global {
      * @cssprop --bq-accordion--filled-collapsed-background - Accordion filled collapsed header background
      * @cssprop --bq-accordion--filled-collapsed-text-color - Accordion filled collapsed header text color
      * @cssprop --bq-accordion--filled-expanded-background - Accordion filled expanded header background
-     * @cssprop --bq-accordion--filled-expanded-collapsed-hover - Accordion filled expanded header color on hover
+     * @cssprop --bq-accordion--filled-expanded-collapsed-hover - Base colour of the filled expanded header hover state (mixed with `--bq-hover` on hover)
      * @cssprop --bq-accordion--filled-expanded-text-color - Accordion filled expanded header text color
      * @cssprop --bq-accordion--ghost-collapsed-background - Accordion ghost collapsed header background
      * @cssprop --bq-accordion--ghost-collapsed-text-color - Accordion ghost collapsed header text color
      * @cssprop --bq-accordion--ghost-expanded-background - Accordion ghost expanded header background
-     * @cssprop --bq-accordion--ghost-expanded-collapsed-hover - Accordion ghost expanded header color on hover
+     * @cssprop --bq-accordion--ghost-expanded-collapsed-hover - Base colour of the ghost header hover state, collapsed and expanded (mixed with `--bq-hover` on hover)
      * @cssprop --bq-accordion--ghost-expanded-text-color - Accordion ghost expanded header text color
+     * @cssprop --bq-accordion--icon-color - Accordion expand and collapse icon color
+     * @cssprop --bq-accordion--panel-background - Accordion panel background
+     * @cssprop --bq-accordion--panel-text-color - Accordion panel text color
      * @cssprop --bq-accordion--panel-filled-border-color - Accordion filled panel border color
      * @cssprop --bq-accordion--panel-filled-border-style - Accordion filled panel border style
      * @cssprop --bq-accordion--panel-filled-border-width - Accordion filled panel border width
@@ -3581,6 +3712,7 @@ declare global {
      * @cssprop --bq-alert--icon-color-success - The alert icon color for success type
      * @cssprop --bq-alert--icon-color-warning - The alert icon color for warning type
      * @cssprop --bq-alert--icon-color-error - The alert icon color for error type
+     * @cssprop --bq-alert--text-color - The alert text color
      * @cssprop --bq-alert--padding - The alert padding
      * @cssprop --bq-alert--min-width - The alert min width
      * @cssprop --bq-alert--z-index - The stacking order of a sticky alert. No default is declared.
@@ -3626,6 +3758,7 @@ declare global {
      * @cssprop --bq-avatar--border-color - Avatar border color
      * @cssprop --bq-avatar--border-style - Avatar border style
      * @cssprop --bq-avatar--border-width - Avatar border width
+     * @cssprop --bq-avatar--text-color - Avatar initials text color
      * @cssprop --bq-avatar--border-radius-circle - Avatar border radius for circle & any size
      * @cssprop --bq-avatar--border-radius-squareXs - Avatar border radius for square & size xsmall
      * @cssprop --bq-avatar--border-radius-squareS - Avatar border radius for square & size small
@@ -3728,6 +3861,7 @@ declare global {
      * @cssprop --bq-breadcrumb-item--text-color-current - Text color of the current breadcrumb item (active)
      * @cssprop --bq-breadcrumb-item--text-size - Text size of the breadcrumb item
      * @cssprop --bq-breadcrumb-item--text-size-separator - Text size of the breadcrumb item separator
+     * @cssprop --bq-breadcrumb-item--separator-color - Color of the breadcrumb item separator
      * @cssprop --bq-breadcrumb-item--padding-start - Padding start of the breadcrumb item
      * @cssprop --bq-breadcrumb-item--padding-end - Padding end of the breadcrumb item
      * @cssprop --bq-breadcrumb-item--paddingY - Padding top and bottom of the breadcrumb item
@@ -3794,6 +3928,18 @@ declare global {
      * @cssprop --bq-button--large-paddingX - Button large padding block (top and bottom)
      * @cssprop --bq-button--large-paddingY - Button large padding inline (left and right)
      * @cssprop --bq-button--large-font-size - Button large font size
+     * @cssprop --bq-button--primary-background - Primary button background color
+     * @cssprop --bq-button--primary-text-color - Primary button text color
+     * @cssprop --bq-button--primary-border-color-ghost - Primary ghost button border color
+     * @cssprop --bq-button--primary-text-color-ghost - Primary ghost button text color
+     * @cssprop --bq-button--primary-background-danger - Primary danger button background color
+     * @cssprop --bq-button--primary-text-color-danger - Primary danger button text color
+     * @cssprop --bq-button--secondary-background - Secondary button background color
+     * @cssprop --bq-button--secondary-text-color - Secondary button text color
+     * @cssprop --bq-button--secondary-border-color-ghost - Secondary ghost button border color
+     * @cssprop --bq-button--secondary-text-color-ghost - Secondary ghost button text color
+     * @cssprop --bq-button--link-text-color - Link button text color
+     * @cssprop --bq-button--text-text-color - Text button text color
      */
     interface HTMLBqButtonElement extends Components.BqButton, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqButtonElementEventMap>(type: K, listener: (this: HTMLBqButtonElement, ev: BqButtonCustomEvent<HTMLBqButtonElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -3871,8 +4017,13 @@ declare global {
      * @event bqFocus - Handler to be called when the checkbox gets focus
      * @event bqBlur - Handler to be called when the checkbox loses focus
      * @cssprop --bq-checkbox--background-color - Checkbox background color
+     * @cssprop --bq-checkbox--background-color-checked - Checkbox background color when checked or indeterminate
+     * @cssprop --bq-checkbox--border-color - Checkbox border color
+     * @cssprop --bq-checkbox--border-color-checked - Checkbox border color when checked or indeterminate
      * @cssprop --bq-checkbox--border-radius - Checkbox border radius
      * @cssprop --bq-checkbox--border-width - Checkbox border width
+     * @cssprop --bq-checkbox--icon-color-checked - Checkbox check and indeterminate mark color
+     * @cssprop --bq-checkbox--label-text-color - Checkbox label text color
      * @cssprop --bq-checkbox--size - Checkbox size
      */
     interface HTMLBqCheckboxElement extends Components.BqCheckbox, HTMLStencilElement {
@@ -3963,6 +4114,9 @@ declare global {
      * @cssprop --bq-date-picker--border-color - Input border color.
      * @cssprop --bq-date-picker--border-color-disabled - Border color when disabled.
      * @cssprop --bq-date-picker--border-color-focus - Border color on focus.
+     * @cssprop --bq-date-picker--border-color-danger - Border color when the validation status is `error`.
+     * @cssprop --bq-date-picker--border-color-success - Border color when the validation status is `success`.
+     * @cssprop --bq-date-picker--border-color-warning - Border color when the validation status is `warning`.
      * @cssprop --bq-date-picker--border-radius - Input border radius.
      * @cssprop --bq-date-picker--border-style - Border style.
      * @cssprop --bq-date-picker--border-width - Border width.
@@ -4056,6 +4210,8 @@ declare global {
      * @cssprop --bq-dialog--background - Dialog background color
      * @cssprop --bq-dialog--background-backdrop - Dialog backdrop background color
      * @cssprop --bq-dialog--box-shadow - Dialog box shadow
+     * @cssprop --bq-dialog--footer-background - Dialog footer background color (`highlight` footer appearance)
+     * @cssprop --bq-dialog--text-color - Dialog text color
      * @cssprop --bq-dialog--border-color - Dialog border color
      * @cssprop --bq-dialog--border-style - Dialog border style
      * @cssprop --bq-dialog--border-width - Dialog border width
@@ -4147,11 +4303,13 @@ declare global {
      * @event bqOpen - Callback handler to be called when the drawer is opened.
      * @event bqAfterOpen - Callback handler to be called after the drawer has been opened.
      * @event bqAfterClose - Callback handler to be called after the drawer has been closed.
+     * @cssprop --bq-drawer--background - Background color of the drawer panel
      * @cssprop --bq-drawer--backgroundBackdrop - Background color of the backdrop
      * @cssprop --bq-drawer--gap - Gap between the drawer and the viewport
      * @cssprop --bq-drawer--width - Width of the drawer
      * @cssprop --bq-drawer--paddingX - Padding left and right of the drawer
      * @cssprop --bq-drawer--paddingY - Padding top and bottom of the drawer
+     * @cssprop --bq-drawer--text-color - Text color of the drawer panel
      * @cssprop --bq-drawer--zIndex - Z-index of the drawer component
      */
     interface HTMLBqDrawerElement extends Components.BqDrawer, HTMLStencilElement {
@@ -4235,6 +4393,7 @@ declare global {
      * @status stable
      * @dependency bq-icon
      * @attr {"large" | "medium" | "small"} size - The size of the empty state component
+     * @cssprop --bq-empty-state--text-color - The text color of the title and body content
      */
     interface HTMLBqEmptyStateElement extends Components.BqEmptyState, HTMLStencilElement {
     }
@@ -4326,12 +4485,18 @@ declare global {
      * @cssprop --bq-input--background-color - Input background color
      * @cssprop --bq-input--border-color - Input border color
      * @cssprop --bq-input--border-color-focus - Input border color on focus
+     * @cssprop --bq-input--border-color-danger - Input border color when the validation status is `error`
+     * @cssprop --bq-input--border-color-success - Input border color when the validation status is `success`
+     * @cssprop --bq-input--border-color-warning - Input border color when the validation status is `warning`
      * @cssprop --bq-input--border-radius - Input border radius
      * @cssprop --bq-input--border-width - Input border width
      * @cssprop --bq-input--border-style - Input border style
      * @cssprop --bq-input--gap - Gap between input content and prefix/suffix
      * @cssprop --bq-input--helper-margin-top - Helper text margin top
      * @cssprop --bq-input--helper-text-color - Helper text color
+     * @cssprop --bq-input--helper-text-color-danger - Helper text color when the validation status is `error`
+     * @cssprop --bq-input--helper-text-color-success - Helper text color when the validation status is `success`
+     * @cssprop --bq-input--helper-text-color-warning - Helper text color when the validation status is `warning`
      * @cssprop --bq-input--helper-text-size - Helper text size
      * @cssprop --bq-input--icon-size - Icon size to use in prefix/suffix and clear button
      * @cssprop --bq-input--label-margin-bottom - Input label margin bottom
@@ -4462,7 +4627,14 @@ declare global {
      * @event bqClick - Handler to be called when item is clicked.
      * @event bqEnter - Emitted when Enter or Space activates a focused option. Checkbox control activation emits bqClick instead.
      * @cssprop --bq-option--background - background color
+     * @cssprop --bq-option--background-hover - background base colour of the hover state (mixed with `--bq-hover` on hover)
+     * @cssprop --bq-option--background-selected - background color when selected
+     * @cssprop --bq-option--expand-text-color-hover - expand control text color on hover
      * @cssprop --bq-option--font-size - font size
+     * @cssprop --bq-option--selection-summary-color - nested selection summary text color
+     * @cssprop --bq-option--text-color - text color
+     * @cssprop --bq-option--text-color-selected - text color when selected
+     * @cssprop --bq-option--tree-line-color - color of the lines connecting nested options
      * @cssprop --bq-option--border-color - border color
      * @cssprop --bq-option--border-style - border style
      * @cssprop --bq-option--border-width - border width
@@ -4571,6 +4743,7 @@ declare global {
      * ```
      * @documentation https://storybook.beeq.design/?path=/docs/components-page-title--overview
      * @status stable
+     * @cssprop --bq-page-title--divider-color - Page title divider (border end) color, used by `--subtitle-borderBlockEnd`
      * @cssprop --paddingY - Padding top and bottom of the page title wrapper
      * @cssprop --subtitle-borderBlockEnd - Page title border end color
      * @cssprop --subtitle-fontWeight - Page title font weight for subtitle
@@ -4638,6 +4811,9 @@ declare global {
      * @cssprop --bq-progress-bar--height - The progress bars height
      * @cssprop --bq-progress-bar--indeterminateWidth - The progress bar width when its indeterminate
      * @cssprop --bq-progress-bar--indicatorColor - The progress bar color (inside the track area)
+     * @cssprop --bq-progress-bar--indicatorColor-error - The progress bar color (inside the track area) when `type="error"`
+     * @cssprop --bq-progress-bar--label-color - The label text color
+     * @cssprop --bq-progress-bar--label-color-error - The label text color when `type="error"`
      * @cssprop --bq-progress-bar--trackColor - The progress bar track area (the grey one)
      */
     interface HTMLBqProgressElement extends Components.BqProgress, HTMLStencilElement {
@@ -4676,7 +4852,11 @@ declare global {
      * @event bqFocus - Handler to be called when the radio gets focused
      * @event bqKeyDown - The handler is to be called when the radio key is pressed
      * @cssprop --bq-radio--background-color - Radio background color
+     * @cssprop --bq-radio--border-color - Radio border color
+     * @cssprop --bq-radio--border-color-checked - Radio border color when checked
      * @cssprop --bq-radio--border-width - Radio border width
+     * @cssprop --bq-radio--dot-color-checked - Radio inner dot color when checked
+     * @cssprop --bq-radio--label-text-color - Radio label text color
      * @cssprop --bq-radio--size - Radio size
      */
     interface HTMLBqRadioElement extends Components.BqRadio, HTMLStencilElement {
@@ -4800,12 +4980,18 @@ declare global {
      * @cssprop --bq-select--background-color - Select background color
      * @cssprop --bq-select--border-color - Select border color
      * @cssprop --bq-select--border-color-focus - Select border color on focus
+     * @cssprop --bq-select--border-color-danger - Select border color when the validation status is `error`
+     * @cssprop --bq-select--border-color-success - Select border color when the validation status is `success`
+     * @cssprop --bq-select--border-color-warning - Select border color when the validation status is `warning`
      * @cssprop --bq-select--border-radius - Select border radius
      * @cssprop --bq-select--border-width - Select border width
      * @cssprop --bq-select--border-style - Select border style
      * @cssprop --bq-select--gap - Gap between Select content and prefix/suffix
      * @cssprop --bq-select--helper-margin-top - Helper text margin top
      * @cssprop --bq-select--helper-text-color - Helper text color
+     * @cssprop --bq-select--helper-text-color-danger - Helper text color when the validation status is `error`
+     * @cssprop --bq-select--helper-text-color-success - Helper text color when the validation status is `success`
+     * @cssprop --bq-select--helper-text-color-warning - Helper text color when the validation status is `warning`
      * @cssprop --bq-select--helper-text-size - Helper text size
      * @cssprop --bq-select--icon-size - Icon size to use in prefix/suffix and clear button
      * @cssprop --bq-select--label-margin-bottom - Select label margin bottom
@@ -4912,8 +5098,10 @@ declare global {
      * @event bqFocus - Handler to be called when the button is clicked.
      * @cssprop --bq-side-menu-item--bg-default - Side menu item default background color
      * @cssprop --bq-side-menu-item--bg-active - Side menu item active background color
+     * @cssprop --bq-side-menu-item--bg-hover - Base colour of the hover background (mixed with `--bq-hover` on hover)
      * @cssprop --bq-side-menu-item--text-default - Side menu item default text color
      * @cssprop --bq-side-menu-item--text-active - Side menu item active text color
+     * @cssprop --bq-side-menu-item--text-hover - Base colour of the hover text (mixed with `--bq-hover` on hover)
      * @cssprop --bq-side-menu-item--paddingX - Side menu item vertical padding
      * @cssprop --bq-side-menu-item--paddingY - Side menu item horizontal padding
      */
@@ -4965,6 +5153,9 @@ declare global {
      * @cssprop --bq-slider--thumb-size - Slider hover thumb size
      * @cssprop --bq-slider--progress-color - Slider progress background color
      * @cssprop --bq-slider--trackarea-color - Slider track background color
+     * @cssprop --bq-slider--thumb-background - Slider thumb background color
+     * @cssprop --bq-slider--thumb-border-color - Slider thumb border color
+     * @cssprop --bq-slider--label-color - Slider value indicator (label) text color
      */
     interface HTMLBqSliderElement extends Components.BqSlider, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqSliderElementEventMap>(type: K, listener: (this: HTMLBqSliderElement, ev: BqSliderCustomEvent<HTMLBqSliderElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -5001,6 +5192,7 @@ declare global {
      * @cssprop --bq-spinner--medium-text-fontSize - Spinner medium text font size
      * @cssprop --bq-spinner--small-text-fontSize - Spinner small text font size
      * @cssprop --bq-spinner--text-lineHeight - Spinner text line height
+     * @cssprop --bq-spinner--text-color - Spinner text color
      */
     interface HTMLBqSpinnerElement extends Components.BqSpinner, HTMLStencilElement {
     }
@@ -5019,6 +5211,12 @@ declare global {
      * @dependency bq-badge
      * @attr {"alert" | "danger" | "info" | "neutral" | "success"} type - It defines the type of status to display.
      * @cssprop --bq-status-circ - Status circle size.
+     * @cssprop --bq-status--dot-color-alert - Status circle color when type is 'alert'.
+     * @cssprop --bq-status--dot-color-danger - Status circle color when type is 'danger'.
+     * @cssprop --bq-status--dot-color-info - Status circle color when type is 'info'.
+     * @cssprop --bq-status--dot-color-neutral - Status circle color when type is 'neutral'.
+     * @cssprop --bq-status--dot-color-success - Status circle color when type is 'success'.
+     * @cssprop --bq-status--text-color - Status text color.
      */
     interface HTMLBqStatusElement extends Components.BqStatus, HTMLStencilElement {
     }
@@ -5052,12 +5250,23 @@ declare global {
      * @event bqClick - Callback handler emitted when the step item is clicked
      * @event bqFocus - Callback handler emitted when the step item is focused
      * @event bqBlur - Callback handler emitted when the step item loses focus
+     * @cssprop --bq-step-item--background-hover - Background base colour of the step item hover state (mixed with `--bq-hover` on hover)
+     * @cssprop --bq-step-item--description-color - Text color of the description
      * @cssprop --bq-step-item--prefix-color - Color of the prefix icon
      * @cssprop --bq-step-item--prefix-color-current - Color of the prefix icon when current
      * @cssprop --bq-step-item--prefix-color-completed - Color of the prefix icon when completed
      * @cssprop --bq-step-item--prefix-color-error - Color of the prefix icon when error
      * @cssprop --bq-step-item--prefix-num-size - Size of the prefix number
      * @cssprop --bq-step-item--prefix-num-bg-color - Background color of the prefix number
+     * @cssprop --bq-step-item--prefix-num-bg-color-current - Background color of the prefix number when current
+     * @cssprop --bq-step-item--prefix-num-bg-color-completed - Background color of the prefix number when completed
+     * @cssprop --bq-step-item--prefix-num-bg-color-error - Background color of the prefix number when error
+     * @cssprop --bq-step-item--prefix-num-text-color - Text color of the prefix number
+     * @cssprop --bq-step-item--prefix-num-text-color-current - Text color of the prefix number when current
+     * @cssprop --bq-step-item--prefix-num-text-color-completed - Text color of the prefix number when completed
+     * @cssprop --bq-step-item--prefix-num-text-color-error - Text color of the prefix number when error
+     * @cssprop --bq-step-item--title-color - Text color of the title
+     * @cssprop --bq-step-item--title-color-current - Text color of the title when current
      */
     interface HTMLBqStepItemElement extends Components.BqStepItem, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqStepItemElementEventMap>(type: K, listener: (this: HTMLBqStepItemElement, ev: BqStepItemCustomEvent<HTMLBqStepItemElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -5136,6 +5345,13 @@ declare global {
      * @cssprop --bq-switch--justify-content - Switch justify content
      * @cssprop --bq-switch--width - Switch width
      * @cssprop --bq-switch--dot-size - Switch dot size
+     * @cssprop --bq-switch--dot-color - Switch dot color
+     * @cssprop --bq-switch--dot-color-checked - Switch dot color when checked
+     * @cssprop --bq-switch--icon-color - Switch inner icon color (unchecked)
+     * @cssprop --bq-switch--icon-color-checked - Switch inner icon color when checked
+     * @cssprop --bq-switch--label-text-color - Switch label text color
+     * @cssprop --bq-switch--track-color - Switch track color
+     * @cssprop --bq-switch--track-color-checked - Switch track color when checked
      */
     interface HTMLBqSwitchElement extends Components.BqSwitch, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqSwitchElementEventMap>(type: K, listener: (this: HTMLBqSwitchElement, ev: BqSwitchCustomEvent<HTMLBqSwitchElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -5180,11 +5396,13 @@ declare global {
      * @method vClick - Simulate a click event on the native `<button>` HTML element used under the hood
      * @method vFocus - Sets focus on the native `<button>` HTML element used under the hood
      * @method vBlur - Remove focus from the native `<button>` HTML element used under the hood
+     * @cssprop --bq-tab--background-hover - Background base colour of the hover state (mixed with `--bq-hover` on hover)
      * @cssprop --bq-tab--font-size - Font size
      * @cssprop --bq-tab--font-weight - Font weight
      * @cssprop --bq-tab--icon-size-large - Icon size for large tab
      * @cssprop --bq-tab--icon-size-medium - Icon size for medium tab
      * @cssprop --bq-tab--icon-size-small - Icon size for small tab
+     * @cssprop --bq-tab--indicator-color - Color of the active tab indicator
      * @cssprop --bq-tab--label-icon-gap - Gap between label and icon
      * @cssprop --bq-tab--line-height - Line height
      * @cssprop --bq-tab--padding-horizontal-large - Horizontal padding for large tab
@@ -5193,6 +5411,9 @@ declare global {
      * @cssprop --bq-tab--padding-vertical-large - Vertical padding for large tab
      * @cssprop --bq-tab--padding-vertical-medium - Vertical padding for medium tab
      * @cssprop --bq-tab--padding-vertical-small - Vertical padding for small tab
+     * @cssprop --bq-tab--text-color - Text color
+     * @cssprop --bq-tab--text-color-active - Text color of the active tab
+     * @cssprop --bq-tab--text-color-hover - Text base colour of the hover state (mixed with `--bq-hover` on hover)
      */
     interface HTMLBqTabElement extends Components.BqTab, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqTabElementEventMap>(type: K, listener: (this: HTMLBqTabElement, ev: BqTabCustomEvent<HTMLBqTabElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -5231,6 +5452,7 @@ declare global {
      * @attr {string} size - The size of the tab
      * @attr {string} value - A string representing the id of the selected tab.
      * @event bqChange - Handler to be called when the tab value changes
+     * @cssprop --bq-tab-group--border-color - Color of the divider line along the tabs
      */
     interface HTMLBqTabGroupElement extends Components.BqTabGroup, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqTabGroupElementEventMap>(type: K, listener: (this: HTMLBqTabGroupElement, ev: BqTabGroupCustomEvent<HTMLBqTabGroupElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -5292,6 +5514,34 @@ declare global {
      * @cssprop --bq-tag--medium-gap - Tag medium gap between content
      * @cssprop --bq-tag--medium-padding-x - Tag medium padding horizontal
      * @cssprop --bq-tag--medium-padding-y - Tag medium padding vertical
+     * @cssprop --bq-tag--text-color - Tag text color
+     * @cssprop --bq-tag--background-selected - Tag background color when it is clickable and selected
+     * @cssprop --bq-tag--text-selected - Tag text color when it is clickable and selected
+     * @cssprop --bq-tag--background-error-filled - Tag background color for the error color and filled variant
+     * @cssprop --bq-tag--text-error-filled - Tag text color for the error color and filled variant
+     * @cssprop --bq-tag--background-error-outline - Tag background color for the error color and outline variant
+     * @cssprop --bq-tag--text-error-outline - Tag text color for the error color and outline variant
+     * @cssprop --bq-tag--border-error-outline - Tag border color for the error color and outline variant
+     * @cssprop --bq-tag--background-gray-filled - Tag background color for the gray color and filled variant
+     * @cssprop --bq-tag--text-gray-filled - Tag text color for the gray color and filled variant
+     * @cssprop --bq-tag--background-gray-outline - Tag background color for the gray color and outline variant
+     * @cssprop --bq-tag--text-gray-outline - Tag text color for the gray color and outline variant
+     * @cssprop --bq-tag--border-gray-outline - Tag border color for the gray color and outline variant
+     * @cssprop --bq-tag--background-info-filled - Tag background color for the info color and filled variant
+     * @cssprop --bq-tag--text-info-filled - Tag text color for the info color and filled variant
+     * @cssprop --bq-tag--background-info-outline - Tag background color for the info color and outline variant
+     * @cssprop --bq-tag--text-info-outline - Tag text color for the info color and outline variant
+     * @cssprop --bq-tag--border-info-outline - Tag border color for the info color and outline variant
+     * @cssprop --bq-tag--background-success-filled - Tag background color for the success color and filled variant
+     * @cssprop --bq-tag--text-success-filled - Tag text color for the success color and filled variant
+     * @cssprop --bq-tag--background-success-outline - Tag background color for the success color and outline variant
+     * @cssprop --bq-tag--text-success-outline - Tag text color for the success color and outline variant
+     * @cssprop --bq-tag--border-success-outline - Tag border color for the success color and outline variant
+     * @cssprop --bq-tag--background-warning-filled - Tag background color for the warning color and filled variant
+     * @cssprop --bq-tag--text-warning-filled - Tag text color for the warning color and filled variant
+     * @cssprop --bq-tag--background-warning-outline - Tag background color for the warning color and outline variant
+     * @cssprop --bq-tag--text-warning-outline - Tag text color for the warning color and outline variant
+     * @cssprop --bq-tag--border-warning-outline - Tag border color for the warning color and outline variant
      */
     interface HTMLBqTagElement extends Components.BqTag, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqTagElementEventMap>(type: K, listener: (this: HTMLBqTagElement, ev: BqTagCustomEvent<HTMLBqTagElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -5355,11 +5605,17 @@ declare global {
      * @cssprop --bq-textarea--background-color - Textarea background color
      * @cssprop --bq-textarea--border-color - Textarea border color
      * @cssprop --bq-textarea--border-color-focus - Textarea border color on focus
+     * @cssprop --bq-textarea--border-color-danger - Textarea border color when the validation status is `error`
+     * @cssprop --bq-textarea--border-color-success - Textarea border color when the validation status is `success`
+     * @cssprop --bq-textarea--border-color-warning - Textarea border color when the validation status is `warning`
      * @cssprop --bq-textarea--border-radius - Textarea border radius
      * @cssprop --bq-textarea--border-width - Textarea border width
      * @cssprop --bq-textarea--border-style - Textarea border style
      * @cssprop --bq-textarea--helper-margin-top - Textarea helper text margin top
      * @cssprop --bq-textarea--helper-text-color - Textarea helper text color
+     * @cssprop --bq-textarea--helper-text-color-danger - Helper text color when the validation status is `error`
+     * @cssprop --bq-textarea--helper-text-color-success - Helper text color when the validation status is `success`
+     * @cssprop --bq-textarea--helper-text-color-warning - Helper text color when the validation status is `warning`
      * @cssprop --bq-textarea--helper-text-size - Textarea helper text size
      * @cssprop --bq-textarea--label-margin-bottom - Textarea label margin bottom
      * @cssprop --bq-textarea--label-text-color - Textarea label text color
@@ -5589,13 +5845,16 @@ declare namespace LocalJSX {
      * @cssprop --bq-accordion--filled-collapsed-background - Accordion filled collapsed header background
      * @cssprop --bq-accordion--filled-collapsed-text-color - Accordion filled collapsed header text color
      * @cssprop --bq-accordion--filled-expanded-background - Accordion filled expanded header background
-     * @cssprop --bq-accordion--filled-expanded-collapsed-hover - Accordion filled expanded header color on hover
+     * @cssprop --bq-accordion--filled-expanded-collapsed-hover - Base colour of the filled expanded header hover state (mixed with `--bq-hover` on hover)
      * @cssprop --bq-accordion--filled-expanded-text-color - Accordion filled expanded header text color
      * @cssprop --bq-accordion--ghost-collapsed-background - Accordion ghost collapsed header background
      * @cssprop --bq-accordion--ghost-collapsed-text-color - Accordion ghost collapsed header text color
      * @cssprop --bq-accordion--ghost-expanded-background - Accordion ghost expanded header background
-     * @cssprop --bq-accordion--ghost-expanded-collapsed-hover - Accordion ghost expanded header color on hover
+     * @cssprop --bq-accordion--ghost-expanded-collapsed-hover - Base colour of the ghost header hover state, collapsed and expanded (mixed with `--bq-hover` on hover)
      * @cssprop --bq-accordion--ghost-expanded-text-color - Accordion ghost expanded header text color
+     * @cssprop --bq-accordion--icon-color - Accordion expand and collapse icon color
+     * @cssprop --bq-accordion--panel-background - Accordion panel background
+     * @cssprop --bq-accordion--panel-text-color - Accordion panel text color
      * @cssprop --bq-accordion--panel-filled-border-color - Accordion filled panel border color
      * @cssprop --bq-accordion--panel-filled-border-style - Accordion filled panel border style
      * @cssprop --bq-accordion--panel-filled-border-width - Accordion filled panel border width
@@ -5773,6 +6032,7 @@ declare namespace LocalJSX {
      * @cssprop --bq-alert--icon-color-success - The alert icon color for success type
      * @cssprop --bq-alert--icon-color-warning - The alert icon color for warning type
      * @cssprop --bq-alert--icon-color-error - The alert icon color for error type
+     * @cssprop --bq-alert--text-color - The alert text color
      * @cssprop --bq-alert--padding - The alert padding
      * @cssprop --bq-alert--min-width - The alert min width
      * @cssprop --bq-alert--z-index - The stacking order of a sticky alert. No default is declared.
@@ -5857,6 +6117,7 @@ declare namespace LocalJSX {
      * @cssprop --bq-avatar--border-color - Avatar border color
      * @cssprop --bq-avatar--border-style - Avatar border style
      * @cssprop --bq-avatar--border-width - Avatar border width
+     * @cssprop --bq-avatar--text-color - Avatar initials text color
      * @cssprop --bq-avatar--border-radius-circle - Avatar border radius for circle & any size
      * @cssprop --bq-avatar--border-radius-squareXs - Avatar border radius for square & size xsmall
      * @cssprop --bq-avatar--border-radius-squareS - Avatar border radius for square & size small
@@ -5923,7 +6184,7 @@ declare namespace LocalJSX {
      */
     interface BqBadge {
         /**
-          * Badge background color. The value should be a valid value of the palette color
+          * Badge background color. The value should be a valid value of the palette color. When it changes, set a matching `textColor` (e.g. `text--on-success` for `ui--success`) so the content stays legible.
          */
         "backgroundColor"?: string;
         /**
@@ -5986,6 +6247,7 @@ declare namespace LocalJSX {
      * @cssprop --bq-breadcrumb-item--text-color-current - Text color of the current breadcrumb item (active)
      * @cssprop --bq-breadcrumb-item--text-size - Text size of the breadcrumb item
      * @cssprop --bq-breadcrumb-item--text-size-separator - Text size of the breadcrumb item separator
+     * @cssprop --bq-breadcrumb-item--separator-color - Color of the breadcrumb item separator
      * @cssprop --bq-breadcrumb-item--padding-start - Padding start of the breadcrumb item
      * @cssprop --bq-breadcrumb-item--padding-end - Padding end of the breadcrumb item
      * @cssprop --bq-breadcrumb-item--paddingY - Padding top and bottom of the breadcrumb item
@@ -6060,6 +6322,18 @@ declare namespace LocalJSX {
      * @cssprop --bq-button--large-paddingX - Button large padding block (top and bottom)
      * @cssprop --bq-button--large-paddingY - Button large padding inline (left and right)
      * @cssprop --bq-button--large-font-size - Button large font size
+     * @cssprop --bq-button--primary-background - Primary button background color
+     * @cssprop --bq-button--primary-text-color - Primary button text color
+     * @cssprop --bq-button--primary-border-color-ghost - Primary ghost button border color
+     * @cssprop --bq-button--primary-text-color-ghost - Primary ghost button text color
+     * @cssprop --bq-button--primary-background-danger - Primary danger button background color
+     * @cssprop --bq-button--primary-text-color-danger - Primary danger button text color
+     * @cssprop --bq-button--secondary-background - Secondary button background color
+     * @cssprop --bq-button--secondary-text-color - Secondary button text color
+     * @cssprop --bq-button--secondary-border-color-ghost - Secondary ghost button border color
+     * @cssprop --bq-button--secondary-text-color-ghost - Secondary ghost button text color
+     * @cssprop --bq-button--link-text-color - Link button text color
+     * @cssprop --bq-button--text-text-color - Text button text color
      */
     interface BqButton {
         /**
@@ -6212,8 +6486,13 @@ declare namespace LocalJSX {
      * @event bqFocus - Handler to be called when the checkbox gets focus
      * @event bqBlur - Handler to be called when the checkbox loses focus
      * @cssprop --bq-checkbox--background-color - Checkbox background color
+     * @cssprop --bq-checkbox--background-color-checked - Checkbox background color when checked or indeterminate
+     * @cssprop --bq-checkbox--border-color - Checkbox border color
+     * @cssprop --bq-checkbox--border-color-checked - Checkbox border color when checked or indeterminate
      * @cssprop --bq-checkbox--border-radius - Checkbox border radius
      * @cssprop --bq-checkbox--border-width - Checkbox border width
+     * @cssprop --bq-checkbox--icon-color-checked - Checkbox check and indeterminate mark color
+     * @cssprop --bq-checkbox--label-text-color - Checkbox label text color
      * @cssprop --bq-checkbox--size - Checkbox size
      */
     interface BqCheckbox {
@@ -6340,6 +6619,9 @@ declare namespace LocalJSX {
      * @cssprop --bq-date-picker--border-color - Input border color.
      * @cssprop --bq-date-picker--border-color-disabled - Border color when disabled.
      * @cssprop --bq-date-picker--border-color-focus - Border color on focus.
+     * @cssprop --bq-date-picker--border-color-danger - Border color when the validation status is `error`.
+     * @cssprop --bq-date-picker--border-color-success - Border color when the validation status is `success`.
+     * @cssprop --bq-date-picker--border-color-warning - Border color when the validation status is `warning`.
      * @cssprop --bq-date-picker--border-radius - Input border radius.
      * @cssprop --bq-date-picker--border-style - Border style.
      * @cssprop --bq-date-picker--border-width - Border width.
@@ -6575,6 +6857,8 @@ declare namespace LocalJSX {
      * @cssprop --bq-dialog--background - Dialog background color
      * @cssprop --bq-dialog--background-backdrop - Dialog backdrop background color
      * @cssprop --bq-dialog--box-shadow - Dialog box shadow
+     * @cssprop --bq-dialog--footer-background - Dialog footer background color (`highlight` footer appearance)
+     * @cssprop --bq-dialog--text-color - Dialog text color
      * @cssprop --bq-dialog--border-color - Dialog border color
      * @cssprop --bq-dialog--border-style - Dialog border style
      * @cssprop --bq-dialog--border-width - Dialog border width
@@ -6749,11 +7033,13 @@ declare namespace LocalJSX {
      * @event bqOpen - Callback handler to be called when the drawer is opened.
      * @event bqAfterOpen - Callback handler to be called after the drawer has been opened.
      * @event bqAfterClose - Callback handler to be called after the drawer has been closed.
+     * @cssprop --bq-drawer--background - Background color of the drawer panel
      * @cssprop --bq-drawer--backgroundBackdrop - Background color of the backdrop
      * @cssprop --bq-drawer--gap - Gap between the drawer and the viewport
      * @cssprop --bq-drawer--width - Width of the drawer
      * @cssprop --bq-drawer--paddingX - Padding left and right of the drawer
      * @cssprop --bq-drawer--paddingY - Padding top and bottom of the drawer
+     * @cssprop --bq-drawer--text-color - Text color of the drawer panel
      * @cssprop --bq-drawer--zIndex - Z-index of the drawer component
      */
     interface BqDrawer {
@@ -6908,6 +7194,7 @@ declare namespace LocalJSX {
      * @status stable
      * @dependency bq-icon
      * @attr {"large" | "medium" | "small"} size - The size of the empty state component
+     * @cssprop --bq-empty-state--text-color - The text color of the title and body content
      */
     interface BqEmptyState {
         /**
@@ -7008,12 +7295,18 @@ declare namespace LocalJSX {
      * @cssprop --bq-input--background-color - Input background color
      * @cssprop --bq-input--border-color - Input border color
      * @cssprop --bq-input--border-color-focus - Input border color on focus
+     * @cssprop --bq-input--border-color-danger - Input border color when the validation status is `error`
+     * @cssprop --bq-input--border-color-success - Input border color when the validation status is `success`
+     * @cssprop --bq-input--border-color-warning - Input border color when the validation status is `warning`
      * @cssprop --bq-input--border-radius - Input border radius
      * @cssprop --bq-input--border-width - Input border width
      * @cssprop --bq-input--border-style - Input border style
      * @cssprop --bq-input--gap - Gap between input content and prefix/suffix
      * @cssprop --bq-input--helper-margin-top - Helper text margin top
      * @cssprop --bq-input--helper-text-color - Helper text color
+     * @cssprop --bq-input--helper-text-color-danger - Helper text color when the validation status is `error`
+     * @cssprop --bq-input--helper-text-color-success - Helper text color when the validation status is `success`
+     * @cssprop --bq-input--helper-text-color-warning - Helper text color when the validation status is `warning`
      * @cssprop --bq-input--helper-text-size - Helper text size
      * @cssprop --bq-input--icon-size - Icon size to use in prefix/suffix and clear button
      * @cssprop --bq-input--label-margin-bottom - Input label margin bottom
@@ -7282,7 +7575,14 @@ declare namespace LocalJSX {
      * @event bqClick - Handler to be called when item is clicked.
      * @event bqEnter - Emitted when Enter or Space activates a focused option. Checkbox control activation emits bqClick instead.
      * @cssprop --bq-option--background - background color
+     * @cssprop --bq-option--background-hover - background base colour of the hover state (mixed with `--bq-hover` on hover)
+     * @cssprop --bq-option--background-selected - background color when selected
+     * @cssprop --bq-option--expand-text-color-hover - expand control text color on hover
      * @cssprop --bq-option--font-size - font size
+     * @cssprop --bq-option--selection-summary-color - nested selection summary text color
+     * @cssprop --bq-option--text-color - text color
+     * @cssprop --bq-option--text-color-selected - text color when selected
+     * @cssprop --bq-option--tree-line-color - color of the lines connecting nested options
      * @cssprop --bq-option--border-color - border color
      * @cssprop --bq-option--border-style - border style
      * @cssprop --bq-option--border-width - border width
@@ -7442,6 +7742,7 @@ declare namespace LocalJSX {
      * ```
      * @documentation https://storybook.beeq.design/?path=/docs/components-page-title--overview
      * @status stable
+     * @cssprop --bq-page-title--divider-color - Page title divider (border end) color, used by `--subtitle-borderBlockEnd`
      * @cssprop --paddingY - Padding top and bottom of the page title wrapper
      * @cssprop --subtitle-borderBlockEnd - Page title border end color
      * @cssprop --subtitle-fontWeight - Page title font weight for subtitle
@@ -7536,6 +7837,9 @@ declare namespace LocalJSX {
      * @cssprop --bq-progress-bar--height - The progress bars height
      * @cssprop --bq-progress-bar--indeterminateWidth - The progress bar width when its indeterminate
      * @cssprop --bq-progress-bar--indicatorColor - The progress bar color (inside the track area)
+     * @cssprop --bq-progress-bar--indicatorColor-error - The progress bar color (inside the track area) when `type="error"`
+     * @cssprop --bq-progress-bar--label-color - The label text color
+     * @cssprop --bq-progress-bar--label-color-error - The label text color when `type="error"`
      * @cssprop --bq-progress-bar--trackColor - The progress bar track area (the grey one)
      */
     interface BqProgress {
@@ -7599,7 +7903,11 @@ declare namespace LocalJSX {
      * @event bqFocus - Handler to be called when the radio gets focused
      * @event bqKeyDown - The handler is to be called when the radio key is pressed
      * @cssprop --bq-radio--background-color - Radio background color
+     * @cssprop --bq-radio--border-color - Radio border color
+     * @cssprop --bq-radio--border-color-checked - Radio border color when checked
      * @cssprop --bq-radio--border-width - Radio border width
+     * @cssprop --bq-radio--dot-color-checked - Radio inner dot color when checked
+     * @cssprop --bq-radio--label-text-color - Radio label text color
      * @cssprop --bq-radio--size - Radio size
      */
     interface BqRadio {
@@ -7793,12 +8101,18 @@ declare namespace LocalJSX {
      * @cssprop --bq-select--background-color - Select background color
      * @cssprop --bq-select--border-color - Select border color
      * @cssprop --bq-select--border-color-focus - Select border color on focus
+     * @cssprop --bq-select--border-color-danger - Select border color when the validation status is `error`
+     * @cssprop --bq-select--border-color-success - Select border color when the validation status is `success`
+     * @cssprop --bq-select--border-color-warning - Select border color when the validation status is `warning`
      * @cssprop --bq-select--border-radius - Select border radius
      * @cssprop --bq-select--border-width - Select border width
      * @cssprop --bq-select--border-style - Select border style
      * @cssprop --bq-select--gap - Gap between Select content and prefix/suffix
      * @cssprop --bq-select--helper-margin-top - Helper text margin top
      * @cssprop --bq-select--helper-text-color - Helper text color
+     * @cssprop --bq-select--helper-text-color-danger - Helper text color when the validation status is `error`
+     * @cssprop --bq-select--helper-text-color-success - Helper text color when the validation status is `success`
+     * @cssprop --bq-select--helper-text-color-warning - Helper text color when the validation status is `warning`
      * @cssprop --bq-select--helper-text-size - Helper text size
      * @cssprop --bq-select--icon-size - Icon size to use in prefix/suffix and clear button
      * @cssprop --bq-select--label-margin-bottom - Select label margin bottom
@@ -8036,8 +8350,10 @@ declare namespace LocalJSX {
      * @event bqFocus - Handler to be called when the button is clicked.
      * @cssprop --bq-side-menu-item--bg-default - Side menu item default background color
      * @cssprop --bq-side-menu-item--bg-active - Side menu item active background color
+     * @cssprop --bq-side-menu-item--bg-hover - Base colour of the hover background (mixed with `--bq-hover` on hover)
      * @cssprop --bq-side-menu-item--text-default - Side menu item default text color
      * @cssprop --bq-side-menu-item--text-active - Side menu item active text color
+     * @cssprop --bq-side-menu-item--text-hover - Base colour of the hover text (mixed with `--bq-hover` on hover)
      * @cssprop --bq-side-menu-item--paddingX - Side menu item vertical padding
      * @cssprop --bq-side-menu-item--paddingY - Side menu item horizontal padding
      */
@@ -8099,6 +8415,9 @@ declare namespace LocalJSX {
      * @cssprop --bq-slider--thumb-size - Slider hover thumb size
      * @cssprop --bq-slider--progress-color - Slider progress background color
      * @cssprop --bq-slider--trackarea-color - Slider track background color
+     * @cssprop --bq-slider--thumb-background - Slider thumb background color
+     * @cssprop --bq-slider--thumb-border-color - Slider thumb border color
+     * @cssprop --bq-slider--label-color - Slider value indicator (label) text color
      */
     interface BqSlider {
         /**
@@ -8197,6 +8516,7 @@ declare namespace LocalJSX {
      * @cssprop --bq-spinner--medium-text-fontSize - Spinner medium text font size
      * @cssprop --bq-spinner--small-text-fontSize - Spinner small text font size
      * @cssprop --bq-spinner--text-lineHeight - Spinner text line height
+     * @cssprop --bq-spinner--text-color - Spinner text color
      */
     interface BqSpinner {
         /**
@@ -8226,6 +8546,12 @@ declare namespace LocalJSX {
      * @dependency bq-badge
      * @attr {"alert" | "danger" | "info" | "neutral" | "success"} type - It defines the type of status to display.
      * @cssprop --bq-status-circ - Status circle size.
+     * @cssprop --bq-status--dot-color-alert - Status circle color when type is 'alert'.
+     * @cssprop --bq-status--dot-color-danger - Status circle color when type is 'danger'.
+     * @cssprop --bq-status--dot-color-info - Status circle color when type is 'info'.
+     * @cssprop --bq-status--dot-color-neutral - Status circle color when type is 'neutral'.
+     * @cssprop --bq-status--dot-color-success - Status circle color when type is 'success'.
+     * @cssprop --bq-status--text-color - Status text color.
      */
     interface BqStatus {
         /**
@@ -8255,12 +8581,23 @@ declare namespace LocalJSX {
      * @event bqClick - Callback handler emitted when the step item is clicked
      * @event bqFocus - Callback handler emitted when the step item is focused
      * @event bqBlur - Callback handler emitted when the step item loses focus
+     * @cssprop --bq-step-item--background-hover - Background base colour of the step item hover state (mixed with `--bq-hover` on hover)
+     * @cssprop --bq-step-item--description-color - Text color of the description
      * @cssprop --bq-step-item--prefix-color - Color of the prefix icon
      * @cssprop --bq-step-item--prefix-color-current - Color of the prefix icon when current
      * @cssprop --bq-step-item--prefix-color-completed - Color of the prefix icon when completed
      * @cssprop --bq-step-item--prefix-color-error - Color of the prefix icon when error
      * @cssprop --bq-step-item--prefix-num-size - Size of the prefix number
      * @cssprop --bq-step-item--prefix-num-bg-color - Background color of the prefix number
+     * @cssprop --bq-step-item--prefix-num-bg-color-current - Background color of the prefix number when current
+     * @cssprop --bq-step-item--prefix-num-bg-color-completed - Background color of the prefix number when completed
+     * @cssprop --bq-step-item--prefix-num-bg-color-error - Background color of the prefix number when error
+     * @cssprop --bq-step-item--prefix-num-text-color - Text color of the prefix number
+     * @cssprop --bq-step-item--prefix-num-text-color-current - Text color of the prefix number when current
+     * @cssprop --bq-step-item--prefix-num-text-color-completed - Text color of the prefix number when completed
+     * @cssprop --bq-step-item--prefix-num-text-color-error - Text color of the prefix number when error
+     * @cssprop --bq-step-item--title-color - Text color of the title
+     * @cssprop --bq-step-item--title-color-current - Text color of the title when current
      */
     interface BqStepItem {
         /**
@@ -8377,6 +8714,13 @@ declare namespace LocalJSX {
      * @cssprop --bq-switch--justify-content - Switch justify content
      * @cssprop --bq-switch--width - Switch width
      * @cssprop --bq-switch--dot-size - Switch dot size
+     * @cssprop --bq-switch--dot-color - Switch dot color
+     * @cssprop --bq-switch--dot-color-checked - Switch dot color when checked
+     * @cssprop --bq-switch--icon-color - Switch inner icon color (unchecked)
+     * @cssprop --bq-switch--icon-color-checked - Switch inner icon color when checked
+     * @cssprop --bq-switch--label-text-color - Switch label text color
+     * @cssprop --bq-switch--track-color - Switch track color
+     * @cssprop --bq-switch--track-color-checked - Switch track color when checked
      */
     interface BqSwitch {
         /**
@@ -8471,11 +8815,13 @@ declare namespace LocalJSX {
      * @method vClick - Simulate a click event on the native `<button>` HTML element used under the hood
      * @method vFocus - Sets focus on the native `<button>` HTML element used under the hood
      * @method vBlur - Remove focus from the native `<button>` HTML element used under the hood
+     * @cssprop --bq-tab--background-hover - Background base colour of the hover state (mixed with `--bq-hover` on hover)
      * @cssprop --bq-tab--font-size - Font size
      * @cssprop --bq-tab--font-weight - Font weight
      * @cssprop --bq-tab--icon-size-large - Icon size for large tab
      * @cssprop --bq-tab--icon-size-medium - Icon size for medium tab
      * @cssprop --bq-tab--icon-size-small - Icon size for small tab
+     * @cssprop --bq-tab--indicator-color - Color of the active tab indicator
      * @cssprop --bq-tab--label-icon-gap - Gap between label and icon
      * @cssprop --bq-tab--line-height - Line height
      * @cssprop --bq-tab--padding-horizontal-large - Horizontal padding for large tab
@@ -8484,6 +8830,9 @@ declare namespace LocalJSX {
      * @cssprop --bq-tab--padding-vertical-large - Vertical padding for large tab
      * @cssprop --bq-tab--padding-vertical-medium - Vertical padding for medium tab
      * @cssprop --bq-tab--padding-vertical-small - Vertical padding for small tab
+     * @cssprop --bq-tab--text-color - Text color
+     * @cssprop --bq-tab--text-color-active - Text color of the active tab
+     * @cssprop --bq-tab--text-color-hover - Text base colour of the hover state (mixed with `--bq-hover` on hover)
      */
     interface BqTab {
         /**
@@ -8555,6 +8904,7 @@ declare namespace LocalJSX {
      * @attr {string} size - The size of the tab
      * @attr {string} value - A string representing the id of the selected tab.
      * @event bqChange - Handler to be called when the tab value changes
+     * @cssprop --bq-tab-group--border-color - Color of the divider line along the tabs
      */
     interface BqTabGroup {
         /**
@@ -8630,6 +8980,34 @@ declare namespace LocalJSX {
      * @cssprop --bq-tag--medium-gap - Tag medium gap between content
      * @cssprop --bq-tag--medium-padding-x - Tag medium padding horizontal
      * @cssprop --bq-tag--medium-padding-y - Tag medium padding vertical
+     * @cssprop --bq-tag--text-color - Tag text color
+     * @cssprop --bq-tag--background-selected - Tag background color when it is clickable and selected
+     * @cssprop --bq-tag--text-selected - Tag text color when it is clickable and selected
+     * @cssprop --bq-tag--background-error-filled - Tag background color for the error color and filled variant
+     * @cssprop --bq-tag--text-error-filled - Tag text color for the error color and filled variant
+     * @cssprop --bq-tag--background-error-outline - Tag background color for the error color and outline variant
+     * @cssprop --bq-tag--text-error-outline - Tag text color for the error color and outline variant
+     * @cssprop --bq-tag--border-error-outline - Tag border color for the error color and outline variant
+     * @cssprop --bq-tag--background-gray-filled - Tag background color for the gray color and filled variant
+     * @cssprop --bq-tag--text-gray-filled - Tag text color for the gray color and filled variant
+     * @cssprop --bq-tag--background-gray-outline - Tag background color for the gray color and outline variant
+     * @cssprop --bq-tag--text-gray-outline - Tag text color for the gray color and outline variant
+     * @cssprop --bq-tag--border-gray-outline - Tag border color for the gray color and outline variant
+     * @cssprop --bq-tag--background-info-filled - Tag background color for the info color and filled variant
+     * @cssprop --bq-tag--text-info-filled - Tag text color for the info color and filled variant
+     * @cssprop --bq-tag--background-info-outline - Tag background color for the info color and outline variant
+     * @cssprop --bq-tag--text-info-outline - Tag text color for the info color and outline variant
+     * @cssprop --bq-tag--border-info-outline - Tag border color for the info color and outline variant
+     * @cssprop --bq-tag--background-success-filled - Tag background color for the success color and filled variant
+     * @cssprop --bq-tag--text-success-filled - Tag text color for the success color and filled variant
+     * @cssprop --bq-tag--background-success-outline - Tag background color for the success color and outline variant
+     * @cssprop --bq-tag--text-success-outline - Tag text color for the success color and outline variant
+     * @cssprop --bq-tag--border-success-outline - Tag border color for the success color and outline variant
+     * @cssprop --bq-tag--background-warning-filled - Tag background color for the warning color and filled variant
+     * @cssprop --bq-tag--text-warning-filled - Tag text color for the warning color and filled variant
+     * @cssprop --bq-tag--background-warning-outline - Tag background color for the warning color and outline variant
+     * @cssprop --bq-tag--text-warning-outline - Tag text color for the warning color and outline variant
+     * @cssprop --bq-tag--border-warning-outline - Tag border color for the warning color and outline variant
      */
     interface BqTag {
         /**
@@ -8736,11 +9114,17 @@ declare namespace LocalJSX {
      * @cssprop --bq-textarea--background-color - Textarea background color
      * @cssprop --bq-textarea--border-color - Textarea border color
      * @cssprop --bq-textarea--border-color-focus - Textarea border color on focus
+     * @cssprop --bq-textarea--border-color-danger - Textarea border color when the validation status is `error`
+     * @cssprop --bq-textarea--border-color-success - Textarea border color when the validation status is `success`
+     * @cssprop --bq-textarea--border-color-warning - Textarea border color when the validation status is `warning`
      * @cssprop --bq-textarea--border-radius - Textarea border radius
      * @cssprop --bq-textarea--border-width - Textarea border width
      * @cssprop --bq-textarea--border-style - Textarea border style
      * @cssprop --bq-textarea--helper-margin-top - Textarea helper text margin top
      * @cssprop --bq-textarea--helper-text-color - Textarea helper text color
+     * @cssprop --bq-textarea--helper-text-color-danger - Helper text color when the validation status is `error`
+     * @cssprop --bq-textarea--helper-text-color-success - Helper text color when the validation status is `success`
+     * @cssprop --bq-textarea--helper-text-color-warning - Helper text color when the validation status is `warning`
      * @cssprop --bq-textarea--helper-text-size - Textarea helper text size
      * @cssprop --bq-textarea--label-margin-bottom - Textarea label margin bottom
      * @cssprop --bq-textarea--label-text-color - Textarea label text color
@@ -9531,13 +9915,16 @@ declare module "@stencil/core" {
              * @cssprop --bq-accordion--filled-collapsed-background - Accordion filled collapsed header background
              * @cssprop --bq-accordion--filled-collapsed-text-color - Accordion filled collapsed header text color
              * @cssprop --bq-accordion--filled-expanded-background - Accordion filled expanded header background
-             * @cssprop --bq-accordion--filled-expanded-collapsed-hover - Accordion filled expanded header color on hover
+             * @cssprop --bq-accordion--filled-expanded-collapsed-hover - Base colour of the filled expanded header hover state (mixed with `--bq-hover` on hover)
              * @cssprop --bq-accordion--filled-expanded-text-color - Accordion filled expanded header text color
              * @cssprop --bq-accordion--ghost-collapsed-background - Accordion ghost collapsed header background
              * @cssprop --bq-accordion--ghost-collapsed-text-color - Accordion ghost collapsed header text color
              * @cssprop --bq-accordion--ghost-expanded-background - Accordion ghost expanded header background
-             * @cssprop --bq-accordion--ghost-expanded-collapsed-hover - Accordion ghost expanded header color on hover
+             * @cssprop --bq-accordion--ghost-expanded-collapsed-hover - Base colour of the ghost header hover state, collapsed and expanded (mixed with `--bq-hover` on hover)
              * @cssprop --bq-accordion--ghost-expanded-text-color - Accordion ghost expanded header text color
+             * @cssprop --bq-accordion--icon-color - Accordion expand and collapse icon color
+             * @cssprop --bq-accordion--panel-background - Accordion panel background
+             * @cssprop --bq-accordion--panel-text-color - Accordion panel text color
              * @cssprop --bq-accordion--panel-filled-border-color - Accordion filled panel border color
              * @cssprop --bq-accordion--panel-filled-border-style - Accordion filled panel border style
              * @cssprop --bq-accordion--panel-filled-border-width - Accordion filled panel border width
@@ -9631,6 +10018,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-alert--icon-color-success - The alert icon color for success type
              * @cssprop --bq-alert--icon-color-warning - The alert icon color for warning type
              * @cssprop --bq-alert--icon-color-error - The alert icon color for error type
+             * @cssprop --bq-alert--text-color - The alert text color
              * @cssprop --bq-alert--padding - The alert padding
              * @cssprop --bq-alert--min-width - The alert min width
              * @cssprop --bq-alert--z-index - The stacking order of a sticky alert. No default is declared.
@@ -9663,6 +10051,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-avatar--border-color - Avatar border color
              * @cssprop --bq-avatar--border-style - Avatar border style
              * @cssprop --bq-avatar--border-width - Avatar border width
+             * @cssprop --bq-avatar--text-color - Avatar initials text color
              * @cssprop --bq-avatar--border-radius-circle - Avatar border radius for circle & any size
              * @cssprop --bq-avatar--border-radius-squareXs - Avatar border radius for square & size xsmall
              * @cssprop --bq-avatar--border-radius-squareS - Avatar border radius for square & size small
@@ -9745,6 +10134,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-breadcrumb-item--text-color-current - Text color of the current breadcrumb item (active)
              * @cssprop --bq-breadcrumb-item--text-size - Text size of the breadcrumb item
              * @cssprop --bq-breadcrumb-item--text-size-separator - Text size of the breadcrumb item separator
+             * @cssprop --bq-breadcrumb-item--separator-color - Color of the breadcrumb item separator
              * @cssprop --bq-breadcrumb-item--padding-start - Padding start of the breadcrumb item
              * @cssprop --bq-breadcrumb-item--padding-end - Padding end of the breadcrumb item
              * @cssprop --bq-breadcrumb-item--paddingY - Padding top and bottom of the breadcrumb item
@@ -9793,6 +10183,18 @@ declare module "@stencil/core" {
              * @cssprop --bq-button--large-paddingX - Button large padding block (top and bottom)
              * @cssprop --bq-button--large-paddingY - Button large padding inline (left and right)
              * @cssprop --bq-button--large-font-size - Button large font size
+             * @cssprop --bq-button--primary-background - Primary button background color
+             * @cssprop --bq-button--primary-text-color - Primary button text color
+             * @cssprop --bq-button--primary-border-color-ghost - Primary ghost button border color
+             * @cssprop --bq-button--primary-text-color-ghost - Primary ghost button text color
+             * @cssprop --bq-button--primary-background-danger - Primary danger button background color
+             * @cssprop --bq-button--primary-text-color-danger - Primary danger button text color
+             * @cssprop --bq-button--secondary-background - Secondary button background color
+             * @cssprop --bq-button--secondary-text-color - Secondary button text color
+             * @cssprop --bq-button--secondary-border-color-ghost - Secondary ghost button border color
+             * @cssprop --bq-button--secondary-text-color-ghost - Secondary ghost button text color
+             * @cssprop --bq-button--link-text-color - Link button text color
+             * @cssprop --bq-button--text-text-color - Text button text color
              */
             "bq-button": LocalJSX.IntrinsicElements["bq-button"] & JSXBase.HTMLAttributes<HTMLBqButtonElement>;
             /**
@@ -9847,8 +10249,13 @@ declare module "@stencil/core" {
              * @event bqFocus - Handler to be called when the checkbox gets focus
              * @event bqBlur - Handler to be called when the checkbox loses focus
              * @cssprop --bq-checkbox--background-color - Checkbox background color
+             * @cssprop --bq-checkbox--background-color-checked - Checkbox background color when checked or indeterminate
+             * @cssprop --bq-checkbox--border-color - Checkbox border color
+             * @cssprop --bq-checkbox--border-color-checked - Checkbox border color when checked or indeterminate
              * @cssprop --bq-checkbox--border-radius - Checkbox border radius
              * @cssprop --bq-checkbox--border-width - Checkbox border width
+             * @cssprop --bq-checkbox--icon-color-checked - Checkbox check and indeterminate mark color
+             * @cssprop --bq-checkbox--label-text-color - Checkbox label text color
              * @cssprop --bq-checkbox--size - Checkbox size
              */
             "bq-checkbox": LocalJSX.IntrinsicElements["bq-checkbox"] & JSXBase.HTMLAttributes<HTMLBqCheckboxElement>;
@@ -9919,6 +10326,9 @@ declare module "@stencil/core" {
              * @cssprop --bq-date-picker--border-color - Input border color.
              * @cssprop --bq-date-picker--border-color-disabled - Border color when disabled.
              * @cssprop --bq-date-picker--border-color-focus - Border color on focus.
+             * @cssprop --bq-date-picker--border-color-danger - Border color when the validation status is `error`.
+             * @cssprop --bq-date-picker--border-color-success - Border color when the validation status is `success`.
+             * @cssprop --bq-date-picker--border-color-warning - Border color when the validation status is `warning`.
              * @cssprop --bq-date-picker--border-radius - Input border radius.
              * @cssprop --bq-date-picker--border-style - Border style.
              * @cssprop --bq-date-picker--border-width - Border width.
@@ -9992,6 +10402,8 @@ declare module "@stencil/core" {
              * @cssprop --bq-dialog--background - Dialog background color
              * @cssprop --bq-dialog--background-backdrop - Dialog backdrop background color
              * @cssprop --bq-dialog--box-shadow - Dialog box shadow
+             * @cssprop --bq-dialog--footer-background - Dialog footer background color (`highlight` footer appearance)
+             * @cssprop --bq-dialog--text-color - Dialog text color
              * @cssprop --bq-dialog--border-color - Dialog border color
              * @cssprop --bq-dialog--border-style - Dialog border style
              * @cssprop --bq-dialog--border-width - Dialog border width
@@ -10059,11 +10471,13 @@ declare module "@stencil/core" {
              * @event bqOpen - Callback handler to be called when the drawer is opened.
              * @event bqAfterOpen - Callback handler to be called after the drawer has been opened.
              * @event bqAfterClose - Callback handler to be called after the drawer has been closed.
+             * @cssprop --bq-drawer--background - Background color of the drawer panel
              * @cssprop --bq-drawer--backgroundBackdrop - Background color of the backdrop
              * @cssprop --bq-drawer--gap - Gap between the drawer and the viewport
              * @cssprop --bq-drawer--width - Width of the drawer
              * @cssprop --bq-drawer--paddingX - Padding left and right of the drawer
              * @cssprop --bq-drawer--paddingY - Padding top and bottom of the drawer
+             * @cssprop --bq-drawer--text-color - Text color of the drawer panel
              * @cssprop --bq-drawer--zIndex - Z-index of the drawer component
              */
             "bq-drawer": LocalJSX.IntrinsicElements["bq-drawer"] & JSXBase.HTMLAttributes<HTMLBqDrawerElement>;
@@ -10118,6 +10532,7 @@ declare module "@stencil/core" {
              * @status stable
              * @dependency bq-icon
              * @attr {"large" | "medium" | "small"} size - The size of the empty state component
+             * @cssprop --bq-empty-state--text-color - The text color of the title and body content
              */
             "bq-empty-state": LocalJSX.IntrinsicElements["bq-empty-state"] & JSXBase.HTMLAttributes<HTMLBqEmptyStateElement>;
             /**
@@ -10181,12 +10596,18 @@ declare module "@stencil/core" {
              * @cssprop --bq-input--background-color - Input background color
              * @cssprop --bq-input--border-color - Input border color
              * @cssprop --bq-input--border-color-focus - Input border color on focus
+             * @cssprop --bq-input--border-color-danger - Input border color when the validation status is `error`
+             * @cssprop --bq-input--border-color-success - Input border color when the validation status is `success`
+             * @cssprop --bq-input--border-color-warning - Input border color when the validation status is `warning`
              * @cssprop --bq-input--border-radius - Input border radius
              * @cssprop --bq-input--border-width - Input border width
              * @cssprop --bq-input--border-style - Input border style
              * @cssprop --bq-input--gap - Gap between input content and prefix/suffix
              * @cssprop --bq-input--helper-margin-top - Helper text margin top
              * @cssprop --bq-input--helper-text-color - Helper text color
+             * @cssprop --bq-input--helper-text-color-danger - Helper text color when the validation status is `error`
+             * @cssprop --bq-input--helper-text-color-success - Helper text color when the validation status is `success`
+             * @cssprop --bq-input--helper-text-color-warning - Helper text color when the validation status is `warning`
              * @cssprop --bq-input--helper-text-size - Helper text size
              * @cssprop --bq-input--icon-size - Icon size to use in prefix/suffix and clear button
              * @cssprop --bq-input--label-margin-bottom - Input label margin bottom
@@ -10279,7 +10700,14 @@ declare module "@stencil/core" {
              * @event bqClick - Handler to be called when item is clicked.
              * @event bqEnter - Emitted when Enter or Space activates a focused option. Checkbox control activation emits bqClick instead.
              * @cssprop --bq-option--background - background color
+             * @cssprop --bq-option--background-hover - background base colour of the hover state (mixed with `--bq-hover` on hover)
+             * @cssprop --bq-option--background-selected - background color when selected
+             * @cssprop --bq-option--expand-text-color-hover - expand control text color on hover
              * @cssprop --bq-option--font-size - font size
+             * @cssprop --bq-option--selection-summary-color - nested selection summary text color
+             * @cssprop --bq-option--text-color - text color
+             * @cssprop --bq-option--text-color-selected - text color when selected
+             * @cssprop --bq-option--tree-line-color - color of the lines connecting nested options
              * @cssprop --bq-option--border-color - border color
              * @cssprop --bq-option--border-style - border style
              * @cssprop --bq-option--border-width - border width
@@ -10354,6 +10782,7 @@ declare module "@stencil/core" {
              * ```
              * @documentation https://storybook.beeq.design/?path=/docs/components-page-title--overview
              * @status stable
+             * @cssprop --bq-page-title--divider-color - Page title divider (border end) color, used by `--subtitle-borderBlockEnd`
              * @cssprop --paddingY - Padding top and bottom of the page title wrapper
              * @cssprop --subtitle-borderBlockEnd - Page title border end color
              * @cssprop --subtitle-fontWeight - Page title font weight for subtitle
@@ -10411,6 +10840,9 @@ declare module "@stencil/core" {
              * @cssprop --bq-progress-bar--height - The progress bars height
              * @cssprop --bq-progress-bar--indeterminateWidth - The progress bar width when its indeterminate
              * @cssprop --bq-progress-bar--indicatorColor - The progress bar color (inside the track area)
+             * @cssprop --bq-progress-bar--indicatorColor-error - The progress bar color (inside the track area) when `type="error"`
+             * @cssprop --bq-progress-bar--label-color - The label text color
+             * @cssprop --bq-progress-bar--label-color-error - The label text color when `type="error"`
              * @cssprop --bq-progress-bar--trackColor - The progress bar track area (the grey one)
              */
             "bq-progress": LocalJSX.IntrinsicElements["bq-progress"] & JSXBase.HTMLAttributes<HTMLBqProgressElement>;
@@ -10438,7 +10870,11 @@ declare module "@stencil/core" {
              * @event bqFocus - Handler to be called when the radio gets focused
              * @event bqKeyDown - The handler is to be called when the radio key is pressed
              * @cssprop --bq-radio--background-color - Radio background color
+             * @cssprop --bq-radio--border-color - Radio border color
+             * @cssprop --bq-radio--border-color-checked - Radio border color when checked
              * @cssprop --bq-radio--border-width - Radio border width
+             * @cssprop --bq-radio--dot-color-checked - Radio inner dot color when checked
+             * @cssprop --bq-radio--label-text-color - Radio label text color
              * @cssprop --bq-radio--size - Radio size
              */
             "bq-radio": LocalJSX.IntrinsicElements["bq-radio"] & JSXBase.HTMLAttributes<HTMLBqRadioElement>;
@@ -10525,12 +10961,18 @@ declare module "@stencil/core" {
              * @cssprop --bq-select--background-color - Select background color
              * @cssprop --bq-select--border-color - Select border color
              * @cssprop --bq-select--border-color-focus - Select border color on focus
+             * @cssprop --bq-select--border-color-danger - Select border color when the validation status is `error`
+             * @cssprop --bq-select--border-color-success - Select border color when the validation status is `success`
+             * @cssprop --bq-select--border-color-warning - Select border color when the validation status is `warning`
              * @cssprop --bq-select--border-radius - Select border radius
              * @cssprop --bq-select--border-width - Select border width
              * @cssprop --bq-select--border-style - Select border style
              * @cssprop --bq-select--gap - Gap between Select content and prefix/suffix
              * @cssprop --bq-select--helper-margin-top - Helper text margin top
              * @cssprop --bq-select--helper-text-color - Helper text color
+             * @cssprop --bq-select--helper-text-color-danger - Helper text color when the validation status is `error`
+             * @cssprop --bq-select--helper-text-color-success - Helper text color when the validation status is `success`
+             * @cssprop --bq-select--helper-text-color-warning - Helper text color when the validation status is `warning`
              * @cssprop --bq-select--helper-text-size - Helper text size
              * @cssprop --bq-select--icon-size - Icon size to use in prefix/suffix and clear button
              * @cssprop --bq-select--label-margin-bottom - Select label margin bottom
@@ -10602,8 +11044,10 @@ declare module "@stencil/core" {
              * @event bqFocus - Handler to be called when the button is clicked.
              * @cssprop --bq-side-menu-item--bg-default - Side menu item default background color
              * @cssprop --bq-side-menu-item--bg-active - Side menu item active background color
+             * @cssprop --bq-side-menu-item--bg-hover - Base colour of the hover background (mixed with `--bq-hover` on hover)
              * @cssprop --bq-side-menu-item--text-default - Side menu item default text color
              * @cssprop --bq-side-menu-item--text-active - Side menu item active text color
+             * @cssprop --bq-side-menu-item--text-hover - Base colour of the hover text (mixed with `--bq-hover` on hover)
              * @cssprop --bq-side-menu-item--paddingX - Side menu item vertical padding
              * @cssprop --bq-side-menu-item--paddingY - Side menu item horizontal padding
              */
@@ -10637,6 +11081,9 @@ declare module "@stencil/core" {
              * @cssprop --bq-slider--thumb-size - Slider hover thumb size
              * @cssprop --bq-slider--progress-color - Slider progress background color
              * @cssprop --bq-slider--trackarea-color - Slider track background color
+             * @cssprop --bq-slider--thumb-background - Slider thumb background color
+             * @cssprop --bq-slider--thumb-border-color - Slider thumb border color
+             * @cssprop --bq-slider--label-color - Slider value indicator (label) text color
              */
             "bq-slider": LocalJSX.IntrinsicElements["bq-slider"] & JSXBase.HTMLAttributes<HTMLBqSliderElement>;
             /**
@@ -10660,6 +11107,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-spinner--medium-text-fontSize - Spinner medium text font size
              * @cssprop --bq-spinner--small-text-fontSize - Spinner small text font size
              * @cssprop --bq-spinner--text-lineHeight - Spinner text line height
+             * @cssprop --bq-spinner--text-color - Spinner text color
              */
             "bq-spinner": LocalJSX.IntrinsicElements["bq-spinner"] & JSXBase.HTMLAttributes<HTMLBqSpinnerElement>;
             /**
@@ -10673,6 +11121,12 @@ declare module "@stencil/core" {
              * @dependency bq-badge
              * @attr {"alert" | "danger" | "info" | "neutral" | "success"} type - It defines the type of status to display.
              * @cssprop --bq-status-circ - Status circle size.
+             * @cssprop --bq-status--dot-color-alert - Status circle color when type is 'alert'.
+             * @cssprop --bq-status--dot-color-danger - Status circle color when type is 'danger'.
+             * @cssprop --bq-status--dot-color-info - Status circle color when type is 'info'.
+             * @cssprop --bq-status--dot-color-neutral - Status circle color when type is 'neutral'.
+             * @cssprop --bq-status--dot-color-success - Status circle color when type is 'success'.
+             * @cssprop --bq-status--text-color - Status text color.
              */
             "bq-status": LocalJSX.IntrinsicElements["bq-status"] & JSXBase.HTMLAttributes<HTMLBqStatusElement>;
             /**
@@ -10696,12 +11150,23 @@ declare module "@stencil/core" {
              * @event bqClick - Callback handler emitted when the step item is clicked
              * @event bqFocus - Callback handler emitted when the step item is focused
              * @event bqBlur - Callback handler emitted when the step item loses focus
+             * @cssprop --bq-step-item--background-hover - Background base colour of the step item hover state (mixed with `--bq-hover` on hover)
+             * @cssprop --bq-step-item--description-color - Text color of the description
              * @cssprop --bq-step-item--prefix-color - Color of the prefix icon
              * @cssprop --bq-step-item--prefix-color-current - Color of the prefix icon when current
              * @cssprop --bq-step-item--prefix-color-completed - Color of the prefix icon when completed
              * @cssprop --bq-step-item--prefix-color-error - Color of the prefix icon when error
              * @cssprop --bq-step-item--prefix-num-size - Size of the prefix number
              * @cssprop --bq-step-item--prefix-num-bg-color - Background color of the prefix number
+             * @cssprop --bq-step-item--prefix-num-bg-color-current - Background color of the prefix number when current
+             * @cssprop --bq-step-item--prefix-num-bg-color-completed - Background color of the prefix number when completed
+             * @cssprop --bq-step-item--prefix-num-bg-color-error - Background color of the prefix number when error
+             * @cssprop --bq-step-item--prefix-num-text-color - Text color of the prefix number
+             * @cssprop --bq-step-item--prefix-num-text-color-current - Text color of the prefix number when current
+             * @cssprop --bq-step-item--prefix-num-text-color-completed - Text color of the prefix number when completed
+             * @cssprop --bq-step-item--prefix-num-text-color-error - Text color of the prefix number when error
+             * @cssprop --bq-step-item--title-color - Text color of the title
+             * @cssprop --bq-step-item--title-color-current - Text color of the title when current
              */
             "bq-step-item": LocalJSX.IntrinsicElements["bq-step-item"] & JSXBase.HTMLAttributes<HTMLBqStepItemElement>;
             /**
@@ -10757,6 +11222,13 @@ declare module "@stencil/core" {
              * @cssprop --bq-switch--justify-content - Switch justify content
              * @cssprop --bq-switch--width - Switch width
              * @cssprop --bq-switch--dot-size - Switch dot size
+             * @cssprop --bq-switch--dot-color - Switch dot color
+             * @cssprop --bq-switch--dot-color-checked - Switch dot color when checked
+             * @cssprop --bq-switch--icon-color - Switch inner icon color (unchecked)
+             * @cssprop --bq-switch--icon-color-checked - Switch inner icon color when checked
+             * @cssprop --bq-switch--label-text-color - Switch label text color
+             * @cssprop --bq-switch--track-color - Switch track color
+             * @cssprop --bq-switch--track-color-checked - Switch track color when checked
              */
             "bq-switch": LocalJSX.IntrinsicElements["bq-switch"] & JSXBase.HTMLAttributes<HTMLBqSwitchElement>;
             /**
@@ -10782,11 +11254,13 @@ declare module "@stencil/core" {
              * @method vClick - Simulate a click event on the native `<button>` HTML element used under the hood
              * @method vFocus - Sets focus on the native `<button>` HTML element used under the hood
              * @method vBlur - Remove focus from the native `<button>` HTML element used under the hood
+             * @cssprop --bq-tab--background-hover - Background base colour of the hover state (mixed with `--bq-hover` on hover)
              * @cssprop --bq-tab--font-size - Font size
              * @cssprop --bq-tab--font-weight - Font weight
              * @cssprop --bq-tab--icon-size-large - Icon size for large tab
              * @cssprop --bq-tab--icon-size-medium - Icon size for medium tab
              * @cssprop --bq-tab--icon-size-small - Icon size for small tab
+             * @cssprop --bq-tab--indicator-color - Color of the active tab indicator
              * @cssprop --bq-tab--label-icon-gap - Gap between label and icon
              * @cssprop --bq-tab--line-height - Line height
              * @cssprop --bq-tab--padding-horizontal-large - Horizontal padding for large tab
@@ -10795,6 +11269,9 @@ declare module "@stencil/core" {
              * @cssprop --bq-tab--padding-vertical-large - Vertical padding for large tab
              * @cssprop --bq-tab--padding-vertical-medium - Vertical padding for medium tab
              * @cssprop --bq-tab--padding-vertical-small - Vertical padding for small tab
+             * @cssprop --bq-tab--text-color - Text color
+             * @cssprop --bq-tab--text-color-active - Text color of the active tab
+             * @cssprop --bq-tab--text-color-hover - Text base colour of the hover state (mixed with `--bq-hover` on hover)
              */
             "bq-tab": LocalJSX.IntrinsicElements["bq-tab"] & JSXBase.HTMLAttributes<HTMLBqTabElement>;
             /**
@@ -10817,6 +11294,7 @@ declare module "@stencil/core" {
              * @attr {string} size - The size of the tab
              * @attr {string} value - A string representing the id of the selected tab.
              * @event bqChange - Handler to be called when the tab value changes
+             * @cssprop --bq-tab-group--border-color - Color of the divider line along the tabs
              */
             "bq-tab-group": LocalJSX.IntrinsicElements["bq-tab-group"] & JSXBase.HTMLAttributes<HTMLBqTabGroupElement>;
             /**
@@ -10858,6 +11336,34 @@ declare module "@stencil/core" {
              * @cssprop --bq-tag--medium-gap - Tag medium gap between content
              * @cssprop --bq-tag--medium-padding-x - Tag medium padding horizontal
              * @cssprop --bq-tag--medium-padding-y - Tag medium padding vertical
+             * @cssprop --bq-tag--text-color - Tag text color
+             * @cssprop --bq-tag--background-selected - Tag background color when it is clickable and selected
+             * @cssprop --bq-tag--text-selected - Tag text color when it is clickable and selected
+             * @cssprop --bq-tag--background-error-filled - Tag background color for the error color and filled variant
+             * @cssprop --bq-tag--text-error-filled - Tag text color for the error color and filled variant
+             * @cssprop --bq-tag--background-error-outline - Tag background color for the error color and outline variant
+             * @cssprop --bq-tag--text-error-outline - Tag text color for the error color and outline variant
+             * @cssprop --bq-tag--border-error-outline - Tag border color for the error color and outline variant
+             * @cssprop --bq-tag--background-gray-filled - Tag background color for the gray color and filled variant
+             * @cssprop --bq-tag--text-gray-filled - Tag text color for the gray color and filled variant
+             * @cssprop --bq-tag--background-gray-outline - Tag background color for the gray color and outline variant
+             * @cssprop --bq-tag--text-gray-outline - Tag text color for the gray color and outline variant
+             * @cssprop --bq-tag--border-gray-outline - Tag border color for the gray color and outline variant
+             * @cssprop --bq-tag--background-info-filled - Tag background color for the info color and filled variant
+             * @cssprop --bq-tag--text-info-filled - Tag text color for the info color and filled variant
+             * @cssprop --bq-tag--background-info-outline - Tag background color for the info color and outline variant
+             * @cssprop --bq-tag--text-info-outline - Tag text color for the info color and outline variant
+             * @cssprop --bq-tag--border-info-outline - Tag border color for the info color and outline variant
+             * @cssprop --bq-tag--background-success-filled - Tag background color for the success color and filled variant
+             * @cssprop --bq-tag--text-success-filled - Tag text color for the success color and filled variant
+             * @cssprop --bq-tag--background-success-outline - Tag background color for the success color and outline variant
+             * @cssprop --bq-tag--text-success-outline - Tag text color for the success color and outline variant
+             * @cssprop --bq-tag--border-success-outline - Tag border color for the success color and outline variant
+             * @cssprop --bq-tag--background-warning-filled - Tag background color for the warning color and filled variant
+             * @cssprop --bq-tag--text-warning-filled - Tag text color for the warning color and filled variant
+             * @cssprop --bq-tag--background-warning-outline - Tag background color for the warning color and outline variant
+             * @cssprop --bq-tag--text-warning-outline - Tag text color for the warning color and outline variant
+             * @cssprop --bq-tag--border-warning-outline - Tag border color for the warning color and outline variant
              */
             "bq-tag": LocalJSX.IntrinsicElements["bq-tag"] & JSXBase.HTMLAttributes<HTMLBqTagElement>;
             /**
@@ -10901,11 +11407,17 @@ declare module "@stencil/core" {
              * @cssprop --bq-textarea--background-color - Textarea background color
              * @cssprop --bq-textarea--border-color - Textarea border color
              * @cssprop --bq-textarea--border-color-focus - Textarea border color on focus
+             * @cssprop --bq-textarea--border-color-danger - Textarea border color when the validation status is `error`
+             * @cssprop --bq-textarea--border-color-success - Textarea border color when the validation status is `success`
+             * @cssprop --bq-textarea--border-color-warning - Textarea border color when the validation status is `warning`
              * @cssprop --bq-textarea--border-radius - Textarea border radius
              * @cssprop --bq-textarea--border-width - Textarea border width
              * @cssprop --bq-textarea--border-style - Textarea border style
              * @cssprop --bq-textarea--helper-margin-top - Textarea helper text margin top
              * @cssprop --bq-textarea--helper-text-color - Textarea helper text color
+             * @cssprop --bq-textarea--helper-text-color-danger - Helper text color when the validation status is `error`
+             * @cssprop --bq-textarea--helper-text-color-success - Helper text color when the validation status is `success`
+             * @cssprop --bq-textarea--helper-text-color-warning - Helper text color when the validation status is `warning`
              * @cssprop --bq-textarea--helper-text-size - Textarea helper text size
              * @cssprop --bq-textarea--label-margin-bottom - Textarea label margin bottom
              * @cssprop --bq-textarea--label-text-color - Textarea label text color

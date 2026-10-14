@@ -36,6 +36,15 @@
   @apply animate-indeterminate bg-[--bq-progress-bar--indicatorColor];
 }
 
+// Keep vendor pseudo-elements in separate rules: an unknown one invalidates the whole selector list
+.progress-bar.progress-bar__error::-webkit-progress-value {
+  @apply bg-[--bq-progress-bar--indicatorColor-error];
+}
+
+.progress-bar.progress-bar__error::-moz-progress-bar {
+  @apply bg-[--bq-progress-bar--indicatorColor-error];
+}
+
 .progress-bar:indeterminate::-moz-progress-bar {
   @apply bg-[--bq-progress-bar--trackColor];
 }

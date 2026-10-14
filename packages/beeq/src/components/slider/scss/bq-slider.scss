@@ -6,7 +6,7 @@
 
 @layer components {
   .thumb {
-    @apply pointer-events-auto box-content size-[--bq-slider--thumb-size] cursor-pointer appearance-none rounded-full border-m border-solid border-brand bg-ui-primary;
+    @apply pointer-events-auto box-content size-[--bq-slider--thumb-size] cursor-pointer appearance-none rounded-full border-m border-solid border-[color:--bq-slider--thumb-border-color] bg-[--bq-slider--thumb-background];
     @apply transition-[background-color,border-color,box-shadow] duration-300;
   }
 
@@ -15,11 +15,11 @@
   }
 
   .thumb-hover {
-    @apply border-hover-brand;
+    @apply border-[color:color-mix(in_srgb,_var(--bq-slider--thumb-border-color),_var(--bq-hover)_20%)];
   }
 
   .thumb-active {
-    @apply cursor-grabbing bg-active-ui-brand border-active-brand;
+    @apply cursor-grabbing bg-active-ui-brand border-[color:color-mix(in_srgb,_var(--bq-slider--thumb-border-color),_var(--bq-active)_20%)];
   }
 }
 

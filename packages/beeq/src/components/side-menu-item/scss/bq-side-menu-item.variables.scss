@@ -6,15 +6,19 @@
   /**
    * @prop --bq-side-menu-item--bg-default - Side menu item default background color
    * @prop --bq-side-menu-item--bg-active - Side menu item active background color
+   * @prop --bq-side-menu-item--bg-hover - Base colour of the hover background (mixed with `--bq-hover` on hover)
    * @prop --bq-side-menu-item--text-default - Side menu item default text color
    * @prop --bq-side-menu-item--text-active - Side menu item active text color
+   * @prop --bq-side-menu-item--text-hover - Base colour of the hover text (mixed with `--bq-hover` on hover)
    * @prop --bq-side-menu-item--paddingX - Side menu item vertical padding
    * @prop --bq-side-menu-item--paddingY - Side menu item horizontal padding
    */
-  --bq-side-menu-item--bg-default: theme(backgroundColor.transparent);
-  --bq-side-menu-item--bg-active: theme(backgroundColor.ui.brand-alt);
-  --bq-side-menu-item--text-default: theme(textColor.primary);
-  --bq-side-menu-item--text-active: theme(textColor.brand);
+  --bq-side-menu-item--bg-default: transparent;
+  --bq-side-menu-item--bg-active: var(--bq-ui--brand-alt);
+  --bq-side-menu-item--bg-hover: var(--bq-ui--alt);
+  --bq-side-menu-item--text-default: var(--bq-text--primary);
+  --bq-side-menu-item--text-active: var(--bq-text--brand);
+  --bq-side-menu-item--text-hover: var(--bq-text--primary);
   --bq-side-menu-item--paddingX: theme(space.l);
   --bq-side-menu-item--paddingY: theme(space.m);
 }

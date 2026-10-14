@@ -10,6 +10,8 @@
   * @prop --bq-avatar--border-style: Avatar border style
   * @prop --bq-avatar--border-width: Avatar border width
 
+  * @prop --bq-avatar--text-color: Avatar initials text color
+
   * @prop --bq-avatar--border-radius-circle: Avatar border radius for circle & any size
   * @prop --bq-avatar--border-radius-squareXs: Avatar border radius for square & size xsmall
   * @prop --bq-avatar--border-radius-squareS: Avatar border radius for square & size small
@@ -26,11 +28,13 @@
   * @prop --bq-avatar--badge-left-circle: Badge left position shape circle
   */
 
-  --bq-avatar-background: theme(backgroundColor.ui.alt);
+  --bq-avatar-background: var(--bq-ui--alt);
 
-  --bq-avatar--border-color: theme(stroke.tertiary);
+  --bq-avatar--border-color: var(--bq-stroke--tertiary);
   --bq-avatar--border-style: solid;
   --bq-avatar--border-width: theme(borderWidth.m);
+
+  --bq-avatar--text-color: var(--bq-text--primary);
 
   --bq-avatar--border-radius-circle: theme(borderRadius.full);
   --bq-avatar--border-radius-squareXs: theme(borderRadius.xs);

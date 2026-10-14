@@ -91,7 +91,7 @@ export class BqOptionGroup {
 
   render() {
     return (
-      <div class="bg-ui-primary">
+      <div class="bg-[--bq-option-group--background]">
         <legend class="bq-option-group m-be-[--bq-option-group--gapY-list]" part="label">
           <span class="option-group__prefix flex items-center" part="prefix">
             <slot name="header-prefix" />

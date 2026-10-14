@@ -27,6 +27,16 @@ const mkGroup = (
   </bq-tab-group>
 );
 
+/** Resolves a CSS color value (e.g. `var(--bq-text--brand)`) to its computed `rgb()` form */
+const resolveColor = (value: string): string => {
+  const probe = document.createElement('div');
+  probe.style.color = value;
+  document.body.appendChild(probe);
+  const { color } = getComputedStyle(probe);
+  probe.remove();
+  return color;
+};
+
 describe('bq-tab-group', () => {
   it('should render', async () => {
     const { root } = await render(mkGroup());
@@ -179,5 +189,23 @@ describe('bq-tab-group', () => {
     const base = root.shadowRoot.querySelector('[part="base"]');
 
     expect(base.className).toContain('bq-tab-group--vertical');
+  });
+
+  it('should use the border color variable for the divider', async () => {
+    const { root } = await render(
+      <bq-tab-group>
+        <bq-tab tabId="1" controls="panel-1">
+          Tab 1
+        </bq-tab>
+      </bq-tab-group>,
+    );
+
+    const hostStyle = getComputedStyle(root);
+    expect(hostStyle.getPropertyValue('--bq-tab-group--border-color').trim()).toBe(
+      hostStyle.getPropertyValue('--bq-stroke--primary').trim(),
+    );
+
+    const divider = getComputedStyle(root.shadowRoot.querySelector('[part="base"]'), '::after');
+    expect(divider.borderBottomColor).toBe(resolveColor('var(--bq-stroke--primary)'));
   });
 });
