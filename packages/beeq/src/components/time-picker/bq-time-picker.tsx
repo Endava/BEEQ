@@ -14,7 +14,6 @@ import {
   isDefined,
   isEventHandled,
   isEventTargetChildOfElement,
-  isSameSegmentKey,
   isString,
   markEventHandled,
   type TTimeHourCycle,
@@ -39,6 +38,10 @@ import {
   type TTimePickerLabels,
   type TTimePrecision,
 } from './bq-time-picker.types';
+import { InternalButton } from './components/InternalButton';
+import { PanelFooter } from './components/PanelFooter';
+import { FixedMinuteColumn, TimeColumn } from './components/TimeColumn';
+import { TimeSegments } from './components/TimeSegments';
 import { DEFAULT_INPUT_ID, TIME_PICKER_PARTS } from './helper/constants';
 import {
   clampTimeToBounds,
@@ -59,11 +62,9 @@ import {
 import {
   completeTypedDigit,
   getTimeSegmentGroup,
-  getTimeSegmentRange,
   matchDayPeriodKey,
   partialToTime,
   readTimeSegmentGroup,
-  type TTimeSegment,
   type TTimeSegmentGroup,
   type TTimeSegmentKey,
   toPartialTime,
@@ -873,11 +874,6 @@ export class BqTimePicker {
     return !!related && (related === this.el || this.el.contains(related));
   };
 
-  /** Stops the internal buttons' events so they aren't mistaken for the component's own. */
-  private stopInternalEvent = (ev: Event): void => {
-    ev.stopPropagation();
-  };
-
   private handleSegmentsFocusIn = (ev: FocusEvent): void => {
     if (this.segmentContainerElem?.contains(ev.relatedTarget as Node)) return;
 
@@ -1242,180 +1238,6 @@ export class BqTimePicker {
   // Rendering helpers
   // -----------------
 
-  /** Resolves the visible text and the spinbutton range/value of a segment. */
-  private getSegmentSpinValue = (
-    segment: TTimeSegment,
-  ): {
-    display: string;
-    range?: [number, number];
-    valueNow?: number;
-  } => {
-    const { hourCycle } = this.mask;
-    if (segment.field === 'dayPeriod') {
-      if (!segment.value) return { display: '' };
-
-      const [am, pm] = this.dayPeriodLabels;
-      return { display: segment.value === 'pm' ? pm : am };
-    }
-
-    const range = getTimeSegmentRange(segment.field, hourCycle);
-    const numeric = Number(segment.value);
-    const isComplete = segment.value.length === segment.maxLength;
-    const valueNow = isComplete && numeric >= range[0] && numeric <= range[1] ? numeric : undefined;
-    return { display: segment.value, range, valueNow };
-  };
-
-  private renderSegment = (group: TTimeSegmentGroup, index: number): JSX.Element => {
-    const segment = group.segments[index];
-    const key = { groupId: group.id, field: segment.field };
-    const isActive = isSameSegmentKey(this.activeSegment, key);
-    const isInvalid = this.validationStatus === 'error' || this.hasConstraintError;
-    const isComplete = segment.value.length === segment.maxLength;
-    const { display, range, valueNow } = this.getSegmentSpinValue(segment);
-
-    return (
-      <span
-        aria-disabled={this.disabled ? 'true' : undefined}
-        aria-invalid={isInvalid ? 'true' : 'false'}
-        aria-label={this.getFieldLabel(segment.field)}
-        aria-readonly={this.readonly ? 'true' : undefined}
-        aria-required={this.required ? 'true' : undefined}
-        aria-valuemax={range?.[1]}
-        aria-valuemin={range?.[0]}
-        aria-valuenow={valueNow}
-        aria-valuetext={display || 'Empty'}
-        class={{
-          'bq-time-picker__segment': true,
-          'bq-time-picker__segment--day-period': segment.field === 'dayPeriod',
-          'is-active': isActive,
-          'is-empty': !segment.value,
-          'is-partial': segment.value.length > 0 && !isComplete,
-        }}
-        data-group-id={`${key.groupId}`}
-        data-segment-field={key.field}
-        inputmode={segment.field === 'dayPeriod' ? 'text' : 'numeric'}
-        onBlur={this.handleSegmentsFocusOut}
-        onClick={(ev) => this.handleSegmentClick(key, ev)}
-        onFocus={this.handleSegmentsFocusIn}
-        onKeyDown={(ev) => this.handleSegmentKeyDown(ev, key)}
-        part={TIME_PICKER_PARTS.segment}
-        role="spinbutton"
-        tabindex={isActive && !this.disabled ? 0 : -1}
-      >
-        {display || segment.placeholder}
-      </span>
-    );
-  };
-
-  private renderLiteral = (literal: string): JSX.Element | undefined =>
-    literal ? (
-      <span aria-hidden="true" class="bq-time-picker__segment-literal" part={TIME_PICKER_PARTS.segmentLiteral}>
-        {literal}
-      </span>
-    ) : undefined;
-
-  /** Renders the segments with the locale literals before, between and after them. */
-  private renderSegments = (): JSX.Element[] => {
-    const [group] = this.segmentGroups;
-    if (!group) return [];
-
-    const { template, segments } = this.mask;
-    return [
-      this.renderLiteral(template.slice(0, segments[0]?.start ?? 0)),
-      ...group.segments.map((_, index) => [
-        this.renderSegment(group, index),
-        this.renderLiteral(template.slice(segments[index].end, segments[index + 1]?.start)),
-      ]),
-    ].flat();
-  };
-
-  private getOptionPart = (selected: boolean): string =>
-    selected ? `${TIME_PICKER_PARTS.option} ${TIME_PICKER_PARTS.optionSelected}` : TIME_PICKER_PARTS.option;
-
-  private renderColumn = (column: TTimeMaskField, selected: TPartialTime): JSX.Element => {
-    const options = getColumnOptions(column, this.getColumnContext(selected));
-    const tabStop = options.find((option) => option.selected) ?? options.find((option) => !option.disabled);
-    const headerId = `bq-time-picker__column-header-${column}`;
-
-    return (
-      <div class="bq-time-picker__column-group">
-        <div class="bq-time-picker__column-header" id={headerId} part={TIME_PICKER_PARTS.columnHeader}>
-          {this.getFieldLabel(column)}
-        </div>
-        <div
-          aria-labelledby={headerId}
-          class="bq-time-picker__column"
-          data-column={column}
-          onKeyDown={(ev) => this.handleColumnKeyDown(ev, column, options)}
-          part={TIME_PICKER_PARTS.column}
-          role="listbox"
-          // Focus roves between the options; -1 only keeps focus in the column when a gap is clicked.
-          tabIndex={-1}
-        >
-          {options.map((option) => (
-            // Options can't contain focusable children, so the button itself takes the `option` role.
-            // Disabled options keep `aria-disabled` instead of `disabled` so assistive tech still lists them.
-            <button
-              aria-disabled={option.disabled ? 'true' : undefined}
-              aria-selected={option.selected ? 'true' : 'false'}
-              class={{
-                'bq-time-picker__option': true,
-                'is-selected': option.selected,
-              }}
-              data-value={`${option.value}`}
-              key={`${option.value}`}
-              onClick={() => this.handleOptionClick(column, option)}
-              part={this.getOptionPart(option.selected)}
-              role="option"
-              tabIndex={option === tabStop ? 0 : -1}
-              type="button"
-            >
-              {option.label}
-            </button>
-          ))}
-        </div>
-      </div>
-    );
-  };
-
-  /**
-   * Read-only minute column shown on a 24-hour clock at hour precision,
-   * so the panel reads as a time (`HH:00`) instead of a single list of numbers.
-   */
-  private renderFixedMinuteColumn = (selected: TPartialTime): JSX.Element => {
-    const headerId = 'bq-time-picker__column-header-minute';
-    const isSelected = selected.hour !== undefined;
-
-    return (
-      <div class="bq-time-picker__column-group">
-        <div class="bq-time-picker__column-header" id={headerId} part={TIME_PICKER_PARTS.columnHeader}>
-          {this.resolvedLabels.minute}
-        </div>
-        <div
-          aria-disabled="true"
-          aria-labelledby={headerId}
-          class="bq-time-picker__column"
-          data-column="minute"
-          part={TIME_PICKER_PARTS.column}
-          role="listbox"
-        >
-          <button
-            aria-disabled="true"
-            aria-selected={isSelected ? 'true' : 'false'}
-            class={{ 'bq-time-picker__option': true, 'is-selected': isSelected }}
-            data-value="0"
-            part={this.getOptionPart(isSelected)}
-            role="option"
-            tabIndex={-1}
-            type="button"
-          >
-            00
-          </button>
-        </div>
-      </div>
-    );
-  };
-
   private renderPanel = (): JSX.Element => {
     const selected = this.panelPartial;
     const canPickNow = this.isInteractive && !!getNowTime(this.constraints);
@@ -1432,40 +1254,30 @@ export class BqTimePicker {
         role="dialog"
       >
         <div class="bq-time-picker__columns" part={TIME_PICKER_PARTS.columns}>
-          {this.mask.segments.map(({ field }) => [
-            this.renderColumn(field, selected),
-            showFixedMinute && field === 'hour' && this.renderFixedMinuteColumn(selected),
-          ])}
+          {this.mask.segments.map(({ field }) => {
+            const options = getColumnOptions(field, this.getColumnContext(selected));
+            return [
+              <TimeColumn
+                field={field}
+                label={this.getFieldLabel(field)}
+                onKeyDown={(ev) => this.handleColumnKeyDown(ev, field, options)}
+                onOptionClick={(option) => this.handleOptionClick(field, option)}
+                options={options}
+              />,
+              showFixedMinute && field === 'hour' && (
+                <FixedMinuteColumn label={this.resolvedLabels.minute} selected={selected.hour !== undefined} />
+              ),
+            ];
+          })}
         </div>
-        <div class="bq-time-picker__footer" part={TIME_PICKER_PARTS.footer}>
-          {!this.disableNow && (
-            <bq-button
-              appearance="text"
-              class="bq-time-picker__now"
-              disabled={!canPickNow}
-              exportparts="button"
-              onBqBlur={this.stopInternalEvent}
-              onBqClick={this.handleNowClick}
-              onBqFocus={this.stopInternalEvent}
-              part={`${TIME_PICKER_PARTS.button} ${TIME_PICKER_PARTS.nowBtn}`}
-              size="small"
-            >
-              {this.resolvedLabels.now}
-            </bq-button>
-          )}
-          <bq-button
-            appearance="primary"
-            class="bq-time-picker__confirm"
-            exportparts="button"
-            onBqBlur={this.stopInternalEvent}
-            onBqClick={this.handleConfirmClick}
-            onBqFocus={this.stopInternalEvent}
-            part={`${TIME_PICKER_PARTS.button} ${TIME_PICKER_PARTS.confirmBtn}`}
-            size="small"
-          >
-            {this.resolvedLabels.confirm}
-          </bq-button>
-        </div>
+        <PanelFooter
+          confirmLabel={this.resolvedLabels.confirm}
+          nowDisabled={!canPickNow}
+          nowLabel={this.resolvedLabels.now}
+          onConfirm={this.handleConfirmClick}
+          onNow={this.handleNowClick}
+          showNow={!this.disableNow}
+        />
       </div>
     );
   };
@@ -1543,7 +1355,21 @@ export class BqTimePicker {
               }}
               role="group"
             >
-              {this.renderSegments()}
+              <TimeSegments
+                activeSegment={this.activeSegment}
+                dayPeriodLabels={this.dayPeriodLabels}
+                disabled={this.disabled}
+                getLabel={this.getFieldLabel}
+                group={this.segmentGroups[0]}
+                invalid={this.validationStatus === 'error' || this.hasConstraintError}
+                mask={this.mask}
+                onSegmentBlur={this.handleSegmentsFocusOut}
+                onSegmentClick={this.handleSegmentClick}
+                onSegmentFocus={this.handleSegmentsFocusIn}
+                onSegmentKeyDown={this.handleSegmentKeyDown}
+                readonly={this.readonly}
+                required={this.required}
+              />
             </div>
             <span class="bq-time-picker__mask-description" id={maskDescriptionId}>
               Expected format: {this.mask.template}
@@ -1558,46 +1384,37 @@ export class BqTimePicker {
             </span>
 
             {this.hasValue && this.isInteractive && !this.disableClear && (
-              <bq-button
+              <InternalButton
                 appearance="text"
                 border="xs"
                 class="bq-time-picker__clear"
-                exportparts="button"
                 label={this.resolvedLabels.clear}
-                onBqBlur={this.stopInternalEvent}
                 onBqClick={this.handleClearClick}
-                onBqFocus={this.stopInternalEvent}
                 onlyIcon
                 part={TIME_PICKER_PARTS.clearBtn}
-                size="small"
               >
                 <slot name="clear-icon">
                   <bq-icon aria-hidden="true" name="x-circle" />
                 </slot>
-              </bq-button>
+              </InternalButton>
             )}
 
-            {/* biome-ignore lint/a11y/noStaticElementInteractions: bq-button renders a native <button> in its shadow DOM */}
-            <bq-button
+            <InternalButton
               appearance="text"
               border="xs"
               class="bq-time-picker__trigger"
               disabled={!this.isInteractive}
-              exportparts="button"
               label={this.resolvedLabels.openPanel}
-              // `handleTriggerClick` toggles the panel; keep bq-dropdown from toggling it again.
-              onClick={(ev: MouseEvent) => markEventHandled(ev)}
-              onBqBlur={this.stopInternalEvent}
               onBqClick={this.handleTriggerClick}
-              onBqFocus={this.stopInternalEvent}
+              // `handleTriggerClick` toggles the panel; keep bq-dropdown from toggling it again.
+              onClick={markEventHandled}
               onlyIcon
               part={`${TIME_PICKER_PARTS.button} ${TIME_PICKER_PARTS.suffix} ${TIME_PICKER_PARTS.timeTrigger}`}
-              size="small"
             >
               <slot name="suffix" onSlotchange={this.handleSlotChange}>
                 <bq-icon aria-hidden="true" name="clock" />
               </slot>
-            </bq-button>
+            </InternalButton>
           </div>
 
           {this.renderPanel()}
