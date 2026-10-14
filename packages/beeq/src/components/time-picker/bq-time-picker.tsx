@@ -1349,6 +1349,8 @@ export class BqTimePicker {
           onKeyDown={(ev) => this.handleColumnKeyDown(ev, column, options)}
           part={TIME_PICKER_PARTS.column}
           role="listbox"
+          // Focus roves between the options; -1 only keeps focus in the column when a gap is clicked.
+          tabIndex={-1}
         >
           {options.map((option) => (
             // Options can't contain focusable children, so the button itself takes the `option` role.
@@ -1361,6 +1363,7 @@ export class BqTimePicker {
                 'is-selected': option.selected,
               }}
               data-value={`${option.value}`}
+              key={`${option.value}`}
               onClick={() => this.handleOptionClick(column, option)}
               part={this.getOptionPart(option.selected)}
               role="option"
@@ -1481,13 +1484,10 @@ export class BqTimePicker {
     return (
       <div class="bq-time-picker" part={TIME_PICKER_PARTS.base}>
         {/* biome-ignore lint/a11y/useKeyWithClickEvents: pointer activation forwards focus; keyboard users tab directly to the roving segment. */}
-        <label
+        <label // NOSONAR: labels are pointer-activated; keyboard users focus the segments directly.
           class={{ 'bq-time-picker__label': true, 'is-hidden': !this.hasLabel }}
           htmlFor={id}
-          onClick={
-            this
-              .handleLabelClick /* NOSONAR: Native labels are pointer-activated; keyboard focus enters the roving spinbuttons directly. */
-          }
+          onClick={this.handleLabelClick}
           part={TIME_PICKER_PARTS.label}
           ref={(labelElem) => {
             this.labelElem = labelElem;
@@ -1507,7 +1507,7 @@ export class BqTimePicker {
           skidding={this.skidding}
           strategy={this.strategy}
         >
-          <div
+          <div // NOSONAR: the click is a pointer shortcut to the segments; keydown only stops bq-dropdown from toggling.
             aria-label="Time picker"
             class={{
               'bq-time-picker__control': true,
