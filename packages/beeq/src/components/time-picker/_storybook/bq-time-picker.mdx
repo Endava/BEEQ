@@ -20,6 +20,8 @@ import { ArgTypes, Title, Subtitle } from '@storybook/addon-docs/blocks';
 
     `locale` sets the field order, separators, column headers and AM/PM labels. The clock is 24-hour by default; set `hour-format="12"` for a 12-hour clock with an AM/PM segment.
 
+    `labels` overrides the column headers, AM/PM labels, button text and accessible names. Pass an object, or a JSON string through the attribute; missing keys keep the locale names or the English defaults.
+
     <Subtitle>Confirmation</Subtitle>
 
     By default each pick in the panel updates `value` and emits `bqChange`. Set `require-confirm` to keep panel picks as a draft until the user presses OK or Enter; Escape, Tab or an outside click discard the draft. Typing in the field always commits directly.

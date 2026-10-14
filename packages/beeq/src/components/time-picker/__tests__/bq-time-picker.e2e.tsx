@@ -82,7 +82,7 @@ describe('bq-time-picker', () => {
 
     expect(getSegmentFields(tp)).toEqual(['hour', 'minute']);
     expect(getSegmentText(tp)).toBe('hh:mm');
-    expect(getSegment(tp, 'hour')).toEqualAttribute('aria-label', 'Hours');
+    expect(getSegment(tp, 'hour')).toEqualAttribute('aria-label', 'hour');
     expect(getSegment(tp, 'hour')).toEqualAttribute('aria-valuetext', 'Empty');
   });
 
@@ -691,7 +691,7 @@ describe('bq-time-picker', () => {
 
   it('should render custom footer button labels', async () => {
     const { root, waitForChanges } = await render(
-      <bq-time-picker confirmButtonLabel="Apply" name="time" nowButtonLabel="Current" />,
+      <bq-time-picker labels={{ confirm: 'Apply', now: 'Current' }} name="time" />,
     );
     const tp = root as HTMLBqTimePickerElement;
     await openPanel(tp, waitForChanges);
@@ -984,24 +984,20 @@ describe('bq-time-picker', () => {
   it('should reflect its props to attributes', async () => {
     const { root } = await render(
       <bq-time-picker
-        clearButtonLabel="Reset"
         disableClear
         name="time"
         precision="second"
         required
-        timeButtonLabel="Choose time"
         validationStatus="warning"
         value="09:30:15"
       />,
     );
     const tp = root as HTMLBqTimePickerElement;
 
-    expect(tp).toEqualAttribute('clear-button-label', 'Reset');
     expect(tp).toHaveAttribute('disable-clear');
     expect(tp).toEqualAttribute('name', 'time');
     expect(tp).toEqualAttribute('precision', 'second');
     expect(tp).toHaveAttribute('required');
-    expect(tp).toEqualAttribute('time-button-label', 'Choose time');
     expect(tp).toEqualAttribute('validation-status', 'warning');
     expect(tp).toEqualAttribute('value', '09:30:15');
   });
@@ -1029,15 +1025,81 @@ describe('bq-time-picker', () => {
     expect(warn).toHaveBeenCalled();
   });
 
-  it('should name the clear and clock buttons with the label props', async () => {
-    const { root } = await render(
-      <bq-time-picker clearButtonLabel="Reset time" name="time" timeButtonLabel="Choose a time" value="09:30" />,
+  it('should use the default labels when `labels` is not set', async () => {
+    const { root, waitForChanges } = await render(<bq-time-picker name="time" value="09:30" />);
+    const tp = root as HTMLBqTimePickerElement;
+    await openPanel(tp, waitForChanges);
+
+    expect(getInnerButton(tp, 'clear-btn')).toEqualAttribute('aria-label', 'Clear');
+    expect(getInnerButton(tp, 'time-trigger')).toEqualAttribute('aria-label', 'Open time picker');
+    expect(tp.shadowRoot?.querySelector('[part="container"]')).toEqualAttribute('aria-label', 'Choose time');
+    expect(tp.shadowRoot?.querySelector('[part~="now-btn"]')).toEqualText('Now');
+    expect(tp.shadowRoot?.querySelector('[part~="confirm-btn"]')).toEqualText('OK');
+  });
+
+  it('should apply the `labels` to the headers, segments, day periods and buttons', async () => {
+    const labels = {
+      hour: 'Heure',
+      minute: 'Minute',
+      second: 'Seconde',
+      am: 'matin',
+      pm: 'soir',
+      now: 'Maintenant',
+      clear: 'Effacer',
+      confirm: 'Valider',
+      openPanel: 'Ouvrir',
+      panelLabel: "Choisir l'heure",
+    };
+    const { root, waitForChanges } = await render(
+      <bq-time-picker hourFormat="12" labels={labels} name="time" precision="second" value="02:30:00" />,
+    );
+    const tp = root as HTMLBqTimePickerElement;
+    await openPanel(tp, waitForChanges);
+
+    const fields: TField[] = ['hour', 'minute', 'second', 'dayPeriod'];
+    expect(fields.map((field) => getColumnHeader(tp, field)?.textContent)).toEqual([
+      'Heure',
+      'Minute',
+      'Seconde',
+      'matin/soir',
+    ]);
+    expect(fields.map((field) => getSegment(tp, field)?.getAttribute('aria-label'))).toEqual([
+      'Heure',
+      'Minute',
+      'Seconde',
+      'matin/soir',
+    ]);
+    expect(getSegment(tp, 'dayPeriod')).toEqualText('matin');
+    expect(getOption(tp, 'dayPeriod', 'pm')).toEqualText('soir');
+    expect(getInnerButton(tp, 'clear-btn')).toEqualAttribute('aria-label', 'Effacer');
+    expect(getInnerButton(tp, 'time-trigger')).toEqualAttribute('aria-label', 'Ouvrir');
+    expect(tp.shadowRoot?.querySelector('[part="container"]')).toEqualAttribute('aria-label', "Choisir l'heure");
+    expect(tp.shadowRoot?.querySelector('[part~="now-btn"]')).toEqualText('Maintenant');
+    expect(tp.shadowRoot?.querySelector('[part~="confirm-btn"]')).toEqualText('Valider');
+
+    tp.labels = { ...labels, period: 'Période' };
+    await waitForChanges();
+    expect(getColumnHeader(tp, 'dayPeriod')).toEqualText('Période');
+
+    await typeInSegment(tp, 'dayPeriod', 's');
+    expect(tp.value).toBe('14:30:00');
+  });
+
+  it('should accept the `labels` as a JSON string and ignore invalid JSON', async () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
+    const { root, waitForChanges } = await render(
+      <bq-time-picker labels='{"clear":"Reset time","openPanel":"Choose a time"}' name="time" value="09:30" />,
     );
     const tp = root as HTMLBqTimePickerElement;
     await waitForStable(root);
 
     expect(getInnerButton(tp, 'clear-btn')).toEqualAttribute('aria-label', 'Reset time');
     expect(getInnerButton(tp, 'time-trigger')).toEqualAttribute('aria-label', 'Choose a time');
+
+    tp.labels = '{clear:';
+    await waitForChanges();
+    expect(getInnerButton(tp, 'clear-btn')).toEqualAttribute('aria-label', 'Clear');
+    expect(warn).toHaveBeenCalled();
   });
 
   it('should apply the `validation-status` to the control and segments', async () => {

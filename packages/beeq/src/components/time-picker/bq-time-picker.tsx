@@ -14,6 +14,7 @@ import {
   isEventHandled,
   isEventTargetChildOfElement,
   isSameSegmentKey,
+  isString,
   markEventHandled,
   type TTimeHourCycle,
   type TTimeMask,
@@ -35,6 +36,7 @@ import {
   type TPartialTime,
   type TTime,
   type TTimeOption,
+  type TTimePickerLabels,
   type TTimePrecision,
 } from './bq-time-picker.types';
 import { DEFAULT_INPUT_ID, TIME_PICKER_PARTS } from './helper/constants';
@@ -45,7 +47,7 @@ import {
   getTimeValidityFlags,
   type TTimeConstraints,
 } from './helper/constraints';
-import { formatTime, getColumnHeaders, TIME_FIELD_LABELS } from './helper/labels';
+import { formatTime, parseLabels, resolveLabels } from './helper/labels';
 import {
   applyColumnPick,
   getColumnOptions,
@@ -109,8 +111,6 @@ type TOpenSource = 'input' | 'keyboard' | 'trigger' | 'programmatic';
  * @dependency bq-icon
  *
  * @attr {boolean} autofocus - If `true`, the Time picker field will be focused on component render.
- * @attr {string} clear-button-label - The clear button aria label.
- * @attr {string} confirm-button-label - The label of the panel confirm (OK) button.
  * @attr {boolean} disable-clear - If `true`, the clear button won't be displayed.
  * @attr {boolean} disable-now - If `true`, the panel "Now" button won't be displayed.
  * @attr {boolean} disabled - Indicates whether the Time picker is disabled or not.
@@ -119,12 +119,12 @@ type TOpenSource = 'input' | 'keyboard' | 'trigger' | 'programmatic';
  * @attr {string} form-validation-message - Custom native form validation message.
  * @attr {"12" | "24"} hour-format - The clock used by the field and the panel. Defaults to `"24"`.
  * @attr {number} hour-step - Step between selectable hours.
+ * @attr {string} labels - JSON object with the text of the column headers, AM/PM labels, buttons and accessible names.
  * @attr {Intl.LocalesArgument} locale - Locale used for the field layout, separators, column headers and day period labels.
  * @attr {string} max - Latest selectable time (`HH:mm` or `HH:mm:ss`).
  * @attr {string} min - Earliest selectable time (`HH:mm` or `HH:mm:ss`).
  * @attr {number} minute-step - Step between selectable minutes.
  * @attr {string} name - The Time picker name.
- * @attr {string} now-button-label - The label of the panel "Now" button.
  * @attr {boolean} open - If `true`, the panel is visible.
  * @attr {string} panel-height - Overrides the height of the panel.
  * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Placement of the panel.
@@ -135,7 +135,6 @@ type TOpenSource = 'input' | 'keyboard' | 'trigger' | 'programmatic';
  * @attr {number} second-step - Step between selectable seconds.
  * @attr {number} skidding - Skidding between the panel and the field.
  * @attr {"fixed" | "absolute"} strategy - Positioning strategy for the panel.
- * @attr {string} time-button-label - The aria-label of the clock trigger button.
  * @attr {"error" | "none" | "success" | "warning"} validation-status - Validation state.
  * @attr {string} value - The selected time in 24-hour format: `HH:mm` (`HH:00` at hour precision) or `HH:mm:ss`.
  *
@@ -221,7 +220,11 @@ export class BqTimePicker {
   /** Source of the current panel opening, used to decide where focus goes. */
   private activeOpenSource: TOpenSource = 'programmatic';
 
-  private cachedColumnHeaders?: { key: TTimeMask; value: Record<TTimeMaskField, string> };
+  private cachedLabels?: {
+    labels: TTimePickerLabels | string | undefined;
+    mask: TTimeMask;
+    value: Required<TTimePickerLabels>;
+  };
   private cachedConstraints?: { key: string; value: TTimeConstraints };
   private cachedMask?: { key: string; value: TTimeMask };
 
@@ -276,12 +279,6 @@ export class BqTimePicker {
   /** If `true`, the Time picker field will be focused on component render. */
   @Prop({ reflect: true }) autofocus: boolean = false;
 
-  /** The clear button aria label. */
-  @Prop({ reflect: true }) clearButtonLabel: string = 'Clear value';
-
-  /** The label of the panel confirm (OK) button. */
-  @Prop({ reflect: true }) confirmButtonLabel: string = 'OK';
-
   /** If `true`, the clear button won't be displayed. */
   @Prop({ reflect: true }) disableClear: boolean = false;
 
@@ -309,6 +306,13 @@ export class BqTimePicker {
   /** Step between selectable hours. */
   @Prop({ reflect: true }) hourStep: number = 1;
 
+  /**
+   * Text of the column headers, AM/PM labels, buttons and accessible names, as an object or a JSON string.
+   * Missing keys fall back to the `locale` names (`hour`, `minute`, `second`, `am`, `pm`),
+   * `am/pm` (`period`), or English text: `Now`, `Clear`, `OK`, `Open time picker` and `Choose time`.
+   */
+  @Prop() labels?: TTimePickerLabels | string;
+
   /** Locale used for the field layout, separators, column headers and day period labels. The clock is set by `hour-format`. */
   @Prop({ reflect: true }) locale: Intl.LocalesArgument = 'en-GB';
 
@@ -329,9 +333,6 @@ export class BqTimePicker {
 
   /** The Time picker name. */
   @Prop({ reflect: true }) name!: string;
-
-  /** The label of the panel "Now" button. */
-  @Prop({ reflect: true }) nowButtonLabel: string = 'Now';
 
   /** If `true`, the panel is visible. */
   @Prop({ reflect: true, mutable: true }) open: boolean = false;
@@ -371,9 +372,6 @@ export class BqTimePicker {
 
   /** Positioning strategy for the panel. */
   @Prop({ reflect: true }) strategy: TFloatingStrategy = 'fixed';
-
-  /** The aria-label of the clock trigger button. */
-  @Prop({ reflect: true }) timeButtonLabel: string = 'Open time picker';
 
   /** Validation state applied to the field. */
   @Prop({ reflect: true }) validationStatus: TInputValidation = 'none';
@@ -586,14 +584,30 @@ export class BqTimePicker {
     return this.cachedMask.value;
   }
 
-  /** Localized column headers, memoized by the mask they belong to. */
-  private get columnHeaders(): Record<TTimeMaskField, string> {
-    const { mask } = this;
-    if (this.cachedColumnHeaders?.key !== mask) {
-      this.cachedColumnHeaders = { key: mask, value: getColumnHeaders(this.locale, mask.dayPeriods) };
+  /** Labels set through `labels`, completed with the locale names and English defaults. Memoized by their inputs. */
+  private get resolvedLabels(): Required<TTimePickerLabels> {
+    const { labels, mask } = this;
+    if (this.cachedLabels?.labels !== labels || this.cachedLabels.mask !== mask) {
+      const parsed = parseLabels(labels);
+      if (isString(labels) && labels.trim() && !parsed) {
+        console.warn('[BqTimePicker] `labels` must be a JSON object. The default labels are used.', labels);
+      }
+      this.cachedLabels = { labels, mask, value: resolveLabels(this.locale, mask.dayPeriods, parsed) };
     }
-    return this.cachedColumnHeaders.value;
+    return this.cachedLabels.value;
   }
+
+  /** Localized `[AM, PM]` labels used by the field, the panel and letter typing. */
+  private get dayPeriodLabels(): readonly [string, string] {
+    const { am, pm } = this.resolvedLabels;
+    return [am, pm];
+  }
+
+  /** Column header and segment accessible name of a field. */
+  private getFieldLabel = (field: TTimeMaskField): string => {
+    const labels = this.resolvedLabels;
+    return field === 'dayPeriod' ? labels.period : labels[field];
+  };
 
   /** Sanitized min/max and step constraints, memoized by their inputs. */
   private get constraints(): TTimeConstraints {
@@ -763,7 +777,7 @@ export class BqTimePicker {
   private handleDayPeriodKey = (ev: KeyboardEvent, key: TTimeSegmentKey): void => {
     if (ev.metaKey || ev.ctrlKey || ev.altKey) return;
 
-    const dayPeriod = matchDayPeriodKey(ev.key, this.mask.dayPeriods);
+    const dayPeriod = matchDayPeriodKey(ev.key, this.dayPeriodLabels);
     if (!dayPeriod) return;
 
     ev.preventDefault();
@@ -904,7 +918,7 @@ export class BqTimePicker {
   private getColumnContext = (selected: TPartialTime) => ({
     constraints: this.constraints,
     hourCycle: this.mask.hourCycle,
-    dayPeriods: this.mask.dayPeriods,
+    dayPeriods: this.dayPeriodLabels,
     selected,
   });
 
@@ -1233,9 +1247,9 @@ export class BqTimePicker {
     range?: [number, number];
     valueNow?: number;
   } => {
-    const { dayPeriods, hourCycle } = this.mask;
+    const { hourCycle } = this.mask;
     if (segment.field === 'dayPeriod') {
-      return { display: segment.value ? dayPeriods[segment.value === 'pm' ? 1 : 0] : '' };
+      return { display: segment.value ? this.dayPeriodLabels[segment.value === 'pm' ? 1 : 0] : '' };
     }
 
     const range = getTimeSegmentRange(segment.field, hourCycle);
@@ -1257,7 +1271,7 @@ export class BqTimePicker {
       <span
         aria-disabled={this.disabled ? 'true' : undefined}
         aria-invalid={isInvalid ? 'true' : 'false'}
-        aria-label={TIME_FIELD_LABELS[segment.field]}
+        aria-label={this.getFieldLabel(segment.field)}
         aria-readonly={this.readonly ? 'true' : undefined}
         aria-required={this.required ? 'true' : undefined}
         aria-valuemax={range?.[1]}
@@ -1317,7 +1331,7 @@ export class BqTimePicker {
     return (
       <div class="bq-time-picker__column-group">
         <div class="bq-time-picker__column-header" id={headerId} part={TIME_PICKER_PARTS.columnHeader}>
-          {this.columnHeaders[column]}
+          {this.getFieldLabel(column)}
         </div>
         <div
           aria-labelledby={headerId}
@@ -1363,7 +1377,7 @@ export class BqTimePicker {
     return (
       <div class="bq-time-picker__column-group">
         <div class="bq-time-picker__column-header" id={headerId} part={TIME_PICKER_PARTS.columnHeader}>
-          {this.columnHeaders.minute}
+          {this.resolvedLabels.minute}
         </div>
         <div
           aria-disabled="true"
@@ -1390,15 +1404,14 @@ export class BqTimePicker {
     );
   };
 
-  private renderPanel = (labelId: string): JSX.Element => {
+  private renderPanel = (): JSX.Element => {
     const selected = this.panelPartial;
     const canPickNow = this.isInteractive && !!getNowTime(this.constraints);
     const showFixedMinute = this.precision === 'hour' && this.hourFormat !== '12';
 
     return (
       <div
-        aria-label={this.hasLabel ? undefined : 'Time picker'}
-        aria-labelledby={this.hasLabel ? labelId : undefined}
+        aria-label={this.resolvedLabels.panelLabel}
         class="bq-time-picker__panel"
         part={TIME_PICKER_PARTS.container}
         ref={(el) => {
@@ -1425,7 +1438,7 @@ export class BqTimePicker {
               part={`${TIME_PICKER_PARTS.button} ${TIME_PICKER_PARTS.nowBtn}`}
               size="small"
             >
-              {this.nowButtonLabel}
+              {this.resolvedLabels.now}
             </bq-button>
           )}
           <bq-button
@@ -1438,7 +1451,7 @@ export class BqTimePicker {
             part={`${TIME_PICKER_PARTS.button} ${TIME_PICKER_PARTS.confirmBtn}`}
             size="small"
           >
-            {this.confirmButtonLabel}
+            {this.resolvedLabels.confirm}
           </bq-button>
         </div>
       </div>
@@ -1541,7 +1554,7 @@ export class BqTimePicker {
                 border="xs"
                 class="bq-time-picker__clear"
                 exportparts="button"
-                label={this.clearButtonLabel}
+                label={this.resolvedLabels.clear}
                 onBqBlur={this.stopInternalEvent}
                 onBqClick={this.handleClearClick}
                 onBqFocus={this.stopInternalEvent}
@@ -1562,7 +1575,7 @@ export class BqTimePicker {
               class="bq-time-picker__trigger"
               disabled={!this.isInteractive}
               exportparts="button"
-              label={this.timeButtonLabel}
+              label={this.resolvedLabels.openPanel}
               // `handleTriggerClick` toggles the panel; keep bq-dropdown from toggling it again.
               onClick={(ev: MouseEvent) => markEventHandled(ev)}
               onBqBlur={this.stopInternalEvent}
@@ -1578,7 +1591,7 @@ export class BqTimePicker {
             </bq-button>
           </div>
 
-          {this.renderPanel(labelId)}
+          {this.renderPanel()}
         </bq-dropdown>
       </div>
     );

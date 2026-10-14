@@ -33,7 +33,7 @@ import { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq
 import { TTabOrientation, TTabPlacement, TTabSize } from "./components/tab/bq-tab.types";
 import { TTagBorderRadius, TTagColor, TTagSize, TTagVariant } from "./components/tag/bq-tag.types";
 import { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq-textarea.types";
-import { TFloatingStrategy as TFloatingStrategy1, THourFormat, TInputValidation as TInputValidation1, TTimePrecision } from "./components/time-picker/bq-time-picker.types";
+import { TFloatingStrategy as TFloatingStrategy1, THourFormat, TInputValidation as TInputValidation1, TTimePickerLabels, TTimePrecision } from "./components/time-picker/bq-time-picker.types";
 import { TToastBorderRadius, TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
 export { TAccordionAppearance, TAccordionSize } from "./components/accordion/bq-accordion.types";
 export { TAlertBorderRadius, TAlertType } from "./components/alert/bq-alert.types";
@@ -63,7 +63,7 @@ export { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq
 export { TTabOrientation, TTabPlacement, TTabSize } from "./components/tab/bq-tab.types";
 export { TTagBorderRadius, TTagColor, TTagSize, TTagVariant } from "./components/tag/bq-tag.types";
 export { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq-textarea.types";
-export { TFloatingStrategy as TFloatingStrategy1, THourFormat, TInputValidation as TInputValidation1, TTimePrecision } from "./components/time-picker/bq-time-picker.types";
+export { TFloatingStrategy as TFloatingStrategy1, THourFormat, TInputValidation as TInputValidation1, TTimePickerLabels, TTimePrecision } from "./components/time-picker/bq-time-picker.types";
 export { TToastBorderRadius, TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
 export namespace Components {
     /**
@@ -3148,8 +3148,6 @@ export namespace Components {
      * @dependency bq-dropdown
      * @dependency bq-icon
      * @attr {boolean} autofocus - If `true`, the Time picker field will be focused on component render.
-     * @attr {string} clear-button-label - The clear button aria label.
-     * @attr {string} confirm-button-label - The label of the panel confirm (OK) button.
      * @attr {boolean} disable-clear - If `true`, the clear button won't be displayed.
      * @attr {boolean} disable-now - If `true`, the panel "Now" button won't be displayed.
      * @attr {boolean} disabled - Indicates whether the Time picker is disabled or not.
@@ -3158,12 +3156,12 @@ export namespace Components {
      * @attr {string} form-validation-message - Custom native form validation message.
      * @attr {"12" | "24"} hour-format - The clock used by the field and the panel. Defaults to `"24"`.
      * @attr {number} hour-step - Step between selectable hours.
+     * @attr {string} labels - JSON object with the text of the column headers, AM/PM labels, buttons and accessible names.
      * @attr {Intl.LocalesArgument} locale - Locale used for the field layout, separators, column headers and day period labels.
      * @attr {string} max - Latest selectable time (`HH:mm` or `HH:mm:ss`).
      * @attr {string} min - Earliest selectable time (`HH:mm` or `HH:mm:ss`).
      * @attr {number} minute-step - Step between selectable minutes.
      * @attr {string} name - The Time picker name.
-     * @attr {string} now-button-label - The label of the panel "Now" button.
      * @attr {boolean} open - If `true`, the panel is visible.
      * @attr {string} panel-height - Overrides the height of the panel.
      * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Placement of the panel.
@@ -3174,7 +3172,6 @@ export namespace Components {
      * @attr {number} second-step - Step between selectable seconds.
      * @attr {number} skidding - Skidding between the panel and the field.
      * @attr {"fixed" | "absolute"} strategy - Positioning strategy for the panel.
-     * @attr {string} time-button-label - The aria-label of the clock trigger button.
      * @attr {"error" | "none" | "success" | "warning"} validation-status - Validation state.
      * @attr {string} value - The selected time in 24-hour format: `HH:mm` (`HH:00` at hour precision) or `HH:mm:ss`.
      * @method clear() - Clears the selected value.
@@ -3227,16 +3224,6 @@ export namespace Components {
          */
         "clear": () => Promise<void>;
         /**
-          * The clear button aria label.
-          * @default 'Clear value'
-         */
-        "clearButtonLabel": string;
-        /**
-          * The label of the panel confirm (OK) button.
-          * @default 'OK'
-         */
-        "confirmButtonLabel": string;
-        /**
           * If `true`, the clear button won't be displayed.
           * @default false
          */
@@ -3275,6 +3262,10 @@ export namespace Components {
          */
         "hourStep": number;
         /**
+          * Text of the column headers, AM/PM labels, buttons and accessible names, as an object or a JSON string. Missing keys fall back to the `locale` names (`hour`, `minute`, `second`, `am`, `pm`), `am/pm` (`period`), or English text: `Now`, `Clear`, `OK`, `Open time picker` and `Choose time`.
+         */
+        "labels"?: TTimePickerLabels | string;
+        /**
           * Locale used for the field layout, separators, column headers and day period labels. The clock is set by `hour-format`.
           * @default 'en-GB'
          */
@@ -3296,11 +3287,6 @@ export namespace Components {
           * The Time picker name.
          */
         "name": string;
-        /**
-          * The label of the panel "Now" button.
-          * @default 'Now'
-         */
-        "nowButtonLabel": string;
         /**
           * If `true`, the panel is visible.
           * @default false
@@ -3351,11 +3337,6 @@ export namespace Components {
           * @default 'fixed'
          */
         "strategy": TFloatingStrategy1;
-        /**
-          * The aria-label of the clock trigger button.
-          * @default 'Open time picker'
-         */
-        "timeButtonLabel": string;
         /**
           * Validation state applied to the field.
           * @default 'none'
@@ -5647,8 +5628,6 @@ declare global {
      * @dependency bq-dropdown
      * @dependency bq-icon
      * @attr {boolean} autofocus - If `true`, the Time picker field will be focused on component render.
-     * @attr {string} clear-button-label - The clear button aria label.
-     * @attr {string} confirm-button-label - The label of the panel confirm (OK) button.
      * @attr {boolean} disable-clear - If `true`, the clear button won't be displayed.
      * @attr {boolean} disable-now - If `true`, the panel "Now" button won't be displayed.
      * @attr {boolean} disabled - Indicates whether the Time picker is disabled or not.
@@ -5657,12 +5636,12 @@ declare global {
      * @attr {string} form-validation-message - Custom native form validation message.
      * @attr {"12" | "24"} hour-format - The clock used by the field and the panel. Defaults to `"24"`.
      * @attr {number} hour-step - Step between selectable hours.
+     * @attr {string} labels - JSON object with the text of the column headers, AM/PM labels, buttons and accessible names.
      * @attr {Intl.LocalesArgument} locale - Locale used for the field layout, separators, column headers and day period labels.
      * @attr {string} max - Latest selectable time (`HH:mm` or `HH:mm:ss`).
      * @attr {string} min - Earliest selectable time (`HH:mm` or `HH:mm:ss`).
      * @attr {number} minute-step - Step between selectable minutes.
      * @attr {string} name - The Time picker name.
-     * @attr {string} now-button-label - The label of the panel "Now" button.
      * @attr {boolean} open - If `true`, the panel is visible.
      * @attr {string} panel-height - Overrides the height of the panel.
      * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Placement of the panel.
@@ -5673,7 +5652,6 @@ declare global {
      * @attr {number} second-step - Step between selectable seconds.
      * @attr {number} skidding - Skidding between the panel and the field.
      * @attr {"fixed" | "absolute"} strategy - Positioning strategy for the panel.
-     * @attr {string} time-button-label - The aria-label of the clock trigger button.
      * @attr {"error" | "none" | "success" | "warning"} validation-status - Validation state.
      * @attr {string} value - The selected time in 24-hour format: `HH:mm` (`HH:00` at hour precision) or `HH:mm:ss`.
      * @method clear() - Clears the selected value.
@@ -9226,8 +9204,6 @@ declare namespace LocalJSX {
      * @dependency bq-dropdown
      * @dependency bq-icon
      * @attr {boolean} autofocus - If `true`, the Time picker field will be focused on component render.
-     * @attr {string} clear-button-label - The clear button aria label.
-     * @attr {string} confirm-button-label - The label of the panel confirm (OK) button.
      * @attr {boolean} disable-clear - If `true`, the clear button won't be displayed.
      * @attr {boolean} disable-now - If `true`, the panel "Now" button won't be displayed.
      * @attr {boolean} disabled - Indicates whether the Time picker is disabled or not.
@@ -9236,12 +9212,12 @@ declare namespace LocalJSX {
      * @attr {string} form-validation-message - Custom native form validation message.
      * @attr {"12" | "24"} hour-format - The clock used by the field and the panel. Defaults to `"24"`.
      * @attr {number} hour-step - Step between selectable hours.
+     * @attr {string} labels - JSON object with the text of the column headers, AM/PM labels, buttons and accessible names.
      * @attr {Intl.LocalesArgument} locale - Locale used for the field layout, separators, column headers and day period labels.
      * @attr {string} max - Latest selectable time (`HH:mm` or `HH:mm:ss`).
      * @attr {string} min - Earliest selectable time (`HH:mm` or `HH:mm:ss`).
      * @attr {number} minute-step - Step between selectable minutes.
      * @attr {string} name - The Time picker name.
-     * @attr {string} now-button-label - The label of the panel "Now" button.
      * @attr {boolean} open - If `true`, the panel is visible.
      * @attr {string} panel-height - Overrides the height of the panel.
      * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Placement of the panel.
@@ -9252,7 +9228,6 @@ declare namespace LocalJSX {
      * @attr {number} second-step - Step between selectable seconds.
      * @attr {number} skidding - Skidding between the panel and the field.
      * @attr {"fixed" | "absolute"} strategy - Positioning strategy for the panel.
-     * @attr {string} time-button-label - The aria-label of the clock trigger button.
      * @attr {"error" | "none" | "success" | "warning"} validation-status - Validation state.
      * @attr {string} value - The selected time in 24-hour format: `HH:mm` (`HH:00` at hour precision) or `HH:mm:ss`.
      * @method clear() - Clears the selected value.
@@ -9300,16 +9275,6 @@ declare namespace LocalJSX {
          */
         "autofocus"?: boolean;
         /**
-          * The clear button aria label.
-          * @default 'Clear value'
-         */
-        "clearButtonLabel"?: string;
-        /**
-          * The label of the panel confirm (OK) button.
-          * @default 'OK'
-         */
-        "confirmButtonLabel"?: string;
-        /**
           * If `true`, the clear button won't be displayed.
           * @default false
          */
@@ -9348,6 +9313,10 @@ declare namespace LocalJSX {
          */
         "hourStep"?: number;
         /**
+          * Text of the column headers, AM/PM labels, buttons and accessible names, as an object or a JSON string. Missing keys fall back to the `locale` names (`hour`, `minute`, `second`, `am`, `pm`), `am/pm` (`period`), or English text: `Now`, `Clear`, `OK`, `Open time picker` and `Choose time`.
+         */
+        "labels"?: TTimePickerLabels | string;
+        /**
           * Locale used for the field layout, separators, column headers and day period labels. The clock is set by `hour-format`.
           * @default 'en-GB'
          */
@@ -9369,11 +9338,6 @@ declare namespace LocalJSX {
           * The Time picker name.
          */
         "name": string;
-        /**
-          * The label of the panel "Now" button.
-          * @default 'Now'
-         */
-        "nowButtonLabel"?: string;
         /**
           * Callback handler emitted when focus leaves the Time picker. Moving focus between the field and the panel doesn't emit it.
          */
@@ -9440,11 +9404,6 @@ declare namespace LocalJSX {
           * @default 'fixed'
          */
         "strategy"?: TFloatingStrategy1;
-        /**
-          * The aria-label of the clock trigger button.
-          * @default 'Open time picker'
-         */
-        "timeButtonLabel"?: string;
         /**
           * Validation state applied to the field.
           * @default 'none'
@@ -10010,8 +9969,6 @@ declare namespace LocalJSX {
     }
     interface BqTimePickerAttributes {
         "autofocus": boolean;
-        "clearButtonLabel": string;
-        "confirmButtonLabel": string;
         "disableClear": boolean;
         "disableNow": boolean;
         "disabled": boolean;
@@ -10020,12 +9977,12 @@ declare namespace LocalJSX {
         "formValidationMessage": string;
         "hourFormat": THourFormat;
         "hourStep": number;
+        "labels": TTimePickerLabels | string;
         "locale": Intl.LocalesArgument;
         "max": string;
         "min": string;
         "minuteStep": number;
         "name": string;
-        "nowButtonLabel": string;
         "open": boolean;
         "panelHeight": string;
         "placement": Placement;
@@ -10036,7 +9993,6 @@ declare namespace LocalJSX {
         "secondStep": number;
         "skidding": number;
         "strategy": TFloatingStrategy;
-        "timeButtonLabel": string;
         "validationStatus": TInputValidation;
         "value": string;
     }
@@ -11556,8 +11512,6 @@ declare module "@stencil/core" {
              * @dependency bq-dropdown
              * @dependency bq-icon
              * @attr {boolean} autofocus - If `true`, the Time picker field will be focused on component render.
-             * @attr {string} clear-button-label - The clear button aria label.
-             * @attr {string} confirm-button-label - The label of the panel confirm (OK) button.
              * @attr {boolean} disable-clear - If `true`, the clear button won't be displayed.
              * @attr {boolean} disable-now - If `true`, the panel "Now" button won't be displayed.
              * @attr {boolean} disabled - Indicates whether the Time picker is disabled or not.
@@ -11566,12 +11520,12 @@ declare module "@stencil/core" {
              * @attr {string} form-validation-message - Custom native form validation message.
              * @attr {"12" | "24"} hour-format - The clock used by the field and the panel. Defaults to `"24"`.
              * @attr {number} hour-step - Step between selectable hours.
+             * @attr {string} labels - JSON object with the text of the column headers, AM/PM labels, buttons and accessible names.
              * @attr {Intl.LocalesArgument} locale - Locale used for the field layout, separators, column headers and day period labels.
              * @attr {string} max - Latest selectable time (`HH:mm` or `HH:mm:ss`).
              * @attr {string} min - Earliest selectable time (`HH:mm` or `HH:mm:ss`).
              * @attr {number} minute-step - Step between selectable minutes.
              * @attr {string} name - The Time picker name.
-             * @attr {string} now-button-label - The label of the panel "Now" button.
              * @attr {boolean} open - If `true`, the panel is visible.
              * @attr {string} panel-height - Overrides the height of the panel.
              * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Placement of the panel.
@@ -11582,7 +11536,6 @@ declare module "@stencil/core" {
              * @attr {number} second-step - Step between selectable seconds.
              * @attr {number} skidding - Skidding between the panel and the field.
              * @attr {"fixed" | "absolute"} strategy - Positioning strategy for the panel.
-             * @attr {string} time-button-label - The aria-label of the clock trigger button.
              * @attr {"error" | "none" | "success" | "warning"} validation-status - Validation state.
              * @attr {string} value - The selected time in 24-hour format: `HH:mm` (`HH:00` at hour precision) or `HH:mm:ss`.
              * @method clear() - Clears the selected value.

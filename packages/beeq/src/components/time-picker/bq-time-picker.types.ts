@@ -52,3 +52,34 @@ export type TTimeOption = {
   disabled: boolean;
   selected: boolean;
 };
+
+/**
+ * Text used by the time picker. Every key is optional:
+ * - `hour`, `minute`, `second`, `am` and `pm` default to the `locale` names.
+ * - `period` defaults to the `am` and `pm` labels joined by a slash (e.g. `AM/PM`).
+ * - `now`, `clear`, `confirm`, `openPanel` and `panelLabel` default to English text.
+ */
+export type TTimePickerLabels = {
+  /** Header of the hour column and accessible name of the hour segment. */
+  hour?: string;
+  /** Header of the minute column and accessible name of the minute segment. */
+  minute?: string;
+  /** Header of the second column and accessible name of the second segment. */
+  second?: string;
+  /** Header of the AM/PM column and accessible name of the AM/PM segment. */
+  period?: string;
+  /** Label of the morning period, shown in the field and the panel. */
+  am?: string;
+  /** Label of the afternoon period, shown in the field and the panel. */
+  pm?: string;
+  /** Label of the panel "Now" button. */
+  now?: string;
+  /** Accessible name of the clear button. */
+  clear?: string;
+  /** Label of the panel confirm button. */
+  confirm?: string;
+  /** Accessible name of the clock trigger button. */
+  openPanel?: string;
+  /** Accessible name of the panel. */
+  panelLabel?: string;
+};

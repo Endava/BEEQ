@@ -1,46 +1,76 @@
-import type { TTimeHourCycle, TTimeMaskField } from '../../../shared/utils';
-import type { TTime, TTimePrecision } from '../bq-time-picker.types';
+import type { TTimeHourCycle } from '../../../shared/utils';
+import { isString } from '../../../shared/utils';
+import type { TTime, TTimePickerLabels, TTimePrecision } from '../bq-time-picker.types';
 
-/** Accessible names of the editable fields and panel columns. */
-export const TIME_FIELD_LABELS: Record<TTimeMaskField, string> = {
-  hour: 'Hours',
-  minute: 'Minutes',
-  second: 'Seconds',
-  dayPeriod: 'AM/PM',
-};
+/** English text used when `labels` doesn't set a button or panel label. */
+const DEFAULT_LABELS = {
+  now: 'Now',
+  clear: 'Clear',
+  confirm: 'OK',
+  openPanel: 'Open time picker',
+  panelLabel: 'Choose time',
+} as const satisfies TTimePickerLabels;
 
 /** Column headers used when the browser can't provide localized field names. */
-const COLUMN_HEADER_FALLBACK: Record<Exclude<TTimeMaskField, 'dayPeriod'>, string> = {
+const FIELD_NAME_FALLBACK = {
   hour: 'Hour',
   minute: 'Minute',
   second: 'Second',
+} as const;
+
+/**
+ * Reads the `labels` prop, which may be an object or a JSON string set through the attribute.
+ *
+ * @param labels Value of the `labels` prop.
+ * @returns The labels object, or `undefined` when the value is missing or isn't a valid JSON object.
+ */
+export const parseLabels = (labels: TTimePickerLabels | string | undefined): TTimePickerLabels | undefined => {
+  if (!isString(labels)) return labels ?? undefined;
+
+  try {
+    const parsed: unknown = JSON.parse(labels);
+    return parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? (parsed as TTimePickerLabels) : undefined;
+  } catch {
+    return undefined;
+  }
 };
 
 /**
- * Returns the localized headers of the panel columns.
- * The AM/PM header joins the locale day period labels so it matches the options below it.
+ * Fills the missing labels with the locale names and the English defaults.
  *
  * @param locale Locale used for the field names.
  * @param dayPeriods Localized AM and PM labels.
- * @returns The header of each column.
+ * @param labels Labels set by the consumer.
+ * @returns Every label of the time picker.
  */
-export const getColumnHeaders = (
+export const resolveLabels = (
   locale: Intl.LocalesArgument,
   dayPeriods: readonly [string, string],
-): Record<TTimeMaskField, string> => {
+  labels: TTimePickerLabels = {},
+): Required<TTimePickerLabels> => {
   let names: Intl.DisplayNames | undefined;
   try {
     names = new Intl.DisplayNames(locale, { type: 'dateTimeField' });
   } catch {
     names = undefined;
   }
-  const getName = (field: keyof typeof COLUMN_HEADER_FALLBACK) => names?.of(field) ?? COLUMN_HEADER_FALLBACK[field];
+  const getName = (field: keyof typeof FIELD_NAME_FALLBACK) =>
+    labels[field] || names?.of(field) || FIELD_NAME_FALLBACK[field];
+  const am = labels.am || dayPeriods[0];
+  const pm = labels.pm || dayPeriods[1];
 
   return {
     hour: getName('hour'),
     minute: getName('minute'),
     second: getName('second'),
-    dayPeriod: dayPeriods.join('/'),
+    am,
+    pm,
+    period: labels.period || `${am}/${pm}`,
+    now: labels.now || DEFAULT_LABELS.now,
+    clear: labels.clear || DEFAULT_LABELS.clear,
+    confirm: labels.confirm || DEFAULT_LABELS.confirm,
+    openPanel: labels.openPanel || DEFAULT_LABELS.openPanel,
+    panelLabel: labels.panelLabel || DEFAULT_LABELS.panelLabel,
   };
 };
 

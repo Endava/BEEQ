@@ -22,8 +22,6 @@ const meta: Meta = {
   },
   argTypes: {
     autofocus: { control: 'boolean' },
-    'clear-button-label': { control: 'text' },
-    'confirm-button-label': { control: 'text' },
     'disable-clear': { control: 'boolean' },
     'disable-now': { control: 'boolean' },
     disabled: { control: 'boolean' },
@@ -32,12 +30,12 @@ const meta: Meta = {
     'form-validation-message': { control: 'text' },
     'hour-format': { control: 'select', options: [...HOUR_FORMAT] },
     'hour-step': { control: 'number' },
+    labels: { control: 'object' },
     locale: { control: 'text' },
     max: { control: 'text' },
     min: { control: 'text' },
     'minute-step': { control: 'number' },
     name: { control: 'text' },
-    'now-button-label': { control: 'text' },
     open: { control: 'boolean' },
     'panel-height': { control: 'text' },
     placement: { control: 'select', options: [...FLOATING_PLACEMENT] },
@@ -48,7 +46,6 @@ const meta: Meta = {
     'second-step': { control: 'number' },
     skidding: { control: 'number' },
     strategy: { control: 'select', options: [...FLOATING_STRATEGY] },
-    'time-button-label': { control: 'text' },
     'validation-status': { control: 'select', options: [...INPUT_VALIDATION] },
     value: { control: 'text' },
     // Events
@@ -64,8 +61,6 @@ const meta: Meta = {
   },
   args: {
     autofocus: false,
-    'clear-button-label': 'Clear value',
-    'confirm-button-label': 'OK',
     'disable-clear': false,
     'disable-now': false,
     disabled: false,
@@ -74,12 +69,12 @@ const meta: Meta = {
     'form-validation-message': undefined,
     'hour-format': '24',
     'hour-step': 1,
+    labels: undefined,
     locale: 'en-GB',
     max: undefined,
     min: undefined,
     'minute-step': 1,
     name: 'bq-time-picker',
-    'now-button-label': 'Now',
     open: false,
     'panel-height': 'auto',
     placement: 'bottom-end',
@@ -90,7 +85,6 @@ const meta: Meta = {
     'second-step': 1,
     skidding: 0,
     strategy: 'fixed',
-    'time-button-label': 'Open time picker',
     'validation-status': 'none',
     value: undefined,
     noLabel: false,
@@ -122,8 +116,6 @@ const Template = (args: Args) => {
   return html`
     <bq-time-picker
       ?autofocus=${args.autofocus}
-      clear-button-label=${ifDefined(args['clear-button-label'])}
-      confirm-button-label=${ifDefined(args['confirm-button-label'])}
       ?disable-clear=${args['disable-clear']}
       ?disable-now=${args['disable-now']}
       ?disabled=${args.disabled}
@@ -132,12 +124,12 @@ const Template = (args: Args) => {
       form-validation-message=${ifDefined(args['form-validation-message'])}
       hour-format=${ifDefined(args['hour-format'])}
       hour-step=${ifDefined(args['hour-step'])}
+      .labels=${args.labels}
       locale=${ifDefined(args.locale)}
       max=${ifDefined(args.max)}
       min=${ifDefined(args.min)}
       minute-step=${ifDefined(args['minute-step'])}
       name=${ifDefined(args.name)}
-      now-button-label=${ifDefined(args['now-button-label'])}
       ?open=${args.open}
       panel-height=${ifDefined(args['panel-height'])}
       placement=${ifDefined(args.placement)}
@@ -148,7 +140,6 @@ const Template = (args: Args) => {
       second-step=${ifDefined(args['second-step'])}
       skidding=${ifDefined(args.skidding)}
       strategy=${ifDefined(args.strategy)}
-      time-button-label=${ifDefined(args['time-button-label'])}
       validation-status=${ifDefined(args['validation-status'])}
       value=${ifDefined(args.value)}
       @bqBlur=${args.bqBlur}
@@ -239,6 +230,29 @@ export const Localized: Story = {
         args: { ...args, name: 'tp-ar', locale: 'ar-EG', 'hour-format': '12', value: '14:30' },
       },
     ]),
+};
+
+export const CustomLabels: Story = {
+  name: 'Custom labels',
+  render: Template,
+  args: {
+    open: true,
+    'hour-format': '12',
+    labels: {
+      hour: 'Heure',
+      minute: 'Minute',
+      am: 'matin',
+      pm: 'soir',
+      period: 'Moment',
+      now: 'Maintenant',
+      clear: 'Effacer',
+      confirm: 'Valider',
+      openPanel: "Ouvrir le sélecteur d'heure",
+      panelLabel: "Choisir l'heure",
+    },
+    locale: 'fr-FR',
+    value: '14:30',
+  },
 };
 
 export const RTL: Story = {
