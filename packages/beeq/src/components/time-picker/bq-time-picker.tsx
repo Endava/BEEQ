@@ -8,7 +8,6 @@ import {
   getAdjacentSegmentKey,
   getFirstEmptySegmentKey,
   getSegment,
-  getSegmentGroupBoundaryKey,
   getTimeMask,
   hasSlotContent,
   isDefined,
@@ -50,15 +49,17 @@ import {
   getTimeValidityFlags,
   type TTimeConstraints,
 } from './helper/constraints';
-import { formatTime, parseLabels, resolveLabels } from './helper/labels';
 import {
-  applyColumnPick,
-  getColumnOptions,
-  moveColumnOption,
-  resolvePartialTime,
-  stepColumnOption,
-  type TColumnMove,
-} from './helper/options';
+  findOptionByValue,
+  getAdjacentColumn,
+  getColumnKeyMove,
+  getSegmentNavigationTarget,
+  isSegmentNavigationKey,
+  stepSegmentValue,
+} from './helper/keyboard';
+import { formatTime, parseLabels, resolveLabels } from './helper/labels';
+import { applyColumnPick, getColumnOptions, moveColumnOption, resolvePartialTime } from './helper/options';
+import { focusColumnTabStop, getScrollBehavior, scrollSelectionIntoView } from './helper/scroll';
 import {
   completeTypedDigit,
   getTimeSegmentGroup,
@@ -77,16 +78,6 @@ const defaultValidityMessage = (flags: ValidityStateFlags): string => {
   if (flags.rangeUnderflow) return 'Selected time is before the minimum';
   if (flags.rangeOverflow) return 'Selected time is after the maximum';
   return 'Selected time is not an allowed step';
-};
-
-/** Keyboard keys mapped to panel column moves. */
-const COLUMN_KEY_MOVES: Record<string, TColumnMove> = {
-  ArrowDown: 'next',
-  ArrowUp: 'previous',
-  PageDown: 'pageNext',
-  PageUp: 'pagePrevious',
-  Home: 'first',
-  End: 'last',
 };
 
 type TOpenSource = 'input' | 'keyboard' | 'trigger' | 'programmatic';
@@ -722,16 +713,11 @@ export class BqTimePicker {
   };
 
   private handleSegmentNavigation = (ev: KeyboardEvent, key: TTimeSegmentKey): boolean => {
-    if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(ev.key)) return false;
+    if (!isSegmentNavigationKey(ev.key)) return false;
 
     ev.preventDefault();
 
-    let next: TTimeSegmentKey | undefined;
-    if (ev.key === 'Home' || ev.key === 'End') {
-      next = getSegmentGroupBoundaryKey(this.segmentGroups[0], ev.key === 'Home' ? 'start' : 'end');
-    } else {
-      next = getAdjacentSegmentKey(this.segmentGroups, key, ev.key === 'ArrowLeft' ? -1 : 1);
-    }
+    const next = getSegmentNavigationTarget(this.segmentGroups, key, ev.key);
     if (!next) return true;
 
     this.activeSegment = next;
@@ -766,13 +752,11 @@ export class BqTimePicker {
     const segment = getSegment(this.segmentGroups, key);
     if (!segment) return true;
 
-    const current =
-      segment.value.length === segment.maxLength ? this.toOptionValue(key.field, segment.value) : undefined;
     const options = getColumnOptions(key.field, this.getColumnContext(this.displayPartial));
-    const next = stepColumnOption(options, current, ev.key === 'ArrowUp' ? 1 : -1, key.field, this.mask.hourCycle);
+    const next = stepSegmentValue(segment, options, ev.key === 'ArrowUp' ? 1 : -1, this.mask.hourCycle);
     if (!next) return true;
 
-    this.editSegment(key, this.toSegmentValue(next.value));
+    this.editSegment(key, next);
     this.focusSegment(key);
     return true;
   };
@@ -821,12 +805,6 @@ export class BqTimePicker {
     this.activeSegment = key;
     this.syncSegmentDraftValue();
   };
-
-  private toOptionValue = (field: TTimeMaskField, value: string): number | TDayPeriod =>
-    field === 'dayPeriod' ? (value as TDayPeriod) : Number(value);
-
-  private toSegmentValue = (value: number | TDayPeriod): string =>
-    typeof value === 'number' ? `${value}`.padStart(2, '0') : value;
 
   /** Opens the panel from a segment click while keeping keyboard focus on the field. */
   private handleSegmentClick = (key: TTimeSegmentKey, ev: MouseEvent): void => {
@@ -977,7 +955,7 @@ export class BqTimePicker {
       return;
     }
 
-    const move = COLUMN_KEY_MOVES[ev.key];
+    const move = getColumnKeyMove(ev.key);
     if (!move) return;
 
     ev.preventDefault();
@@ -996,16 +974,14 @@ export class BqTimePicker {
     ev.preventDefault();
     const columns = this.mask.segments.map(({ field }) => field);
     const isRtl = getComputedStyle(this.el).direction === 'rtl';
-    const forward = (ev.key === 'ArrowRight') !== isRtl;
-    const next = columns[columns.indexOf(column) + (forward ? 1 : -1)];
+    const next = getAdjacentColumn(columns, column, ev.key, isRtl);
     if (next) this.focusColumn(next);
     return true;
   };
 
   /** Picks the focused option when it is not selected yet (e.g. the first option of an empty column). */
   private pickFocusedOption = (ev: KeyboardEvent, column: TTimeMaskField, options: TTimeOption[]): void => {
-    const target = ev.target as HTMLElement;
-    const option = options.find((item) => `${item.value}` === target.dataset.value);
+    const option = findOptionByValue(options, (ev.target as HTMLElement).dataset.value);
     if (!option || option.selected || option.disabled) return;
 
     this.pickOption(column, option.value);
@@ -1058,18 +1034,14 @@ export class BqTimePicker {
     if (!this.panelElem || typeof ResizeObserver === 'undefined') return;
 
     this.panelResizeObserver ??= new ResizeObserver(() => {
-      if (this.open) this.scrollSelectionIntoView('auto');
+      if (this.open) scrollSelectionIntoView(this.panelElem, 'auto');
     });
     this.panelResizeObserver.observe(this.panelElem);
   };
 
   /** Moves focus to the tab stop of a column. */
   private focusColumn = (column: TTimeMaskField): void => {
-    requestAnimationFrame(() => {
-      this.panelElem
-        ?.querySelector<HTMLElement>(`[data-column="${column}"] [role="option"][tabindex="0"]`)
-        ?.focus({ preventScroll: true });
-    });
+    requestAnimationFrame(() => focusColumnTabStop(this.panelElem, column));
   };
 
   /**
@@ -1081,41 +1053,14 @@ export class BqTimePicker {
    */
   private scrollColumnsToSelection = (isOpening: boolean, focusColumn?: TTimeMaskField): void => {
     const shouldFocusFirst = isOpening && this.activeOpenSource !== 'input';
-    const behavior: ScrollBehavior = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
-      ? 'auto'
-      : 'smooth';
+    const behavior = getScrollBehavior();
 
     requestAnimationFrame(() => {
-      this.scrollSelectionIntoView(behavior);
+      scrollSelectionIntoView(this.panelElem, behavior);
 
       const column = focusColumn ?? (shouldFocusFirst ? this.mask.segments[0]?.field : undefined);
       if (column) this.focusColumn(column);
     });
-  };
-
-  private scrollSelectionIntoView = (behavior: ScrollBehavior): void => {
-    const columns: HTMLElement[] = this.panelElem
-      ? Array.from(this.panelElem.querySelectorAll<HTMLElement>('[data-column]'))
-      : [];
-    for (const columnElem of columns) {
-      const optionElem: HTMLElement | null = columnElem.querySelector('[role="option"][tabindex="0"]');
-      if (optionElem) this.scrollOptionIntoView(columnElem, optionElem, behavior);
-    }
-  };
-
-  /**
-   * Scrolls a column just enough to show the option.
-   * Uses `scrollTop` instead of `scrollIntoView` so the page and the floating panel don't move.
-   */
-  private scrollOptionIntoView = (columnElem: HTMLElement, optionElem: HTMLElement, behavior: ScrollBehavior): void => {
-    const top = optionElem.offsetTop;
-    const bottom = top + optionElem.offsetHeight;
-    const { scrollTop, clientHeight } = columnElem;
-    // The panel is still hidden or being laid out; the resize observer retries once it has its size.
-    if (clientHeight < optionElem.offsetHeight) return;
-
-    if (top < scrollTop) columnElem.scrollTo({ top, behavior });
-    else if (bottom > scrollTop + clientHeight) columnElem.scrollTo({ top: bottom - clientHeight, behavior });
   };
 
   // Value and validity
