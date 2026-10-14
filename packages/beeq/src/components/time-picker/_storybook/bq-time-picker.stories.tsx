@@ -198,14 +198,11 @@ export const HourFormat: Story = {
   render: (args) =>
     Grid([
       { title: '24-hour clock (default)', args: { ...args, name: 'tp-24', value: '14:30' } },
-      { title: '12-hour clock', args: { ...args, name: 'tp-12', 'hour-format': '12', value: '14:30' } },
+      {
+        title: '12-hour clock (en-US)',
+        args: { ...args, name: 'tp-12', 'hour-format': '12', locale: 'en-US', value: '14:30' },
+      },
     ]),
-};
-
-export const TwelveHourClock: Story = {
-  name: '12-hour clock',
-  render: Template,
-  args: { open: true, 'hour-format': '12', locale: 'en-US', value: '14:30' },
 };
 
 export const Localized: Story = {
