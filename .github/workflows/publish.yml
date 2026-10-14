@@ -2,8 +2,23 @@ name: NPM publish and Storybook deploy
 
 on:
   workflow_dispatch: # Allows manual triggering
+    inputs:
+      channel:
+        description: 'latest publishes the checked-out ref as is. beta publishes the next X.Y.Z-beta.N from main.'
+        type: choice
+        options: [latest, beta]
+        default: latest
+      dry_run:
+        description: 'Run npm publish in dry-run mode and skip the Storybook deploy'
+        type: boolean
+        default: false
   release:
     types: [published] # Triggers on release publish
+
+# Betas serialize among themselves so two runs can't pick the same beta number
+concurrency:
+  group: npm-publish-${{ inputs.channel || 'latest' }}
+  cancel-in-progress: false
 
 env:
   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -44,16 +59,33 @@ jobs:
       - name: 💫 Load and cache dependencies
         uses: ./.github/actions/cache-deps
 
+      - name: 🧪 Check beta runs from main
+        if: inputs.channel == 'beta' && github.ref != 'refs/heads/main'
+        run: |
+          echo "::error::Beta releases must run from main (current ref: $GITHUB_REF)"
+          exit 1
+        shell: bash
+
+      - name: 🏷 Bump packages to the next beta version
+        id: beta
+        if: inputs.channel == 'beta'
+        run: node tools/scripts/beta-release.mjs
+        shell: bash
+
       - name: ⏳ Build
         run: pnpm build
         shell: bash
 
       - name: 🚀 Publish BEEQ to NPM registry
-        run: pnpm exec nx release publish --parallel=5 --output-style=stream
+        run: pnpm exec nx release publish --parallel=5 --output-style=stream --tag "$NPM_TAG" $DRY_RUN_FLAG
+        shell: bash
         env:
           NPM_CONFIG_PROVENANCE: true
+          NPM_TAG: ${{ inputs.channel == 'beta' && 'beta' || 'latest' }}
+          DRY_RUN_FLAG: ${{ inputs.dry_run && '--dry-run' || '' }}
 
       - name: 🚚 Deploy BEEQ Storybook to GitHub Pages
+        if: inputs.channel != 'beta' && !inputs.dry_run
         uses: bitovi/github-actions-storybook-to-github-pages@ddd9d35f670cceedd2bfc444be681001b0709730 # v1.0.4
         with:
           build_command: pnpm build:storybook
