@@ -16,9 +16,9 @@ export const TIME_PRECISION = ['hour', 'minute', 'second'] as const;
 /** The smallest unit edited and submitted by the time picker. */
 export type TTimePrecision = (typeof TIME_PRECISION)[number];
 
-/** Hour format override. When unset, the locale decides. */
+/** Clock used by the time picker: 12-hour with an AM/PM period, or 24-hour. */
 export const HOUR_FORMAT = ['12', '24'] as const;
-/** Hour format override. When unset, the locale decides. */
+/** Clock used by the time picker: 12-hour with an AM/PM period, or 24-hour. */
 export type THourFormat = (typeof HOUR_FORMAT)[number];
 
 /** Editable time fields, in canonical order. */

@@ -117,9 +117,9 @@ type TOpenSource = 'input' | 'keyboard' | 'trigger' | 'programmatic';
  * @attr {number} distance - Represents the distance between the panel and the field.
  * @attr {string} form - The form ID the field belongs to.
  * @attr {string} form-validation-message - Custom native form validation message.
- * @attr {"12" | "24"} hour-format - Forces a 12-hour or 24-hour clock. Defaults to the locale's clock.
+ * @attr {"12" | "24"} hour-format - The clock used by the field and the panel. Defaults to `"24"`.
  * @attr {number} hour-step - Step between selectable hours.
- * @attr {Intl.LocalesArgument} locale - Locale used for the field layout, day period labels and the default clock.
+ * @attr {Intl.LocalesArgument} locale - Locale used for the field layout, separators, column headers and day period labels.
  * @attr {string} max - Latest selectable time (`HH:mm` or `HH:mm:ss`).
  * @attr {string} min - Earliest selectable time (`HH:mm` or `HH:mm:ss`).
  * @attr {number} minute-step - Step between selectable minutes.
@@ -301,15 +301,15 @@ export class BqTimePicker {
   @Prop({ mutable: true }) formValidationMessage?: string;
 
   /**
-   * Forces a 12-hour (`"12"`) or 24-hour (`"24"`) clock.
-   * When unset, the clock of the `locale` is used.
+   * The clock used by the field and the panel: 24-hour (`"24"`) or 12-hour with an AM/PM period (`"12"`).
+   * It doesn't depend on the `locale`.
    */
-  @Prop({ reflect: true, mutable: true }) hourFormat?: THourFormat;
+  @Prop({ reflect: true, mutable: true }) hourFormat: THourFormat = '24';
 
   /** Step between selectable hours. */
   @Prop({ reflect: true }) hourStep: number = 1;
 
-  /** Locale used for the field layout, the day period labels and the default clock. */
+  /** Locale used for the field layout, separators, column headers and day period labels. The clock is set by `hour-format`. */
   @Prop({ reflect: true }) locale: Intl.LocalesArgument = 'en-GB';
 
   /**
@@ -438,7 +438,7 @@ export class BqTimePicker {
     validatePropValue(FLOATING_STRATEGY, 'fixed', this.el, 'strategy');
     validatePropValue(FLOATING_PLACEMENT, 'bottom-end', this.el, 'placement');
     validatePropValue(INPUT_VALIDATION, 'none', this.el, 'validationStatus');
-    this.checkHourFormat();
+    validatePropValue(HOUR_FORMAT, '24', this.el, 'hourFormat');
   }
 
   @Watch('open')
@@ -576,18 +576,10 @@ export class BqTimePicker {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  /** `hour-format` is optional, so an invalid value falls back to the locale clock instead of a default. */
-  private checkHourFormat = (): void => {
-    if (this.hourFormat === undefined || HOUR_FORMAT.includes(this.hourFormat)) return;
-
-    console.warn(`[BQ-TIME-PICKER] Please notice that "hourFormat" should be one of ${HOUR_FORMAT.join('|')}`);
-    this.hourFormat = undefined;
-  };
-
   /** Locale- and precision-aware segment mask, memoized by its inputs. */
   private get mask(): TTimeMask {
-    const hourCycle = this.forcedHourCycle;
-    const key = `${String(this.locale)}|${this.precision}|${hourCycle ?? ''}`;
+    const hourCycle: TTimeHourCycle = this.hourFormat === '12' ? 'h12' : 'h23';
+    const key = `${String(this.locale)}|${this.precision}|${hourCycle}`;
     if (this.cachedMask?.key !== key) {
       this.cachedMask = { key, value: getTimeMask(this.locale, this.precision, hourCycle) };
     }
@@ -601,12 +593,6 @@ export class BqTimePicker {
       this.cachedColumnHeaders = { key: mask, value: getColumnHeaders(this.locale, mask.dayPeriods) };
     }
     return this.cachedColumnHeaders.value;
-  }
-
-  private get forcedHourCycle(): TTimeHourCycle | undefined {
-    if (this.hourFormat === '12') return 'h12';
-    if (this.hourFormat === '24') return 'h23';
-    return undefined;
   }
 
   /** Sanitized min/max and step constraints, memoized by their inputs. */

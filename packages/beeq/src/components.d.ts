@@ -3156,9 +3156,9 @@ export namespace Components {
      * @attr {number} distance - Represents the distance between the panel and the field.
      * @attr {string} form - The form ID the field belongs to.
      * @attr {string} form-validation-message - Custom native form validation message.
-     * @attr {"12" | "24"} hour-format - Forces a 12-hour or 24-hour clock. Defaults to the locale's clock.
+     * @attr {"12" | "24"} hour-format - The clock used by the field and the panel. Defaults to `"24"`.
      * @attr {number} hour-step - Step between selectable hours.
-     * @attr {Intl.LocalesArgument} locale - Locale used for the field layout, day period labels and the default clock.
+     * @attr {Intl.LocalesArgument} locale - Locale used for the field layout, separators, column headers and day period labels.
      * @attr {string} max - Latest selectable time (`HH:mm` or `HH:mm:ss`).
      * @attr {string} min - Earliest selectable time (`HH:mm` or `HH:mm:ss`).
      * @attr {number} minute-step - Step between selectable minutes.
@@ -3265,16 +3265,17 @@ export namespace Components {
          */
         "formValidationMessage"?: string;
         /**
-          * Forces a 12-hour (`"12"`) or 24-hour (`"24"`) clock. When unset, the clock of the `locale` is used.
+          * The clock used by the field and the panel: 24-hour (`"24"`) or 12-hour with an AM/PM period (`"12"`). It doesn't depend on the `locale`.
+          * @default '24'
          */
-        "hourFormat"?: THourFormat;
+        "hourFormat": THourFormat;
         /**
           * Step between selectable hours.
           * @default 1
          */
         "hourStep": number;
         /**
-          * Locale used for the field layout, the day period labels and the default clock.
+          * Locale used for the field layout, separators, column headers and day period labels. The clock is set by `hour-format`.
           * @default 'en-GB'
          */
         "locale": Intl.LocalesArgument;
@@ -5654,9 +5655,9 @@ declare global {
      * @attr {number} distance - Represents the distance between the panel and the field.
      * @attr {string} form - The form ID the field belongs to.
      * @attr {string} form-validation-message - Custom native form validation message.
-     * @attr {"12" | "24"} hour-format - Forces a 12-hour or 24-hour clock. Defaults to the locale's clock.
+     * @attr {"12" | "24"} hour-format - The clock used by the field and the panel. Defaults to `"24"`.
      * @attr {number} hour-step - Step between selectable hours.
-     * @attr {Intl.LocalesArgument} locale - Locale used for the field layout, day period labels and the default clock.
+     * @attr {Intl.LocalesArgument} locale - Locale used for the field layout, separators, column headers and day period labels.
      * @attr {string} max - Latest selectable time (`HH:mm` or `HH:mm:ss`).
      * @attr {string} min - Earliest selectable time (`HH:mm` or `HH:mm:ss`).
      * @attr {number} minute-step - Step between selectable minutes.
@@ -9233,9 +9234,9 @@ declare namespace LocalJSX {
      * @attr {number} distance - Represents the distance between the panel and the field.
      * @attr {string} form - The form ID the field belongs to.
      * @attr {string} form-validation-message - Custom native form validation message.
-     * @attr {"12" | "24"} hour-format - Forces a 12-hour or 24-hour clock. Defaults to the locale's clock.
+     * @attr {"12" | "24"} hour-format - The clock used by the field and the panel. Defaults to `"24"`.
      * @attr {number} hour-step - Step between selectable hours.
-     * @attr {Intl.LocalesArgument} locale - Locale used for the field layout, day period labels and the default clock.
+     * @attr {Intl.LocalesArgument} locale - Locale used for the field layout, separators, column headers and day period labels.
      * @attr {string} max - Latest selectable time (`HH:mm` or `HH:mm:ss`).
      * @attr {string} min - Earliest selectable time (`HH:mm` or `HH:mm:ss`).
      * @attr {number} minute-step - Step between selectable minutes.
@@ -9337,7 +9338,8 @@ declare namespace LocalJSX {
          */
         "formValidationMessage"?: string;
         /**
-          * Forces a 12-hour (`"12"`) or 24-hour (`"24"`) clock. When unset, the clock of the `locale` is used.
+          * The clock used by the field and the panel: 24-hour (`"24"`) or 12-hour with an AM/PM period (`"12"`). It doesn't depend on the `locale`.
+          * @default '24'
          */
         "hourFormat"?: THourFormat;
         /**
@@ -9346,7 +9348,7 @@ declare namespace LocalJSX {
          */
         "hourStep"?: number;
         /**
-          * Locale used for the field layout, the day period labels and the default clock.
+          * Locale used for the field layout, separators, column headers and day period labels. The clock is set by `hour-format`.
           * @default 'en-GB'
          */
         "locale"?: Intl.LocalesArgument;
@@ -11562,9 +11564,9 @@ declare module "@stencil/core" {
              * @attr {number} distance - Represents the distance between the panel and the field.
              * @attr {string} form - The form ID the field belongs to.
              * @attr {string} form-validation-message - Custom native form validation message.
-             * @attr {"12" | "24"} hour-format - Forces a 12-hour or 24-hour clock. Defaults to the locale's clock.
+             * @attr {"12" | "24"} hour-format - The clock used by the field and the panel. Defaults to `"24"`.
              * @attr {number} hour-step - Step between selectable hours.
-             * @attr {Intl.LocalesArgument} locale - Locale used for the field layout, day period labels and the default clock.
+             * @attr {Intl.LocalesArgument} locale - Locale used for the field layout, separators, column headers and day period labels.
              * @attr {string} max - Latest selectable time (`HH:mm` or `HH:mm:ss`).
              * @attr {string} min - Earliest selectable time (`HH:mm` or `HH:mm:ss`).
              * @attr {number} minute-step - Step between selectable minutes.

@@ -30,7 +30,7 @@ const meta: Meta = {
     distance: { control: 'number' },
     form: { control: 'text' },
     'form-validation-message': { control: 'text' },
-    'hour-format': { control: 'select', options: [undefined, ...HOUR_FORMAT] },
+    'hour-format': { control: 'select', options: [...HOUR_FORMAT] },
     'hour-step': { control: 'number' },
     locale: { control: 'text' },
     max: { control: 'text' },
@@ -72,7 +72,7 @@ const meta: Meta = {
     distance: 8,
     form: undefined,
     'form-validation-message': undefined,
-    'hour-format': undefined,
+    'hour-format': '24',
     'hour-step': 1,
     locale: 'en-GB',
     max: undefined,
@@ -212,22 +212,15 @@ export const HourFormat: Story = {
   name: 'Hour format',
   render: (args) =>
     Grid([
-      { title: 'Locale clock (en-US)', args: { ...args, name: 'tp-locale', locale: 'en-US', value: '14:30' } },
-      {
-        title: '24-hour override (en-US)',
-        args: { ...args, name: 'tp-24', locale: 'en-US', 'hour-format': '24', value: '14:30' },
-      },
-      {
-        title: '12-hour override (en-GB)',
-        args: { ...args, name: 'tp-12', locale: 'en-GB', 'hour-format': '12', value: '14:30' },
-      },
+      { title: '24-hour clock (default)', args: { ...args, name: 'tp-24', value: '14:30' } },
+      { title: '12-hour clock', args: { ...args, name: 'tp-12', 'hour-format': '12', value: '14:30' } },
     ]),
 };
 
 export const TwelveHourClock: Story = {
   name: '12-hour clock',
   render: Template,
-  args: { open: true, locale: 'en-US', value: '14:30' },
+  args: { open: true, 'hour-format': '12', locale: 'en-US', value: '14:30' },
 };
 
 export const Localized: Story = {
@@ -241,13 +234,16 @@ export const Localized: Story = {
         title: 'Korean (ko-KR)',
         args: { ...args, name: 'tp-ko', locale: 'ko-KR', 'hour-format': '12', value: '14:30' },
       },
-      { title: 'Arabic (ar-EG)', args: { ...args, name: 'tp-ar', locale: 'ar-EG', value: '14:30' } },
+      {
+        title: 'Arabic (ar-EG)',
+        args: { ...args, name: 'tp-ar', locale: 'ar-EG', 'hour-format': '12', value: '14:30' },
+      },
     ]),
 };
 
 export const RTL: Story = {
   render: (args) => html`<div dir="rtl">${Template(args)}</div>`,
-  args: { open: true, locale: 'ar-EG', value: '14:30' },
+  args: { open: true, 'hour-format': '12', locale: 'ar-EG', value: '14:30' },
 };
 
 /* -------------------------------- Constraints ------------------------------- */

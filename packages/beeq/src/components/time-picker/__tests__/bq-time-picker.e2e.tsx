@@ -158,8 +158,18 @@ describe('bq-time-picker', () => {
 
   /* ---------------------------- Locale and format ---------------------------- */
 
-  it('should use the 12-hour clock of the `locale`', async () => {
+  it('should use the 24-hour clock by default, whatever the `locale`', async () => {
     const { root } = await render(<bq-time-picker locale="en-US" name="time" value="14:30" />);
+    const tp = root as HTMLBqTimePickerElement;
+
+    expect(tp.hourFormat).toBe('24');
+    expect(tp).toEqualAttribute('hour-format', '24');
+    expect(getSegmentFields(tp)).toEqual(['hour', 'minute']);
+    expect(getSegment(tp, 'hour')?.textContent).toBe('14');
+  });
+
+  it('should use the 12-hour clock with `hour-format="12"`', async () => {
+    const { root } = await render(<bq-time-picker hourFormat="12" locale="en-US" name="time" value="14:30" />);
     const tp = root as HTMLBqTimePickerElement;
 
     expect(getSegmentFields(tp)).toEqual(['hour', 'minute', 'dayPeriod']);
@@ -168,7 +178,7 @@ describe('bq-time-picker', () => {
     expect(tp.value).toBe('14:30');
   });
 
-  it('should let `hour-format` override the locale clock', async () => {
+  it('should switch the clock when `hour-format` changes', async () => {
     const { root, waitForChanges } = await render(<bq-time-picker hourFormat="24" locale="en-US" name="time" />);
     const tp = root as HTMLBqTimePickerElement;
 
@@ -225,7 +235,7 @@ describe('bq-time-picker', () => {
   });
 
   it('should set the day period from a typed letter', async () => {
-    const { root } = await render(<bq-time-picker locale="en-US" name="time" value="02:30" />);
+    const { root } = await render(<bq-time-picker hourFormat="12" locale="en-US" name="time" value="02:30" />);
     const tp = root as HTMLBqTimePickerElement;
 
     await typeInSegment(tp, 'dayPeriod', 'p');
@@ -388,11 +398,11 @@ describe('bq-time-picker', () => {
   });
 
   it.each([
-    ['en-US', ['hour', 'minute', 'second', 'AM/PM']],
-    ['de-DE', ['Stunde', 'Minute', 'Sekunde']],
-  ])('should render a localized header above each column for `%s`', async (locale, headers) => {
+    ['en-US', '12', ['hour', 'minute', 'second', 'AM/PM']],
+    ['de-DE', '24', ['Stunde', 'Minute', 'Sekunde']],
+  ] as const)('should render a localized header above each column for `%s`', async (locale, hourFormat, headers) => {
     const { root, waitForChanges } = await render(
-      <bq-time-picker locale={locale} name="time" precision="second" value="09:30:00" />,
+      <bq-time-picker hourFormat={hourFormat} locale={locale} name="time" precision="second" value="09:30:00" />,
     );
     const tp = root as HTMLBqTimePickerElement;
     await openPanel(tp, waitForChanges);
@@ -980,7 +990,7 @@ describe('bq-time-picker', () => {
     const tp = root as HTMLBqTimePickerElement;
     await waitForStable(root);
 
-    expect(tp.hourFormat).toBeUndefined();
+    expect(tp.hourFormat).toBe('24');
     expect(tp.placement).toBe('bottom-end');
     expect(tp.precision).toBe('minute');
     expect(tp.strategy).toBe('fixed');
