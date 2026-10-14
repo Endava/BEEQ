@@ -11,6 +11,7 @@ import {
   getSegmentGroupBoundaryKey,
   getTimeMask,
   hasSlotContent,
+  isDefined,
   isEventHandled,
   isEventTargetChildOfElement,
   isSameSegmentKey,
@@ -19,7 +20,6 @@ import {
   type TTimeHourCycle,
   type TTimeMask,
   type TTimeMaskField,
-  updateFormValidity,
   updateSegment,
   validatePropValue,
 } from '../../shared/utils';
@@ -227,6 +227,8 @@ export class BqTimePicker {
   };
   private cachedConstraints?: { key: string; value: TTimeConstraints };
   private cachedMask?: { key: string; value: TTimeMask };
+  /** Validity last passed to `setValidity`, so an unchanged state isn't set again. */
+  private appliedValidity?: { key: string; anchor?: HTMLElement };
 
   /** Sticky flag: the typed draft can't be read as a time. Cleared on the next valid commit or clear. */
   private hasBadInput = false;
@@ -1189,37 +1191,37 @@ export class BqTimePicker {
     this.bqChange.emit({ value: this.value, el: this.el });
   };
 
-  /** Runs `required`, then bad input, bounds and step checks, and unions the failing flags. */
+  /**
+   * Checks bad input, bounds and steps, then `required`, and applies the result.
+   * `setValidity` only runs when the result changes: Chrome re-shows a visible validation message on
+   * every call, so calling it on blur would keep the message open after focus leaves.
+   */
   private syncValidity = (): void => {
     if (!this.internals) return;
 
-    updateFormValidity({
-      internals: this.internals,
-      required: this.required,
-      value: this.value,
-      inputElem: this.validationAnchor,
-      validationMessage: this.formValidationMessage,
-      defaultMessage: 'Please, input or select a valid time',
-    });
-
-    const flags: ValidityStateFlags = getTimeValidityFlags(parseTime(this.value), this.constraints);
+    let flags: ValidityStateFlags = getTimeValidityFlags(parseTime(this.value), this.constraints);
     if (this.hasBadInput) flags.badInput = true;
 
-    if (Object.keys(flags).length === 0) {
-      this.hasConstraintError = !this.internals.validity.valid;
-      this.constraintErrorMessage = this.hasConstraintError ? this.internals.validationMessage : undefined;
-      return;
+    let message = '';
+    if (Object.keys(flags).length > 0) {
+      message = this.formValidationMessage ?? defaultValidityMessage(flags);
+    } else if (this.required && !isDefined(this.value)) {
+      flags = { valueMissing: true };
+      message = this.formValidationMessage ?? 'Please, input or select a valid time';
     }
 
-    this.internals.states.delete('valid');
-    this.internals.states.add('invalid');
-    this.internals.setValidity(
-      flags,
-      this.formValidationMessage ?? defaultValidityMessage(flags),
-      this.validationAnchor,
-    );
-    this.hasConstraintError = true;
-    this.constraintErrorMessage = this.internals.validationMessage;
+    const isValid = !message;
+    const anchor = isValid ? undefined : this.validationAnchor;
+    const key = `${JSON.stringify(flags)}|${message}`;
+    if (this.appliedValidity?.key !== key || this.appliedValidity.anchor !== anchor) {
+      this.internals.setValidity(flags, message, anchor);
+      this.appliedValidity = { key, anchor };
+    }
+
+    this.internals.states.delete(isValid ? 'invalid' : 'valid');
+    this.internals.states.add(isValid ? 'valid' : 'invalid');
+    this.hasConstraintError = !isValid;
+    this.constraintErrorMessage = isValid ? undefined : message;
   };
 
   /** Announces the committed time once when focus enters the field. */
