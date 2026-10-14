@@ -500,6 +500,7 @@ describe('bq-time-picker', () => {
     const options = minuteColumn?.querySelectorAll<HTMLElement>('[role="option"]') ?? [];
     expect(getColumnHeader(tp, 'minute')?.textContent).toBe('minute');
     expect(minuteColumn).toEqualAttribute('aria-disabled', 'true');
+    expect(minuteColumn).toEqualAttribute('tabindex', '-1');
     expect(options).toHaveLength(1);
     expect(options[0]).toEqualText('00');
     expect(options[0]).toEqualAttribute('aria-disabled', 'true');

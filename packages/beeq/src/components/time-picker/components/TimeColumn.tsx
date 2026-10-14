@@ -30,7 +30,7 @@ const ColumnShell: FunctionalComponent<TColumnShellProps> = ({ field, label, dis
         part={TIME_PICKER_PARTS.column}
         role="listbox"
         // Focus roves between the options; -1 only keeps focus in the column when a gap is clicked.
-        tabIndex={disabled ? undefined : -1}
+        tabIndex={-1}
       >
         {children}
       </div>
