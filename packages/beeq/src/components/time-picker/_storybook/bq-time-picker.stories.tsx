@@ -1,6 +1,7 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { fn } from 'storybook/test';
 
 import { skipSnapshotParameters } from '../../../../.storybook/chromatic-parameters';
 import {
@@ -48,11 +49,6 @@ const meta: Meta = {
     strategy: { control: 'select', options: [...FLOATING_STRATEGY] },
     'validation-status': { control: 'select', options: [...INPUT_VALIDATION] },
     value: { control: 'text' },
-    // Events
-    bqBlur: { action: 'bqBlur' },
-    bqChange: { action: 'bqChange' },
-    bqClear: { action: 'bqClear' },
-    bqFocus: { action: 'bqFocus' },
     // Not part of the public API — hidden from docs table
     noLabel: { control: 'boolean', table: { disable: true } },
     optionalLabel: { control: 'boolean', table: { disable: true } },
@@ -91,6 +87,11 @@ const meta: Meta = {
     optionalLabel: false,
     prefix: false,
     suffix: false,
+    // Events
+    bqBlur: fn(),
+    bqChange: fn(),
+    bqClear: fn(),
+    bqFocus: fn(),
   },
 };
 export default meta;
