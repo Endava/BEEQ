@@ -39,7 +39,8 @@ const getPublishedVersions = () => {
 };
 
 const nextBetaNumber = (baseVersion, publishedVersions) => {
-  const pattern = new RegExp(`^${baseVersion.replaceAll('.', '\\.')}-${PREID}\\.(\\d+)$`);
+  const escapedBase = baseVersion.replaceAll('.', String.raw`\.`);
+  const pattern = new RegExp(String.raw`^${escapedBase}-${PREID}\.(\d+)$`);
   const numbers = publishedVersions
     .map((version) => pattern.exec(version)?.[1])
     .filter(Boolean)
