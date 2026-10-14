@@ -163,7 +163,7 @@ Use the default configuration when people need to set an hour and minute. Click 
 
 ### Precision
 
-Use `precision` to choose the smallest unit people edit and submit. The field and the panel only show the matching segments and columns.
+Use `precision` to choose the smallest unit people edit and submit. The field and the panel only show the matching segments and columns. At hour precision on a 24-hour clock, the panel adds a disabled minute column fixed at `00`, so it reads as a time.
 
 <CodeLivePreview mode="shadow" code={`
   <style>
@@ -459,6 +459,136 @@ Use `locale` to set the segment order, separators, AM/PM labels, and column head
   </CodeGroup>
 </CodeLivePreview>
 
+### Labels
+
+Use `labels` to change the column headers, AM/PM labels, button text, and accessible names, for example to translate them. Pass an object, or a JSON string through the HTML attribute. Every key is optional: `hour`, `minute`, `second`, `am`, and `pm` default to the `locale` names, `period` defaults to the AM and PM labels joined by a slash, and the rest default to English.
+
+| Key | Used for | Default |
+|---|---|---|
+| `hour` | Hour column header and hour segment name | Locale name, e.g. `hour` |
+| `minute` | Minute column header and minute segment name | Locale name, e.g. `minute` |
+| `second` | Second column header and second segment name | Locale name, e.g. `second` |
+| `period` | AM/PM column header and AM/PM segment name | `am` and `pm` joined by a slash |
+| `am` | Morning period in the field and the panel | Locale label, e.g. `am` |
+| `pm` | Afternoon period in the field and the panel | Locale label, e.g. `pm` |
+| `now` | "Now" button text | `"Now"` |
+| `clear` | Clear button name | `"Clear"` |
+| `confirm` | Confirm button text | `"OK"` |
+| `openPanel` | Clock trigger button name | `"Open time picker"` |
+| `panelLabel` | Panel name | `"Choose time"` |
+
+<CodeLivePreview mode="shadow" code={`
+  <style>
+    :host {
+      justify-content: flex-start !important;
+      position: relative;
+      width: 100%;
+      z-index: 11;
+    }
+  </style>
+
+  <bq-time-picker
+    hour-format="12"
+    labels='{"hour":"Heure","minute":"Minute","am":"matin","pm":"soir","period":"Moment","now":"Maintenant","clear":"Effacer","confirm":"Valider","openPanel":"Ouvrir le sélecteur d’heure","panelLabel":"Choisir l’heure"}'
+    locale="fr-FR"
+    name="rdv"
+    value="14:30"
+  >
+    <label slot="label">Heure du rendez-vous</label>
+  </bq-time-picker>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <bq-time-picker
+      hour-format="12"
+      labels='{"hour":"Heure","minute":"Minute","am":"matin","pm":"soir","period":"Moment","now":"Maintenant","clear":"Effacer","confirm":"Valider","openPanel":"Ouvrir le sélecteur d’heure","panelLabel":"Choisir l’heure"}'
+      locale="fr-FR"
+      name="rdv"
+      value="14:30"
+    >
+      <label slot="label">Heure du rendez-vous</label>
+    </bq-time-picker>
+    ```
+
+    ```jsx React icon="react" expandable
+    import { BqTimePicker } from "@beeq/react";
+
+    const labels = {
+      hour: "Heure",
+      minute: "Minute",
+      am: "matin",
+      pm: "soir",
+      period: "Moment",
+      now: "Maintenant",
+      clear: "Effacer",
+      confirm: "Valider",
+      openPanel: "Ouvrir le sélecteur d’heure",
+      panelLabel: "Choisir l’heure",
+    };
+
+    <BqTimePicker hourFormat="12" labels={labels} locale="fr-FR" name="rdv" value="14:30">
+      <label slot="label">Heure du rendez-vous</label>
+    </BqTimePicker>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqTimePicker } from "@beeq/angular/standalone";
+    import type { TTimePickerLabels } from "@beeq/core";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqTimePicker],
+      template: `
+        <bq-time-picker hour-format="12" [labels]="labels" locale="fr-FR" name="rdv" value="14:30">
+          <label slot="label">Heure du rendez-vous</label>
+        </bq-time-picker>
+      `
+    })
+    export class TimePickerLabelsComponent {
+      labels: TTimePickerLabels = {
+        hour: "Heure",
+        minute: "Minute",
+        am: "matin",
+        pm: "soir",
+        period: "Moment",
+        now: "Maintenant",
+        clear: "Effacer",
+        confirm: "Valider",
+        openPanel: "Ouvrir le sélecteur d’heure",
+        panelLabel: "Choisir l’heure",
+      };
+    }
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqTimePicker } from "@beeq/vue";
+
+    const labels = {
+      hour: "Heure",
+      minute: "Minute",
+      am: "matin",
+      pm: "soir",
+      period: "Moment",
+      now: "Maintenant",
+      clear: "Effacer",
+      confirm: "Valider",
+      openPanel: "Ouvrir le sélecteur d’heure",
+      panelLabel: "Choisir l’heure",
+    };
+    </script>
+
+    <template>
+      <BqTimePicker hourFormat="12" :labels="labels" locale="fr-FR" name="rdv" value="14:30">
+        <label slot="label">Heure du rendez-vous</label>
+      </BqTimePicker>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
 ### Minimum and maximum time
 
 Use `min` and `max` to set the earliest and latest selectable times. Options outside the range are disabled in the panel, and the "Now" button is disabled when the current time is out of range. If `min` is later than `max`, both are ignored.
@@ -681,7 +811,7 @@ Set `disable-now` to hide the "Now" button when the current time isn't a meaning
 
 ### Prefix and suffix
 
-Use the `prefix` slot to add context before the value. The `suffix` slot replaces the clock icon inside the trigger button, so update `time-button-label` to keep the button name accurate.
+Use the `prefix` slot to add context before the value. The `suffix` slot replaces the clock icon inside the trigger button, so set `labels.openPanel` to keep the button name accurate.
 
 <CodeLivePreview mode="shadow" code={`
   <style>
@@ -698,7 +828,7 @@ Use the `prefix` slot to add context before the value. The `suffix` slot replace
     <bq-icon name="alarm" slot="prefix"></bq-icon>
   </bq-time-picker>
 
-  <bq-time-picker name="timer-end" time-button-label="Choose end time" value="07:20">
+  <bq-time-picker labels='{"openPanel":"Choose end time"}' name="timer-end" value="07:20">
     <label slot="label">Timer ends</label>
     <bq-icon name="clock-countdown" slot="suffix"></bq-icon>
   </bq-time-picker>
@@ -710,7 +840,7 @@ Use the `prefix` slot to add context before the value. The `suffix` slot replace
       <bq-icon name="alarm" slot="prefix"></bq-icon>
     </bq-time-picker>
 
-    <bq-time-picker name="timer-end" time-button-label="Choose end time" value="07:20">
+    <bq-time-picker labels='{"openPanel":"Choose end time"}' name="timer-end" value="07:20">
       <label slot="label">Timer ends</label>
       <bq-icon name="clock-countdown" slot="suffix"></bq-icon>
     </bq-time-picker>
@@ -725,7 +855,7 @@ Use the `prefix` slot to add context before the value. The `suffix` slot replace
         <BqIcon name="alarm" slot="prefix" />
       </BqTimePicker>
 
-      <BqTimePicker name="timer-end" timeButtonLabel="Choose end time" value="07:20">
+      <BqTimePicker labels={{ openPanel: "Choose end time" }} name="timer-end" value="07:20">
         <label slot="label">Timer ends</label>
         <BqIcon name="clock-countdown" slot="suffix" />
       </BqTimePicker>
@@ -746,7 +876,7 @@ Use the `prefix` slot to add context before the value. The `suffix` slot replace
           <bq-icon name="alarm" slot="prefix"></bq-icon>
         </bq-time-picker>
 
-        <bq-time-picker name="timer-end" time-button-label="Choose end time" value="07:20">
+        <bq-time-picker [labels]="{ openPanel: 'Choose end time' }" name="timer-end" value="07:20">
           <label slot="label">Timer ends</label>
           <bq-icon name="clock-countdown" slot="suffix"></bq-icon>
         </bq-time-picker>
@@ -766,7 +896,7 @@ Use the `prefix` slot to add context before the value. The `suffix` slot replace
         <BqIcon name="alarm" slot="prefix" />
       </BqTimePicker>
 
-      <BqTimePicker name="timer-end" timeButtonLabel="Choose end time" value="07:20">
+      <BqTimePicker :labels="{ openPanel: 'Choose end time' }" name="timer-end" value="07:20">
         <label slot="label">Timer ends</label>
         <BqIcon name="clock-countdown" slot="suffix" />
       </BqTimePicker>
@@ -1295,13 +1425,14 @@ When focus leaves the field, complete times outside `min` or `max` are clamped t
 - `bq-time-picker` is form-associated and delegates focus, so it participates in native forms and moves focus into its segmented field when the component receives focus.
 - The segmented field is a labelled `group` described by the expected format and, when a constraint fails, by the validation message. Each hour, minute, second, and AM/PM control is a `spinbutton` with its own label, limits, value text, and roving tabindex, and exposes `aria-required` when the field is required.
 - Each segment sets `aria-invalid="true"` for `validationStatus="error"` and native constraint failures, such as a missing required value or an incomplete, out-of-range, or off-step time. `aria-readonly` and `aria-disabled` reflect the `readonly` and `disabled` states.
-- The panel carries `role="dialog"` and is labelled via `aria-labelledby` when a label is present, or by its built-in "Time picker" label otherwise. The panel isn't modal.
+- The panel carries `role="dialog"` and is named by `labels.panelLabel` ("Choose time" by default). The panel isn't modal.
 - Each column is a `listbox` labelled by its visible header (`aria-labelledby`), so the spoken name matches what people see. Options expose `aria-selected`, and options outside `min`, `max`, or the steps expose `aria-disabled="true"`.
 - The component announces the selected time, or that no time is selected, when focus enters the field.
 - Press `Alt`+`ArrowDown` in the field, or Tab to the clock icon and press `Enter` or `Space`, to open the panel and move focus into it. Clicking the field opens the panel while keeping focus on the segment.
 - In the panel, `ArrowUp` and `ArrowDown` move between options, `Home` and `End` jump to the first or last option, `PageUp` and `PageDown` move faster, and `ArrowLeft` and `ArrowRight` switch columns. `Enter` or `Space` picks an option, and `Escape` closes the panel and returns focus to the field.
 - In `readonly` mode the segments stay focusable so screen reader users can read the value, but they can't be edited and the panel doesn't open.
-- Always provide a visible label through the `label` slot, so the field and the panel dialog have a programmatic name.
+- Always provide a visible label through the `label` slot, so the field has a programmatic name.
+- When you translate the interface, translate `labels` too: segment names, button names and the panel name come from it.
 - Validation states should never rely on color alone. Pair `validationStatus` with visible error text so screen reader users receive the same feedback as sighted users.
 
 ## API reference
@@ -1311,8 +1442,6 @@ When focus leaves the field, complete times outside `min` or `max` are clamped t
 | Property | Attribute | Description | Type | Default |
 |---|---|---|---|---|
 | `autofocus` | `autofocus` | If `true`, the Time picker field will be focused on component render | `boolean` | `false` |
-| `clearButtonLabel` | `clear-button-label` | The clear button aria label | `string` | `"Clear value"` |
-| `confirmButtonLabel` | `confirm-button-label` | The label of the panel confirm (OK) button | `string` | `"OK"` |
 | `disableClear` | `disable-clear` | If `true`, the clear button won't be displayed | `boolean` | `false` |
 | `disableNow` | `disable-now` | If `true`, the panel "Now" button won't be displayed | `boolean` | `false` |
 | `disabled` | `disabled` | Indicates whether the Time picker is disabled or not | `boolean` | `false` |
@@ -1321,12 +1450,12 @@ When focus leaves the field, complete times outside `min` or `max` are clamped t
 | `formValidationMessage` | `form-validation-message` | Native form validation message | `string` | `undefined` |
 | `hourFormat` | `hour-format` | The clock used by the field and the panel: 24-hour (`"24"`) or 12-hour with an AM/PM period (`"12"`). It doesn't depend on the `locale` | `"12" \| "24"` | `"24"` |
 | `hourStep` | `hour-step` | Step between selectable hours | `number` | `1` |
+| `labels` | `labels` | Text of the column headers, AM/PM labels, buttons and accessible names, as an object or a JSON string. Missing keys fall back to the `locale` names or English text. See [Labels](#labels) | `TTimePickerLabels \| string` | `undefined` |
 | `locale` | `locale` | Locale used for the field layout, separators, column headers and day period labels. The clock is set by `hour-format` | `Locale \| readonly (string \| Locale)[] \| string` | `"en-GB"` |
 | `max` | `max` | Latest selectable time, in 24-hour format (`HH:mm` or `HH:mm:ss`). Ignored, together with `min`, when it is earlier than `min` | `string` | `undefined` |
 | `min` | `min` | Earliest selectable time, in 24-hour format (`HH:mm` or `HH:mm:ss`). Ignored, together with `max`, when it is later than `max` | `string` | `undefined` |
 | `minuteStep` | `minute-step` | Step between selectable minutes | `number` | `1` |
 | `name` | `name` | Name submitted with the form data (required) | `string` | `undefined` |
-| `nowButtonLabel` | `now-button-label` | The label of the panel "Now" button | `string` | `"Now"` |
 | `open` | `open` | If `true`, the panel is visible | `boolean` | `false` |
 | `panelHeight` | `panel-height` | Overrides the height of the Time picker panel | `string` | `"auto"` |
 | `placement` | `placement` | Position of the Time picker panel | `"bottom" \| "bottom-end" \| "bottom-start" \| "left" \| "left-end" \| "left-start" \| "right" \| "right-end" \| "right-start" \| "top" \| "top-end" \| "top-start"` | `"bottom-end"` |
@@ -1337,7 +1466,6 @@ When focus leaves the field, complete times outside `min` or `max` are clamped t
 | `secondStep` | `second-step` | Step between selectable seconds | `number` | `1` |
 | `skidding` | `skidding` | Skidding between the panel and the field | `number` | `0` |
 | `strategy` | `strategy` | Positioning strategy for the panel | `"absolute" \| "fixed"` | `"fixed"` |
-| `timeButtonLabel` | `time-button-label` | The aria-label of the clock trigger button | `string` | `"Open time picker"` |
 | `validationStatus` | `validation-status` | Validation state applied to the field | `"error" \| "none" \| "success" \| "warning"` | `"none"` |
 | `value` | `value` | The selected time, in 24-hour format: `HH:mm` (`HH:00` at hour precision) or `HH:mm:ss` at second precision | `string` | `undefined` |
 
@@ -1368,7 +1496,7 @@ When focus leaves the field, complete times outside `min` or `max` are clamped t
 |---|---|
 | `label` | Label displayed above the field |
 | `prefix` | Optional content rendered before the value |
-| `suffix` | Replaces the icon inside the clock trigger button; defaults to a clock icon. Use `timeButtonLabel` to name the button |
+| `suffix` | Replaces the icon inside the clock trigger button; defaults to a clock icon. Use `labels.openPanel` to name the button |
 | `clear-icon` | Replaces the default clear icon |
 
 ### Shadow parts
