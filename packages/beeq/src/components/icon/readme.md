@@ -52,6 +52,7 @@ It is a small graphical element that is used to enhance the user interface and i
  - [bq-select](../select)
  - [bq-switch](../switch)
  - [bq-tag](../tag)
+ - [bq-time-picker](../time-picker)
  - [bq-toast](../toast)
 
 ### Graph
@@ -70,6 +71,7 @@ graph TD;
   bq-select --> bq-icon
   bq-switch --> bq-icon
   bq-tag --> bq-icon
+  bq-time-picker --> bq-icon
   bq-toast --> bq-icon
   style bq-icon fill:#f9f,stroke:#333,stroke-width:4px
 ```

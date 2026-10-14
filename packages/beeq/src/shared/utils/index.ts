@@ -16,6 +16,7 @@ export * from './isPopoverSupported';
 export * from './isString';
 export * from './props';
 export * from './scrollLock';
+export * from './segments';
 export * from './setRafTimeout';
 export * from './slot';
 export * from './stringToArray';
