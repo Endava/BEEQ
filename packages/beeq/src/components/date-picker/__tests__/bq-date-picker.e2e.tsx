@@ -299,6 +299,21 @@ describe('bq-date-picker', () => {
     expect(bqBlur.events.some((event) => event.detail === datePicker)).toBe(true);
   });
 
+  it('should not leak blur and focus events from internal buttons', async () => {
+    const { root, spyOnEvent, waitForChanges } = await render(<bq-date-picker name="date-picker" type="single" />);
+    const datePicker = root as HTMLBqDatePickerElement;
+    const bqFocus = spyOnEvent('bqFocus');
+    const bqBlur = spyOnEvent('bqBlur');
+    const trigger = getCalendarTriggerButton(datePicker);
+
+    trigger?.focus();
+    trigger?.blur();
+    await waitForChanges();
+
+    expect(bqFocus.events.every((event) => event.detail === datePicker)).toBe(true);
+    expect(bqBlur.events.every((event) => event.detail === datePicker)).toBe(true);
+  });
+
   it('should not open the calendar when a segment receives keyboard focus', async () => {
     const { root } = await render(<bq-date-picker name="date-picker" type="single" />);
     const datePicker = root as HTMLBqDatePickerElement;

@@ -674,6 +674,15 @@ export class BqDatePicker {
     this.open = open;
   }
 
+  /** Prevents blur/focus events from internal calendar controls from reaching consumers. */
+  @Listen('bqBlur')
+  @Listen('bqFocus')
+  handleInternalFocusEvents(ev: CustomEvent<HTMLElement>) {
+    if (ev.detail === this.el) return;
+
+    ev.stopImmediatePropagation();
+  }
+
   // Public methods API
   // These methods are exposed on the host element.
   // Always use two lines.
