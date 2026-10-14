@@ -109,18 +109,18 @@ A promise that resolves once the value has been cleared.
 
 ### Depends on
 
-- [bq-button](../button)
 - [bq-dropdown](../dropdown)
 - [bq-icon](../icon)
+- [bq-button](../button)
 
 ### Graph
 ```mermaid
 graph TD;
-  bq-time-picker --> bq-button
   bq-time-picker --> bq-dropdown
   bq-time-picker --> bq-icon
-  bq-button --> bq-icon
+  bq-time-picker --> bq-button
   bq-dropdown --> bq-panel
+  bq-button --> bq-icon
   style bq-time-picker fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
