@@ -3169,7 +3169,7 @@ export namespace Components {
      * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Placement of the panel.
      * @attr {"hour" | "minute" | "second"} precision - The smallest unit edited and submitted.
      * @attr {boolean} readonly - If `true`, the value can be read and submitted but not changed.
-     * @attr {boolean} require-confirm - If `true`, panel picks are a draft until confirmed with the OK button or Enter.
+     * @attr {boolean} require-confirm - If `true`, panel picks are a draft shown only in the panel until confirmed with the OK button or Enter.
      * @attr {boolean} required - Whether a value must be entered before submitting the form.
      * @attr {number} second-step - Step between selectable seconds.
      * @attr {number} skidding - Skidding between the panel and the field.
@@ -3326,7 +3326,7 @@ export namespace Components {
          */
         "readonly": boolean;
         /**
-          * If `true`, picks made in the panel (including "Now") are a draft until confirmed with the OK button or Enter. Escape or an outside click discards the draft.
+          * If `true`, picks made in the panel (including "Now") are a draft until confirmed with the OK button or Enter. The field keeps showing the committed value until then. Escape or an outside click discards the draft.
           * @default false
          */
         "requireConfirm": boolean;
@@ -5667,7 +5667,7 @@ declare global {
      * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Placement of the panel.
      * @attr {"hour" | "minute" | "second"} precision - The smallest unit edited and submitted.
      * @attr {boolean} readonly - If `true`, the value can be read and submitted but not changed.
-     * @attr {boolean} require-confirm - If `true`, panel picks are a draft until confirmed with the OK button or Enter.
+     * @attr {boolean} require-confirm - If `true`, panel picks are a draft shown only in the panel until confirmed with the OK button or Enter.
      * @attr {boolean} required - Whether a value must be entered before submitting the form.
      * @attr {number} second-step - Step between selectable seconds.
      * @attr {number} skidding - Skidding between the panel and the field.
@@ -9246,7 +9246,7 @@ declare namespace LocalJSX {
      * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Placement of the panel.
      * @attr {"hour" | "minute" | "second"} precision - The smallest unit edited and submitted.
      * @attr {boolean} readonly - If `true`, the value can be read and submitted but not changed.
-     * @attr {boolean} require-confirm - If `true`, panel picks are a draft until confirmed with the OK button or Enter.
+     * @attr {boolean} require-confirm - If `true`, panel picks are a draft shown only in the panel until confirmed with the OK button or Enter.
      * @attr {boolean} required - Whether a value must be entered before submitting the form.
      * @attr {number} second-step - Step between selectable seconds.
      * @attr {number} skidding - Skidding between the panel and the field.
@@ -9414,7 +9414,7 @@ declare namespace LocalJSX {
          */
         "readonly"?: boolean;
         /**
-          * If `true`, picks made in the panel (including "Now") are a draft until confirmed with the OK button or Enter. Escape or an outside click discards the draft.
+          * If `true`, picks made in the panel (including "Now") are a draft until confirmed with the OK button or Enter. The field keeps showing the committed value until then. Escape or an outside click discards the draft.
           * @default false
          */
         "requireConfirm"?: boolean;
@@ -11575,7 +11575,7 @@ declare module "@stencil/core" {
              * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Placement of the panel.
              * @attr {"hour" | "minute" | "second"} precision - The smallest unit edited and submitted.
              * @attr {boolean} readonly - If `true`, the value can be read and submitted but not changed.
-             * @attr {boolean} require-confirm - If `true`, panel picks are a draft until confirmed with the OK button or Enter.
+             * @attr {boolean} require-confirm - If `true`, panel picks are a draft shown only in the panel until confirmed with the OK button or Enter.
              * @attr {boolean} required - Whether a value must be entered before submitting the form.
              * @attr {number} second-step - Step between selectable seconds.
              * @attr {number} skidding - Skidding between the panel and the field.

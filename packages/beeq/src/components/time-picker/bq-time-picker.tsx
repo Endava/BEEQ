@@ -130,7 +130,7 @@ type TOpenSource = 'input' | 'keyboard' | 'trigger' | 'programmatic';
  * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Placement of the panel.
  * @attr {"hour" | "minute" | "second"} precision - The smallest unit edited and submitted.
  * @attr {boolean} readonly - If `true`, the value can be read and submitted but not changed.
- * @attr {boolean} require-confirm - If `true`, panel picks are a draft until confirmed with the OK button or Enter.
+ * @attr {boolean} require-confirm - If `true`, panel picks are a draft shown only in the panel until confirmed with the OK button or Enter.
  * @attr {boolean} required - Whether a value must be entered before submitting the form.
  * @attr {number} second-step - Step between selectable seconds.
  * @attr {number} skidding - Skidding between the panel and the field.
@@ -229,9 +229,6 @@ export class BqTimePicker {
   private hasBadInput = false;
   /** Keeps a non-empty partial draft invalid after blur until it is corrected or cleared. */
   private hasBlurredIncompleteDraft = false;
-  /** In `require-confirm` mode, the field shows a panel draft that is not committed yet. */
-  private hasPendingDraft = false;
-
   /** Initial `value` captured at load time, restored on form reset. */
   private initialValue?: string;
 
@@ -269,6 +266,8 @@ export class BqTimePicker {
   @State() hasLabel = false;
   @State() hasPrefix = false;
   @State() hasValue = false;
+  /** In `require-confirm` mode, the time picked in the panel until it is confirmed. The field keeps the committed value. */
+  @State() panelDraft?: TTime;
   @State() segmentGroups: TTimeSegmentGroup[] = [];
 
   // Public Property API
@@ -356,7 +355,8 @@ export class BqTimePicker {
 
   /**
    * If `true`, picks made in the panel (including "Now") are a draft until confirmed
-   * with the OK button or Enter. Escape or an outside click discards the draft.
+   * with the OK button or Enter. The field keeps showing the committed value until then.
+   * Escape or an outside click discards the draft.
    */
   @Prop({ reflect: true }) requireConfirm: boolean = false;
 
@@ -399,7 +399,7 @@ export class BqTimePicker {
 
     this.hasBadInput = false;
     this.hasBlurredIncompleteDraft = false;
-    this.hasPendingDraft = false;
+    this.panelDraft = undefined;
     const isSegmentDraftCommit = this.isCommittingSegmentDraft;
     this.isCommittingSegmentDraft = false;
     if (!isSegmentDraftCommit) this.syncDerivedFromValue();
@@ -628,6 +628,11 @@ export class BqTimePicker {
     return group ? readTimeSegmentGroup(group, this.mask.hourCycle).partial : {};
   }
 
+  /** Display values selected in the panel: the unconfirmed draft, or else the field. */
+  private get panelPartial(): TPartialTime {
+    return this.panelDraft ? toPartialTime(this.panelDraft, this.mask.hourCycle) : this.displayPartial;
+  }
+
   private get isInteractive(): boolean {
     return !this.disabled && !this.readonly;
   }
@@ -807,7 +812,7 @@ export class BqTimePicker {
 
   /** Applies a segment edit typed by the user. Typing always commits directly, even in confirm mode. */
   private editSegment = (key: TTimeSegmentKey, value: string): void => {
-    this.hasPendingDraft = false;
+    this.panelDraft = undefined;
     this.segmentGroups = updateSegment(this.segmentGroups, key, value);
     this.activeSegment = key;
     this.syncSegmentDraftValue();
@@ -888,7 +893,7 @@ export class BqTimePicker {
 
   /** Moves a complete, out-of-range typed time to the closest allowed time. */
   private clampSegmentsToBounds = (): void => {
-    if (this.hasPendingDraft || this.readonly) return;
+    if (this.readonly) return;
 
     const draft = this.readDraft();
     const time = draft.isComplete ? partialToTime(draft.partial, this.mask) : undefined;
@@ -922,25 +927,26 @@ export class BqTimePicker {
    * and the result is clamped to the bounds.
    */
   private pickOption = (column: TTimeMaskField, value: number | TDayPeriod): void => {
-    const partial = applyColumnPick(this.displayPartial, column, value);
+    const partial = applyColumnPick(this.panelPartial, column, value);
     const resolved = resolvePartialTime(partial, this.mask.hourCycle, this.constraints);
     if (!resolved) return;
 
     this.applyPanelTime(clampTimeToBounds(resolved, this.constraints));
   };
 
-  /** Shows a time picked in the panel, committing it unless confirmation is required. */
+  /** Commits a time picked in the panel, or keeps it as the panel draft when confirmation is required. */
   private applyPanelTime = (time: TTime): void => {
-    this.setSegmentsFromTime(time);
-    this.hasBlurredIncompleteDraft = false;
-
     if (this.requireConfirm) {
-      this.hasPendingDraft = true;
-      this.hasBadInput = false;
-      this.syncValidity();
+      this.panelDraft = time;
       return;
     }
 
+    this.commitPanelTime(time);
+  };
+
+  private commitPanelTime = (time: TTime): void => {
+    this.setSegmentsFromTime(time);
+    this.hasBlurredIncompleteDraft = false;
     this.syncSegmentDraftValue();
   };
 
@@ -1029,9 +1035,10 @@ export class BqTimePicker {
 
   /** Commits a pending draft (confirm mode) and closes the panel. */
   private confirmAndClose = (restoreFocus: boolean): void => {
-    if (this.hasPendingDraft) {
-      this.hasPendingDraft = false;
-      this.syncSegmentDraftValue();
+    const draft = this.panelDraft;
+    if (draft) {
+      this.panelDraft = undefined;
+      this.commitPanelTime(draft);
     }
 
     this.closePanel(restoreFocus);
@@ -1042,12 +1049,9 @@ export class BqTimePicker {
     this.open = false;
   };
 
-  /** Drops an unconfirmed panel draft and shows the committed value again. */
+  /** Drops an unconfirmed panel draft. */
   private discardPendingDraft = (): void => {
-    if (!this.hasPendingDraft) return;
-
-    this.hasPendingDraft = false;
-    this.syncDerivedFromValue();
+    this.panelDraft = undefined;
   };
 
   /** Re-runs the selection scroll when the panel is shown or resized, since it is hidden when the scroll first runs. */
@@ -1140,7 +1144,7 @@ export class BqTimePicker {
   private clearValue = (): void => {
     this.hasBadInput = false;
     this.hasBlurredIncompleteDraft = false;
-    this.hasPendingDraft = false;
+    this.panelDraft = undefined;
     this.value = undefined;
     this.syncDerivedFromValue();
   };
@@ -1171,7 +1175,7 @@ export class BqTimePicker {
     this.hasBadInput = draft.isInvalid || (this.hasBlurredIncompleteDraft && isPartial);
     this.syncValidity();
 
-    if (this.hasBadInput || isPartial || this.hasPendingDraft) return;
+    if (this.hasBadInput || isPartial) return;
 
     const time = draft.isEmpty ? undefined : partialToTime(draft.partial, this.mask);
     const nextValue = time ? serializeTime(time, this.precision) : undefined;
@@ -1363,7 +1367,7 @@ export class BqTimePicker {
   };
 
   private renderPanel = (labelId: string): JSX.Element => {
-    const selected = this.displayPartial;
+    const selected = this.panelPartial;
     const canPickNow = this.isInteractive && !!getNowTime(this.constraints);
 
     return (

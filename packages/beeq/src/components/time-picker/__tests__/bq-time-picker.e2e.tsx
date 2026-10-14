@@ -673,7 +673,9 @@ describe('bq-time-picker', () => {
     getOption(tp, 'minute', 15)?.click();
     await waitForChanges();
 
-    expect(getSegmentText(tp)).toBe('11:15');
+    expect(getSegmentText(tp)).toBe('09:30');
+    expect(getSelectedOption(tp, 'hour')).toEqualAttribute('data-value', '11');
+    expect(getSelectedOption(tp, 'minute')).toEqualAttribute('data-value', '15');
     expect(tp.value).toBe('09:30');
     expect(tp.open).toBe(true);
     expect(bqChange).toHaveReceivedEventTimes(0);
@@ -682,6 +684,7 @@ describe('bq-time-picker', () => {
     await waitForChanges();
 
     expect(tp.value).toBe('11:15');
+    expect(getSegmentText(tp)).toBe('11:15');
     expect(tp.open).toBe(false);
     expect(bqChange).toHaveReceivedEventTimes(1);
   });
@@ -710,12 +713,34 @@ describe('bq-time-picker', () => {
     await userEvent.keyboard('{ArrowDown}');
     await waitForChanges();
     expect(tp.value).toBe('09:30');
+    expect(getSegmentText(tp)).toBe('09:30');
 
     await userEvent.keyboard('{Enter}');
     await waitForChanges();
 
     expect(tp.value).toBe('10:30');
+    expect(getSegmentText(tp)).toBe('10:30');
     expect(tp.open).toBe(false);
+  });
+
+  it('should keep the Now draft out of the field until confirmed', async () => {
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(new Date(2024, 0, 1, 14, 45, 0));
+    const { root, waitForChanges } = await render(<bq-time-picker name="time" requireConfirm value="09:30" />);
+    const tp = root as HTMLBqTimePickerElement;
+    await openPanel(tp, waitForChanges);
+
+    getInnerButton(tp, 'now-btn')?.click();
+    await waitForChanges();
+
+    expect(getSegmentText(tp)).toBe('09:30');
+    expect(getSelectedOption(tp, 'hour')).toEqualAttribute('data-value', '14');
+    expect(tp.value).toBe('09:30');
+
+    getInnerButton(tp, 'confirm-btn')?.click();
+    await waitForChanges();
+
+    expect(tp.value).toBe('14:45');
   });
 
   it('should commit typed segments directly with `require-confirm`', async () => {
