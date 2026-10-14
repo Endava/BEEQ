@@ -49,12 +49,12 @@ from scrollable columns in a dropdown panel.
 
 ## Events
 
-| Event      | Description                                                      | Type                                               |
-| ---------- | ---------------------------------------------------------------- | -------------------------------------------------- |
-| `bqBlur`   | Callback handler emitted when the field loses focus.             | `CustomEvent<HTMLBqTimePickerElement>`             |
-| `bqChange` | Callback handler emitted when the value is committed or cleared. | `CustomEvent<{ value: string; el: HTMLElement; }>` |
-| `bqClear`  | Callback handler emitted when the value is cleared.              | `CustomEvent<HTMLBqTimePickerElement>`             |
-| `bqFocus`  | Callback handler emitted when the field receives focus.          | `CustomEvent<HTMLBqTimePickerElement>`             |
+| Event      | Description                                                                                                               | Type                                               |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
+| `bqBlur`   | Callback handler emitted when focus leaves the Time picker. Moving focus between the field and the panel doesn't emit it. | `CustomEvent<HTMLBqTimePickerElement>`             |
+| `bqChange` | Callback handler emitted when the value is committed or cleared.                                                          | `CustomEvent<{ value: string; el: HTMLElement; }>` |
+| `bqClear`  | Callback handler emitted when the value is cleared.                                                                       | `CustomEvent<HTMLBqTimePickerElement>`             |
+| `bqFocus`  | Callback handler emitted when focus enters the Time picker. Moving focus between the field and the panel doesn't emit it. | `CustomEvent<HTMLBqTimePickerElement>`             |
 
 
 ## Methods

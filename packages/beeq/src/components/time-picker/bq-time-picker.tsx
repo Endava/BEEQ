@@ -141,10 +141,10 @@ type TOpenSource = 'input' | 'keyboard' | 'trigger' | 'programmatic';
  *
  * @method clear() - Clears the selected value.
  *
- * @event bqBlur - Emitted when the field loses focus.
+ * @event bqBlur - Emitted when focus leaves the Time picker, including its panel.
  * @event bqChange - Emitted when the value is committed or cleared.
  * @event bqClear - Emitted when the value is cleared.
- * @event bqFocus - Emitted when the field receives focus.
+ * @event bqFocus - Emitted when focus enters the Time picker, including its panel.
  *
  * @slot label - The label displayed above the field.
  * @slot prefix - Content rendered before the field value.
@@ -467,7 +467,7 @@ export class BqTimePicker {
   // Requires JSDocs for public API documentation
   // ==============================================
 
-  /** Callback handler emitted when the field loses focus. */
+  /** Callback handler emitted when focus leaves the Time picker. Moving focus between the field and the panel doesn't emit it. */
   @Event() bqBlur!: EventEmitter<HTMLBqTimePickerElement>;
 
   /** Callback handler emitted when the value is committed or cleared. */
@@ -476,7 +476,7 @@ export class BqTimePicker {
   /** Callback handler emitted when the value is cleared. */
   @Event() bqClear!: EventEmitter<HTMLBqTimePickerElement>;
 
-  /** Callback handler emitted when the field receives focus. */
+  /** Callback handler emitted when focus enters the Time picker. Moving focus between the field and the panel doesn't emit it. */
   @Event() bqFocus!: EventEmitter<HTMLBqTimePickerElement>;
 
   // Component lifecycle events
@@ -532,6 +532,22 @@ export class BqTimePicker {
     if (this.open === open) return;
 
     this.open = open;
+  }
+
+  /** Emits `bqFocus` only when focus enters the component, not when it moves between its parts. */
+  @Listen('focusin')
+  handleHostFocusIn(ev: FocusEvent) {
+    if (this.disabled || this.isFocusMovingWithin(ev)) return;
+
+    this.bqFocus.emit(this.el);
+  }
+
+  /** Emits `bqBlur` only when focus leaves the component, not when it moves to the panel or a button. */
+  @Listen('focusout')
+  handleHostFocusOut(ev: FocusEvent) {
+    if (this.disabled || this.isFocusMovingWithin(ev)) return;
+
+    this.bqBlur.emit(this.el);
   }
 
   // Public methods API
@@ -840,10 +856,23 @@ export class BqTimePicker {
     this.open = true;
   };
 
+  /**
+   * Focus events crossing the shadow boundary are retargeted, so a `relatedTarget` inside the
+   * shadow tree is reported as the host itself.
+   */
+  private isFocusMovingWithin = (ev: FocusEvent): boolean => {
+    const related = ev.relatedTarget as Node | null;
+    return !!related && (related === this.el || this.el.contains(related));
+  };
+
+  /** Stops the internal buttons' events so they aren't mistaken for the component's own. */
+  private stopInternalEvent = (ev: Event): void => {
+    ev.stopPropagation();
+  };
+
   private handleSegmentsFocusIn = (ev: FocusEvent): void => {
     if (this.segmentContainerElem?.contains(ev.relatedTarget as Node)) return;
 
-    if (!this.disabled) this.bqFocus.emit(this.el);
     this.announceValue();
   };
 
@@ -855,7 +884,6 @@ export class BqTimePicker {
     const draft = this.readDraft();
     this.hasBlurredIncompleteDraft = !draft.isEmpty && !draft.isComplete;
     this.syncSegmentDraftValue();
-    this.bqBlur.emit(this.el);
   };
 
   /** Moves a complete, out-of-range typed time to the closest allowed time. */
@@ -978,7 +1006,8 @@ export class BqTimePicker {
     this.pickOption(column, option.value);
   };
 
-  private handleNowClick = (): void => {
+  private handleNowClick = (ev: CustomEvent): void => {
+    ev.stopPropagation();
     if (!this.isInteractive) return;
 
     const now = getNowTime(this.constraints);
@@ -993,7 +1022,8 @@ export class BqTimePicker {
     this.closePanel(true);
   };
 
-  private handleConfirmClick = (): void => {
+  private handleConfirmClick = (ev: CustomEvent): void => {
+    ev.stopPropagation();
     this.confirmAndClose(true);
   };
 
@@ -1099,7 +1129,8 @@ export class BqTimePicker {
   };
 
   /** Toggles the panel when the clock trigger button is activated. */
-  private handleTriggerClick = (): void => {
+  private handleTriggerClick = (ev: CustomEvent): void => {
+    ev.stopPropagation();
     if (!this.isInteractive) return;
 
     this.pendingOpenSource = 'trigger';
@@ -1356,7 +1387,9 @@ export class BqTimePicker {
               class="bq-time-picker__now"
               disabled={!canPickNow}
               exportparts="button"
+              onBqBlur={this.stopInternalEvent}
               onBqClick={this.handleNowClick}
+              onBqFocus={this.stopInternalEvent}
               part={`${TIME_PICKER_PARTS.button} ${TIME_PICKER_PARTS.nowBtn}`}
               size="small"
             >
@@ -1367,7 +1400,9 @@ export class BqTimePicker {
             appearance="primary"
             class="bq-time-picker__confirm"
             exportparts="button"
+            onBqBlur={this.stopInternalEvent}
             onBqClick={this.handleConfirmClick}
+            onBqFocus={this.stopInternalEvent}
             part={`${TIME_PICKER_PARTS.button} ${TIME_PICKER_PARTS.confirmBtn}`}
             size="small"
           >
@@ -1475,7 +1510,9 @@ export class BqTimePicker {
                 class="bq-time-picker__clear"
                 exportparts="button"
                 label={this.clearButtonLabel}
+                onBqBlur={this.stopInternalEvent}
                 onBqClick={this.handleClearClick}
+                onBqFocus={this.stopInternalEvent}
                 onlyIcon
                 part={TIME_PICKER_PARTS.clearBtn}
                 size="small"
@@ -1496,7 +1533,9 @@ export class BqTimePicker {
               label={this.timeButtonLabel}
               // `handleTriggerClick` toggles the panel; keep bq-dropdown from toggling it again.
               onClick={(ev: MouseEvent) => markEventHandled(ev)}
+              onBqBlur={this.stopInternalEvent}
               onBqClick={this.handleTriggerClick}
+              onBqFocus={this.stopInternalEvent}
               onlyIcon
               part={`${TIME_PICKER_PARTS.button} ${TIME_PICKER_PARTS.suffix} ${TIME_PICKER_PARTS.timeTrigger}`}
               size="small"

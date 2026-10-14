@@ -3178,10 +3178,10 @@ export namespace Components {
      * @attr {"error" | "none" | "success" | "warning"} validation-status - Validation state.
      * @attr {string} value - The selected time in 24-hour format: `HH:mm` (`HH:00` at hour precision) or `HH:mm:ss`.
      * @method clear() - Clears the selected value.
-     * @event bqBlur - Emitted when the field loses focus.
+     * @event bqBlur - Emitted when focus leaves the Time picker, including its panel.
      * @event bqChange - Emitted when the value is committed or cleared.
      * @event bqClear - Emitted when the value is cleared.
-     * @event bqFocus - Emitted when the field receives focus.
+     * @event bqFocus - Emitted when focus enters the Time picker, including its panel.
      * @cssprop --bq-time-picker--background-color - Field background color.
      * @cssprop --bq-time-picker--border-color - Field border color.
      * @cssprop --bq-time-picker--border-color-disabled - Border color when disabled.
@@ -5676,10 +5676,10 @@ declare global {
      * @attr {"error" | "none" | "success" | "warning"} validation-status - Validation state.
      * @attr {string} value - The selected time in 24-hour format: `HH:mm` (`HH:00` at hour precision) or `HH:mm:ss`.
      * @method clear() - Clears the selected value.
-     * @event bqBlur - Emitted when the field loses focus.
+     * @event bqBlur - Emitted when focus leaves the Time picker, including its panel.
      * @event bqChange - Emitted when the value is committed or cleared.
      * @event bqClear - Emitted when the value is cleared.
-     * @event bqFocus - Emitted when the field receives focus.
+     * @event bqFocus - Emitted when focus enters the Time picker, including its panel.
      * @cssprop --bq-time-picker--background-color - Field background color.
      * @cssprop --bq-time-picker--border-color - Field border color.
      * @cssprop --bq-time-picker--border-color-disabled - Border color when disabled.
@@ -9255,10 +9255,10 @@ declare namespace LocalJSX {
      * @attr {"error" | "none" | "success" | "warning"} validation-status - Validation state.
      * @attr {string} value - The selected time in 24-hour format: `HH:mm` (`HH:00` at hour precision) or `HH:mm:ss`.
      * @method clear() - Clears the selected value.
-     * @event bqBlur - Emitted when the field loses focus.
+     * @event bqBlur - Emitted when focus leaves the Time picker, including its panel.
      * @event bqChange - Emitted when the value is committed or cleared.
      * @event bqClear - Emitted when the value is cleared.
-     * @event bqFocus - Emitted when the field receives focus.
+     * @event bqFocus - Emitted when focus enters the Time picker, including its panel.
      * @cssprop --bq-time-picker--background-color - Field background color.
      * @cssprop --bq-time-picker--border-color - Field border color.
      * @cssprop --bq-time-picker--border-color-disabled - Border color when disabled.
@@ -9373,7 +9373,7 @@ declare namespace LocalJSX {
          */
         "nowButtonLabel"?: string;
         /**
-          * Callback handler emitted when the field loses focus.
+          * Callback handler emitted when focus leaves the Time picker. Moving focus between the field and the panel doesn't emit it.
          */
         "onBqBlur"?: (event: BqTimePickerCustomEvent<HTMLBqTimePickerElement>) => void;
         /**
@@ -9385,7 +9385,7 @@ declare namespace LocalJSX {
          */
         "onBqClear"?: (event: BqTimePickerCustomEvent<HTMLBqTimePickerElement>) => void;
         /**
-          * Callback handler emitted when the field receives focus.
+          * Callback handler emitted when focus enters the Time picker. Moving focus between the field and the panel doesn't emit it.
          */
         "onBqFocus"?: (event: BqTimePickerCustomEvent<HTMLBqTimePickerElement>) => void;
         /**
@@ -11584,10 +11584,10 @@ declare module "@stencil/core" {
              * @attr {"error" | "none" | "success" | "warning"} validation-status - Validation state.
              * @attr {string} value - The selected time in 24-hour format: `HH:mm` (`HH:00` at hour precision) or `HH:mm:ss`.
              * @method clear() - Clears the selected value.
-             * @event bqBlur - Emitted when the field loses focus.
+             * @event bqBlur - Emitted when focus leaves the Time picker, including its panel.
              * @event bqChange - Emitted when the value is committed or cleared.
              * @event bqClear - Emitted when the value is cleared.
-             * @event bqFocus - Emitted when the field receives focus.
+             * @event bqFocus - Emitted when focus enters the Time picker, including its panel.
              * @cssprop --bq-time-picker--background-color - Field background color.
              * @cssprop --bq-time-picker--border-color - Field border color.
              * @cssprop --bq-time-picker--border-color-disabled - Border color when disabled.

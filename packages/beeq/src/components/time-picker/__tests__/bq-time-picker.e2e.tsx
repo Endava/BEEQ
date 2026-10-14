@@ -888,7 +888,7 @@ describe('bq-time-picker', () => {
 
     const focused = tp.shadowRoot.activeElement as HTMLElement;
     expect(document.activeElement).toBe(tp);
-    expect(focused).toHaveAttribute('role', 'spinbutton');
+    expect(focused).toEqualAttribute('role', 'spinbutton');
     expect(focused.dataset.segmentField).toBe('hour');
 
     form.querySelector('button').focus();
@@ -1175,20 +1175,50 @@ describe('bq-time-picker', () => {
 
   /* --------------------------------- Events ---------------------------------- */
 
-  it('should emit focus and blur events from the segmented field', async () => {
-    const { root, spyOnEvent, waitForChanges } = await render(<bq-time-picker name="time" />);
-    const tp = root as HTMLBqTimePickerElement;
+  it('should emit focus and blur events only when focus enters or leaves the component', async () => {
+    const { root, spyOnEvent, waitForChanges } = await render(
+      <div>
+        <bq-time-picker name="time" requireConfirm />
+        <button type="button">Outside</button>
+      </div>,
+    );
+    const tp = root.querySelector<HTMLBqTimePickerElement>('bq-time-picker');
     const bqFocus = spyOnEvent('bqFocus');
     const bqBlur = spyOnEvent('bqBlur');
 
     getSegment(tp, 'hour')?.focus();
     getSegment(tp, 'minute')?.focus();
-    await waitForChanges();
-    expect(bqFocus).toHaveReceivedEventTimes(1);
-
     getInnerButton(tp, 'time-trigger')?.focus();
+    await openPanel(tp, waitForChanges);
+    getOption(tp, 'hour', 10)?.focus();
+    getInnerButton(tp, 'confirm-btn')?.click();
     await waitForChanges();
+    await settle();
+
+    expect(bqFocus).toHaveReceivedEventTimes(1);
+    expect(bqBlur).toHaveReceivedEventTimes(0);
+
+    root.querySelector('button')?.focus();
+    await waitForChanges();
+
+    expect(bqFocus).toHaveReceivedEventTimes(1);
     expect(bqBlur).toHaveReceivedEventTimes(1);
+  });
+
+  it('should not leak the internal button events', async () => {
+    const { root, spyOnEvent, waitForChanges } = await render(<bq-time-picker name="time" value="09:30" />);
+    const tp = root as HTMLBqTimePickerElement;
+    const bqClick = spyOnEvent('bqClick');
+    const bqFocus = spyOnEvent('bqFocus');
+    await openPanel(tp, waitForChanges);
+
+    getInnerButton(tp, 'confirm-btn')?.focus();
+    getInnerButton(tp, 'confirm-btn')?.click();
+    await waitForChanges();
+
+    expect(bqClick).toHaveReceivedEventTimes(0);
+    expect(bqFocus).toHaveReceivedEventTimes(1);
+    expect(bqFocus).toHaveReceivedEventDetail(tp);
   });
 
   it('should focus the first segment when `autofocus` is set', async () => {
