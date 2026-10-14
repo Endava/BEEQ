@@ -589,7 +589,8 @@ export class BqTimePicker {
   /** Labels set through `labels`, completed with the locale names and English defaults. Memoized by their inputs. */
   private get resolvedLabels(): Required<TTimePickerLabels> {
     const { labels, mask } = this;
-    if (!this.cachedLabels || this.cachedLabels.labels !== labels || this.cachedLabels.mask !== mask) {
+    // `mask` is always defined, so the first check is true while nothing is cached yet.
+    if (this.cachedLabels?.mask !== mask || this.cachedLabels.labels !== labels) {
       const parsed = parseLabels(labels);
       if (isString(labels) && labels.trim() && !parsed) {
         console.warn('[BqTimePicker] `labels` must be a JSON object. The default labels are used.', labels);
@@ -1251,7 +1252,10 @@ export class BqTimePicker {
   } => {
     const { hourCycle } = this.mask;
     if (segment.field === 'dayPeriod') {
-      return { display: segment.value ? this.dayPeriodLabels[segment.value === 'pm' ? 1 : 0] : '' };
+      if (!segment.value) return { display: '' };
+
+      const [am, pm] = this.dayPeriodLabels;
+      return { display: segment.value === 'pm' ? pm : am };
     }
 
     const range = getTimeSegmentRange(segment.field, hourCycle);
@@ -1325,6 +1329,9 @@ export class BqTimePicker {
     ].flat();
   };
 
+  private getOptionPart = (selected: boolean): string =>
+    selected ? `${TIME_PICKER_PARTS.option} ${TIME_PICKER_PARTS.optionSelected}` : TIME_PICKER_PARTS.option;
+
   private renderColumn = (column: TTimeMaskField, selected: TPartialTime): JSX.Element => {
     const options = getColumnOptions(column, this.getColumnContext(selected));
     const tabStop = options.find((option) => option.selected) ?? options.find((option) => !option.disabled);
@@ -1355,7 +1362,7 @@ export class BqTimePicker {
               }}
               data-value={`${option.value}`}
               onClick={() => this.handleOptionClick(column, option)}
-              part={`${TIME_PICKER_PARTS.option}${option.selected ? ` ${TIME_PICKER_PARTS.optionSelected}` : ''}`}
+              part={this.getOptionPart(option.selected)}
               role="option"
               tabIndex={option === tabStop ? 0 : -1}
               type="button"
@@ -1394,7 +1401,7 @@ export class BqTimePicker {
             aria-selected={isSelected ? 'true' : 'false'}
             class={{ 'bq-time-picker__option': true, 'is-selected': isSelected }}
             data-value="0"
-            part={`${TIME_PICKER_PARTS.option}${isSelected ? ` ${TIME_PICKER_PARTS.optionSelected}` : ''}`}
+            part={this.getOptionPart(isSelected)}
             role="option"
             tabIndex={-1}
             type="button"

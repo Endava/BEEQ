@@ -29,7 +29,7 @@ export const parseLabels = (labels: TTimePickerLabels | string | undefined): TTi
 
   try {
     const parsed: unknown = JSON.parse(labels);
-    return parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? (parsed as TTimePickerLabels) : undefined;
+    return parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? parsed : undefined;
   } catch {
     return undefined;
   }
