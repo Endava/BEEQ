@@ -191,12 +191,6 @@ export const Precision: Story = {
     ]),
 };
 
-export const WithSeconds: Story = {
-  name: 'Precision: second',
-  render: Template,
-  args: { open: true, precision: 'second', value: '14:45:30' },
-};
-
 /* ----------------------------- Locale and format ---------------------------- */
 
 export const HourFormat: Story = {
