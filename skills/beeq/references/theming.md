@@ -80,6 +80,8 @@ Change an intent to re-colour every role and component that reads it, in both mo
 
 The stylesheet sets `font-family: var(--bq-font-family)` and `font-size: var(--bq-font-size--m)` on `html`, and `background-color: var(--bq-background--primary)`, `color: var(--bq-text--primary)`, and `line-height: var(--bq-font-line-height--regular)` on `body`. Pages inherit the active theme and mode from these rules, so product CSS starts at layout. Set a different surface or text role only on the element that needs it.
 
+It also ships a reset: `* { margin: 0 }`, `box-sizing: border-box`, block-level responsive media, inherited fonts on form controls, monospace `code`, centered `dialog` and `[popover]`, no markers on lists with `role="list"`, and reduced motion. Most rules use `:where()`, so any class overrides them. Full list: [CSS reset](https://www.beeq.design/getting-started/installation.md#css-reset).
+
 ## Safe pairings
 
 Each colour family has one job. Pair a fill with the foreground made for it.
