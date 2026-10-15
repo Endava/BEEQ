@@ -117,6 +117,7 @@ Rules that keep overrides safe:
 - Never override states (hover, focus, disabled, invalid) without restyling all of them. A half-overridden component looks broken in some state.
 - Never remove or replace a focus ring with a border alone.
 - Keep overrides scoped to a class on a container. A global `bq-button { … }` rule changes every button in the product.
+- With Tailwind, a utility on a `bq-*` host never reaches a part. Target it with an arbitrary variant, `class="[&::part(button)]:rounded-full"`, for one or two declarations. For more, write a named class: `@utility custom-button { &::part(button) { … } }` in Tailwind v4, or `.custom-button::part(button) { … }` inside `@layer components` in v3. Never build long `bg-[image:…]` arbitrary-value chains.
 
 See the [styling guide](https://www.beeq.design/guides/styles.md) and [component CSS variables](https://www.beeq.design/theming/component-css-variables.md).
 

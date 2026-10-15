@@ -33,7 +33,7 @@ Deleting all text or leaving only whitespace in a searchable single-select immed
 
 Every app needs two things, set up once. When the project lacks either, add it as part of the task:
 
-1. **Stylesheet.** Import `@beeq/core/dist/beeq/beeq.css` once, in the main stylesheet the entry file loads ([Angular](#angular) lists it in its global styles). Without it, components render unstyled.
+1. **Stylesheet.** Import `@beeq/core/dist/beeq/beeq.css` once, in the main stylesheet the entry file loads ([Angular](#angular) lists it in its global styles). Without it, components render unstyled. When that stylesheet also has `@import "tailwindcss";` (Tailwind CSS v4) or puts app styles in `@layer`, import it as `@import "@beeq/core/dist/beeq/beeq.css" layer(base);`. `beeq.css` is unlayered, so otherwise its reset (`* { margin: 0 }`) beats every layered utility.
 2. **Icons.** Tell BEEQ where the SVG files live. A bundled app has no usable default, so without this every `bq-icon` renders blank, including the icons inside other components.
 
 A plain HTML app also registers the components itself; the framework wrappers do that for you. Pick the path by how the page is served:
@@ -236,6 +236,7 @@ Middle-click fires `auxclick`, not `click`, so it opens the `href` in a new tab 
 | --- | --- |
 | Components render but look unstyled | The BEEQ stylesheet (`@beeq/core/dist/beeq/beeq.css`) is missing or loaded twice in conflicting order. See [Installation](https://www.beeq.design/getting-started/installation.md). |
 | Works in dev, unstyled or blank after build | The HTML links `/node_modules/…` URLs. Use the CDN or the bundler entry; see [Setup](#setup). |
+| Tailwind v4 margin, font-size, or heading utilities have no effect | `beeq.css` is imported without `layer(base)`, so its unlayered reset and heading styles win. See [Setup](#setup). |
 | Icons are blank | SVG files are not served, or the icon base path does not match the public URL. |
 | React events never fire | A kebab-case or native event name was used instead of `onBq…`. |
 | A BEEQ event handler never fires | The event name comes from another component, for example `bqChange` on `bq-select`, which emits `bqSelect`. Check the component's Events table. |

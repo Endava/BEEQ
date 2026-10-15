@@ -134,6 +134,50 @@ Style them using the `::part()` pseudo-element from your own stylesheet:
   </CodeGroup>
 </CodeLivePreview>
 
+### Styling parts with Tailwind CSS
+
+Tailwind utilities style the element they're on, so `rounded-full` on `<bq-button>` never reaches the inner `<button>`. Add an arbitrary `::part()` variant to target a part:
+
+```html
+<bq-button class="[&::part(button)]:rounded-full [&::part(label)]:text-xl">
+  Custom button
+</bq-button>
+```
+
+This works in Tailwind CSS v3 and v4, and with the [`@beeq/tailwindcss`](https://www.npmjs.com/package/@beeq/tailwindcss) preset the values come from BEEQ tokens (`rounded-full` is `var(--bq-radius--full)`).
+
+Keep the variant for one or two declarations. Once a part needs several declarations, or something utilities can't express well, such as several stacked gradients with different sizes, write a named class in your stylesheet instead. A string of arbitrary values is harder to read and review than the CSS it replaces.
+
+<CodeGroup>
+  ```css Tailwind v4 icon="tailwind"
+  @utility custom-button {
+    &::part(button) {
+      background-color: var(--bq-magenta-600);
+      border-radius: var(--bq-radius--full);
+    }
+
+    &::part(label) {
+      font-weight: var(--bq-font-weight--semibold);
+    }
+  }
+  ```
+
+  ```css Tailwind v3 icon="tailwind"
+  @layer components {
+    .custom-button::part(button) {
+      background-color: var(--bq-magenta-600);
+      border-radius: var(--bq-radius--full);
+    }
+
+    .custom-button::part(label) {
+      font-weight: var(--bq-font-weight--semibold);
+    }
+  }
+  ```
+</CodeGroup>
+
+Use it as `class="custom-button"`. Because Tailwind registers the class, variants work too: `hover:custom-button` or `md:custom-button` apply the part styles only in that state.
+
 ### Inspecting parts from JavaScript
 
 Parts are also queryable from JavaScript when you need to reach into component internals programmatically:
