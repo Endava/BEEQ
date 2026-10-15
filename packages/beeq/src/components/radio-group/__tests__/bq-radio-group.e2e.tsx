@@ -6,6 +6,10 @@ import { getTextContent } from '../../../shared/utils/slot';
 
 const getRadio = (element: ParentNode, value: string) =>
   element.querySelector<HTMLBqRadioElement>(`bq-radio[value="${value}"]`);
+const pressKey = (radio: HTMLBqRadioElement, key: string) =>
+  radio.shadowRoot
+    ?.querySelector<HTMLInputElement>('input')
+    ?.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true, composed: true }));
 const getLabelSlot = (element: HTMLBqRadioGroupElement) =>
   element.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="label"]');
 
@@ -230,6 +234,89 @@ describe('bq-radio-group', () => {
     expect(bqChange).toHaveReceivedEventTimes(1);
     expect(bqRadioGroup.value).toBe('option3');
     expect(bqRadioGroup).toEqualAttribute('value', 'option3');
+  });
+
+  it('should emit bqChange synchronously on keyboard selection with the default debounceTime', async () => {
+    const { root, spyOnEvent } = await render(
+      <bq-radio-group name="test-option" value="option1">
+        <bq-radio name="test-option" value="option1">
+          Option 1
+        </bq-radio>
+        <bq-radio name="test-option" value="option2">
+          Option 2
+        </bq-radio>
+      </bq-radio-group>,
+    );
+    const bqChange = spyOnEvent('bqChange');
+
+    pressKey(getRadio(root, 'option1'), 'ArrowDown');
+
+    // Asserted before any await: the event is emitted inside the keydown
+    expect(bqChange).toHaveReceivedEventTimes(1);
+    expect(bqChange.events[0].detail.value).toBe('option2');
+  });
+
+  it('should emit only the latest value after a positive debounceTime', async () => {
+    const { root, spyOnEvent } = await render(
+      <bq-radio-group debounceTime={100} name="test-option" value="option1">
+        <bq-radio name="test-option" value="option1">
+          Option 1
+        </bq-radio>
+        <bq-radio name="test-option" value="option2">
+          Option 2
+        </bq-radio>
+        <bq-radio name="test-option" value="option3">
+          Option 3
+        </bq-radio>
+      </bq-radio-group>,
+    );
+    const bqChange = spyOnEvent('bqChange');
+
+    pressKey(getRadio(root, 'option1'), 'ArrowDown');
+    pressKey(getRadio(root, 'option2'), 'ArrowDown');
+
+    expect(bqChange).toHaveReceivedEventTimes(0);
+
+    await new Promise((resolve) => setTimeout(resolve, 200));
+
+    expect(bqChange).toHaveReceivedEventTimes(1);
+    expect(bqChange.events[0].detail.value).toBe('option3');
+    expect((root as HTMLBqRadioGroupElement).value).toBe('option3');
+  });
+
+  it('should keep the selection when a controlled consumer re-renders a stale value', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-radio-group name="test-option" value="option1">
+        <bq-radio name="test-option" value="option1">
+          Option 1
+        </bq-radio>
+        <bq-radio name="test-option" value="option2">
+          Option 2
+        </bq-radio>
+      </bq-radio-group>,
+    );
+    const bqRadioGroup = root as HTMLBqRadioGroupElement;
+    let state = 'option1';
+    const received: string[] = [];
+    const renderState = () => {
+      bqRadioGroup.value = state;
+    };
+    bqRadioGroup.addEventListener('bqChange', (event: CustomEvent<{ value: string }>) => {
+      received.push(event.detail.value);
+      state = event.detail.value;
+      setTimeout(renderState, 0);
+    });
+    // Simulates an unrelated re-render, queued before the selection, that re-applies the controlled value
+    bqRadioGroup.addEventListener('keydown', () => setTimeout(renderState, 0), true);
+
+    await getRadio(bqRadioGroup, 'option1').vFocus();
+    await userEvent.keyboard('{ArrowRight}');
+    await new Promise((resolve) => setTimeout(resolve, 50));
+    await waitForChanges();
+
+    expect(received).toEqual(['option2']);
+    expect(bqRadioGroup.value).toBe('option2');
+    expect(getRadio(bqRadioGroup, 'option2')).toHaveAttribute('checked');
   });
 
   it('should propagate disabled and hover properties to child radios', async () => {
