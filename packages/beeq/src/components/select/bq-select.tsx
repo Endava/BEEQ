@@ -175,8 +175,7 @@ export class BqSelect {
   private prefixElem?: HTMLElement;
   private suffixElem?: HTMLElement;
 
-  private debounceQuery: TDebounce<void>;
-  private debounceInput: TDebounce<void>;
+  private debounceInput?: TDebounce<string>;
   private activeTreeOption?: HTMLBqOptionElement;
   private expansionObserver?: MutationObserver;
   private optionsObserver?: MutationObserver;
@@ -221,7 +220,7 @@ export class BqSelect {
 
   /**
    * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes.
-   * A value of 0 means no debouncing will occur.
+   * A value of 0 means no debouncing will occur: `bqInput` is emitted synchronously and options are filtered right away.
    */
   @Prop({ reflect: true, mutable: true }) debounceTime? = 0;
 
@@ -354,6 +353,12 @@ export class BqSelect {
     this.updateInternalsAccessibility();
   }
 
+  @Watch('debounceTime')
+  handleDebounceTimeChange() {
+    this.debounceInput?.cancel();
+    this.debounceInput = this.debounceTime > 0 ? debounce(this.handleSearchInput, this.debounceTime) : undefined;
+  }
+
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
@@ -377,6 +382,10 @@ export class BqSelect {
   // Ordered by their natural call order
   // =====================================
 
+  componentWillLoad() {
+    this.handleDebounceTimeChange();
+  }
+
   componentDidLoad() {
     this.handleSlotChange();
     this.observeOptionExpansion();
@@ -394,7 +403,6 @@ export class BqSelect {
   disconnectedCallback() {
     this.hasFocus = false;
     this.debounceInput?.cancel();
-    this.debounceQuery?.cancel();
     this.expansionObserver?.disconnect();
     this.optionsObserver?.disconnect();
   }
@@ -638,38 +646,31 @@ export class BqSelect {
   private handleSearchFilter = (value: string) => {
     if (this.disabled) return;
 
-    this.debounceQuery?.cancel();
-
-    const trimmedValue = value?.trim();
-    if (!trimmedValue) {
+    const query = value?.trim().toLowerCase();
+    if (!query) {
       this.resetOptionsVisibility();
       return;
     }
 
-    this.debounceQuery = debounce(() => {
-      const query = trimmedValue.toLowerCase();
-      const matchesByOption = new Map<HTMLBqOptionElement, boolean>();
+    const matchesByOption = new Map<HTMLBqOptionElement, boolean>();
 
-      this.getActiveOptions(this.getOptionStructure()).forEach((item) => {
-        // We want to get the full option text to allow searching across nested options.
-        const optionLabel = item.textContent?.trim().toLowerCase() || '';
-        const optionValue = item.value?.toLowerCase() || '';
-        // Show item if EITHER label OR value matches.
-        matchesByOption.set(item, optionLabel.includes(query) || optionValue.includes(query));
-      });
+    this.getActiveOptions(this.getOptionStructure()).forEach((item) => {
+      // We want to get the full option text to allow searching across nested options.
+      const optionLabel = item.textContent?.trim().toLowerCase() || '';
+      const optionValue = item.value?.toLowerCase() || '';
+      // Show item if EITHER label OR value matches.
+      matchesByOption.set(item, optionLabel.includes(query) || optionValue.includes(query));
+    });
 
-      matchesByOption.forEach((matches, item) => {
-        item.hidden = !matches;
+    matchesByOption.forEach((matches, item) => {
+      item.hidden = !matches;
 
-        if (matches) {
-          this.expandOptionAncestors(item);
-        }
-      });
+      if (matches) {
+        this.expandOptionAncestors(item);
+      }
+    });
 
-      this.syncTreeTabIndexes();
-    }, this.debounceTime);
-
-    this.debounceQuery();
+    this.syncTreeTabIndexes();
   };
 
   private handleKeydown = (ev: KeyboardEvent) => {
@@ -713,22 +714,25 @@ export class BqSelect {
 
     this.searchValue = value;
 
-    this.debounceInput?.cancel();
+    if (this.debounceInput) {
+      this.debounceInput(value);
+      return;
+    }
 
-    this.debounceInput = debounce(() => {
-      const inputEvent = this.bqInput.emit({ value });
-      if (!inputEvent.defaultPrevented && this.searchValue === value) {
-        this.open = true;
-        this.handleSearchFilter(value);
-      }
-    }, this.debounceTime);
+    this.handleSearchInput(value);
+  };
 
-    this.debounceInput();
+  private handleSearchInput = (value: string) => {
+    const inputEvent = this.bqInput.emit({ value });
+    // Skip canceled searches and stale debounced values (the search text changed or was reset meanwhile).
+    if (inputEvent.defaultPrevented || this.searchValue !== value) return;
+
+    this.open = true;
+    this.handleSearchFilter(value);
   };
 
   private resetSearch = () => {
     this.debounceInput?.cancel();
-    this.debounceQuery?.cancel();
     this.searchValue = undefined;
   };
 
