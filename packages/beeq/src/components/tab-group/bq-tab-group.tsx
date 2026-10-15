@@ -46,7 +46,7 @@ export class BqTabGroup {
   // Own Properties
   // ====================
 
-  private debouncedBqChange: TDebounce<{ value: string; target: HTMLBqTabElement }>;
+  private debouncedBqChange?: TDebounce<{ value: string; target: HTMLBqTabElement }>;
 
   // Reference to host HTML element
   // ===================================
@@ -60,7 +60,7 @@ export class BqTabGroup {
   // Public Property API
   // ========================
 
-  /** A number representing the delay value applied to bqChange event handler */
+  /** A number representing the delay value applied to bqChange event handler. With `0` (default), the event is emitted synchronously. */
   @Prop({ reflect: true, mutable: true }) debounceTime = 0;
 
   /** If true, the underline divider below the tabs won't be shown  */
@@ -87,13 +87,14 @@ export class BqTabGroup {
       this.debounceTime = Math.max(0, this.debounceTime);
     }
 
-    if (this.debouncedBqChange) {
-      this.debouncedBqChange.cancel();
-    }
-
-    this.debouncedBqChange = debounce((event: Parameters<typeof this.debouncedBqChange>[0]) => {
-      this.bqChange.emit(event);
-    }, this.debounceTime);
+    this.debouncedBqChange?.cancel();
+    // With no delay, `emitBqChange` emits synchronously, inside the click or keydown that changed the value
+    this.debouncedBqChange =
+      this.debounceTime > 0
+        ? debounce((event: { value: string; target: HTMLBqTabElement }) => {
+            this.bqChange.emit(event);
+          }, this.debounceTime)
+        : undefined;
   }
 
   @Watch('size')
@@ -133,6 +134,10 @@ export class BqTabGroup {
     this.checkPropValues();
   }
 
+  disconnectedCallback() {
+    this.debouncedBqChange?.cancel();
+  }
+
   // Listeners
   // ==============
 
@@ -150,7 +155,6 @@ export class BqTabGroup {
     this.bqTabElements.forEach((bqTabElement) => {
       bqTabElement.active = bqTabElement === target;
     });
-    this.debouncedBqChange({ value: target.tabId, target });
     this.selectTab(target);
   }
 
@@ -247,7 +251,16 @@ export class BqTabGroup {
     const { tabId } = target;
     target.active = true;
     this.value = tabId;
-    this.debouncedBqChange({ value: tabId, target });
+    this.emitBqChange({ value: tabId, target });
+  };
+
+  private emitBqChange = (event: { value: string; target: HTMLBqTabElement }): void => {
+    if (this.debouncedBqChange) {
+      this.debouncedBqChange(event);
+      return;
+    }
+
+    this.bqChange.emit(event);
   };
 
   // render() function

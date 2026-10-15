@@ -2953,7 +2953,7 @@ export namespace Components {
      */
     interface BqTabGroup {
         /**
-          * A number representing the delay value applied to bqChange event handler
+          * A number representing the delay value applied to bqChange event handler. With `0` (default), the event is emitted synchronously.
           * @default 0
          */
         "debounceTime": number;
@@ -9228,7 +9228,7 @@ declare namespace LocalJSX {
      */
     interface BqTabGroup {
         /**
-          * A number representing the delay value applied to bqChange event handler
+          * A number representing the delay value applied to bqChange event handler. With `0` (default), the event is emitted synchronously.
           * @default 0
          */
         "debounceTime"?: number;
