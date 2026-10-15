@@ -3,6 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, render, vi, waitForStable 
 import { cdp, userEvent } from 'vitest/browser';
 
 import { computedStyle } from '../../../shared/test-utils/computedStyle';
+import type { TInputValue } from '../bq-input.types';
 
 /** Resolves a CSS color value (e.g. `var(--bq-stroke--danger)`) to its computed `rgb()` form */
 const resolveColor = (value: string): string => {
@@ -23,6 +24,14 @@ const waitForTransitions = async (element: Element) => {
 const getInput = (el: HTMLBqInputElement) => el.shadowRoot?.querySelector<HTMLInputElement>('[part="input"]');
 const getClearButton = (el: HTMLBqInputElement) =>
   el.shadowRoot?.querySelector<HTMLBqButtonElement>('[part="clear-btn"]');
+
+/** Sets the native input value and dispatches a native `input` event synchronously */
+const dispatchNativeInput = (input: HTMLInputElement, value: string) => {
+  input.value = value;
+  input.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+};
+
+const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 afterEach(() => {
   vi.restoreAllMocks();
@@ -117,22 +126,60 @@ describe('bq-input', () => {
 
   it('should write and emit input event', async () => {
     const inputValue = 'Hello';
-    const { root, spyOnEvent, waitForChanges } = await render(<bq-input name="bq-input"></bq-input>);
+    const { root, spyOnEvent } = await render(<bq-input name="bq-input"></bq-input>);
     const bqInput = root as HTMLBqInputElement;
 
     const nativeInput = root.shadowRoot?.querySelector<HTMLInputElement>('.bq-input--control__input');
     const bqInputEvent = spyOnEvent('bqInput');
 
-    nativeInput?.blur();
-    await waitForChanges();
-
-    for (const char of inputValue) {
-      await userEvent.type(nativeInput, char);
-      await waitForChanges();
-    }
+    await userEvent.type(nativeInput, inputValue);
 
     expect(bqInput.value).toBe(inputValue);
     expect(bqInputEvent).toHaveReceivedEventTimes(inputValue.length);
+  });
+
+  it.each([
+    ['text', 'x', 'x'],
+    ['number', '42', 42],
+  ] as const)('should emit `bqInput` synchronously for %s input by default', async (type, text, value) => {
+    const onInput = vi.fn();
+    const { root } = await render(<bq-input name="bq-input" type={type} onBqInput={onInput} />);
+    const host = root as HTMLBqInputElement;
+
+    dispatchNativeInput(getInput(host), text);
+
+    // Asserted before any await: the event must fire inside the native `input` dispatch
+    expect(onInput).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ detail: { value, el: host } }));
+  });
+
+  it.each([
+    ['text', 'hello world', 'hello world'],
+    ['number', '12345', 12345],
+  ] as const)('should keep typed %s input when a controlled consumer re-renders stale state', async (type, text, value) => {
+    const { root } = await render(<bq-input name="bq-input" type={type} />);
+    const host = root as HTMLBqInputElement;
+    const input = getInput(host);
+
+    let state: TInputValue = '';
+    host.addEventListener('bqInput', (ev: CustomEvent<{ value: TInputValue }>) => {
+      state = ev.detail.value;
+    });
+    // Simulates an unrelated framework re-render that re-applies the controlled value from state
+    host.addEventListener(
+      'keydown',
+      () =>
+        setTimeout(() => {
+          host.value = state;
+        }, 0),
+      true,
+    );
+
+    await userEvent.type(input, text);
+    await wait(50);
+
+    expect(state).toBe(value);
+    expect(host.value).toBe(value);
+    expect(input.value).toBe(text);
   });
 
   it('should clear the value and emit clear event', async () => {
@@ -252,21 +299,75 @@ describe('bq-input', () => {
 
   it('should debounce `bqInput` emission when `debounce-time` is set', async () => {
     const DEBOUNCE_TIME = 50;
-    const { root, spyOnEvent, waitForChanges } = await render(
-      <bq-input name="bq-input" debounce-time={DEBOUNCE_TIME} />,
+    const onInput = vi.fn();
+    const { root } = await render(<bq-input name="bq-input" debounce-time={DEBOUNCE_TIME} onBqInput={onInput} />);
+    const host = root as HTMLBqInputElement;
+    const input = getInput(host);
+
+    for (const text of ['a', 'ab', 'abc']) {
+      dispatchNativeInput(input, text);
+    }
+
+    expect(host.value).toBe('abc');
+    expect(onInput).not.toHaveBeenCalled();
+
+    // After the debounce settles, the event fires exactly once with the latest value
+    await wait(DEBOUNCE_TIME + 20);
+    expect(onInput).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ detail: { value: 'abc', el: host } }));
+  });
+
+  it('should switch between synchronous and debounced `bqInput` when `debounceTime` changes', async () => {
+    const DEBOUNCE_TIME = 50;
+    const onInput = vi.fn();
+    const { root, setProps } = await render(<bq-input name="bq-input" onBqInput={onInput} />);
+    const host = root as HTMLBqInputElement;
+    const input = getInput(host);
+
+    await setProps({ debounceTime: DEBOUNCE_TIME });
+    dispatchNativeInput(input, 'a');
+    expect(onInput).not.toHaveBeenCalled();
+    await wait(DEBOUNCE_TIME + 20);
+    expect(onInput).toHaveBeenLastCalledWith(expect.objectContaining({ detail: { value: 'a', el: host } }));
+
+    await setProps({ debounceTime: 0 });
+    dispatchNativeInput(input, 'ab');
+    expect(onInput).toHaveBeenCalledTimes(2);
+    expect(onInput).toHaveBeenLastCalledWith(expect.objectContaining({ detail: { value: 'ab', el: host } }));
+  });
+
+  it('should drop a pending debounced `bqInput` when the value is cleared', async () => {
+    // Long enough for the clicks below to land before the pending emit would fire
+    const DEBOUNCE_TIME = 500;
+    const onInput = vi.fn();
+    const { root, waitForChanges } = await render(
+      <bq-input name="bq-input" debounce-time={DEBOUNCE_TIME} onBqInput={onInput} />,
     );
+    const host = root as HTMLBqInputElement;
+    const input = getInput(host);
 
-    const bqInput = spyOnEvent('bqInput');
-    const nativeInput = root.shadowRoot?.querySelector<HTMLInputElement>('.bq-input--control__input');
-
-    await userEvent.type(nativeInput, 'abc');
-
-    // Let the real debounce timer settle
-    await new Promise((resolve) => setTimeout(resolve, DEBOUNCE_TIME + 20));
+    await userEvent.click(input);
+    dispatchNativeInput(input, 'abc');
     await waitForChanges();
+    await waitForStable(root);
+    await userEvent.click(getClearButton(host));
+    expect(onInput).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ detail: { value: '', el: host } }));
 
-    // After the debounce settles, the event fires exactly once for the entire typing sequence
-    expect(bqInput).toHaveReceivedEventTimes(1);
+    await wait(DEBOUNCE_TIME + 20);
+    expect(host.value).toBe('');
+    expect(onInput).toHaveBeenCalledOnce();
+  });
+
+  it('should drop a pending debounced `bqInput` when the input is removed from the DOM', async () => {
+    const DEBOUNCE_TIME = 50;
+    const onInput = vi.fn();
+    const { root } = await render(<bq-input name="bq-input" debounce-time={DEBOUNCE_TIME} onBqInput={onInput} />);
+    const host = root as HTMLBqInputElement;
+
+    dispatchNativeInput(getInput(host), 'abc');
+    host.remove();
+    await wait(DEBOUNCE_TIME + 20);
+
+    expect(onInput).not.toHaveBeenCalled();
   });
 
   it.each(['Backspace', 'Delete'])('should keep numeric input empty after %s and blur', async (key) => {

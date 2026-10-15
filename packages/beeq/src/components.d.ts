@@ -1497,7 +1497,7 @@ export namespace Components {
          */
         "clearButtonLabel"?: string;
         /**
-          * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes. A value of 0 means no debouncing will occur.
+          * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes. With `0` (default), the event is emitted synchronously.
           * @default 0
          */
         "debounceTime"?: number;
@@ -7663,7 +7663,7 @@ declare namespace LocalJSX {
          */
         "clearButtonLabel"?: string;
         /**
-          * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes. A value of 0 means no debouncing will occur.
+          * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes. With `0` (default), the event is emitted synchronously.
           * @default 0
          */
         "debounceTime"?: number;

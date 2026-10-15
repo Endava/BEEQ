@@ -110,7 +110,7 @@ export class BqInput {
   private prefixElem?: HTMLElement;
   private suffixElem?: HTMLElement;
 
-  private debounceBqInput: TDebounce<void>;
+  private debounceBqInput?: TDebounce<[TInputValue]>;
   private fallbackInputId = 'input';
 
   // Reference to host HTML element
@@ -155,7 +155,7 @@ export class BqInput {
 
   /**
    * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes.
-   * A value of 0 means no debouncing will occur.
+   * With `0` (default), the event is emitted synchronously.
    */
   @Prop({ reflect: true, mutable: true }) debounceTime? = 0;
 
@@ -274,6 +274,15 @@ export class BqInput {
     this.updateFormValidity();
   }
 
+  @Watch('debounceTime')
+  handleDebounceTimeChange() {
+    this.debounceBqInput?.cancel();
+    this.debounceBqInput =
+      this.debounceTime > 0
+        ? debounce((value: TInputValue) => this.bqInput.emit({ value, el: this.el }), this.debounceTime)
+        : undefined;
+  }
+
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
@@ -307,10 +316,15 @@ export class BqInput {
 
   componentWillLoad() {
     this.handleValueChange();
+    this.handleDebounceTimeChange();
   }
 
   componentDidLoad() {
     this.handleSlotChange();
+  }
+
+  disconnectedCallback() {
+    this.debounceBqInput?.cancel();
   }
 
   formAssociatedCallback() {
@@ -358,16 +372,19 @@ export class BqInput {
 
   private handleInput = (ev: Event) => {
     if (this.disabled) return;
-
-    this.debounceBqInput?.cancel();
-
     if (!isHTMLElement(ev.target, 'input')) return;
-    this.value = this.getInputValue(ev.target);
 
-    this.debounceBqInput = debounce(() => {
-      this.bqInput.emit({ value: this.value, el: this.el });
-    }, this.debounceTime);
-    this.debounceBqInput();
+    this.value = this.getInputValue(ev.target);
+    this.emitBqInput(this.value);
+  };
+
+  private emitBqInput = (value: TInputValue) => {
+    if (this.debounceBqInput) {
+      this.debounceBqInput(value);
+      return;
+    }
+
+    this.bqInput.emit({ value, el: this.el });
   };
 
   private handleChange = (ev: Event) => {
@@ -386,6 +403,8 @@ export class BqInput {
     if (this.disabled) return;
 
     const { inputElem, setFormValue, updateFormValidity } = this;
+    // Drop a pending debounced `bqInput` so a stale value can't arrive after the clear
+    this.debounceBqInput?.cancel();
     // Clear input element value
     inputElem.value = '';
     this.value = inputElem.value;
