@@ -80,6 +80,10 @@ You can add BEEQ to an existing React project in a few steps:
     <Tip>
       In a Sass or Less file, keep the `.css` extension so the line stays a plain CSS import that your bundler resolves. Without it, Less can't find the file and Sass falls back to its deprecated `@import`.
     </Tip>
+
+    <Tip>
+      Using Tailwind CSS v4? Import BEEQ with `layer(base)` so Tailwind utilities still override the BEEQ reset. See [Apps that use cascade layers](/getting-started/installation#apps-that-use-cascade-layers).
+    </Tip>
   </Step>
 
   <Step title="Configure icons" titleSize="h3">

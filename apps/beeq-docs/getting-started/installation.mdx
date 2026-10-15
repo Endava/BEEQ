@@ -60,6 +60,21 @@ Import the BEEQ stylesheet **once** in your application’s main CSS or SCSS fil
 
 For CDN-based HTML pages without a bundler, link the stylesheet in your document instead — see [HTML / Web Components](/guides/frameworks/html-web-components).
 
+### Apps that use cascade layers
+
+`beeq.css` is not in a cascade layer, and browsers apply unlayered styles over any `@layer`, whatever the selector. Tailwind CSS v4 puts its utilities in `@layer utilities`, so the BEEQ [CSS reset](#css-reset) and heading styles override classes such as `mx-auto` or `text-l`.
+
+Import the stylesheet into the `base` layer instead:
+
+```css
+@import "tailwindcss";
+@import "@beeq/core/dist/beeq/beeq.css" layer(base);
+```
+
+Use `base`, not a new layer name. A layer first named after `@import "tailwindcss"` is ordered after `utilities`, so it would still win. The same applies to any app that puts its own styles in `@layer`.
+
+Tailwind CSS v3 and plain CSS without `@layer` don't need this: their styles are unlayered too, so a class still beats the reset's element selectors.
+
 ## Icons
 
 Many BEEQ components render SVG icons from a separate folder. Your app must **serve** those files at a public URL and **tell BEEQ** where to find them.

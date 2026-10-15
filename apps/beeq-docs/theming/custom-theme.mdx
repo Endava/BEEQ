@@ -70,14 +70,14 @@ To create a custom theme, override BEEQ's root semantics — the brand, intent, 
     ```
 
     The full list of mode roles and their defaults is in [Colors → Mode roles](/foundations/colors#mode-roles). Hover and active colors aren't roles you set per component: BEEQ mixes them from the rest color with `--bq-hover` and `--bq-active`, so they follow your overrides.
-
-    <Warning>
-      BEEQ applies its light mode roles to `[bq-mode="light"]` and `.light`, and to `:root` only when no `bq-theme` (or `bq-theme="beeq"`) is set. With a custom `bq-theme`, always set `bq-mode` as well.
-    </Warning>
   </Step>
 
   <Step title="Apply your custom theme">
     Include your custom theme CSS file in your project and set the `bq-theme` and `bq-mode` attributes on the `<html>` element.
+
+    <Warning>
+      A custom `bq-theme` always needs `bq-mode` (or the `.light` / `.dark` class) next to it. BEEQ applies its light mode roles to `:root` only when there's no `bq-theme` or it's `bq-theme="beeq"`. With `bq-theme="my-custom-theme"` alone, your palette tokens resolve but every mode role (`--bq-ui--*`, `--bq-text--*`, `--bq-background--*`, `--bq-stroke--*`, `--bq-icon--*`) is empty, so components lose their colors.
+    </Warning>
 
     <Note>
       Always load `beeq.css` **before** your custom theme CSS so that your variables correctly override the defaults.
@@ -109,7 +109,7 @@ To create a custom theme, override BEEQ's root semantics — the brand, intent, 
       ```css Tailwind v4 icon="tailwind"
       /* src/index.css */
       @import "tailwindcss";
-      @import "@beeq/core/dist/beeq/beeq.css";
+      @import "@beeq/core/dist/beeq/beeq.css" layer(base);
       @plugin "@beeq/tailwindcss";
       @import "./custom-theme.css";
       ```
@@ -131,6 +131,10 @@ To create a custom theme, override BEEQ's root semantics — the brand, intent, 
     <Note>
       With Tailwind v4, `@beeq/tailwindcss` 1.16.2 and earlier fail with `@plugin` (`b is not a function`). On those versions, use `@config "@beeq/tailwindcss";` instead.
     </Note>
+
+    <Warning>
+      With Tailwind v4, import `beeq.css` with `layer(base)` as shown. Without it, the BEEQ reset overrides Tailwind utilities such as `mx-auto`. See [Apps that use cascade layers](/getting-started/installation#apps-that-use-cascade-layers).
+    </Warning>
 
     Set the theme and mode on the root element from your app entry so the attributes are present before any component renders:
 

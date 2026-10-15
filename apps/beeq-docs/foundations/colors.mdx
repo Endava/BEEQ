@@ -667,6 +667,10 @@ export default {
   `@beeq/tailwindcss` 1.16.2 and earlier fail with `@plugin` (`b is not a function`). On those versions, use `@config "@beeq/tailwindcss";` instead.
 </Note>
 
+<Warning>
+  If you also import `beeq.css`, add `layer(base)` to that import so the BEEQ reset doesn't override Tailwind utilities. See [Apps that use cascade layers](/getting-started/installation#apps-that-use-cascade-layers).
+</Warning>
+
 Once set up, all mode roles are available as utility classes:
 
 | Category | Tailwind prefix | Example class |
