@@ -1,3 +1,45 @@
+## 1.17.0 (2026-10-15)
+
+### Features ⚡️
+
+- **Beeq Tailwind CSS:** add `border-stroke-*` width aliases ([3bb07f51](https://github.com/Endava/BEEQ/commit/3bb07f51))
+- **Theme:** rework color token chain and fix dark mode contrast ([#1846](https://github.com/Endava/BEEQ/pull/1846))
+- **TimePicker:** add `bq-time-picker` component ([#1847](https://github.com/Endava/BEEQ/pull/1847))
+
+### Bug Fixes 🐞
+
+- **Beeq Tailwind CSS:** support `@plugin` with Tailwind CSS v4 ([4029dbea](https://github.com/Endava/BEEQ/commit/4029dbea))
+- **Beeq Tailwind CSS:** remove duplicate ColorMix utilities ([b27db72b](https://github.com/Endava/BEEQ/commit/b27db72b))
+- **Beeq Tailwind CSS:** drop spacing-based logical border shorthands ([e015c346](https://github.com/Endava/BEEQ/commit/e015c346))
+- **Beeq Tailwind CSS:** keep native element styles in the CSS reset ([d842c209](https://github.com/Endava/BEEQ/commit/d842c209))
+- **Beeq Tailwind CSS:** apply default light roles when no `bq-mode` is set ([3ce5d7cd](https://github.com/Endava/BEEQ/commit/3ce5d7cd))
+- **Beeq Tailwind CSS:** set `stroke` in `stroke-hover` and `stroke-active` utilities ([5b684d17](https://github.com/Endava/BEEQ/commit/5b684d17))
+- **Breadcrumb item:** apply the `rel` prop to the inner link ([#1848](https://github.com/Endava/BEEQ/pull/1848))
+- **CSS:** strip raw tailwind directives from published css ([#1852](https://github.com/Endava/BEEQ/pull/1852))
+- **Radio group:** fix aria-labelledby id for the group label ([#1849](https://github.com/Endava/BEEQ/pull/1849))
+- **Select:** stop using the form name as the label aria-label ([#1851](https://github.com/Endava/BEEQ/pull/1851))
+- **Side menu item:** drop `menuitem` role without menu parent ([#1850](https://github.com/Endava/BEEQ/pull/1850))
+- **Storybook:** log component events once in the actions panel ([#1855](https://github.com/Endava/BEEQ/pull/1855))
+- **Tag:** improve hover/active color on the close button of the removable variant ([03cd6344](https://github.com/Endava/BEEQ/commit/03cd6344))
+- **Wrappers:** inline sources in react and vue sourcemaps ([#1854](https://github.com/Endava/BEEQ/pull/1854))
+- **Wrappers:** emit explicit extensions in esm relative imports ([#1856](https://github.com/Endava/BEEQ/pull/1856))
+- **Wrappers:** declare react ssr proxies as build outputs ([#1859](https://github.com/Endava/BEEQ/pull/1859))
+- **bq-date-picker:** stop internal bqBlur and bqFocus events from escaping the component ([06386684](https://github.com/Endava/BEEQ/commit/06386684))
+
+### Chore ⚙️
+
+- **deps:** update stencil ([#1860](https://github.com/Endava/BEEQ/pull/1860))
+
+### Test 🧪
+
+- **Beeq Tailwind CSS:** document endava dark danger contrast exceptions ([9f61633d](https://github.com/Endava/BEEQ/commit/9f61633d))
+
+### ❤️ Thank You
+
+- BEEQ Design System @en-beeq
+- Dabiel Gonzalez-Ramos @dgonzalezr
+- dgonzalezr @dgonzalezr
+
 ## 1.16.2 (2026-10-12)
 
 ### Bug Fixes 🐞
