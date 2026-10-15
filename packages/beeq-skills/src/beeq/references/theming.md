@@ -159,7 +159,7 @@ For a full identity (font, brand, surfaces), create one theme file and scope it 
 
 Two consequences to plan for:
 
-- **Set `bq-mode` explicitly with a custom theme.** BEEQ applies its default light roles when there is no theme attribute or when `bq-theme="beeq"`. With a custom theme name and no mode, the light roles are yours to define. Either always set `bq-mode`, or define the full light role set under `[bq-theme="acme"]:not([bq-mode])`.
+- **`bq-mode` is optional on the root.** Without it, `:root` gets BEEQ's default light roles whatever the `bq-theme`, plus any overrides under `[bq-theme="acme"]:not([bq-mode])`. Set `bq-mode="dark"` or `.dark` for dark mode.
 - **Scope role overrides to a mode.** A role set on `[bq-theme="acme"]` applies in both modes. To change `--bq-background--primary` for light mode only, set it under `[bq-theme="acme"][bq-mode="light"]` and leave dark mode alone, or set a dark value under `[bq-theme="acme"][bq-mode="dark"]` too.
 
 The [Custom theme](https://www.beeq.design/theming/custom-theme.md) guide lists every token to cover, including the selectors for class-based themes and the Tailwind setup.

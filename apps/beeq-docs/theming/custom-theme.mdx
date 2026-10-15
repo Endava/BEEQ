@@ -75,9 +75,9 @@ To create a custom theme, override BEEQ's root semantics — the brand, intent, 
   <Step title="Apply your custom theme">
     Include your custom theme CSS file in your project and set the `bq-theme` and `bq-mode` attributes on the `<html>` element.
 
-    <Warning>
-      A custom `bq-theme` always needs `bq-mode` (or the `.light` / `.dark` class) next to it. BEEQ applies its light mode roles to `:root` only when there's no `bq-theme` or it's `bq-theme="beeq"`. With `bq-theme="my-custom-theme"` alone, your palette tokens resolve but every mode role (`--bq-ui--*`, `--bq-text--*`, `--bq-background--*`, `--bq-stroke--*`, `--bq-icon--*`) is empty, so components lose their colors.
-    </Warning>
+    <Note>
+      `bq-mode` is optional for light mode: without it, the root element uses BEEQ's light mode roles plus the `:not([bq-mode])` overrides from the previous step. Set `bq-mode="dark"` (or the `.dark` class) to switch to dark mode.
+    </Note>
 
     <Note>
       Always load `beeq.css` **before** your custom theme CSS so that your variables correctly override the defaults.

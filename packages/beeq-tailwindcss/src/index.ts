@@ -173,10 +173,9 @@ const preset = {
         {
           name: 'light',
           selectors: [
-            // Default when no theme/mode specified
-            ':root:not([bq-theme]):not([bq-mode])',
-            // Default for BEEQ theme with no mode
-            ':root[bq-theme="beeq"]:not([bq-mode])',
+            // Default when no mode is specified, for any theme (including custom ones).
+            // Endava's light block comes later, so it still wins for bq-theme="endava".
+            ':root:not([bq-mode])',
             '.beeq:not([bq-mode])',
             // Explicit light mode
             '[bq-mode="light"]',
