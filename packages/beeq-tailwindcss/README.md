@@ -65,7 +65,21 @@ export default {
 
 ## CSS reset 🧹
 
-The preset includes a CSS reset that removes all the default browser styles. If you want to use your own reset, you can add your own CSS reset code to the `@base` layer of TailwindCSS:
+The preset includes an opinionated CSS reset, the same one `@beeq/core` ships in `beeq.css`. Most of its selectors use `:where()`, so they have zero specificity and your own styles override them. See the [full list of rules](https://www.beeq.design/getting-started/installation#css-reset).
+
+To add your own reset rules on top, put them in Tailwind's `base` layer.
+
+Tailwind CSS v4:
+
+```css
+@import "tailwindcss";
+@plugin "@beeq/tailwindcss";
+@layer base {
+  /* Your CSS reset code */
+}
+```
+
+Tailwind CSS v3:
 
 ```css
 @tailwind base;
