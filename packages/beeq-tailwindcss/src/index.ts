@@ -18,7 +18,7 @@ import {
 
 const inherit: string = 'inherit';
 
-export default {
+const preset = {
   theme: {
     colors: {
       inherit,
@@ -219,6 +219,15 @@ export default {
     }),
   ],
 } satisfies Partial<Config>;
+
+/**
+ * The default export works both as a Tailwind CSS v3 preset (`presets: [beeqPreset]`, or v4 `@config`)
+ * and as a Tailwind CSS v4 plugin (`@plugin "@beeq/tailwindcss"`), which expects `{ handler, config }`.
+ */
+export default Object.assign(
+  plugin(() => {}, preset),
+  preset,
+);
 
 export {
   CSS_COLORS,
