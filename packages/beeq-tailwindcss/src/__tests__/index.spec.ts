@@ -12,4 +12,13 @@ describe('@beeq/tailwindcss default export', () => {
     expect(preset.handler).toBeTypeOf('function');
     expect(preset.config).toMatchObject({ theme: preset.theme, plugins: preset.plugins });
   });
+
+  it('exposes stroke width keys that do not clash with Tailwind CSS v4 side utilities', () => {
+    expect(preset.theme.borderWidth).toMatchObject({
+      s: 'var(--bq-stroke-s)',
+      'stroke-s': 'var(--bq-stroke-s)',
+      'stroke-m': 'var(--bq-stroke-m)',
+      'stroke-l': 'var(--bq-stroke-l)',
+    });
+  });
 });
