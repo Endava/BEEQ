@@ -4,7 +4,7 @@
 
    Handles custom styles that cannot be expressed as Tailwind
    utilities: BEEQ token values, gradients, and brand colours.
-   Imported by style.css.
+   Loaded by Mintlify, which injects every root-level .css file.
 
    Uses modern CSS: logical properties, :is(), CSS custom
    properties. No CSS nesting — postcss-nesting is not in the
