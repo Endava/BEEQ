@@ -120,13 +120,13 @@ jobs:
       # Run all Nx commands
       - run:
           name: 🩺 Run Linter, Formatter, and Import Sorting
-          command: pnpm exec nx affected -t check --exclude='*,!tag:core,!tag:skills,!tag:tools' --parallel=3 --base=$NX_BASE --head=$NX_HEAD --verbose
+          command: pnpm exec nx affected -t check --parallel=3 --base=$NX_BASE --head=$NX_HEAD --verbose
       - run:
           name: 🔠 Run Type Check
-          command: pnpm exec nx affected -t typecheck --exclude='*,!tag:core,!tag:skills,!tag:tools' --parallel=3 --base=$NX_BASE --head=$NX_HEAD --verbose
+          command: pnpm exec nx affected -t typecheck --parallel=3 --base=$NX_BASE --head=$NX_HEAD --verbose
       - run:
           name: 🧰 Run Unit Tests
-          command: pnpm exec nx affected -t test --exclude='*,!tag:core,!tag:skills,!tag:tools,!tag:preset' --parallel=3 --base=$NX_BASE --head=$NX_HEAD --verbose
+          command: pnpm exec nx affected -t test --parallel=3 --base=$NX_BASE --head=$NX_HEAD --verbose
       - run:
           name: ✅ Validate Skill Eval Graders
           # Runs each eval task's reference solution through the deterministic graders. No agent, no tokens.
