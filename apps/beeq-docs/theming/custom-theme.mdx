@@ -128,6 +128,10 @@ To create a custom theme, override BEEQ's root semantics — the brand, intent, 
 
     The `@beeq/tailwindcss` preset maps BEEQ tokens to Tailwind utility classes but does not define your custom theme. Keep the custom theme CSS as a separate file that overrides `--bq-*` variables, and load it after `beeq.css`.
 
+    <Note>
+      With Tailwind v4, `@beeq/tailwindcss` 1.16.2 and earlier fail with `@plugin` (`b is not a function`). On those versions, use `@config "@beeq/tailwindcss";` instead.
+    </Note>
+
     Set the theme and mode on the root element from your app entry so the attributes are present before any component renders:
 
     <CodeGroup>

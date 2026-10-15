@@ -20,7 +20,7 @@ Search the project before writing markup or CSS. Record what you find and follow
 | Theme overrides | CSS that sets `--bq-*` tokens, often inside `[bq-theme="…"]` selectors | The project's brand decisions. Add to this file; do not create a competing one. |
 | Global stylesheet | An import of `@beeq/core/dist/beeq/beeq.css` | Where BEEQ styles load. Never load them twice. |
 | Icon setup | `setBasePath(...)` or a `data-beeq` script attribute | Where SVG icons are served from. |
-| Tailwind preset | `@beeq/tailwindcss` in a Tailwind config or `@plugin` rule | Whether BEEQ utility classes such as `gap-m` or `bg-primary` are available. |
+| Tailwind preset | `@beeq/tailwindcss` in a Tailwind config, or an `@plugin` or `@config` rule | Whether BEEQ utility classes such as `gap-m` or `bg-primary` are available. |
 | Wrapper components | Files that import `Bq*` and re-export them (`AppButton`, `styled(BqInput)`) | House defaults such as size, appearance, and analytics hooks. Use the wrapper. |
 | Form conventions | Form library bindings, shared `FormField` layouts, validation helpers | How labels, helper text, and errors are wired. |
 | Routing | The router's link component and any BEEQ integration | How navigation is intercepted without losing real links. |

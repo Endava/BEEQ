@@ -1,6 +1,6 @@
 # BEEQ TailwindCSS Preset
 
-BEEQ TailwindCSS is a preset that adds BEEQ's opinionated TailwindCSS configuration to your application.
+BEEQ TailwindCSS is a preset that adds BEEQ's opinionated TailwindCSS configuration to your application. It works with Tailwind CSS v3 and v4.
 
 ## Prerequisites 🧰
 
@@ -8,7 +8,7 @@ Before starting to use BEEQ TailwindCSS, you need to have installed:
 
 - [TailwindCSS](https://tailwindcss.com/docs/installation)
 
-Make sure that Tailwind CSS directives are added to your main CSS file:
+With Tailwind CSS v3, make sure that the Tailwind CSS directives are added to your main CSS file:
 
 ```css
 @tailwind base;
@@ -23,6 +23,19 @@ npm i -D @beeq/tailwindcss
 ```
 
 ## Usage 🚀
+
+### Tailwind CSS v4
+
+Load the preset with `@plugin` in your CSS entry file:
+
+```css
+@import "tailwindcss";
+@plugin "@beeq/tailwindcss";
+```
+
+> Note: `@beeq/tailwindcss` 1.16.2 and earlier fail with `@plugin` (`b is not a function`). On those versions, use `@config "@beeq/tailwindcss";` instead.
+
+### Tailwind CSS v3
 
 ```js
 const beeqPreset = require('@beeq/tailwindcss');
