@@ -270,13 +270,13 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
         <!-- 1. Load styles -->
         <link
           rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/@beeq/core/dist/beeq/beeq.css"
+          href="https://cdn.jsdelivr.net/npm/@beeq/core@1.17.0/dist/beeq/beeq.css"
         />
 
         <!-- 2. Load components + icons -->
         <script type="module"
-          src="https://cdn.jsdelivr.net/npm/@beeq/core/dist/beeq/beeq.esm.js"
-          data-beeq="https://cdn.jsdelivr.net/npm/@beeq/core/dist/beeq/svg/">
+          src="https://cdn.jsdelivr.net/npm/@beeq/core@1.17.0/dist/beeq/beeq.esm.js"
+          data-beeq="https://cdn.jsdelivr.net/npm/@beeq/core@1.17.0/dist/beeq/svg/">
         </script>
 
         <!-- 3. Use any component -->
@@ -286,7 +286,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
         ```tsx React icon="react"
         // main.tsx — register icon path once
         import { setBasePath } from "@beeq/core/dist/components";
-        setBasePath("https://cdn.jsdelivr.net/npm/@beeq/core/dist/beeq/svg/");
+        setBasePath("https://cdn.jsdelivr.net/npm/@beeq/core@1.17.0/dist/beeq/svg/");
 
         // anywhere in your app:
         import { BqButton } from "@beeq/react";

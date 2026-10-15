@@ -26,9 +26,10 @@ export const CodeLivePreview = ({ code, children, height, removePadding = false,
 
   // Constants are centralized so URLs and selectors are not duplicated.
   const BEEQ_VERSION = '1.17.0';
-  const BEEQ_ESM_URL = `https://cdn.jsdelivr.net/npm/@beeq/core@${BEEQ_VERSION}/dist/beeq/beeq.esm.min.js`;
-  const BEEQ_CSS_URL = `https://cdn.jsdelivr.net/npm/@beeq/core@${BEEQ_VERSION}/dist/beeq/beeq.css`;
-  const BEEQ_ICONS_URL = `https://cdn.jsdelivr.net/npm/@beeq/core@${BEEQ_VERSION}/dist/beeq/svg`;
+  const CDN_BASE = 'https://unpkg.com';
+  const BEEQ_ESM_URL = `${CDN_BASE}/@beeq/core@${BEEQ_VERSION}/dist/beeq/beeq.esm.js`;
+  const BEEQ_CSS_URL = `${CDN_BASE}/@beeq/core@${BEEQ_VERSION}/dist/beeq/beeq.css`;
+  const BEEQ_ICONS_URL = `${CDN_BASE}/@beeq/core@${BEEQ_VERSION}/dist/beeq/svg`;
 
   /**
    * Ensures BEEQ web components are loaded in the parent document.
