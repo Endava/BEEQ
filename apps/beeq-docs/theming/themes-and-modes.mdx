@@ -536,10 +536,10 @@ The `endava` theme follows the [Endava brand portal](https://brand.endava.com/vi
 
 - **Brand and accent:** Red Orange `#FF5640` is the brand fill. Accent aliases the brand, so `--bq-accent-*` matches `--bq-brand-*`.
 - **Brand text:** `--bq-brand-strong` is `#C33600` (light mode text, icons, strokes, and focus). `--bq-brand-bright` is Red Orange `#FF5640` (dark mode), as on endava.com.
-- **Neutrals:** Solid Blue `#192B37` is the darkest neutral (`--bq-neutral-950`) and `--bq-black`.
+- **Neutrals:** Solid Blue `#192B37` is the darkest neutral (`--bq-neutral-950`). `--bq-black` is the slightly darker `#14222C` (`--bq-endava-grey-1000`), so on-colors reach more contrast on the dark mode fills.
 - **Info:** uses the endava.com accent blues so it stays distinct from neutral UI. Mid Blue `#417191` is the light mode fill, `#3B6684` is light mode text, and `#9DCFF0` (a tint of Bright Blue `#68B5E8`) is dark mode text and fill.
-- **Dark mode fills:** info, success, warning, and danger fills use their `-bright` step, with Solid Blue as the on-color.
-- **Signal colors:** dark mode success and warning use the brand guide's dark Positive `#3DD17B` and Warning `#F99C11` for text, icons, strokes, and fills. Light mode signal colors and dark danger use nearby shades, listed in the deviation log.
+- **Dark mode fills:** info, success, warning, and danger fills use their `-bright` step, with `--bq-black` (`#14222C`) as the on-color.
+- **Signal colors:** dark mode success and warning use the brand guide's dark Positive `#3DD17B` and Warning `#F99C11` for text, icons, strokes, and fills. Dark danger is the brand Negative `#E84641`. Light mode signal colors use nearby shades. Contrast limits and overrides are listed in the deviation log.
 - **Data colors:** come from the brand portal palette. The brand asks for primary colors and Solid Blue shades first, so start charts with `--bq-data-01` (Red Orange), `--bq-data-11` (Solid Blue), `--bq-data-12` (white), and `--bq-neutral-*` shades. Add `--bq-data-02` to `--bq-data-10` only when you need more series.
 
 <Warning>
@@ -570,7 +570,8 @@ The `endava` theme follows the [Endava brand portal](https://brand.endava.com/vi
 | Light warning fill `#EB9410` | Warning fill `#F99C11` in light mode | Solid Blue on `#EB9410` drops to 4.33:1 when active. |
 | Light success fill `#2D9C5B` | Success fill `#26864E` | Neither white (3.49:1) nor Solid Blue (4.17:1) passes on `#2D9C5B`. |
 | Light success / warning borders `#2D9C5B` / `#EB9410` | `--bq-stroke--success` / `--bq-stroke--warning` use the strong step (`#1D633A` / `#975C04`) | On Blue 10, `#2D9C5B` is 2.89:1 and `#EB9410` is 1.98:1, below the 3:1 minimum for borders. |
-| Dark danger `#E84641` | `--bq-danger-bright` `#F6B5B3` (60% white tint) | `#E84641` is 3.73:1 on Solid Blue and fails as a fill with either on-color. `#F6B5B3` also reaches APCA Lc 60 on Blue 90. |
+| Dark danger `#E84641` | `--bq-danger-bright` `#E84641`, same as the brand | Brand fidelity over contrast. Danger text, icons, and strokes are 3.73:1 on the base surface and 3.19:1 on the danger tint, so AA for large text only there. On raised surfaces (Blue 90) they are 2.75:1, below even the 3:1 minimum for large text and icons (APCA Lc 27–33). Avoid small danger text on raised surfaces. Override `--bq-danger-bright` with `#F6B5B3` for 4.5:1 and APCA Lc 60 on every dark surface. |
+| Solid Blue as `--bq-black` | `--bq-black` `#14222C` | Solid Blue on the dark danger fill is 3.73:1. `#14222C` raises it to 4.16:1, which is AA for large text and UI components but still below 4.5:1 for normal text. It also darkens `--bq-data-11`, which the brand portal lists as Solid Blue. |
 | Hover and active colors | `color-mix()` with `--bq-hover` / `--bq-active` | Same state model as the default theme. |
 | Disabled colors | Opacity set per component | Same state model as the default theme. |
 | Dark secondary / tertiary surfaces Blue 80 / Blue 60 | Blue 90 `#30404B` / Blue 80 `#47555F` | Secondary text fails on Blue 60. |

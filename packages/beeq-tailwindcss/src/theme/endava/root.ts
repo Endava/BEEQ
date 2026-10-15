@@ -1,7 +1,7 @@
 export const EndavaRootTheme = {
   // Fonts
   'bq-font-family': "'Poppins', sans-serif",
-  // Anchors: Endava has no black, Solid Blue is the darkest brand color
+  // Anchors: Endava has no black, so `bq-black` is a deliberately darker step than Solid Blue (better contrast on dark fills)
   'bq-white': 'var(--bq-endava-neutral-white)',
   'bq-black': 'var(--bq-endava-grey-1000)',
   // Neutrals

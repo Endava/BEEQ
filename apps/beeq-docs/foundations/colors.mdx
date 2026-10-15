@@ -152,7 +152,7 @@ The base step is tuned to be recognizable as a fill, not to be readable as text,
       <Color.Item name="danger" value="var(--bq-endava-negative-500)" />
       <Color.Item name="danger-dark" value="var(--bq-endava-negative-1000)" />
       <Color.Item name="danger-strong" value="var(--bq-endava-negative-800)" />
-      <Color.Item name="danger-bright" value="var(--bq-endava-negative-200)" />
+      <Color.Item name="danger-bright" value="var(--bq-endava-negative-400)" />
     </Color>
   </Tab>
 </Tabs>
@@ -161,7 +161,7 @@ Swatch names drop the `--bq-` prefix — for example, `brand-strong` is `--bq-br
 
 ### Neutral
 
-The neutral scale underpins surfaces, text, borders, and icons. `--bq-white` and `--bq-black` complete it. In the BEEQ theme the neutrals alias the grey primitives, and `--bq-white` and `--bq-black` are plain hex values with no primitive behind them; in the Endava theme they're the Endava Solid Blue shades, and `--bq-neutral-950` and `--bq-black` are Solid Blue itself.
+The neutral scale underpins surfaces, text, borders, and icons. `--bq-white` and `--bq-black` complete it. In the BEEQ theme the neutrals alias the grey primitives, and `--bq-white` and `--bq-black` are plain hex values with no primitive behind them; in the Endava theme they're the Endava Solid Blue shades, `--bq-neutral-950` is Solid Blue itself, and `--bq-black` is the slightly darker `--bq-endava-grey-1000` (`#14222C`).
 
 <Tabs>
   <Tab title="BEEQ theme">
@@ -197,7 +197,7 @@ The neutral scale underpins surfaces, text, borders, and icons. `--bq-white` and
       <Color.Item name="bq-neutral-900" value="var(--bq-endava-grey-900)" />
       <Color.Item name="bq-neutral-950" value="var(--bq-endava-grey-950)" />
       <Color.Item name="bq-neutral-1000" value="var(--bq-endava-grey-1000)" />
-      <Color.Item name="bq-black" value="var(--bq-endava-grey-950)" />
+      <Color.Item name="bq-black" value="var(--bq-endava-grey-1000)" />
     </Color>
   </Tab>
 </Tabs>
@@ -235,7 +235,7 @@ A curated set of 12 distinct hues for charts, graphs, and data-driven visualizat
       <Color.Item name="bq-data-08" value="var(--bq-endava-data-jeans)" />
       <Color.Item name="bq-data-09" value="var(--bq-endava-data-teal)" />
       <Color.Item name="bq-data-10" value="var(--bq-endava-grey-700)" />
-      <Color.Item name="bq-data-11" value="var(--bq-endava-grey-950)" />
+      <Color.Item name="bq-data-11" value="var(--bq-endava-grey-1000)" />
       <Color.Item name="bq-data-12" value="var(--bq-endava-neutral-white)" />
     </Color>
   </Tab>
@@ -335,7 +335,7 @@ Use UI tokens for component fills — buttons, toggles, chips, selects, badges, 
       <Color.Item name="--bq-ui--success-alt" value={{ light: "var(--bq-endava-positive-100)", dark: "var(--bq-endava-positive-1000)" }} />
       <Color.Item name="--bq-ui--warning" value="var(--bq-endava-warning-400)" />
       <Color.Item name="--bq-ui--warning-alt" value={{ light: "var(--bq-endava-warning-100)", dark: "var(--bq-endava-warning-1000)" }} />
-      <Color.Item name="--bq-ui--danger" value={{ light: "var(--bq-endava-negative-500)", dark: "var(--bq-endava-negative-200)" }} />
+      <Color.Item name="--bq-ui--danger" value={{ light: "var(--bq-endava-negative-500)", dark: "var(--bq-endava-negative-400)" }} />
       <Color.Item name="--bq-ui--danger-alt" value={{ light: "var(--bq-endava-negative-100)", dark: "var(--bq-endava-negative-1000)" }} />
     </Color>
   </Tab>
@@ -386,7 +386,7 @@ Use text tokens for all typographic content — headings, body copy, labels, cap
       <Color.Item name="--bq-text--info" value={{ light: "var(--bq-endava-info-700)", dark: "var(--bq-endava-info-300)" }} />
       <Color.Item name="--bq-text--success" value={{ light: "var(--bq-endava-positive-800)", dark: "var(--bq-endava-positive-400)" }} />
       <Color.Item name="--bq-text--warning" value={{ light: "var(--bq-endava-warning-800)", dark: "var(--bq-endava-warning-400)" }} />
-      <Color.Item name="--bq-text--danger" value={{ light: "var(--bq-endava-negative-800)", dark: "var(--bq-endava-negative-200)" }} />
+      <Color.Item name="--bq-text--danger" value={{ light: "var(--bq-endava-negative-800)", dark: "var(--bq-endava-negative-400)" }} />
     </Color>
   </Tab>
 </Tabs>
@@ -418,10 +418,10 @@ On-color tokens set the text and icon color on a solid intent fill. Each one is 
     <Color variant="compact">
       <Color.Item name="--bq-text--on-brand" value="var(--bq-endava-neutral-white)" />
       <Color.Item name="--bq-text--on-accent" value="var(--bq-endava-neutral-white)" />
-      <Color.Item name="--bq-text--on-info" value={{ light: "var(--bq-endava-neutral-white)", dark: "var(--bq-endava-grey-950)" }} />
-      <Color.Item name="--bq-text--on-success" value={{ light: "var(--bq-endava-neutral-white)", dark: "var(--bq-endava-grey-950)" }} />
-      <Color.Item name="--bq-text--on-warning" value="var(--bq-endava-grey-950)" />
-      <Color.Item name="--bq-text--on-danger" value={{ light: "var(--bq-endava-neutral-white)", dark: "var(--bq-endava-grey-950)" }} />
+      <Color.Item name="--bq-text--on-info" value={{ light: "var(--bq-endava-neutral-white)", dark: "var(--bq-endava-grey-1000)" }} />
+      <Color.Item name="--bq-text--on-success" value={{ light: "var(--bq-endava-neutral-white)", dark: "var(--bq-endava-grey-1000)" }} />
+      <Color.Item name="--bq-text--on-warning" value="var(--bq-endava-grey-1000)" />
+      <Color.Item name="--bq-text--on-danger" value={{ light: "var(--bq-endava-neutral-white)", dark: "var(--bq-endava-grey-1000)" }} />
     </Color>
   </Tab>
 </Tabs>
@@ -467,7 +467,7 @@ Use icon tokens for SVG fills. Pair each icon token with the text token of the s
       <Color.Item name="--bq-icon--info" value={{ light: "var(--bq-endava-info-700)", dark: "var(--bq-endava-info-300)" }} />
       <Color.Item name="--bq-icon--success" value={{ light: "var(--bq-endava-positive-800)", dark: "var(--bq-endava-positive-400)" }} />
       <Color.Item name="--bq-icon--warning" value={{ light: "var(--bq-endava-warning-800)", dark: "var(--bq-endava-warning-400)" }} />
-      <Color.Item name="--bq-icon--danger" value={{ light: "var(--bq-endava-negative-800)", dark: "var(--bq-endava-negative-200)" }} />
+      <Color.Item name="--bq-icon--danger" value={{ light: "var(--bq-endava-negative-800)", dark: "var(--bq-endava-negative-400)" }} />
     </Color>
   </Tab>
 </Tabs>
@@ -514,7 +514,7 @@ Use stroke tokens for borders, dividers, and outlines.
       <Color.Item name="--bq-stroke--info" value={{ light: "var(--bq-endava-info-700)", dark: "var(--bq-endava-info-300)" }} />
       <Color.Item name="--bq-stroke--success" value={{ light: "var(--bq-endava-positive-800)", dark: "var(--bq-endava-positive-400)" }} />
       <Color.Item name="--bq-stroke--warning" value={{ light: "var(--bq-endava-warning-800)", dark: "var(--bq-endava-warning-400)" }} />
-      <Color.Item name="--bq-stroke--danger" value={{ light: "var(--bq-endava-negative-800)", dark: "var(--bq-endava-negative-200)" }} />
+      <Color.Item name="--bq-stroke--danger" value={{ light: "var(--bq-endava-negative-800)", dark: "var(--bq-endava-negative-400)" }} />
     </Color>
   </Tab>
 </Tabs>

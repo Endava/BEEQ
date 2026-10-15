@@ -3,7 +3,7 @@ import { DARK_BOX_SHADOWS } from '../shadows';
 /**
  * Endava theme, dark mode roles.
  * Neutrals are the Endava Solid Blue shades (`--bq-neutral-950` is Solid Blue).
- * Solid intent fills use the `-bright` variant, so their on-color is Solid Blue (`--bq-black`).
+ * Solid intent fills use the `-bright` variant, so their on-color is the near-black `--bq-black` (`#14222C`, darker than Solid Blue).
  *
  * Mode roles only reference root semantics (`--bq-{intent}[-light|-dark|-strong|-bright]`,
  * `--bq-neutral-*`, `--bq-white`, `--bq-black`), never primitives.

@@ -140,9 +140,17 @@ const NON_TEXT_PAIRS: Pair[] = [
 
 /**
  * Accepted contrast exceptions. Each entry lowers the minimum for one text pair, or one on-fill pair (rest, hover and active).
- * The list is pinned by `EXPECTED_EXCEPTION_COUNT` so it cannot grow silently.
+ * The list is pinned by `EXPECTED_EXCEPTION_COUNT` so it cannot grow silently. A minimum below the 3:1 non-text floor
+ * needs `belowFloor`, and those entries are pinned by `EXPECTED_BELOW_FLOOR_COUNT`.
  */
-type ContrastException = { combo: ComboName; fg: string; bg: string; min: number; reason: string };
+type ContrastException = {
+  combo: ComboName;
+  fg: string;
+  bg: string;
+  min: number;
+  reason: string;
+  belowFloor?: boolean;
+};
 
 const ENDAVA_WHITE_ON_RED_ORANGE =
   'Endava brand fidelity: white on Red Orange #FF5640 (≈3.15:1). Passes AA for large text only; decided with the user and documented in the Endava theme docs.';
@@ -150,11 +158,34 @@ const ENDAVA_WHITE_ON_RED_ORANGE =
 const ENDAVA_DARK_RED_ORANGE_TEXT =
   'Endava brand fidelity: dark brand text is Red Orange #FF5640, as on endava.com. 4.62:1 on the base surface, but 3.40:1 on raised surfaces and 3.77:1 on the brand tint (AA for large text only). Decided with the user and documented in the Endava deviation log.';
 
+const ENDAVA_DARK_DANGER_FILL =
+  'Endava brand fidelity: the dark danger fill is the brand Negative #E84641. Solid Blue on it is 3.73:1, so `--bq-black` is the darker #14222C (grey-1000), which reaches 4.16:1 at rest. Passes AA for large text and UI components only. Decided with the user and documented in the Endava deviation log.';
+
+const ENDAVA_DARK_DANGER_TEXT =
+  'Endava brand fidelity: dark danger text is the brand Negative #E84641 (`--bq-danger-bright`). 3.73:1 on the base surface, 3.19:1 on the danger tint and 2.75:1 on raised surfaces, so it misses AA for normal text and the 3:1 large-text floor on raised surfaces (APCA Lc 27–33). Decided with the user and documented in the Endava deviation log; override `--bq-danger-bright` with #F6B5B3 for 4.5:1 on every dark surface.';
+
 const CONTRAST_EXCEPTIONS: ContrastException[] = [
   { combo: 'endava-light', fg: 'text--on-brand', bg: 'ui--brand', min: 3, reason: ENDAVA_WHITE_ON_RED_ORANGE },
   { combo: 'endava-light', fg: 'text--on-accent', bg: 'ui--accent', min: 3, reason: ENDAVA_WHITE_ON_RED_ORANGE },
   { combo: 'endava-dark', fg: 'text--on-brand', bg: 'ui--brand', min: 3, reason: ENDAVA_WHITE_ON_RED_ORANGE },
   { combo: 'endava-dark', fg: 'text--on-accent', bg: 'ui--accent', min: 3, reason: ENDAVA_WHITE_ON_RED_ORANGE },
+  { combo: 'endava-dark', fg: 'text--on-danger', bg: 'ui--danger', min: 3, reason: ENDAVA_DARK_DANGER_FILL },
+  ...(
+    [
+      ['background--primary', 3.7],
+      ['ui--primary', 3.7],
+      ['ui--danger-alt', 3.1],
+      ['background--secondary', 2.7, true],
+      ['ui--secondary', 2.7, true],
+    ] as const
+  ).map(([bg, min, belowFloor]) => ({
+    combo: 'endava-dark' as const,
+    fg: 'text--danger',
+    bg,
+    min,
+    reason: ENDAVA_DARK_DANGER_TEXT,
+    belowFloor,
+  })),
   ...(['brand', 'accent'] as const).flatMap((intent) =>
     ['background--secondary', 'ui--secondary', `ui--${intent}-alt`].map((bg) => ({
       combo: 'endava-dark' as const,
@@ -165,7 +196,8 @@ const CONTRAST_EXCEPTIONS: ContrastException[] = [
     })),
   ),
 ];
-const EXPECTED_EXCEPTION_COUNT = 10;
+const EXPECTED_EXCEPTION_COUNT = 16;
+const EXPECTED_BELOW_FLOOR_COUNT = 2;
 
 const findException = (combo: ComboName, { fg, bg }: Pair) =>
   CONTRAST_EXCEPTIONS.find((entry) => entry.combo === combo && entry.fg === fg && entry.bg === bg);
@@ -187,10 +219,11 @@ const APCA_EXCEPTIONS: ApcaException[] = [
   { combo: 'default-dark', fg: 'text--danger', min: 59, reason: DEFAULT_DARK_RAISED_SURFACE_TEXT },
   { combo: 'endava-dark', fg: 'text--brand', min: 35, reason: ENDAVA_DARK_RED_ORANGE_TEXT },
   { combo: 'endava-dark', fg: 'text--accent', min: 35, reason: ENDAVA_DARK_RED_ORANGE_TEXT },
+  { combo: 'endava-dark', fg: 'text--danger', min: 27, reason: ENDAVA_DARK_DANGER_TEXT },
   { combo: 'endava-dark', fg: 'text--success', min: 50, reason: ENDAVA_DARK_SIGNAL_TEXT },
   { combo: 'endava-dark', fg: 'text--warning', min: 50, reason: ENDAVA_DARK_SIGNAL_TEXT },
 ];
-const EXPECTED_APCA_EXCEPTION_COUNT = 6;
+const EXPECTED_APCA_EXCEPTION_COUNT = 7;
 
 const findApcaException = (combo: ComboName, fg: string) =>
   APCA_EXCEPTIONS.find((entry) => entry.combo === combo && entry.fg === fg);
@@ -324,7 +357,7 @@ const EXPECTED_DECLARATIVE_KEYS: [string, string][] = [
 const ENDAVA_PINS: [string, string][] = [
   ['--bq-brand', '#FF5640'], // Red Orange
   ['--bq-white', '#FFFFFF'], // Pure White
-  ['--bq-black', '#192B37'], // Solid Blue
+  ['--bq-black', '#14222C'], // Deliberately darker than Solid Blue #192B37: 4.16:1 (not 3.73:1) on the dark danger fill
   ['--bq-neutral-100', '#E8EAEB'], // Blue 10
   ['--bq-neutral-200', '#D1D5D7'], // Blue 20
   ['--bq-neutral-300', '#BABFC3'], // Blue 30
@@ -398,10 +431,15 @@ describe('contrast exception allowlist', () => {
     expect(CONTRAST_EXCEPTIONS).toHaveLength(EXPECTED_EXCEPTION_COUNT);
   });
 
+  it('should keep the exceptions below the 3:1 floor to a minimum', () => {
+    expect(CONTRAST_EXCEPTIONS.filter(({ belowFloor }) => belowFloor)).toHaveLength(EXPECTED_BELOW_FLOOR_COUNT);
+  });
+
   it.each(CONTRAST_EXCEPTIONS)('$combo: $fg on $bg should be a tested text or on-fill pair with a reason', (entry) => {
     expect([...TEXT_PAIRS, ...ON_FILL_PAIRS]).toContainEqual({ fg: entry.fg, bg: entry.bg });
     expect(entry.reason.length).toBeGreaterThan(0);
-    expect(entry.min).toBeGreaterThanOrEqual(NON_TEXT_MIN);
+    if (entry.belowFloor) expect(entry.min).toBeLessThan(NON_TEXT_MIN);
+    else expect(entry.min).toBeGreaterThanOrEqual(NON_TEXT_MIN);
   });
 
   it.each(CONTRAST_EXCEPTIONS)('$combo: $fg on $bg should still need the exception at rest', (entry) => {
