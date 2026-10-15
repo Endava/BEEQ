@@ -5,6 +5,8 @@ import type { JSX } from '@stencil/core/internal';
 import { clamp, debounce, isNil, isString, type TDebounce } from '../../shared/utils';
 import type { TSliderType, TSliderValue } from './bq-slider.types';
 
+type TSliderChangeValue = Exclude<TSliderValue, string>;
+
 /**
  * Sliders provide a visual representation of adjustable content, enabling users to change values by dragging a handle along a horizontal track.
  *
@@ -68,7 +70,7 @@ export class BqSlider {
   private inputMinElem: HTMLInputElement;
   private inputMaxElem: HTMLInputElement;
   private progressElem: HTMLSpanElement;
-  private debounceBqChange: TDebounce<void>;
+  private debounceBqChange?: TDebounce<[TSliderChangeValue]>;
 
   // Reference to host HTML element
   // ===================================
@@ -92,7 +94,10 @@ export class BqSlider {
   // Public Property API
   // ========================
 
-  /** The amount of time, in milliseconds, to wait to trigger the `bqChange` event after each value change. */
+  /**
+   * The amount of time, in milliseconds, to wait to trigger the `bqChange` event after each value change.
+   * With `0` (default), the event is emitted synchronously.
+   */
   @Prop({ reflect: true }) debounceTime = 0;
 
   /** If `true` the slider is disabled. */
@@ -157,9 +162,22 @@ export class BqSlider {
   }
 
   @Watch('value')
-  handleValuePropChange(newValue: TSliderValue) {
+  handleValuePropChange(newValue: TSliderValue, oldValue: TSliderValue) {
     this.setState(newValue);
-    this.emitBqChange();
+    // A consumer writing the emitted range back passes a new array with the same numbers.
+    // Emitting again would recurse now that `bqChange` is synchronous.
+    if (this.isSameValue(newValue, oldValue)) return;
+
+    this.emitBqChange(this.isRangeType ? [this.minValue, this.maxValue] : this.minValue);
+  }
+
+  @Watch('debounceTime')
+  handleDebounceTimeChange() {
+    this.debounceBqChange?.cancel();
+    this.debounceBqChange =
+      this.debounceTime > 0
+        ? debounce((value: TSliderChangeValue) => this.bqChange.emit({ value, el: this.el }), this.debounceTime)
+        : undefined;
   }
 
   @Watch('step')
@@ -197,6 +215,7 @@ export class BqSlider {
 
   componentWillLoad() {
     this.init();
+    this.handleDebounceTimeChange();
   }
 
   componentDidLoad() {
@@ -209,6 +228,7 @@ export class BqSlider {
 
   disconnectedCallback() {
     this.handleMouseUp();
+    this.debounceBqChange?.cancel();
   }
 
   formAssociatedCallback() {
@@ -256,6 +276,13 @@ export class BqSlider {
 
   private stringToObject = (value: TSliderValue) => (isString(value) ? JSON.parse(value) : value);
 
+  private isSameValue = (a: TSliderValue, b: TSliderValue) => {
+    const [first, second] = [this.stringToObject(a), this.stringToObject(b)];
+    if (!Array.isArray(first) || !Array.isArray(second)) return first === second;
+
+    return first.length === second.length && first.every((value, index) => value === second[index]);
+  };
+
   private handleInputChange = (type: 'min' | 'max', event: InputEvent) => {
     const target = event.target as HTMLInputElement;
     const value = parseFloat(target.value);
@@ -298,13 +325,13 @@ export class BqSlider {
     this.progressElem.style.inlineSize = `${width}%`;
   };
 
-  private emitBqChange = () => {
-    this.debounceBqChange?.cancel();
+  private emitBqChange = (value: TSliderChangeValue) => {
+    if (this.debounceBqChange) {
+      this.debounceBqChange(value);
+      return;
+    }
 
-    const value: Exclude<TSliderValue, string> = this.isRangeType ? [this.minValue, this.maxValue] : this.minValue;
-    this.debounceBqChange = debounce(() => this.bqChange.emit({ value, el: this.el }), this.debounceTime);
-
-    this.debounceBqChange();
+    this.bqChange.emit({ value, el: this.el });
   };
 
   private handleBlur = () => {

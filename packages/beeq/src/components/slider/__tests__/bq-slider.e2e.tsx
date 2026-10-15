@@ -4,6 +4,7 @@ import { cdp, page, userEvent } from 'vitest/browser';
 
 import { sleep } from '../../../shared/test-utils';
 import { computedStyle } from '../../../shared/test-utils/computedStyle';
+import type { TSliderValue } from '../bq-slider.types';
 
 afterEach(async () => {
   vi.restoreAllMocks();
@@ -29,6 +30,11 @@ const renderWithSpace = (template: Parameters<typeof render>[0]) =>
 
 const getRangeInputs = (slider: HTMLBqSliderElement) =>
   Array.from(slider.shadowRoot?.querySelectorAll<HTMLInputElement>('input[type="range"]') ?? []);
+
+const setNativeValue = (input: HTMLInputElement, value: number) => {
+  input.value = value.toString();
+  input.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+};
 
 const getTooltips = (slider: HTMLBqSliderElement) =>
   Array.from(slider.shadowRoot.querySelectorAll<HTMLBqTooltipElement>('bq-tooltip'));
@@ -538,6 +544,91 @@ describe('bq-slider', () => {
     await sleep(300);
 
     expect(bqChange).toHaveReceivedEventTimes(1);
+  });
+
+  it('should emit bqChange synchronously on native input when debounceTime is 0', async () => {
+    const { root } = await render(<bq-slider type="range" value="[20,60]" />);
+    const slider = root as HTMLBqSliderElement;
+    const values: unknown[] = [];
+    slider.addEventListener('bqChange', (ev) => values.push(ev.detail.value));
+
+    const [minInput, maxInput] = getRangeInputs(slider);
+    setNativeValue(minInput, 30);
+    expect(values).toEqual([[30, 60]]);
+
+    setNativeValue(maxInput, 70);
+    expect(values).toEqual([
+      [30, 60],
+      [30, 70],
+    ]);
+  });
+
+  it('should emit only the latest native value after a positive debounceTime', async () => {
+    const { root, setProps } = await render(<bq-slider value={30} />);
+    const slider = root as HTMLBqSliderElement;
+    const values: unknown[] = [];
+    slider.addEventListener('bqChange', (ev) => values.push(ev.detail.value));
+
+    await setProps({ debounceTime: 100 });
+
+    const [input] = getRangeInputs(slider);
+    setNativeValue(input, 40);
+    setNativeValue(input, 50);
+    setNativeValue(input, 60);
+    expect(values).toEqual([]);
+
+    await sleep(150);
+
+    expect(values).toEqual([60]);
+  });
+
+  it('should drop a pending debounced bqChange when disconnected', async () => {
+    const { root, spyOnEvent } = await render(<bq-slider debounceTime={100} value={30} />);
+    const slider = root as HTMLBqSliderElement;
+    const bqChange = spyOnEvent('bqChange');
+
+    setNativeValue(getRangeInputs(slider)[0], 40);
+    slider.remove();
+    await sleep(150);
+
+    expect(bqChange).toHaveReceivedEventTimes(0);
+  });
+
+  it('should emit once when a consumer writes the emitted range value back', async () => {
+    const { root } = await render(<bq-slider type="range" value="[20,60]" />);
+    const slider = root as HTMLBqSliderElement;
+    const values: unknown[] = [];
+    slider.addEventListener('bqChange', (ev) => {
+      values.push(ev.detail.value);
+      slider.value = ev.detail.value;
+    });
+
+    setNativeValue(getRangeInputs(slider)[0], 30);
+    await sleep(50);
+
+    expect(values).toEqual([[30, 60]]);
+  });
+
+  it('should keep keyboard changes when a controlled consumer re-renders a stale value', async () => {
+    const { root } = await render(<bq-slider value={10} />);
+    const slider = root as HTMLBqSliderElement;
+    let state: TSliderValue = 10;
+    slider.addEventListener('bqChange', (ev) => {
+      state = ev.detail.value;
+    });
+    // Simulates an unrelated framework re-render that re-applies the controlled value from state
+    slider.addEventListener('keydown', () => setTimeout(() => (slider.value = state), 0), true);
+
+    const [input] = getRangeInputs(slider);
+    input.focus();
+    for (let i = 0; i < 10; i++) {
+      await userEvent.keyboard('{ArrowRight}');
+    }
+    await sleep(50);
+
+    expect(state).toBe(20);
+    expect(slider.value).toBe(20);
+    expect(input.value).toBe('20');
   });
 
   it('should respect the expected design styles', async () => {

@@ -2496,7 +2496,7 @@ export namespace Components {
      */
     interface BqSlider {
         /**
-          * The amount of time, in milliseconds, to wait to trigger the `bqChange` event after each value change.
+          * The amount of time, in milliseconds, to wait to trigger the `bqChange` event after each value change. With `0` (default), the event is emitted synchronously.
           * @default 0
          */
         "debounceTime": number;
@@ -8741,7 +8741,7 @@ declare namespace LocalJSX {
      */
     interface BqSlider {
         /**
-          * The amount of time, in milliseconds, to wait to trigger the `bqChange` event after each value change.
+          * The amount of time, in milliseconds, to wait to trigger the `bqChange` event after each value change. With `0` (default), the event is emitted synchronously.
           * @default 0
          */
         "debounceTime"?: number;
