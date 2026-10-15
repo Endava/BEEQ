@@ -3189,7 +3189,7 @@ export namespace Components {
          */
         "autofocus": boolean;
         /**
-          * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the textarea value changes. A value of 0 means no debouncing will occur.
+          * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the textarea value changes. A value of 0 means no debouncing will occur: `bqInput` is emitted synchronously on every input.
           * @default 0
          */
         "debounceTime"?: number;
@@ -9480,7 +9480,7 @@ declare namespace LocalJSX {
          */
         "autofocus"?: boolean;
         /**
-          * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the textarea value changes. A value of 0 means no debouncing will occur.
+          * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the textarea value changes. A value of 0 means no debouncing will occur: `bqInput` is emitted synchronously on every input.
           * @default 0
          */
         "debounceTime"?: number;
