@@ -33,9 +33,9 @@ export const ColorMix = plugin(({ matchUtilities, theme }) => {
   matchUtilities(
     {
       // Stroke `hover` state blend color
-      'stroke-hover': (value) => blendColor({ color: value, base: 'var(--bq-hover)', property: 'color' }),
+      'stroke-hover': (value) => blendColor({ color: value, base: 'var(--bq-hover)', property: 'stroke' }),
       // Stroke `active` state blend color
-      'stroke-active': (value) => blendColor({ color: value, base: 'var(--bq-active)', property: 'color' }),
+      'stroke-active': (value) => blendColor({ color: value, base: 'var(--bq-active)', property: 'stroke' }),
     },
     { values: flattenColorPalette(theme('stroke')) },
   );
