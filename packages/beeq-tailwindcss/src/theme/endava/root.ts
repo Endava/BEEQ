@@ -3,7 +3,7 @@ export const EndavaRootTheme = {
   'bq-font-family': "'Poppins', sans-serif",
   // Anchors: Endava has no black, Solid Blue is the darkest brand color
   'bq-white': 'var(--bq-endava-neutral-white)',
-  'bq-black': 'var(--bq-endava-grey-950)',
+  'bq-black': 'var(--bq-endava-grey-1000)',
   // Neutrals
   'bq-neutral-50': 'var(--bq-endava-grey-50)',
   'bq-neutral-100': 'var(--bq-endava-grey-100)',
@@ -44,7 +44,7 @@ export const EndavaRootTheme = {
   'bq-danger': 'var(--bq-endava-negative-500)',
   'bq-danger-dark': 'var(--bq-endava-negative-1000)',
   'bq-danger-strong': 'var(--bq-endava-negative-800)',
-  'bq-danger-bright': 'var(--bq-endava-negative-200)',
+  'bq-danger-bright': 'var(--bq-endava-negative-400)',
   // Warning
   'bq-warning-light': 'var(--bq-endava-warning-100)',
   'bq-warning': 'var(--bq-endava-warning-400)',
