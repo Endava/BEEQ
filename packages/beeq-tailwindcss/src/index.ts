@@ -46,6 +46,10 @@ const preset = {
       s: 'var(--bq-stroke-s)',
       m: 'var(--bq-stroke-m)',
       l: 'var(--bq-stroke-l)',
+      // Tailwind CSS v4 also matches `border-s` and `border-l` as its own side utilities, so use these keys there
+      'stroke-s': 'var(--bq-stroke-s)',
+      'stroke-m': 'var(--bq-stroke-m)',
+      'stroke-l': 'var(--bq-stroke-l)',
     },
     boxShadow: {
       xs: 'var(--bq-box-shadow--xs)',

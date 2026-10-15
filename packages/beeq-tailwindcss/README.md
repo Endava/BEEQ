@@ -35,6 +35,8 @@ Load the preset with `@plugin` in your CSS entry file:
 
 > Note: `@beeq/tailwindcss` 1.16.2 and earlier fail with `@plugin` (`b is not a function`). On those versions, use `@config "@beeq/tailwindcss";` instead.
 
+> Note: For stroke widths, use `border-stroke-s`, `border-stroke-m`, and `border-stroke-l`. Tailwind CSS v4 also reads `border-s` and `border-l` as its own inline-start and left border utilities, so those classes add a `1px` side border on top of the BEEQ stroke width.
+
 ### Tailwind CSS v3
 
 ```js

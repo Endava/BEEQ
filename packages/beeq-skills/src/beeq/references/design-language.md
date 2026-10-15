@@ -191,7 +191,7 @@ Use the smallest stroke for ordinary separation, a stronger stroke for focused o
 | Shape role | CSS variables |
 | --- | --- |
 | Radius | `--bq-radius--none`, `--bq-radius--xs2`, `--bq-radius--xs`, `--bq-radius--s`, `--bq-radius--m`, `--bq-radius--l`, `--bq-radius--full` |
-| Stroke width | `--bq-stroke-s`, `--bq-stroke-m`, `--bq-stroke-l`; Tailwind exposes them as `border-s`, `border-m`, and `border-l` |
+| Stroke width | `--bq-stroke-s`, `--bq-stroke-m`, `--bq-stroke-l`; Tailwind exposes them as `border-stroke-s`, `border-stroke-m`, and `border-stroke-l` (`border-s`, `border-m`, and `border-l` also work on Tailwind v3, but clash with core side utilities on v4) |
 
 For custom surfaces, start with `--bq-radius--s` on compact controls, `--bq-radius--m` on cards or buttons, and `--bq-radius--l` only when a larger surface has enough padding. Use `--bq-radius--full` for circular or pill shapes. Use `--bq-stroke-s` with a semantic stroke color for ordinary separation; reserve stronger widths and colors for focus, selection, or state. Do not replace a component's built-in focus indicator with a border alone.
 
