@@ -135,6 +135,16 @@ describe('createThemeSwapper', () => {
       expect(new Set(order).size).toBe(order.length);
       expect(order).toEqual([...order].sort((a, b) => a - b));
     });
+
+    it('should apply the default light mode to the root for any theme when no mode is set', async () => {
+      // Arrange & Act
+      const selectors = await getThemeTokenSelectors();
+      const lightSelector = selectors.find((selector) => splitSelector(selector).includes(':where([bq-mode="light"])'));
+
+      // Assert
+      expect(lightSelector).toBeDefined();
+      expect(splitSelector(lightSelector ?? '')).toContain(':where(:root:not([bq-mode]))');
+    });
   });
 
   describe('validation', () => {

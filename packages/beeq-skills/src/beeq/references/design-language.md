@@ -85,7 +85,7 @@ Identity and colour scheme are separate decisions: `bq-theme` sets the brand, `b
 
 Class equivalents (`.beeq`, `.endava`, `.light`, `.dark`) work the same way. BEEQ does not read `prefers-color-scheme` or persist the user's choice; the consuming app sets the initial mode, offers a toggle, and remembers it.
 
-For a custom brand, scope overrides to a new theme name, as described in [Custom theme](https://www.beeq.design/theming/custom-theme.md). Always set `bq-mode` explicitly with a custom theme name, or define the full light role set for the no-mode case, because BEEQ's default light roles only apply without a theme attribute or with `bq-theme="beeq"`.
+For a custom brand, scope overrides to a new theme name, as described in [Custom theme](https://www.beeq.design/theming/custom-theme.md). `bq-mode` is optional for light mode: a root without `bq-mode` gets BEEQ's default light roles whatever its `bq-theme`, and the custom theme's overrides apply on top. Set `bq-mode="dark"` (or `.dark`) for dark mode.
 
 ## Typography
 
