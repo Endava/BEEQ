@@ -95,7 +95,7 @@ export class BqTextarea {
   // Own Properties
   // ====================
 
-  private debounceBqInput: TDebounce<void>;
+  private debounceBqInput?: TDebounce<string>;
   private fallbackId = 'textarea';
 
   private helperTextElem?: HTMLElement;
@@ -144,7 +144,7 @@ export class BqTextarea {
 
   /**
    * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the textarea value changes.
-   * A value of 0 means no debouncing will occur.
+   * A value of 0 means no debouncing will occur: `bqInput` is emitted synchronously on every input.
    */
   @Prop({ reflect: true, mutable: true }) debounceTime? = 0;
 
@@ -231,6 +231,16 @@ export class BqTextarea {
     this.updateFormValidity();
   }
 
+  @Watch('debounceTime')
+  handleDebounceTimeChange() {
+    this.debounceBqInput?.cancel();
+    // Only a positive delay is debounced; otherwise `bqInput` is emitted synchronously (see `emitBqInput`)
+    this.debounceBqInput =
+      this.debounceTime > 0
+        ? debounce((value: string) => this.bqInput.emit({ value, el: this.el }), this.debounceTime)
+        : undefined;
+  }
+
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
@@ -259,6 +269,10 @@ export class BqTextarea {
   // Component lifecycle events
   // Ordered by their natural call order
   // =====================================
+
+  componentWillLoad() {
+    this.handleDebounceTimeChange();
+  }
 
   componentDidLoad() {
     this.handleSlotChange();
@@ -326,15 +340,21 @@ export class BqTextarea {
   private handleInput = (ev: Event) => {
     if (this.disabled || this.readonly) return;
 
-    this.debounceBqInput?.cancel();
-
     if (!isHTMLElement(ev.target, 'textarea')) return;
     this.value = ev.target.value;
 
-    this.debounceBqInput = debounce(() => {
-      this.bqInput.emit({ value: this.value, el: this.el });
-    }, this.debounceTime);
-    this.debounceBqInput();
+    this.emitBqInput(this.value);
+  };
+
+  private emitBqInput = (value: string) => {
+    if (this.debounceBqInput) {
+      this.debounceBqInput(value);
+      return;
+    }
+
+    // Emit within the native `input` event so controlled consumers update before any re-render can
+    // write a stale `value` back into the textarea
+    this.bqInput.emit({ value, el: this.el });
   };
 
   private autoResize = () => {

@@ -1264,7 +1264,7 @@ Set `validation-status` to `error`, `warning`, or `success` to communicate the s
 | `autocomplete` | `autocomplete` | Specifies whether autocomplete is enabled | `string` | `'off'` |
 | `autofocus` | `autofocus` | If `true`, the textarea is focused on render | `boolean` | `false` |
 | `autoGrow` | `auto-grow` | If `true`, the textarea grows and shrinks to fit its contents | `boolean` | `false` |
-| `debounceTime` | `debounce-time` | Milliseconds to wait before emitting `bqInput` after a value change | `number` | `0` |
+| `debounceTime` | `debounce-time` | Milliseconds to wait before emitting `bqInput` after a value change. When `0`, `bqInput` is emitted synchronously on every input | `number` | `0` |
 | `disabled` | `disabled` | If `true`, the user cannot interact with the textarea | `boolean` | `false` |
 | `disableResize` | `disable-resize` | If `true`, the user cannot resize the textarea | `boolean` | `false` |
 | `form` | `form` | The ID of the form the textarea belongs to | `string` | — |

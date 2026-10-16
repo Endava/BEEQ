@@ -115,17 +115,86 @@ describe('bq-textarea', () => {
     const bqInput = spyOnEvent('bqInput');
     const nativeTextarea = root.shadowRoot.querySelector<HTMLTextAreaElement>('.bq-textarea__input');
 
-    // Type one character at a time and wait for changes between each keystroke.
-    // debounceTime defaults to 0ms — rapid typing cancels the previous debounce before
-    // it fires. Waiting after each character lets the 0ms setTimeout resolve, matching
-    // the per-keystroke timing expected by this interaction test.
-    for (const char of value) {
-      await userEvent.type(nativeTextarea, char);
-      await waitForChanges();
-    }
+    await userEvent.type(nativeTextarea, value);
+    await waitForChanges();
 
     expect((root as HTMLBqTextareaElement).value).toBe(value);
     expect(bqInput).toHaveReceivedEventTimes(value.length);
+    expect(bqInput).toHaveReceivedEventDetail({ value, el: root });
+  });
+
+  it('should emit bqInput synchronously within the native input event by default', async () => {
+    const { root } = await render(<bq-textarea name="textarea" />);
+    const nativeTextarea = root.shadowRoot.querySelector<HTMLTextAreaElement>('.bq-textarea__input');
+    const received: string[] = [];
+    root.addEventListener('bqInput', (ev: CustomEvent<{ value: string }>) => received.push(ev.detail.value));
+
+    nativeTextarea.value = 'Hi';
+    nativeTextarea.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+
+    // No await on purpose: with the default `debounceTime` of 0 the event must not be deferred
+    expect(received).toEqual(['Hi']);
+  });
+
+  it('should keep every typed character when a controlled consumer re-renders between keystrokes', async () => {
+    const value = 'hello world';
+    const { root, waitForChanges } = await render(<bq-textarea name="textarea" />);
+    const textareaElem = root as HTMLBqTextareaElement;
+    const nativeTextarea = root.shadowRoot.querySelector<HTMLTextAreaElement>('.bq-textarea__input');
+
+    // Controlled consumer: state follows `bqInput`, and an unrelated re-render queued on each keydown
+    // re-applies the controlled value from state (like a React render landing mid-typing)
+    let state = '';
+    root.addEventListener('bqInput', (ev: CustomEvent<{ value: string }>) => {
+      state = ev.detail.value;
+    });
+    root.addEventListener(
+      'keydown',
+      () =>
+        setTimeout(() => {
+          textareaElem.value = state;
+        }),
+      true,
+    );
+
+    await userEvent.type(nativeTextarea, value);
+    await new Promise((resolve) => setTimeout(resolve, 50));
+    await waitForChanges();
+
+    expect(state).toBe(value);
+    expect(nativeTextarea.value).toBe(value);
+  });
+
+  it('should debounce bqInput and emit only the latest value when debounceTime is positive', async () => {
+    const { root, spyOnEvent } = await render(<bq-textarea debounceTime={50} name="textarea" />);
+    const bqInput = spyOnEvent('bqInput');
+    const nativeTextarea = root.shadowRoot.querySelector<HTMLTextAreaElement>('.bq-textarea__input');
+
+    for (const value of ['a', 'ab', 'abc']) {
+      nativeTextarea.value = value;
+      nativeTextarea.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+    }
+
+    expect(bqInput).toHaveReceivedEventTimes(0);
+
+    await new Promise((resolve) => setTimeout(resolve, 150));
+
+    expect(bqInput).toHaveReceivedEventTimes(1);
+    expect(bqInput).toHaveReceivedEventDetail({ value: 'abc', el: root });
+  });
+
+  it('should emit bqInput synchronously after debounceTime changes to 0', async () => {
+    const { root, setProps, spyOnEvent } = await render(<bq-textarea debounceTime={50} name="textarea" />);
+    const bqInput = spyOnEvent('bqInput');
+    const nativeTextarea = root.shadowRoot.querySelector<HTMLTextAreaElement>('.bq-textarea__input');
+
+    await setProps({ debounceTime: 0 });
+
+    nativeTextarea.value = 'Hi';
+    nativeTextarea.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+
+    expect(bqInput).toHaveReceivedEventTimes(1);
+    expect(bqInput).toHaveReceivedEventDetail({ value: 'Hi', el: root });
   });
 
   it('should show and count all characters', async () => {
