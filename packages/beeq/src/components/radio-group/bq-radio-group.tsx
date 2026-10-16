@@ -177,6 +177,8 @@ export class BqRadioGroup {
 
   @Watch('value')
   handleValueChange() {
+    // Set the form value first: `bqChange` is emitted synchronously and its handlers can change `value` again
+    this.internals?.setFormValue(this.value ?? null);
     this.updateRadioProperties();
     this.updateFormValidity();
 
@@ -361,8 +363,6 @@ export class BqRadioGroup {
     target.vFocus();
 
     this.checkedRadio = target;
-    // Set the form value first: changing `value` emits `bqChange` synchronously
-    this.internals?.setFormValue(target.value ?? null);
     this.value = target.value;
 
     this.updateRadioTabIndexes();

@@ -127,6 +127,87 @@ describe('bq-radio-group', () => {
     expect(getRadio(form, 'option2').checked).toBe(false);
   });
 
+  it('should submit the selected option with the form', async () => {
+    const { root, waitForChanges } = await render(
+      <form>
+        <bq-radio-group name="test-option" value="option1">
+          <bq-radio name="test-option" value="option1">
+            Option 1
+          </bq-radio>
+          <bq-radio name="test-option" value="option2">
+            Option 2
+          </bq-radio>
+        </bq-radio-group>
+      </form>,
+    );
+    const form = root as HTMLFormElement;
+
+    await waitForStable(form.querySelector('bq-radio-group'));
+    expect(new FormData(form).get('test-option')).toBe('option1');
+
+    await getRadio(form, 'option2').vClick();
+    await waitForChanges();
+
+    expect(new FormData(form).get('test-option')).toBe('option2');
+  });
+
+  it('should update the form value when the value property is set from code', async () => {
+    const { root, waitForChanges } = await render(
+      <form>
+        <bq-radio-group name="test-option" value="option1">
+          <bq-radio name="test-option" value="option1">
+            Option 1
+          </bq-radio>
+          <bq-radio name="test-option" value="option2">
+            Option 2
+          </bq-radio>
+        </bq-radio-group>
+      </form>,
+    );
+    const form = root as HTMLFormElement;
+    const radioGroup = form.querySelector<HTMLBqRadioGroupElement>('bq-radio-group');
+
+    await waitForStable(radioGroup);
+    radioGroup.value = 'option2';
+    await waitForChanges();
+
+    expect(new FormData(form).get('test-option')).toBe('option2');
+
+    radioGroup.value = undefined;
+    await waitForChanges();
+
+    expect(new FormData(form).has('test-option')).toBe(false);
+  });
+
+  it('should keep the form value in sync when a bqChange handler overrides the value synchronously', async () => {
+    const { root, waitForChanges } = await render(
+      <form>
+        <bq-radio-group name="test-option" value="option1">
+          <bq-radio name="test-option" value="option1">
+            Option 1
+          </bq-radio>
+          <bq-radio name="test-option" value="option2">
+            Option 2
+          </bq-radio>
+        </bq-radio-group>
+      </form>,
+    );
+    const form = root as HTMLFormElement;
+    const radioGroup = form.querySelector<HTMLBqRadioGroupElement>('bq-radio-group');
+
+    await waitForStable(radioGroup);
+    // A controlled consumer that rejects the selection and restores the previous value inside the event
+    radioGroup.addEventListener('bqChange', (event: CustomEvent<{ value: string }>) => {
+      if (event.detail.value === 'option2') radioGroup.value = 'option1';
+    });
+
+    await getRadio(form, 'option2').vClick();
+    await waitForChanges();
+
+    expect(radioGroup.value).toBe('option1');
+    expect(new FormData(form).get('test-option')).toBe('option1');
+  });
+
   it('should check a radio when the value property is set', async () => {
     const { root } = await render(
       <bq-radio-group name="test-option" value="option2">
