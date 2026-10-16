@@ -2107,7 +2107,7 @@ export namespace Components {
          */
         "backgroundOnHover": boolean;
         /**
-          * A number representing the delay time (in milliseconds) that `bqChange` event handler gets triggered once the value change
+          * A number representing the delay time (in milliseconds) that `bqChange` event handler gets triggered once the value change. With `0` (default), the event is emitted synchronously.
           * @default 0
          */
         "debounceTime": number;
@@ -2953,7 +2953,7 @@ export namespace Components {
      */
     interface BqTabGroup {
         /**
-          * A number representing the delay value applied to bqChange event handler
+          * A number representing the delay value applied to bqChange event handler. With `0` (default), the event is emitted synchronously.
           * @default 0
          */
         "debounceTime": number;
@@ -8317,7 +8317,7 @@ declare namespace LocalJSX {
          */
         "backgroundOnHover"?: boolean;
         /**
-          * A number representing the delay time (in milliseconds) that `bqChange` event handler gets triggered once the value change
+          * A number representing the delay time (in milliseconds) that `bqChange` event handler gets triggered once the value change. With `0` (default), the event is emitted synchronously.
           * @default 0
          */
         "debounceTime"?: number;
@@ -9228,7 +9228,7 @@ declare namespace LocalJSX {
      */
     interface BqTabGroup {
         /**
-          * A number representing the delay value applied to bqChange event handler
+          * A number representing the delay value applied to bqChange event handler. With `0` (default), the event is emitted synchronously.
           * @default 0
          */
         "debounceTime"?: number;

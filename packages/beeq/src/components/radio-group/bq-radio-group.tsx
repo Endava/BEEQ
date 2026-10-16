@@ -78,7 +78,7 @@ export class BqRadioGroup {
   // ====================
 
   private initialValue?: string;
-  private debouncedBqChange: TDebounce<{ value: string; target: HTMLBqRadioElement }>;
+  private debouncedBqChange?: TDebounce<{ value: string; target: HTMLBqRadioElement }>;
   private focusedBqRadio: HTMLBqRadioElement | null = null;
   private readonly radioElementsSet = new Set<HTMLBqRadioElement>();
   private cachedRadioElements: HTMLBqRadioElement[] = [];
@@ -102,7 +102,10 @@ export class BqRadioGroup {
   /** If true, all radio inputs in the group will display a background on hover */
   @Prop({ reflect: true }) backgroundOnHover = false;
 
-  /** A number representing the delay time (in milliseconds) that `bqChange` event handler gets triggered once the value change */
+  /**
+   * A number representing the delay time (in milliseconds) that `bqChange` event handler gets triggered once the value change.
+   * With `0` (default), the event is emitted synchronously.
+   */
   @Prop({ reflect: true, mutable: true }) debounceTime = 0;
 
   /** If true radio inputs are disabled */
@@ -139,9 +142,13 @@ export class BqRadioGroup {
     }
 
     this.debouncedBqChange?.cancel();
-    this.debouncedBqChange = debounce((event: { value: string; target: HTMLBqRadioElement }): void => {
-      this.bqChange?.emit(event);
-    }, this.debounceTime);
+    // With no delay, `emitBqChange` emits synchronously, inside the click or keydown that changed the value
+    this.debouncedBqChange =
+      this.debounceTime > 0
+        ? debounce((event: { value: string; target: HTMLBqRadioElement }): void => {
+            this.bqChange?.emit(event);
+          }, this.debounceTime)
+        : undefined;
   }
 
   @Watch('disabled')
@@ -177,7 +184,7 @@ export class BqRadioGroup {
     const newCheckedRadio = this.cachedRadioElements.find((radio) => radio.value === this.value);
     if (newCheckedRadio) {
       this.checkedRadio = newCheckedRadio;
-      this.debouncedBqChange?.({ value: this.value, target: newCheckedRadio });
+      this.emitBqChange({ value: this.value, target: newCheckedRadio });
     } else {
       this.checkedRadio = undefined;
     }
@@ -354,8 +361,9 @@ export class BqRadioGroup {
     target.vFocus();
 
     this.checkedRadio = target;
+    // Set the form value first: changing `value` emits `bqChange` synchronously
+    this.internals?.setFormValue(target.value ?? null);
     this.value = target.value;
-    this.internals?.setFormValue(this.value ?? null);
 
     this.updateRadioTabIndexes();
   };
@@ -395,6 +403,15 @@ export class BqRadioGroup {
 
     const nextElement = getNextElement(this.cachedRadioElements, currentIndex, direction);
     this.updateRadioSelection(nextElement);
+  };
+
+  private emitBqChange = (event: { value: string; target: HTMLBqRadioElement }): void => {
+    if (this.debouncedBqChange) {
+      this.debouncedBqChange(event);
+      return;
+    }
+
+    this.bqChange?.emit(event);
   };
 
   private updateFormValidity = async (): Promise<void> => {
