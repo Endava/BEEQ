@@ -437,6 +437,27 @@ describe('bq-input', () => {
     expect(onChange).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ detail: { value: '', el: host } }));
   });
 
+  it('should update the form value and validity when only a change event is dispatched', async () => {
+    const { root, waitForChanges } = await render(
+      <form>
+        <bq-input name="text" required form-validation-message="Enter a value" />
+      </form>,
+    );
+    const form = root as HTMLFormElement;
+    const host = form.querySelector<HTMLBqInputElement>('bq-input');
+    const input = getInput(host);
+
+    expect(form.checkValidity()).toBe(false);
+
+    input.value = 'Hello';
+    input.dispatchEvent(new Event('change', { bubbles: true }));
+    await waitForChanges();
+
+    expect(host.value).toBe('Hello');
+    expect(new FormData(form).get('text')).toBe('Hello');
+    expect(form.checkValidity()).toBe(true);
+  });
+
   it.each([
     ['-', '5', -5],
     ['.', '5', 0.5],

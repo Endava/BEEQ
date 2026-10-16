@@ -392,9 +392,6 @@ export class BqInput {
 
     if (!isHTMLElement(ev.target, 'input')) return;
     this.value = this.getInputValue(ev.target);
-    // Update form value and validity
-    this.setFormValue(`${this.value}`);
-    this.updateFormValidity();
 
     this.bqChange.emit({ value: this.value, el: this.el });
   };
