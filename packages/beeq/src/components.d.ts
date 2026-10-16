@@ -3137,7 +3137,7 @@ export namespace Components {
      * @attr {"soft" | "hard"} wrap - Specifies how the text in a text area is to be wrapped when submitted in a form.
      * @event bqBlur - Handler to be called when the textarea loses focus.
      * @event bqChange - Handler to be called when the textarea value has changed and the textarea loses focus.
-     * @event bqClear - Handler to be called when the textarea value has been cleared.
+     * @event bqClear - Deprecated. `bq-textarea` never emits `bqClear`. It will be removed in the next major release.
      * @event bqFocus - Handler to be called when the textarea has received focus.
      * @event bqInput - Handler to be called when the textarea value changes.
      * @cssprop --bq-textarea--background-color - Textarea background color
@@ -5819,7 +5819,7 @@ declare global {
      * @attr {"soft" | "hard"} wrap - Specifies how the text in a text area is to be wrapped when submitted in a form.
      * @event bqBlur - Handler to be called when the textarea loses focus.
      * @event bqChange - Handler to be called when the textarea value has changed and the textarea loses focus.
-     * @event bqClear - Handler to be called when the textarea value has been cleared.
+     * @event bqClear - Deprecated. `bq-textarea` never emits `bqClear`. It will be removed in the next major release.
      * @event bqFocus - Handler to be called when the textarea has received focus.
      * @event bqInput - Handler to be called when the textarea value changes.
      * @cssprop --bq-textarea--background-color - Textarea background color
@@ -9428,7 +9428,7 @@ declare namespace LocalJSX {
      * @attr {"soft" | "hard"} wrap - Specifies how the text in a text area is to be wrapped when submitted in a form.
      * @event bqBlur - Handler to be called when the textarea loses focus.
      * @event bqChange - Handler to be called when the textarea value has changed and the textarea loses focus.
-     * @event bqClear - Handler to be called when the textarea value has been cleared.
+     * @event bqClear - Deprecated. `bq-textarea` never emits `bqClear`. It will be removed in the next major release.
      * @event bqFocus - Handler to be called when the textarea has received focus.
      * @event bqInput - Handler to be called when the textarea value changes.
      * @cssprop --bq-textarea--background-color - Textarea background color
@@ -9519,7 +9519,7 @@ declare namespace LocalJSX {
          */
         "onBqChange"?: (event: BqTextareaCustomEvent<{ value: string; el: HTMLBqTextareaElement }>) => void;
         /**
-          * Callback handler emitted when the textarea value has been cleared
+          * @deprecated `bq-textarea` never emits `bqClear`. It will be removed in the next major release. Listen to `bqInput` or `bqChange` and check for an empty value instead.
          */
         "onBqClear"?: (event: BqTextareaCustomEvent<HTMLBqTextareaElement>) => void;
         /**
@@ -11977,7 +11977,7 @@ declare module "@stencil/core" {
              * @attr {"soft" | "hard"} wrap - Specifies how the text in a text area is to be wrapped when submitted in a form.
              * @event bqBlur - Handler to be called when the textarea loses focus.
              * @event bqChange - Handler to be called when the textarea value has changed and the textarea loses focus.
-             * @event bqClear - Handler to be called when the textarea value has been cleared.
+             * @event bqClear - Deprecated. `bq-textarea` never emits `bqClear`. It will be removed in the next major release.
              * @event bqFocus - Handler to be called when the textarea has received focus.
              * @event bqInput - Handler to be called when the textarea value changes.
              * @cssprop --bq-textarea--background-color - Textarea background color

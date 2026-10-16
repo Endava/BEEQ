@@ -44,7 +44,7 @@ import type { TTextareaAutoCapitalize, TTextareaWrap } from './bq-textarea.types
  *
  * @event bqBlur - Handler to be called when the textarea loses focus.
  * @event bqChange - Handler to be called when the textarea value has changed and the textarea loses focus.
- * @event bqClear - Handler to be called when the textarea value has been cleared.
+ * @event bqClear - Deprecated. `bq-textarea` never emits `bqClear`. It will be removed in the next major release.
  * @event bqFocus - Handler to be called when the textarea has received focus.
  * @event bqInput - Handler to be called when the textarea value changes.
  *
@@ -254,7 +254,10 @@ export class BqTextarea {
    */
   @Event() bqChange!: EventEmitter<{ value: string; el: HTMLBqTextareaElement }>;
 
-  /** Callback handler emitted when the textarea value has been cleared */
+  /**
+   * @deprecated `bq-textarea` never emits `bqClear`. It will be removed in the next major release.
+   * Listen to `bqInput` or `bqChange` and check for an empty value instead.
+   */
   @Event() bqClear!: EventEmitter<HTMLBqTextareaElement>;
 
   /** Callback handler emitted when the textarea has received focus */
