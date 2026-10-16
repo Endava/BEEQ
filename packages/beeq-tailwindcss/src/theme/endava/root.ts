@@ -25,7 +25,7 @@ export const EndavaRootTheme = {
   'bq-brand-light': 'var(--bq-endava-orange-100)',
   'bq-brand': 'var(--bq-endava-orange-600)',
   'bq-brand-dark': 'var(--bq-endava-orange-1000)',
-  'bq-brand-strong': 'var(--bq-endava-orange-800)',
+  'bq-brand-strong': 'var(--bq-endava-orange-600)', // Red Orange, so brand text, icons, strokes and focus match the brand fill
   'bq-brand-bright': 'var(--bq-endava-orange-600)', // Red Orange, as on endava.com dark
   // Accent
   'bq-accent-light': 'var(--bq-brand-light)',
