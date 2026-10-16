@@ -535,7 +535,7 @@ Here is a working example showing how to read the user's preferred color scheme 
 The `endava` theme follows the [Endava brand portal](https://brand.endava.com/visual/colours), the Endava brand guide, and the color tokens used on [endava.com](https://www.endava.com). It keeps the brand's colors wherever they meet [WCAG 2.1 Level AA](/foundations/colors#accessibility), and uses a nearby shade where they don't.
 
 - **Brand and accent:** Red Orange `#FF5640` is the brand fill. Accent aliases the brand, so `--bq-accent-*` matches `--bq-brand-*`.
-- **Brand text:** `--bq-brand-strong` is `#C33600` (light mode text, icons, strokes, and focus). `--bq-brand-bright` is Red Orange `#FF5640` (dark mode), as on endava.com.
+- **Brand text:** `--bq-brand-strong` (light mode text, icons, strokes, and focus) and `--bq-brand-bright` (dark mode) are both Red Orange `#FF5640`, so brand text and indicators match the brand fill, as on endava.com. Contrast limits are listed in the deviation log.
 - **Neutrals:** Solid Blue `#192B37` is the darkest neutral (`--bq-neutral-950`). `--bq-black` is the slightly darker `#14222C` (`--bq-endava-grey-1000`), so on-colors reach more contrast on the dark mode fills.
 - **Info:** uses the endava.com accent blues so it stays distinct from neutral UI. Mid Blue `#417191` is the light mode fill, `#3B6684` is light mode text, and `#9DCFF0` (a tint of Bright Blue `#68B5E8`) is dark mode text and fill.
 - **Dark mode fills:** info, success, warning, and danger fills use their `-bright` step, with `--bq-black` (`#14222C`) as the on-color.
@@ -552,7 +552,7 @@ The `endava` theme follows the [Endava brand portal](https://brand.endava.com/vi
   }
   ```
 
-  White on `#D63B10` is 4.67:1 at rest, 5.61:1 on hover, and 6.16:1 on active. For more contrast, use `var(--bq-brand-strong)` (`#C33600`) instead: 5.46:1 at rest, 6.36:1 on hover, and 7.01:1 on active.
+  White on `#D63B10` is 4.67:1 at rest, 5.61:1 on hover, and 6.16:1 on active. For more contrast, use `#C33600` (`var(--bq-endava-orange-800)`) instead: 5.46:1 at rest, 6.36:1 on hover, and 7.01:1 on active.
 </Warning>
 
 <Note>
@@ -564,7 +564,7 @@ The `endava` theme follows the [Endava brand portal](https://brand.endava.com/vi
 <Accordion title="Deviation log">
 | Brand value | BEEQ value | Reason |
 | --- | --- | --- |
-| Light brand text `#E03E00` (kit), `#D63B10` (endava.com) | `--bq-brand-strong` `#C33600` | `#E03E00` is 4.32:1 on white. `#D63B10` passes on white (4.67:1) but not on Blue 10 (3.87:1) or the brand tint (4.16:1), where BEEQ also shows brand text. |
+| Light brand text `#E03E00` (kit), `#D63B10` (endava.com) | `--bq-brand-strong` Red Orange `#FF5640`, same as the brand fill | Brand fidelity over contrast: brand text, icons, strokes, and focus match the brand fill they sit next to (buttons, tabs, checkboxes). 3.15:1 on white, so AA for large text and non-text UI only. On Blue 10 (2.61:1) and the brand tint (2.81:1) it's below 3:1. Avoid small brand text on those surfaces. Override `--bq-brand-strong` with `#C33600` for 4.5:1 on every light surface. |
 | Dark brand text Red Orange (endava.com) | `--bq-brand-bright` `#FF5640`, same as the brand | Brand fidelity over contrast: 4.62:1 on the base surface, but 3.40:1 on raised surfaces and 3.77:1 on the brand tint, so AA for large text only there (APCA Lc 35–41). Override `--bq-brand-bright` with `#FF8979` for 4.5:1 on every dark surface. |
 | Warning text `#C77905` | `--bq-warning-strong` `#975C04` | `#C77905` is 3.41:1 on white. |
 | Light warning fill `#EB9410` | Warning fill `#F99C11` in light mode | Solid Blue on `#EB9410` drops to 4.33:1 when active. |
@@ -575,8 +575,7 @@ The `endava` theme follows the [Endava brand portal](https://brand.endava.com/vi
 | Hover and active colors | `color-mix()` with `--bq-hover` / `--bq-active` | Same state model as the default theme. |
 | Disabled colors | Opacity set per component | Same state model as the default theme. |
 | Dark secondary / tertiary surfaces Blue 80 / Blue 60 | Blue 90 `#30404B` / Blue 80 `#47555F` | Secondary text fails on Blue 60. |
-| Shades only for Solid Blue | Red Orange tints and shades (`--bq-brand-light`, `-dark`, `-strong`, `-bright`) | Brand text needs darker or lighter shades to reach 4.5:1, and selected states need a subtle tint. |
-| Red Orange icons | `--bq-icon--brand` uses `--bq-brand-strong` (light) and `--bq-brand-bright` (dark) | Red Orange is 2.61:1 on Blue 10 and 2.81:1 on the light brand tint, below the 3:1 minimum for icons. |
+| Shades only for Solid Blue | Red Orange tints (`--bq-brand-light`, `--bq-brand-dark`) | Selected states need a subtle tint in each mode. |
 | White on Red Orange only for call-to-action boxes and large text | White on all brand fills, including small button labels | Solid Blue on Red Orange is excluded by the brand, so white is the only brand on-color. See the warning above. |
 | Info icon and text Solid Blue (light) / white (dark), from the kit and endava.com | `--bq-info-*` built from the endava.com accent blues: Mid Blue `#417191` (light fill), `#3B6684` (light text), `#9DCFF0` (dark text and fill) | Solid Blue and white are also the neutral colors, so info alerts, notifications, and tags looked neutral. |
 | Illustration accent colors | Only Mid Blue and Bright Blue, for info | The brand portal limits them to illustrations. BEEQ uses the two blues for info only; the other accent colors are not included. |

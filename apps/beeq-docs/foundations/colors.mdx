@@ -59,7 +59,7 @@ BEEQ has six intents: **brand**, **accent**, **info**, **success**, **warning**,
 | Strong | `--bq-{intent}-strong` | Text, icons, and strokes on light surfaces | `--bq-text--{intent}`, `--bq-icon--{intent}`, `--bq-stroke--{intent}` in light mode |
 | Bright | `--bq-{intent}-bright` | Text, icons, and strokes on dark surfaces | `--bq-text--{intent}`, `--bq-icon--{intent}`, `--bq-stroke--{intent}` in dark mode |
 
-The base step is tuned to be recognizable as a fill, not to be readable as text, so text, icons, and strokes use `-strong` and `-bright` instead. Those steps reach **4.5:1** on neutral surfaces and on the matching `-alt` tint, and `-bright` also reaches **APCA Lc 60**, because WCAG 2 overrates light text on dark surfaces. When the base primitive already meets those targets, the step reuses it, so some swatches repeat: BEEQ `brand-strong` and `accent-strong`, and Endava `warning-bright`. Endava `brand-bright` and `accent-bright` reuse Red Orange to match endava.com, which is a documented [contrast exception](#accessibility).
+The base step is tuned to be recognizable as a fill, not to be readable as text, so text, icons, and strokes use `-strong` and `-bright` instead. Those steps reach **4.5:1** on neutral surfaces and on the matching `-alt` tint, and `-bright` also reaches **APCA Lc 60**, because WCAG 2 overrates light text on dark surfaces. When the base primitive already meets those targets, the step reuses it, so some swatches repeat: BEEQ `brand-strong` and `accent-strong`, and Endava `warning-bright`. Endava `brand-strong`, `brand-bright`, `accent-strong`, and `accent-bright` reuse Red Orange, so brand text, icons, and strokes match the brand fill as on endava.com. That's a documented [contrast exception](#accessibility).
 
 - **Brand** anchors primary actions, selection, and brand surfaces.
 - **Accent** is a secondary brand color for white-label themes. BEEQ components don't use it; the Endava theme aliases it to brand.
@@ -116,14 +116,14 @@ The base step is tuned to be recognizable as a fill, not to be readable as text,
       <Color.Item name="brand-light" value="var(--bq-endava-orange-100)" />
       <Color.Item name="brand" value="var(--bq-endava-orange-600)" />
       <Color.Item name="brand-dark" value="var(--bq-endava-orange-1000)" />
-      <Color.Item name="brand-strong" value="var(--bq-endava-orange-800)" />
+      <Color.Item name="brand-strong" value="var(--bq-endava-orange-600)" />
       <Color.Item name="brand-bright" value="var(--bq-endava-orange-600)" />
     </Color>
     <Color variant="compact">
       <Color.Item name="accent-light" value="var(--bq-endava-orange-100)" />
       <Color.Item name="accent" value="var(--bq-endava-orange-600)" />
       <Color.Item name="accent-dark" value="var(--bq-endava-orange-1000)" />
-      <Color.Item name="accent-strong" value="var(--bq-endava-orange-800)" />
+      <Color.Item name="accent-strong" value="var(--bq-endava-orange-600)" />
       <Color.Item name="accent-bright" value="var(--bq-endava-orange-600)" />
     </Color>
     <Color variant="compact">
@@ -381,8 +381,8 @@ Use text tokens for all typographic content — headings, body copy, labels, cap
       <Color.Item name="--bq-text--primary" value={{ light: "var(--bq-endava-grey-950)", dark: "var(--bq-endava-neutral-white)" }} />
       <Color.Item name="--bq-text--secondary" value={{ light: "var(--bq-endava-grey-700)", dark: "var(--bq-endava-grey-400)" }} />
       <Color.Item name="--bq-text--inverse" value={{ light: "var(--bq-endava-neutral-white)", dark: "var(--bq-endava-grey-950)" }} />
-      <Color.Item name="--bq-text--brand" value={{ light: "var(--bq-endava-orange-800)", dark: "var(--bq-endava-orange-600)" }} />
-      <Color.Item name="--bq-text--accent" value={{ light: "var(--bq-endava-orange-800)", dark: "var(--bq-endava-orange-600)" }} />
+      <Color.Item name="--bq-text--brand" value={{ light: "var(--bq-endava-orange-600)", dark: "var(--bq-endava-orange-600)" }} />
+      <Color.Item name="--bq-text--accent" value={{ light: "var(--bq-endava-orange-600)", dark: "var(--bq-endava-orange-600)" }} />
       <Color.Item name="--bq-text--info" value={{ light: "var(--bq-endava-info-700)", dark: "var(--bq-endava-info-300)" }} />
       <Color.Item name="--bq-text--success" value={{ light: "var(--bq-endava-positive-800)", dark: "var(--bq-endava-positive-400)" }} />
       <Color.Item name="--bq-text--warning" value={{ light: "var(--bq-endava-warning-800)", dark: "var(--bq-endava-warning-400)" }} />
@@ -462,8 +462,8 @@ Use icon tokens for SVG fills. Pair each icon token with the text token of the s
       <Color.Item name="--bq-icon--primary" value={{ light: "var(--bq-endava-grey-950)", dark: "var(--bq-endava-neutral-white)" }} />
       <Color.Item name="--bq-icon--secondary" value={{ light: "var(--bq-endava-grey-700)", dark: "var(--bq-endava-grey-400)" }} />
       <Color.Item name="--bq-icon--inverse" value={{ light: "var(--bq-endava-neutral-white)", dark: "var(--bq-endava-grey-950)" }} />
-      <Color.Item name="--bq-icon--brand" value={{ light: "var(--bq-endava-orange-800)", dark: "var(--bq-endava-orange-600)" }} />
-      <Color.Item name="--bq-icon--accent" value={{ light: "var(--bq-endava-orange-800)", dark: "var(--bq-endava-orange-600)" }} />
+      <Color.Item name="--bq-icon--brand" value={{ light: "var(--bq-endava-orange-600)", dark: "var(--bq-endava-orange-600)" }} />
+      <Color.Item name="--bq-icon--accent" value={{ light: "var(--bq-endava-orange-600)", dark: "var(--bq-endava-orange-600)" }} />
       <Color.Item name="--bq-icon--info" value={{ light: "var(--bq-endava-info-700)", dark: "var(--bq-endava-info-300)" }} />
       <Color.Item name="--bq-icon--success" value={{ light: "var(--bq-endava-positive-800)", dark: "var(--bq-endava-positive-400)" }} />
       <Color.Item name="--bq-icon--warning" value={{ light: "var(--bq-endava-warning-800)", dark: "var(--bq-endava-warning-400)" }} />
@@ -508,9 +508,9 @@ Use stroke tokens for borders, dividers, and outlines.
       <Color.Item name="--bq-stroke--tertiary" value={{ light: "var(--bq-endava-grey-950)", dark: "var(--bq-endava-neutral-white)" }} />
       <Color.Item name="--bq-stroke--inverse" value={{ light: "var(--bq-endava-neutral-white)", dark: "var(--bq-endava-grey-950)" }} />
       <Color.Item name="--bq-stroke--alt" value={{ light: "var(--bq-endava-grey-100)", dark: "var(--bq-endava-grey-900)" }} />
-      <Color.Item name="--bq-stroke--brand" value={{ light: "var(--bq-endava-orange-800)", dark: "var(--bq-endava-orange-600)" }} />
+      <Color.Item name="--bq-stroke--brand" value={{ light: "var(--bq-endava-orange-600)", dark: "var(--bq-endava-orange-600)" }} />
       <Color.Item name="--bq-stroke--brand-alt" value={{ light: "var(--bq-endava-orange-100)", dark: "var(--bq-endava-orange-1000)" }} />
-      <Color.Item name="--bq-stroke--accent" value={{ light: "var(--bq-endava-orange-800)", dark: "var(--bq-endava-orange-600)" }} />
+      <Color.Item name="--bq-stroke--accent" value={{ light: "var(--bq-endava-orange-600)", dark: "var(--bq-endava-orange-600)" }} />
       <Color.Item name="--bq-stroke--info" value={{ light: "var(--bq-endava-info-700)", dark: "var(--bq-endava-info-300)" }} />
       <Color.Item name="--bq-stroke--success" value={{ light: "var(--bq-endava-positive-800)", dark: "var(--bq-endava-positive-400)" }} />
       <Color.Item name="--bq-stroke--warning" value={{ light: "var(--bq-endava-warning-800)", dark: "var(--bq-endava-warning-400)" }} />
@@ -734,6 +734,7 @@ Some pairs are deliberately outside these guarantees:
 - `--bq-stroke--primary` is decorative and `--bq-stroke--secondary` marks subtle or disabled borders, so neither carries the 3:1 non-text requirement. Use `--bq-stroke--tertiary` for borders that identify an interactive control.
 - In the BEEQ theme, dark-mode `--bq-text--accent` and `--bq-text--danger` reach APCA Lc 59.5 and 59.8 on `--bq-ui--secondary`, just under Lc 60. They still meet about 7:1.
 - In the Endava theme, `--bq-text--secondary` is only legible on `primary` and `secondary` surfaces. Don't place it on `--bq-background--tertiary` or `--bq-background--alt`.
+- In the Endava theme, light-mode `--bq-text--brand`, `--bq-icon--brand`, `--bq-stroke--brand`, `--bq-focus`, and their accent versions are Red Orange (`#FF5640`), so they match the brand fill. Red Orange is 3.15:1 on `--bq-background--primary` and `--bq-ui--primary`, which meets 3:1 for icons, strokes, focus, and large text (24px, or 18.66px bold), but not 4.5:1 for regular text. On `--bq-background--secondary` and `--bq-ui--secondary` (2.61:1) and the brand tint `--bq-ui--brand-alt` (2.81:1), it falls below 3:1. If you need AA everywhere, override `--bq-brand-strong` with `#C33600` (`var(--bq-endava-orange-800)`).
 - In the Endava theme, dark-mode `--bq-text--brand` and `--bq-text--accent` are Red Orange (`#FF5640`), as on [endava.com](https://www.endava.com). They meet 4.5:1 only on `--bq-background--primary` and `--bq-ui--primary`. On `--bq-background--secondary`, `--bq-ui--secondary` (3.40:1), and the brand tint `--bq-ui--brand-alt` (3.77:1), they meet AA for large text (24px, or 18.66px bold) only. If you need AA for regular text there, override `--bq-brand-bright` with `#FF8979`.
 - In the Endava theme, dark-mode `--bq-text--success` (`#3DD17B`) and `--bq-text--warning` (`#F99C11`) use the brand guide's dark signal colours. They meet 4.5:1 on every dark surface but reach only APCA Lc 51–57. For APCA Lc 60, override `--bq-success-bright` with `#6EDC9C` and `--bq-warning-bright` with `#FBBA58`.
 
@@ -747,7 +748,7 @@ Some pairs are deliberately outside these guarantees:
   }
   ```
 
-  `#D63B10` is the brand-contrast orange used on [endava.com](https://www.endava.com). White text on it reaches 4.67:1 at rest, and more on hover and active. For more contrast, use `var(--bq-brand-strong)` (`#C33600`, 5.46:1).
+  `#D63B10` is the brand-contrast orange used on [endava.com](https://www.endava.com). White text on it reaches 4.67:1 at rest, and more on hover and active. For more contrast, use `#C33600` (`var(--bq-endava-orange-800)`, 5.46:1).
 </Warning>
 
 <Tip>
