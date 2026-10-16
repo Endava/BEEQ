@@ -24,7 +24,7 @@
     "build:storybook:fast": "BEEQ_SKIP_ICONS=1 pnpm exec nx run-many -t storybook-build --exclude='*,!tag:core' --parallel --output-style=stream",
     "lint": "pnpm exec nx run-many -t lint --exclude='*,!tag:publishable' --parallel=4 --output-style=stream",
     "lint:branch-name": "chmod 755 .husky/branch-name.sh && sh .husky/branch-name.sh",
-    "lint:staged": "lint-staged --verbose",
+    "lint:staged": "lint-staged --verbose --no-stash --no-hide-partially-staged",
     "test": "run-s test:*",
     "test:spec": "pnpm exec nx run-many -t test --exclude='*,!tag:publishable' --parallel=4 --output-style=stream",
     "test:e2e": "pnpm exec nx run-many -t e2e --exclude='*,!tag:core' --parallel --output-style=stream",
