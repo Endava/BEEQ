@@ -4,6 +4,16 @@ import { afterEach, describe, expect, it, render, vi, waitForStable } from '@ste
 import { computedStyle } from '../../../shared/test-utils/computedStyle';
 import { getTextContent } from '../../../shared/utils/slot';
 
+/** Resolves a CSS color value (e.g. `var(--bq-ui--danger)`) to its computed `rgb()` form */
+const resolveColor = (value: string): string => {
+  const probe = document.createElement('div');
+  probe.style.color = value;
+  document.body.appendChild(probe);
+  const { color } = getComputedStyle(probe);
+  probe.remove();
+  return color;
+};
+
 afterEach(() => {
   vi.restoreAllMocks();
 });
@@ -63,6 +73,26 @@ describe('bq-badge', () => {
     expect(root.style.getPropertyValue('--bq-badge--text-color')).toBe('var(--bq-text--inverse)');
   });
 
+  it('should use the on-danger text color on the default danger background', async () => {
+    const { root } = await render(<bq-badge>2</bq-badge>);
+
+    await waitForStable(root);
+
+    const hostStyle = getComputedStyle(root);
+    expect(hostStyle.getPropertyValue('--bq-badge--background-color').trim()).toBe(
+      hostStyle.getPropertyValue('--bq-ui--danger').trim(),
+    );
+    expect(hostStyle.getPropertyValue('--bq-badge--text-color').trim()).toBe(
+      hostStyle.getPropertyValue('--bq-text--on-danger').trim(),
+    );
+
+    const style = computedStyle('bq-badge >>> .bq-badge', ['backgroundColor', 'color']);
+    expect(style).toEqual({
+      backgroundColor: resolveColor('var(--bq-ui--danger)'),
+      color: resolveColor('var(--bq-text--on-danger)'),
+    });
+  });
+
   it('should handle invalid size values', async () => {
     const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
     const { root, setProps } = await render(<bq-badge size="medium" />);
@@ -87,5 +117,24 @@ describe('bq-badge', () => {
     expect(getTextContent(numberSlot, { recurse: true })).toBe('12');
     expect(badge).toHaveClass('is-populated');
     expect(badge).toHaveClass('is-multiple');
+  });
+
+  it('should update content length when a non-first slotted node changes', async () => {
+    const { root } = await render(
+      <bq-badge>
+        <span>1</span>
+        <span>2</span>
+      </bq-badge>,
+    );
+
+    await waitForStable(root);
+
+    const badge = root.shadowRoot.querySelector('.bq-badge') as HTMLDivElement;
+    const [, secondNode] = root.querySelectorAll<HTMLSpanElement>('span');
+
+    secondNode.textContent = '';
+
+    expect(badge).toHaveClass('digit');
+    await expect.poll(() => badge.classList.contains('p-i-xs2')).toBe(false);
   });
 });

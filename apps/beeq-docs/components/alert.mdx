@@ -35,6 +35,7 @@ Alert is a lightweight message surface for conveying status, progress, or requir
     - The message overlaps essential content or important interface controls
     - Its presence could confuse users or compete with a more relevant inline message
     - A toast, notification, or field-level validation message would be more precise
+    - Content failed to load and the region has nothing else to show; use an [Empty state](/components/empty-state) with a retry action instead
   </Card>
 </CardGroup>
 
@@ -1009,7 +1010,7 @@ Use the `sticky` attribute for persistent alerts that remain visible until users
     }
 
     bq-alert.is-sticky {
-      position: absolute !important;
+      position: absolute;
     }
 
     main {
@@ -1357,27 +1358,32 @@ Set `auto-dismiss` to hide the alert automatically after a delay. Use `time` to 
   | `--bq-alert--border-radius` | Alert border radius | `var(--bq-radius--s)` |
   | `--bq-alert--content-footer-gap` | Gap between content and footer | `var(--bq-spacing-s)` |
   | `--bq-alert--title-body-gap` | Gap between title and body | `var(--bq-spacing-s)` |
-  | `--bq-alert--background-info` | Background color for info alerts | `var(--bq-ui--brand-alt)` |
+  | `--bq-alert--background-info` | Background color for info alerts | `var(--bq-ui--info-alt)` |
   | `--bq-alert--background-success` | Background color for success alerts | `var(--bq-ui--success-alt)` |
   | `--bq-alert--background-warning` | Background color for warning alerts | `var(--bq-ui--warning-alt)` |
   | `--bq-alert--background-error` | Background color for error alerts | `var(--bq-ui--danger-alt)` |
   | `--bq-alert--background-default` | Background color for default alerts | `var(--bq-ui--primary)` |
-  | `--bq-alert--border-info` | Border color for info alerts | `var(--bq-stroke--brand)` |
+  | `--bq-alert--border-info` | Border color for info alerts | `var(--bq-stroke--info)` |
   | `--bq-alert--border-success` | Border color for success alerts | `var(--bq-stroke--success)` |
   | `--bq-alert--border-warning` | Border color for warning alerts | `var(--bq-stroke--warning)` |
   | `--bq-alert--border-error` | Border color for error alerts | `var(--bq-stroke--danger)` |
   | `--bq-alert--border-default` | Border color for default alerts | `var(--bq-stroke--secondary)` |
-  | `--bq-alert--border-color` | Alert border color | `undefined` |
   | `--bq-alert--border-width` | Alert border width | `var(--bq-stroke-s)` |
   | `--bq-alert--border-style` | Alert border style | `solid` |
-  | `--bq-alert--icon-color-info` | Icon color for info alerts | `var(--bq-icon--brand)` |
+  | `--bq-alert--icon-color-info` | Icon color for info alerts | `var(--bq-icon--info)` |
   | `--bq-alert--icon-color-success` | Icon color for success alerts | `var(--bq-icon--success)` |
   | `--bq-alert--icon-color-warning` | Icon color for warning alerts | `var(--bq-icon--warning)` |
   | `--bq-alert--icon-color-error` | Icon color for error alerts | `var(--bq-icon--danger)` |
   | `--bq-alert--icon-color-default` | Icon color for default alerts | `var(--bq-icon--primary)` |
+  | `--bq-alert--text-color` | Alert text color | `var(--bq-text--primary)` |
   | `--bq-alert--padding` | Alert padding | `var(--bq-spacing-s)` |
   | `--bq-alert--min-width` | Alert minimum width | `320px` |
+  | `--bq-alert--z-index` | Stacking order of a sticky alert | No declared default |
 </Expandable>
+
+<Note>
+  Set `--bq-alert--z-index` on the alert when your page needs an explicit stacking order. Without an override, the sticky alert's `z-index` computes to `auto`. Use the type-specific `--bq-alert--border-*` variables to customize its border color.
+</Note>
 
 <Tip>
   Learn more about [styling with shadow parts](/guides/styles#component-shadow-dom-parts) and [CSS custom properties](/guides/styles#global-css-custom-properties).

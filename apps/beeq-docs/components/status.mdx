@@ -420,9 +420,17 @@ Use `type="success"` when the state confirms a positive outcome.
 
 ### CSS custom properties
 
-| Variable | Description | Default |
-|---|---|---|
-| `--bq-status-circle--size` | Status circle size | `12px` |
+<Expandable title="CSS variables" defaultOpen={true}>
+  | Variable | Description | Default |
+  |---|---|---|
+  | `--bq-status-circle--size` | Status circle size | `12px` |
+  | `--bq-status--dot-color-alert` | Status circle color when `type` is `alert` | `var(--bq-icon--warning)` |
+  | `--bq-status--dot-color-danger` | Status circle color when `type` is `danger` | `var(--bq-icon--danger)` |
+  | `--bq-status--dot-color-info` | Status circle color when `type` is `info` | `var(--bq-icon--info)` |
+  | `--bq-status--dot-color-neutral` | Status circle color when `type` is `neutral` | `var(--bq-icon--secondary)` |
+  | `--bq-status--dot-color-success` | Status circle color when `type` is `success` | `var(--bq-icon--success)` |
+  | `--bq-status--text-color` | Status text color | `var(--bq-text--primary)` |
+</Expandable>
 
 <Tip>
   Learn more about [styling with shadow parts](/guides/styles#component-shadow-dom-parts) and [CSS custom properties](/guides/styles#global-css-custom-properties).

@@ -5,7 +5,14 @@
 :host {
   /**
   * @prop --bq-option--background - background color
+  * @prop --bq-option--background-hover - background base colour of the hover state (mixed with `--bq-hover` on hover)
+  * @prop --bq-option--background-selected - background color when selected
+  * @prop --bq-option--expand-text-color-hover - expand control text color on hover
   * @prop --bq-option--font-size - font size
+  * @prop --bq-option--selection-summary-color - nested selection summary text color
+  * @prop --bq-option--text-color - text color
+  * @prop --bq-option--text-color-selected - text color when selected
+  * @prop --bq-option--tree-line-color - color of the lines connecting nested options
   * @prop --bq-option--border-color - border color
   * @prop --bq-option--border-style - border style
   * @prop --bq-option--border-width - border width
@@ -14,13 +21,21 @@
   * @prop --bq-option--gap-start - gap space between prefix and label
   * @prop --bq-option--gap-end - gap space between label and suffix
   * @prop --bq-option--paddingY - padding Y axis
-  * @prop --bq-option--padding-start - option label padding start
-  * @prop --bq-option--padding-end - option label padding end
+  * @prop --bq-option--padding-start - option item padding start
+  * @prop --bq-option--padding-end - option item padding end
   */
-  --bq-option--background: theme(backgroundColor.ui.primary);
+  --bq-option--background: var(--bq-ui--primary);
+  --bq-option--background-hover: var(--bq-ui--secondary);
+  --bq-option--background-selected: var(--bq-ui--brand-alt);
   --bq-option--font-size: theme(fontSize.m);
 
-  --bq-option--border-color: theme(stroke.transparent);
+  --bq-option--text-color: var(--bq-text--primary);
+  --bq-option--text-color-selected: var(--bq-text--brand);
+  --bq-option--expand-text-color-hover: var(--bq-text--brand);
+  --bq-option--selection-summary-color: var(--bq-text--secondary);
+  --bq-option--tree-line-color: var(--bq-stroke--primary);
+
+  --bq-option--border-color: transparent;
   --bq-option--border-style: none;
   --bq-option--border-width: theme(borderWidth.0);
   --bq-option--border-radius: theme(borderRadius.s);

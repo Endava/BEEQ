@@ -1,13 +1,20 @@
 import { h } from '@stencil/core';
 import { describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
-import { userEvent } from 'vitest/browser';
+import { page, userEvent } from 'vitest/browser';
 
 import { getTextContent } from '../../../shared/utils/slot';
 
 const getRadio = (element: ParentNode, value: string) =>
   element.querySelector<HTMLBqRadioElement>(`bq-radio[value="${value}"]`);
+const pressKey = (radio: HTMLBqRadioElement, key: string) =>
+  radio.shadowRoot
+    ?.querySelector<HTMLInputElement>('input')
+    ?.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true, composed: true }));
 const getLabelSlot = (element: HTMLBqRadioGroupElement) =>
   element.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="label"]');
+
+const getFieldset = (element: HTMLBqRadioGroupElement) =>
+  element.shadowRoot?.querySelector<HTMLFieldSetElement>('fieldset');
 
 describe('bq-radio-group', () => {
   it('should render', async () => {
@@ -229,6 +236,89 @@ describe('bq-radio-group', () => {
     expect(bqRadioGroup).toEqualAttribute('value', 'option3');
   });
 
+  it('should emit bqChange synchronously on keyboard selection with the default debounceTime', async () => {
+    const { root, spyOnEvent } = await render(
+      <bq-radio-group name="test-option" value="option1">
+        <bq-radio name="test-option" value="option1">
+          Option 1
+        </bq-radio>
+        <bq-radio name="test-option" value="option2">
+          Option 2
+        </bq-radio>
+      </bq-radio-group>,
+    );
+    const bqChange = spyOnEvent('bqChange');
+
+    pressKey(getRadio(root, 'option1'), 'ArrowDown');
+
+    // Asserted before any await: the event is emitted inside the keydown
+    expect(bqChange).toHaveReceivedEventTimes(1);
+    expect(bqChange.events[0].detail.value).toBe('option2');
+  });
+
+  it('should emit only the latest value after a positive debounceTime', async () => {
+    const { root, spyOnEvent } = await render(
+      <bq-radio-group debounceTime={100} name="test-option" value="option1">
+        <bq-radio name="test-option" value="option1">
+          Option 1
+        </bq-radio>
+        <bq-radio name="test-option" value="option2">
+          Option 2
+        </bq-radio>
+        <bq-radio name="test-option" value="option3">
+          Option 3
+        </bq-radio>
+      </bq-radio-group>,
+    );
+    const bqChange = spyOnEvent('bqChange');
+
+    pressKey(getRadio(root, 'option1'), 'ArrowDown');
+    pressKey(getRadio(root, 'option2'), 'ArrowDown');
+
+    expect(bqChange).toHaveReceivedEventTimes(0);
+
+    await new Promise((resolve) => setTimeout(resolve, 200));
+
+    expect(bqChange).toHaveReceivedEventTimes(1);
+    expect(bqChange.events[0].detail.value).toBe('option3');
+    expect((root as HTMLBqRadioGroupElement).value).toBe('option3');
+  });
+
+  it('should keep the selection when a controlled consumer re-renders a stale value', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-radio-group name="test-option" value="option1">
+        <bq-radio name="test-option" value="option1">
+          Option 1
+        </bq-radio>
+        <bq-radio name="test-option" value="option2">
+          Option 2
+        </bq-radio>
+      </bq-radio-group>,
+    );
+    const bqRadioGroup = root as HTMLBqRadioGroupElement;
+    let state = 'option1';
+    const received: string[] = [];
+    const renderState = () => {
+      bqRadioGroup.value = state;
+    };
+    bqRadioGroup.addEventListener('bqChange', (event: CustomEvent<{ value: string }>) => {
+      received.push(event.detail.value);
+      state = event.detail.value;
+      setTimeout(renderState, 0);
+    });
+    // Simulates an unrelated re-render, queued before the selection, that re-applies the controlled value
+    bqRadioGroup.addEventListener('keydown', () => setTimeout(renderState, 0), true);
+
+    await getRadio(bqRadioGroup, 'option1').vFocus();
+    await userEvent.keyboard('{ArrowRight}');
+    await new Promise((resolve) => setTimeout(resolve, 50));
+    await waitForChanges();
+
+    expect(received).toEqual(['option2']);
+    expect(bqRadioGroup.value).toBe('option2');
+    expect(getRadio(bqRadioGroup, 'option2')).toHaveAttribute('checked');
+  });
+
   it('should propagate disabled and hover properties to child radios', async () => {
     const { root } = await render(
       <bq-radio-group backgroundOnHover disabled name="test-option">
@@ -309,6 +399,75 @@ describe('bq-radio-group', () => {
 
     expect(bqRadioGroup.value).toBe('option2');
     expect(getRadio(bqRadioGroup, 'option2')).toHaveAttribute('checked');
+  });
+
+  it('should reference an existing label element from the fieldset aria-labelledby', async () => {
+    const { root } = await render(
+      <bq-radio-group name="delivery">
+        <span slot="label">Delivery method</span>
+        <bq-radio name="delivery" value="standard">
+          Standard
+        </bq-radio>
+        <bq-radio name="delivery" value="express">
+          Express
+        </bq-radio>
+      </bq-radio-group>,
+    );
+    const bqRadioGroup = root as HTMLBqRadioGroupElement;
+    await waitForStable(bqRadioGroup);
+
+    const labelledBy = getFieldset(bqRadioGroup)?.getAttribute('aria-labelledby');
+    const labelElement = bqRadioGroup.shadowRoot?.getElementById(labelledBy ?? '');
+
+    expect(labelledBy).toBeTruthy();
+    expect(labelElement).not.toBeNull();
+    expect(labelElement).toBe(getLabelSlot(bqRadioGroup));
+  });
+
+  it('should expose the label slot content as the accessible name of the group', async () => {
+    const { root } = await render(
+      <bq-radio-group name="delivery">
+        <span slot="label">Delivery method</span>
+        <bq-radio name="delivery" value="standard">
+          Standard
+        </bq-radio>
+        <bq-radio name="delivery" value="express">
+          Express
+        </bq-radio>
+      </bq-radio-group>,
+    );
+    await waitForStable(root as HTMLBqRadioGroupElement);
+
+    await expect.element(page.getByRole('group', { name: 'Delivery method' })).toBeVisible();
+  });
+
+  it('should resolve the accessible name of each group when multiple instances are rendered', async () => {
+    const { root } = await render(
+      <div>
+        <bq-radio-group name="delivery">
+          <span slot="label">Delivery method</span>
+          <bq-radio name="delivery" value="standard">
+            Standard
+          </bq-radio>
+        </bq-radio-group>
+        <bq-radio-group name="payment">
+          <span slot="label">Payment method</span>
+          <bq-radio name="payment" value="card">
+            Card
+          </bq-radio>
+        </bq-radio-group>
+      </div>,
+    );
+    const groups = Array.from(root.querySelectorAll<HTMLBqRadioGroupElement>('bq-radio-group'));
+    await Promise.all(groups.map((group) => waitForStable(group)));
+
+    groups.forEach((group) => {
+      const labelledBy = getFieldset(group)?.getAttribute('aria-labelledby');
+
+      expect(group.shadowRoot?.getElementById(labelledBy ?? '')).toBe(getLabelSlot(group));
+    });
+    await expect.element(page.getByRole('group', { name: 'Delivery method' })).toBeVisible();
+    await expect.element(page.getByRole('group', { name: 'Payment method' })).toBeVisible();
   });
 
   it('should fallback invalid orientation values to vertical', async () => {

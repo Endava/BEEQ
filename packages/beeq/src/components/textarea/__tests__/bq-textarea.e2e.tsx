@@ -1,6 +1,38 @@
 import { h } from '@stencil/core';
-import { describe, expect, it, render } from '@stencil/vitest';
-import { userEvent } from 'vitest/browser';
+import { beforeEach, describe, expect, it, render, waitForStable } from '@stencil/vitest';
+import { cdp, userEvent } from 'vitest/browser';
+
+import { computedStyle } from '../../../shared/test-utils/computedStyle';
+
+/** Resolves a CSS color value (e.g. `var(--bq-stroke--danger)`) to its computed `rgb()` form */
+const resolveColor = (value: string): string => {
+  const probe = document.createElement('div');
+  probe.style.color = value;
+  document.body.appendChild(probe);
+  const { color } = getComputedStyle(probe);
+  probe.remove();
+  return color;
+};
+
+/** Waits for any running CSS transition inside the element's shadow root to finish */
+const waitForTransitions = async (element: Element) => {
+  const animations = element.shadowRoot?.getAnimations() ?? [];
+  await Promise.all(animations.map((animation) => animation.finished));
+};
+
+// Hover/click tests leave the Playwright cursor where they finished, so a freshly rendered element can
+// render under it and pick up `:hover` styles. Before each test, park the cursor in the bottom-right corner
+// of the top-level page (CDP coordinates), which lies outside the scaled test iframe.
+const movePointerOff = () =>
+  cdp().send('Input.dispatchMouseEvent', {
+    type: 'mouseMoved',
+    x: window.top.innerWidth - 1,
+    y: window.top.innerHeight - 1,
+  });
+
+beforeEach(async () => {
+  await movePointerOff();
+});
 
 describe('bq-textarea', () => {
   it('should render', async () => {
@@ -83,17 +115,86 @@ describe('bq-textarea', () => {
     const bqInput = spyOnEvent('bqInput');
     const nativeTextarea = root.shadowRoot.querySelector<HTMLTextAreaElement>('.bq-textarea__input');
 
-    // Type one character at a time and wait for changes between each keystroke.
-    // debounceTime defaults to 0ms — rapid typing cancels the previous debounce before
-    // it fires. Waiting after each character lets the 0ms setTimeout resolve, matching
-    // the per-keystroke timing expected by this interaction test.
-    for (const char of value) {
-      await userEvent.type(nativeTextarea, char);
-      await waitForChanges();
-    }
+    await userEvent.type(nativeTextarea, value);
+    await waitForChanges();
 
     expect((root as HTMLBqTextareaElement).value).toBe(value);
     expect(bqInput).toHaveReceivedEventTimes(value.length);
+    expect(bqInput).toHaveReceivedEventDetail({ value, el: root });
+  });
+
+  it('should emit bqInput synchronously within the native input event by default', async () => {
+    const { root } = await render(<bq-textarea name="textarea" />);
+    const nativeTextarea = root.shadowRoot.querySelector<HTMLTextAreaElement>('.bq-textarea__input');
+    const received: string[] = [];
+    root.addEventListener('bqInput', (ev: CustomEvent<{ value: string }>) => received.push(ev.detail.value));
+
+    nativeTextarea.value = 'Hi';
+    nativeTextarea.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+
+    // No await on purpose: with the default `debounceTime` of 0 the event must not be deferred
+    expect(received).toEqual(['Hi']);
+  });
+
+  it('should keep every typed character when a controlled consumer re-renders between keystrokes', async () => {
+    const value = 'hello world';
+    const { root, waitForChanges } = await render(<bq-textarea name="textarea" />);
+    const textareaElem = root as HTMLBqTextareaElement;
+    const nativeTextarea = root.shadowRoot.querySelector<HTMLTextAreaElement>('.bq-textarea__input');
+
+    // Controlled consumer: state follows `bqInput`, and an unrelated re-render queued on each keydown
+    // re-applies the controlled value from state (like a React render landing mid-typing)
+    let state = '';
+    root.addEventListener('bqInput', (ev: CustomEvent<{ value: string }>) => {
+      state = ev.detail.value;
+    });
+    root.addEventListener(
+      'keydown',
+      () =>
+        setTimeout(() => {
+          textareaElem.value = state;
+        }),
+      true,
+    );
+
+    await userEvent.type(nativeTextarea, value);
+    await new Promise((resolve) => setTimeout(resolve, 50));
+    await waitForChanges();
+
+    expect(state).toBe(value);
+    expect(nativeTextarea.value).toBe(value);
+  });
+
+  it('should debounce bqInput and emit only the latest value when debounceTime is positive', async () => {
+    const { root, spyOnEvent } = await render(<bq-textarea debounceTime={50} name="textarea" />);
+    const bqInput = spyOnEvent('bqInput');
+    const nativeTextarea = root.shadowRoot.querySelector<HTMLTextAreaElement>('.bq-textarea__input');
+
+    for (const value of ['a', 'ab', 'abc']) {
+      nativeTextarea.value = value;
+      nativeTextarea.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+    }
+
+    expect(bqInput).toHaveReceivedEventTimes(0);
+
+    await new Promise((resolve) => setTimeout(resolve, 150));
+
+    expect(bqInput).toHaveReceivedEventTimes(1);
+    expect(bqInput).toHaveReceivedEventDetail({ value: 'abc', el: root });
+  });
+
+  it('should emit bqInput synchronously after debounceTime changes to 0', async () => {
+    const { root, setProps, spyOnEvent } = await render(<bq-textarea debounceTime={50} name="textarea" />);
+    const bqInput = spyOnEvent('bqInput');
+    const nativeTextarea = root.shadowRoot.querySelector<HTMLTextAreaElement>('.bq-textarea__input');
+
+    await setProps({ debounceTime: 0 });
+
+    nativeTextarea.value = 'Hi';
+    nativeTextarea.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+
+    expect(bqInput).toHaveReceivedEventTimes(1);
+    expect(bqInput).toHaveReceivedEventDetail({ value: 'Hi', el: root });
   });
 
   it('should show and count all characters', async () => {
@@ -120,6 +221,100 @@ describe('bq-textarea', () => {
     await setProps({ value });
 
     expect(nativeTextarea.value).toBe(value.substring(0, maxlength));
+  });
+
+  it('should show the initial value count in the counter', async () => {
+    const value = 'Hello';
+    const maxlength = 100;
+    const { root } = await render(
+      <bq-textarea maxlength={maxlength} value={value} name="textarea" placeholder="Placeholder..." />,
+    );
+    const counterElem = root.shadowRoot.querySelector<HTMLElement>('.bq-textarea__helper--counter');
+
+    expect(counterElem.innerText).toBe(`${value.length}/${maxlength}`);
+  });
+
+  it('should display programmatic value changes after the user types', async () => {
+    const maxlength = 200;
+    const { root, waitForChanges } = await render(
+      <bq-textarea maxlength={maxlength} name="textarea" placeholder="Placeholder..." />,
+    );
+    const textareaElem = root as HTMLBqTextareaElement;
+    const nativeTextarea = root.shadowRoot.querySelector<HTMLTextAreaElement>('.bq-textarea__input');
+    const counterElem = root.shadowRoot.querySelector<HTMLElement>('.bq-textarea__helper--counter');
+
+    textareaElem.value = 'First value set from code';
+    await waitForChanges();
+    await userEvent.type(nativeTextarea, 'ddd');
+    await waitForChanges();
+    expect(textareaElem.value).toBe('First value set from codeddd');
+
+    const nextValue = 'Second value';
+    textareaElem.value = nextValue;
+    await waitForChanges();
+
+    expect(nativeTextarea.value).toBe(nextValue);
+    expect(counterElem.innerText).toBe(`${nextValue.length}/${maxlength}`);
+
+    textareaElem.value = '';
+    await waitForChanges();
+
+    expect(nativeTextarea.value).toBe('');
+    expect(counterElem.innerText).toBe(`0/${maxlength}`);
+  });
+
+  it('should truncate a programmatic value longer than maxlength after the user types', async () => {
+    const maxlength = 10;
+    const { root, waitForChanges } = await render(
+      <bq-textarea maxlength={maxlength} name="textarea" placeholder="Placeholder..." />,
+    );
+    const textareaElem = root as HTMLBqTextareaElement;
+    const nativeTextarea = root.shadowRoot.querySelector<HTMLTextAreaElement>('.bq-textarea__input');
+
+    await userEvent.type(nativeTextarea, 'abc');
+    await waitForChanges();
+
+    textareaElem.value = 'Lorem ipsum dolor sit amet';
+    await waitForChanges();
+
+    expect(textareaElem.value).toBe('Lorem ipsu');
+    expect(nativeTextarea.value).toBe('Lorem ipsu');
+  });
+
+  it('should grow to fit a programmatic value when auto-grow is enabled', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-textarea auto-grow rows={2} name="textarea" placeholder="Placeholder..." />,
+    );
+    const textareaElem = root as HTMLBqTextareaElement;
+    const nativeTextarea = root.shadowRoot.querySelector<HTMLTextAreaElement>('.bq-textarea__input');
+    const initialHeight = nativeTextarea.getBoundingClientRect().height;
+
+    textareaElem.value = Array.from({ length: 10 }, (_, i) => `Line ${i + 1}`).join('\n');
+    await waitForChanges();
+
+    expect(nativeTextarea.getBoundingClientRect().height).toBeGreaterThan(initialHeight);
+  });
+
+  it('should clear the visible text on form reset after the user types', async () => {
+    const { root, waitForChanges } = await render(
+      <form>
+        <bq-textarea name="notes" placeholder="Placeholder..." />
+      </form>,
+    );
+    const form = root as HTMLFormElement;
+    const textareaElem = form.querySelector('bq-textarea');
+    const nativeTextarea = textareaElem.shadowRoot.querySelector<HTMLTextAreaElement>('.bq-textarea__input');
+
+    await userEvent.type(nativeTextarea, 'Hello');
+    await waitForChanges();
+    expect(new FormData(form).get('notes')).toBe('Hello');
+
+    form.reset();
+    await waitForChanges();
+
+    expect(textareaElem.value).toBe('');
+    expect(nativeTextarea.value).toBe('');
+    expect(new FormData(form).get('notes')).toBeNull();
   });
 
   it('should emit bqFocus and bqBlur events', async () => {
@@ -194,5 +389,64 @@ describe('bq-textarea', () => {
     await waitForChanges();
 
     expect(bqChange).toHaveReceivedEventTimes(0);
+  });
+
+  it('should map the validation color variables to the theme role tokens', async () => {
+    const { root } = await render(<bq-textarea name="textarea" placeholder="Placeholder..." />);
+
+    const hostStyle = getComputedStyle(root);
+
+    for (const status of ['danger', 'success', 'warning']) {
+      expect(hostStyle.getPropertyValue(`--bq-textarea--border-color-${status}`).trim()).toBe(
+        hostStyle.getPropertyValue(`--bq-stroke--${status}`).trim(),
+      );
+      expect(hostStyle.getPropertyValue(`--bq-textarea--helper-text-color-${status}`).trim()).toBe(
+        hostStyle.getPropertyValue(`--bq-text--${status}`).trim(),
+      );
+    }
+  });
+
+  it('should paint the border and helper text with the validation color variables', async () => {
+    const { root, setProps } = await render(
+      <bq-textarea name="textarea" placeholder="Placeholder...">
+        <span slot="helper-text">Helper text</span>
+      </bq-textarea>,
+    );
+    const statuses = { error: 'danger', success: 'success', warning: 'warning' } as const;
+
+    for (const [validationStatus, role] of Object.entries(statuses)) {
+      await setProps({ validationStatus });
+      await waitForStable(root);
+      await waitForTransitions(root);
+
+      expect(computedStyle('bq-textarea >>> [part="input"]', ['borderTopColor']).borderTopColor).toBe(
+        resolveColor(`var(--bq-stroke--${role})`),
+      );
+      expect(computedStyle('bq-textarea >>> [part="helper-info"]', ['color']).color).toBe(
+        resolveColor(`var(--bq-text--${role})`),
+      );
+    }
+  });
+
+  it('should allow overriding the validation color variables', async () => {
+    const { root } = await render(
+      <bq-textarea
+        name="textarea"
+        placeholder="Placeholder..."
+        validationStatus="error"
+        style={{
+          '--bq-textarea--border-color-danger': 'rgb(1, 2, 3)',
+          '--bq-textarea--helper-text-color-danger': 'rgb(4, 5, 6)',
+        }}
+      >
+        <span slot="helper-text">Helper text</span>
+      </bq-textarea>,
+    );
+
+    await waitForStable(root);
+    await waitForTransitions(root);
+
+    expect(computedStyle('bq-textarea >>> [part="input"]', ['borderTopColor']).borderTopColor).toBe('rgb(1, 2, 3)');
+    expect(computedStyle('bq-textarea >>> [part="helper-info"]', ['color']).color).toBe('rgb(4, 5, 6)');
   });
 });

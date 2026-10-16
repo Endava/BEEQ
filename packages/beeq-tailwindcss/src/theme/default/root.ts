@@ -1,3 +1,5 @@
+import { LIGHT_BOX_SHADOWS } from '../shadows';
+
 export const DefaultRootTheme = {
   'bq-white': '#ffffff',
   'bq-black': '#060708',
@@ -14,32 +16,51 @@ export const DefaultRootTheme = {
   'bq-neutral-900': 'var(--bq-grey-900)',
   'bq-neutral-950': 'var(--bq-grey-950)',
   'bq-neutral-1000': 'var(--bq-grey-1000)',
+  /**
+   * Intents. Each intent exposes five tokens:
+   * - `-light`: subtle tint for light mode (read by `ui--{intent}-alt`)
+   * - base: solid fill (read by `ui--{intent}`)
+   * - `-dark`: subtle tint for dark mode (read by `ui--{intent}-alt`)
+   * - `-strong`: text, icon and stroke on light surfaces (>= 4.5:1)
+   * - `-bright`: text, icon and stroke on dark surfaces (>= 4.5:1 and APCA Lc >= 60)
+   * The focus ring color lives at mode level (`--bq-focus`).
+   */
   // Brand
   'bq-brand-light': 'var(--bq-iris-100)',
   'bq-brand': 'var(--bq-iris-600)',
-  'bq-brand-dark': 'var(--bq-iris-1000)',
+  'bq-brand-dark': 'var(--bq-iris-950)',
+  'bq-brand-strong': 'var(--bq-iris-600)',
+  'bq-brand-bright': 'var(--bq-iris-300)',
   // Accent
   'bq-accent-light': 'var(--bq-purple-100)',
   'bq-accent': 'var(--bq-purple-600)',
-  'bq-accent-dark': 'var(--bq-purple-1000)',
+  'bq-accent-dark': 'var(--bq-purple-950)',
+  'bq-accent-strong': 'var(--bq-purple-600)',
+  'bq-accent-bright': 'var(--bq-purple-300)',
   // Success
   'bq-success-light': 'var(--bq-teal-100)',
   'bq-success': 'var(--bq-teal-600)',
-  'bq-success-dark': 'var(--bq-teal-1000)',
+  'bq-success-dark': 'var(--bq-teal-950)',
+  'bq-success-strong': 'var(--bq-teal-800)',
+  'bq-success-bright': 'var(--bq-teal-400)',
   // Danger
   'bq-danger-light': 'var(--bq-red-100)',
   'bq-danger': 'var(--bq-red-600)',
-  'bq-danger-dark': 'var(--bq-red-1000)',
+  'bq-danger-dark': 'var(--bq-red-950)',
+  'bq-danger-strong': 'var(--bq-red-700)',
+  'bq-danger-bright': 'var(--bq-red-300)',
   // Warning
   'bq-warning-light': 'var(--bq-gold-100)',
   'bq-warning': 'var(--bq-gold-600)',
-  'bq-warning-dark': 'var(--bq-gold-1000)',
+  'bq-warning-dark': 'var(--bq-gold-950)',
+  'bq-warning-strong': 'var(--bq-gold-800)',
+  'bq-warning-bright': 'var(--bq-gold-400)',
   // Info
-  'bq-info-light': 'var(--bq-iris-100)',
-  'bq-info': 'var(--bq-iris-600)',
-  'bq-info-dark': 'var(--bq-iris-1000)',
-  // Focus
-  'bq-focus': 'var(--bq-iris-600)',
+  'bq-info-light': 'var(--bq-blue-100)',
+  'bq-info': 'var(--bq-blue-600)',
+  'bq-info-dark': 'var(--bq-blue-950)',
+  'bq-info-strong': 'var(--bq-blue-700)',
+  'bq-info-bright': 'var(--bq-blue-300)',
   // Data
   'bq-data-01': 'var(--bq-brand)',
   'bq-data-02': 'var(--bq-purple-600)',
@@ -61,11 +82,8 @@ export const DefaultRootTheme = {
   'bq-radius--m': '0.75rem', // 12px
   'bq-radius--l': '1.5rem', // 24px
   'bq-radius--full': '9999px',
-  // Box Shadow
-  'bq-box-shadow--xs': '0 2px 0 rgba(0, 0, 0, 0.016)',
-  'bq-box-shadow--s': '0 8px 24px rgba(0, 0, 0, 0.04)',
-  'bq-box-shadow--m': '0 10px 48px -16px rgba(0, 0, 0, 0.12)',
-  'bq-box-shadow--l': '0 20px 58px -16px rgba(0, 0, 0, 0.16)',
+  // Box Shadow (light values; mode objects override them)
+  ...LIGHT_BOX_SHADOWS,
   // Fonts
   'bq-font-family': "'Outfit', sans-serif",
   'bq-font-size--xs': '0.75rem', // 12px

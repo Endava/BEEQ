@@ -1,6 +1,6 @@
 # BEEQ TailwindCSS Preset
 
-BEEQ TailwindCSS is a preset that adds BEEQ's opinionated TailwindCSS configuration to your application.
+BEEQ TailwindCSS is a preset that adds BEEQ's opinionated TailwindCSS configuration to your application. It works with Tailwind CSS v3 and v4.
 
 ## Prerequisites 🧰
 
@@ -8,7 +8,7 @@ Before starting to use BEEQ TailwindCSS, you need to have installed:
 
 - [TailwindCSS](https://tailwindcss.com/docs/installation)
 
-Make sure that Tailwind CSS directives are added to your main CSS file:
+With Tailwind CSS v3, make sure that the Tailwind CSS directives are added to your main CSS file:
 
 ```css
 @tailwind base;
@@ -23,6 +23,23 @@ npm i -D @beeq/tailwindcss
 ```
 
 ## Usage 🚀
+
+### Tailwind CSS v4
+
+Load the preset with `@plugin` in your CSS entry file:
+
+```css
+@import "tailwindcss";
+@plugin "@beeq/tailwindcss";
+```
+
+> Note: `@beeq/tailwindcss` 1.16.2 and earlier fail with `@plugin` (`b is not a function`). On those versions, use `@config "@beeq/tailwindcss";` instead.
+
+> Note: If you also import `@beeq/core/dist/beeq/beeq.css`, import it into Tailwind's `base` layer: `@import "@beeq/core/dist/beeq/beeq.css" layer(base);`. `beeq.css` is unlayered, and unlayered styles override Tailwind CSS v4 utilities, so its reset would turn `mx-auto` into `margin: 0`.
+
+> Note: For stroke widths, use `border-stroke-s`, `border-stroke-m`, and `border-stroke-l`. Tailwind CSS v4 also reads `border-s` and `border-l` as its own inline-start and left border utilities, so those classes add a `1px` side border on top of the BEEQ stroke width.
+
+### Tailwind CSS v3
 
 ```js
 const beeqPreset = require('@beeq/tailwindcss');
@@ -48,7 +65,21 @@ export default {
 
 ## CSS reset 🧹
 
-The preset includes a CSS reset that removes all the default browser styles. If you want to use your own reset, you can add your own CSS reset code to the `@base` layer of TailwindCSS:
+The preset includes an opinionated CSS reset, the same one `@beeq/core` ships in `beeq.css`. Most of its selectors use `:where()`, so they have zero specificity and your own styles override them. See the [full list of rules](https://www.beeq.design/getting-started/installation#css-reset).
+
+To add your own reset rules on top, put them in Tailwind's `base` layer.
+
+Tailwind CSS v4:
+
+```css
+@import "tailwindcss";
+@plugin "@beeq/tailwindcss";
+@layer base {
+  /* Your CSS reset code */
+}
+```
+
+Tailwind CSS v3:
 
 ```css
 @tailwind base;

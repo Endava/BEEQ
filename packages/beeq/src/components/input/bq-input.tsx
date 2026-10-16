@@ -68,12 +68,18 @@ import type { TInputType, TInputValidation, TInputValue } from './bq-input.types
  * @cssprop --bq-input--background-color - Input background color
  * @cssprop --bq-input--border-color - Input border color
  * @cssprop --bq-input--border-color-focus - Input border color on focus
+ * @cssprop --bq-input--border-color-danger - Input border color when the validation status is `error`
+ * @cssprop --bq-input--border-color-success - Input border color when the validation status is `success`
+ * @cssprop --bq-input--border-color-warning - Input border color when the validation status is `warning`
  * @cssprop --bq-input--border-radius - Input border radius
  * @cssprop --bq-input--border-width - Input border width
  * @cssprop --bq-input--border-style - Input border style
  * @cssprop --bq-input--gap - Gap between input content and prefix/suffix
  * @cssprop --bq-input--helper-margin-top - Helper text margin top
  * @cssprop --bq-input--helper-text-color - Helper text color
+ * @cssprop --bq-input--helper-text-color-danger - Helper text color when the validation status is `error`
+ * @cssprop --bq-input--helper-text-color-success - Helper text color when the validation status is `success`
+ * @cssprop --bq-input--helper-text-color-warning - Helper text color when the validation status is `warning`
  * @cssprop --bq-input--helper-text-size - Helper text size
  * @cssprop --bq-input--icon-size - Icon size to use in prefix/suffix and clear button
  * @cssprop --bq-input--label-margin-bottom - Input label margin bottom
@@ -104,7 +110,7 @@ export class BqInput {
   private prefixElem?: HTMLElement;
   private suffixElem?: HTMLElement;
 
-  private debounceBqInput: TDebounce<void>;
+  private debounceBqInput?: TDebounce<[TInputValue]>;
   private fallbackInputId = 'input';
 
   // Reference to host HTML element
@@ -149,7 +155,7 @@ export class BqInput {
 
   /**
    * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes.
-   * A value of 0 means no debouncing will occur.
+   * With `0` (default), the event is emitted synchronously.
    */
   @Prop({ reflect: true, mutable: true }) debounceTime? = 0;
 
@@ -240,7 +246,10 @@ export class BqInput {
    */
   @Prop({ reflect: true }) validationStatus: TInputValidation = 'none';
 
-  /** The input value, it can be used to reset the input to a previous value */
+  /**
+   * The input value, it can be used to reset the input to a previous value.
+   * User-entered number values are numbers; empty or incomplete numeric input and Clear use an empty string.
+   */
   @Prop({ reflect: true, mutable: true }) value: TInputValue;
 
   // Prop lifecycle events
@@ -255,7 +264,7 @@ export class BqInput {
       return;
     }
 
-    this.hasValue = isDefined(value);
+    this.hasValue = value === 0 || isDefined(value);
     internals.setFormValue(!isNil(value) ? `${value}` : undefined);
     this.updateFormValidity();
   }
@@ -263,6 +272,15 @@ export class BqInput {
   @Watch('required')
   handleRequiredPropChange() {
     this.updateFormValidity();
+  }
+
+  @Watch('debounceTime')
+  handleDebounceTimeChange() {
+    this.debounceBqInput?.cancel();
+    this.debounceBqInput =
+      this.debounceTime > 0
+        ? debounce((value: TInputValue) => this.bqInput.emit({ value, el: this.el }), this.debounceTime)
+        : undefined;
   }
 
   // Events section
@@ -275,6 +293,7 @@ export class BqInput {
   /**
    * Callback handler emitted when the input value has changed and the input loses focus.
    * This handler is called whenever the user finishes typing or pasting text into the input field and then clicks outside of the input field.
+   * Numeric input emits a number when complete and an empty string when empty or incomplete.
    */
   @Event() bqChange!: EventEmitter<{ value: string | number | string[]; el: HTMLBqInputElement }>;
 
@@ -287,6 +306,7 @@ export class BqInput {
   /**
    * Callback handler emitted when the input value changes.
    * This handler is called whenever the user types or pastes text into the input field.
+   * Numeric input emits a number when complete and an empty string when empty or incomplete.
    */
   @Event() bqInput!: EventEmitter<{ value: string | number | string[]; el: HTMLBqInputElement }>;
 
@@ -296,10 +316,15 @@ export class BqInput {
 
   componentWillLoad() {
     this.handleValueChange();
+    this.handleDebounceTimeChange();
   }
 
   componentDidLoad() {
     this.handleSlotChange();
+  }
+
+  disconnectedCallback() {
+    this.debounceBqInput?.cancel();
   }
 
   formAssociatedCallback() {
@@ -340,25 +365,33 @@ export class BqInput {
     this.bqFocus.emit(this.el);
   };
 
+  private getInputValue = (input: HTMLInputElement): string | number => {
+    const { value } = input;
+    return this.type === 'number' && value !== '' ? Number(value) : value;
+  };
+
   private handleInput = (ev: Event) => {
     if (this.disabled) return;
-
-    this.debounceBqInput?.cancel();
-
     if (!isHTMLElement(ev.target, 'input')) return;
-    this.value = this.type === 'number' ? Number(ev.target.value) : ev.target.value;
 
-    this.debounceBqInput = debounce(() => {
-      this.bqInput.emit({ value: this.value, el: this.el });
-    }, this.debounceTime);
-    this.debounceBqInput();
+    this.value = this.getInputValue(ev.target);
+    this.emitBqInput(this.value);
+  };
+
+  private emitBqInput = (value: TInputValue) => {
+    if (this.debounceBqInput) {
+      this.debounceBqInput(value);
+      return;
+    }
+
+    this.bqInput.emit({ value, el: this.el });
   };
 
   private handleChange = (ev: Event) => {
     if (this.disabled) return;
 
     if (!isHTMLElement(ev.target, 'input')) return;
-    this.value = this.type === 'number' ? Number(ev.target.value) : ev.target.value;
+    this.value = this.getInputValue(ev.target);
     // Update form value and validity
     this.setFormValue(`${this.value}`);
     this.updateFormValidity();
@@ -370,6 +403,8 @@ export class BqInput {
     if (this.disabled) return;
 
     const { inputElem, setFormValue, updateFormValidity } = this;
+    // Drop a pending debounced `bqInput` so a stale value can't arrive after the clear
+    this.debounceBqInput?.cancel();
     // Clear input element value
     inputElem.value = '';
     this.value = inputElem.value;
@@ -401,14 +436,14 @@ export class BqInput {
     // Clear the validity state
     internals?.states.clear();
 
-    if (required && (!value || value.toString().trim() === '')) {
+    if (required && (isNil(value) || value.toString().trim() === '')) {
       // Set validity state to invalid
       internals?.states.add('invalid');
       internals?.setValidity({ valueMissing: true }, formValidationMessage || 'This field is required', inputElem);
       return;
     }
 
-    // Set validity state to valid if textarea has value or is not required
+    // Set validity state to valid if input has value or is not required
     internals?.states.add('valid');
     internals?.setValidity({});
   };
@@ -488,7 +523,7 @@ export class BqInput {
             required={this.required}
             step={this.step}
             type={this.type}
-            value={this.value}
+            value={this.value?.toString() ?? ''}
           />
           {/* Clear Button */}
           {this.hasValue && !this.disabled && !this.disableClear && (

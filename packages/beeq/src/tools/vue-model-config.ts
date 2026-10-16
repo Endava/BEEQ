@@ -7,7 +7,15 @@ export const vueComponentModels: ComponentModelConfig[] = [
     targetAttr: 'checked',
   },
   {
-    elements: ['bq-date-picker', 'bq-input', 'bq-radio-group', 'bq-select', 'bq-slider', 'bq-textarea'],
+    elements: [
+      'bq-date-picker',
+      'bq-input',
+      'bq-radio-group',
+      'bq-select',
+      'bq-slider',
+      'bq-textarea',
+      'bq-time-picker',
+    ],
     event: 'bqChange',
     targetAttr: 'value',
   },

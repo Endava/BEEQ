@@ -22,15 +22,15 @@
 }
 
 .bq-select__helper-text.validation-error {
-  @apply text-danger;
+  @apply text-[color:--bq-select--helper-text-color-danger];
 }
 
 .bq-select__helper-text.validation-success {
-  @apply text-success;
+  @apply text-[color:--bq-select--helper-text-color-success];
 }
 
 .bq-select__helper-text.validation-warning {
-  @apply text-warning;
+  @apply text-[color:--bq-select--helper-text-color-warning];
 }
 
 /* -------------------------------------------------------------------------- */
@@ -78,32 +78,35 @@
 /* ------------------------------- Validation ------------------------------- */
 
 .bq-select__control.validation-error {
-  @apply border-danger [&:not(.disabled):not(:focus-within)]:hover:border-hover-danger;
+  @apply border-[color:--bq-select--border-color-danger];
+  @apply [&:not(.disabled):not(:focus-within)]:hover:border-[color:color-mix(in_srgb,_var(--bq-select--border-color-danger),_var(--bq-hover)_20%)];
 
   &:not(.disabled):focus-within {
-    --bq-ring-color-focus: theme(stroke.danger);
+    --bq-ring-color-focus: var(--bq-select--border-color-danger);
 
-    @apply border-active-danger;
+    @apply border-[color:color-mix(in_srgb,_var(--bq-select--border-color-danger),_var(--bq-active)_20%)];
   }
 }
 
 .bq-select__control.validation-success {
-  @apply border-success [&:not(.disabled):not(:focus-within)]:hover:border-hover-success;
+  @apply border-[color:--bq-select--border-color-success];
+  @apply [&:not(.disabled):not(:focus-within)]:hover:border-[color:color-mix(in_srgb,_var(--bq-select--border-color-success),_var(--bq-hover)_20%)];
 
   &:not(.disabled):focus-within {
-    --bq-ring-color-focus: theme(stroke.success);
+    --bq-ring-color-focus: var(--bq-select--border-color-success);
 
-    @apply border-active-success;
+    @apply border-[color:color-mix(in_srgb,_var(--bq-select--border-color-success),_var(--bq-active)_20%)];
   }
 }
 
 .bq-select__control.validation-warning {
-  @apply border-warning [&:not(.disabled):not(:focus-within)]:hover:border-hover-warning;
+  @apply border-[color:--bq-select--border-color-warning];
+  @apply [&:not(.disabled):not(:focus-within)]:hover:border-[color:color-mix(in_srgb,_var(--bq-select--border-color-warning),_var(--bq-hover)_20%)];
 
   &:not(.disabled):focus-within {
-    --bq-ring-color-focus: theme(stroke.warning);
+    --bq-ring-color-focus: var(--bq-select--border-color-warning);
 
-    @apply border-active-warning;
+    @apply border-[color:color-mix(in_srgb,_var(--bq-select--border-color-warning),_var(--bq-active)_20%)];
   }
 }
 

@@ -13,25 +13,111 @@
 }
 
 .bq-option {
-  @apply flex cursor-pointer items-center text-[length:--bq-option--font-size] text-primary is-full;
-  @apply p-b-[--bq-option--paddingY] p-i-[--bq-option--paddingY];
-  @apply rounded-[--bq-option--border-radius] bg-[--bq-option--background] shadow-[shadow:--bq-option--box-shadow];
-  @apply border-[length:--bq-option--border-width] border-[color:--bq-option--border-color];
-  // Transition
-  @apply transition-colors duration-150 ease-in-out;
-  // Focus
-  @apply enabled:focus-visible:focus;
-  // Hover
-  @apply enabled:hover:bg-hover-ui-secondary;
-  // Active
-  @apply enabled:[&.active]:bg-ui-brand-alt enabled:[&.active]:text-brand;
-  // Disabled
-  @apply disabled:cursor-not-allowed disabled:opacity-60;
-
-  border-style: var(--bq-option--border-style);
+  @apply flex min-is-0 flex-1 cursor-pointer items-center bg-transparent text-[length:--bq-option--font-size] text-inherit outline-none;
+  @apply border-0 p-0 hover:bg-transparent;
 }
 
 .bq-option__label {
   @apply inline-block flex-auto overflow-hidden text-ellipsis text-start whitespace-nowrap;
-  @apply pe-[--bq-option-label--padding-end] ps-[--bq-option-label--padding-start];
+}
+
+.bq-option__checkbox,
+.bq-option__checkbox::part(base),
+.bq-option__checkbox::part(label) {
+  @apply is-full;
+}
+
+.bq-option__checkbox {
+  @apply inline-flex;
+}
+
+.bq-option__checkbox::part(base) {
+  @apply rounded-none bg-transparent p-0;
+}
+
+:host([selected]) .bq-option__checkbox::part(label) {
+  @apply text-[color:--bq-option--text-color-selected];
+}
+
+.bq-option__item {
+  @apply flex cursor-pointer items-center rounded-[--bq-option--border-radius] bg-[--bq-option--background] text-[color:--bq-option--text-color] shadow-[shadow:--bq-option--box-shadow];
+  @apply border-[length:--bq-option--border-width] border-[color:--bq-option--border-color] transition-colors duration-150 ease-in-out;
+  @apply pe-[--bq-option--padding-end] ps-[--bq-option--padding-start] p-b-[--bq-option--paddingY] hover:bg-[color-mix(in_srgb,_var(--bq-option--background-hover),_var(--bq-hover)_20%)] focus-within:focus;
+
+  border-style: var(--bq-option--border-style);
+}
+
+.bq-option__item--flat {
+  @apply p-0;
+}
+
+.bq-option__item--flat > .bq-option {
+  @apply cursor-inherit;
+}
+
+.bq-option__item--flat > .bq-option,
+.bq-option__item--flat > .bq-option__checkbox::part(base) {
+  @apply pe-[--bq-option--padding-end] ps-[--bq-option--padding-start] p-b-[--bq-option--paddingY];
+}
+
+:host(:focus) .bq-option__item {
+  @apply focus;
+}
+
+:host(:focus) {
+  outline: none;
+}
+
+:host([selected]) .bq-option__item {
+  @apply bg-[--bq-option--background-selected] text-[color:--bq-option--text-color-selected];
+}
+
+.bq-option__item > .bq-option,
+.bq-option__item > .bq-option__checkbox {
+  @apply flex-1 min-is-0;
+}
+
+:host([disabled]) .bq-option__item {
+  @apply cursor-not-allowed opacity-60;
+}
+
+.bq-option__expand::part(button) {
+  --bq-button--border-radius: var(--bq-radius--s);
+  --bq-button--small-font-size: var(--bq-font-size--xs);
+
+  @apply text-inherit enabled:hover:bg-transparent enabled:hover:text-[color:--bq-option--expand-text-color-hover];
+}
+
+.bq-option__selection-summary {
+  @apply ms-s shrink-0 text-s text-[color:--bq-option--selection-summary-color];
+}
+
+.bq-option__options {
+  @apply m-bs-xs2 ms-[calc(var(--bq-option--padding-start)_*_2)] flex flex-col gap-y-xs2 ps-s;
+}
+
+:host([slot='options']) {
+  position: relative;
+}
+
+:host([slot='options'])::before {
+  content: '';
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: calc(-1 * var(--bq-option--padding-start));
+  block-size: 50%;
+  inline-size: var(--bq-option--padding-start);
+  border-block-end: 1px solid var(--bq-option--tree-line-color);
+  border-inline-start: 1px solid var(--bq-option--tree-line-color);
+  margin-inline-start: -1px;
+}
+
+:host([slot='options']:not(:last-child))::after {
+  content: '';
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: calc(-1 * var(--bq-option--padding-start));
+  block-size: calc(50% + var(--bq-option-group--gapY-list));
+  border-inline-start: 1px solid var(--bq-option--tree-line-color);
+  margin-inline-start: -1px;
 }

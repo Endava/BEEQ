@@ -1,0 +1,29 @@
+name: save-error-alert
+metadata:
+  stack: angular
+  tags: [patterns, selection]
+instruction: >-
+  In an Angular profile form with name and email fields, handle a failed save: keep what the user
+  typed and let them try again.
+workspace:
+  - src: '{{evals}}/fixtures/angular'
+    dest: .
+expected:
+  criteria: >-
+    The form and the user's values stay on screen, so the failure is a message about that content:
+    an inline bq-alert of type error, opened by the failed save and placed with the form, saying the
+    save failed and that trying again is safe. The answer does not replace the form with an empty
+    state, and a toast, if used, is not the only copy of the error. Retrying resubmits the same
+    values, through the Save button or an action in the alert's footer. The fields keep their labels,
+    and the project imports the BEEQ stylesheet once.
+  checks:
+    - name: alert
+      match: '<bq-alert\b[^>]*\btype\]?="''?error'
+    - name: alert-opens
+      match: '<bq-alert\b[^>]*\[?open\b'
+    - name: fields
+      match: '<bq-input\b[\s\S]*<bq-input\b'
+    - name: no-empty-state
+      absent: '<bq-empty-state\b'
+    - name: stylesheet
+      match: '@beeq/core(@[^/]+)?/dist/beeq/beeq\.css'

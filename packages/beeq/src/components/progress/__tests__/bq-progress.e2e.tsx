@@ -9,15 +9,18 @@ const getTooltip = (element: HTMLBqProgressElement) =>
   element.shadowRoot?.querySelector<HTMLBqTooltipElement>('bq-tooltip');
 const getIndeterminate = (element: HTMLBqProgressElement) =>
   element.shadowRoot?.querySelector<HTMLDivElement>('[part="indeterminate"]');
-const getComputedColor = (color: string) => {
-  const element = document.createElement('div');
-  element.style.color = color;
-  document.body.append(element);
-
-  const computedColor = getComputedStyle(element).color;
-  element.remove();
-
-  return computedColor;
+const resolveColor = (value: string) => {
+  const probe = document.createElement('span');
+  probe.style.color = value;
+  document.body.appendChild(probe);
+  const { color } = getComputedStyle(probe);
+  probe.remove();
+  return color;
+};
+const getAlignmentError = (element: HTMLBqProgressElement) => {
+  const bar = getProgressBar(element).getBoundingClientRect();
+  const panel = getTooltip(element).shadowRoot.querySelector<HTMLElement>('[part="panel"]').getBoundingClientRect();
+  return Math.abs(panel.left + panel.width / 2 - (bar.left + (bar.width * element.value) / 100));
 };
 
 describe('bq-progress', () => {
@@ -59,7 +62,7 @@ describe('bq-progress', () => {
     const label = getLabel(bqProgress);
 
     expect(label).toEqualAttribute('aria-hidden', 'true');
-    expect(getComputedStyle(label).visibility).toBe('hidden');
+    expect(label).toHaveClass('invisible');
   });
 
   it('should render the progress bar with tooltip', async () => {
@@ -82,14 +85,82 @@ describe('bq-progress', () => {
     expect(getTooltip(tooltip)).toBeNull();
   });
 
+  it('should follow the progress endpoint after value and width changes', async () => {
+    const { root, setProps } = await render(
+      <bq-progress enableTooltip value={20} style={{ width: '60vw', margin: '100px auto', display: 'block' }} />,
+    );
+    const progress = root as HTMLBqProgressElement;
+
+    for (const value of [20, 50, 80, 30]) {
+      await setProps({ value });
+      await expect.poll(() => getAlignmentError(progress)).toBeLessThanOrEqual(2);
+      const tooltip = getTooltip(progress);
+      const panel = tooltip.shadowRoot.querySelector<HTMLElement>('[part="panel"]');
+      expect(panel).toEqualAttribute('aria-hidden', 'false');
+      expect(getComputedStyle(panel).visibility).toBe('visible');
+      expect(tooltip.textContent.trim()).toBe(String(value));
+    }
+    progress.style.width = '40vw';
+    await expect.poll(() => getAlignmentError(progress)).toBeLessThanOrEqual(2);
+
+    const tooltip = getTooltip(progress);
+    await setProps({ indeterminate: true });
+    expect(getTooltip(progress)).toBeNull();
+    expect(tooltip.isConnected).toBe(false);
+    await setProps({ indeterminate: false });
+    await expect.poll(() => getAlignmentError(progress)).toBeLessThanOrEqual(2);
+    await setProps({ enableTooltip: false });
+    expect(getTooltip(progress)).toBeNull();
+  });
+
   it('should render the error type styles', async () => {
     const { root } = await render(<bq-progress label type="error" value={60} />);
     const bqProgress = root as HTMLBqProgressElement;
 
     await waitForStable(bqProgress);
 
-    expect(bqProgress).toEqualAttribute('type', 'error');
-    expect(getComputedStyle(getLabel(bqProgress)).color).toBe(getComputedColor('var(--bq-text--danger)'));
+    expect(getProgressBar(bqProgress)).toHaveClass('progress-bar__error');
+    expect(getComputedStyle(getLabel(bqProgress)).color).toBe(resolveColor('var(--bq-text--danger)'));
+    // The public indicator colour must not be mutated by the error type
+    expect(bqProgress.style.getPropertyValue('--bq-progress-bar--indicatorColor')).toBe('');
+  });
+
+  it('should use the default label and indicator colours', async () => {
+    const { root } = await render(<bq-progress indeterminate label />);
+    const bqProgress = root as HTMLBqProgressElement;
+
+    await waitForStable(bqProgress);
+
+    expect(getComputedStyle(getLabel(bqProgress)).color).toBe(resolveColor('var(--bq-text--primary)'));
+    expect(getComputedStyle(getIndeterminate(bqProgress)).backgroundColor).toBe(resolveColor('var(--bq-ui--brand)'));
+  });
+
+  it('should use the error indicator colour for the indeterminate error state', async () => {
+    const { root } = await render(<bq-progress indeterminate type="error" />);
+    const bqProgress = root as HTMLBqProgressElement;
+
+    await waitForStable(bqProgress);
+
+    expect(getComputedStyle(getIndeterminate(bqProgress)).backgroundColor).toBe(resolveColor('var(--bq-ui--danger)'));
+  });
+
+  it('should apply custom error colour overrides', async () => {
+    const { root } = await render(
+      <bq-progress
+        indeterminate
+        style={{
+          '--bq-progress-bar--indicatorColor-error': 'rgb(255, 0, 0)',
+          '--bq-progress-bar--label-color-error': 'rgb(0, 0, 255)',
+        }}
+        type="error"
+      />,
+    );
+    const bqProgress = root as HTMLBqProgressElement;
+
+    await waitForStable(bqProgress);
+
+    expect(getComputedStyle(getIndeterminate(bqProgress)).backgroundColor).toBe('rgb(255, 0, 0)');
+    expect(getComputedStyle(getLabel(bqProgress)).color).toBe('rgb(0, 0, 255)');
   });
 
   it('should render the large thickness styles', async () => {
@@ -98,7 +169,7 @@ describe('bq-progress', () => {
 
     await waitForStable(bqProgress);
 
-    expect(getComputedStyle(getProgressBar(bqProgress)).blockSize).toBe('8px');
+    expect(bqProgress.style.getPropertyValue('--bq-progress-bar--height')).toBe('var(--bq-spacing-xs)');
   });
 
   it('should clamp the value to the supported range', async () => {
@@ -127,18 +198,14 @@ describe('bq-progress', () => {
     const { root } = await render(<bq-progress borderShape="rounded" value={60} />);
     const bqProgress = root as HTMLBqProgressElement;
 
-    await waitForStable(bqProgress);
-
-    expect(getComputedStyle(getProgressBar(bqProgress)).borderRadius).toBe('9999px');
+    expect(getProgressBar(bqProgress)).toHaveClass('progress-bar__border-shape');
   });
 
   it('should render the square border shape without rounded styles', async () => {
     const { root } = await render(<bq-progress borderShape="square" value={60} />);
     const bqProgress = root as HTMLBqProgressElement;
 
-    await waitForStable(bqProgress);
-
-    expect(getComputedStyle(getProgressBar(bqProgress)).borderRadius).toBe('0px');
+    expect(getProgressBar(bqProgress)).not.toHaveClass('progress-bar__border-shape');
   });
 
   it('should not render tooltip content for indeterminate progress', async () => {

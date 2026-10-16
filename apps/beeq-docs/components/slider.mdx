@@ -77,6 +77,8 @@ Every slider supports five states: **default**, **hover**, **focus**, **active**
 
 Use `enable-value-indicator` to show the numeric value beside the track at all times. This is appropriate when the exact number matters to the user, such as a temperature, percentage, or step count. Use `enable-tooltip` when you want feedback only while the user is actively dragging, keeping the interface clean at rest. Pair it with `tooltip-always-visible` to keep the tooltip permanently visible.
 
+Tooltips stay aligned with their thumbs when the value or slider width changes. Transient tooltips stop tracking while idle; permanently visible tooltips continue tracking movement. Use transient tooltips when a page contains many sliders and their values do not need to stay visible.
+
 ### Width
 
 The slider fills its container's available width. Constrain the width of its parent container to control how large the track appears — a very short track makes precise selection difficult.
@@ -850,14 +852,14 @@ As a developer you are responsible for:
 | `step` | `step` | Increment between selectable values; selected values are rounded to the nearest multiple of `step` | `number` | `1` |
 | `tooltipAlwaysVisible` | `tooltip-always-visible` | If true, the tooltip is permanently visible; requires `enable-tooltip` to be set | `boolean` | `false` |
 | `type` | `type` | Slider variant — `single` for one handle, `range` for two handles | `'single' \| 'range'` | `'single'` |
-| `value` | `value` | Current value. A number for `single` type (e.g. `30`); a two-element array string for `range` type (e.g. `"[20,70]"`). In React and Vue, pass the array directly: `value={[20, 70]}`. | `number \| [number, number] \| string` | — |
+| `value` | `value` | Current value. A number for `single` type (e.g. `30`); a two-element array string for `range` type (e.g. `"[20,70]"`). In React and Vue, pass the array directly: `value={[20, 70]}`. | `number \| number[] \| string` | — |
 
 ### Events
 
 | Event | Description | Type |
 |---|---|---|
 | `bqBlur` | Emitted when the slider loses focus | `CustomEvent<HTMLBqSliderElement>` |
-| `bqChange` | Emitted when the slider value changes | `CustomEvent<{ value: number \| [number, number]; el: HTMLBqSliderElement }>` |
+| `bqChange` | Emitted when the slider value changes | `CustomEvent<{ value: number \| number[]; el: HTMLBqSliderElement }>` |
 | `bqFocus` | Emitted when the slider gains focus | `CustomEvent<HTMLBqSliderElement>` |
 
 ### Slots
@@ -881,13 +883,18 @@ As a developer you are responsible for:
 
 ### CSS custom properties
 
-| Variable | Description | Default |
-|---|---|---|
-| `--bq-slider--size` | Height of the track and progress area | `4px` |
-| `--bq-slider--border-radius` | Border radius of the track and progress area | `var(--bq-radius--xs)` |
-| `--bq-slider--thumb-size` | Size of the draggable thumb on hover | `13px` |
-| `--bq-slider--progress-color` | Background color of the filled progress segment | `var(--bq-ui--brand)` |
-| `--bq-slider--trackarea-color` | Background color of the unfilled track area | `var(--bq-ui--secondary)` |
+<Expandable title="CSS variables" defaultOpen={true}>
+  | Variable | Description | Default |
+  |---|---|---|
+  | `--bq-slider--size` | Height of the track and progress area | `4px` |
+  | `--bq-slider--border-radius` | Border radius of the track and progress area | `var(--bq-radius--xs)` |
+  | `--bq-slider--thumb-size` | Size of the draggable thumb on hover | `13px` |
+  | `--bq-slider--thumb-background` | Background color of the draggable thumb | `var(--bq-ui--primary)` |
+  | `--bq-slider--thumb-border-color` | Border color of the draggable thumb | `var(--bq-stroke--brand)` |
+  | `--bq-slider--progress-color` | Background color of the filled progress segment | `var(--bq-ui--brand)` |
+  | `--bq-slider--trackarea-color` | Background color of the unfilled track area | `var(--bq-ui--tertiary)` |
+  | `--bq-slider--label-color` | Text color of the value indicator (label) | `var(--bq-text--primary)` |
+</Expandable>
 
 <Tip>
   Learn more about [styling with shadow parts](/guides/styles) and [CSS custom properties](/theming/global-css-variables).

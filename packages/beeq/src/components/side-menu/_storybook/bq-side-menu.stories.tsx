@@ -2,6 +2,7 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
+import { fn } from 'storybook/test';
 
 import { SIDE_MENU_APPEARANCE, SIDE_MENU_SIZE } from '../bq-side-menu.types';
 import mdx from './bq-side-menu.mdx';
@@ -19,9 +20,6 @@ const meta: Meta = {
     appearance: { control: 'select', options: [...SIDE_MENU_APPEARANCE] },
     collapse: { control: 'boolean' },
     size: { control: 'inline-radio', options: [...SIDE_MENU_SIZE] },
-    // Events
-    bqCollapse: { action: 'bqCollapse' },
-    bqSelect: { action: 'bqSelect' },
     // Not part of the public API
     footerContent: { control: 'text', table: { disable: true } },
   },
@@ -29,6 +27,9 @@ const meta: Meta = {
     appearance: 'default',
     collapse: false,
     size: SIDE_MENU_SIZE[0],
+    // Events
+    bqCollapse: fn(),
+    bqSelect: fn(),
   },
 };
 export default meta;

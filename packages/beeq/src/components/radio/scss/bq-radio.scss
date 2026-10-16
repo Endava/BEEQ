@@ -16,11 +16,11 @@
     @apply cursor-not-allowed opacity-60;
 
     &.is-checked .bq-radio__circle {
-      @apply border-icon-brand;
+      @apply border-[color:--bq-radio--border-color-checked];
     }
 
     &.is-checked .bq-radio__checked {
-      @apply bg-ui-brand;
+      @apply bg-[--bq-radio--dot-color-checked];
     }
   }
 
@@ -30,11 +30,11 @@
 
   &.is-checked:not(.is-disabled) {
     .bq-radio__circle {
-      @apply border-icon-brand;
+      @apply border-[color:--bq-radio--border-color-checked];
     }
 
     .bq-radio__checked {
-      @apply bg-ui-brand;
+      @apply bg-[--bq-radio--dot-color-checked];
     }
   }
 
@@ -45,8 +45,12 @@
   &.is-checked:not(.is-disabled):hover {
     .bq-radio__checked,
     .bq-radio__circle {
-      @apply border-hover-icon-brand;
+      @apply border-[color:color-mix(in_srgb,_var(--bq-radio--border-color-checked),_var(--bq-hover)_20%)];
     }
+  }
+
+  &:not(.is-disabled):hover .bq-radio__label {
+    @apply text-[color-mix(in_srgb,_var(--bq-radio--label-text-color),_var(--bq-hover)_20%)];
   }
 }
 
@@ -65,7 +69,7 @@
 }
 
 .bq-radio__circle {
-  @apply relative box-border flex items-center justify-center bg-[--bq-radio--background-color] rounded-full border-[length:--bq-radio--border-width] border-solid border-hover-icon-primary bs-full is-full p-b-[3px] p-i-[3px];
+  @apply relative box-border flex items-center justify-center bg-[--bq-radio--background-color] rounded-full border-[length:--bq-radio--border-width] border-solid border-[color:--bq-radio--border-color] bs-full is-full p-b-[3px] p-i-[3px];
 }
 
 .bq-radio__checked {
@@ -73,7 +77,7 @@
 }
 
 .bq-radio__label {
-  @apply font-medium leading-regular text-primary;
+  @apply font-medium leading-regular text-[--bq-radio--label-text-color];
 }
 
 .bq-radio__circle,

@@ -27,6 +27,21 @@ const mkGroup = (
   </bq-tab-group>
 );
 
+const getTabButton = (root: HTMLElement, tabId: string) =>
+  root
+    .querySelector<HTMLBqTabElement>(`bq-tab[tab-id="${tabId}"]`)
+    ?.shadowRoot?.querySelector<HTMLButtonElement>('button');
+
+/** Resolves a CSS color value (e.g. `var(--bq-text--brand)`) to its computed `rgb()` form */
+const resolveColor = (value: string): string => {
+  const probe = document.createElement('div');
+  probe.style.color = value;
+  document.body.appendChild(probe);
+  const { color } = getComputedStyle(probe);
+  probe.remove();
+  return color;
+};
+
 describe('bq-tab-group', () => {
   it('should render', async () => {
     const { root } = await render(mkGroup());
@@ -74,6 +89,45 @@ describe('bq-tab-group', () => {
 
     const changeEvent = bqChange.events[0];
     expect(changeEvent.detail.value).toBe('2');
+  });
+
+  it('should emit bqChange synchronously on tab click with the default debounceTime', async () => {
+    const { root, spyOnEvent } = await render(mkGroup());
+    const bqChange = spyOnEvent('bqChange');
+
+    getTabButton(root, '2').click();
+
+    // Asserted before any await: the event is emitted inside the click
+    expect(bqChange).toHaveReceivedEventTimes(1);
+    expect(bqChange.events[0].detail.value).toBe('2');
+  });
+
+  it('should emit only the latest value after a positive debounceTime', async () => {
+    const { root, spyOnEvent } = await render(
+      <bq-tab-group value="1" debounceTime={100}>
+        <bq-tab tabId="1" controls="panel-1">
+          Tab 1
+        </bq-tab>
+        <bq-tab tabId="2" controls="panel-2">
+          Tab 2
+        </bq-tab>
+        <bq-tab tabId="3" controls="panel-3">
+          Tab 3
+        </bq-tab>
+      </bq-tab-group>,
+    );
+    const bqChange = spyOnEvent('bqChange');
+
+    getTabButton(root, '2').click();
+    getTabButton(root, '3').click();
+
+    expect(bqChange).toHaveReceivedEventTimes(0);
+
+    await new Promise((resolve) => setTimeout(resolve, 200));
+
+    expect(bqChange).toHaveReceivedEventTimes(1);
+    expect(bqChange.events[0].detail.value).toBe('3');
+    expect((root as HTMLBqTabGroupElement).value).toBe('3');
   });
 
   it('should emit bqChange on keyboard navigation via arrow keys', async () => {
@@ -181,5 +235,23 @@ describe('bq-tab-group', () => {
 
     expect(root).toEqualAttribute('orientation', 'vertical');
     expect(window.getComputedStyle(tabs).flexDirection).toBe('column');
+  });
+
+  it('should use the border color variable for the divider', async () => {
+    const { root } = await render(
+      <bq-tab-group>
+        <bq-tab tabId="1" controls="panel-1">
+          Tab 1
+        </bq-tab>
+      </bq-tab-group>,
+    );
+
+    const hostStyle = getComputedStyle(root);
+    expect(hostStyle.getPropertyValue('--bq-tab-group--border-color').trim()).toBe(
+      hostStyle.getPropertyValue('--bq-stroke--primary').trim(),
+    );
+
+    const divider = getComputedStyle(root.shadowRoot.querySelector('[part="base"]'), '::after');
+    expect(divider.borderBottomColor).toBe(resolveColor('var(--bq-stroke--primary)'));
   });
 });

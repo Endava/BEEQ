@@ -8,6 +8,15 @@ afterEach(() => {
   vi.restoreAllMocks();
 });
 
+const resolveColor = (value: string) => {
+  const probe = document.createElement('span');
+  probe.style.color = value;
+  document.body.appendChild(probe);
+  const { color } = getComputedStyle(probe);
+  probe.remove();
+  return color;
+};
+
 describe('bq-spinner', () => {
   it('should render', async () => {
     const { root } = await render(<bq-spinner />);
@@ -148,6 +157,37 @@ describe('bq-spinner', () => {
     expect(smallTextStyle).toEqual(textStyleExpected('12px'));
     expect(mediumTextStyle).toEqual(textStyleExpected('14px'));
     expect(largeTextStyle).toEqual(textStyleExpected('16px'));
+  });
+
+  it('should use the colour custom properties', async () => {
+    const { root } = await render(<bq-spinner textPosition="below">Loading...</bq-spinner>);
+
+    await waitForStable(root);
+
+    const loaderStyle = computedStyle('bq-spinner >>> .bq-spinner--loader', ['color']);
+    const textStyle = computedStyle('bq-spinner >>> .bq-spinner--text', ['color']);
+
+    expect(loaderStyle.color).toBe(resolveColor('var(--bq-icon--brand)'));
+    expect(textStyle.color).toBe(resolveColor('var(--bq-text--primary)'));
+  });
+
+  it('should apply custom colour overrides', async () => {
+    const { root } = await render(
+      <bq-spinner
+        style={{ '--bq-spinner--color': 'rgb(255, 0, 0)', '--bq-spinner--text-color': 'rgb(0, 0, 255)' }}
+        textPosition="below"
+      >
+        Loading...
+      </bq-spinner>,
+    );
+
+    await waitForStable(root);
+
+    const loaderStyle = computedStyle('bq-spinner >>> .bq-spinner--loader', ['color']);
+    const textStyle = computedStyle('bq-spinner >>> .bq-spinner--text', ['color']);
+
+    expect(loaderStyle.color).toBe('rgb(255, 0, 0)');
+    expect(textStyle.color).toBe('rgb(0, 0, 255)');
   });
 
   it('should render default slot text content', async () => {

@@ -1,6 +1,7 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, nothing } from 'lit-html';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
+import { fn } from 'storybook/test';
 
 import { isChromatic, skipSnapshotParameters } from '../../../../.storybook/chromatic-parameters';
 import { BUTTON_APPEARANCE, BUTTON_BORDER_RADIUS, BUTTON_SIZE, BUTTON_TYPE, BUTTON_VARIANT } from '../bq-button.types';
@@ -28,10 +29,6 @@ const meta: Meta = {
     target: { control: 'select', options: ['_blank', '_parent', '_self', '_top'] },
     type: { control: 'select', options: [...BUTTON_TYPE] },
     variant: { control: 'select', options: [...BUTTON_VARIANT] },
-    // Event handlers
-    bqBlur: { action: 'bqBlur' },
-    bqFocus: { action: 'bqFocus' },
-    bqClick: { action: 'bqClick' },
     // This control is not part of the component
     buttonText: { control: 'text', table: { disable: true } },
     buttonPrefix: { control: 'text', table: { disable: true } },
@@ -51,6 +48,10 @@ const meta: Meta = {
     target: undefined,
     type: 'button',
     variant: 'standard',
+    // Events
+    bqBlur: fn(),
+    bqFocus: fn(),
+    bqClick: fn(),
   },
 };
 export default meta;

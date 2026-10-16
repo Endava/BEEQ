@@ -40,8 +40,10 @@ import { getTextContent } from '../../shared/utils';
  *
  * @cssprop --bq-side-menu-item--bg-default - Side menu item default background color
  * @cssprop --bq-side-menu-item--bg-active - Side menu item active background color
+ * @cssprop --bq-side-menu-item--bg-hover - Base colour of the hover background (mixed with `--bq-hover` on hover)
  * @cssprop --bq-side-menu-item--text-default - Side menu item default text color
  * @cssprop --bq-side-menu-item--text-active - Side menu item active text color
+ * @cssprop --bq-side-menu-item--text-hover - Base colour of the hover text (mixed with `--bq-hover` on hover)
  * @cssprop --bq-side-menu-item--paddingX - Side menu item vertical padding
  * @cssprop --bq-side-menu-item--paddingY - Side menu item horizontal padding
  */
@@ -170,7 +172,6 @@ export class BqSideMenuItem {
       onClick={this.handleClick}
       onFocus={this.handleFocus}
       part="base"
-      role="menuitem"
       slot="trigger"
       tabindex={this.disabled ? -1 : 0}
       type="button"

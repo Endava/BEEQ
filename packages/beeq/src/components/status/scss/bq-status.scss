@@ -7,7 +7,7 @@
 /* ---------------------------------- Host ---------------------------------- */
 
 :host {
-  --_status-circle-background-color: var(--bq-ui--secondary);
+  --_status-circle-background-color: var(--bq-status--dot-color-neutral);
 }
 
 /* ---------------------------------- Base ---------------------------------- */
@@ -30,7 +30,7 @@
   margin-inline: 0;
   padding-block: 0;
   padding-inline: 0;
-  color: var(--bq-text--primary);
+  color: var(--bq-status--text-color);
   font-weight: var(--bq-font-weight--medium);
   font-size: var(--bq-font-size--s);
   line-height: var(--bq-font-line-height--regular);
@@ -39,19 +39,19 @@
 /* -------------------------------- Variants -------------------------------- */
 
 :host([type='alert']) {
-  --_status-circle-background-color: var(--bq-ui--warning);
+  --_status-circle-background-color: var(--bq-status--dot-color-alert);
 }
 
 :host([type='danger']) {
-  --_status-circle-background-color: var(--bq-ui--danger);
+  --_status-circle-background-color: var(--bq-status--dot-color-danger);
 }
 
 :host([type='info']) {
-  --_status-circle-background-color: var(--bq-ui--brand);
+  --_status-circle-background-color: var(--bq-status--dot-color-info);
 }
 
 :host([type='success']) {
-  --_status-circle-background-color: var(--bq-ui--success);
+  --_status-circle-background-color: var(--bq-status--dot-color-success);
 }
 
 /* ---------------------------------- Slots --------------------------------- */
@@ -62,7 +62,7 @@
   margin-inline: 0;
   padding-block: 0;
   padding-inline: 0;
-  color: var(--bq-text--primary);
+  color: var(--bq-status--text-color);
   font-weight: var(--bq-font-weight--medium);
   font-size: var(--bq-font-size--s);
   line-height: var(--bq-font-line-height--regular);

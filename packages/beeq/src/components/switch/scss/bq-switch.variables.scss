@@ -8,9 +8,23 @@
    * @prop --bq-switch--justify-content - Switch justify content
    * @prop --bq-switch--width - Switch width
    * @prop --bq-switch--dot-size - Switch dot size
+   * @prop --bq-switch--dot-color - Switch dot color
+   * @prop --bq-switch--dot-color-checked - Switch dot color when checked
+   * @prop --bq-switch--icon-color - Switch inner icon color (unchecked)
+   * @prop --bq-switch--icon-color-checked - Switch inner icon color when checked
+   * @prop --bq-switch--label-text-color - Switch label text color
+   * @prop --bq-switch--track-color - Switch track color
+   * @prop --bq-switch--track-color-checked - Switch track color when checked
    */
   --bq-switch--height: 24px;
   --bq-switch--justify-content: 'start';
   --bq-switch--width: 44px;
   --bq-switch--dot-size: calc(var(--bq-switch--height) - (theme(spacing.xs2) * 2));
+  --bq-switch--dot-color: var(--bq-ui--primary);
+  --bq-switch--dot-color-checked: var(--bq-text--on-brand);
+  --bq-switch--icon-color: var(--bq-icon--inverse);
+  --bq-switch--icon-color-checked: var(--bq-text--on-brand);
+  --bq-switch--label-text-color: var(--bq-text--primary);
+  --bq-switch--track-color: var(--bq-ui--tertiary);
+  --bq-switch--track-color-checked: var(--bq-ui--brand);
 }

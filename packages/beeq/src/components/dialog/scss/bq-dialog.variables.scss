@@ -8,6 +8,8 @@
    * @prop --bq-dialog--background - Dialog background color
    * @prop --bq-dialog--background-backdrop - Dialog backdrop background color
    * @prop --bq-dialog--box-shadow - Dialog box shadow
+   * @prop --bq-dialog--footer-background - Dialog footer background color (`highlight` footer appearance)
+   * @prop --bq-dialog--text-color - Dialog text color
    * @prop --bq-dialog--border-color - Dialog border color
    * @prop --bq-dialog--border-style - Dialog border style
    * @prop --bq-dialog--border-width - Dialog border width
@@ -21,13 +23,14 @@
    * @prop --bq-dialog-z-index - Dialog z-index applied when opened
    */
 
-  --bq-dialog--background: theme(backgroundColor.ui.primary);
-  --bq-dialog--background-backdrop: theme(backgroundColor.overlay);
-  --bq-dialog--text-color: theme(textColor.primary);
+  --bq-dialog--background: var(--bq-ui--primary);
+  --bq-dialog--background-backdrop: var(--bq-background--overlay);
+  --bq-dialog--footer-background: var(--bq-ui--alt);
+  --bq-dialog--text-color: var(--bq-text--primary);
 
   --bq-dialog--box-shadow: theme(boxShadow.l);
 
-  --bq-dialog--border-color: theme(stroke.transparent);
+  --bq-dialog--border-color: transparent;
   --bq-dialog--border-radius: theme(borderRadius.m);
   --bq-dialog--border-style: none;
   --bq-dialog--border-width: unset;

@@ -4,7 +4,7 @@ import { Component, Element, Event, Host, h, Method, Prop, State, Watch } from '
 import { getColorCSSVariable, hasSlotContent, validatePropValue } from '../../shared/utils';
 import type { TTagBorderRadius, TTagColor, TTagSize, TTagVariant } from './bq-tag.types';
 import { TAG_COLOR, TAG_SIZE, TAG_VARIANT } from './bq-tag.types';
-import { iconSize, textColor } from './helper';
+import { iconSize } from './helper';
 
 /**
  * The Tag Component is a UI element used to label and categorize content within an application.
@@ -261,12 +261,6 @@ export class BqTag {
     };
   }
 
-  private get closeIconColor(): string {
-    if (this.hasCustomColor) return 'text--alt';
-
-    return this.color ? (textColor(this.color)[this.variant] ?? 'text--primary') : 'text--primary';
-  }
-
   private get computeButtonInteractiveProps() {
     if (!this.isClickable) return {};
 
@@ -320,7 +314,7 @@ export class BqTag {
               part="btn-close"
               size="small"
             >
-              <bq-icon aria-hidden="true" color={this.closeIconColor} name="x-circle" size={iconSize(this.size)} />
+              <bq-icon aria-hidden="true" name="x-circle" size={iconSize(this.size)} />
             </bq-button>
           )}
         </TagElement>

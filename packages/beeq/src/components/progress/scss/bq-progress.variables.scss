@@ -12,5 +12,8 @@
   --bq-progress-bar--height: var(--bq-spacing-xs2);
   --bq-progress-bar--indeterminateWidth: 25%;
   --bq-progress-bar--indicatorColor: var(--bq-ui--brand);
+  --bq-progress-bar--indicatorColor-error: var(--bq-ui--danger);
+  --bq-progress-bar--label-color: var(--bq-text--primary);
+  --bq-progress-bar--label-color-error: var(--bq-text--danger);
   --bq-progress-bar--trackColor: var(--bq-ui--secondary);
 }

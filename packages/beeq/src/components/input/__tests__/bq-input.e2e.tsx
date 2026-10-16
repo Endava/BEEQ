@@ -1,6 +1,55 @@
 import { h } from '@stencil/core';
-import { describe, expect, it, render } from '@stencil/vitest';
-import { userEvent } from 'vitest/browser';
+import { afterEach, beforeEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
+import { cdp, userEvent } from 'vitest/browser';
+
+import { computedStyle } from '../../../shared/test-utils/computedStyle';
+import type { TInputValue } from '../bq-input.types';
+
+/** Resolves a CSS color value (e.g. `var(--bq-stroke--danger)`) to its computed `rgb()` form */
+const resolveColor = (value: string): string => {
+  const probe = document.createElement('div');
+  probe.style.color = value;
+  document.body.appendChild(probe);
+  const { color } = getComputedStyle(probe);
+  probe.remove();
+  return color;
+};
+
+/** Waits for any running CSS transition inside the element's shadow root to finish */
+const waitForTransitions = async (element: Element) => {
+  const animations = element.shadowRoot?.getAnimations() ?? [];
+  await Promise.all(animations.map((animation) => animation.finished));
+};
+
+const getInput = (el: HTMLBqInputElement) => el.shadowRoot?.querySelector<HTMLInputElement>('[part="input"]');
+const getClearButton = (el: HTMLBqInputElement) =>
+  el.shadowRoot?.querySelector<HTMLBqButtonElement>('[part="clear-btn"]');
+
+/** Sets the native input value and dispatches a native `input` event synchronously */
+const dispatchNativeInput = (input: HTMLInputElement, value: string) => {
+  input.value = value;
+  input.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+};
+
+const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+afterEach(() => {
+  vi.restoreAllMocks();
+});
+
+// Hover/click tests leave the Playwright cursor where they finished, so a freshly rendered element can
+// render under it and pick up `:hover` styles. Before each test, park the cursor in the bottom-right corner
+// of the top-level page (CDP coordinates), which lies outside the scaled test iframe.
+const movePointerOff = () =>
+  cdp().send('Input.dispatchMouseEvent', {
+    type: 'mouseMoved',
+    x: window.top.innerWidth - 1,
+    y: window.top.innerHeight - 1,
+  });
+
+beforeEach(async () => {
+  await movePointerOff();
+});
 
 describe('bq-input', () => {
   it('should render', async () => {
@@ -77,22 +126,60 @@ describe('bq-input', () => {
 
   it('should write and emit input event', async () => {
     const inputValue = 'Hello';
-    const { root, spyOnEvent, waitForChanges } = await render(<bq-input name="bq-input"></bq-input>);
+    const { root, spyOnEvent } = await render(<bq-input name="bq-input"></bq-input>);
     const bqInput = root as HTMLBqInputElement;
 
     const nativeInput = root.shadowRoot?.querySelector<HTMLInputElement>('.bq-input--control__input');
     const bqInputEvent = spyOnEvent('bqInput');
 
-    nativeInput?.blur();
-    await waitForChanges();
-
-    for (const char of inputValue) {
-      await userEvent.type(nativeInput, char);
-      await waitForChanges();
-    }
+    await userEvent.type(nativeInput, inputValue);
 
     expect(bqInput.value).toBe(inputValue);
     expect(bqInputEvent).toHaveReceivedEventTimes(inputValue.length);
+  });
+
+  it.each([
+    ['text', 'x', 'x'],
+    ['number', '42', 42],
+  ] as const)('should emit `bqInput` synchronously for %s input by default', async (type, text, value) => {
+    const onInput = vi.fn();
+    const { root } = await render(<bq-input name="bq-input" type={type} onBqInput={onInput} />);
+    const host = root as HTMLBqInputElement;
+
+    dispatchNativeInput(getInput(host), text);
+
+    // Asserted before any await: the event must fire inside the native `input` dispatch
+    expect(onInput).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ detail: { value, el: host } }));
+  });
+
+  it.each([
+    ['text', 'hello world', 'hello world'],
+    ['number', '12345', 12345],
+  ] as const)('should keep typed %s input when a controlled consumer re-renders stale state', async (type, text, value) => {
+    const { root } = await render(<bq-input name="bq-input" type={type} />);
+    const host = root as HTMLBqInputElement;
+    const input = getInput(host);
+
+    let state: TInputValue = '';
+    host.addEventListener('bqInput', (ev: CustomEvent<{ value: TInputValue }>) => {
+      state = ev.detail.value;
+    });
+    // Simulates an unrelated framework re-render that re-applies the controlled value from state
+    host.addEventListener(
+      'keydown',
+      () =>
+        setTimeout(() => {
+          host.value = state;
+        }, 0),
+      true,
+    );
+
+    await userEvent.type(input, text);
+    await wait(50);
+
+    expect(state).toBe(value);
+    expect(host.value).toBe(value);
+    expect(input.value).toBe(text);
   });
 
   it('should clear the value and emit clear event', async () => {
@@ -212,20 +299,470 @@ describe('bq-input', () => {
 
   it('should debounce `bqInput` emission when `debounce-time` is set', async () => {
     const DEBOUNCE_TIME = 50;
-    const { root, spyOnEvent, waitForChanges } = await render(
-      <bq-input name="bq-input" debounce-time={DEBOUNCE_TIME} />,
+    const onInput = vi.fn();
+    const { root } = await render(<bq-input name="bq-input" debounce-time={DEBOUNCE_TIME} onBqInput={onInput} />);
+    const host = root as HTMLBqInputElement;
+    const input = getInput(host);
+
+    for (const text of ['a', 'ab', 'abc']) {
+      dispatchNativeInput(input, text);
+    }
+
+    expect(host.value).toBe('abc');
+    expect(onInput).not.toHaveBeenCalled();
+
+    // After the debounce settles, the event fires exactly once with the latest value
+    await wait(DEBOUNCE_TIME + 20);
+    expect(onInput).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ detail: { value: 'abc', el: host } }));
+  });
+
+  it('should switch between synchronous and debounced `bqInput` when `debounceTime` changes', async () => {
+    const DEBOUNCE_TIME = 50;
+    const onInput = vi.fn();
+    const { root, setProps } = await render(<bq-input name="bq-input" onBqInput={onInput} />);
+    const host = root as HTMLBqInputElement;
+    const input = getInput(host);
+
+    await setProps({ debounceTime: DEBOUNCE_TIME });
+    dispatchNativeInput(input, 'a');
+    expect(onInput).not.toHaveBeenCalled();
+    await wait(DEBOUNCE_TIME + 20);
+    expect(onInput).toHaveBeenLastCalledWith(expect.objectContaining({ detail: { value: 'a', el: host } }));
+
+    await setProps({ debounceTime: 0 });
+    dispatchNativeInput(input, 'ab');
+    expect(onInput).toHaveBeenCalledTimes(2);
+    expect(onInput).toHaveBeenLastCalledWith(expect.objectContaining({ detail: { value: 'ab', el: host } }));
+  });
+
+  it('should drop a pending debounced `bqInput` when the value is cleared', async () => {
+    // Long enough for the clicks below to land before the pending emit would fire
+    const DEBOUNCE_TIME = 500;
+    const onInput = vi.fn();
+    const { root, waitForChanges } = await render(
+      <bq-input name="bq-input" debounce-time={DEBOUNCE_TIME} onBqInput={onInput} />,
     );
+    const host = root as HTMLBqInputElement;
+    const input = getInput(host);
 
-    const bqInput = spyOnEvent('bqInput');
-    const nativeInput = root.shadowRoot?.querySelector<HTMLInputElement>('.bq-input--control__input');
+    await userEvent.click(input);
+    dispatchNativeInput(input, 'abc');
+    await waitForChanges();
+    await waitForStable(root);
+    await userEvent.click(getClearButton(host));
+    expect(onInput).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ detail: { value: '', el: host } }));
 
-    await userEvent.type(nativeInput, 'abc');
+    await wait(DEBOUNCE_TIME + 20);
+    expect(host.value).toBe('');
+    expect(onInput).toHaveBeenCalledOnce();
+  });
 
-    // Let the real debounce timer settle
-    await new Promise((resolve) => setTimeout(resolve, DEBOUNCE_TIME + 20));
+  it('should drop a pending debounced `bqInput` when the input is removed from the DOM', async () => {
+    const DEBOUNCE_TIME = 50;
+    const onInput = vi.fn();
+    const { root } = await render(<bq-input name="bq-input" debounce-time={DEBOUNCE_TIME} onBqInput={onInput} />);
+    const host = root as HTMLBqInputElement;
+
+    dispatchNativeInput(getInput(host), 'abc');
+    host.remove();
+    await wait(DEBOUNCE_TIME + 20);
+
+    expect(onInput).not.toHaveBeenCalled();
+  });
+
+  it.each(['Backspace', 'Delete'])('should keep numeric input empty after %s and blur', async (key) => {
+    const onInput = vi.fn();
+    const onChange = vi.fn();
+    const onClear = vi.fn();
+    const { root, waitForChanges } = await render(
+      <form>
+        <bq-input
+          name="amount"
+          type="number"
+          value={10}
+          onBqInput={onInput}
+          onBqChange={onChange}
+          onBqClear={onClear}
+        />
+      </form>,
+    );
+    const form = root as HTMLFormElement;
+    const host = form.querySelector<HTMLBqInputElement>('bq-input');
+    const input = getInput(host);
+
+    await userEvent.click(input);
+    input.select();
+    await userEvent.keyboard(`{${key}}`);
+    await waitForChanges();
+    await waitForStable(root);
+
+    expect(input.value).toBe('');
+    expect(host.value).toBe('');
+    expect(host).toEqualAttribute('value', '');
+    expect(new FormData(form).get('amount')).toBe('');
+    expect(onInput).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ detail: { value: '', el: host } }));
+
+    input.blur();
+    await waitForChanges();
+    await waitForStable(root);
+
+    expect(onChange).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ detail: { value: '', el: host } }));
+    expect(onClear).not.toHaveBeenCalled();
+    expect(input.value).toBe('');
+    expect(new FormData(form).get('amount')).toBe('');
+
+    host.placeholder = 'Still empty';
+    await waitForChanges();
+    expect(input.value).toBe('');
+  });
+
+  it('should preserve empty numeric values in the change handler without an input event', async () => {
+    const onChange = vi.fn();
+    const { root, waitForChanges } = await render(
+      <form>
+        <bq-input name="amount" type="number" value={10} onBqChange={onChange} />
+      </form>,
+    );
+    const form = root as HTMLFormElement;
+    const host = form.querySelector<HTMLBqInputElement>('bq-input');
+    const input = getInput(host);
+
+    input.value = '';
+    input.dispatchEvent(new Event('change', { bubbles: true }));
     await waitForChanges();
 
-    // After the debounce settles, the event fires exactly once for the entire typing sequence
-    expect(bqInput).toHaveReceivedEventTimes(1);
+    expect(host.value).toBe('');
+    expect(input.value).toBe('');
+    expect(new FormData(form).get('amount')).toBe('');
+    expect(onChange).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ detail: { value: '', el: host } }));
+  });
+
+  it.each([
+    ['-', '5', -5],
+    ['.', '5', 0.5],
+    ['1e', '2', 100],
+  ])('should allow completing the partial numeric token %s without emitting zero', async (partial, rest, value) => {
+    const onInput = vi.fn();
+    const { root, waitForChanges } = await render(<bq-input name="amount" type="number" onBqInput={onInput} />);
+    const host = root as HTMLBqInputElement;
+    const input = getInput(host);
+
+    await userEvent.type(input, partial);
+    await waitForChanges();
+    await waitForStable(root);
+
+    expect(input.value).toBe('');
+    expect(host.value).toBe('');
+    expect(onInput).toHaveBeenLastCalledWith(expect.objectContaining({ detail: { value: '', el: host } }));
+
+    await userEvent.keyboard(rest);
+    await waitForChanges();
+    await waitForStable(root);
+
+    expect(host.value).toBe(value);
+    expect(input.valueAsNumber).toBe(value);
+    expect(onInput).toHaveBeenLastCalledWith(expect.objectContaining({ detail: { value, el: host } }));
+  });
+
+  it('should treat deliberately entered zero as a required numeric value', async () => {
+    const onInput = vi.fn();
+    const onChange = vi.fn();
+    const { root, waitForChanges } = await render(
+      <form>
+        <bq-input name="amount" type="number" required onBqInput={onInput} onBqChange={onChange} />
+      </form>,
+    );
+    const form = root as HTMLFormElement;
+    const host = form.querySelector<HTMLBqInputElement>('bq-input');
+    const input = getInput(host);
+
+    expect(form.checkValidity()).toBe(false);
+    await userEvent.type(input, '0');
+    input.blur();
+    await waitForChanges();
+    await waitForStable(root);
+
+    expect(host.value).toBe(0);
+    expect(input.value).toBe('0');
+    expect(new FormData(form).get('amount')).toBe('0');
+    expect(form.checkValidity()).toBe(true);
+    expect(getClearButton(host)).not.toBeNull();
+    expect(onInput).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ detail: { value: 0, el: host } }));
+    expect(onChange).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ detail: { value: 0, el: host } }));
+  });
+
+  it.each([0, '0'])('should preserve initial and programmatic zero %j', async (value) => {
+    const { root, waitForChanges } = await render(
+      <form>
+        <bq-input name="amount" type="number" value={value} required />
+      </form>,
+    );
+    const form = root as HTMLFormElement;
+    const host = form.querySelector<HTMLBqInputElement>('bq-input');
+    const input = getInput(host);
+
+    expect(host.value).toBe(value);
+    expect(form.checkValidity()).toBe(true);
+    expect(getClearButton(host)).not.toBeNull();
+    expect(new FormData(form).get('amount')).toBe('0');
+
+    host.value = '';
+    await waitForChanges();
+    expect(form.checkValidity()).toBe(false);
+    expect(getClearButton(host)).toBeNull();
+    expect(new FormData(form).get('amount')).toBe('');
+
+    host.required = false;
+    await waitForChanges();
+    expect(form.checkValidity()).toBe(true);
+
+    host.required = true;
+    host.value = value;
+    await waitForChanges();
+    expect(host.value).toBe(value);
+    expect(input.value).toBe('0');
+    expect(form.checkValidity()).toBe(true);
+    expect(getClearButton(host)).not.toBeNull();
+  });
+
+  it('should clear numeric zero with the existing event order, validity, and focus', async () => {
+    const events: string[] = [];
+    const onClear = vi.fn(() => events.push('clear'));
+    const onInput = vi.fn(() => events.push('input'));
+    const onChange = vi.fn(() => events.push('change'));
+    const { root, waitForChanges } = await render(
+      <form>
+        <bq-input
+          name="amount"
+          type="number"
+          value={0}
+          required
+          onBqClear={onClear}
+          onBqInput={onInput}
+          onBqChange={onChange}
+        />
+      </form>,
+    );
+    const form = root as HTMLFormElement;
+    const host = form.querySelector<HTMLBqInputElement>('bq-input');
+    const input = getInput(host);
+
+    await userEvent.click(input);
+    await waitForStable(root);
+    expect(getClearButton(host)).not.toBeNull();
+    await userEvent.click(getClearButton(host));
+    await waitForChanges();
+
+    expect(events).toEqual(['clear', 'input', 'change']);
+    expect(onClear).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ detail: host }));
+    expect(onInput).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ detail: { value: '', el: host } }));
+    expect(onChange).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ detail: { value: '', el: host } }));
+    expect(host.value).toBe('');
+    expect(input.value).toBe('');
+    expect(new FormData(form).get('amount')).toBe('');
+    expect(form.checkValidity()).toBe(false);
+    expect(host.shadowRoot.activeElement).toBe(input);
+  });
+
+  it.each([
+    ['10', 10],
+    ['-5', -5],
+    ['1.5', 1.5],
+    ['1e2', 100],
+  ])('should continue emitting numbers for %s', async (text, value) => {
+    const onChange = vi.fn();
+    const { root, waitForChanges } = await render(
+      <bq-input name="amount" type="number" min={-10} max={100} step="any" onBqChange={onChange} />,
+    );
+    const host = root as HTMLBqInputElement;
+    const input = getInput(host);
+
+    expect(input.min).toBe('-10');
+    expect(input.max).toBe('100');
+    expect(input.step).toBe('any');
+    await userEvent.type(input, text);
+    input.blur();
+    await waitForChanges();
+
+    expect(host.value).toBe(value);
+    expect(onChange).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ detail: { value, el: host } }));
+  });
+
+  it.each(['text', 'search', 'tel'] as const)('should keep zero as a string for %s inputs', async (type) => {
+    const onInput = vi.fn();
+    const { root, waitForChanges } = await render(<bq-input name="text" type={type} onBqInput={onInput} />);
+    const host = root as HTMLBqInputElement;
+
+    await userEvent.type(getInput(host), '0');
+    await waitForChanges();
+
+    expect(host.value).toBe('0');
+    expect(onInput).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ detail: { value: '0', el: host } }));
+  });
+
+  it('should preserve whitespace-only required validation for text', async () => {
+    const { root, waitForChanges } = await render(
+      <form>
+        <bq-input name="text" value="   " required form-validation-message="Enter a value" />
+      </form>,
+    );
+    const form = root as HTMLFormElement;
+    const host = form.querySelector<HTMLBqInputElement>('bq-input');
+
+    expect(form.checkValidity()).toBe(false);
+    host.value = '0';
+    await waitForChanges();
+    expect(form.checkValidity()).toBe(true);
+  });
+
+  it('should preserve array serialization and Clear behavior', async () => {
+    const { root, waitForChanges } = await render(
+      <form>
+        <bq-input name="text" value={['one', 'two']} />
+      </form>,
+    );
+    const form = root as HTMLFormElement;
+    const host = form.querySelector<HTMLBqInputElement>('bq-input');
+
+    expect(new FormData(form).get('text')).toBe('one,two');
+    await userEvent.click(getInput(host));
+    await waitForStable(root);
+    await userEvent.click(getClearButton(host));
+    await waitForChanges();
+    expect(host.value).toBe('');
+    expect(new FormData(form).get('text')).toBe('');
+
+    host.value = [];
+    await waitForChanges();
+    expect(getClearButton(host)).toBeNull();
+    expect(new FormData(form).get('text')).toBe('');
+  });
+
+  it('should preserve numeric reset behavior without emitting user events', async () => {
+    const onInput = vi.fn();
+    const onChange = vi.fn();
+    const onClear = vi.fn();
+    const { root, waitForChanges } = await render(
+      <form>
+        <bq-input
+          name="amount"
+          type="number"
+          value={10}
+          onBqInput={onInput}
+          onBqChange={onChange}
+          onBqClear={onClear}
+        />
+      </form>,
+    );
+    const form = root as HTMLFormElement;
+    const host = form.querySelector<HTMLBqInputElement>('bq-input');
+
+    form.reset();
+    await waitForChanges();
+    expect(host.value).toBe('');
+    expect(getInput(host).value).toBe('');
+    expect(new FormData(form).get('amount')).toBe('');
+    expect(onInput).not.toHaveBeenCalled();
+    expect(onChange).not.toHaveBeenCalled();
+    expect(onClear).not.toHaveBeenCalled();
+  });
+
+  it.each(['disabled', 'readonly', 'disableClear'] as const)('should preserve %s for numeric zero', async (prop) => {
+    const onInput = vi.fn();
+    const { root, waitForChanges } = await render(
+      <bq-input name="amount" type="number" value={0} {...{ [prop]: true }} onBqInput={onInput} />,
+    );
+    const host = root as HTMLBqInputElement;
+    const input = getInput(host);
+
+    if (prop === 'disableClear') {
+      expect(getClearButton(host)).toBeNull();
+    } else {
+      await userEvent.type(input, '5');
+      await waitForChanges();
+      expect(prop === 'readonly' ? input.readOnly : input.disabled).toBe(true);
+      expect(onInput).not.toHaveBeenCalled();
+      expect(host.value).toBe(0);
+    }
+  });
+
+  it('should debounce numeric deletion without changing its empty value', async () => {
+    const onInput = vi.fn();
+    const { root, waitForChanges } = await render(
+      <form>
+        <bq-input name="amount" type="number" value={10} debounceTime={50} onBqInput={onInput} />
+      </form>,
+    );
+    const form = root as HTMLFormElement;
+    const host = form.querySelector<HTMLBqInputElement>('bq-input');
+    const input = getInput(host);
+
+    await userEvent.click(input);
+    input.select();
+    await userEvent.keyboard('{Backspace}');
+    await waitForChanges();
+    expect(host.value).toBe('');
+    expect(new FormData(form).get('amount')).toBe('');
+    await vi.waitFor(() => {
+      expect(onInput).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ detail: { value: '', el: host } }));
+    });
+  });
+
+  it('should map the validation color variables to the theme role tokens', async () => {
+    const { root } = await render(<bq-input name="bq-input" />);
+
+    const hostStyle = getComputedStyle(root);
+
+    for (const status of ['danger', 'success', 'warning']) {
+      expect(hostStyle.getPropertyValue(`--bq-input--border-color-${status}`).trim()).toBe(
+        hostStyle.getPropertyValue(`--bq-stroke--${status}`).trim(),
+      );
+      expect(hostStyle.getPropertyValue(`--bq-input--helper-text-color-${status}`).trim()).toBe(
+        hostStyle.getPropertyValue(`--bq-text--${status}`).trim(),
+      );
+    }
+  });
+
+  it('should paint the border and helper text with the validation color variables', async () => {
+    const { root, setProps } = await render(
+      <bq-input name="bq-input">
+        <span slot="helper-text">Helper text</span>
+      </bq-input>,
+    );
+    const statuses = { error: 'danger', success: 'success', warning: 'warning' } as const;
+
+    for (const [validationStatus, role] of Object.entries(statuses)) {
+      await setProps({ validationStatus });
+      await waitForStable(root);
+      await waitForTransitions(root);
+
+      expect(computedStyle('bq-input >>> [part="control"]', ['borderTopColor']).borderTopColor).toBe(
+        resolveColor(`var(--bq-stroke--${role})`),
+      );
+      expect(computedStyle('bq-input >>> [part="helper-text"]', ['color']).color).toBe(
+        resolveColor(`var(--bq-text--${role})`),
+      );
+    }
+  });
+
+  it('should allow overriding the validation color variables', async () => {
+    const { root } = await render(
+      <bq-input
+        name="bq-input"
+        validationStatus="error"
+        style={{
+          '--bq-input--border-color-danger': 'rgb(1, 2, 3)',
+          '--bq-input--helper-text-color-danger': 'rgb(4, 5, 6)',
+        }}
+      >
+        <span slot="helper-text">Helper text</span>
+      </bq-input>,
+    );
+
+    await waitForStable(root);
+    await waitForTransitions(root);
+
+    expect(computedStyle('bq-input >>> [part="control"]', ['borderTopColor']).borderTopColor).toBe('rgb(1, 2, 3)');
+    expect(computedStyle('bq-input >>> [part="helper-text"]', ['color']).color).toBe('rgb(4, 5, 6)');
   });
 });

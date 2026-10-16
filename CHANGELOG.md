@@ -1,3 +1,145 @@
+## 1.17.0 (2026-10-15)
+
+### Features ⚡️
+
+- **Beeq Tailwind CSS:** add `border-stroke-*` width aliases ([3bb07f51](https://github.com/Endava/BEEQ/commit/3bb07f51))
+- **Theme:** rework color token chain and fix dark mode contrast ([#1846](https://github.com/Endava/BEEQ/pull/1846))
+- **TimePicker:** add `bq-time-picker` component ([#1847](https://github.com/Endava/BEEQ/pull/1847))
+
+### Bug Fixes 🐞
+
+- **Beeq Tailwind CSS:** support `@plugin` with Tailwind CSS v4 ([4029dbea](https://github.com/Endava/BEEQ/commit/4029dbea))
+- **Beeq Tailwind CSS:** remove duplicate ColorMix utilities ([b27db72b](https://github.com/Endava/BEEQ/commit/b27db72b))
+- **Beeq Tailwind CSS:** drop spacing-based logical border shorthands ([e015c346](https://github.com/Endava/BEEQ/commit/e015c346))
+- **Beeq Tailwind CSS:** keep native element styles in the CSS reset ([d842c209](https://github.com/Endava/BEEQ/commit/d842c209))
+- **Beeq Tailwind CSS:** apply default light roles when no `bq-mode` is set ([3ce5d7cd](https://github.com/Endava/BEEQ/commit/3ce5d7cd))
+- **Beeq Tailwind CSS:** set `stroke` in `stroke-hover` and `stroke-active` utilities ([5b684d17](https://github.com/Endava/BEEQ/commit/5b684d17))
+- **Breadcrumb item:** apply the `rel` prop to the inner link ([#1848](https://github.com/Endava/BEEQ/pull/1848))
+- **CSS:** strip raw tailwind directives from published css ([#1852](https://github.com/Endava/BEEQ/pull/1852))
+- **Radio group:** fix aria-labelledby id for the group label ([#1849](https://github.com/Endava/BEEQ/pull/1849))
+- **Select:** stop using the form name as the label aria-label ([#1851](https://github.com/Endava/BEEQ/pull/1851))
+- **Side menu item:** drop `menuitem` role without menu parent ([#1850](https://github.com/Endava/BEEQ/pull/1850))
+- **Storybook:** log component events once in the actions panel ([#1855](https://github.com/Endava/BEEQ/pull/1855))
+- **Tag:** improve hover/active color on the close button of the removable variant ([03cd6344](https://github.com/Endava/BEEQ/commit/03cd6344))
+- **Wrappers:** inline sources in react and vue sourcemaps ([#1854](https://github.com/Endava/BEEQ/pull/1854))
+- **Wrappers:** emit explicit extensions in esm relative imports ([#1856](https://github.com/Endava/BEEQ/pull/1856))
+- **Wrappers:** declare react ssr proxies as build outputs ([#1859](https://github.com/Endava/BEEQ/pull/1859))
+- **bq-date-picker:** stop internal bqBlur and bqFocus events from escaping the component ([06386684](https://github.com/Endava/BEEQ/commit/06386684))
+
+### Chore ⚙️
+
+- **deps:** update stencil ([#1860](https://github.com/Endava/BEEQ/pull/1860))
+
+### Test 🧪
+
+- **Beeq Tailwind CSS:** document endava dark danger contrast exceptions ([9f61633d](https://github.com/Endava/BEEQ/commit/9f61633d))
+
+### ❤️ Thank You
+
+- BEEQ Design System @en-beeq
+- Dabiel Gonzalez-Ramos @dgonzalezr
+- dgonzalezr @dgonzalezr
+
+## 1.16.2 (2026-10-12)
+
+### Bug Fixes 🐞
+
+- **Date picker:** close other open panels when opening ([#1841](https://github.com/Endava/BEEQ/pull/1841))
+- **Input number:** preserve empty numeric values and accept zero ([#1840](https://github.com/Endava/BEEQ/pull/1840))
+- **Option:** make option padding clickable ([#1842](https://github.com/Endava/BEEQ/pull/1842))
+- **Textarea:** sync visible value with programmatic changes ([#1839](https://github.com/Endava/BEEQ/pull/1839))
+- **Tooltip:** restore tracking for moving hosts ([#1838](https://github.com/Endava/BEEQ/pull/1838))
+
+### ❤️ Thank You
+
+- Dabiel Gonzalez-Ramos @dgonzalezr
+
+## 1.16.1 (2026-10-06)
+
+### Bug Fixes 🐞
+
+- **date picker:** invalidate incomplete drafts on blur ([#1826](https://github.com/Endava/BEEQ/pull/1826))
+- **storybook:** improve custom event action details ([39b49632](https://github.com/Endava/BEEQ/commit/39b49632))
+
+### Chore ⚙️
+
+- **ci:** enhance Renovate configuration and workflow automation ([d5cd69d0](https://github.com/Endava/BEEQ/commit/d5cd69d0))
+- **deps:** update nx to v23.2.1 ([#1821](https://github.com/Endava/BEEQ/pull/1821))
+- **deps:** update angular ([#1822](https://github.com/Endava/BEEQ/pull/1822))
+- **deps:** update chromatic ([#1823](https://github.com/Endava/BEEQ/pull/1823))
+- **deps:** update dependency playwright to v1.63.0 ([#1824](https://github.com/Endava/BEEQ/pull/1824))
+- **deps:** update pnpm to v12.9.0 ([#1825](https://github.com/Endava/BEEQ/pull/1825))
+- **nx:** disable preserveMatchingDependencyRanges in version configuration ([f3e21a4e](https://github.com/Endava/BEEQ/commit/f3e21a4e))
+
+### ❤️ Thank You
+
+- BEEQ @en-beeq
+- BEEQ Design System @en-beeq
+- Dabiel Gonzalez-Ramos @dgonzalezr
+
+## 1.16.0 (2026-10-02)
+
+### Features ⚡️
+
+- **AI Skill:** add an installable BEEQ agent skill with evals ([#1808](https://github.com/Endava/BEEQ/pull/1808))
+
+### Bug Fixes 🐞
+
+- **Datepicker:** improve accessibility and manual entry regardless type variant ([#1787](https://github.com/Endava/BEEQ/pull/1787))
+- **Select:** preserve async search and keyboard focus ([#1809](https://github.com/Endava/BEEQ/pull/1809))
+
+### Chore ⚙️
+
+- **ci:** add GitHub Action Renovate workflow for automated dependency updates ([da0184af](https://github.com/Endava/BEEQ/commit/da0184af))
+- **ci:** remove dry-run from GitHub Renovate workflow ([a01d802f](https://github.com/Endava/BEEQ/commit/a01d802f))
+- **ci:** update Renovate workflow configuration for BEEQ authentication ([4549ae19](https://github.com/Endava/BEEQ/commit/4549ae19))
+- **ci:** add issue trigger and approval conditions to Renovate workflow ([2106396f](https://github.com/Endava/BEEQ/commit/2106396f))
+- **deps:** update dependency @angular/router to v22.2.0 [security] ([#1810](https://github.com/Endava/BEEQ/pull/1810))
+- **deps:** update dependency chromatic to v18 ([#1816](https://github.com/Endava/BEEQ/pull/1816))
+- **deps:** update actions/checkout action to v7 ([#1815](https://github.com/Endava/BEEQ/pull/1815))
+- **deps:** update actions/cache action to v6 ([#1814](https://github.com/Endava/BEEQ/pull/1814))
+- **deps:** update dependency @wc-toolkit/type-parser to v1.3.1 ([#1813](https://github.com/Endava/BEEQ/pull/1813))
+- **deps:** update dependency @stencil/core to v4.45.1 ([#1812](https://github.com/Endava/BEEQ/pull/1812))
+- **deps:** update dependency vitest to v4.1.11 [security] ([#1792](https://github.com/Endava/BEEQ/pull/1792))
+- **deps:** update angular to v22.2.1 ([8f4a537e](https://github.com/Endava/BEEQ/commit/8f4a537e))
+- **deps:** update dependency @wc-toolkit/jsdoc-tags to v1.2.1 ([#1817](https://github.com/Endava/BEEQ/pull/1817))
+- **deps:** update dependency autoprefixer to v10.6.1 ([#1819](https://github.com/Endava/BEEQ/pull/1819))
+- **workspace:** migrate from volta to mise ([#1811](https://github.com/Endava/BEEQ/pull/1811))
+
+### ❤️ Thank You
+
+- BEEQ @en-beeq
+- BEEQ Design System @en-beeq
+- Dabiel Gonzalez-Ramos @dgonzalezr
+
+## 1.15.0 (2026-09-25)
+
+### Features ⚡️
+
+- **Select:** add opt-in checkboxes for multiple selection ([#1802](https://github.com/Endava/BEEQ/pull/1802))
+- **Select:** add nested option support ([#1803](https://github.com/Endava/BEEQ/pull/1803))
+- **Select:** cascade nested multi-select values ([#1804](https://github.com/Endava/BEEQ/pull/1804))
+- **Select:** support accessible option keyboard navigation ([#1805](https://github.com/Endava/BEEQ/pull/1805))
+
+### Bug Fixes 🐞
+
+- **Badge:** preserve native slot property compatibility with React 19 ([#1797](https://github.com/Endava/BEEQ/pull/1797))
+
+### Chore ⚙️
+
+- **deps:** update angular ([#1788](https://github.com/Endava/BEEQ/pull/1788))
+- **deps:** update storybook to v10.6.0 ([#1789](https://github.com/Endava/BEEQ/pull/1789))
+- **deps:** update nx to v23.2.0 ([#1790](https://github.com/Endava/BEEQ/pull/1790))
+- **deps:** update stencil ([#1791](https://github.com/Endava/BEEQ/pull/1791))
+- **deps:** update react to v19.3.0 ([#1795](https://github.com/Endava/BEEQ/pull/1795))
+- **deps:** update types react to v19.3.0 ([#1796](https://github.com/Endava/BEEQ/pull/1796))
+- **deps:** update stencil ([#1798](https://github.com/Endava/BEEQ/pull/1798))
+- **deps:** update node.js to v24.21.0 ([#1799](https://github.com/Endava/BEEQ/pull/1799))
+
+### ❤️ Thank You
+
+- Dabiel Gonzalez-Ramos @dgonzalezr
+
 ## 1.14.0 (2026-08-19)
 
 ### Features ⚡️

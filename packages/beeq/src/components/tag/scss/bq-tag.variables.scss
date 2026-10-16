@@ -32,4 +32,38 @@
   --bq-tag--medium-gap: var(--bq-spacing-xs);
   --bq-tag--medium-padding-x: calc(var(--bq-spacing-s) - var(--bq-tag--border-width));
   --bq-tag--medium-padding-y: calc(var(--bq-spacing-xs2) - var(--bq-tag--border-width));
+
+  --bq-tag--text-color: var(--bq-text--primary);
+  --bq-tag--background-selected: var(--bq-ui--brand);
+  --bq-tag--text-selected: var(--bq-text--on-brand);
+
+  --bq-tag--background-error-filled: var(--bq-ui--danger);
+  --bq-tag--text-error-filled: var(--bq-text--on-danger);
+  --bq-tag--background-error-outline: var(--bq-ui--danger-alt);
+  --bq-tag--text-error-outline: var(--bq-text--danger);
+  --bq-tag--border-error-outline: var(--bq-stroke--danger);
+
+  --bq-tag--background-gray-filled: var(--bq-ui--inverse);
+  --bq-tag--text-gray-filled: var(--bq-text--inverse);
+  --bq-tag--background-gray-outline: var(--bq-ui--primary);
+  --bq-tag--text-gray-outline: var(--bq-text--primary);
+  --bq-tag--border-gray-outline: var(--bq-stroke--tertiary);
+
+  --bq-tag--background-info-filled: var(--bq-ui--info);
+  --bq-tag--text-info-filled: var(--bq-text--on-info);
+  --bq-tag--background-info-outline: var(--bq-ui--info-alt);
+  --bq-tag--text-info-outline: var(--bq-text--info);
+  --bq-tag--border-info-outline: var(--bq-stroke--info);
+
+  --bq-tag--background-success-filled: var(--bq-ui--success);
+  --bq-tag--text-success-filled: var(--bq-text--on-success);
+  --bq-tag--background-success-outline: var(--bq-ui--success-alt);
+  --bq-tag--text-success-outline: var(--bq-text--success);
+  --bq-tag--border-success-outline: var(--bq-stroke--success);
+
+  --bq-tag--background-warning-filled: var(--bq-ui--warning);
+  --bq-tag--text-warning-filled: var(--bq-text--on-warning);
+  --bq-tag--background-warning-outline: var(--bq-ui--warning-alt);
+  --bq-tag--text-warning-outline: var(--bq-text--warning);
+  --bq-tag--border-warning-outline: var(--bq-stroke--warning);
 }

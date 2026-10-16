@@ -1,6 +1,6 @@
 import { h } from '@stencil/core';
-import { afterEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
-import { userEvent } from 'vitest/browser';
+import { afterEach, beforeEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
+import { cdp, userEvent } from 'vitest/browser';
 
 import { computedStyle } from '../../../shared/test-utils/computedStyle';
 import { getTextContent } from '../../../shared/utils/slot';
@@ -9,8 +9,38 @@ const getCheckboxInput = (checkbox: HTMLBqCheckboxElement) => checkbox.shadowRoo
 const getCheckboxBase = (checkbox: HTMLBqCheckboxElement) => checkbox.shadowRoot?.querySelector('[part="base"]');
 const getCheckboxMark = (checkbox: HTMLBqCheckboxElement) => checkbox.shadowRoot?.querySelector('[part="checkbox"]');
 
+/** Resolves a CSS color value (e.g. `var(--bq-ui--brand)`) to its computed `rgb()` form */
+const resolveColor = (value: string): string => {
+  const probe = document.createElement('div');
+  probe.style.color = value;
+  document.body.appendChild(probe);
+  const { color } = getComputedStyle(probe);
+  probe.remove();
+  return color;
+};
+
+/** Waits for any running CSS transition inside the element's shadow root to finish */
+const waitForTransitions = async (element: Element) => {
+  const animations = element.shadowRoot?.getAnimations() ?? [];
+  await Promise.all(animations.map((animation) => animation.finished));
+};
+
 afterEach(() => {
   vi.restoreAllMocks();
+});
+
+// Hover/click tests leave the Playwright cursor where they finished, so a freshly rendered element can
+// render under it and pick up `:hover` styles. Before each test, park the cursor in the bottom-right corner
+// of the top-level page (CDP coordinates), which lies outside the scaled test iframe.
+const movePointerOff = () =>
+  cdp().send('Input.dispatchMouseEvent', {
+    type: 'mouseMoved',
+    x: window.top.innerWidth - 1,
+    y: window.top.innerHeight - 1,
+  });
+
+beforeEach(async () => {
+  await movePointerOff();
 });
 
 describe('bq-checkbox', () => {
@@ -243,5 +273,85 @@ describe('bq-checkbox', () => {
 
     expect(baseStyle).toEqual({ height: '40px' });
     expect(checkboxStyle).toEqual({ borderWidth: '2px', borderRadius: '4px' });
+  });
+
+  it('should map the color variables to the theme role tokens', async () => {
+    const { root } = await render(<bq-checkbox name="checkbox" value="test" />);
+
+    const hostStyle = getComputedStyle(root);
+    const expectedRoles = {
+      '--bq-checkbox--background-color': '--bq-ui--primary',
+      '--bq-checkbox--background-color-checked': '--bq-ui--brand',
+      '--bq-checkbox--border-color': '--bq-stroke--tertiary',
+      '--bq-checkbox--border-color-checked': '--bq-ui--brand',
+      '--bq-checkbox--icon-color-checked': '--bq-text--on-brand',
+      '--bq-checkbox--label-text-color': '--bq-text--primary',
+    };
+
+    for (const [componentVar, roleVar] of Object.entries(expectedRoles)) {
+      expect(hostStyle.getPropertyValue(componentVar).trim()).toBe(hostStyle.getPropertyValue(roleVar).trim());
+    }
+  });
+
+  it('should paint the unchecked state with the color variables', async () => {
+    const { root } = await render(
+      <bq-checkbox name="checkbox" value="test">
+        Label
+      </bq-checkbox>,
+    );
+
+    await waitForStable(root);
+    await waitForTransitions(root);
+
+    expect(computedStyle('bq-checkbox >>> [part="checkbox"]', ['backgroundColor', 'borderTopColor'])).toEqual({
+      backgroundColor: resolveColor('var(--bq-ui--primary)'),
+      borderTopColor: resolveColor('var(--bq-stroke--tertiary)'),
+    });
+    expect(computedStyle('bq-checkbox >>> [part="label"]', ['color']).color).toBe(
+      resolveColor('var(--bq-text--primary)'),
+    );
+  });
+
+  it('should paint the checked state with the color variables', async () => {
+    const { root } = await render(
+      <bq-checkbox checked name="checkbox" value="test">
+        Label
+      </bq-checkbox>,
+    );
+
+    await waitForStable(root);
+    await waitForTransitions(root);
+
+    expect(computedStyle('bq-checkbox >>> [part="checkbox"]', ['backgroundColor', 'borderTopColor'])).toEqual({
+      backgroundColor: resolveColor('var(--bq-ui--brand)'),
+      borderTopColor: resolveColor('var(--bq-ui--brand)'),
+    });
+    expect(computedStyle('bq-checkbox >>> [part="checkbox"] svg', ['color']).color).toBe(
+      resolveColor('var(--bq-text--on-brand)'),
+    );
+  });
+
+  it('should allow overriding the checked color variables', async () => {
+    const { root } = await render(
+      <bq-checkbox
+        checked
+        name="checkbox"
+        style={{
+          '--bq-checkbox--background-color-checked': 'rgb(1, 2, 3)',
+          '--bq-checkbox--icon-color-checked': 'rgb(4, 5, 6)',
+        }}
+        value="test"
+      >
+        Label
+      </bq-checkbox>,
+    );
+
+    await waitForStable(root);
+    await waitForTransitions(root);
+
+    expect(computedStyle('bq-checkbox >>> [part="checkbox"]', ['backgroundColor']).backgroundColor).toBe(
+      'rgb(1, 2, 3)',
+    );
+    expect(computedStyle('bq-checkbox >>> [part="checkbox"] svg', ['color']).color).toBe('rgb(4, 5, 6)');
   });
 });

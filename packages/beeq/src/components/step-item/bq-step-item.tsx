@@ -41,12 +41,23 @@ import { STEP_ITEM_STATUS } from './bq-step-item.types';
  * @part title - The component's title.
  * @part description - The component's description.
  *
+ * @cssprop --bq-step-item--background-hover - Background base colour of the step item hover state (mixed with `--bq-hover` on hover)
+ * @cssprop --bq-step-item--description-color - Text color of the description
  * @cssprop --bq-step-item--prefix-color - Color of the prefix icon
  * @cssprop --bq-step-item--prefix-color-current - Color of the prefix icon when current
  * @cssprop --bq-step-item--prefix-color-completed - Color of the prefix icon when completed
  * @cssprop --bq-step-item--prefix-color-error - Color of the prefix icon when error
  * @cssprop --bq-step-item--prefix-num-size - Size of the prefix number
  * @cssprop --bq-step-item--prefix-num-bg-color - Background color of the prefix number
+ * @cssprop --bq-step-item--prefix-num-bg-color-current - Background color of the prefix number when current
+ * @cssprop --bq-step-item--prefix-num-bg-color-completed - Background color of the prefix number when completed
+ * @cssprop --bq-step-item--prefix-num-bg-color-error - Background color of the prefix number when error
+ * @cssprop --bq-step-item--prefix-num-text-color - Text color of the prefix number
+ * @cssprop --bq-step-item--prefix-num-text-color-current - Text color of the prefix number when current
+ * @cssprop --bq-step-item--prefix-num-text-color-completed - Text color of the prefix number when completed
+ * @cssprop --bq-step-item--prefix-num-text-color-error - Text color of the prefix number when error
+ * @cssprop --bq-step-item--title-color - Text color of the title
+ * @cssprop --bq-step-item--title-color-current - Text color of the title when current
  */
 @Component({
   tag: 'bq-step-item',
@@ -210,9 +221,8 @@ export class BqStepItem {
             {/* TITLE */}
             <div
               class={{
-                'bq-step-item__content--title pe-xs3 text-m text-primary leading-regular': true,
+                'bq-step-item__content--title pe-xs3 text-m leading-regular': true,
                 'pointer-events-none': this.isDisabled,
-                'text-brand': this.isCurrent,
               }}
               part="title"
             >
@@ -221,7 +231,7 @@ export class BqStepItem {
             {/* DESCRIPTION */}
             <div
               class={{
-                'bq-step-item__content--description text-s text-secondary leading-regular': true,
+                'bq-step-item__content--description text-s leading-regular': true,
                 'opacity-60': this.isDisabled,
               }}
               part="description"

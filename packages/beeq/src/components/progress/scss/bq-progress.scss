@@ -19,7 +19,7 @@
 :host {
   --_progress-bar-height: var(--bq-progress-bar--height);
   --_progress-bar-indicator-color: var(--bq-progress-bar--indicatorColor);
-  --_progress-label-color: var(--bq-text--primary);
+  --_progress-label-color: var(--bq-progress-bar--label-color);
 }
 
 /* ---------------------------------- Base ---------------------------------- */
@@ -75,8 +75,8 @@
 }
 
 :host([type='error']) {
-  --_progress-bar-indicator-color: var(--bq-ui--danger);
-  --_progress-label-color: var(--bq-text--danger);
+  --_progress-bar-indicator-color: var(--bq-progress-bar--indicatorColor-error);
+  --_progress-label-color: var(--bq-progress-bar--label-color-error);
 }
 
 :host([border-shape='square']) .bq-progress__bar,

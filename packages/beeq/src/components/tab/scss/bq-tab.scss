@@ -10,12 +10,14 @@
 
 .bq-tab {
   @apply relative flex cursor-pointer items-center justify-center rounded-s disabled:cursor-not-allowed disabled:opacity-60;
-  @apply text-[length:--bq-tab--font-size] font-[--bq-tab--font-weight] leading-[--bq-tab--line-height] [&:not([disabled])]:hover:bg-hover-ui-primary [&:not([disabled])]:hover:text-hover-brand;
+  @apply text-[length:--bq-tab--font-size] font-[--bq-tab--font-weight] leading-[--bq-tab--line-height] text-[color:--bq-tab--text-color];
+  @apply [&:not([disabled])]:hover:bg-[color-mix(in_srgb,_var(--bq-tab--background-hover),_var(--bq-hover)_20%)];
+  @apply [&:not([disabled])]:hover:text-[color:color-mix(in_srgb,_var(--bq-tab--text-color-hover),_var(--bq-hover)_20%)];
   @apply border-0 bg-transparent focus-visible:focus;
   @apply transition-[color,background-color,border-color,box-shadow] duration-300;
 
   &::after {
-    @apply absolute z-[1] block bg-brand opacity-0 content-empty -inset-be-1;
+    @apply absolute z-[1] block bg-[--bq-tab--indicator-color] opacity-0 content-empty -inset-be-1;
     @apply transition-opacity duration-300 ease-linear;
   }
 
@@ -44,6 +46,10 @@
     &::after {
       @apply -start-xs2 bs-[calc(100%_+_var(--bq-spacing-xs2))] is-[2px];
     }
+  }
+
+  &[aria-selected='true'] {
+    @apply text-[color:--bq-tab--text-color-active];
   }
 
   &[aria-selected='true']::after {

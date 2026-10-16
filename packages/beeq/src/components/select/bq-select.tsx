@@ -5,6 +5,7 @@ import type { BqTagCustomEvent } from '../..';
 import type { Placement } from '../../services/interfaces';
 import {
   debounce,
+  getTextContent,
   hasSlotContent,
   isDefined,
   isHTMLElement,
@@ -15,6 +16,31 @@ import {
 import type { TInputValidation } from '../input/bq-input.types';
 
 export type TSelectValue = string | string[];
+
+export interface TSelectSelectionTreeNode {
+  value: string;
+  children: TSelectSelectionTreeNode[];
+}
+
+export interface TSelectChangeDetail {
+  value: TSelectValue;
+  item: HTMLBqOptionElement;
+  selectionTree?: TSelectSelectionTreeNode[];
+}
+
+type TSelectOptionStructure = {
+  all: HTMLBqOptionElement[];
+  childrenByParent: Map<HTMLBqOptionElement, HTMLBqOptionElement[]>;
+  hasNestedMarkup: boolean;
+  nested: HTMLBqOptionElement[];
+  parentByChild: Map<HTMLBqOptionElement, HTMLBqOptionElement>;
+  topLevel: HTMLBqOptionElement[];
+};
+
+type TSelectDisplayTag = {
+  item: HTMLBqOptionElement;
+  label: string;
+};
 
 /**
  * The select input component lets users choose from a predefined list, commonly used in forms for easy data selection.
@@ -63,19 +89,21 @@ export type TSelectValue = string | string[];
  * @attr {boolean} readonly - Deprecated. Use `disable-search` to allow selection without text filtering.
  * @attr {boolean} required - Indicates whether or not the Select input is required to be filled out before submitting the form.
  * @attr {boolean} same-width - Whether the panel should have the Select same width as the input element.
+ * @attr {boolean} enable-checkboxes - If `true` and `multiple` is enabled, flat options render with checkboxes. Nested multi-select options always render with checkboxes.
  * @attr {number} skidding - Represents the skidding between the Select panel and the input element.
  * @attr {"absolute" | "fixed"} strategy - Defines the strategy to position the Select panel.
  * @attr {"error" | "success" | "warning" | "none"} validation-status - The validation status of the Select input.
- * @attr {"number" | "string" | "string[]"} value - The select input value can be used to reset the field to a previous value.
+ * @attr {string | string[]} value - The select input value can be used to reset the field to a previous value.
  *
  * @method clear - Method to be called to clear the selected value.
  *
- * @event bqBlur - The callback handler is emitted when the Select input loses focus.
+ * @event bqBlur - Emitted when focus leaves the entire Select, including its input, options, and controls.
  * @event bqClear - The callback handler is emitted when the selected value has been cleared.
- * @event bqFocus - A callback handler is emitted when the Select input has received focus.
- * @event bqSelect - The callback handler is emitted when the selected value has changed.
+ * @event bqFocus - Emitted when focus enters the Select from outside the component.
+ * @event bqSelect - The callback handler is emitted when the selected value has changed. Nested multi-select events include selected paths in `selectionTree`.
  *
  * @slot label - The label slot container.
+ * @slot - The options rendered in the select list.
  * @slot prefix - The prefix slot container.
  * @slot tags - The tags slot container.
  * @slot clear-icon - The clear icon slot container.
@@ -104,13 +132,18 @@ export type TSelectValue = string | string[];
  * @cssprop --bq-select--background-color - Select background color
  * @cssprop --bq-select--border-color - Select border color
  * @cssprop --bq-select--border-color-focus - Select border color on focus
- * @cssprop --bq-select--border-color-disabled - Select border color when disabled
+ * @cssprop --bq-select--border-color-danger - Select border color when the validation status is `error`
+ * @cssprop --bq-select--border-color-success - Select border color when the validation status is `success`
+ * @cssprop --bq-select--border-color-warning - Select border color when the validation status is `warning`
  * @cssprop --bq-select--border-radius - Select border radius
  * @cssprop --bq-select--border-width - Select border width
  * @cssprop --bq-select--border-style - Select border style
  * @cssprop --bq-select--gap - Gap between Select content and prefix/suffix
  * @cssprop --bq-select--helper-margin-top - Helper text margin top
  * @cssprop --bq-select--helper-text-color - Helper text color
+ * @cssprop --bq-select--helper-text-color-danger - Helper text color when the validation status is `error`
+ * @cssprop --bq-select--helper-text-color-success - Helper text color when the validation status is `success`
+ * @cssprop --bq-select--helper-text-color-warning - Helper text color when the validation status is `warning`
  * @cssprop --bq-select--helper-text-size - Helper text size
  * @cssprop --bq-select--icon-size - Icon size to use in prefix/suffix and clear button
  * @cssprop --bq-select--label-margin-bottom - Select label margin bottom
@@ -138,11 +171,21 @@ export class BqSelect {
   private helperTextElem?: HTMLElement;
   private inputElem?: HTMLInputElement;
   private labelElem?: HTMLElement;
+  private pendingOptionFocus?: HTMLBqOptionElement;
   private prefixElem?: HTMLElement;
   private suffixElem?: HTMLElement;
 
-  private debounceQuery: TDebounce<void>;
-  private debounceInput: TDebounce<void>;
+  private debounceInput?: TDebounce<string>;
+  private activeTreeOption?: HTMLBqOptionElement;
+  private expansionObserver?: MutationObserver;
+  private optionsObserver?: MutationObserver;
+  private restoringSearchExpandedOptions = new WeakSet<HTMLBqOptionElement>();
+  private searchExpandedOptions = new Set<HTMLBqOptionElement>();
+  private userExpandedOptions = new Map<HTMLBqOptionElement, boolean>();
+  private reportedDuplicateOptionValues = new Set<string>();
+  private hasFocus = false;
+  private hasWarnedUnsupportedNestedOptions = false;
+  private isNormalizingValue = false;
 
   private fallbackInputId = 'select';
 
@@ -161,9 +204,10 @@ export class BqSelect {
   @State() selectedOptions: HTMLBqOptionElement[] = [];
 
   @State() hasLabel = false;
+  @State() hasNestedOptions = false;
   @State() hasPrefix = false;
   @State() hasSuffix = false;
-  @State() hasValue = false;
+  @State() searchValue?: string;
 
   // Public Property API
   // ========================
@@ -176,7 +220,7 @@ export class BqSelect {
 
   /**
    * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes.
-   * A value of 0 means no debouncing will occur.
+   * A value of 0 means no debouncing will occur: `bqInput` is emitted synchronously and options are filtered right away.
    */
   @Prop({ reflect: true, mutable: true }) debounceTime? = 0;
 
@@ -240,6 +284,9 @@ export class BqSelect {
   /** Whether the panel should have the Select same width as the input element */
   @Prop({ reflect: true }) sameWidth?: boolean = true;
 
+  /** If true, flat options render with checkboxes when multiple selection is enabled. Nested multi-select options always render with checkboxes. */
+  @Prop({ reflect: true }) enableCheckboxes?: boolean;
+
   /**  Represents the skidding between the Select panel and the input element. */
   @Prop({ reflect: true }) skidding?: number = 0;
 
@@ -266,30 +313,10 @@ export class BqSelect {
 
   @Watch('value')
   handleValueChange() {
-    // Early return for undefined/null values
-    if (isNil(this.value)) {
-      this.value = this.multiple ? [] : '';
-      this.internals.setFormValue(undefined);
-      this.syncItemsFromValue();
-      this.updateFormValidity();
-      return;
-    }
+    if (this.isNormalizingValue) return;
 
-    // Handle multiple selection mode
-    if (this.multiple) {
-      this.value = stringToArray(this.value);
-      this.internals.setFormValue(this.value.join(','));
-      this.syncItemsFromValue();
-      this.updateFormValidity();
-
-      return;
-    }
-
-    // Handle single selection mode
-    this.value = String(this.value);
-    this.internals.setFormValue(this.value);
-    this.syncItemsFromValue();
-    this.updateFormValidity();
+    this.resetSearch();
+    this.syncOptionsAndValue();
   }
 
   @Watch('required')
@@ -297,21 +324,56 @@ export class BqSelect {
     this.updateFormValidity();
   }
 
+  @Watch('enableCheckboxes')
+  handleEnableCheckboxesChange() {
+    this.syncOptionPresentation(this.getOptionStructure().all);
+  }
+
+  @Watch('multiple')
+  handleMultipleChange(multiple: boolean, previousMultiple?: boolean) {
+    this.resetSearch();
+    const optionStructure = this.getOptionStructure();
+
+    if (!multiple && previousMultiple && optionStructure.hasNestedMarkup) {
+      this.selectedOptions = [];
+      this.value = '';
+      return;
+    }
+
+    if (multiple && !previousMultiple && isDefined(this.value) && !Array.isArray(this.value)) {
+      this.value = this.value ? [String(this.value)] : [];
+      return;
+    }
+
+    this.syncOptionsAndValue(optionStructure);
+  }
+
+  @Watch('open')
+  handleOpenStateChange() {
+    this.updateInternalsAccessibility();
+  }
+
+  @Watch('debounceTime')
+  handleDebounceTimeChange() {
+    this.debounceInput?.cancel();
+    this.debounceInput = this.debounceTime > 0 ? debounce(this.handleSearchInput, this.debounceTime) : undefined;
+  }
+
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
 
-  /** Callback handler emitted when the Select input loses focus */
+  /** Emitted when focus leaves the entire Select, including its input, options, and controls. */
   @Event() bqBlur!: EventEmitter<HTMLBqSelectElement>;
 
   /** Callback handler emitted when the selected value has been cleared */
   @Event() bqClear!: EventEmitter<HTMLBqSelectElement>;
 
-  /** Callback handler emitted when the Select input has received focus */
+  /** Emitted when focus enters the Select from outside the component. */
   @Event() bqFocus!: EventEmitter<HTMLBqSelectElement>;
 
-  /** Callback handler emitted when the selected value has changed */
-  @Event() bqSelect!: EventEmitter<{ value: string | number | string[]; item: HTMLBqOptionElement }>;
+  /** Callback handler emitted when the selected value has changed. Nested multi-select also includes selected paths in `selectionTree`. */
+  @Event() bqSelect!: EventEmitter<TSelectChangeDetail>;
 
   /** Callback handler emitted when the Select input changes its value while typing */
   @Event() bqInput: EventEmitter<{ value: string | number | string[] }>;
@@ -320,26 +382,33 @@ export class BqSelect {
   // Ordered by their natural call order
   // =====================================
 
-  connectedCallback() {
-    this.initMultipleValue();
-  }
-
   componentWillLoad() {
-    this.initMultipleValue();
+    this.handleDebounceTimeChange();
   }
 
   componentDidLoad() {
     this.handleSlotChange();
+    this.observeOptionExpansion();
+    this.observeOptions();
+  }
 
-    if (this.multiple && Array.isArray(this.value)) {
-      this.selectedOptions = this.options.filter((item) => this.value.includes(item.value));
-    }
-    this.handleValueChange();
+  componentDidRender() {
+    if (!this.open || !this.pendingOptionFocus) return;
+
+    const option = this.pendingOptionFocus;
+    this.pendingOptionFocus = undefined;
+    this.focusOption(option);
+  }
+
+  disconnectedCallback() {
+    this.hasFocus = false;
+    this.debounceInput?.cancel();
+    this.expansionObserver?.disconnect();
+    this.optionsObserver?.disconnect();
   }
 
   formAssociatedCallback() {
-    this.internals.role = 'combobox';
-    this.internals.ariaExpanded = this.open ? 'true' : 'false';
+    this.updateInternalsAccessibility();
     this.updateFormValidity();
   }
 
@@ -347,26 +416,87 @@ export class BqSelect {
     if (isNil(this.value)) return;
 
     this.updateFormValidity();
-    this.clear();
+    await this.clear();
   }
 
   // Listeners
   // ==============
+
+  @Listen('focusin')
+  handleFocus(event: FocusEvent) {
+    if (this.disabled || this.hasFocus || this.isFocusWithinSelect(event.relatedTarget)) return;
+
+    this.hasFocus = true;
+    this.bqFocus.emit(this.el);
+  }
+
+  @Listen('focusout')
+  handleBlur(event: FocusEvent) {
+    if (!this.hasFocus || this.isFocusWithinSelect(event.relatedTarget)) return;
+
+    if (event.relatedTarget) {
+      this.emitBlur();
+      return;
+    }
+
+    // Selection can briefly clear focus before returning it to the input.
+    queueMicrotask(() => {
+      if (!this.el.matches(':focus-within')) this.emitBlur();
+    });
+  }
 
   @Listen('bqOpen', { capture: true })
   handleOpenChange(ev: CustomEvent<{ open: boolean }>) {
     if (!ev.composedPath().includes(this.el)) return;
 
     this.open = ev.detail.open;
+    if (!this.open) {
+      this.pendingOptionFocus = undefined;
+      this.restoreSearchExpansion();
+    }
   }
 
   @Listen('bqFocus', { capture: true })
   @Listen('bqBlur', { capture: true })
-  stopOptionFocusBlurPropagation(ev: CustomEvent) {
-    // Stop propagation of focus and blur events coming from the `bq-option` elements
-    if (isHTMLElement(ev.target, 'bq-select')) return;
+  stopChildFocusBlurPropagation(ev: CustomEvent) {
+    // Shadow DOM can retarget a child control's event to this Select.
+    if (ev.composedPath()[0] === this.el) return;
+
+    if (this.hasNestedOptions && isHTMLElement(ev.target, 'bq-option')) {
+      this.setActiveTreeOption(ev.target);
+    }
 
     ev.stopPropagation();
+  }
+
+  @Listen('keydown', { capture: true })
+  handlePanelKeydown(event: KeyboardEvent) {
+    if (!this.open) return;
+
+    if (event.key === 'Escape' || event.key === 'Esc') {
+      event.preventDefault();
+      event.stopPropagation();
+      this.pendingOptionFocus = undefined;
+      this.focusInput();
+      this.open = false;
+      return;
+    }
+
+    if (!this.isOptionNavigationKey(event.key)) return;
+    if (event.composedPath().some((target) => isHTMLElement(target, 'bq-button'))) return;
+
+    const option = event.composedPath().find((target) => isHTMLElement(target, 'bq-option'));
+    if (!isHTMLElement(option, 'bq-option') || !this.el.contains(option)) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (this.hasNestedOptions) {
+      this.navigateTree(option, event.key);
+      return;
+    }
+
+    this.navigateFlatOptions(option, event.key);
   }
 
   @Listen('scroll', { target: 'window', passive: true, capture: true })
@@ -397,23 +527,17 @@ export class BqSelect {
   async clear(): Promise<void> {
     if (this.disabled) return;
 
-    const { multiple, inputElem, bqClear, el } = this;
-
+    this.resetSearch();
     // Clear value and selected options
-    this.value = '';
+    this.value = this.multiple ? [] : '';
     this.selectedOptions = [];
-
-    // Clear display value and input element if not multiple
-    if (!multiple) {
-      this.displayValue = '';
-      inputElem.value = '';
-    }
+    this.syncOptionsAndValue();
 
     // Update form value and reset options visibility
     this.resetOptionsVisibility();
 
     // Emit clear event
-    bqClear.emit(el);
+    this.bqClear.emit(this.el);
   }
 
   /**
@@ -427,8 +551,9 @@ export class BqSelect {
   async reset(value: TSelectValue): Promise<void> {
     if (isNil(value)) return;
 
+    this.resetSearch();
     this.value = value;
-    this.syncItemsFromValue();
+    this.syncOptionsAndValue();
   }
 
   // Local methods
@@ -436,28 +561,19 @@ export class BqSelect {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private initMultipleValue = () => {
-    if (!this.multiple || !isDefined(this.value)) return;
+  private isFocusWithinSelect = (target: EventTarget | null) => target instanceof Node && this.el.contains(target);
 
-    this.value = Array.isArray(this.value) ? this.value : Array.from(JSON.parse(String(this.value)));
-  };
+  private emitBlur = () => {
+    if (!this.hasFocus) return;
 
-  private handleBlur = () => {
-    if (this.disabled) return;
-
-    this.bqBlur.emit(this.el);
-  };
-
-  private handleFocus = () => {
-    if (this.disabled) return;
-
-    this.collapseInputSelection();
-    this.bqFocus.emit(this.el);
+    this.hasFocus = false;
+    if (!this.disabled) this.bqBlur.emit(this.el);
   };
 
   private handleSelect = (ev: CustomEvent<{ value: TSelectValue; item: HTMLBqOptionElement }>) => {
     if (this.disabled) return;
 
+    this.resetSearch();
     if (this.multiple) {
       ev.stopPropagation();
     }
@@ -465,74 +581,118 @@ export class BqSelect {
     const { value, item } = ev.detail;
 
     if (this.multiple) {
-      this.handleMultipleSelection(item);
-      // Clear the input value after selecting an item
-      this.inputElem.value = '';
+      const value = this.handleMultipleSelection(item);
       // If multiple selection is enabled, emit the selected items array instead of relying on
       // the option list to emit the value of the selected item
-      this.bqSelect.emit({ value: this.value, item });
+      this.emitSelect(item, value);
     } else {
       this.value = value;
+      this.syncOptionsAndValue();
     }
 
     this.resetOptionsVisibility();
+
+    if (this.hasNestedOptions && this.keepOpenOnSelect) {
+      this.focusTreeOption(item);
+      return;
+    }
+
     this.focusInput();
   };
 
   private handleMultipleSelection = (item: HTMLBqOptionElement) => {
-    // Set has O(1) complexity for insertion, deletion, and search operations, compared to an Array's O(n)
-    const selectedOptionsSet = new Set(this.selectedOptions);
+    const optionStructure = this.getOptionStructure();
+    const value = this.getMultipleSelectionValue(item, optionStructure);
 
-    if (selectedOptionsSet.has(item)) {
-      selectedOptionsSet.delete(item);
-    } else {
-      selectedOptionsSet.add(item);
+    this.value = value;
+    this.syncValueState(optionStructure);
+
+    return value;
+  };
+
+  private getMultipleSelectionValue = (item: HTMLBqOptionElement, optionStructure: TSelectOptionStructure) => {
+    // Set has O(1) complexity for insertion, deletion, and search operations, compared to an Array's O(n)
+    const selectedValues = new Set(Array.isArray(this.value) ? this.value : []);
+    const options = this.getActiveOptions(optionStructure);
+
+    if (!this.hasNestedOptions) {
+      this.toggleOptionValue(selectedValues, item);
+      return this.getSelectedOptionValues(selectedValues, options);
     }
 
-    this.selectedOptions = Array.from(selectedOptionsSet);
-    this.value = this.selectedOptions.map((item) => item.value);
+    this.toggleNestedOptionValue(selectedValues, item, optionStructure);
+    return this.getSelectedOptionValues(selectedValues, options);
+  };
+
+  private removeMultipleSelection = (item: HTMLBqOptionElement) => {
+    const optionStructure = this.getOptionStructure();
+    const options = this.getActiveOptions(optionStructure);
+    const selectedValues = new Set(Array.isArray(this.value) ? this.value : []);
+    const optionsToRemove = this.hasNestedOptions
+      ? [item, ...this.getOptionDescendants(item, optionStructure)].filter(this.isSelectableOption)
+      : [item];
+
+    optionsToRemove.forEach((option) => {
+      selectedValues.delete(option.value);
+    });
+
+    const value = this.getSelectedOptionValues(selectedValues, options);
+    this.value = value;
+    this.syncValueState(optionStructure);
+
+    return value;
   };
 
   private handleSearchFilter = (value: string) => {
     if (this.disabled) return;
 
-    this.debounceQuery?.cancel();
-
-    const trimmedValue = value?.trim();
-    if (!isDefined(trimmedValue)) {
-      // For multi-select, just reset options visibility without clearing selections
-      // This prevents backspace from removing selected tags when only clearing search text
-      if (this.multiple) {
-        this.resetOptionsVisibility();
-        return;
-      }
-
-      this.clear();
+    const query = value?.trim().toLowerCase();
+    if (!query) {
+      this.resetOptionsVisibility();
       return;
     }
 
-    this.debounceQuery = debounce(() => {
-      this.options.forEach((item: HTMLBqOptionElement) => {
-        // We want to get the entire inner text of the option element
-        // to allow searching across the entire text, not just the first level
-        const optionLabel = item.innerText?.trim().toLowerCase();
-        const optionValue = item.value?.toLowerCase();
-        // Show item if EITHER label OR value matches
-        const matches =
-          optionLabel.includes(trimmedValue.toLowerCase()) || optionValue.includes(trimmedValue.toLowerCase());
-        item.hidden = !matches;
-      });
-    }, this.debounceTime);
+    const matchesByOption = new Map<HTMLBqOptionElement, boolean>();
 
-    this.debounceQuery();
+    this.getActiveOptions(this.getOptionStructure()).forEach((item) => {
+      // We want to get the full option text to allow searching across nested options.
+      const optionLabel = item.textContent?.trim().toLowerCase() || '';
+      const optionValue = item.value?.toLowerCase() || '';
+      // Show item if EITHER label OR value matches.
+      matchesByOption.set(item, optionLabel.includes(query) || optionValue.includes(query));
+    });
 
-    // The panel will close once a selection is made
-    // so we need to make sure it's open when the user is typing and the query is not empty
-    this.open = true;
+    matchesByOption.forEach((matches, item) => {
+      item.hidden = !matches;
+
+      if (matches) {
+        this.expandOptionAncestors(item);
+      }
+    });
+
+    this.syncTreeTabIndexes();
   };
 
   private handleKeydown = (ev: KeyboardEvent) => {
-    if (this.disabled || ev.key !== 'Backspace' || !this.multiple) return;
+    if (this.disabled) return;
+
+    if (ev.key === 'ArrowDown' || ev.key === 'ArrowUp') {
+      ev.preventDefault();
+
+      const options = this.getVisibleOptions();
+      const option = ev.key === 'ArrowDown' ? options[0] : options.at(-1);
+
+      if (this.open) {
+        this.focusOption(option);
+        return;
+      }
+
+      this.pendingOptionFocus = option;
+      this.open = true;
+      return;
+    }
+
+    if (ev.key !== 'Backspace' || !this.multiple) return;
 
     // Only remove tags if input value is empty (no writing) and there are selected options
     if (this.inputElem?.value === '' && this.selectedOptions.length > 0) {
@@ -547,31 +707,46 @@ export class BqSelect {
     if (this.disabled || this.isSearchDisabled) return;
 
     const { value } = ev.target as HTMLInputElement;
+    // Selection clearing is independent of cancelable search filtering.
+    if (!this.multiple && !value.trim() && isDefined(this.value)) {
+      this.clear();
+    }
 
+    this.searchValue = value;
+
+    if (this.debounceInput) {
+      this.debounceInput(value);
+      return;
+    }
+
+    this.handleSearchInput(value);
+  };
+
+  private handleSearchInput = (value: string) => {
+    const inputEvent = this.bqInput.emit({ value });
+    // Skip canceled searches and stale debounced values (the search text changed or was reset meanwhile).
+    if (inputEvent.defaultPrevented || this.searchValue !== value) return;
+
+    this.open = true;
+    this.handleSearchFilter(value);
+  };
+
+  private resetSearch = () => {
     this.debounceInput?.cancel();
-
-    this.debounceInput = debounce(() => {
-      const inputEvent = this.bqInput.emit({ value });
-      if (!inputEvent.defaultPrevented) {
-        // Continue with search filtering only if the event wasn't prevented
-        this.handleSearchFilter(value);
-      }
-    }, this.debounceTime);
-
-    this.debounceInput();
+    this.searchValue = undefined;
   };
 
   private handleClearClick = (ev: CustomEvent) => {
     (async () => {
       await this.clear();
     })();
-    this.inputElem.focus();
+    this.inputElem?.focus();
 
     ev.stopPropagation();
   };
 
   private focusInput = () => {
-    this.inputElem.focus();
+    this.inputElem?.focus();
     this.collapseInputSelection();
   };
 
@@ -587,8 +762,9 @@ export class BqSelect {
   private handleTagRemove = (item: HTMLBqOptionElement) => {
     if (this.disabled) return;
 
-    this.handleMultipleSelection(item);
-    this.bqSelect.emit({ value: this.value, item });
+    this.resetSearch();
+    const value = this.removeMultipleSelection(item);
+    this.emitSelect(item, value);
   };
 
   private handleSlotChange = () => {
@@ -596,67 +772,499 @@ export class BqSelect {
     this.hasPrefix = hasSlotContent(this.prefixElem);
     this.hasSuffix = hasSlotContent(this.suffixElem);
     this.hasHelperText = hasSlotContent(this.helperTextElem);
+    this.syncOptionsAndValue();
   };
 
   private resetOptionsVisibility = () => {
-    this.options.forEach((item: HTMLBqOptionElement) => {
+    this.getActiveOptions(this.getOptionStructure()).forEach((item) => {
       item.hidden = false;
+    });
+
+    this.syncTreeTabIndexes();
+  };
+
+  private expandOptionAncestors = (option: HTMLBqOptionElement) => {
+    let parentOption = option.parentElement?.closest<HTMLBqOptionElement>('bq-option');
+
+    while (parentOption && this.el.contains(parentOption)) {
+      if (!parentOption.expanded) {
+        this.searchExpandedOptions.add(parentOption);
+        parentOption.expanded = true;
+      }
+
+      parentOption = parentOption.parentElement?.closest<HTMLBqOptionElement>('bq-option');
+    }
+  };
+
+  private hasSelectedDescendant = (option: HTMLBqOptionElement) =>
+    this.getOptionDescendants(option, this.getOptionStructure()).some((item) => item.selected);
+
+  private handleOptionExpansionMutations = (mutations: MutationRecord[]) => {
+    mutations.forEach((mutation) => {
+      const option = mutation.target as HTMLBqOptionElement;
+
+      if (this.restoringSearchExpandedOptions.has(option)) {
+        this.restoringSearchExpandedOptions.delete(option);
+        return;
+      }
+
+      if (option.expanded && this.searchExpandedOptions.has(option)) return;
+
+      this.searchExpandedOptions.delete(option);
+      this.userExpandedOptions.set(option, option.expanded);
+    });
+
+    this.syncTreeTabIndexes();
+  };
+
+  private observeOptionExpansion = () => {
+    this.expansionObserver = new MutationObserver(this.handleOptionExpansionMutations);
+    this.expansionObserver.observe(this.el, {
+      attributeFilter: ['expanded'],
+      attributes: true,
+      subtree: true,
     });
   };
 
-  private syncItemsFromValue = () => {
-    const { internals, options, value } = this;
-    if (!options.length) return;
+  private restoreSearchExpansion = () => {
+    this.searchExpandedOptions.forEach((option) => {
+      if (!this.el.contains(option)) {
+        this.searchExpandedOptions.delete(option);
+        this.userExpandedOptions.delete(option);
+        return;
+      }
 
-    // Sync selected state of the BqOption elements
-    this.syncSelectedOptionsState();
+      const userExpanded = this.userExpandedOptions.get(option);
+      if (userExpanded !== undefined) {
+        this.searchExpandedOptions.delete(option);
+        option.expanded = userExpanded;
+        return;
+      }
 
-    if (this.multiple) {
-      // Sync selected options for multiple selection mode
-      this.selectedOptions = options.filter((option) => this.value?.includes(option.value));
-    }
+      if (this.hasSelectedDescendant(option)) return;
 
-    // Always update display value and form value
-    this.updateDisplayLabel();
-    internals.setFormValue(!isNil(value) ? `${value}` : undefined);
+      this.restoringSearchExpandedOptions.add(option);
+      this.searchExpandedOptions.delete(option);
+      option.expanded = false;
+    });
   };
 
-  /**
-   * Syncs the selected state of the BqOption elements which value is included in the `value` property.
-   * Notice that value can be a string or an array of strings.
-   *
-   * @private
-   * @memberof BqSelect
-   */
-  private syncSelectedOptionsState = () => {
-    const { options, multiple, value } = this;
+  private syncOptionsAndValue = (optionStructure = this.getOptionStructure()) => {
+    this.syncNestedOptionsMode(optionStructure);
+    this.reportDuplicateNestedOptionValues(optionStructure);
+    this.syncOptionPresentation(optionStructure.all);
+    this.syncValueState(optionStructure);
+  };
+
+  private reportDuplicateNestedOptionValues = (optionStructure: TSelectOptionStructure) => {
+    if (!this.hasNestedOptions) {
+      this.reportedDuplicateOptionValues.clear();
+      return;
+    }
+
+    const seenValues = new Set<string>();
+    const duplicateValues = new Set<string>();
+
+    optionStructure.all.forEach((option) => {
+      if (seenValues.has(option.value)) duplicateValues.add(option.value);
+      seenValues.add(option.value);
+    });
+
+    this.reportedDuplicateOptionValues.forEach((value) => {
+      if (!duplicateValues.has(value)) this.reportedDuplicateOptionValues.delete(value);
+    });
+
+    duplicateValues.forEach((value) => {
+      if (this.reportedDuplicateOptionValues.has(value)) return;
+
+      console.error(
+        `[BqSelect] Duplicate option value "${value}" detected. Option values must be unique within a nested select.`,
+      );
+      this.reportedDuplicateOptionValues.add(value);
+    });
+  };
+
+  private syncOptionPresentation = (options: HTMLBqOptionElement[]) => {
+    options.forEach((option) => {
+      option.checkbox = Boolean(this.multiple && (this.enableCheckboxes || this.hasNestedOptions));
+      option.tree = this.hasNestedOptions;
+    });
+
+    this.syncTreeTabIndexes(options);
+  };
+
+  private getVisibleTreeOptions = () => {
+    const options = this.getActiveOptions(this.getOptionStructure());
+
+    return options.filter((option) => this.isVisibleTreeOption(option));
+  };
+
+  private getVisibleOptions = () =>
+    this.hasNestedOptions
+      ? this.getVisibleTreeOptions()
+      : this.getActiveOptions(this.getOptionStructure()).filter(this.isSelectableOption);
+
+  private isVisibleTreeOption = (option: HTMLBqOptionElement) => {
+    if (!this.isSelectableOption(option)) return false;
+
+    let parentOption = option.parentElement?.closest<HTMLBqOptionElement>('bq-option');
+
+    while (parentOption && this.el.contains(parentOption)) {
+      if (parentOption.hidden || !parentOption.expanded) return false;
+
+      parentOption = parentOption.parentElement?.closest<HTMLBqOptionElement>('bq-option');
+    }
+
+    return true;
+  };
+
+  private getTreeOptionParent = (option: HTMLBqOptionElement) => this.getOptionStructure().parentByChild.get(option);
+
+  private getTreeOptionChildren = (option: HTMLBqOptionElement) =>
+    this.getOptionStructure().childrenByParent.get(option) || [];
+
+  private isOptionNavigationKey = (key: string) =>
+    ['ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'End', 'Home'].includes(key);
+
+  private navigateFlatOptions = (option: HTMLBqOptionElement, key: string) => {
+    const visibleOptions = this.getVisibleOptions();
+    const currentIndex = visibleOptions.indexOf(option);
+    if (currentIndex < 0) return;
+
+    if (key === 'ArrowDown') {
+      this.focusOption(visibleOptions[currentIndex + 1]);
+      return;
+    }
+
+    if (key === 'ArrowUp') {
+      this.focusOption(visibleOptions[currentIndex - 1]);
+      return;
+    }
+
+    if (key === 'Home') {
+      this.focusOption(visibleOptions[0]);
+      return;
+    }
+
+    if (key === 'End') {
+      this.focusOption(visibleOptions.at(-1));
+    }
+  };
+
+  private navigateTree = (option: HTMLBqOptionElement, key: string) => {
+    const visibleOptions = this.getVisibleTreeOptions();
+    const currentOption = visibleOptions.includes(option) ? option : visibleOptions[0];
+    if (!currentOption) return;
+
+    const currentIndex = visibleOptions.indexOf(currentOption);
+
+    if (key === 'ArrowDown') {
+      this.focusTreeOption(visibleOptions[currentIndex + 1]);
+      return;
+    }
+
+    if (key === 'ArrowUp') {
+      this.focusTreeOption(visibleOptions[currentIndex - 1]);
+      return;
+    }
+
+    if (key === 'Home') {
+      this.focusTreeOption(visibleOptions[0]);
+      return;
+    }
+
+    if (key === 'End') {
+      this.focusTreeOption(visibleOptions.at(-1));
+      return;
+    }
+
+    const children = this.getTreeOptionChildren(currentOption);
+
+    if (key === 'ArrowRight') {
+      if (!children.length) return;
+
+      if (!currentOption.expanded) {
+        currentOption.expanded = true;
+        return;
+      }
+
+      this.focusTreeOption(children.find((child) => this.isVisibleTreeOption(child)));
+      return;
+    }
+
+    if (currentOption.expanded && children.length) {
+      currentOption.expanded = false;
+      return;
+    }
+
+    this.focusTreeOption(this.getTreeOptionParent(currentOption));
+  };
+
+  private focusTreeOption = (option?: HTMLBqOptionElement) => {
+    if (!option || !this.isVisibleTreeOption(option)) return;
+
+    this.setActiveTreeOption(option);
+    option.focus();
+  };
+
+  private focusOption = (option?: HTMLBqOptionElement) => {
+    if (!option) return;
+    if (this.hasNestedOptions) {
+      this.focusTreeOption(option);
+      return;
+    }
+
+    option.tabIndex = -1;
+    option.focus();
+  };
+
+  private syncTreeTabIndexes = (options = this.getActiveOptions(this.getOptionStructure())) => {
+    if (!this.hasNestedOptions) {
+      this.activeTreeOption = undefined;
+      options.forEach((option) => {
+        option.removeAttribute('data-tree-tab-index');
+        option.removeAttribute('tabindex');
+      });
+      return;
+    }
+
+    const visibleOptions = options.filter((option) => this.isVisibleTreeOption(option));
+    const activeOption =
+      this.activeTreeOption && visibleOptions.includes(this.activeTreeOption)
+        ? this.activeTreeOption
+        : visibleOptions[0];
+
+    this.activeTreeOption = activeOption;
+    options.forEach((option) => {
+      const tabIndex = option === activeOption ? 0 : -1;
+      option.dataset.treeTabIndex = String(tabIndex);
+      option.tabIndex = tabIndex;
+    });
+  };
+
+  private setActiveTreeOption = (option: HTMLBqOptionElement) => {
+    if (!this.isVisibleTreeOption(option)) return;
+
+    this.activeTreeOption = option;
+    this.syncTreeTabIndexes();
+  };
+
+  private syncValueState = (optionStructure: TSelectOptionStructure) => {
+    const value = this.normalizeValue(optionStructure);
+    const options = this.getActiveOptions(optionStructure);
+
+    if (!this.hasSameValue(this.value, value)) {
+      // Option normalization is not a consumer-initiated value change.
+      this.isNormalizingValue = true;
+      try {
+        this.value = value;
+      } finally {
+        this.isNormalizingValue = false;
+      }
+    }
+
+    this.syncUnsupportedNestedOptionsState(optionStructure);
+    this.syncSelectedOptionsState(options, value, optionStructure);
+    this.selectedOptions =
+      this.multiple && Array.isArray(value) ? options.filter((option) => value.includes(option.value)) : [];
+    this.updateDisplayLabel(options, value);
+    this.internals.setFormValue(this.getFormValue(value));
+    this.updateFormValidity(value);
+  };
+
+  private normalizeValue = (optionStructure: TSelectOptionStructure): TSelectValue => {
+    if (this.multiple) {
+      const value = this.getMultipleValue();
+
+      return this.hasNestedOptions ? this.normalizeNestedValue(value, optionStructure) : value;
+    }
+
+    const value = isNil(this.value) ? '' : String(this.value);
+    const isNestedValue = optionStructure.nested.some((option) => option.value?.toLowerCase() === value.toLowerCase());
+
+    return isNestedValue ? '' : value;
+  };
+
+  private getMultipleValue = (): string[] => {
+    if (Array.isArray(this.value)) return this.value;
+    if (isNil(this.value) || this.value === '') return [];
+
+    return stringToArray(this.value);
+  };
+
+  private normalizeNestedValue = (value: string[], optionStructure: TSelectOptionStructure) => {
+    const options = this.getActiveOptions(optionStructure);
+    const selectedValues = new Set(value);
+
+    options.forEach((option) => {
+      if (!selectedValues.has(option.value)) return;
+
+      this.getOptionAncestors(option, optionStructure).forEach((ancestor) => {
+        if (this.isSelectableOption(ancestor)) selectedValues.add(ancestor.value);
+      });
+    });
+
+    return this.getSelectedOptionValues(selectedValues, options);
+  };
+
+  private getSelectedOptionValues = (selectedValues: Set<string>, options: HTMLBqOptionElement[]) =>
+    options.filter((option) => selectedValues.has(option.value)).map((option) => option.value);
+
+  private toggleOptionValue = (selectedValues: Set<string>, option: HTMLBqOptionElement) => {
+    if (selectedValues.has(option.value)) {
+      selectedValues.delete(option.value);
+      return;
+    }
+
+    selectedValues.add(option.value);
+  };
+
+  private toggleNestedOptionValue = (
+    selectedValues: Set<string>,
+    option: HTMLBqOptionElement,
+    optionStructure: TSelectOptionStructure,
+  ) => {
+    const descendants = this.getOptionDescendants(option, optionStructure).filter(this.isSelectableOption);
+
+    if (!descendants.length) {
+      this.toggleOptionValue(selectedValues, option);
+      if (selectedValues.has(option.value)) {
+        this.getOptionAncestors(option, optionStructure).forEach((ancestor) => {
+          if (this.isSelectableOption(ancestor)) selectedValues.add(ancestor.value);
+        });
+      } else {
+        this.getOptionAncestors(option, optionStructure).forEach((ancestor) => {
+          const selectedDescendants = this.getOptionDescendants(ancestor, optionStructure).some(
+            (descendant) => this.isSelectableOption(descendant) && selectedValues.has(descendant.value),
+          );
+
+          if (!selectedDescendants) selectedValues.delete(ancestor.value);
+        });
+      }
+      return;
+    }
+
+    const selectedDescendantCount = descendants.filter((nestedOption) => selectedValues.has(nestedOption.value)).length;
+    const isIndeterminate = selectedDescendantCount > 0 && selectedDescendantCount < descendants.length;
+    const isSelected = selectedValues.has(option.value) && !isIndeterminate;
+    const optionsToToggle = [option, ...descendants].filter(this.isSelectableOption);
+
+    optionsToToggle.forEach((nestedOption) => {
+      if (isSelected) {
+        selectedValues.delete(nestedOption.value);
+        return;
+      }
+
+      selectedValues.add(nestedOption.value);
+    });
+  };
+
+  private getOptionDescendants = (option: HTMLBqOptionElement, optionStructure: TSelectOptionStructure) => {
+    const descendants: HTMLBqOptionElement[] = [];
+    const addDescendants = (parent: HTMLBqOptionElement) => {
+      optionStructure.childrenByParent.get(parent)?.forEach((child) => {
+        descendants.push(child);
+        addDescendants(child);
+      });
+    };
+
+    addDescendants(option);
+    return descendants;
+  };
+
+  private getOptionAncestors = (option: HTMLBqOptionElement, optionStructure: TSelectOptionStructure) => {
+    const ancestors: HTMLBqOptionElement[] = [];
+    let ancestor = optionStructure.parentByChild.get(option);
+
+    while (ancestor) {
+      ancestors.unshift(ancestor);
+      ancestor = optionStructure.parentByChild.get(ancestor);
+    }
+
+    return ancestors;
+  };
+
+  private isSelectableOption = (option: HTMLBqOptionElement) => !option.disabled && !option.hidden;
+
+  private getSelectionTree = (
+    value: TSelectValue,
+    optionStructure = this.getOptionStructure(),
+  ): TSelectSelectionTreeNode[] => {
+    if (!this.hasNestedOptions || !Array.isArray(value)) return [];
+
+    const selectedValues = new Set(value);
+    const getSelectedNode = (option: HTMLBqOptionElement): TSelectSelectionTreeNode | undefined => {
+      if (!selectedValues.has(option.value)) return undefined;
+
+      const children = (optionStructure.childrenByParent.get(option) || [])
+        .map(getSelectedNode)
+        .filter((node): node is TSelectSelectionTreeNode => Boolean(node));
+
+      return { children, value: option.value };
+    };
+
+    return optionStructure.topLevel
+      .map(getSelectedNode)
+      .filter((node): node is TSelectSelectionTreeNode => Boolean(node));
+  };
+
+  private emitSelect = (item: HTMLBqOptionElement, value: TSelectValue) => {
+    const selectionTree = this.hasNestedOptions ? this.getSelectionTree(value) : undefined;
+
+    this.bqSelect.emit({ item, selectionTree, value });
+  };
+
+  private hasSameValue = (value: TSelectValue, nextValue: TSelectValue) => {
+    if (Array.isArray(value) && Array.isArray(nextValue)) {
+      return value.length === nextValue.length && value.every((item, index) => item === nextValue[index]);
+    }
+
+    return value === nextValue;
+  };
+
+  private syncSelectedOptionsState = (
+    options: HTMLBqOptionElement[],
+    value: TSelectValue,
+    optionStructure: TSelectOptionStructure,
+  ) => {
     const lowerCaseValue = String(value).toLowerCase();
 
-    options.forEach((option: HTMLBqOptionElement) => {
-      if (multiple && Array.isArray(value)) {
+    options.forEach((option) => {
+      if (this.multiple && Array.isArray(value)) {
         option.selected = value.includes(option.value);
       } else {
         option.selected = option.value?.toLowerCase() === lowerCaseValue;
       }
+
+      option.toggleAttribute('indeterminate', this.getOptionIndeterminateState(option, optionStructure, value));
     });
   };
 
-  /**
-   * Updates the display value of the input element based on the selected option.
-   *
-   * @private
-   * @memberof BqSelect
-   */
-  private updateDisplayLabel = () => {
-    const { value, options, inputElem } = this;
+  private getOptionIndeterminateState = (
+    option: HTMLBqOptionElement,
+    optionStructure: TSelectOptionStructure,
+    value: TSelectValue,
+  ) => {
+    if (!this.hasNestedOptions || !Array.isArray(value)) return false;
 
-    const checkedItem = options.find((item) => item.value === value);
+    const selectableDescendants = this.getOptionDescendants(option, optionStructure).filter(this.isSelectableOption);
+    if (!selectableDescendants.length) return false;
+
+    const selectedValues = new Set(value);
+    const selectedDescendantCount = selectableDescendants.filter((descendant) =>
+      selectedValues.has(descendant.value),
+    ).length;
+
+    return selectedDescendantCount > 0 && selectedDescendantCount < selectableDescendants.length;
+  };
+
+  private updateDisplayLabel = (options: HTMLBqOptionElement[], value: TSelectValue) => {
+    const checkedItem = Array.isArray(value) ? undefined : options.find((item) => item.value === value);
     const displayValue = checkedItem ? this.getOptionLabel(checkedItem) : '';
 
     this.displayValue = displayValue;
-    if (inputElem) {
-      inputElem.value = displayValue;
-    }
+    const inputValue = this.searchValue ?? displayValue;
+    if (this.inputElem && this.inputElem.value !== inputValue) this.inputElem.value = inputValue;
   };
 
   private getOptionLabel = (item: HTMLBqOptionElement) => {
@@ -667,40 +1275,15 @@ export class BqSelect {
     }
 
     const defaultSlot = item.shadowRoot?.querySelector('slot:not([name])');
-    if (!defaultSlot) {
-      return item.innerText.trim();
-    }
+    const label = defaultSlot
+      ? getTextContent(defaultSlot as HTMLSlotElement, { recurse: true })
+      : item.textContent?.trim();
 
-    const text = this.getItemTextContent(defaultSlot as HTMLSlotElement);
-    if (text) return text;
-
-    // Fallback to innerText
-    return item.innerText.trim();
+    return label || item.value || '';
   };
 
-  private getItemTextContent = (slot: HTMLSlotElement): string | undefined => {
-    const nodes = slot.assignedNodes({ flatten: true });
-
-    for (const node of nodes) {
-      if (node.nodeType === Node.TEXT_NODE) {
-        const text = node.textContent?.trim();
-        if (text) return text;
-      }
-
-      // Element node - get first child text
-      if (node.nodeType === Node.ELEMENT_NODE) {
-        for (const child of Array.from((node as HTMLElement).childNodes)) {
-          const text = child.textContent?.trim();
-          if (text) return text;
-        }
-      }
-    }
-
-    return '';
-  };
-
-  private updateFormValidity = () => {
-    const { formValidationMessage, internals, required, value } = this;
+  private updateFormValidity = (value: TSelectValue = this.value) => {
+    const { formValidationMessage, internals, required } = this;
 
     // Clear the validity state
     internals?.states.clear();
@@ -725,9 +1308,94 @@ export class BqSelect {
     internals?.setValidity({});
   };
 
-  private get options() {
-    return Array.from(this.el.querySelectorAll('bq-option'));
-  }
+  private getOptionStructure = (): TSelectOptionStructure => {
+    const all = Array.from(this.el.querySelectorAll<HTMLBqOptionElement>('bq-option'));
+    const allOptions = new Set(all);
+    const childrenByParent = new Map<HTMLBqOptionElement, HTMLBqOptionElement[]>();
+    const parentByChild = new Map<HTMLBqOptionElement, HTMLBqOptionElement>();
+
+    all.forEach((option) => {
+      const parent = option.parentElement?.closest<HTMLBqOptionElement>('bq-option');
+      if (!parent || !allOptions.has(parent)) return;
+
+      const children = childrenByParent.get(parent) || [];
+      children.push(option);
+      childrenByParent.set(parent, children);
+      parentByChild.set(option, parent);
+    });
+    const nested = all.filter((option) => parentByChild.has(option));
+
+    return {
+      all,
+      childrenByParent,
+      hasNestedMarkup: all.some((option) => option.querySelector('bq-option[slot="options"]')),
+      nested,
+      parentByChild,
+      topLevel: all.filter((option) => !nested.includes(option)),
+    };
+  };
+
+  private getActiveOptions = (optionStructure: TSelectOptionStructure) =>
+    this.hasNestedOptions ? optionStructure.all : optionStructure.topLevel;
+
+  private syncNestedOptionsMode = (optionStructure: TSelectOptionStructure) => {
+    const hasUnsupportedNestedOptions = optionStructure.hasNestedMarkup && !this.multiple;
+
+    this.hasNestedOptions = this.multiple && optionStructure.hasNestedMarkup;
+
+    if (!hasUnsupportedNestedOptions) {
+      this.hasWarnedUnsupportedNestedOptions = false;
+      return;
+    }
+
+    if (this.hasWarnedUnsupportedNestedOptions) return;
+
+    console.warn('[BqSelect] Nested options require `multiple` to be enabled. Nested descendants are unavailable.');
+    this.hasWarnedUnsupportedNestedOptions = true;
+  };
+
+  private syncUnsupportedNestedOptionsState = (optionStructure: TSelectOptionStructure) => {
+    if (!optionStructure.hasNestedMarkup || this.hasNestedOptions) return;
+
+    optionStructure.nested.forEach((option) => {
+      option.hidden = false;
+      option.selected = false;
+    });
+  };
+
+  private getFormValue = (value: TSelectValue) => (Array.isArray(value) ? value.join(',') : value);
+
+  private updateInternalsAccessibility = () => {
+    this.internals.role = 'combobox';
+    this.internals.ariaExpanded = this.open ? 'true' : 'false';
+  };
+
+  private handleOptionMarkupMutations = (mutations: MutationRecord[]) => {
+    if (!mutations.some(this.isOptionMarkupMutation)) return;
+
+    this.syncOptionsAndValue();
+  };
+
+  private isOptionMarkupMutation = (mutation: MutationRecord) => {
+    if (mutation.type === 'attributes') {
+      return isHTMLElement(mutation.target, 'bq-option');
+    }
+
+    return [...Array.from(mutation.addedNodes), ...Array.from(mutation.removedNodes)].some(this.isOptionMarkupNode);
+  };
+
+  private isOptionMarkupNode = (node: Node) =>
+    node instanceof HTMLElement && (node.matches('bq-option') || Boolean(node.querySelector('bq-option')));
+
+  private observeOptions = () => {
+    this.optionsObserver = new MutationObserver(this.handleOptionMarkupMutations);
+    this.optionsObserver.observe(this.el, {
+      attributeFilter: ['slot', 'value'],
+      attributes: true,
+      childList: true,
+      subtree: true,
+    });
+  };
 
   private get displayPlaceholder() {
     // Hide the placeholder when multiple selection is enabled and there are selected items
@@ -735,7 +1403,9 @@ export class BqSelect {
   }
 
   private get displayTags() {
-    return this.selectedOptions.map((item, index) => {
+    const tags = this.getDisplayTags();
+
+    return tags.map(({ item, label }, index) => {
       if (index < this.maxTagsVisible || this.maxTagsVisible < 0) {
         return (
           <bq-tag
@@ -753,7 +1423,7 @@ export class BqSelect {
             size="xsmall"
             variant="filled"
           >
-            {this.getOptionLabel(item)}
+            {label}
           </bq-tag>
         );
       } else if (index === this.maxTagsVisible) {
@@ -765,7 +1435,7 @@ export class BqSelect {
             size="xsmall"
             variant="filled"
           >
-            +{this.selectedOptions.length - index}
+            +{tags.length - index}
           </bq-tag>
         );
       }
@@ -773,6 +1443,27 @@ export class BqSelect {
       return null;
     });
   }
+
+  private getDisplayTags = (): TSelectDisplayTag[] => {
+    if (!this.hasNestedOptions) {
+      return this.selectedOptions.map((item) => ({ item, label: this.getOptionLabel(item) }));
+    }
+
+    const optionStructure = this.getOptionStructure();
+
+    return this.selectedOptions
+      .filter((item) => optionStructure.topLevel.includes(item))
+      .map((item) => ({ item, label: this.getNestedTagLabel(item, optionStructure) }));
+  };
+
+  private getNestedTagLabel = (item: HTMLBqOptionElement, optionStructure: TSelectOptionStructure) => {
+    const selectableDescendants = this.getOptionDescendants(item, optionStructure).filter(this.isSelectableOption);
+    const selectedCount = selectableDescendants.filter((option) => option.selected).length;
+
+    if (!selectedCount || selectedCount === selectableDescendants.length) return this.getOptionLabel(item);
+
+    return `${this.getOptionLabel(item)} (${selectedCount})`;
+  };
 
   private get hasClearIcon() {
     if (this.disableClear || this.disabled) {
@@ -801,7 +1492,6 @@ export class BqSelect {
       <div class="bq-select" part="base">
         {/* Label */}
         <label
-          aria-label={this.name || this.fallbackInputId}
           class={{ 'bq-select__label': true, '!hidden': !this.hasLabel }}
           htmlFor={this.name || this.fallbackInputId}
           id={labelId}
@@ -860,7 +1550,7 @@ export class BqSelect {
                 aria-controls={`bq-options-${this.name}`}
                 aria-disabled={this.disabled ? 'true' : 'false'}
                 aria-expanded={this.open ? 'true' : 'false'}
-                aria-haspopup="listbox"
+                aria-haspopup={this.hasNestedOptions ? 'tree' : 'listbox'}
                 autoCapitalize="off"
                 autoComplete="off"
                 class="bq-select__control--input is-full flex-grow"
@@ -868,8 +1558,7 @@ export class BqSelect {
                 form={this.form}
                 id={this.name || this.fallbackInputId}
                 name={this.name}
-                onBlur={this.handleBlur}
-                onFocus={this.handleFocus}
+                onFocus={this.collapseInputSelection}
                 onInput={this.handleInput}
                 onKeyDown={this.handleKeydown}
                 onSelect={this.collapseInputSelection}
@@ -884,7 +1573,7 @@ export class BqSelect {
                 // Events
                 spellcheck={false}
                 type="text"
-                value={this.displayValue}
+                value={this.searchValue ?? this.displayValue}
               />
             </div>
             {/* Clear Button */}
@@ -921,15 +1610,26 @@ export class BqSelect {
               </slot>
             </span>
           </div>
-          <bq-option-list
-            aria-expanded={this.open ? 'true' : 'false'}
-            exportparts="base:option-list"
-            id={`bq-options-${this.name}`}
-            onBqSelect={this.handleSelect}
-            role="listbox"
-          >
-            <slot />
-          </bq-option-list>
+          {this.hasNestedOptions ? (
+            <bq-option-list
+              aria-multiselectable="true"
+              exportparts="base:option-list"
+              id={`bq-options-${this.name}`}
+              onBqSelect={this.handleSelect}
+              role="tree"
+            >
+              <slot onSlotchange={this.handleSlotChange} />
+            </bq-option-list>
+          ) : (
+            <bq-option-list
+              exportparts="base:option-list"
+              id={`bq-options-${this.name}`}
+              onBqSelect={this.handleSelect}
+              role="listbox"
+            >
+              <slot onSlotchange={this.handleSlotChange} />
+            </bq-option-list>
+          )}
         </bq-dropdown>
         {/* Helper text */}
         <div

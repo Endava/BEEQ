@@ -1249,7 +1249,7 @@ Set `validation-status` to `error`, `warning`, or `success` to communicate the s
 ### Developer responsibilities
 
 - Always provide content in the `label` slot. The label is the primary source of the accessible name for the textarea. Do not rely on `placeholder` — it disappears once the user starts typing.
-- When using `validation-status`, pair it with a `helper-text` message that explains the issue. Screen readers announce the helper text to users so they know what to correct.
+- When using `validation-status`, pair it with a `helper-text` message that explains the issue. The helper text is not programmatically linked to the textarea (no `aria-describedby`), so keep the message next to the field and make the recovery step explicit.
 - When the textarea is `disabled`, it is removed from the tab order and excluded from form submission. Communicate the reason for disabling through surrounding text.
 - A `readonly` textarea remains focusable and its value is included in form submissions. Use it when you want users to see but not edit a value.
 - The `bqChange` event fires when the user changes the value and then blurs the field. The `bqInput` event fires on every keystroke. Use `debounce-time` to throttle `bqInput` for performance-sensitive scenarios such as live search.
@@ -1264,7 +1264,7 @@ Set `validation-status` to `error`, `warning`, or `success` to communicate the s
 | `autocomplete` | `autocomplete` | Specifies whether autocomplete is enabled | `string` | `'off'` |
 | `autofocus` | `autofocus` | If `true`, the textarea is focused on render | `boolean` | `false` |
 | `autoGrow` | `auto-grow` | If `true`, the textarea grows and shrinks to fit its contents | `boolean` | `false` |
-| `debounceTime` | `debounce-time` | Milliseconds to wait before emitting `bqInput` after a value change | `number` | `0` |
+| `debounceTime` | `debounce-time` | Milliseconds to wait before emitting `bqInput` after a value change. When `0`, `bqInput` is emitted synchronously on every input | `number` | `0` |
 | `disabled` | `disabled` | If `true`, the user cannot interact with the textarea | `boolean` | `false` |
 | `disableResize` | `disable-resize` | If `true`, the user cannot resize the textarea | `boolean` | `false` |
 | `form` | `form` | The ID of the form the textarea belongs to | `string` | — |
@@ -1286,7 +1286,6 @@ Set `validation-status` to `error`, `warning`, or `success` to communicate the s
 |---|---|---|
 | `bqBlur` | Emitted when the textarea loses focus | `CustomEvent<HTMLBqTextareaElement>` |
 | `bqChange` | Emitted when the value changes and the textarea loses focus | `CustomEvent<{ value: string; el: HTMLBqTextareaElement }>` |
-| `bqClear` | Emitted when the textarea value is cleared | `CustomEvent<HTMLBqTextareaElement>` |
 | `bqFocus` | Emitted when the textarea receives focus | `CustomEvent<HTMLBqTextareaElement>` |
 | `bqInput` | Emitted on every value change (keystroke or paste) | `CustomEvent<{ value: string; el: HTMLBqTextareaElement }>` |
 
@@ -1316,11 +1315,17 @@ Set `validation-status` to `error`, `warning`, or `success` to communicate the s
   | `--bq-textarea--background-color` | Textarea background color | `transparent` |
   | `--bq-textarea--border-color` | Textarea border color | `var(--bq-stroke--tertiary)` |
   | `--bq-textarea--border-color-focus` | Textarea border color on focus | `var(--bq-stroke--brand)` |
+  | `--bq-textarea--border-color-danger` | Textarea border color when the validation status is `error` | `var(--bq-stroke--danger)` |
+  | `--bq-textarea--border-color-success` | Textarea border color when the validation status is `success` | `var(--bq-stroke--success)` |
+  | `--bq-textarea--border-color-warning` | Textarea border color when the validation status is `warning` | `var(--bq-stroke--warning)` |
   | `--bq-textarea--border-radius` | Textarea border radius | `var(--bq-radius--s)` |
   | `--bq-textarea--border-width` | Textarea border width | `var(--bq-stroke-s)` |
   | `--bq-textarea--border-style` | Textarea border style | `solid` |
   | `--bq-textarea--helper-margin-top` | Helper text margin top | `var(--bq-spacing-xs)` |
   | `--bq-textarea--helper-text-color` | Helper text color | `var(--bq-text--primary)` |
+  | `--bq-textarea--helper-text-color-danger` | Helper text color when the validation status is `error` | `var(--bq-text--danger)` |
+  | `--bq-textarea--helper-text-color-success` | Helper text color when the validation status is `success` | `var(--bq-text--success)` |
+  | `--bq-textarea--helper-text-color-warning` | Helper text color when the validation status is `warning` | `var(--bq-text--warning)` |
   | `--bq-textarea--helper-text-size` | Helper text font size | `var(--bq-font-size--s)` |
   | `--bq-textarea--label-margin-bottom` | Label margin bottom | `var(--bq-spacing-xs)` |
   | `--bq-textarea--label-text-color` | Label text color | `var(--bq-text--primary)` |

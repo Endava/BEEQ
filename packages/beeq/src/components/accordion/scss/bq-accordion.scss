@@ -52,11 +52,11 @@
 
   &.filled {
     .bq-accordion__header {
-      @apply bg-[--bq-accordion--filled-collapsed-background] hover:bg-hover-ui-secondary;
+      @apply bg-[--bq-accordion--filled-collapsed-background] hover:bg-[color-mix(in_srgb,_var(--bq-accordion--filled-collapsed-background),_var(--bq-hover)_20%)];
     }
 
     .bq-accordion__header--text {
-      @apply text-[--bq-accordion--filled-collapsed-text-color];
+      @apply text-[color:--bq-accordion--filled-collapsed-text-color];
     }
 
     .bq-accordion__content {
@@ -66,21 +66,21 @@
     }
 
     &[open] .bq-accordion__header {
-      @apply bg-[--bq-accordion--filled-expanded-background] hover:bg-hover-ui-secondary;
+      @apply bg-[--bq-accordion--filled-expanded-background] hover:bg-[color-mix(in_srgb,_var(--bq-accordion--filled-expanded-collapsed-hover),_var(--bq-hover)_20%)];
     }
 
     &[open] .bq-accordion__header--text {
-      @apply text-[--bq-accordion--filled-expanded-text-color];
+      @apply text-[color:--bq-accordion--filled-expanded-text-color];
     }
   }
 
   &.ghost {
     .bq-accordion__header {
-      @apply bg-[--bq-accordion--ghost-collapsed-background] hover:bg-hover-ui-secondary;
+      @apply bg-[--bq-accordion--ghost-collapsed-background] hover:bg-[color-mix(in_srgb,_var(--bq-accordion--ghost-expanded-collapsed-hover),_var(--bq-hover)_20%)];
     }
 
     .bq-accordion__header--text {
-      @apply text-[--bq-accordion--ghost-collapsed-text-color];
+      @apply text-[color:--bq-accordion--ghost-collapsed-text-color];
     }
 
     .bq-accordion__content {
@@ -90,11 +90,11 @@
     }
 
     &[open] .bq-accordion__header {
-      @apply bg-[--bq-accordion--ghost-expanded-background] hover:bg-hover-ui-secondary;
+      @apply bg-[--bq-accordion--ghost-expanded-background] hover:bg-[color-mix(in_srgb,_var(--bq-accordion--ghost-expanded-collapsed-hover),_var(--bq-hover)_20%)];
     }
 
     &[open] .bq-accordion__header--text {
-      @apply text-[--bq-accordion--ghost-expanded-text-color];
+      @apply text-[color:--bq-accordion--ghost-expanded-text-color];
     }
   }
 
@@ -141,6 +141,14 @@
 
 .bq-accordion__header--text {
   @apply flex-1;
+}
+
+.bq-accordion__header--icon {
+  @apply flex items-center justify-center text-[color:--bq-accordion--icon-color];
+}
+
+.bq-accordion__body {
+  @apply overflow-hidden bg-[--bq-accordion--panel-background] text-[color:--bq-accordion--panel-text-color];
 }
 
 .bq-accordion__header--prefix,

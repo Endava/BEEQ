@@ -19,6 +19,9 @@ interface HeaderLabelArgs {
  *   when several months are visible at once.
  * - `months`: the localized year currently in focus.
  * - `years`: the closed range spanning the visible decade.
+ *
+ * @param args Calendar state used to derive the label.
+ * @returns The localized label for the current calendar header.
  */
 export const getHeaderLabel = ({
   view,
@@ -49,6 +52,10 @@ export const getHeaderLabel = ({
  * Aria label announcing what clicking the title switches to.
  * Views cycle days → months → years → back to the base view (days for
  * `precision="day"`, months for `precision="month"`).
+ *
+ * @param view Current calendar view.
+ * @param precision Date precision configured for the picker.
+ * @returns The localized action label for the header title button.
  */
 export const getHeaderTitleLabel = (view: TCalendarView, precision: TDatePrecision = 'day'): string => {
   if (view === 'days') return DEFAULT_ARIA_LABELS.chooseMonth;
@@ -56,14 +63,24 @@ export const getHeaderTitleLabel = (view: TCalendarView, precision: TDatePrecisi
   return precision === 'month' ? DEFAULT_ARIA_LABELS.chooseMonth : DEFAULT_ARIA_LABELS.chooseDate;
 };
 
-/** Aria label for the "previous" navigation button, per view. */
+/**
+ * Gets the aria label for the previous navigation button in a view.
+ *
+ * @param view Current calendar view.
+ * @returns The appropriate previous navigation label.
+ */
 export const getPreviousLabel = (view: TCalendarView): string => {
   if (view === 'days') return DEFAULT_ARIA_LABELS.previousMonth;
   if (view === 'months') return DEFAULT_ARIA_LABELS.previousYear;
   return DEFAULT_ARIA_LABELS.previousDecade;
 };
 
-/** Aria label for the "next" navigation button, per view. */
+/**
+ * Gets the aria label for the next navigation button in a view.
+ *
+ * @param view Current calendar view.
+ * @returns The appropriate next navigation label.
+ */
 export const getNextLabel = (view: TCalendarView): string => {
   if (view === 'days') return DEFAULT_ARIA_LABELS.nextMonth;
   if (view === 'months') return DEFAULT_ARIA_LABELS.nextYear;

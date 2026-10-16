@@ -11,12 +11,9 @@
 .bq-checkbox {
   @apply box-border inline-flex cursor-pointer select-none rounded-s transition-colors duration-300 ease-in-out p-b-xs p-i-xs;
 
-  // Default hover state
-  &:not(.is-checked),
-  &:not(.is-indeterminate) {
-    &:not(.is-disabled):hover .bq-checkbox__checkbox {
-      @apply border-hover-brand;
-    }
+  // Default hover state (unchecked only, so the checked border keeps matching its fill)
+  &:not(.is-checked, .is-indeterminate, .is-disabled):hover .bq-checkbox__checkbox {
+    @apply border-[color:color-mix(in_srgb,_var(--bq-checkbox--border-color-checked),_var(--bq-hover)_20%)];
   }
 
   // Display background on hover (if enabled)
@@ -28,7 +25,8 @@
   &.is-checked,
   &.is-indeterminate {
     &:not(.is-disabled):hover .bq-checkbox__checkbox {
-      @apply bg-hover-ui-brand border-hover-brand;
+      @apply bg-[color-mix(in_srgb,_var(--bq-checkbox--background-color-checked),_var(--bq-hover)_20%)];
+      @apply border-[color:color-mix(in_srgb,_var(--bq-checkbox--border-color-checked),_var(--bq-hover)_20%)];
     }
   }
 }
@@ -38,7 +36,7 @@
   &:focus,
   &:focus-visible {
     ~ .bq-checkbox__checkbox {
-      @apply focus border-brand;
+      @apply focus border-[color:--bq-checkbox--border-color-checked];
     }
   }
 
@@ -46,7 +44,7 @@
   &:checked,
   &:indeterminate {
     ~ .bq-checkbox__checkbox {
-      @apply border-brand bg-ui-brand;
+      @apply border-[color:--bq-checkbox--border-color-checked] bg-[--bq-checkbox--background-color-checked];
     }
   }
 
@@ -67,7 +65,7 @@
 
 // Checkbox square icon `DEFAULT` state (not checked/indeterminate, not hover, not disabled)
 .bq-checkbox__checkbox {
-  @apply bg-[--bq-checkbox--background-color] rounded-[--bq-checkbox--border-radius] border-[length:--bq-checkbox--border-width] border-solid border-[color:--bq-icon--primary];
+  @apply bg-[--bq-checkbox--background-color] rounded-[--bq-checkbox--border-radius] border-[length:--bq-checkbox--border-width] border-solid border-[color:--bq-checkbox--border-color];
 }
 
 .bq-checkbox__checkbox,

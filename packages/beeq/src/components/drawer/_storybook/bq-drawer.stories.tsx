@@ -2,6 +2,7 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
+import { fn } from 'storybook/test';
 
 import { DRAWER_POSITIONS } from '../bq-drawer.types';
 import mdx from './bq-drawer.mdx';
@@ -20,11 +21,6 @@ const meta: Meta = {
     'close-on-esc': { control: 'boolean' },
     open: { control: 'boolean' },
     position: { control: 'inline-radio', options: [...DRAWER_POSITIONS] },
-    // Events
-    bqOpen: { action: 'bqOpen' },
-    bqClose: { action: 'bqClose' },
-    bqAfterOpen: { action: 'bqAfterOpen' },
-    bqAfterClose: { action: 'bqAfterClose' },
     // Not part of the component API
     noFooter: { control: 'boolean', table: { disable: true } },
     customFooterDivider: { control: 'boolean', table: { disable: true } },
@@ -36,6 +32,11 @@ const meta: Meta = {
     'close-on-click-outside': false,
     'close-on-esc': false,
     'enable-backdrop': false,
+    // Events
+    bqOpen: fn(),
+    bqClose: fn(),
+    bqAfterOpen: fn(),
+    bqAfterClose: fn(),
   },
 };
 export default meta;

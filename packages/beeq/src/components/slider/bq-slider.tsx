@@ -5,6 +5,8 @@ import type { JSX } from '@stencil/core/internal';
 import { clamp, debounce, isNil, isString, type TDebounce } from '../../shared/utils';
 import type { TSliderType, TSliderValue } from './bq-slider.types';
 
+type TSliderChangeValue = Exclude<TSliderValue, string>;
+
 /**
  * Sliders provide a visual representation of adjustable content, enabling users to change values by dragging a handle along a horizontal track.
  *
@@ -49,6 +51,9 @@ import type { TSliderType, TSliderValue } from './bq-slider.types';
  * @cssprop --bq-slider--thumb-size - Slider hover thumb size
  * @cssprop --bq-slider--progress-color - Slider progress background color
  * @cssprop --bq-slider--trackarea-color - Slider track background color
+ * @cssprop --bq-slider--thumb-background - Slider thumb background color
+ * @cssprop --bq-slider--thumb-border-color - Slider thumb border color
+ * @cssprop --bq-slider--label-color - Slider value indicator (label) text color
  */
 @Component({
   tag: 'bq-slider',
@@ -64,11 +69,8 @@ export class BqSlider {
 
   private inputMinElem: HTMLInputElement;
   private inputMaxElem: HTMLInputElement;
-  private minTooltipElem: HTMLBqTooltipElement;
-  private maxTooltipElem: HTMLBqTooltipElement;
   private progressElem: HTMLSpanElement;
-  private trackElem: HTMLSpanElement;
-  private debounceBqChange: TDebounce<void>;
+  private debounceBqChange?: TDebounce<[TSliderChangeValue]>;
 
   // Reference to host HTML element
   // ===================================
@@ -80,6 +82,7 @@ export class BqSlider {
   // Inlined decorator, alphabetical order
   // =======================================
 
+  @State() activeTooltip?: 'min' | 'max';
   /**
    * The `minValue` state is the only value when the slider type is `single`
    * and the minimum value when the slider type is `range`.
@@ -87,15 +90,14 @@ export class BqSlider {
   @State() minValue: number;
   /** The `maxValue` state is only used when the slider type is `range`. */
   @State() maxValue: number;
-  /** It hold the left position of the Thumb for the value or the minimum value (if the slider type is `range`) */
-  @State() minThumbPosition: number;
-  /** It hold the left position of the Thumb for the maximum value (if the slider type is `range`) */
-  @State() maxThumbPosition: number;
 
   // Public Property API
   // ========================
 
-  /** The amount of time, in milliseconds, to wait to trigger the `bqChange` event after each value change. */
+  /**
+   * The amount of time, in milliseconds, to wait to trigger the `bqChange` event after each value change.
+   * With `0` (default), the event is emitted synchronously.
+   */
   @Prop({ reflect: true }) debounceTime = 0;
 
   /** If `true` the slider is disabled. */
@@ -144,10 +146,38 @@ export class BqSlider {
   // Prop lifecycle events
   // =======================
 
+  @Watch('enableTooltip')
+  handleEnableTooltipChange() {
+    if (!this.enableTooltip) this.handleMouseUp();
+  }
+
+  @Watch('disabled')
+  handleDisabledChange() {
+    if (this.disabled) this.handleMouseUp();
+  }
+
+  @Watch('type')
+  handleTypeChange() {
+    this.handleMouseUp();
+  }
+
   @Watch('value')
-  handleValuePropChange(newValue: TSliderValue) {
+  handleValuePropChange(newValue: TSliderValue, oldValue: TSliderValue) {
     this.setState(newValue);
-    this.emitBqChange();
+    // A consumer writing the emitted range back passes a new array with the same numbers.
+    // Emitting again would recurse now that `bqChange` is synchronous.
+    if (this.isSameValue(newValue, oldValue)) return;
+
+    this.emitBqChange(this.isRangeType ? [this.minValue, this.maxValue] : this.minValue);
+  }
+
+  @Watch('debounceTime')
+  handleDebounceTimeChange() {
+    this.debounceBqChange?.cancel();
+    this.debounceBqChange =
+      this.debounceTime > 0
+        ? debounce((value: TSliderChangeValue) => this.bqChange.emit({ value, el: this.el }), this.debounceTime)
+        : undefined;
   }
 
   @Watch('step')
@@ -185,6 +215,7 @@ export class BqSlider {
 
   componentWillLoad() {
     this.init();
+    this.handleDebounceTimeChange();
   }
 
   componentDidLoad() {
@@ -193,6 +224,11 @@ export class BqSlider {
 
   componentDidUpdate() {
     this.runUpdates();
+  }
+
+  disconnectedCallback() {
+    this.handleMouseUp();
+    this.debounceBqChange?.cancel();
   }
 
   formAssociatedCallback() {
@@ -223,7 +259,6 @@ export class BqSlider {
   private runUpdates = () => {
     this.updateProgressTrack();
     this.syncInputsValue();
-    this.setThumbPosition();
   };
 
   private setState = (newValue: TSliderValue) => {
@@ -234,19 +269,19 @@ export class BqSlider {
     this.maxValue = isRangeType ? clamp(value[1], this.minValue + this.gap, this.max) : this.minValue;
   };
 
-  private setThumbPosition = () => {
-    if (!this.enableTooltip) return;
-
-    // Destructure the returned object from this.thumbPosition() and assign the properties to this.minThumbPosition and this.maxThumbPosition
-    ({ minThumbPosition: this.minThumbPosition, maxThumbPosition: this.maxThumbPosition } = this.thumbPosition());
-  };
-
   private syncInputsValue = () => {
     this.inputMinElem?.setAttribute('value', this.minValue.toString());
     this.inputMaxElem?.setAttribute('value', this.maxValue.toString());
   };
 
   private stringToObject = (value: TSliderValue) => (isString(value) ? JSON.parse(value) : value);
+
+  private isSameValue = (a: TSliderValue, b: TSliderValue) => {
+    const [first, second] = [this.stringToObject(a), this.stringToObject(b)];
+    if (!Array.isArray(first) || !Array.isArray(second)) return first === second;
+
+    return first.length === second.length && first.every((value, index) => value === second[index]);
+  };
 
   private handleInputChange = (type: 'min' | 'max', event: InputEvent) => {
     const target = event.target as HTMLInputElement;
@@ -290,33 +325,13 @@ export class BqSlider {
     this.progressElem.style.inlineSize = `${width}%`;
   };
 
-  private calculateThumbPosition = (value: number): number => {
-    if (!this.progressElem) return 0;
+  private emitBqChange = (value: TSliderChangeValue) => {
+    if (this.debounceBqChange) {
+      this.debounceBqChange(value);
+      return;
+    }
 
-    // Get the width of the track area and the size of the input range thumb
-    const trackAreaWidth = this.trackElem.getBoundingClientRect().width;
-    // We need to also add 4px to the thumb size,
-    // this is because the thumb is 2px border (`border-m`)
-    const inputThumbSize = parseInt(getComputedStyle(this.el).getPropertyValue('--bq-slider--thumb-size'), 10) + 4;
-    const totalWidth = trackAreaWidth - inputThumbSize;
-
-    return ((value - this.min) / (this.max - this.min)) * totalWidth + inputThumbSize / 2;
-  };
-
-  private thumbPosition = (): { minThumbPosition: number; maxThumbPosition?: number } => {
-    const minThumbPosition = this.calculateThumbPosition(this.minValue);
-    const maxThumbPosition = this.isRangeType ? this.calculateThumbPosition(this.maxValue) : undefined;
-
-    return { minThumbPosition, maxThumbPosition };
-  };
-
-  private emitBqChange = () => {
-    this.debounceBqChange?.cancel();
-
-    const value: Exclude<TSliderValue, string> = this.isRangeType ? [this.minValue, this.maxValue] : this.minValue;
-    this.debounceBqChange = debounce(() => this.bqChange.emit({ value, el: this.el }), this.debounceTime);
-
-    this.debounceBqChange();
+    this.bqChange.emit({ value, el: this.el });
   };
 
   private handleBlur = () => {
@@ -328,19 +343,15 @@ export class BqSlider {
   };
 
   private handleMouseDown = (event: MouseEvent) => {
-    this.handleTooltipVisibility(event, 'remove');
+    if (!this.enableTooltip || this.disabled) return;
+
+    this.activeTooltip = event.target === this.inputMinElem ? 'min' : 'max';
+    this.el.ownerDocument.addEventListener('mouseup', this.handleMouseUp, { capture: true, once: true });
   };
 
-  private handleMouseUp = (event: MouseEvent) => {
-    this.handleTooltipVisibility(event, 'add');
-  };
-
-  private handleTooltipVisibility = (event: MouseEvent, action: 'add' | 'remove') => {
-    if (!this.enableTooltip || this.tooltipAlwaysVisible) return;
-
-    const target = event.target as HTMLElement;
-    const tooltipElem = target === this.inputMinElem ? this.minTooltipElem : this.maxTooltipElem;
-    tooltipElem.classList[action]('hidden');
+  private handleMouseUp = () => {
+    this.el.ownerDocument.removeEventListener('mouseup', this.handleMouseUp, true);
+    this.activeTooltip = undefined;
   };
 
   private get decimalCount(): number {
@@ -360,7 +371,7 @@ export class BqSlider {
     return (
       <span
         class={{
-          [`${css} is-fit min-is-8 box-content block font-medium text-primary text-s leading-regular [font-variant:tabular-nums]`]: true,
+          [`${css} is-fit min-is-8 box-content block font-medium text-[--bq-slider--label-color] text-s leading-regular [font-variant:tabular-nums]`]: true,
           hidden: position === 'start' ? !this.enableValueIndicator : !this.enableValueIndicator || !this.isRangeType,
         }}
         part={`label-${position}`}
@@ -407,26 +418,30 @@ export class BqSlider {
     );
   };
 
-  private renderTooltip = (
-    value: number,
-    thumbPosition: number,
-    refCallback: (elem: HTMLBqTooltipElement) => void,
-  ): JSX.Element => (
-    <bq-tooltip
-      alwaysVisible={true}
-      class={{
-        'absolute [&::part(panel)]:absolute': true,
-        hidden: !this.isTooltipAlwaysVisible,
-      }}
-      distance={this.enableValueIndicator ? 6 : 16}
-      exportparts="base,trigger,panel"
-      ref={refCallback}
-      style={{ insetInlineStart: `${thumbPosition}px`, fontVariant: 'tabular-nums' }}
-    >
-      <div class="bs-1 is-1 absolute" slot="trigger" />
-      {value.toFixed(this.decimalCount)}
-    </bq-tooltip>
-  );
+  private renderTooltip = (value: number, type: 'min' | 'max'): JSX.Element => {
+    const percent = this.max === this.min ? 0 : this.calculatePercent(value);
+    const isVisible = this.isTooltipAlwaysVisible || this.activeTooltip === type;
+
+    return (
+      <bq-tooltip
+        alwaysVisible={isVisible}
+        class={{
+          'absolute [&::part(panel)]:absolute': true,
+          hidden: !isVisible,
+        }}
+        distance={this.enableValueIndicator ? 6 : 16}
+        exportparts="base,trigger,panel"
+        style={{
+          // Include the thumb's two 2px borders and its inset at the track ends.
+          insetInlineStart: `calc(${percent}% + (var(--bq-slider--thumb-size) + 4px) * ${0.5 - percent / 100})`,
+          fontVariant: 'tabular-nums',
+        }}
+      >
+        <div class="bs-1 is-1 absolute" slot="trigger" />
+        {value.toFixed(this.decimalCount)}
+      </bq-tooltip>
+    );
+  };
 
   // render() function
   // Always the last one in the class.
@@ -447,9 +462,6 @@ export class BqSlider {
           <span
             class="bs-1 is-full absolute inset-bs-[50%] start-0 -translate-y-1/2 rounded-xs bg-[--bq-slider--trackarea-color]"
             part="track-area"
-            ref={(elem) => {
-              this.trackElem = elem;
-            }}
           />
           {/* PROGRESS AREA */}
           <span
@@ -460,20 +472,13 @@ export class BqSlider {
             }}
           />
           {/* TOOLTIP on top of the value or min value (if the slider type is `range`) */}
-          {this.enableTooltip &&
-            this.renderTooltip(this.minValue, this.minThumbPosition, (elem) => {
-              this.minTooltipElem = elem;
-            })}
+          {this.enableTooltip && this.renderTooltip(this.minValue, 'min')}
           {/* INPUT (Min), used on single type */}
           {this.renderInput('min', this.minValue, (input) => {
             this.inputMinElem = input;
           })}
           {/* TOOLTIP on top of the max value (if the slider type is `range`) */}
-          {this.enableTooltip &&
-            this.isRangeType &&
-            this.renderTooltip(this.maxValue, this.maxThumbPosition, (elem) => {
-              this.maxTooltipElem = elem;
-            })}
+          {this.enableTooltip && this.isRangeType && this.renderTooltip(this.maxValue, 'max')}
           {/* INPUT (Max) */}
           {this.isRangeType &&
             this.renderInput('max', this.maxValue, (input) => {

@@ -44,8 +44,13 @@ import { isNil } from '../../shared/utils';
  * @part label - The `<span>` element that holds the text content.
  *
  * @cssprop --bq-checkbox--background-color - Checkbox background color
+ * @cssprop --bq-checkbox--background-color-checked - Checkbox background color when checked or indeterminate
+ * @cssprop --bq-checkbox--border-color - Checkbox border color
+ * @cssprop --bq-checkbox--border-color-checked - Checkbox border color when checked or indeterminate
  * @cssprop --bq-checkbox--border-radius - Checkbox border radius
  * @cssprop --bq-checkbox--border-width - Checkbox border width
+ * @cssprop --bq-checkbox--icon-color-checked - Checkbox check and indeterminate mark color
+ * @cssprop --bq-checkbox--label-text-color - Checkbox label text color
  * @cssprop --bq-checkbox--size - Checkbox size
  */
 @Component({
@@ -263,6 +268,12 @@ export class BqCheckbox {
     this.bqBlur.emit(this.el);
   };
 
+  private get ariaChecked() {
+    if (this.indeterminate) return 'mixed';
+
+    return this.checked ? 'true' : 'false';
+  }
+
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -285,7 +296,7 @@ export class BqCheckbox {
           part="control"
         >
           <input
-            aria-checked={this.checked ? 'true' : 'false'}
+            aria-checked={this.ariaChecked}
             aria-disabled={this.disabled ? 'true' : 'false'}
             checked={this.checked}
             class="bq-checkbox__input pointer-events-none absolute m-b-0 m-i-0 p-b-0 p-i-0 opacity-0"
@@ -316,7 +327,7 @@ export class BqCheckbox {
             {this.checked && (
               <svg
                 aria-hidden="true"
-                class="bs-full is-full absolute text-neutral-white"
+                class="bs-full is-full absolute text-[--bq-checkbox--icon-color-checked]"
                 viewBox="0 0 256 256"
                 xmlns="http://www.w3.org/2000/svg"
               >
@@ -334,7 +345,7 @@ export class BqCheckbox {
             {!this.checked && this.indeterminate && (
               <svg
                 aria-hidden="true"
-                class="bs-full is-full absolute text-neutral-white"
+                class="bs-full is-full absolute text-[--bq-checkbox--icon-color-checked]"
                 fill="currentColor"
                 viewBox="0 0 256 256"
                 xmlns="http://www.w3.org/2000/svg"
@@ -353,10 +364,10 @@ export class BqCheckbox {
           </span>
         </div>
         <span
-          class="bq-checkbox__label ps-xs text-start font-medium text-primary leading-regular group-hover-[&:not(.is-disabled)]:text-hover-primary group-[.is-disabled]:opacity-60"
+          class="bq-checkbox__label ps-xs text-start font-medium text-[--bq-checkbox--label-text-color] leading-regular group-hover-[&:not(.is-disabled)]:text-[color-mix(in_srgb,_var(--bq-checkbox--label-text-color),_var(--bq-hover)_20%)] group-[.is-disabled]:opacity-60"
           part="label"
         >
-          <slot />
+          <slot class="flex items-center" />
         </span>
       </label>
     );

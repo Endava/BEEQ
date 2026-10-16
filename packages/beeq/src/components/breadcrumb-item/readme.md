@@ -11,11 +11,11 @@ The Breadcrumb Item helps users understand their current location within a websi
 
 ## Properties
 
-| Property | Attribute | Description                                                                                                          | Type                                         | Default                 |
-| -------- | --------- | -------------------------------------------------------------------------------------------------------------------- | -------------------------------------------- | ----------------------- |
-| `href`   | `href`    | If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered. | `string`                                     | `undefined`             |
-| `rel`    | `rel`     | Where to display the link in the browser context. Relevant only if `href` is set.                                    | `string`                                     | `'noreferrer noopener'` |
-| `target` | `target`  | Where to display the link in the browser context. Relevant only if `href` is set.                                    | `"_blank" \| "_parent" \| "_self" \| "_top"` | `undefined`             |
+| Property | Attribute | Description                                                                                                                                                                                           | Type                                         | Default     |
+| -------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------- | ----------- |
+| `href`   | `href`    | If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered.                                                                                  | `string`                                     | `undefined` |
+| `rel`    | `rel`     | Space-separated link relationship types (e.g. `external`, `nofollow`) applied to the inner `<a>`. Relevant only if `href` is set. When `target` is set, `noreferrer` and `noopener` are always added. | `string`                                     | `undefined` |
+| `target` | `target`  | Where to display the link in the browser context. Relevant only if `href` is set.                                                                                                                     | `"_blank" \| "_parent" \| "_self" \| "_top"` | `undefined` |
 
 
 ## Events
@@ -29,10 +29,10 @@ The Breadcrumb Item helps users understand their current location within a websi
 
 ## Slots
 
-| Slot          | Description                                                     |
-| ------------- | --------------------------------------------------------------- |
-|               | The default slot is used to add content to the breadcrumb item. |
-| `"separator"` |                                                                 |
+| Slot          | Description                                                      |
+| ------------- | ---------------------------------------------------------------- |
+|               | The default slot is used to add content to the breadcrumb item.  |
+| `"separator"` | Per-item separator content, normally populated by bq-breadcrumb. |
 
 
 ## Shadow Parts
