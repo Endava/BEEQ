@@ -2814,7 +2814,7 @@ Set `disable-clear` to hide the clear button and prevent one-click deselection. 
 
 Call `preventDefault()` on the `bqInput` event to take full control of option filtering. This lets you implement async filtering, loading states, empty-state messages, and matched-text highlighting entirely in your own code.
 
-Keyboard focus alone keeps the panel closed. With search enabled, typing opens it after the debounced `bqInput` event. Calling `preventDefault()` on that event stops automatic opening as well as built-in filtering. Set `open` yourself when your custom flow needs to show the panel.
+Keyboard focus alone keeps the panel closed. With search enabled, typing opens it when `bqInput` is emitted: right away by default, or after `debounce-time` when you set one. Calling `preventDefault()` on that event stops automatic opening as well as built-in filtering. Set `open` yourself when your custom flow needs to show the panel.
 
 Adding, replacing, or removing options preserves the text you are typing in both single- and multi-select. The search text is separate from `value`, which holds the committed selection. Selecting an option, clearing or resetting the field, or changing `value` programmatically replaces the search text with the selected label or an empty input.
 
@@ -3646,7 +3646,7 @@ These events no longer follow input-only focus changes. If your handler needs to
 |---|---|---|---|---|
 | `autofocus` | `autofocus` | If `true`, the Select input will be focused on component render | `boolean` | — |
 | `clearButtonLabel` | `clear-button-label` | The aria label for the clear button | `string` | `'Clear value'` |
-| `debounceTime` | `debounce-time` | Milliseconds to wait before emitting `bqInput` after typing | `number` | `0` |
+| `debounceTime` | `debounce-time` | Milliseconds to wait before emitting `bqInput` after typing. With `0`, `bqInput` is emitted synchronously | `number` | `0` |
 | `disableClear` | `disable-clear` | If `true`, the clear button is hidden | `boolean` | `false` |
 | `disableSearch` | `disable-search` | If `true`, typing in the input is disabled while option selection remains available | `boolean` | `false` |
 | `disabled` | `disabled` | If `true`, the select cannot be interacted with | `boolean` | `false` |

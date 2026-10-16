@@ -1140,14 +1140,107 @@ describe('bq-select', () => {
     expect(input.readOnly).toBe(false);
 
     await userEvent.click(input);
-    // Use fill instead of type to set the value atomically, ensuring exactly 1 bqInput
-    // event fires regardless of debounce timing across character keystrokes
+    // `fill` sets the whole value in a single input event, so exactly one bqInput is emitted
     await userEvent.fill(input, 'alp');
     await waitForChanges();
 
     expect(bqInput).toHaveReceivedEventTimes(1);
     expect(alphaOption.hidden).toBe(false);
     expect(betaOption.hidden).toBe(true);
+  });
+
+  it.each([
+    false,
+    true,
+  ])('should emit bqInput synchronously during the native input event by default with custom filtering=%s', async (customFiltering) => {
+    const { root, spyOnEvent } = await render(
+      <bq-select
+        name="bq-select"
+        onBqInput={(event) => {
+          if (customFiltering) event.preventDefault();
+        }}
+      >
+        <bq-option value="alpha">Alpha</bq-option>
+        <bq-option value="beta">Beta</bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const input = getInput(select);
+    const alphaOption = select.querySelector<HTMLBqOptionElement>('bq-option[value="alpha"]');
+    const betaOption = select.querySelector<HTMLBqOptionElement>('bq-option[value="beta"]');
+    const bqInput = spyOnEvent('bqInput');
+
+    expect(select.debounceTime).toBe(0);
+
+    input.value = 'alp';
+    input.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+
+    // Asserted before any await or timer: the event, panel and filter all follow the native input event
+    expect(bqInput).toHaveReceivedEventTimes(1);
+    expect(bqInput.events[0].detail).toEqual({ value: 'alp' });
+    expect(select.open).toBe(!customFiltering);
+    expect(alphaOption.hidden).toBe(false);
+    expect(betaOption.hidden).toBe(!customFiltering);
+  });
+
+  it('should emit only the latest search text after a positive debounceTime and filter right away', async () => {
+    const { root, spyOnEvent } = await render(
+      <bq-select debounceTime={200} name="bq-select">
+        <bq-option value="alpha">Alpha</bq-option>
+        <bq-option value="beta">Beta</bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const input = getInput(select);
+    const alphaOption = select.querySelector<HTMLBqOptionElement>('bq-option[value="alpha"]');
+    const betaOption = select.querySelector<HTMLBqOptionElement>('bq-option[value="beta"]');
+    const bqInput = spyOnEvent('bqInput');
+
+    for (const value of ['a', 'al', 'alp']) {
+      input.value = value;
+      input.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+    }
+
+    expect(bqInput).toHaveReceivedEventTimes(0);
+    expect(select.open).toBe(false);
+    expect(betaOption.hidden).toBe(false);
+
+    await expect.poll(() => bqInput.events.length, { timeout: 3000 }).toBe(1);
+
+    // The filter runs with the emit, not after a second debounceTime delay
+    expect(bqInput.events[0].detail).toEqual({ value: 'alp' });
+    expect(select.open).toBe(true);
+    expect(alphaOption.hidden).toBe(false);
+    expect(betaOption.hidden).toBe(true);
+
+    await sleep(300);
+    expect(bqInput).toHaveReceivedEventTimes(1);
+  });
+
+  it('should apply debounceTime changes to the next search input', async () => {
+    const { root, setProps, spyOnEvent } = await render(
+      <bq-select debounceTime={200} name="bq-select">
+        <bq-option value="alpha">Alpha</bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const input = getInput(select);
+    const bqInput = spyOnEvent('bqInput');
+    const typeSearch = (value: string) => {
+      input.value = value;
+      input.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+    };
+
+    await setProps({ debounceTime: 0 });
+    typeSearch('a');
+    expect(bqInput).toHaveReceivedEventTimes(1);
+
+    await setProps({ debounceTime: 200 });
+    typeSearch('al');
+    expect(bqInput).toHaveReceivedEventTimes(1);
+
+    await expect.poll(() => bqInput.events.length, { timeout: 3000 }).toBe(2);
+    expect(bqInput.events.map((event) => event.detail.value)).toEqual(['a', 'al']);
   });
 
   describe.each([false, true])('keyboard search with multiple=%s', (multiple) => {
