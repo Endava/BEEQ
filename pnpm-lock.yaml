@@ -287,8 +287,8 @@ importers:
         specifier: 3.3.3
         version: 3.3.3(@stencil/core@4.45.2)
       '@stencil/vitest':
-        specifier: 1.15.1
-        version: 1.15.1(@stencil/core@4.45.2)(@vitest/browser-playwright@4.1.11)(playwright@1.63.0)(vitest@4.1.11)
+        specifier: 1.16.1
+        version: 1.16.1(@stencil/core@4.45.2)(@vitest/browser-playwright@4.1.11)(playwright@1.63.0)(vitest@4.1.11)
       '@stencil/vue-output-target':
         specifier: 0.14.6
         version: 0.14.6(@stencil/core@4.45.2)(vue@3.5.33(typescript@6.0.3))
@@ -3998,9 +3998,9 @@ packages:
     peerDependencies:
       '@stencil/core': ^4.0.0 || ^5.0.0 || >=5.0.0-alpha.19 <5.0.0-next.0
 
-  '@stencil/vitest@1.15.1':
-    resolution: {integrity: sha512-aOOMF9UZPqdfvfllMRfDnvkcwTdk72UFHV6tGdNmlD3/VD5ooYVI0GIVzQOCSVI1H8540H8OtF+CHeP7eijMgw==}
-    engines: {node: ^20.0.0 || ^22.0.0 || >=24.0.0}
+  '@stencil/vitest@1.16.1':
+    resolution: {integrity: sha512-2ZWw2NlFd9X04HLArnmwKavG3uPT55xiQSSnGk+EImlnP2Nx6+gEyuOLuHEELU+Efy5ybzZgjG/ebI3RkB1Mhg==}
+    engines: {node: ^22.12.0 || ^24.0.0 || >=26.0.0}
     hasBin: true
     peerDependencies:
       '@playwright/test': '*'
@@ -9327,8 +9327,8 @@ packages:
       yaml:
         optional: true
 
-  vitest-environment-stencil@1.15.1:
-    resolution: {integrity: sha512-x4JGSytUr5oeRqTrgnr++yY+wAXgvAAF1TxaqIp0jfvTnaEM5psrDYbwuy6oD+X1+DSSN9nkufMw0E4y099goQ==}
+  vitest-environment-stencil@1.16.1:
+    resolution: {integrity: sha512-RQsygK4aq+A8Yx980qU9DyZwCMJhFamzfjEbomLJefKIDmKgjEc6lfnyyAMUL07UjgerqqGIMPPraI2JDx7XVw==}
     peerDependencies:
       '@stencil/core': ^4.0.0 || >=5.0.0-alpha.0 <5.0.0-next.0 || ^5.0.0
 
@@ -13007,13 +13007,13 @@ snapshots:
       '@stencil/core': 4.45.2
       sass-embedded: 1.100.0
 
-  '@stencil/vitest@1.15.1(@stencil/core@4.45.2)(@vitest/browser-playwright@4.1.11)(playwright@1.63.0)(vitest@4.1.11)':
+  '@stencil/vitest@1.16.1(@stencil/core@4.45.2)(@vitest/browser-playwright@4.1.11)(playwright@1.63.0)(vitest@4.1.11)':
     dependencies:
       '@stencil/core': 4.45.2
       jiti: 2.7.0
       local-pkg: 1.2.1
       vitest: 4.1.11(@types/node@25.9.3)(@vitest/browser-playwright@4.1.11)(@vitest/coverage-istanbul@4.1.11)(vite@8.0.16(@types/node@25.9.3)(esbuild@0.28.1)(jiti@1.21.7)(less@4.6.6)(sass-embedded@1.100.0)(sass@1.105.1)(terser@5.48.0)(tsx@4.22.4)(yaml@2.9.1))
-      vitest-environment-stencil: 1.15.1(@stencil/core@4.45.2)
+      vitest-environment-stencil: 1.16.1(@stencil/core@4.45.2)
     optionalDependencies:
       '@vitest/browser-playwright': 4.1.11(playwright@1.63.0)(vite@8.0.16(@types/node@25.9.3)(esbuild@0.28.1)(jiti@1.21.7)(less@4.6.6)(sass-embedded@1.100.0)(sass@1.105.1)(terser@5.48.0)(tsx@4.22.4)(yaml@2.9.1))(vitest@4.1.11)
       playwright: 1.63.0
@@ -18795,10 +18795,10 @@ snapshots:
       tsx: 4.22.4
       yaml: 2.9.1
 
-  vitest-environment-stencil@1.15.1(@stencil/core@4.45.2):
+  vitest-environment-stencil@1.16.1(@stencil/core@4.45.2):
     dependencies:
       '@stencil/core': 4.45.2
-      '@stencil/vitest': 1.15.1(@stencil/core@4.45.2)(@vitest/browser-playwright@4.1.11)(playwright@1.63.0)(vitest@4.1.11)
+      '@stencil/vitest': 1.16.1(@stencil/core@4.45.2)(@vitest/browser-playwright@4.1.11)(playwright@1.63.0)(vitest@4.1.11)
 
   vitest@4.1.11(@types/node@25.9.3)(@vitest/browser-playwright@4.1.11)(@vitest/coverage-istanbul@4.1.11)(vite@8.0.16(@types/node@25.9.3)(esbuild@0.28.1)(jiti@1.21.7)(less@4.6.6)(sass-embedded@1.100.0)(sass@1.105.1)(terser@5.48.0)(tsx@4.22.4)(yaml@2.9.1)):
     dependencies:
