@@ -36,6 +36,10 @@ A breadcrumb is a form of contextual navigation displaying a user's position wit
   </Card>
 </CardGroup>
 
+<Tip>
+  Choose [`bq-steps`](/components/steps) instead of `bq-breadcrumb` when users move through a fixed sequence with current, completed, and error states. Use `bq-breadcrumb` to show where the page sits in a site hierarchy.
+</Tip>
+
 ## Anatomy
 
 <Frame className="px-4 py-4" caption="Breadcrumb component anatomy">
@@ -498,6 +502,12 @@ Each `bq-breadcrumb-item` renders a native `a` (with `href`) or `button` (withou
 | `href` | `href` | If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered | `string` | `undefined` |
 | `rel` | `rel` | Space-separated link relationship types (e.g. `external`, `nofollow`) applied to the inner `<a>`. Relevant only if `href` is set. When `target` is set, `noreferrer` and `noopener` are always added | `string` | `undefined` |
 | `target` | `target` | Where to display the link in the browser context. Relevant only if `href` is set | `'_blank'` \| `'_parent'` \| `'_self'` \| `'_top'` | `undefined` |
+
+#### Allowed values
+
+| Dimension | Attribute | Allowed values | Default |
+|---|---|---|---|
+| Target | `target` | `_blank`, `_parent`, `_self`, `_top` | none |
 
 <Note>
   When `target` is set, `bq-breadcrumb-item` merges `noreferrer` and `noopener` into the `rel` value you provide, so `rel="external"` with `target="_blank"` renders `rel="external noreferrer noopener"`. Without `target`, only your `rel` value is applied.

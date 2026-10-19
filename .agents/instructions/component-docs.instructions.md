@@ -24,7 +24,7 @@ Every component documentation page must follow this section order:
 11. **Options** — additional configurations and combination patterns with `CodeLivePreview` + `CodeGroup`, with [allowed values](#allowed-values-in-options) written as text
 12. **Best practices** — four-column (2×2) `CardGroup` with Do/Don't pairs
 13. **Accessibility** — built-in behaviors and requirements, a keyboard interaction table and a rules table; do not repeat the API reference
-14. **API reference** — Properties (plus Invalid combinations), Slots, Shadow parts, CSS custom properties tables
+14. **API reference** — Properties, Allowed values (a `Dimension | Attribute | Allowed values | Default` table for every property with a fixed set of values), Invalid combinations, Slots, Shadow parts, CSS custom properties tables
 15. **Resources** — two-column `CardGroup` linking to Storybook and GitHub source
 
 ## Overview Frame

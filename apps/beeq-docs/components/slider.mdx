@@ -40,6 +40,10 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
   </Card>
 </CardGroup>
 
+<Tip>
+  Choose [`bq-progress`](/components/progress) instead of `bq-slider` when the value is a read-only measure of completion. Use `bq-slider` when users set the value themselves.
+</Tip>
+
 ## Anatomy
 
 <Frame className="px-4 py-4" caption="Slider component anatomy">
@@ -881,6 +885,12 @@ Each handle is a native `<input type="range">`, so these keys come from the brow
 | `tooltipAlwaysVisible` | `tooltip-always-visible` | If true, the tooltip is permanently visible; requires `enable-tooltip` to be set | `boolean` | `false` |
 | `type` | `type` | Slider variant — `single` for one handle, `range` for two handles | `'single' \| 'range'` | `'single'` |
 | `value` | `value` | Current value. A number for `single` type (e.g. `30`); a two-element array string for `range` type (e.g. `"[20,70]"`). In React and Vue, pass the array directly: `value={[20, 70]}`. | `number \| number[] \| string` | — |
+
+### Allowed values
+
+| Dimension | Attribute | Allowed values | Default |
+|---|---|---|---|
+| Type | `type` | `single`, `range` | `single` |
 
 ### Invalid combinations
 

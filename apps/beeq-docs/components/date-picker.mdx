@@ -1734,6 +1734,18 @@ When focus leaves the segmented field, complete dates outside `min` or `max` are
 | `validationStatus` | `validation-status` | Validation state of the control | `"none" \| "error" \| "warning" \| "success"` | `"none"` |
 | `value` | `value` | Selected value in the wire format matching `precision`; `range` uses `start/end`, `multi` uses space-separated dates | `string` | `undefined` |
 
+### Allowed values
+
+| Dimension | Attribute | Allowed values | Default |
+|---|---|---|---|
+| Initial view | `initial-view` | `days`, `months`, `years` | `days` |
+| Months per view | `months-per-view` | `single`, `months` | `single` |
+| Placement | `placement` | `top`, `top-start`, `top-end`, `right`, `right-start`, `right-end`, `bottom`, `bottom-start`, `bottom-end`, `left`, `left-start`, `left-end` | `bottom-end` |
+| Precision | `precision` | `day`, `month`, `year` | `day` |
+| Strategy | `strategy` | `fixed`, `absolute` | `fixed` |
+| Type | `type` | `single`, `range`, `multi` | `single` |
+| Validation status | `validation-status` | `none`, `error`, `warning`, `success` | `none` |
+
 ### Invalid combinations
 
 | Combination | Strength | Result |
