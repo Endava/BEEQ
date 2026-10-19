@@ -1,3 +1,29 @@
+## 1.17.1 (2026-10-19)
+
+### Bug Fixes 🐞
+
+- **Debounce:** fire the immediate call on every burst, once per call ([#1873](https://github.com/Endava/BEEQ/pull/1873))
+- **Input:** emit bqInput synchronously when debounceTime is 0 ([#1870](https://github.com/Endava/BEEQ/pull/1870))
+- **RadioGroup:** update the form value in the value watcher ([#1881](https://github.com/Endava/BEEQ/pull/1881))
+- **Select:** emit bqInput synchronously when debounceTime is 0 ([#1875](https://github.com/Endava/BEEQ/pull/1875))
+- **Slider:** emit bqChange synchronously when debounceTime is 0 ([#1877](https://github.com/Endava/BEEQ/pull/1877))
+- **TabGroup, RadioGroup:** emit bqChange synchronously at debounceTime 0 ([#1871](https://github.com/Endava/BEEQ/pull/1871))
+- **Textarea:** emit bqInput synchronously when debounceTime is 0 ([#1869](https://github.com/Endava/BEEQ/pull/1869))
+- **Theme:** use Red Orange for Endava light brand text, icons, strokes and focus ([#1878](https://github.com/Endava/BEEQ/pull/1878))
+
+### Refactor 🛠️
+
+- **Input:** drop duplicated form updates from change and clear ([#1882](https://github.com/Endava/BEEQ/pull/1882))
+- **Textarea:** deprecate unused bqClear event ([#1876](https://github.com/Endava/BEEQ/pull/1876))
+
+### Chore ⚙️
+
+- **Husky:** skip the shared git stash in lint-staged ([#1879](https://github.com/Endava/BEEQ/pull/1879))
+
+### ❤️ Thank You
+
+- Dabiel Gonzalez-Ramos @dgonzalezr
+
 ## 1.17.0 (2026-10-15)
 
 ### Features ⚡️
