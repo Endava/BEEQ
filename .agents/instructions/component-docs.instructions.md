@@ -24,7 +24,7 @@ Every component documentation page must follow this section order:
 11. **Options** — additional configurations and combination patterns with `CodeLivePreview` + `CodeGroup`, with [allowed values](#allowed-values-in-options) written as text
 12. **Best practices** — four-column (2×2) `CardGroup` with Do/Don't pairs
 13. **Accessibility** — built-in behaviors and requirements, a keyboard interaction table and a rules table; do not repeat the API reference
-14. **API reference** — Properties (plus Invalid combinations for form controls), Slots, Shadow parts, CSS custom properties tables
+14. **API reference** — Properties (plus Invalid combinations), Slots, Shadow parts, CSS custom properties tables
 15. **Resources** — two-column `CardGroup` linking to Storybook and GitHub source
 
 ## Overview Frame
@@ -230,15 +230,15 @@ Use four subsections in this order:
 
    **Default values must use `var(--bq-*)` CSS custom properties** — never Tailwind `theme()` function calls. Use the values from `bq-<name>.variables.scss` as the source of truth and map them to their underlying `var(--bq-*)` equivalents. Hardcoded values (e.g. `transparent`, `none`, `solid`, `unset`, plain numbers like `0` or `10`, pixel values like `24px`) are kept as-is.
 
-Form controls add an `### Invalid combinations` subsection right after Properties, listing props that cannot be used together and what happens when they are:
+Every component page adds an `### Invalid combinations` subsection right after Properties (or after the properties of the last component on multi-component pages), listing props that cannot be used together and what happens when they are. Pages with no source-backed combinations say so:
 
 ```mdx
 | Combination | Strength | Result |
 |---|---|---|
-| `multiple` with `type="password"` | MUST NOT | The second prop is ignored |
+| `time` without `auto-dismiss` | SHOULD NOT | `time` is ignored |
 ```
 
-State only combinations verified in the source or tests. If the component has none, write "No invalid prop combinations."
+Use MUST NOT when the combination breaks behavior, logs a console warning or error, or removes accessibility. Use SHOULD NOT when one prop is simply ignored. State only combinations verified in the source or tests. If the component has none, write "No invalid prop combinations." Skip invalid enum values, which fall back to defaults and are not combinations.
 
 Follow with a `Tip` linking to theming guides:
 

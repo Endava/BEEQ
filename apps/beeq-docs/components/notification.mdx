@@ -1077,6 +1077,13 @@ The notification itself is not focusable. Only the elements inside it receive fo
 | `time` | `time` | Duration in milliseconds before auto-dismissal. Only valid when `auto-dismiss` is `true` | `number` | `3000` |
 | `type` | `type` | The semantic type of the notification | `"error" \| "info" \| "neutral" \| "success" \| "warning"` | `"info"` |
 
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| `time` without `auto-dismiss` | SHOULD NOT | `time` is ignored and the notification never closes itself |
+| `hide-icon` with an `icon` slot | SHOULD NOT | The whole icon container is hidden, including the slotted icon |
+
 ### Events
 
 | Event | Description | Type |

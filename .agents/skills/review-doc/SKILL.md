@@ -54,7 +54,7 @@ Check the page against every rule of each instruction section below. Record each
 | Accessibility | Accessibility in component-docs: keyboard table with one row per key, then a `### Rules` table (Rule, Strength, Verified by) that covers the Accessibility bullets; no `<Visibility for="agents">` rules block |
 | Rule strength | Rule strength in documentation: capitals (MUST / SHOULD / MUST NOT / SHOULD NOT / MAY) appear only in the Rules and Invalid combinations Strength columns; Accessibility, Keyboard, prose and Do/Don't cards use plain lowercase wording |
 | Allowed values | Allowed Values in component-docs: every variant, size, type or placement dimension lists its values as text |
-| API reference | API Reference in component-docs, cross-checked against the source from step 2; Invalid combinations for form controls |
+| API reference | API Reference in component-docs, cross-checked against the source from step 2; Invalid combinations on every component page |
 | Resources | Resources in component-docs |
 | Tone & language | Tone and anti-patterns in documentation |
 

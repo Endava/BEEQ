@@ -503,6 +503,12 @@ Each `bq-breadcrumb-item` renders a native `a` (with `href`) or `button` (withou
   When `target` is set, `bq-breadcrumb-item` merges `noreferrer` and `noopener` into the `rel` value you provide, so `rel="external"` with `target="_blank"` renders `rel="external noreferrer noopener"`. Without `target`, only your `rel` value is applied.
 </Note>
 
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| `target` or `rel` on a `bq-breadcrumb-item` without `href` | SHOULD NOT | Both are dropped because the item renders a `<button>` instead of a link |
+
 ### Events
 
 Events are emitted by `bq-breadcrumb-item`.

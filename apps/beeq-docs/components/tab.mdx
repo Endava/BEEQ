@@ -803,6 +803,12 @@ Arrow keys work in both `horizontal` and `vertical` orientations. Disabled tabs 
 | `size` | `size` | Size applied to all child tabs | `"small" \| "medium" \| "large"` | `"medium"` |
 | `value` | `value` | The `tab-id` of the currently selected tab | `string` | — |
 
+#### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| `size`, `orientation` or `placement` on a `bq-tab` inside `bq-tab-group` | SHOULD NOT | The group overwrites these values on every tab |
+
 #### Events
 
 | Event | Description | Type |

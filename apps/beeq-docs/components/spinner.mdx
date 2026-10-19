@@ -476,6 +476,12 @@ No keyboard interaction: the component is not focusable.
 | `size` | `size` | Defines the size of the icon element displayed | `"small"` \| `"medium"` \| `"large"` | `"medium"` |
 | `textPosition` | `text-position` | Defines the position of the label text | `"none"` \| `"left"` \| `"right"` \| `"above"` \| `"below"` | `"none"` |
 
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| `text-position="none"` with text in the default slot | SHOULD NOT | The text is hidden even though the slot has content |
+
 ### Slots
 
 | Slot | Description |

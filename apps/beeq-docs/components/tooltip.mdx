@@ -1294,6 +1294,12 @@ The `distance` prop controls the gap in pixels between the trigger and the toolt
 | `sameWidth`    | `same-width`     | If `true`, the tooltip panel width matches the trigger element width                            | `boolean`                                                                                                                                                 | `false`   |
 | `visible`      | `visible`        | If `true`, the tooltip is visible on first render and after each user interaction               | `boolean`                                                                                                                                                 | `false`   |
 
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| Calling `hide()` on a tooltip with `always-visible` | SHOULD NOT | `hide()` returns early and the tooltip stays visible |
+
 ### Events
 
 | Event        | Description                                           | Type                                    |

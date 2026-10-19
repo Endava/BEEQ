@@ -1205,6 +1205,13 @@ Keys apply to the focused option. Disabled and hidden options are not focusable.
 | `showSelectionSummary` | `show-selection-summary` | If `true`, shows the nested selection summary beside the expand control | `boolean` | `true` |
 | `value` | `value` | A string used to identify the option | `string` | — |
 
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| `indeterminate` without `checkbox` | SHOULD NOT | `indeterminate` is ignored because only the checkbox variant renders it |
+| `expanded` without nested content in the `options` slot | SHOULD NOT | Nothing expands because there are no nested options and no expand button |
+
 ### Events
 
 | Event | Description | Type |

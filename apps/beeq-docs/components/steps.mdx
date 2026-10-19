@@ -1124,6 +1124,12 @@ A step item with `status="disabled"` is not focusable and does not emit `bqClick
 | `status` | `status` | Visual and semantic state of the item | `'default'` \| `'current'` \| `'completed'` \| `'error'` \| `'disabled'` | `'default'` |
 | `type` | `type` | Prefix type; usually inherited from `bq-steps` | `'numeric'` \| `'icon'` \| `'dot'` | `undefined` |
 
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| `type`, `size`, `orientation` or `divider-color` on a `bq-step-item` inside `bq-steps` | SHOULD NOT | The parent overwrites these values on every step item |
+
 ### Slots
 
 #### `bq-steps`

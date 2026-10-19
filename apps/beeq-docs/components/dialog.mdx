@@ -1145,6 +1145,12 @@ With `disable-backdrop` the dialog is non-modal, so `Tab` is not confined to the
 | `open` | `open` | If `true`, the dialog is shown as open | `boolean` | `false` |
 | `size` | `size` | The size of the dialog | `"small" \| "medium" \| "large"` | `"medium"` |
 
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| `hide-close-button` with a `button-close` slot | SHOULD NOT | The slotted button still renders because the prop only hides the default close button |
+
 ### Events
 
 | Event | Description | Type |

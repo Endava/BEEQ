@@ -677,6 +677,13 @@ No keyboard interaction: the component is not focusable.
 | `type` | `type` | Sets the visual type of the progress bar | `"default"` \| `"error"` | `"default"` |
 | `value` | `value` | The current progress value, clamped between `0` and `100` | `number` | `0` |
 
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| `enable-tooltip` with `indeterminate` | SHOULD NOT | The tooltip does not render while the progress is indeterminate |
+| `label` with `indeterminate` | SHOULD NOT | The label is hidden and marked `aria-hidden` |
+
 ### Shadow parts
 
 | Part | Description |

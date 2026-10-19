@@ -622,6 +622,12 @@ No keyboard interaction: the component is not focusable.
 | `strokeThickness` | `stroke-thickness` | Stroke thickness, in pixels | `number` | `1` |
 | `titleAlignment` | `title-alignment` | Alignment of title content on the divider axis | `'end' \| 'middle' \| 'start'` | `'middle'` |
 
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| `stroke-dash-width` or `stroke-dash-gap` without `dashed` | SHOULD NOT | Both are ignored because the dash pattern is only applied to a dashed divider |
+
 ### Slots
 
 | Slot | Description |

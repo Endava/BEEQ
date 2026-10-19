@@ -1414,6 +1414,12 @@ Use `same-width` when the panel should match the trigger width. Use `panel-heigh
 | `skidding` | `skidding` | Represents the skidding between the panel and the trigger element | `number` | `0` |
 | `strategy` | `strategy` | Defines the positioning strategy | `'fixed'` \| `'absolute'` | `'fixed'` |
 
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| No child with `slot="trigger"` | MUST NOT | Nothing toggles the panel because the click listener attaches to the trigger |
+
 ### Events
 
 | Event | Description | Type |

@@ -908,6 +908,13 @@ A disabled or `loading` button does not emit `bqClick` or act on the form. `Spac
 | `type` | `type` | The default behavior of the button | `'button'` \| `'submit'` \| `'reset'` | `'button'` |
 | `variant` | `variant` | The variant on top of appearance (primary and secondary only) | `'standard'` \| `'ghost'` \| `'danger'` | `'standard'` |
 
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| `only-icon` without `label` | MUST NOT | The component logs a console warning because the icon-only button has no accessible name |
+| `download` without `href` | SHOULD NOT | `download` is dropped because the button renders a `<button>` instead of a link |
+
 ### Events
 
 | Event | Description | Type |

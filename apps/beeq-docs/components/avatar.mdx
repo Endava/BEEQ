@@ -844,6 +844,12 @@ No keyboard interaction: the component is not focusable. If you place an avatar 
 | `shape` | `shape` | Visual shape of the avatar | `'circle'` \| `'square'` | `'circle'` |
 | `size` | `size` | Size of the avatar | `'xsmall'` \| `'small'` \| `'medium'` \| `'large'` | `'medium'` |
 
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| `initials` longer than the `size` allows | SHOULD NOT | The initials are cut to 1, 2, 3 or 4 characters for `xsmall`, `small`, `medium` and `large` |
+
 ### Slots
 
 | Slot | Description |

@@ -615,6 +615,13 @@ No keyboard interaction: the component is not focusable. Make an icon interactiv
 | `src` | `src` | Loads a custom SVG source and overrides `name` when set | `string` | `undefined` |
 | ~~`weight`~~ | ~~`weight`~~ | <strong className="text-red-500">Deprecated!</strong> Legacy icon weight/style prop | `'thin'` \| `'light'` \| `'regular'` \| `'bold'` \| `'fill'` \| `'duotone'` | `undefined` |
 
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| `src` with `name` | SHOULD NOT | `src` takes precedence and `name` is ignored |
+| `weight` | MUST NOT | The deprecated prop logs a console warning; put the weight in `name` instead, for example `bell-fill` |
+
 ### Slots
 
 This component has no public slots.

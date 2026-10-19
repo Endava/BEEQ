@@ -1613,6 +1613,12 @@ As a developer, you are responsible for the following:
 | `position` | `position` | Defines the edge the drawer slides from | `'start' \| 'end'` | `'end'` |
 | `placement` | `placement` | **Deprecated.** Use `position` instead. Defines the edge the drawer slides from | `'left' \| 'right'` | `'right'` |
 
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| `placement` | MUST NOT | The deprecated prop logs a console warning and overrides `position`; use `position` instead |
+
 ### Methods
 
 | Method | Description | Signature |

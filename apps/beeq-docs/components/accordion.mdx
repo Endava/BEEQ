@@ -1366,6 +1366,12 @@ The header is a native `<summary>` element exposed with `role="button"`.
 | `multiple`    | `multiple`     | If `true`, multiple accordion items can be expanded at the same time          | `boolean`                  | `false`    |
 | `size`        | `size`         | Size applied to all child accordions                                          | `'small'` \| `'medium'`   | `'medium'` |
 
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| Setting `disabled` while `expanded` is `true` | SHOULD NOT | `expanded` resets to `false` |
+
 ### Events
 
 | Event          | Description                                           | Type                                    |

@@ -1331,6 +1331,12 @@ The alert itself is not focusable. Only the elements inside it receive focus; th
 | `time` | `time` | The length of time, in milliseconds, after which the alert closes itself. Only valid when `auto-dismiss` is set | `number` | `3000` |
 | `type` | `type` | Type of alert | `'default'` \| `'error'` \| `'info'` \| `'success'` \| `'warning'` | `'default'` |
 
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| `time` without `auto-dismiss` | SHOULD NOT | `time` is ignored and the alert never closes itself |
+
 ### Events
 
 | Event | Description | Type |

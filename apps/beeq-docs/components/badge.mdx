@@ -441,6 +441,12 @@ No keyboard interaction: the component is not focusable.
 | `size` | `size` | Dot size when no content is provided | `'small'` \| `'medium'` | `'small'` |
 | `textColor` | `text-color` | Text color token used when content is present | `string` | `undefined` |
 
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| `size` with slotted content | SHOULD NOT | `size` is ignored and the badge sizes itself to the content |
+
 ### Slots
 
 | Slot | Description |
