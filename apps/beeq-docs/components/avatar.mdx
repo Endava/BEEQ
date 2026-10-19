@@ -14,7 +14,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 Avatars help people identify users, teams, or entities at a glance. Use them in places where identity matters, such as lists, comments, ownership indicators, profile surfaces, contact cards, and people pickers.
 
 <Note>
-  Provide a meaningful `label` for every avatar. When an image is used, add `alt-text` and keep `initials` short so they remain a clean fallback if the image cannot load.
+  You must provide a meaningful `label` for every avatar. When an image is used, you should add `alt-text` and keep `initials` short so they remain a clean fallback if the image cannot load.
 </Note>
 
 ## When to use
@@ -123,7 +123,7 @@ Pass the full intended initials (e.g. `"JD"` for John Doe) and let the component
 ### Image and initials together
 
 <Note>
-  Always pass both `image` and `initials` when showing a photo. If the image fails to load, the component automatically falls back to the initials — no extra logic required on your side.
+  You should pass both `image` and `initials` when showing a photo. If the image fails to load, the component automatically falls back to the initials — no extra logic required on your side.
 </Note>
 
 ## Usage
@@ -259,7 +259,11 @@ When a profile photo or logo is available, pass both `image` and `initials`. The
 
 ### Shape and size
 
-Avatar supports four sizes (`xsmall`, `small`, `medium`, `large`) and two shapes (`circle`, `square`). Choose size based on context: `small` works well in dense lists and inline layouts; `large` suits profile headers and contact cards where identity is the focal point. Keep shape and size consistent within the same group so the UI feels intentional and easy to scan.
+Avatar supports four sizes and two shapes. Choose size based on context: `small` works well in dense lists and inline layouts; `large` suits profile headers and contact cards where identity is the focal point. Shape and size should be consistent within the same group so the UI feels intentional and easy to scan.
+
+**Allowed `size` values:** `xsmall`, `small`, `medium` (default), `large`.
+
+**Allowed `shape` values:** `circle` (default), `square`.
 
 <CodeLivePreview mode="shadow" code={`
   <style>
@@ -329,7 +333,7 @@ Avatar supports four sizes (`xsmall`, `small`, `medium`, `large`) and two shapes
 
 ### Avatar group
 
-Use a grouped avatar pattern when you need to represent multiple participants in a compact space, such as shared ownership, collaborators, or team members. Keep the same size and shape across the whole group.
+Use a grouped avatar pattern when you need to represent multiple participants in a compact space, such as shared ownership, collaborators, or team members. The same size and shape should be used across the whole group.
 
 <Tip>
   Avatar grouping is not a built-in feature — the component renders avatars independently. A few lines of CSS are all you need to create an overlapping stack, as shown in the example below.
@@ -735,7 +739,7 @@ Use the `badge` slot when the avatar needs a compact status or count indicator. 
       Do
     </span>
 
-    Use the supported `shape` options to keep avatars aligned with the system and the surrounding UI.
+    should use the supported `shape` options to keep avatars aligned with the system and the surrounding UI.
   </Card>
 
   <Card>
@@ -744,7 +748,7 @@ Use the `badge` slot when the avatar needs a compact status or count indicator. 
       Don't
     </span>
 
-    Do not resize avatars outside the available sizes. It can distort the component and break visual consistency.
+    must not resize avatars outside the available sizes. It can distort the component and break visual consistency.
   </Card>
 
   <Card>
@@ -753,7 +757,7 @@ Use the `badge` slot when the avatar needs a compact status or count indicator. 
       Do
     </span>
 
-    Keep initials short, ideally using the first letters of a first and last name so they remain legible at every size.
+    should keep initials short, ideally using the first letters of a first and last name so they remain legible at every size.
   </Card>
 
   <Card>
@@ -762,7 +766,7 @@ Use the `badge` slot when the avatar needs a compact status or count indicator. 
       Don't
     </span>
 
-    Do not pass full names as initials. Long strings quickly become unreadable and visually unbalanced.
+    should not pass full names as initials. Long strings quickly become unreadable and visually unbalanced.
   </Card>
 
   <Card>
@@ -771,7 +775,7 @@ Use the `badge` slot when the avatar needs a compact status or count indicator. 
       Do
     </span>
 
-    Keep avatar style consistent within the same group. Use the same shape, size, and image-vs-initials pattern where possible.
+    should keep avatar style consistent within the same group, using the same shape, size, and image-vs-initials pattern where possible.
   </Card>
 
   <Card>
@@ -780,7 +784,7 @@ Use the `badge` slot when the avatar needs a compact status or count indicator. 
       Don't
     </span>
 
-    Do not mix mismatched avatar treatments in one group unless the difference carries meaning. It makes lists harder to scan.
+    should not mix mismatched avatar treatments in one group unless the difference carries meaning. It makes lists harder to scan.
   </Card>
 
   <Card>
@@ -789,7 +793,7 @@ Use the `badge` slot when the avatar needs a compact status or count indicator. 
       Do
     </span>
 
-    Use well-cropped images that fit the avatar area cleanly and keep the subject centered and recognizable.
+    should use well-cropped images that fit the avatar area cleanly and keep the subject centered and recognizable.
   </Card>
 
   <Card>
@@ -798,17 +802,21 @@ Use the `badge` slot when the avatar needs a compact status or count indicator. 
       Don't
     </span>
 
-    Do not use clipped, stretched, or low-quality images. If the image is not clear, initials are often the better fallback.
+    should not use clipped, stretched, or low-quality images. If the image is not clear, initials are often the better fallback.
   </Card>
 </CardGroup>
 
 ## Accessibility
 
-The component automatically applies `role="img"` and `aria-label` to its root element. You do not need to add ARIA attributes manually — provide a descriptive `label` and the component handles the rest.
+The component automatically applies `role="img"` and `aria-label` to its root element. You do not need to add ARIA attributes manually — you MUST provide a descriptive `label` and the component handles the rest.
 
-When the avatar displays an image, also pass `alt-text` to describe what the image shows. Keep `initials` short so the text fallback remains readable if the image cannot load.
+When the avatar displays an image, you SHOULD also pass `alt-text` to describe what the image shows. `initials` SHOULD be short so the text fallback remains readable if the image cannot load.
 
-If the avatar appears alongside other interactive elements such as names, links, or buttons, make sure the surrounding pattern is accessible as a whole — the avatar's built-in label describes the avatar itself, not the composite component around it.
+If the avatar appears alongside other interactive elements such as names, links, or buttons, the surrounding pattern MUST be accessible as a whole — the avatar's built-in label describes the avatar itself, not the composite component around it.
+
+### Keyboard interaction
+
+No keyboard interaction: the component is not focusable. If you place an avatar inside a link or button, that element provides the keyboard behavior.
 
 ## API reference
 

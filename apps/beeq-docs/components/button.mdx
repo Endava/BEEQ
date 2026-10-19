@@ -11,10 +11,10 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 </Frame>
 
 Buttons trigger actions in the current context — saving, submitting, confirming, or moving forward in a flow.
-Use emphasis to communicate priority: each view should have one clear primary action, while secondary actions should be visually lower in emphasis.
+Use emphasis to communicate priority: each view should have one clear primary action, and secondary actions should be visually lower in emphasis.
 
 <Note>
-  Use a link button for navigation when the intent is to move to another page. See the [Link](#link) variant.
+  You should use a link button for navigation when the intent is to move to another page. See the [Link](#link) variant.
 </Note>
 
 ## When to use
@@ -40,6 +40,8 @@ Use emphasis to communicate priority: each view should have one clear primary ac
   </Card>
 </CardGroup>
 
+Choose [`bq-dropdown`](/components/dropdown) instead of `bq-button` when a trigger must open a list of related actions or values. Use `bq-button` when the control performs one action directly.
+
 ## Button patterns
 
 Some patterns below are standalone `bq-button` usages, while others are composite interactions built from buttons and related components.
@@ -61,7 +63,7 @@ Some patterns below are standalone `bq-button` usages, while others are composit
 </Frame>
 
 A button can contain a label and optional leading or trailing icons.
-The label should always communicate the action clearly. Icons should reinforce meaning, not replace it — unless the action is universally understood and an accessible `label` prop is provided.
+The label must communicate the action clearly. Icons should reinforce meaning, not replace it — unless the action is universally understood and an accessible `label` prop is provided.
 
 | Part | Element | Description |
 |---|---|---|
@@ -71,11 +73,21 @@ The label should always communicate the action clearly. Icons should reinforce m
 
 ## Design guidelines
 
-Choose the button variant based on the importance of the action. Use the strongest visual treatment for the main action in a region, keep labels short and specific, and avoid making several actions compete for the same level of emphasis.
+Choose the button variant based on the importance of the action. Use the strongest visual treatment for the main action in a region. Labels should be short and specific, and several actions should not compete for the same level of emphasis.
 
 ## Usage
 
 `appearance` defines the base style of the button. `variant` modifies supported appearances — `ghost` applies to both primary and secondary buttons, while `danger` is reserved for destructive actions on the primary appearance.
+
+| Dimension | Allowed values | Default |
+|---|---|---|
+| `appearance` | `primary`, `secondary`, `link`, `text` | `primary` |
+| `variant` | `standard`, `ghost`, `danger` (applies to `appearance="primary"` only) | `standard` |
+| `size` | `small`, `medium`, `large` | `medium` |
+| `border` | `none`, `xs2`, `xs`, `s`, `m`, `l`, `full` | `m` |
+| `type` | `button`, `submit`, `reset` | `button` |
+| `justify-content` | `left`, `center`, `right` | `center` |
+| `target` (only with `href`) | `_blank`, `_parent`, `_self`, `_top` | none |
 
 ### Primary
 
@@ -270,7 +282,7 @@ Renders as an `<a>` element under the hood when `href` is provided. Still action
 </CodeLivePreview>
 
 <Warning>
-  When using the Link button, always provide a `href` value.
+  When using the Link button, you must provide a `href` value.
 </Warning>
 
 ### Text
@@ -319,7 +331,9 @@ No background or border. Suitable for inline actions, subtle calls to action, or
 
 ### Sizes
 
-Choose the size that best matches the context. Medium is the default and preferred size for most interfaces.
+Choose the size that best matches the context. Medium is the default and should be the size for most interfaces.
+
+**Allowed `size` values:** `small`, `medium` (default), `large`.
 
 | Size | When to use |
 |---|---|
@@ -420,6 +434,8 @@ Use the `block` attribute to make the button stretch to its parent width.
 ### Border radius
 
 Use the `border` property to control the corner radius.
+
+**Allowed `border` values:** `none`, `xs2`, `xs`, `s`, `m` (default), `l`, `full`.
 
 <CodeLivePreview mode="shadow" code={`
   <bq-button border="full">Primary</bq-button>
@@ -541,12 +557,12 @@ The `disabled` attribute can be applied to any button variation. When disabled, 
 </CodeLivePreview>
 
 <Warning>
-  Avoid disabled buttons when possible. If an action is unavailable, prefer keeping the button discoverable and explain what is required to proceed.
+  You should avoid disabled buttons when possible. If an action is unavailable, keep the button discoverable and explain what is required to proceed.
 </Warning>
 
 ### Loading
 
-Use the `loading` attribute to indicate something is being processed. Pair with `disabled` to prevent duplicate actions.
+Use the `loading` attribute to indicate something is being processed. You should pair it with `disabled` to prevent duplicate actions.
 
 <CodeLivePreview mode="shadow" code={`
   <bq-button loading>Loading</bq-button>
@@ -595,7 +611,7 @@ Use the `loading` attribute to indicate something is being processed. Pair with 
 
 ### Leading and trailing icons
 
-Use the `prefix` or `suffix` slot to add icons. Icons should reinforce the label — never use them for decoration only.
+Use the `prefix` or `suffix` slot to add icons. Icons should reinforce the label and must not be decoration only.
 
 <CodeLivePreview mode="shadow" code={`
   <bq-button>
@@ -677,7 +693,7 @@ Use the `prefix` or `suffix` slot to add icons. Icons should reinforce the label
 ### Only-icon buttons
 
 Use `only-icon` buttons only for common, easily recognized actions.
-Always provide a `label` so assistive technologies can announce the action correctly.
+You must provide a `label` so assistive technologies can announce the action correctly.
 
 <CodeLivePreview mode="shadow" code={`
   <bq-button only-icon label="Notifications">
@@ -758,7 +774,7 @@ Always provide a `label` so assistive technologies can announce the action corre
 </CodeLivePreview>
 
 <Warning>
-  Do not use `prefix` or `suffix` slots for icon-only buttons. Pass the icon as the default slot and always set the `label` prop.
+  You must not use `prefix` or `suffix` slots for icon-only buttons. Pass the icon as the default slot and set the `label` prop.
 </Warning>
 
 ## Content guidelines
@@ -767,11 +783,11 @@ Always provide a `label` so assistive technologies can announce the action corre
 
 | Guideline | Rule |
 |---|---|
-| **Be concise** | 1–2 words, max 4 words, under 20 characters. No punctuation. |
+| **Be concise** | Labels should be 1–2 words, max 4 words, under 20 characters. Labels should not include punctuation. |
 | **Use verbs** | Labels should describe the action: "Save", "Delete", "Submit" — not nouns or adjectives. |
-| **Sentence case** | Never use ALL CAPS to emphasize a button. |
-| **No wrapping** | Labels must never break to multiple lines. |
-| **No emoji** | Keep labels functional and utilitarian. No emoji or exclamation points. |
+| **Sentence case** | Labels should not use ALL CAPS to emphasize a button. |
+| **No wrapping** | Labels must not break to multiple lines. |
+| **No emoji** | Labels should be functional and utilitarian. Labels should not include emoji or exclamation points. |
 
 ---
 
@@ -783,42 +799,42 @@ Always provide a `label` so assistive technologies can announce the action corre
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Keep button labels succinct — 1 or 2 words, no longer than 4, under 20 characters.
+    should keep button labels succinct — 1 or 2 words, no longer than 4, under 20 characters.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Never let button labels wrap to multiple lines or lose their button shape.
+    must not let button labels wrap to multiple lines or lose their button shape.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Pair a primary button with a secondary button for alternative actions.
+    should pair a primary button with a secondary button for alternative actions.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Don't place multiple primary buttons together — it dilutes the visual hierarchy.
+    should not place multiple primary buttons together — it dilutes the visual hierarchy.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Keep emphasis aligned with task priority — one primary action per view.
+    should keep emphasis aligned with task priority — one primary action per view.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Don't use icons as decoration. Every icon should reinforce the label meaning.
+    should not use icons as decoration. Every icon should reinforce the label meaning.
   </Card>
 
   <Card>
@@ -826,7 +842,7 @@ Always provide a `label` so assistive technologies can announce the action corre
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Use icon-only buttons only when the action is familiar and the `label` prop provides an accessible name.
+    should use icon-only buttons only when the action is familiar, and the `label` prop must provide an accessible name.
   </Card>
 
   <Card>
@@ -834,7 +850,7 @@ Always provide a `label` so assistive technologies can announce the action corre
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Do not rely on an icon alone when the action is uncommon, destructive, or easy to misunderstand.
+    should not rely on an icon alone when the action is uncommon, destructive, or easy to misunderstand.
   </Card>
 </CardGroup>
 
@@ -842,11 +858,23 @@ Always provide a `label` so assistive technologies can announce the action corre
 
 ## Accessibility
 
-- **Use descriptive labels** — labeling buttons properly lets users know what will happen, reduces errors, and increases confidence.
-- **Icon-only buttons** — always set the `label` prop to provide a text alternative for assistive technologies.
-- **Keyboard navigation** — enabled buttons are activated with <kbd>Enter</kbd> or <kbd>Space</kbd>. When `href` is set, the component renders a native link, activated with <kbd>Enter</kbd>; <kbd>Space</kbd> does not activate it.
-- **Disabled states** — `disabled` sets `aria-disabled="true"`, removes the control from the Tab order, and prevents activation. Native buttons also receive `disabled`. Disabled controls are not necessarily hidden from screen readers; explain nearby what is required to proceed.
-- **Correct semantics** — omit `href` for actions and set `href` for navigation. `appearance="link"` changes styling only; it does not turn a button into a link.
+- **Use descriptive labels** — buttons MUST have descriptive labels so users know what will happen, which reduces errors and increases confidence.
+- **Icon-only buttons** — you MUST set the `label` prop to provide a text alternative for assistive technologies.
+- **Disabled states** — `disabled` sets `aria-disabled="true"`, removes the control from the Tab order, and prevents activation. Native buttons also receive `disabled`. Disabled controls are not necessarily hidden from screen readers; you SHOULD explain nearby what is required to proceed.
+- **Correct semantics** — you MUST omit `href` for actions and set `href` for navigation. `appearance="link"` changes styling only; it does not turn a button into a link.
+
+### Keyboard interaction
+
+The component renders a native `button`, or a native `a` when `href` is set.
+
+| Key | Context | Action |
+|---|---|---|
+| `Tab` | Any | Moves focus to the next enabled button; a disabled button has `tabindex="-1"` and is skipped |
+| `Shift` + `Tab` | Any | Moves focus to the previous enabled button |
+| `Enter` | Button or link focused | Emits `bqClick`; with `type="submit"` or `type="reset"` it submits or resets the associated form; with `href` it follows the link |
+| `Space` | Button focused (no `href`) | Emits `bqClick`; with `type="submit"` or `type="reset"` it submits or resets the associated form |
+
+A disabled or `loading` button does not emit `bqClick` or act on the form. `Space` does not activate a link rendered with `href`.
 
 ## API reference
 

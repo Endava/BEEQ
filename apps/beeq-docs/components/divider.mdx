@@ -52,15 +52,15 @@ A divider creates a visual break between related pieces of content. Use it to cl
 
 A **full-bleed** divider runs edge-to-edge across its container. This is the default (`stroke-basis="0"`) and suits top-level page and card section breaks where content is not indented.
 
-An **inset** divider sets `stroke-basis` to the pixel offset of the content below it — typically the width of a list item's leading avatar or icon. The stroke starts at that offset rather than the container edge, keeping it visually aligned with the text column. Use this pattern in rich lists and inbox-style data rows.
+An **inset** divider sets `stroke-basis` to the pixel offset of the content below it — typically the width of a list item's leading avatar or icon. The stroke starts at that offset rather than the container edge, keeping it visually aligned with the text column. You should use this pattern in rich lists and inbox-style data rows.
 
 ### List rows
 
-Place a divider between repeated items in dense views — inboxes, contact lists, or data tables — when row boundaries would otherwise blur together and impair scanning.
+You should place a divider between repeated items in dense views — inboxes, contact lists, or data tables — when row boundaries would otherwise blur together and impair scanning.
 
 ### Title separation
 
-A divider with slot content and `title-alignment="start"` doubles as a lightweight section label. Use this pattern when a heading (`<h2>`, `<h3>`) would add too much visual weight but the group still needs a short name.
+A divider with slot content and `title-alignment="start"` doubles as a lightweight section label. You should use this pattern only when a heading (`<h2>`, `<h3>`) would add too much visual weight but the group still needs a short name.
 
 ## Anatomy
 
@@ -92,14 +92,14 @@ A divider with slot content and `title-alignment="start"` doubles as a lightweig
     imageLightSrc="/components/images/divider/divider-type-horizontal-light.svg"
     imageDarkSrc="/components/images/divider/divider-type-horizontal-dark.svg"
   >
-    Use horizontal dividers to separate stacked content, sections, list rows, or blocks inside a page.
+    You should use horizontal dividers to separate stacked content, sections, list rows, or blocks inside a page.
   </CardTile>
   <CardTile
     title="Vertical divider"
     imageLightSrc="/components/images/divider/divider-type-vertical-light.svg"
     imageDarkSrc="/components/images/divider/divider-type-vertical-dark.svg"
   >
-    Use vertical dividers between side-by-side controls or columns when spacing alone does not show the relationship clearly.
+    You should use vertical dividers between side-by-side controls or columns when spacing alone does not show the relationship clearly.
   </CardTile>
 </CardGroup>
 
@@ -118,14 +118,14 @@ A divider with slot content and `title-alignment="start"` doubles as a lightweig
     imageLightSrc="/components/images/divider/divider-placement-list-light.svg"
     imageDarkSrc="/components/images/divider/divider-placement-list-dark.svg"
   >
-    Use dividers in dense lists when repeated items need stronger row boundaries for scanning.
+    You should use dividers in dense lists when repeated items need stronger row boundaries for scanning.
   </CardTile>
 </CardGroup>
 
 ### Sizing
 
 <Note>
-  Divider strokes default to a thin line. Increase `stroke-thickness` only when the divider must match a stronger visual treatment in the surrounding layout.
+  Divider strokes default to a thin line. You should increase `stroke-thickness` only when the divider must match a stronger visual treatment in the surrounding layout.
 </Note>
 
 ## Usage
@@ -285,6 +285,12 @@ Set `orientation="vertical"` when the divider separates side-by-side content, su
 </Tip>
 
 ## Options
+
+| Dimension | Allowed values | Default |
+|---|---|---|
+| `orientation` | `horizontal`, `vertical` | `horizontal` |
+| `title-alignment` | `start`, `middle`, `end` | `middle` |
+| `stroke-linecap` | `butt`, `round`, `square` (only applies when `dashed` is set) | `butt` |
 
 ### Dashed
 
@@ -529,56 +535,56 @@ Use stroke attributes to match the divider to a specific visual treatment. Set `
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Use dividers to clarify groups that already belong together.
+    should use dividers to clarify groups that already belong together.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Do not use dividers to force unrelated content into the same section.
+    should not use dividers to force unrelated content into the same section.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Prefer spacing first, then add a divider when the boundary still needs emphasis.
+    should use spacing first, then add a divider when the boundary still needs emphasis.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Do not add repeated dividers that make the layout feel busy.
+    should not add repeated dividers that make the layout feel busy.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Use title content only when the label helps users understand the next group.
+    should use title content only when the label helps users understand the next group.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Do not use divider title content as a replacement for a real heading.
+    must not use divider title content as a replacement for a real heading.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Keep stroke color and thickness consistent with the surrounding hierarchy.
+    should keep stroke color and thickness consistent with the surrounding hierarchy.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Do not rely on color or line style as the only way to communicate meaning.
+    must not rely on color or line style as the only way to communicate meaning.
   </Card>
 </CardGroup>
 
@@ -586,9 +592,13 @@ Use stroke attributes to match the divider to a specific visual treatment. Set `
 
 - Divider strokes are rendered as SVG lines with `aria-hidden="true"`, so assistive technologies ignore the decorative line.
 - Content passed into the default slot remains available to assistive technologies.
-- Use slot content only for short labels that help identify the following group.
-- Do not rely on a divider alone to communicate page structure. Use headings, landmarks, or list semantics when users need navigation or hierarchy.
-- Keep vertical dividers out of the keyboard focus order unless nearby interactive content already provides a clear path.
+- You SHOULD use slot content only for short labels that help identify the following group.
+- You MUST NOT rely on a divider alone to communicate page structure. Use headings, landmarks, or list semantics when users need navigation or hierarchy.
+- You SHOULD keep vertical dividers out of the keyboard focus order unless nearby interactive content already provides a clear path.
+
+### Keyboard interaction
+
+No keyboard interaction: the component is not focusable.
 
 ## API reference
 

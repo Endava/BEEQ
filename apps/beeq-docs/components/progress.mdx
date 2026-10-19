@@ -14,7 +14,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 Progress bars communicate the status of ongoing tasks such as downloads, uploads, installations, or any operation with measurable completion. They reduce uncertainty by showing how much work is done and how much remains.
 
 <Note>
-  Use a determinate progress bar when completion can be calculated against a known total. Use `indeterminate` only when the duration or completion cannot be determined.
+  You should use a determinate progress bar when completion can be calculated against a known total. You should use `indeterminate` only when the duration or completion cannot be determined.
 </Note>
 
 ## When to use
@@ -41,6 +41,8 @@ Progress bars communicate the status of ongoing tasks such as downloads, uploads
     - The bar would compete with the main content instead of supporting it
   </Card>
 </CardGroup>
+
+Choose [`bq-spinner`](/components/spinner) instead of `bq-progress` when work is active but its completion cannot be measured as a percentage.
 
 ## Patterns
 
@@ -87,23 +89,23 @@ Choose the progress treatment that matches how precise the feedback needs to be.
     imageLightSrc="/components/images/progress/progress-percentage-guidance-light.svg"
     imageDarkSrc="/components/images/progress/progress-percentage-guidance-dark.svg"
   >
-    Add `label` or `enable-tooltip` when users need a clear numeric indication of how much work remains.
+    You should add `label` or `enable-tooltip` when users need a clear numeric indication of how much work remains.
   </CardTile>
   <CardTile
     title="Pair status changes with context"
     imageLightSrc="/components/images/progress/progress-status-guidance-light.svg"
     imageDarkSrc="/components/images/progress/progress-status-guidance-dark.svg"
   >
-    Color changes such as `type="error"` should always be supported by nearby text that explains what happened.
+    Color changes such as `type="error"` must be supported by nearby text that explains what happened.
   </CardTile>
 </CardGroup>
 
 <Steps>
   <Step title="Choose the feedback type">
-    Start with a determinate bar whenever progress can be measured. Switch to `indeterminate` only when the task is active but cannot be quantified.
+    You should start with a determinate bar whenever progress can be measured. Switch to `indeterminate` only when the task is active but cannot be quantified.
   </Step>
   <Step title="Choose the emphasis">
-    Use `medium` thickness by default. Use `large` only when the progress bar needs stronger visual emphasis in a prominent area.
+    You should use `medium` thickness by default. Use `large` only when the progress bar needs stronger visual emphasis in a prominent area.
   </Step>
   <Step title="Choose the detail level">
     Add `label` for persistent percentage text or `enable-tooltip` when you want the value attached to the indicator instead.
@@ -191,6 +193,12 @@ Use the default progress bar for general task tracking when the process has a me
 </CodeLivePreview>
 
 ## Options
+
+| Dimension | Allowed values | Default |
+|---|---|---|
+| `type` | `default`, `error` | `default` |
+| `thickness` | `medium`, `large` | `medium` |
+| `border-shape` | `rounded`, `square` | `rounded` |
 
 ### Large thickness
 
@@ -578,56 +586,56 @@ Use `indeterminate` when the task is active but the exact completion point canno
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Place descriptive text close to the progress bar so people immediately understand what is being tracked.
+    should place descriptive text close to the progress bar so people immediately understand what is being tracked.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Do not embed text inside the bar itself. It becomes unreadable at low progress values and is harder to interpret accessibly.
+    should not embed text inside the bar itself. It becomes unreadable at low progress values and is harder to interpret accessibly.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Use `label` or `enable-tooltip` when users need a precise sense of how much work remains.
+    should use `label` or `enable-tooltip` when users need a precise sense of how much work remains.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Do not use a determinate progress bar when progress cannot actually be measured. That creates false certainty.
+    should not use a determinate progress bar when progress cannot actually be measured. That creates false certainty.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Pair `type="error"` with a visible message so users who cannot perceive color still understand the failure.
+    must pair `type="error"` with a visible message so users who cannot perceive color still understand the failure.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Do not rely on color alone to communicate error state. Not all users perceive color distinctions.
+    must not rely on color alone to communicate error state. Not all users perceive color distinctions.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Use `indeterminate` only when the duration genuinely cannot be measured. Switch to a determinate bar as soon as progress can be tracked.
+    should use `indeterminate` only when the duration genuinely cannot be measured. Switch to a determinate bar as soon as progress can be tracked.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Do not use an indeterminate bar as a substitute when a determinate bar is technically possible. It creates unnecessary uncertainty.
+    should not use an indeterminate bar as a substitute when a determinate bar is technically possible. It creates unnecessary uncertainty.
   </Card>
 </CardGroup>
 
@@ -635,10 +643,14 @@ Use `indeterminate` when the task is active but the exact completion point canno
 
 - **Built-in progress semantics** — the component renders a native `<progress>` element inside its shadow DOM, which browsers expose as `role="progressbar"` with `aria-valuenow`, `aria-valuemin="0"`, and `aria-valuemax="100"` automatically. Assistive technology reads the current value without additional markup.
 - **Indeterminate state** — when `indeterminate` is `true`, the native element has no `value` attribute, and assistive technology announces it as an indeterminate progress bar.
-- **Provide task context**: add a visible label or nearby text that explains what operation the progress bar is tracking.
-- **Do not rely on color alone**: pair `type="error"` with a visible message so the failure state is understandable without color perception.
-- **Use percentage only when it helps**: `label` or `enable-tooltip` improves clarity when precise status matters, but it is not required for every short or self-explanatory task.
-- **Be careful with motion**: if indeterminate animation is distracting in your application, respect `prefers-reduced-motion` at the app level.
+- **Provide task context**: you MUST add a visible label or nearby text that explains what operation the progress bar is tracking.
+- **Do not rely on color alone**: you MUST pair `type="error"` with a visible message so the failure state is understandable without color perception.
+- **Use percentage only when it helps**: you SHOULD use `label` or `enable-tooltip` when precise status matters. You MAY omit them for short or self-explanatory tasks.
+- **Be careful with motion**: if indeterminate animation is distracting in your application, you SHOULD respect `prefers-reduced-motion` at the app level.
+
+### Keyboard interaction
+
+No keyboard interaction: the component is not focusable.
 
 ## API reference
 

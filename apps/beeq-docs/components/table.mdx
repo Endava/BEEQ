@@ -14,7 +14,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 Tables organize information into rows and columns so people can compare values, find records, and take action on individual items. BEEQ styles the native HTML `<table>` element with CSS utility classes instead of shipping a custom web component.
 
 <Note>
-  Because the table is a CSS-only pattern, you own the correct HTML structure: `<table>`, `<thead>`, `<tbody>`, `<tr>`, `<th>`, and `<td>`. BEEQ styles apply only when the `bq-table` class is present on the `<table>` element.
+  Because the table is a CSS-only pattern, you own the correct HTML structure: `<table>`, `<thead>`, `<tbody>`, `<tr>`, `<th>`, and `<td>`. BEEQ styles apply only when the `bq-table` class is present on the `<table>` element, so you must add it.
 </Note>
 
 ## When to use
@@ -92,11 +92,11 @@ A table is built from standard HTML sectioning and cell elements. Each part has 
 
 <CardGroup cols={2}>
   <CardTile title="Default density">
-    The default table uses generous cell padding to give content room to breathe. Use it in most contexts where the dataset fits comfortably on screen.
+    The default table uses generous cell padding to give content room to breathe. It should be the density in most contexts where the dataset fits comfortably on screen.
   </CardTile>
 
   <CardTile title="Compact density">
-    The `.compact` modifier reduces padding significantly. Reserve it for dashboards or administrative screens where showing more rows at once outweighs the reduced spacing.
+    The `.compact` modifier reduces padding significantly. It should be reserved for dashboards or administrative screens where showing more rows at once outweighs the reduced spacing.
   </CardTile>
 </CardGroup>
 
@@ -106,12 +106,12 @@ A table is built from standard HTML sectioning and cell elements. Each part has 
   </CardTile>
 
   <CardTile title="Bordered">
-    A table with `class="bq-table bordered"` uses separate cell borders and an outer border. Use this when column delineation is critical for data clarity, such as financial or spreadsheet-style tables.
+    A table with `class="bq-table bordered"` uses separate cell borders and an outer border. Use it when column delineation is critical for data clarity, such as financial or spreadsheet-style tables.
   </CardTile>
 </CardGroup>
 
 <Note>
-  Wrap the table in `.bq-table--container` to enable horizontal scrolling on smaller screens. Without this wrapper, wide tables may overflow their parent container.
+  You should wrap the table in `.bq-table--container` to enable horizontal scrolling on smaller screens. Without this wrapper, wide tables may overflow their parent container.
 </Note>
 
 ## Usage
@@ -292,9 +292,11 @@ The default table applies base typography, header and cell padding, and row sepa
 
 ## Options
 
+**Allowed modifier classes:** `compact` and `bordered` on `<table class="bq-table">` (neither is on by default), and `selected` on `<tr>`. Density is `default` unless `compact` is set. Each modifier works only together with the `bq-table` class.
+
 ### Selected row
 
-Add the `selected` class to a `<tr>` to highlight the active record. Use this when a row selection drives a side panel, detail view, or other contextual UI.
+Add the `selected` class to a `<tr>` to highlight the active record. Use it when a row selection drives a side panel, detail view, or other contextual UI.
 
 <CodeLivePreview mode="iframe" height="18rem" removePadding code={`
   <style>
@@ -1439,7 +1441,7 @@ BEEQ does not ship a pagination, sorting, filtering, or virtualization component
 </CodeLivePreview>
 
 <Note>
-  Announce page changes for screen reader users. This example updates a polite live region after each transition; move focus to the first cell when the new page must become the next task.
+  You must announce page changes for screen reader users. This example updates a polite live region after each transition; move focus to the first cell when the new page must become the next task.
 </Note>
 
 ## Best practices
@@ -1450,7 +1452,7 @@ BEEQ does not ship a pagination, sorting, filtering, or virtualization component
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Always wrap the table in `.bq-table--container` so it scrolls horizontally on small screens instead of overflowing.
+    should wrap the table in `.bq-table--container` so it scrolls horizontally on small screens instead of overflowing.
   </Card>
 
   <Card>
@@ -1458,7 +1460,7 @@ BEEQ does not ship a pagination, sorting, filtering, or virtualization component
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Let a wide table overflow its parent without a scroll container — this breaks the page layout on narrow viewports.
+    should not let a wide table overflow its parent without a scroll container — this breaks the page layout on narrow viewports.
   </Card>
 
   <Card>
@@ -1466,7 +1468,7 @@ BEEQ does not ship a pagination, sorting, filtering, or virtualization component
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Keep column headers short and descriptive so users understand each column without reading the data first.
+    should keep column headers short and descriptive so users understand each column without reading the data first.
   </Card>
 
   <Card>
@@ -1474,7 +1476,7 @@ BEEQ does not ship a pagination, sorting, filtering, or virtualization component
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Use abbreviations or internal codes in headers without a tooltip or legend to explain them.
+    should not use abbreviations or internal codes in headers without a tooltip or legend to explain them.
   </Card>
 
   <Card>
@@ -1482,7 +1484,7 @@ BEEQ does not ship a pagination, sorting, filtering, or virtualization component
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Align numeric values to the trailing edge of the cell so decimal points and magnitudes line up across rows.
+    should align numeric values to the trailing edge of the cell so decimal points and magnitudes line up across rows.
   </Card>
 
   <Card>
@@ -1490,7 +1492,7 @@ BEEQ does not ship a pagination, sorting, filtering, or virtualization component
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Mix left-aligned and center-aligned numeric columns in the same table — inconsistent alignment makes comparison harder.
+    should not mix left-aligned and center-aligned numeric columns in the same table — inconsistent alignment makes comparison harder.
   </Card>
 
   <Card>
@@ -1498,7 +1500,7 @@ BEEQ does not ship a pagination, sorting, filtering, or virtualization component
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Choose the density that matches the user's task — default for reading and reviewing, compact for monitoring and bulk operations.
+    should choose the density that matches the user's task — default for reading and reviewing, compact for monitoring and bulk operations.
   </Card>
 
   <Card>
@@ -1506,18 +1508,22 @@ BEEQ does not ship a pagination, sorting, filtering, or virtualization component
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Apply the compact modifier to fit more rows when it makes the content harder to read or interact with.
+    should not apply the compact modifier to fit more rows when it makes the content harder to read or interact with.
   </Card>
 </CardGroup>
 
 ## Accessibility
 
-- You must: provide a `<caption>` or `aria-label` on the `<table>` element so screen readers announce the table's purpose before reading the data.
-- You must: use `<th>` elements with the correct `scope` attribute (`scope="col"` for column headers, `scope="row"` for row headers) so assistive technologies can map each cell to its headers.
-- You must: keep the table structure semantic — do not use a `<table>` for layout purposes.
-- You must: ensure inline action elements inside cells (buttons, dropdowns) have accessible labels, especially icon-only controls.
-- You must: when a row selection changes UI state (such as opening a side panel), communicate that change programmatically — for example by managing focus or using a live region.
-- Built in: the `.selected` row styling uses `outline` rather than `border` so the selection indicator does not affect layout. There is no automatic ARIA state applied; add `aria-selected="true"` to the `<tr>` when the row is interactively selectable.
+- You MUST provide a `<caption>` or `aria-label` on the `<table>` element so screen readers announce the table's purpose before reading the data.
+- You MUST use `<th>` elements with the correct `scope` attribute (`scope="col"` for column headers, `scope="row"` for row headers) so assistive technologies can map each cell to its headers.
+- You MUST keep the table structure semantic. You MUST NOT use a `<table>` for layout purposes.
+- You MUST give inline action elements inside cells (buttons, dropdowns) accessible labels, especially icon-only controls.
+- When a row selection changes UI state (such as opening a side panel), you MUST communicate that change programmatically, for example by managing focus or using a live region.
+- Built in: the `.selected` row styling uses `outline` rather than `border` so the selection indicator does not affect layout. There is no automatic ARIA state applied; you SHOULD add `aria-selected="true"` to the `<tr>` when the row is interactively selectable.
+
+### Keyboard interaction
+
+No keyboard interaction: the component is not focusable. The table styles add no focusable elements; buttons, links, and dropdowns you place in cells follow their own keyboard behavior.
 
 ## API reference
 

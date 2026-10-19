@@ -39,6 +39,8 @@ Badges provide a compact visual cue for status, presence, or counts without taki
   </Card>
 </CardGroup>
 
+Choose [`bq-tag`](/components/tag) instead of `bq-badge` when the element needs a text label or must be clickable or removable, and [`bq-status`](/components/status) when you need a dot with a text label that names a state. Use `bq-badge` for a count or dot attached to another element.
+
 ## Badge patterns
 
 <CardGroup cols={3}>
@@ -73,6 +75,8 @@ A badge is a compact surface with optional slotted content. When no content is p
 
 Badge dot size is controlled by the `size` prop. Choose the size based on how much visual weight the indicator should carry in context.
 
+**Allowed `size` values:** `small` (default), `medium`. The `size` prop only applies when the badge has no slot content.
+
 <Note>
   The `size` prop only applies when the badge has **no content**. When you add slot content — a number or short label — the badge ignores `size` and auto-expands to fit the text.
 </Note>
@@ -84,10 +88,10 @@ Badge dot size is controlled by the `size` prop. Choose the size based on how mu
 
 ### Content length
 
-Keep counter content short — three characters maximum, including the `+` symbol.
+Counter content must stay short: three characters maximum, including the `+` symbol.
 
 <Tip>
-  When a count exceeds what fits, show `99+` or a similar capped value. The `+` signals overflow without needing an exact number.
+  When a count exceeds what fits, the badge should show `99+` or a similar capped value. The `+` signals overflow without needing an exact number.
 </Tip>
 
 ## Usage
@@ -200,7 +204,9 @@ Add slot content when the badge needs to communicate a count. Keep the value sho
 
 ### Color
 
-Badge color should reinforce meaning, not create it on its own. Keep semantic usage consistent so people learn what each color communicates across the product.
+Badge color should reinforce meaning, not create it on its own. Semantic usage should stay consistent so people learn what each color communicates across the product.
+
+**Allowed `background-color` and `text-color` values:** any palette color token as a `string` (for example `ui--info`, `ui--success`, `ui--warning`, `ui--danger`, `text--inverse`). Both default to `undefined`, which renders the default badge color. You should set a matching `text-color` whenever you change `background-color`.
 
 | Color | Typical meaning |
 |---|---|
@@ -339,7 +345,7 @@ When a badge is paired with an icon or trigger, position it on the outer edge so
       Do
     </span>
 
-    Use the supported badge sizes so indicators stay visually consistent across the product.
+    should use the supported badge sizes so indicators stay visually consistent across the product.
   </Card>
 
   <Card>
@@ -348,7 +354,7 @@ When a badge is paired with an icon or trigger, position it on the outer edge so
       Don't
     </span>
 
-    Do not resize badges arbitrarily. Oversized indicators quickly feel noisy and unbalanced.
+    should not resize badges arbitrarily. Oversized indicators quickly feel noisy and unbalanced.
   </Card>
 
   <Card>
@@ -357,7 +363,7 @@ When a badge is paired with an icon or trigger, position it on the outer edge so
       Do
     </span>
 
-    Show a badge only when there is relevant status or count information to communicate.
+    should show a badge only when there is relevant status or count information to communicate.
   </Card>
 
   <Card>
@@ -366,7 +372,7 @@ When a badge is paired with an icon or trigger, position it on the outer edge so
       Don't
     </span>
 
-    Do not leave empty or unnecessary badges in the interface when there is nothing meaningful to show.
+    should not leave empty or unnecessary badges in the interface when there is nothing meaningful to show.
   </Card>
 
   <Card>
@@ -375,7 +381,7 @@ When a badge is paired with an icon or trigger, position it on the outer edge so
       Do
     </span>
 
-    Place attached badges on the outer edge of the related icon or trigger so both elements remain visible.
+    should place attached badges on the outer edge of the related icon or trigger so both elements remain visible.
   </Card>
 
   <Card>
@@ -384,7 +390,7 @@ When a badge is paired with an icon or trigger, position it on the outer edge so
       Don't
     </span>
 
-    Do not center a badge over the element it refers to. It can obscure the symbol and reduce clarity.
+    should not center a badge over the element it refers to. It can obscure the symbol and reduce clarity.
   </Card>
 
   <Card>
@@ -393,7 +399,7 @@ When a badge is paired with an icon or trigger, position it on the outer edge so
       Do
     </span>
 
-    Pair badges with another UI element so the status or count has clear context.
+    should pair badges with another UI element so the status or count has clear context.
   </Card>
 
   <Card>
@@ -402,15 +408,19 @@ When a badge is paired with an icon or trigger, position it on the outer edge so
       Don't
     </span>
 
-    Do not rely on a standalone badge in product UI unless its meaning is obvious from nearby content or a legend.
+    should not rely on a standalone badge in product UI unless its meaning is obvious from nearby content or a legend.
   </Card>
 </CardGroup>
 
 ## Accessibility
 
-Badges are visual indicators, not interactive controls. When a badge communicates count or status, make sure the surrounding element or nearby text also exposes that meaning to assistive technologies.
+Badges are visual indicators, not interactive controls. When a badge communicates count or status, the surrounding element or nearby text MUST also expose that meaning to assistive technologies.
 
-Do not rely on color alone. Use text, labels, or accessible names on the related control when the badge carries important information such as unread notifications or an error state.
+Badges MUST NOT rely on color alone. When the badge carries important information such as unread notifications or an error state, you MUST provide text, a label, or an accessible name on the related control.
+
+### Keyboard interaction
+
+No keyboard interaction: the component is not focusable.
 
 ## API reference
 

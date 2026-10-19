@@ -13,7 +13,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 Icons help people scan and understand an interface faster. Use them to support actions, labels, and status cues, but keep them purposeful so they clarify meaning instead of adding noise.
 
 <Note>
-  Named BEEQ icons are loaded from SVG files. Before using them in an app, make sure those assets are publicly available and that you configure `setBasePath()` to point to that directory.
+  Named BEEQ icons are loaded from SVG files. Before using them in an app, you must make those assets publicly available and configure `setBasePath()` to point to that directory.
 
   Icon setup depends on your stack and build tool. See the **Configure icons** step in your framework guide ([For developers](/getting-started/for-developers) lists all paths).
 </Note>
@@ -76,10 +76,10 @@ Use icons deliberately so they reinforce meaning without becoming decoration for
 
 <Steps>
   <Step title="Start with meaning">
-    Choose an icon only when the metaphor is widely recognizable. If the symbol is ambiguous, pair it with visible text.
+    You should choose an icon only when the metaphor is widely recognizable. If the symbol is ambiguous, you must pair it with visible text.
   </Step>
   <Step title="Match size to context">
-    Smaller icons work for supporting cues, while medium icons are the standard choice for most interface controls. Larger icons should be reserved for moments like empty states or strong emphasis.
+    Smaller icons work for supporting cues, while medium icons are the standard choice for most interface controls. You should reserve larger icons for moments like empty states or strong emphasis.
   </Step>
   <Step title="Keep alignment and color consistent">
     Center icons visually with nearby text and use colors that match the meaning already established across the product.
@@ -87,7 +87,7 @@ Use icons deliberately so they reinforce meaning without becoming decoration for
 </Steps>
 
 <Note>
-  Do not use small icons as the only interactive target. If the icon triggers an action, make sure the clickable area is comfortably large, or use an icon button pattern instead.
+  You should not use small icons as the only interactive target. If the icon triggers an action, the clickable area should be comfortably large, or you should use an icon button pattern instead.
 </Note>
 
 ## Usage
@@ -142,6 +142,8 @@ Use the default icon when you need a simple visual cue inside navigation, action
 ### Size
 
 Adjust `size` when the icon needs to match the surrounding text or visual emphasis more closely.
+
+**Allowed `size` values:** a number of pixels, such as `16`, `24` (default), or `32`.
 
 <CodeLivePreview mode="shadow" code={`
   <bq-icon name="bell-ringing" size="16"></bq-icon>
@@ -264,14 +266,18 @@ An icon inherits color from its parent by default, but you can also assign a tok
 </CodeLivePreview>
 
 <Warning>
-  The `color` value must be a valid BEEQ token. Do not rely on color alone to communicate status or intent.
+  The `color` value must be a valid BEEQ token. You must not rely on color alone to communicate status or intent.
 </Warning>
 
 ## Options
 
 ### Styles
 
-Use icon-name suffixes like `-thin`, `-light`, `-bold`, `-duotone`, and `-fill` to select a style. This is the preferred approach over the deprecated `weight` prop.
+**Allowed icon-name style suffixes:** `-thin`, `-light`, `-bold`, `-duotone`, `-fill`. The regular style has no suffix.
+
+**Allowed `weight` values (deprecated):** `thin`, `light`, `regular`, `bold`, `fill`, `duotone`. No default.
+
+Use icon-name suffixes like `-thin`, `-light`, `-bold`, `-duotone`, and `-fill` to select a style. You should use this approach instead of the deprecated `weight` prop.
 
 <CodeLivePreview mode="shadow" code={`
   <bq-icon name="heart"></bq-icon>
@@ -342,7 +348,7 @@ Use icon-name suffixes like `-thin`, `-light`, `-bold`, `-duotone`, and `-fill` 
 </CodeLivePreview>
 
 <Warning>
-  The `weight` prop is deprecated. Prefer putting the style directly into the icon name, such as `heart-fill`.
+  The `weight` prop is deprecated. You should put the style directly into the icon name, such as `heart-fill`.
 </Warning>
 
 ### Custom SVG source
@@ -409,7 +415,7 @@ Use `src` when you want to load a custom icon from a local or CORS-enabled endpo
 </CodeLivePreview>
 
 <Tip>
-  When you use `src`, always provide `label`. Unlike named icons, a custom SVG source does not give the component a useful fallback name.
+  When you use `src`, you must provide `label`. Unlike named icons, a custom SVG source does not give the component a useful fallback name.
 </Tip>
 
 ### Explore icons
@@ -520,56 +526,56 @@ The Phosphor library gives you a broad icon set. The example below shows only a 
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Use one clear icon per concept so the meaning stays easy to recognize.
+    should use one clear icon per concept so the meaning stays easy to recognize.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Do not use multiple icon variations for the same concept in one product.
+    should not use multiple icon variations for the same concept in one product.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Pair icons with text when the action or meaning may not be obvious on its own.
+    should pair icons with text when the action or meaning may not be obvious on its own.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Do not rely on a symbol alone when users might have to guess what it means.
+    must not rely on a symbol alone when users might have to guess what it means.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Keep icons aligned with nearby text and controls so the layout feels balanced.
+    should keep icons aligned with nearby text and controls so the layout feels balanced.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Do not mix unrelated icon sizes and styles without a clear visual reason.
+    should not mix unrelated icon sizes and styles without a clear visual reason.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Use color to reinforce meaning only after the icon choice itself is already understandable.
+    should use color to reinforce meaning only after the icon choice itself is already understandable.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Do not use decorative or inconsistent colors that suggest the wrong status or action.
+    should not use decorative or inconsistent colors that suggest the wrong status or action.
   </Card>
 </CardGroup>
 
@@ -578,10 +584,14 @@ The Phosphor library gives you a broad icon set. The example below shows only a 
 - `bq-icon` renders with `role="img"` and applies an `aria-label` automatically.
 - If you provide `label`, that value becomes the accessible name.
 - For named icons without a `label`, the component falls back to `"[name] icon"`, such as `"bell-ringing icon"`.
-- For custom SVG icons loaded through `src`, add `label` explicitly so assistive technologies get a meaningful name.
-- When an icon is ambiguous, pair it with visible text instead of expecting the symbol alone to carry the meaning.
-- For icon-only interactive patterns, add a `bq-tooltip` so keyboard and pointer users get a visible label. Keep in mind that tooltips are not reliably discoverable on touch devices, so a visible text label is preferred where possible.
-- Choose icons with widely recognized metaphors: a magnifying glass for search, a heart for favorites, a plus for add actions.
+- For custom SVG icons loaded through `src`, you MUST add `label` explicitly so assistive technologies get a meaningful name.
+- When an icon is ambiguous, you MUST pair it with visible text instead of expecting the symbol alone to carry the meaning.
+- For icon-only interactive patterns, you SHOULD add a `bq-tooltip` so keyboard and pointer users get a visible label. Tooltips are not reliably discoverable on touch devices, so you SHOULD use a visible text label where possible.
+- You SHOULD choose icons with widely recognized metaphors: a magnifying glass for search, a heart for favorites, a plus for add actions.
+
+### Keyboard interaction
+
+No keyboard interaction: the component is not focusable. Make an icon interactive by wrapping it in a focusable element such as `bq-button`.
 
 ## API reference
 

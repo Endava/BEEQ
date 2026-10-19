@@ -14,7 +14,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 Spinners reassure people that the system is still working during loading, submitting, syncing, or processing states. Use them when work is active but the exact progress cannot be measured reliably.
 
 <Note>
-  Show a spinner only when the wait is noticeable, typically longer than one second. If progress can be measured, prefer a [progress bar](/components/progress) instead.
+  You should show a spinner only when the wait is noticeable, typically longer than one second. If progress can be measured, you should use a [progress bar](/components/progress) instead.
 </Note>
 
 ## When to use
@@ -42,11 +42,13 @@ Spinners reassure people that the system is still working during loading, submit
   </Card>
 </CardGroup>
 
+Choose [`bq-progress`](/components/progress) instead of `bq-spinner` when completion can be measured against a known total.
+
 ## Patterns
 
 <CardGroup cols={3}>
   <Card title="No label">
-    Use a spinner without text only when the surrounding UI already makes the loading context obvious.
+    You should use a spinner without text only when the surrounding UI already makes the loading context obvious.
   </Card>
   <Card title="Label below">
     A strong default for standalone loading states because the message adds context without widening the layout.
@@ -90,31 +92,31 @@ Choose the spinner treatment that best explains the waiting state without adding
     imageLightSrc="/components/images/spinner/spinner-label-guidance-light.svg"
     imageDarkSrc="/components/images/spinner/spinner-label-guidance-dark.svg"
   >
-    Use a short loading message when the spinner appears away from the triggering action or when the wait may last several seconds.
+    You should use a short loading message when the spinner appears away from the triggering action or when the wait may last several seconds.
   </CardTile>
   <CardTile
     title="Match the size to the surface"
     imageLightSrc="/components/images/spinner/spinner-size-guidance-light.svg"
     imageDarkSrc="/components/images/spinner/spinner-size-guidance-dark.svg"
   >
-    Keep `small` for compact containers, `medium` for most component-level states, and `large` for prominent or page-level loading areas.
+    You should keep `small` for compact containers, `medium` for most component-level states, and `large` for prominent or page-level loading areas.
   </CardTile>
 </CardGroup>
 
 <Steps>
   <Step title="Decide whether text is needed">
-    Omit the label only when nearby UI already explains what is loading. Otherwise, add a short task-oriented message.
+    You should omit the label only when nearby UI already explains what is loading. Otherwise, add a short task-oriented message.
   </Step>
   <Step title="Choose the position">
-    Use `below` as the default for standalone loading states. Use `left` or `right` when the spinner needs to fit into a horizontal composition.
+    You should use `below` as the default for standalone loading states. Use `left` or `right` when the spinner needs to fit into a horizontal composition.
   </Step>
   <Step title="Keep the message short">
-    Prefer specific labels such as "Loading invoices" or "Syncing changes" instead of long descriptions.
+    Labels should be specific, such as "Loading invoices" or "Syncing changes", instead of long descriptions.
   </Step>
 </Steps>
 
 <Note>
-  If you replace the default loader with the `icon` slot, you are also replacing the built-in loading status element. Make sure the surrounding UI still communicates that work is in progress.
+  If you replace the default loader with the `icon` slot, you are also replacing the built-in loading status element. The surrounding UI must still communicate that work is in progress.
 </Note>
 
 ## Usage
@@ -167,6 +169,10 @@ Use the default spinner when the surrounding UI already makes the loading contex
 </Tip>
 
 ## Options
+
+**Allowed `size` values:** `small`, `medium` (default), `large`.
+
+**Allowed `text-position` values:** `none` (default), `left`, `right`, `above`, `below`.
 
 ### Small
 
@@ -324,7 +330,7 @@ Use `text-position` to control where the loading message appears relative to the
 
 ### Custom icon
 
-Use the `icon` slot when you need a different spinner icon treatment. Make sure the surrounding context still communicates that work is in progress.
+Use the `icon` slot when you need a different spinner icon treatment. The surrounding context must still communicate that work is in progress.
 
 <CodeLivePreview mode="shadow" code={`
   <bq-spinner size="large">
@@ -385,66 +391,70 @@ Use the `icon` slot when you need a different spinner icon treatment. Make sure 
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Keep the message short and specific, such as "Loading invoices" or "Submitting form."
+    should keep the message short and specific, such as "Loading invoices" or "Submitting form."
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Do not use a spinner when the system can show real progress or an immediate result instead.
+    should not use a spinner when the system can show real progress or an immediate result instead.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Match the size to the surface: `small` for compact containers, `medium` for standard sections, and `large` for prominent loading states.
+    should match the size to the surface: `small` for compact containers, `medium` for standard sections, and `large` for prominent loading states.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Do not place multiple unrelated spinners on the same page unless each one represents a clearly separate loading region.
+    should not place multiple unrelated spinners on the same page unless each one represents a clearly separate loading region.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Add a visible label when the spinner appears away from the action that triggered it, or when the wait may last several seconds.
+    should add a visible label when the spinner appears away from the action that triggered it, or when the wait may last several seconds.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Do not use a spinner as a page-level blocker for instant operations. It creates unnecessary friction.
+    should not use a spinner as a page-level blocker for instant operations. It creates unnecessary friction.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Use `text-position="below"` for standalone loading states where vertical layout is natural.
+    should use `text-position="below"` for standalone loading states where vertical layout is natural.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Do not omit a label in contexts where the surrounding UI does not already make the loading operation obvious.
+    should not omit a label in contexts where the surrounding UI does not already make the loading operation obvious.
   </Card>
 </CardGroup>
 
 ## Accessibility
 
-- **Built-in loading indicator** — the default spinner includes a status element with an accessible loading label that assistive technology can announce. When `textPosition` is set to any value other than `"none"`, the visible label text is also available to screen readers. If you replace the default loader with the `icon` slot, test that the loading state is still communicated clearly in context.
-- **Use meaningful status text when needed**: add a short visible label such as "Loading results..." when the spinner appears away from the triggering action or when the wait may last several seconds.
-- **Keep the message task-oriented**: choose labels that describe the current action, such as "Syncing changes" or "Submitting form", instead of generic filler.
-- **Be careful with motion changes**: setting `animation={false}` can make an active process look stalled, so only stop the animation when another clear status treatment explains that work is still ongoing.
-- **Avoid competing announcements**: too many independent loading indicators can create noise for screen reader users and make it harder to understand which region is updating.
+- **Built-in loading indicator** — the default spinner includes a status element with an accessible loading label that assistive technology can announce. When `textPosition` is set to any value other than `"none"`, the visible label text is also available to screen readers. If you replace the default loader with the `icon` slot, you MUST test that the loading state is still communicated clearly in context.
+- **Use meaningful status text when needed**: you SHOULD add a short visible label such as "Loading results..." when the spinner appears away from the triggering action or when the wait may last several seconds.
+- **Keep the message task-oriented**: labels SHOULD describe the current action, such as "Syncing changes" or "Submitting form", instead of generic filler.
+- **Be careful with motion changes**: setting `animation={false}` can make an active process look stalled, so you SHOULD stop the animation only when another clear status treatment explains that work is still ongoing.
+- **Avoid competing announcements**: too many independent loading indicators can create noise for screen reader users and make it harder to understand which region is updating. You SHOULD NOT show several independent spinners at once.
+
+### Keyboard interaction
+
+No keyboard interaction: the component is not focusable.
 
 ## API reference
 

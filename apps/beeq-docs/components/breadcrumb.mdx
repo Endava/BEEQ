@@ -83,14 +83,14 @@ Breadcrumbs should appear near the top of the page, above the page title or dire
     imageLightSrc="/components/images/breadcrumb/breadcrumb-label-icon-light.svg"
     imageDarkSrc="/components/images/breadcrumb/breadcrumb-label-icon-dark.svg"
   >
-    Use small icons (`size="16"`) paired with a text label to aid recognition. Never use an icon alone without a text label or an icon `label`.
+    Use small icons (`size="16"`) paired with a text label to aid recognition. An icon must not appear alone without a text label or an icon `label`.
   </CardTile>
   <CardTile
     title="Text only"
     imageLightSrc="/components/images/breadcrumb/breadcrumb-label-text-light.svg"
     imageDarkSrc="/components/images/breadcrumb/breadcrumb-label-text-dark.svg"
   >
-    Text-only labels work well in compact spaces or minimal interfaces. Keep labels short and match the destination page title exactly.
+    Text-only labels work well in compact spaces or minimal interfaces. Labels should be short and should match the destination page title exactly.
   </CardTile>
 </CardGroup>
 
@@ -117,7 +117,7 @@ Breadcrumb items use consistent internal padding and separator spacing controlle
 ### Truncation
 
 <Note>
-  Show a maximum of four items in the breadcrumb trail. When the path is deeper, keep the first (root) and last (current page) items visible and collapse the intermediate levels into a dropdown so users can still reach any level.
+  A breadcrumb trail should show a maximum of four items. When the path is deeper, keep the first (root) and last (current page) items visible and collapse the intermediate levels into a dropdown so users can still reach any level.
 </Note>
 
 ## Usage
@@ -129,7 +129,7 @@ The examples below cover the most common ways to use breadcrumbs in BEEQ.
 Use a default breadcrumb to show the current page within a hierarchy. When `href` is not set, each breadcrumb item renders as a button.
 
 <Note>
-  Always place `bq-breadcrumb-item` elements directly inside `bq-breadcrumb`. Items rendered outside the component will not receive separator or `aria-current` handling.
+  You must place `bq-breadcrumb-item` elements directly inside `bq-breadcrumb`. Items rendered outside the component will not receive separator or `aria-current` handling.
 </Note>
 
 <CodeLivePreview mode="shadow" code={`
@@ -269,7 +269,7 @@ Use the `separator` slot to replace the default `/` separator.
 </CodeLivePreview>
 
 <Note>
-  Use the same separator throughout a breadcrumb trail. Mixing separator styles in a single trail breaks visual consistency.
+  A breadcrumb trail should use the same separator throughout. Mixing separator styles in a single trail breaks visual consistency.
 </Note>
 
 ### Intercepting navigation
@@ -294,6 +294,8 @@ When a `bq-breadcrumb-item` has an `href`, activating it navigates to that URL. 
 ```
 
 ## Options
+
+**Allowed `target` values** (on `bq-breadcrumb-item`, only with `href`): `_blank`, `_parent`, `_self`, `_top`. The prop has no default.
 
 The following example shows how to combine icons with breadcrumb items.
 
@@ -395,7 +397,7 @@ Icons next to labels help users recognize categories at a glance. Use `size="16"
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    For breadcrumbs on detail pages, include the page type (Create, Edit, View) followed by the item name.
+    should include the page type (Create, Edit, View) followed by the item name on breadcrumbs for detail pages.
   </Card>
 
   <Card>
@@ -403,7 +405,7 @@ Icons next to labels help users recognize categories at a glance. Use `size="16"
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Avoid indicating the item number or using dynamically generated names without context.
+    should not indicate the item number or use dynamically generated names without context.
   </Card>
 
   <Card>
@@ -411,7 +413,7 @@ Icons next to labels help users recognize categories at a glance. Use `size="16"
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Truncate labels longer than 30 characters with an ellipsis and show the full text in a tooltip on hover.
+    should truncate labels longer than 30 characters with an ellipsis and show the full text in a tooltip on hover.
   </Card>
 
   <Card>
@@ -419,7 +421,7 @@ Icons next to labels help users recognize categories at a glance. Use `size="16"
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Display overly long labels that wrap or truncate without a way to view the complete text.
+    should not display overly long labels that wrap or truncate without a way to view the complete text.
   </Card>
 
   <Card>
@@ -427,7 +429,7 @@ Icons next to labels help users recognize categories at a glance. Use `size="16"
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Show a maximum of four items in the breadcrumb trail. For longer paths, truncate and show the first and last items.
+    should show a maximum of four items in the breadcrumb trail. For longer paths, truncate and show the first and last items.
   </Card>
 
   <Card>
@@ -435,7 +437,7 @@ Icons next to labels help users recognize categories at a glance. Use `size="16"
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Display more than four items in a single breadcrumb trail, as it overloads the visual and reduces usability.
+    should not display more than four items in a single breadcrumb trail, as it overloads the visual and reduces usability.
   </Card>
 
   <Card>
@@ -443,7 +445,7 @@ Icons next to labels help users recognize categories at a glance. Use `size="16"
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Make all parent breadcrumb items clickable links, including the current page as the last non-interactive item.
+    should make all parent breadcrumb items clickable links, with the current page as the last non-interactive item.
   </Card>
 
   <Card>
@@ -451,17 +453,27 @@ Icons next to labels help users recognize categories at a glance. Use `size="16"
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Display the current page as a clickable link; it should be non-interactive text to reflect the user's current location.
+    should not display the current page as a clickable link; it should be non-interactive text to reflect the user's current location.
   </Card>
 </CardGroup>
 
 ## Accessibility
 
-- **Navigation** — navigate to each link in the breadcrumb using <kbd>Tab</kbd> and activate it with <kbd>Enter</kbd>.
-- **Landmark label** — use the `label` prop to set an `aria-label` on the `<nav>` landmark. The default value is `Breadcrumbs`; override it when multiple navigation regions exist on the same page.
+- **Landmark label** — the `label` prop sets an `aria-label` on the `<nav>` landmark. The default value is `Breadcrumbs`; you MUST override it when multiple navigation regions exist on the same page.
 - **Current page** — the last breadcrumb item receives `aria-current="page"` automatically.
-- **Icon-only items** — when a breadcrumb item contains only an icon, set `label` on the `bq-icon` to describe the destination (e.g. `<bq-icon name="house-line" label="Home page">`). The item does not forward an `aria-label` set on `bq-breadcrumb-item` to its inner link or button.
-- **Decorative icons** — when an icon appears alongside a visible text label, set `aria-hidden="true"` on the `bq-icon` so screen readers do not announce it twice.
+- **Icon-only items** — when a breadcrumb item contains only an icon, you MUST set `label` on the `bq-icon` to describe the destination (e.g. `<bq-icon name="house-line" label="Home page">`). The item does not forward an `aria-label` set on `bq-breadcrumb-item` to its inner link or button.
+- **Decorative icons** — when an icon appears alongside a visible text label, you MUST set `aria-hidden="true"` on the `bq-icon` so screen readers do not announce it twice.
+
+### Keyboard interaction
+
+Each `bq-breadcrumb-item` renders a native `a` (with `href`) or `button` (without `href`).
+
+| Key | Context | Action |
+|---|---|---|
+| `Tab` | Any | Moves focus to the next breadcrumb item |
+| `Shift` + `Tab` | Any | Moves focus to the previous breadcrumb item |
+| `Enter` | Item focused | Activates the item and emits `bqClick`; with `href`, navigates to the link unless `bqClick` is canceled |
+| `Space` | Item without `href` focused | Activates the button and emits `bqClick` |
 
 ## API reference
 
