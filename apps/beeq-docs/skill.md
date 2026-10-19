@@ -24,11 +24,11 @@ The BEEQ skill lives in the [BEEQ repository](https://github.com/Endava/BEEQ/tre
 Run this in the project root. The [`skills` CLI](https://github.com/vercel-labs/skills) detects your agent and installs the skill into the folder that agent reads:
 
 ```bash
-npx skills add Endava/BEEQ#v1.17.0 --skill beeq
+npx skills add Endava/BEEQ#v1.17.1 --skill beeq
 ```
 
 Commit the installed folder so every agent on the team gets the same guidance.
 
 ## Read it without installing
 
-An agent that cannot run the install reads the skill directly, starting from [SKILL.md](https://raw.githubusercontent.com/Endava/BEEQ/v1.17.0/skills/beeq/SKILL.md). Its relative `references/` links resolve next to it, under `https://raw.githubusercontent.com/Endava/BEEQ/v1.17.0/skills/beeq/references/`. Follow SKILL.md from there; this page only points to it.
+An agent that cannot run the install reads the skill directly, starting from [SKILL.md](https://raw.githubusercontent.com/Endava/BEEQ/v1.17.1/skills/beeq/SKILL.md). Its relative `references/` links resolve next to it, under `https://raw.githubusercontent.com/Endava/BEEQ/v1.17.1/skills/beeq/references/`. Follow SKILL.md from there; this page only points to it.
