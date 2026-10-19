@@ -45,6 +45,10 @@ Tabs let users navigate between related sections of content within the same page
   </Card>
 </CardGroup>
 
+<Tip>
+  Choose [`bq-tab`](/components/tab) for a small set of peer sections where one panel is shown at a time and users switch freely in any order, [`bq-accordion`](/components/accordion) for sections stacked on one page whose panels expand and collapse in place, and [`bq-steps`](/components/steps) when the sections follow a fixed order with current, completed, and error states.
+</Tip>
+
 ## Anatomy
 
 <Frame className="px-4 py-4" caption="Tab component anatomy">
@@ -82,6 +86,8 @@ The tab group renders a list of tab buttons inside a scrollable container. Each 
   </CardTile>
 </CardGroup>
 
+**Allowed `orientation` values:** `horizontal` (default), `vertical`.
+
 ### Size
 
 <Steps>
@@ -90,6 +96,8 @@ The tab group renders a list of tab buttons inside a scrollable container. Each 
   <Step title="large">Prominent tabs with increased padding. Use when tabs are a primary navigation element or accessibility requires larger touch targets.</Step>
 </Steps>
 
+**Allowed `size` values:** `small`, `medium` (default), `large`.
+
 <Note>
   Setting `size` on `bq-tab-group` propagates the value to all child `bq-tab` elements automatically. You do not need to set `size` on each tab individually.
 </Note>
@@ -97,6 +105,8 @@ The tab group renders a list of tab buttons inside a scrollable container. Each 
 ### Placement
 
 Use `placement="start"` (default) to left-align horizontal tabs or top-align vertical tabs. Use `placement="end"` to right-align horizontal tabs or bottom-align vertical tabs.
+
+**Allowed `placement` values:** `start` (default), `end`.
 
 ## Usage
 
@@ -746,17 +756,37 @@ import { BqTab, BqTabGroup } from "@beeq/vue";
 
 - The tab list container has `role="tablist"`.
 - Each `bq-tab` renders as a `<button role="tab">` with `aria-selected` and `aria-disabled` set automatically.
-- The `controls` prop maps to `aria-controls`, linking each tab to its panel. Always provide a matching `id` on the panel element and `role="tabpanel"` for correct screen reader announcements.
-- Keyboard navigation is handled by the tab group:
-  - `ArrowRight` / `ArrowDown` — move focus to the next enabled tab
-  - `ArrowLeft` / `ArrowUp` — move focus to the previous enabled tab
+- The `controls` prop maps to `aria-controls`, linking each tab to its panel. You must provide a matching `id` on the panel element and `role="tabpanel"` for correct screen reader announcements.
+- Keyboard navigation is handled by the tab group; see [Keyboard interaction](#keyboard-interaction).
 - Focus management follows the roving `tabindex` pattern: only the active tab is in the tab order; other tabs are reachable via arrow keys.
 - Disabled tabs have `aria-disabled="true"` and `disabled` set on the underlying button, removing them from interaction.
 
 **Your responsibilities:**
-- Provide a meaningful `controls` value on each `bq-tab` that matches the `id` of the corresponding panel.
-- Add `role="tabpanel"` to each panel element.
-- When using icons without a visible label, add a descriptive `aria-label` to the `bq-tab` so screen readers can identify the tab.
+- You must provide a meaningful `controls` value on each `bq-tab` that matches the `id` of the corresponding panel.
+- You must add `role="tabpanel"` to each panel element.
+- When using icons without a visible label, you must add a descriptive `aria-label` to the `bq-tab` so screen readers can identify the tab.
+
+### Keyboard interaction
+
+| Key | Context | Action |
+|---|---|---|
+| `Tab` | Focus outside the tab list | Moves focus to the active tab; inactive tabs have `tabindex="-1"` and are reached with the arrow keys |
+| `ArrowRight` | Tab focused | Moves focus to the next enabled tab, wrapping from the last to the first, and selects it |
+| `ArrowDown` | Tab focused | Moves focus to the next enabled tab, wrapping from the last to the first, and selects it |
+| `ArrowLeft` | Tab focused | Moves focus to the previous enabled tab, wrapping from the first to the last, and selects it |
+| `ArrowUp` | Tab focused | Moves focus to the previous enabled tab, wrapping from the first to the last, and selects it |
+| `Enter` | Tab focused | Selects the focused tab (native button activation) |
+| `Space` | Tab focused | Selects the focused tab (native button activation) |
+
+Arrow keys work in both `horizontal` and `vertical` orientations. Disabled tabs are skipped.
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Set `controls` on each `bq-tab` to the `id` of its panel | MUST | manual (checked by hand) |
+| Add `role="tabpanel"` and the matching `id` to each panel element | MUST | manual (checked by hand) |
+| Add an `aria-label` to the `bq-tab` when it uses an icon without a visible label | MUST | manual (checked by hand) |
 
 ## API reference
 
@@ -772,6 +802,12 @@ import { BqTab, BqTabGroup } from "@beeq/vue";
 | `placement` | `placement` | Alignment of tabs within the group | `"start" \| "end"` | `"start"` |
 | `size` | `size` | Size applied to all child tabs | `"small" \| "medium" \| "large"` | `"medium"` |
 | `value` | `value` | The `tab-id` of the currently selected tab | `string` | — |
+
+#### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| `size`, `orientation` or `placement` on a `bq-tab` inside `bq-tab-group` | SHOULD NOT | The group overwrites these values on every tab |
 
 #### Events
 

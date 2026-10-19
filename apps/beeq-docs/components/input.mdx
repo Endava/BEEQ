@@ -45,6 +45,10 @@ Inputs let users enter a short value in a familiar, single-line control. Use the
   </Card>
 </CardGroup>
 
+<Tip>
+  Choose [`bq-textarea`](/components/textarea) instead of `bq-input` when users enter more than one line of text.
+</Tip>
+
 ## Patterns
 
 <CardGroup cols={2}>
@@ -77,12 +81,13 @@ An input combines a persistent label with a single-line text field and optional 
 | Part | Element | Description |
 |---|---|---|
 | **1** | Label | Persistent field name shown through the `label` slot |
-| **2** | Control | The bordered container that groups the editable field and optional affordances |
-| **3** | Native input | The actual text input used for typing, autofill, and form submission |
-| **4** | Prefix | Optional leading content inside the control, usually an icon |
-| **5** | Suffix | Optional trailing content inside the control, often a status or supporting icon |
-| **6** | Helper text | Supporting guidance or validation feedback shown below the field |
-| **7** | Clear button | Optional action that appears when the field has a value and clearing is enabled |
+| **2** | Control | The bordered container that groups the native input and the optional prefix, suffix and clear button |
+| **3** | Prefix icon | Optional leading icon inside the control, set through the `prefix` slot |
+| **4** | Placeholder | Example text shown by the native input while the field is empty. It is a hint, not a replacement for the label |
+| **5** | Helper text | Supporting guidance or validation feedback shown below the field through the `helper-text` slot |
+| **7** | Suffix icon | Optional trailing icon inside the control, set through the `suffix` slot |
+| **8** | Optional label | Text next to the label that marks the field as optional. Compose it inside the `label` slot |
+| **9** | Label tooltip icon | Optional info icon next to the label that reveals extra context. Compose it inside the `label` slot |
 
 ## Design guidelines
 
@@ -686,6 +691,11 @@ Use the `disabled` attribute when the input field should be visible but non-edit
 
 ## Options
 
+| Dimension | Attribute | Allowed values | Default |
+|---|---|---|---|
+| Type | `type` | `date`, `datetime-local`, `email`, `number`, `password`, `search`, `tel`, `text`, `time`, `url` | `text` |
+| Validation status | `validation-status` | `error`, `none`, `success`, `warning` | `none` |
+
 ### Validation
 
 Use this variant for validation feedback by setting `validation-status` to `error`, `success`, `warning`, or `none`.
@@ -1048,7 +1058,6 @@ Use this style when you want to include an optional marker to provide additional
       </BqInput>
     </template>
 
-
     <style>
       .label-row {
         display: flex;
@@ -1289,7 +1298,6 @@ Use this style when you want to include an informational tooltip alongside the i
         </span>
       </BqInput>
     </template>
-
 
     <style>
       bq-tooltip {
@@ -1795,10 +1803,38 @@ An incomplete numeric entry, such as `-`, can also expose `''` while you type be
 - Built in: when `disabled` is set, the native input receives `aria-disabled="true"` so assistive technologies can detect the unavailable state.
 - Built in: the clear button uses `clearButtonLabel` as its accessible name, and the default clear icon is marked `aria-hidden="true"`.
 - Built in: the component participates in forms and can surface native required-state validity when you combine `required` with `formValidationMessage`.
-- You must: provide meaningful content in the `label` slot for most cases, even when the surrounding layout makes the field purpose look obvious visually.
-- You must: treat helper and validation text as instructions, not decoration. Keep it concise and make recovery steps explicit.
-- You must: avoid placeholder-only labeling because placeholder text disappears as soon as the user types.
-- You must: add alternate context when you intentionally omit the visible label, so screen reader and keyboard users still understand the field purpose.
+- You must provide meaningful content in the `label` slot, even when the surrounding layout makes the field purpose look obvious visually.
+- You must treat helper and validation text as instructions, not decoration. Keep it concise and make recovery steps explicit.
+- You must not use placeholder text as the only label because it disappears as soon as the user types.
+- You must add alternate context when you intentionally omit the visible label, so screen reader and keyboard users still understand the field purpose.
+
+### Keyboard interaction
+
+The component renders a native `input` element and a `bq-button` (a native `button`) for the clear action, so the keys below come from those elements.
+
+| Key | Context | Action |
+|---|---|---|
+| `Tab` | Any | Moves focus to the input, then to the clear button when it is shown, then to the next focusable element |
+| `Shift` + `Tab` | Any | Moves focus to the previous focusable element |
+| Printable characters | Input focused, not `disabled` or `readonly` | Types into the field and emits `bqInput` on every change |
+| `ArrowUp` | Input focused, `type="number"` | Increases the value by `step` (native behavior) |
+| `ArrowDown` | Input focused, `type="number"` | Decreases the value by `step` (native behavior) |
+| `Enter` | Clear button focused | Clears the value, emits `bqClear`, and returns focus to the input |
+| `Space` | Clear button focused | Clears the value, emits `bqClear`, and returns focus to the input |
+
+The input is not focusable when `disabled` is set. When `readonly` is set, it stays focusable but rejects typing.
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Provide a visible label in the `label` slot, or alternate context when you omit it | MUST | manual (checked by hand) |
+| Set `name` so the value is submitted with the form | MUST | automated: `bq-input.e2e.tsx` |
+| Set `required` for mandatory fields so the form fails validation while the value is empty | MUST | automated: `bq-input.e2e.tsx` |
+| Set `form-validation-message` to tell users how to fix a missing required value | SHOULD | manual (checked by hand) |
+| Do not use `placeholder` as the only label | MUST NOT | manual (checked by hand) |
+| Provide helper or validation text that explains how to recover from an error | SHOULD | manual (checked by hand) |
+| Do not rely on color alone to communicate `validation-status` | MUST NOT | manual (checked by hand) |
 
 ## API reference
 
@@ -1829,6 +1865,10 @@ An incomplete numeric entry, such as `-`, can also expose `''` while you type be
 | `type` | `type` | Native input type to render | `"date" \| "datetime-local" \| "email" \| "number" \| "password" \| "search" \| "tel" \| "text" \| "time" \| "url"` | `"text"` |
 | `validationStatus` | `validation-status` | Validation state of the control | `"error" \| "none" \| "success" \| "warning"` | `"none"` |
 | `value` | `value` | Current input value | `number \| string \| string[]` | `undefined` |
+
+### Invalid combinations
+
+No invalid prop combinations.
 
 ### Events
 

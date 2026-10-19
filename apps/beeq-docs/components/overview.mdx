@@ -132,6 +132,10 @@ BEEQ components are the building blocks of consistent, accessible, and efficient
       <img src="/components/images/textarea/textarea-overview-light.svg" alt="BEEQ Textarea component overview" className="block dark:hidden" />
       <img src="/components/images/textarea/textarea-overview-dark.svg" alt="BEEQ Textarea component overview" className="hidden dark:block" />
     </Tile>
+    <Tile href="/components/time-picker" title="Time Picker" description="Let users pick a time of day with hours, minutes, and seconds.">
+      <img src="/components/images/time-picker/time-picker-overview-light.svg" alt="BEEQ Time Picker component overview" className="block dark:hidden" />
+      <img src="/components/images/time-picker/time-picker-overview-dark.svg" alt="BEEQ Time Picker component overview" className="hidden dark:block" />
+    </Tile>
   </Columns>
 
   ## Layout
@@ -158,11 +162,32 @@ BEEQ components are the building blocks of consistent, accessible, and efficient
       <img src="/components/images/breadcrumb/breadcrumb-overview-light.svg" alt="BEEQ Breadcrumb component overview" className="block dark:hidden" />
       <img src="/components/images/breadcrumb/breadcrumb-overview-dark.svg" alt="BEEQ Breadcrumb component overview" className="hidden dark:block" />
     </Tile>
-    <Tile href="/components/side-menu" title="Side Menu" description="Navigate between sections with a persistent vertical menu." />
-    <Tile href="/components/steps" title="Steps" description="Guide users through a multi-step flow with clear progress." />
-    <Tile href="/components/tab" title="Tab" description="Switch between related views within the same context." />
+    <Tile href="/components/side-menu" title="Side Menu" description="Navigate between sections with a persistent vertical menu.">
+      <img src="/components/images/side-menu/side-menu-overview-light.svg" alt="BEEQ Side Menu component overview" className="block dark:hidden" />
+      <img src="/components/images/side-menu/side-menu-overview-dark.svg" alt="BEEQ Side Menu component overview" className="hidden dark:block" />
+    </Tile>
+    <Tile href="/components/steps" title="Steps" description="Guide users through a multi-step flow with clear progress.">
+      <img src="/components/images/steps/steps-overview-light.svg" alt="BEEQ Steps component overview" className="block dark:hidden" />
+      <img src="/components/images/steps/steps-overview-dark.svg" alt="BEEQ Steps component overview" className="hidden dark:block" />
+    </Tile>
+    <Tile href="/components/tab" title="Tab" description="Switch between related views within the same context.">
+      <img src="/components/images/tab/tab-overview-light.svg" alt="BEEQ Tab component overview" className="block dark:hidden" />
+      <img src="/components/images/tab/tab-overview-dark.svg" alt="BEEQ Tab component overview" className="hidden dark:block" />
+    </Tile>
   </Columns>
 </div>
+
+## How to read the rules
+
+Component pages describe requirements with plain "must" and "should". The Rules table at the end of each page's Accessibility section labels each rule with an [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119) keyword in capitals.
+
+| Keyword | Meaning |
+|---|---|
+| **MUST** / **MUST NOT** | Hard requirement. Breaking it breaks accessibility, form behavior, or the component. |
+| **SHOULD** / **SHOULD NOT** | Strong recommendation. Deviate only with a reason. |
+| **MAY** | Optional behavior. |
+
+Every Rules table has a **Verified by** column: `automated` (a test in the repository asserts it), `assisted` (a tool or lint rule helps), or `manual (checked by hand)` (checked by review or with assistive technology).
 
 ---
 

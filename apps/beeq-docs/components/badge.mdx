@@ -39,6 +39,10 @@ Badges provide a compact visual cue for status, presence, or counts without taki
   </Card>
 </CardGroup>
 
+<Tip>
+  Choose [`bq-tag`](/components/tag) instead of `bq-badge` when the element needs a text label or must be clickable or removable, and [`bq-status`](/components/status) when you need a dot with a text label that names a state. Use `bq-badge` for a count or dot attached to another element.
+</Tip>
+
 ## Badge patterns
 
 <CardGroup cols={3}>
@@ -72,6 +76,8 @@ A badge is a compact surface with optional slotted content. When no content is p
 ### Size
 
 Badge dot size is controlled by the `size` prop. Choose the size based on how much visual weight the indicator should carry in context.
+
+**Allowed `size` values:** `small` (default), `medium`. The `size` prop only applies when the badge has no slot content.
 
 <Note>
   The `size` prop only applies when the badge has **no content**. When you add slot content — a number or short label — the badge ignores `size` and auto-expands to fit the text.
@@ -200,7 +206,9 @@ Add slot content when the badge needs to communicate a count. Keep the value sho
 
 ### Color
 
-Badge color should reinforce meaning, not create it on its own. Keep semantic usage consistent so people learn what each color communicates across the product.
+Badge color should reinforce meaning, not create it on its own. Semantic usage should stay consistent so people learn what each color communicates across the product.
+
+**Allowed `background-color` and `text-color` values:** any palette color token as a `string` (for example `ui--info`, `ui--success`, `ui--warning`, `ui--danger`, `text--inverse`). Both default to `undefined`, which renders the default badge color. You should set a matching `text-color` whenever you change `background-color`.
 
 | Color | Typical meaning |
 |---|---|
@@ -309,7 +317,6 @@ When a badge is paired with an icon or trigger, position it on the outer edge so
       </div>
     </template>
 
-
     <style>
       .badge--icon {
         position: relative;
@@ -408,9 +415,21 @@ When a badge is paired with an icon or trigger, position it on the outer edge so
 
 ## Accessibility
 
-Badges are visual indicators, not interactive controls. When a badge communicates count or status, make sure the surrounding element or nearby text also exposes that meaning to assistive technologies.
+Badges are visual indicators, not interactive controls. When a badge communicates count or status, the surrounding element or nearby text must also expose that meaning to assistive technologies.
 
-Do not rely on color alone. Use text, labels, or accessible names on the related control when the badge carries important information such as unread notifications or an error state.
+Badges must not rely on color alone. When the badge carries important information such as unread notifications or an error state, you must provide text, a label, or an accessible name on the related control.
+
+### Keyboard interaction
+
+No keyboard interaction: the component is not focusable.
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Expose the badge meaning (count or status) through the surrounding element or nearby text | MUST | manual (checked by hand) |
+| Provide text, a label, or an accessible name on the related control when the badge carries important information | MUST | manual (checked by hand) |
+| Do not rely on color alone | MUST NOT | manual (checked by hand) |
 
 ## API reference
 
@@ -421,6 +440,12 @@ Do not rely on color alone. Use text, labels, or accessible names on the related
 | `backgroundColor` | `background-color` | Badge background color token | `string` | `undefined` |
 | `size` | `size` | Dot size when no content is provided | `'small'` \| `'medium'` | `'small'` |
 | `textColor` | `text-color` | Text color token used when content is present | `string` | `undefined` |
+
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| `size` with slotted content | SHOULD NOT | `size` is ignored and the badge sizes itself to the content |
 
 ### Slots
 

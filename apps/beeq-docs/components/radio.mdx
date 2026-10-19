@@ -45,6 +45,10 @@ Radio buttons present a list of options where only one can be active at a time. 
   </Card>
 </CardGroup>
 
+<Tip>
+  Choose [`bq-checkbox`](/components/checkbox) instead of `bq-radio-group` when users can select several options, [`bq-switch`](/components/switch) when the choice is a single on/off setting that applies immediately, [`bq-select`](/components/select) when the list is too long to show every option in a form, and [`bq-dropdown`](/components/dropdown) when the options trigger actions instead of setting a form value.
+</Tip>
+
 ## Patterns
 
 <CardGroup cols={2}>
@@ -304,6 +308,8 @@ Set `disabled` on the group to prevent all interaction. You can also disable ind
 ### Horizontal
 
 Use `orientation="horizontal"` to arrange options side by side. Best for short labels and a small number of choices where vertical space is limited.
+
+**Allowed `orientation` values:** `vertical` (default), `horizontal`. Any other value falls back to `vertical`.
 
 <CodeLivePreview mode="shadow" code={`
   <bq-radio-group name="group" value="option1" orientation="horizontal">
@@ -810,14 +816,42 @@ Set `background-on-hover` on the group to show a filled highlight on every label
 
 - **Built in:** `bq-radio-group` always renders a `<fieldset>` with a `<legend>` that holds the `label` slot. The `fieldset` property only adds the visible border.
 - **Built in:** each `bq-radio` native `<input type="radio">` carries `aria-checked`, `aria-disabled`, and `aria-labelledby` pointing to its visible label element.
-- **Built in:** `ArrowDown` / `ArrowRight` focus and select the next enabled radio; `ArrowUp` / `ArrowLeft` focus and select the previous enabled radio. Navigation skips disabled radios and wraps at the ends. All four keys work in both orientations; `orientation` controls layout only.
+- **Built in:** arrow keys focus and select the adjacent enabled radio, skip disabled radios and wrap at the ends. All four arrow keys work in both orientations; `orientation` controls layout only.
 - **Built in:** only one radio in the group receives `tabindex="0"` at a time (the selected or first enabled option), keeping the tab stop count low.
-- **Your responsibility:** always populate the `label` slot on `bq-radio-group` with meaningful group text.
-- **Your responsibility:** provide meaningful text inside each `bq-radio` slot — the `aria-labelledby` on the native input points to the label span, so empty or icon-only labels are not announced.
-- **Your responsibility:** when you disable the group, add visible helper text nearby explaining why the options are unavailable.
+- **Your responsibility:** you must populate the `label` slot on `bq-radio-group` with meaningful group text.
+- **Your responsibility:** you must provide meaningful text inside each `bq-radio` slot. The `aria-labelledby` on the native input points to the label span, so empty or icon-only labels are not announced.
+- **Your responsibility:** when you disable the group, you should add visible helper text nearby explaining why the options are unavailable.
+
+### Keyboard interaction
+
+| Key | Context | Action |
+|---|---|---|
+| `Tab` | Focus outside the group | Moves focus into the group, to the selected radio or the first enabled radio |
+| `Tab` | Focus on a radio in the group | Moves focus out of the group to the next focusable element |
+| `Shift` + `Tab` | Focus on a radio in the group | Moves focus out of the group to the previous focusable element |
+| `ArrowDown` | Radio focused | Focuses and selects the next enabled radio; wraps from the last to the first |
+| `ArrowRight` | Radio focused | Focuses and selects the next enabled radio; wraps from the last to the first |
+| `ArrowUp` | Radio focused | Focuses and selects the previous enabled radio; wraps from the first to the last |
+| `ArrowLeft` | Radio focused | Focuses and selects the previous enabled radio; wraps from the first to the last |
+| `Space` | Unselected radio focused | Selects the focused radio (native `<input type="radio">` behavior) |
+
+All four arrow keys work in both orientations. A disabled group has no tab stop.
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Wrap every `bq-radio` in a `bq-radio-group` | MUST | manual (checked by hand) |
+| Fill the `label` slot of the group with meaningful text | MUST | manual (checked by hand) |
+| Provide meaningful text in each `bq-radio` slot | MUST | manual (checked by hand) |
+| Set `name` on the group so the selected value submits with the form | MUST | automated: `bq-radio-group.e2e.tsx` |
+| Select an option before submitting a required group | MUST | automated: `bq-radio-group.e2e.tsx` |
+| Set `required-validation-message` on a required group | SHOULD | manual (checked by hand) |
+| Pre-select a default with `value` when one choice is always required | SHOULD | manual (checked by hand) |
+| Explain nearby why a group or option is disabled | SHOULD | manual (checked by hand) |
 
 <Warning>
-  The fieldset's `aria-labelledby` currently references an ID that does not match the label slot. This source defect is tracked in [the Radio Group follow-up issue](https://github.com/Endava/BEEQ/issues/1830). Do not assume that populating the slot repairs the explicit ARIA reference; verify the group name with your supported assistive technologies.
+  The fieldset's `aria-labelledby` currently references an ID that does not match the label slot. This source defect is tracked in [the Radio Group follow-up issue](https://github.com/Endava/BEEQ/issues/1830). You must not assume that populating the slot repairs the explicit ARIA reference; verify the group name with your supported assistive technologies.
 </Warning>
 
 ## API reference
@@ -847,6 +881,14 @@ Set `background-on-hover` on the group to show a filled highlight on every label
 | `required` | `required` | If `true`, the radio group is required | `boolean` | `false` |
 | `requiredValidationMessage` | `required-validation-message` | Native form validation message shown when the group is required and no option is selected | `string` | — |
 | `value` | `value` | The value of the currently selected radio | `string` | — |
+
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| `name` or `required` on a `bq-radio` inside a `bq-radio-group` | MUST NOT | The group overwrites both with its own `name` and `required` values |
+| `required-validation-message` without `required` on the group | SHOULD NOT | The message is never used because the group is always valid |
+| `debounce-time` below `0` | MUST NOT | The group clamps the value to `0` |
 
 ### `bq-radio` methods
 

@@ -40,6 +40,10 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
   </Card>
 </CardGroup>
 
+<Tip>
+  Choose [`bq-progress`](/components/progress) instead of `bq-slider` when the value is a read-only measure of completion. Use `bq-slider` when users set the value themselves.
+</Tip>
+
 ## Anatomy
 
 <Frame className="px-4 py-4" caption="Slider component anatomy">
@@ -75,15 +79,17 @@ Every slider supports five states: **default**, **hover**, **focus**, **active**
 
 ### Value feedback
 
-Use `enable-value-indicator` to show the numeric value beside the track at all times. This is appropriate when the exact number matters to the user, such as a temperature, percentage, or step count. Use `enable-tooltip` when you want feedback only while the user is actively dragging, keeping the interface clean at rest. Pair it with `tooltip-always-visible` to keep the tooltip permanently visible.
+`enable-value-indicator` shows the numeric value beside the track at all times and should be used when the exact number matters to the user, such as a temperature, percentage, or step count. `enable-tooltip` should be used when feedback is only needed while the user is actively dragging, keeping the interface clean at rest. `tooltip-always-visible` may be added to keep the tooltip permanently visible.
 
-Tooltips stay aligned with their thumbs when the value or slider width changes. Transient tooltips stop tracking while idle; permanently visible tooltips continue tracking movement. Use transient tooltips when a page contains many sliders and their values do not need to stay visible.
+Tooltips stay aligned with their thumbs when the value or slider width changes. Transient tooltips stop tracking while idle; permanently visible tooltips continue tracking movement. Transient tooltips should be used when a page contains many sliders and their values do not need to stay visible.
 
 ### Width
 
 The slider fills its container's available width. Constrain the width of its parent container to control how large the track appears — a very short track makes precise selection difficult.
 
 ## Usage
+
+**Allowed `type` values:** `single` (default), `range`.
 
 ### Single
 
@@ -825,15 +831,41 @@ Use `gap` to set the minimum distance the two handles must maintain between each
 
 `bq-slider` renders native `<input type="range">` elements inside its shadow DOM (`input-min` and `input-max` shadow parts). This means the built-in browser keyboard and screen-reader support for range inputs is available out of the box:
 
-- **Keyboard navigation** — `ArrowLeft` / `ArrowDown` decreases the value by one step; `ArrowRight` / `ArrowUp` increases it. `Home` sets the value to `min`; `End` sets it to `max`.
 - **Screen reader announcement** — the browser announces the current numeric value and the min/max boundaries when the handle receives focus.
 - **`role="slider"`** — comes from the native `<input type="range">`.
 
 As a developer you are responsible for:
 
-- **Providing an accessible label** — wrap `bq-slider` in a `<label>` or use `aria-label` / `aria-labelledby` on the host element so screen readers can announce what the slider controls.
-- **Avoid using sliders for highly precise values** — drag interactions can be imprecise. When an exact value is critical, supplement the slider with a visible number input that reflects the same value.
-- **Range sliders and assistive technologies** — not all screen readers handle two-thumb range inputs equally well. Test with your target assistive technologies and consider providing a complementary text summary of the selected range.
+- **Providing an accessible label** — you must wrap `bq-slider` in a `<label>` or use `aria-label` / `aria-labelledby` on the host element so screen readers can announce what the slider controls.
+- **Avoiding sliders for highly precise values** — drag interactions can be imprecise, so you should not use a slider alone when an exact value is critical. You should supplement it with a visible number input that reflects the same value.
+- **Range sliders and assistive technologies** — not all screen readers handle two-thumb range inputs equally well. You should test with your target assistive technologies and should provide a complementary text summary of the selected range.
+
+### Keyboard interaction
+
+Each handle is a native `<input type="range">`, so these keys come from the browser.
+
+| Key | Context | Action |
+|---|---|---|
+| `Tab` | Slider enabled | Moves focus to the handle and emits `bqFocus`; focus leaving emits `bqBlur` |
+| `Tab` | Range type, min handle focused | Moves focus to the max handle |
+| `Shift+Tab` | Range type, max handle focused | Moves focus back to the min handle |
+| `ArrowRight` | Handle focused | Increases the value by one `step` |
+| `ArrowUp` | Handle focused | Increases the value by one `step` |
+| `ArrowLeft` | Handle focused | Decreases the value by one `step` |
+| `ArrowDown` | Handle focused | Decreases the value by one `step` |
+| `Home` | Handle focused | Sets the value to `min` |
+| `End` | Handle focused | Sets the value to `max` |
+| `Tab` | Slider disabled | Skips the slider; the inputs are disabled |
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Provide an accessible label with a wrapping `<label>`, `aria-label` or `aria-labelledby` | MUST | manual (checked by hand) |
+| Set `name` so the value is submitted with the form | MUST | automated: `bq-slider.e2e.tsx` |
+| Supplement the slider with a visible number input when an exact value is critical | SHOULD | manual (checked by hand) |
+| Test range sliders with the target assistive technologies and provide a text summary of the range | SHOULD | manual (checked by hand) |
+| Use the slider for adjustable values, not mandatory completion checks, because it has no `required` prop | SHOULD | manual (checked by hand) |
 
 ## API reference
 
@@ -853,6 +885,14 @@ As a developer you are responsible for:
 | `tooltipAlwaysVisible` | `tooltip-always-visible` | If true, the tooltip is permanently visible; requires `enable-tooltip` to be set | `boolean` | `false` |
 | `type` | `type` | Slider variant — `single` for one handle, `range` for two handles | `'single' \| 'range'` | `'single'` |
 | `value` | `value` | Current value. A number for `single` type (e.g. `30`); a two-element array string for `range` type (e.g. `"[20,70]"`). In React and Vue, pass the array directly: `value={[20, 70]}`. | `number \| number[] \| string` | — |
+
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| `tooltip-always-visible` without `enable-tooltip` | MUST NOT | No tooltip is shown; `tooltip-always-visible` only takes effect together with `enable-tooltip` |
+| `gap` with `type="single"` | SHOULD NOT | `gap` is ignored; it only applies to `type="range"` |
+| `gap` below `min` or above `max` on a range slider | SHOULD NOT | `gap` is reset to `0` |
 
 ### Events
 

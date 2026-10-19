@@ -43,6 +43,10 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
   </Card>
 </CardGroup>
 
+<Tip>
+  Choose [`bq-option`](/components/option) for a single selectable item, [`bq-option-group`](/components/option-group) to put related options under a shared label, and [`bq-option-list`](/components/option-list) as the listbox container that holds the options and groups and emits `bqSelect`.
+</Tip>
+
 ## Option patterns
 
 <CardGroup cols={2}>
@@ -1149,9 +1153,39 @@ For flat options, `bq-option` sets `role="option"` and exposes `aria-selected`. 
 
 As a developer, you are responsible for:
 
-- **Choosing the right parent** — use `bq-option-list` for a standalone flat list, or `bq-select` for select options. Do not put options in an arbitrary container.
-- **Providing meaningful labels** — the text inside the default slot is read by screen readers as the option's accessible name. Avoid icon-only options; always include a visible text label.
-- **Keyboard navigation** — for a nested Select, let the Select handle `ArrowUp`, `ArrowDown`, `ArrowRight`, and `ArrowLeft`. Do not intercept these keys in your own handlers.
+- **Choosing the right parent** — you must use `bq-option-list` for a standalone flat list, or `bq-select` for select options, and must not put options in an arbitrary container.
+- **Providing meaningful labels** — the text inside the default slot is read by screen readers as the option's accessible name. Options must include a visible text label and must not be icon-only.
+- **Keyboard navigation** — for a nested Select, the Select must handle `ArrowUp`, `ArrowDown`, `ArrowRight`, and `ArrowLeft`. You must not intercept these keys in your own handlers.
+
+### Keyboard interaction
+
+Keys apply to the focused option. Disabled and hidden options are not focusable.
+
+| Key | Context | Action |
+|---|---|---|
+| `Tab` | Flat option | Moves focus to the option (a native `<button>`); disabled and hidden options are skipped |
+| `Shift` + `Tab` | Flat option | Moves focus to the previous focusable element |
+| `Enter` | Flat option focused | Emits `bqEnter`; the parent `bq-option-list` turns it into `bqSelect` |
+| `Space` | Flat option focused | Emits `bqEnter`; the parent `bq-option-list` turns it into `bqSelect` |
+| `Enter` | Option with `checkbox` focused (checkbox control) | Emits `bqClick` |
+| `Space` | Option with `checkbox` focused (checkbox control) | Toggles the checkbox and emits `bqClick` |
+| `Enter` | Nested option (tree item) focused | Emits `bqEnter` |
+| `Space` | Nested option (tree item) focused | Emits `bqEnter` |
+| `ArrowRight` | Nested option focused, collapsed, with child options | Expands the option |
+| `ArrowLeft` | Nested option focused, expanded, with child options | Collapses the option |
+| `Enter` | Expand control focused | Toggles `expanded` without selecting the option |
+| `Space` | Expand control focused | Toggles `expanded` without selecting the option |
+| `ArrowUp` / `ArrowDown` | Option inside `bq-select` | Handled by `bq-select`, not by `bq-option` |
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Use `bq-option-list` for a standalone flat list or `bq-select` for select options | MUST | manual (checked by hand) |
+| Do not put options in an arbitrary container | MUST NOT | manual (checked by hand) |
+| Include a visible text label in the default slot | MUST | manual (checked by hand) |
+| Do not make an option icon-only | MUST NOT | manual (checked by hand) |
+| Do not intercept `ArrowUp`, `ArrowDown`, `ArrowRight`, or `ArrowLeft` in your own handlers when options are in a nested `bq-select` | MUST NOT | manual (checked by hand) |
 
 ## API reference
 
@@ -1170,6 +1204,13 @@ As a developer, you are responsible for:
 | `selectedCountLabel` | `selected-count-label` | Partial-selection summary. Use `{count}` for the selected descendant count | `string` | `'{count} selected'` |
 | `showSelectionSummary` | `show-selection-summary` | If `true`, shows the nested selection summary beside the expand control | `boolean` | `true` |
 | `value` | `value` | A string used to identify the option | `string` | — |
+
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| `indeterminate` without `checkbox` | SHOULD NOT | `indeterminate` is ignored because only the checkbox variant renders it |
+| `expanded` without nested content in the `options` slot | SHOULD NOT | Nothing expands because there are no nested options and no expand button |
 
 ### Events
 

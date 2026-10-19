@@ -43,6 +43,10 @@ Tooltips provide supplemental context about an element without cluttering the in
   </Card>
 </CardGroup>
 
+<Tip>
+  Choose [`bq-dialog`](/components/dialog) instead of `bq-tooltip` when the content is essential or the user must respond before continuing, and [`bq-drawer`](/components/drawer) when the content needs a larger panel with interactive controls.
+</Tip>
+
 ## Anatomy
 
 <Frame caption="Tooltip anatomy">
@@ -140,6 +144,8 @@ By default the tooltip appears **above** the trigger on hover. Tooltip content g
 ### Placement
 
 Use `placement` to control which side of the trigger the tooltip appears on. The four primary values are `top` (default), `right`, `bottom`, and `left`. Each also supports `-start` and `-end` sub-variants for fine-grained alignment.
+
+**Allowed `placement` values:** `top` (default), `top-start`, `top-end`, `right`, `right-start`, `right-end`, `bottom`, `bottom-start`, `bottom-end`, `left`, `left-start`, `left-end`.
 
 <CodeLivePreview mode="shadow" code={`
   <style>
@@ -280,7 +286,9 @@ Use `placement` to control which side of the trigger the tooltip appears on. The
 
 ### Display on click
 
-Set `display-on="click"` when the trigger element is not naturally focusable (e.g., a plain icon or image) or when hover behavior would conflict with touch devices. The tooltip toggles on each click and closes on <kbd>Esc</kbd> or an outside click.
+You should set `display-on="click"` when the trigger element is not naturally focusable (e.g., a plain icon or image) or when hover behavior would conflict with touch devices. The tooltip toggles on each click and closes on <kbd>Esc</kbd> or an outside click.
+
+**Allowed `display-on` values:** `hover` (default), `click`.
 
 <CodeLivePreview mode="shadow" code={`
   <style>
@@ -1193,7 +1201,7 @@ The `distance` prop controls the gap in pixels between the trigger and the toolt
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Don't use tooltips for lengthy explanations or content that includes interactive elements like links or buttons — those can't be reached by keyboard or touch.
+    Avoid tooltips for lengthy explanations. Don't put interactive elements like links or buttons inside a tooltip, because keyboard and touch users can't reach them.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
@@ -1243,12 +1251,34 @@ The `distance` prop controls the gap in pixels between the trigger and the toolt
 
 ## Accessibility
 
-- **Not the only source of truth** — tooltips are hidden by default and not guaranteed to be seen by all users. Never place critical instructions, error messages, or required form guidance inside a tooltip.
+- **Not the only source of truth** — tooltips are hidden by default and not guaranteed to be seen by all users. You must not place critical instructions, error messages, or required form guidance inside a tooltip.
 - **Keyboard accessible** — when `display-on` is `hover` (default), the tooltip also opens on focus so keyboard users can access the content by tabbing to the trigger. Pressing <kbd>Esc</kbd> (click mode) or moving focus away closes it.
-- **Screen reader support** — the panel has `role="tooltip"` and toggles `aria-hidden` with visibility. The component does not create an `aria-describedby` association or live region, so showing the panel does not guarantee an announcement. Give the trigger an understandable accessible name and keep essential guidance in visible text.
-- **Use focusable triggers** — the tooltip does not make its trigger focusable. `display-on="click"` helps touch users, but keyboard users can only reach the tooltip through a focusable trigger such as a button.
-- **Preserve control semantics** — the trigger wrapper delegates events without adding a role or a tab stop. The slotted control keeps its accessible name, existing descriptions, and native keyboard activation. Do not turn the wrapper into another button or point a light-DOM `aria-describedby` at the panel inside the tooltip's shadow root; that ID reference cannot cross the shadow boundary.
-- **WCAG 1.4.13 (Content on Hover or Focus)** — hover-mode tooltips close when the pointer leaves the trigger or focus moves away, and the panel itself is not hoverable. <kbd>Esc</kbd> dismisses only click-mode tooltips. Keep tooltip content short and non-essential, and use `display-on="click"` when users need time to read it.
+- **Screen reader support** — the panel has `role="tooltip"` and toggles `aria-hidden` with visibility. The component does not create an `aria-describedby` association or live region, so showing the panel does not guarantee an announcement. You must give the trigger an understandable accessible name and must keep essential guidance in visible text.
+- **Use focusable triggers** — the tooltip does not make its trigger focusable. `display-on="click"` helps touch users, but keyboard users can only reach the tooltip through a focusable trigger such as a button, so the trigger should be focusable.
+- **Preserve control semantics** — the trigger wrapper delegates events without adding a role or a tab stop. The slotted control keeps its accessible name, existing descriptions, and native keyboard activation. You must not turn the wrapper into another button or point a light-DOM `aria-describedby` at the panel inside the tooltip's shadow root; that ID reference cannot cross the shadow boundary.
+- **WCAG 1.4.13 (Content on Hover or Focus)** — hover-mode tooltips close when the pointer leaves the trigger or focus moves away, and the panel itself is not hoverable. <kbd>Esc</kbd> dismisses only click-mode tooltips. You should keep tooltip content short and non-essential, and should use `display-on="click"` when users need time to read it.
+
+### Keyboard interaction
+
+| Key | Context | Action |
+|---|---|---|
+| `Tab` | `display-on="hover"`, focus moves to the trigger | Opens the tooltip |
+| `Tab` | `display-on="hover"`, tooltip open, focus moves off the trigger | Closes the tooltip |
+| `Shift` + `Tab` | `display-on="hover"`, focus moves to or off the trigger | Opens or closes the tooltip in the same way as `Tab` |
+| `Enter` | `display-on="click"`, native `<button>` trigger focused | Activates the trigger click, which toggles the tooltip |
+| `Space` | `display-on="click"`, native `<button>` trigger focused | Activates the trigger click, which toggles the tooltip |
+| `Escape` | `display-on="click"`, tooltip open | Closes the tooltip |
+
+`Escape` has no effect in hover mode or when `always-visible` is set.
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Do not place critical instructions, error messages, or required form guidance in a tooltip | MUST NOT | manual (checked by hand) |
+| Do not turn the trigger wrapper into another button or tab stop | MUST NOT | manual (checked by hand) |
+| Use a focusable trigger such as a button, since the tooltip does not make its trigger focusable | SHOULD | manual (checked by hand) |
+| Keep tooltip content short; hover tooltips close on pointer leave or focus loss, and only click-mode tooltips close on `Esc` | SHOULD | manual (checked by hand) |
 
 ## API reference
 
@@ -1263,6 +1293,12 @@ The `distance` prop controls the gap in pixels between the trigger and the toolt
 | `placement`    | `placement`      | Position of the tooltip relative to the trigger                                                 | `'top'` \| `'top-start'` \| `'top-end'` \| `'right'` \| `'right-start'` \| `'right-end'` \| `'bottom'` \| `'bottom-start'` \| `'bottom-end'` \| `'left'` \| `'left-start'` \| `'left-end'` | `'top'`   |
 | `sameWidth`    | `same-width`     | If `true`, the tooltip panel width matches the trigger element width                            | `boolean`                                                                                                                                                 | `false`   |
 | `visible`      | `visible`        | If `true`, the tooltip is visible on first render and after each user interaction               | `boolean`                                                                                                                                                 | `false`   |
+
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| Calling `hide()` on a tooltip with `always-visible` | SHOULD NOT | `hide()` returns early and the tooltip stays visible |
 
 ### Events
 

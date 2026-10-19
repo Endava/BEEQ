@@ -16,15 +16,15 @@ Every component documentation page must follow this section order:
 3. **Overview Frame** — light/dark image pair with caption
 4. **Introduction paragraph** — one or two sentences describing the component and its primary purpose
 5. **Note** (optional) — a key requirement or gotcha that affects all uses (e.g., accessibility requirement)
-6. **When to use** — two-column `CardGroup` with a Do card and a Don't card using bullet lists
+6. **When to use** — two-column `CardGroup` with a Do card and a Don't card using bullet lists, followed by a [related-components](#related-components-in-when-to-use) sentence
 7. **Patterns** (optional) — common real-world contexts where the component adds value
 8. **Anatomy** — light/dark anatomy image in a `Frame`, followed by a parts table
 9. **Design guidelines** — shape, sizing rules, visual behavior guidance using `CardTile`, `Steps`, and `Note`
 10. **Usage** — primary variants (Text, Image, etc.) with `CodeLivePreview` + `CodeGroup`
-11. **Options** — additional configurations and combination patterns with `CodeLivePreview` + `CodeGroup`
+11. **Options** — additional configurations and combination patterns with `CodeLivePreview` + `CodeGroup`, with [allowed values](#allowed-values-in-options) written as text
 12. **Best practices** — four-column (2×2) `CardGroup` with Do/Don't pairs
-13. **Accessibility** — built-in behaviors and requirements; do not repeat the API reference
-14. **API reference** — Properties, Slots, Shadow parts, CSS custom properties tables
+13. **Accessibility** — built-in behaviors and requirements, a keyboard interaction table and a rules table; do not repeat the API reference
+14. **API reference** — Properties (the Type column lists every allowed value of an enum prop), Invalid combinations, Slots, Shadow parts, CSS custom properties tables
 15. **Resources** — two-column `CardGroup` linking to Storybook and GitHub source
 
 ## Overview Frame
@@ -52,6 +52,22 @@ Use anatomy-specific images (not the overview image):
 ```
 
 Follow with a brief description and a parts table with columns: **Part**, **Element**, **Description**.
+
+---
+
+## Related Components (in When to use)
+
+Components that look alike MUST name each other. Right after the When to use cards, add one sentence on **both** pages naming the sibling and the deciding condition, wrapped in a `<Tip>`:
+
+```mdx
+<Tip>
+  Choose [`bq-textarea`](/components/textarea) instead of `bq-input` when users enter more than one line of text.
+</Tip>
+```
+
+- Name only siblings that have a page in `docs.json`, and link them.
+- State the condition that picks between them, never a bare "see also".
+- Typical pairs: Input/Textarea, Select/Radio/Dropdown, Checkbox/Switch/Radio, Date picker/Time picker, Tooltip/Dialog/Drawer, Alert/Notification/Toast, Tab/Steps.
 
 ---
 
@@ -119,6 +135,19 @@ Always use a two-column `CardGroup` with exactly two cards — one "Use when" an
 
 ---
 
+## Allowed Values (in Options)
+
+Whenever a page uses a word that names a dimension (variants, sizes, types, placements, statuses), write its allowed values as text, not only as rendered examples. Add one line under the matching Options heading, or a table when there are several dimensions:
+
+```mdx
+**Allowed `size` values:** `small`, `medium` (default), `large`.
+```
+
+- Take values and defaults from the source types (`bq-<name>.types.ts`), not from memory.
+- If a value only works with another prop, say which.
+
+---
+
 ## Best Practices Section
 
 Use a 2×2 `CardGroup` (4 pairs minimum, 8 cards total). Each pair must contain:
@@ -155,6 +184,38 @@ Document what the component does automatically and what the developer must do:
 - State what props feed those attributes (e.g., "`label` prop maps to `aria-label`")
 - List what the developer is responsible for (e.g., providing meaningful `label`, wrapping interactive patterns)
 - Do **not** repeat API property descriptions already in the reference table
+- Write every requirement in this section with a plain lowercase [rule strength keyword](documentation.instructions.md#rule-strength-rfc-2119) ("must", "should"); capitals live only in the Rules table
+- Restate each requirement as a row of the page's `### Rules` table (see [Rules and verification](#rules-and-verification)). Update the table whenever the bullets change
+
+### Keyboard interaction
+
+Every interactive component has a `### Keyboard interaction` table with one row per key. Never write "supports keyboard navigation" without the table.
+
+```mdx
+| Key | Context | Action |
+|---|---|---|
+| `Tab` | Trigger focused | Moves focus to the next focusable element |
+| `Escape` | Panel open | Closes the panel and returns focus to the trigger |
+```
+
+- **Context** is the state in which the key applies (for example "Panel open", "Any"). Use "Any" when none.
+- Verify each row against the component's key handlers and e2e tests; list a key only if the component handles it or the native element does.
+- A non-interactive component states "No keyboard interaction: the component is not focusable." instead of a table.
+
+### Rules and verification
+
+Every component page ends its Accessibility section, after Keyboard interaction, with a `### Rules` table that says how strongly each requirement applies and how it is verified. The table is visible HTML, so readers and crawlers both get the capitalised strength:
+
+```mdx
+| Rule | Strength | Verified by |
+|---|---|---|
+| Provide a visible label in the `label` slot | MUST | manual (checked by hand) |
+| Set `name` for form submission | MUST | automated: `bq-input.e2e.tsx` |
+```
+
+- **Verified by** is `automated` (name the test file that asserts it), `assisted` (a tool or lint rule helps, name it) or `manual (checked by hand)` (review or screen reader check; write it in full, since crawlers read the cell as text).
+- Use `automated` only when a test in the repo asserts the behavior. When unsure, use `manual`.
+- Write "Do not X" rows for `MUST NOT` / `SHOULD NOT`. Don't use `<Visibility for="agents">` for rules: crawlers that read the rendered HTML don't see it, so the table is the only copy.
 
 ---
 
@@ -162,12 +223,22 @@ Document what the component does automatically and what the developer must do:
 
 Use four subsections in this order:
 
-1. **Properties** — columns: Property, Attribute, Description, Type, Default
+1. **Properties** — columns: Property, Attribute, Description, Type, Default. Write enum props as backticked literal unions (`'small' \| 'medium'`) so the Type column is the single source for allowed values
 2. **Slots** — columns: Slot, Description
 3. **Shadow parts** — columns: Part, Description
 4. **CSS custom properties** — if the component has **more than 5 variables**, wrap in `<Expandable title="CSS variables" defaultOpen={true}>` (use `defaultOpen={false}` when the list is very long, e.g. 20+); if **5 or fewer**, display the markdown table directly without an `<Expandable>` wrapper. Columns: Variable, Description, Default
 
    **Default values must use `var(--bq-*)` CSS custom properties** — never Tailwind `theme()` function calls. Use the values from `bq-<name>.variables.scss` as the source of truth and map them to their underlying `var(--bq-*)` equivalents. Hardcoded values (e.g. `transparent`, `none`, `solid`, `unset`, plain numbers like `0` or `10`, pixel values like `24px`) are kept as-is.
+
+Every component page adds an `### Invalid combinations` subsection right after Properties (or after the properties of the last component on multi-component pages), listing props that cannot be used together and what happens when they are. Pages with no source-backed combinations say so:
+
+```mdx
+| Combination | Strength | Result |
+|---|---|---|
+| `time` without `auto-dismiss` | SHOULD NOT | `time` is ignored |
+```
+
+Use MUST NOT when the combination breaks behavior, logs a console warning or error, or removes accessibility. Use SHOULD NOT when one prop is simply ignored. State only combinations verified in the source or tests. If the component has none, write "No invalid prop combinations." Skip invalid enum values, which fall back to defaults and are not combinations.
 
 Follow with a `Tip` linking to theming guides:
 

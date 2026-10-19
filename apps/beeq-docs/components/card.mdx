@@ -299,7 +299,6 @@ A card with icon, title, description, and a call-to-action — use when users ne
       </BqCard>
     </template>
 
-
     <style>
       .card--default {
         max-width: 24rem;
@@ -552,7 +551,6 @@ Use a card list when you have a collection of items that share the same structur
         </section>
       </BqCard>
     </template>
-
 
     <style>
       .card--highlights {
@@ -827,7 +825,6 @@ A KPI card combining an icon, headline value, and trend indicator — ideal for 
         </div>
       </BqCard>
     </template>
-
 
     <style>
       .card--overview {
@@ -1121,7 +1118,6 @@ A compact horizontal card using `type="minimal"` that removes built-in padding, 
       </BqCard>
     </template>
 
-
     <style>
       .card--mini {
         width: 100%;
@@ -1177,6 +1173,8 @@ A compact horizontal card using `type="minimal"` that removes built-in padding, 
 ### Types
 
 `type` is a layout decision that controls whether the card applies its own internal padding or leaves spacing entirely up to you.
+
+**Allowed `type` values:** `default` (default), `minimal`.
 
 | Type | Padding | When to use |
 |---|---|---|
@@ -1273,6 +1271,8 @@ A compact horizontal card using `type="minimal"` that removes built-in padding, 
 ### Border radius
 
 Use the `border` property to control the card corner radius.
+
+**Allowed `border` values:** `none`, `xs2`, `xs`, `s`, `m` (default), `l`, `full`.
 
 <CodeLivePreview mode="shadow" code={`
   <style>
@@ -1514,14 +1514,18 @@ Use the `border` property to control the card corner radius.
 
 ## Accessibility
 
-- **Images** — provide descriptive `alt` text for any images inside a card so screen readers can convey what the image shows.
-- **Headings** — use a proper heading hierarchy within the card so assistive technologies can navigate the content structure correctly.
-- **Keyboard navigation** — ensure all interactive elements inside a card (buttons, links) are reachable and operable with the keyboard alone.
-- **Color contrast** — maintain sufficient contrast between the card background, text, and UI elements so content remains readable for all users.
+- **Images** — you must provide descriptive `alt` text for any images inside a card so screen readers can convey what the image shows.
+- **Headings** — you must use a proper heading hierarchy within the card so assistive technologies can navigate the content structure correctly.
+- **Interactive content** — all interactive elements inside a card (buttons, links) must be reachable and operable with the keyboard alone.
+- **Color contrast** — the card background, text, and UI elements must keep sufficient contrast so content remains readable for all users.
+
+### Keyboard interaction
+
+No keyboard interaction: the component is not focusable. Buttons and links you place inside a card follow their own keyboard behavior.
 
 ### Navigation
 
-When a card represents a link destination (for example, an article or product), wrap it in a semantic `<a>` element. `bq-card` is a non-interactive container and does not handle click or keyboard events on its own.
+When a card represents a link destination (for example, an article or product), you must wrap it in a semantic `<a>` element. `bq-card` is a non-interactive container and does not handle click or keyboard events on its own.
 
 <CodeLivePreview mode="shadow" code={`
   <style>
@@ -1768,7 +1772,6 @@ When a card represents a link destination (for example, an article or product), 
       </a>
     </template>
 
-
     <style>
       .card-link {
         border-radius: var(--bq-radius--m);
@@ -1805,6 +1808,15 @@ When a card represents a link destination (for example, an article or product), 
   </CodeGroup>
 </CodeLivePreview>
 
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Provide descriptive `alt` text for images inside a card | MUST | manual (checked by hand) |
+| Keep a proper heading hierarchy inside the card | MUST | manual (checked by hand) |
+| Keep interactive elements inside the card operable with the keyboard alone | MUST | manual (checked by hand) |
+| Keep sufficient contrast for the background, text, and UI elements | MUST | manual (checked by hand) |
+
 ## API reference
 
 ### Properties
@@ -1813,6 +1825,10 @@ When a card represents a link destination (for example, an article or product), 
 |---|---|---|---|---|
 | `border` | `border` | The corner radius of the card component | `'none'` \| `'xs2'` \| `'xs'` \| `'s'` \| `'m'` \| `'l'` \| `'full'` | `'m'` |
 | `type` | `type` | Type of card component | `'default'` \| `'minimal'` | `'default'` |
+
+### Invalid combinations
+
+No invalid prop combinations.
 
 ### Slots
 

@@ -128,6 +128,7 @@ Notes:
 - Every control has a visible label through its `label` slot or default slot.
 - Show validation with `validation-status="error"` and a message in the `helper-text` slot; do not rely on colour alone.
 - Use `bq-switch` only when the change applies without submitting. Inside a submitted form, `bq-checkbox` is often clearer.
+- For a required acknowledgement inside a form use `bq-checkbox` with `required`; for a required choice between named options use `bq-radio-group` with `required`.
 
 ## List with loading, empty, and error states
 

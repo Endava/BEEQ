@@ -46,13 +46,15 @@ Check the page against every rule of each instruction section below. Record each
 |---|---|
 | Page structure | Component pages: page structure in component-docs (section order, optional sections, Resources last). Non-component pages: the non-component section in documentation, plus the checks below |
 | Images | Image paths in component-docs; light and dark pair; overview and anatomy variants |
-| When to use | When to Use section in component-docs |
+| When to use | When to Use and Related Components in component-docs; both siblings name each other with the deciding condition |
 | CodeLivePreview isolation | `CodeLivePreview` in code-examples (mode, height, `:host`, `previewRoot`, IIFE, wrappers) |
 | Framework tabs | `CodeGroup` in code-examples (tab order, icons, `expandable`, per-framework syntax) |
 | CSS code tab | CSS Code Tab in code-examples |
 | Best practices | Best Practices in component-docs |
-| Accessibility | Accessibility in component-docs |
-| API reference | API Reference in component-docs, cross-checked against the source from step 2 |
+| Accessibility | Accessibility in component-docs: keyboard table with one row per key, then a `### Rules` table (Rule, Strength, Verified by) that covers the Accessibility bullets; no `<Visibility for="agents">` rules block |
+| Rule strength | Rule strength in documentation: capitals (MUST / SHOULD / MUST NOT / SHOULD NOT / MAY) appear only in the Rules and Invalid combinations Strength columns; Accessibility, Keyboard, prose and Do/Don't cards use plain lowercase wording |
+| Allowed values | Allowed Values in component-docs: every variant, size, type or placement dimension lists its values as text |
+| API reference | API Reference in component-docs, cross-checked against the source from step 2; Invalid combinations on every component page |
 | Resources | Resources in component-docs |
 | Tone & language | Tone and anti-patterns in documentation |
 
@@ -90,6 +92,8 @@ For non-component pages, mark component-only categories such as API reference or
 | CSS code tab | ✅/⚠️/❌ | … |
 | Best practices | ✅/⚠️/❌ | … |
 | Accessibility | ✅/⚠️/❌ | … |
+| Rule strength | ✅/⚠️/❌ | … |
+| Allowed values | ✅/⚠️/❌ | … |
 | API reference | ✅/⚠️/❌ | … |
 | Resources | ✅/⚠️/❌ | … |
 | Tone & language | ✅/⚠️/❌ | … |

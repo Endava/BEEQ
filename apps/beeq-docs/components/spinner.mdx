@@ -42,6 +42,10 @@ Spinners reassure people that the system is still working during loading, submit
   </Card>
 </CardGroup>
 
+<Tip>
+  Choose [`bq-progress`](/components/progress) instead of `bq-spinner` when completion can be measured against a known total.
+</Tip>
+
 ## Patterns
 
 <CardGroup cols={3}>
@@ -167,6 +171,10 @@ Use the default spinner when the surrounding UI already makes the loading contex
 </Tip>
 
 ## Options
+
+**Allowed `size` values:** `small`, `medium` (default), `large`.
+
+**Allowed `text-position` values:** `none` (default), `left`, `right`, `above`, `below`.
 
 ### Small
 
@@ -440,11 +448,23 @@ Use the `icon` slot when you need a different spinner icon treatment. Make sure 
 
 ## Accessibility
 
-- **Built-in loading indicator** — the default spinner includes a status element with an accessible loading label that assistive technology can announce. When `textPosition` is set to any value other than `"none"`, the visible label text is also available to screen readers. If you replace the default loader with the `icon` slot, test that the loading state is still communicated clearly in context.
-- **Use meaningful status text when needed**: add a short visible label such as "Loading results..." when the spinner appears away from the triggering action or when the wait may last several seconds.
-- **Keep the message task-oriented**: choose labels that describe the current action, such as "Syncing changes" or "Submitting form", instead of generic filler.
-- **Be careful with motion changes**: setting `animation={false}` can make an active process look stalled, so only stop the animation when another clear status treatment explains that work is still ongoing.
-- **Avoid competing announcements**: too many independent loading indicators can create noise for screen reader users and make it harder to understand which region is updating.
+- **Built-in loading indicator** — the default spinner includes a status element with an accessible loading label that assistive technology can announce. When `textPosition` is set to any value other than `"none"`, the visible label text is also available to screen readers. If you replace the default loader with the `icon` slot, you must test that the loading state is still communicated clearly in context.
+- **Use meaningful status text when needed**: you should add a short visible label such as "Loading results..." when the spinner appears away from the triggering action or when the wait may last several seconds.
+- **Keep the message task-oriented**: labels should describe the current action, such as "Syncing changes" or "Submitting form", instead of generic filler.
+- **Be careful with motion changes**: setting `animation={false}` can make an active process look stalled, so you should stop the animation only when another clear status treatment explains that work is still ongoing.
+- **Avoid competing announcements**: too many independent loading indicators can create noise for screen reader users and make it harder to understand which region is updating. You should not show several independent spinners at once.
+
+### Keyboard interaction
+
+No keyboard interaction: the component is not focusable.
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Add a short task-oriented visible label when the spinner is far from the triggering action or the wait may last several seconds | SHOULD | manual (checked by hand) |
+| Stop the animation (`animation={false}`) only when another clear status treatment shows that work is ongoing | SHOULD | manual (checked by hand) |
+| Do not show several independent spinners at once | SHOULD NOT | manual (checked by hand) |
 
 ## API reference
 
@@ -455,6 +475,12 @@ Use the `icon` slot when you need a different spinner icon treatment. Make sure 
 | `animation` | `animation` | If `false`, the animation on the icon element will be stopped | `boolean` | `true` |
 | `size` | `size` | Defines the size of the icon element displayed | `"small"` \| `"medium"` \| `"large"` | `"medium"` |
 | `textPosition` | `text-position` | Defines the position of the label text | `"none"` \| `"left"` \| `"right"` \| `"above"` \| `"below"` | `"none"` |
+
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| `text-position="none"` with text in the default slot | SHOULD NOT | The text is hidden even though the slot has content |
 
 ### Slots
 

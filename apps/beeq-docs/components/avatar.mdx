@@ -182,7 +182,12 @@ Use initials when no uploaded image is available or when the interface is intent
 </CodeLivePreview>
 
 <Tip>
-  When using the `Text` variant, you can customise the avatar background color via the `--bq-avatar-background` CSS custom property. For example: `bq-avatar { --bq-avatar-background: var(--bq-ui--success); }`
+  When using the `Text` variant, you can customise the avatar background color via the `--bq-avatar-background` CSS custom property. For example:
+  ```css
+  bq-avatar {
+    --bq-avatar-background: var(--bq-ui--success);
+  }
+  ```
 </Tip>
 
 ### Image
@@ -259,7 +264,11 @@ When a profile photo or logo is available, pass both `image` and `initials`. The
 
 ### Shape and size
 
-Avatar supports four sizes (`xsmall`, `small`, `medium`, `large`) and two shapes (`circle`, `square`). Choose size based on context: `small` works well in dense lists and inline layouts; `large` suits profile headers and contact cards where identity is the focal point. Keep shape and size consistent within the same group so the UI feels intentional and easy to scan.
+Avatar supports four sizes and two shapes. Choose size based on context: `small` works well in dense lists and inline layouts; `large` suits profile headers and contact cards where identity is the focal point. Shape and size should be consistent within the same group so the UI feels intentional and easy to scan.
+
+**Allowed `size` values:** `xsmall`, `small`, `medium` (default), `large`.
+
+**Allowed `shape` values:** `circle` (default), `square`.
 
 <CodeLivePreview mode="shadow" code={`
   <style>
@@ -331,9 +340,9 @@ Avatar supports four sizes (`xsmall`, `small`, `medium`, `large`) and two shapes
 
 Use a grouped avatar pattern when you need to represent multiple participants in a compact space, such as shared ownership, collaborators, or team members. Keep the same size and shape across the whole group.
 
-<Tip>
+<Note>
   Avatar grouping is not a built-in feature — the component renders avatars independently. A few lines of CSS are all you need to create an overlapping stack, as shown in the example below.
-</Tip>
+</Note>
 
 <CodeLivePreview mode="shadow" code={`
   <style>
@@ -523,7 +532,6 @@ Use a grouped avatar pattern when you need to represent multiple participants in
         <BqAvatar initials="BQ" label="BEEQ team" size="small" />
       </div>
     </template>
-
 
     <style>
       .avatar--group {
@@ -804,11 +812,24 @@ Use the `badge` slot when the avatar needs a compact status or count indicator. 
 
 ## Accessibility
 
-The component automatically applies `role="img"` and `aria-label` to its root element. You do not need to add ARIA attributes manually — provide a descriptive `label` and the component handles the rest.
+The component automatically applies `role="img"` and `aria-label` to its root element. You do not need to add ARIA attributes manually — you must provide a descriptive `label` and the component handles the rest.
 
-When the avatar displays an image, also pass `alt-text` to describe what the image shows. Keep `initials` short so the text fallback remains readable if the image cannot load.
+When the avatar displays an image, you should also pass `alt-text` to describe what the image shows. `initials` should be short so the text fallback remains readable if the image cannot load.
 
-If the avatar appears alongside other interactive elements such as names, links, or buttons, make sure the surrounding pattern is accessible as a whole — the avatar's built-in label describes the avatar itself, not the composite component around it.
+If the avatar appears alongside other interactive elements such as names, links, or buttons, the surrounding pattern must be accessible as a whole — the avatar's built-in label describes the avatar itself, not the composite component around it.
+
+### Keyboard interaction
+
+No keyboard interaction: the component is not focusable. If you place an avatar inside a link or button, that element provides the keyboard behavior.
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Provide a descriptive `label`; the component sets `role="img"` and `aria-label` | MUST | manual (checked by hand) |
+| Make the surrounding pattern accessible as a whole when the avatar sits next to names, links, or buttons | MUST | manual (checked by hand) |
+| Pass `alt-text` when the avatar shows an image | SHOULD | manual (checked by hand) |
+| Keep `initials` short so the fallback stays readable | SHOULD | manual (checked by hand) |
 
 ## API reference
 
@@ -822,6 +843,12 @@ If the avatar appears alongside other interactive elements such as names, links,
 | `label` | `label` | Accessible name announced for the avatar | `string` | `undefined` |
 | `shape` | `shape` | Visual shape of the avatar | `'circle'` \| `'square'` | `'circle'` |
 | `size` | `size` | Size of the avatar | `'xsmall'` \| `'small'` \| `'medium'` \| `'large'` | `'medium'` |
+
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| `initials` longer than the `size` allows | SHOULD NOT | The initials are cut to 1, 2, 3 or 4 characters for `xsmall`, `small`, `medium` and `large` |
 
 ### Slots
 

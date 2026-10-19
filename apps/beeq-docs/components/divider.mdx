@@ -266,7 +266,6 @@ Set `orientation="vertical"` when the divider separates side-by-side content, su
       </div>
     </template>
 
-
     <style>
       .divider--vertical-example {
         display: flex;
@@ -285,6 +284,12 @@ Set `orientation="vertical"` when the divider separates side-by-side content, su
 </Tip>
 
 ## Options
+
+| Dimension | Allowed values | Default |
+|---|---|---|
+| `orientation` | `horizontal`, `vertical` | `horizontal` |
+| `title-alignment` | `start`, `middle`, `end` | `middle` |
+| `stroke-linecap` | `butt`, `round`, `square` (only applies when `dashed` is set) | `butt` |
 
 ### Dashed
 
@@ -430,7 +435,6 @@ Use `title-alignment` to place title content at the start, middle, or end of the
       <BqDivider titleAlignment="middle">Text middle</BqDivider>
       <BqDivider titleAlignment="end">Text end</BqDivider>
     </template>
-
 
     <style>
       bq-divider {
@@ -586,9 +590,21 @@ Use stroke attributes to match the divider to a specific visual treatment. Set `
 
 - Divider strokes are rendered as SVG lines with `aria-hidden="true"`, so assistive technologies ignore the decorative line.
 - Content passed into the default slot remains available to assistive technologies.
-- Use slot content only for short labels that help identify the following group.
-- Do not rely on a divider alone to communicate page structure. Use headings, landmarks, or list semantics when users need navigation or hierarchy.
-- Keep vertical dividers out of the keyboard focus order unless nearby interactive content already provides a clear path.
+- You should use slot content only for short labels that help identify the following group.
+- You must not rely on a divider alone to communicate page structure. Use headings, landmarks, or list semantics when users need navigation or hierarchy.
+- You should keep vertical dividers out of the keyboard focus order unless nearby interactive content already provides a clear path.
+
+### Keyboard interaction
+
+No keyboard interaction: the component is not focusable.
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Do not rely on a divider alone to communicate page structure; use headings, landmarks, or list semantics | MUST NOT | manual (checked by hand) |
+| Use slot content only for short labels that identify the following group | SHOULD | manual (checked by hand) |
+| Keep vertical dividers out of the keyboard focus order unless nearby interactive content provides a clear path | SHOULD | manual (checked by hand) |
 
 ## API reference
 
@@ -605,6 +621,12 @@ Use stroke attributes to match the divider to a specific visual treatment. Set `
 | `strokeLinecap` | `stroke-linecap` | Line cap style when `dashed` is set | `'butt' \| 'round' \| 'square'` | `'butt'` |
 | `strokeThickness` | `stroke-thickness` | Stroke thickness, in pixels | `number` | `1` |
 | `titleAlignment` | `title-alignment` | Alignment of title content on the divider axis | `'end' \| 'middle' \| 'start'` | `'middle'` |
+
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| `stroke-dash-width` or `stroke-dash-gap` without `dashed` | SHOULD NOT | Both are ignored because the dash pattern is only applied to a dashed divider |
 
 ### Slots
 
