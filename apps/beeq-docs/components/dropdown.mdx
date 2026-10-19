@@ -41,6 +41,8 @@ A dropdown surfaces a floating panel of options, actions, or destinations from a
   </Card>
 </CardGroup>
 
+Choose [`bq-select`](/components/select) instead of `bq-dropdown` when users pick a value that is submitted with a form, [`bq-radio-group`](/components/radio) when users pick one of a few named options that can stay visible, and [`bq-button`](/components/button) when there is a single action and no list to open.
+
 ## Patterns
 
 Dropdowns support compact action menus and panel-based selection patterns.
@@ -85,7 +87,7 @@ A dropdown is composed of a trigger and a floating panel. The trigger can be a b
 
 ### Chevron direction
 
-Chevrons on the trigger must reflect the current state of the panel. Use a downward-pointing chevron when the panel is closed, and switch to an upward-pointing chevron when it is open. Reversing this communicates the wrong state to users and erodes trust in the interface.
+Chevrons on the trigger must reflect the current state of the panel. Use a downward-pointing chevron when the panel is closed, and an upward-pointing chevron when it is open. Reversing this communicates the wrong state to users and erodes trust in the interface.
 
 <Warning>
   `bq-dropdown` does not manage chevron rotation automatically. Listen to the `bqOpen` event and update the icon name (`caret-up` / `caret-down`) or apply a CSS rotation on your trigger accordingly.
@@ -93,7 +95,7 @@ Chevrons on the trigger must reflect the current state of the panel. Use a downw
 
 ### Data ordering
 
-Arrange options alphabetically or by a meaningful semantic order, such as frequency of use or logical progression. A randomly ordered list forces users to scan every item before finding what they need.
+You should arrange options alphabetically or by a meaningful semantic order, such as frequency of use or logical progression. A randomly ordered list forces users to scan every item before finding what they need.
 
 ## Usage
 
@@ -313,6 +315,10 @@ If the dropdown sits inside a scrollable area, scrolling that area will close th
 </Note>
 
 ## Options
+
+**Allowed `placement` values:** `bottom-start` (default), `bottom`, `bottom-end`, `top`, `top-start`, `top-end`, `right`, `right-start`, `right-end`, `left`, `left-start`, `left-end`.
+
+**Allowed `strategy` values:** `fixed` (default), `absolute`.
 
 ### Placement
 
@@ -1301,56 +1307,56 @@ Use `same-width` when the panel should match the trigger width. Use `panel-heigh
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Use a `bq-button` as the trigger. It gives users a clear, clickable target and signals that interaction is available.
+    You should use a `bq-button` as the trigger. It gives users a clear, clickable target and signals that interaction is available.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Use a link-style trigger to open the dropdown panel. A dropdown opens a floating surface; it should not look like direct page navigation.
+    You should not use a link-style trigger to open the dropdown panel. A dropdown opens a floating surface, so its trigger must not look like direct page navigation.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Use a downward chevron when the panel is closed and an upward chevron when it is open. The chevron should always match the actual state.
+    You must use a downward chevron when the panel is closed and an upward chevron when it is open. The chevron must match the actual state.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Use the same chevron direction regardless of state. Users rely on the icon direction to understand whether the panel is open or closed.
+    You must not use the same chevron direction regardless of state. Users rely on the icon direction to understand whether the panel is open or closed.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Use short, clear labels for both the trigger and each option so users can quickly understand the context and available choices.
+    You should use short, clear labels for both the trigger and each option so users can quickly understand the context and available choices.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Use long, vague, or technical labels. They slow users down and increase the risk of selecting the wrong option.
+    You should not use long, vague, or technical labels. They slow users down and increase the risk of selecting the wrong option.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Arrange options alphabetically or in a meaningful semantic order so users can find what they need without scanning every item.
+    You should arrange options alphabetically or in a meaningful semantic order so users can find what they need without scanning every item.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Display a large, unordered list without structure. If users need search or filtering to navigate the options, consider a more appropriate pattern.
+    You should not display a large, unordered list without structure. If users need search or filtering to navigate the options, consider a more appropriate pattern.
   </Card>
 </CardGroup>
 
@@ -1358,15 +1364,26 @@ Use `same-width` when the panel should match the trigger width. Use `panel-heigh
 
 `bq-dropdown` does not render its own ARIA role — accessible semantics come from the slotted trigger element. When a `bq-button` is used as the trigger, it exposes `role="button"` and `aria-disabled` automatically. The `bq-option-list` inside the panel renders with `role="listbox"`, and each `bq-option` carries `role="option"`, `aria-selected`, and `aria-disabled`.
 
-**Developer responsibilities:** provide a meaningful visible label or `aria-label` on the trigger, especially for icon-only triggers. When using a `bq-avatar` as the trigger, supply the `label` prop to ensure screen readers announce the button purpose.
+**Developer responsibilities:** you MUST provide a meaningful visible label or `aria-label` on the trigger, especially for icon-only triggers. When using a `bq-avatar` as the trigger, you MUST supply the `label` prop to ensure screen readers announce the button purpose.
 
-- The dropdown trigger should be reachable with <kbd>Tab</kbd> and expose a clear accessible label.
-- Users should be able to open the dropdown with <kbd>Enter</kbd> or <kbd>Space</kbd> when the trigger is focused.
-- In selectable lists, users should be able to move between options with arrow keys and select the focused option with <kbd>Enter</kbd> or <kbd>Space</kbd>.
+- The dropdown trigger MUST be reachable with <kbd>Tab</kbd> and expose a clear accessible label. Use a natively focusable element such as `bq-button`.
+- The dropdown opens on trigger click, so a native button trigger opens it with <kbd>Enter</kbd> or <kbd>Space</kbd>.
+- Each enabled `bq-option` is a tab stop. <kbd>Enter</kbd> or <kbd>Space</kbd> on the focused option selects it. `bq-dropdown` and `bq-option-list` do not add arrow-key navigation between options.
 - Pressing <kbd>Esc</kbd> closes the dropdown, and <kbd>Tab</kbd> closes it when focus leaves the component.
 - Only one panel stays open at a time. Opening a dropdown, select, or date picker closes any other open panel, unless it is nested inside that panel.
-- For multi-select patterns, selection and deselection should remain visible and predictable.
-- Do not rely on icons alone. Pair icon-only triggers with accessible labels and keep option text readable.
+- For multi-select patterns, selection and deselection SHOULD remain visible and predictable.
+- You MUST NOT rely on icons alone. Pair icon-only triggers with accessible labels and keep option text readable.
+
+### Keyboard interaction
+
+| Key | Context | Action |
+|---|---|---|
+| `Tab` | Focus moves to the trigger | Focuses the trigger; does not open the panel |
+| `Enter` or `Space` | Native `<button>` trigger focused (such as `bq-button`) | Activates the trigger click, which toggles the panel |
+| `Tab` | Panel open, focus moves to the next enabled `bq-option` | Moves focus to the option; the panel stays open |
+| `Enter` or `Space` | `bq-option` focused | Selects the option; the panel closes unless `keep-open-on-select` is set |
+| `Escape` | Panel open | Closes the panel |
+| `Tab` | Panel open, focus leaves the dropdown | Closes the panel |
 
 ## API reference
 

@@ -39,6 +39,8 @@ Alert is a lightweight message surface for conveying status, progress, or requir
   </Card>
 </CardGroup>
 
+Choose [`bq-alert`](/components/alert) for a message tied to a page or section that stays in the document flow, [`bq-notification`](/components/notification) for a system message with a description or actions that stacks at the edge of the screen, and [`bq-toast`](/components/toast) for a short status message with no actions that disappears on its own.
+
 ## Patterns
 
 Alerts can be used at different scopes, depending on what the message affects.
@@ -49,7 +51,7 @@ Alerts can be used at different scopes, depending on what the message affects.
     imageLightSrc="/components/images/alert/alert-placement-global-light.svg"
     imageDarkSrc="/components/images/alert/alert-placement-global-dark.svg"
   >
-    Use a global alert for messages that affect the full experience. Place it directly below the navigation.
+    Use a global alert for messages that affect the full experience. It should sit directly below the navigation.
   </CardTile>
   <CardTile
     title="Page alert"
@@ -63,14 +65,14 @@ Alerts can be used at different scopes, depending on what the message affects.
     imageLightSrc="/components/images/alert/alert-placement-card-light.svg"
     imageDarkSrc="/components/images/alert/alert-placement-card-dark.svg"
   >
-    Place alerts close to the affected section so users can connect the message with the content it describes.
+    Alerts should sit close to the affected section so users can connect the message with the content it describes.
   </CardTile>
   <CardTile
     title="Custom alert"
     imageLightSrc="/components/images/alert/alert-placement-custom-light.svg"
     imageDarkSrc="/components/images/alert/alert-placement-custom-dark.svg"
   >
-    Use custom icons and CSS variables when a message has no built-in severity, but keep color and icon choices consistent.
+    Use custom icons and CSS variables when a message has no built-in severity, and should keep color and icon choices consistent.
   </CardTile>
 </CardGroup>
 
@@ -126,10 +128,14 @@ Alerts can be used at different scopes, depending on what the message affects.
 </CardGroup>
 
 <Note>
-  Set `border` to match the surface where the alert appears. Use the same radius scale as the surrounding layout.
+  You should set `border` to match the surface where the alert appears and use the same radius scale as the surrounding layout.
 </Note>
 
 ## Usage
+
+**Allowed `type` values:** `default` (default), `info`, `success`, `warning`, `error`. Only `info`, `success`, `warning` and `error` render a predefined status icon; `default` renders the `icon` slot content only.
+
+**Allowed `border` values:** `none`, `xs2`, `xs`, `s` (default), `m`, `l`, `full`.
 
 ### Default
 
@@ -1127,10 +1133,10 @@ Use the `sticky` attribute for persistent alerts that remain visible until users
 
 ### Auto-dismiss
 
-Set `auto-dismiss` to hide the alert automatically after a delay. Use `time` to override the default 3000 ms. Set a minimum of 8000 ms for alerts with meaningful content so users have enough time to read the message.
+Set `auto-dismiss` to hide the alert automatically after a delay. Use `time` to override the default 3000 ms. You should set `time` to at least 8000 ms for alerts with meaningful content so users have enough time to read the message.
 
 <Warning>
-  Do not use `auto-dismiss` for alerts that contain errors, required actions, or legal information.
+  You must not use `auto-dismiss` for alerts that contain errors, required actions, or legal information.
 </Warning>
 
 <CodeLivePreview mode="shadow" code={`
@@ -1221,56 +1227,56 @@ Set `auto-dismiss` to hide the alert automatically after a delay. Use `time` to 
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Place alerts close to the content or workflow they affect.
+    should place alerts close to the content or workflow they affect.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Do not place alerts where they hide controls or interrupt a critical task.
+    must not place alerts where they hide controls or interrupt a critical task.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Write a short title that explains the state, then add body text only when users need context.
+    should write a short title that explains the state, then add body text only when users need context.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Do not use long paragraphs or unrelated links inside an alert.
+    should not use long paragraphs or unrelated links inside an alert.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Give users enough time to read auto-dismiss alerts and keep important messages dismissible by intent.
+    should give users enough time to read auto-dismiss alerts and keep important messages dismissible by intent.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Do not auto-dismiss alerts that contain errors, required actions, or legal information.
+    must not auto-dismiss alerts that contain errors, required actions, or legal information.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Match the alert type, icon, and action style to the severity of the message.
+    should match the alert type, icon, and action style to the severity of the message.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Do not mix severity colors or custom icons in ways that make the alert harder to scan.
+    should not mix severity colors or custom icons in ways that make the alert harder to scan.
   </Card>
 </CardGroup>
 
@@ -1280,11 +1286,22 @@ Set `auto-dismiss` to hide the alert automatically after a delay. Use `time` to 
 - The host sets `aria-hidden` from the `open` state, keeping hidden alerts out of the accessibility tree.
 - The default close button has the accessible label "Close alert."
 - `type` provides visual intent and a matching predefined status icon for `info`, `success`, `warning`, and `error`.
-- Provide a concise title in the default slot and supporting details in the `body` slot when users need more context.
-- The built-in type tokens (`info`, `success`, `warning`, `error`) meet WCAG AA color-contrast requirements in both light and dark themes. Verify contrast manually when using custom colors via CSS variables.
-- All interactive elements inside the alert — the close button, footer actions, and body links — must be reachable via `Tab` and have a visible focus indicator.
-- Set `time` to a minimum of 8000 ms for `auto-dismiss` alerts. Do not auto-dismiss while the user has keyboard focus or hover inside the alert.
-- When `sticky` is enabled, keep the page focus order logical so keyboard users can still reach the affected content.
+- Alerts SHOULD have a concise title in the default slot and put supporting details in the `body` slot when users need more context.
+- The built-in type tokens (`info`, `success`, `warning`, `error`) meet WCAG AA color-contrast requirements in both light and dark themes. You MUST verify contrast manually when using custom colors via CSS variables.
+- All interactive elements inside the alert (the close button, footer actions, and body links) MUST be reachable via `Tab` and MUST have a visible focus indicator.
+- You SHOULD set `time` to at least 8000 ms for `auto-dismiss` alerts, and SHOULD NOT auto-dismiss while the user has keyboard focus or hover inside the alert.
+- When `sticky` is enabled, you MUST keep the page focus order logical so keyboard users can still reach the affected content.
+
+### Keyboard interaction
+
+The alert itself is not focusable. Only the elements inside it receive focus; the close button is a native `<button>` rendered by `bq-button`.
+
+| Key | Context | Action |
+|---|---|---|
+| `Tab` | Alert open, close button shown | Moves focus to the close button, then to focusable content in the `body` and `footer` slots |
+| `Shift` + `Tab` | Focus inside the alert | Moves focus to the previous focusable element |
+| `Enter` | Close button focused | Activates the button and hides the alert |
+| `Space` | Close button focused | Activates the button and hides the alert |
 
 ## API reference
 

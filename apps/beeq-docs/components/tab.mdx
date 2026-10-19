@@ -14,7 +14,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 Tabs let users navigate between related sections of content within the same page or view. Each tab reveals one panel at a time, keeping the interface clean while making multiple content sections available without navigation.
 
 <Note>
-  `bq-tab` must always be placed inside a `bq-tab-group`. The group manages tab state, keyboard navigation, and propagates `size`, `orientation`, and `placement` to all child tabs automatically.
+  `bq-tab` must be placed inside a `bq-tab-group`. The group manages tab state, keyboard navigation, and propagates `size`, `orientation`, and `placement` to all child tabs automatically.
 </Note>
 
 ## When to use
@@ -44,6 +44,8 @@ Tabs let users navigate between related sections of content within the same page
     - The goal is to navigate to a new page or route — prefer anchor links or a navigation component
   </Card>
 </CardGroup>
+
+Choose [`bq-tab`](/components/tab) for a small set of peer sections where one panel is shown at a time and users switch freely in any order, [`bq-accordion`](/components/accordion) for sections stacked on one page whose panels expand and collapse in place, and [`bq-steps`](/components/steps) when the sections follow a fixed order with current, completed, and error states.
 
 ## Anatomy
 
@@ -78,17 +80,21 @@ The tab group renders a list of tab buttons inside a scrollable container. Each 
     imageLightSrc="/components/images/tab/tab-orientation-vertical-light.svg"
     imageDarkSrc="/components/images/tab/tab-orientation-vertical-dark.svg"
   >
-    Tabs are stacked in a column to the left or right of the content area. Use when there are many tabs or when the layout is sidebar-based.
+    Tabs are stacked in a column to the left or right of the content area. You should use it when there are many tabs or when the layout is sidebar-based.
   </CardTile>
 </CardGroup>
+
+**Allowed `orientation` values:** `horizontal` (default), `vertical`.
 
 ### Size
 
 <Steps>
-  <Step title="small">Compact tabs with reduced padding. Use in dense interfaces or data-heavy views where space is constrained.</Step>
+  <Step title="small">Compact tabs with reduced padding. You should use it in dense interfaces or data-heavy views where space is constrained.</Step>
   <Step title="medium">The default size. Appropriate for most applications and standard-density layouts.</Step>
-  <Step title="large">Prominent tabs with increased padding. Use when tabs are a primary navigation element or accessibility requires larger touch targets.</Step>
+  <Step title="large">Prominent tabs with increased padding. You should use it when tabs are a primary navigation element or accessibility requires larger touch targets.</Step>
 </Steps>
+
+**Allowed `size` values:** `small`, `medium` (default), `large`.
 
 <Note>
   Setting `size` on `bq-tab-group` propagates the value to all child `bq-tab` elements automatically. You do not need to set `size` on each tab individually.
@@ -97,6 +103,8 @@ The tab group renders a list of tab buttons inside a scrollable container. Each 
 ### Placement
 
 Use `placement="start"` (default) to left-align horizontal tabs or top-align vertical tabs. Use `placement="end"` to right-align horizontal tabs or bottom-align vertical tabs.
+
+**Allowed `placement` values:** `start` (default), `end`.
 
 ## Usage
 
@@ -680,7 +688,7 @@ import { BqTab, BqTabGroup } from "@beeq/vue";
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Keep tab labels short and parallel — prefer noun phrases like "Overview", "Details", or "Settings" rather than full sentences.
+    should keep tab labels short and parallel — prefer noun phrases like "Overview", "Details", or "Settings" rather than full sentences.
   </Card>
 
   <Card>
@@ -688,7 +696,7 @@ import { BqTab, BqTabGroup } from "@beeq/vue";
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Don't use tabs with only one or two items — a single visible section or a toggle is simpler and less visually heavy.
+    should not use tabs with only one or two items — a single visible section or a toggle is simpler and less visually heavy.
   </Card>
 
   <Card>
@@ -696,7 +704,7 @@ import { BqTab, BqTabGroup } from "@beeq/vue";
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Always provide a `controls` attribute on each `bq-tab` pointing to the `id` of its associated panel element to meet ARIA requirements.
+    must provide a `controls` attribute on each `bq-tab` pointing to the `id` of its associated panel element to meet ARIA requirements.
   </Card>
 
   <Card>
@@ -704,7 +712,7 @@ import { BqTab, BqTabGroup } from "@beeq/vue";
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Don't mix tabs of different sizes in the same tab group. Set `size` on `bq-tab-group` and let it propagate uniformly.
+    should not mix tabs of different sizes in the same tab group. Set `size` on `bq-tab-group` and let it propagate uniformly.
   </Card>
 
   <Card>
@@ -712,7 +720,7 @@ import { BqTab, BqTabGroup } from "@beeq/vue";
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Use consistent tab labels across your interface — if some tabs have icons, apply icons to all tabs in the same group.
+    should use consistent tab labels across your interface — if some tabs have icons, apply icons to all tabs in the same group.
   </Card>
 
   <Card>
@@ -720,7 +728,7 @@ import { BqTab, BqTabGroup } from "@beeq/vue";
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Don't use tabs for actions or commands. Tabs are for navigation between content views, not for triggering operations like "Save" or "Delete".
+    must not use tabs for actions or commands. Tabs are for navigation between content views, not for triggering operations like "Save" or "Delete".
   </Card>
 
   <Card>
@@ -728,7 +736,7 @@ import { BqTab, BqTabGroup } from "@beeq/vue";
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Choose the orientation that matches your layout — use horizontal tabs for top-of-content placement and vertical tabs for sidebar-style navigation.
+    should choose the orientation that matches your layout — use horizontal tabs for top-of-content placement and vertical tabs for sidebar-style navigation.
   </Card>
 
   <Card>
@@ -736,7 +744,7 @@ import { BqTab, BqTabGroup } from "@beeq/vue";
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Don't rely solely on the active-indicator underline for visual differentiation — ensure sufficient color contrast on the active tab label as well.
+    must not rely solely on the active-indicator underline for visual differentiation — the active tab label must also have sufficient color contrast.
   </Card>
 </CardGroup>
 
@@ -746,17 +754,29 @@ import { BqTab, BqTabGroup } from "@beeq/vue";
 
 - The tab list container has `role="tablist"`.
 - Each `bq-tab` renders as a `<button role="tab">` with `aria-selected` and `aria-disabled` set automatically.
-- The `controls` prop maps to `aria-controls`, linking each tab to its panel. Always provide a matching `id` on the panel element and `role="tabpanel"` for correct screen reader announcements.
-- Keyboard navigation is handled by the tab group:
-  - `ArrowRight` / `ArrowDown` — move focus to the next enabled tab
-  - `ArrowLeft` / `ArrowUp` — move focus to the previous enabled tab
+- The `controls` prop maps to `aria-controls`, linking each tab to its panel. You MUST provide a matching `id` on the panel element and `role="tabpanel"` for correct screen reader announcements.
+- Keyboard navigation is handled by the tab group; see [Keyboard interaction](#keyboard-interaction).
 - Focus management follows the roving `tabindex` pattern: only the active tab is in the tab order; other tabs are reachable via arrow keys.
 - Disabled tabs have `aria-disabled="true"` and `disabled` set on the underlying button, removing them from interaction.
 
 **Your responsibilities:**
-- Provide a meaningful `controls` value on each `bq-tab` that matches the `id` of the corresponding panel.
-- Add `role="tabpanel"` to each panel element.
-- When using icons without a visible label, add a descriptive `aria-label` to the `bq-tab` so screen readers can identify the tab.
+- You MUST provide a meaningful `controls` value on each `bq-tab` that matches the `id` of the corresponding panel.
+- You MUST add `role="tabpanel"` to each panel element.
+- When using icons without a visible label, you MUST add a descriptive `aria-label` to the `bq-tab` so screen readers can identify the tab.
+
+### Keyboard interaction
+
+| Key | Context | Action |
+|---|---|---|
+| `Tab` | Focus outside the tab list | Moves focus to the active tab; inactive tabs have `tabindex="-1"` and are reached with the arrow keys |
+| `ArrowRight` | Tab focused | Moves focus to the next enabled tab, wrapping from the last to the first, and selects it |
+| `ArrowDown` | Tab focused | Moves focus to the next enabled tab, wrapping from the last to the first, and selects it |
+| `ArrowLeft` | Tab focused | Moves focus to the previous enabled tab, wrapping from the first to the last, and selects it |
+| `ArrowUp` | Tab focused | Moves focus to the previous enabled tab, wrapping from the first to the last, and selects it |
+| `Enter` | Tab focused | Selects the focused tab (native button activation) |
+| `Space` | Tab focused | Selects the focused tab (native button activation) |
+
+Arrow keys work in both `horizontal` and `vertical` orientations. Disabled tabs are skipped.
 
 ## API reference
 

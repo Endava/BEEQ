@@ -14,7 +14,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 Dialogs keep people in context while they respond to important information, confirm an action, or complete a short focused task. Use them sparingly, only when the interruption is justified.
 
 <Note>
-  Keep dialog content concise and purposeful. Always provide a clear way to dismiss the dialog, such as a close button, a cancel action, or both.
+  Dialog content should be concise and purposeful. You must provide a clear way to dismiss the dialog, such as a close button, a cancel action, or both.
 </Note>
 
 ## When to use
@@ -39,6 +39,8 @@ Dialogs keep people in context while they respond to important information, conf
     - The interruption would add friction without adding clarity
   </Card>
 </CardGroup>
+
+Choose [`bq-drawer`](/components/drawer) instead of `bq-dialog` when users need a larger side panel with richer or longer content while keeping the page visible, and [`bq-tooltip`](/components/tooltip) when the content is a short, non-essential hint that needs no response.
 
 ## Patterns
 
@@ -92,24 +94,24 @@ Use dialogs only when the interruption is worth the attention shift and the next
     imageLightSrc="/components/images/dialog/dialog-actions-guidance-light.svg"
     imageDarkSrc="/components/images/dialog/dialog-actions-guidance-dark.svg"
   >
-    Keep the footer focused. One primary action and one secondary action is usually enough for quick decisions.
+    The footer should stay focused. One primary action and one secondary action is usually enough for quick decisions.
   </CardTile>
 </CardGroup>
 
 <Steps>
   <Step title="Choose the right level of interruption">
-    Use a dialog only when people must pause to confirm, review, or complete a short task before continuing.
+    You should use a dialog only when people must pause to confirm, review, or complete a short task before continuing.
   </Step>
   <Step title="Write clear actions">
-    Make button labels describe the outcome, especially in destructive or irreversible flows.
+    Button labels should describe the outcome, especially in destructive or irreversible flows.
   </Step>
   <Step title="Use confirm dialogs carefully">
-    Reserve locked-down confirmation dialogs for actions that carry real risk, such as deletion or deactivation.
+    You should reserve locked-down confirmation dialogs for actions that carry real risk, such as deletion or deactivation.
   </Step>
 </Steps>
 
 <Note>
-  If the content grows beyond a short decision or focused task, move the interaction to an inline flow or a dedicated page instead of expanding the dialog.
+  If the content grows beyond a short decision or focused task, you should move the interaction to an inline flow or a dedicated page instead of expanding the dialog.
 </Note>
 
 ## Usage
@@ -295,6 +297,12 @@ Use the `default` dialog when you want to overlay content for focused user engag
 </Tip>
 
 ## Options
+
+**Allowed `size` values:** `small`, `medium` (default), `large`. Any other value logs a warning and falls back to `large`.
+
+**Allowed `footer-appearance` values:** `standard` (default), `highlight`. Any other value logs a warning and falls back to `standard`.
+
+**Allowed `border` values:** `none`, `xs2`, `xs`, `s`, `m` (default), `l`, `full`.
 
 ### Highlight footer
 
@@ -1034,56 +1042,56 @@ Use this variant to confirm irreversible actions with clear messaging and focuse
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Make the title and primary action work together so the outcome of the dialog is unmistakable.
+    The title and primary action should work together so the outcome of the dialog is unmistakable.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Do not use vague titles or button labels that force people to infer the meaning of the decision.
+    You should not use vague titles or button labels that force people to infer the meaning of the decision.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Use concise content and keep the structure easy to scan with a clear title, short body copy, and focused actions.
+    Dialog content should be concise and the structure easy to scan, with a clear title, short body copy, and focused actions.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Do not duplicate actions in the footer or offer too many equally weighted choices.
+    You should not duplicate actions in the footer or offer too many equally weighted choices.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Match the dialog size to the amount of content so the layout feels intentional and easy to scan.
+    The dialog size should match the amount of content so the layout feels intentional and easy to scan.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Do not force long forms, dense tables, or multi-step workflows into a dialog that needs more room than the pattern is meant to provide.
+    You should not force long forms, dense tables, or multi-step workflows into a dialog that needs more room than the pattern is meant to provide.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Keep a reliable dismissal path available, especially in confirmation flows where people may need to back out safely.
+    You should keep a reliable dismissal path available, especially in confirmation flows where people may need to back out safely.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Do not disable the close button, backdrop dismissal, and <kbd>Esc</kbd> handling together unless the action carries real risk and the remaining actions are explicit.
+    You must not disable the close button, backdrop dismissal, and <kbd>Esc</kbd> handling together unless the action carries real risk and the remaining actions are explicit.
   </Card>
 </CardGroup>
 
@@ -1091,12 +1099,24 @@ Use this variant to confirm irreversible actions with clear messaging and focuse
 
 - **Built-in dialog semantics** — the component applies `aria-labelledby="bq-dialog--title"` and `aria-modal="true"` to the native `<dialog>` element, so assistive technology can identify it as a modal surface.
 - **Built-in close control labeling** — when the default close button is shown, it includes an accessible `label="Close"` and a decorative close icon marked with `aria-hidden="true"`.
-- **Built-in focus management** — the native `<dialog>` element automatically traps keyboard focus within the dialog while it is open and restores it to the previously focused element when the dialog closes.
-- **Provide a meaningful title** — the content you place in the `title` slot becomes the dialog's accessible label, so it should clearly describe the decision, task, or message.
-- **Include an explicit dismissal path** — if you hide the close button or disable outside dismissal, provide a clear cancel or close action in the footer.
-- **Preserve keyboard expectations** — keep <kbd>Esc</kbd> enabled for dismissible dialogs unless there is a strong product reason to require an explicit choice.
-- **Use precise action labels** — button text should describe the result of the action, especially in confirmations and destructive flows.
-- **Use `disable-backdrop` carefully** — removing the backdrop changes the modal emphasis, so make sure the surrounding page does not compete visually with the dialog content.
+- **Built-in focus management** — the native `<dialog>` element automatically traps keyboard focus within the dialog while it is open (unless `disable-backdrop` is set, see below) and restores it to the previously focused element when the dialog closes.
+- **Provide a meaningful title** — the content you place in the `title` slot becomes the dialog's accessible label, so it MUST clearly describe the decision, task, or message.
+- **Include an explicit dismissal path** — if you hide the close button or disable outside dismissal, you MUST provide a clear cancel or close action in the footer.
+- **Preserve keyboard expectations** — you SHOULD keep <kbd>Esc</kbd> enabled for dismissible dialogs unless there is a strong product reason to require an explicit choice.
+- **Use precise action labels** — button text SHOULD describe the result of the action, especially in confirmations and destructive flows.
+- **Use `disable-backdrop` carefully** — with `disable-backdrop` the dialog opens as a non-modal `<dialog>`, so focus is not trapped and the surrounding page stays reachable. The surrounding page SHOULD NOT compete visually with the dialog content.
+
+### Keyboard interaction
+
+| Key | Context | Action |
+|---|---|---|
+| `Tab` | Dialog open with the backdrop (modal) | Moves focus to the next focusable element inside the dialog (native modal `<dialog>` behavior) |
+| `Shift` + `Tab` | Dialog open with the backdrop (modal) | Moves focus to the previous focusable element inside the dialog (native modal `<dialog>` behavior) |
+| `Escape` | Dialog open, `disable-close-esc-keydown` not set | Cancels the dialog and emits `bqCancel` |
+| `Escape` | Dialog open, `disable-close-esc-keydown` set | Does nothing; the dialog stays open |
+| `Enter` or `Space` | Focus on the close button or a native `<button>` in the footer | Activates the focused button |
+
+With `disable-backdrop` the dialog is non-modal, so `Tab` is not confined to the dialog.
 
 ## API reference
 

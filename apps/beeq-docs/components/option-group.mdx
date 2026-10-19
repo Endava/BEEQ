@@ -42,6 +42,8 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
   </Card>
 </CardGroup>
 
+Choose [`bq-option`](/components/option) for a single selectable item, [`bq-option-group`](/components/option-group) to put related options under a shared label, and [`bq-option-list`](/components/option-list) as the listbox container that holds the options and groups and emits `bqSelect`.
+
 ## Option Group patterns
 
 <CardGroup cols={3}>
@@ -76,29 +78,29 @@ Each option group has a header row containing an optional prefix, the required l
 
 ### Label clarity
 
-The group label exists to help users understand why these options are grouped together. Write it as a short noun phrase — a category name, not an instruction.
+The group label exists to help users understand why these options are grouped together. You should write it as a short noun phrase — a category name, not an instruction.
 
 <Steps>
   <Step title="Name the category">
-    Use a noun or short noun phrase: "Sport", "Food", "Recent", "Admin actions". The label names the group, not the action.
+    You should use a noun or short noun phrase: "Sport", "Food", "Recent", "Admin actions". The label names the group, not the action.
   </Step>
   <Step title="Keep it short">
-    The label is displayed in a constrained space and truncates on overflow. Aim for one to three words.
+    The label is displayed in a constrained space and truncates on overflow. The label should be one to three words.
   </Step>
   <Step title="Use consistent casing">
-    Apply title case or sentence case consistently across all groups in the same list. Mixing styles creates visual noise.
+    You should apply title case or sentence case consistently across all groups in the same list. Mixing styles creates visual noise.
   </Step>
 </Steps>
 
 ### Nesting and depth
 
 <Note>
-  Option groups are flat by design — they do not support nesting. Each group sits at the same level inside `bq-option-list`. If you find yourself needing nested groups, reconsider the information architecture: a deeper hierarchy usually belongs in a separate navigation component rather than a dropdown.
+  Option groups are flat by design — they do not support nesting, and you must not nest one group inside another. Each group sits at the same level inside `bq-option-list`. If you find yourself needing nested groups, reconsider the information architecture: a deeper hierarchy usually belongs in a separate navigation component rather than a dropdown.
 </Note>
 
 ### Prefix and suffix icons
 
-Use the `header-prefix` slot to place a category icon next to the label. This helps users identify the group at a glance in long lists. Use the `header-suffix` slot sparingly — a count badge or status indicator can add value, but too many suffix elements make the header feel cluttered.
+Use the `header-prefix` slot to place a category icon next to the label. This helps users identify the group at a glance in long lists. You should use the `header-suffix` slot sparingly — a count badge or status indicator can add value, but too many suffix elements make the header feel cluttered.
 
 ## Usage
 
@@ -702,7 +704,7 @@ Use the `header-suffix` slot to place a count badge, status chip, or secondary i
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Always provide content in the `header-label` slot so screen readers and sighted users both know what the group represents.
+    must provide content in the `header-label` slot so screen readers and sighted users both know what the group represents.
   </Card>
 
   <Card>
@@ -710,7 +712,7 @@ Use the `header-suffix` slot to place a count badge, status chip, or secondary i
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Render a group without a label — an unnamed group header creates visual ambiguity and an unnamed `role="group"` gives screen readers nothing useful to announce.
+    must not render a group without a label — an unnamed group header creates visual ambiguity and an unnamed `role="group"` gives screen readers nothing useful to announce.
   </Card>
 
   <Card>
@@ -718,7 +720,7 @@ Use the `header-suffix` slot to place a count badge, status chip, or secondary i
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Include at least two options in each group — a group containing a single item implies the grouping is arbitrary.
+    should include at least two options in each group — a group containing a single item implies the grouping is arbitrary.
   </Card>
 
   <Card>
@@ -726,7 +728,7 @@ Use the `header-suffix` slot to place a count badge, status chip, or secondary i
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Create groups where every group contains only one option. If no meaningful category exists, use a flat `bq-option-list` instead.
+    should not create groups where every group contains only one option. If no meaningful category exists, use a flat `bq-option-list` instead.
   </Card>
 
   <Card>
@@ -734,7 +736,7 @@ Use the `header-suffix` slot to place a count badge, status chip, or secondary i
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Keep group labels short — one to three words. The label is displayed in a constrained header row and truncates when it overflows.
+    should keep group labels short — one to three words. The label is displayed in a constrained header row and truncates when it overflows.
   </Card>
 
   <Card>
@@ -742,7 +744,7 @@ Use the `header-suffix` slot to place a count badge, status chip, or secondary i
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Write full sentences as group labels. Long text truncates silently and makes the header unreadable in narrow containers.
+    should not write full sentences as group labels. Long text truncates silently and makes the header unreadable in narrow containers.
   </Card>
 
   <Card>
@@ -750,7 +752,7 @@ Use the `header-suffix` slot to place a count badge, status chip, or secondary i
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Use groups consistently — if one group has a prefix icon, give all groups a prefix icon so the header row stays visually aligned.
+    should use groups consistently — if one group has a prefix icon, give all groups a prefix icon so the header row stays visually aligned.
   </Card>
 
   <Card>
@@ -758,7 +760,7 @@ Use the `header-suffix` slot to place a count badge, status chip, or secondary i
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Mix groups with and without prefix icons in the same list. The inconsistent indentation makes the list harder to scan.
+    should not mix groups with and without prefix icons in the same list. The inconsistent indentation makes the list harder to scan.
   </Card>
 </CardGroup>
 
@@ -768,9 +770,13 @@ Use the `header-suffix` slot to place a count badge, status chip, or secondary i
 
 As a developer, you are responsible for:
 
-- **Always providing `header-label` content** — the text in this slot is what sighted users and screen reader users rely on to understand what the group is about. Without it, the group boundary is invisible to assistive technologies.
-- **Placing the component inside `bq-option-list`** — `bq-option-group` provides `role="group"`, which must be a descendant of `role="listbox"` (supplied by `bq-option-list`). Rendering option groups outside this context breaks the expected ARIA tree structure.
-- **Keeping groups non-empty** — a group with no options creates an orphaned header with no associated list items, which confuses both sighted users and screen readers.
+- **Providing `header-label` content** — you MUST provide it. The text in this slot is what sighted users and screen reader users rely on to understand what the group is about. Without it, the group boundary is invisible to assistive technologies.
+- **Placing the component inside `bq-option-list`** — `bq-option-group` provides `role="group"`, which MUST be a descendant of `role="listbox"` (supplied by `bq-option-list`). You MUST NOT render option groups outside this context, because it breaks the expected ARIA tree structure.
+- **Keeping groups non-empty** — a group with no options creates an orphaned header with no associated list items, which confuses both sighted users and screen readers, so you MUST NOT leave a group empty.
+
+### Keyboard interaction
+
+No keyboard interaction: the component is not focusable. The `bq-option` items inside the group receive focus; see [Option](/components/option#keyboard-interaction).
 
 ## API reference
 

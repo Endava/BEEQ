@@ -13,7 +13,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 `bq-option-list` is the required wrapper for `bq-option` and `bq-option-group` elements. It sets the `role="listbox"` context, handles keyboard and click events from child options, and emits a single `bqSelect` event with the selected item's value back to the parent component.
 
 <Note>
-  `bq-option-list` is a structural container — it does not render any visible UI of its own. It is used internally by higher-level components such as `bq-select` and `bq-dropdown`. Use it directly only when you are building a custom listbox-based control.
+  `bq-option-list` is a structural container — it does not render any visible UI of its own. It is used internally by higher-level components such as `bq-select` and `bq-dropdown`. You should use it directly only when you are building a custom listbox-based control.
 </Note>
 
 ## When to use
@@ -41,6 +41,8 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
     * The items are primarily navigational links rather than discrete selectable choices
   </Card>
 </CardGroup>
+
+Choose [`bq-option`](/components/option) for a single selectable item, [`bq-option-group`](/components/option-group) to put related options under a shared label, and [`bq-option-list`](/components/option-list) as the listbox container that holds the options and groups and emits `bqSelect`.
 
 ## Option List patterns
 
@@ -82,11 +84,11 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 
 ### Vertical rhythm
 
-The gap between items is controlled by the `--bq-option-group--gapY-list` CSS custom property. The default is tight (`var(--bq-spacing-xs)`) to keep the list compact. Increase it only when items are taller than a single text line or when the list is used in a context with generous surrounding whitespace.
+The gap between items is controlled by the `--bq-option-group--gapY-list` CSS custom property. The default is tight (`var(--bq-spacing-xs)`) to keep the list compact. You should increase it only when items are taller than a single text line or when the list is used in a context with generous surrounding whitespace.
 
 ### Accessible label
 
-The `ariaLabel` prop (rendered as `aria-label` on the host element) names the listbox for screen readers. The default value is `"Options"`. Override it with a more specific label when the context makes the default ambiguous — for example, `"Navigation links"` or `"Assignees"`.
+The `ariaLabel` prop (rendered as `aria-label` on the host element) names the listbox for screen readers. The default value is `"Options"`. You SHOULD override it with a more specific label when the context makes the default ambiguous — for example, `"Navigation links"` or `"Assignees"`.
 
 ## Usage
 
@@ -344,7 +346,7 @@ Override `aria-label` when the default `"Options"` is too generic for the contex
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Always place `bq-option` and `bq-option-group` directly inside `bq-option-list` — the component listens for `bqClick` and `bqEnter` events from child options and will not receive them if additional wrapper elements break the event path.
+    must place `bq-option` and `bq-option-group` directly inside `bq-option-list` — the component listens for `bqClick` and `bqEnter` events from child options and will not receive them if additional wrapper elements break the event path.
   </Card>
 
   <Card>
@@ -352,7 +354,7 @@ Override `aria-label` when the default `"Options"` is too generic for the contex
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Wrap options in arbitrary `<div>` or `<span>` elements inside the list. Non-option wrappers break the `bqClick`/`bqEnter` event delegation that `bq-option-list` relies on to emit `bqSelect`.
+    must not wrap options in arbitrary `<div>` or `<span>` elements inside the list. Non-option wrappers break the `bqClick`/`bqEnter` event delegation that `bq-option-list` relies on to emit `bqSelect`.
   </Card>
 
   <Card>
@@ -360,7 +362,7 @@ Override `aria-label` when the default `"Options"` is too generic for the contex
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Override `aria-label` with a descriptive phrase when the list is not the only `role="listbox"` on the page or when the default `"Options"` does not communicate the list's purpose.
+    should override `aria-label` with a descriptive phrase when the list is not the only `role="listbox"` on the page or when the default `"Options"` does not communicate the list's purpose.
   </Card>
 
   <Card>
@@ -368,7 +370,7 @@ Override `aria-label` when the default `"Options"` is too generic for the contex
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Leave the default `aria-label="Options"` on multiple lists within the same view without making each one contextually unique — screen reader users navigating by landmark will see identical labels and cannot tell the lists apart.
+    should not leave the default `aria-label="Options"` on multiple lists within the same view without making each one contextually unique — screen reader users navigating by landmark will see identical labels and cannot tell the lists apart.
   </Card>
 
   <Card>
@@ -376,7 +378,7 @@ Override `aria-label` when the default `"Options"` is too generic for the contex
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Listen to the `bqSelect` event on `bq-option-list` rather than individual `bqClick` events on each `bq-option`. The list normalises both click and Enter-key activations into a single `bqSelect` event with a consistent `{ value, item }` payload.
+    should listen to the `bqSelect` event on `bq-option-list` rather than individual `bqClick` events on each `bq-option`. The list normalises both click and Enter-key activations into a single `bqSelect` event with a consistent `{ value, item }` payload.
   </Card>
 
   <Card>
@@ -384,7 +386,7 @@ Override `aria-label` when the default `"Options"` is too generic for the contex
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Attach separate `bqClick` listeners to every `bq-option` when you only need the selected value — `bq-option-list` already aggregates these and emitting redundant handlers increases the chance of inconsistent state.
+    should not attach separate `bqClick` listeners to every `bq-option` when you only need the selected value — `bq-option-list` already aggregates these and emitting redundant handlers increases the chance of inconsistent state.
   </Card>
 
   <Card>
@@ -392,7 +394,7 @@ Override `aria-label` when the default `"Options"` is too generic for the contex
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Use `bq-option-group` to divide a long list into named sections when the number of items makes scanning difficult.
+    should use `bq-option-group` to divide a long list into named sections when the number of items makes scanning difficult.
   </Card>
 
   <Card>
@@ -400,7 +402,7 @@ Override `aria-label` when the default `"Options"` is too generic for the contex
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Render dozens of flat options without any grouping. An ungrouped list longer than around eight items becomes hard to scan — users have to read every item individually rather than jumping to the relevant category.
+    should not render dozens of flat options without any grouping. An ungrouped list longer than around eight items becomes hard to scan — users have to read every item individually rather than jumping to the relevant category.
   </Card>
 </CardGroup>
 
@@ -412,9 +414,20 @@ The `ariaLabel` prop is reflected as `aria-label` on the host and defaults to `"
 
 As a developer, you are responsible for:
 
-- **Providing a meaningful `ariaLabel`** when the default is ambiguous. Screen readers announce the listbox name before a user navigates into it, so a specific label ("Assignees", "Color palette") is more useful than the generic default.
-- **Placing only `bq-option` and `bq-option-group` elements inside the list** — inserting non-option elements breaks the `role="listbox"` / `role="option"` relationship that assistive technologies expect.
-- **Managing focus** when the list is shown or hidden — `bq-option-list` does not manage focus automatically. If you are building a custom dropdown, move focus to the first option when the list opens and return it to the trigger when it closes.
+- **Providing a meaningful `ariaLabel`** — you SHOULD set one when the default is ambiguous. Screen readers announce the listbox name before a user navigates into it, so a specific label ("Assignees", "Color palette") is more useful than the generic default.
+- **Placing only `bq-option` and `bq-option-group` elements inside the list** — you MUST NOT insert non-option elements, because that breaks the `role="listbox"` / `role="option"` relationship that assistive technologies expect.
+- **Managing focus** when the list is shown or hidden — `bq-option-list` does not manage focus automatically. If you are building a custom dropdown, you MUST move focus to the first option when the list opens and return it to the trigger when it closes.
+
+### Keyboard interaction
+
+`bq-option-list` is not focusable and does not handle arrow keys itself. Each flat `bq-option` inside it is a native `<button>`, so keys apply to the focused option.
+
+| Key | Context | Action |
+|---|---|---|
+| `Tab` | Focus outside the list | Moves focus to the first enabled option; disabled and hidden options are skipped |
+| `Shift` + `Tab` | Focus on an option | Moves focus to the previous focusable element |
+| `Enter` | Option focused | The option emits `bqEnter` and the list emits `bqSelect` with `{ value, item }` |
+| `Space` | Option focused | The option emits `bqEnter` and the list emits `bqSelect` with `{ value, item }` |
 
 ## API reference
 

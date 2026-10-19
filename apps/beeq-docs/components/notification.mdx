@@ -14,7 +14,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 Notifications inform people about significant events, status changes, or updates that need their awareness without requiring an immediate response. They appear at the edge of the interface, stack gracefully when multiple are present, and dismiss automatically or on demand.
 
 <Note>
-  Use notifications for system-level messages and status updates. When feedback belongs directly to a field, control, or focused task area, keep it closer to that context instead.
+  You should use notifications for system-level messages and status updates. When feedback belongs directly to a field, control, or focused task area, you should keep it closer to that context instead.
 </Note>
 
 ## When to use
@@ -41,6 +41,8 @@ Notifications inform people about significant events, status changes, or updates
     - The message needs detailed explanation rather than a short, scannable summary
   </Card>
 </CardGroup>
+
+Choose [`bq-alert`](/components/alert) for a message tied to a page or section that stays in the document flow, [`bq-notification`](/components/notification) for a system message with a description or actions that stacks at the edge of the screen, and [`bq-toast`](/components/toast) for a short status message with no actions that disappears on its own.
 
 ## Patterns
 
@@ -103,15 +105,15 @@ Choose the notification treatment that matches the urgency of the message withou
     Start by deciding whether the message is informational, successful, cautionary, or error-related. That determines the right `type`.
   </Step>
   <Step title="Decide whether actions are needed">
-    Add footer actions only when users genuinely need a next step such as retrying, reviewing, or navigating.
+    You should add footer actions only when users genuinely need a next step such as retrying, reviewing, or navigating.
   </Step>
   <Step title="Choose placement">
-    Use inline open notifications for contained layouts. Use `toast()` for stacked, portal-based notifications outside the document flow.
+    You should use inline open notifications for contained layouts and `toast()` for stacked, portal-based notifications outside the document flow.
   </Step>
 </Steps>
 
 <Note>
-  If you use `auto-dismiss`, make sure the timeout gives users enough time to read the content and does not remove important information too quickly.
+  If you use `auto-dismiss`, the timeout must give users enough time to read the content and should not remove important information too quickly.
 </Note>
 
 ## Usage
@@ -324,6 +326,10 @@ Use the default `info` notification for standard messages and updates.
 </Tip>
 
 ## Options
+
+**Allowed `type` values:** `info` (default), `success`, `warning`, `error`, `neutral`.
+
+**Allowed `border` values:** `none`, `xs2`, `xs`, `s` (default), `m`, `l`, `full`.
 
 ### Semantic types
 
@@ -670,7 +676,7 @@ Use the `icon` slot to replace the default type icon with a custom `bq-icon`.
 
 Use the `toast()` method to render notifications in a fixed-position portal that stacks multiple notifications vertically outside the normal document flow. The component creates and reuses a `.bq-notification-portal` element attached to `document.body`, and BEEQ global styles position that portal for you.
 
-In framework apps, prefer a framework-owned portal or stack when you want the notification lifecycle to stay declarative.
+In framework apps, you should use a framework-owned portal or stack when you want the notification lifecycle to stay declarative.
 
 <CodeLivePreview mode="shadow" code={`
   <style>
@@ -973,56 +979,56 @@ In framework apps, prefer a framework-owned portal or stack when you want the no
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Position notifications at the edges of the screen so they do not block the main content.
+    should position notifications at the edges of the screen so they do not block the main content.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Do not position notifications in the center of the screen where they compete with the main task.
+    should not position notifications in the center of the screen where they compete with the main task.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Keep messages concise and direct, and lead with the most important information.
+    should keep messages concise and direct, and lead with the most important information.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Do not use long descriptions in notifications because they reduce scanability.
+    should not use long descriptions in notifications because they reduce scanability.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Use the correct `type` so the icon and visual treatment reinforce the message severity.
+    should use the correct `type` so the icon and visual treatment reinforce the message severity.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Do not rely on custom colors or ambiguous language to communicate urgency.
+    should not rely on custom colors or ambiguous language to communicate urgency.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Provide a close button or a thoughtful auto-dismiss timeout so users can dismiss notifications predictably.
+    should provide a close button or a thoughtful auto-dismiss timeout so users can dismiss notifications predictably.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Do not use all-caps or unnecessary typographic emphasis in notification copy.
+    should not use all-caps or unnecessary typographic emphasis in notification copy.
   </Card>
 </CardGroup>
 
@@ -1030,10 +1036,21 @@ In framework apps, prefer a framework-owned portal or stack when you want the no
 
 - **Built-in alert role** — the component applies `role="alert"` to the notification host element, which implicitly carries `aria-live="assertive"`. Assistive technology announces new notifications immediately when they appear.
 - **Visibility tied to `open`** — the host also receives `aria-hidden="true"` when `open` is `false`, removing it from the accessibility tree when not visible.
-- **Color alone is not enough**: the icon and message text should work together so users who cannot perceive color still understand the notification.
-- **Keep interactive elements reachable**: users must be able to tab to the close button, links, and footer actions and activate them with the keyboard.
-- **Use considerate auto-dismiss timing**: if `auto-dismiss` is enabled, give users enough time to read the content before it disappears.
-- **Do not steal focus**: stacked notifications are non-modal and should not move focus unexpectedly away from the current task.
+- **Color alone is not enough**: the icon and message text MUST work together so users who cannot perceive color still understand the notification.
+- **Keep interactive elements reachable**: users MUST be able to tab to the close button, links, and footer actions and activate them with the keyboard.
+- **Use considerate auto-dismiss timing**: if `auto-dismiss` is enabled, you MUST give users enough time to read the content before it disappears.
+- **Do not steal focus**: stacked notifications are non-modal, so you MUST NOT move focus unexpectedly away from the current task when showing one.
+
+### Keyboard interaction
+
+The notification itself is not focusable. Only the elements inside it receive focus; the close button is a native `<button>` rendered by `bq-button`.
+
+| Key | Context | Action |
+|---|---|---|
+| `Tab` | Notification open, close button shown | Moves focus to the close button, then to focusable content in the `body` and `footer` slots |
+| `Shift` + `Tab` | Focus inside the notification | Moves focus to the previous focusable element |
+| `Enter` | Close button focused | Activates the button and hides the notification |
+| `Space` | Close button focused | Activates the button and hides the notification |
 
 ## API reference
 

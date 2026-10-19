@@ -13,7 +13,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 Accordions organize related content into collapsible sections. Each section has a header that reveals or hides its panel content, helping people scan headings first and open only the information they need.
 
 <Note>
-  Use `bq-accordion-group` to wrap multiple `bq-accordion` items when you need to coordinate their behavior — for example, collapsing one when another opens.
+  You should use `bq-accordion-group` to wrap multiple `bq-accordion` items when you need to coordinate their behavior — for example, collapsing one when another opens.
 </Note>
 
 ## At a glance
@@ -48,6 +48,8 @@ Accordions organize related content into collapsible sections. Each section has 
   </Card>
 </CardGroup>
 
+Choose [`bq-accordion`](/components/accordion) for sections stacked on one page whose panels expand and collapse in place, and [`bq-tab`](/components/tab) for a small set of peer sections where one panel is shown at a time.
+
 ## Anatomy
 
 <Frame caption="Accordion anatomy">
@@ -68,7 +70,7 @@ Each accordion item includes a clickable header and a collapsible panel. The hea
 
 ## Design guidelines
 
-Use accordions to reduce page density without hiding content that people need to complete the task. Keep each header specific, keep panel content focused, and use `bq-accordion-group` when several accordion items should behave as one coordinated set.
+You should use accordions to reduce page density without hiding content that people need to complete the task. You should keep each header specific, keep panel content focused, and use `bq-accordion-group` when several accordion items should behave as one coordinated set.
 
 ## Usage
 
@@ -202,6 +204,8 @@ Two appearance values are available:
 - **filled**: (default) adds a background color to the header for a contained look
 - **ghost**: removes the background for a minimal style that blends with surrounding content.
 
+**Allowed `appearance` values:** `filled` (default), `ghost`.
+
 <Tip>
   Since `filled` is the default, there's no need to explicitly set `appearance="filled"` on the component.
 </Tip>
@@ -299,6 +303,8 @@ Two appearance values are available:
 Accordions support two sizes: `medium` (default) and `small`.
 The `small` size uses more compact padding and a smaller border radius, giving it a tighter look.
 
+**Allowed `size` values:** `small`, `medium` (default).
+
 <CodeLivePreview mode="shadow" code={`
   <bq-accordion size="medium" expanded>
     <span slot="header">Medium accordion (default)</span>
@@ -380,7 +386,7 @@ The `small` size uses more compact padding and a smaller border radius, giving i
 </CodeLivePreview>
 
 <Note>
-  Use the `small` size in dense layouts or sidebars where space is limited.
+  You should use the `small` size in dense layouts or sidebars where space is limited.
 </Note>
 
 ### Group
@@ -395,7 +401,7 @@ The group also lets you set `appearance`, `size`, and `no-animation` once and ha
 
 ### Single open (default group behavior)
 
-Use the default group behavior when the sections are mutually exclusive or when keeping only one panel open helps reduce distraction.
+You should use the default group behavior when the sections are mutually exclusive or when keeping only one panel open helps reduce distraction.
 
 <CodeLivePreview mode="shadow" code={`
   <bq-accordion-group>
@@ -1242,7 +1248,7 @@ Developers can [rely on the exposed shadow DOM parts](/guides/styles#component-s
       Do
     </span>
 
-    Write header labels that clearly describe the content inside. People should be able to predict what they will find before opening the section.
+    should write header labels that clearly describe the content inside. People should be able to predict what they will find before opening the section.
   </Card>
 
   <Card>
@@ -1251,7 +1257,7 @@ Developers can [rely on the exposed shadow DOM parts](/guides/styles#component-s
       Don't
     </span>
 
-    Do not nest accordions inside accordion panels. It creates unclear hierarchy and makes interaction patterns harder to follow.
+    should not nest accordions inside accordion panels. It creates unclear hierarchy and makes interaction patterns harder to follow.
   </Card>
 
   <Card>
@@ -1260,7 +1266,7 @@ Developers can [rely on the exposed shadow DOM parts](/guides/styles#component-s
       Do
     </span>
 
-    Use `bq-accordion-group` when items belong together and their open/close behavior should be coordinated.
+    should use `bq-accordion-group` when items belong together and their open/close behavior should be coordinated.
   </Card>
 
   <Card>
@@ -1269,7 +1275,7 @@ Developers can [rely on the exposed shadow DOM parts](/guides/styles#component-s
       Don't
     </span>
 
-    Do not hide critical content inside accordions. If the information is essential to the page, it should usually remain visible.
+    must not hide critical content inside accordions. If the information is essential to the page, it should remain visible.
   </Card>
 
   <Card>
@@ -1278,7 +1284,7 @@ Developers can [rely on the exposed shadow DOM parts](/guides/styles#component-s
       Do
     </span>
 
-    Consider `no-animation` or a reduced-motion strategy for workflows where motion may distract or overwhelm.
+    should consider `no-animation` or a reduced-motion strategy for workflows where motion may distract or overwhelm.
   </Card>
 
   <Card>
@@ -1286,7 +1292,7 @@ Developers can [rely on the exposed shadow DOM parts](/guides/styles#component-s
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Do not use an accordion when a simpler show/hide pattern or a tab group would communicate the structure more clearly.
+    should not use an accordion when a simpler show/hide pattern or a tab group would communicate the structure more clearly.
   </Card>
 
   <Card>
@@ -1295,7 +1301,7 @@ Developers can [rely on the exposed shadow DOM parts](/guides/styles#component-s
       Do
     </span>
 
-    Keep panel content focused on the promise made by the header so people can scan and decide quickly.
+    should keep panel content focused on the promise made by the header so people can scan and decide quickly.
   </Card>
 
   <Card>
@@ -1304,17 +1310,28 @@ Developers can [rely on the exposed shadow DOM parts](/guides/styles#component-s
       Don't
     </span>
 
-    Do not use vague headers such as "More details" when a specific label would set clearer expectations.
+    should not use vague headers such as "More details" when a specific label would set clearer expectations.
   </Card>
 </CardGroup>
 
 ## Accessibility
 
-- **Keyboard navigation** — the header is a focusable button and can be activated with <kbd>Enter</kbd> or <kbd>Space</kbd>.
-- **Clear headings** — header labels should describe the panel content clearly enough to be understood before expansion.
+- **Clear headings** — header labels SHOULD describe the panel content clearly enough to be understood before expansion.
 - **ARIA support** — the header exposes `aria-expanded`, and the panel visibility is reflected for assistive technologies.
-- **Disabled state** — disabled accordions are removed from the tab order, so use this state sparingly and explain unavailable content when possible.
-- **Reduced motion** — use `no-animation` when motion should be minimized, or respect the user's `prefers-reduced-motion` setting.
+- **Disabled state** — disabled accordions are removed from the tab order, so you SHOULD use this state sparingly and explain unavailable content when possible.
+- **Reduced motion** — you SHOULD use `no-animation` when motion should be minimized, or respect the user's `prefers-reduced-motion` setting.
+
+### Keyboard interaction
+
+The header is a native `<summary>` element exposed with `role="button"`.
+
+| Key | Context | Action |
+|---|---|---|
+| `Tab` | Header of an enabled accordion | Moves focus to the header and emits `bqFocus` |
+| `Shift` + `Tab` | Header of an enabled accordion | Moves focus to the previous focusable element |
+| `Enter` | Header focused | Toggles the panel open or closed and emits `bqClick` |
+| `Space` | Header focused | Toggles the panel open or closed and emits `bqClick` |
+| `Tab` | Disabled accordion | Skipped; the header has `tabindex="-1"` |
 
 ## API reference
 

@@ -13,7 +13,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 `bq-drawer` is a side panel that slides in from the edge of the screen to surface navigation menus, settings, notifications, or contextual actions. Users keep the underlying page in view, so they can complete focused tasks without losing context.
 
 <Note>
-  The drawer manages its own open/close animation and backdrop. Call the `show()` and `hide()` methods programmatically, or toggle the `open` prop, to control visibility. Do not remove the element from the DOM to hide it — use `hide()` instead.
+  The drawer manages its own open/close animation and backdrop. Call the `show()` and `hide()` methods programmatically, or toggle the `open` prop, to control visibility. You must not remove the element from the DOM to hide it. Use `hide()` instead.
 </Note>
 
 ## When to use
@@ -41,6 +41,8 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
     * There are better alternatives available for presenting supplementary information or navigation options, such as a dedicated page or `bq-dialog`
   </Card>
 </CardGroup>
+
+Choose [`bq-dialog`](/components/dialog) instead of `bq-drawer` when the user must respond before continuing, such as a blocking confirmation, and [`bq-tooltip`](/components/tooltip) when the content is a short, non-essential hint.
 
 ## Patterns
 
@@ -75,7 +77,7 @@ The drawer panel contains a header with an optional icon and headline, a scrolla
 
 ### Position
 
-Always position the drawer close to the relevant content to avoid confusing users and ensure intuitive navigation.
+You should position the drawer close to the relevant content to avoid confusing users and ensure intuitive navigation.
 
 <Steps>
   <Step title="end (default)">
@@ -95,25 +97,25 @@ The drawer container area can hold rich media, images, forms, icons, buttons, an
 The backdrop dims the page content behind the drawer, reinforcing that the drawer is in focus.
 
 <Note>
-  Enable the backdrop (`enable-backdrop`) when the drawer contains a form or detail view that should feel visually separate from the page. For lightweight navigation drawers that share the screen with the page, omit the backdrop to keep the experience lighter.
+  You should enable the backdrop (`enable-backdrop`) when the drawer contains a form or detail view that should feel visually separate from the page. For lightweight navigation drawers that share the screen with the page, you may omit the backdrop to keep the experience lighter.
 </Note>
 
 ### Width
 
-The default drawer width is `320px`, controlled by `--bq-drawer--width`. Increase it for content-heavy panels such as filter forms or data tables, but keep it narrow enough that the underlying page remains recognisably visible.
+The default drawer width is `320px`, controlled by `--bq-drawer--width`. You may increase it for content-heavy panels such as filter forms or data tables, but it should stay narrow enough that the underlying page remains recognisably visible.
 
 ### Footer
 
-Add a footer to house actions that apply to all content in the panel (e.g. save a form or close the panel). Buttons are left-aligned, and only one primary button should be used at a time. The footer slot is only rendered when it contains content.
+Add a footer to house actions that apply to all content in the panel (e.g. save a form or close the panel). Buttons are left-aligned, and you should use only one primary button at a time. The footer slot is only rendered when it contains content.
 
 ### Keep it simple and clear
 
-While drawers can efficiently store additional information not included on the parent page, it is essential to avoid overwhelming users with excessive content. Proper organisation and grouping of information within the drawer are crucial to ensure clarity and usability.
+While drawers can efficiently store additional information not included on the parent page, you should not overwhelm users with excessive content. Organise and group information within the drawer to keep it clear and usable.
 
 ## Usage
 
 <Tip>
-  When using the Drawer component, make sure to place it higher in the DOM hierarchy — for example, as a direct child of `<body>` and not inside a container element. This ensures the drawer's fixed positioning and z-index work correctly across all layouts.
+  When using the Drawer component, you should place it high in the DOM hierarchy, for example as a direct child of `<body>` and not inside a container element. This ensures the drawer's fixed positioning and z-index work correctly across all layouts.
 </Tip>
 
 ### Default
@@ -811,6 +813,10 @@ The `position` prop allows you to specify the edge from which the drawer appears
 
 ## Options
 
+**Allowed `position` values:** `start`, `end` (default). Any other value logs a warning and falls back to `start`.
+
+**Allowed `placement` values (deprecated):** `left`, `right` (default). Any other value logs a warning and falls back to `right`. Use `position` instead.
+
 ### With backdrop
 
 The backdrop variant adds a semi-transparent overlay behind the drawer, helping to focus user attention on the drawer content while dimming the background. Enable this variant when you want to visually separate the drawer from the rest of the interface and provide a modal-like experience.
@@ -1484,7 +1490,7 @@ By default, clicking outside the panel or pressing `Esc` closes the drawer. Set 
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Place drawers along the screen's edge — typically the right side — to prevent interference with navigational components on the left edge.
+    You should place drawers along the screen's edge, typically the right side, to prevent interference with navigational components on the left edge.
   </Card>
 
   <Card>
@@ -1492,7 +1498,7 @@ By default, clicking outside the panel or pressing `Esc` closes the drawer. Set 
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Inset a drawer significantly from the screen edges. Doing so makes its position and scroll behaviour unclear and can obscure primary content.
+    You should not inset a drawer significantly from the screen edges. Doing so makes its position and scroll behaviour unclear and can obscure primary content.
   </Card>
 
   <Card>
@@ -1500,7 +1506,7 @@ By default, clicking outside the panel or pressing `Esc` closes the drawer. Set 
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Always provide a meaningful `title` slot so users and screen readers know the purpose of the panel before interacting with its content.
+    You must provide a meaningful `title` slot so users and screen readers know the purpose of the panel before interacting with its content.
   </Card>
 
   <Card>
@@ -1508,7 +1514,7 @@ By default, clicking outside the panel or pressing `Esc` closes the drawer. Set 
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Leave the title slot empty. A drawer without a title gives assistive technologies no label for the `role="dialog"` and leaves sighted users without orientation.
+    You must not leave the title slot empty. A drawer without a title gives assistive technologies no label for the `role="dialog"` and leaves sighted users without orientation.
   </Card>
 
   <Card>
@@ -1516,7 +1522,7 @@ By default, clicking outside the panel or pressing `Esc` closes the drawer. Set 
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Use `enable-backdrop` when the drawer contains a form or a detail view that requires focused attention — it visually separates the panel from the underlying page.
+    You should use `enable-backdrop` when the drawer contains a form or a detail view that requires focused attention — it visually separates the panel from the underlying page.
   </Card>
 
   <Card>
@@ -1524,7 +1530,7 @@ By default, clicking outside the panel or pressing `Esc` closes the drawer. Set 
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Use a drawer for critical, blocking confirmations such as destructive action prompts. Use `bq-dialog` for those — a drawer implies the page behind it is still accessible.
+    You must not use a drawer for critical, blocking confirmations such as destructive action prompts. Use `bq-dialog` for those — a drawer implies the page behind it is still accessible.
   </Card>
 
   <Card>
@@ -1532,7 +1538,7 @@ By default, clicking outside the panel or pressing `Esc` closes the drawer. Set 
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Place primary actions (Save, Apply, Confirm) in the `footer` slot so they are always accessible at the bottom of the panel, even when the body content is long and scrollable.
+    You should place primary actions (Save, Apply, Confirm) in the `footer` slot so they are always accessible at the bottom of the panel, even when the body content is long and scrollable.
   </Card>
 
   <Card>
@@ -1540,7 +1546,7 @@ By default, clicking outside the panel or pressing `Esc` closes the drawer. Set 
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Bury primary action buttons in the scrollable body. Users who do not scroll to the bottom will miss them and may not know how to complete the task.
+    You should not bury primary action buttons in the scrollable body. Users who do not scroll to the bottom will miss them and may not know how to complete the task.
   </Card>
 
   <Card>
@@ -1548,7 +1554,7 @@ By default, clicking outside the panel or pressing `Esc` closes the drawer. Set 
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Use `close-on-click-outside` and `close-on-esc` together when the panel contains unsaved changes that would be lost if the user accidentally dismisses it.
+    You should use `close-on-click-outside` and `close-on-esc` together when the panel contains unsaved changes that would be lost if the user accidentally dismisses it.
   </Card>
 
   <Card>
@@ -1556,7 +1562,7 @@ By default, clicking outside the panel or pressing `Esc` closes the drawer. Set 
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Lock the close behavior by default on every drawer. Preventing Esc and outside-click dismissal frustrates users who expect those standard interactions to work.
+    You should not lock the close behavior by default on every drawer. Preventing Esc and outside-click dismissal frustrates users who expect those standard interactions to work.
   </Card>
 </CardGroup>
 
@@ -1566,12 +1572,21 @@ By default, clicking outside the panel or pressing `Esc` closes the drawer. Set 
 
 The built-in close button has `label="Close"` and is announced by screen readers as "Close, button".
 
-As a developer, you are responsible for:
+As a developer, you are responsible for the following:
 
-- **Moving focus into the drawer when it opens** — the component does not trap focus automatically. When you call `show()`, move focus to the first interactive element inside the panel or to the panel itself so keyboard users can begin navigating immediately.
-- **Returning focus to the trigger when the drawer closes** — call `hide()` and then restore focus to the element that opened the drawer so keyboard users are not left disoriented.
-- **Providing a descriptive title** — the `aria-labelledby` attribute references the title slot. Screen readers announce this text when the dialog opens. An empty or generic title such as "Panel" makes the dialog purpose unclear.
-- **Avoid nesting focusable elements in the backdrop** — the backdrop does not receive focus; keep interactive content inside the panel.
+- **Moving focus into the drawer when it opens** — the component does not trap focus automatically. When you call `show()`, you MUST move focus to the first interactive element inside the panel or to the panel itself so keyboard users can begin navigating immediately.
+- **Returning focus to the trigger when the drawer closes** — after `hide()`, you MUST restore focus to the element that opened the drawer so keyboard users are not left disoriented.
+- **Providing a descriptive title** — the `aria-labelledby` attribute references the title slot. Screen readers announce this text when the dialog opens, so you MUST NOT use an empty or generic title such as "Panel", which makes the dialog purpose unclear.
+- **Keeping focusable elements out of the backdrop** — the backdrop does not receive focus, so you MUST keep interactive content inside the panel.
+
+### Keyboard interaction
+
+| Key | Context | Action |
+|---|---|---|
+| `Escape` | Drawer open, `close-on-esc` not set | Closes the drawer and emits `bqClose` |
+| `Escape` | Drawer open, `close-on-esc` set | Does nothing; the drawer stays open |
+| `Tab` / `Shift` + `Tab` | Drawer open | Follows the native tab order; focus is not trapped inside the drawer |
+| `Enter` or `Space` | Focus on the close button or a native `<button>` inside the drawer | Activates the focused button |
 
 ## API reference
 
