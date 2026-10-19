@@ -182,7 +182,12 @@ Use initials when no uploaded image is available or when the interface is intent
 </CodeLivePreview>
 
 <Tip>
-  When using the `Text` variant, you can customise the avatar background color via the `--bq-avatar-background` CSS custom property. For example: `bq-avatar { --bq-avatar-background: var(--bq-ui--success); }`
+  When using the `Text` variant, you can customise the avatar background color via the `--bq-avatar-background` CSS custom property. For example:
+  ```css
+  bq-avatar {
+    --bq-avatar-background: var(--bq-ui--success);
+  }
+  ```
 </Tip>
 
 ### Image
@@ -335,9 +340,9 @@ Avatar supports four sizes and two shapes. Choose size based on context: `small`
 
 Use a grouped avatar pattern when you need to represent multiple participants in a compact space, such as shared ownership, collaborators, or team members. Keep the same size and shape across the whole group.
 
-<Tip>
+<Note>
   Avatar grouping is not a built-in feature — the component renders avatars independently. A few lines of CSS are all you need to create an overlapping stack, as shown in the example below.
-</Tip>
+</Note>
 
 <CodeLivePreview mode="shadow" code={`
   <style>
