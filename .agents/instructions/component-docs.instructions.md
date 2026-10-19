@@ -182,7 +182,7 @@ Document what the component does automatically and what the developer must do:
 - State what props feed those attributes (e.g., "`label` prop maps to `aria-label`")
 - List what the developer is responsible for (e.g., providing meaningful `label`, wrapping interactive patterns)
 - Do **not** repeat API property descriptions already in the reference table
-- Write every requirement with a [rule strength keyword](documentation.instructions.md#rule-strength-rfc-2119)
+- Write every requirement in this section with a capitalised [rule strength keyword](documentation.instructions.md#rule-strength-rfc-2119)
 
 ### Keyboard interaction
 

@@ -22,7 +22,7 @@ Documentation is read by developers, designers, product managers, and other stak
 
 ### Rule strength (RFC 2119)
 
-Every requirement or recommendation on a component page (Accessibility, Best practices, Notes, Invalid combinations) carries a strength keyword in capitals, so readers and agents can tell a hard requirement from advice.
+Requirements in the structured spec sections of a component page (Accessibility, Keyboard interaction, Rules, Invalid combinations) carry a strength keyword in capitals, so readers and agents can tell a hard requirement from advice. Prose, Do/Don't cards, Tips and Notes use plain lowercase wording ("should", "avoid"); capitals there read as shouting.
 
 | Keyword | Meaning |
 |---|---|
@@ -30,9 +30,9 @@ Every requirement or recommendation on a component page (Accessibility, Best pra
 | **SHOULD** / **SHOULD NOT** | Strong recommendation. Deviate only with a reason. |
 | **MAY** | Optional behavior. |
 
-- Capitalise the keyword; leave lowercase "must" or "should" out of rules. Descriptions of what the component does ("The component sets `role="switch"`") need no keyword.
+- Capitalise the keyword in the spec sections only. Descriptions of what the component does ("The component sets `role="switch"`") need no keyword.
 - Pick the strength from intent: WCAG failures and functional breakage are MUST / MUST NOT; stylistic and UX guidance is SHOULD / SHOULD NOT.
-- Rule cards in Best practices keep the Do/Don't structure and start the sentence with the keyword.
+- Best practices cards keep the Do/Don't structure in plain lowercase wording; the same rule appears with its capitalised strength in the Rules table when it is verifiable.
 
 ### Reference pages vs guide pages
 

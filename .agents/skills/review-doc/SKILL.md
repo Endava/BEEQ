@@ -52,7 +52,7 @@ Check the page against every rule of each instruction section below. Record each
 | CSS code tab | CSS Code Tab in code-examples |
 | Best practices | Best Practices in component-docs |
 | Accessibility | Accessibility in component-docs: keyboard table with one row per key; for form controls the Rules table (Verified by) |
-| Rule strength | Rule strength in documentation: requirements use MUST / SHOULD / MUST NOT / SHOULD NOT / MAY, no lowercase "must" or "always" rules |
+| Rule strength | Rule strength in documentation: requirements in Accessibility, Keyboard, Rules and Invalid combinations use MUST / SHOULD / MUST NOT / SHOULD NOT / MAY; prose and Do/Don't cards stay lowercase |
 | Allowed values | Allowed Values in component-docs: every variant, size, type or placement dimension lists its values as text |
 | API reference | API Reference in component-docs, cross-checked against the source from step 2; Invalid combinations for form controls |
 | Resources | Resources in component-docs |
