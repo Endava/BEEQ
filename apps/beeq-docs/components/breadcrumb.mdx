@@ -503,12 +503,6 @@ Each `bq-breadcrumb-item` renders a native `a` (with `href`) or `button` (withou
 | `rel` | `rel` | Space-separated link relationship types (e.g. `external`, `nofollow`) applied to the inner `<a>`. Relevant only if `href` is set. When `target` is set, `noreferrer` and `noopener` are always added | `string` | `undefined` |
 | `target` | `target` | Where to display the link in the browser context. Relevant only if `href` is set | `'_blank'` \| `'_parent'` \| `'_self'` \| `'_top'` | `undefined` |
 
-#### Allowed values
-
-| Dimension | Attribute | Allowed values | Default |
-|---|---|---|---|
-| Target | `target` | `_blank`, `_parent`, `_self`, `_top` | none |
-
 <Note>
   When `target` is set, `bq-breadcrumb-item` merges `noreferrer` and `noopener` into the `rel` value you provide, so `rel="external"` with `target="_blank"` renders `rel="external noreferrer noopener"`. Without `target`, only your `rel` value is applied.
 </Note>

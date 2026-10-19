@@ -24,7 +24,7 @@ Every component documentation page must follow this section order:
 11. **Options** — additional configurations and combination patterns with `CodeLivePreview` + `CodeGroup`, with [allowed values](#allowed-values-in-options) written as text
 12. **Best practices** — four-column (2×2) `CardGroup` with Do/Don't pairs
 13. **Accessibility** — built-in behaviors and requirements, a keyboard interaction table and a rules table; do not repeat the API reference
-14. **API reference** — Properties, Allowed values (a `Dimension | Attribute | Allowed values | Default` table for every property with a fixed set of values), Invalid combinations, Slots, Shadow parts, CSS custom properties tables
+14. **API reference** — Properties (the Type column lists every allowed value of an enum prop), Invalid combinations, Slots, Shadow parts, CSS custom properties tables
 15. **Resources** — two-column `CardGroup` linking to Storybook and GitHub source
 
 ## Overview Frame
@@ -223,7 +223,7 @@ Every component page ends its Accessibility section, after Keyboard interaction,
 
 Use four subsections in this order:
 
-1. **Properties** — columns: Property, Attribute, Description, Type, Default
+1. **Properties** — columns: Property, Attribute, Description, Type, Default. Write enum props as backticked literal unions (`'small' \| 'medium'`) so the Type column is the single source for allowed values
 2. **Slots** — columns: Slot, Description
 3. **Shadow parts** — columns: Part, Description
 4. **CSS custom properties** — if the component has **more than 5 variables**, wrap in `<Expandable title="CSS variables" defaultOpen={true}>` (use `defaultOpen={false}` when the list is very long, e.g. 20+); if **5 or fewer**, display the markdown table directly without an `<Expandable>` wrapper. Columns: Variable, Description, Default
