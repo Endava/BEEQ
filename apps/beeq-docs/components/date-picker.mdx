@@ -922,17 +922,19 @@ Use `locale` to match date formatting and calendar conventions to regional expec
     ```jsx React icon="react" expandable
     import { BqDatePicker } from "@beeq/react";
 
-    <BqDatePicker locale="en-GB" name="locale-gb" value="2026-10-13">
-      <label slot="label">en-GB</label>
-    </BqDatePicker>
+    <>
+      <BqDatePicker locale="en-GB" name="locale-gb" value="2026-10-13">
+        <label slot="label">en-GB</label>
+      </BqDatePicker>
 
-    <BqDatePicker locale="ja-JP" name="locale-jp" value="2026-10-13">
-      <label slot="label">ja-JP</label>
-    </BqDatePicker>
+      <BqDatePicker locale="ja-JP" name="locale-jp" value="2026-10-13">
+        <label slot="label">ja-JP</label>
+      </BqDatePicker>
 
-    <BqDatePicker locale="ar-EG" name="locale-eg" value="2026-10-13">
-      <label slot="label">ar-EG</label>
-    </BqDatePicker>
+      <BqDatePicker locale="ar-EG" name="locale-eg" value="2026-10-13">
+        <label slot="label">ar-EG</label>
+      </BqDatePicker>
+    </>
     ```
 
     ```ts Angular icon="angular" expandable
@@ -1018,13 +1020,15 @@ Use `first-day-of-week` to align the calendar grid with regional or business exp
     ```jsx React icon="react" expandable
     import { BqDatePicker } from "@beeq/react";
 
-    <BqDatePicker firstDayOfWeek={1} locale="en-GB" name="week-monday" value="2026-10-13">
-      <label slot="label">Monday first</label>
-    </BqDatePicker>
+    <>
+      <BqDatePicker firstDayOfWeek={1} locale="en-GB" name="week-monday" value="2026-10-13">
+        <label slot="label">Monday first</label>
+      </BqDatePicker>
 
-    <BqDatePicker firstDayOfWeek={0} locale="en-GB" name="week-sunday" value="2026-10-13">
-      <label slot="label">Sunday first</label>
-    </BqDatePicker>
+      <BqDatePicker firstDayOfWeek={0} locale="en-GB" name="week-sunday" value="2026-10-13">
+        <label slot="label">Sunday first</label>
+      </BqDatePicker>
+    </>
     ```
 
     ```ts Angular icon="angular" expandable
@@ -1712,7 +1716,7 @@ When focus leaves the segmented field, complete dates outside `min` or `max` are
 | `firstDayOfWeek` | `first-day-of-week` | First day of the week where Sunday is `0` | `0 \| 1 \| 2 \| 3 \| 4 \| 5 \| 6` | `1` |
 | `form` | `form` | ID of the form the input belongs to | `string` | `undefined` |
 | `formValidationMessage` | `form-validation-message` | Native validation message used for required, invalid typed, and out-of-bounds values | `string` | `undefined` |
-| `formatOptions` | *(property only)* | Numeric `Intl.DateTimeFormat` options that control segment order and separators. Textual or variable-length options fall back to the locale numeric layout with a development warning. | `DateTimeFormatOptions` | `undefined` |
+| `formatOptions` | *(property only)* | Numeric `Intl.DateTimeFormat` options that control segment order and separators. Textual or variable-length options fall back to the locale numeric layout with a development warning. | `Intl.DateTimeFormatOptions` | `undefined` |
 | `initialView` | `initial-view` | Starting view when `precision` is `"day"`; month and year precision always open in their matching view | `"days" \| "months" \| "years"` | `"days"` |
 | `isDateDisallowed` | *(property only)* | Function used to disable specific dates | `(date: Date) => boolean` | `undefined` |
 | `locale` | `locale` | Locale used to format and parse dates | `Intl.LocalesArgument` | `"en-GB"` |

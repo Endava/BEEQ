@@ -1874,7 +1874,7 @@ No invalid prop combinations.
 | `bqChange` | Fired when the value changes and the input loses focus | `CustomEvent<{ value: string \| number \| string[]; el: HTMLBqInputElement }>` |
 | `bqClear` | Fired when the value is cleared | `CustomEvent<HTMLBqInputElement>` |
 | `bqFocus` | Fired when the input receives focus | `CustomEvent<HTMLBqInputElement>` |
-| `bqInput` | Fired on every keystroke as the value changes | `CustomEvent<{ value: string \| number \| string[]; el: HTMLBqInputElement }>` |
+| `bqInput` | Fired when the value changes as the user types or clears it; debounced by `debounceTime` when it is greater than `0` | `CustomEvent<{ value: string \| number \| string[]; el: HTMLBqInputElement }>` |
 
 ### Slots
 
