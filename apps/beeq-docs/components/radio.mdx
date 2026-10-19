@@ -848,6 +848,19 @@ All four arrow keys work in both orientations. A disabled group has no tab stop.
 | Pre-select a default with `value` when one choice is always required | SHOULD | manual |
 | Explain nearby why a group or option is disabled | SHOULD | manual |
 
+<Visibility for="agents">
+  Rules for `bq-radio`. Keywords follow RFC 2119 and match the Rules table above.
+
+  - MUST: Wrap every `bq-radio` in a `bq-radio-group` (manual)
+  - MUST: Fill the `label` slot of the group with meaningful text (manual)
+  - MUST: Provide meaningful text in each `bq-radio` slot (manual)
+  - MUST: Set `name` on the group so the selected value submits with the form (automated: `bq-radio-group.e2e.tsx`)
+  - MUST: Select an option before submitting a required group (automated: `bq-radio-group.e2e.tsx`)
+  - SHOULD: Set `required-validation-message` on a required group (manual)
+  - SHOULD: Pre-select a default with `value` when one choice is always required (manual)
+  - SHOULD: Explain nearby why a group or option is disabled (manual)
+</Visibility>
+
 <Warning>
   The fieldset's `aria-labelledby` currently references an ID that does not match the label slot. This source defect is tracked in [the Radio Group follow-up issue](https://github.com/Endava/BEEQ/issues/1830). You MUST NOT assume that populating the slot repairs the explicit ARIA reference; verify the group name with your supported assistive technologies.
 </Warning>

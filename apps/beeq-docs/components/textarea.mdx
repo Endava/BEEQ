@@ -1279,6 +1279,17 @@ A `disabled` textarea is not focusable. A `readonly` textarea stays focusable bu
 | Set `required` and `form-validation-message` when a value is mandatory before submit | SHOULD | manual |
 | Communicate why a `disabled` textarea is unavailable through surrounding text | SHOULD | manual |
 
+<Visibility for="agents">
+  Rules for `bq-textarea`. Keywords follow RFC 2119 and match the Rules table above.
+
+  - MUST: Provide a visible label in the `label` slot (manual)
+  - MUST NOT: use `placeholder` as the only label (manual)
+  - MUST: Pair `validation-status` with a `helper-text` message that explains how to recover (manual)
+  - MUST: Set `name` so the value is submitted with the form (manual)
+  - SHOULD: Set `required` and `form-validation-message` when a value is mandatory before submit (manual)
+  - SHOULD: Communicate why a `disabled` textarea is unavailable through surrounding text (manual)
+</Visibility>
+
 ## API reference
 
 ### Properties

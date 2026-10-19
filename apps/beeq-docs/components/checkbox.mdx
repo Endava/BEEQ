@@ -1009,6 +1009,19 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
 | Group related checkboxes under a shared heading or `<fieldset>` | SHOULD | manual |
 | Use more than color to communicate the checked state | MUST | manual |
 
+<Visibility for="agents">
+  Rules for `bq-checkbox`. Keywords follow RFC 2119 and match the Rules table above.
+
+  - MUST: Provide a visible label in the default slot (manual)
+  - MUST: Set `name` so the checked state is submitted with the form (automated: `bq-checkbox.e2e.tsx`)
+  - MUST: Set `required` on checkboxes that must be checked before submission (automated: `bq-checkbox.e2e.tsx`)
+  - SHOULD: Set `form-validation-message` on required checkboxes to give a specific validation message (manual)
+  - MUST: Keep the parent and child checkboxes synchronized in a nested group (manual)
+  - SHOULD: Use `indeterminate` only to summarize a partially selected group (manual)
+  - SHOULD: Group related checkboxes under a shared heading or `<fieldset>` (manual)
+  - MUST: Use more than color to communicate the checked state (manual)
+</Visibility>
+
 ## API reference
 
 ### Properties

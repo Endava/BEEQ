@@ -863,6 +863,16 @@ Each handle is a native `<input type="range">`, so these keys come from the brow
 | Test range sliders with the target assistive technologies and provide a text summary of the range | SHOULD | manual |
 | Use the slider for adjustable values, not mandatory completion checks, because it has no `required` prop | SHOULD | manual |
 
+<Visibility for="agents">
+  Rules for `bq-slider`. Keywords follow RFC 2119 and match the Rules table above.
+
+  - MUST: Provide an accessible label with a wrapping `<label>`, `aria-label` or `aria-labelledby` (manual)
+  - MUST: Set `name` so the value is submitted with the form (automated: `bq-slider.e2e.tsx`)
+  - SHOULD: Supplement the slider with a visible number input when an exact value is critical (manual)
+  - SHOULD: Test range sliders with the target assistive technologies and provide a text summary of the range (manual)
+  - SHOULD: Use the slider for adjustable values, not mandatory completion checks, because it has no `required` prop (manual)
+</Visibility>
+
 ## API reference
 
 ### Properties

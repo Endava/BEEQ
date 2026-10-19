@@ -968,6 +968,19 @@ The native `<input type="checkbox" role="switch">` handles these keys. A disable
 | Explain why a switch is disabled in the surrounding text | SHOULD | manual |
 | Call `vFocus()`, `vBlur()` and `vClick()` instead of `focus()`, `blur()` and `click()` on the host | SHOULD | manual |
 
+<Visibility for="agents">
+  Rules for `bq-switch`. Keywords follow RFC 2119 and match the Rules table above.
+
+  - MUST: Provide a visible text label in the default slot (manual)
+  - MUST: Set `name` so the switch submits with the form (automated: `bq-switch.e2e.tsx`)
+  - MUST: Turn a required switch ON before submitting the form (automated: `bq-switch.e2e.tsx`)
+  - SHOULD: Set `form-validation-message` on a required switch (manual)
+  - MUST: Tell users before submit that a required switch has to be ON (manual)
+  - MUST: Provide at least one cue besides track color for the ON state (manual)
+  - SHOULD: Explain why a switch is disabled in the surrounding text (manual)
+  - SHOULD: Call `vFocus()`, `vBlur()` and `vClick()` instead of `focus()`, `blur()` and `click()` on the host (manual)
+</Visibility>
+
 ### Developer responsibilities
 
 - You MUST provide a visible text label via the default slot. The switch derives its accessible name from the `name` prop via `aria-label` on the native `<input>`; the visible slot text is not automatically wired to the control. To make the visible label the accessible name, you SHOULD use `aria-labelledby` on the host element pointing to the associated label element.
