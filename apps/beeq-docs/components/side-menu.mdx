@@ -2135,6 +2135,17 @@ The component uses native button Tab navigation, not the composite ARIA menu key
 - **Labels** - labels MUST be unique and make sense without additional context. The item text feeds the collapsed tooltip content.
 - **Footer actions** - every icon-only `bq-button` MUST have a meaningful `label`, and its decorative icon MUST be hidden from assistive technology.
 
+<Visibility for="agents">
+  Accessibility rules for `bq-side-menu`. Keywords follow RFC 2119 and summarize the Accessibility section above.
+
+  - MUST: Communicate the expanded or collapsed state from any layout control you add
+  - MUST: Set `aria-hidden="true"` on prefix icons
+  - MUST: Give items unique labels that make sense without context
+  - MUST: Give icon-only `bq-button` controls in the footer a meaningful `label` and hide their decorative icon
+  - SHOULD: Put semantic heading text in the logo slot
+  - SHOULD: Validate icon meaning when collapsed navigation relies on icons
+</Visibility>
+
 ### Keyboard interaction
 
 Each `bq-side-menu-item` renders a native `<button>`, so there are no arrow-key shortcuts between items.

@@ -420,6 +420,14 @@ Badges are visual indicators, not interactive controls. When a badge communicate
 
 Badges MUST NOT rely on color alone. When the badge carries important information such as unread notifications or an error state, you MUST provide text, a label, or an accessible name on the related control.
 
+<Visibility for="agents">
+  Accessibility rules for `bq-badge`. Keywords follow RFC 2119 and summarize the Accessibility section above.
+
+  - MUST: Expose the badge meaning (count or status) through the surrounding element or nearby text
+  - MUST: Provide text, a label, or an accessible name on the related control when the badge carries important information
+  - MUST NOT: Rely on color alone
+</Visibility>
+
 ### Keyboard interaction
 
 No keyboard interaction: the component is not focusable.

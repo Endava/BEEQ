@@ -1157,6 +1157,16 @@ As a developer, you are responsible for:
 - **Providing meaningful labels** — the text inside the default slot is read by screen readers as the option's accessible name. Options MUST include a visible text label and MUST NOT be icon-only.
 - **Keyboard navigation** — for a nested Select, the Select MUST handle `ArrowUp`, `ArrowDown`, `ArrowRight`, and `ArrowLeft`. You MUST NOT intercept these keys in your own handlers.
 
+<Visibility for="agents">
+  Accessibility rules for `bq-option`. Keywords follow RFC 2119 and summarize the Accessibility section above.
+
+  - MUST: Use `bq-option-list` for a standalone flat list or `bq-select` for select options
+  - MUST NOT: Put options in an arbitrary container
+  - MUST: Include a visible text label in the default slot
+  - MUST NOT: Make an option icon-only
+  - MUST NOT: Intercept `ArrowUp`, `ArrowDown`, `ArrowRight`, or `ArrowLeft` in your own handlers when options are in a nested `bq-select`
+</Visibility>
+
 ### Keyboard interaction
 
 Keys apply to the focused option. Disabled and hidden options are not focusable.

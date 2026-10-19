@@ -865,6 +865,15 @@ Always provide a `label` so assistive technologies can announce the action corre
 - **Disabled states** — `disabled` sets `aria-disabled="true"`, removes the control from the Tab order, and prevents activation. Native buttons also receive `disabled`. Disabled controls are not necessarily hidden from screen readers; you SHOULD explain nearby what is required to proceed.
 - **Correct semantics** — you MUST omit `href` for actions and set `href` for navigation. `appearance="link"` changes styling only; it does not turn a button into a link.
 
+<Visibility for="agents">
+  Accessibility rules for `bq-button`. Keywords follow RFC 2119 and summarize the Accessibility section above.
+
+  - MUST: Give every button a descriptive label
+  - MUST: Set `label` on icon-only buttons
+  - MUST: Omit `href` for actions and set `href` for navigation; `appearance="link"` changes styling only
+  - SHOULD: Explain nearby why a button is `disabled`, since disabled controls are not necessarily hidden from screen readers
+</Visibility>
+
 ### Keyboard interaction
 
 The component renders a native `button`, or a native `a` when `href` is set.

@@ -1020,6 +1020,14 @@ Use the outline variant with a prefix icon when you want context with a lighter 
 - You MUST NOT rely on color alone for category or state. The label MUST still make sense without the visual treatment.
 - You SHOULD make the effect of removing a tag obvious in the surrounding UI, especially in filters and selected-value patterns.
 
+<Visibility for="agents">
+  Accessibility rules for `bq-tag`. Keywords follow RFC 2119 and summarize the Accessibility section above.
+
+  - MUST: Keep text as the primary content; prefix icons MUST NOT replace the visible label
+  - MUST NOT: Rely on color alone for category or state
+  - SHOULD: Make the effect of removing a tag obvious in the surrounding UI
+</Visibility>
+
 ### Keyboard interaction
 
 A tag is focusable only when it is clickable (and not disabled) or removable (and not disabled). An informational tag renders a `div` and has no keyboard interaction. Disabled clickable tags and disabled removable tags are not focusable.

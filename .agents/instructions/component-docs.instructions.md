@@ -185,6 +185,7 @@ Document what the component does automatically and what the developer must do:
 - List what the developer is responsible for (e.g., providing meaningful `label`, wrapping interactive patterns)
 - Do **not** repeat API property descriptions already in the reference table
 - Write every requirement in this section with a capitalised [rule strength keyword](documentation.instructions.md#rule-strength-rfc-2119)
+- End the bullets with one `<Visibility for="agents">` block (right before `### Keyboard interaction`) that restates the `MUST` / `SHOULD` requirements as a compact list, one line per rule: `- MUST: <rule>`. The bullets are the source of truth; update the block whenever they change. Form controls use the block under their Rules table instead
 
 ### Keyboard interaction
 
@@ -214,7 +215,7 @@ Form controls (input, textarea, select, checkbox, radio, switch, slider, date pi
 
 - **Verified by** is `automated` (name the test file that asserts it), `assisted` (a tool or lint rule helps, name it) or `manual` (review or screen reader check).
 - Use `automated` only when a test in the repo asserts the behavior. When unsure, use `manual`.
-- Right after the table, add one `<Visibility for="agents">` block with the same rules as a compact list, one line per rule: `- MUST: <rule> (<verified by>)`. Rewrite "Do not X" rows as `- MUST NOT: X`. It renders only in the Markdown view (`.md`, `llms-full.txt`), so humans see the table once. The table is the source of truth; change the block whenever the table changes. Component pages without a Rules table get no block.
+- Right after the table, add one `<Visibility for="agents">` block with the same rules as a compact list, one line per rule: `- MUST: <rule> (<verified by>)`. Rewrite "Do not X" rows as `- MUST NOT: X`. It renders only in the Markdown view (`.md`, `llms-full.txt`), so humans see the table once. The table is the source of truth; change the block whenever the table changes. Component pages without a Rules table use the Accessibility block described in [Accessibility Section](#accessibility-section).
 
 ---
 

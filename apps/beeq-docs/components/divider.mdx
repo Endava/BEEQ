@@ -596,6 +596,14 @@ Use stroke attributes to match the divider to a specific visual treatment. Set `
 - You MUST NOT rely on a divider alone to communicate page structure. Use headings, landmarks, or list semantics when users need navigation or hierarchy.
 - You SHOULD keep vertical dividers out of the keyboard focus order unless nearby interactive content already provides a clear path.
 
+<Visibility for="agents">
+  Accessibility rules for `bq-divider`. Keywords follow RFC 2119 and summarize the Accessibility section above.
+
+  - MUST NOT: Rely on a divider alone to communicate page structure; use headings, landmarks, or list semantics
+  - SHOULD: Use slot content only for short labels that identify the following group
+  - SHOULD: Keep vertical dividers out of the keyboard focus order unless nearby interactive content provides a clear path
+</Visibility>
+
 ### Keyboard interaction
 
 No keyboard interaction: the component is not focusable.

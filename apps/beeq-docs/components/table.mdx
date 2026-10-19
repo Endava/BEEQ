@@ -1521,6 +1521,17 @@ BEEQ does not ship a pagination, sorting, filtering, or virtualization component
 - When a row selection changes UI state (such as opening a side panel), you MUST communicate that change programmatically, for example by managing focus or using a live region.
 - Built in: the `.selected` row styling uses `outline` rather than `border` so the selection indicator does not affect layout. There is no automatic ARIA state applied; you SHOULD add `aria-selected="true"` to the `<tr>` when the row is interactively selectable.
 
+<Visibility for="agents">
+  Accessibility rules for `bq-table`. Keywords follow RFC 2119 and summarize the Accessibility section above.
+
+  - MUST: Provide a `<caption>` or `aria-label` on the `<table>`
+  - MUST: Use `<th>` with `scope="col"` or `scope="row"`
+  - MUST NOT: Use a `<table>` for layout
+  - MUST: Give inline actions inside cells accessible labels, especially icon-only controls
+  - MUST: Communicate selection-driven UI changes programmatically, for example with focus management or a live region
+  - SHOULD: Add `aria-selected="true"` to the `<tr>` of a selectable row, since none is applied automatically
+</Visibility>
+
 ### Keyboard interaction
 
 No keyboard interaction: the component is not focusable. The table styles add no focusable elements; buttons, links, and dropdowns you place in cells follow their own keyboard behavior.

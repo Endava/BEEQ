@@ -51,7 +51,7 @@ Check the page against every rule of each instruction section below. Record each
 | Framework tabs | `CodeGroup` in code-examples (tab order, icons, `expandable`, per-framework syntax) |
 | CSS code tab | CSS Code Tab in code-examples |
 | Best practices | Best Practices in component-docs |
-| Accessibility | Accessibility in component-docs: keyboard table with one row per key; for form controls the Rules table (Verified by) followed by a `<Visibility for="agents">` block that mirrors it |
+| Accessibility | Accessibility in component-docs: keyboard table with one row per key; for form controls the Rules table (Verified by) followed by a `<Visibility for="agents">` block that mirrors it; other components get one `<Visibility for="agents">` block summarizing the Accessibility bullets, before the keyboard heading |
 | Rule strength | Rule strength in documentation: requirements in Accessibility, Keyboard, Rules and Invalid combinations use MUST / SHOULD / MUST NOT / SHOULD NOT / MAY; prose and Do/Don't cards stay lowercase |
 | Allowed values | Allowed Values in component-docs: every variant, size, type or placement dimension lists its values as text |
 | API reference | API Reference in component-docs, cross-checked against the source from step 2; Invalid combinations for form controls |

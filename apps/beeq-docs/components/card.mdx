@@ -1523,6 +1523,15 @@ Use the `border` property to control the card corner radius.
 - **Interactive content** — all interactive elements inside a card (buttons, links) MUST be reachable and operable with the keyboard alone.
 - **Color contrast** — the card background, text, and UI elements MUST keep sufficient contrast so content remains readable for all users.
 
+<Visibility for="agents">
+  Accessibility rules for `bq-card`. Keywords follow RFC 2119 and summarize the Accessibility section above.
+
+  - MUST: Provide descriptive `alt` text for images inside a card
+  - MUST: Keep a proper heading hierarchy inside the card
+  - MUST: Keep interactive elements inside the card operable with the keyboard alone
+  - MUST: Keep sufficient contrast for the background, text, and UI elements
+</Visibility>
+
 ### Keyboard interaction
 
 No keyboard interaction: the component is not focusable. Buttons and links you place inside a card follow their own keyboard behavior.

@@ -1108,6 +1108,16 @@ Use this variant to confirm irreversible actions with clear messaging and focuse
 - **Use precise action labels** — button text SHOULD describe the result of the action, especially in confirmations and destructive flows.
 - **Use `disable-backdrop` carefully** — with `disable-backdrop` the dialog opens as a non-modal `<dialog>`, so focus is not trapped and the surrounding page stays reachable. The surrounding page SHOULD NOT compete visually with the dialog content.
 
+<Visibility for="agents">
+  Accessibility rules for `bq-dialog`. Keywords follow RFC 2119 and summarize the Accessibility section above.
+
+  - MUST: Put a title in the `title` slot that describes the decision, task, or message; it becomes the accessible label
+  - MUST: Provide a clear cancel or close action in the footer when you hide the close button or disable outside dismissal
+  - SHOULD: Keep `Esc` enabled for dismissible dialogs
+  - SHOULD: Use action labels that describe the result, especially in confirmations and destructive flows
+  - SHOULD NOT: Let the page compete visually with the dialog when `disable-backdrop` is set; the dialog is then non-modal and focus is not trapped
+</Visibility>
+
 ### Keyboard interaction
 
 | Key | Context | Action |

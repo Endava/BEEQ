@@ -668,6 +668,16 @@ Use the suffix slot when the title area needs page-level actions such as edit or
 - The subtitle is additional context, not a replacement for the title. The main heading MUST be understandable on its own.
 - If you use icon-only controls in `back` or `suffix`, they MUST have an accessible label and not just a visual symbol.
 
+<Visibility for="agents">
+  Accessibility rules for `bq-page-title`. Keywords follow RFC 2119 and summarize the Accessibility section above.
+
+  - MUST: Use only one `h1` per page
+  - MUST NOT: Place `bq-page-title` inside panels, cards, drawers, or any context that renders another `h1`
+  - MUST: Put the primary page heading in the default slot, understandable on its own
+  - MUST: Use real buttons or links with accessible names in the `back` and `suffix` slots
+  - MUST: Set `label` on icon-only `bq-button` controls
+</Visibility>
+
 ### Keyboard interaction
 
 No keyboard interaction: the component is not focusable. Controls you place in the `back` and `suffix` slots keep their own keyboard behavior.

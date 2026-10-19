@@ -420,6 +420,15 @@ As a developer, you are responsible for:
 - **Placing only `bq-option` and `bq-option-group` elements inside the list** — you MUST NOT insert non-option elements, because that breaks the `role="listbox"` / `role="option"` relationship that assistive technologies expect.
 - **Managing focus** when the list is shown or hidden — `bq-option-list` does not manage focus automatically. If you are building a custom dropdown, you MUST move focus to the first option when the list opens and return it to the trigger when it closes.
 
+<Visibility for="agents">
+  Accessibility rules for `bq-option-list`. Keywords follow RFC 2119 and summarize the Accessibility section above.
+
+  - MUST: Place only `bq-option` and `bq-option-group` elements inside the list
+  - MUST NOT: Insert non-option elements
+  - MUST: Move focus to the first option when a custom dropdown opens the list, and return it to the trigger when it closes
+  - SHOULD: Set a specific `ariaLabel` when the default `Options` is ambiguous
+</Visibility>
+
 ### Keyboard interaction
 
 `bq-option-list` is not focusable and does not handle arrow keys itself. Each flat `bq-option` inside it is a native `<button>`, so keys apply to the focused option.

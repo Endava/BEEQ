@@ -589,6 +589,15 @@ The Phosphor library gives you a broad icon set. The example below shows only a 
 - For icon-only interactive patterns, you SHOULD add a `bq-tooltip` so keyboard and pointer users get a visible label. Tooltips are not reliably discoverable on touch devices, so you SHOULD use a visible text label where possible.
 - You SHOULD choose icons with widely recognized metaphors: a magnifying glass for search, a heart for favorites, a plus for add actions.
 
+<Visibility for="agents">
+  Accessibility rules for `bq-icon`. Keywords follow RFC 2119 and summarize the Accessibility section above.
+
+  - MUST: Set `label` on custom SVG icons loaded through `src`
+  - MUST: Pair ambiguous icons with visible text
+  - SHOULD: Add a `bq-tooltip` to icon-only interactive patterns, and a visible text label where possible since tooltips are unreliable on touch
+  - SHOULD: Pick icons with widely recognized metaphors
+</Visibility>
+
 ### Keyboard interaction
 
 No keyboard interaction: the component is not focusable. Make an icon interactive by wrapping it in a focusable element such as `bq-button`.

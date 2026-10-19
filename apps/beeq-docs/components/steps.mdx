@@ -1078,6 +1078,16 @@ The `bq-steps` container renders with `role="list"`, and each `bq-step-item` ren
 - **Icons and numbers** - you MUST mark decorative icons with `aria-hidden="true"`. When numeric prefixes are used, you MUST provide an `aria-label` such as `Step 1`.
 - **Descriptions** - you SHOULD use the `description` slot when users need more context about a step, an error, or the expected next action.
 
+<Visibility for="agents">
+  Accessibility rules for `bq-steps`. Keywords follow RFC 2119 and summarize the Accessibility section above.
+
+  - MUST: Set `status="current"` on exactly one step item
+  - MUST: Pair color with text, icon shape, or description changes
+  - MUST: Mark decorative icons with `aria-hidden="true"`
+  - MUST: Provide an `aria-label` such as `Step 1` when numeric prefixes are used
+  - SHOULD: Use the `description` slot for extra context, errors, or the next action
+</Visibility>
+
 ### Keyboard interaction
 
 Each `bq-step-item` renders a native `button`.

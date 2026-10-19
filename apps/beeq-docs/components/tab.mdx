@@ -766,6 +766,14 @@ import { BqTab, BqTabGroup } from "@beeq/vue";
 - You MUST add `role="tabpanel"` to each panel element.
 - When using icons without a visible label, you MUST add a descriptive `aria-label` to the `bq-tab` so screen readers can identify the tab.
 
+<Visibility for="agents">
+  Accessibility rules for `bq-tab`. Keywords follow RFC 2119 and summarize the Accessibility section above.
+
+  - MUST: Set `controls` on each `bq-tab` to the `id` of its panel
+  - MUST: Add `role="tabpanel"` and the matching `id` to each panel element
+  - MUST: Add an `aria-label` to the `bq-tab` when it uses an icon without a visible label
+</Visibility>
+
 ### Keyboard interaction
 
 | Key | Context | Action |

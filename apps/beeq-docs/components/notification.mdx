@@ -1043,6 +1043,15 @@ In framework apps, prefer a framework-owned portal or stack when you want the no
 - **Use considerate auto-dismiss timing**: if `auto-dismiss` is enabled, you MUST give users enough time to read the content before it disappears.
 - **Do not steal focus**: stacked notifications are non-modal, so you MUST NOT move focus unexpectedly away from the current task when showing one.
 
+<Visibility for="agents">
+  Accessibility rules for `bq-notification`. Keywords follow RFC 2119 and summarize the Accessibility section above.
+
+  - MUST: Make the icon and message text work together so the notification is understood without color
+  - MUST: Keep the close button, links, and footer actions reachable and operable with the keyboard
+  - MUST: Give users enough time to read the content when `auto-dismiss` is enabled
+  - MUST NOT: Move focus away from the current task when showing a notification
+</Visibility>
+
 ### Keyboard interaction
 
 The notification itself is not focusable. Only the elements inside it receive focus; the close button is a native `<button>` rendered by `bq-button`.

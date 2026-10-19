@@ -814,6 +814,15 @@ When the avatar displays an image, you SHOULD also pass `alt-text` to describe w
 
 If the avatar appears alongside other interactive elements such as names, links, or buttons, the surrounding pattern MUST be accessible as a whole — the avatar's built-in label describes the avatar itself, not the composite component around it.
 
+<Visibility for="agents">
+  Accessibility rules for `bq-avatar`. Keywords follow RFC 2119 and summarize the Accessibility section above.
+
+  - MUST: Provide a descriptive `label`; the component sets `role="img"` and `aria-label`
+  - MUST: Make the surrounding pattern accessible as a whole when the avatar sits next to names, links, or buttons
+  - SHOULD: Pass `alt-text` when the avatar shows an image
+  - SHOULD: Keep `initials` short so the fallback stays readable
+</Visibility>
+
 ### Keyboard interaction
 
 No keyboard interaction: the component is not focusable. If you place an avatar inside a link or button, that element provides the keyboard behavior.

@@ -454,6 +454,14 @@ Use the `icon` slot when you need a different spinner icon treatment. Make sure 
 - **Be careful with motion changes**: setting `animation={false}` can make an active process look stalled, so you SHOULD stop the animation only when another clear status treatment explains that work is still ongoing.
 - **Avoid competing announcements**: too many independent loading indicators can create noise for screen reader users and make it harder to understand which region is updating. You SHOULD NOT show several independent spinners at once.
 
+<Visibility for="agents">
+  Accessibility rules for `bq-spinner`. Keywords follow RFC 2119 and summarize the Accessibility section above.
+
+  - SHOULD: Add a short task-oriented visible label when the spinner is far from the triggering action or the wait may last several seconds
+  - SHOULD: Stop the animation (`animation={false}`) only when another clear status treatment shows that work is ongoing
+  - SHOULD NOT: Show several independent spinners at once
+</Visibility>
+
 ### Keyboard interaction
 
 No keyboard interaction: the component is not focusable.
