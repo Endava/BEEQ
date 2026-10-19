@@ -14,7 +14,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 Notifications inform people about significant events, status changes, or updates that need their awareness without requiring an immediate response. They appear at the edge of the interface, stack gracefully when multiple are present, and dismiss automatically or on demand.
 
 <Note>
-  You should use notifications for system-level messages and status updates. When feedback belongs directly to a field, control, or focused task area, you should keep it closer to that context instead.
+  Use notifications for system-level messages and status updates. When feedback belongs directly to a field, control, or focused task area, keep it closer to that context instead.
 </Note>
 
 ## When to use
@@ -105,15 +105,15 @@ Choose the notification treatment that matches the urgency of the message withou
     Start by deciding whether the message is informational, successful, cautionary, or error-related. That determines the right `type`.
   </Step>
   <Step title="Decide whether actions are needed">
-    You should add footer actions only when users genuinely need a next step such as retrying, reviewing, or navigating.
+    Add footer actions only when users genuinely need a next step such as retrying, reviewing, or navigating.
   </Step>
   <Step title="Choose placement">
-    You should use inline open notifications for contained layouts and `toast()` for stacked, portal-based notifications outside the document flow.
+    Use inline open notifications for contained layouts. Use `toast()` for stacked, portal-based notifications outside the document flow.
   </Step>
 </Steps>
 
 <Note>
-  If you use `auto-dismiss`, the timeout must give users enough time to read the content and should not remove important information too quickly.
+  If you use `auto-dismiss`, make sure the timeout gives users enough time to read the content and does not remove important information too quickly.
 </Note>
 
 ## Usage
@@ -676,7 +676,7 @@ Use the `icon` slot to replace the default type icon with a custom `bq-icon`.
 
 Use the `toast()` method to render notifications in a fixed-position portal that stacks multiple notifications vertically outside the normal document flow. The component creates and reuses a `.bq-notification-portal` element attached to `document.body`, and BEEQ global styles position that portal for you.
 
-In framework apps, you should use a framework-owned portal or stack when you want the notification lifecycle to stay declarative.
+In framework apps, prefer a framework-owned portal or stack when you want the notification lifecycle to stay declarative.
 
 <CodeLivePreview mode="shadow" code={`
   <style>
@@ -979,56 +979,56 @@ In framework apps, you should use a framework-owned portal or stack when you wan
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should position notifications at the edges of the screen so they do not block the main content.
+    Position notifications at the edges of the screen so they do not block the main content.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not position notifications in the center of the screen where they compete with the main task.
+    Do not position notifications in the center of the screen where they compete with the main task.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should keep messages concise and direct, and lead with the most important information.
+    Keep messages concise and direct, and lead with the most important information.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not use long descriptions in notifications because they reduce scanability.
+    Do not use long descriptions in notifications because they reduce scanability.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should use the correct `type` so the icon and visual treatment reinforce the message severity.
+    Use the correct `type` so the icon and visual treatment reinforce the message severity.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not rely on custom colors or ambiguous language to communicate urgency.
+    Do not rely on custom colors or ambiguous language to communicate urgency.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should provide a close button or a thoughtful auto-dismiss timeout so users can dismiss notifications predictably.
+    Provide a close button or a thoughtful auto-dismiss timeout so users can dismiss notifications predictably.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not use all-caps or unnecessary typographic emphasis in notification copy.
+    Do not use all-caps or unnecessary typographic emphasis in notification copy.
   </Card>
 </CardGroup>
 

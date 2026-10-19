@@ -87,7 +87,7 @@ A dropdown is composed of a trigger and a floating panel. The trigger can be a b
 
 ### Chevron direction
 
-Chevrons on the trigger must reflect the current state of the panel. Use a downward-pointing chevron when the panel is closed, and an upward-pointing chevron when it is open. Reversing this communicates the wrong state to users and erodes trust in the interface.
+Chevrons on the trigger must reflect the current state of the panel. Use a downward-pointing chevron when the panel is closed, and switch to an upward-pointing chevron when it is open. Reversing this communicates the wrong state to users and erodes trust in the interface.
 
 <Warning>
   `bq-dropdown` does not manage chevron rotation automatically. Listen to the `bqOpen` event and update the icon name (`caret-up` / `caret-down`) or apply a CSS rotation on your trigger accordingly.
@@ -95,7 +95,7 @@ Chevrons on the trigger must reflect the current state of the panel. Use a downw
 
 ### Data ordering
 
-You should arrange options alphabetically or by a meaningful semantic order, such as frequency of use or logical progression. A randomly ordered list forces users to scan every item before finding what they need.
+Arrange options alphabetically or by a meaningful semantic order, such as frequency of use or logical progression. A randomly ordered list forces users to scan every item before finding what they need.
 
 ## Usage
 
@@ -1307,56 +1307,56 @@ Use `same-width` when the panel should match the trigger width. Use `panel-heigh
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    You should use a `bq-button` as the trigger. It gives users a clear, clickable target and signals that interaction is available.
+    Use a `bq-button` as the trigger. It gives users a clear, clickable target and signals that interaction is available.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    You should not use a link-style trigger to open the dropdown panel. A dropdown opens a floating surface, so its trigger must not look like direct page navigation.
+    Use a link-style trigger to open the dropdown panel. A dropdown opens a floating surface; it should not look like direct page navigation.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    You must use a downward chevron when the panel is closed and an upward chevron when it is open. The chevron must match the actual state.
+    Use a downward chevron when the panel is closed and an upward chevron when it is open. The chevron should always match the actual state.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    You must not use the same chevron direction regardless of state. Users rely on the icon direction to understand whether the panel is open or closed.
+    Use the same chevron direction regardless of state. Users rely on the icon direction to understand whether the panel is open or closed.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    You should use short, clear labels for both the trigger and each option so users can quickly understand the context and available choices.
+    Use short, clear labels for both the trigger and each option so users can quickly understand the context and available choices.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    You should not use long, vague, or technical labels. They slow users down and increase the risk of selecting the wrong option.
+    Use long, vague, or technical labels. They slow users down and increase the risk of selecting the wrong option.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    You should arrange options alphabetically or in a meaningful semantic order so users can find what they need without scanning every item.
+    Arrange options alphabetically or in a meaningful semantic order so users can find what they need without scanning every item.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    You should not display a large, unordered list without structure. If users need search or filtering to navigate the options, consider a more appropriate pattern.
+    Display a large, unordered list without structure. If users need search or filtering to navigate the options, consider a more appropriate pattern.
   </Card>
 </CardGroup>
 

@@ -87,7 +87,7 @@ Cards are flexible containers, so their anatomy can vary depending on the conten
     imageLightSrc="/components/images/card/card-alignment-horizontal-light.svg"
     imageDarkSrc="/components/images/card/card-alignment-horizontal-dark.svg"
   >
-    Cards should sit side by side, flowing left to right. This is the default layout for card groups and works best when each card has a similar amount of content.
+    Arrange cards side by side, flowing left to right. This is the default layout for card groups and works best when each card has a similar amount of content.
   </CardTile>
 
   <CardTile
@@ -95,7 +95,7 @@ Cards are flexible containers, so their anatomy can vary depending on the conten
     imageLightSrc="/components/images/card/card-alignment-vertical-light.svg"
     imageDarkSrc="/components/images/card/card-alignment-vertical-dark.svg"
   >
-    When horizontal space is limited — narrow viewports or sidebars — the group should stack vertically. Card widths should stay consistent within the group so users can scan without re-learning the layout on each item.
+    When horizontal space is limited — narrow viewports or sidebars — the group should stack vertically. Keep card widths consistent within the group so users can scan without re-learning the layout on each item.
   </CardTile>
 </CardGroup>
 
@@ -111,16 +111,16 @@ Establish a clear hierarchy inside each card by following this order:
     Secondary-weight or muted text for context — a description, timestamp, or label.
   </Step>
   <Step title="Action">
-    A brand-colored link or button at the bottom. A card should have one primary action.
+    A brand-colored link or button at the bottom. Keep it to one primary action per card.
   </Step>
 </Steps>
 
-A card should not use more than two distinct text styles, to keep the layout readable.
+Avoid using more than two distinct text styles in a single card to keep the layout readable.
 
 ### States
 
 <Note>
-  `bq-card` has no built-in hover, active, or focus visual feedback — it is a static container by design. Interactive children such as buttons and links carry their own state styles. When a whole card represents a navigable destination, you should wrap it in a semantic `<a>` element rather than rely on a click handler on the card surface (see [Accessibility](#accessibility) for details).
+  `bq-card` has no built-in hover, active, or focus visual feedback — it is a static container by design. Interactive children such as buttons and links carry their own state styles. When a whole card represents a navigable destination, wrap it in a semantic `<a>` element rather than relying on a click handler on the card surface (see [Accessibility](#accessibility) for details).
 </Note>
 
 ## Usage
@@ -1186,7 +1186,7 @@ A compact horizontal card using `type="minimal"` that removes built-in padding, 
 | **minimal** | None | When you need full control over inner layout, such as a branded color block flush with the card edge |
 
 <Tip>
-  You should use `type="minimal"` only when your design requires content to bleed to the card edge. For everything else, `default` keeps spacing consistent automatically.
+  Reach for `type="minimal"` only when your design requires content to bleed to the card edge. For everything else, `default` keeps spacing consistent automatically.
 </Tip>
 
 <CodeLivePreview mode="shadow" code={`
@@ -1456,7 +1456,7 @@ Use the `border` property to control the card corner radius.
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should keep cards within the same group visually consistent — same size, same internal layout — so users can scan and compare them quickly.
+    Keep cards within the same group visually consistent — same size, same internal layout — so users can scan and compare them quickly.
   </Card>
 
   <Card>
@@ -1464,7 +1464,7 @@ Use the `border` property to control the card corner radius.
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not mix unrelated card layouts in the same group when users are expected to compare items — inconsistency makes scanning harder.
+    Mix unrelated card layouts in the same group when users are expected to compare items — inconsistency makes scanning harder.
   </Card>
 
   <Card>
@@ -1472,7 +1472,7 @@ Use the `border` property to control the card corner radius.
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should limit each card to one primary topic or action. If a card is trying to do too much, split the content or using a dedicated page.
+    Limit each card to one primary topic or action. If a card is trying to do too much, consider splitting the content or using a dedicated page.
   </Card>
 
   <Card>
@@ -1480,7 +1480,7 @@ Use the `border` property to control the card corner radius.
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not overload a card with long descriptions or multiple unrelated actions — if the content needs more room, a dedicated page or panel is a better fit.
+    Overload a card with long descriptions or multiple unrelated actions — if the content needs more room, a dedicated page or panel is a better fit.
   </Card>
 
   <Card>
@@ -1488,7 +1488,7 @@ Use the `border` property to control the card corner radius.
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should lead with the most important information. Place the primary value — a number, a name, or a status — at the top so users see it at a glance before reading further.
+    Lead with the most important information. Place the primary value — a number, a name, or a status — at the top so users see it at a glance before reading further.
   </Card>
 
   <Card>
@@ -1496,7 +1496,7 @@ Use the `border` property to control the card corner radius.
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not nest cards inside other cards. It creates visual confusion and makes hierarchy hard to follow — use a different layout pattern instead.
+    Nest cards inside other cards. It creates visual confusion and makes hierarchy hard to follow — use a different layout pattern instead.
   </Card>
 
   <Card>
@@ -1504,7 +1504,7 @@ Use the `border` property to control the card corner radius.
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should choose icons that match the card's content — a wallet for finance, a chart for analytics. Users should be able to identify the card's purpose from the icon at a glance.
+    Choose icons that match the card's content — a wallet for finance, a chart for analytics. Users should be able to identify the card's purpose from the icon at a glance.
   </Card>
 
   <Card>
@@ -1512,7 +1512,7 @@ Use the `border` property to control the card corner radius.
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not use icons as pure decoration. An icon that has no connection to the card's content adds visual noise without adding meaning.
+    Use icons as pure decoration. An icon that has no connection to the card's content adds visual noise without adding meaning.
   </Card>
 </CardGroup>
 

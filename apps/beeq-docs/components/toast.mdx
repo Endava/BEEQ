@@ -73,7 +73,7 @@ Choose [`bq-alert`](/components/alert) for a message tied to a page or section t
   <img className="hidden dark:block" src="/components/images/toast/toast-anatomy-dark.svg" alt="BEEQ Toast component anatomy" />
 </Frame>
 
-Each toast contains a compact message and, by default, a semantic icon that helps users understand the status instantly. A toast should always include a clear label, and that label should be paired with the icon that best matches the message meaning.
+Each toast contains a compact message and, by default, a semantic icon that helps users understand the status instantly. Toasts should always include a clear label, and that label should be paired with the icon that best matches the message meaning.
 
 | Part | Element | Description |
 |---|---|---|
@@ -82,7 +82,7 @@ Each toast contains a compact message and, by default, a semantic icon that help
 | **3** | Label | The short message describing what happened or what is happening |
 
 <Note>
-  Toasts use a standard size intended to work across most interfaces. You should keep the default sizing and spacing so messages stay compact, readable, and visually consistent.
+  Toasts use a standard size intended to work across most interfaces. Prefer the default sizing and spacing so messages stay compact, readable, and visually consistent.
 </Note>
 
 ## Design guidelines
@@ -91,13 +91,13 @@ Use toast messages carefully so they stay brief, noticeable, and easy to underst
 
 <Steps>
   <Step title="Be concise">
-    The message should be short and direct, limited to one or two brief sentences.
+    Keep the message short and direct. Limit the content to one or two brief sentences.
   </Step>
   <Step title="Provide context">
-    The toast should include enough context for users to understand why the toast appeared and what happened.
+    Include enough context for users to understand why the toast appeared and what happened.
   </Step>
   <Step title="Use sentence case">
-    You should write toast text in sentence case instead of using capitalization to force emphasis.
+    Write toast text in sentence case instead of using capitalization to force emphasis.
   </Step>
 </Steps>
 
@@ -109,7 +109,7 @@ Use toast messages carefully so they stay brief, noticeable, and easy to underst
 
 ### Default
 
-Use the built-in `type` values to communicate the nature of the message quickly. You should keep the text concise and let the icon and color carry the status cue. `info` is the default type, while `success`, `alert`, `error`, and `loading` cover the most common toast states.
+Use the built-in `type` values to communicate the nature of the message quickly. Keep the text concise and let the icon and color carry the status cue. `info` is the default type, while `success`, `alert`, `error`, and `loading` cover the most common toast states.
 
 <CodeLivePreview mode="shadow" code={`
   <style>
@@ -488,56 +488,56 @@ Use a dedicated toast container when you want the stacking behavior to be explic
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should keep toast copy short, direct, and written in sentence case.
+    Keep toast copy short, direct, and written in sentence case.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not use a toast for long explanations, multi-step guidance, or anything users may need to revisit later.
+    Don't use a toast for long explanations, multi-step guidance, or anything users may need to revisit later.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should use the correct semantic `type` so icon and color reinforce the meaning immediately.
+    Use the correct semantic `type` so icon and color reinforce the meaning immediately.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not flood the interface with many simultaneous toasts. If several events occur, queue or stack them in a controlled order.
+    Don't flood the interface with many simultaneous toasts. If several events occur, queue or stack them in a controlled order.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should place viewport toasts where they do not cover bottom navigation, floating actions, or other critical controls.
+    Place viewport toasts where they do not cover bottom navigation, floating actions, or other critical controls.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    must not rely on a toast alone for critical errors or irreversible outcomes that require acknowledgment.
+    Don't rely on a toast alone for critical errors or irreversible outcomes that require acknowledgment.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should set a long enough `time` for users who may need more seconds to read the message, especially if it contains an error explanation.
+    Set a long enough `time` for users who may need more seconds to read the message, especially if it contains an error explanation.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    must not auto-dismiss a toast that users may need to act on or reference. Use a notification or dialog for persistent messages instead.
+    Do not auto-dismiss a toast that users may need to act on or reference. Use a notification or dialog for persistent messages instead.
   </Card>
 </CardGroup>
 

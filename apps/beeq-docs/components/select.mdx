@@ -104,7 +104,7 @@ Use nested options when people need to select a category, its related choices, o
 - Nested multi-select always renders checkboxes. You do not need `enable-checkboxes`.
 - Selecting a parent selects its selectable descendants. Selecting a child also selects its selectable ancestors.
 - A parent becomes indeterminate while only some of its selectable descendants are selected. Disabled and hidden descendants are not changed by a cascade.
-- You must use a unique `value` for every option in the tree. Duplicate values are reported in the browser console because they make the value and event payload ambiguous.
+- Use a unique `value` for every option in the tree. Duplicate values are reported in the browser console because they make the value and event payload ambiguous.
 
 In the input, nested selections render one tag per selected top-level parent. A partial selection adds the descendant count, such as `Frontend (2)`; a fully selected branch keeps the parent label without a count.
 
@@ -116,14 +116,14 @@ In the input, nested selections render one tag per selected top-level parent. A 
     imageLightSrc="/components/images/select/select-error-light.svg"
     imageDarkSrc="/components/images/select/select-error-dark.svg"
   >
-    Set `validation-status="error"` and populate the `helper-text` slot with the reason. You must pair a visual indicator with a text description so color-blind users are not excluded.
+    Set `validation-status="error"` and populate the `helper-text` slot with the reason. Always pair a visual indicator with a text description so color-blind users are not excluded.
   </CardTile>
   <CardTile
     title="Success state"
     imageLightSrc="/components/images/select/select-success-light.svg"
     imageDarkSrc="/components/images/select/select-success-dark.svg"
   >
-    Set `validation-status="success"` to confirm a valid selection. You should use it sparingly, only when confirmation meaningfully reduces user uncertainty.
+    Set `validation-status="success"` to confirm a valid selection. Use sparingly — only when confirmation meaningfully reduces user uncertainty.
   </CardTile>
 </CardGroup>
 
@@ -1311,7 +1311,7 @@ The component keeps the parent tag as `Frontend` and shows the `all-selected-lab
 ```
 
 <Warning>
-  `selectionTree` is event output, not component input. You must not pass it back into `value`.
+  `selectionTree` is event output, not component input. Do not pass it back into `value`.
 </Warning>
 
 <Tip>
@@ -1328,7 +1328,7 @@ Listen for `bqSelect` when the selection changes. The event gives you two views 
 | Send selected categories and children to a hierarchy-aware API | `event.detail.selectionTree` | This is a selected-only tree, built from the current `value`. |
 
 <Note>
-  `selectionTree` exists only for nested multi-select. It is `undefined` for flat and single Selects. You must treat it as read-only output and keep using `value` to control the component.
+  `selectionTree` exists only for nested multi-select. It is `undefined` for flat and single Selects. Treat it as read-only output; keep using `value` to control the component.
 </Note>
 
 ```javascript
@@ -2376,7 +2376,7 @@ Adjust the panel placement to suit your layout. Use the `placement` attribute to
 
 ### Visually hidden label
 
-You must keep an accessible label when the layout does not need one visibly. Use visually hidden text in the `label` slot, for example in a toolbar or compact table.
+Keep an accessible label when the layout does not need one visibly. Use visually hidden text in the `label` slot, for example in a toolbar or compact table.
 
 <CodeLivePreview mode="shadow" code={`
   <style>
@@ -2619,7 +2619,7 @@ Set `disable-search` to keep the option panel usable while blocking any typing i
 Keyboard focus alone keeps the panel closed. Press ArrowDown or ArrowUp to open it and move to an option.
 
 <Note>
-  The `readonly` attribute currently has the same effect and is now **deprecated**. You should use `disable-search` instead. In a future major release, `readonly` will prevent changing the selected value rather than disabling filtering.
+  The `readonly` attribute currently has the same effect and is now **deprecated** — use `disable-search` instead. In a future major release, `readonly` will prevent changing the selected value rather than disabling filtering.
 </Note>
 
 <CodeLivePreview mode="shadow" code={`
@@ -2720,7 +2720,7 @@ Keyboard focus alone keeps the panel closed. Press ArrowDown or ArrowUp to open 
 
 ### Without clear button
 
-Set `disable-clear` to hide the clear button and prevent one-click deselection. You should use this when selecting a value is required and removing it should not be trivially easy.
+Set `disable-clear` to hide the clear button and prevent one-click deselection. Use this when selecting a value is required and removing it should not be trivially easy.
 
 <CodeLivePreview mode="shadow" code={`
   <style>
@@ -2830,14 +2830,14 @@ In a searchable single-select, deleting all text or leaving only whitespace imme
 
 For a controlled Select, handle `bqClear` to clear the selected value in your application or form state and reset the async query. Use the same handler for the clear button and text deletion. To show all options without removing a single selection, open the panel while keeping its selected label visible. Use `reset(select.value)` to cancel a search draft and restore that label.
 
-For async results, you should keep selected options in the list when you need their labels or tags to remain visible. You should ignore stale responses in your request handler so an older search does not replace newer results.
+For async results, keep selected options in the list when you need their labels or tags to remain visible. Ignore stale responses in your request handler so an older search does not replace newer results.
 
 `bqFocus` and `bqBlur` track focus entering and leaving the whole Select. Moving between the input, options, and internal controls does not emit these events. Use `bqBlur` for field-level cleanup and call `reset(select.value)` to clear the search text without clearing the selection or remounting the control.
 
 These events no longer follow input-only focus changes. If your handler needs to respond when the native input itself gains or loses focus, listen to that input's native `focus` or `blur` event instead.
 
 <Tip>
-  You may set `debounce-time` to throttle how often `bqInput` fires while the user types. `300` ms is a good default for async requests.
+  Set `debounce-time` to throttle how often `bqInput` fires while the user types — `300` ms is a good default for async requests.
 </Tip>
 
 <CodeLivePreview mode="shadow" code={String.raw`
@@ -3567,7 +3567,7 @@ These events no longer follow input-only focus changes. If your handler needs to
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    You must populate the `label` slot so the select has an accessible name visible to all users, not just those relying on assistive technology.
+    Always populate the `label` slot so the select has an accessible name visible to all users, not just those relying on assistive technology.
   </Card>
 
   <Card>
@@ -3575,7 +3575,7 @@ These events no longer follow input-only focus changes. If your handler needs to
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    You must not leave the `label` slot empty and rely solely on `placeholder` text. Placeholder disappears once a value is selected and is not announced reliably by screen readers.
+    Leave the `label` slot empty and rely solely on `placeholder` text — placeholder disappears once a value is selected and is not announced reliably by screen readers.
   </Card>
 
   <Card>
@@ -3583,7 +3583,7 @@ These events no longer follow input-only focus changes. If your handler needs to
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    You should write a clear, neutral placeholder such as "Choose a country" so users understand the field is interactive and what kind of value they are selecting.
+    Write a clear, neutral placeholder such as "Choose a country" so users understand the field is interactive and what kind of value they are selecting.
   </Card>
 
   <Card>
@@ -3591,7 +3591,7 @@ These events no longer follow input-only focus changes. If your handler needs to
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    You must not use the placeholder as a label substitute, and you should not write a directive like "Select" without context. This gives users no information about what the field is for.
+    Use the placeholder as a label substitute or write a directive like "Select" without context — this gives users no information about what the field is for.
   </Card>
 
   <Card>
@@ -3599,7 +3599,7 @@ These events no longer follow input-only focus changes. If your handler needs to
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    You should use `validation-status` and the `helper-text` slot together when the field is required or has a validation error, so users understand exactly what is wrong and how to fix it.
+    Use `validation-status` and the `helper-text` slot together when the field is required or has a validation error, so users understand exactly what is wrong and how to fix it.
   </Card>
 
   <Card>
@@ -3607,7 +3607,7 @@ These events no longer follow input-only focus changes. If your handler needs to
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    You must not apply `validation-status="error"` without a helper text message. A red border alone does not tell users what is wrong or how to correct it.
+    Apply `validation-status="error"` without a helper text message — a red border alone does not tell users what is wrong or how to correct it.
   </Card>
 
   <Card>
@@ -3615,7 +3615,7 @@ These events no longer follow input-only focus changes. If your handler needs to
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    You should provide meaningful option labels that describe the value clearly — e.g., "Europe" instead of "EU", "Pro plan ($49/mo)" instead of "pro".
+    Provide meaningful option labels that describe the value clearly — e.g., "Europe" instead of "EU", "Pro plan ($49/mo)" instead of "pro".
   </Card>
 
   <Card>
@@ -3623,7 +3623,7 @@ These events no longer follow input-only focus changes. If your handler needs to
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    You should not use internal codes, abbreviations, or IDs as the visible option labels. What is meaningful in your database is not necessarily meaningful to users.
+    Use internal codes, abbreviations, or IDs as the visible option labels — what is meaningful in your database is not necessarily meaningful to users.
   </Card>
 </CardGroup>
 

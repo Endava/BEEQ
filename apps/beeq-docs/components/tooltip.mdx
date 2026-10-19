@@ -13,7 +13,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 Tooltips provide supplemental context about an element without cluttering the interface. They appear on hover or click and disappear automatically, making them ideal for short clarifying text like control names, definitions, or brief instructions.
 
 <Note>
-  Tooltips are for **non-essential** information only. You must not put critical instructions, form errors, or content that must be read to complete a task inside a tooltip.
+  Tooltips are for **non-essential** information only. Never put critical instructions, form errors, or content that must be read to complete a task inside a tooltip.
 </Note>
 
 ## When to use
@@ -61,11 +61,11 @@ Choose [`bq-dialog`](/components/dialog) instead of `bq-tooltip` when the conten
 
 ## Design guidelines
 
-Use tooltips for short contextual help attached to a specific control or value. Tooltip content should be brief, essential instructions must not live only inside a tooltip, and the trigger should remain understandable without the tooltip.
+Use tooltips for short contextual help attached to a specific control or value. Keep content brief, avoid placing essential instructions only inside a tooltip, and make sure the trigger remains understandable without the tooltip.
 
 Open tooltips follow their trigger automatically when it moves, including during CSS animations or changes to a parent layout. You do not need to call a repositioning method.
 
-Movement tracking runs while the tooltip is open. On pages with many tooltips, you should keep only the ones you need open: use `hide()` or set `visible` to `false` to stop tracking. For an `always-visible` tooltip, remove that setting first. Hiding an open tooltip with CSS alone does not stop its tracking.
+Movement tracking runs while the tooltip is open. On pages with many tooltips, keep only the ones you need open: use `hide()` or set `visible` to `false` to stop tracking. For an `always-visible` tooltip, remove that setting first. Hiding an open tooltip with CSS alone does not stop its tracking.
 
 ## Usage
 
@@ -135,8 +135,8 @@ By default the tooltip appears **above** the trigger on hover. Tooltip content g
 </CodeLivePreview>
 
 <Tip>
-  You may use any element as the trigger, but for accessibility reasons it should be **something that can receive keyboard focus** (e.g., a button, link, or input).
-  If you attach a tooltip to a non-focusable element like an icon, you should set `display-on="click"` so touch users can access the content. The trigger wrapper is not focusable, so keyboard users still need a focusable trigger such as a button.
+  You can **use any element as the trigger, but for accessibility reasons, it should be something that can receive keyboard focus** (e.g., a button, link, or input).
+  If you need to attach a tooltip to a non-focusable element like an icon, set `display-on="click"` so touch users can access the content. The trigger wrapper is not focusable, so keyboard users still need a focusable trigger such as a button.
 </Tip>
 
 ### Placement
@@ -1192,42 +1192,42 @@ The `distance` prop controls the gap in pixels between the trigger and the toolt
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Tooltip content should be short and scannable, one sentence at most. If you need more space, consider a popover or inline helper text instead.
+    Keep tooltip content short and scannable — one sentence at most. If you need more space, consider a popover or inline helper text instead.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    You should not use tooltips for lengthy explanations. You must not put interactive elements like links or buttons inside a tooltip, because keyboard and touch users can't reach them.
+    Avoid tooltips for lengthy explanations. Don't put interactive elements like links or buttons inside a tooltip, because keyboard and touch users can't reach them.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    You should use tooltips to label icon-only controls where the action is not immediately obvious from the icon alone.
+    Use tooltips to label icon-only controls where the action is not immediately obvious from the icon alone.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    You should not restate visible UI text in a tooltip. It provides no new value and adds noise for screen reader users.
+    Don't restate visible UI text in a tooltip — it provides no new value and adds noise for screen reader users.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    You should keep the tooltip positioned in view. Prefer `top` for most cases; switch to `bottom`, `left`, or `right` when the tooltip would be clipped by the viewport edge.
+    Keep the tooltip positioned in view. Prefer `top` for most cases; switch to `bottom`, `left`, or `right` when the tooltip would be clipped by the viewport edge.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    You should not place the tooltip inside a parent that is both a scroll container and a containing block for positioned elements. An ancestor with `overflow: hidden` or `overflow: auto` that also establishes a containing block will clip the panel regardless of the positioning strategy used.
+    Don't place the tooltip inside a parent that is both a scroll container and a containing block for positioned elements. An ancestor with `overflow: hidden` or `overflow: auto` that also establishes a containing block will clip the panel regardless of the positioning strategy used.
   </Card>
 
   <Card>
@@ -1235,7 +1235,7 @@ The `distance` prop controls the gap in pixels between the trigger and the toolt
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    The trigger label or icon must stay understandable without the tooltip so the interface still works on touch devices and assistive technologies.
+    Keep the trigger label or icon understandable without the tooltip so the interface still works on touch devices and assistive technologies.
   </Card>
 
   <Card>
@@ -1243,7 +1243,7 @@ The `distance` prop controls the gap in pixels between the trigger and the toolt
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    You must not put required instructions only in a tooltip. Move essential guidance into visible helper text or the main content.
+    Do not put required instructions only in a tooltip. Move essential guidance into visible helper text or the main content.
   </Card>
 </CardGroup>
 

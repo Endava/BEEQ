@@ -14,7 +14,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 Date pickers combine a calendar with locale-ordered day, month, and year segments. They reduce ambiguity, prevent formatting mistakes, and support single dates, ranges, and multiple dates.
 
 <Note>
-  should use a date picker when the interface benefits from visual date selection or date validation. may use a simpler input or select when users need to enter very flexible freeform dates or choose from a tiny, predictable set of options.
+  Use a date picker when the interface benefits from visual date selection or date validation. If users need to enter very flexible freeform dates or work with a tiny, predictable set of choices, a simpler input or select may be more appropriate.
 </Note>
 
 ## When to use
@@ -80,22 +80,22 @@ The date picker combines a labeled field with a calendar surface that helps peop
 
 <Steps>
   <Step title="Choose the simplest selection mode">
-    should start with `single` when one date is enough. should use `range` only when people need both a start and end date, and should use `multi` only for truly non-consecutive selections.
+    Start with `single` when one date is enough. Use `range` only when people need both a start and end date, and use `multi` only for truly non-consecutive selections.
   </Step>
   <Step title="Keep labels and format expectations clear">
-    must write labels that describe the task directly, such as "Arrival date" or "Travel dates". must make sure the displayed format and first day of week match the product locale.
+    Write labels that describe the task directly, such as "Arrival date" or "Travel dates". Make sure the displayed format and first day of week match the product locale.
   </Step>
   <Step title="Use calendar rules to prevent bad choices">
-    should apply `min`, `max`, `isDateDisallowed`, and validation states when business rules are known, so people are guided before they submit the form.
+    Apply `min`, `max`, `isDateDisallowed`, and validation states when business rules are known, so people are guided before they submit the form.
   </Step>
 </Steps>
 
 <Note>
-  should show two months at once for `range` and most `multi` scenarios, because it makes comparison easier and reduces selection errors.
+  For `range` and most `multi` scenarios, showing two months at once usually makes comparison easier and reduces selection errors.
 </Note>
 
 <Tip>
-  should keep the calendar trigger visible so date selection is recognisable before people interact with the field.
+  Use the calendar trigger to make date selection recognisable before people interact with the field.
 </Tip>
 
 ## Usage
@@ -251,7 +251,7 @@ Use `type="range"` when users need a start and end date. Set `months="2"` so bot
 </CodeLivePreview>
 
 <Warning>
-  `months` supports one or two panels. should use two months to make range comparison easier. should use `months-per-view="months"` when each navigation action should advance both visible panels.
+  `months` supports one or two panels. Two months make range comparison easier; use `months-per-view="months"` when each navigation action should advance both visible panels.
 </Warning>
 
 ### Multiple dates
@@ -1126,7 +1126,7 @@ By default, the calendar shows only the days of the displayed month. Enable `sho
 </CodeLivePreview>
 
 <Tip>
-  should not set `show-outside-days` for `range` and `multi` unless the added density clearly improves the task. It can make complex selection states harder to read.
+  Avoid `show-outside-days` for `range` and `multi` unless the added density clearly improves the task. It can make complex selection states harder to read.
 </Tip>
 
 ### Disallowed dates
@@ -1379,7 +1379,7 @@ Use numeric `formatOptions` to set the segment order and separators. The compone
 
 ### Form integration
 
-`bq-date-picker` submits its current date value with the form. must set `required` and should set `form-validation-message` when the date is mandatory; the custom message also applies to invalid typed values and out-of-bounds dates.
+`bq-date-picker` submits its current date value with the form. Use `required` and `form-validation-message` when the date is mandatory; the custom message also applies to invalid typed values and out-of-bounds dates.
 
 <Warning>
   A non-empty incomplete segment draft becomes invalid when focus leaves the segmented field, even when the picker is optional. The draft stays visible and the last committed `value` is preserved, but native form validation blocks submission until the user completes a valid date, chooses a valid calendar date, or clears the field.
@@ -1592,56 +1592,56 @@ When focus leaves the segmented field, complete dates outside `min` or `max` are
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should use clear, task-specific labels like "Arrival date" or "Travel dates" so users know exactly what they are selecting.
+    Use clear, task-specific labels like "Arrival date" or "Travel dates" so users know exactly what they are selecting.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    must not overcomplicate the field label or ask for extra date information that the task does not need.
+    Do not overcomplicate the field label or ask for extra date information that the task does not need.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should use a single combined input when possible. It keeps the interaction simpler and easier to scan.
+    Use a single combined input when possible. It keeps the interaction simpler and easier to scan.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    must not split day, month, and year into separate inputs unless the use case truly requires it.
+    Do not split day, month, and year into separate inputs unless the use case truly requires it.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should disable unavailable dates when the business rules are known, instead of letting users submit invalid choices.
+    Disable unavailable dates when the business rules are known, instead of letting users submit invalid choices.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    must not rely on placeholder text as the only instruction or explanation for the field.
+    Do not rely on placeholder text as the only instruction or explanation for the field.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should show two months for range selection when comparison matters, so people can understand the interval more easily.
+    Show two months for range selection when comparison matters, so people can understand the interval more easily.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not use a heavier multi-date or range pattern when one simple date field would solve the task.
+    Do not use a heavier multi-date or range pattern when one simple date field would solve the task.
   </Card>
 </CardGroup>
 

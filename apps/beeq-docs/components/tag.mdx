@@ -13,7 +13,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 Tags are concise elements that let users input information, make selections, filter content, or initiate actions within a user interface. Use them to label items with keywords or categories so content is easier to find, organize, and manage.
 
 <Note>
-  Tags can be purely informational, clickable, or removable. Icons can support the meaning of a tag, but an icon must not replace the text label as the only content.
+  Tags can be purely informational, clickable, or removable. Icons can support the meaning of a tag, but they cannot replace the text label as the only content.
 </Note>
 
 ## When to use
@@ -49,7 +49,7 @@ The design guidance highlights several common ways tags can appear in an interfa
 
 <CardGroup cols={2}>
   <Card title="Default">
-    The default tag must include a text label. Labels should be succinct and clearly communicate their purpose.
+    The default tag includes a text label, which is mandatory. Labels should be succinct and clearly communicate their purpose.
   </Card>
   <Card title="Default with icon">
     An optional icon may be positioned to the left of the tag label to provide extra context or emphasis.
@@ -66,7 +66,7 @@ The design guidance highlights several common ways tags can appear in an interfa
 </CardGroup>
 
 <Note>
-  Tags serve four functional roles: **input** (user-entered keywords or values), **suggestion** (pre-defined hints offered based on context), **filter** (applied search or browse criteria shown as chips), and **assist** (read-only context chips alongside content). You should choose the visual pattern — informational, clickable, or removable — to match the functional role.
+  Tags serve four functional roles: **input** (user-entered keywords or values), **suggestion** (pre-defined hints offered based on context), **filter** (applied search or browse criteria shown as chips), and **assist** (read-only context chips alongside content). Choose the visual pattern — informational, clickable, or removable — to match the functional role.
 </Note>
 
 ## Anatomy
@@ -91,18 +91,18 @@ Use tags with restraint so they help users scan and act without turning into vis
 
 <Steps>
   <Step title="Choose the role">
-    You should start by deciding whether the tag is informational, clickable, or removable. Each behavior changes what users expect when they interact with it.
+    Start by deciding whether the tag is informational, clickable, or removable. Each behavior changes what users expect when they interact with it.
   </Step>
   <Step title="Choose the size">
-    You should use `medium` tags when the label needs more prominence, `small` for secondary metadata, and `xsmall` only when space is tight and the text can stay readable.
+    Use `medium` tags when the label needs more prominence, `small` for secondary metadata, and `xsmall` only when space is tight and the text can stay readable.
   </Step>
   <Step title="Choose the emphasis">
-    You should use neutral tags by default and add color only when it helps people distinguish categories, states, or selected values faster.
+    Prefer neutral tags by default. Add color only when it helps people distinguish categories, states, or selected values faster.
   </Step>
 </Steps>
 
 <Note>
-  Tag labels should stay short, ideally one or two words or no more than about 20 characters, so the tag remains scannable.
+  Keep tag labels short, ideally one or two words or roughly no more than 20 characters, so the tag remains scannable.
 </Note>
 
 ## Usage
@@ -937,70 +937,70 @@ Use the outline variant with a prefix icon when you want context with a lighter 
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should position tags where they remain visible and accessible without obstructing important content or interactions.
+    Position tags where they remain visible and accessible without obstructing important content or interactions.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not use sentence-length labels or dense technical wording inside tags.
+    Don't use sentence-length labels or dense technical wording inside tags.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should use visually distinct styles and colors to differentiate types of tags when those distinctions help users.
+    Use visually distinct styles and colors to differentiate types of tags when those distinctions help users.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    must not rely on an icon alone. A tag needs a clear text label.
+    Don't rely on an icon alone. A tag still needs a clear text label.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should make interactive tags easy to use, whether the goal is to click, toggle, or remove them.
+    Make interactive tags easy to use, whether the goal is to click, toggle, or remove them.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not mix too many colors or tag styles in the same area. Limit color use to a single semantic purpose — more than one color scheme in a single list forces users to decode two systems at once.
+    Don't mix too many colors or tag styles in the same area. Limit color use to a single semantic purpose — more than one color scheme in a single list forces users to decode two systems at once.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should group tags in a meaningful set when they work as filters, suggestions, or applied selections so users can compare them quickly.
+    Group tags in a meaningful set when they work as filters, suggestions, or applied selections so users can compare them quickly.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not display a single standalone tag. Tags gain meaning through comparison — use a set of at least three before reaching for this component, otherwise a plain label or a different component will communicate the same thing more clearly.
+    Don't display a single standalone tag. Tags gain meaning through comparison — use a set of at least three before reaching for this component, otherwise a plain label or a different component will communicate the same thing more clearly.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should reserve removable tags for low-stakes selections like applied filters or entered keywords, where removing the tag is easy to undo.
+    Reserve removable tags for low-stakes selections like applied filters or entered keywords, where removing the tag is easy to undo.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not use removable tags for critical or destructive actions. A close button is easy to tap accidentally — use an explicit button or a confirmation dialog for consequential operations.
+    Don't use removable tags for critical or destructive actions. A close button is easy to tap accidentally — use an explicit button or a confirmation dialog for consequential operations.
   </Card>
 </CardGroup>
 

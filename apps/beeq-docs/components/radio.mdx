@@ -14,7 +14,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 Radio buttons present a list of options where only one can be active at a time. When a user selects a new option, the previous selection is cleared automatically. Use them inside a `bq-radio-group` to connect the options and manage state.
 
 <Note>
-  You must wrap `bq-radio` elements inside a `bq-radio-group`. The group manages selection state, keyboard navigation, form association, and accessibility — an isolated `bq-radio` cannot do this on its own.
+  Always wrap `bq-radio` elements inside a `bq-radio-group`. The group manages selection state, keyboard navigation, form association, and accessibility — an isolated `bq-radio` cannot do this on its own.
 </Note>
 
 ## When to use
@@ -82,7 +82,7 @@ A radio button consists of a circular icon and a text label. The icon changes ap
     imageLightSrc="/components/images/radio/radio-orientation-vertical-light.svg"
     imageDarkSrc="/components/images/radio/radio-orientation-vertical-dark.svg"
   >
-    You should stack options vertically when the labels are longer than a few words. Vertical lists are easier to scan and less prone to accidental selection.
+    Stack options vertically when the labels are longer than a few words. Vertical lists are easier to scan and less prone to accidental selection.
   </CardTile>
 
   <CardTile
@@ -90,7 +90,7 @@ A radio button consists of a circular icon and a text label. The icon changes ap
     imageLightSrc="/components/images/radio/radio-orientation-horizontal-light.svg"
     imageDarkSrc="/components/images/radio/radio-orientation-horizontal-dark.svg"
   >
-    You should arrange options in a row only when the labels are short (one or two words) and the total number of choices is small, as in compact filters or sort controls.
+    Arrange options in a row when the labels are short (one or two words) and the total number of choices is small. Use this for compact filters or sort controls.
   </CardTile>
 </CardGroup>
 
@@ -100,7 +100,7 @@ A radio button consists of a circular icon and a text label. The icon changes ap
     imageLightSrc="/components/images/radio/radio-fieldset-light.svg"
     imageDarkSrc="/components/images/radio/radio-fieldset-dark.svg"
   >
-    You may enable `fieldset` on the group to render a visible border and legend around the options when the radio group is one of several form sections that need visual separation.
+    Enable `fieldset` on the group to render a visible border and legend around the options. Use this when the radio group is one of several form sections that need visual separation.
   </CardTile>
 
   <CardTile
@@ -108,7 +108,7 @@ A radio button consists of a circular icon and a text label. The icon changes ap
     imageLightSrc="/components/images/radio/radio-background-hover-light.svg"
     imageDarkSrc="/components/images/radio/radio-background-hover-dark.svg"
   >
-    You may enable `background-on-hover` to show a filled background on the label row when the user hovers, which increases the perceived click area in spacious layouts.
+    Enable `background-on-hover` to show a filled background on the label row when the user hovers. Use this to increase the perceived click area in spacious layouts.
   </CardTile>
 </CardGroup>
 
@@ -517,7 +517,7 @@ Set `background-on-hover` on the group to show a filled highlight on every label
 
 ### Form integration
 
-`bq-radio-group` submits the selected radio value with the form. You should set `required` and `required-validation-message` on the group when users must choose one option before submission.
+`bq-radio-group` submits the selected radio value with the form. Use `required` and `required-validation-message` on the group when users must choose one option before submission.
 
 <CodeLivePreview mode="iframe" height="25rem" removePadding code={`
   <style>
@@ -750,7 +750,7 @@ Set `background-on-hover` on the group to show a filled highlight on every label
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    You must provide a group label via the `label` slot on `bq-radio-group` so screen readers announce the question or field name when focus enters the group.
+    Always provide a group label via the `label` slot on `bq-radio-group` so screen readers announce the question or field name when focus enters the group.
   </Card>
 
   <Card>
@@ -758,7 +758,7 @@ Set `background-on-hover` on the group to show a filled highlight on every label
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    You must not leave the `label` slot empty. Users relying on assistive technology will not know what the radio group is asking.
+    Leave the `label` slot empty — users relying on assistive technology will not know what the radio group is asking.
   </Card>
 
   <Card>
@@ -766,7 +766,7 @@ Set `background-on-hover` on the group to show a filled highlight on every label
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    You should pre-select a sensible default by setting `value` on the group so the form always has a valid starting state and users understand which option is active on first view.
+    Pre-select a sensible default by setting `value` on the group so the form always has a valid starting state and users understand which option is active on first view.
   </Card>
 
   <Card>
@@ -774,7 +774,7 @@ Set `background-on-hover` on the group to show a filled highlight on every label
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    You should not leave all options unselected when one choice is always required. An empty radio group can cause confusing form validation errors on submit.
+    Leave all options unselected when one choice is always required — an empty radio group can cause confusing form validation errors on submit.
   </Card>
 
   <Card>
@@ -782,7 +782,7 @@ Set `background-on-hover` on the group to show a filled highlight on every label
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    You should write option labels as nouns or short phrases that clearly describe each choice so users can compare them at a glance.
+    Write option labels as nouns or short phrases that clearly describe each choice so users can compare them at a glance.
   </Card>
 
   <Card>
@@ -790,7 +790,7 @@ Set `background-on-hover` on the group to show a filled highlight on every label
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    You should not use vague labels like "Option 1" or "Yes/No" when more descriptive text would make the choice immediately understandable without additional context.
+    Use vague labels like "Option 1" or "Yes/No" when more descriptive text would make the choice immediately understandable without additional context.
   </Card>
 
   <Card>
@@ -798,7 +798,7 @@ Set `background-on-hover` on the group to show a filled highlight on every label
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    You should use `disabled` on the entire group when the choice is unavailable in the current context, and explain why it is locked via nearby helper text.
+    Use `disabled` on the entire group when the choice is unavailable in the current context, and explain why it is locked via nearby helper text.
   </Card>
 
   <Card>
@@ -806,7 +806,7 @@ Set `background-on-hover` on the group to show a filled highlight on every label
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    You should not disable individual radio options without a visible explanation. Users will not know whether the option is temporarily locked or permanently unavailable.
+    Disable individual radio options without a visible explanation — users will not know whether the option is temporarily locked or permanently unavailable.
   </Card>
 </CardGroup>
 

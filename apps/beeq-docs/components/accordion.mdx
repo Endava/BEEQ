@@ -13,7 +13,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 Accordions organize related content into collapsible sections. Each section has a header that reveals or hides its panel content, helping people scan headings first and open only the information they need.
 
 <Note>
-  You should use `bq-accordion-group` to wrap multiple `bq-accordion` items when you need to coordinate their behavior — for example, collapsing one when another opens.
+  Use `bq-accordion-group` to wrap multiple `bq-accordion` items when you need to coordinate their behavior — for example, collapsing one when another opens.
 </Note>
 
 ## At a glance
@@ -70,7 +70,7 @@ Each accordion item includes a clickable header and a collapsible panel. The hea
 
 ## Design guidelines
 
-You should use accordions to reduce page density without hiding content that people need to complete the task. You should keep each header specific, keep panel content focused, and use `bq-accordion-group` when several accordion items should behave as one coordinated set.
+Use accordions to reduce page density without hiding content that people need to complete the task. Keep each header specific, keep panel content focused, and use `bq-accordion-group` when several accordion items should behave as one coordinated set.
 
 ## Usage
 
@@ -386,7 +386,7 @@ The `small` size uses more compact padding and a smaller border radius, giving i
 </CodeLivePreview>
 
 <Note>
-  You should use the `small` size in dense layouts or sidebars where space is limited.
+  Use the `small` size in dense layouts or sidebars where space is limited.
 </Note>
 
 ### Group
@@ -401,7 +401,7 @@ The group also lets you set `appearance`, `size`, and `no-animation` once and ha
 
 ### Single open (default group behavior)
 
-You should use the default group behavior when the sections are mutually exclusive or when keeping only one panel open helps reduce distraction.
+Use the default group behavior when the sections are mutually exclusive or when keeping only one panel open helps reduce distraction.
 
 <CodeLivePreview mode="shadow" code={`
   <bq-accordion-group>
@@ -1248,7 +1248,7 @@ Developers can [rely on the exposed shadow DOM parts](/guides/styles#component-s
       Do
     </span>
 
-    should write header labels that clearly describe the content inside. People should be able to predict what they will find before opening the section.
+    Write header labels that clearly describe the content inside. People should be able to predict what they will find before opening the section.
   </Card>
 
   <Card>
@@ -1257,7 +1257,7 @@ Developers can [rely on the exposed shadow DOM parts](/guides/styles#component-s
       Don't
     </span>
 
-    should not nest accordions inside accordion panels. It creates unclear hierarchy and makes interaction patterns harder to follow.
+    Do not nest accordions inside accordion panels. It creates unclear hierarchy and makes interaction patterns harder to follow.
   </Card>
 
   <Card>
@@ -1266,7 +1266,7 @@ Developers can [rely on the exposed shadow DOM parts](/guides/styles#component-s
       Do
     </span>
 
-    should use `bq-accordion-group` when items belong together and their open/close behavior should be coordinated.
+    Use `bq-accordion-group` when items belong together and their open/close behavior should be coordinated.
   </Card>
 
   <Card>
@@ -1275,7 +1275,7 @@ Developers can [rely on the exposed shadow DOM parts](/guides/styles#component-s
       Don't
     </span>
 
-    must not hide critical content inside accordions. If the information is essential to the page, it should remain visible.
+    Do not hide critical content inside accordions. If the information is essential to the page, it should usually remain visible.
   </Card>
 
   <Card>
@@ -1284,7 +1284,7 @@ Developers can [rely on the exposed shadow DOM parts](/guides/styles#component-s
       Do
     </span>
 
-    should consider `no-animation` or a reduced-motion strategy for workflows where motion may distract or overwhelm.
+    Consider `no-animation` or a reduced-motion strategy for workflows where motion may distract or overwhelm.
   </Card>
 
   <Card>
@@ -1292,7 +1292,7 @@ Developers can [rely on the exposed shadow DOM parts](/guides/styles#component-s
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not use an accordion when a simpler show/hide pattern or a tab group would communicate the structure more clearly.
+    Do not use an accordion when a simpler show/hide pattern or a tab group would communicate the structure more clearly.
   </Card>
 
   <Card>
@@ -1301,7 +1301,7 @@ Developers can [rely on the exposed shadow DOM parts](/guides/styles#component-s
       Do
     </span>
 
-    should keep panel content focused on the promise made by the header so people can scan and decide quickly.
+    Keep panel content focused on the promise made by the header so people can scan and decide quickly.
   </Card>
 
   <Card>
@@ -1310,7 +1310,7 @@ Developers can [rely on the exposed shadow DOM parts](/guides/styles#component-s
       Don't
     </span>
 
-    should not use vague headers such as "More details" when a specific label would set clearer expectations.
+    Do not use vague headers such as "More details" when a specific label would set clearer expectations.
   </Card>
 </CardGroup>
 

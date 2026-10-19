@@ -62,16 +62,16 @@ The slider consists of a horizontal track, a filled progress region that visuali
 
 <Steps>
   <Step title="Single (default)">
-    A single handle slides along the track to represent one value. This type should be used for individual settings such as volume, zoom level, or brightness — any scenario where one number is all that matters.
+    A single handle slides along the track to represent one value. Use this for individual settings such as volume, zoom level, or brightness — any scenario where one number is all that matters.
   </Step>
   <Step title="Range">
-    Two handles define a minimum and maximum. This type should be used when users need to select an interval — for example, a price range, a time window, or a quantity bracket.
+    Two handles define a minimum and maximum. Use this when users need to select an interval — for example, a price range, a time window, or a quantity bracket.
   </Step>
 </Steps>
 
 ### States
 
-Every slider supports five states: **default**, **hover**, **focus**, **active**, and **disabled**. The handle enlarges slightly on hover and focus to provide a clear interactive target. The disabled state dims the track and handle and prevents all interaction. It may be used to display a read-only preset value.
+Every slider supports five states: **default**, **hover**, **focus**, **active**, and **disabled**. The handle enlarges slightly on hover and focus to provide a clear interactive target. The disabled state dims the track and handle and prevents all interaction — use it to display a read-only preset value.
 
 ### Value feedback
 
@@ -81,7 +81,7 @@ Tooltips stay aligned with their thumbs when the value or slider width changes. 
 
 ### Width
 
-The slider fills its container's available width. Constrain the width of its parent container to control how large the track appears. The container should not be so narrow that the track becomes very short, because that makes precise selection difficult.
+The slider fills its container's available width. Constrain the width of its parent container to control how large the track appears — a very short track makes precise selection difficult.
 
 ## Usage
 
@@ -563,7 +563,7 @@ Use `gap` to set the minimum distance the two handles must maintain between each
 
 ### Form integration
 
-`bq-slider` is form-associated and submits its current value as form data. It does not expose `required`, so it should be used for adjustable values rather than mandatory completion checks.
+`bq-slider` is form-associated and submits its current value as form data. It does not expose `required`, so use it for adjustable values rather than mandatory completion checks.
 
 <CodeLivePreview mode="iframe" height="22rem" removePadding code={`
   <style>
@@ -763,7 +763,7 @@ Use `gap` to set the minimum distance the two handles must maintain between each
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    must provide a clear, concise label that describes the purpose of the slider and the scale it represents — for example, "Volume" or "Price range".
+    Provide a clear, concise label that describes the purpose of the slider and the scale it represents — for example, "Volume" or "Price range".
   </Card>
 
   <Card>
@@ -771,7 +771,7 @@ Use `gap` to set the minimum distance the two handles must maintain between each
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not use long or ambiguous labels. If users cannot tell what the slider controls at a glance, they may set incorrect values without realizing it.
+    Use long or ambiguous labels. If users cannot tell what the slider controls at a glance, they may set incorrect values without realizing it.
   </Card>
 
   <Card>
@@ -779,7 +779,7 @@ Use `gap` to set the minimum distance the two handles must maintain between each
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should show the selected value alongside the slider using `enable-value-indicator` or `enable-tooltip` whenever the exact number matters to the user's decision.
+    Show the selected value alongside the slider using `enable-value-indicator` or `enable-tooltip` whenever the exact number matters to the user's decision.
   </Card>
 
   <Card>
@@ -787,7 +787,7 @@ Use `gap` to set the minimum distance the two handles must maintain between each
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not leave the slider without any value feedback when precision is important. Users cannot reliably read off an exact number from the handle position alone.
+    Leave the slider without any value feedback when precision is important. Users cannot reliably read off an exact number from the handle position alone.
   </Card>
 
   <Card>
@@ -795,7 +795,7 @@ Use `gap` to set the minimum distance the two handles must maintain between each
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should choose `min`, `max`, and `step` values that reflect meaningful increments for the context — for example, steps of 5 or 10 for a percentage, or steps of 0.05 for a fractional coefficient.
+    Choose `min`, `max`, and `step` values that reflect meaningful increments for the context — for example, steps of 5 or 10 for a percentage, or steps of 0.05 for a fractional coefficient.
   </Card>
 
   <Card>
@@ -803,7 +803,7 @@ Use `gap` to set the minimum distance the two handles must maintain between each
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not use ranges that result in very large step counts or non-discrete increments where the relationship between handle position and value is unclear to users.
+    Use ranges that result in very large step counts or non-discrete increments where the relationship between handle position and value is unclear to users.
   </Card>
 
   <Card>
@@ -811,7 +811,7 @@ Use `gap` to set the minimum distance the two handles must maintain between each
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should set `gap` on range sliders when the minimum and maximum handles must stay a meaningful distance apart — for example, when a time range must span at least one hour.
+    Set `gap` on range sliders when the minimum and maximum handles must stay a meaningful distance apart — for example, when a time range must span at least one hour.
   </Card>
 
   <Card>
@@ -819,7 +819,7 @@ Use `gap` to set the minimum distance the two handles must maintain between each
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not use a slider for very narrow ranges (1–3 values). With only a few valid positions the drag interaction is awkward and a radio group or button group communicates the options more clearly.
+    Use a slider for very narrow ranges (1–3 values). With only a few valid positions the drag interaction is awkward and a radio group or button group communicates the options more clearly.
   </Card>
 </CardGroup>
 

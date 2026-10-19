@@ -83,14 +83,14 @@ Breadcrumbs should appear near the top of the page, above the page title or dire
     imageLightSrc="/components/images/breadcrumb/breadcrumb-label-icon-light.svg"
     imageDarkSrc="/components/images/breadcrumb/breadcrumb-label-icon-dark.svg"
   >
-    Use small icons (`size="16"`) paired with a text label to aid recognition. An icon must not appear alone without a text label or an icon `label`.
+    Use small icons (`size="16"`) paired with a text label to aid recognition. Never use an icon alone without a text label or an icon `label`.
   </CardTile>
   <CardTile
     title="Text only"
     imageLightSrc="/components/images/breadcrumb/breadcrumb-label-text-light.svg"
     imageDarkSrc="/components/images/breadcrumb/breadcrumb-label-text-dark.svg"
   >
-    Text-only labels work well in compact spaces or minimal interfaces. Labels should be short and should match the destination page title exactly.
+    Text-only labels work well in compact spaces or minimal interfaces. Keep labels short and match the destination page title exactly.
   </CardTile>
 </CardGroup>
 
@@ -129,7 +129,7 @@ The examples below cover the most common ways to use breadcrumbs in BEEQ.
 Use a default breadcrumb to show the current page within a hierarchy. When `href` is not set, each breadcrumb item renders as a button.
 
 <Note>
-  You must place `bq-breadcrumb-item` elements directly inside `bq-breadcrumb`. Items rendered outside the component will not receive separator or `aria-current` handling.
+  Always place `bq-breadcrumb-item` elements directly inside `bq-breadcrumb`. Items rendered outside the component will not receive separator or `aria-current` handling.
 </Note>
 
 <CodeLivePreview mode="shadow" code={`
@@ -269,7 +269,7 @@ Use the `separator` slot to replace the default `/` separator.
 </CodeLivePreview>
 
 <Note>
-  A breadcrumb trail should use the same separator throughout. Mixing separator styles in a single trail breaks visual consistency.
+  Use the same separator throughout a breadcrumb trail. Mixing separator styles in a single trail breaks visual consistency.
 </Note>
 
 ### Intercepting navigation
@@ -397,7 +397,7 @@ Icons next to labels help users recognize categories at a glance. Use `size="16"
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should include the page type (Create, Edit, View) followed by the item name on breadcrumbs for detail pages.
+    For breadcrumbs on detail pages, include the page type (Create, Edit, View) followed by the item name.
   </Card>
 
   <Card>
@@ -405,7 +405,7 @@ Icons next to labels help users recognize categories at a glance. Use `size="16"
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not indicate the item number or use dynamically generated names without context.
+    Avoid indicating the item number or using dynamically generated names without context.
   </Card>
 
   <Card>
@@ -413,7 +413,7 @@ Icons next to labels help users recognize categories at a glance. Use `size="16"
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should truncate labels longer than 30 characters with an ellipsis and show the full text in a tooltip on hover.
+    Truncate labels longer than 30 characters with an ellipsis and show the full text in a tooltip on hover.
   </Card>
 
   <Card>
@@ -421,7 +421,7 @@ Icons next to labels help users recognize categories at a glance. Use `size="16"
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not display overly long labels that wrap or truncate without a way to view the complete text.
+    Display overly long labels that wrap or truncate without a way to view the complete text.
   </Card>
 
   <Card>
@@ -429,7 +429,7 @@ Icons next to labels help users recognize categories at a glance. Use `size="16"
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should show a maximum of four items in the breadcrumb trail. For longer paths, truncate and show the first and last items.
+    Show a maximum of four items in the breadcrumb trail. For longer paths, truncate and show the first and last items.
   </Card>
 
   <Card>
@@ -437,7 +437,7 @@ Icons next to labels help users recognize categories at a glance. Use `size="16"
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not display more than four items in a single breadcrumb trail, as it overloads the visual and reduces usability.
+    Display more than four items in a single breadcrumb trail, as it overloads the visual and reduces usability.
   </Card>
 
   <Card>
@@ -445,7 +445,7 @@ Icons next to labels help users recognize categories at a glance. Use `size="16"
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should make all parent breadcrumb items clickable links, with the current page as the last non-interactive item.
+    Make all parent breadcrumb items clickable links, including the current page as the last non-interactive item.
   </Card>
 
   <Card>
@@ -453,7 +453,7 @@ Icons next to labels help users recognize categories at a glance. Use `size="16"
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not display the current page as a clickable link; it should be non-interactive text to reflect the user's current location.
+    Display the current page as a clickable link; it should be non-interactive text to reflect the user's current location.
   </Card>
 </CardGroup>
 

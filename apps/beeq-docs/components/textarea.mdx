@@ -72,7 +72,7 @@ The textarea is composed of a label area, an input container, and an optional he
 A textarea supports five interactive states: **default**, **focused**, **disabled**, **read-only**, and **validation** (error, warning, success). The focused state shows a colored ring. The disabled state dims the control and blocks all interaction. The read-only state displays the value but prevents editing.
 
 <Note>
-  You must pair a textarea with a visible `label` slot. An unlabeled textarea has no accessible name and is inaccessible by default.
+  Always pair a textarea with a visible `label` slot. An unlabeled textarea has no accessible name and is inaccessible by default.
 </Note>
 
 ### Resize behavior
@@ -85,7 +85,7 @@ When `maxlength` is set to a value greater than zero, a character counter appear
 
 ### Validation
 
-Set `validation-status` to `error`, `warning`, or `success` to communicate the state of the field. You must pair each state with a descriptive `helper-text` message so users know what went wrong and how to fix it. You should use `error` for critical blocking issues, `warning` for non-blocking concerns, and `success` to confirm valid input.
+Set `validation-status` to `error`, `warning`, or `success` to communicate the state of the field. Pair each state with a descriptive `helper-text` message so users know what went wrong and how to fix it. Use `error` for critical blocking issues, `warning` for non-blocking concerns, and `success` to confirm valid input.
 
 ## Usage
 
@@ -278,7 +278,7 @@ Pre-populate your textarea with an initial `value` attribute to streamline user 
 
 ### Disabled
 
-Set `disabled` when the field is not currently available for interaction. Use it to present non-editable content in a form context. You should communicate why the field is disabled through surrounding text or a tooltip.
+Set `disabled` when the field is not currently available for interaction. Use it to present non-editable content in a form context. Always communicate why the field is disabled through surrounding text or a tooltip.
 
 <CodeLivePreview mode="shadow" code={`
   <style>
@@ -961,12 +961,12 @@ Set `validation-status` to `error`, `warning`, or `success` to communicate the s
 </CodeLivePreview>
 
 <Tip>
-  You should use validation feedback to give context on the textarea's status based on user input.
+  Use validation feedback to provide context on the textarea's status based on user input.
 </Tip>
 
 ### Form integration
 
-`bq-textarea` submits its current text value with the form. You should set `required` and `form-validation-message` when users must provide multiline feedback before submitting.
+`bq-textarea` submits its current text value with the form. Use `required` and `form-validation-message` when users must provide multiline feedback before submitting.
 
 <CodeLivePreview mode="iframe" height="24rem" removePadding code={`
   <style>
@@ -1188,56 +1188,56 @@ Set `validation-status` to `error`, `warning`, or `success` to communicate the s
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    You must provide a visible label via the `label` slot. An unlabeled textarea has no accessible name and relies entirely on context, which screen readers cannot infer.
+    Always provide a visible label via the `label` slot. An unlabeled textarea has no accessible name and relies entirely on context, which screen readers cannot infer.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    You must not use placeholder text as a substitute for a label. Placeholder text disappears as soon as the user starts typing, leaving the field without any visible description.
+    Use placeholder text as a substitute for a label. Placeholder text disappears as soon as the user starts typing, leaving the field without any visible description.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    You should write user-centric validation messages that explain what went wrong and how to fix it, not only that the input was invalid.
+    Write user-centric validation messages that explain what went wrong and how to fix it, not only that the input was invalid.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    You should not show vague error messages like "Invalid input". Users need actionable guidance to correct their input, not a generic error label.
+    Show vague error messages like "Invalid input". Users need actionable guidance to correct their input, not a generic error label.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    You should use `maxlength` for inputs where length matters — tweet-like comments, SMS text, or short descriptions. The character counter gives users clear progress feedback.
+    Use `maxlength` for inputs where length matters — tweet-like comments, SMS text, or short descriptions. The character counter gives users clear progress feedback.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    You should not set `maxlength` on open-ended fields like detailed feedback forms or long descriptions where an arbitrary limit would frustrate users.
+    Set `maxlength` on open-ended fields like detailed feedback forms or long descriptions where an arbitrary limit would frustrate users.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    You should use a textarea only when the expected input is long or variable in length. This sets the right expectation for users about how much text they should provide.
+    Use a textarea only when the expected input is long or variable in length. This sets the right expectation for users about how much text they should provide.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    You should not use a textarea when a short single-line response is expected. An oversized input creates confusion and wastes space — use an Input component instead.
+    Use a textarea when a short single-line response is expected. An oversized input creates confusion and wastes space — use an Input component instead.
   </Card>
 </CardGroup>
 

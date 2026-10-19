@@ -14,7 +14,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 Dialogs keep people in context while they respond to important information, confirm an action, or complete a short focused task. Use them sparingly, only when the interruption is justified.
 
 <Note>
-  Dialog content should be concise and purposeful. You must provide a clear way to dismiss the dialog, such as a close button, a cancel action, or both.
+  Keep dialog content concise and purposeful. Always provide a clear way to dismiss the dialog, such as a close button, a cancel action, or both.
 </Note>
 
 ## When to use
@@ -94,24 +94,24 @@ Use dialogs only when the interruption is worth the attention shift and the next
     imageLightSrc="/components/images/dialog/dialog-actions-guidance-light.svg"
     imageDarkSrc="/components/images/dialog/dialog-actions-guidance-dark.svg"
   >
-    The footer should stay focused. One primary action and one secondary action is usually enough for quick decisions.
+    Keep the footer focused. One primary action and one secondary action is usually enough for quick decisions.
   </CardTile>
 </CardGroup>
 
 <Steps>
   <Step title="Choose the right level of interruption">
-    You should use a dialog only when people must pause to confirm, review, or complete a short task before continuing.
+    Use a dialog only when people must pause to confirm, review, or complete a short task before continuing.
   </Step>
   <Step title="Write clear actions">
-    Button labels should describe the outcome, especially in destructive or irreversible flows.
+    Make button labels describe the outcome, especially in destructive or irreversible flows.
   </Step>
   <Step title="Use confirm dialogs carefully">
-    You should reserve locked-down confirmation dialogs for actions that carry real risk, such as deletion or deactivation.
+    Reserve locked-down confirmation dialogs for actions that carry real risk, such as deletion or deactivation.
   </Step>
 </Steps>
 
 <Note>
-  If the content grows beyond a short decision or focused task, you should move the interaction to an inline flow or a dedicated page instead of expanding the dialog.
+  If the content grows beyond a short decision or focused task, move the interaction to an inline flow or a dedicated page instead of expanding the dialog.
 </Note>
 
 ## Usage
@@ -1042,56 +1042,56 @@ Use this variant to confirm irreversible actions with clear messaging and focuse
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    The title and primary action should work together so the outcome of the dialog is unmistakable.
+    Make the title and primary action work together so the outcome of the dialog is unmistakable.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    You should not use vague titles or button labels that force people to infer the meaning of the decision.
+    Do not use vague titles or button labels that force people to infer the meaning of the decision.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Dialog content should be concise and the structure easy to scan, with a clear title, short body copy, and focused actions.
+    Use concise content and keep the structure easy to scan with a clear title, short body copy, and focused actions.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    You should not duplicate actions in the footer or offer too many equally weighted choices.
+    Do not duplicate actions in the footer or offer too many equally weighted choices.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    The dialog size should match the amount of content so the layout feels intentional and easy to scan.
+    Match the dialog size to the amount of content so the layout feels intentional and easy to scan.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    You should not force long forms, dense tables, or multi-step workflows into a dialog that needs more room than the pattern is meant to provide.
+    Do not force long forms, dense tables, or multi-step workflows into a dialog that needs more room than the pattern is meant to provide.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    You should keep a reliable dismissal path available, especially in confirmation flows where people may need to back out safely.
+    Keep a reliable dismissal path available, especially in confirmation flows where people may need to back out safely.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    You must not disable the close button, backdrop dismissal, and <kbd>Esc</kbd> handling together unless the action carries real risk and the remaining actions are explicit.
+    Do not disable the close button, backdrop dismissal, and <kbd>Esc</kbd> handling together unless the action carries real risk and the remaining actions are explicit.
   </Card>
 </CardGroup>
 

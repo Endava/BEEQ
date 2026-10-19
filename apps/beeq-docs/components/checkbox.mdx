@@ -99,7 +99,7 @@ Use checkbox labels and grouping patterns that make the selected state easy to u
     The label should read as a clear statement of the checked state, especially in settings and consent flows.
   </CardTile>
   <CardTile title="Make hierarchy obvious">
-    When a parent checkbox controls child options, the relationship should be visually clear and the parent state must stay synchronized with its children.
+    When a parent checkbox controls child options, make the relationship visually clear and keep the parent state synchronized.
   </CardTile>
 </CardGroup>
 
@@ -111,12 +111,12 @@ Use checkbox labels and grouping patterns that make the selected state easy to u
     Checkboxes that belong to one decision or category should share a heading or fieldset.
   </Step>
   <Step title="Use indeterminate as a summary">
-    The indeterminate state should be reserved for parent checkboxes that represent a partially selected group.
+    Reserve the indeterminate state for parent checkboxes that represent a partially selected group.
   </Step>
 </Steps>
 
 <Note>
-  If users choose exactly one option, you should use [Radio](/components/radio) instead of adapting a checkbox pattern to a single-select task.
+  If users must choose exactly one option, use [Radio](/components/radio) instead of adapting a checkbox pattern to a single-select task.
 </Note>
 
 ## Usage
@@ -709,12 +709,12 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
 </CodeLivePreview>
 
 <Warning>
-  Indeterminate is a visual summary state, not a third submitted form value. The parent and child checkboxes must be kept synchronized through event handling.
+  Indeterminate is a visual summary state, not a third submitted form value. Keep the parent and child checkboxes synchronized through event handling.
 </Warning>
 
 ### Form integration
 
-`bq-checkbox` participates in native forms. A checked checkbox submits `"on"` for its `name`; an unchecked checkbox is omitted from `FormData`. Set `required` on consent or confirmation checkboxes that must be selected before submission.
+`bq-checkbox` participates in native forms. A checked checkbox submits `"on"` for its `name`; an unchecked checkbox is omitted from `FormData`. Use `required` for consent or confirmation choices that must be selected before submission.
 
 <Note>
   The live preview runs in an iframe sandbox that does not allow native form submission. Its Submit button uses `type="button"` and `bqClick` to validate the form and display `FormData` without submitting it. The copyable examples use native `type="submit"` buttons for normal application forms.
@@ -925,56 +925,56 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should write checkbox labels as clear statements, not questions, so people understand the resulting selected state.
+    Write checkbox labels as clear statements, not questions, so people understand the resulting selected state.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not use checkboxes when users must choose only one option. Use [Radio](/components/radio) instead.
+    Do not use checkboxes when users must choose only one option. Use [Radio](/components/radio) instead.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should align long labels from the top so wrapped text stays visually connected to the checkbox control.
+    Align long labels from the top so wrapped text stays visually connected to the checkbox control.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not center long wrapped labels vertically against the control, because that weakens scanability.
+    Do not center long wrapped labels vertically against the control, because that weakens scanability.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should group related checkboxes under a shared heading when they belong to the same decision.
+    Group related checkboxes under a shared heading when they belong to the same decision.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    must not rely on unchecked-by-default choices to imply consent when legal or high-stakes confirmation is required.
+    Do not rely on unchecked-by-default choices to imply consent when legal or high-stakes confirmation is required.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should use the indeterminate state only when it accurately summarizes a partially selected group of child options.
+    Use the indeterminate state only when it accurately summarizes a partially selected group of child options.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not present indeterminate as a standalone third choice, because it is only meaningful as a group summary.
+    Do not present indeterminate as a standalone third choice, because it is only meaningful as a group summary.
   </Card>
 </CardGroup>
 

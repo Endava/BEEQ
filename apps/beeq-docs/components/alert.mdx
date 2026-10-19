@@ -51,7 +51,7 @@ Alerts can be used at different scopes, depending on what the message affects.
     imageLightSrc="/components/images/alert/alert-placement-global-light.svg"
     imageDarkSrc="/components/images/alert/alert-placement-global-dark.svg"
   >
-    Use a global alert for messages that affect the full experience. It should sit directly below the navigation.
+    Use a global alert for messages that affect the full experience. Place it directly below the navigation.
   </CardTile>
   <CardTile
     title="Page alert"
@@ -65,14 +65,14 @@ Alerts can be used at different scopes, depending on what the message affects.
     imageLightSrc="/components/images/alert/alert-placement-card-light.svg"
     imageDarkSrc="/components/images/alert/alert-placement-card-dark.svg"
   >
-    Alerts should sit close to the affected section so users can connect the message with the content it describes.
+    Place alerts close to the affected section so users can connect the message with the content it describes.
   </CardTile>
   <CardTile
     title="Custom alert"
     imageLightSrc="/components/images/alert/alert-placement-custom-light.svg"
     imageDarkSrc="/components/images/alert/alert-placement-custom-dark.svg"
   >
-    Use custom icons and CSS variables when a message has no built-in severity, and should keep color and icon choices consistent.
+    Use custom icons and CSS variables when a message has no built-in severity, but keep color and icon choices consistent.
   </CardTile>
 </CardGroup>
 
@@ -128,7 +128,7 @@ Alerts can be used at different scopes, depending on what the message affects.
 </CardGroup>
 
 <Note>
-  You should set `border` to match the surface where the alert appears and use the same radius scale as the surrounding layout.
+  Set `border` to match the surface where the alert appears. Use the same radius scale as the surrounding layout.
 </Note>
 
 ## Usage
@@ -1133,10 +1133,10 @@ Use the `sticky` attribute for persistent alerts that remain visible until users
 
 ### Auto-dismiss
 
-Set `auto-dismiss` to hide the alert automatically after a delay. Use `time` to override the default 3000 ms. You should set `time` to at least 8000 ms for alerts with meaningful content so users have enough time to read the message.
+Set `auto-dismiss` to hide the alert automatically after a delay. Use `time` to override the default 3000 ms. Set a minimum of 8000 ms for alerts with meaningful content so users have enough time to read the message.
 
 <Warning>
-  You must not use `auto-dismiss` for alerts that contain errors, required actions, or legal information.
+  Do not use `auto-dismiss` for alerts that contain errors, required actions, or legal information.
 </Warning>
 
 <CodeLivePreview mode="shadow" code={`
@@ -1227,56 +1227,56 @@ Set `auto-dismiss` to hide the alert automatically after a delay. Use `time` to 
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should place alerts close to the content or workflow they affect.
+    Place alerts close to the content or workflow they affect.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    must not place alerts where they hide controls or interrupt a critical task.
+    Do not place alerts where they hide controls or interrupt a critical task.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should write a short title that explains the state, then add body text only when users need context.
+    Write a short title that explains the state, then add body text only when users need context.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not use long paragraphs or unrelated links inside an alert.
+    Do not use long paragraphs or unrelated links inside an alert.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should give users enough time to read auto-dismiss alerts and keep important messages dismissible by intent.
+    Give users enough time to read auto-dismiss alerts and keep important messages dismissible by intent.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    must not auto-dismiss alerts that contain errors, required actions, or legal information.
+    Do not auto-dismiss alerts that contain errors, required actions, or legal information.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should match the alert type, icon, and action style to the severity of the message.
+    Match the alert type, icon, and action style to the severity of the message.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not mix severity colors or custom icons in ways that make the alert harder to scan.
+    Do not mix severity colors or custom icons in ways that make the alert harder to scan.
   </Card>
 </CardGroup>
 

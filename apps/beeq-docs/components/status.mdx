@@ -13,7 +13,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 Statuses help people understand the current state of an item at a glance. Use them when a short label plus a small visual cue makes lists, cards, and workflows easier to scan.
 
 <Note>
-  `bq-status` implements the dot-and-label pattern. If you need a status with an icon, you should build that as a separate composition instead of expecting it from this component.
+  `bq-status` implements the dot-and-label pattern. If you need a status with an icon, build that as a separate composition instead of expecting it from this component.
 </Note>
 
 ## When to use
@@ -76,18 +76,18 @@ Use statuses consistently so people can recognize state changes without pausing 
 
 <Steps>
   <Step title="Write the label first">
-    You should start with the text. The label must make sense on its own, because the indicator is only a supporting cue.
+    Start with the text. The label should still make sense on its own, because the indicator is only a supporting cue.
   </Step>
   <Step title="Keep the indicator supportive">
-    The indicator should act as a quick visual signal, not the whole message. If you need a more specific symbol, you should build an icon status as a separate composition.
+    Treat the indicator as a quick visual signal, not the whole message. If you need a more specific symbol, build an icon status as a separate composition.
   </Step>
   <Step title="Keep spacing compact and consistent">
-    You should place the status close to the row, card, or object it describes, and preserve enough spacing around it so the label and indicator remain easy to scan.
+    Place the status close to the row, card, or object it describes, and preserve enough spacing around it so the label and indicator remain easy to scan.
   </Step>
 </Steps>
 
 <Note>
-  Status labels should be short and stable. You should reuse the same wording and color meaning across the product so states remain predictable.
+  Status labels work best when they are short and stable. Reuse the same wording and color meaning across the product so states remain predictable.
 </Note>
 
 ## Usage
@@ -339,56 +339,56 @@ Use `type="success"` when the state confirms a positive outcome.
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should use clear labels so the meaning stays understandable even without color.
+    Use clear labels so the meaning stays understandable even without color.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    must not rely on the colored dot alone to communicate the state.
+    Do not rely on the colored dot alone to communicate the state.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should keep status wording and color meaning consistent across the product.
+    Keep status wording and color meaning consistent across the product.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not assign different meanings to the same status type in different screens.
+    Do not assign different meanings to the same status type in different screens.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should use one status per item when possible so the message stays easy to scan.
+    Use one status per item when possible so the message stays easy to scan.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not stack multiple competing statuses around the same piece of content.
+    Do not stack multiple competing statuses around the same piece of content.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should place the status close to the item it describes so the relationship is obvious.
+    Place the status close to the item it describes so the relationship is obvious.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not separate the status so far from the content that users have to infer what it belongs to.
+    Do not separate the status so far from the content that users have to infer what it belongs to.
   </Card>
 </CardGroup>
 

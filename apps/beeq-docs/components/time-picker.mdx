@@ -14,7 +14,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 Time pickers combine locale-ordered hour, minute, and second segments with a panel of scrollable columns. People can type a time directly or pick it from the panel, and the component keeps the value in a predictable 24-hour format.
 
 <Note>
-  should use a time picker when people need to set a time of day. should pair it with a [date picker](/components/date-picker) to pick a date and a time together. should use a [select](/components/select) or radio group for a short list of fixed slots, such as three delivery windows.
+  Use a time picker when people need to set a time of day. To pick a date and a time together, pair it with a [date picker](/components/date-picker). For a short list of fixed slots, such as three delivery windows, a [select](/components/select) or radio group is clearer.
 </Note>
 
 ## When to use
@@ -81,22 +81,22 @@ The time picker pairs a labeled, segmented field with a panel of columns, one pe
 
 <Steps>
   <Step title="Pick the right precision">
-    should start with the default `minute` precision. should use `hour` for coarse slots, such as opening hours, and should use `second` only when seconds matter, such as lap times or logs.
+    Start with the default `minute` precision. Use `hour` for coarse slots, such as opening hours, and `second` only when seconds matter, such as lap times or logs.
   </Step>
   <Step title="Let the locale drive the format">
-    should set `locale` to the product locale, so segment order, separators, and AM/PM labels match what people expect. The clock is 24-hour by default; should set `hour-format="12"` when people expect a 12-hour clock.
+    Set `locale` to the product locale, so segment order, separators, and AM/PM labels match what people expect. The clock is 24-hour by default; set `hour-format="12"` when people expect a 12-hour clock.
   </Step>
   <Step title="Constrain the choices">
-    should apply `min`, `max`, and step values when business rules are known. Options outside the rules are disabled in the panel, and typed values are clamped when focus leaves the field.
+    Apply `min`, `max`, and step values when business rules are known. Options outside the rules are disabled in the panel, and typed values are clamped when focus leaves the field.
   </Step>
 </Steps>
 
 <Note>
-  should use steps that divide evenly into the unit, such as 5, 10, 15, or 30 minutes, so the options stay predictable and easy to scan.
+  Use steps that divide evenly into the unit, such as 5, 10, 15, or 30 minutes, so the options stay predictable and easy to scan.
 </Note>
 
 <Tip>
-  should keep the clock trigger visible. It signals that a panel is available and gives pointer users a faster way to pick a time.
+  Keep the clock trigger visible. It signals that a panel is available and gives pointer users a faster way to pick a time.
 </Tip>
 
 ## Usage
@@ -1163,7 +1163,7 @@ Use `validation-status` when the field should show immediate visual feedback aft
 
 ### Form integration
 
-`bq-time-picker` submits its current value with the form, in 24-hour format. must set `required` and should set `form-validation-message` when the time is mandatory; the custom message also applies to incomplete, out-of-range, and off-step values.
+`bq-time-picker` submits its current value with the form, in 24-hour format. Use `required` and `form-validation-message` when the time is mandatory; the custom message also applies to incomplete, out-of-range, and off-step values.
 
 <Warning>
   A partly filled field becomes invalid when focus leaves it, even when the picker is optional. The draft stays visible and the last committed `value` is preserved, but native form validation blocks submission until the user completes the time, picks one from the panel, or clears the field.
@@ -1376,56 +1376,56 @@ When focus leaves the field, complete times outside `min` or `max` are clamped t
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should write labels that name the moment, such as "Departure time" or "Meeting starts", so people know which time they are setting.
+    Write labels that name the moment, such as "Departure time" or "Meeting starts", so people know which time they are setting.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    must not rely on the format hint alone to explain the field. must provide a visible label.
+    Do not rely on the format hint alone to explain the field. Always provide a visible label.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should match `precision` to the task. Most scheduling needs hours and minutes only; add seconds only for durations or precise logs.
+    Match `precision` to the task. Most scheduling needs hours and minutes only; add seconds only for durations or precise logs.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not ask for seconds when nobody will use them. Every extra segment adds typing and scanning effort.
+    Do not ask for seconds when nobody will use them. Every extra segment adds typing and scanning effort.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should set `min`, `max`, and step values when business rules are known, so unavailable times are disabled before people pick them.
+    Set `min`, `max`, and step values when business rules are known, so unavailable times are disabled before people pick them.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    must not mix clocks across a product. should pick the `hour-format` your audience expects and use it for every time picker.
+    Do not mix clocks across a product. Pick the `hour-format` your audience expects and use it for every time picker.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should use `require-confirm` when a picked time triggers an expensive or irreversible action, such as rescheduling a booking.
+    Use `require-confirm` when a picked time triggers an expensive or irreversible action, such as rescheduling a booking.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    must not use a time picker for durations longer than a day or for picking a date and time together.
+    Do not use a time picker for durations longer than a day or for picking a date and time together.
   </Card>
 </CardGroup>
 

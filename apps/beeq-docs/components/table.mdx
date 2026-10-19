@@ -14,7 +14,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 Tables organize information into rows and columns so people can compare values, find records, and take action on individual items. BEEQ styles the native HTML `<table>` element with CSS utility classes instead of shipping a custom web component.
 
 <Note>
-  Because the table is a CSS-only pattern, you own the correct HTML structure: `<table>`, `<thead>`, `<tbody>`, `<tr>`, `<th>`, and `<td>`. BEEQ styles apply only when the `bq-table` class is present on the `<table>` element, so you must add it.
+  Because the table is a CSS-only pattern, you own the correct HTML structure: `<table>`, `<thead>`, `<tbody>`, `<tr>`, `<th>`, and `<td>`. BEEQ styles apply only when the `bq-table` class is present on the `<table>` element.
 </Note>
 
 ## When to use
@@ -92,11 +92,11 @@ A table is built from standard HTML sectioning and cell elements. Each part has 
 
 <CardGroup cols={2}>
   <CardTile title="Default density">
-    The default table uses generous cell padding to give content room to breathe. It should be the density in most contexts where the dataset fits comfortably on screen.
+    The default table uses generous cell padding to give content room to breathe. Use it in most contexts where the dataset fits comfortably on screen.
   </CardTile>
 
   <CardTile title="Compact density">
-    The `.compact` modifier reduces padding significantly. It should be reserved for dashboards or administrative screens where showing more rows at once outweighs the reduced spacing.
+    The `.compact` modifier reduces padding significantly. Reserve it for dashboards or administrative screens where showing more rows at once outweighs the reduced spacing.
   </CardTile>
 </CardGroup>
 
@@ -111,7 +111,7 @@ A table is built from standard HTML sectioning and cell elements. Each part has 
 </CardGroup>
 
 <Note>
-  You should wrap the table in `.bq-table--container` to enable horizontal scrolling on smaller screens. Without this wrapper, wide tables may overflow their parent container.
+  Wrap the table in `.bq-table--container` to enable horizontal scrolling on smaller screens. Without this wrapper, wide tables may overflow their parent container.
 </Note>
 
 ## Usage
@@ -1441,7 +1441,7 @@ BEEQ does not ship a pagination, sorting, filtering, or virtualization component
 </CodeLivePreview>
 
 <Note>
-  You must announce page changes for screen reader users. This example updates a polite live region after each transition; move focus to the first cell when the new page must become the next task.
+  Announce page changes for screen reader users. This example updates a polite live region after each transition; move focus to the first cell when the new page must become the next task.
 </Note>
 
 ## Best practices
@@ -1452,7 +1452,7 @@ BEEQ does not ship a pagination, sorting, filtering, or virtualization component
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should wrap the table in `.bq-table--container` so it scrolls horizontally on small screens instead of overflowing.
+    Always wrap the table in `.bq-table--container` so it scrolls horizontally on small screens instead of overflowing.
   </Card>
 
   <Card>
@@ -1460,7 +1460,7 @@ BEEQ does not ship a pagination, sorting, filtering, or virtualization component
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not let a wide table overflow its parent without a scroll container — this breaks the page layout on narrow viewports.
+    Let a wide table overflow its parent without a scroll container — this breaks the page layout on narrow viewports.
   </Card>
 
   <Card>
@@ -1468,7 +1468,7 @@ BEEQ does not ship a pagination, sorting, filtering, or virtualization component
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should keep column headers short and descriptive so users understand each column without reading the data first.
+    Keep column headers short and descriptive so users understand each column without reading the data first.
   </Card>
 
   <Card>
@@ -1476,7 +1476,7 @@ BEEQ does not ship a pagination, sorting, filtering, or virtualization component
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not use abbreviations or internal codes in headers without a tooltip or legend to explain them.
+    Use abbreviations or internal codes in headers without a tooltip or legend to explain them.
   </Card>
 
   <Card>
@@ -1484,7 +1484,7 @@ BEEQ does not ship a pagination, sorting, filtering, or virtualization component
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should align numeric values to the trailing edge of the cell so decimal points and magnitudes line up across rows.
+    Align numeric values to the trailing edge of the cell so decimal points and magnitudes line up across rows.
   </Card>
 
   <Card>
@@ -1492,7 +1492,7 @@ BEEQ does not ship a pagination, sorting, filtering, or virtualization component
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not mix left-aligned and center-aligned numeric columns in the same table — inconsistent alignment makes comparison harder.
+    Mix left-aligned and center-aligned numeric columns in the same table — inconsistent alignment makes comparison harder.
   </Card>
 
   <Card>
@@ -1500,7 +1500,7 @@ BEEQ does not ship a pagination, sorting, filtering, or virtualization component
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should choose the density that matches the user's task — default for reading and reviewing, compact for monitoring and bulk operations.
+    Choose the density that matches the user's task — default for reading and reviewing, compact for monitoring and bulk operations.
   </Card>
 
   <Card>
@@ -1508,7 +1508,7 @@ BEEQ does not ship a pagination, sorting, filtering, or virtualization component
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not apply the compact modifier to fit more rows when it makes the content harder to read or interact with.
+    Apply the compact modifier to fit more rows when it makes the content harder to read or interact with.
   </Card>
 </CardGroup>
 

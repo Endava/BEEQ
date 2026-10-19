@@ -13,7 +13,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 A switch is a binary control that immediately toggles a setting on or off. Unlike checkboxes, a switch should trigger an instant change — no submit button needed. Use it for toggling preferences, enabling features, or activating modes where the result is visible right away.
 
 <Note>
-  You should use a [Checkbox](/components/checkbox) when the choice is part of a form that requires explicit submission, or when multiple items can be selected at once. Use a Switch when the action takes immediate effect.
+  Use a [Checkbox](/components/checkbox) when the choice is part of a form that requires explicit submission, or when multiple items can be selected at once. Use a Switch when the action takes immediate effect.
 </Note>
 
 ## When to use
@@ -67,7 +67,7 @@ The switch is composed of a toggle control (track + dot) and an optional label. 
 A switch has four interactive states: **default** (off), **checked** (on), **focused**, and **disabled**. Hover adds a subtle background when `background-on-hover` is enabled. The disabled state prevents all interaction and dims the control to signal it is unavailable.
 
 <Note>
-  You should pair a switch with a visible text label unless the context makes the purpose unmistakably clear (for example, a dark-mode toggle adjacent to sun and moon icons). Unlabeled switches are inaccessible by default.
+  Always pair a switch with a visible text label unless the context makes the purpose unmistakably clear (for example, a dark-mode toggle adjacent to sun and moon icons). Unlabeled switches are inaccessible by default.
 </Note>
 
 ### Inner label
@@ -334,7 +334,7 @@ Use the `icon-on` and `icon-off` slots to replace the default check and X marks.
 </CodeLivePreview>
 
 <Tip>
-  The icon size should be consistent with the switch size.
+  Mind the icon size. It should be consistent with the switch size.
 </Tip>
 
 ### Reverse order
@@ -653,7 +653,7 @@ Use `full-width` with `reverse-order` and `justify-content="space-between"` to b
 
 `bq-switch` participates in native forms through `ElementInternals`. A checked switch submits `"on"` for its `name`; an unchecked switch is omitted from `FormData`.
 
-A required switch blocks form submission until it is ON, and `form-validation-message` sets the text of the native validation bubble. You should set `required` only when the form cannot continue unless the switch is ON.
+A required switch blocks form submission until it is ON, and `form-validation-message` sets the text of the native validation bubble. Set `required` only when the form cannot continue unless the switch is ON.
 
 <Tip>
   Consent belongs on `bq-checkbox` with `required`. A required choice between named options belongs on `bq-radio-group` with `required`. A required switch should always carry `form-validation-message`.
@@ -874,70 +874,70 @@ A required switch blocks form submission until it is ON, and `form-validation-me
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    You should use concise, present-tense labels that clearly describe the result of the switch being on. "Enable notifications" or "Dark mode" communicate the outcome at a glance.
+    Use concise, present-tense labels that clearly describe the result of the switch being on. "Enable notifications" or "Dark mode" communicate the outcome at a glance.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    You should not use vague labels like "Toggle" or "On/Off". Users should not need to think about what the switch controls, so the label should describe the setting itself.
+    Use vague labels like "Toggle" or "On/Off". Users should not need to think about what the switch controls — the label must describe the setting itself.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    A switch should apply its effect immediately without requiring a submit action. Use this pattern for preferences that take effect in real time — dark mode, notifications, or feature flags.
+    Apply the switch's effect immediately without requiring a submit action. Use this pattern for preferences that take effect in real time — dark mode, notifications, or feature flags.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    You should not use a switch when the change only takes effect after the user clicks a Save button. If the state is not immediately applied, use a checkbox inside a form instead.
+    Use a switch when the change only takes effect after the user clicks a Save button. If the state is not immediately applied, use a checkbox inside a form instead.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    You should use `inner-label="icon"` to supplement the color change with a shape cue (check / X). This improves the control for users with color vision deficiencies who cannot rely on brand color alone.
+    Use `inner-label="icon"` to supplement the color change with a shape cue (check / X). This improves the control for users with color vision deficiencies who cannot rely on brand color alone.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    You must not rely solely on the track color to communicate the ON state. At least one additional cue, such as dot position or an icon, must distinguish the two states.
+    Rely solely on the track color to communicate the ON state. Always ensure that at least one additional cue — dot position or icon — distinguishes the two states.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    You should place the label directly adjacent to the switch and keep the pairing stable across the list. Consistent label position helps users scan a settings panel without searching for the control.
+    Place the label directly adjacent to the switch and keep the pairing stable across the list. Consistent label position helps users scan a settings panel without searching for the control.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    You should not change the label text based on state (for example, "Enabled" when on and "Disabled" when off). The label should always describe the setting; the control itself communicates the current state.
+    Don't change the label text based on state (for example, "Enabled" when on and "Disabled" when off). The label should always describe the setting; the control itself communicates the current state.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    You should use `bq-checkbox` with `required` for consent and `bq-radio-group` with `required` for a required choice between named options.
+    Use `bq-checkbox` with `required` for consent and `bq-radio-group` with `required` for a required choice between named options.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    You should not use a required switch as a consent or choose-one control. A switch that must be ON is a checkbox in disguise, and users read an OFF switch as a valid answer.
+    Don't use a required switch as a consent or choose-one control. A switch that must be ON is a checkbox in disguise, and users read an OFF switch as a valid answer.
   </Card>
 </CardGroup>
 

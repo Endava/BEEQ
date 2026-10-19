@@ -74,7 +74,7 @@ Choose [`bq-textarea`](/components/textarea) instead of `bq-input` when users en
   <img className="hidden dark:block" src="/components/images/input/input-anatomy-dark.svg" alt="BEEQ Input component anatomy" />
 </Frame>
 
-An input combines a persistent label with a single-line text field and optional supporting content. You should keep the label visible, use helper text for guidance or feedback, and treat placeholder text as an example rather than an instruction.
+An input combines a persistent label with a single-line text field and optional supporting content. Keep the label visible, use helper text for guidance or feedback, and treat placeholder text as an example rather than an instruction.
 
 | Part | Element | Description |
 |---|---|---|
@@ -114,16 +114,16 @@ Use this sequence when you define an input:
   </Step>
 
   <Step title="Write the label first">
-    Make the field purpose clear with a persistent label. You should use helper text for extra context and keep placeholder text for examples only.
+    Make the field purpose clear with a persistent label. Use helper text for extra context and keep placeholder text for examples only.
   </Step>
 
   <Step title="Support fast completion">
-    You should add semantic attributes such as `autocomplete`, `required`, and `pattern` only when they meaningfully improve completion or validation.
+    Add semantic attributes such as `autocomplete`, `required`, and `pattern` only when they meaningfully improve completion or validation.
   </Step>
 </Steps>
 
 <Note>
-  When the field has a value and `disable-clear` is not set, the component can surface a built-in clear action. You should not build a separate clear button for common text-entry cases.
+  When the field has a value and `disable-clear` is not set, the component can surface a built-in clear action. You do not need to build a separate clear button for common text-entry cases.
 </Note>
 
 ## Usage
@@ -1509,7 +1509,7 @@ Use this variant when the field does not require supplementary guidance.
 
 For `type="number"`, user-entered values are numbers in `value`, `bqInput.detail.value`, and `bqChange.detail.value`. Deleting all contents or using Clear sets the value to `''` and submits an empty string, not `"0"`. A deliberate numeric `0` satisfies `required` and supports the Clear action when clearing is enabled.
 
-An incomplete numeric entry, such as `-`, can also expose `''` while you type because the native number input has no complete numeric value yet. You should check for `''` before converting event values to numbers so an empty optional filter does not become a zero bound.
+An incomplete numeric entry, such as `-`, can also expose `''` while you type because the native number input has no complete numeric value yet. Check for `''` before converting event values to numbers so an empty optional filter does not become a zero bound.
 
 <CodeLivePreview mode="iframe" height="20.5rem" removePadding code={`
   <style>
@@ -1736,7 +1736,7 @@ An incomplete numeric entry, such as `-`, can also expose `''` while you type be
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    You should keep labels short, specific, and visible after users start typing.
+    Keep labels short, specific, and visible after users start typing.
   </Card>
 
   <Card>
@@ -1744,7 +1744,7 @@ An incomplete numeric entry, such as `-`, can also expose `''` while you type be
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    You must not rely on placeholder text as the only explanation of what the field is for.
+    Rely on placeholder text as the only explanation of what the field is for.
   </Card>
 
   <Card>
@@ -1752,7 +1752,7 @@ An incomplete numeric entry, such as `-`, can also expose `''` while you type be
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    You should write helper text that explains format, constraints, or what happens next in plain language.
+    Write helper text that explains format, constraints, or what happens next in plain language.
   </Card>
 
   <Card>
@@ -1760,7 +1760,7 @@ An incomplete numeric entry, such as `-`, can also expose `''` while you type be
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    You should not fill the space under the field with long, repetitive instructions users will skip.
+    Fill the space under the field with long, repetitive instructions users will skip.
   </Card>
 
   <Card>
@@ -1768,7 +1768,7 @@ An incomplete numeric entry, such as `-`, can also expose `''` while you type be
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    You should match field type, width, and ordering to the data people are expected to enter.
+    Match field type, width, and ordering to the data people are expected to enter.
   </Card>
 
   <Card>
@@ -1776,7 +1776,7 @@ An incomplete numeric entry, such as `-`, can also expose `''` while you type be
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    You should not make users jump across multiple columns or guess which fields belong together.
+    Make users jump across multiple columns or guess which fields belong together.
   </Card>
 
   <Card>
@@ -1784,7 +1784,7 @@ An incomplete numeric entry, such as `-`, can also expose `''` while you type be
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    You should explain validation close to the field and tell users how to recover from an error.
+    Explain validation close to the field and tell users how to recover from an error.
   </Card>
 
   <Card>
@@ -1792,7 +1792,7 @@ An incomplete numeric entry, such as `-`, can also expose `''` while you type be
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    You must not use color alone to communicate validity or leave users guessing which format is required.
+    Use color alone to communicate validity or leave users guessing which format is required.
   </Card>
 </CardGroup>
 

@@ -14,7 +14,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 `bq-option` is a single selectable item inside a list-based UI control such as a dropdown, select, or navigation menu. It manages its own focused, selected, and disabled states, and communicates user interactions back to the parent through events.
 
 <Note>
-  You must place standalone options in `bq-option-list`, or use them as direct children of `bq-select`. A nested `bq-select` manages the tree semantics, selection state, and checkboxes for its options.
+  Place standalone options in `bq-option-list`, or use them as direct children of `bq-select`. A nested `bq-select` manages the tree semantics, selection state, and checkboxes for its options.
 </Note>
 
 ## When to use
@@ -55,10 +55,10 @@ Choose [`bq-option`](/components/option) for a single selectable item, [`bq-opti
     An icon to the left of the label visually categorizes the item. Use when the list contains many entries and users benefit from a quick visual scan.
   </Card>
   <Card title="Label + suffix icon">
-    An icon to the right of the label signals a secondary function — such as an external link, a shortcut key, or a status indicator. You should use it sparingly so it does not compete with the primary label.
+    An icon to the right of the label signals a secondary function — such as an external link, a shortcut key, or a status indicator. Use sparingly so it does not compete with the primary label.
   </Card>
   <Card title="Nested parent">
-    A parent option contains related child options. You should use this pattern only inside a multiple `bq-select`, where the Select manages cascading, mixed state, and keyboard tree navigation.
+    A parent option contains related child options. Use this pattern only inside a multiple `bq-select`, where the Select manages cascading, mixed state, and keyboard tree navigation.
   </Card>
 </CardGroup>
 
@@ -117,13 +117,13 @@ Place prefix icons when the list is long and icon-based scanning helps users fin
     Use when the right-aligned indicator is the primary reason for the icon — for example, a link-out arrow that tells users this option opens a new page.
   </Step>
   <Step title="Prefix and suffix">
-    Acceptable for rich option lists where both a category icon (prefix) and a status indicator (suffix) genuinely add value. You should not overuse this combination — it can make the list feel dense.
+    Acceptable for rich option lists where both a category icon (prefix) and a status indicator (suffix) genuinely add value. Avoid overusing this combination — it can make the list feel dense.
   </Step>
 </Steps>
 
 ### Nested parent options
 
-Use `expanded` and the `options` slot to define a branch. Inside a nested `bq-select`, you must not manage `selected`, `indeterminate`, or `checkbox` on the parent yourself: Select keeps those states in sync with the canonical `value`.
+Use `expanded` and the `options` slot to define a branch. Inside a nested `bq-select`, do not manage `selected`, `indeterminate`, or `checkbox` on the parent yourself: Select keeps those states in sync with the canonical `value`.
 
 The parent can show a label beside its expand control through `expand-label`. `show-selection-summary` controls the generated summary; customise its complete and partial text with `all-selected-label` and `selected-count-label`. The latter replaces `{count}` with the number of selected selectable descendants.
 
@@ -708,7 +708,7 @@ Set `selected` on the option that reflects the current active value. The compone
 Set `checkbox` to render a checkbox inside a standalone option list. Use `selected` to reflect an initial checked state.
 
 <Note>
-  Inside a flat [Select](/components/select), you should set `multiple` and `enable-checkboxes` on Select instead. Select applies checkbox presentation to its options. Nested multiple Selects always render checkboxes.
+  Inside a flat [Select](/components/select), set `multiple` and `enable-checkboxes` on Select instead. Select applies checkbox presentation to its options. Nested multiple Selects always render checkboxes.
 </Note>
 
 <CodeLivePreview mode="shadow" code={`
@@ -1079,7 +1079,7 @@ Set `hidden` on an option to remove it from the visible list and the accessibili
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    must provide a `value` attribute on each option so the parent component can identify which item was selected.
+    Always provide a `value` attribute on each option so the parent component can identify which item was selected.
   </Card>
 
   <Card>
@@ -1087,7 +1087,7 @@ Set `hidden` on an option to remove it from the visible list and the accessibili
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    must not omit the `value` attribute. Without it, the parent `bq-option-list` or select-like component cannot distinguish which option the user chose.
+    Omit the `value` attribute. Without it, the parent `bq-option-list` or select-like component cannot distinguish which option the user chose.
   </Card>
 
   <Card>
@@ -1095,7 +1095,7 @@ Set `hidden` on an option to remove it from the visible list and the accessibili
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should use `disabled` for options that are temporarily unavailable in the current context — keeping them visible signals that the feature exists.
+    Use `disabled` for options that are temporarily unavailable in the current context — keeping them visible signals that the feature exists.
   </Card>
 
   <Card>
@@ -1103,7 +1103,7 @@ Set `hidden` on an option to remove it from the visible list and the accessibili
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not use `hidden` as a permanent way to remove an option. If an option is never relevant for the user, remove it from the DOM entirely instead.
+    Use `hidden` as a permanent way to remove an option. If an option is never relevant for the user, remove it from the DOM entirely instead.
   </Card>
 
   <Card>
@@ -1111,7 +1111,7 @@ Set `hidden` on an option to remove it from the visible list and the accessibili
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should keep option labels short and descriptive — one to four words that clearly identify the action or destination.
+    Keep option labels short and descriptive — one to four words that clearly identify the action or destination.
   </Card>
 
   <Card>
@@ -1119,7 +1119,7 @@ Set `hidden` on an option to remove it from the visible list and the accessibili
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not write long sentences as option labels. Long labels break the visual rhythm of the list and make scanning harder.
+    Write long sentences as option labels. Long labels break the visual rhythm of the list and make scanning harder.
   </Card>
 
   <Card>
@@ -1127,7 +1127,7 @@ Set `hidden` on an option to remove it from the visible list and the accessibili
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should use consistent icon placement across all options in the same list — either all with prefix icons or all without.
+    Use consistent icon placement across all options in the same list — either all with prefix icons or all without.
   </Card>
 
   <Card>
@@ -1135,7 +1135,7 @@ Set `hidden` on an option to remove it from the visible list and the accessibili
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not mix options with icons and options without icons in the same list — the uneven spacing makes the list look misaligned.
+    Mix options with icons and options without icons in the same list — the uneven spacing makes the list look misaligned.
   </Card>
 </CardGroup>
 

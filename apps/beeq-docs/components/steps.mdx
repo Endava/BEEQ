@@ -83,34 +83,34 @@ Steps are composed of a label or prefix, title, optional description, and divide
     imageLightSrc="/components/images/steps/steps-type-light.svg"
     imageDarkSrc="/components/images/steps/steps-type-dark.svg"
   >
-    A page should use one steps type. Mixing dots, numbers, and icons in the same view makes the process harder to follow.
+    Use one steps type per page. Mixing dots, numbers, and icons in the same view makes the process harder to follow.
   </CardTile>
   <CardTile
     title="Show current status"
     imageLightSrc="/components/images/steps/steps-status-light.svg"
     imageDarkSrc="/components/images/steps/steps-status-dark.svg"
   >
-    The current step must be distinguishable from completed and remaining steps. You must not use color as the only signal; combine it with status, text, and icon changes.
+    The current step must be distinguishable from completed and remaining steps. Don't use color as the only signal; combine it with status, text, and icon changes.
   </CardTile>
   <CardTile
     title="Keep flows manageable"
     imageLightSrc="/components/images/steps/steps-manageable-flow-light.svg"
     imageDarkSrc="/components/images/steps/steps-manageable-flow-dark.svg"
   >
-    Processes should stay concise. Long forms are easier to complete when the step count stays focused and predictable.
+    Keep processes concise. Long forms are easier to complete when the step count stays focused and predictable.
   </CardTile>
   <CardTile
     title="Pick the right orientation"
     imageLightSrc="/components/images/steps/steps-orientation-light.svg"
     imageDarkSrc="/components/images/steps/steps-orientation-dark.svg"
   >
-    Steps should use the horizontal orientation for left-to-right progression. Steps should use the vertical orientation when horizontal space is limited or when descriptions need more room.
+    Use horizontal steps for left-to-right progression. Use vertical steps when horizontal space is limited or when descriptions need more room.
   </CardTile>
 </CardGroup>
 
 ### Label and icon
 
-Labels describe each step, while icons provide visual cues. Titles should be meaningful, and icons should be reserved for cases where the symbol helps users understand the action or context.
+Labels describe each step, while icons provide visual cues. Use meaningful titles and reserve icons for cases where the symbol helps users understand the action or context.
 
 ## Usage
 
@@ -522,7 +522,7 @@ The current step must be visually distinct from completed and remaining steps.
 **Allowed `status` values:** `default` (default), `current`, `completed`, `error`, `disabled`. Set `status` on `bq-step-item`, not on `bq-steps`.
 
 <Tip>
-  You should apply the status to the `bq-step-item` element. This ensures that the entire step, including the label and description, reflects the current state.
+  The status should be applied to the `bq-step-item` element. This ensures that the entire step, including the label and description, reflects the current state.
 </Tip>
 
 | Status | Description |
@@ -866,7 +866,7 @@ Use `orientation="vertical"` when the process should unfold from top to bottom o
 </CodeLivePreview>
 
 <Tip>
-  Vertical steps adapt to the height of their container. The container holding the steps must have enough block size to allow the divider to span the desired area.
+  Vertical steps adapt to the height of their container. You must ensure that the container holding the steps has enough block size to allow the divider to span the desired area.
 </Tip>
 
 ### Size and divider color
@@ -1014,56 +1014,56 @@ Use `size="small"` in compact layouts. Use `divider-color` with a declarative co
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should use one steps component per page so the process stays clear and cohesive.
+    Use one steps component per page so the process stays clear and cohesive.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not use multiple steppers in the same view because they can compete for attention and disrupt the flow.
+    Avoid multiple steppers in the same view because they can compete for attention and disrupt the flow.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should write labels that describe the task or destination for each step.
+    Write labels that describe the task or destination for each step.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not use labels that only repeat the status, such as current or completed.
+    Avoid labels that only repeat the status, such as current or completed.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should confirm progress with status, text, and icon changes after a step is completed.
+    Confirm progress with status, text, and icon changes after a step is completed.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    must not rely on color alone to communicate the state of a step.
+    Do not rely on color alone to communicate the state of a step.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should keep the number of steps manageable so users feel the process is achievable.
+    Keep the number of steps manageable so users feel the process is achievable.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not turn long or non-linear workflows into a single rigid step sequence.
+    Avoid turning long or non-linear workflows into a single rigid step sequence.
   </Card>
 </CardGroup>
 

@@ -13,7 +13,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 `bq-option-list` is the required wrapper for `bq-option` and `bq-option-group` elements. It sets the `role="listbox"` context, handles keyboard and click events from child options, and emits a single `bqSelect` event with the selected item's value back to the parent component.
 
 <Note>
-  `bq-option-list` is a structural container — it does not render any visible UI of its own. It is used internally by higher-level components such as `bq-select` and `bq-dropdown`. You should use it directly only when you are building a custom listbox-based control.
+  `bq-option-list` is a structural container — it does not render any visible UI of its own. It is used internally by higher-level components such as `bq-select` and `bq-dropdown`. Use it directly only when you are building a custom listbox-based control.
 </Note>
 
 ## When to use
@@ -84,7 +84,7 @@ Choose [`bq-option`](/components/option) for a single selectable item, [`bq-opti
 
 ### Vertical rhythm
 
-The gap between items is controlled by the `--bq-option-group--gapY-list` CSS custom property. The default is tight (`var(--bq-spacing-xs)`) to keep the list compact. You should increase it only when items are taller than a single text line or when the list is used in a context with generous surrounding whitespace.
+The gap between items is controlled by the `--bq-option-group--gapY-list` CSS custom property. The default is tight (`var(--bq-spacing-xs)`) to keep the list compact. Increase it only when items are taller than a single text line or when the list is used in a context with generous surrounding whitespace.
 
 ### Accessible label
 
@@ -346,7 +346,7 @@ Override `aria-label` when the default `"Options"` is too generic for the contex
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    must place `bq-option` and `bq-option-group` directly inside `bq-option-list` — the component listens for `bqClick` and `bqEnter` events from child options and will not receive them if additional wrapper elements break the event path.
+    Always place `bq-option` and `bq-option-group` directly inside `bq-option-list` — the component listens for `bqClick` and `bqEnter` events from child options and will not receive them if additional wrapper elements break the event path.
   </Card>
 
   <Card>
@@ -354,7 +354,7 @@ Override `aria-label` when the default `"Options"` is too generic for the contex
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    must not wrap options in arbitrary `<div>` or `<span>` elements inside the list. Non-option wrappers break the `bqClick`/`bqEnter` event delegation that `bq-option-list` relies on to emit `bqSelect`.
+    Wrap options in arbitrary `<div>` or `<span>` elements inside the list. Non-option wrappers break the `bqClick`/`bqEnter` event delegation that `bq-option-list` relies on to emit `bqSelect`.
   </Card>
 
   <Card>
@@ -362,7 +362,7 @@ Override `aria-label` when the default `"Options"` is too generic for the contex
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should override `aria-label` with a descriptive phrase when the list is not the only `role="listbox"` on the page or when the default `"Options"` does not communicate the list's purpose.
+    Override `aria-label` with a descriptive phrase when the list is not the only `role="listbox"` on the page or when the default `"Options"` does not communicate the list's purpose.
   </Card>
 
   <Card>
@@ -370,7 +370,7 @@ Override `aria-label` when the default `"Options"` is too generic for the contex
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not leave the default `aria-label="Options"` on multiple lists within the same view without making each one contextually unique — screen reader users navigating by landmark will see identical labels and cannot tell the lists apart.
+    Leave the default `aria-label="Options"` on multiple lists within the same view without making each one contextually unique — screen reader users navigating by landmark will see identical labels and cannot tell the lists apart.
   </Card>
 
   <Card>
@@ -378,7 +378,7 @@ Override `aria-label` when the default `"Options"` is too generic for the contex
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should listen to the `bqSelect` event on `bq-option-list` rather than individual `bqClick` events on each `bq-option`. The list normalises both click and Enter-key activations into a single `bqSelect` event with a consistent `{ value, item }` payload.
+    Listen to the `bqSelect` event on `bq-option-list` rather than individual `bqClick` events on each `bq-option`. The list normalises both click and Enter-key activations into a single `bqSelect` event with a consistent `{ value, item }` payload.
   </Card>
 
   <Card>
@@ -386,7 +386,7 @@ Override `aria-label` when the default `"Options"` is too generic for the contex
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not attach separate `bqClick` listeners to every `bq-option` when you only need the selected value — `bq-option-list` already aggregates these and emitting redundant handlers increases the chance of inconsistent state.
+    Attach separate `bqClick` listeners to every `bq-option` when you only need the selected value — `bq-option-list` already aggregates these and emitting redundant handlers increases the chance of inconsistent state.
   </Card>
 
   <Card>
@@ -394,7 +394,7 @@ Override `aria-label` when the default `"Options"` is too generic for the contex
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should use `bq-option-group` to divide a long list into named sections when the number of items makes scanning difficult.
+    Use `bq-option-group` to divide a long list into named sections when the number of items makes scanning difficult.
   </Card>
 
   <Card>
@@ -402,7 +402,7 @@ Override `aria-label` when the default `"Options"` is too generic for the contex
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not render dozens of flat options without any grouping. An ungrouped list longer than around eight items becomes hard to scan — users have to read every item individually rather than jumping to the relevant category.
+    Render dozens of flat options without any grouping. An ungrouped list longer than around eight items becomes hard to scan — users have to read every item individually rather than jumping to the relevant category.
   </Card>
 </CardGroup>
 

@@ -80,23 +80,23 @@ Page titles combine a required H1 with optional supporting slots. This makes it 
 
 ## Design guidelines
 
-The page title component already renders the main title inside an `h1`. You must use it for the primary page heading and must not use it for lower-level section labels.
+The page title component already renders the main title inside an `h1`. Use it for the primary page heading, not for lower-level section labels.
 Follow this sequence when you define a page title:
 
 <Steps>
   <Step title="Write the title first">
-    You should start with the shortest heading that clearly identifies the page. The main title should confirm location immediately without sounding like a sentence.
+    Start with the shortest heading that clearly identifies the page. The main title should confirm location immediately without sounding like a sentence.
   </Step>
   <Step title="Add context only when needed">
-    You should use the subtitle for clarifying details that help users act or understand scope. If the subtitle repeats the title, you should remove it.
+    Use the subtitle for clarifying details that help users act or understand scope. If the subtitle repeats the title, remove it.
   </Step>
   <Step title="Keep actions focused">
-    You should place only page-level actions in the suffix area. If the title bar starts competing with the page content, you should reduce or relocate the actions.
+    Only place page-level actions in the suffix area. If the title bar starts competing with the page content, reduce or relocate the actions.
   </Step>
 </Steps>
 
 <Warning>
-  You must use `bq-page-title` once per page view and only at the top of the main content area. Placing it inside cards, panels, or repeating list items creates multiple `h1` elements on the same page, which breaks heading hierarchy for screen readers.
+  Use `bq-page-title` once per page view and only at the top of the main content area. Placing it inside cards, panels, or repeating list items creates multiple `h1` elements on the same page, which breaks heading hierarchy for screen readers.
 </Warning>
 
 ## Usage
@@ -606,56 +606,56 @@ Use the suffix slot when the title area needs page-level actions such as edit or
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should use the page title for the main page heading so people can understand location immediately.
+    Use the page title for the main page heading so people can understand location immediately.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    must not use the component for lower-level section labels that belong inside the page content.
+    Do not use the component for lower-level section labels that should remain inside the page content.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should keep the title concise and use the subtitle only when it adds real context.
+    Keep the title concise and use the subtitle only when it adds real context.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not repeat the same message across the title and subtitle or turn the header into a paragraph.
+    Do not repeat the same message across the title and subtitle or turn the header into a paragraph.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should use the back slot for clear return navigation when the page belongs to a nested flow.
+    Use the back slot for clear return navigation when the page belongs to a nested flow.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not add decorative icons that look like actions but have no clear purpose.
+    Do not add decorative icons that look like actions but have no clear purpose.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should limit suffix actions to the page-level controls users are most likely to need right away.
+    Keep suffix actions limited to the page-level controls users are most likely to need right away.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not overload the title area with too many actions or controls that compete with the heading itself.
+    Do not overload the title area with too many actions or controls that compete with the heading itself.
   </Card>
 </CardGroup>
 

@@ -14,7 +14,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 Empty states appear when a section, page, or workflow has nothing to show, whether no content exists yet or it failed to load. A good empty state explains the situation, reduces uncertainty, and helps people recover by pointing them toward the next meaningful action.
 
 <Note>
-  You should use empty states when the absence of content is meaningful enough to deserve guidance, including a region that failed to load and needs a retry. While content is still loading, you should use a spinner or skeleton instead.
+  Use empty states when the absence of content is meaningful enough to deserve guidance, including a region that failed to load and needs a retry. While content is still loading, use a spinner or skeleton instead.
 </Note>
 
 ## When to use
@@ -45,10 +45,10 @@ Empty states appear when a section, page, or workflow has nothing to show, wheth
 
 <CardGroup cols={2}>
   <CardTile title="With icon">
-    You should use an icon when a compact, symbolic visual is enough to communicate the empty state quickly and keep the message lightweight.
+    Use an icon when a compact, symbolic visual is enough to communicate the empty state quickly and keep the message lightweight.
   </CardTile>
   <CardTile title="Illustration">
-    You should use an illustration when a more expressive or context-rich visual helps people understand the situation and feel guided toward the next step.
+    Use an illustration when a more expressive or context-rich visual helps people understand the situation and feel guided toward the next step.
   </CardTile>
 </CardGroup>
 
@@ -75,27 +75,27 @@ Use empty states to orient people quickly, explain why nothing is shown, and mak
 
 <CardGroup cols={2}>
   <CardTile title="Choose the right visual weight">
-    You should use an icon for simpler product moments and a richer illustration only when it adds meaningful context to the empty state.
+    Use an icon for simpler product moments and a richer illustration only when it adds meaningful context to the empty state.
   </CardTile>
   <CardTile title="Keep recovery obvious">
-    You should pair the message with one clear next action when people need help creating, finding, or restoring content.
+    Pair the message with one clear next action when people need help creating, finding, or restoring content.
   </CardTile>
 </CardGroup>
 
 <Steps>
   <Step title="Start with the reason">
-    You should explain what is missing or unavailable before telling people what they can do next.
+    Explain what is missing or unavailable before telling people what they can do next.
   </Step>
   <Step title="Add only necessary detail">
-    You should use a short description when the title alone is not enough to reduce uncertainty or guide the next action.
+    Use a short description when the title alone is not enough to reduce uncertainty or guide the next action.
   </Step>
   <Step title="Match the scale to the layout">
-    You should use `small`, `medium`, or `large` based on the available space and the prominence the empty moment needs.
+    Use `small`, `medium`, or `large` based on the available space and the prominence the empty moment needs.
   </Step>
 </Steps>
 
 <Note>
-  You should center the empty state within the available area when it represents the main content of the page or section, so the message is easy to notice without competing with unrelated UI.
+  Center the empty state within the available area when it represents the main content of the page or section, so the message is easy to notice without competing with unrelated UI.
 </Note>
 
 ## Usage
@@ -256,7 +256,7 @@ Use body content when the empty state needs a short explanation or a little more
 
 ### With call to action
 
-Use the footer when the empty state should help people recover immediately. You should use one primary action. Add a secondary action only when it offers a clearly different path.
+Use the footer when the empty state should help people recover immediately. Prefer one primary action. Add a secondary action only when it offers a clearly different path.
 
 <CodeLivePreview mode="shadow" code={`
   <style>
@@ -459,7 +459,7 @@ Use the footer when the empty state should help people recover immediately. You 
 </CodeLivePreview>
 
 <Warning>
-  You should not overload an empty state with many equal-priority actions. If people need several next steps, pick the primary recovery path and move secondary options elsewhere.
+  Do not overload an empty state with many equal-priority actions. If people need several next steps, pick the primary recovery path and move secondary options elsewhere.
 </Warning>
 
 ### Error with retry
@@ -558,56 +558,56 @@ Choose size based on the available space and the prominence of the moment. `medi
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should combine a clear title with a short description when people need extra context. A title alone is often not enough to guide recovery.
+    Combine a clear title with a short description when people need extra context. A title alone is often not enough to guide recovery.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not leave people with a vague message that explains nothing beyond the fact that the page is empty.
+    Do not leave people with a vague message that explains nothing beyond the fact that the page is empty.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should use one clear primary [Button](/components/button) or link to show the most useful next step.
+    Use one clear primary [Button](/components/button) or link to show the most useful next step.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not add too many competing calls to action. Too many choices weaken the guidance the empty state is supposed to provide.
+    Do not add too many competing calls to action. Too many choices weaken the guidance the empty state is supposed to provide.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should use a representative icon or illustration and place the empty state where it is easy to notice, usually centered within the available space.
+    Use a representative icon or illustration and place the empty state where it is easy to notice, usually centered within the available space.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not use decorative art that suggests the wrong situation or distracts from the actual message.
+    Do not use decorative art that suggests the wrong situation or distracts from the actual message.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should match the empty state size to the available layout so the message feels intentional instead of oversized or easy to miss.
+    Match the empty state size to the available layout so the message feels intentional instead of oversized or easy to miss.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not use a full-page large empty state inside a compact panel or card where it overwhelms the surrounding layout.
+    Do not use a full-page large empty state inside a compact panel or card where it overwhelms the surrounding layout.
   </Card>
 </CardGroup>
 

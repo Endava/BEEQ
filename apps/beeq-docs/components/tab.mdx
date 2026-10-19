@@ -14,7 +14,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 Tabs let users navigate between related sections of content within the same page or view. Each tab reveals one panel at a time, keeping the interface clean while making multiple content sections available without navigation.
 
 <Note>
-  `bq-tab` must be placed inside a `bq-tab-group`. The group manages tab state, keyboard navigation, and propagates `size`, `orientation`, and `placement` to all child tabs automatically.
+  `bq-tab` must always be placed inside a `bq-tab-group`. The group manages tab state, keyboard navigation, and propagates `size`, `orientation`, and `placement` to all child tabs automatically.
 </Note>
 
 ## When to use
@@ -80,7 +80,7 @@ The tab group renders a list of tab buttons inside a scrollable container. Each 
     imageLightSrc="/components/images/tab/tab-orientation-vertical-light.svg"
     imageDarkSrc="/components/images/tab/tab-orientation-vertical-dark.svg"
   >
-    Tabs are stacked in a column to the left or right of the content area. You should use it when there are many tabs or when the layout is sidebar-based.
+    Tabs are stacked in a column to the left or right of the content area. Use when there are many tabs or when the layout is sidebar-based.
   </CardTile>
 </CardGroup>
 
@@ -89,9 +89,9 @@ The tab group renders a list of tab buttons inside a scrollable container. Each 
 ### Size
 
 <Steps>
-  <Step title="small">Compact tabs with reduced padding. You should use it in dense interfaces or data-heavy views where space is constrained.</Step>
+  <Step title="small">Compact tabs with reduced padding. Use in dense interfaces or data-heavy views where space is constrained.</Step>
   <Step title="medium">The default size. Appropriate for most applications and standard-density layouts.</Step>
-  <Step title="large">Prominent tabs with increased padding. You should use it when tabs are a primary navigation element or accessibility requires larger touch targets.</Step>
+  <Step title="large">Prominent tabs with increased padding. Use when tabs are a primary navigation element or accessibility requires larger touch targets.</Step>
 </Steps>
 
 **Allowed `size` values:** `small`, `medium` (default), `large`.
@@ -688,7 +688,7 @@ import { BqTab, BqTabGroup } from "@beeq/vue";
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should keep tab labels short and parallel — prefer noun phrases like "Overview", "Details", or "Settings" rather than full sentences.
+    Keep tab labels short and parallel — prefer noun phrases like "Overview", "Details", or "Settings" rather than full sentences.
   </Card>
 
   <Card>
@@ -696,7 +696,7 @@ import { BqTab, BqTabGroup } from "@beeq/vue";
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not use tabs with only one or two items — a single visible section or a toggle is simpler and less visually heavy.
+    Don't use tabs with only one or two items — a single visible section or a toggle is simpler and less visually heavy.
   </Card>
 
   <Card>
@@ -704,7 +704,7 @@ import { BqTab, BqTabGroup } from "@beeq/vue";
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    must provide a `controls` attribute on each `bq-tab` pointing to the `id` of its associated panel element to meet ARIA requirements.
+    Always provide a `controls` attribute on each `bq-tab` pointing to the `id` of its associated panel element to meet ARIA requirements.
   </Card>
 
   <Card>
@@ -712,7 +712,7 @@ import { BqTab, BqTabGroup } from "@beeq/vue";
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not mix tabs of different sizes in the same tab group. Set `size` on `bq-tab-group` and let it propagate uniformly.
+    Don't mix tabs of different sizes in the same tab group. Set `size` on `bq-tab-group` and let it propagate uniformly.
   </Card>
 
   <Card>
@@ -720,7 +720,7 @@ import { BqTab, BqTabGroup } from "@beeq/vue";
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should use consistent tab labels across your interface — if some tabs have icons, apply icons to all tabs in the same group.
+    Use consistent tab labels across your interface — if some tabs have icons, apply icons to all tabs in the same group.
   </Card>
 
   <Card>
@@ -728,7 +728,7 @@ import { BqTab, BqTabGroup } from "@beeq/vue";
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    must not use tabs for actions or commands. Tabs are for navigation between content views, not for triggering operations like "Save" or "Delete".
+    Don't use tabs for actions or commands. Tabs are for navigation between content views, not for triggering operations like "Save" or "Delete".
   </Card>
 
   <Card>
@@ -736,7 +736,7 @@ import { BqTab, BqTabGroup } from "@beeq/vue";
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should choose the orientation that matches your layout — use horizontal tabs for top-of-content placement and vertical tabs for sidebar-style navigation.
+    Choose the orientation that matches your layout — use horizontal tabs for top-of-content placement and vertical tabs for sidebar-style navigation.
   </Card>
 
   <Card>
@@ -744,7 +744,7 @@ import { BqTab, BqTabGroup } from "@beeq/vue";
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    must not rely solely on the active-indicator underline for visual differentiation — the active tab label must also have sufficient color contrast.
+    Don't rely solely on the active-indicator underline for visual differentiation — ensure sufficient color contrast on the active tab label as well.
   </Card>
 </CardGroup>
 

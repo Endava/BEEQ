@@ -13,7 +13,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 Icons help people scan and understand an interface faster. Use them to support actions, labels, and status cues, but keep them purposeful so they clarify meaning instead of adding noise.
 
 <Note>
-  Named BEEQ icons are loaded from SVG files. Before using them in an app, you must make those assets publicly available and configure `setBasePath()` to point to that directory.
+  Named BEEQ icons are loaded from SVG files. Before using them in an app, make sure those assets are publicly available and that you configure `setBasePath()` to point to that directory.
 
   Icon setup depends on your stack and build tool. See the **Configure icons** step in your framework guide ([For developers](/getting-started/for-developers) lists all paths).
 </Note>
@@ -76,10 +76,10 @@ Use icons deliberately so they reinforce meaning without becoming decoration for
 
 <Steps>
   <Step title="Start with meaning">
-    You should choose an icon only when the metaphor is widely recognizable. If the symbol is ambiguous, you must pair it with visible text.
+    Choose an icon only when the metaphor is widely recognizable. If the symbol is ambiguous, pair it with visible text.
   </Step>
   <Step title="Match size to context">
-    Smaller icons work for supporting cues, while medium icons are the standard choice for most interface controls. You should reserve larger icons for moments like empty states or strong emphasis.
+    Smaller icons work for supporting cues, while medium icons are the standard choice for most interface controls. Larger icons should be reserved for moments like empty states or strong emphasis.
   </Step>
   <Step title="Keep alignment and color consistent">
     Center icons visually with nearby text and use colors that match the meaning already established across the product.
@@ -87,7 +87,7 @@ Use icons deliberately so they reinforce meaning without becoming decoration for
 </Steps>
 
 <Note>
-  You should not use small icons as the only interactive target. If the icon triggers an action, the clickable area should be comfortably large, or you should use an icon button pattern instead.
+  Do not use small icons as the only interactive target. If the icon triggers an action, make sure the clickable area is comfortably large, or use an icon button pattern instead.
 </Note>
 
 ## Usage
@@ -266,7 +266,7 @@ An icon inherits color from its parent by default, but you can also assign a tok
 </CodeLivePreview>
 
 <Warning>
-  The `color` value must be a valid BEEQ token. You must not rely on color alone to communicate status or intent.
+  The `color` value must be a valid BEEQ token. Do not rely on color alone to communicate status or intent.
 </Warning>
 
 ## Options
@@ -348,7 +348,7 @@ Use icon-name suffixes like `-thin`, `-light`, `-bold`, `-duotone`, and `-fill` 
 </CodeLivePreview>
 
 <Warning>
-  The `weight` prop is deprecated. You should put the style directly into the icon name, such as `heart-fill`.
+  The `weight` prop is deprecated. Prefer putting the style directly into the icon name, such as `heart-fill`.
 </Warning>
 
 ### Custom SVG source
@@ -415,7 +415,7 @@ Use `src` when you want to load a custom icon from a local or CORS-enabled endpo
 </CodeLivePreview>
 
 <Tip>
-  When you use `src`, you must provide `label`. Unlike named icons, a custom SVG source does not give the component a useful fallback name.
+  When you use `src`, always provide `label`. Unlike named icons, a custom SVG source does not give the component a useful fallback name.
 </Tip>
 
 ### Explore icons
@@ -526,56 +526,56 @@ The Phosphor library gives you a broad icon set. The example below shows only a 
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should use one clear icon per concept so the meaning stays easy to recognize.
+    Use one clear icon per concept so the meaning stays easy to recognize.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not use multiple icon variations for the same concept in one product.
+    Do not use multiple icon variations for the same concept in one product.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should pair icons with text when the action or meaning may not be obvious on its own.
+    Pair icons with text when the action or meaning may not be obvious on its own.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    must not rely on a symbol alone when users might have to guess what it means.
+    Do not rely on a symbol alone when users might have to guess what it means.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should keep icons aligned with nearby text and controls so the layout feels balanced.
+    Keep icons aligned with nearby text and controls so the layout feels balanced.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not mix unrelated icon sizes and styles without a clear visual reason.
+    Do not mix unrelated icon sizes and styles without a clear visual reason.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    should use color to reinforce meaning only after the icon choice itself is already understandable.
+    Use color to reinforce meaning only after the icon choice itself is already understandable.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    should not use decorative or inconsistent colors that suggest the wrong status or action.
+    Do not use decorative or inconsistent colors that suggest the wrong status or action.
   </Card>
 </CardGroup>
 
