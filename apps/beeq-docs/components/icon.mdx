@@ -584,10 +584,10 @@ The Phosphor library gives you a broad icon set. The example below shows only a 
 - `bq-icon` renders with `role="img"` and applies an `aria-label` automatically.
 - If you provide `label`, that value becomes the accessible name.
 - For named icons without a `label`, the component falls back to `"[name] icon"`, such as `"bell-ringing icon"`.
-- For custom SVG icons loaded through `src`, you MUST add `label` explicitly so assistive technologies get a meaningful name.
-- When an icon is ambiguous, you MUST pair it with visible text instead of expecting the symbol alone to carry the meaning.
-- For icon-only interactive patterns, you SHOULD add a `bq-tooltip` so keyboard and pointer users get a visible label. Tooltips are not reliably discoverable on touch devices, so you SHOULD use a visible text label where possible.
-- You SHOULD choose icons with widely recognized metaphors: a magnifying glass for search, a heart for favorites, a plus for add actions.
+- For custom SVG icons loaded through `src`, you must add `label` explicitly so assistive technologies get a meaningful name.
+- When an icon is ambiguous, you must pair it with visible text instead of expecting the symbol alone to carry the meaning.
+- For icon-only interactive patterns, you should add a `bq-tooltip` so keyboard and pointer users get a visible label. Tooltips are not reliably discoverable on touch devices, so you SHOULD use a visible text label where possible.
+- Choose icons with widely recognized metaphors: a magnifying glass for search, a heart for favorites, a plus for add actions.
 
 <Visibility for="agents">
   Accessibility rules for `bq-icon`. Keywords follow RFC 2119 and summarize the Accessibility section above.

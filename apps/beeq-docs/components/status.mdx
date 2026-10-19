@@ -397,10 +397,10 @@ Use `type="success"` when the state confirms a positive outcome.
 ## Accessibility
 
 - `bq-status` unconditionally renders with `role="status"` on its wrapper element, so assistive technologies always treat it as a live status message regardless of the `type` prop.
-- You MUST provide a text label. The colored dot is supportive, not sufficient on its own.
-- Labels SHOULD be short and specific so status changes remain easy to understand when announced.
-- This component is informational, not interactive. If users need to act on the message, you SHOULD pair it with a separate button or link.
-- The label MUST keep sufficient contrast with its background and remain readable in tables, cards, and dense data views.
+- You must provide a text label. The colored dot is supportive, not sufficient on its own.
+- Labels should be short and specific so status changes remain easy to understand when announced.
+- This component is informational, not interactive. If users need to act on the message, you should pair it with a separate button or link.
+- The label must keep sufficient contrast with its background and remain readable in tables, cards, and dense data views.
 
 <Visibility for="agents">
   Accessibility rules for `bq-status`. Keywords follow RFC 2119 and summarize the Accessibility section above.

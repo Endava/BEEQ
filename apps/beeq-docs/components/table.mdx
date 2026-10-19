@@ -1514,12 +1514,12 @@ BEEQ does not ship a pagination, sorting, filtering, or virtualization component
 
 ## Accessibility
 
-- You MUST provide a `<caption>` or `aria-label` on the `<table>` element so screen readers announce the table's purpose before reading the data.
-- You MUST use `<th>` elements with the correct `scope` attribute (`scope="col"` for column headers, `scope="row"` for row headers) so assistive technologies can map each cell to its headers.
-- You MUST keep the table structure semantic. You MUST NOT use a `<table>` for layout purposes.
-- You MUST give inline action elements inside cells (buttons, dropdowns) accessible labels, especially icon-only controls.
-- When a row selection changes UI state (such as opening a side panel), you MUST communicate that change programmatically, for example by managing focus or using a live region.
-- Built in: the `.selected` row styling uses `outline` rather than `border` so the selection indicator does not affect layout. There is no automatic ARIA state applied; you SHOULD add `aria-selected="true"` to the `<tr>` when the row is interactively selectable.
+- You must provide a `<caption>` or `aria-label` on the `<table>` element so screen readers announce the table's purpose before reading the data.
+- You must use `<th>` elements with the correct `scope` attribute (`scope="col"` for column headers, `scope="row"` for row headers) so assistive technologies can map each cell to its headers.
+- You must keep the table structure semantic. You must not use a `<table>` for layout purposes.
+- You must give inline action elements inside cells (buttons, dropdowns) accessible labels, especially icon-only controls.
+- When a row selection changes UI state (such as opening a side panel), you must communicate that change programmatically, for example by managing focus or using a live region.
+- Built in: the `.selected` row styling uses `outline` rather than `border` so the selection indicator does not affect layout. There is no automatic ARIA state applied; you should add `aria-selected="true"` to the `<tr>` when the row is interactively selectable.
 
 <Visibility for="agents">
   Accessibility rules for `bq-table`. Keywords follow RFC 2119 and summarize the Accessibility section above.

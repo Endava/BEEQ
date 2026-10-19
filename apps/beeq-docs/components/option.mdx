@@ -1153,9 +1153,9 @@ For flat options, `bq-option` sets `role="option"` and exposes `aria-selected`. 
 
 As a developer, you are responsible for:
 
-- **Choosing the right parent** — you MUST use `bq-option-list` for a standalone flat list, or `bq-select` for select options, and MUST NOT put options in an arbitrary container.
-- **Providing meaningful labels** — the text inside the default slot is read by screen readers as the option's accessible name. Options MUST include a visible text label and MUST NOT be icon-only.
-- **Keyboard navigation** — for a nested Select, the Select MUST handle `ArrowUp`, `ArrowDown`, `ArrowRight`, and `ArrowLeft`. You MUST NOT intercept these keys in your own handlers.
+- **Choosing the right parent** — you must use `bq-option-list` for a standalone flat list, or `bq-select` for select options, and must not put options in an arbitrary container.
+- **Providing meaningful labels** — the text inside the default slot is read by screen readers as the option's accessible name. Options must include a visible text label and must not be icon-only.
+- **Keyboard navigation** — for a nested Select, the Select must handle `ArrowUp`, `ArrowDown`, `ArrowRight`, and `ArrowLeft`. You must not intercept these keys in your own handlers.
 
 <Visibility for="agents">
   Accessibility rules for `bq-option`. Keywords follow RFC 2119 and summarize the Accessibility section above.

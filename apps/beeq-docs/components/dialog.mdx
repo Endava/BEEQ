@@ -1102,11 +1102,11 @@ Use this variant to confirm irreversible actions with clear messaging and focuse
 - **Built-in dialog semantics** — the component applies `aria-labelledby="bq-dialog--title"` and `aria-modal="true"` to the native `<dialog>` element, so assistive technology can identify it as a modal surface.
 - **Built-in close control labeling** — when the default close button is shown, it includes an accessible `label="Close"` and a decorative close icon marked with `aria-hidden="true"`.
 - **Built-in focus management** — the native `<dialog>` element automatically traps keyboard focus within the dialog while it is open (unless `disable-backdrop` is set, see below) and restores it to the previously focused element when the dialog closes.
-- **Provide a meaningful title** — the content you place in the `title` slot becomes the dialog's accessible label, so it MUST clearly describe the decision, task, or message.
-- **Include an explicit dismissal path** — if you hide the close button or disable outside dismissal, you MUST provide a clear cancel or close action in the footer.
-- **Preserve keyboard expectations** — you SHOULD keep <kbd>Esc</kbd> enabled for dismissible dialogs unless there is a strong product reason to require an explicit choice.
-- **Use precise action labels** — button text SHOULD describe the result of the action, especially in confirmations and destructive flows.
-- **Use `disable-backdrop` carefully** — with `disable-backdrop` the dialog opens as a non-modal `<dialog>`, so focus is not trapped and the surrounding page stays reachable. The surrounding page SHOULD NOT compete visually with the dialog content.
+- **Provide a meaningful title** — the content you place in the `title` slot becomes the dialog's accessible label, so it must clearly describe the decision, task, or message.
+- **Include an explicit dismissal path** — if you hide the close button or disable outside dismissal, you must provide a clear cancel or close action in the footer.
+- **Preserve keyboard expectations** — you should keep <kbd>Esc</kbd> enabled for dismissible dialogs unless there is a strong product reason to require an explicit choice.
+- **Use precise action labels** — button text should describe the result of the action, especially in confirmations and destructive flows.
+- **Use `disable-backdrop` carefully** — with `disable-backdrop` the dialog opens as a non-modal `<dialog>`, so focus is not trapped and the surrounding page stays reachable. The surrounding page should not compete visually with the dialog content.
 
 <Visibility for="agents">
   Accessibility rules for `bq-dialog`. Keywords follow RFC 2119 and summarize the Accessibility section above.

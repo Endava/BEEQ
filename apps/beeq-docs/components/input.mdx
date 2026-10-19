@@ -1804,10 +1804,10 @@ An incomplete numeric entry, such as `-`, can also expose `''` while you type be
 - Built in: when `disabled` is set, the native input receives `aria-disabled="true"` so assistive technologies can detect the unavailable state.
 - Built in: the clear button uses `clearButtonLabel` as its accessible name, and the default clear icon is marked `aria-hidden="true"`.
 - Built in: the component participates in forms and can surface native required-state validity when you combine `required` with `formValidationMessage`.
-- You MUST provide meaningful content in the `label` slot, even when the surrounding layout makes the field purpose look obvious visually.
-- You MUST treat helper and validation text as instructions, not decoration. Keep it concise and make recovery steps explicit.
-- You MUST NOT use placeholder text as the only label because it disappears as soon as the user types.
-- You MUST add alternate context when you intentionally omit the visible label, so screen reader and keyboard users still understand the field purpose.
+- You must provide meaningful content in the `label` slot, even when the surrounding layout makes the field purpose look obvious visually.
+- You must treat helper and validation text as instructions, not decoration. Keep it concise and make recovery steps explicit.
+- You must not use placeholder text as the only label because it disappears as soon as the user types.
+- You must add alternate context when you intentionally omit the visible label, so screen reader and keyboard users still understand the field purpose.
 
 ### Keyboard interaction
 

@@ -1288,11 +1288,11 @@ Set `auto-dismiss` to hide the alert automatically after a delay. Use `time` to 
 - The host sets `aria-hidden` from the `open` state, keeping hidden alerts out of the accessibility tree.
 - The default close button has the accessible label "Close alert."
 - `type` provides visual intent and a matching predefined status icon for `info`, `success`, `warning`, and `error`.
-- Alerts SHOULD have a concise title in the default slot and put supporting details in the `body` slot when users need more context.
-- The built-in type tokens (`info`, `success`, `warning`, `error`) meet WCAG AA color-contrast requirements in both light and dark themes. You MUST verify contrast manually when using custom colors via CSS variables.
-- All interactive elements inside the alert (the close button, footer actions, and body links) MUST be reachable via `Tab` and MUST have a visible focus indicator.
-- You SHOULD set `time` to at least 8000 ms for `auto-dismiss` alerts, and SHOULD NOT auto-dismiss while the user has keyboard focus or hover inside the alert.
-- When `sticky` is enabled, you MUST keep the page focus order logical so keyboard users can still reach the affected content.
+- Alerts should have a concise title in the default slot and put supporting details in the `body` slot when users need more context.
+- The built-in type tokens (`info`, `success`, `warning`, `error`) meet WCAG AA color-contrast requirements in both light and dark themes. You must verify contrast manually when using custom colors via CSS variables.
+- All interactive elements inside the alert (the close button, footer actions, and body links) must be reachable via `Tab` and must have a visible focus indicator.
+- You should set `time` to at least 8000 ms for `auto-dismiss` alerts, and should not auto-dismiss while the user has keyboard focus or hover inside the alert.
+- When `sticky` is enabled, you must keep the page focus order logical so keyboard users can still reach the affected content.
 
 <Visibility for="agents">
   Accessibility rules for `bq-alert`. Keywords follow RFC 2119 and summarize the Accessibility section above.

@@ -2129,11 +2129,11 @@ The side menu renders its root surface as an `<aside>` and places menu items ins
 
 The component uses native button Tab navigation, not the composite ARIA menu keyboard pattern, so the items are not exposed as `menuitem` elements.
 
-- **Landmark context** - you SHOULD include semantic heading text in the logo slot to communicate the menu purpose and where its content begins.
-- **Collapsed state** - when you add a layout control, it MUST communicate the expanded or collapsed state.
-- **Icons** - you SHOULD validate icon meaning when collapsed navigation relies on icons to identify destinations. You MUST add `aria-hidden="true"` to prefix icons: the label already names the item, and an unlabelled `bq-icon` adds its own `<name> icon` text to that name.
-- **Labels** - labels MUST be unique and make sense without additional context. The item text feeds the collapsed tooltip content.
-- **Footer actions** - every icon-only `bq-button` MUST have a meaningful `label`, and its decorative icon MUST be hidden from assistive technology.
+- **Landmark context** - you should include semantic heading text in the logo slot to communicate the menu purpose and where its content begins.
+- **Collapsed state** - when you add a layout control, it must communicate the expanded or collapsed state.
+- **Icons** - you should validate icon meaning when collapsed navigation relies on icons to identify destinations. You must add `aria-hidden="true"` to prefix icons: the label already names the item, and an unlabelled `bq-icon` adds its own `<name> icon` text to that name.
+- **Labels** - labels must be unique and make sense without additional context. The item text feeds the collapsed tooltip content.
+- **Footer actions** - every icon-only `bq-button` must have a meaningful `label`, and its decorative icon must be hidden from assistive technology.
 
 <Visibility for="agents">
   Accessibility rules for `bq-side-menu`. Keywords follow RFC 2119 and summarize the Accessibility section above.

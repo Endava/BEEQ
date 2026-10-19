@@ -3637,10 +3637,10 @@ These events no longer follow input-only focus changes. If your handler needs to
 - **Built in:** opening the panel closes any other open select, date picker, or dropdown panel, so only one panel stays open at a time.
 - **Built in:** nested multi-select changes the option container to a tree.
 - **Built in:** parent tree items expose checked, unchecked, or mixed state as their descendants are selected, and `aria-expanded` communicates whether a branch is open. The separate visual expand button is hidden from assistive technology and removed from the Tab order; keyboard users expand and collapse the focused tree item with `ArrowRight` and `ArrowLeft`.
-- **Your responsibility:** you MUST provide text in the `label` slot. The component associates its native `<label>` with the combobox input through `for` and `id`. You SHOULD use visually hidden text when the layout cannot show a visible label.
-- **Your responsibility:** when `validation-status` is `"error"`, you MUST populate the `helper-text` slot with a clear error description. The component does not set `aria-describedby` or `aria-invalid` on the input, so you MUST NOT rely on color alone to communicate the error.
-- **Your responsibility:** if options are loaded asynchronously, you SHOULD show a disabled loading option in the default slot, as in the custom filtering example. `panel` is a shadow part for styling, not a slot.
-- **Your responsibility:** you MUST give every nested option a unique `value`. Values are used for selection state, form submission, tags, and the `selectionTree` event detail.
+- **Your responsibility:** you must provide text in the `label` slot. The component associates its native `<label>` with the combobox input through `for` and `id`. You should use visually hidden text when the layout cannot show a visible label.
+- **Your responsibility:** when `validation-status` is `"error"`, you must populate the `helper-text` slot with a clear error description. The component does not set `aria-describedby` or `aria-invalid` on the input, so you must not rely on color alone to communicate the error.
+- **Your responsibility:** if options are loaded asynchronously, you should show a disabled loading option in the default slot, as in the custom filtering example. `panel` is a shadow part for styling, not a slot.
+- **Your responsibility:** you must give every nested option a unique `value`. Values are used for selection state, form submission, tags, and the `selectionTree` event detail.
 
 ### Keyboard interaction
 

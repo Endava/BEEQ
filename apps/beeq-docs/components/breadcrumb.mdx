@@ -459,10 +459,10 @@ Icons next to labels help users recognize categories at a glance. Use `size="16"
 
 ## Accessibility
 
-- **Landmark label** — the `label` prop sets an `aria-label` on the `<nav>` landmark. The default value is `Breadcrumbs`; you MUST override it when multiple navigation regions exist on the same page.
+- **Landmark label** — the `label` prop sets an `aria-label` on the `<nav>` landmark. The default value is `Breadcrumbs`; you must override it when multiple navigation regions exist on the same page.
 - **Current page** — the last breadcrumb item receives `aria-current="page"` automatically.
-- **Icon-only items** — when a breadcrumb item contains only an icon, you MUST set `label` on the `bq-icon` to describe the destination (e.g. `<bq-icon name="house-line" label="Home page">`). The item does not forward an `aria-label` set on `bq-breadcrumb-item` to its inner link or button.
-- **Decorative icons** — when an icon appears alongside a visible text label, you MUST set `aria-hidden="true"` on the `bq-icon` so screen readers do not announce it twice.
+- **Icon-only items** — when a breadcrumb item contains only an icon, you must set `label` on the `bq-icon` to describe the destination (e.g. `<bq-icon name="house-line" label="Home page">`). The item does not forward an `aria-label` set on `bq-breadcrumb-item` to its inner link or button.
+- **Decorative icons** — when an icon appears alongside a visible text label, you must set `aria-hidden="true"` on the `bq-icon` so screen readers do not announce it twice.
 
 <Visibility for="agents">
   Accessibility rules for `bq-breadcrumb`. Keywords follow RFC 2119 and summarize the Accessibility section above.

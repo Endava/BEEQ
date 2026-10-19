@@ -1038,10 +1038,10 @@ In framework apps, prefer a framework-owned portal or stack when you want the no
 
 - **Built-in alert role** — the component applies `role="alert"` to the notification host element, which implicitly carries `aria-live="assertive"`. Assistive technology announces new notifications immediately when they appear.
 - **Visibility tied to `open`** — the host also receives `aria-hidden="true"` when `open` is `false`, removing it from the accessibility tree when not visible.
-- **Color alone is not enough**: the icon and message text MUST work together so users who cannot perceive color still understand the notification.
-- **Keep interactive elements reachable**: users MUST be able to tab to the close button, links, and footer actions and activate them with the keyboard.
-- **Use considerate auto-dismiss timing**: if `auto-dismiss` is enabled, you MUST give users enough time to read the content before it disappears.
-- **Do not steal focus**: stacked notifications are non-modal, so you MUST NOT move focus unexpectedly away from the current task when showing one.
+- **Color alone is not enough**: the icon and message text must work together so users who cannot perceive color still understand the notification.
+- **Keep interactive elements reachable**: users must be able to tab to the close button, links, and footer actions and activate them with the keyboard.
+- **Use considerate auto-dismiss timing**: if `auto-dismiss` is enabled, you must give users enough time to read the content before it disappears.
+- **Do not steal focus**: stacked notifications are non-modal, so you must not move focus unexpectedly away from the current task when showing one.
 
 <Visibility for="agents">
   Accessibility rules for `bq-notification`. Keywords follow RFC 2119 and summarize the Accessibility section above.

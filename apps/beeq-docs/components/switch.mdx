@@ -985,12 +985,12 @@ The native `<input type="checkbox" role="switch">` handles these keys. A disable
 
 ### Developer responsibilities
 
-- You MUST provide a visible text label via the default slot. The switch derives its accessible name from the `name` prop via `aria-label` on the native `<input>`; the visible slot text is not automatically wired to the control. To make the visible label the accessible name, you SHOULD use `aria-labelledby` on the host element pointing to the associated label element.
-- You MUST set the `name` attribute (required) to participate in form submissions and to give the control a machine-readable identifier.
-- When the switch is `disabled`, it is excluded from the tab order and does not respond to keyboard or pointer events. You SHOULD communicate the reason for disabling through surrounding text.
-- You MUST tell users before submit that a required switch has to be ON. The validation bubble only appears after a failed submit.
+- You must provide a visible text label via the default slot. The switch derives its accessible name from the `name` prop via `aria-label` on the native `<input>`; the visible slot text is not automatically wired to the control. To make the visible label the accessible name, you should use `aria-labelledby` on the host element pointing to the associated label element.
+- You must set the `name` attribute (required) to participate in form submissions and to give the control a machine-readable identifier.
+- When the switch is `disabled`, it is excluded from the tab order and does not respond to keyboard or pointer events. You should communicate the reason for disabling through surrounding text.
+- You must tell users before submit that a required switch has to be ON. The validation bubble only appears after a failed submit.
 - The `bqChange` event is cancelable. Calling `event.preventDefault()` inside a `bqChange` handler prevents the switch from updating its visual state, which is useful when you need to confirm a change before applying it.
-- You SHOULD use `vFocus()`, `vBlur()`, and `vClick()` instead of the global `element.focus()`, `element.blur()`, and `element.click()` to interact with the native input correctly across Shadow DOM boundaries.
+- You should use `vFocus()`, `vBlur()`, and `vClick()` instead of the global `element.focus()`, `element.blur()`, and `element.click()` to interact with the native input correctly across Shadow DOM boundaries.
 
 ## API reference
 

@@ -661,12 +661,12 @@ Use the suffix slot when the title area needs page-level actions such as edit or
 
 ## Accessibility
 
-- A page MUST have only one `h1`. You MUST NOT place `bq-page-title` inside panels, cards, drawers, or any context where it would render alongside another `h1`.
-- For icon-only back and suffix buttons, you MUST set `label` on `bq-button` so the inner native button has an accessible name. You SHOULD set `aria-hidden="true"` on its decorative icon; a `title` or `aria-label` on the `bq-icon` host does not label the button.
-- `bq-page-title` renders the main title inside an `h1`, so the default slot MUST contain the primary heading for the page.
-- Back and suffix content are slotted, so their accessibility depends on what you place there. You MUST use real buttons or links with clear accessible names.
-- The subtitle is additional context, not a replacement for the title. The main heading MUST be understandable on its own.
-- If you use icon-only controls in `back` or `suffix`, they MUST have an accessible label and not just a visual symbol.
+- A page must have only one `h1`. You must not place `bq-page-title` inside panels, cards, drawers, or any context where it would render alongside another `h1`.
+- For icon-only back and suffix buttons, you must set `label` on `bq-button` so the inner native button has an accessible name. You should set `aria-hidden="true"` on its decorative icon; a `title` or `aria-label` on the `bq-icon` host does not label the button.
+- `bq-page-title` renders the main title inside an `h1`, so the default slot must contain the primary heading for the page.
+- Back and suffix content are slotted, so their accessibility depends on what you place there. You must use real buttons or links with clear accessible names.
+- The subtitle is additional context, not a replacement for the title. The main heading must be understandable on its own.
+- If you use icon-only controls in `back` or `suffix`, they must have an accessible label and not just a visual symbol.
 
 <Visibility for="agents">
   Accessibility rules for `bq-page-title`. Keywords follow RFC 2119 and summarize the Accessibility section above.

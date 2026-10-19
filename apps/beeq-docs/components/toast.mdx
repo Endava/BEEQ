@@ -545,11 +545,11 @@ Use a dedicated toast container when you want the stacking behavior to be explic
 
 ## Accessibility
 
-- **Announced as status** - the component uses `role="status"`, so the message SHOULD make sense when read aloud without surrounding visual context.
-- **Not color-only** - you MUST NOT rely on icon color alone to communicate meaning. The message text itself MUST state what happened clearly.
-- **Allow enough reading time** - you SHOULD increase `time` for longer messages, and SHOULD NOT auto-dismiss content people may need more than a few seconds to read.
-- **Do not steal focus** - toasts are non-modal status messages, so they MUST NOT interrupt the current keyboard focus or workflow.
-- **Use a stronger pattern when needed** - if the message requires action, contains links, or must remain available, you MUST use a persistent notification or dialog instead.
+- **Announced as status** - the component uses `role="status"`, so the message should make sense when read aloud without surrounding visual context.
+- **Not color-only** - you must not rely on icon color alone to communicate meaning. The message text itself must state what happened clearly.
+- **Allow enough reading time** - you should increase `time` for longer messages, and should not auto-dismiss content people may need more than a few seconds to read.
+- **Do not steal focus** - toasts are non-modal status messages, so they must not interrupt the current keyboard focus or workflow.
+- **Use a stronger pattern when needed** - if the message requires action, contains links, or must remain available, you must use a persistent notification or dialog instead.
 
 <Visibility for="agents">
   Accessibility rules for `bq-toast`. Keywords follow RFC 2119 and summarize the Accessibility section above.

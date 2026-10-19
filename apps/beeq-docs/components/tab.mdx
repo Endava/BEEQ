@@ -756,15 +756,15 @@ import { BqTab, BqTabGroup } from "@beeq/vue";
 
 - The tab list container has `role="tablist"`.
 - Each `bq-tab` renders as a `<button role="tab">` with `aria-selected` and `aria-disabled` set automatically.
-- The `controls` prop maps to `aria-controls`, linking each tab to its panel. You MUST provide a matching `id` on the panel element and `role="tabpanel"` for correct screen reader announcements.
+- The `controls` prop maps to `aria-controls`, linking each tab to its panel. You must provide a matching `id` on the panel element and `role="tabpanel"` for correct screen reader announcements.
 - Keyboard navigation is handled by the tab group; see [Keyboard interaction](#keyboard-interaction).
 - Focus management follows the roving `tabindex` pattern: only the active tab is in the tab order; other tabs are reachable via arrow keys.
 - Disabled tabs have `aria-disabled="true"` and `disabled` set on the underlying button, removing them from interaction.
 
 **Your responsibilities:**
-- You MUST provide a meaningful `controls` value on each `bq-tab` that matches the `id` of the corresponding panel.
-- You MUST add `role="tabpanel"` to each panel element.
-- When using icons without a visible label, you MUST add a descriptive `aria-label` to the `bq-tab` so screen readers can identify the tab.
+- You must provide a meaningful `controls` value on each `bq-tab` that matches the `id` of the corresponding panel.
+- You must add `role="tabpanel"` to each panel element.
+- When using icons without a visible label, you must add a descriptive `aria-label` to the `bq-tab` so screen readers can identify the tab.
 
 <Visibility for="agents">
   Accessibility rules for `bq-tab`. Keywords follow RFC 2119 and summarize the Accessibility section above.

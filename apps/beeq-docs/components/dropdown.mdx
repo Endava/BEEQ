@@ -1366,15 +1366,15 @@ Use `same-width` when the panel should match the trigger width. Use `panel-heigh
 
 `bq-dropdown` does not render its own ARIA role — accessible semantics come from the slotted trigger element. When a `bq-button` is used as the trigger, it exposes `role="button"` and `aria-disabled` automatically. The `bq-option-list` inside the panel renders with `role="listbox"`, and each `bq-option` carries `role="option"`, `aria-selected`, and `aria-disabled`.
 
-**Developer responsibilities:** you MUST provide a meaningful visible label or `aria-label` on the trigger, especially for icon-only triggers. When using a `bq-avatar` as the trigger, you MUST supply the `label` prop to ensure screen readers announce the button purpose.
+**Developer responsibilities:** you must provide a meaningful visible label or `aria-label` on the trigger, especially for icon-only triggers. When using a `bq-avatar` as the trigger, you must supply the `label` prop to ensure screen readers announce the button purpose.
 
-- The dropdown trigger MUST be reachable with <kbd>Tab</kbd> and expose a clear accessible label. Use a natively focusable element such as `bq-button`.
+- The dropdown trigger must be reachable with <kbd>Tab</kbd> and expose a clear accessible label. Use a natively focusable element such as `bq-button`.
 - The dropdown opens on trigger click, so a native button trigger opens it with <kbd>Enter</kbd> or <kbd>Space</kbd>.
 - Each enabled `bq-option` is a tab stop. <kbd>Enter</kbd> or <kbd>Space</kbd> on the focused option selects it. `bq-dropdown` and `bq-option-list` do not add arrow-key navigation between options.
 - Pressing <kbd>Esc</kbd> closes the dropdown, and <kbd>Tab</kbd> closes it when focus leaves the component.
 - Only one panel stays open at a time. Opening a dropdown, select, or date picker closes any other open panel, unless it is nested inside that panel.
-- For multi-select patterns, selection and deselection SHOULD remain visible and predictable.
-- You MUST NOT rely on icons alone. Pair icon-only triggers with accessible labels and keep option text readable.
+- For multi-select patterns, selection and deselection should remain visible and predictable.
+- You must not rely on icons alone. Pair icon-only triggers with accessible labels and keep option text readable.
 
 <Visibility for="agents">
   Accessibility rules for `bq-dropdown`. Keywords follow RFC 2119 and summarize the Accessibility section above.

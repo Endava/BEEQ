@@ -1576,10 +1576,10 @@ The built-in close button has `label="Close"` and is announced by screen readers
 
 As a developer, you are responsible for the following:
 
-- **Moving focus into the drawer when it opens** — the component does not trap focus automatically. When you call `show()`, you MUST move focus to the first interactive element inside the panel or to the panel itself so keyboard users can begin navigating immediately.
-- **Returning focus to the trigger when the drawer closes** — after `hide()`, you MUST restore focus to the element that opened the drawer so keyboard users are not left disoriented.
-- **Providing a descriptive title** — the `aria-labelledby` attribute references the title slot. Screen readers announce this text when the dialog opens, so you MUST NOT use an empty or generic title such as "Panel", which makes the dialog purpose unclear.
-- **Keeping focusable elements out of the backdrop** — the backdrop does not receive focus, so you MUST keep interactive content inside the panel.
+- **Moving focus into the drawer when it opens** — the component does not trap focus automatically. When you call `show()`, you must move focus to the first interactive element inside the panel or to the panel itself so keyboard users can begin navigating immediately.
+- **Returning focus to the trigger when the drawer closes** — after `hide()`, you must restore focus to the element that opened the drawer so keyboard users are not left disoriented.
+- **Providing a descriptive title** — the `aria-labelledby` attribute references the title slot. Screen readers announce this text when the dialog opens, so you must not use an empty or generic title such as "Panel", which makes the dialog purpose unclear.
+- **Keeping focusable elements out of the backdrop** — the backdrop does not receive focus, so you must keep interactive content inside the panel.
 
 <Visibility for="agents">
   Accessibility rules for `bq-drawer`. Keywords follow RFC 2119 and summarize the Accessibility section above.

@@ -808,11 +808,11 @@ Use the `badge` slot when the avatar needs a compact status or count indicator. 
 
 ## Accessibility
 
-The component automatically applies `role="img"` and `aria-label` to its root element. You do not need to add ARIA attributes manually — you MUST provide a descriptive `label` and the component handles the rest.
+The component automatically applies `role="img"` and `aria-label` to its root element. You do not need to add ARIA attributes manually — you must provide a descriptive `label` and the component handles the rest.
 
-When the avatar displays an image, you SHOULD also pass `alt-text` to describe what the image shows. `initials` SHOULD be short so the text fallback remains readable if the image cannot load.
+When the avatar displays an image, you should also pass `alt-text` to describe what the image shows. `initials` should be short so the text fallback remains readable if the image cannot load.
 
-If the avatar appears alongside other interactive elements such as names, links, or buttons, the surrounding pattern MUST be accessible as a whole — the avatar's built-in label describes the avatar itself, not the composite component around it.
+If the avatar appears alongside other interactive elements such as names, links, or buttons, the surrounding pattern must be accessible as a whole — the avatar's built-in label describes the avatar itself, not the composite component around it.
 
 <Visibility for="agents">
   Accessibility rules for `bq-avatar`. Keywords follow RFC 2119 and summarize the Accessibility section above.

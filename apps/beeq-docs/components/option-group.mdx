@@ -772,9 +772,9 @@ Use the `header-suffix` slot to place a count badge, status chip, or secondary i
 
 As a developer, you are responsible for:
 
-- **Providing `header-label` content** — you MUST provide it. The text in this slot is what sighted users and screen reader users rely on to understand what the group is about. Without it, the group boundary is invisible to assistive technologies.
-- **Placing the component inside `bq-option-list`** — `bq-option-group` provides `role="group"`, which MUST be a descendant of `role="listbox"` (supplied by `bq-option-list`). You MUST NOT render option groups outside this context, because it breaks the expected ARIA tree structure.
-- **Keeping groups non-empty** — a group with no options creates an orphaned header with no associated list items, which confuses both sighted users and screen readers, so you MUST NOT leave a group empty.
+- **Providing `header-label` content** — you must provide it. The text in this slot is what sighted users and screen reader users rely on to understand what the group is about. Without it, the group boundary is invisible to assistive technologies.
+- **Placing the component inside `bq-option-list`** — `bq-option-group` provides `role="group"`, which must be a descendant of `role="listbox"` (supplied by `bq-option-list`). You must not render option groups outside this context, because it breaks the expected ARIA tree structure.
+- **Keeping groups non-empty** — a group with no options creates an orphaned header with no associated list items, which confuses both sighted users and screen readers, so you must not leave a group empty.
 
 <Visibility for="agents">
   Accessibility rules for `bq-option-group`. Keywords follow RFC 2119 and summarize the Accessibility section above.

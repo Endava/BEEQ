@@ -985,9 +985,9 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
 - **Built-in native checkbox semantics** — the component uses a native `<input type="checkbox">`, so checked, unchecked, disabled, and required states follow standard browser and assistive technology behavior.
 - **Built-in label association** — the internal input and the slotted text are wrapped in the same `<label>`, so clicking the label toggles the checkbox without extra wiring.
 - **Built-in focus support** — the shadow root delegates focus to the native input, and the component emits `bqFocus` and `bqBlur` when that input gains or loses focus.
-- **Group related choices semantically** — when multiple checkboxes form a set, they SHOULD share a heading or a `<fieldset>` with an accessible label.
-- **Use indeterminate carefully** — it SHOULD summarize a partial group selection and MUST NOT replace clear child options.
-- **Do not rely on color alone** — the checked mark, focus treatment, and label text together MUST communicate meaning; color MUST NOT be the only cue.
+- **Group related choices semantically** — when multiple checkboxes form a set, they should share a heading or a `<fieldset>` with an accessible label.
+- **Use indeterminate carefully** — it should summarize a partial group selection and must not replace clear child options.
+- **Do not rely on color alone** — the checked mark, focus treatment, and label text together must communicate meaning; color must not be the only cue.
 
 ### Keyboard interaction
 

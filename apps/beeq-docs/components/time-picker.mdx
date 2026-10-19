@@ -1441,9 +1441,9 @@ When focus leaves the field, complete times outside `min` or `max` are clamped t
 - The component announces the selected time, or that no time is selected, when focus enters the field.
 - The panel opens from the keyboard through the segmented field or the clock icon, and moves focus into it; see [Keyboard interaction](#keyboard-interaction) for the keys. Clicking the field opens the panel while keeping focus on the segment.
 - In `readonly` mode the segments stay focusable so screen reader users can read the value, but they can't be edited and the panel doesn't open.
-- MUST provide a visible label through the `label` slot, so the field has a programmatic name.
-- MUST translate `labels` when translating the interface: segment names, button names and the panel name come from it.
-- MUST NOT rely on color alone to communicate validation states. MUST pair `validationStatus` with visible error text so screen reader users receive the same feedback as sighted users.
+- Provide a visible label through the `label` slot, so the field has a programmatic name.
+- Translate `labels` when translating the interface: segment names, button names and the panel name come from it.
+- Don't rely on color alone to communicate validation states. Pair `validationStatus` with visible error text so screen reader users receive the same feedback as sighted users.
 
 ### Keyboard interaction
 

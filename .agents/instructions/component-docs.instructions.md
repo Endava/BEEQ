@@ -184,8 +184,8 @@ Document what the component does automatically and what the developer must do:
 - State what props feed those attributes (e.g., "`label` prop maps to `aria-label`")
 - List what the developer is responsible for (e.g., providing meaningful `label`, wrapping interactive patterns)
 - Do **not** repeat API property descriptions already in the reference table
-- Write every requirement in this section with a capitalised [rule strength keyword](documentation.instructions.md#rule-strength-rfc-2119)
-- End the bullets with one `<Visibility for="agents">` block (right before `### Keyboard interaction`) that restates the `MUST` / `SHOULD` requirements as a compact list, one line per rule: `- MUST: <rule>`. The bullets are the source of truth; update the block whenever they change. Form controls use the block under their Rules table instead
+- Write every requirement in this section with a plain lowercase [rule strength keyword](documentation.instructions.md#rule-strength-rfc-2119) ("must", "should"); capitals live only in the agent block below
+- End the bullets with one `<Visibility for="agents">` block (right before `### Keyboard interaction`) that restates the "must" / "should" requirements with capitalised `MUST` / `SHOULD` keywords as a compact list, one line per rule: `- MUST: <rule>`. The bullets are the source of truth; update the block whenever they change. Form controls use the block under their Rules table instead
 
 ### Keyboard interaction
 

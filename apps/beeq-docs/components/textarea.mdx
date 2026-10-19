@@ -1263,12 +1263,12 @@ A `disabled` textarea is not focusable. A `readonly` textarea stays focusable bu
 
 ### Developer responsibilities
 
-- You MUST provide content in the `label` slot. The label is the primary source of the accessible name for the textarea.
-- You MUST NOT rely on `placeholder` as the label because it disappears once the user starts typing.
-- When using `validation-status`, you MUST pair it with a `helper-text` message that explains the issue. The helper text is not programmatically linked to the textarea (no `aria-describedby`), so you MUST keep the message next to the field and make the recovery step explicit.
-- When the textarea is `disabled`, it is removed from the tab order and excluded from form submission. You SHOULD communicate the reason for disabling through surrounding text.
-- A `readonly` textarea remains focusable and its value is included in form submissions. You MAY use it when you want users to see but not edit a value.
-- The `bqChange` event fires when the user changes the value and then blurs the field. The `bqInput` event fires on every keystroke. You MAY use `debounce-time` to throttle `bqInput` for performance-sensitive scenarios such as live search.
+- You must provide content in the `label` slot. The label is the primary source of the accessible name for the textarea.
+- You must not rely on `placeholder` as the label because it disappears once the user starts typing.
+- When using `validation-status`, you must pair it with a `helper-text` message that explains the issue. The helper text is not programmatically linked to the textarea (no `aria-describedby`), so you must keep the message next to the field and make the recovery step explicit.
+- When the textarea is `disabled`, it is removed from the tab order and excluded from form submission. You should communicate the reason for disabling through surrounding text.
+- A `readonly` textarea remains focusable and its value is included in form submissions. You may use it when you want users to see but not edit a value.
+- The `bqChange` event fires when the user changes the value and then blurs the field. The `bqInput` event fires on every keystroke. You may use `debounce-time` to throttle `bqInput` for performance-sensitive scenarios such as live search.
 
 ### Rules
 

@@ -818,9 +818,9 @@ Set `background-on-hover` on the group to show a filled highlight on every label
 - **Built in:** each `bq-radio` native `<input type="radio">` carries `aria-checked`, `aria-disabled`, and `aria-labelledby` pointing to its visible label element.
 - **Built in:** arrow keys focus and select the adjacent enabled radio, skip disabled radios and wrap at the ends. All four arrow keys work in both orientations; `orientation` controls layout only.
 - **Built in:** only one radio in the group receives `tabindex="0"` at a time (the selected or first enabled option), keeping the tab stop count low.
-- **Your responsibility:** you MUST populate the `label` slot on `bq-radio-group` with meaningful group text.
-- **Your responsibility:** you MUST provide meaningful text inside each `bq-radio` slot. The `aria-labelledby` on the native input points to the label span, so empty or icon-only labels are not announced.
-- **Your responsibility:** when you disable the group, you SHOULD add visible helper text nearby explaining why the options are unavailable.
+- **Your responsibility:** you must populate the `label` slot on `bq-radio-group` with meaningful group text.
+- **Your responsibility:** you must provide meaningful text inside each `bq-radio` slot. The `aria-labelledby` on the native input points to the label span, so empty or icon-only labels are not announced.
+- **Your responsibility:** when you disable the group, you should add visible helper text nearby explaining why the options are unavailable.
 
 ### Keyboard interaction
 
@@ -864,7 +864,7 @@ All four arrow keys work in both orientations. A disabled group has no tab stop.
 </Visibility>
 
 <Warning>
-  The fieldset's `aria-labelledby` currently references an ID that does not match the label slot. This source defect is tracked in [the Radio Group follow-up issue](https://github.com/Endava/BEEQ/issues/1830). You MUST NOT assume that populating the slot repairs the explicit ARIA reference; verify the group name with your supported assistive technologies.
+  The fieldset's `aria-labelledby` currently references an ID that does not match the label slot. This source defect is tracked in [the Radio Group follow-up issue](https://github.com/Endava/BEEQ/issues/1830). You must not assume that populating the slot repairs the explicit ARIA reference; verify the group name with your supported assistive technologies.
 </Warning>
 
 ## API reference

@@ -1073,10 +1073,10 @@ Use `size="small"` in compact layouts. Use `divider-color` with a declarative co
 
 The `bq-steps` container renders with `role="list"`, and each `bq-step-item` renders with `role="listitem"` around an interactive button. The current step maps to `aria-current="step"`, and disabled items use the native `disabled` button state.
 
-- **Current step** - you MUST set `status="current"` on one step item so assistive technology can announce the current position.
-- **Status communication** - you MUST pair color with text, icon shape, or description changes so users do not need color perception to understand progress.
-- **Icons and numbers** - you MUST mark decorative icons with `aria-hidden="true"`. When numeric prefixes are used, you MUST provide an `aria-label` such as `Step 1`.
-- **Descriptions** - you SHOULD use the `description` slot when users need more context about a step, an error, or the expected next action.
+- **Current step** - you must set `status="current"` on one step item so assistive technology can announce the current position.
+- **Status communication** - you must pair color with text, icon shape, or description changes so users do not need color perception to understand progress.
+- **Icons and numbers** - you must mark decorative icons with `aria-hidden="true"`. When numeric prefixes are used, you must provide an `aria-label` such as `Step 1`.
+- **Descriptions** - you should use the `description` slot when users need more context about a step, an error, or the expected next action.
 
 <Visibility for="agents">
   Accessibility rules for `bq-steps`. Keywords follow RFC 2119 and summarize the Accessibility section above.
