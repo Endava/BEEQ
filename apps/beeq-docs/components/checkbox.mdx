@@ -1002,14 +1002,14 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
 
 | Rule | Strength | Verified by |
 |---|---|---|
-| Provide a visible label in the default slot | MUST | manual |
+| Provide a visible label in the default slot | MUST | manual (checked by hand) |
 | Set `name` so the checked state is submitted with the form | MUST | automated: `bq-checkbox.e2e.tsx` |
 | Set `required` on checkboxes that must be checked before submission | MUST | automated: `bq-checkbox.e2e.tsx` |
-| Set `form-validation-message` on required checkboxes to give a specific validation message | SHOULD | manual |
-| Keep the parent and child checkboxes synchronized in a nested group | MUST | manual |
-| Use `indeterminate` only to summarize a partially selected group | SHOULD | manual |
-| Group related checkboxes under a shared heading or `<fieldset>` | SHOULD | manual |
-| Use more than color to communicate the checked state | MUST | manual |
+| Set `form-validation-message` on required checkboxes to give a specific validation message | SHOULD | manual (checked by hand) |
+| Keep the parent and child checkboxes synchronized in a nested group | MUST | manual (checked by hand) |
+| Use `indeterminate` only to summarize a partially selected group | SHOULD | manual (checked by hand) |
+| Group related checkboxes under a shared heading or `<fieldset>` | SHOULD | manual (checked by hand) |
+| Use more than color to communicate the checked state | MUST | manual (checked by hand) |
 
 ## API reference
 

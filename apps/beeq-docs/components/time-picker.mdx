@@ -1473,15 +1473,15 @@ When focus leaves the field, complete times outside `min` or `max` are clamped t
 
 | Rule | Strength | Verified by |
 |---|---|---|
-| Provide a visible label through the `label` slot | MUST | manual |
+| Provide a visible label through the `label` slot | MUST | manual (checked by hand) |
 | Set `required` when a time is mandatory so form submission is blocked until a value is set | MUST | automated: `bq-time-picker.e2e.tsx` |
-| Set `form-validation-message` to provide a specific message for incomplete, out-of-range, and off-step values | SHOULD | manual |
-| Translate `labels` when translating the interface | MUST | manual |
-| Pair `validationStatus` with visible error text | MUST | manual |
-| Use more than color to communicate validation states | MUST NOT | manual |
-| Set `min`, `max`, and step values when business rules are known | SHOULD | manual |
-| Use one `hour-format` across a product | MUST | manual |
-| Rely on the format hint alone to explain the field | MUST NOT | manual |
+| Set `form-validation-message` to provide a specific message for incomplete, out-of-range, and off-step values | SHOULD | manual (checked by hand) |
+| Translate `labels` when translating the interface | MUST | manual (checked by hand) |
+| Pair `validationStatus` with visible error text | MUST | manual (checked by hand) |
+| Use more than color to communicate validation states | MUST NOT | manual (checked by hand) |
+| Set `min`, `max`, and step values when business rules are known | SHOULD | manual (checked by hand) |
+| Use one `hour-format` across a product | MUST | manual (checked by hand) |
+| Rely on the format hint alone to explain the field | MUST NOT | manual (checked by hand) |
 
 ## API reference
 

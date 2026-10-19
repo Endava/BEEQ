@@ -857,11 +857,11 @@ Each handle is a native `<input type="range">`, so these keys come from the brow
 
 | Rule | Strength | Verified by |
 |---|---|---|
-| Provide an accessible label with a wrapping `<label>`, `aria-label` or `aria-labelledby` | MUST | manual |
+| Provide an accessible label with a wrapping `<label>`, `aria-label` or `aria-labelledby` | MUST | manual (checked by hand) |
 | Set `name` so the value is submitted with the form | MUST | automated: `bq-slider.e2e.tsx` |
-| Supplement the slider with a visible number input when an exact value is critical | SHOULD | manual |
-| Test range sliders with the target assistive technologies and provide a text summary of the range | SHOULD | manual |
-| Use the slider for adjustable values, not mandatory completion checks, because it has no `required` prop | SHOULD | manual |
+| Supplement the slider with a visible number input when an exact value is critical | SHOULD | manual (checked by hand) |
+| Test range sliders with the target assistive technologies and provide a text summary of the range | SHOULD | manual (checked by hand) |
+| Use the slider for adjustable values, not mandatory completion checks, because it has no `required` prop | SHOULD | manual (checked by hand) |
 
 ## API reference
 

@@ -8,6 +8,10 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 To create a custom theme, override BEEQ's root semantics — the brand, intent, and neutral colors — with your own values. BEEQ's light and dark mode roles already point to those root tokens, so every component picks up your palette in both modes. Override individual mode roles only where your palette needs a different mapping.
 
 <Note>
+  Set `--bq-brand` and the other root semantics here, in the theme. To style UI with the brand color, use the mode role `--bq-ui--brand` instead, as described in [Color architecture](/foundations/colors#color-architecture).
+</Note>
+
+<Note>
   Namespace your theme using the `bq-theme` attribute (e.g., `bq-theme="my-custom-theme"`) or a matching CSS class (e.g., `.my-custom-theme`).
 </Note>
 
