@@ -23,7 +23,7 @@ Every component documentation page must follow this section order:
 10. **Usage** — primary variants (Text, Image, etc.) with `CodeLivePreview` + `CodeGroup`
 11. **Options** — additional configurations and combination patterns with `CodeLivePreview` + `CodeGroup`, with [allowed values](#allowed-values-in-options) written as text
 12. **Best practices** — four-column (2×2) `CardGroup` with Do/Don't pairs
-13. **Accessibility** — built-in behaviors and requirements, a keyboard interaction table and, for form controls, a rules table; do not repeat the API reference
+13. **Accessibility** — built-in behaviors and requirements, a keyboard interaction table and a rules table; do not repeat the API reference
 14. **API reference** — Properties (plus Invalid combinations for form controls), Slots, Shadow parts, CSS custom properties tables
 15. **Resources** — two-column `CardGroup` linking to Storybook and GitHub source
 
@@ -184,8 +184,8 @@ Document what the component does automatically and what the developer must do:
 - State what props feed those attributes (e.g., "`label` prop maps to `aria-label`")
 - List what the developer is responsible for (e.g., providing meaningful `label`, wrapping interactive patterns)
 - Do **not** repeat API property descriptions already in the reference table
-- Write every requirement in this section with a plain lowercase [rule strength keyword](documentation.instructions.md#rule-strength-rfc-2119) ("must", "should"); capitals live only in the agent block below
-- End the bullets with one `<Visibility for="agents">` block (right before `### Keyboard interaction`) that restates the "must" / "should" requirements with capitalised `MUST` / `SHOULD` keywords as a compact list, one line per rule: `- MUST: <rule>`. The bullets are the source of truth; update the block whenever they change. Form controls use the block under their Rules table instead
+- Write every requirement in this section with a plain lowercase [rule strength keyword](documentation.instructions.md#rule-strength-rfc-2119) ("must", "should"); capitals live only in the Rules table
+- Restate each requirement as a row of the page's `### Rules` table (see [Rules and verification](#rules-and-verification)). Update the table whenever the bullets change
 
 ### Keyboard interaction
 
@@ -202,9 +202,9 @@ Every interactive component has a `### Keyboard interaction` table with one row 
 - Verify each row against the component's key handlers and e2e tests; list a key only if the component handles it or the native element does.
 - A non-interactive component states "No keyboard interaction: the component is not focusable." instead of a table.
 
-### Rules and verification (form controls)
+### Rules and verification
 
-Form controls (input, textarea, select, checkbox, radio, switch, slider, date picker, time picker) also have a `### Rules` table that says how each hard requirement is verified:
+Every component page ends its Accessibility section, after Keyboard interaction, with a `### Rules` table that says how strongly each requirement applies and how it is verified. The table is visible HTML, so readers and crawlers both get the capitalised strength:
 
 ```mdx
 | Rule | Strength | Verified by |
@@ -215,7 +215,7 @@ Form controls (input, textarea, select, checkbox, radio, switch, slider, date pi
 
 - **Verified by** is `automated` (name the test file that asserts it), `assisted` (a tool or lint rule helps, name it) or `manual` (review or screen reader check).
 - Use `automated` only when a test in the repo asserts the behavior. When unsure, use `manual`.
-- Right after the table, add one `<Visibility for="agents">` block with the same rules as a compact list, one line per rule: `- MUST: <rule> (<verified by>)`. Rewrite "Do not X" rows as `- MUST NOT: X`. It renders only in the Markdown view (`.md`, `llms-full.txt`), so humans see the table once. The table is the source of truth; change the block whenever the table changes. Component pages without a Rules table use the Accessibility block described in [Accessibility Section](#accessibility-section).
+- Write "Do not X" rows for `MUST NOT` / `SHOULD NOT`. Don't use `<Visibility for="agents">` for rules: crawlers that read the rendered HTML don't see it, so the table is the only copy.
 
 ---
 

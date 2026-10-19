@@ -1294,17 +1294,6 @@ Set `auto-dismiss` to hide the alert automatically after a delay. Use `time` to 
 - You should set `time` to at least 8000 ms for `auto-dismiss` alerts, and should not auto-dismiss while the user has keyboard focus or hover inside the alert.
 - When `sticky` is enabled, you must keep the page focus order logical so keyboard users can still reach the affected content.
 
-<Visibility for="agents">
-  Accessibility rules for `bq-alert`. Keywords follow RFC 2119 and summarize the Accessibility section above.
-
-  - MUST: Keep every interactive element inside the alert (close button, footer actions, body links) reachable with `Tab` and visibly focused
-  - MUST: Verify color contrast manually when you override colors with CSS variables
-  - MUST: Keep the page focus order logical when `sticky` is set
-  - SHOULD: Put a concise title in the default slot and details in the `body` slot
-  - SHOULD: Set `time` to at least 8000 ms for `auto-dismiss`
-  - SHOULD NOT: Auto-dismiss while the user has focus or hover inside the alert
-</Visibility>
-
 ### Keyboard interaction
 
 The alert itself is not focusable. Only the elements inside it receive focus; the close button is a native `<button>` rendered by `bq-button`.
@@ -1315,6 +1304,17 @@ The alert itself is not focusable. Only the elements inside it receive focus; th
 | `Shift` + `Tab` | Focus inside the alert | Moves focus to the previous focusable element |
 | `Enter` | Close button focused | Activates the button and hides the alert |
 | `Space` | Close button focused | Activates the button and hides the alert |
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Keep every interactive element inside the alert (close button, footer actions, body links) reachable with `Tab` and visibly focused | MUST | manual |
+| Verify color contrast manually when you override colors with CSS variables | MUST | manual |
+| Keep the page focus order logical when `sticky` is set | MUST | manual |
+| Put a concise title in the default slot and details in the `body` slot | SHOULD | manual |
+| Set `time` to at least 8000 ms for `auto-dismiss` | SHOULD | manual |
+| Do not auto-dismiss while the user has focus or hover inside the alert | SHOULD NOT | manual |
 
 ## API reference
 

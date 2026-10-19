@@ -1376,16 +1376,6 @@ Use `same-width` when the panel should match the trigger width. Use `panel-heigh
 - For multi-select patterns, selection and deselection should remain visible and predictable.
 - You must not rely on icons alone. Pair icon-only triggers with accessible labels and keep option text readable.
 
-<Visibility for="agents">
-  Accessibility rules for `bq-dropdown`. Keywords follow RFC 2119 and summarize the Accessibility section above.
-
-  - MUST: Provide a visible label or `aria-label` on the trigger, especially for icon-only triggers
-  - MUST: Supply the `label` prop when a `bq-avatar` is the trigger
-  - MUST: Make the trigger reachable with `Tab`; use a natively focusable element such as `bq-button`
-  - MUST NOT: Rely on icons alone; pair icon-only triggers with accessible labels
-  - SHOULD: Keep selection and deselection visible and predictable for multi-select patterns
-</Visibility>
-
 ### Keyboard interaction
 
 | Key | Context | Action |
@@ -1396,6 +1386,16 @@ Use `same-width` when the panel should match the trigger width. Use `panel-heigh
 | `Enter` or `Space` | `bq-option` focused | Selects the option; the panel closes unless `keep-open-on-select` is set |
 | `Escape` | Panel open | Closes the panel |
 | `Tab` | Panel open, focus leaves the dropdown | Closes the panel |
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Provide a visible label or `aria-label` on the trigger, especially for icon-only triggers | MUST | manual |
+| Supply the `label` prop when a `bq-avatar` is the trigger | MUST | manual |
+| Make the trigger reachable with `Tab`; use a natively focusable element such as `bq-button` | MUST | manual |
+| Do not rely on icons alone; pair icon-only triggers with accessible labels | MUST NOT | manual |
+| Keep selection and deselection visible and predictable for multi-select patterns | SHOULD | manual |
 
 ## API reference
 

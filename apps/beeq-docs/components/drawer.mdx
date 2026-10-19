@@ -1581,16 +1581,6 @@ As a developer, you are responsible for the following:
 - **Providing a descriptive title** — the `aria-labelledby` attribute references the title slot. Screen readers announce this text when the dialog opens, so you must not use an empty or generic title such as "Panel", which makes the dialog purpose unclear.
 - **Keeping focusable elements out of the backdrop** — the backdrop does not receive focus, so you must keep interactive content inside the panel.
 
-<Visibility for="agents">
-  Accessibility rules for `bq-drawer`. Keywords follow RFC 2119 and summarize the Accessibility section above.
-
-  - MUST: Move focus into the drawer after `show()`; the component does not trap focus
-  - MUST: Restore focus to the trigger after `hide()`
-  - MUST: Provide a descriptive title in the title slot
-  - MUST NOT: Use an empty or generic title such as "Panel"
-  - MUST: Keep interactive content inside the panel, not the backdrop
-</Visibility>
-
 ### Keyboard interaction
 
 | Key | Context | Action |
@@ -1599,6 +1589,16 @@ As a developer, you are responsible for the following:
 | `Escape` | Drawer open, `close-on-esc` set | Does nothing; the drawer stays open |
 | `Tab` / `Shift` + `Tab` | Drawer open | Follows the native tab order; focus is not trapped inside the drawer |
 | `Enter` or `Space` | Focus on the close button or a native `<button>` inside the drawer | Activates the focused button |
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Move focus into the drawer after `show()`; the component does not trap focus | MUST | manual |
+| Restore focus to the trigger after `hide()` | MUST | manual |
+| Provide a descriptive title in the title slot | MUST | manual |
+| Do not use an empty or generic title such as "Panel" | MUST NOT | manual |
+| Keep interactive content inside the panel, not the backdrop | MUST | manual |
 
 ## API reference
 

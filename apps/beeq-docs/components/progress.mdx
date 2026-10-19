@@ -650,18 +650,18 @@ Use `indeterminate` when the task is active but the exact completion point canno
 - **Use percentage only when it helps**: you should use `label` or `enable-tooltip` when precise status matters. You may omit them for short or self-explanatory tasks.
 - **Be careful with motion**: if indeterminate animation is distracting in your application, you should respect `prefers-reduced-motion` at the app level.
 
-<Visibility for="agents">
-  Accessibility rules for `bq-progress`. Keywords follow RFC 2119 and summarize the Accessibility section above.
-
-  - MUST: Add a visible label or nearby text that says which operation the bar tracks
-  - MUST: Pair `type="error"` with a visible message
-  - SHOULD: Use `label` or `enable-tooltip` when precise status matters
-  - SHOULD: Respect `prefers-reduced-motion` at the app level for the indeterminate animation
-</Visibility>
-
 ### Keyboard interaction
 
 No keyboard interaction: the component is not focusable.
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Add a visible label or nearby text that says which operation the bar tracks | MUST | manual |
+| Pair `type="error"` with a visible message | MUST | manual |
+| Use `label` or `enable-tooltip` when precise status matters | SHOULD | manual |
+| Respect `prefers-reduced-motion` at the app level for the indeterminate animation | SHOULD | manual |
 
 ## API reference
 

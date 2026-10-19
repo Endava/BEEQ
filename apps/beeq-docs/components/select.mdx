@@ -3678,19 +3678,6 @@ The native `input` is the only tab stop. The clear button has `tabindex="-1"` an
 | Give every nested option a unique `value` | MUST | automated: `bq-select.e2e.tsx` |
 | Show a disabled loading option while options load asynchronously | SHOULD | manual |
 
-<Visibility for="agents">
-  Rules for `bq-select`. Keywords follow RFC 2119 and match the Rules table above.
-
-  - MUST: Provide text in the `label` slot, visually hidden when the layout hides it (manual)
-  - MUST NOT: use `placeholder` as the only label (manual)
-  - MUST: Populate the `helper-text` slot when `validation-status` is `"error"` (manual)
-  - SHOULD: Verify the computed combobox name, because the internal `aria-label` can override the slotted label (manual)
-  - MUST: Set `name` so the value is submitted with the form (automated: `bq-select.e2e.tsx`)
-  - MUST: Set `required` when a selection is mandatory so the form is invalid while no value is selected (automated: `bq-select.e2e.tsx`)
-  - MUST: Give every nested option a unique `value` (automated: `bq-select.e2e.tsx`)
-  - SHOULD: Show a disabled loading option while options load asynchronously (manual)
-</Visibility>
-
 <Warning>
   The internal label currently sets `aria-label` from the technical `name` value, or `"select"` when no name is supplied. This may override the slotted label in accessible-name computation and is tracked in [the Select follow-up issue](https://github.com/Endava/BEEQ/issues/1832). Provide meaningful label text and verify the computed combobox name in your supported browsers and assistive technologies.
 </Warning>

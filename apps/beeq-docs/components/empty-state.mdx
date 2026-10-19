@@ -619,19 +619,19 @@ Choose size based on the available space and the prominence of the moment. `medi
 - **Preserve reading order** — title, description, and actions should follow a logical visual and DOM sequence.
 - **Do not rely on color or imagery alone** — the message itself must explain what is happening and what can be done next.
 
-<Visibility for="agents">
-  Accessibility rules for `bq-empty-state`. Keywords follow RFC 2119 and summarize the Accessibility section above.
-
-  - MUST: Hide purely decorative thumbnails with `aria-hidden="true"` or an empty `alt`
-  - MUST: Make the title and body explain the state without the artwork
-  - MUST: Render recovery actions in the footer as real buttons or links with clear labels
-  - MUST: Explain what is happening and what to do next, without relying on color or imagery alone
-  - SHOULD: Keep title, description, and actions in a logical visual and DOM order
-</Visibility>
-
 ### Keyboard interaction
 
 No keyboard interaction: the component is not focusable. Actions you place in the `footer` slot keep their own keyboard behavior.
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Hide purely decorative thumbnails with `aria-hidden="true"` or an empty `alt` | MUST | manual |
+| Make the title and body explain the state without the artwork | MUST | manual |
+| Render recovery actions in the footer as real buttons or links with clear labels | MUST | manual |
+| Explain what is happening and what to do next, without relying on color or imagery alone | MUST | manual |
+| Keep title, description, and actions in a logical visual and DOM order | SHOULD | manual |
 
 ## API reference
 

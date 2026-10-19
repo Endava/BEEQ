@@ -299,7 +299,6 @@ A card with icon, title, description, and a call-to-action — use when users ne
       </BqCard>
     </template>
 
-
     <style>
       .card--default {
         max-width: 24rem;
@@ -552,7 +551,6 @@ Use a card list when you have a collection of items that share the same structur
         </section>
       </BqCard>
     </template>
-
 
     <style>
       .card--highlights {
@@ -827,7 +825,6 @@ A KPI card combining an icon, headline value, and trend indicator — ideal for 
         </div>
       </BqCard>
     </template>
-
 
     <style>
       .card--overview {
@@ -1120,7 +1117,6 @@ A compact horizontal card using `type="minimal"` that removes built-in padding, 
         </div>
       </BqCard>
     </template>
-
 
     <style>
       .card--mini {
@@ -1523,15 +1519,6 @@ Use the `border` property to control the card corner radius.
 - **Interactive content** — all interactive elements inside a card (buttons, links) must be reachable and operable with the keyboard alone.
 - **Color contrast** — the card background, text, and UI elements must keep sufficient contrast so content remains readable for all users.
 
-<Visibility for="agents">
-  Accessibility rules for `bq-card`. Keywords follow RFC 2119 and summarize the Accessibility section above.
-
-  - MUST: Provide descriptive `alt` text for images inside a card
-  - MUST: Keep a proper heading hierarchy inside the card
-  - MUST: Keep interactive elements inside the card operable with the keyboard alone
-  - MUST: Keep sufficient contrast for the background, text, and UI elements
-</Visibility>
-
 ### Keyboard interaction
 
 No keyboard interaction: the component is not focusable. Buttons and links you place inside a card follow their own keyboard behavior.
@@ -1785,7 +1772,6 @@ When a card represents a link destination (for example, an article or product), 
       </a>
     </template>
 
-
     <style>
       .card-link {
         border-radius: var(--bq-radius--m);
@@ -1821,6 +1807,15 @@ When a card represents a link destination (for example, an article or product), 
     ```
   </CodeGroup>
 </CodeLivePreview>
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Provide descriptive `alt` text for images inside a card | MUST | manual |
+| Keep a proper heading hierarchy inside the card | MUST | manual |
+| Keep interactive elements inside the card operable with the keyboard alone | MUST | manual |
+| Keep sufficient contrast for the background, text, and UI elements | MUST | manual |
 
 ## API reference
 

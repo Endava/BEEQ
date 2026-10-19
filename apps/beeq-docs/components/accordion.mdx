@@ -1323,14 +1323,6 @@ Developers can [rely on the exposed shadow DOM parts](/guides/styles#component-s
 - **Disabled state** — disabled accordions are removed from the tab order, so you should use this state sparingly and explain unavailable content when possible.
 - **Reduced motion** — you should use `no-animation` when motion should be minimized, or respect the user's `prefers-reduced-motion` setting.
 
-<Visibility for="agents">
-  Accessibility rules for `bq-accordion`. Keywords follow RFC 2119 and summarize the Accessibility section above.
-
-  - SHOULD: Write header labels that describe the panel content before it is expanded
-  - SHOULD: Use `disabled` sparingly and explain unavailable content nearby
-  - SHOULD: Set `no-animation` or respect `prefers-reduced-motion` when motion must be minimized
-</Visibility>
-
 ### Keyboard interaction
 
 The header is a native `<summary>` element exposed with `role="button"`.
@@ -1342,6 +1334,14 @@ The header is a native `<summary>` element exposed with `role="button"`.
 | `Enter` | Header focused | Toggles the panel open or closed and emits `bqClick` |
 | `Space` | Header focused | Toggles the panel open or closed and emits `bqClick` |
 | `Tab` | Disabled accordion | Skipped; the header has `tabindex="-1"` |
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Write header labels that describe the panel content before it is expanded | SHOULD | manual |
+| Use `disabled` sparingly and explain unavailable content nearby | SHOULD | manual |
+| Set `no-animation` or respect `prefers-reduced-motion` when motion must be minimized | SHOULD | manual |
 
 ## API reference
 

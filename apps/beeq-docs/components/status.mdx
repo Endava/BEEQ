@@ -402,18 +402,18 @@ Use `type="success"` when the state confirms a positive outcome.
 - This component is informational, not interactive. If users need to act on the message, you should pair it with a separate button or link.
 - The label must keep sufficient contrast with its background and remain readable in tables, cards, and dense data views.
 
-<Visibility for="agents">
-  Accessibility rules for `bq-status`. Keywords follow RFC 2119 and summarize the Accessibility section above.
-
-  - MUST: Provide a text label; the dot is not sufficient on its own
-  - MUST: Keep sufficient label contrast against the background
-  - SHOULD: Keep labels short and specific
-  - SHOULD: Pair the status with a separate button or link when users need to act
-</Visibility>
-
 ### Keyboard interaction
 
 No keyboard interaction: the component is not focusable.
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Provide a text label; the dot is not sufficient on its own | MUST | manual |
+| Keep sufficient label contrast against the background | MUST | manual |
+| Keep labels short and specific | SHOULD | manual |
+| Pair the status with a separate button or link when users need to act | SHOULD | manual |
 
 ## API reference
 

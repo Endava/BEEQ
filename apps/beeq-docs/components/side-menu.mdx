@@ -2135,17 +2135,6 @@ The component uses native button Tab navigation, not the composite ARIA menu key
 - **Labels** - labels must be unique and make sense without additional context. The item text feeds the collapsed tooltip content.
 - **Footer actions** - every icon-only `bq-button` must have a meaningful `label`, and its decorative icon must be hidden from assistive technology.
 
-<Visibility for="agents">
-  Accessibility rules for `bq-side-menu`. Keywords follow RFC 2119 and summarize the Accessibility section above.
-
-  - MUST: Communicate the expanded or collapsed state from any layout control you add
-  - MUST: Set `aria-hidden="true"` on prefix icons
-  - MUST: Give items unique labels that make sense without context
-  - MUST: Give icon-only `bq-button` controls in the footer a meaningful `label` and hide their decorative icon
-  - SHOULD: Put semantic heading text in the logo slot
-  - SHOULD: Validate icon meaning when collapsed navigation relies on icons
-</Visibility>
-
 ### Keyboard interaction
 
 Each `bq-side-menu-item` renders a native `<button>`, so there are no arrow-key shortcuts between items.
@@ -2156,6 +2145,17 @@ Each `bq-side-menu-item` renders a native `<button>`, so there are no arrow-key 
 | `Shift` + `Tab` | Any | Moves focus to the previous enabled item; disabled items are skipped |
 | `Enter` | Enabled, inactive item focused | Emits `bqClick` and makes the item active |
 | `Space` | Enabled, inactive item focused | Emits `bqClick` and makes the item active |
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Communicate the expanded or collapsed state from any layout control you add | MUST | manual |
+| Set `aria-hidden="true"` on prefix icons | MUST | manual |
+| Give items unique labels that make sense without context | MUST | manual |
+| Give icon-only `bq-button` controls in the footer a meaningful `label` and hide their decorative icon | MUST | manual |
+| Put semantic heading text in the logo slot | SHOULD | manual |
+| Validate icon meaning when collapsed navigation relies on icons | SHOULD | manual |
 
 ## API reference
 

@@ -1090,7 +1090,6 @@ By default, the calendar shows only the days of the displayed month. Enable `sho
     ```jsx React icon="react"
     import { BqDatePicker } from "@beeq/react";
 
-
     <BqDatePicker name="outside-visible" open showOutsideDays value="2026-05-12">
       <label slot="label">With outside days</label>
     </BqDatePicker>
@@ -1697,19 +1696,6 @@ When focus leaves the segmented field, complete dates outside `min` or `max` are
 | Set `min`, `max`, or `isDateDisallowed` when the valid dates are known | SHOULD | manual |
 | Keep `locale`, `first-day-of-week`, and display formatting aligned with user expectations | SHOULD | manual |
 | Use a placeholder as the only instruction for the field | MUST NOT | manual |
-
-<Visibility for="agents">
-  Rules for `bq-date-picker`. Keywords follow RFC 2119 and match the Rules table above.
-
-  - MUST: Provide a visible label through the `label` slot (manual)
-  - MUST: Set `required` when a date is mandatory so form submission is blocked until a value is set (automated: `bq-date-picker.e2e.tsx`)
-  - SHOULD: Set `form-validation-message` to provide a specific message for required, invalid typed, and out-of-bounds values (automated: `bq-date-picker.e2e.tsx`)
-  - MUST: Pair `validationStatus` with visible error text (manual)
-  - MUST: Use more than color to communicate validation states (manual)
-  - SHOULD: Set `min`, `max`, or `isDateDisallowed` when the valid dates are known (manual)
-  - SHOULD: Keep `locale`, `first-day-of-week`, and display formatting aligned with user expectations (manual)
-  - MUST NOT: use a placeholder as the only instruction for the field (manual)
-</Visibility>
 
 ## API reference
 

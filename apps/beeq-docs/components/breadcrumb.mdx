@@ -464,14 +464,6 @@ Icons next to labels help users recognize categories at a glance. Use `size="16"
 - **Icon-only items** — when a breadcrumb item contains only an icon, you must set `label` on the `bq-icon` to describe the destination (e.g. `<bq-icon name="house-line" label="Home page">`). The item does not forward an `aria-label` set on `bq-breadcrumb-item` to its inner link or button.
 - **Decorative icons** — when an icon appears alongside a visible text label, you must set `aria-hidden="true"` on the `bq-icon` so screen readers do not announce it twice.
 
-<Visibility for="agents">
-  Accessibility rules for `bq-breadcrumb`. Keywords follow RFC 2119 and summarize the Accessibility section above.
-
-  - MUST: Override `label` (default `Breadcrumbs`) when the page has several navigation regions
-  - MUST: Set `label` on `bq-icon` for icon-only items
-  - MUST: Set `aria-hidden="true"` on a `bq-icon` that sits next to a visible text label
-</Visibility>
-
 ### Keyboard interaction
 
 Each `bq-breadcrumb-item` renders a native `a` (with `href`) or `button` (without `href`).
@@ -482,6 +474,14 @@ Each `bq-breadcrumb-item` renders a native `a` (with `href`) or `button` (withou
 | `Shift` + `Tab` | Any | Moves focus to the previous breadcrumb item |
 | `Enter` | Item focused | Activates the item and emits `bqClick`; with `href`, navigates to the link unless `bqClick` is canceled |
 | `Space` | Item without `href` focused | Activates the button and emits `bqClick` |
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Override `label` (default `Breadcrumbs`) when the page has several navigation regions | MUST | manual |
+| Set `label` on `bq-icon` for icon-only items | MUST | manual |
+| Set `aria-hidden="true"` on a `bq-icon` that sits next to a visible text label | MUST | manual |
 
 ## API reference
 

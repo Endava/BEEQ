@@ -266,7 +266,6 @@ Set `orientation="vertical"` when the divider separates side-by-side content, su
       </div>
     </template>
 
-
     <style>
       .divider--vertical-example {
         display: flex;
@@ -437,7 +436,6 @@ Use `title-alignment` to place title content at the start, middle, or end of the
       <BqDivider titleAlignment="end">Text end</BqDivider>
     </template>
 
-
     <style>
       bq-divider {
         white-space: nowrap;
@@ -596,17 +594,17 @@ Use stroke attributes to match the divider to a specific visual treatment. Set `
 - You must not rely on a divider alone to communicate page structure. Use headings, landmarks, or list semantics when users need navigation or hierarchy.
 - You should keep vertical dividers out of the keyboard focus order unless nearby interactive content already provides a clear path.
 
-<Visibility for="agents">
-  Accessibility rules for `bq-divider`. Keywords follow RFC 2119 and summarize the Accessibility section above.
-
-  - MUST NOT: Rely on a divider alone to communicate page structure; use headings, landmarks, or list semantics
-  - SHOULD: Use slot content only for short labels that identify the following group
-  - SHOULD: Keep vertical dividers out of the keyboard focus order unless nearby interactive content provides a clear path
-</Visibility>
-
 ### Keyboard interaction
 
 No keyboard interaction: the component is not focusable.
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Do not rely on a divider alone to communicate page structure; use headings, landmarks, or list semantics | MUST NOT | manual |
+| Use slot content only for short labels that identify the following group | SHOULD | manual |
+| Keep vertical dividers out of the keyboard focus order unless nearby interactive content provides a clear path | SHOULD | manual |
 
 ## API reference
 

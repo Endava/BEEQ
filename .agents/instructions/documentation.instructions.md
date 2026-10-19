@@ -22,7 +22,7 @@ Documentation is read by developers, designers, product managers, and other stak
 
 ### Rule strength (RFC 2119)
 
-Strength keywords in capitals appear in two places only: the **Strength** column of the Rules and Invalid combinations tables and the `<Visibility for="agents">` blocks, so agents can tell a hard requirement from advice. Everything humans read (Accessibility and Keyboard bullets, prose, Do/Don't cards, Tips, Notes) uses plain lowercase wording ("must", "should", "avoid"); capitals there read as shouting.
+Strength keywords in capitals appear in one place only: the **Strength** column of the Rules and Invalid combinations tables, so readers and agents can tell a hard requirement from advice. Everything humans read (Accessibility and Keyboard bullets, prose, Do/Don't cards, Tips, Notes) uses plain lowercase wording ("must", "should", "avoid"); capitals there read as shouting.
 
 | Keyword | Meaning |
 |---|---|
@@ -30,7 +30,7 @@ Strength keywords in capitals appear in two places only: the **Strength** column
 | **SHOULD** / **SHOULD NOT** | Strong recommendation. Deviate only with a reason. |
 | **MAY** | Optional behavior. |
 
-- Capitalise the keyword only in the Strength column and the agent-only blocks. Descriptions of what the component does ("The component sets `role="switch"`") need no keyword.
+- Capitalise the keyword only in the Strength column. Descriptions of what the component does ("The component sets `role="switch"`") need no keyword.
 - Pick the strength from intent: WCAG failures and functional breakage are MUST / MUST NOT; stylistic and UX guidance is SHOULD / SHOULD NOT.
 - Write sentences that start with the requirement as imperatives ("Provide a label…", "Don't rely on color alone…"), never as a bare lowercase "must" or "should".
 - Best practices cards keep the Do/Don't structure; the same rule appears with its capitalised strength in the Rules table when it is verifiable.

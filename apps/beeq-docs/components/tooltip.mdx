@@ -1258,15 +1258,6 @@ The `distance` prop controls the gap in pixels between the trigger and the toolt
 - **Preserve control semantics** — the trigger wrapper delegates events without adding a role or a tab stop. The slotted control keeps its accessible name, existing descriptions, and native keyboard activation. You must not turn the wrapper into another button or point a light-DOM `aria-describedby` at the panel inside the tooltip's shadow root; that ID reference cannot cross the shadow boundary.
 - **WCAG 1.4.13 (Content on Hover or Focus)** — hover-mode tooltips close when the pointer leaves the trigger or focus moves away, and the panel itself is not hoverable. <kbd>Esc</kbd> dismisses only click-mode tooltips. You should keep tooltip content short and non-essential, and should use `display-on="click"` when users need time to read it.
 
-<Visibility for="agents">
-  Accessibility rules for `bq-tooltip`. Keywords follow RFC 2119 and summarize the Accessibility section above.
-
-  - MUST NOT: Place critical instructions, error messages, or required form guidance in a tooltip
-  - MUST NOT: Turn the trigger wrapper into another button or tab stop
-  - SHOULD: Use a focusable trigger such as a button, since the tooltip does not make its trigger focusable
-  - SHOULD: Keep tooltip content short; hover tooltips close on pointer leave or focus loss, and only click-mode tooltips close on `Esc`
-</Visibility>
-
 ### Keyboard interaction
 
 | Key | Context | Action |
@@ -1279,6 +1270,15 @@ The `distance` prop controls the gap in pixels between the trigger and the toolt
 | `Escape` | `display-on="click"`, tooltip open | Closes the tooltip |
 
 `Escape` has no effect in hover mode or when `always-visible` is set.
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Do not place critical instructions, error messages, or required form guidance in a tooltip | MUST NOT | manual |
+| Do not turn the trigger wrapper into another button or tab stop | MUST NOT | manual |
+| Use a focusable trigger such as a button, since the tooltip does not make its trigger focusable | SHOULD | manual |
+| Keep tooltip content short; hover tooltips close on pointer leave or focus loss, and only click-mode tooltips close on `Esc` | SHOULD | manual |
 
 ## API reference
 

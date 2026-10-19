@@ -317,7 +317,6 @@ When a badge is paired with an icon or trigger, position it on the outer edge so
       </div>
     </template>
 
-
     <style>
       .badge--icon {
         position: relative;
@@ -420,17 +419,17 @@ Badges are visual indicators, not interactive controls. When a badge communicate
 
 Badges must not rely on color alone. When the badge carries important information such as unread notifications or an error state, you must provide text, a label, or an accessible name on the related control.
 
-<Visibility for="agents">
-  Accessibility rules for `bq-badge`. Keywords follow RFC 2119 and summarize the Accessibility section above.
-
-  - MUST: Expose the badge meaning (count or status) through the surrounding element or nearby text
-  - MUST: Provide text, a label, or an accessible name on the related control when the badge carries important information
-  - MUST NOT: Rely on color alone
-</Visibility>
-
 ### Keyboard interaction
 
 No keyboard interaction: the component is not focusable.
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Expose the badge meaning (count or status) through the surrounding element or nearby text | MUST | manual |
+| Provide text, a label, or an accessible name on the related control when the badge carries important information | MUST | manual |
+| Do not rely on color alone | MUST NOT | manual |
 
 ## API reference
 
