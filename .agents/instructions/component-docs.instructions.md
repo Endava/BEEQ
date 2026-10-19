@@ -57,10 +57,12 @@ Follow with a brief description and a parts table with columns: **Part**, **Elem
 
 ## Related Components (in When to use)
 
-Components that look alike MUST name each other. Right after the When to use cards, add one sentence on **both** pages naming the sibling and the deciding condition:
+Components that look alike MUST name each other. Right after the When to use cards, add one sentence on **both** pages naming the sibling and the deciding condition, wrapped in a `<Tip>`:
 
 ```mdx
-Choose [`bq-textarea`](/components/textarea) instead of `bq-input` when users enter more than one line of text.
+<Tip>
+  Choose [`bq-textarea`](/components/textarea) instead of `bq-input` when users enter more than one line of text.
+</Tip>
 ```
 
 - Name only siblings that have a page in `docs.json`, and link them.
