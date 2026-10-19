@@ -25,7 +25,7 @@ export const CodeLivePreview = ({ code, children, height, removePadding = false,
   const previewRef = useRef(null);
 
   // Constants are centralized so URLs and selectors are not duplicated.
-  const BEEQ_VERSION = '1.17.0';
+  const BEEQ_VERSION = '{{BEEQ_VERSION}}';
   const CDN_BASE = 'https://unpkg.com';
   const BEEQ_ESM_URL = `${CDN_BASE}/@beeq/core@${BEEQ_VERSION}/dist/beeq/beeq.esm.js`;
   const BEEQ_CSS_URL = `${CDN_BASE}/@beeq/core@${BEEQ_VERSION}/dist/beeq/beeq.css`;
