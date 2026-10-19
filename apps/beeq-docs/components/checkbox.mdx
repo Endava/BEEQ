@@ -14,7 +14,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 Checkboxes help people make independent selections, confirm agreement, or control optional settings. Use them when more than one option can be selected at the same time, or when a single opt-in needs an explicit checked state.
 
 <Note>
-  Use a clear visible label for every checkbox. When several checkboxes belong to the same decision, group them under a shared descriptive heading.
+  Every checkbox must have a visible label. Checkboxes that belong to the same decision should be grouped under a shared descriptive heading.
 </Note>
 
 ## When to use
@@ -39,6 +39,8 @@ Checkboxes help people make independent selections, confirm agreement, or contro
     - The label is so long or ambiguous that the yes-or-no meaning becomes unclear
   </Card>
 </CardGroup>
+
+Choose [`bq-switch`](/components/switch) instead of `bq-checkbox` when the setting takes effect immediately without a form submission, and [`bq-radio`](/components/radio) when users must choose exactly one option from a list. Keep consent and confirmation choices on `bq-checkbox`.
 
 ## Patterns
 
@@ -94,27 +96,27 @@ Use checkbox labels and grouping patterns that make the selected state easy to u
 
 <CardGroup cols={2}>
   <CardTile title="Write labels as outcomes">
-    Write the label so the checked state reads like a clear statement, especially in settings and consent flows.
+    The label should read as a clear statement of the checked state, especially in settings and consent flows.
   </CardTile>
   <CardTile title="Make hierarchy obvious">
-    When a parent checkbox controls child options, make the relationship visually clear and keep the parent state synchronized.
+    When a parent checkbox controls child options, the relationship should be visually clear and the parent state must stay synchronized with its children.
   </CardTile>
 </CardGroup>
 
 <Steps>
   <Step title="Start with the key meaning">
-    Put the important words at the beginning of the label so people can scan the list quickly.
+    Labels should start with the important words so people can scan the list quickly.
   </Step>
   <Step title="Group related choices">
-    Use a shared heading or fieldset when several checkboxes belong to one decision or category.
+    Checkboxes that belong to one decision or category should share a heading or fieldset.
   </Step>
   <Step title="Use indeterminate as a summary">
-    Reserve the indeterminate state for parent checkboxes that represent a partially selected group.
+    The indeterminate state should be reserved for parent checkboxes that represent a partially selected group.
   </Step>
 </Steps>
 
 <Note>
-  If users must choose exactly one option, use [Radio](/components/radio) instead of adapting a checkbox pattern to a single-select task.
+  If users choose exactly one option, you should use [Radio](/components/radio) instead of adapting a checkbox pattern to a single-select task.
 </Note>
 
 ## Usage
@@ -240,6 +242,8 @@ Use a longer label when people need more context before deciding, but keep the c
 </CodeLivePreview>
 
 ## Options
+
+**Allowed states:** unchecked (default), `checked`, `indeterminate`. Setting `indeterminate` sets `checked` to `false`, and a user toggle clears `indeterminate`.
 
 ### Background on hover
 
@@ -705,12 +709,12 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
 </CodeLivePreview>
 
 <Warning>
-  Indeterminate is a visual summary state, not a third submitted form value. Keep the parent and child checkboxes synchronized through event handling.
+  Indeterminate is a visual summary state, not a third submitted form value. The parent and child checkboxes must be kept synchronized through event handling.
 </Warning>
 
 ### Form integration
 
-`bq-checkbox` participates in native forms. A checked checkbox submits `"on"` for its `name`; an unchecked checkbox is omitted from `FormData`. Use `required` for consent or confirmation choices that must be selected before submission.
+`bq-checkbox` participates in native forms. A checked checkbox submits `"on"` for its `name`; an unchecked checkbox is omitted from `FormData`. Set `required` on consent or confirmation checkboxes that must be selected before submission.
 
 <Note>
   The live preview runs in an iframe sandbox that does not allow native form submission. Its Submit button uses `type="button"` and `bqClick` to validate the form and display `FormData` without submitting it. The copyable examples use native `type="submit"` buttons for normal application forms.
@@ -921,56 +925,56 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Write checkbox labels as clear statements, not questions, so people understand the resulting selected state.
+    should write checkbox labels as clear statements, not questions, so people understand the resulting selected state.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Do not use checkboxes when users must choose only one option. Use [Radio](/components/radio) instead.
+    should not use checkboxes when users must choose only one option. Use [Radio](/components/radio) instead.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Align long labels from the top so wrapped text stays visually connected to the checkbox control.
+    should align long labels from the top so wrapped text stays visually connected to the checkbox control.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Do not center long wrapped labels vertically against the control, because that weakens scanability.
+    should not center long wrapped labels vertically against the control, because that weakens scanability.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Group related checkboxes under a shared heading when they belong to the same decision.
+    should group related checkboxes under a shared heading when they belong to the same decision.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Do not rely on unchecked-by-default choices to imply consent when legal or high-stakes confirmation is required.
+    must not rely on unchecked-by-default choices to imply consent when legal or high-stakes confirmation is required.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Use the indeterminate state only when it accurately summarizes a partially selected group of child options.
+    should use the indeterminate state only when it accurately summarizes a partially selected group of child options.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Do not present indeterminate as a standalone third choice, because it is only meaningful as a group summary.
+    should not present indeterminate as a standalone third choice, because it is only meaningful as a group summary.
   </Card>
 </CardGroup>
 
@@ -979,9 +983,31 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
 - **Built-in native checkbox semantics** — the component uses a native `<input type="checkbox">`, so checked, unchecked, disabled, and required states follow standard browser and assistive technology behavior.
 - **Built-in label association** — the internal input and the slotted text are wrapped in the same `<label>`, so clicking the label toggles the checkbox without extra wiring.
 - **Built-in focus support** — the shadow root delegates focus to the native input, and the component emits `bqFocus` and `bqBlur` when that input gains or loses focus.
-- **Group related choices semantically** — when multiple checkboxes form a set, provide a shared heading or a `<fieldset>` with an accessible label.
-- **Use indeterminate carefully** — it should summarize a partial group selection, not replace clear child options.
-- **Do not rely on color alone** — the checked mark, focus treatment, and label text should all help communicate meaning.
+- **Group related choices semantically** — when multiple checkboxes form a set, they SHOULD share a heading or a `<fieldset>` with an accessible label.
+- **Use indeterminate carefully** — it SHOULD summarize a partial group selection and MUST NOT replace clear child options.
+- **Do not rely on color alone** — the checked mark, focus treatment, and label text together MUST communicate meaning; color MUST NOT be the only cue.
+
+### Keyboard interaction
+
+| Key | Context | Action |
+|---|---|---|
+| `Tab` | Checkbox enabled | Moves focus to the checkbox and emits `bqFocus`; focus leaving emits `bqBlur` |
+| `Shift+Tab` | Checkbox enabled | Moves focus to the previous focusable element |
+| `Space` | Checkbox focused | Toggles the checked state through the native input and emits `bqChange` |
+| `Tab` | Checkbox disabled | Skips the checkbox |
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Provide a visible label in the default slot | MUST | manual |
+| Set `name` so the checked state is submitted with the form | MUST | automated: `bq-checkbox.e2e.tsx` |
+| Set `required` on checkboxes that must be checked before submission | MUST | automated: `bq-checkbox.e2e.tsx` |
+| Set `form-validation-message` on required checkboxes to give a specific validation message | SHOULD | manual |
+| Keep the parent and child checkboxes synchronized in a nested group | MUST | manual |
+| Use `indeterminate` only to summarize a partially selected group | SHOULD | manual |
+| Group related checkboxes under a shared heading or `<fieldset>` | SHOULD | manual |
+| Use more than color to communicate the checked state | MUST | manual |
 
 ## API reference
 
@@ -998,6 +1024,12 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
 | `name` | `name` | Name of the HTML form control submitted with the form | `string` | `undefined` |
 | `required` | `required` | If `true`, the checkbox must be selected before form submission | `boolean` | `undefined` |
 | `value` | `value` | Sets the underlying `<input>` value attribute. The current form submission value is the fixed string `'on'` when checked | `string` | `undefined` |
+
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| `indeterminate` set while `checked` is `true` | SHOULD NOT | `checked` is set to `false` |
 
 ### Events
 

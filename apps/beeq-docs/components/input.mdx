@@ -45,6 +45,8 @@ Inputs let users enter a short value in a familiar, single-line control. Use the
   </Card>
 </CardGroup>
 
+Choose [`bq-textarea`](/components/textarea) instead of `bq-input` when users enter more than one line of text.
+
 ## Patterns
 
 <CardGroup cols={2}>
@@ -72,7 +74,7 @@ Inputs let users enter a short value in a familiar, single-line control. Use the
   <img className="hidden dark:block" src="/components/images/input/input-anatomy-dark.svg" alt="BEEQ Input component anatomy" />
 </Frame>
 
-An input combines a persistent label with a single-line text field and optional supporting content. Keep the label visible, use helper text for guidance or feedback, and treat placeholder text as an example rather than an instruction.
+An input combines a persistent label with a single-line text field and optional supporting content. You should keep the label visible, use helper text for guidance or feedback, and treat placeholder text as an example rather than an instruction.
 
 | Part | Element | Description |
 |---|---|---|
@@ -112,16 +114,16 @@ Use this sequence when you define an input:
   </Step>
 
   <Step title="Write the label first">
-    Make the field purpose clear with a persistent label. Use helper text for extra context and keep placeholder text for examples only.
+    Make the field purpose clear with a persistent label. You should use helper text for extra context and keep placeholder text for examples only.
   </Step>
 
   <Step title="Support fast completion">
-    Add semantic attributes such as `autocomplete`, `required`, and `pattern` only when they meaningfully improve completion or validation.
+    You should add semantic attributes such as `autocomplete`, `required`, and `pattern` only when they meaningfully improve completion or validation.
   </Step>
 </Steps>
 
 <Note>
-  When the field has a value and `disable-clear` is not set, the component can surface a built-in clear action. You do not need to build a separate clear button for common text-entry cases.
+  When the field has a value and `disable-clear` is not set, the component can surface a built-in clear action. You should not build a separate clear button for common text-entry cases.
 </Note>
 
 ## Usage
@@ -685,6 +687,11 @@ Use the `disabled` attribute when the input field should be visible but non-edit
 </CodeLivePreview>
 
 ## Options
+
+| Dimension | Attribute | Allowed values | Default |
+|---|---|---|---|
+| Type | `type` | `date`, `datetime-local`, `email`, `number`, `password`, `search`, `tel`, `text`, `time`, `url` | `text` |
+| Validation status | `validation-status` | `error`, `none`, `success`, `warning` | `none` |
 
 ### Validation
 
@@ -1502,7 +1509,7 @@ Use this variant when the field does not require supplementary guidance.
 
 For `type="number"`, user-entered values are numbers in `value`, `bqInput.detail.value`, and `bqChange.detail.value`. Deleting all contents or using Clear sets the value to `''` and submits an empty string, not `"0"`. A deliberate numeric `0` satisfies `required` and supports the Clear action when clearing is enabled.
 
-An incomplete numeric entry, such as `-`, can also expose `''` while you type because the native number input has no complete numeric value yet. Check for `''` before converting event values to numbers so an empty optional filter does not become a zero bound.
+An incomplete numeric entry, such as `-`, can also expose `''` while you type because the native number input has no complete numeric value yet. You should check for `''` before converting event values to numbers so an empty optional filter does not become a zero bound.
 
 <CodeLivePreview mode="iframe" height="20.5rem" removePadding code={`
   <style>
@@ -1729,7 +1736,7 @@ An incomplete numeric entry, such as `-`, can also expose `''` while you type be
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Keep labels short, specific, and visible after users start typing.
+    You should keep labels short, specific, and visible after users start typing.
   </Card>
 
   <Card>
@@ -1737,7 +1744,7 @@ An incomplete numeric entry, such as `-`, can also expose `''` while you type be
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Rely on placeholder text as the only explanation of what the field is for.
+    You must not rely on placeholder text as the only explanation of what the field is for.
   </Card>
 
   <Card>
@@ -1745,7 +1752,7 @@ An incomplete numeric entry, such as `-`, can also expose `''` while you type be
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Write helper text that explains format, constraints, or what happens next in plain language.
+    You should write helper text that explains format, constraints, or what happens next in plain language.
   </Card>
 
   <Card>
@@ -1753,7 +1760,7 @@ An incomplete numeric entry, such as `-`, can also expose `''` while you type be
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Fill the space under the field with long, repetitive instructions users will skip.
+    You should not fill the space under the field with long, repetitive instructions users will skip.
   </Card>
 
   <Card>
@@ -1761,7 +1768,7 @@ An incomplete numeric entry, such as `-`, can also expose `''` while you type be
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Match field type, width, and ordering to the data people are expected to enter.
+    You should match field type, width, and ordering to the data people are expected to enter.
   </Card>
 
   <Card>
@@ -1769,7 +1776,7 @@ An incomplete numeric entry, such as `-`, can also expose `''` while you type be
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Make users jump across multiple columns or guess which fields belong together.
+    You should not make users jump across multiple columns or guess which fields belong together.
   </Card>
 
   <Card>
@@ -1777,7 +1784,7 @@ An incomplete numeric entry, such as `-`, can also expose `''` while you type be
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Explain validation close to the field and tell users how to recover from an error.
+    You should explain validation close to the field and tell users how to recover from an error.
   </Card>
 
   <Card>
@@ -1785,7 +1792,7 @@ An incomplete numeric entry, such as `-`, can also expose `''` while you type be
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Use color alone to communicate validity or leave users guessing which format is required.
+    You must not use color alone to communicate validity or leave users guessing which format is required.
   </Card>
 </CardGroup>
 
@@ -1795,10 +1802,38 @@ An incomplete numeric entry, such as `-`, can also expose `''` while you type be
 - Built in: when `disabled` is set, the native input receives `aria-disabled="true"` so assistive technologies can detect the unavailable state.
 - Built in: the clear button uses `clearButtonLabel` as its accessible name, and the default clear icon is marked `aria-hidden="true"`.
 - Built in: the component participates in forms and can surface native required-state validity when you combine `required` with `formValidationMessage`.
-- You must: provide meaningful content in the `label` slot for most cases, even when the surrounding layout makes the field purpose look obvious visually.
-- You must: treat helper and validation text as instructions, not decoration. Keep it concise and make recovery steps explicit.
-- You must: avoid placeholder-only labeling because placeholder text disappears as soon as the user types.
-- You must: add alternate context when you intentionally omit the visible label, so screen reader and keyboard users still understand the field purpose.
+- You MUST provide meaningful content in the `label` slot, even when the surrounding layout makes the field purpose look obvious visually.
+- You MUST treat helper and validation text as instructions, not decoration. Keep it concise and make recovery steps explicit.
+- You MUST NOT use placeholder text as the only label because it disappears as soon as the user types.
+- You MUST add alternate context when you intentionally omit the visible label, so screen reader and keyboard users still understand the field purpose.
+
+### Keyboard interaction
+
+The component renders a native `input` element and a `bq-button` (a native `button`) for the clear action, so the keys below come from those elements.
+
+| Key | Context | Action |
+|---|---|---|
+| `Tab` | Any | Moves focus to the input, then to the clear button when it is shown, then to the next focusable element |
+| `Shift` + `Tab` | Any | Moves focus to the previous focusable element |
+| Printable characters | Input focused, not `disabled` or `readonly` | Types into the field and emits `bqInput` on every change |
+| `ArrowUp` | Input focused, `type="number"` | Increases the value by `step` (native behavior) |
+| `ArrowDown` | Input focused, `type="number"` | Decreases the value by `step` (native behavior) |
+| `Enter` | Clear button focused | Clears the value, emits `bqClear`, and returns focus to the input |
+| `Space` | Clear button focused | Clears the value, emits `bqClear`, and returns focus to the input |
+
+The input is not focusable when `disabled` is set. When `readonly` is set, it stays focusable but rejects typing.
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Provide a visible label in the `label` slot, or alternate context when you omit it | MUST | manual |
+| Set `name` so the value is submitted with the form | MUST | automated: `bq-input.e2e.tsx` |
+| Set `required` for mandatory fields so the form fails validation while the value is empty | MUST | automated: `bq-input.e2e.tsx` |
+| Set `form-validation-message` to tell users how to fix a missing required value | SHOULD | manual |
+| Do not use `placeholder` as the only label | MUST NOT | manual |
+| Provide helper or validation text that explains how to recover from an error | SHOULD | manual |
+| Do not rely on color alone to communicate `validation-status` | MUST NOT | manual |
 
 ## API reference
 
@@ -1829,6 +1864,10 @@ An incomplete numeric entry, such as `-`, can also expose `''` while you type be
 | `type` | `type` | Native input type to render | `"date" \| "datetime-local" \| "email" \| "number" \| "password" \| "search" \| "tel" \| "text" \| "time" \| "url"` | `"text"` |
 | `validationStatus` | `validation-status` | Validation state of the control | `"error" \| "none" \| "success" \| "warning"` | `"none"` |
 | `value` | `value` | Current input value | `number \| string \| string[]` | `undefined` |
+
+### Invalid combinations
+
+No invalid prop combinations.
 
 ### Events
 

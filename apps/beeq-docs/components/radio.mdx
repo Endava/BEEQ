@@ -14,7 +14,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 Radio buttons present a list of options where only one can be active at a time. When a user selects a new option, the previous selection is cleared automatically. Use them inside a `bq-radio-group` to connect the options and manage state.
 
 <Note>
-  Always wrap `bq-radio` elements inside a `bq-radio-group`. The group manages selection state, keyboard navigation, form association, and accessibility — an isolated `bq-radio` cannot do this on its own.
+  You must wrap `bq-radio` elements inside a `bq-radio-group`. The group manages selection state, keyboard navigation, form association, and accessibility — an isolated `bq-radio` cannot do this on its own.
 </Note>
 
 ## When to use
@@ -44,6 +44,8 @@ Radio buttons present a list of options where only one can be active at a time. 
     - The options are so numerous that displaying them all creates visual noise
   </Card>
 </CardGroup>
+
+Choose [`bq-checkbox`](/components/checkbox) instead of `bq-radio-group` when users can select several options, [`bq-switch`](/components/switch) when the choice is a single on/off setting that applies immediately, [`bq-select`](/components/select) when the list is too long to show every option in a form, and [`bq-dropdown`](/components/dropdown) when the options trigger actions instead of setting a form value.
 
 ## Patterns
 
@@ -80,7 +82,7 @@ A radio button consists of a circular icon and a text label. The icon changes ap
     imageLightSrc="/components/images/radio/radio-orientation-vertical-light.svg"
     imageDarkSrc="/components/images/radio/radio-orientation-vertical-dark.svg"
   >
-    Stack options vertically when the labels are longer than a few words. Vertical lists are easier to scan and less prone to accidental selection.
+    You should stack options vertically when the labels are longer than a few words. Vertical lists are easier to scan and less prone to accidental selection.
   </CardTile>
 
   <CardTile
@@ -88,7 +90,7 @@ A radio button consists of a circular icon and a text label. The icon changes ap
     imageLightSrc="/components/images/radio/radio-orientation-horizontal-light.svg"
     imageDarkSrc="/components/images/radio/radio-orientation-horizontal-dark.svg"
   >
-    Arrange options in a row when the labels are short (one or two words) and the total number of choices is small. Use this for compact filters or sort controls.
+    You should arrange options in a row only when the labels are short (one or two words) and the total number of choices is small, as in compact filters or sort controls.
   </CardTile>
 </CardGroup>
 
@@ -98,7 +100,7 @@ A radio button consists of a circular icon and a text label. The icon changes ap
     imageLightSrc="/components/images/radio/radio-fieldset-light.svg"
     imageDarkSrc="/components/images/radio/radio-fieldset-dark.svg"
   >
-    Enable `fieldset` on the group to render a visible border and legend around the options. Use this when the radio group is one of several form sections that need visual separation.
+    You may enable `fieldset` on the group to render a visible border and legend around the options when the radio group is one of several form sections that need visual separation.
   </CardTile>
 
   <CardTile
@@ -106,7 +108,7 @@ A radio button consists of a circular icon and a text label. The icon changes ap
     imageLightSrc="/components/images/radio/radio-background-hover-light.svg"
     imageDarkSrc="/components/images/radio/radio-background-hover-dark.svg"
   >
-    Enable `background-on-hover` to show a filled background on the label row when the user hovers. Use this to increase the perceived click area in spacious layouts.
+    You may enable `background-on-hover` to show a filled background on the label row when the user hovers, which increases the perceived click area in spacious layouts.
   </CardTile>
 </CardGroup>
 
@@ -304,6 +306,8 @@ Set `disabled` on the group to prevent all interaction. You can also disable ind
 ### Horizontal
 
 Use `orientation="horizontal"` to arrange options side by side. Best for short labels and a small number of choices where vertical space is limited.
+
+**Allowed `orientation` values:** `vertical` (default), `horizontal`. Any other value falls back to `vertical`.
 
 <CodeLivePreview mode="shadow" code={`
   <bq-radio-group name="group" value="option1" orientation="horizontal">
@@ -513,7 +517,7 @@ Set `background-on-hover` on the group to show a filled highlight on every label
 
 ### Form integration
 
-`bq-radio-group` submits the selected radio value with the form. Use `required` and `required-validation-message` on the group when users must choose one option before submission.
+`bq-radio-group` submits the selected radio value with the form. You should set `required` and `required-validation-message` on the group when users must choose one option before submission.
 
 <CodeLivePreview mode="iframe" height="25rem" removePadding code={`
   <style>
@@ -746,7 +750,7 @@ Set `background-on-hover` on the group to show a filled highlight on every label
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Always provide a group label via the `label` slot on `bq-radio-group` so screen readers announce the question or field name when focus enters the group.
+    You must provide a group label via the `label` slot on `bq-radio-group` so screen readers announce the question or field name when focus enters the group.
   </Card>
 
   <Card>
@@ -754,7 +758,7 @@ Set `background-on-hover` on the group to show a filled highlight on every label
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Leave the `label` slot empty — users relying on assistive technology will not know what the radio group is asking.
+    You must not leave the `label` slot empty. Users relying on assistive technology will not know what the radio group is asking.
   </Card>
 
   <Card>
@@ -762,7 +766,7 @@ Set `background-on-hover` on the group to show a filled highlight on every label
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Pre-select a sensible default by setting `value` on the group so the form always has a valid starting state and users understand which option is active on first view.
+    You should pre-select a sensible default by setting `value` on the group so the form always has a valid starting state and users understand which option is active on first view.
   </Card>
 
   <Card>
@@ -770,7 +774,7 @@ Set `background-on-hover` on the group to show a filled highlight on every label
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Leave all options unselected when one choice is always required — an empty radio group can cause confusing form validation errors on submit.
+    You should not leave all options unselected when one choice is always required. An empty radio group can cause confusing form validation errors on submit.
   </Card>
 
   <Card>
@@ -778,7 +782,7 @@ Set `background-on-hover` on the group to show a filled highlight on every label
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Write option labels as nouns or short phrases that clearly describe each choice so users can compare them at a glance.
+    You should write option labels as nouns or short phrases that clearly describe each choice so users can compare them at a glance.
   </Card>
 
   <Card>
@@ -786,7 +790,7 @@ Set `background-on-hover` on the group to show a filled highlight on every label
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Use vague labels like "Option 1" or "Yes/No" when more descriptive text would make the choice immediately understandable without additional context.
+    You should not use vague labels like "Option 1" or "Yes/No" when more descriptive text would make the choice immediately understandable without additional context.
   </Card>
 
   <Card>
@@ -794,7 +798,7 @@ Set `background-on-hover` on the group to show a filled highlight on every label
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Use `disabled` on the entire group when the choice is unavailable in the current context, and explain why it is locked via nearby helper text.
+    You should use `disabled` on the entire group when the choice is unavailable in the current context, and explain why it is locked via nearby helper text.
   </Card>
 
   <Card>
@@ -802,7 +806,7 @@ Set `background-on-hover` on the group to show a filled highlight on every label
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Disable individual radio options without a visible explanation — users will not know whether the option is temporarily locked or permanently unavailable.
+    You should not disable individual radio options without a visible explanation. Users will not know whether the option is temporarily locked or permanently unavailable.
   </Card>
 </CardGroup>
 
@@ -810,14 +814,42 @@ Set `background-on-hover` on the group to show a filled highlight on every label
 
 - **Built in:** `bq-radio-group` always renders a `<fieldset>` with a `<legend>` that holds the `label` slot. The `fieldset` property only adds the visible border.
 - **Built in:** each `bq-radio` native `<input type="radio">` carries `aria-checked`, `aria-disabled`, and `aria-labelledby` pointing to its visible label element.
-- **Built in:** `ArrowDown` / `ArrowRight` focus and select the next enabled radio; `ArrowUp` / `ArrowLeft` focus and select the previous enabled radio. Navigation skips disabled radios and wraps at the ends. All four keys work in both orientations; `orientation` controls layout only.
+- **Built in:** arrow keys focus and select the adjacent enabled radio, skip disabled radios and wrap at the ends. All four arrow keys work in both orientations; `orientation` controls layout only.
 - **Built in:** only one radio in the group receives `tabindex="0"` at a time (the selected or first enabled option), keeping the tab stop count low.
-- **Your responsibility:** always populate the `label` slot on `bq-radio-group` with meaningful group text.
-- **Your responsibility:** provide meaningful text inside each `bq-radio` slot — the `aria-labelledby` on the native input points to the label span, so empty or icon-only labels are not announced.
-- **Your responsibility:** when you disable the group, add visible helper text nearby explaining why the options are unavailable.
+- **Your responsibility:** you MUST populate the `label` slot on `bq-radio-group` with meaningful group text.
+- **Your responsibility:** you MUST provide meaningful text inside each `bq-radio` slot. The `aria-labelledby` on the native input points to the label span, so empty or icon-only labels are not announced.
+- **Your responsibility:** when you disable the group, you SHOULD add visible helper text nearby explaining why the options are unavailable.
+
+### Keyboard interaction
+
+| Key | Context | Action |
+|---|---|---|
+| `Tab` | Focus outside the group | Moves focus into the group, to the selected radio or the first enabled radio |
+| `Tab` | Focus on a radio in the group | Moves focus out of the group to the next focusable element |
+| `Shift` + `Tab` | Focus on a radio in the group | Moves focus out of the group to the previous focusable element |
+| `ArrowDown` | Radio focused | Focuses and selects the next enabled radio; wraps from the last to the first |
+| `ArrowRight` | Radio focused | Focuses and selects the next enabled radio; wraps from the last to the first |
+| `ArrowUp` | Radio focused | Focuses and selects the previous enabled radio; wraps from the first to the last |
+| `ArrowLeft` | Radio focused | Focuses and selects the previous enabled radio; wraps from the first to the last |
+| `Space` | Unselected radio focused | Selects the focused radio (native `<input type="radio">` behavior) |
+
+All four arrow keys work in both orientations. A disabled group has no tab stop.
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Wrap every `bq-radio` in a `bq-radio-group` | MUST | manual |
+| Fill the `label` slot of the group with meaningful text | MUST | manual |
+| Provide meaningful text in each `bq-radio` slot | MUST | manual |
+| Set `name` on the group so the selected value submits with the form | MUST | automated: `bq-radio-group.e2e.tsx` |
+| Select an option before submitting a required group | MUST | automated: `bq-radio-group.e2e.tsx` |
+| Set `required-validation-message` on a required group | SHOULD | manual |
+| Pre-select a default with `value` when one choice is always required | SHOULD | manual |
+| Explain nearby why a group or option is disabled | SHOULD | manual |
 
 <Warning>
-  The fieldset's `aria-labelledby` currently references an ID that does not match the label slot. This source defect is tracked in [the Radio Group follow-up issue](https://github.com/Endava/BEEQ/issues/1830). Do not assume that populating the slot repairs the explicit ARIA reference; verify the group name with your supported assistive technologies.
+  The fieldset's `aria-labelledby` currently references an ID that does not match the label slot. This source defect is tracked in [the Radio Group follow-up issue](https://github.com/Endava/BEEQ/issues/1830). You MUST NOT assume that populating the slot repairs the explicit ARIA reference; verify the group name with your supported assistive technologies.
 </Warning>
 
 ## API reference
@@ -847,6 +879,14 @@ Set `background-on-hover` on the group to show a filled highlight on every label
 | `required` | `required` | If `true`, the radio group is required | `boolean` | `false` |
 | `requiredValidationMessage` | `required-validation-message` | Native form validation message shown when the group is required and no option is selected | `string` | — |
 | `value` | `value` | The value of the currently selected radio | `string` | — |
+
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| `name` or `required` on a `bq-radio` inside a `bq-radio-group` | MUST NOT | The group overwrites both with its own `name` and `required` values |
+| `required-validation-message` without `required` on the group | SHOULD NOT | The message is never used because the group is always valid |
+| `debounce-time` below `0` | MUST NOT | The group clamps the value to `0` |
 
 ### `bq-radio` methods
 

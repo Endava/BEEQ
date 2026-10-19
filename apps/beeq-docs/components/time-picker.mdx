@@ -14,7 +14,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 Time pickers combine locale-ordered hour, minute, and second segments with a panel of scrollable columns. People can type a time directly or pick it from the panel, and the component keeps the value in a predictable 24-hour format.
 
 <Note>
-  Use a time picker when people need to set a time of day. To pick a date and a time together, pair it with a [date picker](/components/date-picker). For a short list of fixed slots, such as three delivery windows, a [select](/components/select) or radio group is clearer.
+  should use a time picker when people need to set a time of day. should pair it with a [date picker](/components/date-picker) to pick a date and a time together. should use a [select](/components/select) or radio group for a short list of fixed slots, such as three delivery windows.
 </Note>
 
 ## When to use
@@ -41,6 +41,8 @@ Time pickers combine locale-ordered hour, minute, and second segments with a pan
     - An approximate time of day, like "morning", is enough
   </Card>
 </CardGroup>
+
+Choose [`bq-date-picker`](/components/date-picker) instead of `bq-time-picker` when users select a calendar date rather than a time of day.
 
 ## Patterns
 
@@ -79,22 +81,22 @@ The time picker pairs a labeled, segmented field with a panel of columns, one pe
 
 <Steps>
   <Step title="Pick the right precision">
-    Start with the default `minute` precision. Use `hour` for coarse slots, such as opening hours, and `second` only when seconds matter, such as lap times or logs.
+    should start with the default `minute` precision. should use `hour` for coarse slots, such as opening hours, and should use `second` only when seconds matter, such as lap times or logs.
   </Step>
   <Step title="Let the locale drive the format">
-    Set `locale` to the product locale, so segment order, separators, and AM/PM labels match what people expect. The clock is 24-hour by default; set `hour-format="12"` when people expect a 12-hour clock.
+    should set `locale` to the product locale, so segment order, separators, and AM/PM labels match what people expect. The clock is 24-hour by default; should set `hour-format="12"` when people expect a 12-hour clock.
   </Step>
   <Step title="Constrain the choices">
-    Apply `min`, `max`, and step values when business rules are known. Options outside the rules are disabled in the panel, and typed values are clamped when focus leaves the field.
+    should apply `min`, `max`, and step values when business rules are known. Options outside the rules are disabled in the panel, and typed values are clamped when focus leaves the field.
   </Step>
 </Steps>
 
 <Note>
-  Use steps that divide evenly into the unit, such as 5, 10, 15, or 30 minutes, so the options stay predictable and easy to scan.
+  should use steps that divide evenly into the unit, such as 5, 10, 15, or 30 minutes, so the options stay predictable and easy to scan.
 </Note>
 
 <Tip>
-  Keep the clock trigger visible. It signals that a panel is available and gives pointer users a faster way to pick a time.
+  should keep the clock trigger visible. It signals that a panel is available and gives pointer users a faster way to pick a time.
 </Tip>
 
 ## Usage
@@ -106,7 +108,7 @@ Use the default configuration when people need to set an hour and minute. Click 
 <Note>
   The `value` attribute, `min`, and `max` always use a 24-hour wire format, whatever the display: `HH:mm` at minute precision, `HH:00` at hour precision, and `HH:mm:ss` at second precision.
 
-  A locale-derived format hint, such as `hh:mm`, shows the expected layout before entry starts. On focus, one segment is active. Type digits to replace that segment, use `ArrowLeft` and `ArrowRight` to move, `Home` and `End` to reach the first or last segment, `ArrowUp` and `ArrowDown` to change a value, and `Backspace` or `Delete` to clear a segment. For AM/PM, type `A` or `P`. Paste is not supported.
+  A locale-derived format hint, such as `hh:mm`, shows the expected layout before entry starts. On focus, one segment is active. Typing digits replaces that segment, and typing `A` or `P` sets AM/PM. Paste is not supported. See [Keyboard interaction](#keyboard-interaction) for the full key list.
 </Note>
 
 <CodeLivePreview mode="shadow" code={`
@@ -161,6 +163,12 @@ Use the default configuration when people need to set an hour and minute. Click 
 </CodeLivePreview>
 
 ## Options
+
+**Allowed `precision` values:** `hour`, `minute` (default), `second`.<br />
+**Allowed `hour-format` values:** `24` (default), `12`.<br />
+**Allowed `validation-status` values:** `none` (default), `error`, `warning`, `success`.<br />
+**Allowed `strategy` values:** `fixed` (default), `absolute`.<br />
+**Allowed `placement` values:** `top`, `top-start`, `top-end`, `right`, `right-start`, `right-end`, `bottom`, `bottom-start`, `bottom-end` (default), `left`, `left-start`, `left-end`.
 
 ### Precision
 
@@ -1155,10 +1163,10 @@ Use `validation-status` when the field should show immediate visual feedback aft
 
 ### Form integration
 
-`bq-time-picker` submits its current value with the form, in 24-hour format. Use `required` and `form-validation-message` when the time is mandatory; the custom message also applies to incomplete, out-of-range, and off-step values.
+`bq-time-picker` submits its current value with the form, in 24-hour format. must set `required` and should set `form-validation-message` when the time is mandatory; the custom message also applies to incomplete, out-of-range, and off-step values.
 
 <Warning>
-  A partly filled field becomes invalid when focus leaves it, even when the picker is optional. The draft stays visible and the last committed `value` is preserved, but native form validation blocks submission until people complete the time, pick one from the panel, or clear the field.
+  A partly filled field becomes invalid when focus leaves it, even when the picker is optional. The draft stays visible and the last committed `value` is preserved, but native form validation blocks submission until the user completes the time, picks one from the panel, or clears the field.
 </Warning>
 
 When focus leaves the field, complete times outside `min` or `max` are clamped to the nearest bound. A disabled time picker is excluded from form data; a read-only one is still submitted.
@@ -1368,56 +1376,56 @@ When focus leaves the field, complete times outside `min` or `max` are clamped t
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Write labels that name the moment, such as "Departure time" or "Meeting starts", so people know which time they are setting.
+    should write labels that name the moment, such as "Departure time" or "Meeting starts", so people know which time they are setting.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Do not rely on the format hint alone to explain the field. Always provide a visible label.
+    must not rely on the format hint alone to explain the field. must provide a visible label.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Match `precision` to the task. Most scheduling needs hours and minutes only; add seconds only for durations or precise logs.
+    should match `precision` to the task. Most scheduling needs hours and minutes only; add seconds only for durations or precise logs.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Do not ask for seconds when nobody will use them. Every extra segment adds typing and scanning effort.
+    should not ask for seconds when nobody will use them. Every extra segment adds typing and scanning effort.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Set `min`, `max`, and step values when business rules are known, so unavailable times are disabled before people pick them.
+    should set `min`, `max`, and step values when business rules are known, so unavailable times are disabled before people pick them.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Do not mix clocks across a product. Pick the `hour-format` your audience expects and use it for every time picker.
+    must not mix clocks across a product. should pick the `hour-format` your audience expects and use it for every time picker.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Use `require-confirm` when a picked time triggers an expensive or irreversible action, such as rescheduling a booking.
+    should use `require-confirm` when a picked time triggers an expensive or irreversible action, such as rescheduling a booking.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Do not use a time picker for durations longer than a day or for picking a date and time together.
+    must not use a time picker for durations longer than a day or for picking a date and time together.
   </Card>
 </CardGroup>
 
@@ -1429,12 +1437,49 @@ When focus leaves the field, complete times outside `min` or `max` are clamped t
 - The panel carries `role="dialog"` and is named by `labels.panelLabel` ("Choose time" by default). The panel isn't modal.
 - Each column is a `listbox` labelled by its visible header (`aria-labelledby`), so the spoken name matches what people see. Options expose `aria-selected`, and options outside `min`, `max`, or the steps expose `aria-disabled="true"`.
 - The component announces the selected time, or that no time is selected, when focus enters the field.
-- Press `Alt`+`ArrowDown` in the field, or Tab to the clock icon and press `Enter` or `Space`, to open the panel and move focus into it. Clicking the field opens the panel while keeping focus on the segment.
-- In the panel, `ArrowUp` and `ArrowDown` move between options, `Home` and `End` jump to the first or last option, `PageUp` and `PageDown` move faster, and `ArrowLeft` and `ArrowRight` switch columns. `Enter` or `Space` picks an option, and `Escape` closes the panel and returns focus to the field.
+- The panel opens from the keyboard through the segmented field or the clock icon, and moves focus into it; see [Keyboard interaction](#keyboard-interaction) for the keys. Clicking the field opens the panel while keeping focus on the segment.
 - In `readonly` mode the segments stay focusable so screen reader users can read the value, but they can't be edited and the panel doesn't open.
-- Always provide a visible label through the `label` slot, so the field has a programmatic name.
-- When you translate the interface, translate `labels` too: segment names, button names and the panel name come from it.
-- Validation states should never rely on color alone. Pair `validationStatus` with visible error text so screen reader users receive the same feedback as sighted users.
+- MUST provide a visible label through the `label` slot, so the field has a programmatic name.
+- MUST translate `labels` when translating the interface: segment names, button names and the panel name come from it.
+- MUST NOT rely on color alone to communicate validation states. MUST pair `validationStatus` with visible error text so screen reader users receive the same feedback as sighted users.
+
+### Keyboard interaction
+
+| Key | Context | Action |
+|---|---|---|
+| `Tab` | Segmented field | Moves focus to the active segment (one tab stop for all segments) |
+| `ArrowLeft` / `ArrowRight` | Time segment | Moves focus to the previous or next segment |
+| `Home` / `End` | Time segment | Moves focus to the first or last segment |
+| `ArrowUp` / `ArrowDown` | Time segment | Steps the segment value, wrapping around and skipping disabled options |
+| `0`–`9` | Hour, minute or second segment | Types digits into the segment and advances automatically when the segment is full |
+| `A` / `P` | AM/PM segment (`hour-format="12"`) | Sets the day period and moves to the next segment |
+| `Backspace` / `Delete` | Time segment | Clears the segment; `Backspace` then moves focus to the previous segment |
+| `Alt+ArrowDown` | Time segment | Opens the panel and moves focus into it |
+| `Enter` | Time segment, panel open | Confirms any pending draft and closes the panel |
+| `Enter` / `Space` | Clock icon focused | Opens the panel and moves focus to the first column |
+| `ArrowUp` / `ArrowDown` | Panel column | Moves to the previous or next option and selects it |
+| `Home` / `End` | Panel column | Moves to the first or last option |
+| `PageUp` / `PageDown` | Panel column | Moves several options back or forward |
+| `ArrowLeft` / `ArrowRight` | Panel column | Moves focus to the adjacent column (mirrored in right-to-left layouts) |
+| `Space` | Panel column | Picks the focused option |
+| `Enter` | Panel column | Picks the focused option, confirms, and closes the panel |
+| `Escape` | Panel column | Closes the panel and returns focus to the field; with `require-confirm`, the draft is discarded |
+| Edit keys (digits, `A`/`P`, `Backspace`, `Delete`, `ArrowUp`, `ArrowDown`) | `readonly` | Ignored; segments stay focusable and `ArrowLeft`, `ArrowRight`, `Home` and `End` still move focus |
+| Any key | Time picker disabled | Segment key handling is ignored |
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Provide a visible label through the `label` slot | MUST | manual |
+| Set `required` when a time is mandatory so form submission is blocked until a value is set | MUST | automated: `bq-time-picker.e2e.tsx` |
+| Set `form-validation-message` to provide a specific message for incomplete, out-of-range, and off-step values | SHOULD | manual |
+| Translate `labels` when translating the interface | MUST | manual |
+| Pair `validationStatus` with visible error text | MUST | manual |
+| Use more than color to communicate validation states | MUST NOT | manual |
+| Set `min`, `max`, and step values when business rules are known | SHOULD | manual |
+| Use one `hour-format` across a product | MUST | manual |
+| Rely on the format hint alone to explain the field | MUST NOT | manual |
 
 ## API reference
 
@@ -1469,6 +1514,16 @@ When focus leaves the field, complete times outside `min` or `max` are clamped t
 | `strategy` | `strategy` | Positioning strategy for the panel | `"absolute" \| "fixed"` | `"fixed"` |
 | `validationStatus` | `validation-status` | Validation state applied to the field | `"error" \| "none" \| "success" \| "warning"` | `"none"` |
 | `value` | `value` | The selected time, in 24-hour format: `HH:mm` (`HH:00` at hour precision) or `HH:mm:ss` at second precision | `string` | `undefined` |
+
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| `min` later than `max` | MUST NOT | Both `min` and `max` are ignored |
+| `hour-step` above `23`, or `minute-step` or `second-step` above `59` | MUST NOT | The step is capped at `23` or `59` |
+| `hour-step`, `minute-step` or `second-step` below `1` or not a number | MUST NOT | The step is treated as `1` |
+| `open` set with `disabled` or `readonly` | SHOULD NOT | The panel does not open |
+| An unsupported value for `precision`, `hour-format`, `strategy`, `placement`, or `validation-status` | MUST NOT | A development warning is logged and the default value is used |
 
 ### Events
 

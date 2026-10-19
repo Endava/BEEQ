@@ -62,28 +62,30 @@ The slider consists of a horizontal track, a filled progress region that visuali
 
 <Steps>
   <Step title="Single (default)">
-    A single handle slides along the track to represent one value. Use this for individual settings such as volume, zoom level, or brightness — any scenario where one number is all that matters.
+    A single handle slides along the track to represent one value. This type should be used for individual settings such as volume, zoom level, or brightness — any scenario where one number is all that matters.
   </Step>
   <Step title="Range">
-    Two handles define a minimum and maximum. Use this when users need to select an interval — for example, a price range, a time window, or a quantity bracket.
+    Two handles define a minimum and maximum. This type should be used when users need to select an interval — for example, a price range, a time window, or a quantity bracket.
   </Step>
 </Steps>
 
 ### States
 
-Every slider supports five states: **default**, **hover**, **focus**, **active**, and **disabled**. The handle enlarges slightly on hover and focus to provide a clear interactive target. The disabled state dims the track and handle and prevents all interaction — use it to display a read-only preset value.
+Every slider supports five states: **default**, **hover**, **focus**, **active**, and **disabled**. The handle enlarges slightly on hover and focus to provide a clear interactive target. The disabled state dims the track and handle and prevents all interaction. It may be used to display a read-only preset value.
 
 ### Value feedback
 
-Use `enable-value-indicator` to show the numeric value beside the track at all times. This is appropriate when the exact number matters to the user, such as a temperature, percentage, or step count. Use `enable-tooltip` when you want feedback only while the user is actively dragging, keeping the interface clean at rest. Pair it with `tooltip-always-visible` to keep the tooltip permanently visible.
+`enable-value-indicator` shows the numeric value beside the track at all times and should be used when the exact number matters to the user, such as a temperature, percentage, or step count. `enable-tooltip` should be used when feedback is only needed while the user is actively dragging, keeping the interface clean at rest. `tooltip-always-visible` may be added to keep the tooltip permanently visible.
 
-Tooltips stay aligned with their thumbs when the value or slider width changes. Transient tooltips stop tracking while idle; permanently visible tooltips continue tracking movement. Use transient tooltips when a page contains many sliders and their values do not need to stay visible.
+Tooltips stay aligned with their thumbs when the value or slider width changes. Transient tooltips stop tracking while idle; permanently visible tooltips continue tracking movement. Transient tooltips should be used when a page contains many sliders and their values do not need to stay visible.
 
 ### Width
 
-The slider fills its container's available width. Constrain the width of its parent container to control how large the track appears — a very short track makes precise selection difficult.
+The slider fills its container's available width. Constrain the width of its parent container to control how large the track appears. The container should not be so narrow that the track becomes very short, because that makes precise selection difficult.
 
 ## Usage
+
+**Allowed `type` values:** `single` (default), `range`.
 
 ### Single
 
@@ -561,7 +563,7 @@ Use `gap` to set the minimum distance the two handles must maintain between each
 
 ### Form integration
 
-`bq-slider` is form-associated and submits its current value as form data. It does not expose `required`, so use it for adjustable values rather than mandatory completion checks.
+`bq-slider` is form-associated and submits its current value as form data. It does not expose `required`, so it should be used for adjustable values rather than mandatory completion checks.
 
 <CodeLivePreview mode="iframe" height="22rem" removePadding code={`
   <style>
@@ -761,7 +763,7 @@ Use `gap` to set the minimum distance the two handles must maintain between each
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Provide a clear, concise label that describes the purpose of the slider and the scale it represents — for example, "Volume" or "Price range".
+    must provide a clear, concise label that describes the purpose of the slider and the scale it represents — for example, "Volume" or "Price range".
   </Card>
 
   <Card>
@@ -769,7 +771,7 @@ Use `gap` to set the minimum distance the two handles must maintain between each
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Use long or ambiguous labels. If users cannot tell what the slider controls at a glance, they may set incorrect values without realizing it.
+    should not use long or ambiguous labels. If users cannot tell what the slider controls at a glance, they may set incorrect values without realizing it.
   </Card>
 
   <Card>
@@ -777,7 +779,7 @@ Use `gap` to set the minimum distance the two handles must maintain between each
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Show the selected value alongside the slider using `enable-value-indicator` or `enable-tooltip` whenever the exact number matters to the user's decision.
+    should show the selected value alongside the slider using `enable-value-indicator` or `enable-tooltip` whenever the exact number matters to the user's decision.
   </Card>
 
   <Card>
@@ -785,7 +787,7 @@ Use `gap` to set the minimum distance the two handles must maintain between each
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Leave the slider without any value feedback when precision is important. Users cannot reliably read off an exact number from the handle position alone.
+    should not leave the slider without any value feedback when precision is important. Users cannot reliably read off an exact number from the handle position alone.
   </Card>
 
   <Card>
@@ -793,7 +795,7 @@ Use `gap` to set the minimum distance the two handles must maintain between each
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Choose `min`, `max`, and `step` values that reflect meaningful increments for the context — for example, steps of 5 or 10 for a percentage, or steps of 0.05 for a fractional coefficient.
+    should choose `min`, `max`, and `step` values that reflect meaningful increments for the context — for example, steps of 5 or 10 for a percentage, or steps of 0.05 for a fractional coefficient.
   </Card>
 
   <Card>
@@ -801,7 +803,7 @@ Use `gap` to set the minimum distance the two handles must maintain between each
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Use ranges that result in very large step counts or non-discrete increments where the relationship between handle position and value is unclear to users.
+    should not use ranges that result in very large step counts or non-discrete increments where the relationship between handle position and value is unclear to users.
   </Card>
 
   <Card>
@@ -809,7 +811,7 @@ Use `gap` to set the minimum distance the two handles must maintain between each
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Set `gap` on range sliders when the minimum and maximum handles must stay a meaningful distance apart — for example, when a time range must span at least one hour.
+    should set `gap` on range sliders when the minimum and maximum handles must stay a meaningful distance apart — for example, when a time range must span at least one hour.
   </Card>
 
   <Card>
@@ -817,7 +819,7 @@ Use `gap` to set the minimum distance the two handles must maintain between each
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Use a slider for very narrow ranges (1–3 values). With only a few valid positions the drag interaction is awkward and a radio group or button group communicates the options more clearly.
+    should not use a slider for very narrow ranges (1–3 values). With only a few valid positions the drag interaction is awkward and a radio group or button group communicates the options more clearly.
   </Card>
 </CardGroup>
 
@@ -825,15 +827,41 @@ Use `gap` to set the minimum distance the two handles must maintain between each
 
 `bq-slider` renders native `<input type="range">` elements inside its shadow DOM (`input-min` and `input-max` shadow parts). This means the built-in browser keyboard and screen-reader support for range inputs is available out of the box:
 
-- **Keyboard navigation** — `ArrowLeft` / `ArrowDown` decreases the value by one step; `ArrowRight` / `ArrowUp` increases it. `Home` sets the value to `min`; `End` sets it to `max`.
 - **Screen reader announcement** — the browser announces the current numeric value and the min/max boundaries when the handle receives focus.
 - **`role="slider"`** — comes from the native `<input type="range">`.
 
 As a developer you are responsible for:
 
-- **Providing an accessible label** — wrap `bq-slider` in a `<label>` or use `aria-label` / `aria-labelledby` on the host element so screen readers can announce what the slider controls.
-- **Avoid using sliders for highly precise values** — drag interactions can be imprecise. When an exact value is critical, supplement the slider with a visible number input that reflects the same value.
-- **Range sliders and assistive technologies** — not all screen readers handle two-thumb range inputs equally well. Test with your target assistive technologies and consider providing a complementary text summary of the selected range.
+- **Providing an accessible label** — you MUST wrap `bq-slider` in a `<label>` or use `aria-label` / `aria-labelledby` on the host element so screen readers can announce what the slider controls.
+- **Avoiding sliders for highly precise values** — drag interactions can be imprecise, so you SHOULD NOT use a slider alone when an exact value is critical. You SHOULD supplement it with a visible number input that reflects the same value.
+- **Range sliders and assistive technologies** — not all screen readers handle two-thumb range inputs equally well. You SHOULD test with your target assistive technologies and SHOULD provide a complementary text summary of the selected range.
+
+### Keyboard interaction
+
+Each handle is a native `<input type="range">`, so these keys come from the browser.
+
+| Key | Context | Action |
+|---|---|---|
+| `Tab` | Slider enabled | Moves focus to the handle and emits `bqFocus`; focus leaving emits `bqBlur` |
+| `Tab` | Range type, min handle focused | Moves focus to the max handle |
+| `Shift+Tab` | Range type, max handle focused | Moves focus back to the min handle |
+| `ArrowRight` | Handle focused | Increases the value by one `step` |
+| `ArrowUp` | Handle focused | Increases the value by one `step` |
+| `ArrowLeft` | Handle focused | Decreases the value by one `step` |
+| `ArrowDown` | Handle focused | Decreases the value by one `step` |
+| `Home` | Handle focused | Sets the value to `min` |
+| `End` | Handle focused | Sets the value to `max` |
+| `Tab` | Slider disabled | Skips the slider; the inputs are disabled |
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Provide an accessible label with a wrapping `<label>`, `aria-label` or `aria-labelledby` | MUST | manual |
+| Set `name` so the value is submitted with the form | MUST | automated: `bq-slider.e2e.tsx` |
+| Supplement the slider with a visible number input when an exact value is critical | SHOULD | manual |
+| Test range sliders with the target assistive technologies and provide a text summary of the range | SHOULD | manual |
+| Use the slider for adjustable values, not mandatory completion checks, because it has no `required` prop | SHOULD | manual |
 
 ## API reference
 
@@ -853,6 +881,14 @@ As a developer you are responsible for:
 | `tooltipAlwaysVisible` | `tooltip-always-visible` | If true, the tooltip is permanently visible; requires `enable-tooltip` to be set | `boolean` | `false` |
 | `type` | `type` | Slider variant — `single` for one handle, `range` for two handles | `'single' \| 'range'` | `'single'` |
 | `value` | `value` | Current value. A number for `single` type (e.g. `30`); a two-element array string for `range` type (e.g. `"[20,70]"`). In React and Vue, pass the array directly: `value={[20, 70]}`. | `number \| number[] \| string` | — |
+
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| `tooltip-always-visible` without `enable-tooltip` | MUST NOT | No tooltip is shown; `tooltip-always-visible` only takes effect together with `enable-tooltip` |
+| `gap` with `type="single"` | SHOULD NOT | `gap` is ignored; it only applies to `type="range"` |
+| `gap` below `min` or above `max` on a range slider | SHOULD NOT | `gap` is reset to `0` |
 
 ### Events
 

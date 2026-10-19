@@ -14,7 +14,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 Date pickers combine a calendar with locale-ordered day, month, and year segments. They reduce ambiguity, prevent formatting mistakes, and support single dates, ranges, and multiple dates.
 
 <Note>
-  Use a date picker when the interface benefits from visual date selection or date validation. If users need to enter very flexible freeform dates or work with a tiny, predictable set of choices, a simpler input or select may be more appropriate.
+  should use a date picker when the interface benefits from visual date selection or date validation. may use a simpler input or select when users need to enter very flexible freeform dates or choose from a tiny, predictable set of options.
 </Note>
 
 ## When to use
@@ -41,6 +41,8 @@ Date pickers combine a calendar with locale-ordered day, month, and year segment
     - The interaction would be unnecessarily heavy for the task
   </Card>
 </CardGroup>
+
+Choose [`bq-time-picker`](/components/time-picker) instead of `bq-date-picker` when users select a time of day rather than a calendar date.
 
 ## Patterns
 
@@ -78,25 +80,27 @@ The date picker combines a labeled field with a calendar surface that helps peop
 
 <Steps>
   <Step title="Choose the simplest selection mode">
-    Start with `single` when one date is enough. Use `range` only when people need both a start and end date, and use `multi` only for truly non-consecutive selections.
+    should start with `single` when one date is enough. should use `range` only when people need both a start and end date, and should use `multi` only for truly non-consecutive selections.
   </Step>
   <Step title="Keep labels and format expectations clear">
-    Write labels that describe the task directly, such as "Arrival date" or "Travel dates". Make sure the displayed format and first day of week match the product locale.
+    must write labels that describe the task directly, such as "Arrival date" or "Travel dates". must make sure the displayed format and first day of week match the product locale.
   </Step>
   <Step title="Use calendar rules to prevent bad choices">
-    Apply `min`, `max`, `isDateDisallowed`, and validation states when business rules are known, so people are guided before they submit the form.
+    should apply `min`, `max`, `isDateDisallowed`, and validation states when business rules are known, so people are guided before they submit the form.
   </Step>
 </Steps>
 
 <Note>
-  For `range` and most `multi` scenarios, showing two months at once usually makes comparison easier and reduces selection errors.
+  should show two months at once for `range` and most `multi` scenarios, because it makes comparison easier and reduces selection errors.
 </Note>
 
 <Tip>
-  Use the calendar trigger to make date selection recognisable before people interact with the field.
+  should keep the calendar trigger visible so date selection is recognisable before people interact with the field.
 </Tip>
 
 ## Usage
+
+**Allowed `type` values:** `single` (default), `range`, `multi`.
 
 ### Default
 
@@ -108,7 +112,7 @@ Use the default `single` type when users need to choose one date. This is the be
   The wire format of the `value` attribute — and of `min`/`max` — depends on `precision`:
   `day` uses `YYYY-MM-DD`, `month` uses `YYYY-MM`, and `year` uses `YYYY`. For `type="range"` two tokens are joined with `/` (`start/end`); for `type="multi"` tokens are space-separated.
 
-  The locale-derived format hint is always shown before entry starts. On focus, one segment is active. Type digits to replace that segment, use `ArrowLeft` and `ArrowRight` to move, `Home` and `End` to reach a group boundary, `ArrowUp` and `ArrowDown` to change a value, and `Backspace` or `Delete` to clear a segment. Paste is not supported.
+  The locale-derived format hint is always shown before entry starts. On focus, one segment is active. Typing digits replaces that segment. Paste is not supported. See [Keyboard interaction](#keyboard-interaction) for the full key list.
 </Note>
 
 <CodeLivePreview mode="shadow" code={`
@@ -247,7 +251,7 @@ Use `type="range"` when users need a start and end date. Set `months="2"` so bot
 </CodeLivePreview>
 
 <Warning>
-  `months` supports one or two panels. Two months make range comparison easier; use `months-per-view="months"` when each navigation action should advance both visible panels.
+  `months` supports one or two panels. should use two months to make range comparison easier. should use `months-per-view="months"` when each navigation action should advance both visible panels.
 </Warning>
 
 ### Multiple dates
@@ -331,6 +335,14 @@ Use `type="multi"` when users need to pick several non-consecutive dates. Unlike
 </CodeLivePreview>
 
 ## Options
+
+**Allowed `precision` values:** `day` (default), `month`, `year`.<br />
+**Allowed `initial-view` values:** `days` (default), `months`, `years`. Applies only when `precision="day"`.<br />
+**Allowed `months-per-view` values:** `single` (default), `months`.<br />
+**Allowed `validation-status` values:** `none` (default), `error`, `warning`, `success`.<br />
+**Allowed `strategy` values:** `fixed` (default), `absolute`.<br />
+**Allowed `placement` values:** `top`, `top-start`, `top-end`, `right`, `right-start`, `right-end`, `bottom`, `bottom-start`, `bottom-end` (default), `left`, `left-start`, `left-end`.<br />
+**Allowed `first-day-of-week` values:** `0` (Sunday) to `6` (Saturday); `1` (Monday) is the default.
 
 ### Month selection
 
@@ -1114,7 +1126,7 @@ By default, the calendar shows only the days of the displayed month. Enable `sho
 </CodeLivePreview>
 
 <Tip>
-  Avoid `show-outside-days` for `range` and `multi` unless the added density clearly improves the task. It can make complex selection states harder to read.
+  should not set `show-outside-days` for `range` and `multi` unless the added density clearly improves the task. It can make complex selection states harder to read.
 </Tip>
 
 ### Disallowed dates
@@ -1367,10 +1379,10 @@ Use numeric `formatOptions` to set the segment order and separators. The compone
 
 ### Form integration
 
-`bq-date-picker` submits its current date value with the form. Use `required` and `form-validation-message` when the date is mandatory; the custom message also applies to invalid typed values and out-of-bounds dates.
+`bq-date-picker` submits its current date value with the form. must set `required` and should set `form-validation-message` when the date is mandatory; the custom message also applies to invalid typed values and out-of-bounds dates.
 
 <Warning>
-  A non-empty incomplete segment draft becomes invalid when focus leaves the segmented field, even when the picker is optional. The draft stays visible and the last committed `value` is preserved, but native form validation blocks submission until you complete a valid date, choose a valid calendar date, or clear the field.
+  A non-empty incomplete segment draft becomes invalid when focus leaves the segmented field, even when the picker is optional. The draft stays visible and the last committed `value` is preserved, but native form validation blocks submission until the user completes a valid date, chooses a valid calendar date, or clears the field.
 </Warning>
 
 When focus leaves the segmented field, complete dates outside `min` or `max` are clamped to the nearest bound. Complete inverted ranges are displayed in chronological order. Invalid or incomplete drafts are not generally reverted to the previous displayed date.
@@ -1580,56 +1592,56 @@ When focus leaves the segmented field, complete dates outside `min` or `max` are
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Use clear, task-specific labels like "Arrival date" or "Travel dates" so users know exactly what they are selecting.
+    should use clear, task-specific labels like "Arrival date" or "Travel dates" so users know exactly what they are selecting.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Do not overcomplicate the field label or ask for extra date information that the task does not need.
+    must not overcomplicate the field label or ask for extra date information that the task does not need.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Use a single combined input when possible. It keeps the interaction simpler and easier to scan.
+    should use a single combined input when possible. It keeps the interaction simpler and easier to scan.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Do not split day, month, and year into separate inputs unless the use case truly requires it.
+    must not split day, month, and year into separate inputs unless the use case truly requires it.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Disable unavailable dates when the business rules are known, instead of letting users submit invalid choices.
+    should disable unavailable dates when the business rules are known, instead of letting users submit invalid choices.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Do not rely on placeholder text as the only instruction or explanation for the field.
+    must not rely on placeholder text as the only instruction or explanation for the field.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Show two months for range selection when comparison matters, so people can understand the interval more easily.
+    should show two months for range selection when comparison matters, so people can understand the interval more easily.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Do not use a heavier multi-date or range pattern when one simple date field would solve the task.
+    should not use a heavier multi-date or range pattern when one simple date field would solve the task.
   </Card>
 </CardGroup>
 
@@ -1640,12 +1652,49 @@ When focus leaves the segmented field, complete dates outside `min` or `max` are
 - The segmented field sets `aria-disabled="true"` when `disabled` is `true`. Each segment sets `aria-invalid="true"` for `validationStatus="error"` and native constraint failures such as required, invalid, or out-of-bounds values.
 - The calendar panel carries `role="dialog"` and is labelled via `aria-labelledby` when a label is present, or by its built-in "Date picker" label otherwise. The panel is not modal.
 - The component announces a completed selection when focus enters the field, after a calendar selection, and announces the current calendar month, year, or year range after previous/next navigation.
-- Press `Alt`+`ArrowDown`, or Tab to the calendar icon and press `Enter` or `Space`, to open the panel. Calendar-trigger activation moves focus into its active date cell; the arrow keys navigate calendar cells and `Escape` closes the panel.
+- The panel opens from the keyboard through the segmented field or the calendar icon; see [Keyboard interaction](#keyboard-interaction) for the keys. Calendar-trigger activation moves focus into its active date cell.
 - Clicking the segmented field opens the calendar while keeping segment focus. Clicking the calendar icon opens the panel and moves focus into it. Selecting a value from the panel returns focus to the first segment.
 - Opening the calendar closes any other open date picker, select, or dropdown panel, so only one panel stays open at a time.
-- Calendar days and months expose localized full names to assistive technology. Always provide a visible label through the `label` slot so the field and calendar dialog have a programmatic name.
-- Validation states should never rely on color alone. Pair `validationStatus` with visible error text so screen reader users receive the same feedback as sighted users.
-- Keep `locale`, `first-day-of-week`, and display formatting aligned with user expectations so typed input and visible values remain understandable for all users.
+- Calendar days and months expose localized full names to assistive technology. MUST provide a visible label through the `label` slot so the field and calendar dialog have a programmatic name.
+- MUST NOT rely on color alone to communicate validation states. MUST pair `validationStatus` with visible error text so screen reader users receive the same feedback as sighted users.
+- SHOULD keep `locale`, `first-day-of-week`, and display formatting aligned with user expectations so typed input and visible values remain understandable for all users.
+
+### Keyboard interaction
+
+| Key | Context | Action |
+|---|---|---|
+| `Tab` | Segmented field | Moves focus to the active segment (one tab stop for all segments), then to the clear button when a value is set, then to the calendar icon |
+| `ArrowLeft` / `ArrowRight` | Date segment | Moves focus to the previous or next segment |
+| `Home` / `End` | Date segment | Moves focus to the first or last segment of the group |
+| `0`–`9` | Date segment | Types digits into the segment and advances automatically when the segment is full |
+| `ArrowUp` / `ArrowDown` | Date segment | Increments or decrements the segment value, skipping dates that are not allowed |
+| `Backspace` / `Delete` | Date segment | Clears the segment; `Backspace` then moves focus to the previous segment |
+| `Alt+ArrowDown` | Date segment | Opens the calendar panel without moving segment focus |
+| Any key | Picker disabled | Segment key handling is ignored |
+| `Enter` / `Space` | Calendar icon focused | Opens the panel and moves focus to the active date cell |
+| `ArrowLeft` / `ArrowRight` | Day grid | Moves focus one day backward or forward (reversed in right-to-left layouts) |
+| `ArrowUp` / `ArrowDown` | Day grid | Moves focus one week backward or forward |
+| `Home` / `End` | Day grid | Moves focus to the start or end of the week row, based on `first-day-of-week` |
+| `PageUp` / `PageDown` | Day grid | Moves to the previous or next month; with `Shift`, to the previous or next year |
+| `Enter` / `Space` | Day, month or year cell | Selects the focused cell, ignoring dates and months outside `min`/`max` or disallowed |
+| Arrow keys | Month or year grid | Moves focus between cells by one, or by one row |
+| `Escape` | Day grid, opened from the segments | Closes the panel and returns focus to the segment |
+| `Escape` | Day grid, opened from the calendar icon | Closes the panel and returns focus to the calendar icon |
+| `Escape` | Month grid | Returns to the days view |
+| `Escape` | Year grid | Returns to the months view |
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Provide a visible label through the `label` slot | MUST | manual |
+| Set `required` when a date is mandatory so form submission is blocked until a value is set | MUST | automated: `bq-date-picker.e2e.tsx` |
+| Set `form-validation-message` to provide a specific message for required, invalid typed, and out-of-bounds values | SHOULD | automated: `bq-date-picker.e2e.tsx` |
+| Pair `validationStatus` with visible error text | MUST | manual |
+| Use more than color to communicate validation states | MUST | manual |
+| Set `min`, `max`, or `isDateDisallowed` when the valid dates are known | SHOULD | manual |
+| Keep `locale`, `first-day-of-week`, and display formatting aligned with user expectations | SHOULD | manual |
+| Use a placeholder as the only instruction for the field | MUST NOT | manual |
 
 ## API reference
 
@@ -1683,6 +1732,16 @@ When focus leaves the segmented field, complete dates outside `min` or `max` are
 | `type` | `type` | Selection mode | `"single" \| "range" \| "multi"` | `"single"` |
 | `validationStatus` | `validation-status` | Validation state of the control | `"none" \| "error" \| "warning" \| "success"` | `"none"` |
 | `value` | `value` | Selected value in the wire format matching `precision`; `range` uses `start/end`, `multi` uses space-separated dates | `string` | `undefined` |
+
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| `placeholder` set to any value | SHOULD NOT | Deprecated; the rendered field does not change |
+| `initial-view` other than `days` with `precision` set to `month` or `year` | SHOULD NOT | `initial-view` is ignored; the picker opens in the view matching `precision` |
+| `months` greater than `2` | SHOULD NOT | `months` is clamped to `2` |
+| `months` greater than `1` with `type="single"` | SHOULD NOT | A single picker always shows one month |
+| An unsupported value for `type`, `precision`, `initial-view`, `months-per-view`, `strategy`, `placement`, `validation-status`, or `first-day-of-week` | MUST NOT | A development warning is logged and the default value is used |
 
 ### Events
 

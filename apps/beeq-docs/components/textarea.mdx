@@ -41,6 +41,8 @@ A textarea is a multi-line text input control. Use it when users need to provide
   </Card>
 </CardGroup>
 
+Choose [`bq-input`](/components/input) instead of `bq-textarea` when users enter a single line of text.
+
 ## Anatomy
 
 <Frame className="px-4 py-4" caption="Textarea component anatomy">
@@ -70,12 +72,12 @@ The textarea is composed of a label area, an input container, and an optional he
 A textarea supports five interactive states: **default**, **focused**, **disabled**, **read-only**, and **validation** (error, warning, success). The focused state shows a colored ring. The disabled state dims the control and blocks all interaction. The read-only state displays the value but prevents editing.
 
 <Note>
-  Always pair a textarea with a visible `label` slot. An unlabeled textarea has no accessible name and is inaccessible by default.
+  You must pair a textarea with a visible `label` slot. An unlabeled textarea has no accessible name and is inaccessible by default.
 </Note>
 
 ### Resize behavior
 
-By default, users can drag the bottom-right corner to resize the textarea vertically. Set `disable-resize` to prevent resizing — useful when you want to maintain a consistent layout height. Alternatively, set `auto-grow` to let the textarea expand automatically as the user types, eliminating the need for manual resizing.
+By default, users can drag the bottom-right corner to resize the textarea vertically. Set `disable-resize` to prevent resizing, which keeps the layout height consistent. Alternatively, set `auto-grow` to let the textarea expand automatically as the user types, eliminating the need for manual resizing.
 
 ### Character counter
 
@@ -83,7 +85,7 @@ When `maxlength` is set to a value greater than zero, a character counter appear
 
 ### Validation
 
-Set `validation-status` to `error`, `warning`, or `success` to communicate the state of the field. Pair each state with a descriptive `helper-text` message so users know what went wrong and how to fix it. Use `error` for critical blocking issues, `warning` for non-blocking concerns, and `success` to confirm valid input.
+Set `validation-status` to `error`, `warning`, or `success` to communicate the state of the field. You must pair each state with a descriptive `helper-text` message so users know what went wrong and how to fix it. You should use `error` for critical blocking issues, `warning` for non-blocking concerns, and `success` to confirm valid input.
 
 ## Usage
 
@@ -268,9 +270,15 @@ Pre-populate your textarea with an initial `value` attribute to streamline user 
 
 ## Options
 
+| Dimension | Attribute | Allowed values | Default |
+|---|---|---|---|
+| Validation status | `validation-status` | `error`, `none`, `success`, `warning` | `none` |
+| Wrap | `wrap` | `hard`, `off`, `soft` | `soft` |
+| Autocapitalize | `autocapitalize` | `characters`, `off`, `on`, `sentences`, `words` | `off` |
+
 ### Disabled
 
-Set `disabled` when the field is not currently available for interaction. Use it to present non-editable content in a form context. Always communicate why the field is disabled through surrounding text or a tooltip.
+Set `disabled` when the field is not currently available for interaction. Use it to present non-editable content in a form context. You should communicate why the field is disabled through surrounding text or a tooltip.
 
 <CodeLivePreview mode="shadow" code={`
   <style>
@@ -503,7 +511,7 @@ Add `disable-resize` to prevent users from resizing the textarea. This is useful
 </CodeLivePreview>
 
 <Tip>
-  Maintain a consistent layout by preventing users from resizing.
+  You may set `disable-resize` to keep a consistent layout.
 </Tip>
 
 ### Max length
@@ -712,7 +720,7 @@ Set `readonly` to display the value without allowing edits. Unlike `disabled`, a
 
 ### Validation
 
-Set `validation-status` to `error`, `warning`, or `success` to communicate the state of the field. Always pair a validation status with a descriptive `helper-text` message so users understand the issue and how to resolve it.
+Set `validation-status` to `error`, `warning`, or `success` to communicate the state of the field. You must pair a validation status with a descriptive `helper-text` message so users understand the issue and how to resolve it.
 
 <CodeLivePreview mode="shadow" code={`
   <style>
@@ -953,12 +961,12 @@ Set `validation-status` to `error`, `warning`, or `success` to communicate the s
 </CodeLivePreview>
 
 <Tip>
-  Use validation feedback to provide context on the textarea's status based on user input.
+  You should use validation feedback to give context on the textarea's status based on user input.
 </Tip>
 
 ### Form integration
 
-`bq-textarea` submits its current text value with the form. Use `required` and `form-validation-message` when users must provide multiline feedback before submitting.
+`bq-textarea` submits its current text value with the form. You should set `required` and `form-validation-message` when users must provide multiline feedback before submitting.
 
 <CodeLivePreview mode="iframe" height="24rem" removePadding code={`
   <style>
@@ -1180,56 +1188,56 @@ Set `validation-status` to `error`, `warning`, or `success` to communicate the s
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Always provide a visible label via the `label` slot. An unlabeled textarea has no accessible name and relies entirely on context, which screen readers cannot infer.
+    You must provide a visible label via the `label` slot. An unlabeled textarea has no accessible name and relies entirely on context, which screen readers cannot infer.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Use placeholder text as a substitute for a label. Placeholder text disappears as soon as the user starts typing, leaving the field without any visible description.
+    You must not use placeholder text as a substitute for a label. Placeholder text disappears as soon as the user starts typing, leaving the field without any visible description.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Write user-centric validation messages that explain what went wrong and how to fix it, not only that the input was invalid.
+    You should write user-centric validation messages that explain what went wrong and how to fix it, not only that the input was invalid.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Show vague error messages like "Invalid input". Users need actionable guidance to correct their input, not a generic error label.
+    You should not show vague error messages like "Invalid input". Users need actionable guidance to correct their input, not a generic error label.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Use `maxlength` for inputs where length matters — tweet-like comments, SMS text, or short descriptions. The character counter gives users clear progress feedback.
+    You should use `maxlength` for inputs where length matters — tweet-like comments, SMS text, or short descriptions. The character counter gives users clear progress feedback.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Set `maxlength` on open-ended fields like detailed feedback forms or long descriptions where an arbitrary limit would frustrate users.
+    You should not set `maxlength` on open-ended fields like detailed feedback forms or long descriptions where an arbitrary limit would frustrate users.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Use a textarea only when the expected input is long or variable in length. This sets the right expectation for users about how much text they should provide.
+    You should use a textarea only when the expected input is long or variable in length. This sets the right expectation for users about how much text they should provide.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Use a textarea when a short single-line response is expected. An oversized input creates confusion and wastes space — use an Input component instead.
+    You should not use a textarea when a short single-line response is expected. An oversized input creates confusion and wastes space — use an Input component instead.
   </Card>
 </CardGroup>
 
@@ -1239,20 +1247,37 @@ Set `validation-status` to `error`, `warning`, or `success` to communicate the s
 
 ### Keyboard interaction
 
-| Key | Action |
-|---|---|
-| `Tab` | Moves focus to the textarea |
-| `Shift + Tab` | Moves focus away from the textarea |
-| Arrow keys | Navigate the cursor through the text |
-| `Enter` | Inserts a new line in the text |
+| Key | Context | Action |
+|---|---|---|
+| `Tab` | Any | Moves focus to the textarea, or to the next focusable element when it is already focused |
+| `Shift` + `Tab` | Textarea focused | Moves focus to the previous focusable element |
+| `ArrowLeft` | Textarea focused | Moves the cursor one character back (native behavior) |
+| `ArrowRight` | Textarea focused | Moves the cursor one character forward (native behavior) |
+| `ArrowUp` | Textarea focused | Moves the cursor to the previous line (native behavior) |
+| `ArrowDown` | Textarea focused | Moves the cursor to the next line (native behavior) |
+| `Enter` | Textarea focused, not `readonly` | Inserts a new line in the text |
+
+A `disabled` textarea is not focusable. A `readonly` textarea stays focusable but rejects edits.
 
 ### Developer responsibilities
 
-- Always provide content in the `label` slot. The label is the primary source of the accessible name for the textarea. Do not rely on `placeholder` — it disappears once the user starts typing.
-- When using `validation-status`, pair it with a `helper-text` message that explains the issue. The helper text is not programmatically linked to the textarea (no `aria-describedby`), so keep the message next to the field and make the recovery step explicit.
-- When the textarea is `disabled`, it is removed from the tab order and excluded from form submission. Communicate the reason for disabling through surrounding text.
-- A `readonly` textarea remains focusable and its value is included in form submissions. Use it when you want users to see but not edit a value.
-- The `bqChange` event fires when the user changes the value and then blurs the field. The `bqInput` event fires on every keystroke. Use `debounce-time` to throttle `bqInput` for performance-sensitive scenarios such as live search.
+- You MUST provide content in the `label` slot. The label is the primary source of the accessible name for the textarea.
+- You MUST NOT rely on `placeholder` as the label because it disappears once the user starts typing.
+- When using `validation-status`, you MUST pair it with a `helper-text` message that explains the issue. The helper text is not programmatically linked to the textarea (no `aria-describedby`), so you MUST keep the message next to the field and make the recovery step explicit.
+- When the textarea is `disabled`, it is removed from the tab order and excluded from form submission. You SHOULD communicate the reason for disabling through surrounding text.
+- A `readonly` textarea remains focusable and its value is included in form submissions. You MAY use it when you want users to see but not edit a value.
+- The `bqChange` event fires when the user changes the value and then blurs the field. The `bqInput` event fires on every keystroke. You MAY use `debounce-time` to throttle `bqInput` for performance-sensitive scenarios such as live search.
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Provide a visible label in the `label` slot | MUST | manual |
+| Do not use `placeholder` as the only label | MUST NOT | manual |
+| Pair `validation-status` with a `helper-text` message that explains how to recover | MUST | manual |
+| Set `name` so the value is submitted with the form | MUST | manual |
+| Set `required` and `form-validation-message` when a value is mandatory before submit | SHOULD | manual |
+| Communicate why a `disabled` textarea is unavailable through surrounding text | SHOULD | manual |
 
 ## API reference
 
@@ -1279,6 +1304,10 @@ Set `validation-status` to `error`, `warning`, or `success` to communicate the s
 | `validationStatus` | `validation-status` | Validation state of the textarea | `'none' \| 'error' \| 'warning' \| 'success'` | `'none'` |
 | `value` | `value` | The current value of the textarea | `string` | — |
 | `wrap` | `wrap` | How text is wrapped when the form is submitted | `'soft' \| 'hard' \| 'off'` | `'soft'` |
+
+### Invalid combinations
+
+No invalid prop combinations.
 
 ### Events
 
