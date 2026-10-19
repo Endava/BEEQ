@@ -20,6 +20,20 @@ Documentation is read by developers, designers, product managers, and other stak
 - Use second-person ("you") when addressing the reader directly.
 - Avoid filler phrases such as "simply", "just", "easily", "note that", or "please".
 
+### Rule strength (RFC 2119)
+
+Every requirement or recommendation on a component page (Accessibility, Best practices, Notes, Invalid combinations) carries a strength keyword in capitals, so readers and agents can tell a hard requirement from advice.
+
+| Keyword | Meaning |
+|---|---|
+| **MUST** / **MUST NOT** | Hard requirement. Breaking it breaks accessibility, form behavior or the component. |
+| **SHOULD** / **SHOULD NOT** | Strong recommendation. Deviate only with a reason. |
+| **MAY** | Optional behavior. |
+
+- Capitalise the keyword; leave lowercase "must" or "should" out of rules. Descriptions of what the component does ("The component sets `role="switch"`") need no keyword.
+- Pick the strength from intent: WCAG failures and functional breakage are MUST / MUST NOT; stylistic and UX guidance is SHOULD / SHOULD NOT.
+- Rule cards in Best practices keep the Do/Don't structure and start the sentence with the keyword.
+
 ### Reference pages vs guide pages
 
 Match the voice to the content type:

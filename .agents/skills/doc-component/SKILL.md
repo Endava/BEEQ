@@ -25,8 +25,8 @@ metadata:
 
 Read in full before writing a line:
 
-- [Documentation instructions](../../instructions/documentation.instructions.md): tone, anti-patterns, frontmatter, imports, Mintlify components.
-- [Component docs instructions](../../instructions/component-docs.instructions.md): page structure and section order, image paths, Do/Don't cards, anatomy, API tables, CSS variable naming, resources.
+- [Documentation instructions](../../instructions/documentation.instructions.md): tone, rule strength keywords, anti-patterns, frontmatter, imports, Mintlify components.
+- [Component docs instructions](../../instructions/component-docs.instructions.md): page structure and section order, related components, allowed values, keyboard and rules tables, invalid combinations, image paths, Do/Don't cards, anatomy, API tables, CSS variable naming, resources.
 - [Code examples instructions](../../instructions/code-examples.instructions.md): `CodeLivePreview` isolation, `CodeGroup` tab order, icons, CSS tab.
 
 Done when you can name the section order and the tab order without looking.
@@ -37,6 +37,7 @@ The source is the ground truth for the API reference. Document only what exists 
 
 - `packages/beeq/src/components/<name>/bq-<name>.tsx`: `@Prop`, `@Event`, `@Method`, class-level JSDoc (`@slot`, `@part`, `@cssprop`, `@attr`)
 - `packages/beeq/src/components/<name>/bq-<name>.types.ts`: prop type unions and constants
+- `packages/beeq/src/components/<name>/__tests__/*.e2e.tsx`: what is asserted, for keyboard rows and "Verified by" values
 - `packages/beeq/src/components/<name>/scss/bq-<name>.variables.scss`: every `--bq-<name>--*` custom property and its default
 - [packages/beeq/cem/](../../../packages/beeq/cem/): the Custom Elements Manifest; the API tables must match it
 

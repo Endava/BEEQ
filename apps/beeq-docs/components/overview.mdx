@@ -164,6 +164,18 @@ BEEQ components are the building blocks of consistent, accessible, and efficient
   </Columns>
 </div>
 
+## How to read the rules
+
+Requirements on component pages use [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119) keywords in capitals.
+
+| Keyword | Meaning |
+|---|---|
+| **MUST** / **MUST NOT** | Hard requirement. Breaking it breaks accessibility, form behavior, or the component. |
+| **SHOULD** / **SHOULD NOT** | Strong recommendation. Deviate only with a reason. |
+| **MAY** | Optional behavior. |
+
+Form control pages add a **Verified by** column to their rules: `automated` (a test in the repository asserts it), `assisted` (a tool or lint rule helps), or `manual` (checked by review or with assistive technology).
+
 ---
 
 <Card title="Request a component" type="tip" icon="lightbulb">
