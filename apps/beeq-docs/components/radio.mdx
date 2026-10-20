@@ -873,7 +873,7 @@ All four arrow keys work in both orientations. A disabled group has no tab stop.
 | Property | Attribute | Description | Type | Default |
 |---|---|---|---|---|
 | `backgroundOnHover` | `background-on-hover` | If `true`, all radios in the group show a background on hover | `boolean` | `false` |
-| `debounceTime` | `debounce-time` | Delay in milliseconds before `bqChange` fires after a value change | `number` | `0` |
+| `debounceTime` | `debounce-time` | Delay in milliseconds before `bqChange` fires after a value change. With `0`, `bqChange` is emitted synchronously | `number` | `0` |
 | `disabled` | `disabled` | If `true`, all radio inputs in the group are disabled | `boolean` | `false` |
 | `fieldset` | `fieldset` | If `true`, the group renders a visible fieldset border with a legend | `boolean` | `false` |
 | `name` | `name` | Name of the form control, submitted with the selected radio's value | `string` | — |

@@ -873,7 +873,7 @@ Each handle is a native `<input type="range">`, so these keys come from the brow
 
 | Property | Attribute | Description | Type | Default |
 |---|---|---|---|---|
-| `debounceTime` | `debounce-time` | Time in milliseconds to wait before emitting `bqChange` after each value change | `number` | `0` |
+| `debounceTime` | `debounce-time` | Time in milliseconds to wait before emitting `bqChange` after each value change. With `0`, `bqChange` is emitted synchronously | `number` | `0` |
 | `disabled` | `disabled` | If true, the slider is disabled and non-interactive | `boolean` | `false` |
 | `enableTooltip` | `enable-tooltip` | If true, a tooltip shows the current value while dragging | `boolean` | `false` |
 | `enableValueIndicator` | `enable-value-indicator` | If true, the current value is shown as a label beside the track | `boolean` | `false` |
