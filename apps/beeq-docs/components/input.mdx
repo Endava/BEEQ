@@ -1828,13 +1828,13 @@ The input is not focusable when `disabled` is set. When `readonly` is set, it st
 
 | Rule | Strength | Verified by |
 |---|---|---|
-| Provide a visible label in the `label` slot, or alternate context when you omit it | MUST | manual (checked by hand) |
-| Set `name` so the value is submitted with the form | MUST | automated: `bq-input.e2e.tsx` |
-| Set `required` for mandatory fields so the form fails validation while the value is empty | MUST | automated: `bq-input.e2e.tsx` |
-| Set `form-validation-message` to tell users how to fix a missing required value | SHOULD | manual (checked by hand) |
-| Do not use `placeholder` as the only label | MUST NOT | manual (checked by hand) |
-| Provide helper or validation text that explains how to recover from an error | SHOULD | manual (checked by hand) |
-| Do not rely on color alone to communicate `validation-status` | MUST NOT | manual (checked by hand) |
+| Provide a visible label in the `label` slot, or alternate context when you omit it | MUST | manual: inspect the field label or its alternative context |
+| Set `name` so the value is submitted with the form | MUST | automated: [`bq-input.e2e.tsx`](https://github.com/Endava/BEEQ/blob/main/packages/beeq/src/components/input/__tests__/bq-input.e2e.tsx) checks `FormData` |
+| Set `required` for mandatory fields so the form fails validation while the value is empty | MUST | automated: [`bq-input.e2e.tsx`](https://github.com/Endava/BEEQ/blob/main/packages/beeq/src/components/input/__tests__/bq-input.e2e.tsx) checks `form.checkValidity()` |
+| Set `form-validation-message` to tell users how to fix a missing required value | SHOULD | manual: inspect the required-field message in a form |
+| Do not use `placeholder` as the only label | MUST NOT | manual: check the label remains after the placeholder disappears |
+| Provide helper or validation text that explains how to recover from an error | SHOULD | manual: read the helper text after an invalid value |
+| Do not rely on color alone to communicate `validation-status` | MUST NOT | manual: read the error state without relying on color |
 
 ## API reference
 

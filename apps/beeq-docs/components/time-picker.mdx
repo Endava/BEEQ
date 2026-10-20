@@ -1473,15 +1473,15 @@ When focus leaves the field, complete times outside `min` or `max` are clamped t
 
 | Rule | Strength | Verified by |
 |---|---|---|
-| Provide a visible label through the `label` slot | MUST | manual (checked by hand) |
-| Set `required` when a time is mandatory so form submission is blocked until a value is set | MUST | automated: `bq-time-picker.e2e.tsx` |
-| Set `form-validation-message` to provide a specific message for incomplete, out-of-range, and off-step values | SHOULD | manual (checked by hand) |
-| Translate `labels` when translating the interface | MUST | manual (checked by hand) |
-| Pair `validationStatus` with visible error text | MUST | manual (checked by hand) |
-| Use more than color to communicate validation states | MUST NOT | manual (checked by hand) |
-| Set `min`, `max`, and step values when business rules are known | SHOULD | manual (checked by hand) |
-| Use one `hour-format` across a product | MUST | manual (checked by hand) |
-| Rely on the format hint alone to explain the field | MUST NOT | manual (checked by hand) |
+| Provide a visible label through the `label` slot | MUST | manual: inspect the visible field label |
+| Set `required` when a time is mandatory so form submission is blocked until a value is set | MUST | automated: [`bq-time-picker.e2e.tsx`](https://github.com/Endava/BEEQ/blob/main/packages/beeq/src/components/time-picker/__tests__/bq-time-picker.e2e.tsx) checks `form.checkValidity()` |
+| Set `form-validation-message` to provide a specific message for incomplete, out-of-range, and off-step values | SHOULD | manual: inspect the native message for incomplete, range and step errors |
+| Translate `labels` when translating the interface | MUST | manual: review translated field and control labels together |
+| Pair `validationStatus` with visible error text | MUST | manual: inspect error text beside each visual error state |
+| Use more than color to communicate validation states | MUST NOT | manual: read validation state without relying on color |
+| Set `min`, `max`, and step values when business rules are known | SHOULD | manual: review business rules against time bounds and step |
+| Use one `hour-format` across a product | MUST | manual: compare hour formats across the product |
+| Rely on the format hint alone to explain the field | MUST NOT | manual: read field instructions with the format hint hidden |
 
 ## API reference
 

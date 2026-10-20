@@ -427,9 +427,9 @@ No keyboard interaction: the component is not focusable.
 
 | Rule | Strength | Verified by |
 |---|---|---|
-| Expose the badge meaning (count or status) through the surrounding element or nearby text | MUST | manual (checked by hand) |
-| Provide text, a label, or an accessible name on the related control when the badge carries important information | MUST | manual (checked by hand) |
-| Do not rely on color alone | MUST NOT | manual (checked by hand) |
+| Expose the badge meaning (count or status) through the surrounding element or nearby text | MUST | manual: read the count or status without its color |
+| Provide text, a label, or an accessible name on the related control when the badge carries important information | MUST | manual: inspect the related control accessible name and nearby text |
+| Do not rely on color alone | MUST NOT | manual: check that text or shape also conveys the badge meaning |
 
 ## API reference
 

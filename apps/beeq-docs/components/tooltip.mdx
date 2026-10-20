@@ -1275,10 +1275,10 @@ The `distance` prop controls the gap in pixels between the trigger and the toolt
 
 | Rule | Strength | Verified by |
 |---|---|---|
-| Do not place critical instructions, error messages, or required form guidance in a tooltip | MUST NOT | manual (checked by hand) |
-| Do not turn the trigger wrapper into another button or tab stop | MUST NOT | manual (checked by hand) |
-| Use a focusable trigger such as a button, since the tooltip does not make its trigger focusable | SHOULD | manual (checked by hand) |
-| Keep tooltip content short; hover tooltips close on pointer leave or focus loss, and only click-mode tooltips close on `Esc` | SHOULD | manual (checked by hand) |
+| Do not place critical instructions, error messages, or required form guidance in a tooltip | MUST NOT | manual: read the workflow with tooltips unavailable |
+| Do not turn the trigger wrapper into another button or tab stop | MUST NOT | manual: tab through the trigger and inspect duplicate focus stops |
+| Use a focusable trigger such as a button, since the tooltip does not make its trigger focusable | SHOULD | manual: reach the trigger using only the keyboard |
+| Keep tooltip content short; hover tooltips close on pointer leave or focus loss, and only click-mode tooltips close on `Esc` | SHOULD | manual: read the tooltip before pointer leave or focus loss |
 
 ## API reference
 

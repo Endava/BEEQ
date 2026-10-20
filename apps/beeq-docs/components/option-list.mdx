@@ -435,10 +435,10 @@ As a developer, you are responsible for:
 
 | Rule | Strength | Verified by |
 |---|---|---|
-| Place only `bq-option` and `bq-option-group` elements inside the list | MUST | manual (checked by hand) |
-| Do not insert non-option elements | MUST NOT | manual (checked by hand) |
-| Move focus to the first option when a custom dropdown opens the list, and return it to the trigger when it closes | MUST | manual (checked by hand) |
-| Set a specific `ariaLabel` when the default `Options` is ambiguous | SHOULD | manual (checked by hand) |
+| Place only `bq-option` and `bq-option-group` elements inside the list | MUST | manual: inspect the list children in the DOM |
+| Do not insert non-option elements | MUST NOT | manual: check custom content sits outside the option list |
+| Move focus to the first option when a custom dropdown opens the list, and return it to the trigger when it closes | MUST | manual: open and close the custom dropdown while tracking focus |
+| Set a specific `ariaLabel` when the default `Options` is ambiguous | SHOULD | manual: inspect the list accessible name in context |
 
 ## API reference
 

@@ -483,9 +483,9 @@ Each `bq-breadcrumb-item` renders a native `a` (with `href`) or `button` (withou
 
 | Rule | Strength | Verified by |
 |---|---|---|
-| Override `label` (default `Breadcrumbs`) when the page has several navigation regions | MUST | manual (checked by hand) |
-| Set `label` on `bq-icon` for icon-only items | MUST | manual (checked by hand) |
-| Set `aria-hidden="true"` on a `bq-icon` that sits next to a visible text label | MUST | manual (checked by hand) |
+| Override `label` (default `Breadcrumbs`) when the page has several navigation regions | MUST | manual: inspect navigation landmark names when several are present |
+| Set `label` on `bq-icon` for icon-only items | MUST | manual: inspect the accessible name of each icon-only item |
+| Set `aria-hidden="true"` on a `bq-icon` that sits next to a visible text label | MUST | manual: inspect decorative icons beside text labels for aria-hidden |
 
 ## API reference
 

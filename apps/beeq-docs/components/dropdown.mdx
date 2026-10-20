@@ -1391,11 +1391,11 @@ Use `same-width` when the panel should match the trigger width. Use `panel-heigh
 
 | Rule | Strength | Verified by |
 |---|---|---|
-| Provide a visible label or `aria-label` on the trigger, especially for icon-only triggers | MUST | manual (checked by hand) |
-| Supply the `label` prop when a `bq-avatar` is the trigger | MUST | manual (checked by hand) |
-| Make the trigger reachable with `Tab`; use a natively focusable element such as `bq-button` | MUST | manual (checked by hand) |
-| Do not rely on icons alone; pair icon-only triggers with accessible labels | MUST NOT | manual (checked by hand) |
-| Keep selection and deselection visible and predictable for multi-select patterns | SHOULD | manual (checked by hand) |
+| Provide a visible label or `aria-label` on the trigger, especially for icon-only triggers | MUST | manual: inspect the trigger accessible name |
+| Supply the `label` prop when a `bq-avatar` is the trigger | MUST | manual: inspect the avatar trigger accessible name |
+| Make the trigger reachable with `Tab`; use a natively focusable element such as `bq-button` | MUST | manual: reach and activate the trigger using only the keyboard |
+| Do not rely on icons alone; pair icon-only triggers with accessible labels | MUST NOT | manual: check icon-only triggers have readable accessible names |
+| Keep selection and deselection visible and predictable for multi-select patterns | SHOULD | manual: select and deselect options and inspect the visible state |
 
 ## API reference
 

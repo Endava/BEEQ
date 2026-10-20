@@ -210,10 +210,10 @@ Every component page ends its Accessibility section, after Keyboard interaction,
 | Rule | Strength | Verified by |
 |---|---|---|
 | Provide a visible label in the `label` slot | MUST | manual: inspect the rendered label text |
-| Set `name` for form submission | MUST | automated: `bq-input.e2e.tsx` checks `FormData` |
+| Set `name` for form submission | MUST | automated: [`bq-input.e2e.tsx`](https://github.com/Endava/BEEQ/blob/main/packages/beeq/src/components/input/__tests__/bq-input.e2e.tsx) checks `FormData` |
 ```
 
-- **Verified by** names a repeatable check: `automated` (name the test file and what it asserts), `assisted` (name the tool or lint rule and what it checks), or `manual` (state what to inspect or review). Write the method in the cell so readers and crawlers can understand it without opening another page. Do not imply a manual check has already happened when the cell only describes how to check.
+- **Verified by** names a repeatable check: `automated` (link directly to the repository test file and say what it asserts), `assisted` (link to an existing check when available and say what it checks), or `manual` (state what to inspect or review). Use a full GitHub `blob/main` URL for repository files so the link works from the published docs. Write the method in the cell so readers and crawlers can understand it without opening another page. A manual method describes how to check; it does not imply that the check has already happened.
 - Use `automated` only when a test in the repo asserts the behavior. When unsure, use `manual`.
 - Write "Do not X" rows for `MUST NOT` / `SHOULD NOT`. Don't use `<Visibility for="agents">` for rules: crawlers that read the rendered HTML don't see it, so the table is the only copy.
 

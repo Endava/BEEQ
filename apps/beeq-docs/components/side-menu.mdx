@@ -2150,12 +2150,12 @@ Each `bq-side-menu-item` renders a native `<button>`, so there are no arrow-key 
 
 | Rule | Strength | Verified by |
 |---|---|---|
-| Communicate the expanded or collapsed state from any layout control you add | MUST | manual (checked by hand) |
-| Set `aria-hidden="true"` on prefix icons | MUST | manual (checked by hand) |
-| Give items unique labels that make sense without context | MUST | manual (checked by hand) |
-| Give icon-only `bq-button` controls in the footer a meaningful `label` and hide their decorative icon | MUST | manual (checked by hand) |
-| Put semantic heading text in the logo slot | SHOULD | manual (checked by hand) |
-| Validate icon meaning when collapsed navigation relies on icons | SHOULD | manual (checked by hand) |
+| Communicate the expanded or collapsed state from any layout control you add | MUST | manual: toggle the layout control and inspect its expanded state |
+| Set `aria-hidden="true"` on prefix icons | MUST | manual: inspect decorative prefix icons for aria-hidden |
+| Give items unique labels that make sense without context | MUST | manual: read item names without surrounding navigation context |
+| Give icon-only `bq-button` controls in the footer a meaningful `label` and hide their decorative icon | MUST | manual: inspect footer button names and decorative icons |
+| Put semantic heading text in the logo slot | SHOULD | manual: read the logo-slot heading in the page outline |
+| Validate icon meaning when collapsed navigation relies on icons | SHOULD | manual: ask readers to identify items from icons in collapsed mode |
 
 ## API reference
 

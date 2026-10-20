@@ -658,10 +658,10 @@ No keyboard interaction: the component is not focusable.
 
 | Rule | Strength | Verified by |
 |---|---|---|
-| Add a visible label or nearby text that says which operation the bar tracks | MUST | manual (checked by hand) |
-| Pair `type="error"` with a visible message | MUST | manual (checked by hand) |
-| Use `label` or `enable-tooltip` when precise status matters | SHOULD | manual (checked by hand) |
-| Respect `prefers-reduced-motion` at the app level for the indeterminate animation | SHOULD | manual (checked by hand) |
+| Add a visible label or nearby text that says which operation the bar tracks | MUST | manual: read nearby text to identify the tracked operation |
+| Pair `type="error"` with a visible message | MUST | manual: inspect the error message next to the bar |
+| Use `label` or `enable-tooltip` when precise status matters | SHOULD | manual: check whether precise progress is available as text |
+| Respect `prefers-reduced-motion` at the app level for the indeterminate animation | SHOULD | manual: check the indeterminate animation with reduced motion enabled |
 
 ## API reference
 

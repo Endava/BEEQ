@@ -841,14 +841,14 @@ All four arrow keys work in both orientations. A disabled group has no tab stop.
 
 | Rule | Strength | Verified by |
 |---|---|---|
-| Wrap every `bq-radio` in a `bq-radio-group` | MUST | manual (checked by hand) |
-| Fill the `label` slot of the group with meaningful text | MUST | manual (checked by hand) |
-| Provide meaningful text in each `bq-radio` slot | MUST | manual (checked by hand) |
-| Set `name` on the group so the selected value submits with the form | MUST | automated: `bq-radio-group.e2e.tsx` |
-| Select an option before submitting a required group | MUST | automated: `bq-radio-group.e2e.tsx` |
-| Set `required-validation-message` on a required group | SHOULD | manual (checked by hand) |
-| Pre-select a default with `value` when one choice is always required | SHOULD | manual (checked by hand) |
-| Explain nearby why a group or option is disabled | SHOULD | manual (checked by hand) |
+| Wrap every `bq-radio` in a `bq-radio-group` | MUST | manual: inspect the parent of every radio in the DOM |
+| Fill the `label` slot of the group with meaningful text | MUST | manual: read the group label before its choices |
+| Provide meaningful text in each `bq-radio` slot | MUST | manual: read each choice without relying on its position |
+| Set `name` on the group so the selected value submits with the form | MUST | automated: [`bq-radio-group.e2e.tsx`](https://github.com/Endava/BEEQ/blob/main/packages/beeq/src/components/radio-group/__tests__/bq-radio-group.e2e.tsx) checks `FormData` |
+| Select an option before submitting a required group | MUST | automated: [`bq-radio-group.e2e.tsx`](https://github.com/Endava/BEEQ/blob/main/packages/beeq/src/components/radio-group/__tests__/bq-radio-group.e2e.tsx) checks `form.checkValidity()` |
+| Set `required-validation-message` on a required group | SHOULD | manual: inspect the required-group validation message |
+| Pre-select a default with `value` when one choice is always required | SHOULD | manual: review the selected default against the question |
+| Explain nearby why a group or option is disabled | SHOULD | manual: inspect nearby text for disabled choices |
 
 <Warning>
   The fieldset's `aria-labelledby` currently references an ID that does not match the label slot. This source defect is tracked in [the Radio Group follow-up issue](https://github.com/Endava/BEEQ/issues/1830). You must not assume that populating the slot repairs the explicit ARIA reference; verify the group name with your supported assistive technologies.

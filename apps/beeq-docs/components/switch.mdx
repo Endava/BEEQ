@@ -961,14 +961,14 @@ The native `<input type="checkbox" role="switch">` handles these keys. A disable
 
 | Rule | Strength | Verified by |
 |---|---|---|
-| Provide a visible text label in the default slot | MUST | manual (checked by hand) |
-| Set `name` so the switch submits with the form | MUST | automated: `bq-switch.e2e.tsx` |
-| Turn a required switch ON before submitting the form | MUST | automated: `bq-switch.e2e.tsx` |
-| Set `form-validation-message` on a required switch | SHOULD | manual (checked by hand) |
-| Tell users before submit that a required switch has to be ON | MUST | manual (checked by hand) |
-| Provide at least one cue besides track color for the ON state | MUST | manual (checked by hand) |
-| Explain why a switch is disabled in the surrounding text | SHOULD | manual (checked by hand) |
-| Call `vFocus()`, `vBlur()` and `vClick()` instead of `focus()`, `blur()` and `click()` on the host | SHOULD | manual (checked by hand) |
+| Provide a visible text label in the default slot | MUST | manual: inspect the visible label beside the switch |
+| Set `name` so the switch submits with the form | MUST | automated: [`bq-switch.e2e.tsx`](https://github.com/Endava/BEEQ/blob/main/packages/beeq/src/components/switch/__tests__/bq-switch.e2e.tsx) checks `FormData` |
+| Turn a required switch ON before submitting the form | MUST | automated: [`bq-switch.e2e.tsx`](https://github.com/Endava/BEEQ/blob/main/packages/beeq/src/components/switch/__tests__/bq-switch.e2e.tsx) checks `form.checkValidity()` |
+| Set `form-validation-message` on a required switch | SHOULD | manual: inspect the required-switch validation message |
+| Tell users before submit that a required switch has to be ON | MUST | manual: read instructions before submitting a required switch |
+| Provide at least one cue besides track color for the ON state | MUST | manual: check the ON state without relying on track color |
+| Explain why a switch is disabled in the surrounding text | SHOULD | manual: inspect nearby text for disabled switches |
+| Call `vFocus()`, `vBlur()` and `vClick()` instead of `focus()`, `blur()` and `click()` on the host | SHOULD | manual: inspect host method calls in the consumer code |
 
 ### Developer responsibilities
 

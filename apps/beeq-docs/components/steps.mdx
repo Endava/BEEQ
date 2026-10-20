@@ -1095,11 +1095,11 @@ A step item with `status="disabled"` is not focusable and does not emit `bqClick
 
 | Rule | Strength | Verified by |
 |---|---|---|
-| Set `status="current"` on exactly one step item | MUST | manual (checked by hand) |
-| Pair color with text, icon shape, or description changes | MUST | manual (checked by hand) |
-| Mark decorative icons with `aria-hidden="true"` | MUST | manual (checked by hand) |
-| Provide an `aria-label` such as `Step 1` when numeric prefixes are used | MUST | manual (checked by hand) |
-| Use the `description` slot for extra context, errors, or the next action | SHOULD | manual (checked by hand) |
+| Set `status="current"` on exactly one step item | MUST | manual: inspect all step statuses for exactly one current item |
+| Pair color with text, icon shape, or description changes | MUST | manual: read step states without their colors |
+| Mark decorative icons with `aria-hidden="true"` | MUST | manual: inspect decorative icons for aria-hidden |
+| Provide an `aria-label` such as `Step 1` when numeric prefixes are used | MUST | manual: inspect numeric prefix accessible names |
+| Use the `description` slot for extra context, errors, or the next action | SHOULD | manual: read descriptions for context, errors and next actions |
 
 ## API reference
 

@@ -861,11 +861,11 @@ Each handle is a native `<input type="range">`, so these keys come from the brow
 
 | Rule | Strength | Verified by |
 |---|---|---|
-| Provide an accessible label with a wrapping `<label>`, `aria-label` or `aria-labelledby` | MUST | manual (checked by hand) |
-| Set `name` so the value is submitted with the form | MUST | automated: `bq-slider.e2e.tsx` |
-| Supplement the slider with a visible number input when an exact value is critical | SHOULD | manual (checked by hand) |
-| Test range sliders with the target assistive technologies and provide a text summary of the range | SHOULD | manual (checked by hand) |
-| Use the slider for adjustable values, not mandatory completion checks, because it has no `required` prop | SHOULD | manual (checked by hand) |
+| Provide an accessible label with a wrapping `<label>`, `aria-label` or `aria-labelledby` | MUST | manual: inspect the slider accessible name |
+| Set `name` so the value is submitted with the form | MUST | automated: [`bq-slider.e2e.tsx`](https://github.com/Endava/BEEQ/blob/main/packages/beeq/src/components/slider/__tests__/bq-slider.e2e.tsx) checks `FormData` |
+| Supplement the slider with a visible number input when an exact value is critical | SHOULD | manual: try setting an exact value with the visible number input |
+| Test range sliders with the target assistive technologies and provide a text summary of the range | SHOULD | manual: use the range with target assistive technologies and read its summary |
+| Use the slider for adjustable values, not mandatory completion checks, because it has no `required` prop | SHOULD | manual: check the task does not require a completion state |
 
 ## API reference
 

@@ -627,11 +627,11 @@ No keyboard interaction: the component is not focusable. Actions you place in th
 
 | Rule | Strength | Verified by |
 |---|---|---|
-| Hide purely decorative thumbnails with `aria-hidden="true"` or an empty `alt` | MUST | manual (checked by hand) |
-| Make the title and body explain the state without the artwork | MUST | manual (checked by hand) |
-| Render recovery actions in the footer as real buttons or links with clear labels | MUST | manual (checked by hand) |
-| Explain what is happening and what to do next, without relying on color or imagery alone | MUST | manual (checked by hand) |
-| Keep title, description, and actions in a logical visual and DOM order | SHOULD | manual (checked by hand) |
+| Hide purely decorative thumbnails with `aria-hidden="true"` or an empty `alt` | MUST | manual: inspect decorative images in the accessibility tree |
+| Make the title and body explain the state without the artwork | MUST | manual: read the title and body with artwork hidden |
+| Render recovery actions in the footer as real buttons or links with clear labels | MUST | manual: activate footer actions using the keyboard |
+| Explain what is happening and what to do next, without relying on color or imagery alone | MUST | manual: read the recovery instructions without color or artwork |
+| Keep title, description, and actions in a logical visual and DOM order | SHOULD | manual: compare visual order with keyboard and screen-reader order |
 
 ## API reference
 

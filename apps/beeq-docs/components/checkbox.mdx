@@ -1002,14 +1002,14 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
 
 | Rule | Strength | Verified by |
 |---|---|---|
-| Provide a visible label in the default slot | MUST | manual (checked by hand) |
-| Set `name` so the checked state is submitted with the form | MUST | automated: `bq-checkbox.e2e.tsx` |
-| Set `required` on checkboxes that must be checked before submission | MUST | automated: `bq-checkbox.e2e.tsx` |
-| Set `form-validation-message` on required checkboxes to give a specific validation message | SHOULD | manual (checked by hand) |
-| Keep the parent and child checkboxes synchronized in a nested group | MUST | manual (checked by hand) |
-| Use `indeterminate` only to summarize a partially selected group | SHOULD | manual (checked by hand) |
-| Group related checkboxes under a shared heading or `<fieldset>` | SHOULD | manual (checked by hand) |
-| Use more than color to communicate the checked state | MUST | manual (checked by hand) |
+| Provide a visible label in the default slot | MUST | manual: inspect the visible label beside the checkbox |
+| Set `name` so the checked state is submitted with the form | MUST | automated: [`bq-checkbox.e2e.tsx`](https://github.com/Endava/BEEQ/blob/main/packages/beeq/src/components/checkbox/__tests__/bq-checkbox.e2e.tsx) checks `FormData` |
+| Set `required` on checkboxes that must be checked before submission | MUST | automated: [`bq-checkbox.e2e.tsx`](https://github.com/Endava/BEEQ/blob/main/packages/beeq/src/components/checkbox/__tests__/bq-checkbox.e2e.tsx) checks `form.checkValidity()` |
+| Set `form-validation-message` on required checkboxes to give a specific validation message | SHOULD | manual: inspect the required-field message in a form |
+| Keep the parent and child checkboxes synchronized in a nested group | MUST | manual: toggle parent and child items and compare their states |
+| Use `indeterminate` only to summarize a partially selected group | SHOULD | manual: check indeterminate only appears for partial selection |
+| Group related checkboxes under a shared heading or `<fieldset>` | SHOULD | manual: inspect the shared heading or fieldset for a related group |
+| Use more than color to communicate the checked state | MUST | manual: read the checked state without relying on color |
 
 ## API reference
 

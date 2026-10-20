@@ -784,10 +784,10 @@ No keyboard interaction: the component is not focusable. The `bq-option` items i
 
 | Rule | Strength | Verified by |
 |---|---|---|
-| Provide `header-label` content | MUST | manual (checked by hand) |
-| Place `bq-option-group` inside `bq-option-list` | MUST | manual (checked by hand) |
-| Do not render option groups outside `bq-option-list` | MUST NOT | manual (checked by hand) |
-| Do not leave a group empty | MUST NOT | manual (checked by hand) |
+| Provide `header-label` content | MUST | manual: inspect each group header label |
+| Place `bq-option-group` inside `bq-option-list` | MUST | manual: inspect the parent of each option group |
+| Do not render option groups outside `bq-option-list` | MUST NOT | manual: check that each group is inside an option list |
+| Do not leave a group empty | MUST NOT | manual: inspect each group for at least one option |
 
 ## API reference
 

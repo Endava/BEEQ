@@ -784,9 +784,9 @@ Arrow keys work in both `horizontal` and `vertical` orientations. Disabled tabs 
 
 | Rule | Strength | Verified by |
 |---|---|---|
-| Set `controls` on each `bq-tab` to the `id` of its panel | MUST | manual (checked by hand) |
-| Add `role="tabpanel"` and the matching `id` to each panel element | MUST | manual (checked by hand) |
-| Add an `aria-label` to the `bq-tab` when it uses an icon without a visible label | MUST | manual (checked by hand) |
+| Set `controls` on each `bq-tab` to the `id` of its panel | MUST | manual: compare each tab controls value with its panel id |
+| Add `role="tabpanel"` and the matching `id` to each panel element | MUST | manual: inspect panel roles and ids in the DOM |
+| Add an `aria-label` to the `bq-tab` when it uses an icon without a visible label | MUST | manual: inspect icon-only tab accessible names |
 
 ## API reference
 

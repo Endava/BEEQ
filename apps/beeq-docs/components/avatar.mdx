@@ -826,10 +826,10 @@ No keyboard interaction: the component is not focusable. If you place an avatar 
 
 | Rule | Strength | Verified by |
 |---|---|---|
-| Provide a descriptive `label`; the component sets `role="img"` and `aria-label` | MUST | manual (checked by hand) |
-| Make the surrounding pattern accessible as a whole when the avatar sits next to names, links, or buttons | MUST | manual (checked by hand) |
-| Pass `alt-text` when the avatar shows an image | SHOULD | manual (checked by hand) |
-| Keep `initials` short so the fallback stays readable | SHOULD | manual (checked by hand) |
+| Provide a descriptive `label`; the component sets `role="img"` and `aria-label` | MUST | manual: inspect the avatar accessible name |
+| Make the surrounding pattern accessible as a whole when the avatar sits next to names, links, or buttons | MUST | manual: read the avatar together with adjacent names and controls |
+| Pass `alt-text` when the avatar shows an image | SHOULD | manual: inspect the image alternative text |
+| Keep `initials` short so the fallback stays readable | SHOULD | manual: check initials at the smallest avatar size |
 
 ## API reference
 

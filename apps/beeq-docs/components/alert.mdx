@@ -1309,12 +1309,12 @@ The alert itself is not focusable. Only the elements inside it receive focus; th
 
 | Rule | Strength | Verified by |
 |---|---|---|
-| Keep every interactive element inside the alert (close button, footer actions, body links) reachable with `Tab` and visibly focused | MUST | manual (checked by hand) |
-| Verify color contrast manually when you override colors with CSS variables | MUST | manual (checked by hand) |
-| Keep the page focus order logical when `sticky` is set | MUST | manual (checked by hand) |
-| Put a concise title in the default slot and details in the `body` slot | SHOULD | manual (checked by hand) |
-| Set `time` to at least 8000 ms for `auto-dismiss` | SHOULD | manual (checked by hand) |
-| Do not auto-dismiss while the user has focus or hover inside the alert | SHOULD NOT | manual (checked by hand) |
+| Keep every interactive element inside the alert (close button, footer actions, body links) reachable with `Tab` and visibly focused | MUST | manual: tab through links and actions and inspect the focus indicator |
+| Verify color contrast manually when you override colors with CSS variables | MUST | manual: measure contrast after overriding alert colors |
+| Keep the page focus order logical when `sticky` is set | MUST | manual: tab through the page with the alert sticky |
+| Put a concise title in the default slot and details in the `body` slot | SHOULD | manual: read the title and body slots in order |
+| Set `time` to at least 8000 ms for `auto-dismiss` | SHOULD | manual: check the auto-dismiss time in the example |
+| Do not auto-dismiss while the user has focus or hover inside the alert | SHOULD NOT | manual: focus and hover over the alert until dismissal would occur |
 
 ## API reference
 

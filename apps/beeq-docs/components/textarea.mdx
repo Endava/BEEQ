@@ -1274,12 +1274,12 @@ A `disabled` textarea is not focusable. A `readonly` textarea stays focusable bu
 
 | Rule | Strength | Verified by |
 |---|---|---|
-| Provide a visible label in the `label` slot | MUST | manual (checked by hand) |
-| Do not use `placeholder` as the only label | MUST NOT | manual (checked by hand) |
-| Pair `validation-status` with a `helper-text` message that explains how to recover | MUST | manual (checked by hand) |
-| Set `name` so the value is submitted with the form | MUST | manual (checked by hand) |
-| Set `required` and `form-validation-message` when a value is mandatory before submit | SHOULD | manual (checked by hand) |
-| Communicate why a `disabled` textarea is unavailable through surrounding text | SHOULD | manual (checked by hand) |
+| Provide a visible label in the `label` slot | MUST | manual: inspect the visible field label |
+| Do not use `placeholder` as the only label | MUST NOT | manual: check the label remains after the placeholder disappears |
+| Pair `validation-status` with a `helper-text` message that explains how to recover | MUST | manual: inspect helper text with an invalid value |
+| Set `name` so the value is submitted with the form | MUST | automated: [`bq-textarea.e2e.tsx`](https://github.com/Endava/BEEQ/blob/main/packages/beeq/src/components/textarea/__tests__/bq-textarea.e2e.tsx) checks `FormData` |
+| Set `required` and `form-validation-message` when a value is mandatory before submit | SHOULD | manual: inspect the required-field validation message |
+| Communicate why a `disabled` textarea is unavailable through surrounding text | SHOULD | manual: inspect nearby text for disabled textareas |
 
 ## API reference
 

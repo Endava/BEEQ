@@ -597,10 +597,10 @@ No keyboard interaction: the component is not focusable. Make an icon interactiv
 
 | Rule | Strength | Verified by |
 |---|---|---|
-| Set `label` on custom SVG icons loaded through `src` | MUST | manual (checked by hand) |
-| Pair ambiguous icons with visible text | MUST | manual (checked by hand) |
-| Add a `bq-tooltip` to icon-only interactive patterns, and a visible text label where possible since tooltips are unreliable on touch | SHOULD | manual (checked by hand) |
-| Pick icons with widely recognized metaphors | SHOULD | manual (checked by hand) |
+| Set `label` on custom SVG icons loaded through `src` | MUST | manual: inspect the accessible name of each custom SVG icon |
+| Pair ambiguous icons with visible text | MUST | manual: read ambiguous icons with their visible text |
+| Add a `bq-tooltip` to icon-only interactive patterns, and a visible text label where possible since tooltips are unreliable on touch | SHOULD | manual: try icon-only controls by touch and keyboard |
+| Pick icons with widely recognized metaphors | SHOULD | manual: ask readers unfamiliar with the screen to identify each icon |
 
 ## API reference
 

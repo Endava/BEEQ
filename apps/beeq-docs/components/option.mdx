@@ -1181,11 +1181,11 @@ Keys apply to the focused option. Disabled and hidden options are not focusable.
 
 | Rule | Strength | Verified by |
 |---|---|---|
-| Use `bq-option-list` for a standalone flat list or `bq-select` for select options | MUST | manual (checked by hand) |
-| Do not put options in an arbitrary container | MUST NOT | manual (checked by hand) |
-| Include a visible text label in the default slot | MUST | manual (checked by hand) |
-| Do not make an option icon-only | MUST NOT | manual (checked by hand) |
-| Do not intercept `ArrowUp`, `ArrowDown`, `ArrowRight`, or `ArrowLeft` in your own handlers when options are in a nested `bq-select` | MUST NOT | manual (checked by hand) |
+| Use `bq-option-list` for a standalone flat list or `bq-select` for select options | MUST | manual: inspect the parent list or select in the DOM |
+| Do not put options in an arbitrary container | MUST NOT | manual: check options are not placed in an arbitrary container |
+| Include a visible text label in the default slot | MUST | manual: read the visible option label |
+| Do not make an option icon-only | MUST NOT | manual: inspect icon options for accompanying text |
+| Do not intercept `ArrowUp`, `ArrowDown`, `ArrowRight`, or `ArrowLeft` in your own handlers when options are in a nested `bq-select` | MUST NOT | manual: try arrow keys with custom handlers in a nested select |
 
 ## API reference
 
