@@ -13,10 +13,6 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 
 Inputs let users enter a short value in a familiar, single-line control. Use them when people need to type information directly and you want the field to support labels, helper text, inline validation, and optional prefix or suffix content.
 
-<Note>
-  Use `bq-input` for single-line entry. If the answer may span multiple lines, use a textarea. If the user must pick from known options, use a select or dropdown. If the value is a date, use a date picker.
-</Note>
-
 ## When to use
 
 <CardGroup cols={2}>
@@ -46,7 +42,7 @@ Inputs let users enter a short value in a familiar, single-line control. Use the
 </CardGroup>
 
 <Tip>
-  Choose [`bq-textarea`](/components/textarea) instead of `bq-input` when users enter more than one line of text.
+  Use `bq-input` for free-form, single-line text. Choose [`bq-textarea`](/components/textarea) for multiple lines, [`bq-select`](/components/select) when a choice from known options needs form submission or validation, or [`bq-dropdown`](/components/dropdown) when options trigger actions or lead to destinations. Choose [`bq-date-picker`](/components/date-picker) when users select a calendar date.
 </Tip>
 
 ## Patterns

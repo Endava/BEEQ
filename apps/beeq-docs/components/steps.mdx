@@ -12,6 +12,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 </Frame>
 
 Steps guide users through a sequential process such as a wizard, onboarding flow, or multistep form. Use them to show progress, the current step, completed steps, and steps that still need attention.
+The component is named Steps (`bq-steps`, containing `bq-step-item`). BEEQ has no separate Stepper component.
 
 <Note>
   Use `bq-step-item` inside `bq-steps`. The parent component passes `type`, `orientation`, `size`, and divider settings down to each step item.
@@ -1023,7 +1024,7 @@ Use `size="small"` in compact layouts. Use `divider-color` with a declarative co
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Avoid multiple steppers in the same view because they can compete for attention and disrupt the flow.
+    Avoid multiple Steps components in the same view because they can compete for attention and disrupt the flow.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
