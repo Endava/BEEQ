@@ -209,11 +209,11 @@ Every component page ends its Accessibility section, after Keyboard interaction,
 ```mdx
 | Rule | Strength | Verified by |
 |---|---|---|
-| Provide a visible label in the `label` slot | MUST | manual (checked by hand) |
-| Set `name` for form submission | MUST | automated: `bq-input.e2e.tsx` |
+| Provide a visible label in the `label` slot | MUST | manual: inspect the rendered label text |
+| Set `name` for form submission | MUST | automated: `bq-input.e2e.tsx` checks `FormData` |
 ```
 
-- **Verified by** is `automated` (name the test file that asserts it), `assisted` (a tool or lint rule helps, name it) or `manual (checked by hand)` (review or screen reader check; write it in full, since crawlers read the cell as text).
+- **Verified by** names a repeatable check: `automated` (name the test file and what it asserts), `assisted` (name the tool or lint rule and what it checks), or `manual` (state what to inspect or review). Write the method in the cell so readers and crawlers can understand it without opening another page. Do not imply a manual check has already happened when the cell only describes how to check.
 - Use `automated` only when a test in the repo asserts the behavior. When unsure, use `manual`.
 - Write "Do not X" rows for `MUST NOT` / `SHOULD NOT`. Don't use `<Visibility for="agents">` for rules: crawlers that read the rendered HTML don't see it, so the table is the only copy.
 

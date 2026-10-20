@@ -38,7 +38,7 @@ The select input lets users choose one option — or multiple options when `mult
 </CardGroup>
 
 <Tip>
-  Choose [`bq-radio`](/components/radio) instead of `bq-select` when the list is short enough to show every option in a form, and [`bq-dropdown`](/components/dropdown) when the options trigger actions instead of setting a form value.
+  Use `bq-select` when the chosen value needs form submission or validation. Choose [`bq-radio-group`](/components/radio) when a few named choices can stay visible, and [`bq-dropdown`](/components/dropdown) when the options trigger actions or lead to destinations instead of setting a form value.
 </Tip>
 
 ## Patterns
@@ -3637,6 +3637,7 @@ These events no longer follow input-only focus changes. If your handler needs to
 - **Built in:** opening the panel closes any other open select, date picker, or dropdown panel, so only one panel stays open at a time.
 - **Built in:** nested multi-select changes the option container to a tree.
 - **Built in:** parent tree items expose checked, unchecked, or mixed state as their descendants are selected, and `aria-expanded` communicates whether a branch is open. The separate visual expand button is hidden from assistive technology and removed from the Tab order; keyboard users expand and collapse the focused tree item with `ArrowRight` and `ArrowLeft`.
+- **Built in:** text in the `label` slot names the combobox. The `name` prop is the form submission key, not the accessible name.
 - **Your responsibility:** you must provide text in the `label` slot. The component associates its native `<label>` with the combobox input through `for` and `id`. You should use visually hidden text when the layout cannot show a visible label.
 - **Your responsibility:** when `validation-status` is `"error"`, you must populate the `helper-text` slot with a clear error description. The component does not set `aria-describedby` or `aria-invalid` on the input, so you must not rely on color alone to communicate the error.
 - **Your responsibility:** if options are loaded asynchronously, you should show a disabled loading option in the default slot, as in the custom filtering example. `panel` is a shadow part for styling, not a slot.
@@ -3669,18 +3670,13 @@ The native `input` is the only tab stop. The clear button has `tabindex="-1"` an
 
 | Rule | Strength | Verified by |
 |---|---|---|
-| Provide text in the `label` slot, visually hidden when the layout hides it | MUST | manual (checked by hand) |
-| Do not use `placeholder` as the only label | MUST NOT | manual (checked by hand) |
-| Populate the `helper-text` slot when `validation-status` is `"error"` | MUST | manual (checked by hand) |
-| Verify the computed combobox name, because the internal `aria-label` can override the slotted label | SHOULD | manual (checked by hand) |
-| Set `name` so the value is submitted with the form | MUST | automated: `bq-select.e2e.tsx` |
-| Set `required` when a selection is mandatory so the form is invalid while no value is selected | MUST | automated: `bq-select.e2e.tsx` |
-| Give every nested option a unique `value` | MUST | automated: `bq-select.e2e.tsx` |
-| Show a disabled loading option while options load asynchronously | SHOULD | manual (checked by hand) |
-
-<Warning>
-  The internal label currently sets `aria-label` from the technical `name` value, or `"select"` when no name is supplied. This may override the slotted label in accessible-name computation and is tracked in [the Select follow-up issue](https://github.com/Endava/BEEQ/issues/1832). Provide meaningful label text and verify the computed combobox name in your supported browsers and assistive technologies.
-</Warning>
+| Provide text in the `label` slot, visually hidden when the layout hides it | MUST | manual: inspect the visible or visually hidden label text |
+| Do not use `placeholder` as the only label | MUST NOT | manual: check that the label remains when the placeholder is removed |
+| Populate the `helper-text` slot when `validation-status` is `"error"` | MUST | manual: inspect the error state and helper text together |
+| Set `name` so the value is submitted with the form | MUST | automated: `bq-select.e2e.tsx` checks `FormData` |
+| Set `required` when a selection is mandatory so the form is invalid while no value is selected | MUST | automated: `bq-select.e2e.tsx` checks `form.checkValidity()` |
+| Give every nested option a unique `value` | MUST | automated: `bq-select.e2e.tsx` checks duplicate-value errors |
+| Show a disabled loading option while options load asynchronously | SHOULD | manual: inspect the option list while loading |
 
 ## API reference
 

@@ -42,7 +42,7 @@ A dropdown surfaces a floating panel of options, actions, or destinations from a
 </CardGroup>
 
 <Tip>
-  Choose [`bq-select`](/components/select) instead of `bq-dropdown` when users pick a value that is submitted with a form, [`bq-radio-group`](/components/radio) when users pick one of a few named options that can stay visible, and [`bq-button`](/components/button) when there is a single action and no list to open.
+  Use [`bq-select`](/components/select) when a chosen value needs form submission or validation, [`bq-radio-group`](/components/radio) when a few named choices can stay visible, and [`bq-button`](/components/button) on its own for a single action. A `bq-button` can also be the dropdown trigger.
 </Tip>
 
 ## Patterns
@@ -54,7 +54,7 @@ Dropdowns support compact action menus and panel-based selection patterns.
     A dropdown is useful for providing users with a list of options in a compact and organized manner. It is primarily used to initiate an action or direct the user to a new page or modal.
   </Card>
   <Card title="Dropdown panel">
-    Serves as a menu presenting a list of available items or actions for users to freely apply or use. The panel slot can host single-select or multi-select forms when the interaction needs it.
+    Presents related actions or destinations. The panel slot can hold custom selection content, but `bq-dropdown` does not submit or validate a chosen value; use `bq-select` when the selection belongs to a form.
   </Card>
   <Card title="Single select">
     Enables users to choose one item from a predefined list. Selected choices should be visibly highlighted so users can understand the current value.
