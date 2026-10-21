@@ -38,7 +38,6 @@ import { TAB_ORIENTATION, TAB_PLACEMENT, TAB_SIZE } from './bq-tab.types';
  * @part content - The HTML `<div>` element that holds the content.
  * @part icon - The HTML `<div>` element that holds the icon content.
  * @part text - The HTML `<div>` element that holds the text content.
- * @part underline - The HTML `<div>` element that display active state.
  *
  * @cssprop --bq-tab--background-hover - Background base colour of the hover state (mixed with `--bq-hover` on hover)
  * @cssprop --bq-tab--font-size - Font size

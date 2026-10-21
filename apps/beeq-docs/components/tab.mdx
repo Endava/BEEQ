@@ -62,7 +62,7 @@ The tab group renders a list of tab buttons inside a scrollable container. Each 
 |---|---|---|
 | **1** | Active tab | The currently selected tab button, visually distinguished by brand color and the selected indicator |
 | **2** | Inactive tab | A tab button that is not currently selected; clicking it activates it and deactivates the previous tab |
-| **3** | Selected indicator | The underline beneath the active tab that marks the current selection; exposed as the `underline` shadow part |
+| **3** | Selected indicator | The underline beneath the active tab that marks the current selection |
 | **4** | Text label | The visible label inside each tab button; placed in the default slot and exposed as the `text` shadow part |
 
 ## Design guidelines
@@ -842,13 +842,13 @@ Arrow keys work in both `horizontal` and `vertical` orientations. Disabled tabs 
 
 | Property | Attribute | Description | Type | Default |
 |---|---|---|---|---|
-| `active` | `active` | If true, the tab is rendered in its active state | `boolean` | `false` |
+| `active` | `active` | If true, the tab is rendered in its active state | `boolean` | — |
 | `controls` *(required)* | `controls` | The `id` of the panel element this tab controls | `string` | — |
 | `disabled` | `disabled` | If true, the tab is non-interactive | `boolean` | `false` |
 | `orientation` | `orientation` | Layout direction — propagated automatically by `bq-tab-group` | `"horizontal" \| "vertical"` | `"horizontal"` |
 | `placement` | `placement` | Alignment — propagated automatically by `bq-tab-group` | `"start" \| "end"` | `"start"` |
 | `size` | `size` | Size — propagated automatically by `bq-tab-group` | `"small" \| "medium" \| "large"` | `"medium"` |
-| `tabId` *(required)* | `tab-id` | Unique identifier used to match the tab to its panel | `string` | — |
+| `tabId` *(required)* | `tab-id` | Unique identifier of the tab, matched against the `value` of `bq-tab-group` to set the active tab | `string` | — |
 
 #### Events
 
@@ -882,7 +882,6 @@ Arrow keys work in both `horizontal` and `vertical` orientations. Disabled tabs 
 | `content` | The `<div>` wrapping the icon and text |
 | `icon` | The `<div>` holding the slotted icon |
 | `text` | The `<div>` holding the slotted label text |
-| `underline` | The element that renders the active-state underline indicator |
 
 #### CSS custom properties
 

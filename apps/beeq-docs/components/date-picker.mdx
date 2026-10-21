@@ -586,15 +586,6 @@ Use `disabled` when the date field should not be interactive, such as when acces
 Use `validation-status` when the field should show immediate visual feedback after validation.
 
 <CodeLivePreview mode="shadow" code={`
-  <style>
-    :host {
-      justify-content: flex-start !important;
-      position: relative;
-      width: 100%;
-      z-index: 11;
-    }
-  </style>
-
   <bq-date-picker name="date-error" validation-status="error" value="2026-05-25">
     <label slot="label">Error date</label>
   </bq-date-picker>
@@ -883,15 +874,6 @@ Combine the label slot with a tooltip when users may need a short explanation be
 Use `locale` to match date formatting and calendar conventions to regional expectations.
 
 <CodeLivePreview mode="shadow" code={`
-  <style>
-    :host {
-      justify-content: flex-start !important;
-      position: relative;
-      width: 100%;
-      z-index: 11;
-    }
-  </style>
-
   <bq-date-picker locale="en-GB" name="locale-gb" value="2026-10-13">
     <label slot="label">en-GB</label>
   </bq-date-picker>
@@ -922,17 +904,19 @@ Use `locale` to match date formatting and calendar conventions to regional expec
     ```jsx React icon="react" expandable
     import { BqDatePicker } from "@beeq/react";
 
-    <BqDatePicker locale="en-GB" name="locale-gb" value="2026-10-13">
-      <label slot="label">en-GB</label>
-    </BqDatePicker>
+    <>
+      <BqDatePicker locale="en-GB" name="locale-gb" value="2026-10-13">
+        <label slot="label">en-GB</label>
+      </BqDatePicker>
 
-    <BqDatePicker locale="ja-JP" name="locale-jp" value="2026-10-13">
-      <label slot="label">ja-JP</label>
-    </BqDatePicker>
+      <BqDatePicker locale="ja-JP" name="locale-jp" value="2026-10-13">
+        <label slot="label">ja-JP</label>
+      </BqDatePicker>
 
-    <BqDatePicker locale="ar-EG" name="locale-eg" value="2026-10-13">
-      <label slot="label">ar-EG</label>
-    </BqDatePicker>
+      <BqDatePicker locale="ar-EG" name="locale-eg" value="2026-10-13">
+        <label slot="label">ar-EG</label>
+      </BqDatePicker>
+    </>
     ```
 
     ```ts Angular icon="angular" expandable
@@ -987,15 +971,6 @@ Use `locale` to match date formatting and calendar conventions to regional expec
 Use `first-day-of-week` to align the calendar grid with regional or business expectations.
 
 <CodeLivePreview mode="shadow" code={`
-  <style>
-    :host {
-      justify-content: flex-start !important;
-      position: relative;
-      width: 100%;
-      z-index: 11;
-    }
-  </style>
-
   <bq-date-picker first-day-of-week="1" locale="en-GB" name="week-monday" value="2026-10-13">
     <label slot="label">Monday first</label>
   </bq-date-picker>
@@ -1018,13 +993,15 @@ Use `first-day-of-week` to align the calendar grid with regional or business exp
     ```jsx React icon="react" expandable
     import { BqDatePicker } from "@beeq/react";
 
-    <BqDatePicker firstDayOfWeek={1} locale="en-GB" name="week-monday" value="2026-10-13">
-      <label slot="label">Monday first</label>
-    </BqDatePicker>
+    <>
+      <BqDatePicker firstDayOfWeek={1} locale="en-GB" name="week-monday" value="2026-10-13">
+        <label slot="label">Monday first</label>
+      </BqDatePicker>
 
-    <BqDatePicker firstDayOfWeek={0} locale="en-GB" name="week-sunday" value="2026-10-13">
-      <label slot="label">Sunday first</label>
-    </BqDatePicker>
+      <BqDatePicker firstDayOfWeek={0} locale="en-GB" name="week-sunday" value="2026-10-13">
+        <label slot="label">Sunday first</label>
+      </BqDatePicker>
+    </>
     ```
 
     ```ts Angular icon="angular" expandable
@@ -1171,7 +1148,7 @@ Use `isDateDisallowed` to make specific dates unavailable for selection. This is
     ```
 
     ```html HTML icon="html5"
-    <bq-date-picker name="disallowed-dates" value="2026-12-12">
+    <bq-date-picker name="disallowed-dates" open value="2026-12-12">
       <label slot="label">Appointment date</label>
     </bq-date-picker>
     ```
@@ -1189,6 +1166,7 @@ Use `isDateDisallowed` to make specific dates unavailable for selection. This is
     <BqDatePicker
       isDateDisallowed={isDateDisallowed}
       name="disallowed-dates"
+      open
       value="2026-12-12"
     >
       <label slot="label">Appointment date</label>
@@ -1207,6 +1185,7 @@ Use `isDateDisallowed` to make specific dates unavailable for selection. This is
         <bq-date-picker
           [isDateDisallowed]="isDateDisallowed"
           name="disallowed-dates"
+          open
           value="2026-12-12"
         >
           <label slot="label">Appointment date</label>
@@ -1239,6 +1218,7 @@ Use `isDateDisallowed` to make specific dates unavailable for selection. This is
       <BqDatePicker
         :isDateDisallowed="isDateDisallowed"
         name="disallowed-dates"
+        open
         value="2026-12-12"
       >
         <label slot="label">Appointment date</label>
@@ -1295,6 +1275,7 @@ Use numeric `formatOptions` to set the segment order and separators. The compone
     ```html HTML icon="html5"
     <bq-date-picker
       name="formatted-date"
+      open
       type="single"
       value="2026-11-18"
     >
@@ -1314,6 +1295,7 @@ Use numeric `formatOptions` to set the segment order and separators. The compone
     <BqDatePicker
       formatOptions={formatOptions}
       name="formatted-date"
+      open
       type="single"
       value="2026-11-18"
     >
@@ -1333,6 +1315,7 @@ Use numeric `formatOptions` to set the segment order and separators. The compone
         <bq-date-picker
           [formatOptions]="formatOptions"
           name="formatted-date"
+          open
           type="single"
           value="2026-11-18"
         >
@@ -1364,6 +1347,7 @@ Use numeric `formatOptions` to set the segment order and separators. The compone
       <BqDatePicker
         :formatOptions="formatOptions"
         name="formatted-date"
+        open
         type="single"
         value="2026-11-18"
       >
@@ -1462,7 +1446,7 @@ When focus leaves the segmented field, complete dates outside `min` or `max` are
 `}>
   <CodeGroup>
     ```html HTML icon="html5" expandable
-    <form id="date-form">
+    <form class="date-form" id="date-form">
       <bq-date-picker
         form-validation-message="Choose a start date"
         name="startDate"
@@ -1470,9 +1454,11 @@ When focus leaves the segmented field, complete dates outside `min` or `max` are
       >
         <label slot="label">Start date</label>
       </bq-date-picker>
-      <bq-button appearance="secondary" type="reset">Reset</bq-button>
-      <bq-button type="submit">Submit</bq-button>
-      <pre id="date-output">{}</pre>
+      <div class="date-form__actions">
+        <bq-button appearance="secondary" type="reset">Reset</bq-button>
+        <bq-button type="submit">Submit</bq-button>
+      </div>
+      <pre class="date-form__output" id="date-output">{}</pre>
     </form>
 
     <script>
@@ -1501,6 +1487,7 @@ When focus leaves the segmented field, complete dates outside `min` or `max` are
 
       return (
         <form
+          className="date-form"
           onReset={() => setData("{}")}
           onSubmit={(event) => {
             event.preventDefault();
@@ -1514,9 +1501,11 @@ When focus leaves the segmented field, complete dates outside `min` or `max` are
           >
             <label slot="label">Start date</label>
           </BqDatePicker>
-          <BqButton appearance="secondary" type="reset">Reset</BqButton>
-          <BqButton type="submit">Submit</BqButton>
-          <pre>{data}</pre>
+          <div className="date-form__actions">
+            <BqButton appearance="secondary" type="reset">Reset</BqButton>
+            <BqButton type="submit">Submit</BqButton>
+          </div>
+          <pre className="date-form__output">{data}</pre>
         </form>
       );
     }
@@ -1531,7 +1520,7 @@ When focus leaves the segmented field, complete dates outside `min` or `max` are
       standalone: true,
       imports: [BqButton, BqDatePicker],
       template: `
-        <form (reset)="data = '{}'" (submit)="handleSubmit($event)">
+        <form class="date-form" (reset)="data = '{}'" (submit)="handleSubmit($event)">
           <bq-date-picker
             form-validation-message="Choose a start date"
             name="startDate"
@@ -1539,9 +1528,11 @@ When focus leaves the segmented field, complete dates outside `min` or `max` are
           >
             <label slot="label">Start date</label>
           </bq-date-picker>
-          <bq-button appearance="secondary" type="reset">Reset</bq-button>
-          <bq-button type="submit">Submit</bq-button>
-          <pre>{{ data }}</pre>
+          <div class="date-form__actions">
+            <bq-button appearance="secondary" type="reset">Reset</bq-button>
+            <bq-button type="submit">Submit</bq-button>
+          </div>
+          <pre class="date-form__output">{{ data }}</pre>
         </form>
       `,
     })
@@ -1568,7 +1559,7 @@ When focus leaves the segmented field, complete dates outside `min` or `max` are
     </script>
 
     <template>
-      <form @reset="data = '{}'" @submit.prevent="handleSubmit">
+      <form class="date-form" @reset="data = '{}'" @submit.prevent="handleSubmit">
         <BqDatePicker
           formValidationMessage="Choose a start date"
           name="startDate"
@@ -1576,9 +1567,11 @@ When focus leaves the segmented field, complete dates outside `min` or `max` are
         >
           <label slot="label">Start date</label>
         </BqDatePicker>
-        <BqButton appearance="secondary" type="reset">Reset</BqButton>
-        <BqButton type="submit">Submit</BqButton>
-        <pre>{{ data }}</pre>
+        <div class="date-form__actions">
+          <BqButton appearance="secondary" type="reset">Reset</BqButton>
+          <BqButton type="submit">Submit</BqButton>
+        </div>
+        <pre class="date-form__output">{{ data }}</pre>
       </form>
     </template>
     ```
@@ -1712,7 +1705,7 @@ When focus leaves the segmented field, complete dates outside `min` or `max` are
 | `firstDayOfWeek` | `first-day-of-week` | First day of the week where Sunday is `0` | `0 \| 1 \| 2 \| 3 \| 4 \| 5 \| 6` | `1` |
 | `form` | `form` | ID of the form the input belongs to | `string` | `undefined` |
 | `formValidationMessage` | `form-validation-message` | Native validation message used for required, invalid typed, and out-of-bounds values | `string` | `undefined` |
-| `formatOptions` | *(property only)* | Numeric `Intl.DateTimeFormat` options that control segment order and separators. Textual or variable-length options fall back to the locale numeric layout with a development warning. | `DateTimeFormatOptions` | `undefined` |
+| `formatOptions` | *(property only)* | Numeric `Intl.DateTimeFormat` options that control segment order and separators. Textual or variable-length options fall back to the locale numeric layout with a development warning. | `Intl.DateTimeFormatOptions` | `undefined` |
 | `initialView` | `initial-view` | Starting view when `precision` is `"day"`; month and year precision always open in their matching view | `"days" \| "months" \| "years"` | `"days"` |
 | `isDateDisallowed` | *(property only)* | Function used to disable specific dates | `(date: Date) => boolean` | `undefined` |
 | `locale` | `locale` | Locale used to format and parse dates | `Intl.LocalesArgument` | `"en-GB"` |
