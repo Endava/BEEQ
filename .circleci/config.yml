@@ -165,11 +165,12 @@ jobs:
     steps:
       - checkout
       - setup-node
+      - setup-deps
       - attach_workspace:
           at: .
       - run:
           name: 🚀 Publish to Chromatic
-          command: pnpm dlx chromatic --project-token=${CHROMATIC_PROJECT_TOKEN} --ci --debug --storybook-build-dir dist/storybook/beeq
+          command: pnpm exec chromatic --project-token="${CHROMATIC_PROJECT_TOKEN}" --ci --debug --storybook-build-dir dist/storybook/beeq --storybook-base-dir packages/beeq --storybook-config-dir packages/beeq/.storybook
 
 # ---------------------------------------------------------------------------- #
 #                                   Workflows                                  #
