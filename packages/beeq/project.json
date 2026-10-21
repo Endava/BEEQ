@@ -64,23 +64,15 @@
       }
     },
     "storybook-build": {
-      "outputs": [
-        "{projectRoot}/{options.output-dir}",
-        "{projectRoot}/{options.config.configDir}",
-        "{projectRoot}/storybook-static",
-        "{options.output-dir}",
-        "{options.outputDir}",
-        "{options.o}"
-      ],
+      "outputs": ["{workspaceRoot}/dist/storybook/beeq"],
       "options": {
-        "statsJson": true,
-        "ci": true,
+        "stats-json": "../../dist/storybook/beeq",
         "config-dir": ".storybook",
         "output-dir": "../../dist/storybook/beeq"
       },
       "configurations": {
         "ci": {
-          "quiet": true
+          "args": ["--quiet"]
         }
       }
     },
