@@ -77,7 +77,7 @@ jobs:
         shell: bash
 
       - name: 🚀 Publish BEEQ to NPM registry
-        run: pnpm exec nx release publish --parallel=5 --output-style=stream --tag "$NPM_TAG" $DRY_RUN_FLAG
+        run: pnpm exec nx release publish --parallel=5 --output-style=static --tag "$NPM_TAG" $DRY_RUN_FLAG
         shell: bash
         env:
           NPM_CONFIG_PROVENANCE: true
@@ -88,7 +88,7 @@ jobs:
         if: inputs.channel != 'beta' && !inputs.dry_run
         uses: bitovi/github-actions-storybook-to-github-pages@ddd9d35f670cceedd2bfc444be681001b0709730 # v1.0.4
         with:
-          build_command: pnpm build:storybook
+          build_command: pnpm exec nx storybook-build beeq --output-style=static
           checkout: false
           install_command: pnpm install --frozen-lockfile --ignore-scripts --prefer-offline
           path: ./dist/storybook/beeq
