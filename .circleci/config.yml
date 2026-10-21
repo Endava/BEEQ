@@ -120,32 +120,32 @@ jobs:
       # Run all Nx commands
       - run:
           name: 🩺 Run Linter, Formatter, and Import Sorting
-          command: pnpm exec nx affected -t check --parallel=3 --base=$NX_BASE --head=$NX_HEAD --verbose
+          command: pnpm exec nx affected -t check --parallel=3 --output-style=static --base=$NX_BASE --head=$NX_HEAD --verbose
       - run:
           name: 🔠 Run Type Check
-          command: pnpm exec nx affected -t typecheck --parallel=3 --base=$NX_BASE --head=$NX_HEAD --verbose
+          command: pnpm exec nx affected -t typecheck --parallel=3 --output-style=static --base=$NX_BASE --head=$NX_HEAD --verbose
       - run:
           name: 🧰 Run Unit Tests
-          command: pnpm exec nx affected -t test --parallel=3 --base=$NX_BASE --head=$NX_HEAD --verbose
+          command: pnpm exec nx affected -t test --parallel=3 --output-style=static --base=$NX_BASE --head=$NX_HEAD --verbose
       - run:
           name: ✅ Validate Skill Eval Graders
           # Runs each eval task's reference solution through the deterministic graders. No agent, no tokens.
-          command: pnpm exec nx affected -t eval-validate --exclude='*,!tag:skills' --base=$NX_BASE --head=$NX_HEAD --verbose
+          command: pnpm exec nx affected -t eval-validate --exclude='*,!tag:skills' --output-style=static --base=$NX_BASE --head=$NX_HEAD --verbose
       - run:
           name: ⏳ Build Libraries
-          command: pnpm exec nx affected -t build --exclude='*,!tag:publishable' --parallel=3 --base=$NX_BASE --head=$NX_HEAD --verbose
+          command: pnpm exec nx affected -t build --exclude='*,!tag:publishable' --output-style=static --parallel=3 --base=$NX_BASE --head=$NX_HEAD --verbose
       - run:
           name: 🧪 Run E2E Tests
           # Browser e2e tests use the Playwright Docker image configured on this
           # CircleCI job. Nx managed agents use separate launch templates, so keep
           # this target on the coordinator unless the agents also install browsers.
-          command: pnpm exec nx affected -t e2e --exclude='*,!tag:core' --parallel=3 --base=$NX_BASE --head=$NX_HEAD --verbose --no-agents
+          command: pnpm exec nx affected -t e2e --exclude='*,!tag:core' --parallel=3 --output-style=static --base=$NX_BASE --head=$NX_HEAD --verbose --no-agents
       - run:
           name: 📚 Build Storybook
           # Browser e2e tests use the Playwright Docker image configured on this
           # CircleCI job. Nx managed agents use separate launch templates, so keep
           # this target on the coordinator unless the agents also install browsers.
-          command: pnpm exec nx run beeq:storybook-build --output-style=stream --verbose
+          command: pnpm exec nx run beeq:storybook-build --output-style=static --verbose
       # Stop Nx Cloud agents
       - run:
           name: ⏹️ Stop Nx Cloud Agents
