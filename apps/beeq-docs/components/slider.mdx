@@ -644,7 +644,7 @@ Use `gap` to set the minimum distance the two handles must maintain between each
 `}>
   <CodeGroup>
     ```html HTML icon="html5" expandable
-    <form id="slider-form">
+    <form class="slider-form" id="slider-form">
       <label for="notification-volume">Notification volume</label>
       <bq-slider
         enable-value-indicator
@@ -653,9 +653,11 @@ Use `gap` to set the minimum distance the two handles must maintain between each
         name="notificationVolume"
         value="65"
       ></bq-slider>
-      <bq-button appearance="secondary" type="reset">Reset</bq-button>
-      <bq-button type="submit">Submit</bq-button>
-      <pre id="slider-output">{}</pre>
+      <div class="slider-form__actions">
+        <bq-button appearance="secondary" type="reset">Reset</bq-button>
+        <bq-button type="submit">Submit</bq-button>
+      </div>
+      <pre class="slider-form__output" id="slider-output">{}</pre>
     </form>
 
     <script>
@@ -684,6 +686,7 @@ Use `gap` to set the minimum distance the two handles must maintain between each
 
       return (
         <form
+          className="slider-form"
           onReset={() => setData("{}")}
           onSubmit={(event) => {
             event.preventDefault();
@@ -692,9 +695,11 @@ Use `gap` to set the minimum distance the two handles must maintain between each
         >
           <label htmlFor="notification-volume">Notification volume</label>
           <BqSlider enableValueIndicator id="notification-volume" max={100} name="notificationVolume" value={65} />
-          <BqButton appearance="secondary" type="reset">Reset</BqButton>
-          <BqButton type="submit">Submit</BqButton>
-          <pre>{data}</pre>
+          <div className="slider-form__actions">
+            <BqButton appearance="secondary" type="reset">Reset</BqButton>
+            <BqButton type="submit">Submit</BqButton>
+          </div>
+          <pre className="slider-form__output">{data}</pre>
         </form>
       );
     }
@@ -709,7 +714,7 @@ Use `gap` to set the minimum distance the two handles must maintain between each
       standalone: true,
       imports: [BqButton, BqSlider],
       template: `
-        <form (reset)="data = '{}'" (submit)="handleSubmit($event)">
+        <form class="slider-form" (reset)="data = '{}'" (submit)="handleSubmit($event)">
           <label for="notification-volume">Notification volume</label>
           <bq-slider
             enable-value-indicator
@@ -718,9 +723,11 @@ Use `gap` to set the minimum distance the two handles must maintain between each
             name="notificationVolume"
             value="65"
           ></bq-slider>
-          <bq-button appearance="secondary" type="reset">Reset</bq-button>
-          <bq-button type="submit">Submit</bq-button>
-          <pre>{{ data }}</pre>
+          <div class="slider-form__actions">
+            <bq-button appearance="secondary" type="reset">Reset</bq-button>
+            <bq-button type="submit">Submit</bq-button>
+          </div>
+          <pre class="slider-form__output">{{ data }}</pre>
         </form>
       `,
     })
@@ -747,12 +754,14 @@ Use `gap` to set the minimum distance the two handles must maintain between each
     </script>
 
     <template>
-      <form @reset="data = '{}'" @submit.prevent="handleSubmit">
+      <form class="slider-form" @reset="data = '{}'" @submit.prevent="handleSubmit">
         <label for="notification-volume">Notification volume</label>
         <BqSlider enableValueIndicator id="notification-volume" :max="100" name="notificationVolume" :value="65" />
-        <BqButton appearance="secondary" type="reset">Reset</BqButton>
-        <BqButton type="submit">Submit</BqButton>
-        <pre>{{ data }}</pre>
+        <div class="slider-form__actions">
+          <BqButton appearance="secondary" type="reset">Reset</BqButton>
+          <BqButton type="submit">Submit</BqButton>
+        </div>
+        <pre class="slider-form__output">{{ data }}</pre>
       </form>
     </template>
     ```
@@ -890,7 +899,7 @@ Each handle is a native `<input type="range">`, so these keys come from the brow
 
 | Combination | Strength | Result |
 |---|---|---|
-| `tooltip-always-visible` without `enable-tooltip` | MUST NOT | No tooltip is shown; `tooltip-always-visible` only takes effect together with `enable-tooltip` |
+| `tooltip-always-visible` without `enable-tooltip` | SHOULD NOT | No tooltip is shown; `tooltip-always-visible` only takes effect together with `enable-tooltip` |
 | `gap` with `type="single"` | SHOULD NOT | `gap` is ignored; it only applies to `type="range"` |
 | `gap` below `min` or above `max` on a range slider | SHOULD NOT | `gap` is reset to `0` |
 
