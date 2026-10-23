@@ -1,7 +1,9 @@
 {
   "$schema": "../node_modules/@biomejs/biome/configuration_schema.json",
   "extends": "//",
-  "files": {
-    "includes": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "**/*.json", "**/*.mjs"]
-  }
+  "files": { "includes": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "**/*.json", "**/*.mjs"] },
+  "linter": {
+    "rules": { "preset": "recommended" }
+  },
+  "overrides": [{ "includes": ["**/*.css"] }, { "includes": ["**/*.scss"] }]
 }

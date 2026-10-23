@@ -172,21 +172,31 @@ function isUntouchedFixture(relative: string, content: string, fixturesDir: stri
   });
 }
 
+/** True when `entry` is not the agent's work: `node_modules` anywhere, or an ignored entry at the workspace root. */
+const isSkippedEntry = (entry: string, isRoot: boolean) =>
+  entry === 'node_modules' || (isRoot && IGNORED_ENTRIES.has(entry));
+
+/** Reads `file` as a workspace file, or `undefined` when it is a fixture file the agent left as it was. */
+function readWorkspaceFile(dir: string, file: string, fixturesDir: string): WorkspaceFile | undefined {
+  const relative = path.relative(dir, file);
+  const content = readFileSync(file, 'utf8');
+  if (isUntouchedFixture(relative, content, fixturesDir)) return undefined;
+  return { path: relative, lang: path.extname(file).slice(1), content };
+}
+
 /** Every file the agent wrote or changed, sorted by path, with the language taken from the extension. */
 export function collectFiles(dir: string, fixturesDir = FIXTURES_DIR) {
   const files: WorkspaceFile[] = [];
   const walk = (current: string) => {
     for (const entry of readdirSync(current).sort((a, b) => a.localeCompare(b, 'en'))) {
-      if (current === dir && IGNORED_ENTRIES.has(entry)) continue;
-      if (entry === 'node_modules') continue;
+      if (isSkippedEntry(entry, current === dir)) continue;
       const file = path.join(current, entry);
-      if (statSync(file).isDirectory()) walk(file);
-      else {
-        const relative = path.relative(dir, file);
-        const content = readFileSync(file, 'utf8');
-        if (isUntouchedFixture(relative, content, fixturesDir)) continue;
-        files.push({ path: relative, lang: path.extname(entry).slice(1), content });
+      if (statSync(file).isDirectory()) {
+        walk(file);
+        continue;
       }
+      const workspaceFile = readWorkspaceFile(dir, file, fixturesDir);
+      if (workspaceFile) files.push(workspaceFile);
     }
   };
   walk(dir);

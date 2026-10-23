@@ -58,7 +58,7 @@
     "@angular/compiler-cli": "22.2.3",
     "@angular/language-service": "22.2.3",
     "@beeq/storybook-addon-html": "7.0.0",
-    "@biomejs/biome": "2.4.11",
+    "@biomejs/biome": "2.6.2",
     "@chromatic-com/storybook": "5.5.1",
     "@commitlint/cli": "21.2.1",
     "@commitlint/config-angular": "21.2.0",

@@ -62,13 +62,14 @@ describe('eval tasks', () => {
     expect(task.workspace).toEqual([{ src: `{{evals}}/fixtures/${task.metadata.stack}`, dest: '.' }]);
   });
 
-  it.each(
-    tasks.flatMap((task) => task.expected.checks.map((check) => [task.name, check] as const)),
-  )('%s check %o should compile', (_, check) => {
-    for (const pattern of [check.match ?? [], check.absent ?? []].flat()) {
-      expect(() => new RegExp(pattern, check.flags)).not.toThrow();
-    }
-  });
+  it.each(tasks.flatMap((task) => task.expected.checks.map((check) => [task.name, check] as const)))(
+    '%s check %o should compile',
+    (_, check) => {
+      for (const pattern of [check.match ?? [], check.absent ?? []].flat()) {
+        expect(() => new RegExp(pattern, check.flags)).not.toThrow();
+      }
+    },
+  );
 
   it('should tag exactly four smoke tasks, each with a solution', () => {
     // Act
