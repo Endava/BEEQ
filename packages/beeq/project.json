@@ -19,15 +19,21 @@
   "targets": {
     "start": {
       "executor": "nx:run-commands",
-      "dependsOn": ["storybook", { "projects": "beeq-tailwindcss", "target": "build" }],
+      "dependsOn": [{ "projects": "beeq-tailwindcss", "target": "build" }],
       "outputs": ["{workspaceRoot}/dist/beeq"],
       "continuous": true,
+      "readyWhen": { "logMatches": "build finished, watching for changes..." },
+      "inputs": ["default", "{workspaceRoot}/tailwind.config.ts", "{workspaceRoot}/postcss.config.js"],
       "options": {
         "command": "node tools/scripts/stencil-build.mjs --dev --watch --serve --no-open --docs"
       }
     },
     "storybook": {
-      "dependsOn": ["prepare-storybook", "storybook-start-css"],
+      "dependsOn": [
+        { "target": "start", "waitFor": "ready" },
+        { "target": "prepare-storybook" },
+        { "target": "storybook-start-css", "waitFor": "ready" }
+      ],
       "options": {
         "loglevel": "error",
         "port": 9001,
@@ -43,6 +49,12 @@
     "build": {
       "dependsOn": ["^build", { "target": "icons" }],
       "executor": "nx:run-commands",
+      "inputs": [
+        "production",
+        "^production",
+        "{workspaceRoot}/tailwind.config.ts",
+        "{workspaceRoot}/postcss.config.js"
+      ],
       "outputs": [
         "{workspaceRoot}/dist/beeq",
         "{projectRoot}/.storybook/custom-elements.json",
@@ -78,15 +90,19 @@
     },
     "storybook-start-css": {
       "executor": "nx:run-commands",
-      "outputs": ["{projectRoot}/.storybook/assets/css"],
+      "dependsOn": [{ "projects": "beeq-tailwindcss", "target": "build" }],
+      "outputs": ["{projectRoot}/.storybook/assets/css/stories.css"],
       "continuous": true,
+      "readyWhen": { "logMatches": "Done in" },
+      "inputs": ["default", "{workspaceRoot}/tailwind.config.ts", "{workspaceRoot}/postcss.config.js"],
       "options": {
         "command": "pnpm exec tailwindcss -i packages/beeq/.storybook/tailwind.css -o packages/beeq/.storybook/assets/css/stories.css --postcss ./postcss.config.js --watch"
       }
     },
     "storybook-build-css": {
       "executor": "nx:run-commands",
-      "outputs": ["{projectRoot}/.storybook/assets/css"],
+      "outputs": ["{projectRoot}/.storybook/assets/css/stories.css"],
+      "inputs": ["default", "{workspaceRoot}/tailwind.config.ts", "{workspaceRoot}/postcss.config.js"],
       "options": {
         "command": "pnpm exec tailwindcss -i packages/beeq/.storybook/tailwind.css -o packages/beeq/.storybook/assets/css/stories.css --postcss ./postcss.config.js --minify"
       }
@@ -107,6 +123,7 @@
     "test": {
       "executor": "nx:run-commands",
       "dependsOn": [{ "target": "build", "projects": "beeq-tailwindcss" }],
+      "inputs": ["default", "^default", "{workspaceRoot}/tailwind.config.ts", "{workspaceRoot}/postcss.config.js"],
       "options": {
         "command": "pnpm exec vitest run --project spec --coverage",
         "cwd": "packages/beeq"
@@ -114,6 +131,7 @@
     },
     "e2e": {
       "executor": "nx:run-commands",
+      "inputs": ["default", "^production", "{workspaceRoot}/tailwind.config.ts", "{workspaceRoot}/postcss.config.js"],
       "options": {
         "command": "pnpm exec vitest run --project e2e",
         "cwd": "packages/beeq"
@@ -152,6 +170,7 @@
     "prepare-storybook": {
       "executor": "nx:run-commands",
       "outputs": ["{projectRoot}/src/_storybook/CHANGELOG.md"],
+      "inputs": ["default", "{workspaceRoot}/CHANGELOG.md"],
       "options": {
         "command": "cp CHANGELOG.md {projectRoot}/src/_storybook"
       }

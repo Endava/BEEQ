@@ -14,8 +14,7 @@
     "default": [
       "{projectRoot}/**/*",
       "{workspaceRoot}/nx.json",
-      "{workspaceRoot}/package.json",
-      "{workspaceRoot}/tailwind.config.ts"
+      "{workspaceRoot}/package.json"
     ],
     "production": [
       "default",
@@ -45,7 +44,7 @@
     },
     "test": {
       "cache": true,
-      "inputs": ["default", "^default", "{workspaceRoot}/jest.preset.js"]
+      "inputs": ["default", "^default"]
     },
     "typecheck": {
       "cache": true,
