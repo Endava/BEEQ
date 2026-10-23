@@ -16,7 +16,7 @@ import { SPINNER_SIZE, SPINNER_TEXT_POSITION } from './bq-spinner.types';
  *
  * @example How to use it
  * ```html
- * <bq-spinner size="medium" text-position="bellow">
+ * <bq-spinner size="medium" text-position="below">
  *   <span>Loading...</span>
  * </bq-spinner>
  * ```

@@ -34,8 +34,8 @@ import { PROGRESS_BORDER_SHAPE, PROGRESS_THICKNESS, PROGRESS_TYPE } from './bq-p
  * @part trigger - The container holding the element that triggers the tooltip display when hovering over the progress bar
  * @part panel - The container holding the content of the tooltip when hovering over the progress bar
  *
- * @cssprop --bq-progress-bar--height - The progress bars height
- * @cssprop --bq-progress-bar--indeterminateWidth - The progress bar width when its indeterminate
+ * @cssprop --bq-progress-bar--height - The progress bar's height
+ * @cssprop --bq-progress-bar--indeterminateWidth - The progress bar width when it's indeterminate
  * @cssprop --bq-progress-bar--indicatorColor - The progress bar color (inside the track area)
  * @cssprop --bq-progress-bar--indicatorColor-error - The progress bar color (inside the track area) when `type="error"`
  * @cssprop --bq-progress-bar--label-color - The label text color
