@@ -14,14 +14,12 @@
     },
     "lint": {
       "executor": "nx:run-commands",
-      "dependsOn": ["build"],
       "options": {
         "command": "pnpm exec biome lint {projectRoot}"
       }
     },
     "check": {
       "executor": "nx:run-commands",
-      "dependsOn": ["build"],
       "options": {
         "command": "pnpm exec biome check {projectRoot}"
       }

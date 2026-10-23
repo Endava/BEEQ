@@ -16,7 +16,7 @@
     "prepare": "husky",
     "pre-commit": "run-s lint:branch-name lint:staged",
     "prebuild": "pnpm clean:build",
-    "start": "pnpm exec nx run beeq:start",
+    "start": "pnpm exec nx storybook beeq",
     "build": "run-s build:*",
     "build:beeq": "pnpm exec nx run-many -t build --exclude='*,!tag:publishable' --parallel --output-style=static",
     "build:beeq:fast": "BEEQ_SKIP_ICONS=1 pnpm exec nx run-many -t build --exclude='*,!tag:publishable' --parallel --output-style=static",
