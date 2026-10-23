@@ -36,7 +36,6 @@ export const InternalButton: FunctionalComponent<TInternalButtonProps> = (
   { appearance, border, class: className, disabled, label, onlyIcon, part, onBqClick, onClick },
   children,
 ) => (
-  // biome-ignore lint/a11y/noStaticElementInteractions: bq-button renders a native <button> in its shadow DOM
   <bq-button
     appearance={appearance}
     border={border}

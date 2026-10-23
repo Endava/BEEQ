@@ -1,13 +1,13 @@
 {
   "$schema": "../../node_modules/@biomejs/biome/configuration_schema.json",
   "extends": "//",
-  "files": {
-    "includes": ["**/*.ts"]
-  },
+  "files": { "includes": ["**/*.ts"] },
   "linter": {
     "rules": {
+      "preset": "recommended",
       "complexity": { "noStaticOnlyClass": "off" },
       "correctness": { "useHookAtTopLevel": "error" }
     }
-  }
+  },
+  "overrides": [{ "includes": ["**/*.css"] }, { "includes": ["**/*.scss"] }]
 }

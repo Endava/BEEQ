@@ -155,32 +155,35 @@ describe('bq-input', () => {
   it.each([
     ['text', 'hello world', 'hello world'],
     ['number', '12345', 12345],
-  ] as const)('should keep typed %s input when a controlled consumer re-renders stale state', async (type, text, value) => {
-    const { root } = await render(<bq-input name="bq-input" type={type} />);
-    const host = root as HTMLBqInputElement;
-    const input = getInput(host);
+  ] as const)(
+    'should keep typed %s input when a controlled consumer re-renders stale state',
+    async (type, text, value) => {
+      const { root } = await render(<bq-input name="bq-input" type={type} />);
+      const host = root as HTMLBqInputElement;
+      const input = getInput(host);
 
-    let state: TInputValue = '';
-    host.addEventListener('bqInput', (ev: CustomEvent<{ value: TInputValue }>) => {
-      state = ev.detail.value;
-    });
-    // Simulates an unrelated framework re-render that re-applies the controlled value from state
-    host.addEventListener(
-      'keydown',
-      () =>
-        setTimeout(() => {
-          host.value = state;
-        }, 0),
-      true,
-    );
+      let state: TInputValue = '';
+      host.addEventListener('bqInput', (ev: CustomEvent<{ value: TInputValue }>) => {
+        state = ev.detail.value;
+      });
+      // Simulates an unrelated framework re-render that re-applies the controlled value from state
+      host.addEventListener(
+        'keydown',
+        () =>
+          setTimeout(() => {
+            host.value = state;
+          }, 0),
+        true,
+      );
 
-    await userEvent.type(input, text);
-    await wait(50);
+      await userEvent.type(input, text);
+      await wait(50);
 
-    expect(state).toBe(value);
-    expect(host.value).toBe(value);
-    expect(input.value).toBe(text);
-  });
+      expect(state).toBe(value);
+      expect(host.value).toBe(value);
+      expect(input.value).toBe(text);
+    },
+  );
 
   it('should clear the value and emit clear event', async () => {
     const inputValue = 'Hello';
