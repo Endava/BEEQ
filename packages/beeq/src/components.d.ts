@@ -1944,8 +1944,8 @@ export namespace Components {
      * @attr {"small" | "medium" | "large"} thickness - Progress bar thickness
      * @attr {"default" | "error"} type - Progress type
      * @attr {number} value - A number representing the current value of the progress bar
-     * @cssprop --bq-progress-bar--height - The progress bars height
-     * @cssprop --bq-progress-bar--indeterminateWidth - The progress bar width when its indeterminate
+     * @cssprop --bq-progress-bar--height - The progress bar's height
+     * @cssprop --bq-progress-bar--indeterminateWidth - The progress bar width when it's indeterminate
      * @cssprop --bq-progress-bar--indicatorColor - The progress bar color (inside the track area)
      * @cssprop --bq-progress-bar--indicatorColor-error - The progress bar color (inside the track area) when `type="error"`
      * @cssprop --bq-progress-bar--label-color - The label text color
@@ -2389,7 +2389,7 @@ export namespace Components {
      * @attr {boolean} collapse - If `true`, the container will reduce its width.
      * @attr {"medium" | "small"} - size - It sets the size of the navigation menu items.
      * @method toggleCollapse - Method to be called to toggle the collapse state of the side menu.
-     * @event bqCollapse - Callback handler to be called when the Side menu changes its width from expanded to collapse and vice versa.
+     * @event bqCollapse - Callback handler to be called when the Side menu changes its width from expanded to collapsed and vice versa.
      * @event bqSelect - Callback handler to be called when the active/selected menu item changes.
      * @cssprop --bq-side-menu--bg-color - Side menu background color
      * @cssprop --bq-side-menu--brand-color - Side menu logo color
@@ -2558,7 +2558,7 @@ export namespace Components {
      * Spinners are designed for users to display data loading.
      * @example How to use it
      * ```html
-     * <bq-spinner size="medium" text-position="bellow">
+     * <bq-spinner size="medium" text-position="below">
      * <span>Loading...</span>
      * </bq-spinner>
      * ```
@@ -5028,8 +5028,8 @@ declare global {
      * @attr {"small" | "medium" | "large"} thickness - Progress bar thickness
      * @attr {"default" | "error"} type - Progress type
      * @attr {number} value - A number representing the current value of the progress bar
-     * @cssprop --bq-progress-bar--height - The progress bars height
-     * @cssprop --bq-progress-bar--indeterminateWidth - The progress bar width when its indeterminate
+     * @cssprop --bq-progress-bar--height - The progress bar's height
+     * @cssprop --bq-progress-bar--indeterminateWidth - The progress bar width when it's indeterminate
      * @cssprop --bq-progress-bar--indicatorColor - The progress bar color (inside the track area)
      * @cssprop --bq-progress-bar--indicatorColor-error - The progress bar color (inside the track area) when `type="error"`
      * @cssprop --bq-progress-bar--label-color - The label text color
@@ -5272,7 +5272,7 @@ declare global {
      * @attr {boolean} collapse - If `true`, the container will reduce its width.
      * @attr {"medium" | "small"} - size - It sets the size of the navigation menu items.
      * @method toggleCollapse - Method to be called to toggle the collapse state of the side menu.
-     * @event bqCollapse - Callback handler to be called when the Side menu changes its width from expanded to collapse and vice versa.
+     * @event bqCollapse - Callback handler to be called when the Side menu changes its width from expanded to collapsed and vice versa.
      * @event bqSelect - Callback handler to be called when the active/selected menu item changes.
      * @cssprop --bq-side-menu--bg-color - Side menu background color
      * @cssprop --bq-side-menu--brand-color - Side menu logo color
@@ -5395,7 +5395,7 @@ declare global {
      * Spinners are designed for users to display data loading.
      * @example How to use it
      * ```html
-     * <bq-spinner size="medium" text-position="bellow">
+     * <bq-spinner size="medium" text-position="below">
      * <span>Loading...</span>
      * </bq-spinner>
      * ```
@@ -8154,8 +8154,8 @@ declare namespace LocalJSX {
      * @attr {"small" | "medium" | "large"} thickness - Progress bar thickness
      * @attr {"default" | "error"} type - Progress type
      * @attr {number} value - A number representing the current value of the progress bar
-     * @cssprop --bq-progress-bar--height - The progress bars height
-     * @cssprop --bq-progress-bar--indeterminateWidth - The progress bar width when its indeterminate
+     * @cssprop --bq-progress-bar--height - The progress bar's height
+     * @cssprop --bq-progress-bar--indeterminateWidth - The progress bar width when it's indeterminate
      * @cssprop --bq-progress-bar--indicatorColor - The progress bar color (inside the track area)
      * @cssprop --bq-progress-bar--indicatorColor-error - The progress bar color (inside the track area) when `type="error"`
      * @cssprop --bq-progress-bar--label-color - The label text color
@@ -8618,7 +8618,7 @@ declare namespace LocalJSX {
      * @attr {boolean} collapse - If `true`, the container will reduce its width.
      * @attr {"medium" | "small"} - size - It sets the size of the navigation menu items.
      * @method toggleCollapse - Method to be called to toggle the collapse state of the side menu.
-     * @event bqCollapse - Callback handler to be called when the Side menu changes its width from expanded to collapse and vice versa.
+     * @event bqCollapse - Callback handler to be called when the Side menu changes its width from expanded to collapsed and vice versa.
      * @event bqSelect - Callback handler to be called when the active/selected menu item changes.
      * @cssprop --bq-side-menu--bg-color - Side menu background color
      * @cssprop --bq-side-menu--brand-color - Side menu logo color
@@ -8636,7 +8636,7 @@ declare namespace LocalJSX {
          */
         "collapse"?: boolean;
         /**
-          * Callback handler to be called when the Side menu changes its width from expanded to collapse and vice versa
+          * Callback handler to be called when the Side menu changes its width from expanded to collapsed and vice versa
          */
         "onBqCollapse"?: (event: BqSideMenuCustomEvent<{ collapse: boolean }>) => void;
         /**
@@ -8819,7 +8819,7 @@ declare namespace LocalJSX {
      * Spinners are designed for users to display data loading.
      * @example How to use it
      * ```html
-     * <bq-spinner size="medium" text-position="bellow">
+     * <bq-spinner size="medium" text-position="below">
      * <span>Loading...</span>
      * </bq-spinner>
      * ```
@@ -11413,8 +11413,8 @@ declare module "@stencil/core" {
              * @attr {"small" | "medium" | "large"} thickness - Progress bar thickness
              * @attr {"default" | "error"} type - Progress type
              * @attr {number} value - A number representing the current value of the progress bar
-             * @cssprop --bq-progress-bar--height - The progress bars height
-             * @cssprop --bq-progress-bar--indeterminateWidth - The progress bar width when its indeterminate
+             * @cssprop --bq-progress-bar--height - The progress bar's height
+             * @cssprop --bq-progress-bar--indeterminateWidth - The progress bar width when it's indeterminate
              * @cssprop --bq-progress-bar--indicatorColor - The progress bar color (inside the track area)
              * @cssprop --bq-progress-bar--indicatorColor-error - The progress bar color (inside the track area) when `type="error"`
              * @cssprop --bq-progress-bar--label-color - The label text color
@@ -11592,7 +11592,7 @@ declare module "@stencil/core" {
              * @attr {boolean} collapse - If `true`, the container will reduce its width.
              * @attr {"medium" | "small"} - size - It sets the size of the navigation menu items.
              * @method toggleCollapse - Method to be called to toggle the collapse state of the side menu.
-             * @event bqCollapse - Callback handler to be called when the Side menu changes its width from expanded to collapse and vice versa.
+             * @event bqCollapse - Callback handler to be called when the Side menu changes its width from expanded to collapsed and vice versa.
              * @event bqSelect - Callback handler to be called when the active/selected menu item changes.
              * @cssprop --bq-side-menu--bg-color - Side menu background color
              * @cssprop --bq-side-menu--brand-color - Side menu logo color
@@ -11666,7 +11666,7 @@ declare module "@stencil/core" {
              * Spinners are designed for users to display data loading.
              * @example How to use it
              * ```html
-             * <bq-spinner size="medium" text-position="bellow">
+             * <bq-spinner size="medium" text-position="below">
              * <span>Loading...</span>
              * </bq-spinner>
              * ```
