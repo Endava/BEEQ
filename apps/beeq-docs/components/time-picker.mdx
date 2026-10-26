@@ -42,6 +42,10 @@ Time pickers combine locale-ordered hour, minute, and second segments with a pan
   </Card>
 </CardGroup>
 
+<Tip>
+  Choose [`bq-date-picker`](/components/date-picker) instead of `bq-time-picker` when users select a calendar date rather than a time of day.
+</Tip>
+
 ## Patterns
 
 <CardGroup cols={2}>
@@ -106,7 +110,7 @@ Use the default configuration when people need to set an hour and minute. Click 
 <Note>
   The `value` attribute, `min`, and `max` always use a 24-hour wire format, whatever the display: `HH:mm` at minute precision, `HH:00` at hour precision, and `HH:mm:ss` at second precision.
 
-  A locale-derived format hint, such as `hh:mm`, shows the expected layout before entry starts. On focus, one segment is active. Type digits to replace that segment, use `ArrowLeft` and `ArrowRight` to move, `Home` and `End` to reach the first or last segment, `ArrowUp` and `ArrowDown` to change a value, and `Backspace` or `Delete` to clear a segment. For AM/PM, type `A` or `P`. Paste is not supported.
+  A locale-derived format hint, such as `hh:mm`, shows the expected layout before entry starts. On focus, one segment is active. Typing digits replaces that segment, and typing `A` or `P` sets AM/PM. Paste is not supported. See [Keyboard interaction](#keyboard-interaction) for the full key list.
 </Note>
 
 <CodeLivePreview mode="shadow" code={`
@@ -161,6 +165,12 @@ Use the default configuration when people need to set an hour and minute. Click 
 </CodeLivePreview>
 
 ## Options
+
+**Allowed `precision` values:** `hour`, `minute` (default), `second`.<br />
+**Allowed `hour-format` values:** `24` (default), `12`.<br />
+**Allowed `validation-status` values:** `none` (default), `error`, `warning`, `success`.<br />
+**Allowed `strategy` values:** `fixed` (default), `absolute`.<br />
+**Allowed `placement` values:** `top`, `top-start`, `top-end`, `right`, `right-start`, `right-end`, `bottom`, `bottom-start`, `bottom-end` (default), `left`, `left-start`, `left-end`.
 
 ### Precision
 
@@ -1158,7 +1168,7 @@ Use `validation-status` when the field should show immediate visual feedback aft
 `bq-time-picker` submits its current value with the form, in 24-hour format. Use `required` and `form-validation-message` when the time is mandatory; the custom message also applies to incomplete, out-of-range, and off-step values.
 
 <Warning>
-  A partly filled field becomes invalid when focus leaves it, even when the picker is optional. The draft stays visible and the last committed `value` is preserved, but native form validation blocks submission until people complete the time, pick one from the panel, or clear the field.
+  A partly filled field becomes invalid when focus leaves it, even when the picker is optional. The draft stays visible and the last committed `value` is preserved, but native form validation blocks submission until the user completes the time, picks one from the panel, or clears the field.
 </Warning>
 
 When focus leaves the field, complete times outside `min` or `max` are clamped to the nearest bound. A disabled time picker is excluded from form data; a read-only one is still submitted.
@@ -1429,12 +1439,49 @@ When focus leaves the field, complete times outside `min` or `max` are clamped t
 - The panel carries `role="dialog"` and is named by `labels.panelLabel` ("Choose time" by default). The panel isn't modal.
 - Each column is a `listbox` labelled by its visible header (`aria-labelledby`), so the spoken name matches what people see. Options expose `aria-selected`, and options outside `min`, `max`, or the steps expose `aria-disabled="true"`.
 - The component announces the selected time, or that no time is selected, when focus enters the field.
-- Press `Alt`+`ArrowDown` in the field, or Tab to the clock icon and press `Enter` or `Space`, to open the panel and move focus into it. Clicking the field opens the panel while keeping focus on the segment.
-- In the panel, `ArrowUp` and `ArrowDown` move between options, `Home` and `End` jump to the first or last option, `PageUp` and `PageDown` move faster, and `ArrowLeft` and `ArrowRight` switch columns. `Enter` or `Space` picks an option, and `Escape` closes the panel and returns focus to the field.
+- The panel opens from the keyboard through the segmented field or the clock icon, and moves focus into it; see [Keyboard interaction](#keyboard-interaction) for the keys. Clicking the field opens the panel while keeping focus on the segment.
 - In `readonly` mode the segments stay focusable so screen reader users can read the value, but they can't be edited and the panel doesn't open.
-- Always provide a visible label through the `label` slot, so the field has a programmatic name.
-- When you translate the interface, translate `labels` too: segment names, button names and the panel name come from it.
-- Validation states should never rely on color alone. Pair `validationStatus` with visible error text so screen reader users receive the same feedback as sighted users.
+- Provide a visible label through the `label` slot, so the field has a programmatic name.
+- Translate `labels` when translating the interface: segment names, button names and the panel name come from it.
+- Don't rely on color alone to communicate validation states. Pair `validationStatus` with visible error text so screen reader users receive the same feedback as sighted users.
+
+### Keyboard interaction
+
+| Key | Context | Action |
+|---|---|---|
+| `Tab` | Segmented field | Moves focus to the active segment (one tab stop for all segments) |
+| `ArrowLeft` / `ArrowRight` | Time segment | Moves focus to the previous or next segment |
+| `Home` / `End` | Time segment | Moves focus to the first or last segment |
+| `ArrowUp` / `ArrowDown` | Time segment | Steps the segment value, wrapping around and skipping disabled options |
+| `0`–`9` | Hour, minute or second segment | Types digits into the segment and advances automatically when the segment is full |
+| `A` / `P` | AM/PM segment (`hour-format="12"`) | Sets the day period and moves to the next segment |
+| `Backspace` / `Delete` | Time segment | Clears the segment; `Backspace` then moves focus to the previous segment |
+| `Alt+ArrowDown` | Time segment | Opens the panel and moves focus into it |
+| `Enter` | Time segment, panel open | Confirms any pending draft and closes the panel |
+| `Enter` / `Space` | Clock icon focused | Opens the panel and moves focus to the first column |
+| `ArrowUp` / `ArrowDown` | Panel column | Moves to the previous or next option and selects it |
+| `Home` / `End` | Panel column | Moves to the first or last option |
+| `PageUp` / `PageDown` | Panel column | Moves several options back or forward |
+| `ArrowLeft` / `ArrowRight` | Panel column | Moves focus to the adjacent column (mirrored in right-to-left layouts) |
+| `Space` | Panel column | Picks the focused option |
+| `Enter` | Panel column | Picks the focused option, confirms, and closes the panel |
+| `Escape` | Panel column | Closes the panel and returns focus to the field; with `require-confirm`, the draft is discarded |
+| Edit keys (digits, `A`/`P`, `Backspace`, `Delete`, `ArrowUp`, `ArrowDown`) | `readonly` | Ignored; segments stay focusable and `ArrowLeft`, `ArrowRight`, `Home` and `End` still move focus |
+| Any key | Time picker disabled | Segment key handling is ignored |
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Provide a visible label through the `label` slot | MUST | manual: inspect the visible field label |
+| Set `required` when a time is mandatory so form submission is blocked until a value is set | MUST | automated: [`bq-time-picker.e2e.tsx`](https://github.com/Endava/BEEQ/blob/main/packages/beeq/src/components/time-picker/__tests__/bq-time-picker.e2e.tsx) checks `form.checkValidity()` |
+| Set `form-validation-message` to provide a specific message for incomplete, out-of-range, and off-step values | SHOULD | manual: inspect the native message for incomplete, range and step errors |
+| Translate `labels` when translating the interface | MUST | manual: review translated field and control labels together |
+| Pair `validationStatus` with visible error text | MUST | manual: inspect error text beside each visual error state |
+| Use more than color to communicate validation states | MUST NOT | manual: read validation state without relying on color |
+| Set `min`, `max`, and step values when business rules are known | SHOULD | manual: review business rules against time bounds and step |
+| Use one `hour-format` across a product | MUST | manual: compare hour formats across the product |
+| Rely on the format hint alone to explain the field | MUST NOT | manual: read field instructions with the format hint hidden |
 
 ## API reference
 
@@ -1469,6 +1516,16 @@ When focus leaves the field, complete times outside `min` or `max` are clamped t
 | `strategy` | `strategy` | Positioning strategy for the panel | `"absolute" \| "fixed"` | `"fixed"` |
 | `validationStatus` | `validation-status` | Validation state applied to the field | `"error" \| "none" \| "success" \| "warning"` | `"none"` |
 | `value` | `value` | The selected time, in 24-hour format: `HH:mm` (`HH:00` at hour precision) or `HH:mm:ss` at second precision | `string` | `undefined` |
+
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| `min` later than `max` | MUST NOT | Both `min` and `max` are ignored |
+| `hour-step` above `23`, or `minute-step` or `second-step` above `59` | MUST NOT | The step is capped at `23` or `59` |
+| `hour-step`, `minute-step` or `second-step` below `1` or not a number | MUST NOT | The step is treated as `1` |
+| `open` set with `disabled` or `readonly` | SHOULD NOT | The panel does not open |
+| An unsupported value for `precision`, `hour-format`, `strategy`, `placement`, or `validation-status` | MUST NOT | A development warning is logged and the default value is used |
 
 ### Events
 

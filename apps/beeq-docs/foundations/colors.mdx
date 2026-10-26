@@ -1,6 +1,6 @@
 ---
 title: Colors
-description: BEEQ's color system resolves every color through four layers — primitives, theme-level intents, mode roles, and component variables — so components stay legible in every theme and mode.
+description: BEEQ resolves every color through primitives, theme intents, mode roles, and component variables, so components stay legible in every theme and mode.
 ---
 
 <Frame className="px-4 py-4" caption="BEEQ colors overview — a snapshot of some tokens from the color palette">
@@ -20,6 +20,8 @@ Color in BEEQ serves communication, not decoration. The system gives every color
 
 <Note>
   Always reach for a **mode role** (`--bq-text--primary`, `--bq-ui--brand`, etc.) rather than a raw primitive value. Mode roles adapt automatically to the active theme and to light and dark mode. Primitives do not.
+
+  For the main brand color on a fill, use `--bq-ui--brand`. `--bq-brand` is a root semantic: set it when you define a theme, and do not use it to style UI.
 </Note>
 
 ## Color architecture

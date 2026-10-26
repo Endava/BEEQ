@@ -63,14 +63,14 @@ The side menu is a vertical navigation element that sits alongside a page or app
   <img className="hidden dark:block" src="/components/images/side-menu/side-menu-anatomy-dark.svg" alt="BEEQ Side Menu component anatomy" />
 </Frame>
 
-A side menu is composed of a container, selected item state, navigation items, and optional logo and footer areas.
+A side menu is a vertical container that holds navigation items, with optional `logo` and `footer` slots for brand content and supplementary controls. The logo sits above the items and has no callout in the figure.
 
 | Part | Element | Description |
 |---|---|---|
-| **1** | Container | The root `<aside>` surface that holds the side menu |
-| **2** | Selected | The active item that represents the current location |
-| **3** | Navigation item | A selectable `bq-side-menu-item` with optional prefix and suffix content |
-| **4** | Logo and footer slots | Optional areas for brand content and supplementary actions |
+| **1** | Container | The `<aside>` root (`base` part) that holds the logo, the navigation items and the footer |
+| **2** | Active item | The `bq-side-menu-item` with the `active` attribute, which marks the current location |
+| **3** | Navigation item | A default `bq-side-menu-item` with an optional `prefix` icon, a label and an optional `suffix` |
+| **4** | Collapse control | An action you place in the `footer` slot to expand and collapse the menu. The `collapse` prop on `bq-side-menu` drives the state; the component does not render this control for you |
 
 ## Design guidelines
 
@@ -507,6 +507,8 @@ Within a side menu, items support default, active, hover, focus, disabled, and w
 ### Appearance
 
 Use the `appearance` attribute to align the side menu with your application's visual language.
+
+**Allowed `appearance` values:** `default` (default), `brand`, `inverse`.
 
 #### Default
 
@@ -1052,6 +1054,8 @@ For example, if your app uses `bq-mode="light"`, the inverse side menu will use 
 The side menu supports two sizes: medium (default) and small.
 The small size reduces the vertical padding of the menu items for a more compact layout.
 Use the `size` attribute/property to switch between the two sizes.
+
+**Allowed `size` values:** `medium` (default), `small`.
 
 <Tip>
   When using the medium size, there's no need to specify the `size` attribute, as it is the default.
@@ -2125,12 +2129,33 @@ The side menu renders its root surface as an `<aside>` and places menu items ins
 
 The component uses native button Tab navigation, not the composite ARIA menu keyboard pattern, so the items are not exposed as `menuitem` elements.
 
-- **Landmark context** - include semantic heading text in the logo slot to communicate the menu purpose and where its content begins.
-- **Collapsed state** - communicate the expanded or collapsed state through the surrounding layout control when you add one.
-- **Icons** - validate icon meaning when collapsed navigation relies on icons to identify destinations. Add `aria-hidden="true"` to prefix icons: the label already names the item, and an unlabelled `bq-icon` adds its own `<name> icon` text to that name.
-- **Labels** - use unique labels that make sense without additional context. The item text feeds the collapsed tooltip content.
-- **Footer actions** - give every icon-only `bq-button` a meaningful `label` and hide its decorative icon from assistive technology.
-- **Keyboard navigation** - side menu items support focus, click, <kbd>Enter</kbd>, and <kbd>Space</kbd> interaction through the underlying button.
+- **Landmark context** - you should include semantic heading text in the logo slot to communicate the menu purpose and where its content begins.
+- **Collapsed state** - when you add a layout control, it must communicate the expanded or collapsed state.
+- **Icons** - you should validate icon meaning when collapsed navigation relies on icons to identify destinations. You must add `aria-hidden="true"` to prefix icons: the label already names the item, and an unlabelled `bq-icon` adds its own `<name> icon` text to that name.
+- **Labels** - labels must be unique and make sense without additional context. The item text feeds the collapsed tooltip content.
+- **Footer actions** - every icon-only `bq-button` must have a meaningful `label`, and its decorative icon must be hidden from assistive technology.
+
+### Keyboard interaction
+
+Each `bq-side-menu-item` renders a native `<button>`, so there are no arrow-key shortcuts between items.
+
+| Key | Context | Action |
+|---|---|---|
+| `Tab` | Any | Moves focus to the next enabled item; disabled items are skipped |
+| `Shift` + `Tab` | Any | Moves focus to the previous enabled item; disabled items are skipped |
+| `Enter` | Enabled, inactive item focused | Emits `bqClick` and makes the item active |
+| `Space` | Enabled, inactive item focused | Emits `bqClick` and makes the item active |
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Communicate the expanded or collapsed state from any layout control you add | MUST | manual: toggle the layout control and inspect its expanded state |
+| Set `aria-hidden="true"` on prefix icons | MUST | manual: inspect decorative prefix icons for aria-hidden |
+| Give items unique labels that make sense without context | MUST | manual: read item names without surrounding navigation context |
+| Give icon-only `bq-button` controls in the footer a meaningful `label` and hide their decorative icon | MUST | manual: inspect footer button names and decorative icons |
+| Put semantic heading text in the logo slot | SHOULD | manual: read the logo-slot heading in the page outline |
+| Validate icon meaning when collapsed navigation relies on icons | SHOULD | manual: ask readers to identify items from icons in collapsed mode |
 
 ## API reference
 
@@ -2151,6 +2176,10 @@ The component uses native button Tab navigation, not the composite ARIA menu key
 | `active` | `active` | If `true`, the menu item will be shown as active or selected | `boolean` | `false` |
 | `collapse` | `collapse` | If `true`, the item label and suffix will be hidden and the width will be reduced according to its parent | `boolean` | `false` |
 | `disabled` | `disabled` | If `true`, the menu item will be disabled and no interaction is allowed | `boolean` | `false` |
+
+### Invalid combinations
+
+No invalid prop combinations.
 
 ### Slots
 

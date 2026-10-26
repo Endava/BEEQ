@@ -41,6 +41,10 @@ Statuses help people understand the current state of an item at a glance. Use th
   </Card>
 </CardGroup>
 
+<Tip>
+  Choose [`bq-tag`](/components/tag) instead of `bq-status` when the label must be clickable, removable, or categorize content, and [`bq-badge`](/components/badge) instead for a count or dot attached to another element.
+</Tip>
+
 ## Patterns
 
 There are two common status patterns, even though the shipped component focuses on one of them.
@@ -138,6 +142,8 @@ Use the default neutral status when the message should stay present without stro
 ## Options
 
 Use the `type` prop to communicate the nature of the status message. Each value maps to a distinct color so states are recognizable at a glance.
+
+**Allowed `type` values:** `alert`, `danger`, `info`, `neutral` (default), `success`.
 
 ### Alert
 
@@ -391,10 +397,23 @@ Use `type="success"` when the state confirms a positive outcome.
 ## Accessibility
 
 - `bq-status` unconditionally renders with `role="status"` on its wrapper element, so assistive technologies always treat it as a live status message regardless of the `type` prop.
-- The text label is required for meaning. The colored dot is supportive, not sufficient on its own.
-- Keep labels short and specific so status changes remain easy to understand when announced.
-- This component is informational, not interactive. If users need to act on the message, pair it with a separate button or link.
-- Check contrast and surrounding layout so the label remains readable in tables, cards, and dense data views.
+- You must provide a text label. The colored dot is supportive, not sufficient on its own.
+- Labels should be short and specific so status changes remain easy to understand when announced.
+- This component is informational, not interactive. If users need to act on the message, you should pair it with a separate button or link.
+- The label must keep sufficient contrast with its background and remain readable in tables, cards, and dense data views.
+
+### Keyboard interaction
+
+No keyboard interaction: the component is not focusable.
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Provide a text label; the dot is not sufficient on its own | MUST | manual: read the status with its dot hidden |
+| Keep sufficient label contrast against the background | MUST | manual: measure label contrast against its background |
+| Keep labels short and specific | SHOULD | manual: read the label without surrounding context |
+| Pair the status with a separate button or link when users need to act | SHOULD | manual: inspect the separate action control when action is needed |
 
 ## API reference
 
@@ -403,6 +422,10 @@ Use `type="success"` when the state confirms a positive outcome.
 | Property | Attribute | Description | Type | Default |
 |---|---|---|---|---|
 | `type` | `type` | Defines the type of status to display | `'alert'` \| `'danger'` \| `'info'` \| `'neutral'` \| `'success'` | `'neutral'` |
+
+### Invalid combinations
+
+No invalid prop combinations.
 
 ### Slots
 

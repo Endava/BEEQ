@@ -1,6 +1,6 @@
 ---
 title: Breadcrumb
-description: "A breadcrumb shows users their current location within a site hierarchy and lets them navigate back through parent levels."
+description: "Breadcrumb shows users their current location within a site hierarchy and lets them navigate back through parent levels."
 ---
 
 import { CardTile } from '/snippets/CardTile.jsx';
@@ -35,6 +35,10 @@ A breadcrumb is a form of contextual navigation displaying a user's position wit
     - The user is in a multistep process; use a progress indicator instead
   </Card>
 </CardGroup>
+
+<Tip>
+  Choose [`bq-steps`](/components/steps) instead of `bq-breadcrumb` when users move through a fixed sequence with current, completed, and error states. Use `bq-breadcrumb` to show where the page sits in a site hierarchy.
+</Tip>
 
 ## Anatomy
 
@@ -117,7 +121,7 @@ Breadcrumb items use consistent internal padding and separator spacing controlle
 ### Truncation
 
 <Note>
-  Show a maximum of four items in the breadcrumb trail. When the path is deeper, keep the first (root) and last (current page) items visible and collapse the intermediate levels into a dropdown so users can still reach any level.
+  A breadcrumb trail should show a maximum of four items. When the path is deeper, keep the first (root) and last (current page) items visible and collapse the intermediate levels into a dropdown so users can still reach any level.
 </Note>
 
 ## Usage
@@ -295,6 +299,8 @@ When a `bq-breadcrumb-item` has an `href`, activating it navigates to that URL. 
 
 ## Options
 
+**Allowed `target` values** (on `bq-breadcrumb-item`, only with `href`): `_blank`, `_parent`, `_self`, `_top`. The prop has no default.
+
 The following example shows how to combine icons with breadcrumb items.
 
 ### With icons
@@ -457,11 +463,29 @@ Icons next to labels help users recognize categories at a glance. Use `size="16"
 
 ## Accessibility
 
-- **Navigation** — navigate to each link in the breadcrumb using <kbd>Tab</kbd> and activate it with <kbd>Enter</kbd>.
-- **Landmark label** — use the `label` prop to set an `aria-label` on the `<nav>` landmark. The default value is `Breadcrumbs`; override it when multiple navigation regions exist on the same page.
+- **Landmark label** — the `label` prop sets an `aria-label` on the `<nav>` landmark. The default value is `Breadcrumbs`; you must override it when multiple navigation regions exist on the same page.
 - **Current page** — the last breadcrumb item receives `aria-current="page"` automatically.
-- **Icon-only items** — when a breadcrumb item contains only an icon, set `label` on the `bq-icon` to describe the destination (e.g. `<bq-icon name="house-line" label="Home page">`). The item does not forward an `aria-label` set on `bq-breadcrumb-item` to its inner link or button.
-- **Decorative icons** — when an icon appears alongside a visible text label, set `aria-hidden="true"` on the `bq-icon` so screen readers do not announce it twice.
+- **Icon-only items** — when a breadcrumb item contains only an icon, you must set `label` on the `bq-icon` to describe the destination (e.g. `<bq-icon name="house-line" label="Home page">`). The item does not forward an `aria-label` set on `bq-breadcrumb-item` to its inner link or button.
+- **Decorative icons** — when an icon appears alongside a visible text label, you must set `aria-hidden="true"` on the `bq-icon` so screen readers do not announce it twice.
+
+### Keyboard interaction
+
+Each `bq-breadcrumb-item` renders a native `a` (with `href`) or `button` (without `href`).
+
+| Key | Context | Action |
+|---|---|---|
+| `Tab` | Any | Moves focus to the next breadcrumb item |
+| `Shift` + `Tab` | Any | Moves focus to the previous breadcrumb item |
+| `Enter` | Item focused | Activates the item and emits `bqClick`; with `href`, navigates to the link unless `bqClick` is canceled |
+| `Space` | Item without `href` focused | Activates the button and emits `bqClick` |
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Override `label` (default `Breadcrumbs`) when the page has several navigation regions | MUST | manual: inspect navigation landmark names when several are present |
+| Set `label` on `bq-icon` for icon-only items | MUST | manual: inspect the accessible name of each icon-only item |
+| Set `aria-hidden="true"` on a `bq-icon` that sits next to a visible text label | MUST | manual: inspect decorative icons beside text labels for aria-hidden |
 
 ## API reference
 
@@ -482,6 +506,12 @@ Icons next to labels help users recognize categories at a glance. Use `size="16"
 <Note>
   When `target` is set, `bq-breadcrumb-item` merges `noreferrer` and `noopener` into the `rel` value you provide, so `rel="external"` with `target="_blank"` renders `rel="external noreferrer noopener"`. Without `target`, only your `rel` value is applied.
 </Note>
+
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| `target` or `rel` on a `bq-breadcrumb-item` without `href` | SHOULD NOT | Both are dropped because the item renders a `<button>` instead of a link |
 
 ### Events
 

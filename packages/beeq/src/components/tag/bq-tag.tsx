@@ -303,7 +303,6 @@ export class BqTag {
             <slot />
           </div>
           {this.isRemovable && !this.disabled && (
-            // biome-ignore lint/a11y/noStaticElementInteractions: `onClick` will behave better than the custom `bqClick` inside the shadow DOM
             <bq-button
               appearance="text"
               border="s"

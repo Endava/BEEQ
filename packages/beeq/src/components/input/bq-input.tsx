@@ -392,9 +392,6 @@ export class BqInput {
 
     if (!isHTMLElement(ev.target, 'input')) return;
     this.value = this.getInputValue(ev.target);
-    // Update form value and validity
-    this.setFormValue(`${this.value}`);
-    this.updateFormValidity();
 
     this.bqChange.emit({ value: this.value, el: this.el });
   };
@@ -402,15 +399,12 @@ export class BqInput {
   private handleClear = () => {
     if (this.disabled) return;
 
-    const { inputElem, setFormValue, updateFormValidity } = this;
+    const { inputElem } = this;
     // Drop a pending debounced `bqInput` so a stale value can't arrive after the clear
     this.debounceBqInput?.cancel();
     // Clear input element value
     inputElem.value = '';
     this.value = inputElem.value;
-    // Set form value to empty string abd update validity
-    setFormValue(this.value);
-    updateFormValidity();
   };
 
   private handleClearClick = (ev: CustomEvent) => {

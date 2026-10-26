@@ -41,6 +41,10 @@ A dropdown surfaces a floating panel of options, actions, or destinations from a
   </Card>
 </CardGroup>
 
+<Tip>
+  Use [`bq-select`](/components/select) when a chosen value needs form submission or validation, [`bq-radio-group`](/components/radio) when a few named choices can stay visible, and [`bq-button`](/components/button) on its own for a single action. A `bq-button` can also be the dropdown trigger.
+</Tip>
+
 ## Patterns
 
 Dropdowns support compact action menus and panel-based selection patterns.
@@ -50,7 +54,7 @@ Dropdowns support compact action menus and panel-based selection patterns.
     A dropdown is useful for providing users with a list of options in a compact and organized manner. It is primarily used to initiate an action or direct the user to a new page or modal.
   </Card>
   <Card title="Dropdown panel">
-    Serves as a menu presenting a list of available items or actions for users to freely apply or use. The panel slot can host single-select or multi-select forms when the interaction needs it.
+    Presents related actions or destinations. The panel slot can hold custom selection content, but `bq-dropdown` does not submit or validate a chosen value; use `bq-select` when the selection belongs to a form.
   </Card>
   <Card title="Single select">
     Enables users to choose one item from a predefined list. Selected choices should be visibly highlighted so users can understand the current value.
@@ -313,6 +317,10 @@ If the dropdown sits inside a scrollable area, scrolling that area will close th
 </Note>
 
 ## Options
+
+**Allowed `placement` values:** `bottom-start` (default), `bottom`, `bottom-end`, `top`, `top-start`, `top-end`, `right`, `right-start`, `right-end`, `left`, `left-start`, `left-end`.
+
+**Allowed `strategy` values:** `fixed` (default), `absolute`.
 
 ### Placement
 
@@ -1358,15 +1366,36 @@ Use `same-width` when the panel should match the trigger width. Use `panel-heigh
 
 `bq-dropdown` does not render its own ARIA role — accessible semantics come from the slotted trigger element. When a `bq-button` is used as the trigger, it exposes `role="button"` and `aria-disabled` automatically. The `bq-option-list` inside the panel renders with `role="listbox"`, and each `bq-option` carries `role="option"`, `aria-selected`, and `aria-disabled`.
 
-**Developer responsibilities:** provide a meaningful visible label or `aria-label` on the trigger, especially for icon-only triggers. When using a `bq-avatar` as the trigger, supply the `label` prop to ensure screen readers announce the button purpose.
+**Developer responsibilities:** you must provide a meaningful visible label or `aria-label` on the trigger, especially for icon-only triggers. When using a `bq-avatar` as the trigger, you must supply the `label` prop to ensure screen readers announce the button purpose.
 
-- The dropdown trigger should be reachable with <kbd>Tab</kbd> and expose a clear accessible label.
-- Users should be able to open the dropdown with <kbd>Enter</kbd> or <kbd>Space</kbd> when the trigger is focused.
-- In selectable lists, users should be able to move between options with arrow keys and select the focused option with <kbd>Enter</kbd> or <kbd>Space</kbd>.
+- The dropdown trigger must be reachable with <kbd>Tab</kbd> and expose a clear accessible label. Use a natively focusable element such as `bq-button`.
+- The dropdown opens on trigger click, so a native button trigger opens it with <kbd>Enter</kbd> or <kbd>Space</kbd>.
+- Each enabled `bq-option` is a tab stop. <kbd>Enter</kbd> or <kbd>Space</kbd> on the focused option selects it. `bq-dropdown` and `bq-option-list` do not add arrow-key navigation between options.
 - Pressing <kbd>Esc</kbd> closes the dropdown, and <kbd>Tab</kbd> closes it when focus leaves the component.
 - Only one panel stays open at a time. Opening a dropdown, select, or date picker closes any other open panel, unless it is nested inside that panel.
 - For multi-select patterns, selection and deselection should remain visible and predictable.
-- Do not rely on icons alone. Pair icon-only triggers with accessible labels and keep option text readable.
+- You must not rely on icons alone. Pair icon-only triggers with accessible labels and keep option text readable.
+
+### Keyboard interaction
+
+| Key | Context | Action |
+|---|---|---|
+| `Tab` | Focus moves to the trigger | Focuses the trigger; does not open the panel |
+| `Enter` or `Space` | Native `<button>` trigger focused (such as `bq-button`) | Activates the trigger click, which toggles the panel |
+| `Tab` | Panel open, focus moves to the next enabled `bq-option` | Moves focus to the option; the panel stays open |
+| `Enter` or `Space` | `bq-option` focused | Selects the option; the panel closes unless `keep-open-on-select` is set |
+| `Escape` | Panel open | Closes the panel |
+| `Tab` | Panel open, focus leaves the dropdown | Closes the panel |
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Provide a visible label or `aria-label` on the trigger, especially for icon-only triggers | MUST | manual: inspect the trigger accessible name |
+| Supply the `label` prop when a `bq-avatar` is the trigger | MUST | manual: inspect the avatar trigger accessible name |
+| Make the trigger reachable with `Tab`; use a natively focusable element such as `bq-button` | MUST | manual: reach and activate the trigger using only the keyboard |
+| Do not rely on icons alone; pair icon-only triggers with accessible labels | MUST NOT | manual: check icon-only triggers have readable accessible names |
+| Keep selection and deselection visible and predictable for multi-select patterns | SHOULD | manual: select and deselect options and inspect the visible state |
 
 ## API reference
 
@@ -1384,6 +1413,12 @@ Use `same-width` when the panel should match the trigger width. Use `panel-heigh
 | `sameWidth` | `same-width` | Whether the panel should have the same width as the trigger element | `boolean` | `false` |
 | `skidding` | `skidding` | Represents the skidding between the panel and the trigger element | `number` | `0` |
 | `strategy` | `strategy` | Defines the positioning strategy | `'fixed'` \| `'absolute'` | `'fixed'` |
+
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| No child with `slot="trigger"` | MUST NOT | Nothing toggles the panel because the click listener attaches to the trigger |
 
 ### Events
 

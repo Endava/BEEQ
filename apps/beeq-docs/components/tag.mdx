@@ -41,6 +41,10 @@ Tags are concise elements that let users input information, make selections, fil
   </Card>
 </CardGroup>
 
+<Tip>
+  Choose [`bq-badge`](/components/badge) instead of `bq-tag` for a non-interactive count or dot attached to another element, and [`bq-status`](/components/status) instead for a read-only state shown as a colored dot with a text label.
+</Tip>
+
 ## Patterns
 
 The design guidance highlights several common ways tags can appear in an interface.
@@ -310,6 +314,13 @@ Apply `disabled` alongside `clickable` when a tag action is temporarily unavaila
 </CodeLivePreview>
 
 ## Options
+
+| Dimension | Allowed values | Default |
+|---|---|---|
+| `size` | `xsmall`, `small`, `medium` | `medium` |
+| `variant` | `filled`, `outline` | `filled` |
+| `color` | `error`, `gray`, `info`, `success`, `warning` | none (default neutral style) |
+| `border` | `none`, `xs2`, `xs`, `s`, `m`, `l`, `full` | none (size's predefined radius) |
 
 ### Color - filled
 
@@ -1005,9 +1016,32 @@ Use the outline variant with a prefix icon when you want context with a lighter 
 - Built in: when a clickable tag is disabled, the internal button receives `disabled` and no click, focus, or blur behavior is emitted.
 - Built in: when a removable tag is closed, the host reflects `hidden` and `aria-hidden`, and the close action is exposed through a button labeled `Close`.
 - Built in: decorative close icons are marked `aria-hidden="true"` so assistive technology reads the button label instead of the icon name.
-- You must: keep text as the primary content. Prefix icons can reinforce meaning, but they should never replace the visible label.
-- You must: avoid relying on color alone for category or state. The label should still make sense without the visual treatment.
-- You must: make the effect of removing a tag obvious in the surrounding UI, especially in filters and selected-value patterns.
+- You must keep text as the primary content. Prefix icons can reinforce meaning, but they must not replace the visible label.
+- You must not rely on color alone for category or state. The label must still make sense without the visual treatment.
+- You should make the effect of removing a tag obvious in the surrounding UI, especially in filters and selected-value patterns.
+
+### Keyboard interaction
+
+A tag is focusable only when it is clickable (and not disabled) or removable (and not disabled). An informational tag renders a `div` and has no keyboard interaction. Disabled clickable tags and disabled removable tags are not focusable.
+
+| Key | Context | Action |
+|---|---|---|
+| `Tab` | Clickable tag | Moves focus to the tag button |
+| `Enter` | Clickable tag focused | Activates the tag: emits `bqClick` and toggles `selected` |
+| `Space` | Clickable tag focused | Activates the tag: emits `bqClick` and toggles `selected` |
+| `Tab` | Removable tag | Moves focus to the `Close` button |
+| `Enter` | `Close` button focused | Hides the tag and emits `bqClose` |
+| `Space` | `Close` button focused | Hides the tag and emits `bqClose` |
+
+`Enter` and `Space` come from the native `button` the tag (or its close button) renders.
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Keep text as the primary content; prefix icons must not replace the visible label | MUST | manual: read the tag with prefix icons hidden |
+| Do not rely on color alone for category or state | MUST NOT | manual: read category or state without its color |
+| Make the effect of removing a tag obvious in the surrounding UI | SHOULD | manual: remove a tag and inspect the surrounding update |
 
 ## API reference
 
@@ -1024,6 +1058,13 @@ Use the outline variant with a prefix icon when you want context with a lighter 
 | `selected` | `selected` | If `true`, the Tag is selected (only if clickable) | `boolean` | `false` |
 | `size` | `size` | The size of the Tag component | `'xsmall'` \| `'small'` \| `'medium'` | `'medium'` |
 | `variant` | `variant` | The visual variant of the Tag | `'filled'` \| `'outline'` | `'filled'` |
+
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| `selected` or `disabled` without `clickable` | SHOULD NOT | Both are ignored because only a clickable tag renders as a button |
+| `clickable` with `removable`, `color` or a custom color | SHOULD NOT | The tag is not clickable, and `removable` only works on a non-clickable tag |
 
 ### Events
 

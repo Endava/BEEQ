@@ -42,6 +42,10 @@ Progress bars communicate the status of ongoing tasks such as downloads, uploads
   </Card>
 </CardGroup>
 
+<Tip>
+  Choose [`bq-spinner`](/components/spinner) instead of `bq-progress` when work is active but its completion cannot be measured as a percentage, and [`bq-slider`](/components/slider) when users set the value themselves.
+</Tip>
+
 ## Patterns
 
 <CardGroup cols={2}>
@@ -191,6 +195,12 @@ Use the default progress bar for general task tracking when the process has a me
 </CodeLivePreview>
 
 ## Options
+
+| Dimension | Allowed values | Default |
+|---|---|---|
+| `type` | `default`, `error` | `default` |
+| `thickness` | `medium`, `large` | `medium` |
+| `border-shape` | `rounded`, `square` | `rounded` |
 
 ### Large thickness
 
@@ -635,10 +645,23 @@ Use `indeterminate` when the task is active but the exact completion point canno
 
 - **Built-in progress semantics** — the component renders a native `<progress>` element inside its shadow DOM, which browsers expose as `role="progressbar"` with `aria-valuenow`, `aria-valuemin="0"`, and `aria-valuemax="100"` automatically. Assistive technology reads the current value without additional markup.
 - **Indeterminate state** — when `indeterminate` is `true`, the native element has no `value` attribute, and assistive technology announces it as an indeterminate progress bar.
-- **Provide task context**: add a visible label or nearby text that explains what operation the progress bar is tracking.
-- **Do not rely on color alone**: pair `type="error"` with a visible message so the failure state is understandable without color perception.
-- **Use percentage only when it helps**: `label` or `enable-tooltip` improves clarity when precise status matters, but it is not required for every short or self-explanatory task.
-- **Be careful with motion**: if indeterminate animation is distracting in your application, respect `prefers-reduced-motion` at the app level.
+- **Provide task context**: you must add a visible label or nearby text that explains what operation the progress bar is tracking.
+- **Do not rely on color alone**: you must pair `type="error"` with a visible message so the failure state is understandable without color perception.
+- **Use percentage only when it helps**: you should use `label` or `enable-tooltip` when precise status matters. You may omit them for short or self-explanatory tasks.
+- **Be careful with motion**: if indeterminate animation is distracting in your application, you should respect `prefers-reduced-motion` at the app level.
+
+### Keyboard interaction
+
+No keyboard interaction: the component is not focusable.
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Add a visible label or nearby text that says which operation the bar tracks | MUST | manual: read nearby text to identify the tracked operation |
+| Pair `type="error"` with a visible message | MUST | manual: inspect the error message next to the bar |
+| Use `label` or `enable-tooltip` when precise status matters | SHOULD | manual: check whether precise progress is available as text |
+| Respect `prefers-reduced-motion` at the app level for the indeterminate animation | SHOULD | manual: check the indeterminate animation with reduced motion enabled |
 
 ## API reference
 
@@ -653,6 +676,13 @@ Use `indeterminate` when the task is active but the exact completion point canno
 | `thickness` | `thickness` | Controls the height of the bar | `"medium"` \| `"large"` | `"medium"` |
 | `type` | `type` | Sets the visual type of the progress bar | `"default"` \| `"error"` | `"default"` |
 | `value` | `value` | The current progress value, clamped between `0` and `100` | `number` | `0` |
+
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| `enable-tooltip` with `indeterminate` | SHOULD NOT | The tooltip does not render while the progress is indeterminate |
+| `label` with `indeterminate` | SHOULD NOT | The label is hidden and marked `aria-hidden` |
 
 ### Shadow parts
 

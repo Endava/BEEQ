@@ -12,6 +12,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 </Frame>
 
 Steps guide users through a sequential process such as a wizard, onboarding flow, or multistep form. Use them to show progress, the current step, completed steps, and steps that still need attention.
+The component is named Steps (`bq-steps`, containing `bq-step-item`). BEEQ has no separate Stepper component.
 
 <Note>
   Use `bq-step-item` inside `bq-steps`. The parent component passes `type`, `orientation`, `size`, and divider settings down to each step item.
@@ -39,6 +40,10 @@ Steps guide users through a sequential process such as a wizard, onboarding flow
     - A status message or progress bar communicates the state more clearly
   </Card>
 </CardGroup>
+
+<Tip>
+  Choose [`bq-tab`](/components/tab) instead of `bq-steps` when users switch freely between peer sections of content in any order. Use `bq-steps` when the sections follow a fixed order with current, completed, and error states. Choose [`bq-breadcrumb`](/components/breadcrumb) to show where a page sits in a site hierarchy instead.
+</Tip>
 
 ## Patterns
 
@@ -88,7 +93,7 @@ Steps are composed of a label or prefix, title, optional description, and divide
     imageLightSrc="/components/images/steps/steps-status-light.svg"
     imageDarkSrc="/components/images/steps/steps-status-dark.svg"
   >
-    Distinguish the current step from completed and remaining steps. Use status, text, and icon changes so color is not the only signal.
+    The current step must be distinguishable from completed and remaining steps. Don't use color as the only signal; combine it with status, text, and icon changes.
   </CardTile>
   <CardTile
     title="Keep flows manageable"
@@ -113,6 +118,8 @@ Labels describe each step, while icons provide visual cues. Use meaningful title
 ## Usage
 
 Start with `bq-steps` and one `bq-step-item` for each stage. There are three types of steps: `numeric`, `dot`, and `icon`.
+
+**Allowed `type` values:** `numeric`, `icon`, `dot`. The prop has no declared default. A value outside this list falls back to `numeric` and logs a console warning.
 
 <Warning>
   You **must specify the type** you want to use on `bq-steps`. If you don't, the default styles will apply, but it may not match your content or design intent.
@@ -513,7 +520,9 @@ Use `type="icon"` when each step benefits from a recognizable symbol. Icons shou
 ## Status
 
 Use the `status` attribute to show progress and guide users through the process.
-The current step should be visually distinct from completed and remaining steps.
+The current step must be visually distinct from completed and remaining steps.
+
+**Allowed `status` values:** `default` (default), `current`, `completed`, `error`, `disabled`. Set `status` on `bq-step-item`, not on `bq-steps`.
 
 <Tip>
   The status should be applied to the `bq-step-item` element. This ensures that the entire step, including the label and description, reflects the current state.
@@ -684,6 +693,8 @@ The current step should be visually distinct from completed and remaining steps.
 ## Options
 
 ### Orientation
+
+**Allowed `orientation` values:** `horizontal` (default), `vertical`.
 
 Use `orientation="vertical"` when the process should unfold from top to bottom or when labels and descriptions need more room.
 
@@ -863,6 +874,10 @@ Use `orientation="vertical"` when the process should unfold from top to bottom o
 
 ### Size and divider color
 
+**Allowed `size` values:** `medium` (default), `small`.
+
+**Allowed `divider-color` values:** any color token as a `string` (default `stroke--primary`).
+
 Use `size="small"` in compact layouts. Use `divider-color` with a declarative color token when the connector needs a different emphasis.
 
 <CodeLivePreview mode="iframe" height="10rem" removePadding code={`
@@ -1009,7 +1024,7 @@ Use `size="small"` in compact layouts. Use `divider-color` with a declarative co
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Avoid multiple steppers in the same view because they can compete for attention and disrupt the flow.
+    Avoid multiple Steps components in the same view because they can compete for attention and disrupt the flow.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
@@ -1059,11 +1074,33 @@ Use `size="small"` in compact layouts. Use `divider-color` with a declarative co
 
 The `bq-steps` container renders with `role="list"`, and each `bq-step-item` renders with `role="listitem"` around an interactive button. The current step maps to `aria-current="step"`, and disabled items use the native `disabled` button state.
 
-- **Keyboard** - users can move through step items with <kbd>Tab</kbd> and <kbd>Shift</kbd> + <kbd>Tab</kbd>. They can activate an enabled step with <kbd>Enter</kbd> or <kbd>Space</kbd>.
-- **Current step** - set `status="current"` on one step item so assistive technology can announce the current position.
-- **Status communication** - pair color with text, icon shape, or description changes so users do not need color perception to understand progress.
-- **Icons and numbers** - mark decorative icons with `aria-hidden="true"`. When numeric prefixes are used, provide an `aria-label` such as `Step 1`.
-- **Descriptions** - use the `description` slot when users need more context about a step, an error, or the expected next action.
+- **Current step** - you must set `status="current"` on one step item so assistive technology can announce the current position.
+- **Status communication** - you must pair color with text, icon shape, or description changes so users do not need color perception to understand progress.
+- **Icons and numbers** - you must mark decorative icons with `aria-hidden="true"`. When numeric prefixes are used, you must provide an `aria-label` such as `Step 1`.
+- **Descriptions** - you should use the `description` slot when users need more context about a step, an error, or the expected next action.
+
+### Keyboard interaction
+
+Each `bq-step-item` renders a native `button`.
+
+| Key | Context | Action |
+|---|---|---|
+| `Tab` | Any | Moves focus to the next enabled step item |
+| `Shift` + `Tab` | Any | Moves focus to the previous enabled step item |
+| `Enter` | Enabled step item focused, not current | Emits `bqClick` and sets the step item as current |
+| `Space` | Enabled step item focused, not current | Emits `bqClick` and sets the step item as current |
+
+A step item with `status="disabled"` is not focusable and does not emit `bqClick`. Activating the current step item does nothing.
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Set `status="current"` on exactly one step item | MUST | manual: inspect all step statuses for exactly one current item |
+| Pair color with text, icon shape, or description changes | MUST | manual: read step states without their colors |
+| Mark decorative icons with `aria-hidden="true"` | MUST | manual: inspect decorative icons for aria-hidden |
+| Provide an `aria-label` such as `Step 1` when numeric prefixes are used | MUST | manual: inspect numeric prefix accessible names |
+| Use the `description` slot for extra context, errors, or the next action | SHOULD | manual: read descriptions for context, errors and next actions |
 
 ## API reference
 
@@ -1087,6 +1124,12 @@ The `bq-steps` container renders with `role="list"`, and each `bq-step-item` ren
 | `size` | `size` | Prefix size; usually inherited from `bq-steps` | `'medium'` \| `'small'` | `'medium'` |
 | `status` | `status` | Visual and semantic state of the item | `'default'` \| `'current'` \| `'completed'` \| `'error'` \| `'disabled'` | `'default'` |
 | `type` | `type` | Prefix type; usually inherited from `bq-steps` | `'numeric'` \| `'icon'` \| `'dot'` | `undefined` |
+
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| `type`, `size`, `orientation` or `divider-color` on a `bq-step-item` inside `bq-steps` | SHOULD NOT | The parent overwrites these values on every step item |
 
 ### Slots
 

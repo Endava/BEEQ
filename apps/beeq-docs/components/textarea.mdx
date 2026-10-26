@@ -41,6 +41,10 @@ A textarea is a multi-line text input control. Use it when users need to provide
   </Card>
 </CardGroup>
 
+<Tip>
+  Choose [`bq-input`](/components/input) instead of `bq-textarea` when users enter a single line of text.
+</Tip>
+
 ## Anatomy
 
 <Frame className="px-4 py-4" caption="Textarea component anatomy">
@@ -75,7 +79,7 @@ A textarea supports five interactive states: **default**, **focused**, **disable
 
 ### Resize behavior
 
-By default, users can drag the bottom-right corner to resize the textarea vertically. Set `disable-resize` to prevent resizing — useful when you want to maintain a consistent layout height. Alternatively, set `auto-grow` to let the textarea expand automatically as the user types, eliminating the need for manual resizing.
+By default, users can drag the bottom-right corner to resize the textarea vertically. Set `disable-resize` to prevent resizing, which keeps the layout height consistent. Alternatively, set `auto-grow` to let the textarea expand automatically as the user types, eliminating the need for manual resizing.
 
 ### Character counter
 
@@ -267,6 +271,12 @@ Pre-populate your textarea with an initial `value` attribute to streamline user 
 </CodeLivePreview>
 
 ## Options
+
+| Dimension | Attribute | Allowed values | Default |
+|---|---|---|---|
+| Validation status | `validation-status` | `error`, `none`, `success`, `warning` | `none` |
+| Wrap | `wrap` | `hard`, `off`, `soft` | `soft` |
+| Autocapitalize | `autocapitalize` | `characters`, `off`, `on`, `sentences`, `words` | `off` |
 
 ### Disabled
 
@@ -503,7 +513,7 @@ Add `disable-resize` to prevent users from resizing the textarea. This is useful
 </CodeLivePreview>
 
 <Tip>
-  Maintain a consistent layout by preventing users from resizing.
+  You may set `disable-resize` to keep a consistent layout.
 </Tip>
 
 ### Max length
@@ -712,7 +722,7 @@ Set `readonly` to display the value without allowing edits. Unlike `disabled`, a
 
 ### Validation
 
-Set `validation-status` to `error`, `warning`, or `success` to communicate the state of the field. Always pair a validation status with a descriptive `helper-text` message so users understand the issue and how to resolve it.
+Set `validation-status` to `error`, `warning`, or `success` to communicate the state of the field. You must pair a validation status with a descriptive `helper-text` message so users understand the issue and how to resolve it.
 
 <CodeLivePreview mode="shadow" code={`
   <style>
@@ -1239,20 +1249,37 @@ Set `validation-status` to `error`, `warning`, or `success` to communicate the s
 
 ### Keyboard interaction
 
-| Key | Action |
-|---|---|
-| `Tab` | Moves focus to the textarea |
-| `Shift + Tab` | Moves focus away from the textarea |
-| Arrow keys | Navigate the cursor through the text |
-| `Enter` | Inserts a new line in the text |
+| Key | Context | Action |
+|---|---|---|
+| `Tab` | Any | Moves focus to the textarea, or to the next focusable element when it is already focused |
+| `Shift` + `Tab` | Textarea focused | Moves focus to the previous focusable element |
+| `ArrowLeft` | Textarea focused | Moves the cursor one character back (native behavior) |
+| `ArrowRight` | Textarea focused | Moves the cursor one character forward (native behavior) |
+| `ArrowUp` | Textarea focused | Moves the cursor to the previous line (native behavior) |
+| `ArrowDown` | Textarea focused | Moves the cursor to the next line (native behavior) |
+| `Enter` | Textarea focused, not `readonly` | Inserts a new line in the text |
+
+A `disabled` textarea is not focusable. A `readonly` textarea stays focusable but rejects edits.
 
 ### Developer responsibilities
 
-- Always provide content in the `label` slot. The label is the primary source of the accessible name for the textarea. Do not rely on `placeholder` — it disappears once the user starts typing.
-- When using `validation-status`, pair it with a `helper-text` message that explains the issue. The helper text is not programmatically linked to the textarea (no `aria-describedby`), so keep the message next to the field and make the recovery step explicit.
-- When the textarea is `disabled`, it is removed from the tab order and excluded from form submission. Communicate the reason for disabling through surrounding text.
-- A `readonly` textarea remains focusable and its value is included in form submissions. Use it when you want users to see but not edit a value.
-- The `bqChange` event fires when the user changes the value and then blurs the field. The `bqInput` event fires on every keystroke. Use `debounce-time` to throttle `bqInput` for performance-sensitive scenarios such as live search.
+- You must provide content in the `label` slot. The label is the primary source of the accessible name for the textarea.
+- You must not rely on `placeholder` as the label because it disappears once the user starts typing.
+- When using `validation-status`, you must pair it with a `helper-text` message that explains the issue. The helper text is not programmatically linked to the textarea (no `aria-describedby`), so you must keep the message next to the field and make the recovery step explicit.
+- When the textarea is `disabled`, it is removed from the tab order and excluded from form submission. You should communicate the reason for disabling through surrounding text.
+- A `readonly` textarea remains focusable and its value is included in form submissions. You may use it when you want users to see but not edit a value.
+- The `bqChange` event fires when the user changes the value and then blurs the field. The `bqInput` event fires on every keystroke. You may use `debounce-time` to throttle `bqInput` for performance-sensitive scenarios such as live search.
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Provide a visible label in the `label` slot | MUST | manual: inspect the visible field label |
+| Do not use `placeholder` as the only label | MUST NOT | manual: check the label remains after the placeholder disappears |
+| Pair `validation-status` with a `helper-text` message that explains how to recover | MUST | manual: inspect helper text with an invalid value |
+| Set `name` so the value is submitted with the form | MUST | automated: [`bq-textarea.e2e.tsx`](https://github.com/Endava/BEEQ/blob/main/packages/beeq/src/components/textarea/__tests__/bq-textarea.e2e.tsx) checks `FormData` |
+| Set `required` and `form-validation-message` when a value is mandatory before submit | SHOULD | manual: inspect the required-field validation message |
+| Communicate why a `disabled` textarea is unavailable through surrounding text | SHOULD | manual: inspect nearby text for disabled textareas |
 
 ## API reference
 
@@ -1279,6 +1306,10 @@ Set `validation-status` to `error`, `warning`, or `success` to communicate the s
 | `validationStatus` | `validation-status` | Validation state of the textarea | `'none' \| 'error' \| 'warning' \| 'success'` | `'none'` |
 | `value` | `value` | The current value of the textarea | `string` | — |
 | `wrap` | `wrap` | How text is wrapped when the form is submitted | `'soft' \| 'hard' \| 'off'` | `'soft'` |
+
+### Invalid combinations
+
+No invalid prop combinations.
 
 ### Events
 

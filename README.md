@@ -60,7 +60,7 @@ The BEEQ components are published to the NPM package manager registry. You can u
 The `beeq` agent skill teaches coding agents (GitHub Copilot, Claude Code, Cursor, and others) to choose, verify, style, and review BEEQ components. Install it into your project with the [`skills` CLI](https://github.com/vercel-labs/skills):
 
 ```bash
-npx skills add Endava/BEEQ --skill beeq
+npx skills add Endava/BEEQ#v1.17.1 --skill beeq
 ```
 
 See [AI tools](https://www.beeq.design/getting-started/ai-tools) for pinning the skill to a release, the MCP server, and `llms.txt`.

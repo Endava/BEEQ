@@ -960,15 +960,18 @@ describe('bq-date-picker', () => {
     ['single', '2026-07-15', 'Selected date: Wednesday, 15 July 2026'],
     ['range', '2026-07-15/2026-07-20', 'Selected date range: Wednesday, 15 July 2026 to Monday, 20 July 2026'],
     ['multi', '2026-07-15 2026-07-20', 'Selected dates: Wednesday, 15 July 2026, Monday, 20 July 2026'],
-  ] as const)('should announce the current %s selection when focus enters the segments', async (type, value, expected) => {
-    const { root } = await render(<bq-date-picker name="date-picker" type={type} value={value} />);
-    const datePicker = root as HTMLBqDatePickerElement;
+  ] as const)(
+    'should announce the current %s selection when focus enters the segments',
+    async (type, value, expected) => {
+      const { root } = await render(<bq-date-picker name="date-picker" type={type} value={value} />);
+      const datePicker = root as HTMLBqDatePickerElement;
 
-    getSegment(datePicker, 'day')?.focus();
-    await waitForSelectionAnnouncement();
+      getSegment(datePicker, 'day')?.focus();
+      await waitForSelectionAnnouncement();
 
-    expect(getSelectionAnnouncement(datePicker)?.textContent).toBe(expected);
-  });
+      expect(getSelectionAnnouncement(datePicker)?.textContent).toBe(expected);
+    },
+  );
 
   it('should not change the selection announcement while roving between segments', async () => {
     const { root } = await render(<bq-date-picker name="date-picker" value="2026-07-15" />);
@@ -1287,20 +1290,23 @@ describe('bq-date-picker', () => {
   it.each([
     ['range', '2026-04-10/2026-06-20', '2026-05-01/2026-05-31'],
     ['multi', '2026-04-10 2026-06-20', '2026-05-01 2026-05-31'],
-  ] as const)('should clamp every complete out-of-bounds %s group when focus leaves the field', async (type, value, expected) => {
-    const { root, waitForChanges } = await render(
-      <bq-date-picker name="date-picker" max="2026-05-31" min="2026-05-01" type={type} value={value} />,
-    );
-    const datePicker = root as HTMLBqDatePickerElement;
-    const firstMonthSegment = getSegment(datePicker, 'month');
-    const trigger = getCalendarTriggerButton(datePicker);
+  ] as const)(
+    'should clamp every complete out-of-bounds %s group when focus leaves the field',
+    async (type, value, expected) => {
+      const { root, waitForChanges } = await render(
+        <bq-date-picker name="date-picker" max="2026-05-31" min="2026-05-01" type={type} value={value} />,
+      );
+      const datePicker = root as HTMLBqDatePickerElement;
+      const firstMonthSegment = getSegment(datePicker, 'month');
+      const trigger = getCalendarTriggerButton(datePicker);
 
-    firstMonthSegment?.focus();
-    trigger?.focus();
-    await waitForChanges();
+      firstMonthSegment?.focus();
+      trigger?.focus();
+      await waitForChanges();
 
-    expect(datePicker.value).toBe(expected);
-  });
+      expect(datePicker.value).toBe(expected);
+    },
+  );
 
   it('should restore the initial value on form reset', async () => {
     const { root, waitForChanges } = await render(

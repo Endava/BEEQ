@@ -1,6 +1,6 @@
 ---
 title: Select
-description: The select input lets users choose one or more options from a predefined list, commonly used in forms for easy data selection.
+description: Select lets users choose one or more options from a predefined list, with a styled trigger, a floating option panel, and native form support.
 ---
 
 import { CardTile } from '/snippets/CardTile.jsx';
@@ -36,6 +36,10 @@ The select input lets users choose one option — or multiple options when `mult
     - The choices are binary (yes / no, on / off) — use a [Checkbox](/components/checkbox) or toggle instead
   </Card>
 </CardGroup>
+
+<Tip>
+  Use `bq-select` when the chosen value needs form submission or validation. Choose [`bq-radio-group`](/components/radio) when a few named choices can stay visible, and [`bq-dropdown`](/components/dropdown) when the options trigger actions or lead to destinations instead of setting a form value.
+</Tip>
 
 ## Patterns
 
@@ -1361,6 +1365,12 @@ For example, `event.detail.selectionTree` looks like this after selecting the fu
 ```
 
 ## Options
+
+| Dimension | Attribute | Allowed values | Default |
+|---|---|---|---|
+| Validation status | `validation-status` | `error`, `none`, `success`, `warning` | `none` |
+| Panel placement | `placement` | `bottom`, `bottom-end`, `bottom-start`, `left`, `left-end`, `left-start`, `right`, `right-end`, `right-start`, `top`, `top-end`, `top-start` | `bottom` |
+| Panel position strategy | `strategy` | `absolute`, `fixed` | `fixed` |
 
 ### Prefix
 
@@ -3624,19 +3634,49 @@ These events no longer follow input-only focus changes. If your handler needs to
 - **Built in:** the native `<input>` inside the control has `role="combobox"`, `aria-haspopup` (`"listbox"` for flat options or `"tree"` for nested options), `aria-expanded` (toggled when the panel opens and closes), and `aria-controls` pointing to the options container by `id`.
 - **Built in:** `aria-disabled="true"` is applied on the input when `disabled` is set.
 - **Built in:** the component is form-associated via `ElementInternals`, so it works with native `<form>` elements, `required` validation, and `formResetCallback`.
-- **Built in:** keyboard navigation — `Tab` moves focus to the input without opening the panel; `ArrowDown` / `ArrowUp` open the panel and move focus to the first or last option; while the panel is open, `ArrowDown` / `ArrowUp` move between options and `Home` / `End` jump to the first or last option; `Enter` or `Space` selects the focused option; `Escape` closes the panel and returns focus to the input without changing the selection.
-- **Built in:** in multi-select mode, `Backspace` on an empty input removes the most recently added tag.
 - **Built in:** opening the panel closes any other open select, date picker, or dropdown panel, so only one panel stays open at a time.
-- **Built in:** nested multi-select changes the option container to a tree. `ArrowRight` expands a branch or moves to its first child; `ArrowLeft` collapses a branch or returns to its parent. `Enter` and `Space` select the focused option without changing expansion.
-- **Built in:** parent tree items expose checked, unchecked, or mixed state as their descendants are selected, and `aria-expanded` communicates whether a branch is open. The separate visual expand button is hidden from assistive technology and removed from the Tab order; keyboard users expand and collapse the focused tree item with the arrow keys.
-- **Your responsibility:** provide text in the `label` slot. The component associates its native `<label>` with the combobox input through `for` and `id`. Use visually hidden text when the layout cannot show a visible label.
-- **Your responsibility:** when `validation-status` is `"error"`, populate the `helper-text` slot with a clear error description. The component does not set `aria-describedby` or `aria-invalid` on the input, so do not rely on color alone to communicate the error.
-- **Your responsibility:** if options are loaded asynchronously, show a disabled loading option in the default slot, as in the custom filtering example. `panel` is a shadow part for styling, not a slot.
-- **Your responsibility:** give every nested option a unique `value`. Values are used for selection state, form submission, tags, and the `selectionTree` event detail.
+- **Built in:** nested multi-select changes the option container to a tree.
+- **Built in:** parent tree items expose checked, unchecked, or mixed state as their descendants are selected, and `aria-expanded` communicates whether a branch is open. The separate visual expand button is hidden from assistive technology and removed from the Tab order; keyboard users expand and collapse the focused tree item with `ArrowRight` and `ArrowLeft`.
+- **Built in:** text in the `label` slot names the combobox. The `name` prop is the form submission key, not the accessible name.
+- **Your responsibility:** you must provide text in the `label` slot. The component associates its native `<label>` with the combobox input through `for` and `id`. You should use visually hidden text when the layout cannot show a visible label.
+- **Your responsibility:** when `validation-status` is `"error"`, you must populate the `helper-text` slot with a clear error description. The component does not set `aria-describedby` or `aria-invalid` on the input, so you must not rely on color alone to communicate the error.
+- **Your responsibility:** if options are loaded asynchronously, you should show a disabled loading option in the default slot, as in the custom filtering example. `panel` is a shadow part for styling, not a slot.
+- **Your responsibility:** you must give every nested option a unique `value`. Values are used for selection state, form submission, tags, and the `selectionTree` event detail.
 
-<Warning>
-  The internal label currently sets `aria-label` from the technical `name` value, or `"select"` when no name is supplied. This may override the slotted label in accessible-name computation and is tracked in [the Select follow-up issue](https://github.com/Endava/BEEQ/issues/1832). Provide meaningful label text and verify the computed combobox name in your supported browsers and assistive technologies.
-</Warning>
+### Keyboard interaction
+
+The native `input` is the only tab stop. The clear button has `tabindex="-1"` and the nested expand buttons are removed from the Tab order.
+
+| Key | Context | Action |
+|---|---|---|
+| `Tab` | Any | Moves focus to the input without opening the panel |
+| Printable characters | Input focused, `disable-search` not set | Filters the options |
+| `ArrowDown` | Input focused, panel closed | Opens the panel and moves focus to the first option |
+| `ArrowUp` | Input focused, panel closed | Opens the panel and moves focus to the last option |
+| `ArrowDown` | Input focused, panel open | Moves focus to the first option |
+| `ArrowUp` | Input focused, panel open | Moves focus to the last option |
+| `ArrowDown` | Option focused | Moves focus to the next option |
+| `ArrowUp` | Option focused | Moves focus to the previous option |
+| `Home` | Option focused | Moves focus to the first option |
+| `End` | Option focused | Moves focus to the last option |
+| `Enter` | Option focused | Selects the focused option without changing tree expansion |
+| `Space` | Option focused | Selects the focused option without changing tree expansion |
+| `Escape` | Panel open | Closes the panel and returns focus to the input without changing the selection |
+| `Backspace` | `multiple`, input empty | Removes the most recently added tag |
+| `ArrowRight` | Nested options, option focused | Expands a collapsed branch, or moves focus to its first child |
+| `ArrowLeft` | Nested options, option focused | Collapses an expanded branch, or moves focus to the parent option |
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Provide text in the `label` slot, visually hidden when the layout hides it | MUST | manual: inspect the visible or visually hidden label text |
+| Do not use `placeholder` as the only label | MUST NOT | manual: check that the label remains when the placeholder is removed |
+| Populate the `helper-text` slot when `validation-status` is `"error"` | MUST | manual: inspect the error state and helper text together |
+| Set `name` so the value is submitted with the form | MUST | automated: [`bq-select.e2e.tsx`](https://github.com/Endava/BEEQ/blob/main/packages/beeq/src/components/select/__tests__/bq-select.e2e.tsx) checks `FormData` |
+| Set `required` when a selection is mandatory so the form is invalid while no value is selected | MUST | automated: [`bq-select.e2e.tsx`](https://github.com/Endava/BEEQ/blob/main/packages/beeq/src/components/select/__tests__/bq-select.e2e.tsx) checks `form.checkValidity()` |
+| Give every nested option a unique `value` | MUST | automated: [`bq-select.e2e.tsx`](https://github.com/Endava/BEEQ/blob/main/packages/beeq/src/components/select/__tests__/bq-select.e2e.tsx) checks duplicate-value errors |
+| Show a disabled loading option while options load asynchronously | SHOULD | manual: inspect the option list while loading |
 
 ## API reference
 
@@ -3670,6 +3710,15 @@ These events no longer follow input-only focus changes. If your handler needs to
 | `strategy` | `strategy` | CSS position strategy used to place the panel | `'fixed' \| 'absolute'` | `'fixed'` |
 | `validationStatus` | `validation-status` | Visual validation state of the select | `'error' \| 'none' \| 'success' \| 'warning'` | `'none'` |
 | `value` | `value` | The currently selected value; can be a string or array of strings in multi-select mode | `string \| string[]` | — |
+
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| Nested `bq-option` children (`slot="options"`) without `multiple` | MUST NOT | Nested descendants are unavailable and the component logs a console warning |
+| Removing `multiple` while nested options exist | MUST NOT | The selection is cleared and `value` resets to an empty string |
+| Duplicate `value` across nested options | MUST NOT | The component logs a console error and the `value` and event payload become ambiguous |
+| `enable-checkboxes` without `multiple` | SHOULD NOT | No checkboxes render because they require `multiple` |
 
 ### Methods
 

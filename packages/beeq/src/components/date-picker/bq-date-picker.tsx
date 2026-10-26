@@ -1983,7 +1983,6 @@ export class BqDatePicker {
               </bq-button>
             )}
 
-            {/* biome-ignore lint/a11y/noStaticElementInteractions: bq-button renders a native <button> in its shadow DOM */}
             <bq-button
               appearance="text"
               border="xs"

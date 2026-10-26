@@ -45,6 +45,10 @@ Radio buttons present a list of options where only one can be active at a time. 
   </Card>
 </CardGroup>
 
+<Tip>
+  Choose [`bq-checkbox`](/components/checkbox) instead of `bq-radio-group` when users can select several options, [`bq-switch`](/components/switch) when the choice is a single on/off setting that applies immediately, [`bq-select`](/components/select) when the list is too long to show every option in a form, and [`bq-dropdown`](/components/dropdown) when the options trigger actions instead of setting a form value.
+</Tip>
+
 ## Patterns
 
 <CardGroup cols={2}>
@@ -305,6 +309,8 @@ Set `disabled` on the group to prevent all interaction. You can also disable ind
 
 Use `orientation="horizontal"` to arrange options side by side. Best for short labels and a small number of choices where vertical space is limited.
 
+**Allowed `orientation` values:** `vertical` (default), `horizontal`. Any other value falls back to `vertical`.
+
 <CodeLivePreview mode="shadow" code={`
   <bq-radio-group name="group" value="option1" orientation="horizontal">
     <span slot="label">Label</span>
@@ -563,7 +569,7 @@ Set `background-on-hover` on the group to show a filled highlight on every label
     </bq-radio-group>
     <div class="radio-form__actions">
       <bq-button appearance="secondary" type="reset">Reset</bq-button>
-      <bq-button type="button">Submit</bq-button>
+      <bq-button type="submit">Submit</bq-button>
     </div>
     <pre class="radio-form__output" id="radio-output">{}</pre>
   </form>
@@ -572,17 +578,11 @@ Set `background-on-hover` on the group to show a filled highlight on every label
     (() => {
       const form = previewRoot.querySelector('#radio-form');
       const output = previewRoot.querySelector('#radio-output');
-      const submitButton = form.querySelector('bq-button[type="button"]');
 
       const showFormData = () => {
         if (!form.reportValidity()) return;
         output.textContent = JSON.stringify(Object.fromEntries(new FormData(form).entries()), null, 2);
       };
-
-      submitButton?.addEventListener('bqClick', (event) => {
-        event.preventDefault();
-        showFormData();
-      });
 
       form.addEventListener('submit', (event) => {
         event.preventDefault();
@@ -599,7 +599,7 @@ Set `background-on-hover` on the group to show a filled highlight on every label
 `}>
   <CodeGroup>
     ```html HTML icon="html5" expandable
-    <form id="radio-form">
+    <form class="radio-form" id="radio-form">
       <bq-radio-group
         fieldset
         name="contactMethod"
@@ -611,9 +611,11 @@ Set `background-on-hover` on the group to show a filled highlight on every label
         <bq-radio value="phone">Phone</bq-radio>
         <bq-radio value="chat">Chat</bq-radio>
       </bq-radio-group>
-      <bq-button appearance="secondary" type="reset">Reset</bq-button>
-      <bq-button type="submit">Submit</bq-button>
-      <pre id="radio-output">{}</pre>
+      <div class="radio-form__actions">
+        <bq-button appearance="secondary" type="reset">Reset</bq-button>
+        <bq-button type="submit">Submit</bq-button>
+      </div>
+      <pre class="radio-form__output" id="radio-output">{}</pre>
     </form>
 
     <script>
@@ -642,6 +644,7 @@ Set `background-on-hover` on the group to show a filled highlight on every label
 
       return (
         <form
+          className="radio-form"
           onReset={() => setData("{}")}
           onSubmit={(event) => {
             event.preventDefault();
@@ -659,9 +662,11 @@ Set `background-on-hover` on the group to show a filled highlight on every label
             <BqRadio value="phone">Phone</BqRadio>
             <BqRadio value="chat">Chat</BqRadio>
           </BqRadioGroup>
-          <BqButton appearance="secondary" type="reset">Reset</BqButton>
-          <BqButton type="submit">Submit</BqButton>
-          <pre>{data}</pre>
+          <div className="radio-form__actions">
+            <BqButton appearance="secondary" type="reset">Reset</BqButton>
+            <BqButton type="submit">Submit</BqButton>
+          </div>
+          <pre className="radio-form__output">{data}</pre>
         </form>
       );
     }
@@ -676,7 +681,7 @@ Set `background-on-hover` on the group to show a filled highlight on every label
       standalone: true,
       imports: [BqButton, BqRadio, BqRadioGroup],
       template: `
-        <form (reset)="data = '{}'" (submit)="handleSubmit($event)">
+        <form class="radio-form" (reset)="data = '{}'" (submit)="handleSubmit($event)">
           <bq-radio-group
             fieldset
             name="contactMethod"
@@ -688,9 +693,11 @@ Set `background-on-hover` on the group to show a filled highlight on every label
             <bq-radio value="phone">Phone</bq-radio>
             <bq-radio value="chat">Chat</bq-radio>
           </bq-radio-group>
-          <bq-button appearance="secondary" type="reset">Reset</bq-button>
-          <bq-button type="submit">Submit</bq-button>
-          <pre>{{ data }}</pre>
+          <div class="radio-form__actions">
+            <bq-button appearance="secondary" type="reset">Reset</bq-button>
+            <bq-button type="submit">Submit</bq-button>
+          </div>
+          <pre class="radio-form__output">{{ data }}</pre>
         </form>
       `,
     })
@@ -717,7 +724,7 @@ Set `background-on-hover` on the group to show a filled highlight on every label
     </script>
 
     <template>
-      <form @reset="data = '{}'" @submit.prevent="handleSubmit">
+      <form class="radio-form" @reset="data = '{}'" @submit.prevent="handleSubmit">
         <BqRadioGroup
           fieldset
           name="contactMethod"
@@ -729,9 +736,11 @@ Set `background-on-hover` on the group to show a filled highlight on every label
           <BqRadio value="phone">Phone</BqRadio>
           <BqRadio value="chat">Chat</BqRadio>
         </BqRadioGroup>
-        <BqButton appearance="secondary" type="reset">Reset</BqButton>
-        <BqButton type="submit">Submit</BqButton>
-        <pre>{{ data }}</pre>
+        <div class="radio-form__actions">
+          <BqButton appearance="secondary" type="reset">Reset</BqButton>
+          <BqButton type="submit">Submit</BqButton>
+        </div>
+        <pre class="radio-form__output">{{ data }}</pre>
       </form>
     </template>
     ```
@@ -810,15 +819,39 @@ Set `background-on-hover` on the group to show a filled highlight on every label
 
 - **Built in:** `bq-radio-group` always renders a `<fieldset>` with a `<legend>` that holds the `label` slot. The `fieldset` property only adds the visible border.
 - **Built in:** each `bq-radio` native `<input type="radio">` carries `aria-checked`, `aria-disabled`, and `aria-labelledby` pointing to its visible label element.
-- **Built in:** `ArrowDown` / `ArrowRight` focus and select the next enabled radio; `ArrowUp` / `ArrowLeft` focus and select the previous enabled radio. Navigation skips disabled radios and wraps at the ends. All four keys work in both orientations; `orientation` controls layout only.
+- **Built in:** arrow keys focus and select the adjacent enabled radio, skip disabled radios and wrap at the ends. All four arrow keys work in both orientations; `orientation` controls layout only.
 - **Built in:** only one radio in the group receives `tabindex="0"` at a time (the selected or first enabled option), keeping the tab stop count low.
-- **Your responsibility:** always populate the `label` slot on `bq-radio-group` with meaningful group text.
-- **Your responsibility:** provide meaningful text inside each `bq-radio` slot — the `aria-labelledby` on the native input points to the label span, so empty or icon-only labels are not announced.
-- **Your responsibility:** when you disable the group, add visible helper text nearby explaining why the options are unavailable.
+- **Your responsibility:** you must populate the `label` slot on `bq-radio-group` with meaningful group text.
+- **Your responsibility:** you must provide meaningful text inside each `bq-radio` slot. The `aria-labelledby` on the native input points to the label span, so empty or icon-only labels are not announced.
+- **Your responsibility:** when you disable the group, you should add visible helper text nearby explaining why the options are unavailable.
 
-<Warning>
-  The fieldset's `aria-labelledby` currently references an ID that does not match the label slot. This source defect is tracked in [the Radio Group follow-up issue](https://github.com/Endava/BEEQ/issues/1830). Do not assume that populating the slot repairs the explicit ARIA reference; verify the group name with your supported assistive technologies.
-</Warning>
+### Keyboard interaction
+
+| Key | Context | Action |
+|---|---|---|
+| `Tab` | Focus outside the group | Moves focus into the group, to the selected radio or the first enabled radio |
+| `Tab` | Focus on a radio in the group | Moves focus out of the group to the next focusable element |
+| `Shift` + `Tab` | Focus on a radio in the group | Moves focus out of the group to the previous focusable element |
+| `ArrowDown` | Radio focused | Focuses and selects the next enabled radio; wraps from the last to the first |
+| `ArrowRight` | Radio focused | Focuses and selects the next enabled radio; wraps from the last to the first |
+| `ArrowUp` | Radio focused | Focuses and selects the previous enabled radio; wraps from the first to the last |
+| `ArrowLeft` | Radio focused | Focuses and selects the previous enabled radio; wraps from the first to the last |
+| `Space` | Unselected radio focused | Selects the focused radio (native `<input type="radio">` behavior) |
+
+All four arrow keys work in both orientations. A disabled group has no tab stop.
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Wrap every `bq-radio` in a `bq-radio-group` | MUST | manual: inspect the parent of every radio in the DOM |
+| Fill the `label` slot of the group with meaningful text | MUST | manual: read the group label before its choices |
+| Provide meaningful text in each `bq-radio` slot | MUST | manual: read each choice without relying on its position |
+| Set `name` on the group so the selected value submits with the form | MUST | automated: [`bq-radio-group.e2e.tsx`](https://github.com/Endava/BEEQ/blob/main/packages/beeq/src/components/radio-group/__tests__/bq-radio-group.e2e.tsx) checks `FormData` |
+| Select an option before submitting a required group | MUST | automated: [`bq-radio-group.e2e.tsx`](https://github.com/Endava/BEEQ/blob/main/packages/beeq/src/components/radio-group/__tests__/bq-radio-group.e2e.tsx) checks `form.checkValidity()` |
+| Set `required-validation-message` on a required group | SHOULD | manual: inspect the required-group validation message |
+| Pre-select a default with `value` when one choice is always required | SHOULD | manual: review the selected default against the question |
+| Explain nearby why a group or option is disabled | SHOULD | manual: inspect nearby text for disabled choices |
 
 ## API reference
 
@@ -839,7 +872,7 @@ Set `background-on-hover` on the group to show a filled highlight on every label
 | Property | Attribute | Description | Type | Default |
 |---|---|---|---|---|
 | `backgroundOnHover` | `background-on-hover` | If `true`, all radios in the group show a background on hover | `boolean` | `false` |
-| `debounceTime` | `debounce-time` | Delay in milliseconds before `bqChange` fires after a value change | `number` | `0` |
+| `debounceTime` | `debounce-time` | Delay in milliseconds before `bqChange` fires after a value change. With `0`, `bqChange` is emitted synchronously | `number` | `0` |
 | `disabled` | `disabled` | If `true`, all radio inputs in the group are disabled | `boolean` | `false` |
 | `fieldset` | `fieldset` | If `true`, the group renders a visible fieldset border with a legend | `boolean` | `false` |
 | `name` | `name` | Name of the form control, submitted with the selected radio's value | `string` | — |
@@ -847,6 +880,14 @@ Set `background-on-hover` on the group to show a filled highlight on every label
 | `required` | `required` | If `true`, the radio group is required | `boolean` | `false` |
 | `requiredValidationMessage` | `required-validation-message` | Native form validation message shown when the group is required and no option is selected | `string` | — |
 | `value` | `value` | The value of the currently selected radio | `string` | — |
+
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| `name` or `required` on a `bq-radio` inside a `bq-radio-group` | SHOULD NOT | The group overwrites both with its own `name` and `required` values |
+| `required-validation-message` without `required` on the group | SHOULD NOT | The message is never used because the group is always valid |
+| `debounce-time` below `0` | SHOULD NOT | The group clamps the value to `0` |
 
 ### `bq-radio` methods
 

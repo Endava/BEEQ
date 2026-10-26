@@ -14,8 +14,7 @@
     "default": [
       "{projectRoot}/**/*",
       "{workspaceRoot}/nx.json",
-      "{workspaceRoot}/package.json",
-      "{workspaceRoot}/tailwind.config.ts"
+      "{workspaceRoot}/package.json"
     ],
     "production": [
       "default",
@@ -45,7 +44,7 @@
     },
     "test": {
       "cache": true,
-      "inputs": ["default", "^default", "{workspaceRoot}/jest.preset.js"]
+      "inputs": ["default", "^default"]
     },
     "typecheck": {
       "cache": true,
@@ -170,5 +169,22 @@
     }
   },
   "analytics": false,
-  "migrate": { "agentic": false }
+  "migrate": { "agentic": false },
+  "plugins": [
+    {
+      "plugin": "@nx/rollup/plugin",
+      "options": {
+        "buildTargetName": "build"
+      }
+    },
+    {
+      "plugin": "@nx/storybook/plugin",
+      "options": {
+        "buildStorybookTargetName": "storybook-build",
+        "serveStorybookTargetName": "storybook",
+        "staticStorybookTargetName": "static-storybook",
+        "testStorybookTargetName": "test-storybook"
+      }
+    }
+  ]
 }

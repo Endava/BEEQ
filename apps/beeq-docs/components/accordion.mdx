@@ -48,6 +48,10 @@ Accordions organize related content into collapsible sections. Each section has 
   </Card>
 </CardGroup>
 
+<Tip>
+  Choose [`bq-accordion`](/components/accordion) for sections stacked on one page whose panels expand and collapse in place, and [`bq-tab`](/components/tab) for a small set of peer sections where one panel is shown at a time.
+</Tip>
+
 ## Anatomy
 
 <Frame caption="Accordion anatomy">
@@ -202,6 +206,8 @@ Two appearance values are available:
 - **filled**: (default) adds a background color to the header for a contained look
 - **ghost**: removes the background for a minimal style that blends with surrounding content.
 
+**Allowed `appearance` values:** `filled` (default), `ghost`.
+
 <Tip>
   Since `filled` is the default, there's no need to explicitly set `appearance="filled"` on the component.
 </Tip>
@@ -298,6 +304,8 @@ Two appearance values are available:
 
 Accordions support two sizes: `medium` (default) and `small`.
 The `small` size uses more compact padding and a smaller border radius, giving it a tighter look.
+
+**Allowed `size` values:** `small`, `medium` (default).
 
 <CodeLivePreview mode="shadow" code={`
   <bq-accordion size="medium" expanded>
@@ -1310,11 +1318,30 @@ Developers can [rely on the exposed shadow DOM parts](/guides/styles#component-s
 
 ## Accessibility
 
-- **Keyboard navigation** — the header is a focusable button and can be activated with <kbd>Enter</kbd> or <kbd>Space</kbd>.
 - **Clear headings** — header labels should describe the panel content clearly enough to be understood before expansion.
 - **ARIA support** — the header exposes `aria-expanded`, and the panel visibility is reflected for assistive technologies.
-- **Disabled state** — disabled accordions are removed from the tab order, so use this state sparingly and explain unavailable content when possible.
-- **Reduced motion** — use `no-animation` when motion should be minimized, or respect the user's `prefers-reduced-motion` setting.
+- **Disabled state** — disabled accordions are removed from the tab order, so you should use this state sparingly and explain unavailable content when possible.
+- **Reduced motion** — you should use `no-animation` when motion should be minimized, or respect the user's `prefers-reduced-motion` setting.
+
+### Keyboard interaction
+
+The header is a native `<summary>` element exposed with `role="button"`.
+
+| Key | Context | Action |
+|---|---|---|
+| `Tab` | Header of an enabled accordion | Moves focus to the header and emits `bqFocus` |
+| `Shift` + `Tab` | Header of an enabled accordion | Moves focus to the previous focusable element |
+| `Enter` | Header focused | Toggles the panel open or closed and emits `bqClick` |
+| `Space` | Header focused | Toggles the panel open or closed and emits `bqClick` |
+| `Tab` | Disabled accordion | Skipped; the header has `tabindex="-1"` |
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Write header labels that describe the panel content before it is expanded | SHOULD | manual: compare each header with the content it reveals |
+| Use `disabled` sparingly and explain unavailable content nearby | SHOULD | manual: review disabled items and their nearby explanation |
+| Set `no-animation` or respect `prefers-reduced-motion` when motion must be minimized | SHOULD | manual: check motion settings and the reduced-motion experience |
 
 ## API reference
 
@@ -1338,6 +1365,12 @@ Developers can [rely on the exposed shadow DOM parts](/guides/styles#component-s
 | `noAnimation` | `no-animation` | If `true`, disables animation on all child accordions                         | `boolean`                  | `false`    |
 | `multiple`    | `multiple`     | If `true`, multiple accordion items can be expanded at the same time          | `boolean`                  | `false`    |
 | `size`        | `size`         | Size applied to all child accordions                                          | `'small'` \| `'medium'`   | `'medium'` |
+
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| Setting `disabled` while `expanded` is `true` | SHOULD NOT | `expanded` resets to `false` |
 
 ### Events
 

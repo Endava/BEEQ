@@ -38,8 +38,14 @@ A switch is a binary control that immediately toggles a setting on or off. Unlik
     - Multiple related options need to be selected together (use checkboxes)
     - The action is irreversible and needs a confirmation step
     - The label text does not clearly describe the result of toggling
+    - The user must turn it on to continue, such as accepting terms (use `bq-checkbox`)
+    - The user must pick one of several named options (use `bq-radio-group`)
   </Card>
 </CardGroup>
+
+<Tip>
+  Choose [`bq-checkbox`](/components/checkbox) instead of `bq-switch` when the choice is submitted with a form, acknowledges terms, or lets users select several items, and [`bq-radio-group`](/components/radio) when users pick one of several named options.
+</Tip>
 
 ## Anatomy
 
@@ -222,6 +228,8 @@ The disabled switch prevents user interaction, making it visually clear that the
 
 Enhance user understanding by incorporating an inner label that provides context about the current state of the switch. Use the `inner-label="icon"` attribute to activate this variant.
 
+**Allowed `inner-label` values:** `default` (default), `icon`.
+
 <CodeLivePreview mode="shadow" code={`
   <bq-switch inner-label="icon">Toggle me!</bq-switch>
 `}>
@@ -376,6 +384,8 @@ The reverse order switch alters the visual arrangement, placing the toggle on th
 ### Full width
 
 Use `full-width` with `reverse-order` and `justify-content="space-between"` to build standard settings-list rows where the label is on the left and the toggle sits flush to the right edge.
+
+**Allowed `justify-content` values:** `start` (default), `end`, `center`, `flex-start`, `flex-end`, `left`, `right`, `space-between`, `space-around`, `space-evenly`, `stretch`, `normal`, `inherit`, `initial`.
 
 <CodeLivePreview mode="shadow" code={`
   <style>
@@ -643,7 +653,13 @@ Use `full-width` with `reverse-order` and `justify-content="space-between"` to b
 
 ### Form integration
 
-`bq-switch` participates in native forms through `ElementInternals`. A checked switch submits `"on"` for its `name`; an unchecked switch is omitted from `FormData`. Use `required` only when the form cannot continue unless the switch is ON.
+`bq-switch` participates in native forms through `ElementInternals`. A checked switch submits `"on"` for its `name`; an unchecked switch is omitted from `FormData`.
+
+A required switch blocks form submission until it is ON, and `form-validation-message` sets the text of the native validation bubble. Set `required` only when the form cannot continue unless the switch is ON.
+
+<Tip>
+  Consent belongs on `bq-checkbox` with `required`. A required choice between named options belongs on `bq-radio-group` with `required`. A required switch should always carry `form-validation-message`.
+</Tip>
 
 <CodeLivePreview mode="iframe" height="23rem" removePadding code={`
   <style>
@@ -909,7 +925,21 @@ Use `full-width` with `reverse-order` and `justify-content="space-between"` to b
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Change the label text based on state (for example, "Enabled" when on and "Disabled" when off). The label should always describe the setting — the control itself communicates the current state.
+    Don't change the label text based on state (for example, "Enabled" when on and "Disabled" when off). The label should always describe the setting; the control itself communicates the current state.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Use `bq-checkbox` with `required` for consent and `bq-radio-group` with `required` for a required choice between named options.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Don't use a required switch as a consent or choose-one control. A switch that must be ON is a checkbox in disguise, and users read an OFF switch as a valid answer.
   </Card>
 </CardGroup>
 
@@ -919,18 +949,35 @@ Use `full-width` with `reverse-order` and `justify-content="space-between"` to b
 
 ### Keyboard interaction
 
-| Key | Action |
-|---|---|
-| `Tab` | Moves focus to the switch |
-| `Space` | Toggles the switch on or off |
+| Key | Context | Action |
+|---|---|---|
+| `Tab` | Any | Moves focus to the next focusable element, including the switch |
+| `Shift` + `Tab` | Any | Moves focus to the previous focusable element, including the switch |
+| `Space` | Switch focused | Toggles the switch on or off |
+
+The native `<input type="checkbox" role="switch">` handles these keys. A disabled switch ignores `Space`.
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Provide a visible text label in the default slot | MUST | manual: inspect the visible label beside the switch |
+| Set `name` so the switch submits with the form | MUST | automated: [`bq-switch.e2e.tsx`](https://github.com/Endava/BEEQ/blob/main/packages/beeq/src/components/switch/__tests__/bq-switch.e2e.tsx) checks `FormData` |
+| Turn a required switch ON before submitting the form | MUST | automated: [`bq-switch.e2e.tsx`](https://github.com/Endava/BEEQ/blob/main/packages/beeq/src/components/switch/__tests__/bq-switch.e2e.tsx) checks `form.checkValidity()` |
+| Set `form-validation-message` on a required switch | SHOULD | manual: inspect the required-switch validation message |
+| Tell users before submit that a required switch has to be ON | MUST | manual: read instructions before submitting a required switch |
+| Provide at least one cue besides track color for the ON state | MUST | manual: check the ON state without relying on track color |
+| Explain why a switch is disabled in the surrounding text | SHOULD | manual: inspect nearby text for disabled switches |
+| Call `vFocus()`, `vBlur()` and `vClick()` instead of `focus()`, `blur()` and `click()` on the host | SHOULD | manual: inspect host method calls in the consumer code |
 
 ### Developer responsibilities
 
-- Always provide a visible text label via the default slot. The switch derives its accessible name from the `name` prop via `aria-label` on the native `<input>` — the visible slot text is not automatically wired to the control. If you want the visible label to serve as the accessible name, use `aria-labelledby` on the host element pointing to the associated label element.
-- Use the `name` attribute (required) to participate in form submissions and to give the control a machine-readable identifier.
-- When the switch is `disabled`, it is excluded from the tab order and will not respond to keyboard or pointer events. Make sure the reason for disabling is communicated through surrounding text.
+- You must provide a visible text label via the default slot. The switch derives its accessible name from the `name` prop via `aria-label` on the native `<input>`; the visible slot text is not automatically wired to the control. To make the visible label the accessible name, you should use `aria-labelledby` on the host element pointing to the associated label element.
+- You must set the `name` attribute (required) to participate in form submissions and to give the control a machine-readable identifier.
+- When the switch is `disabled`, it is excluded from the tab order and does not respond to keyboard or pointer events. You should communicate the reason for disabling through surrounding text.
+- You must tell users before submit that a required switch has to be ON. The validation bubble only appears after a failed submit.
 - The `bqChange` event is cancelable. Calling `event.preventDefault()` inside a `bqChange` handler prevents the switch from updating its visual state, which is useful when you need to confirm a change before applying it.
-- Use `vFocus()`, `vBlur()`, and `vClick()` instead of the global `element.focus()`, `element.blur()`, and `element.click()` to interact with the native input correctly across Shadow DOM boundaries.
+- You should use `vFocus()`, `vBlur()`, and `vClick()` instead of the global `element.focus()`, `element.blur()`, and `element.click()` to interact with the native input correctly across Shadow DOM boundaries.
 
 ## API reference
 
@@ -946,9 +993,13 @@ Use `full-width` with `reverse-order` and `justify-content="space-between"` to b
 | `innerLabel` | `inner-label` | How to display the on/off marks inside the control | `'default' \| 'icon'` | `'default'` |
 | `justifyContent` | `justify-content` | Space distribution between the control and label; accepts any `justify-content` value | `'start' \| 'end' \| 'center' \| 'flex-start' \| 'flex-end' \| 'left' \| 'right' \| 'space-between' \| 'space-around' \| 'space-evenly' \| 'stretch' \| 'normal' \| 'inherit' \| 'initial'` | `'start'` |
 | `name` | `name` | Form control name; submitted as part of a name/value pair | `string` | **required** |
-| `required` | `required` | If `true`, the switch must be ON before the form can be submitted | `boolean` | `false` |
+| `required` | `required` | If `true`, the switch must be ON before the form can be submitted. For consent use `bq-checkbox`; for a required choice use `bq-radio-group`. | `boolean` | `false` |
 | `reverseOrder` | `reverse-order` | If `true`, the label appears before the control | `boolean` | `false` |
 | `value` | `value` | Sets the underlying `<input>` value attribute. Note: the form submission value is the fixed string `'on'` when checked (via ElementInternals), regardless of this prop | `string` | — |
+
+### Invalid combinations
+
+No invalid prop combinations.
 
 ### Methods
 

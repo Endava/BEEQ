@@ -207,7 +207,7 @@ describe('bq-textarea', () => {
 
     await setProps({ value });
 
-    expect(counterElem.innerText).toBe(`${value.length}/${maxlength}`);
+    expect(counterElem.textContent).toBe(`${value.length}/${maxlength}`);
   });
 
   it('should truncate text longer than maxlength', async () => {
@@ -231,7 +231,7 @@ describe('bq-textarea', () => {
     );
     const counterElem = root.shadowRoot.querySelector<HTMLElement>('.bq-textarea__helper--counter');
 
-    expect(counterElem.innerText).toBe(`${value.length}/${maxlength}`);
+    expect(counterElem.textContent).toBe(`${value.length}/${maxlength}`);
   });
 
   it('should display programmatic value changes after the user types', async () => {
@@ -254,13 +254,13 @@ describe('bq-textarea', () => {
     await waitForChanges();
 
     expect(nativeTextarea.value).toBe(nextValue);
-    expect(counterElem.innerText).toBe(`${nextValue.length}/${maxlength}`);
+    expect(counterElem.textContent).toBe(`${nextValue.length}/${maxlength}`);
 
     textareaElem.value = '';
     await waitForChanges();
 
     expect(nativeTextarea.value).toBe('');
-    expect(counterElem.innerText).toBe(`0/${maxlength}`);
+    expect(counterElem.textContent).toBe(`0/${maxlength}`);
   });
 
   it('should truncate a programmatic value longer than maxlength after the user types', async () => {

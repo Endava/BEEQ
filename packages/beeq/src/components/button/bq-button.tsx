@@ -296,7 +296,7 @@ export class BqButton {
     const isLink = isDefined(this.href);
     const TagElem = isLink ? 'a' : 'button';
     const style = {
-      ...(this.border && { '--bq-button--border-radius': `var(--bq-radius--${this.border})` }),
+      ...(this.border !== 'm' && { '--bq-button--border-radius': `var(--bq-radius--${this.border})` }),
     };
 
     return (

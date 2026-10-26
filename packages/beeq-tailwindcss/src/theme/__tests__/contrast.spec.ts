@@ -601,11 +601,12 @@ describe('mode role parity', () => {
     expect(sortedKeys(name)).toEqual(sortedKeys('default-light'));
   });
 
-  it.each(
-    COMBOS.flatMap(({ name, modeTokens }) => REQUIRED_MODE_ROLES.map((role) => ({ name, role, modeTokens }))),
-  )('$name should define $role', ({ role, modeTokens }) => {
-    expect(modeTokens[cssVar(role)]).toBeDefined();
-  });
+  it.each(COMBOS.flatMap(({ name, modeTokens }) => REQUIRED_MODE_ROLES.map((role) => ({ name, role, modeTokens }))))(
+    '$name should define $role',
+    ({ role, modeTokens }) => {
+      expect(modeTokens[cssVar(role)]).toBeDefined();
+    },
+  );
 });
 
 describe('mode box shadows', () => {
@@ -637,11 +638,12 @@ describe('root semantic tokens', () => {
   ];
   const intentTokens = INTENTS.flatMap((intent) => ROOT_INTENT_SUFFIXES.map((suffix) => `bq-${intent}${suffix}`));
 
-  it.each(
-    roots.flatMap(([name, root]) => intentTokens.map((token) => ({ name, token, root }))),
-  )('$name should define $token', ({ token, root }) => {
-    expect(root[token]).toBeDefined();
-  });
+  it.each(roots.flatMap(([name, root]) => intentTokens.map((token) => ({ name, token, root }))))(
+    '$name should define $token',
+    ({ token, root }) => {
+      expect(root[token]).toBeDefined();
+    },
+  );
 
   it.each(roots)('%s should not define bq-focus (it lives at mode level)', (_, root) => {
     expect(root).not.toHaveProperty('bq-focus');
@@ -656,11 +658,12 @@ describe('DECLARATIVE_COLORS', () => {
     expect(leaves[path]).toBe(`var(${cssVar(role)})`);
   });
 
-  it.each(
-    REQUIRED_MODE_ROLES.filter((role) => role !== 'hover' && role !== 'active'),
-  )('should expose the %s role', (role) => {
-    expect(referencedVars.has(cssVar(role))).toBe(true);
-  });
+  it.each(REQUIRED_MODE_ROLES.filter((role) => role !== 'hover' && role !== 'active'))(
+    'should expose the %s role',
+    (role) => {
+      expect(referencedVars.has(cssVar(role))).toBe(true);
+    },
+  );
 });
 
 describe('brand pins', () => {

@@ -542,6 +542,8 @@ When content fails to load and the region has nothing else to show, the failure 
 
 Choose size based on the available space and the prominence of the moment. `medium` is the default and works for most dashboard or section-level empty states.
 
+**Allowed `size` values:** `small`, `medium` (default), `large`.
+
 | Size | When to use |
 |---|---|
 | **Small** | Dense layouts, side panels, compact cards, or mobile contexts where space is limited |
@@ -611,11 +613,25 @@ Choose size based on the available space and the prominence of the moment. `medi
 
 ## Accessibility
 
-- **Keep visuals decorative unless they carry meaning** — if the thumbnail is only illustrative, hide it from assistive technology with `aria-hidden="true"` or an empty `alt` value.
-- **Make the title and body self-sufficient** — people should understand the state without needing to infer meaning from the artwork.
-- **Use semantic, keyboard-accessible actions** — any recovery path in the footer should be a real button or link that can receive focus and has a clear label.
+- **Keep visuals decorative unless they carry meaning** — if the thumbnail is only illustrative, you must hide it from assistive technology with `aria-hidden="true"` or an empty `alt` value.
+- **Make the title and body self-sufficient** — the title and body must let people understand the state without inferring meaning from the artwork.
+- **Use semantic, keyboard-accessible actions** — any recovery path in the footer must be a real button or link that can receive focus and has a clear label.
 - **Preserve reading order** — title, description, and actions should follow a logical visual and DOM sequence.
-- **Do not rely on color or imagery alone** — the message itself should explain what is happening and what can be done next.
+- **Do not rely on color or imagery alone** — the message itself must explain what is happening and what can be done next.
+
+### Keyboard interaction
+
+No keyboard interaction: the component is not focusable. Actions you place in the `footer` slot keep their own keyboard behavior.
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Hide purely decorative thumbnails with `aria-hidden="true"` or an empty `alt` | MUST | manual: inspect decorative images in the accessibility tree |
+| Make the title and body explain the state without the artwork | MUST | manual: read the title and body with artwork hidden |
+| Render recovery actions in the footer as real buttons or links with clear labels | MUST | manual: activate footer actions using the keyboard |
+| Explain what is happening and what to do next, without relying on color or imagery alone | MUST | manual: read the recovery instructions without color or artwork |
+| Keep title, description, and actions in a logical visual and DOM order | SHOULD | manual: compare visual order with keyboard and screen-reader order |
 
 ## API reference
 
@@ -624,6 +640,10 @@ Choose size based on the available space and the prominence of the moment. `medi
 | Property | Attribute | Description | Type | Default |
 |---|---|---|---|---|
 | `size` | `size` | The size of the empty state component | `"large" \| "medium" \| "small"` | `"medium"` |
+
+### Invalid combinations
+
+No invalid prop combinations.
 
 ### Slots
 

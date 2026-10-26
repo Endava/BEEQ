@@ -155,32 +155,35 @@ describe('bq-input', () => {
   it.each([
     ['text', 'hello world', 'hello world'],
     ['number', '12345', 12345],
-  ] as const)('should keep typed %s input when a controlled consumer re-renders stale state', async (type, text, value) => {
-    const { root } = await render(<bq-input name="bq-input" type={type} />);
-    const host = root as HTMLBqInputElement;
-    const input = getInput(host);
+  ] as const)(
+    'should keep typed %s input when a controlled consumer re-renders stale state',
+    async (type, text, value) => {
+      const { root } = await render(<bq-input name="bq-input" type={type} />);
+      const host = root as HTMLBqInputElement;
+      const input = getInput(host);
 
-    let state: TInputValue = '';
-    host.addEventListener('bqInput', (ev: CustomEvent<{ value: TInputValue }>) => {
-      state = ev.detail.value;
-    });
-    // Simulates an unrelated framework re-render that re-applies the controlled value from state
-    host.addEventListener(
-      'keydown',
-      () =>
-        setTimeout(() => {
-          host.value = state;
-        }, 0),
-      true,
-    );
+      let state: TInputValue = '';
+      host.addEventListener('bqInput', (ev: CustomEvent<{ value: TInputValue }>) => {
+        state = ev.detail.value;
+      });
+      // Simulates an unrelated framework re-render that re-applies the controlled value from state
+      host.addEventListener(
+        'keydown',
+        () =>
+          setTimeout(() => {
+            host.value = state;
+          }, 0),
+        true,
+      );
 
-    await userEvent.type(input, text);
-    await wait(50);
+      await userEvent.type(input, text);
+      await wait(50);
 
-    expect(state).toBe(value);
-    expect(host.value).toBe(value);
-    expect(input.value).toBe(text);
-  });
+      expect(state).toBe(value);
+      expect(host.value).toBe(value);
+      expect(input.value).toBe(text);
+    },
+  );
 
   it('should clear the value and emit clear event', async () => {
     const inputValue = 'Hello';
@@ -437,6 +440,27 @@ describe('bq-input', () => {
     expect(onChange).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ detail: { value: '', el: host } }));
   });
 
+  it('should update the form value and validity when only a change event is dispatched', async () => {
+    const { root, waitForChanges } = await render(
+      <form>
+        <bq-input name="text" required form-validation-message="Enter a value" />
+      </form>,
+    );
+    const form = root as HTMLFormElement;
+    const host = form.querySelector<HTMLBqInputElement>('bq-input');
+    const input = getInput(host);
+
+    expect(form.checkValidity()).toBe(false);
+
+    input.value = 'Hello';
+    input.dispatchEvent(new Event('change', { bubbles: true }));
+    await waitForChanges();
+
+    expect(host.value).toBe('Hello');
+    expect(new FormData(form).get('text')).toBe('Hello');
+    expect(form.checkValidity()).toBe(true);
+  });
+
   it.each([
     ['-', '5', -5],
     ['.', '5', 0.5],
@@ -636,6 +660,61 @@ describe('bq-input', () => {
     await waitForChanges();
     expect(getClearButton(host)).toBeNull();
     expect(new FormData(form).get('text')).toBe('');
+  });
+
+  it('should keep the form value and validity in sync when a form reset leaves the value unchanged', async () => {
+    const { root, waitForChanges } = await render(
+      <form>
+        <bq-input name="text" value="" required form-validation-message="Enter a value" />
+      </form>,
+    );
+    const form = root as HTMLFormElement;
+    const host = form.querySelector<HTMLBqInputElement>('bq-input');
+
+    expect(form.checkValidity()).toBe(false);
+
+    form.reset();
+    await waitForChanges();
+
+    expect(host.value).toBe('');
+    expect(new FormData(form).get('text')).toBe('');
+    expect(form.checkValidity()).toBe(false);
+
+    await userEvent.type(getInput(host), 'abc');
+    await userEvent.click(getClearButton(host));
+    await waitForChanges();
+    expect(form.checkValidity()).toBe(false);
+
+    form.reset();
+    await waitForChanges();
+
+    expect(host.value).toBe('');
+    expect(new FormData(form).get('text')).toBe('');
+    expect(form.checkValidity()).toBe(false);
+  });
+
+  it('should discard a partial numeric token on form reset and keep the empty form value', async () => {
+    const { root, waitForChanges } = await render(
+      <form>
+        <bq-input name="amount" type="number" value="" required />
+      </form>,
+    );
+    const form = root as HTMLFormElement;
+    const host = form.querySelector<HTMLBqInputElement>('bq-input');
+    const input = getInput(host);
+
+    await userEvent.type(input, '-');
+    await waitForChanges();
+    expect(input.validity.badInput).toBe(true);
+    expect(host.value).toBe('');
+
+    form.reset();
+    await waitForChanges();
+
+    expect(input.validity.badInput).toBe(false);
+    expect(host.value).toBe('');
+    expect(new FormData(form).get('amount')).toBe('');
+    expect(form.checkValidity()).toBe(false);
   });
 
   it('should preserve numeric reset behavior without emitting user events', async () => {

@@ -87,8 +87,11 @@ describe('docs site skill.md', () => {
   const pointer = read('apps/beeq-docs/skill.md');
 
   it('should point agents to the repository skill and its install command', () => {
-    expect(pointer).toContain('npx skills add Endava/BEEQ --skill beeq');
-    expect(pointer).toContain('https://raw.githubusercontent.com/Endava/BEEQ/main/skills/beeq/SKILL.md');
+    // Pinned to a release tag (`v` + semver), so agents get the skill that matches the published packages.
+    expect(pointer).toMatch(/npx skills add Endava\/BEEQ#v\d+\.\d+\.\d+ --skill beeq/);
+    expect(pointer).toMatch(
+      /https:\/\/raw\.githubusercontent\.com\/Endava\/BEEQ\/v\d+\.\d+\.\d+\/skills\/beeq\/SKILL\.md/,
+    );
   });
 
   it('should keep the frontmatter of the beeq skill', () => {
