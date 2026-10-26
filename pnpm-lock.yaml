@@ -230,8 +230,8 @@ importers:
         specifier: 2.6.2
         version: 2.6.2
       '@chromatic-com/storybook':
-        specifier: 5.5.1
-        version: 5.5.1(storybook@10.6.2(@types/react@19.3.0)(prettier@3.8.4)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))
+        specifier: 5.6.0
+        version: 5.6.0(storybook@10.6.2(@types/react@19.3.0)(prettier@3.8.4)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))
       '@commitlint/cli':
         specifier: 21.2.1
         version: 21.2.1(@types/node@25.9.3)(conventional-commits-parser@7.1.1)(typescript@6.0.3)
@@ -353,8 +353,8 @@ importers:
         specifier: 0.0.9
         version: 0.0.9(@custom-elements-manifest/analyzer@0.11.0)
       chromatic:
-        specifier: 18.13.0
-        version: 18.13.0
+        specifier: 18.13.3
+        version: 18.13.3
       core-js:
         specifier: 3.49.0
         version: 3.49.0
@@ -1434,8 +1434,8 @@ packages:
   '@cacheable/utils@2.4.1':
     resolution: {integrity: sha512-eiFgzCbIneyMlLOmNG4g9xzF7Hv3Mga4LjxjcSC/ues6VYq2+gUbQI8JqNuw/ZM8tJIeIaBGpswAsqV2V7ApgA==}
 
-  '@chromatic-com/storybook@5.5.1':
-    resolution: {integrity: sha512-DOtUEBIJHmqsOWg+Hi1t5m5FTNlyzL0NpZUwQob+ex30nDvL4p+MrYctmvEqH/QT72mf9mLXbz3Uj8aoWD2OYA==}
+  '@chromatic-com/storybook@5.6.0':
+    resolution: {integrity: sha512-Z7YMtr9DVwegQeWcBeQaiK5dLcAvgpX53Qr/eGGYTyAEqTb1meUr5VQNq1wmst0Lj+gT6lQEco0PuFfUuf3jzA==}
     engines: {node: '>=20.0.0', yarn: '>=1.22.18'}
     peerDependencies:
       storybook: 10.6.2
@@ -5404,6 +5404,22 @@ packages:
 
   chromatic@18.13.0:
     resolution: {integrity: sha512-AdN6tHB9anx/sdJKIMQ7JkQQV2RhVe1iTvXOFLlwFBRecbl9rp50h/25N0sZJDdpx22gG7Y81HoUALOORfMuxQ==}
+    engines: {node: '>=22.0.0'}
+    hasBin: true
+    peerDependencies:
+      '@chromatic-com/cypress': ^0.*.* || ^1.0.0
+      '@chromatic-com/playwright': ^0.*.* || ^1.0.0
+      '@chromatic-com/vitest': ^0.*.* || ^1.0.0
+    peerDependenciesMeta:
+      '@chromatic-com/cypress':
+        optional: true
+      '@chromatic-com/playwright':
+        optional: true
+      '@chromatic-com/vitest':
+        optional: true
+
+  chromatic@18.13.3:
+    resolution: {integrity: sha512-86wzIxGIdDMBvyYWCXF+V0RyckI+3kl6ki9lJoZem6a0UfwHtEEg5ruORpryTpu6c9dVtBk2qSTX4xtkz3gwsA==}
     engines: {node: '>=22.0.0'}
     hasBin: true
     peerDependencies:
@@ -10712,7 +10728,7 @@ snapshots:
       hashery: 1.5.1
       keyv: 5.6.0
 
-  '@chromatic-com/storybook@5.5.1(storybook@10.6.2(@types/react@19.3.0)(prettier@3.8.4)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))':
+  '@chromatic-com/storybook@5.6.0(storybook@10.6.2(@types/react@19.3.0)(prettier@3.8.4)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))':
     dependencies:
       '@neoconfetti/react': 1.0.0
       chromatic: 18.13.0
@@ -14311,6 +14327,10 @@ snapshots:
   chownr@1.1.4: {}
 
   chromatic@18.13.0:
+    dependencies:
+      semver: 7.8.5
+
+  chromatic@18.13.3:
     dependencies:
       semver: 7.8.5
 
