@@ -17,6 +17,14 @@ applyTo: packages/beeq/src/components/**/*.{tsx,scss}
 - Structure code for responsiveness: breakpoints, fluid typography, responsive images, container queries.
 - When using CSS class name, apply BEM naming, block/element/modifier/state patterns.
 
+## Implementation variable scope
+
+- Declare internal `--_` custom properties on the component's internal root (for example, `.bq-tag`), or on the nearest internal element that owns the value. Descendants can inherit them from that element.
+- Target that same element in variant and state overrides: `:host([size='small']) .bq-tag { --_tag-gap: ...; }`. Moving defaults off the host requires moving their overrides too; a value declared on the wrapper takes precedence over an inherited host value.
+- Keep a local on `:host` only when a host declaration or host pseudo-element needs it. Add a brief SCSS comment explaining the host-level requirement. Use existing DOM structure; this rule does not require adding a wrapper.
+- Keep public `--bq-*` component defaults on `:host` and preserve existing prop-to-public-variable mappings. Use public variables directly for simple mappings; internal locals remain optional composition helpers.
+- Internal `--_` names are unsupported implementation details, not a CSS privacy boundary. Exposed parts may still override them. Verify computed behaviour and public customisation rather than asserting that consumers cannot reach them.
+
 ## Color tokens
 
 Colors resolve through four layers: primitive (`--bq-iris-600`) → root semantic (`--bq-brand`) → mode role (`--bq-ui--brand`) → component variable (`--bq-button--primary-background`). Consumers rebrand at the root layer and tune one component at the component layer; both only work if components stay on this chain.

@@ -31,6 +31,7 @@ Use [tailwlindcss-migration.plan.md](../../tailwlindcss-migration.plan.md) as th
 - Public component variables remain the consumer override API.
 - Use public component variables directly in component CSS when that is the clearest expression of the style.
 - Private implementation variables use `--_property`.
+- Apply [implementation variable scope](styles.instructions.md#implementation-variable-scope): declare internal locals on their internal owner, move variant/state overrides with them, and document any required host-level exception.
 - Private `--_` variables are optional composition helpers, not a mandatory wrapper around every public component variable.
 - Introduce private `--_` variables only when they reduce meaningful repetition, combine multiple public tokens into one internal value, or keep variant/state selectors focused on value changes.
 - Do not mutate public component variables internally to model private variant or state changes.

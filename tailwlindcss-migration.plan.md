@@ -390,6 +390,7 @@ Rules:
 - Public variables use existing `--bq-component--property` names.
 - Use public component variables directly when that is the clearest expression of the style.
 - Private variables use `--_property`.
+- Follow [implementation variable scope](.agents/instructions/styles.instructions.md#implementation-variable-scope): place locals on their internal owner and target that element in variant/state overrides. Host-level locals require a documented host consumer; public defaults stay on the host.
 - Private `--_` variables are optional composition helpers, not a mandatory wrapper around every public component variable.
 - Introduce private `--_` variables only when they reduce meaningful repetition, combine multiple public tokens into one internal value, or keep variant/state selectors focused on value changes.
 - Do not document private `--_` variables.
@@ -405,12 +406,12 @@ Example:
   --bq-button--border-radius: var(--bq-radius--s);
   --bq-button--medium-paddingX: var(--bq-spacing-m);
   --bq-button--medium-paddingY: var(--bq-spacing-s);
-
-  --_button-background: var(--bq-ui--brand);
-  --_button-color: var(--bq-text--inverse);
 }
 
 .bq-button {
+  --_button-background: var(--bq-ui--brand);
+  --_button-color: var(--bq-text--inverse);
+
   border-radius: var(--bq-button--border-radius);
   padding-block: var(--bq-button--medium-paddingY);
   padding-inline: var(--bq-button--medium-paddingX);
