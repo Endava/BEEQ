@@ -37,7 +37,7 @@ Tick each box when the step lands. Keep the red/green evidence next to the step.
 - [x] S6. Tag — published bundle verified; all 34 Tag e2e tests pass
 - [x] S7. Badge — published bundle verified; all 10 Badge e2e tests pass
 - [x] S8. Other components — all seven items verified; Steps removal recorded as an intentional exception
-- [ ] S9. Progress tests
+- [x] S9. Progress source alignment and behavioural tests — refreshed bundle verified; 21/21 Progress and 1347/1347 full browser tests pass
 - [ ] S10. Public API reconciliation
 - [ ] S11. Generated artifacts and full validation
 
@@ -157,7 +157,7 @@ Status values:
 | 5bc728c2 | Page title `--bq-page-title--divider-color` | Dropped | S8 | e2e | lost |
 | 5bc728c2 | Tab group `--bq-tab-group--border-color` | Import dropped | S8 | e2e | lost |
 | 5bc728c2 | Spinner `--bq-spinner--text-color`, `--bq-spinner--color: icon--brand` | Dropped / reverted | S8 | e2e | lost |
-| 5bc728c2 | Progress `--bq-progress-bar--{indicatorColor-error,label-color,label-color-error}` | Ported | tests only | S9 | partial |
+| 5bc728c2 | Progress `--bq-progress-bar--{indicatorColor-error,label-color,label-color-error}` | Values ported; three @prop entries restored, locals relocated, behavioural tests corrected | S9 source + tests | Progress e2e + S10 | verified in S9 |
 | 5bc728c2 | Avatar `@cssprop --bq-avatar--text-color` | Dropped from TSX JSDoc | S8 | S10 | lost |
 | 5bc728c2 | Steps `--bq-steps--divider-color: stroke--primary` | Unused variable removed by explicit user decision; dividerColor prop controls rendering | S8 | Steps e2e + S10 | intentional API removal; verified in S8.6 |
 | 5bc728c2 | Button public variant vars `--bq-button--{primary,secondary,link,text}-*` | Dropped; WIP restores them (26/26 button e2e passed on the WIP) | S8 | button e2e | wip |
@@ -937,7 +937,14 @@ Test Files  1 passed (1)
 
 [Certain] **S8 is complete.** Empty State (12 tests), Page Title (11), Tab Group (18), Spinner (11), Avatar (11), Steps (8), and Button (33) were verified individually. Avatar's JSDoc was regenerated in the Steps build. Steps' unused divider CSS variable was removed by explicit user decision; its `dividerColor` prop path and rendered SVG stroke are verified. These per-component checks do not substitute for S9–S11 or the final full-suite run. S9 has not started. No new commits or pushes were made.
 
-### S9. Progress tests (visible behaviour)
+### S9. Progress source alignment and behavioural tests
+
+Source work added after the scope review:
+
+- Restore the missing `@prop` entries for `--bq-progress-bar--indicatorColor-error`, `--bq-progress-bar--label-color`, and `--bq-progress-bar--label-color-error`.
+- Move the three implementation locals to `.bq-progress`, with thickness/error selectors targeting that wrapper. Keep public defaults on the host and keep Progress unlayered.
+- Verify default→error→default and medium→large→medium transitions, including public customisation.
+- Use the rendered shadow wrapper as the scoped colour-probe container: Progress has no slot, so probes appended to the light-DOM host are not rendered.
 
 Confirm each assertion is feasible against the real element structure (`.bq-progress__*`) before writing it. If a pseudo-element query isn't reliable, assert on the resolved custom property or the nearest element instead.
 
@@ -949,6 +956,38 @@ Confirm each assertion is feasible against the real element structure (`.bq-prog
 - **Indeterminate + error:** `.bq-progress__indeterminate` background is the error colour.
 - **Large:** bar `blockSize: 8px`.
 - **Rounded:** `border-radius: 9999px`. **Square:** `0px`.
+
+#### S9 implementation — 2026-10-27 (Australia/Brisbane)
+
+[Certain] **S9 is complete; final build and full-browser-suite verification is recorded below.** Expanded S9 after review showed that its original tests-only scope omitted three variable-file `@prop` entries and the newly agreed local-variable placement rule. Restored all three docs from pinned main. Moved the three defaults and their thickness/error overrides to `.bq-progress`; all public defaults, props, slots, parts and interaction values are preserved. Progress stays unlayered. The seven documented variable names match pinned main.
+
+[Certain] Replaced the four stale class/inline-style assertions with computed visibility/inline size, reflected error type and resolved indicator/label colours, 8px large thickness, and 9999px/0px border radii. Colour expectations use scoped `resolveColorToken`. Tests check a visible determinate label before switching to indeterminate colour checks. Native progress pseudo-element colour queries are unreliable in Chromium, so the error test checks the resolved value feeding the native indicator; Sass inspection verifies that the native rules consume it, and separate tests verify the rendered indeterminate indicator's actual background.
+
+[Certain] Added two cases: default→error→default restores the correct colours, and a custom 6px medium height survives large (8px) and returns to 6px without mutating the public variable. Existing tooltip endpoint/width-change, clamping, invalid prop, label-content and indeterminate behaviour tests remain. The suite now has 21 tests.
+
+| Check | Result |
+|---|---|
+| Original suite against the latest Button-built bundle | 4 failed / 15 passed; four stale class/inline assertions reproduced |
+| Revised suite against that same pre-relocation bundle | 21 passed, total 3.32s |
+| Strict Stylelint scoped to Progress SCSS | Passed |
+| Uncached package `beeq:stylelint` | Passed; 2 tasks succeeded |
+| Biome and focused TypeScript with repo settings/provider types | Passed |
+| Sass/PostCSS and pinned-main variable-doc comparison | Passed; six local declarations target wrapper; native and indeterminate indicator rules consume local colour; all seven @prop names match |
+| Fresh core build and browser suite after local relocation | Passed via uncached `beeq:e2e`: 21/21 Progress tests; all 1347 tests across 46 files pass |
+
+[Certain] Initial scoped-colour tests exposed a fixture issue: a probe appended to Progress's unslotted host is not rendered, so the helper correctly rejected it. Tests now use the rendered internal wrapper, preserving component-scoped inheritance. A subsequent stale test variable reference was corrected before the final 21/21 run; neither intermediate run is counted as source-regression evidence. Evidence is in `/tmp/beeq-s9-20261027/`: `baseline.log`, `updated-before-build.log`, `typecheck.log`, `stylelint-package.log`, `progress.css`, and `before.patch`.
+
+[Certain] The preceding S8 changes were committed as `a576a388` before starting S9. The existing gitignore and mixed generated-typing WIP were left unstaged and remain unchanged from the pre-S9 snapshot. S9 changes and this plan update are uncommitted. S10/S11 have not started; nothing was pushed.
+
+#### S9 final verification — 2026-10-27 (Australia/Brisbane)
+
+[Certain] The user ran uncached `beeq:e2e` with its preset build, icons and core build dependencies. Nx completed successfully in **2m 32s**. Stencil completed in **66.47s**, including copying 27,238 files in 26.16s and generating wrapper source outputs. This run verifies the core build required for the browser suite; the separate publishable wrapper-package builds remain covered by the earlier runs and S11's final gates.
+
+[Certain] The complete refreshed-bundle Chromium suite passed **46/46 files and 1347/1347 tests**, starting at **23:50:48**, with total Vitest duration **66.34s**. Progress passed **21/21** (2.148s within that suite), including computed appearance, public overrides, type/thickness transitions and tooltip endpoint tracking. The four stale assertions identified at baseline are replaced and all known browser-suite failures are resolved in this run.
+
+[Certain] Independently inspected refreshed lazy bundle `dist/beeq/dist/beeq/p-2ebe31d4.entry.js` (mtime **23:50:45.252 AEST**). It contains wrapper-local defaults, no host-local declarations, wrapper-targeted thickness/error overrides, and the public indicator/label mappings. Evidence is in `/tmp/beeq-s9-20261027/fresh-artifact-check.log`. No generated Progress files outside the pre-existing mixed typings WIP have a working-tree diff.
+
+[Certain] S9 is complete. The source repairs, tests and final record are uncommitted. S10 public API reconciliation and S11's remaining unit, artifact, documentation and final validation gates are still outstanding; a green browser suite does not close them. Nothing was pushed.
 
 ### S10. Public API reconciliation
 

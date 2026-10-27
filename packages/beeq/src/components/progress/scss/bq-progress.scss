@@ -14,17 +14,13 @@
   }
 }
 
-/* ---------------------------------- Host ---------------------------------- */
-
-:host {
-  --_progress-bar-height: var(--bq-progress-bar--height);
-  --_progress-bar-indicator-color: var(--bq-progress-bar--indicatorColor);
-  --_progress-label-color: var(--bq-progress-bar--label-color);
-}
-
 /* ---------------------------------- Base ---------------------------------- */
 
 .bq-progress {
+  --_progress-bar-height: var(--bq-progress-bar--height);
+  --_progress-bar-indicator-color: var(--bq-progress-bar--indicatorColor);
+  --_progress-label-color: var(--bq-progress-bar--label-color);
+
   display: flex;
   align-items: center;
 }
@@ -70,11 +66,11 @@
 
 /* -------------------------------- Variants -------------------------------- */
 
-:host([thickness='large']) {
+:host([thickness='large']) .bq-progress {
   --_progress-bar-height: var(--bq-spacing-xs);
 }
 
-:host([type='error']) {
+:host([type='error']) .bq-progress {
   --_progress-bar-indicator-color: var(--bq-progress-bar--indicatorColor-error);
   --_progress-label-color: var(--bq-progress-bar--label-color-error);
 }
