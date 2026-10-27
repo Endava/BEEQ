@@ -733,6 +733,8 @@ packages/beeq/src/global/styles/default.scss
 
 For the Storybook/default.scss path, `build-styles.mjs` must mirror Stencil's `injectGlobalPaths` behavior by prepending `src/global/styles/mixins/index.scss` before compiling. The standalone token/reset/typography entrypoints should not receive that mixin prelude unless they start using mixins.
 
+During the remaining legacy migration, keep `default.scss` native-only. Both Stencil's global CSS transformer and the Storybook builder consume `src/global/styles/legacy-tailwind.scss` as a separate build input containing only the components/utilities directives. Never include Tailwind base in that input: native foundations own tokens, themes and reset. Component CSS retains the existing bridge configuration until its migration is complete.
+
 Stencil remains responsible for:
 
 ```text
@@ -977,6 +979,7 @@ The second command should return no visual Tailwind styling for the migrated com
 Tasks:
 
 - Remove Tailwind plugins from Stencil config.
+- Remove the temporary `legacy-tailwind.scss` input and its Stencil/Storybook wiring once legacy global generation is no longer required.
 - Add `autoprefixCss: true`.
 - Replace Storybook CSS Tailwind commands with `build-styles.mjs`.
 - Remove `stencil-tailwind-plugin`.

@@ -1,0 +1,6 @@
+/*
+ * Temporary build input shared by Stencil and Storybook. Do not import from default.scss.
+ * Native foundations own tokens, themes and reset; this input must not generate base styles.
+ */
+@tailwind components;
+@tailwind utilities;
