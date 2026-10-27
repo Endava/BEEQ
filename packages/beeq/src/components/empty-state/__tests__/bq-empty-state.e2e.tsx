@@ -1,18 +1,14 @@
 import { h } from '@stencil/core';
 import { afterEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
 
+import { resolveColorToken } from '../../../shared/test-utils/resolveColorToken';
 import { getTextContent } from '../../../shared/utils/slot';
 
-const resolveColor = (value: string) => {
-  const probe = document.createElement('span');
-  probe.style.color = value;
-  document.body.appendChild(probe);
-  const { color } = getComputedStyle(probe);
-  probe.remove();
-  return color;
-};
-
 describe('bq-empty-state', () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   it('should render', async () => {
     const { root } = await render(<bq-empty-state />);
     expect(root).not.toBeNull();
@@ -99,10 +95,6 @@ describe('bq-empty-state', () => {
     expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('"size" should be one of small|medium|large'));
   });
 
-  afterEach(() => {
-    vi.restoreAllMocks();
-  });
-
   it('should render default `bq-icon` in thumbnail when no thumbnail slot is provided', async () => {
     const { root } = await render(<bq-empty-state />);
 
@@ -122,7 +114,8 @@ describe('bq-empty-state', () => {
 
     await waitForStable(root);
 
-    const expected = resolveColor('var(--bq-text--primary)');
+    const expected = resolveColorToken('--bq-text--primary', root);
+    expect(resolveColorToken('--bq-empty-state--text-color', root)).toBe(expected);
     const title = root.shadowRoot?.querySelector<HTMLElement>('[part="title"]');
     const body = root.shadowRoot?.querySelector<HTMLElement>('[part="body"]');
 
@@ -132,13 +125,19 @@ describe('bq-empty-state', () => {
 
   it('should apply a custom text colour', async () => {
     const { root } = await render(
-      <bq-empty-state style={{ '--bq-empty-state--text-color': 'rgb(255, 0, 0)' }}>Title</bq-empty-state>,
+      <bq-empty-state style={{ '--bq-empty-state--text-color': 'rgb(255, 0, 0)' }}>
+        Title
+        <span slot="body">Body</span>
+      </bq-empty-state>,
     );
 
     await waitForStable(root);
 
     const title = root.shadowRoot?.querySelector<HTMLElement>('[part="title"]');
 
-    expect(getComputedStyle(title).color).toBe('rgb(255, 0, 0)');
+    const body = root.shadowRoot?.querySelector<HTMLElement>('[part="body"]');
+    const expected = resolveColorToken('--bq-empty-state--text-color', root);
+    expect(getComputedStyle(title).color).toBe(expected);
+    expect(getComputedStyle(body).color).toBe(expected);
   });
 });

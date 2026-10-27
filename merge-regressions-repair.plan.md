@@ -774,6 +774,27 @@ Test Files  1 passed (1)
   - Add or confirm a consumer-override check for the restored public variables.
   - Mark done only after that.
 
+#### S8.1 Empty State — implementation, 2026-10-27 (Australia/Brisbane)
+
+[Certain] **Source repair is implemented; fresh-build/browser verification is pending.** Following the user's request to handle S8 components one by one, only Empty State has been repaired in this step. Restored the variables import, mapped both title and body colours to `--bq-empty-state--text-color`, and restored its `@cssprop` documentation from pinned main (`1e4f7b0e`). Empty State stays unlayered, as specified by the migration plan. No props, events, slots or parts changed; size and layout values are preserved.
+
+[Certain] Follow-up: moved the five internal layout defaults from `:host` to `.bq-empty-state`, and changed both size selectors to target that wrapper. Children inherit the same values; public text-colour defaults remain on the host. These locals remain unsupported implementation details, not an inaccessible privacy boundary. Source checks were rerun; fresh-bundle verification must include this adjustment.
+
+[Certain] Updated the two existing colour tests to use scoped `resolveColorToken`. The default test also checks that the public variable resolves to `--bq-text--primary`; the consumer override test now includes body content and checks both title and body. The suite still has 12 tests.
+
+| Check | Result |
+|---|---|
+| Original Empty State suite against the S7-built bundle | 1 failed / 11 passed; custom text-colour override fails |
+| Strengthened suite against that pre-repair bundle | 2 failed / 10 passed; missing public default and ignored consumer override reproduced |
+| Strict Stylelint scoped to Empty State SCSS | Passed |
+| Uncached package `beeq:stylelint` | Passed; 2 tasks succeeded |
+| Biome on Empty State TSX and e2e tests | Passed |
+| Focused TypeScript check with repo decorator/strict settings and Playwright provider types | Passed |
+| Sass compilation and PostCSS inspection | Passed; public default and title/body colour references verified, unlayered structure retained |
+| Full publishable build and Empty State e2e against refreshed bundle | Pending; terminal verification requested |
+
+[Certain] Evidence is in `/tmp/beeq-s8-empty-state-20261027/`: `baseline.log`, `regressions-before-build.log`, `typecheck.log`, `stylelint-package.log`, `empty-state.css`, and `before.patch`. Pre-existing tracked WIP is byte-identical to the pre-step snapshot. Page Title and the remaining S8 components have not been changed in this step. No commits or pushes were made.
+
 ### S9. Progress tests (visible behaviour)
 
 Confirm each assertion is feasible against the real element structure (`.bq-progress__*`) before writing it. If a pseudo-element query isn't reliable, assert on the resolved custom property or the nearest element instead.
