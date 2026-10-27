@@ -1,16 +1,8 @@
 import { h } from '@stencil/core';
 import { describe, expect, it, render, waitForStable } from '@stencil/vitest';
 
+import { resolveColorToken } from '../../../shared/test-utils/resolveColorToken';
 import { getTextContent } from '../../../shared/utils/slot';
-
-const resolveColor = (value: string) => {
-  const probe = document.createElement('span');
-  probe.style.color = value;
-  document.body.appendChild(probe);
-  const { color } = getComputedStyle(probe);
-  probe.remove();
-  return color;
-};
 
 describe('bq-page-title', () => {
   it('should render', async () => {
@@ -96,9 +88,12 @@ describe('bq-page-title', () => {
     const title = root.shadowRoot?.querySelector<HTMLElement>('[part="title"]');
     const subTitle = root.shadowRoot?.querySelector<HTMLElement>('[part="sub-title"]');
 
-    expect(getComputedStyle(base).borderBlockEndColor).toBe(resolveColor('var(--bq-stroke--primary)'));
-    expect(getComputedStyle(title).color).toBe(resolveColor('var(--bq-text--primary)'));
-    expect(getComputedStyle(subTitle).color).toBe(resolveColor('var(--bq-text--secondary)'));
+    expect(resolveColorToken('--bq-page-title--divider-color', root)).toBe(
+      resolveColorToken('--bq-stroke--primary', root),
+    );
+    expect(getComputedStyle(base).borderBlockEndColor).toBe(resolveColorToken('--bq-stroke--primary', root));
+    expect(getComputedStyle(title).color).toBe(resolveColorToken('--bq-text--primary', root));
+    expect(getComputedStyle(subTitle).color).toBe(resolveColorToken('--bq-text--secondary', root));
   });
 
   it('should apply a custom divider colour', async () => {
@@ -110,6 +105,22 @@ describe('bq-page-title', () => {
 
     const base = root.shadowRoot?.querySelector<HTMLElement>('[part="base"]');
 
-    expect(getComputedStyle(base).borderBlockEndColor).toBe('rgb(255, 0, 0)');
+    expect(getComputedStyle(base).borderBlockEndColor).toBe(resolveColorToken('--bq-page-title--divider-color', root));
+  });
+
+  it('should preserve the legacy divider shorthand override', async () => {
+    const { root } = await render(
+      <bq-page-title
+        style={{ '--bq-page-title--divider-color': 'red', '--subtitle-borderBlockEnd': '3px dashed blue' }}
+      >
+        Title
+      </bq-page-title>,
+    );
+    await waitForStable(root);
+    const base = root.shadowRoot.querySelector<HTMLElement>('[part="base"]');
+    const style = getComputedStyle(base);
+    expect(style.borderBlockEndWidth).toBe('3px');
+    expect(style.borderBlockEndStyle).toBe('dashed');
+    expect(style.borderBlockEndColor).toBe('rgb(0, 0, 255)');
   });
 });

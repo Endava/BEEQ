@@ -2,6 +2,8 @@ import { h } from '@stencil/core';
 import { afterEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
 import { userEvent } from 'vitest/browser';
 
+import { resolveColorToken } from '../../../shared/test-utils/resolveColorToken';
+
 afterEach(() => {
   vi.restoreAllMocks();
 });
@@ -165,9 +167,19 @@ describe('bq-steps', () => {
     expect(step1.dividerColor).toBe('stroke--primary');
     expect(step2.dividerColor).toBe('stroke--primary');
 
+    await waitForStable(root);
+    const divider = step1.shadowRoot.querySelector<HTMLBqDividerElement>('bq-divider');
+    const stroke = divider.shadowRoot.querySelector<SVGElement>('.bq-divider__stroke');
+    expect(getComputedStyle(stroke).stroke).toBe(resolveColorToken('--bq-stroke--primary', root));
+
     await setProps({ dividerColor: 'stroke--brand' });
 
     expect(step1.dividerColor).toBe('stroke--brand');
     expect(step2.dividerColor).toBe('stroke--brand');
+
+    await waitForChanges();
+    await waitForStable(root);
+    expect(divider.strokeColor).toBe('stroke--brand');
+    expect(getComputedStyle(stroke).stroke).toBe(resolveColorToken('--bq-stroke--brand', root));
   });
 });

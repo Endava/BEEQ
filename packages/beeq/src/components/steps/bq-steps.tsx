@@ -35,7 +35,6 @@ import { STEPS_ORIENTATION, STEPS_SIZE, STEPS_TYPE } from './bq-steps.types';
  * @part divider-dash-start - The dash start wrapper of the divider component
  * @part divider-dash-end - The dash end wrapper of the divider component
  *
- * @cssprop --bq-steps--divider-color - Divider color
  * @cssprop --bq-steps--gap - Gap between steps
  */
 @Component({

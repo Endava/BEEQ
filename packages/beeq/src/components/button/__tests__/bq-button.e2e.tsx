@@ -3,6 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, render, vi, waitForStable 
 import { cdp, userEvent } from 'vitest/browser';
 
 import { computedStyle } from '../../../shared/test-utils/computedStyle';
+import { resolveColorToken } from '../../../shared/test-utils/resolveColorToken';
 import { getTextContent } from '../../../shared/utils/slot';
 
 const getButtonElement = (button: HTMLBqButtonElement) =>
@@ -481,4 +482,62 @@ describe('bq-button', () => {
       color: 'rgb(4, 5, 6)',
     });
   });
+
+  it.each([
+    {
+      appearance: 'primary',
+      variant: 'standard',
+      hoverBase: '--bq-button--primary-background',
+      activeBase: '--bq-button--primary-background',
+    },
+    { appearance: 'primary', variant: 'ghost', hoverBase: '--bq-ui--primary', activeBase: '--bq-ui--primary' },
+    {
+      appearance: 'primary',
+      variant: 'danger',
+      hoverBase: '--bq-button--primary-background-danger',
+      activeBase: '--bq-button--primary-background-danger',
+    },
+    {
+      appearance: 'secondary',
+      variant: 'standard',
+      hoverBase: '--bq-button--secondary-background',
+      activeBase: '--bq-button--secondary-background',
+    },
+    { appearance: 'secondary', variant: 'ghost', hoverBase: '--bq-ui--secondary', activeBase: '--bq-ui--secondary' },
+    { appearance: 'link', variant: 'standard', hoverBase: '--bq-ui--primary', activeBase: '--bq-ui--secondary' },
+    { appearance: 'text', variant: 'standard', hoverBase: '--bq-ui--primary', activeBase: '--bq-ui--secondary' },
+  ] as const)(
+    'should preserve hover and active mixes for $appearance / $variant',
+    async ({ appearance, variant, hoverBase, activeBase }) => {
+      const { root } = await render(
+        <bq-button appearance={appearance} variant={variant}>
+          Button
+        </bq-button>,
+      );
+      const inner = getButtonElement(root as HTMLBqButtonElement);
+      root.style.setProperty(
+        '--expected-button-hover',
+        `color-mix(in srgb, var(${hoverBase}), var(--bq-hover) var(--bq-state-mix-hover))`,
+      );
+      root.style.setProperty(
+        '--expected-button-active',
+        `color-mix(in srgb, var(${activeBase}), var(--bq-active) var(--bq-state-mix-active))`,
+      );
+
+      await userEvent.hover(inner);
+      await expect
+        .poll(() => getComputedStyle(inner).backgroundColor)
+        .toBe(resolveColorToken('--expected-button-hover', root));
+      inner.focus();
+      try {
+        await userEvent.keyboard('{Space>}');
+        expect(inner.matches(':active')).toBe(true);
+        await expect
+          .poll(() => getComputedStyle(inner).backgroundColor)
+          .toBe(resolveColorToken('--expected-button-active', root));
+      } finally {
+        await userEvent.keyboard('{/Space}');
+      }
+    },
+  );
 });

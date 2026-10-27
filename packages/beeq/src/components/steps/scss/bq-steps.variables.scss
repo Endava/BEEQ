@@ -4,9 +4,7 @@
 
 :host {
   /**
-   * @prop --bq-steps--divider-color - Divider color
    * @prop --bq-steps--gap - Gap between steps
    */
-  --bq-steps--divider-color: var(--bq-stroke--secondary);
   --bq-steps--gap: var(--bq-spacing-m);
 }

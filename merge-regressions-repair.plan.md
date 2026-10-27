@@ -36,7 +36,7 @@ Tick each box when the step lands. Keep the red/green evidence next to the step.
 - [x] S5. Table — published CSS verified; all 15 table e2e tests pass
 - [x] S6. Tag — published bundle verified; all 34 Tag e2e tests pass
 - [x] S7. Badge — published bundle verified; all 10 Badge e2e tests pass
-- [ ] S8. Other components (empty-state, page-title, tab-group, spinner, avatar, steps, button)
+- [x] S8. Other components — all seven items verified; Steps removal recorded as an intentional exception
 - [ ] S9. Progress tests
 - [ ] S10. Public API reconciliation
 - [ ] S11. Generated artifacts and full validation
@@ -159,7 +159,7 @@ Status values:
 | 5bc728c2 | Spinner `--bq-spinner--text-color`, `--bq-spinner--color: icon--brand` | Dropped / reverted | S8 | e2e | lost |
 | 5bc728c2 | Progress `--bq-progress-bar--{indicatorColor-error,label-color,label-color-error}` | Ported | tests only | S9 | partial |
 | 5bc728c2 | Avatar `@cssprop --bq-avatar--text-color` | Dropped from TSX JSDoc | S8 | S10 | lost |
-| 5bc728c2 | Steps `--bq-steps--divider-color: stroke--primary` | Reverted to `stroke--secondary` | S8 | S10 | lost |
+| 5bc728c2 | Steps `--bq-steps--divider-color: stroke--primary` | Unused variable removed by explicit user decision; dividerColor prop controls rendering | S8 | Steps e2e + S10 | intentional API removal; verified in S8.6 |
 | 5bc728c2 | Button public variant vars `--bq-button--{primary,secondary,link,text}-*` | Dropped; WIP restores them (26/26 button e2e passed on the WIP) | S8 | button e2e | wip |
 | 5bc728c2 | Status `--bq-status--dot-color-*`, `--bq-status-circ` alias | Ported in merge | check only | S10 | ok? |
 | 5bc728c2 | Card, Divider, Panel, Breadcrumb, Option/Select readmes | Ported in merge | check only | S10 | ok? |
@@ -766,8 +766,8 @@ Test Files  1 passed (1)
   - Set `--bq-spinner--color: var(--bq-icon--brand)`.
   - Fix **only the two colour tests** (lines ~167–168 and ~186–187) to use `.bq-spinner__loader`/`.bq-spinner__text` and `resolveColorToken` with the tested host as scope. Leave the other tests alone.
 - **Avatar:** restore the `@cssprop --bq-avatar--text-color`.
-- **Steps:** `--bq-steps--divider-color: var(--bq-stroke--primary)`.
-- **Button: implementation present, verification pending.**
+- **Steps:** remove unused `--bq-steps--divider-color` and its documentation, per the user-approved change to the original token-restoration plan. Preserve and verify the `dividerColor` prop path to the rendered divider.
+- **Button: complete; fresh-build verification is recorded in S8.7 below.**
   - The variables and rules are in the WIP, and the button e2e passed 26/26 when the WIP was written.
   - Re-run it after S3, because the tokens it consumes change.
   - Compare against `git show 1e4f7b0e:packages/beeq/src/components/button/scss/bq-button.scss`: primary/secondary/danger/ghost/link/text, and hover and active mixes.
@@ -776,7 +776,7 @@ Test Files  1 passed (1)
 
 #### S8.1 Empty State — implementation, 2026-10-27 (Australia/Brisbane)
 
-[Certain] **Source repair is implemented; fresh-build/browser verification is pending.** Following the user's request to handle S8 components one by one, only Empty State has been repaired in this step. Restored the variables import, mapped both title and body colours to `--bq-empty-state--text-color`, and restored its `@cssprop` documentation from pinned main (`1e4f7b0e`). Empty State stays unlayered, as specified by the migration plan. No props, events, slots or parts changed; size and layout values are preserved.
+[Certain] **S8.1 Empty State is complete; final verification is recorded below.** Following the user's request to handle S8 components one by one, only Empty State has been repaired in this step. Restored the variables import, mapped both title and body colours to `--bq-empty-state--text-color`, and restored its `@cssprop` documentation from pinned main (`1e4f7b0e`). Empty State stays unlayered, as specified by the migration plan. No props, events, slots or parts changed; size and layout values are preserved.
 
 [Certain] Follow-up: moved the five internal layout defaults from `:host` to `.bq-empty-state`, and changed both size selectors to target that wrapper. Children inherit the same values; public text-colour defaults remain on the host. These locals remain unsupported implementation details, not an inaccessible privacy boundary. Source checks were rerun; fresh-bundle verification must include this adjustment.
 
@@ -791,9 +791,151 @@ Test Files  1 passed (1)
 | Biome on Empty State TSX and e2e tests | Passed |
 | Focused TypeScript check with repo decorator/strict settings and Playwright provider types | Passed |
 | Sass compilation and PostCSS inspection | Passed; public default and title/body colour references verified, unlayered structure retained |
-| Full publishable build and Empty State e2e against refreshed bundle | Pending; terminal verification requested |
+| Full publishable build and Empty State e2e against refreshed bundle | Passed; user-run uncached build (2m 21s), then 12/12 browser tests (1.75s) |
 
 [Certain] Evidence is in `/tmp/beeq-s8-empty-state-20261027/`: `baseline.log`, `regressions-before-build.log`, `typecheck.log`, `stylelint-package.log`, `empty-state.css`, and `before.patch`. Pre-existing tracked WIP is byte-identical to the pre-step snapshot. Page Title and the remaining S8 components have not been changed in this step. No commits or pushes were made.
+
+#### S8.1 Empty State — final verification, 2026-10-27 (Australia/Brisbane)
+
+[Certain] The user's uncached publishable build succeeded for all five projects and two dependency tasks in **2m 21s**. Stencil completed in **92.42s**, including copying 27,238 files in 48.22s; React, Vue and both Angular entrypoints built successfully. The refreshed-bundle Empty State Chromium suite passed **12/12 tests**, starting at **17:56:14**, with a total duration of **1.75s**. Both colour regressions now pass after the pre-repair **2 failed / 10 passed** run.
+
+[Certain] Independently inspected refreshed lazy bundle `dist/beeq/dist/beeq/p-73149da0.entry.js` (mtime **17:44:22.257 AEST**). It contains the public text default, the minifier's merged title/body colour rule, locals on the internal wrapper, and both small/large overrides targeting the wrapper. Evidence is in `/tmp/beeq-s8-empty-state-20261027/fresh-artifact-check.log`. The initial artifact string check assumed separate colour rules; inspecting the merged rule and rerunning the check confirmed both mappings. This was a check correction, not a source change. The generated Empty State documentation has no working-tree diff; pre-existing generated typings and Button WIP remain unstaged.
+
+[Certain] Empty State's implementation was committed as `ed809391` before this final verification. This evidence update is not committed. S8 remains open for the other components; the full component e2e suite and S11's broader artifact checks were not rerun for this step.
+
+#### S8.2 Page Title — implementation, 2026-10-27 (Australia/Brisbane)
+
+[Certain] **S8.2 Page Title is complete; final verification is recorded below.** Restored `--bq-page-title--divider-color: var(--bq-stroke--primary)` and its upstream `@prop` documentation. The existing `--subtitle-borderBlockEnd` shorthand now references that public colour variable, and the wrapper continues using the legacy shorthand. All legacy variable names remain intact. The TSX already documents the divider variable, so no TSX edit was necessary; Page Title remains unlayered.
+
+[Certain] Updated the existing default/custom-colour expectations to scoped `resolveColorToken`; the default test checks the restored public default. Added a legacy shorthand precedence test using `3px dashed blue` while the new divider colour is red. This proves the old shorthand remains the complete border override. The suite now has 11 tests.
+
+| Check | Result |
+|---|---|
+| Original Page Title suite against the Empty State-built bundle | 1 failed / 9 passed; custom divider colour ignored |
+| Expanded suite against that pre-repair bundle | 2 failed / 9 passed; restored default and custom colour missing; legacy shorthand override test passes |
+| Strict Stylelint scoped to Page Title SCSS | Passed with the exact legacy-name exception described below |
+| Uncached package `beeq:stylelint` | Passed; 2 tasks succeeded |
+| Biome on e2e test and strict config | Passed |
+| Focused TypeScript check with repo decorator/strict settings and Playwright provider types | Passed |
+| Sass compilation and public-variable API comparison | Passed; restored divider→legacy shorthand→border chain, all documented variable names match pinned main |
+| Full publishable build and Page Title e2e against refreshed bundle | Passed; user-run uncached build (2m 0s), then 11/11 browser tests (2.10s) |
+
+[Certain] Strict Stylelint initially rejected the nine existing legacy public names in both SCSS files. Inline suppression comments then conflicted with the normal package gate's needless-disable checks, because that gate turns the naming rule off. Removed those comments and added an exact allowlist to `.stylelintrc.strict.json`, scoped only to the two Page Title stylesheets. The naming rule remains active, with its existing pattern plus those nine names; checks confirm new invalid names are rejected. No other lint rule or component's naming scope changed.
+
+[Certain] Evidence is in `/tmp/beeq-s8-page-title-20261027/`: `baseline.log`, `regressions-before-build.log`, `typecheck.log`, `stylelint-package.log`, `page-title.css`, and `before.patch`. Unrelated tracked WIP is unchanged from the pre-step snapshot. Tab Group and subsequent S8 components have not been changed in this step. No new commits or pushes were made.
+
+#### S8.2 Page Title — final verification, 2026-10-27 (Australia/Brisbane)
+
+[Certain] The user's uncached publishable build succeeded for all five projects and two dependency tasks in **2m 0s**. Stencil completed in **73.97s**, including copying 27,238 files in 34.80s; React, Vue and both Angular entrypoints built successfully. The refreshed-bundle Chromium suite passed **11/11 Page Title tests**, starting at **22:15:59**, with a total duration of **2.10s**. Both colour regressions now pass after the pre-repair **2 failed / 9 passed** run; the legacy shorthand precedence test also passes.
+
+[Certain] Independently inspected refreshed lazy bundle `dist/beeq/dist/beeq/p-542a3ed1.entry.js` (mtime **22:07:46.922 AEST**). It contains the public divider default, its use in `--subtitle-borderBlockEnd`, and the wrapper's consumption of that shorthand. Evidence is in `/tmp/beeq-s8-page-title-20261027/fresh-artifact-check.log`. No generated Page Title files have a working-tree diff. The implementation and verification record are not committed. S8 remains open for the other components; no full component e2e or S11 artifact sweep is claimed.
+
+#### S8.3 Tab Group — implementation, 2026-10-27 (Australia/Brisbane)
+
+[Certain] **S8.3 Tab Group is complete; final verification is recorded below.** Restored the variables import and mapped the divider pseudo-element's background to `--bq-tab-group--border-color`. Its public default remains `var(--bq-stroke--primary)`. The variable is already documented in the TSX; no TSX or variable-file edit was needed. The layout locals already live on `.bq-tab-group`, with orientation/placement overrides targeting that wrapper. No props, events, debounce behaviour, slots, parts or layout values changed; Tab Group remains unlayered.
+
+[Certain] The existing divider test checked a border colour even though the rendered line is a pseudo-element background. It now checks `backgroundColor` using scoped `resolveColorToken` while retaining the public-default assertion. Added custom-colour checks for horizontal/start, vertical/start and vertical/end. The suite now has 18 tests, retaining the existing disabled-divider and navigation/event coverage.
+
+| Check | Result |
+|---|---|
+| Original Tab Group suite against the Page Title-built bundle | 1 failed / 14 passed; missing imported public default reproduced |
+| Expanded suite against that pre-repair bundle | 4 failed / 14 passed; default mapping and three custom divider cases fail |
+| Strict Stylelint scoped to Tab Group SCSS | Passed |
+| Uncached package `beeq:stylelint` | Passed; 2 tasks succeeded |
+| Biome on Tab Group e2e test | Passed |
+| Focused TypeScript check with repo decorator/strict settings and Playwright provider types | Passed |
+| Sass compilation with injected shared mixins | Passed; public default and divider background mapping verified |
+| Full publishable build and Tab Group e2e against refreshed bundle | Passed; user-run uncached build (1m 36s), then 18/18 browser tests (3.20s) |
+
+[Certain] Evidence is in `/tmp/beeq-s8-tab-group-20261027/`: `baseline.log`, `regressions-before-build.log`, `typecheck.log`, `stylelint-package.log`, `tab-group.css`, and `before.patch`. Existing Page Title changes, its strict-config exception, generated typings, gitignore and Button WIP remain unchanged from the pre-step snapshot. Spinner and subsequent S8 components have not been changed in this step. No commits or pushes were made.
+
+#### S8.3 Tab Group — final verification, 2026-10-27 (Australia/Brisbane)
+
+[Certain] The user's uncached publishable build succeeded for all five projects and two dependency tasks in **1m 36s**. Stencil completed in **68.41s**, including copying 27,238 files in 26.69s; React, Vue and both Angular entrypoints built successfully. The refreshed-bundle Chromium suite passed **18/18 Tab Group tests**, starting at **22:26:34**, with a total duration of **3.20s**. All four divider regressions now pass after the pre-repair **4 failed / 14 passed** run; navigation, events, debounce and divider disabling also pass.
+
+[Certain] Independently inspected refreshed lazy bundle `dist/beeq/dist/beeq/p-f076b1b5.entry.js` (mtime **22:21:30.281 AEST**). It contains the public border-colour default and the pseudo-element background reference. Evidence is in `/tmp/beeq-s8-tab-group-20261027/fresh-artifact-check.log`. No generated Tab Group files have a working-tree diff. The implementation and verification record are not committed. S8 remains open for the remaining components; no full component e2e or S11 artifact sweep is claimed.
+
+#### S8.4 Spinner — implementation, 2026-10-27 (Australia/Brisbane)
+
+[Certain] **S8.4 Spinner is complete; final verification is recorded below.** Restored `--bq-spinner--color: var(--bq-icon--brand)` and `--bq-spinner--text-color: var(--bq-text--primary)`, with the missing `@prop` and `@cssprop` text-colour documentation. Spinner text now consumes its public variable. The documented variable-name sets in TSX and variables match pinned main (`1e4f7b0e`). No prop, slot, part or animation API changes were made.
+
+[Certain] Following the newly agreed internal-variable scope rule, moved the size and text-font-size locals from the host to `.bq-spinner`, with both small/large selectors targeting that wrapper. All size/font values are unchanged. Spinner remains unlayered. The existing design-style test covers all three loader sizes and text font size, weight and line height against the refreshed bundle.
+
+[Certain] Only the two existing colour tests were changed (plus replacing their shared colour resolver). They now use the actual `.bq-spinner__loader` / `.bq-spinner__text` selectors and scoped `resolveColorToken`. The default test gives `--bq-icon--brand` a distinct scoped value so the previous stroke-role mapping cannot pass by coincidence. All other test bodies remain unchanged; the suite still has 11 tests.
+
+| Check | Result |
+|---|---|
+| Original Spinner suite against the Tab Group-built bundle | 2 failed / 9 passed; both colour tests use stale selectors |
+| Corrected suite against that pre-repair bundle | 2 failed / 9 passed; wrong loader semantic mapping and ignored text-colour override reproduced |
+| Strict Stylelint scoped to Spinner SCSS | Passed |
+| Uncached package `beeq:stylelint` | Passed; 2 tasks succeeded |
+| Biome on Spinner TSX and e2e test | Passed |
+| Focused TypeScript check with repo decorator/strict settings and Playwright provider types | Passed |
+| Sass compilation with injected shared mixins and API comparison | Passed; both colour mappings, six wrapper-local declarations, and pinned-main documentation name sets verified |
+| Full publishable build and Spinner e2e against refreshed bundle | Passed; user-run uncached build (1m 33s), then 11/11 browser tests (2.39s) |
+
+[Certain] Evidence is in `/tmp/beeq-s8-spinner-20261027/`: `baseline.log`, `regressions-before-build.log`, `typecheck.log`, `stylelint-package.log`, `spinner.css`, and `before.patch`. Earlier S8 changes and unrelated tracked WIP are unchanged from the pre-step snapshot. Avatar, Steps and Button verification have not been worked on in this step. No commits or pushes were made.
+
+#### S8.4 Spinner — final verification, 2026-10-27 (Australia/Brisbane)
+
+[Certain] The user's uncached publishable build succeeded for all five projects and two dependency tasks in **1m 33s**. Stencil completed in **68.33s**, including copying 27,238 files in 29.78s; React, Vue and both Angular entrypoints built successfully. The refreshed-bundle Chromium suite passed **11/11 Spinner tests**, starting at **22:45:45**, with a total duration of **2.39s**. Both colour regressions now pass after the pre-repair **2 failed / 9 passed** run. The existing design-style test also verifies all three loader sizes and the text font sizes, weight and line heights following local-variable relocation.
+
+[Certain] Independently inspected refreshed lazy bundle `dist/beeq/dist/beeq/p-8b381200.entry.js` (mtime **22:42:21.676 AEST**). It contains both restored public colour defaults, the text-colour reference, wrapper locals and both size overrides. Evidence is in `/tmp/beeq-s8-spinner-20261027/fresh-artifact-check.log`. No generated Spinner file outside the existing `components.d.ts` WIP has a working-tree diff. The implementation and verification record are not committed. S8 remains open for Avatar, Steps and Button; no full component e2e or S11 artifact sweep is claimed.
+
+#### S8.5 Avatar — documentation restoration, 2026-10-27 (Australia/Brisbane)
+
+[Certain] **Avatar's requested source documentation repair is complete.** Restored the single `@cssprop --bq-avatar--text-color - Avatar initials text color` entry from pinned main. Source comparison confirms that removing this one line reproduces the pre-step TSX exactly. The public default already exists and the rendered initials already consume it, so no runtime styles, props, slots, parts or tests were changed.
+
+[Certain] Biome and diff checks pass. The unchanged Avatar Chromium suite passes **11/11**, starting at **22:47:10**, with total duration **1.77s**, including default colours and the public text-colour override. This run uses the existing Spinner-built runtime; the edit is JSDoc-only and no new build is claimed. Generated documentation will be refreshed and reviewed with the next build/S11 artifact checks. Evidence and pre-step snapshot are in `/tmp/beeq-s8-avatar-20261027/browser.log` and `before.patch`. No new commits or pushes were made.
+
+#### S8.6 Steps — dependency review, 2026-10-27 (Australia/Brisbane)
+
+[Certain] **Initial review found a disconnected variable; the user subsequently approved removing it.** Repository search found no runtime consumption of `--bq-steps--divider-color`: it appears in the variable declaration and public documentation. The actual line colour follows `bq-steps.dividerColor` → `bq-step-item.dividerColor` → `bq-divider.strokeColor`. Therefore the planned default swap from secondary to primary would not change the visible divider. This differs from Page Title's verified indirect CSS-variable consumption.
+
+[Certain] Following the user's instruction to evaluate usefulness rather than restore every main declaration mechanically, raised this gap before changing the token. The user chose removal because `dividerColor` already handles the divider. This explicitly supersedes the planned default-token restoration; no new CSS-variable rendering path will be introduced. Button has not been worked on in this step.
+
+#### S8.6 Steps — implementation, 2026-10-27 (Australia/Brisbane)
+
+[Certain] **S8.6 Steps is complete; final verification is recorded below.** Removed `--bq-steps--divider-color` from the variable partial, its `@prop`/`@cssprop` documentation, and the Mintlify Steps CSS-variable table. The remaining `--bq-steps--gap` variable and the `dividerColor` prop defaults, reflection and propagation are unchanged. This is an intentional user-approved API removal, not an unexplained migration loss.
+
+[Certain] Strengthened the existing dividerColor propagation test to check the actual SVG divider stroke for primary, then brand, using scoped `resolveColorToken`; no new test cases were added. The suite passes **8/8** against the existing Spinner-built runtime (total **7.39s**). This confirms existing prop behaviour, not generation of the new source. Strict Stylelint scoped to Steps, uncached package Stylelint, Biome, focused TypeScript, Sass compilation and diff checks pass. Sass output retains the gap and omits the removed divider variable.
+
+[Certain] `components.d.ts` still contains the old generated CSS-property entries until the next build; it was not hand-edited because it contains existing WIP. The user will run the full publishable build and Steps tests, which will also refresh Avatar's restored JSDoc. Verify the refreshed Steps CSS, generated API entries, and the existing WIP delta before closing this item. Logs and snapshots are in `/tmp/beeq-s8-steps-20261027/`: `browser-before-build.log`, `typecheck.log`, `stylelint-package.log`, `steps.css`, and `before.patch`. No commits or pushes were made.
+
+#### S8.6 Steps — final verification, 2026-10-27 (Australia/Brisbane)
+
+[Certain] The user's uncached publishable build succeeded for all five projects and two dependency tasks in **1m 18s**. Stencil completed in **55.58s**, including copying 27,238 files in 23.88s; React, Vue and both Angular entrypoints built successfully. The refreshed-bundle Chromium suite passed **8/8 Steps tests**, starting at **23:07:03**, with a total duration of **7.22s**. The strengthened test verifies primary→brand dividerColor propagation through the rendered SVG stroke. The vertical-orientation case spent 5.05s in its existing stability wait; it passed.
+
+[Certain] Independently verified the refreshed Steps lazy bundle and generated typings; the removed variable is absent, while `--bq-steps--gap` remains. `components.d.ts` also contains Avatar's restored text-colour documentation in all four generated API sections. Search across Steps source, CEM, typings and its Mintlify page finds no stale removed-variable reference. Evidence is in `/tmp/beeq-s8-steps-20261027/fresh-artifact-check.log`. The source/API removal and documentation regeneration are complete; no new commit or full component e2e/S11 sweep is claimed. Button remains the final S8 item.
+
+#### S8.7 Button — implementation verification, 2026-10-27 (Australia/Brisbane)
+
+[Certain] **S8.7 Button and S8 are complete; final fresh-build verification is recorded below.** Inspected pinned main's primary, primary ghost, primary danger, secondary, secondary ghost, link and text rules, including their hover and active bases. The existing WIP's public variable defaults and mappings preserve those paths. Public variable documentation names match pinned main. The existing consumer-override test changes the primary background and text colour and verifies both rendered values.
+
+[Certain] The original suite passes **26/26** against the user's Steps-built bundle (total **3.54s**), after S3's token repair. Added seven parameterised cases covering real hover and held-Space active states for those appearance/variant combinations. Expected colours resolve the appropriate base and public interaction tokens through scoped `resolveColorToken`. Each test asserts `:active` while Space is held and releases the key in `finally`. The expanded suite passes **33/33** against the same bundle (total **9.12s**).
+
+[Certain] Applied the newly agreed local-variable rule: moved five default `--_button-*` values from `:host` to `.bq-button`; existing variant overrides already target that internal element. The host only keeps host layout and public border-radius consumption. The prior Button variable-file WIP is unchanged. No TSX, props, events, slots, parts, variant class structure or interaction values changed in this step. At the initial source-validation point, a fresh build was still required to verify this relocation; the final verification below closes that check.
+
+| Check | Result |
+|---|---|
+| Original Button suite against the Steps-built bundle | 26 passed |
+| Expanded Button suite against that same pre-relocation bundle | 33 passed, including public colour overrides and seven hover/active pairs |
+| Strict Stylelint scoped to Button SCSS | Passed |
+| Uncached package `beeq:stylelint` | Passed; 2 tasks succeeded |
+| Biome on Button e2e test | Passed |
+| Focused TypeScript check with repo decorator/strict settings and Playwright provider types | Passed |
+| Sass/PostCSS inspection and pinned-main comparison | Passed; wrapper locals, public variable names, all seven variant interaction bases and shared hover/active mixes verified |
+| Full publishable build and Button e2e after local relocation | Passed; user-run uncached build (1m 49s), then 33/33 browser tests (9.48s) |
+
+[Certain] Evidence is in `/tmp/beeq-s8-button-20261027/`: `baseline.log`, `expanded-before-build.log`, `typecheck.log`, `stylelint-package.log`, `button.css`, and `before.patch`. Earlier S8 changes, generated typings, gitignore and the Button variable file remain unchanged from the pre-step snapshot. S9 has not started. No commits or pushes were made.
+
+#### S8.7 Button — final verification, 2026-10-27 (Australia/Brisbane)
+
+[Certain] The user's uncached publishable build succeeded for all five projects and two dependency tasks in **1m 49s**. Stencil completed in **68.37s**, including copying 27,238 files in 28.94s; React, Vue and both Angular entrypoints built successfully. The refreshed-bundle Chromium suite passed **33/33 Button tests**, starting at **23:32:47**, with total duration **9.48s**. This verifies default and ghost sizing, public colour mappings and overrides, all seven hover/active pairs, and the existing interaction/form coverage after local-variable relocation.
+
+[Certain] Independently inspected refreshed lazy bundle `dist/beeq/dist/beeq/p-c87a0d03.entry.js` (mtime **23:26:23.254 AEST**). It contains the five default locals on the internal button, no host-local declarations, and the expected public colour and interaction-mix references. Evidence is in `/tmp/beeq-s8-button-20261027/fresh-artifact-check.log`. No generated Button files have a working-tree diff.
+
+[Certain] **S8 is complete.** Empty State (12 tests), Page Title (11), Tab Group (18), Spinner (11), Avatar (11), Steps (8), and Button (33) were verified individually. Avatar's JSDoc was regenerated in the Steps build. Steps' unused divider CSS variable was removed by explicit user decision; its `dividerColor` prop path and rendered SVG stroke are verified. These per-component checks do not substitute for S9–S11 or the final full-suite run. S9 has not started. No new commits or pushes were made.
 
 ### S9. Progress tests (visible behaviour)
 
@@ -817,7 +959,7 @@ Write a one-off script (or an Nx target if useful). For every migrated component
 - `@Prop` names, defaults and optionality
 - public `--bq-*` declared in variables files
 
-Every difference must be an intentional migration change listed in the inventory. Update the Status column, and resolve each `ok?`.
+Every difference must be an intentional migration change listed in the inventory. Update the Status column, and resolve each `ok?`. The user-approved removal of Steps' unused `--bq-steps--divider-color` is an expected difference; verify it is absent from source and regenerated documentation while `dividerColor` remains intact.
 
 Keep the script's output as the **upstream-change reconciliation checklist**, so "all tests pass" can't hide silent API losses.
 
@@ -849,7 +991,7 @@ Keep the script's output as the **upstream-change reconciliation checklist**, so
 - Don't use the full `nx run beeq:stylelint-strict` as a component gate while legacy styles remain.
 - `pnpm exec nx affected -t check --exclude='*,!tag:core' --parallel=3`; Biome.
 - S10 reconciliation: no unexplained differences.
-- `git diff 1e4f7b0e -- 'packages/beeq/src/components/*/bq-*.tsx' | grep '^-.*@cssprop'`: nothing missing. This is a quick sanity check; S10 is the real gate.
+- `git diff 1e4f7b0e -- 'packages/beeq/src/components/*/bq-*.tsx' | grep '^-.*@cssprop'`: no unexplained omissions. Steps' user-approved `--bq-steps--divider-color` removal is expected. This is a quick sanity check; S10 is the real gate.
 
 ## Risks and follow-ups
 

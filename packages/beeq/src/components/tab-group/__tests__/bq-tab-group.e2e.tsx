@@ -1,6 +1,8 @@
 import { h } from '@stencil/core';
-import { describe, expect, it, render } from '@stencil/vitest';
+import { describe, expect, it, render, waitForStable } from '@stencil/vitest';
 import { userEvent } from 'vitest/browser';
+
+import { resolveColorToken } from '../../../shared/test-utils/resolveColorToken';
 
 // Shared fixture — 4 tabs with a given active value
 const mkGroup = (
@@ -31,16 +33,6 @@ const getTabButton = (root: HTMLElement, tabId: string) =>
   root
     .querySelector<HTMLBqTabElement>(`bq-tab[tab-id="${tabId}"]`)
     ?.shadowRoot?.querySelector<HTMLButtonElement>('button');
-
-/** Resolves a CSS color value (e.g. `var(--bq-text--brand)`) to its computed `rgb()` form */
-const resolveColor = (value: string): string => {
-  const probe = document.createElement('div');
-  probe.style.color = value;
-  document.body.appendChild(probe);
-  const { color } = getComputedStyle(probe);
-  probe.remove();
-  return color;
-};
 
 describe('bq-tab-group', () => {
   it('should render', async () => {
@@ -252,6 +244,31 @@ describe('bq-tab-group', () => {
     );
 
     const divider = getComputedStyle(root.shadowRoot.querySelector('[part="base"]'), '::after');
-    expect(divider.borderBottomColor).toBe(resolveColor('var(--bq-stroke--primary)'));
+    expect(divider.backgroundColor).toBe(resolveColorToken('--bq-stroke--primary', root));
   });
+
+  it.each([
+    { orientation: 'horizontal', placement: 'start' },
+    { orientation: 'vertical', placement: 'start' },
+    { orientation: 'vertical', placement: 'end' },
+  ] as const)(
+    'should apply a custom divider colour for $orientation / $placement',
+    async ({ orientation, placement }) => {
+      const { root } = await render(
+        <bq-tab-group
+          orientation={orientation}
+          placement={placement}
+          style={{ '--bq-tab-group--border-color': '#123456' }}
+        >
+          <bq-tab tabId="1" controls="panel-1">
+            Tab 1
+          </bq-tab>
+        </bq-tab-group>,
+      );
+      await waitForStable(root);
+      const divider = getComputedStyle(root.shadowRoot.querySelector('[part="base"]'), '::after');
+      expect(divider.content).not.toBe('none');
+      expect(divider.backgroundColor).toBe(resolveColorToken('--bq-tab-group--border-color', root));
+    },
+  );
 });

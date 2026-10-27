@@ -7,9 +7,6 @@
 /* ---------------------------------- Host ---------------------------------- */
 
 :host {
-  --_spinner-size: var(--bq-spinner--size-medium);
-  --_spinner-text-font-size: var(--bq-spinner--medium-text-fontSize);
-
   position: relative;
   display: inline-block;
 }
@@ -17,6 +14,9 @@
 /* ---------------------------------- Base ---------------------------------- */
 
 .bq-spinner {
+  --_spinner-size: var(--bq-spinner--size-medium);
+  --_spinner-text-font-size: var(--bq-spinner--medium-text-fontSize);
+
   display: flex;
 }
 
@@ -39,7 +39,7 @@
 }
 
 .bq-spinner__text {
-  color: var(--bq-text--primary);
+  color: var(--bq-spinner--text-color);
   font-weight: var(--bq-font-weight--medium);
   font-size: var(--_spinner-text-font-size);
   line-height: var(--bq-spinner--text-lineHeight);
@@ -47,12 +47,12 @@
 
 /* -------------------------------- Variants -------------------------------- */
 
-:host([size='small']) {
+:host([size='small']) .bq-spinner {
   --_spinner-size: var(--bq-spinner--size-small);
   --_spinner-text-font-size: var(--bq-spinner--small-text-fontSize);
 }
 
-:host([size='large']) {
+:host([size='large']) .bq-spinner {
   --_spinner-size: var(--bq-spinner--size-large);
   --_spinner-text-font-size: var(--bq-spinner--large-text-fontSize);
 }

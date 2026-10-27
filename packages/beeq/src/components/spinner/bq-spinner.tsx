@@ -44,6 +44,7 @@ import { SPINNER_SIZE, SPINNER_TEXT_POSITION } from './bq-spinner.types';
  * @cssprop --bq-spinner--medium-text-fontSize - Spinner medium text font size
  * @cssprop --bq-spinner--small-text-fontSize - Spinner small text font size
  * @cssprop --bq-spinner--text-lineHeight - Spinner text line height
+ * @cssprop --bq-spinner--text-color - Spinner text color
  */
 @Component({
   tag: 'bq-spinner',
@@ -56,7 +57,7 @@ export class BqSpinner {
 
   private iconSlotElem?: HTMLElement;
   private slotElem?: HTMLElement;
-  private observer: MutationObserver = new MutationObserver((mutations) => {
+  private readonly observer: MutationObserver = new MutationObserver((mutations) => {
     const [mutation] = mutations;
     this.slotContentLength = mutation.target.textContent?.length ?? 0;
   });
@@ -142,7 +143,7 @@ export class BqSpinner {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private handleSlotChange = () => {
+  private readonly handleSlotChange = () => {
     if (!this.slotElem) return;
 
     this.hasSlot = hasSlotContent(this.slotElem);
@@ -162,11 +163,11 @@ export class BqSpinner {
     });
   };
 
-  private handleIconSlotChange = (): void => {
+  private readonly handleIconSlotChange = (): void => {
     this.hasIconSlot = hasSlotContent(this.iconSlotElem, 'icon');
   };
 
-  private checkPropValues = (): void => {
+  private readonly checkPropValues = (): void => {
     validatePropValue(SPINNER_TEXT_POSITION, 'none', this.el, 'textPosition');
     validatePropValue(SPINNER_SIZE, 'medium', this.el, 'size');
   };
@@ -174,7 +175,7 @@ export class BqSpinner {
   private setIconSize(): void {
     if (!this.hasIconSlot || !this.bqIcon) return;
 
-    this.bqIcon.size = parseInt(getCSSVariableValue(`bq-spinner--size-${this.size}`, this.el), 10).toString();
+    this.bqIcon.size = Number.parseInt(getCSSVariableValue(`bq-spinner--size-${this.size}`, this.el), 10).toString();
   }
 
   private get bqIcon(): HTMLBqIconElement | null {
