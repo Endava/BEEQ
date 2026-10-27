@@ -34,7 +34,7 @@ Tick each box when the step lands. Keep the red/green evidence next to the step.
 - [x] S3. Native themes — full build confirmed; compiled CSS checks and all 203 focused browser tests pass
 - [x] S4. Native reset — 16/16 parity checks and standalone reset build pass
 - [x] S5. Table — published CSS verified; all 15 table e2e tests pass
-- [ ] S6. Tag
+- [x] S6. Tag — published bundle verified; all 34 Tag e2e tests pass
 - [ ] S7. Badge
 - [ ] S8. Other components (empty-state, page-title, tab-group, spinner, avatar, steps, button)
 - [ ] S9. Progress tests
@@ -645,7 +645,7 @@ Test Files  1 passed (1)
   - `--bq-tag--border-radius` (from `border`)
   - `--bq-tag--background-color` and `--bq-tag--text-color: var(--bq-text--alt)` (custom colour)
 - This is prop-to-public-variable mapping, the same as Badge's `backgroundColor`. It is not internal mutation of public variables for variant/state styling, which stays prohibited.
-- Values must disappear when `color`, `border` or `size` change or are removed. Verify that Stencil's re-render clears them.
+- Custom-colour and border mappings must disappear when those props change or are removed. Changing or removing `size` must replace its old icon-size mapping; existing prop validation restores `medium` (`24px`) when size is removed. Verify these transitions through Stencil re-renders.
 
 **Private locals**
 - Move every `--_tag-*` declaration from `:host` into the `.bq-tag` rule (`bq-tag.base`), each mapped from its public variable.
@@ -678,6 +678,40 @@ Test Files  1 passed (1)
   - removing `border` after render restores the size's radius, with no stale inline `--bq-tag--border-radius`.
 - Changing `color` from custom to `info`, or removing `border` or `size`, leaves no stale inline public vars and gives the expected computed colours and radius.
 - Don't assert `--_tag-*` emptiness on the host as a privacy guarantee. If kept, label it a regression check on where the locals are declared.
+
+#### S6 implementation — 2026-10-27 (Australia/Brisbane)
+
+[Certain] **S6 is complete; final build/browser evidence is recorded below.** Restored the inline public mappings for custom colour, border radius and prefix-icon size. Internal `--_tag-*` declarations now live on the wrapper; variant and selected-state selectors update those wrapper locals through public variables. Small/xsmall radius defaults apply only without an explicit reflected `border`. Public variable defaults are inside `bq-tag.tokens`, and the global layer prelude uses `bq.public`.
+
+[Certain] Focus and hover use the shared mixins. The close button now uses the active mix for its pressed state, and its icon consumes the wrapper text colour. Restored the 28 dropped `@cssprop` and `@prop` entries; both files' full sets of 40 documented variable names match pinned main (`1e4f7b0e`). No prop defaults, reflected props, events, slots or parts were changed.
+
+[Certain] The Tag browser suite now has 34 tests. The custom-colour public-variable test is unchanged. The stale close-icon attribute assertion now checks the rendered icon's computed colour, and colour expectations use scoped `resolveColorToken`. Added host public-variable overrides, selected overrides, both small/xsmall border precedence and removal, custom→info→default colour transitions, and size removal/prefix-icon sizing. Radius expectations resolve their scoped tokens to browser pixel values.
+
+[Certain] **Plan clarification:** removing `size` invokes the existing validator and restores the `medium` default, so the old small prefix-size mapping must become `24px`, rather than disappear. The new test preserves that existing contract. Removing custom colour or border must clear its respective inline public variables.
+
+| Check | Result |
+|---|---|
+| Original Tag suite against the existing S5-built bundle | 2 failed / 26 passed; stale icon-attribute and missing public custom-colour mappings reproduced |
+| Expanded suite against that same pre-S6 bundle | 6 failed / 28 passed; public custom-colour mapping, selected overrides, both size/border cases, colour transition, and public prefix-size mapping fail |
+| Strict Stylelint scoped to Tag SCSS | Passed |
+| Uncached package `beeq:stylelint` | Passed, 2 tasks succeeded |
+| Biome on Tag TSX and e2e tests | Passed |
+| Focused TypeScript check with repo decorator/strict settings and Playwright provider types | Passed |
+| Sass compilation with injected shared mixins; PostCSS checks | Passed; all 42 internal declarations target the wrapper, layer prelude is native, close active mix uses active tokens |
+| Pinned-main documentation API comparison | Passed; 40 names each in TSX and variables docs |
+| Full publishable build and Tag e2e against refreshed bundle | Passed; user-run uncached build (2m 12s), then 34/34 Tag browser tests (6.17s) |
+
+[Certain] Local logs and the compiled Sass inspection artifact are in `/tmp/beeq-s6-20261027/`: `baseline.log`, `regressions-before-build.log`, `typecheck.log`, `stylelint-package.log`, and `tag.css`. The initial standalone TypeScript invocation picked stricter defaults and omitted provider type augmentation; the final command uses the repo's `strict: false` and `@vitest/browser-playwright` types and passes. At that initial validation point, no production bundle had been rebuilt and no green result was claimed. The final verification below supersedes that pending status. Unrelated WIP is preserved; no S7+ repairs, commits or pushes were made.
+
+#### S6 final verification — 2026-10-27 (Australia/Brisbane)
+
+[Certain] The user ran the full publishable build with `--skip-nx-cache`, `--parallel`, and static output. All five publishable projects and their two dependency tasks succeeded in **2m 12s**. Stencil completed in **78.15s**, including copying 27,238 files in 37.55s; React, Vue and both Angular entrypoints built successfully. Existing Rollup and Tailwind warnings remained non-failing.
+
+[Certain] The user's fresh-bundle Chromium run passed **34/34 Tag tests**, starting at **12:12:56**, with a total duration of **6.17s**. This includes the public custom-colour mapping, computed close-icon colours, selected overrides, small/xsmall border removal, colour transitions and prefix sizing. The size-removal test emits the expected existing validation warning before restoring `medium`; the test passes. The expanded suite's pre-repair **6 failed / 28 passed** result now has a verified green result.
+
+[Certain] Independently inspected refreshed lazy bundle `dist/beeq/dist/beeq/p-55a8ebf9.entry.js` (mtime **12:06:57.035 AEST**). It contains the public inline mappings, selected-variable mappings, small-size border guard, native layer prelude and active-state mix. Evidence is in `/tmp/beeq-s6-20261027/fresh-artifact-check.log`. The build refreshed `components.d.ts`: compared with the pre-S6 snapshot, its only new content is the restored Tag documentation in all three generated API sections. Other generated WIP remains, and the other tracked unrelated WIP is unchanged.
+
+[Certain] S6 is complete. The full component e2e suite and S11's broader artifact gates were not rerun for this step. No S7+ repairs, commits or pushes were made.
 
 ### S7. Badge
 

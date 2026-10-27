@@ -60,6 +60,34 @@ import { iconSize } from './helper';
  * @cssprop --bq-tag--medium-gap - Tag medium gap between content
  * @cssprop --bq-tag--medium-padding-x - Tag medium padding horizontal
  * @cssprop --bq-tag--medium-padding-y - Tag medium padding vertical
+ * @cssprop --bq-tag--text-color - Tag text color
+ * @cssprop --bq-tag--background-selected - Tag background color when it is clickable and selected
+ * @cssprop --bq-tag--text-selected - Tag text color when it is clickable and selected
+ * @cssprop --bq-tag--background-error-filled - Tag background color for the error color and filled variant
+ * @cssprop --bq-tag--text-error-filled - Tag text color for the error color and filled variant
+ * @cssprop --bq-tag--background-error-outline - Tag background color for the error color and outline variant
+ * @cssprop --bq-tag--text-error-outline - Tag text color for the error color and outline variant
+ * @cssprop --bq-tag--border-error-outline - Tag border color for the error color and outline variant
+ * @cssprop --bq-tag--background-gray-filled - Tag background color for the gray color and filled variant
+ * @cssprop --bq-tag--text-gray-filled - Tag text color for the gray color and filled variant
+ * @cssprop --bq-tag--background-gray-outline - Tag background color for the gray color and outline variant
+ * @cssprop --bq-tag--text-gray-outline - Tag text color for the gray color and outline variant
+ * @cssprop --bq-tag--border-gray-outline - Tag border color for the gray color and outline variant
+ * @cssprop --bq-tag--background-info-filled - Tag background color for the info color and filled variant
+ * @cssprop --bq-tag--text-info-filled - Tag text color for the info color and filled variant
+ * @cssprop --bq-tag--background-info-outline - Tag background color for the info color and outline variant
+ * @cssprop --bq-tag--text-info-outline - Tag text color for the info color and outline variant
+ * @cssprop --bq-tag--border-info-outline - Tag border color for the info color and outline variant
+ * @cssprop --bq-tag--background-success-filled - Tag background color for the success color and filled variant
+ * @cssprop --bq-tag--text-success-filled - Tag text color for the success color and filled variant
+ * @cssprop --bq-tag--background-success-outline - Tag background color for the success color and outline variant
+ * @cssprop --bq-tag--text-success-outline - Tag text color for the success color and outline variant
+ * @cssprop --bq-tag--border-success-outline - Tag border color for the success color and outline variant
+ * @cssprop --bq-tag--background-warning-filled - Tag background color for the warning color and filled variant
+ * @cssprop --bq-tag--text-warning-filled - Tag text color for the warning color and filled variant
+ * @cssprop --bq-tag--background-warning-outline - Tag background color for the warning color and outline variant
+ * @cssprop --bq-tag--text-warning-outline - Tag text color for the warning color and outline variant
+ * @cssprop --bq-tag--border-warning-outline - Tag border color for the warning color and outline variant
  */
 @Component({
   tag: 'bq-tag',
@@ -246,11 +274,11 @@ export class BqTag {
 
   private get computedHostStyles() {
     return {
-      '--_tag-icon-prefix-size': `${iconSize(this.size)}px`,
-      ...(this.border && { '--_tag-border-radius': `var(--bq-radius--${this.border})` }),
+      '--bq-tag--icon-prefix-size': `${iconSize(this.size)}px`,
+      ...(this.border && { '--bq-tag--border-radius': `var(--bq-radius--${this.border})` }),
       ...(this.hasCustomColor && {
-        '--_tag-background-color': getColorCSSVariable(this.color) ?? this.color,
-        '--_tag-text-color': `var(--bq-text--alt)`,
+        '--bq-tag--background-color': getColorCSSVariable(this.color) ?? this.color,
+        '--bq-tag--text-color': `var(--bq-text--alt)`,
       }),
     };
   }
