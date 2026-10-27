@@ -47,7 +47,7 @@ export class BqBadge {
 
   private spanElement?: HTMLSpanElement;
 
-  private observer: MutationObserver = new MutationObserver(() => this.updateContentLength());
+  private readonly observer: MutationObserver = new MutationObserver(() => this.updateContentLength());
 
   // Reference to host HTML element
   // ===================================
@@ -63,7 +63,10 @@ export class BqBadge {
   // Public Property API
   // ========================
 
-  /** Badge background color. The value should be a valid value of the palette color */
+  /**
+   * Badge background color. The value should be a valid value of the palette color.
+   * When it changes, set a matching `textColor` (e.g. `text--on-success` for `ui--success`) so the content stays legible.
+   */
   @Prop({ mutable: true, reflect: true }) backgroundColor?: string;
 
   /** Badge number color. The value should be a valid value of the palette color */
@@ -121,11 +124,11 @@ export class BqBadge {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private handleSlotChange = () => {
+  private readonly handleSlotChange = () => {
     this.updateContentLength();
   };
 
-  private updateContentLength = () => {
+  private readonly updateContentLength = () => {
     const slotElem = this.spanElement?.querySelector('slot') ?? null;
     this.contentLength = isNil(slotElem) ? 0 : getTextContent(slotElem, { recurse: true }).length;
   };

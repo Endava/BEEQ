@@ -35,7 +35,7 @@ Tick each box when the step lands. Keep the red/green evidence next to the step.
 - [x] S4. Native reset — 16/16 parity checks and standalone reset build pass
 - [x] S5. Table — published CSS verified; all 15 table e2e tests pass
 - [x] S6. Tag — published bundle verified; all 34 Tag e2e tests pass
-- [ ] S7. Badge
+- [x] S7. Badge — published bundle verified; all 10 Badge e2e tests pass
 - [ ] S8. Other components (empty-state, page-title, tab-group, spinner, avatar, steps, button)
 - [ ] S9. Progress tests
 - [ ] S10. Public API reconciliation
@@ -715,12 +715,46 @@ Test Files  1 passed (1)
 
 ### S7. Badge
 
-- Restore the `backgroundColor` JSDoc, `--bq-badge--text-color: var(--bq-text--on-danger)` and `size?: TBadgeSize`.
+- Restore the `backgroundColor` JSDoc and `--bq-badge--text-color: var(--bq-text--on-danger)`. Retain `size: TBadgeSize = 'small'` without `?`, per the user-approved exception for this defaulted, validated prop.
 - Keep the #1797 mutation scenario: two slotted spans, then clear the second.
   - Assert `is-populated`.
   - Poll `is-multiple` → false.
   - Assert the computed inline padding returns to the single-digit value.
 - `--bq-text--on-danger` exists in the current mode blocks (`beeq.scss` lines 153 and 226). Confirm it resolves via S2b.
+
+#### S7 implementation — 2026-10-27 (Australia/Brisbane)
+
+[Certain] **S7 is complete; final build/browser evidence is recorded below.** Restored pinned main's `backgroundColor` JSDoc explaining matching text colour and `--bq-badge--text-color: var(--bq-text--on-danger)`. The user removed the initially restored `?`; retain `size: TBadgeSize = 'small'` as an explicit exception to upstream restoration, since this prop has a default and validation fallback. Badge remains unlayered as specified by the migration plan. No slot observer or rendering logic changed.
+
+[Certain] Preserved #1797's two-span mutation scenario. The test now asserts `is-populated` and `is-multiple` with 4px inline padding before clearing the second span, polls `is-multiple` to false, then verifies one remaining character, `is-populated`, and 0px inline padding on both sides. It passes against the existing bundle, confirming the observer already handles the scenario and only the stale Tailwind-class assertions needed repair.
+
+[Certain] Strengthened the existing default-colour test with a distinct scoped `--bq-text--on-danger` value and scoped `resolveColorToken` expectations. This prevents `text--alt` and `text--on-danger` resolving to the same default colour from hiding the incorrect mapping. The suite still has 10 tests.
+
+| Check | Result |
+|---|---|
+| Original Badge suite against the S6-built bundle | 1 failed / 9 passed; stale slot-mutation class assertion reproduced |
+| Revised Badge suite against that pre-S7 bundle | 1 failed / 9 passed; mutation test passes, strengthened on-danger mapping test fails as intended |
+| S2b `themes.e2e.tsx`, filtered to `on-danger` | 24 passed / 172 skipped; all root and nested theme fixtures resolve to their concrete oracle colour |
+| Strict Stylelint scoped to Badge SCSS | Passed |
+| Uncached package `beeq:stylelint` | Passed; 2 tasks succeeded |
+| Biome on Badge TSX and e2e tests | Passed |
+| Focused TypeScript check with repo decorator/strict settings and Playwright provider types | Passed |
+| Sass compilation and source contract inspection | Passed; on-danger mapping, mutation padding and unlayered structure retained; restored JSDoc matches pinned main; non-optional defaulted size retained by user decision |
+| Full publishable build and Badge e2e against refreshed bundle | Passed; user-run uncached build (2m 27s), then 10/10 Badge browser tests (1.76s) |
+
+[Certain] Follow-up to the SonarQube readonly diagnostic: marked the observer reference and the `handleSlotChange` / `updateContentLength` arrow-function fields `readonly`, since none is reassigned. The DOM ref, Stencil state and mutable props remain writable. This changes TypeScript assignment constraints only; observer operations and callback behaviour are unchanged. Biome and the focused TypeScript check pass after this adjustment. SonarQube itself was not run here.
+
+[Certain] Evidence is in `/tmp/beeq-s7-20261027/`: `baseline.log`, `regressions-before-build.log`, `on-danger-themes.log`, `typecheck.log`, `stylelint-package.log`, `badge.css`, and `before.patch`. At the initial source-validation point, pre-existing tracked WIP, including Badge's generated readme, was byte-identical to the pre-S7 snapshot. The final build regenerated the Badge documentation as recorded below. No S8+ work, commits or pushes were made.
+
+#### S7 final verification — 2026-10-27 (Australia/Brisbane)
+
+[Certain] The user ran the full publishable build with `--skip-nx-cache`. All five publishable projects and their two dependency tasks succeeded in **2m 27s**. Stencil completed in **111.98s**, including copying 27,238 files in 70.89s, and regenerated Badge's readme. React, Vue and both Angular entrypoints built successfully. Existing Rollup and Tailwind warnings remained non-failing.
+
+[Certain] The user's refreshed-bundle Chromium run passed **10/10 Badge tests**, starting at **15:07:01**, with a total duration of **1.76s**. The strengthened on-danger test now passes after its pre-repair failure. The non-first slotted-node mutation test confirms populated state and the return to single-value padding. The non-optional defaulted size declaration and readonly follow-up were present before this build.
+
+[Certain] Independently inspected refreshed lazy bundle `dist/beeq/dist/beeq/p-a65372b0.entry.js` (mtime **15:04:05.545 AEST**). It contains `--bq-badge--text-color:var(--bq-text--on-danger)`, the `is-multiple` state and its inline-padding rule. Evidence is in `/tmp/beeq-s7-20261027/fresh-artifact-check.log`. The regenerated Badge readme matches HEAD again; relative to the pre-S7 generated snapshot, `components.d.ts` changes only by restoring the matching-text-colour guidance in its two Badge API sections. Its pre-existing non-optional Badge size typing and other generated WIP remain. Unrelated gitignore and Button WIP are unchanged.
+
+[Certain] S7 is complete. The full component e2e suite, S11's broader artifact checks and SonarQube were not rerun for this step. No S8+ repairs, commits or pushes were made.
 
 ### S8. Other components
 
