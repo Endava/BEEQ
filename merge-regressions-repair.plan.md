@@ -33,7 +33,7 @@ Tick each box when the step lands. Keep the red/green evidence next to the step.
 - [x] S2d. Scoped `resolveColorToken` helper (7 unit + 7 browser tests pass)
 - [x] S3. Native themes — full build confirmed; compiled CSS checks and all 203 focused browser tests pass
 - [x] S4. Native reset — 16/16 parity checks and standalone reset build pass
-- [ ] S5. Table
+- [x] S5. Table — published CSS verified; all 15 table e2e tests pass
 - [ ] S6. Tag
 - [ ] S7. Badge
 - [ ] S8. Other components (empty-state, page-title, tab-group, spinner, avatar, steps, button)
@@ -150,7 +150,7 @@ Status values:
 | d842c209 | `foundations/reset.scss` | Pre-d842c209 | S4 | S2c | lost |
 | f02072b4 #1852 | Keep raw Tailwind directives out of published CSS; separate the Storybook input | `default.scss` is native-only; Stencil global CSS and Storybook share `legacy-tailwind.scss` (components/utilities only) | S3 follow-up | Build-path, Storybook and fresh published Stencil CSS checks pass | verified in S3 |
 | 5b684d17, 4029dbe, b27db72, e015c34, 3bb07f5 | Preset plugins only | Merge took main's files; native mixins are generic | none | none | ok |
-| 5bc728c2 | `public/_table.scss` `--bq-table--text-color`, bordered `border-color` | Missing | S5 | table e2e | lost |
+| 5bc728c2 | `public/_table.scss` `--bq-table--text-color`, bordered `border-color` | Text variable restored; bordered mapping was already present and is retained | S5 | table e2e | verified in S5 |
 | 5bc728c2, 03cd6344 | Tag: 28 public vars, selected vars, close-button hover/active, inline public vars | Docs dropped, selected vars unused, active uses hover, private inline | S6 | tag e2e | lost |
 | 5bc728c2, a2eb405b #1797 | Badge: `--bq-badge--text-color: on-danger`, `backgroundColor` JSDoc, `size?`, slot test | Reverted / stale test | S7 | badge e2e | lost |
 | 5bc728c2 | Empty state `--bq-empty-state--text-color` | Import and `@cssprop` dropped | S8 | e2e | lost |
@@ -585,6 +585,53 @@ Test Files  2 passed (2)
 - Add `--bq-table--text-color: var(--bq-text--primary)` with `@prop`. Use it for `th` and `td` `color`.
 - Bordered `border-color` uses `var(--bq-table--border-color)`.
 - Check against `git show 1e4f7b0e:packages/beeq/src/global/styles/_table.scss`.
+
+#### S5 implementation — 2026-10-27 (Australia/Brisbane)
+
+[Certain] **S5 is complete; final build/browser evidence is recorded below.** Added `--bq-table--text-color: var(--bq-text--primary)` and its `@prop` entry to `public/_table.scss`; both `th` and `td` now consume that variable. The existing bordered table/cell rules already used `--bq-table--border-color`, so no border repair was needed. The public class selectors, logical properties and `bq.public` layer are unchanged.
+
+[Certain] Compared against pinned main `1e4f7b0e`: all **13 public table variable declarations** now match. The existing table colour tests now use `resolveColorToken(name, root)` while retaining the original semantic-role expectations. The default text test additionally checks that the public table token resolves to the primary text colour. The custom-text test now checks both header and body cells after a blue override.
+
+[Certain] Before editing, the agent reran the original table tests against the S3/S4 bundle:
+
+```text
+Test Files  1 failed (1)
+     Tests  1 failed | 14 passed (15)
+  Start at  11:17:06
+  Duration  2.14s
+```
+
+[Certain] The sole failure was the expected `should apply a custom text colour` regression. This is pre-repair red evidence, not a post-repair result.
+
+[Certain] Completed checks: strict Stylelint on `public/_table.scss`, uncached package `beeq:stylelint`, Biome on the table e2e file, a focused TypeScript check using the repository's legacy-decorator settings, and `git diff --check` all pass. Uncached `beeq:storybook-build-css` also passes; PostCSS checks confirm the compiled table default, header/cell text-variable references, and all three bordered table/header/cell colour references. Unrelated tracked WIP is byte-identical to its pre-S5 snapshot.
+
+[Certain] The agent ran `CI=true pnpm exec nx run beeq:build --skip-nx-cache --output-style=stream` to refresh the published CSS. It still had no final result after **10m57s** (process snapshot; build and analyzer at 0% CPU), so the agent stopped this verification attempt with Ctrl-C (**exit 130**). That attempt produced no build/browser success result, and no production build configuration was changed for it. At that point, a successful terminal build and the following test were still required; the user's subsequent results below now satisfy that gate:
+
+```bash
+pnpm --dir packages/beeq exec vitest run --project e2e \
+  src/components/table/__tests__/bq-table.e2e.tsx --reporter=verbose
+```
+
+[Certain] Local evidence is in `/tmp/beeq-s5-20261027/`: `table-before.log`, `build.log`, `storybook-css.log`, `storybook-artifact-checks.log`, `public-api-check.log`, `stylelint-package.log`, `typecheck.log`, and the unrelated-WIP snapshots. The initial standalone TypeScript command omitted the legacy-decorator flags; its diagnostics were corrected by rerunning with the repository settings, with no component changes. No S6+ work, commits or pushes were made.
+
+#### S5 final verification — 2026-10-27 (Australia/Brisbane)
+
+[Certain] **User-run full build:** the user supplied the complete successful uncached publishable build output. Nx reported success for **five projects and two dependent tasks**, cache skipped, duration **2m5s**. Core compilation finished in **103.60s**, including a **70.36s** copy of **27,238 files**. React, Vue and both Angular entrypoints completed successfully.
+
+[Certain] **User-run table e2e:** the user supplied the completed Chromium output for the table file, including every individual test result:
+
+```text
+Test Files  1 passed (1)
+     Tests  15 passed (15)
+  Start at  11:42:07
+  Duration  1.82s
+```
+
+[Certain] The custom-text-colour regression is now green, including both header and body assertions. Default text, selected-row colours, bordered colour overrides, compact spacing, corner radii and overflow checks also pass. This is user-provided execution evidence, not an agent-run browser result.
+
+[Certain] **Independent artifact check:** the agent verified `dist/beeq/dist/beeq/beeq.css` with PostCSS. Its modification time was **2026-10-27 11:36:49**, consistent with the user's build log. The full published stylesheet contains the restored table text default and both header/cell references, retains the bordered colour-variable mappings, and contains no raw Tailwind/apply directives. Log: `/tmp/beeq-s5-20261027/published-css-check.log`.
+
+[Certain] With the pre-repair **1 failed / 14 passed** run and the final **15 passed** result, S5's red-to-green verification is complete. The earlier lint, type, upstream API comparison and Storybook compilation evidence remains valid. The broader component e2e suite was not rerun here. No S6+ changes, commits or pushes were made.
 
 ### S6. Tag (`bq-tag.tsx`, `scss/bq-tag.scss`, `scss/bq-tag.variables.scss`, test)
 
