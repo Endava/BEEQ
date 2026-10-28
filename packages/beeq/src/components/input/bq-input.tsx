@@ -459,7 +459,7 @@ export class BqInput {
         {/* Label */}
         <label
           aria-label={this.name || this.fallbackInputId}
-          class={{ 'bq-input--label': true, '!hidden': !this.hasLabel }}
+          class={{ 'bq-input--label': true, 'is-hidden': !this.hasLabel }}
           htmlFor={this.name || this.fallbackInputId}
           part="label"
           ref={(labelElem) => {
@@ -479,7 +479,7 @@ export class BqInput {
         >
           {/* Prefix */}
           <span
-            class={{ 'bq-input--control__prefix': true, '!hidden': !this.hasPrefix }}
+            class={{ 'bq-input--control__prefix': true, 'is-hidden': !this.hasPrefix }}
             part="prefix"
             ref={(spanElem) => {
               this.prefixElem = spanElem;
@@ -526,7 +526,7 @@ export class BqInput {
             <bq-button
               appearance="text"
               border="s"
-              class="bq-input--control__clear ms-[--bq-date-picker--gap] hidden [&::part(button)]:border-none [&::part(button)]:p-0"
+              class="bq-input--control__clear"
               exportparts="button"
               label={this.clearButtonLabel}
               onBqClick={this.handleClearClick}
@@ -535,13 +535,13 @@ export class BqInput {
               size="small"
             >
               <slot name="clear-icon">
-                <bq-icon aria-hidden="true" class="flex" name="x-circle" />
+                <bq-icon aria-hidden="true" name="x-circle" />
               </slot>
             </bq-button>
           )}
           {/* Suffix */}
           <span
-            class={{ 'bq-input--control__suffix': true, '!hidden': !this.hasSuffix }}
+            class={{ 'bq-input--control__suffix': true, 'is-hidden': !this.hasSuffix }}
             part="suffix"
             ref={(spanElem) => {
               this.suffixElem = spanElem;
@@ -554,7 +554,7 @@ export class BqInput {
         <div
           class={{
             [`bq-input--helper-text validation-${this.validationStatus}`]: true,
-            '!hidden': !this.hasHelperText,
+            'is-hidden': !this.hasHelperText,
           }}
           part="helper-text"
           ref={(divElem) => {
