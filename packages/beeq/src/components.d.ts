@@ -343,6 +343,7 @@ export namespace Components {
      * @attr {string} initials - The text to display on avatar.
      * @attr {"circle" | "square"} shape - The shape of the avatar.
      * @attr {"xsmall" | "small" | "medium" | "large"} size - The size of the avatar.
+     * @cssprop --bq-avatar-background - Deprecated, use --bq-avatar--background instead.
      * @cssprop --bq-avatar--background - Avatar background color
      * @cssprop --bq-avatar--border-color - Avatar border color
      * @cssprop --bq-avatar--border-style - Avatar border style
@@ -365,19 +366,19 @@ export namespace Components {
         /**
           * Alternate text for the avatar image if the image cannot be displayed
          */
-        "altText": string;
+        "altText"?: string;
         /**
           * The image source to load on the avatar (this can be also a base64 encoded image)
          */
-        "image": string;
+        "image"?: string;
         /**
           * The text to display on avatar
          */
-        "initials": string;
+        "initials"?: string;
         /**
           * A text to use for describing the avatar on assistive devices
          */
-        "label": string;
+        "label"?: string;
         /**
           * The shape of the avatar
           * @default 'circle'
@@ -421,7 +422,7 @@ export namespace Components {
           * The size of the badge. Relevant if badge has no content.
           * @default 'small'
          */
-        "size"?: TBadgeSize;
+        "size": TBadgeSize;
         /**
           * Badge number color. The value should be a valid value of the palette color
          */
@@ -626,10 +627,8 @@ export namespace Components {
      * @example How to use it
      * ```html
      * <bq-card type="default" border="m">
-     * <div class="p-m">
-     * <h3 class="text-xl font-bold">Card Title</h3>
-     * <p class="text-m">Card content goes here</p>
-     * </div>
+     * <h3>Card Title</h3>
+     * <p>Card content goes here</p>
      * </bq-card>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/522abb-card
@@ -1108,7 +1107,7 @@ export namespace Components {
      * @example How to use it
      * ```html
      * <bq-divider orientation="horizontal" stroke-color="stroke--primary" title-alignment="middle">
-     * <span slot="title">Divider Title</span>
+     * <span>Divider Title</span>
      * </bq-divider>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/53dfe6-divider
@@ -1947,7 +1946,7 @@ export namespace Components {
      * @cssprop --bq-progress-bar--height - The progress bars height
      * @cssprop --bq-progress-bar--indeterminateWidth - The progress bar width when its indeterminate
      * @cssprop --bq-progress-bar--indicatorColor - The progress bar color (inside the track area)
-     * @cssprop --bq-progress-bar--indicatorColor-error - The progress bar color (inside the track area) when `type="error"`
+     * @cssprop --bq-progress-bar--indicatorColor-error - The progress bar color when `type="error"`
      * @cssprop --bq-progress-bar--label-color - The label text color
      * @cssprop --bq-progress-bar--label-color-error - The label text color when `type="error"`
      * @cssprop --bq-progress-bar--trackColor - The progress bar track area (the grey one)
@@ -2604,12 +2603,13 @@ export namespace Components {
      * @status stable
      * @dependency bq-badge
      * @attr {"alert" | "danger" | "info" | "neutral" | "success"} type - It defines the type of status to display.
-     * @cssprop --bq-status-circ - Status circle size.
-     * @cssprop --bq-status--dot-color-alert - Status circle color when type is 'alert'.
-     * @cssprop --bq-status--dot-color-danger - Status circle color when type is 'danger'.
-     * @cssprop --bq-status--dot-color-info - Status circle color when type is 'info'.
-     * @cssprop --bq-status--dot-color-neutral - Status circle color when type is 'neutral'.
-     * @cssprop --bq-status--dot-color-success - Status circle color when type is 'success'.
+     * @cssprop --bq-status-circle--size - Status circle size.
+     * @cssprop --bq-status-circ - Status circle size alias.
+     * @cssprop --bq-status--dot-color-alert - Status circle color when type is `alert`.
+     * @cssprop --bq-status--dot-color-danger - Status circle color when type is `danger`.
+     * @cssprop --bq-status--dot-color-info - Status circle color when type is `info`.
+     * @cssprop --bq-status--dot-color-neutral - Status circle color when type is `neutral`.
+     * @cssprop --bq-status--dot-color-success - Status circle color when type is `success`.
      * @cssprop --bq-status--text-color - Status text color.
      */
     interface BqStatus {
@@ -2707,7 +2707,6 @@ export namespace Components {
      * @attr {"horizontal" | "vertical"} orientation - The orientation of the steps
      * @attr {"medium" | "small"} size - The size of the steps
      * @attr {"numeric" | "icon" | "dot"} type - The type of prefix element to use on the step items
-     * @cssprop --bq-steps--divider-color - Divider color
      * @cssprop --bq-steps--gap - Gap between steps
      */
     interface BqSteps {
@@ -2733,6 +2732,7 @@ export namespace Components {
         "size": TStepsSize;
         /**
           * The type of prefix element to use on the step items
+          * @default 'numeric'
          */
         "type": TStepsType;
     }
@@ -3974,6 +3974,7 @@ declare global {
      * @attr {string} initials - The text to display on avatar.
      * @attr {"circle" | "square"} shape - The shape of the avatar.
      * @attr {"xsmall" | "small" | "medium" | "large"} size - The size of the avatar.
+     * @cssprop --bq-avatar-background - Deprecated, use --bq-avatar--background instead.
      * @cssprop --bq-avatar--background - Avatar background color
      * @cssprop --bq-avatar--border-color - Avatar border color
      * @cssprop --bq-avatar--border-style - Avatar border style
@@ -4181,10 +4182,8 @@ declare global {
      * @example How to use it
      * ```html
      * <bq-card type="default" border="m">
-     * <div class="p-m">
-     * <h3 class="text-xl font-bold">Card Title</h3>
-     * <p class="text-m">Card content goes here</p>
-     * </div>
+     * <h3>Card Title</h3>
+     * <p>Card content goes here</p>
      * </bq-card>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/522abb-card
@@ -4463,7 +4462,7 @@ declare global {
      * @example How to use it
      * ```html
      * <bq-divider orientation="horizontal" stroke-color="stroke--primary" title-alignment="middle">
-     * <span slot="title">Divider Title</span>
+     * <span>Divider Title</span>
      * </bq-divider>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/53dfe6-divider
@@ -5031,7 +5030,7 @@ declare global {
      * @cssprop --bq-progress-bar--height - The progress bars height
      * @cssprop --bq-progress-bar--indeterminateWidth - The progress bar width when its indeterminate
      * @cssprop --bq-progress-bar--indicatorColor - The progress bar color (inside the track area)
-     * @cssprop --bq-progress-bar--indicatorColor-error - The progress bar color (inside the track area) when `type="error"`
+     * @cssprop --bq-progress-bar--indicatorColor-error - The progress bar color when `type="error"`
      * @cssprop --bq-progress-bar--label-color - The label text color
      * @cssprop --bq-progress-bar--label-color-error - The label text color when `type="error"`
      * @cssprop --bq-progress-bar--trackColor - The progress bar track area (the grey one)
@@ -5430,12 +5429,13 @@ declare global {
      * @status stable
      * @dependency bq-badge
      * @attr {"alert" | "danger" | "info" | "neutral" | "success"} type - It defines the type of status to display.
-     * @cssprop --bq-status-circ - Status circle size.
-     * @cssprop --bq-status--dot-color-alert - Status circle color when type is 'alert'.
-     * @cssprop --bq-status--dot-color-danger - Status circle color when type is 'danger'.
-     * @cssprop --bq-status--dot-color-info - Status circle color when type is 'info'.
-     * @cssprop --bq-status--dot-color-neutral - Status circle color when type is 'neutral'.
-     * @cssprop --bq-status--dot-color-success - Status circle color when type is 'success'.
+     * @cssprop --bq-status-circle--size - Status circle size.
+     * @cssprop --bq-status-circ - Status circle size alias.
+     * @cssprop --bq-status--dot-color-alert - Status circle color when type is `alert`.
+     * @cssprop --bq-status--dot-color-danger - Status circle color when type is `danger`.
+     * @cssprop --bq-status--dot-color-info - Status circle color when type is `info`.
+     * @cssprop --bq-status--dot-color-neutral - Status circle color when type is `neutral`.
+     * @cssprop --bq-status--dot-color-success - Status circle color when type is `success`.
      * @cssprop --bq-status--text-color - Status text color.
      */
     interface HTMLBqStatusElement extends Components.BqStatus, HTMLStencilElement {
@@ -5521,7 +5521,6 @@ declare global {
      * @attr {"horizontal" | "vertical"} orientation - The orientation of the steps
      * @attr {"medium" | "small"} size - The size of the steps
      * @attr {"numeric" | "icon" | "dot"} type - The type of prefix element to use on the step items
-     * @cssprop --bq-steps--divider-color - Divider color
      * @cssprop --bq-steps--gap - Gap between steps
      */
     interface HTMLBqStepsElement extends Components.BqSteps, HTMLStencilElement {
@@ -6434,6 +6433,7 @@ declare namespace LocalJSX {
      * @attr {string} initials - The text to display on avatar.
      * @attr {"circle" | "square"} shape - The shape of the avatar.
      * @attr {"xsmall" | "small" | "medium" | "large"} size - The size of the avatar.
+     * @cssprop --bq-avatar-background - Deprecated, use --bq-avatar--background instead.
      * @cssprop --bq-avatar--background - Avatar background color
      * @cssprop --bq-avatar--border-color - Avatar border color
      * @cssprop --bq-avatar--border-style - Avatar border style
@@ -6749,10 +6749,8 @@ declare namespace LocalJSX {
      * @example How to use it
      * ```html
      * <bq-card type="default" border="m">
-     * <div class="p-m">
-     * <h3 class="text-xl font-bold">Card Title</h3>
-     * <p class="text-m">Card content goes here</p>
-     * </div>
+     * <h3>Card Title</h3>
+     * <p>Card content goes here</p>
      * </bq-card>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/522abb-card
@@ -7258,7 +7256,7 @@ declare namespace LocalJSX {
      * @example How to use it
      * ```html
      * <bq-divider orientation="horizontal" stroke-color="stroke--primary" title-alignment="middle">
-     * <span slot="title">Divider Title</span>
+     * <span>Divider Title</span>
      * </bq-divider>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/53dfe6-divider
@@ -8157,7 +8155,7 @@ declare namespace LocalJSX {
      * @cssprop --bq-progress-bar--height - The progress bars height
      * @cssprop --bq-progress-bar--indeterminateWidth - The progress bar width when its indeterminate
      * @cssprop --bq-progress-bar--indicatorColor - The progress bar color (inside the track area)
-     * @cssprop --bq-progress-bar--indicatorColor-error - The progress bar color (inside the track area) when `type="error"`
+     * @cssprop --bq-progress-bar--indicatorColor-error - The progress bar color when `type="error"`
      * @cssprop --bq-progress-bar--label-color - The label text color
      * @cssprop --bq-progress-bar--label-color-error - The label text color when `type="error"`
      * @cssprop --bq-progress-bar--trackColor - The progress bar track area (the grey one)
@@ -8865,12 +8863,13 @@ declare namespace LocalJSX {
      * @status stable
      * @dependency bq-badge
      * @attr {"alert" | "danger" | "info" | "neutral" | "success"} type - It defines the type of status to display.
-     * @cssprop --bq-status-circ - Status circle size.
-     * @cssprop --bq-status--dot-color-alert - Status circle color when type is 'alert'.
-     * @cssprop --bq-status--dot-color-danger - Status circle color when type is 'danger'.
-     * @cssprop --bq-status--dot-color-info - Status circle color when type is 'info'.
-     * @cssprop --bq-status--dot-color-neutral - Status circle color when type is 'neutral'.
-     * @cssprop --bq-status--dot-color-success - Status circle color when type is 'success'.
+     * @cssprop --bq-status-circle--size - Status circle size.
+     * @cssprop --bq-status-circ - Status circle size alias.
+     * @cssprop --bq-status--dot-color-alert - Status circle color when type is `alert`.
+     * @cssprop --bq-status--dot-color-danger - Status circle color when type is `danger`.
+     * @cssprop --bq-status--dot-color-info - Status circle color when type is `info`.
+     * @cssprop --bq-status--dot-color-neutral - Status circle color when type is `neutral`.
+     * @cssprop --bq-status--dot-color-success - Status circle color when type is `success`.
      * @cssprop --bq-status--text-color - Status text color.
      */
     interface BqStatus {
@@ -8980,7 +8979,6 @@ declare namespace LocalJSX {
      * @attr {"horizontal" | "vertical"} orientation - The orientation of the steps
      * @attr {"medium" | "small"} size - The size of the steps
      * @attr {"numeric" | "icon" | "dot"} type - The type of prefix element to use on the step items
-     * @cssprop --bq-steps--divider-color - Divider color
      * @cssprop --bq-steps--gap - Gap between steps
      */
     interface BqSteps {
@@ -9001,6 +8999,7 @@ declare namespace LocalJSX {
         "size"?: TStepsSize;
         /**
           * The type of prefix element to use on the step items
+          * @default 'numeric'
          */
         "type"?: TStepsType;
     }
@@ -10623,6 +10622,7 @@ declare module "@stencil/core" {
              * @attr {string} initials - The text to display on avatar.
              * @attr {"circle" | "square"} shape - The shape of the avatar.
              * @attr {"xsmall" | "small" | "medium" | "large"} size - The size of the avatar.
+             * @cssprop --bq-avatar-background - Deprecated, use --bq-avatar--background instead.
              * @cssprop --bq-avatar--background - Avatar background color
              * @cssprop --bq-avatar--border-color - Avatar border color
              * @cssprop --bq-avatar--border-style - Avatar border style
@@ -10779,10 +10779,8 @@ declare module "@stencil/core" {
              * @example How to use it
              * ```html
              * <bq-card type="default" border="m">
-             * <div class="p-m">
-             * <h3 class="text-xl font-bold">Card Title</h3>
-             * <p class="text-m">Card content goes here</p>
-             * </div>
+             * <h3>Card Title</h3>
+             * <p>Card content goes here</p>
              * </bq-card>
              * ```
              * @documentation https://www.beeq.design/3d466e231/p/522abb-card
@@ -10998,7 +10996,7 @@ declare module "@stencil/core" {
              * @example How to use it
              * ```html
              * <bq-divider orientation="horizontal" stroke-color="stroke--primary" title-alignment="middle">
-             * <span slot="title">Divider Title</span>
+             * <span>Divider Title</span>
              * </bq-divider>
              * ```
              * @documentation https://www.beeq.design/3d466e231/p/53dfe6-divider
@@ -11416,7 +11414,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-progress-bar--height - The progress bars height
              * @cssprop --bq-progress-bar--indeterminateWidth - The progress bar width when its indeterminate
              * @cssprop --bq-progress-bar--indicatorColor - The progress bar color (inside the track area)
-             * @cssprop --bq-progress-bar--indicatorColor-error - The progress bar color (inside the track area) when `type="error"`
+             * @cssprop --bq-progress-bar--indicatorColor-error - The progress bar color when `type="error"`
              * @cssprop --bq-progress-bar--label-color - The label text color
              * @cssprop --bq-progress-bar--label-color-error - The label text color when `type="error"`
              * @cssprop --bq-progress-bar--trackColor - The progress bar track area (the grey one)
@@ -11696,12 +11694,13 @@ declare module "@stencil/core" {
              * @status stable
              * @dependency bq-badge
              * @attr {"alert" | "danger" | "info" | "neutral" | "success"} type - It defines the type of status to display.
-             * @cssprop --bq-status-circ - Status circle size.
-             * @cssprop --bq-status--dot-color-alert - Status circle color when type is 'alert'.
-             * @cssprop --bq-status--dot-color-danger - Status circle color when type is 'danger'.
-             * @cssprop --bq-status--dot-color-info - Status circle color when type is 'info'.
-             * @cssprop --bq-status--dot-color-neutral - Status circle color when type is 'neutral'.
-             * @cssprop --bq-status--dot-color-success - Status circle color when type is 'success'.
+             * @cssprop --bq-status-circle--size - Status circle size.
+             * @cssprop --bq-status-circ - Status circle size alias.
+             * @cssprop --bq-status--dot-color-alert - Status circle color when type is `alert`.
+             * @cssprop --bq-status--dot-color-danger - Status circle color when type is `danger`.
+             * @cssprop --bq-status--dot-color-info - Status circle color when type is `info`.
+             * @cssprop --bq-status--dot-color-neutral - Status circle color when type is `neutral`.
+             * @cssprop --bq-status--dot-color-success - Status circle color when type is `success`.
              * @cssprop --bq-status--text-color - Status text color.
              */
             "bq-status": LocalJSX.IntrinsicElements["bq-status"] & JSXBase.HTMLAttributes<HTMLBqStatusElement>;
@@ -11764,7 +11763,6 @@ declare module "@stencil/core" {
              * @attr {"horizontal" | "vertical"} orientation - The orientation of the steps
              * @attr {"medium" | "small"} size - The size of the steps
              * @attr {"numeric" | "icon" | "dot"} type - The type of prefix element to use on the step items
-             * @cssprop --bq-steps--divider-color - Divider color
              * @cssprop --bq-steps--gap - Gap between steps
              */
             "bq-steps": LocalJSX.IntrinsicElements["bq-steps"] & JSXBase.HTMLAttributes<HTMLBqStepsElement>;

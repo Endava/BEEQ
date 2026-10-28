@@ -39,7 +39,7 @@ Tick each box when the step lands. Keep the red/green evidence next to the step.
 - [x] S8. Other components — all seven items verified; Steps removal recorded as an intentional exception
 - [x] S9. Progress source alignment and behavioural tests — refreshed bundle verified; 21/21 Progress and 1347/1347 full browser tests pass
 - [x] S10. Public API reconciliation — inventory resolved; approved differences recorded; Status size fix and full browser suite verified
-- [ ] S11. Generated artifacts and full validation
+- [x] S11. Generated artifacts and full validation — standalone outputs, generated docs, lint, unit tests and Storybook spot-checks verified
 
 ## Handoff
 
@@ -1046,6 +1046,16 @@ Keep the script's output as the **upstream-change reconciliation checklist**, so
 - Run `pnpm docs:generate-beeq-mintlify-css` (it reads `dist/beeq/dist/beeq/beeq.css`). Review the `apps/beeq-docs/beeq-mintlify.css` diff.
 - Review the regenerated `components.d.ts`, readmes and `cem/` before staging. Stage explicit paths.
 
+#### S11 validation — 2026-10-28 (Australia/Brisbane)
+
+- [Certain] The user's uncached publishable build after S10 succeeded, and the full Chromium suite passed 46 files / 1,352 tests. This supplies the fresh core build and browser-suite evidence for S11.
+- [Certain] Uncached `beeq:build-styles` and `beeq:storybook-build-css` passed. The three standalone files were refreshed: tokens contains the primitive, theme/mode and interaction declarations; reset contains reset selectors and no `--bq-*` declarations; typography contains typography selectors referencing public font tokens and no `--bq-*` declarations. The full `beeq.css` contains themes, reset and public table styles.
+- [Certain] `pnpm docs:generate-beeq-mintlify-css` refreshed the tracked Mintlify stylesheet. The generated file contains all four theme/mode selector groups and 19 table rules, with no bare `html`, `body` or universal reset rules. The diff reflects refreshed theme selectors, tokens and public styles; it remains uncommitted for review.
+- [Certain] Uncached `beeq:test` passed 626/626 tests; `beeq-tailwindcss:test` passed 1,955 with 60 skipped. Normal Stylelint, scoped strict Stylelint for the ten touched components and explicit native global files, and uncached affected `check` (Biome checked 302 files) passed. The first strict invocation failed before linting due to a pnpm environment issue; rerunning from the workspace root passed.
+- [Certain] Fresh CEM entries match the approved Avatar optional fields, Badge default, Status aliases, Steps numeric default and removed divider variable, and Progress colour properties. No readme or CEM tracked diff was generated. The existing mixed `components.d.ts` diff includes these approved API changes and unrelated Card/Divider documentation changes; it remains unstaged.
+- [Certain] The user started Storybook on port 9001. In `components-tag--color-filled`, Success, Info, Error, Warning and Gray appeared as distinct filled tags in BEEQ light and dark; switching to Endava dark changed the preview background and tag palette. In `components-progress--with-label`, the 60% label and partially filled track appeared in Endava dark and light. This is a limited visual spot-check, not a complete theme or component audit; the full theme browser suite provides broader coverage.
+- [Certain] **S11 is complete.** The user requested that all available changes be committed after validation.
+
 ## Verification
 
 - `pnpm exec nx run beeq:e2e`: all pass, including the new S2b/S6/S7/S9 tests. No baseline failure remains.
@@ -1067,3 +1077,4 @@ Keep the script's output as the **upstream-change reconciliation checklist**, so
 - Follow-up: migrate the remaining component colour tests from bare `resolveColor` to scoped `resolveColorToken`.
 - Follow-up: a merge checklist for future `main` merges. Run S10 plus the parity specs after every merge.
 - Follow-up: Storybook Tailwind utilities remain out of scope unless this work claims Storybook has been migrated.
+- Follow-up: after all component migrations and pending PRs are complete, remove temporary migration plans and skills that no longer apply to the branch or worktree.
