@@ -283,23 +283,20 @@ export class BqCheckbox {
       <label
         aria-label={this.name || 'checkbox'}
         class={{
-          'bq-checkbox group': true,
+          'bq-checkbox': true,
           'is-checked': this.checked,
           'is-indeterminate': this.indeterminate,
-          'is-disabled !cursor-not-allowed': this.disabled,
+          'is-disabled': this.disabled,
           'has-background': this.backgroundOnHover,
         }}
         part="base"
       >
-        <div
-          class="bq-checkbox__control bs-[--bq-checkbox--size] is-[--bq-checkbox--size] relative box-border flex items-center justify-center p-b-xs3 p-i-xs3"
-          part="control"
-        >
+        <div class="bq-checkbox__control" part="control">
           <input
             aria-checked={this.ariaChecked}
             aria-disabled={this.disabled ? 'true' : 'false'}
             checked={this.checked}
-            class="bq-checkbox__input pointer-events-none absolute m-b-0 m-i-0 p-b-0 p-i-0 opacity-0"
+            class="bq-checkbox__input"
             disabled={this.disabled}
             form={this.formId}
             indeterminate={this.indeterminate}
@@ -316,10 +313,7 @@ export class BqCheckbox {
             type="checkbox"
             value={this.value}
           />
-          <span
-            class="bq-checkbox__checkbox bs-full is-[--bq-checkbox--size] relative box-border flex items-center justify-center"
-            part="checkbox"
-          >
+          <span class="bq-checkbox__checkbox" part="checkbox">
             {/*
               We could move these SVGs to separated functional components, but it seems there's a weird issue with
               Stencil and pure SVG components: https://stencil-worldwide.slack.com/archives/C79EANFL7/p1663779385026389
@@ -327,7 +321,7 @@ export class BqCheckbox {
             {this.checked && (
               <svg
                 aria-hidden="true"
-                class="bs-full is-full absolute text-[--bq-checkbox--icon-color-checked]"
+                class="bq-checkbox__icon"
                 viewBox="0 0 256 256"
                 xmlns="http://www.w3.org/2000/svg"
               >
@@ -345,7 +339,7 @@ export class BqCheckbox {
             {!this.checked && this.indeterminate && (
               <svg
                 aria-hidden="true"
-                class="bs-full is-full absolute text-[--bq-checkbox--icon-color-checked]"
+                class="bq-checkbox__icon"
                 fill="currentColor"
                 viewBox="0 0 256 256"
                 xmlns="http://www.w3.org/2000/svg"
@@ -363,11 +357,8 @@ export class BqCheckbox {
             )}
           </span>
         </div>
-        <span
-          class="bq-checkbox__label ps-xs text-start font-medium text-[--bq-checkbox--label-text-color] leading-regular group-hover-[&:not(.is-disabled)]:text-[color-mix(in_srgb,_var(--bq-checkbox--label-text-color),_var(--bq-hover)_20%)] group-[.is-disabled]:opacity-60"
-          part="label"
-        >
-          <slot class="flex items-center" />
+        <span class="bq-checkbox__label" part="label">
+          <slot />
         </span>
       </label>
     );

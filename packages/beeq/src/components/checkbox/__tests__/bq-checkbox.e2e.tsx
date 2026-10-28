@@ -3,21 +3,12 @@ import { afterEach, beforeEach, describe, expect, it, render, vi, waitForStable 
 import { cdp, userEvent } from 'vitest/browser';
 
 import { computedStyle } from '../../../shared/test-utils/computedStyle';
+import { resolveColorToken } from '../../../shared/test-utils/resolveColorToken';
 import { getTextContent } from '../../../shared/utils/slot';
 
 const getCheckboxInput = (checkbox: HTMLBqCheckboxElement) => checkbox.shadowRoot?.querySelector('[part="input"]');
 const getCheckboxBase = (checkbox: HTMLBqCheckboxElement) => checkbox.shadowRoot?.querySelector('[part="base"]');
 const getCheckboxMark = (checkbox: HTMLBqCheckboxElement) => checkbox.shadowRoot?.querySelector('[part="checkbox"]');
-
-/** Resolves a CSS color value (e.g. `var(--bq-ui--brand)`) to its computed `rgb()` form */
-const resolveColor = (value: string): string => {
-  const probe = document.createElement('div');
-  probe.style.color = value;
-  document.body.appendChild(probe);
-  const { color } = getComputedStyle(probe);
-  probe.remove();
-  return color;
-};
 
 /** Waits for any running CSS transition inside the element's shadow root to finish */
 const waitForTransitions = async (element: Element) => {
@@ -269,10 +260,20 @@ describe('bq-checkbox', () => {
     await waitForStable(root);
 
     const baseStyle = computedStyle('bq-checkbox >>> [part="base"]', ['height']);
-    const checkboxStyle = computedStyle('bq-checkbox >>> [part="checkbox"]', ['borderWidth', 'borderRadius']);
+    const checkboxStyle = computedStyle('bq-checkbox >>> [part="checkbox"]', [
+      'borderWidth',
+      'borderRadius',
+      'transitionDuration',
+      'transitionTimingFunction',
+    ]);
 
     expect(baseStyle).toEqual({ height: '40px' });
-    expect(checkboxStyle).toEqual({ borderWidth: '2px', borderRadius: '4px' });
+    expect(checkboxStyle).toEqual({
+      borderWidth: '2px',
+      borderRadius: '4px',
+      transitionDuration: '0.3s',
+      transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
+    });
   });
 
   it('should map the color variables to the theme role tokens', async () => {
@@ -304,12 +305,42 @@ describe('bq-checkbox', () => {
     await waitForTransitions(root);
 
     expect(computedStyle('bq-checkbox >>> [part="checkbox"]', ['backgroundColor', 'borderTopColor'])).toEqual({
-      backgroundColor: resolveColor('var(--bq-ui--primary)'),
-      borderTopColor: resolveColor('var(--bq-stroke--tertiary)'),
+      backgroundColor: resolveColorToken('--bq-ui--primary', root),
+      borderTopColor: resolveColorToken('--bq-stroke--tertiary', root),
     });
     expect(computedStyle('bq-checkbox >>> [part="label"]', ['color']).color).toBe(
-      resolveColor('var(--bq-text--primary)'),
+      resolveColorToken('--bq-text--primary', root),
     );
+  });
+
+  it('should paint the hover state with mixed component colors', async () => {
+    const { root } = await render(
+      <bq-checkbox backgroundOnHover name="checkbox" value="test">
+        Label
+      </bq-checkbox>,
+    );
+    const checkbox = root as HTMLBqCheckboxElement;
+
+    await userEvent.hover(getCheckboxBase(checkbox));
+    await waitForTransitions(root);
+
+    const colorProbe = document.createElement('span');
+    root.appendChild(colorProbe);
+
+    colorProbe.style.color = 'color-mix(in srgb, var(--bq-ui--primary), var(--bq-hover) var(--bq-state-mix-hover))';
+    expect(computedStyle('bq-checkbox >>> [part="base"]', ['backgroundColor']).backgroundColor).toBe(
+      getComputedStyle(colorProbe).color,
+    );
+
+    colorProbe.style.color = 'color-mix(in srgb, var(--bq-ui--brand), var(--bq-hover) var(--bq-state-mix-hover))';
+    expect(computedStyle('bq-checkbox >>> [part="checkbox"]', ['borderTopColor']).borderTopColor).toBe(
+      getComputedStyle(colorProbe).color,
+    );
+
+    colorProbe.style.color = 'color-mix(in srgb, var(--bq-text--primary), var(--bq-hover) var(--bq-state-mix-hover))';
+    expect(computedStyle('bq-checkbox >>> [part="label"]', ['color']).color).toBe(getComputedStyle(colorProbe).color);
+
+    colorProbe.remove();
   });
 
   it('should paint the checked state with the color variables', async () => {
@@ -323,12 +354,79 @@ describe('bq-checkbox', () => {
     await waitForTransitions(root);
 
     expect(computedStyle('bq-checkbox >>> [part="checkbox"]', ['backgroundColor', 'borderTopColor'])).toEqual({
-      backgroundColor: resolveColor('var(--bq-ui--brand)'),
-      borderTopColor: resolveColor('var(--bq-ui--brand)'),
+      backgroundColor: resolveColorToken('--bq-ui--brand', root),
+      borderTopColor: resolveColorToken('--bq-ui--brand', root),
     });
     expect(computedStyle('bq-checkbox >>> [part="checkbox"] svg', ['color']).color).toBe(
-      resolveColor('var(--bq-text--on-brand)'),
+      resolveColorToken('--bq-text--on-brand', root),
     );
+  });
+
+  it('should preserve separate checked background and border overrides on hover', async () => {
+    const { root } = await render(
+      <bq-checkbox
+        checked
+        name="checkbox"
+        style={{
+          '--bq-checkbox--background-color-checked': 'rgb(1, 2, 3)',
+          '--bq-checkbox--border-color-checked': 'rgb(4, 5, 6)',
+        }}
+        value="test"
+      >
+        Label
+      </bq-checkbox>,
+    );
+    const checkbox = root as HTMLBqCheckboxElement;
+
+    await userEvent.hover(getCheckboxBase(checkbox));
+    await waitForTransitions(root);
+
+    const colorProbe = document.createElement('span');
+    root.appendChild(colorProbe);
+
+    colorProbe.style.color = 'color-mix(in srgb, rgb(1, 2, 3), var(--bq-hover) var(--bq-state-mix-hover))';
+    const expectedBackgroundColor = getComputedStyle(colorProbe).color;
+    colorProbe.style.color = 'color-mix(in srgb, rgb(4, 5, 6), var(--bq-hover) var(--bq-state-mix-hover))';
+    const expectedBorderColor = getComputedStyle(colorProbe).color;
+
+    expect(computedStyle('bq-checkbox >>> [part="checkbox"]', ['backgroundColor', 'borderTopColor'])).toEqual({
+      backgroundColor: expectedBackgroundColor,
+      borderTopColor: expectedBorderColor,
+    });
+
+    colorProbe.remove();
+  });
+
+  it('should expose the focus ring and disabled visual state', async () => {
+    const { root, setProps } = await render(
+      <bq-checkbox name="checkbox" value="test">
+        Label
+      </bq-checkbox>,
+    );
+    const checkbox = root as HTMLBqCheckboxElement;
+
+    await checkbox.vFocus();
+    await waitForTransitions(root);
+
+    expect(
+      computedStyle('bq-checkbox >>> [part="checkbox"]', [
+        'borderTopColor',
+        'outlineOffset',
+        'outlineStyle',
+        'outlineWidth',
+      ]),
+    ).toEqual({
+      borderTopColor: resolveColorToken('--bq-ui--brand', root),
+      outlineOffset: '1px',
+      outlineStyle: 'solid',
+      outlineWidth: '2px',
+    });
+
+    await setProps({ disabled: true });
+
+    expect(computedStyle('bq-checkbox >>> [part="base"]', ['cursor']).cursor).toBe('not-allowed');
+    expect(computedStyle('bq-checkbox >>> [part="checkbox"]', ['opacity']).opacity).toBe('0.6');
+    expect(computedStyle('bq-checkbox >>> [part="label"]', ['opacity']).opacity).toBe('0.6');
   });
 
   it('should allow overriding the checked color variables', async () => {
