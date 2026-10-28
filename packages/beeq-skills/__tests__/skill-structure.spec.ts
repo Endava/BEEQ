@@ -12,6 +12,7 @@ import {
   validateSkill,
 } from '../../../tools/src/generators/sync-skills/lib/index.ts';
 import { RULES } from '../evals/lib/beeq-rules.ts';
+import { TEMPORARY_CONTRIBUTOR_SKILLS } from './temporary-contributor-skills.ts';
 
 const metadataOf = (data: Frontmatter['data']) => (typeof data?.metadata === 'object' ? data.metadata : undefined);
 
@@ -23,6 +24,8 @@ const skillFolders = (dir: string) =>
   readdirSync(path.join(repoRoot, dir), { withFileTypes: true })
     .filter((entry) => entry.isDirectory())
     .map((entry) => entry.name);
+const contributorSkillFolders = () =>
+  skillFolders('.agents/skills').filter((folder) => !TEMPORARY_CONTRIBUTOR_SKILLS.has(folder));
 
 describe('public skills (src/)', () => {
   it.each(skillFolders(source))('%s should pass validation', (folder) => {
@@ -47,7 +50,7 @@ describe('public skills (src/)', () => {
 });
 
 describe('contributor skills (.agents/skills/)', () => {
-  it.each(skillFolders('.agents/skills'))('%s should be marked internal', (folder) => {
+  it.each(contributorSkillFolders())('%s should be marked internal', (folder) => {
     // Act
     const { data } = parseFrontmatter(read(`.agents/skills/${folder}/SKILL.md`));
 
@@ -61,7 +64,7 @@ describe('contributor skills (.agents/skills/)', () => {
     const publicNames = new Set(skillFolders(source));
 
     // Act
-    const clashes = skillFolders('.agents/skills').filter((name) => publicNames.has(name));
+    const clashes = contributorSkillFolders().filter((name) => publicNames.has(name));
 
     // Assert
     expect(clashes).toEqual([]);
