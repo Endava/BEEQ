@@ -134,4 +134,15 @@ describe('bq-avatar', () => {
 
     expect(computedStyle('bq-avatar >>> [part="text"]', ['color']).color).toBe('rgb(255, 0, 0)');
   });
+
+  it('should preserve the legacy background variable and allow the new variable to override it', async () => {
+    const { root } = await render(<bq-avatar initials="AB" />);
+    const base = root.shadowRoot.querySelector<HTMLElement>('[part="base"]');
+    root.style.setProperty('--bq-avatar-background', 'rgb(12, 34, 56)');
+    await expect.poll(() => getComputedStyle(base).backgroundColor).toBe('rgb(12, 34, 56)');
+    root.style.setProperty('--bq-avatar--background', 'rgb(65, 43, 21)');
+    await expect.poll(() => getComputedStyle(base).backgroundColor).toBe('rgb(65, 43, 21)');
+    root.style.removeProperty('--bq-avatar--background');
+    await expect.poll(() => getComputedStyle(base).backgroundColor).toBe('rgb(12, 34, 56)');
+  });
 });

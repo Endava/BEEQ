@@ -1,0 +1,336 @@
+{
+  "baseline": "1e4f7b0e45a392684cb82cfb771f0317fa06fcf5",
+  "head": "667979c628d58d268268c366f08f06767768e17a",
+  "comparison": "working tree",
+  "components": {
+    "tag": {
+      "files": {
+        "tsx": "packages/beeq/src/components/tag/bq-tag.tsx",
+        "variables": "packages/beeq/src/components/tag/scss/bq-tag.variables.scss",
+        "mainVariables": true,
+        "currentVariables": true
+      },
+      "changes": {}
+    },
+    "badge": {
+      "files": {
+        "tsx": "packages/beeq/src/components/badge/bq-badge.tsx",
+        "variables": "packages/beeq/src/components/badge/scss/bq-badge.variables.scss",
+        "mainVariables": true,
+        "currentVariables": true
+      },
+      "changes": {
+        "propContracts": {
+          "size": {
+            "main": {
+              "type": "TBadgeSize",
+              "optional": true,
+              "definite": false,
+              "default": "'small'",
+              "decorator": "Prop({ reflect: true, mutable: true })"
+            },
+            "current": {
+              "type": "TBadgeSize",
+              "optional": false,
+              "definite": false,
+              "default": "'small'",
+              "decorator": "Prop({ reflect: true, mutable: true })"
+            }
+          }
+        }
+      }
+    },
+    "empty-state": {
+      "files": {
+        "tsx": "packages/beeq/src/components/empty-state/bq-empty-state.tsx",
+        "variables": "packages/beeq/src/components/empty-state/scss/bq-empty-state.variables.scss",
+        "mainVariables": true,
+        "currentVariables": true
+      },
+      "changes": {}
+    },
+    "page-title": {
+      "files": {
+        "tsx": "packages/beeq/src/components/page-title/bq-page-title.tsx",
+        "variables": "packages/beeq/src/components/page-title/scss/bq-page-title.variables.scss",
+        "mainVariables": true,
+        "currentVariables": true
+      },
+      "changes": {}
+    },
+    "tab-group": {
+      "files": {
+        "tsx": "packages/beeq/src/components/tab-group/bq-tab-group.tsx",
+        "variables": "packages/beeq/src/components/tab-group/scss/bq-tab-group.variables.scss",
+        "mainVariables": true,
+        "currentVariables": true
+      },
+      "changes": {}
+    },
+    "spinner": {
+      "files": {
+        "tsx": "packages/beeq/src/components/spinner/bq-spinner.tsx",
+        "variables": "packages/beeq/src/components/spinner/scss/bq-spinner.variables.scss",
+        "mainVariables": true,
+        "currentVariables": true
+      },
+      "changes": {}
+    },
+    "progress": {
+      "files": {
+        "tsx": "packages/beeq/src/components/progress/bq-progress.tsx",
+        "variables": "packages/beeq/src/components/progress/scss/bq-progress.variables.scss",
+        "mainVariables": true,
+        "currentVariables": true
+      },
+      "changes": {}
+    },
+    "avatar": {
+      "files": {
+        "tsx": "packages/beeq/src/components/avatar/bq-avatar.tsx",
+        "variables": "packages/beeq/src/components/avatar/scss/bq-avatar.variables.scss",
+        "mainVariables": true,
+        "currentVariables": true
+      },
+      "changes": {
+        "@cssprop": {
+          "removed": [],
+          "added": [
+            "--bq-avatar-background"
+          ]
+        },
+        "@prop": {
+          "removed": [],
+          "added": [
+            "--bq-avatar-background"
+          ]
+        },
+        "declaredVariables": {
+          "removed": [],
+          "added": [
+            "--bq-avatar--background"
+          ]
+        },
+        "propContracts": {
+          "altText": {
+            "main": {
+              "type": "string",
+              "optional": false,
+              "definite": false,
+              "default": null,
+              "decorator": "Prop({ reflect: true })"
+            },
+            "current": {
+              "type": "string",
+              "optional": true,
+              "definite": false,
+              "default": null,
+              "decorator": "Prop({ reflect: true })"
+            }
+          },
+          "image": {
+            "main": {
+              "type": "string",
+              "optional": false,
+              "definite": false,
+              "default": null,
+              "decorator": "Prop({ reflect: true })"
+            },
+            "current": {
+              "type": "string",
+              "optional": true,
+              "definite": false,
+              "default": null,
+              "decorator": "Prop({ reflect: true })"
+            }
+          },
+          "initials": {
+            "main": {
+              "type": "string",
+              "optional": false,
+              "definite": false,
+              "default": null,
+              "decorator": "Prop({ reflect: true })"
+            },
+            "current": {
+              "type": "string",
+              "optional": true,
+              "definite": false,
+              "default": null,
+              "decorator": "Prop({ reflect: true })"
+            }
+          },
+          "label": {
+            "main": {
+              "type": "string",
+              "optional": false,
+              "definite": false,
+              "default": null,
+              "decorator": "Prop({ reflect: true })"
+            },
+            "current": {
+              "type": "string",
+              "optional": true,
+              "definite": false,
+              "default": null,
+              "decorator": "Prop({ reflect: true })"
+            }
+          }
+        }
+      }
+    },
+    "steps": {
+      "files": {
+        "tsx": "packages/beeq/src/components/steps/bq-steps.tsx",
+        "variables": "packages/beeq/src/components/steps/scss/bq-steps.variables.scss",
+        "mainVariables": true,
+        "currentVariables": true
+      },
+      "changes": {
+        "@cssprop": {
+          "removed": [
+            "--bq-steps--divider-color"
+          ],
+          "added": []
+        },
+        "@prop": {
+          "removed": [
+            "--bq-steps--divider-color"
+          ],
+          "added": []
+        },
+        "declaredVariables": {
+          "removed": [
+            "--bq-steps--divider-color"
+          ],
+          "added": []
+        },
+        "propContracts": {
+          "type": {
+            "main": {
+              "type": "TStepsType",
+              "optional": false,
+              "definite": false,
+              "default": null,
+              "decorator": "Prop({ reflect: true })"
+            },
+            "current": {
+              "type": "TStepsType",
+              "optional": false,
+              "definite": false,
+              "default": "'numeric'",
+              "decorator": "Prop({ reflect: true })"
+            }
+          }
+        }
+      }
+    },
+    "button": {
+      "files": {
+        "tsx": "packages/beeq/src/components/button/bq-button.tsx",
+        "variables": "packages/beeq/src/components/button/scss/bq-button.variables.scss",
+        "mainVariables": true,
+        "currentVariables": true
+      },
+      "changes": {}
+    },
+    "status": {
+      "files": {
+        "tsx": "packages/beeq/src/components/status/bq-status.tsx",
+        "variables": "packages/beeq/src/components/status/scss/bq-status.variables.scss",
+        "mainVariables": true,
+        "currentVariables": true
+      },
+      "changes": {
+        "@cssprop": {
+          "removed": [],
+          "added": [
+            "--bq-status-circle--size"
+          ]
+        },
+        "@prop": {
+          "removed": [],
+          "added": [
+            "--bq-status-circle--size"
+          ]
+        }
+      }
+    },
+    "card": {
+      "files": {
+        "tsx": "packages/beeq/src/components/card/bq-card.tsx",
+        "variables": "packages/beeq/src/components/card/scss/bq-card.variables.scss",
+        "mainVariables": true,
+        "currentVariables": true
+      },
+      "changes": {}
+    },
+    "divider": {
+      "files": {
+        "tsx": "packages/beeq/src/components/divider/bq-divider.tsx",
+        "variables": "packages/beeq/src/components/divider/scss/bq-divider.variables.scss",
+        "mainVariables": true,
+        "currentVariables": true
+      },
+      "changes": {}
+    },
+    "panel": {
+      "files": {
+        "tsx": "packages/beeq/src/components/panel/bq-panel.tsx",
+        "variables": "packages/beeq/src/components/panel/scss/bq-panel.variables.scss",
+        "mainVariables": true,
+        "currentVariables": true
+      },
+      "changes": {}
+    },
+    "breadcrumb": {
+      "files": {
+        "tsx": "packages/beeq/src/components/breadcrumb/bq-breadcrumb.tsx",
+        "variables": "packages/beeq/src/components/breadcrumb/scss/bq-breadcrumb.variables.scss",
+        "mainVariables": false,
+        "currentVariables": false
+      },
+      "changes": {}
+    },
+    "option": {
+      "files": {
+        "tsx": "packages/beeq/src/components/option/bq-option.tsx",
+        "variables": "packages/beeq/src/components/option/scss/bq-option.variables.scss",
+        "mainVariables": true,
+        "currentVariables": true
+      },
+      "changes": {}
+    },
+    "select": {
+      "files": {
+        "tsx": "packages/beeq/src/components/select/bq-select.tsx",
+        "variables": "packages/beeq/src/components/select/scss/bq-select.variables.scss",
+        "mainVariables": true,
+        "currentVariables": true
+      },
+      "changes": {}
+    }
+  },
+  "table": {
+    "paths": [
+      "packages/beeq/src/global/styles/_table.scss",
+      "packages/beeq/src/global/styles/public/_table.scss"
+    ],
+    "declaredVariables": {
+      "removed": [],
+      "added": []
+    },
+    "propDocs": {
+      "removed": [],
+      "added": []
+    }
+  },
+  "readmes": {
+    "card": "matches pinned main",
+    "divider": "matches pinned main",
+    "panel": "matches pinned main",
+    "breadcrumb": "matches pinned main",
+    "option": "matches pinned main",
+    "select": "matches pinned main"
+  }
+}

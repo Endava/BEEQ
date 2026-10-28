@@ -38,7 +38,7 @@ Tick each box when the step lands. Keep the red/green evidence next to the step.
 - [x] S7. Badge — published bundle verified; all 10 Badge e2e tests pass
 - [x] S8. Other components — all seven items verified; Steps removal recorded as an intentional exception
 - [x] S9. Progress source alignment and behavioural tests — refreshed bundle verified; 21/21 Progress and 1347/1347 full browser tests pass
-- [ ] S10. Public API reconciliation
+- [x] S10. Public API reconciliation — inventory resolved; approved differences recorded; Status size fix and full browser suite verified
 - [ ] S11. Generated artifacts and full validation
 
 ## Handoff
@@ -141,28 +141,28 @@ Status values:
 
 | Upstream | File / API | Current state | Repair | Test | Status |
 |---|---|---|---|---|---|
-| 5bc728c2 #1846 | `themes/beeq.scss` root: `--bq-{brand,accent,info,success,warning,danger}-{strong,bright}`, info on blue, `*-dark` on `*-950` | Not defined. WIP mode roles reference them, so they resolve to nothing | S3 | S2a/S2b | lost |
-| 5bc728c2 #1846 | `themes/endava.scss` root vs `endava/root.ts`, including Endava's later brand-colour correction | Not independently verified; don't assume the WIP is complete | S3 | S2a/S2b | partial |
-| 5bc728c2 #1846 | `themes/{beeq,endava}.scss` light/dark roles (`--bq-text--on-*`, accent, strong/bright roles, `--bq-focus`, hover/active) | Mode blocks synced in WIP; root they reference is incomplete for beeq | S3 | S2a/S2b | wip |
-| 5bc728c2 / 66219508 | `primitives.scss` Endava palette | Ported in the merge | check only | S2a | ok? |
-| 3ce5d7cd | Light selector `:root:not([bq-mode])` for any theme | Native still uses `:root:not([bq-theme],[bq-mode])` + `[bq-theme=beeq]` | S3 | S2b | lost |
-| theme-swapper | `:where()` on every theme/mode selector | Plain selectors | S3 | S2b | lost |
-| d842c209 | `foundations/reset.scss` | Pre-d842c209 | S4 | S2c | lost |
+| 5bc728c2 #1846 | `themes/beeq.scss` root: `--bq-{brand,accent,info,success,warning,danger}-{strong,bright}`, info on blue, `*-dark` on `*-950` | Root and role mappings restored; preset parity verified | S3 | S2a/S2b | verified in S3/S10 |
+| 5bc728c2 #1846 | `themes/endava.scss` root vs `endava/root.ts`, including Endava's later brand-colour correction | Root aliases and later brand correction verified against preset | S3 | S2a/S2b | verified in S3/S10 |
+| 5bc728c2 #1846 | `themes/{beeq,endava}.scss` light/dark roles (`--bq-text--on-*`, accent, strong/bright roles, `--bq-focus`, hover/active) | All mode roles restored and compared with preset | S3 | S2a/S2b | verified in S3/S10 |
+| 5bc728c2 / 66219508 | `primitives.scss` Endava palette | Primitive colour names and raw values checked against preset | check only | S2a | verified in S10 |
+| 3ce5d7cd | Light selector `:root:not([bq-mode])` for any theme | Selector behaviour compared against preset fixtures | S3 | S2b | verified in S3/S10 |
+| theme-swapper | `:where()` on every theme/mode selector | Selector specificity and cascade verified | S3 | S2b | verified in S3/S10 |
+| d842c209 | `foundations/reset.scss` | Reset rules and selector specificity restored | S4 | S2c | verified in S4/S10 |
 | f02072b4 #1852 | Keep raw Tailwind directives out of published CSS; separate the Storybook input | `default.scss` is native-only; Stencil global CSS and Storybook share `legacy-tailwind.scss` (components/utilities only) | S3 follow-up | Build-path, Storybook and fresh published Stencil CSS checks pass | verified in S3 |
-| 5b684d17, 4029dbe, b27db72, e015c34, 3bb07f5 | Preset plugins only | Merge took main's files; native mixins are generic | none | none | ok |
+| 5b684d17, 4029dbe, b27db72, e015c34, 3bb07f5 | Preset plugins only | Preset plugin files match pinned main | none | none | verified in S10 |
 | 5bc728c2 | `public/_table.scss` `--bq-table--text-color`, bordered `border-color` | Text variable restored; bordered mapping was already present and is retained | S5 | table e2e | verified in S5 |
-| 5bc728c2, 03cd6344 | Tag: 28 public vars, selected vars, close-button hover/active, inline public vars | Docs dropped, selected vars unused, active uses hover, private inline | S6 | tag e2e | lost |
-| 5bc728c2, a2eb405b #1797 | Badge: `--bq-badge--text-color: on-danger`, `backgroundColor` JSDoc, `size?`, slot test | Reverted / stale test | S7 | badge e2e | lost |
-| 5bc728c2 | Empty state `--bq-empty-state--text-color` | Import and `@cssprop` dropped | S8 | e2e | lost |
-| 5bc728c2 | Page title `--bq-page-title--divider-color` | Dropped | S8 | e2e | lost |
-| 5bc728c2 | Tab group `--bq-tab-group--border-color` | Import dropped | S8 | e2e | lost |
-| 5bc728c2 | Spinner `--bq-spinner--text-color`, `--bq-spinner--color: icon--brand` | Dropped / reverted | S8 | e2e | lost |
+| 5bc728c2, 03cd6344 | Tag: 28 public vars, selected vars, close-button hover/active, inline public vars | Public vars, selected state and interaction mappings restored | S6 | tag e2e | verified in S6/S10 |
+| 5bc728c2, a2eb405b #1797 | Badge: `--bq-badge--text-color: on-danger`, `backgroundColor` JSDoc, `size?`, slot test | Text role and JSDoc restored; non-optional defaulted size approved | S7 | badge e2e | verified in S7/S10; approved size exception |
+| 5bc728c2 | Empty state `--bq-empty-state--text-color` | Variable import and documentation restored | S8 | e2e | verified in S8/S10 |
+| 5bc728c2 | Page title `--bq-page-title--divider-color` | Divider variable restored through legacy shorthand | S8 | e2e | verified in S8/S10 |
+| 5bc728c2 | Tab group `--bq-tab-group--border-color` | Variable import and divider background restored | S8 | e2e | verified in S8/S10 |
+| 5bc728c2 | Spinner `--bq-spinner--text-color`, `--bq-spinner--color: icon--brand` | Text and loader semantic colours restored | S8 | e2e | verified in S8/S10 |
 | 5bc728c2 | Progress `--bq-progress-bar--{indicatorColor-error,label-color,label-color-error}` | Values ported; three @prop entries restored, locals relocated, behavioural tests corrected | S9 source + tests | Progress e2e + S10 | verified in S9 |
-| 5bc728c2 | Avatar `@cssprop --bq-avatar--text-color` | Dropped from TSX JSDoc | S8 | S10 | lost |
+| 5bc728c2 | Avatar `@cssprop --bq-avatar--text-color` | Text documentation restored; background alias and optional prop types retained by decision | S8 | S10 | verified in S8/S10; approved type exception |
 | 5bc728c2 | Steps `--bq-steps--divider-color: stroke--primary` | Unused variable removed by explicit user decision; dividerColor prop controls rendering | S8 | Steps e2e + S10 | intentional API removal; verified in S8.6 |
-| 5bc728c2 | Button public variant vars `--bq-button--{primary,secondary,link,text}-*` | Dropped; WIP restores them (26/26 button e2e passed on the WIP) | S8 | button e2e | wip |
-| 5bc728c2 | Status `--bq-status--dot-color-*`, `--bq-status-circ` alias | Ported in merge | check only | S10 | ok? |
-| 5bc728c2 | Card, Divider, Panel, Breadcrumb, Option/Select readmes | Ported in merge | check only | S10 | ok? |
+| 5bc728c2 | Button public variant vars `--bq-button--{primary,secondary,link,text}-*` | Public variants, overrides and interaction states verified | S8 | button e2e | verified in S8/S10 |
+| 5bc728c2 | Status `--bq-status--dot-color-*`, `--bq-status-circ` alias | Public colour names retained; canonical and legacy size overrides repaired | S10 | Status e2e | verified in S10 |
+| 5bc728c2 | Card, Divider, Panel, Breadcrumb, Option/Select readmes | All six readmes byte-match pinned main | check only | S10 | verified in S10 |
 
 ## Implementation order
 
@@ -1001,6 +1001,33 @@ Write a one-off script (or an Nx target if useful). For every migrated component
 Every difference must be an intentional migration change listed in the inventory. Update the Status column, and resolve each `ok?`. The user-approved removal of Steps' unused `--bq-steps--divider-color` is an expected difference; verify it is absent from source and regenerated documentation while `dividerColor` remains intact.
 
 Keep the script's output as the **upstream-change reconciliation checklist**, so "all tests pass" can't hide silent API losses.
+
+#### S10 reconciliation — 2026-10-28 (Australia/Brisbane)
+
+[Certain] **S10 is complete; final verification is recorded below.** The reproducible one-off script `node tools/scripts/s10-reconcile-public-api.mjs` compares pinned main (`1e4f7b0e45a392684cb82cfb771f0317fa06fcf5`) with the working tree. Its retained machine-readable output is `merge-regressions-s10-reconciliation.json`. It checks 17 inventory components for `@cssprop`, `@prop`, `@part`, `@slot`, `@attr`, `@event` and `@method` names; `@Prop` names, declared types, optionality, initializers and decorators; public variable declarations; and changed types files. It also compares the legacy/native public-table variable and documentation sets, and all six inventory readmes. Breadcrumb has no variables file on either side.
+
+[Certain] The comparison finds no removed public names except the explicitly approved, unused Steps `--bq-steps--divider-color`. All six Card/Divider/Panel/Breadcrumb/Option/Select readmes match pinned main. The public table variable and `@prop` name sets match. Preset plugin files match pinned main; primitive colours, theme roots/modes, selectors and reset were verified against their S2/S3/S4 oracles and prior full-browser run.
+
+| Difference | Reconciliation |
+|---|---|
+| Badge `size` optionality | Explicit user decision: keep `size: TBadgeSize = 'small'` without `?`; default and decorator remain unchanged. |
+| Avatar background variables | The migration adds `--bq-avatar--background` and documents the existing `--bq-avatar-background` as its deprecated fallback. Browser checks verify both names and canonical-variable precedence. Mintlify documentation now includes both. |
+| Avatar `altText`, `image`, `initials`, `label` optionality | Existing branch migration (`7730f5d4`) makes these non-defaulted fields optional. Image and initials support alternative content and source handles missing values. The user explicitly chose to retain the optional types; code reading these properties as definitely present may need undefined checks. |
+| Steps divider CSS variable | Explicit user decision: remove the disconnected variable and its docs; preserve `dividerColor`. Source, generated typings/CEM, published bundle and SVG stroke tests were verified in S8.6. |
+| Steps `type` initializer | Explicit user decision: retain the branch's `numeric` default rather than pinned main's absent initializer. A new browser test confirms the reflected host attribute and propagated child type. |
+| Status circle-size documentation | The branch documents the existing `--bq-status-circle--size` alongside `--bq-status-circ`. Mintlify now documents both. A runtime gap was found and repaired as described below; canonical and legacy overrides pass against the fresh bundle. |
+
+[Certain] Status's documented size override did not reach the rendered dot: Badge resolves its local size on the Badge host, but Status supplied `--bq-badge--size-medium` on Badge's internal `::part(base)`. Pinned main's Badge consumed the variable on the base directly. Moved the size assignment to `.bq-status__circle` (the Badge host), and moved Status's local colour default and four type overrides from `:host` to `.bq-status` under the agreed scope rule. Added computed-size checks for the canonical and legacy variables, including precedence and removal, plus a neutral→danger→neutral colour transition. Pre-build red proof: **2 failed / 35 passed** across Avatar, Status and Steps; the two failures are the canonical and legacy Status size cases. Avatar alias precedence and the approved Steps numeric default pass against that bundle.
+
+[Certain] Scoped strict Status Stylelint, normal package Stylelint, focused TypeScript, Biome, Sass/PostCSS checks and diff checks pass. Sass inspection confirms the Badge host receives the size mapping and the wrapper owns all five local colour declarations. At the initial source-validation point, the fresh build and browser suites were pending; the final verification below closes those checks. Generated typing/CEM and the full artifact sweep remain S11 work; the existing `.gitignore`, mixed `components.d.ts`, `.devin/` and `.zed/` WIP is not part of S10.
+
+#### S10 final verification — 2026-10-28 (Australia/Brisbane)
+
+[Certain] The user's uncached publishable build succeeded for all five projects and two dependency tasks in **2m 15s**. Stencil completed in **102.90s**, including copying 27,238 files in 53.50s; React, Vue and both Angular entrypoints built successfully. The refreshed Chromium browser suite passed **46/46 files and 1352/1352 tests**, starting at **11:26:37**, with total Vitest duration **67.53s**. Status passed **16/16**, Avatar **12/12**, and Steps **9/9**, including the canonical and legacy Status size overrides, both Avatar background names and precedence, Status colour transition, and the user-approved numeric Steps default.
+
+[Certain] Independently inspected `dist/beeq/dist/beeq/p-c502c6b6.entry.js` (mtime **11:17:02.848 AEST**): the Badge-host size mapping, public alias fallback, wrapper-local neutral colour and danger override are present. Evidence is in `/tmp/beeq-s10-fresh-artifact-check.log`. The reconciliation script was rerun after the build and its JSON output byte-matches the retained checklist; no source API comparison changed during generation.
+
+[Certain] **S10 is complete.** Every detected difference has been accounted for; the Badge, Avatar and Steps type/default choices and the Steps variable removal were explicitly approved. The newly discovered Status size regression has pre-build **2 failed / 35 passed** evidence and a green refreshed-bundle suite. S11's generated artifact review, standalone CSS checks, Storybook checks, docs CSS generation and remaining final validation remain outstanding. S10 changes and this record are uncommitted; no push was made.
 
 ### S11. Generated artifacts and full validation
 

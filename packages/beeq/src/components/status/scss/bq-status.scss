@@ -4,15 +4,11 @@
 
 @import './bq-status.variables';
 
-/* ---------------------------------- Host ---------------------------------- */
-
-:host {
-  --_status-circle-background-color: var(--bq-status--dot-color-neutral);
-}
-
 /* ---------------------------------- Base ---------------------------------- */
 
 .bq-status {
+  --_status-circle-background-color: var(--bq-status--dot-color-neutral);
+
   display: inline-flex;
   align-items: center;
   gap: var(--bq-spacing-xs);
@@ -21,6 +17,8 @@
 /* ------------------------------- Structure -------------------------------- */
 
 .bq-status__circle {
+  --bq-badge--size-medium: var(--bq-status-circle--size);
+
   border-radius: var(--bq-radius--full);
 }
 
@@ -38,19 +36,19 @@
 
 /* -------------------------------- Variants -------------------------------- */
 
-:host([type='alert']) {
+:host([type='alert']) .bq-status {
   --_status-circle-background-color: var(--bq-status--dot-color-alert);
 }
 
-:host([type='danger']) {
+:host([type='danger']) .bq-status {
   --_status-circle-background-color: var(--bq-status--dot-color-danger);
 }
 
-:host([type='info']) {
+:host([type='info']) .bq-status {
   --_status-circle-background-color: var(--bq-status--dot-color-info);
 }
 
-:host([type='success']) {
+:host([type='success']) .bq-status {
   --_status-circle-background-color: var(--bq-status--dot-color-success);
 }
 
@@ -73,5 +71,4 @@
 .bq-status__circle::part(base) {
   --bq-badge--background-color: var(--_status-circle-background-color);
   --bq-badge--border-radius: var(--bq-radius--full);
-  --bq-badge--size-medium: var(--bq-status-circle--size);
 }

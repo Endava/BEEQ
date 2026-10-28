@@ -26,6 +26,18 @@ describe('bq-steps', () => {
     expect(root).not.toBeNull();
   });
 
+  it('should default to numeric type and propagate it to step items', async () => {
+    const { root } = await render(
+      <bq-steps>
+        <bq-step-item>First</bq-step-item>
+      </bq-steps>,
+    );
+    await waitForStable(root);
+    expect(root).toEqualAttribute('type', 'numeric');
+    expect((root as HTMLBqStepsElement).type).toBe('numeric');
+    expect(root.querySelector<HTMLBqStepItemElement>('bq-step-item').type).toBe('numeric');
+  });
+
   it('should have shadow root', async () => {
     const { root } = await render(<bq-steps type="numeric" size="medium" />);
 

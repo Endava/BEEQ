@@ -2,6 +2,7 @@ import { h } from '@stencil/core';
 import { afterEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
 
 import { computedStyle } from '../../../shared/test-utils/computedStyle';
+import { resolveColorToken } from '../../../shared/test-utils/resolveColorToken';
 import { STATUS_TYPE } from '../bq-status.types';
 
 /** Resolves a CSS color value (e.g. `var(--bq-icon--info)`) to its computed `rgb()` form */
@@ -162,5 +163,45 @@ describe('bq-status', () => {
 
     expect(backgroundColor).toBe(resolveColor('var(--bq-icon--info)'));
     expect(backgroundColor).not.toBe(resolveColor('var(--bq-ui--brand)'));
+  });
+
+  it('should apply the public circle-size variable to the rendered dot', async () => {
+    const { root } = await render(<bq-status>Status</bq-status>);
+    const status = root as HTMLBqStatusElement;
+    status.style.setProperty('--bq-status-circle--size', '18px');
+    await expect.poll(() => getComputedStyle(getDot(status)).inlineSize).toBe('18px');
+  });
+
+  it('should preserve the legacy circle size and allow the new size to override it', async () => {
+    const { root } = await render(<bq-status>Status</bq-status>);
+    const status = root as HTMLBqStatusElement;
+    root.style.setProperty('--bq-status-circ', '18px');
+    await expect.poll(() => getComputedStyle(getDot(status)).inlineSize).toBe('18px');
+    root.style.setProperty('--bq-status-circle--size', '22px');
+    await expect.poll(() => getComputedStyle(getDot(status)).inlineSize).toBe('22px');
+    root.style.removeProperty('--bq-status-circle--size');
+    await expect.poll(() => getComputedStyle(getDot(status)).inlineSize).toBe('18px');
+  });
+
+  it('should update the circle colour when its type changes', async () => {
+    const { root, setProps, waitForChanges } = await render(<bq-status>Status</bq-status>);
+    const status = root as HTMLBqStatusElement;
+    const scope = status.shadowRoot.querySelector<HTMLElement>('[part="base"]');
+    status.style.setProperty('--bq-status--dot-color-danger', '#123456');
+    expect(getComputedStyle(getDot(status)).backgroundColor).toBe(
+      resolveColorToken('--bq-status--dot-color-neutral', scope),
+    );
+    await setProps({ type: 'danger' });
+    await waitForChanges();
+    await waitForStable(status);
+    expect(getComputedStyle(getDot(status)).backgroundColor).toBe(
+      resolveColorToken('--bq-status--dot-color-danger', scope),
+    );
+    await setProps({ type: 'neutral' });
+    await waitForChanges();
+    await waitForStable(status);
+    expect(getComputedStyle(getDot(status)).backgroundColor).toBe(
+      resolveColorToken('--bq-status--dot-color-neutral', scope),
+    );
   });
 });
