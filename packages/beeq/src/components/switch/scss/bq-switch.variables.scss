@@ -19,7 +19,7 @@
   --bq-switch--height: 24px;
   --bq-switch--justify-content: 'start';
   --bq-switch--width: 44px;
-  --bq-switch--dot-size: calc(var(--bq-switch--height) - (theme(spacing.xs2) * 2));
+  --bq-switch--dot-size: calc(var(--bq-switch--height) - (var(--bq-spacing-xs2) * 2));
   --bq-switch--dot-color: var(--bq-ui--primary);
   --bq-switch--dot-color-checked: var(--bq-text--on-brand);
   --bq-switch--icon-color: var(--bq-icon--inverse);
