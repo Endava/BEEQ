@@ -1336,11 +1336,11 @@ describe('bq-time-picker', () => {
     expect(columns).toHaveLength(2);
 
     expect(getComputedStyle(columns[0]).marginBlock).toBe('8px');
-    expect(getComputedStyle(columns[0]).marginInlineStart).toBe('8px');
+    expect(getComputedStyle(columns[0]).marginInlineStart).toBe('4px');
     expect(getComputedStyle(columns[0]).marginInlineEnd).toBe('4px');
     expect(getComputedStyle(columns[1]).marginBlock).toBe('8px');
     expect(getComputedStyle(columns[1]).marginInlineStart).toBe('4px');
-    expect(getComputedStyle(columns[1]).marginInlineEnd).toBe('8px');
+    expect(getComputedStyle(columns[1]).marginInlineEnd).toBe('4px');
   });
 
   it('should paint idle, hover, and focus states through the public focus variable', async () => {
