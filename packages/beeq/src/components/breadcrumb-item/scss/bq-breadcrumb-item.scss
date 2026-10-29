@@ -1,28 +1,84 @@
 /* -------------------------------------------------------------------------- */
-/*                                Breadcrumb item styles                */
+/*                            Breadcrumb item styles                          */
 /* -------------------------------------------------------------------------- */
 
-@import './bq-breadcrumb-item.variables';
+@layer bq.reset, bq.tokens, bq.themes, bq.base, bq.public, bq.overrides,
+  bq-breadcrumb-item.tokens, bq-breadcrumb-item.base, bq-breadcrumb-item.states;
 
-:host([aria-current='page']) {
-  .breadcrumb-item {
-    @apply text-[color:--bq-breadcrumb-item--text-color-current];
+@layer bq-breadcrumb-item.tokens {
+  @import './bq-breadcrumb-item.variables';
+}
+
+@layer bq-breadcrumb-item.base {
+  /* ---------------------------------- Host ---------------------------------- */
+
+  :host {
+    display: inline-block;
+  }
+
+  /* ---------------------------------- Base ---------------------------------- */
+
+  .bq-breadcrumb-item {
+    display: flex;
+    align-items: center;
+  }
+
+  .bq-breadcrumb-item__control {
+    box-sizing: border-box;
+    padding-block: var(--bq-breadcrumb-item--paddingY);
+    padding-inline: var(--bq-breadcrumb-item--padding-start) var(--bq-breadcrumb-item--padding-end);
+    color: var(--bq-breadcrumb-item--text-color);
+    font: inherit;
+    font-weight: var(--bq-font-weight--regular);
+    font-size: var(--bq-breadcrumb-item--text-size);
+    line-height: var(--bq-breadcrumb-item--line-height);
+    text-decoration: none;
+    background-color: var(--bq-breadcrumb-item--background);
+    border-color: var(--bq-breadcrumb-item--border-color);
+    border-style: var(--bq-breadcrumb-item--border-style);
+    border-width: var(--bq-breadcrumb-item--border-width);
+    border-radius: var(--bq-breadcrumb-item--border-radius);
+    box-shadow: var(--bq-breadcrumb-item--box-shadow);
+    cursor: pointer;
+    transition-duration: 300ms;
+    transition-property: color;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* ------------------------------- Structure -------------------------------- */
+
+  .bq-breadcrumb-item__content {
+    display: flex;
+    align-items: center;
+    gap: var(--bq-spacing-xs2);
+  }
+
+  .bq-breadcrumb-item__separator {
+    display: flex;
+    align-items: center;
+    padding-inline: var(--bq-breadcrumb-item--padding-start-separator)
+      var(--bq-breadcrumb-item--padding-end-separator);
+    color: var(--bq-breadcrumb-item--separator-color);
+    font-size: var(--bq-breadcrumb-item--text-size-separator);
   }
 }
 
-.breadcrumb-item {
-  @apply border-[length:--bq-breadcrumb-item--border-width] border-[color:--bq-breadcrumb-item--border-color];
-  @apply rounded-[--bq-breadcrumb-item--border-radius] bg-[--bq-breadcrumb-item--background] shadow-[shadow:--bq-breadcrumb-item--box-shadow];
-  @apply pe-[--bq-breadcrumb-item--padding-end] ps-[--bq-breadcrumb-item--padding-start] p-b-[--bq-breadcrumb-item--paddingY];
-  @apply text-[length:--bq-breadcrumb-item--text-size] font-regular leading-[--bq-breadcrumb-item--line-height] text-[color:--bq-breadcrumb-item--text-color];
-  @apply focus-visible:focus hover:text-[color:color-mix(in_srgb,_var(--bq-breadcrumb-item--text-color),_var(--bq-hover)_20%)] active:outline-none;
-  @apply transition-colors duration-300 ease-in-out;
-  @apply cursor-pointer no-underline;
+@layer bq-breadcrumb-item.states {
+  /* --------------------------------- States --------------------------------- */
 
-  border-style: var(--bq-breadcrumb-item--border-style);
-}
+  :host([aria-current='page']) .bq-breadcrumb-item__control {
+    color: var(--bq-breadcrumb-item--text-color-current);
+  }
 
-.breadcrumb-separator {
-  @apply flex items-center text-[length:--bq-breadcrumb-item--text-size-separator] text-[color:--bq-breadcrumb-item--separator-color];
-  @apply pe-[--bq-breadcrumb-item--padding-end-separator] ps-[--bq-breadcrumb-item--padding-start-separator];
+  .bq-breadcrumb-item__control:hover {
+    @include bq-color-mix(color, var(--bq-breadcrumb-item--text-color), hover);
+  }
+
+  .bq-breadcrumb-item__control:focus-visible {
+    @include bq-focus-ring;
+  }
+
+  .bq-breadcrumb-item__control:active {
+    outline: none;
+  }
 }
