@@ -69,10 +69,9 @@ const compileStorybook = ({ minify = false } = {}) => {
 
   // Tailwind remains temporary here while legacy component/global styles still use @apply.
   const result = spawnSync(
-    'pnpm',
+    process.execPath,
     [
-      'exec',
-      'tailwindcss',
+      resolve(workspaceRoot, 'node_modules/tailwindcss/lib/cli.js'),
       '-i',
       tempInput,
       '-o',
@@ -81,7 +80,7 @@ const compileStorybook = ({ minify = false } = {}) => {
       resolve(workspaceRoot, 'postcss.config.js'),
       ...(minify ? ['--minify'] : []),
     ],
-    { cwd: workspaceRoot, shell: process.platform === 'win32', stdio: 'inherit' },
+    { cwd: workspaceRoot, stdio: 'inherit' },
   );
 
   if (result.status !== 0) {
