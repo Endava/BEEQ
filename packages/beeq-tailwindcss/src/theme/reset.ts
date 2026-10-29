@@ -76,6 +76,10 @@ export const reset: CSSRuleObject | CSSRuleObject[] = {
   ':where(ul[role="list"], ol[role="list"])': {
     'list-style-type': 'none',
   },
+  /* Keep native hidden state authoritative over component layout styles */
+  ':where([hidden]:not([hidden="until-found"]))': {
+    display: 'none !important',
+  },
   /* Remove all animations and transitions for people that prefer not to see them */
   '@media (prefers-reduced-motion: reduce)': {
     '*, *::before, *::after': {

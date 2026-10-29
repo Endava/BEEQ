@@ -62,7 +62,7 @@ describe('bq-input', () => {
     );
 
     const prefixContainerElem = root?.shadowRoot?.querySelector('.bq-input--control__prefix');
-    expect(prefixContainerElem).not.toHaveClass('is-hidden');
+    expect(prefixContainerElem).not.toHaveAttribute('hidden');
   });
 
   it('should render with suffix icon', async () => {
@@ -73,7 +73,7 @@ describe('bq-input', () => {
     );
 
     const suffixContainerElem = root?.shadowRoot?.querySelector('.bq-input--control__suffix');
-    expect(suffixContainerElem).not.toHaveClass('is-hidden');
+    expect(suffixContainerElem).not.toHaveAttribute('hidden');
   });
 
   it('should render with label content', async () => {
@@ -86,7 +86,7 @@ describe('bq-input', () => {
     );
 
     const labelContainerElem = root?.shadowRoot?.querySelector('.bq-input--label');
-    expect(labelContainerElem).not.toHaveClass('is-hidden');
+    expect(labelContainerElem).not.toHaveAttribute('hidden');
   });
 
   it('should render with helper content', async () => {
@@ -97,10 +97,10 @@ describe('bq-input', () => {
     );
 
     const helperContainerElem = root?.shadowRoot?.querySelector('.bq-input--helper-text');
-    expect(helperContainerElem).not.toHaveClass('is-hidden');
+    expect(helperContainerElem).not.toHaveAttribute('hidden');
   });
 
-  it('should hide empty slot wrappers with semantic state classes', async () => {
+  it('should hide empty slot wrappers with the native hidden attribute', async () => {
     const { root } = await render(<bq-input name="bq-input" />);
 
     for (const selector of [
@@ -110,7 +110,7 @@ describe('bq-input', () => {
       '.bq-input--helper-text',
     ]) {
       const wrapper = root.shadowRoot?.querySelector(selector);
-      expect(wrapper).toHaveClass('is-hidden');
+      expect(wrapper).toHaveAttribute('hidden');
       expect(getComputedStyle(wrapper as Element).display).toBe('none');
     }
   });

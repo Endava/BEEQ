@@ -42,12 +42,6 @@
     font-size: var(--bq-textarea--helper-text-size);
   }
 
-  .bq-textarea__label.is-hidden,
-  .bq-textarea__helper.is-hidden,
-  .bq-textarea__helper--counter.is-hidden {
-    display: none;
-  }
-
   .bq-textarea__helper--counter {
     font-variant-numeric: tabular-nums;
   }

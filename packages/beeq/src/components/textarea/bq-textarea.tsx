@@ -414,7 +414,8 @@ export class BqTextarea {
       <div class="bq-textarea" part="base">
         <label
           aria-label={this.name ?? this.fallbackId}
-          class={{ 'bq-textarea__label': true, 'is-hidden': !this.hasLabel }}
+          class="bq-textarea__label"
+          hidden={!this.hasLabel}
           htmlFor={this.name ?? this.fallbackId}
           part="label"
           ref={(label: HTMLLabelElement) => {
@@ -457,8 +458,8 @@ export class BqTextarea {
           class={{
             'bq-textarea__helper': true,
             [`validation-${this.validationStatus}`]: true,
-            'is-hidden': !this.hasHelperText && !this.maxlength,
           }}
+          hidden={!this.hasHelperText && !this.maxlength}
           part="helper-info"
         >
           <span
@@ -470,7 +471,7 @@ export class BqTextarea {
           >
             <slot name="helper-text" onSlotchange={this.handleSlotChange} />
           </span>
-          <span class={{ 'bq-textarea__helper--counter': true, 'is-hidden': !this.maxlength }} part="helper-counter">
+          <span class="bq-textarea__helper--counter" hidden={!this.maxlength} part="helper-counter">
             {this.numberOfCharacters}/{this.maxlength}
           </span>
         </div>

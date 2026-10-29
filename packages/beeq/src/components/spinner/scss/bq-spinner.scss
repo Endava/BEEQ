@@ -111,10 +111,6 @@
   row-gap: var(--bq-spacing-m);
 }
 
-.bq-spinner__icon.is-hidden {
-  display: none;
-}
-
 :host([animation]) .bq-spinner__icon,
 :host([animation]) .bq-spinner__loader > svg {
   @include animation-spin;

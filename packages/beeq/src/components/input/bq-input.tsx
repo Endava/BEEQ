@@ -459,7 +459,8 @@ export class BqInput {
         {/* Label */}
         <label
           aria-label={this.name || this.fallbackInputId}
-          class={{ 'bq-input--label': true, 'is-hidden': !this.hasLabel }}
+          class="bq-input--label"
+          hidden={!this.hasLabel}
           htmlFor={this.name || this.fallbackInputId}
           part="label"
           ref={(labelElem) => {
@@ -479,7 +480,8 @@ export class BqInput {
         >
           {/* Prefix */}
           <span
-            class={{ 'bq-input--control__prefix': true, 'is-hidden': !this.hasPrefix }}
+            class="bq-input--control__prefix"
+            hidden={!this.hasPrefix}
             part="prefix"
             ref={(spanElem) => {
               this.prefixElem = spanElem;
@@ -541,7 +543,8 @@ export class BqInput {
           )}
           {/* Suffix */}
           <span
-            class={{ 'bq-input--control__suffix': true, 'is-hidden': !this.hasSuffix }}
+            class="bq-input--control__suffix"
+            hidden={!this.hasSuffix}
             part="suffix"
             ref={(spanElem) => {
               this.suffixElem = spanElem;
@@ -552,10 +555,8 @@ export class BqInput {
         </div>
         {/* Helper text */}
         <div
-          class={{
-            [`bq-input--helper-text validation-${this.validationStatus}`]: true,
-            'is-hidden': !this.hasHelperText,
-          }}
+          class={`bq-input--helper-text validation-${this.validationStatus}`}
+          hidden={!this.hasHelperText}
           part="helper-text"
           ref={(divElem) => {
             this.helperTextElem = divElem;

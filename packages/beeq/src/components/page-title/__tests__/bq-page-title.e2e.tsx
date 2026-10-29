@@ -28,7 +28,7 @@ describe('bq-page-title', () => {
     const { root } = await render(<bq-page-title>Title</bq-page-title>);
 
     const backContainer = root.shadowRoot?.querySelector<HTMLElement>('[part="back"]');
-    expect(backContainer).toHaveClass('is-hidden');
+    expect(backContainer).toHaveAttribute('hidden');
   });
 
   it('should show back navigation when back slot has content', async () => {
@@ -40,7 +40,7 @@ describe('bq-page-title', () => {
     );
 
     const backContainer = root.shadowRoot?.querySelector<HTMLElement>('[part="back"]');
-    expect(backContainer).not.toHaveClass('is-hidden');
+    expect(backContainer).not.toHaveAttribute('hidden');
   });
 
   it('should render sub-title slot', async () => {
@@ -58,7 +58,7 @@ describe('bq-page-title', () => {
     const { root } = await render(<bq-page-title>Title</bq-page-title>);
 
     const subTitleContainer = root.shadowRoot?.querySelector<HTMLElement>('[part="sub-title"]');
-    expect(subTitleContainer).toHaveClass('is-hidden');
+    expect(subTitleContainer).toHaveAttribute('hidden');
   });
 
   it('should render suffix slot', async () => {

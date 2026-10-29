@@ -17,12 +17,6 @@
   box-sizing: border-box;
 }
 
-/* Hide the label / prefix wrappers when their slots have no content. */
-.bq-time-picker__label.is-hidden,
-.bq-time-picker__prefix.is-hidden {
-  display: none;
-}
-
 /* -------------------------------------------------------------------------- */
 /*                                    Label                                   */
 /* -------------------------------------------------------------------------- */

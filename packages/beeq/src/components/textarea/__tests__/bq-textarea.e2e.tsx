@@ -56,7 +56,7 @@ describe('bq-textarea', () => {
     );
     const labelContainer = root.shadowRoot.querySelector('.bq-textarea__label');
 
-    expect(labelContainer).not.toHaveClass('is-hidden');
+    expect(labelContainer).not.toHaveAttribute('hidden');
   });
 
   it('should render with helper text', async () => {
@@ -67,33 +67,33 @@ describe('bq-textarea', () => {
     );
     const helperContainer = root.shadowRoot.querySelector('.bq-textarea__helper');
 
-    expect(helperContainer).not.toHaveClass('is-hidden');
+    expect(helperContainer).not.toHaveAttribute('hidden');
   });
 
   it('should render with maxlength counter', async () => {
     const { root } = await render(<bq-textarea maxlength={100} name="textarea" placeholder="Placeholder..." />);
     const counterElem = root.shadowRoot.querySelector('.bq-textarea__helper--counter');
 
-    expect(counterElem).not.toHaveClass('is-hidden');
+    expect(counterElem).not.toHaveAttribute('hidden');
   });
 
   it('should hide helper content if no helper text and no maxlength', async () => {
     const { root } = await render(<bq-textarea name="textarea" placeholder="Placeholder..." />);
     const helperContainer = root.shadowRoot.querySelector('.bq-textarea__helper');
 
-    expect(helperContainer).toHaveClass('is-hidden');
+    expect(helperContainer).toHaveAttribute('hidden');
   });
 
-  it('should hide empty slot wrappers with semantic state classes', async () => {
+  it('should hide empty slot wrappers with the native hidden attribute', async () => {
     const { root } = await render(<bq-textarea name="textarea" />);
 
     const label = root.shadowRoot.querySelector('.bq-textarea__label');
     const helper = root.shadowRoot.querySelector('.bq-textarea__helper');
     const counter = root.shadowRoot.querySelector('.bq-textarea__helper--counter');
 
-    expect(label).toHaveClass('is-hidden');
-    expect(helper).toHaveClass('is-hidden');
-    expect(counter).toHaveClass('is-hidden');
+    expect(label).toHaveAttribute('hidden');
+    expect(helper).toHaveAttribute('hidden');
+    expect(counter).toHaveAttribute('hidden');
     expect(getComputedStyle(label).display).toBe('none');
     expect(getComputedStyle(helper).display).toBe('none');
     expect(getComputedStyle(counter).display).toBe('none');

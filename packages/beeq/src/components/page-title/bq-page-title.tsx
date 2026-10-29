@@ -123,7 +123,8 @@ export class BqPageTitle {
       <div class="bq-page-title" part="base">
         {/* Back navigation button */}
         <div
-          class={{ 'bq-page-title__back': true, 'is-hidden': !this.haveBackNavigation }}
+          class="bq-page-title__back"
+          hidden={!this.haveBackNavigation}
           part="back"
           ref={(divElem?: HTMLElement) => {
             this.backNavigationElem = divElem;
@@ -139,7 +140,8 @@ export class BqPageTitle {
             </h1>
             {/* Suffix */}
             <div
-              class={{ 'bq-page-title__suffix': true, 'is-hidden': !this.hasSuffix }}
+              class="bq-page-title__suffix"
+              hidden={!this.hasSuffix}
               part="suffix"
               ref={(divElem?: HTMLElement) => {
                 this.suffixElem = divElem;
@@ -150,10 +152,8 @@ export class BqPageTitle {
           </div>
           {/* Sub-title */}
           <div
-            class={{
-              'bq-page-title__subtitle': true,
-              'is-hidden': !this.hasSubTitle,
-            }}
+            class="bq-page-title__subtitle"
+            hidden={!this.hasSubTitle}
             part="sub-title"
             ref={(divElem?: HTMLElement) => {
               this.subTitleElem = divElem;

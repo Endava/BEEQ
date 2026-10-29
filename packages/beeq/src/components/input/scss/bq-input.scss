@@ -38,13 +38,6 @@
     font-size: var(--bq-input--helper-text-size);
   }
 
-  .bq-input--label.is-hidden,
-  .bq-input--helper-text.is-hidden,
-  .bq-input--control__prefix.is-hidden,
-  .bq-input--control__suffix.is-hidden {
-    display: none;
-  }
-
   .bq-input--control {
     box-sizing: border-box;
     display: flex;

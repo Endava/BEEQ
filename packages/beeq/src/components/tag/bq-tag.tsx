@@ -319,7 +319,8 @@ export class BqTag {
           {...this.computeButtonInteractiveProps}
         >
           <span
-            class={{ 'bq-tag__prefix': true, 'is-hidden': !this.hasPrefix }}
+            class="bq-tag__prefix"
+            hidden={!this.hasPrefix}
             part="prefix"
             ref={(spanElem) => {
               this.prefixElem = spanElem;

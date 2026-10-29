@@ -72,6 +72,11 @@
     list-style-type: none;
   }
 
+  :where([hidden]:not([hidden='until-found'])) {
+    /* stylelint-disable-next-line declaration-no-important -- Native hidden state must override component layout styles. */
+    display: none !important;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,

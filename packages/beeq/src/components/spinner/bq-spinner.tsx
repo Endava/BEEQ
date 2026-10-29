@@ -214,7 +214,8 @@ export class BqSpinner {
           </div>
         )}
         <span
-          class={{ 'bq-spinner__icon': true, 'is-hidden': !this.hasIconSlot }}
+          class="bq-spinner__icon"
+          hidden={!this.hasIconSlot}
           part="custom-icon"
           ref={(spanElem) => {
             this.iconSlotElem = spanElem;

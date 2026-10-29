@@ -85,7 +85,7 @@ describe('bq-spinner', () => {
     const slotElement = root.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="icon"]');
     const iconSlotElements = slotElement.assignedElements({ flatten: true });
 
-    expect(spinnerIcon).not.toHaveClass('is-hidden');
+    expect(spinnerIcon).not.toHaveAttribute('hidden');
     expect(iconSlotElements).toHaveLength(1);
   });
 

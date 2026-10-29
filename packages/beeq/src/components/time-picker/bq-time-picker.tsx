@@ -1247,7 +1247,8 @@ export class BqTimePicker {
       <div class="bq-time-picker" part={TIME_PICKER_PARTS.base}>
         {/* biome-ignore lint/a11y/useKeyWithClickEvents: pointer activation forwards focus; keyboard users tab directly to the roving segment. */}
         <label // NOSONAR: labels are pointer-activated; keyboard users focus the segments directly.
-          class={{ 'bq-time-picker__label': true, 'is-hidden': !this.hasLabel }}
+          class="bq-time-picker__label"
+          hidden={!this.hasLabel}
           htmlFor={id}
           onClick={this.handleLabelClick}
           part={TIME_PICKER_PARTS.label}
@@ -1285,7 +1286,8 @@ export class BqTimePicker {
             slot="trigger"
           >
             <span
-              class={{ 'bq-time-picker__prefix': true, 'is-hidden': !this.hasPrefix }}
+              class="bq-time-picker__prefix"
+              hidden={!this.hasPrefix}
               part={TIME_PICKER_PARTS.prefix}
               ref={(el) => {
                 this.prefixElem = el;

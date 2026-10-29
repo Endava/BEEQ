@@ -143,8 +143,8 @@ describe('bq-time-picker', () => {
     const tp = root as HTMLBqTimePickerElement;
     await waitForStable(root);
 
-    expect(tp.shadowRoot?.querySelector('[part="label"]')).not.toHaveClass('is-hidden');
-    expect(tp.shadowRoot?.querySelector('[part="prefix"]')).not.toHaveClass('is-hidden');
+    expect(tp.shadowRoot?.querySelector('[part="label"]')).not.toHaveAttribute('hidden');
+    expect(tp.shadowRoot?.querySelector('[part="prefix"]')).not.toHaveAttribute('hidden');
   });
 
   it('should hide the label and prefix wrappers without slot content', async () => {
@@ -152,8 +152,8 @@ describe('bq-time-picker', () => {
     const tp = root as HTMLBqTimePickerElement;
     await waitForStable(root);
 
-    expect(tp.shadowRoot?.querySelector('[part="label"]')).toHaveClass('is-hidden');
-    expect(tp.shadowRoot?.querySelector('[part="prefix"]')).toHaveClass('is-hidden');
+    expect(tp.shadowRoot?.querySelector('[part="label"]')).toHaveAttribute('hidden');
+    expect(tp.shadowRoot?.querySelector('[part="prefix"]')).toHaveAttribute('hidden');
   });
 
   /* ---------------------------- Locale and format ---------------------------- */
