@@ -29,7 +29,7 @@
   --bq-step-item--prefix-color-completed: var(--bq-icon--success);
   --bq-step-item--prefix-color-error: var(--bq-icon--danger);
 
-  --bq-step-item--prefix-num-size: theme(spacing.xl);
+  --bq-step-item--prefix-num-size: var(--bq-spacing-xl);
   --bq-step-item--prefix-num-bg-color: var(--bq-ui--secondary);
   --bq-step-item--prefix-num-bg-color-current: var(--bq-ui--brand);
   --bq-step-item--prefix-num-bg-color-completed: var(--bq-ui--success-alt);
