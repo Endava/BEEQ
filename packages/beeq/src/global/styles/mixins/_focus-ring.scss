@@ -1,7 +1,7 @@
 @mixin bq-focus-ring {
   @at-root #{&} {
     outline: var(--bq-ring-width, 2px) solid var(--bq-ring-color-focus, var(--bq-focus));
-    outline-offset: var(--bq-ring-offset-width, 1px); // NOSONAR -- Sass interpolates the caller selector as the scoping root.
+    outline-offset: var(--bq-ring-offset-width, 1px); /* NOSONAR -- Sass interpolates the caller selector as the scoping root. */
   }
 }
 
