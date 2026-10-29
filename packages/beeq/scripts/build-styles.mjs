@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
+import { spawnSync } from 'node:child_process';
 import { mkdirSync, readFileSync, watch, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { spawnSync } from 'node:child_process';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
@@ -14,6 +14,7 @@ const sourceRoot = resolve(projectRoot, 'src/global/styles');
 const outputRoot = resolve(workspaceRoot, 'dist/beeq/dist/beeq');
 const optionalCssOutputRoot = resolve(outputRoot, 'css');
 const injectedMixins = resolve(sourceRoot, 'mixins/index.scss');
+const legacyGlobalInput = resolve(sourceRoot, 'legacy-tailwind.scss');
 const args = new Set(process.argv.slice(2));
 
 const entries = [
@@ -60,9 +61,11 @@ const compileStorybook = ({ minify = false } = {}) => {
   const tempInput = resolve(tmpdir(), `beeq-storybook-${process.pid}.css`);
   const output = resolve(projectRoot, '.storybook/assets/css/stories.css');
   const css = compileSass(source, { injectMixins: true });
+  const legacyCss = readFileSync(legacyGlobalInput, 'utf8');
 
   mkdirSync(dirname(output), { recursive: true });
-  writeFileSync(tempInput, `${css}\n`);
+  // Matches Stencil's global-only Tailwind input; native foundations supply base.
+  writeFileSync(tempInput, `${legacyCss}\n${css}\n`);
 
   // Tailwind remains temporary here while legacy component/global styles still use @apply.
   const result = spawnSync(

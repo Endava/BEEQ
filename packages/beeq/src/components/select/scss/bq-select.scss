@@ -2,171 +2,269 @@
 /*                                Select styles                               */
 /* -------------------------------------------------------------------------- */
 
-@import './bq-select.variables';
+@layer bq.reset, bq.tokens, bq.themes, bq.base, bq.public, bq.overrides,
+  bq-select.tokens, bq-select.base, bq-select.structure, bq-select.validation, bq-select.states, bq-select.parts;
 
-:host {
-  @apply block w-full;
+@layer bq-select.tokens {
+  @import './bq-select.variables';
 }
 
-/* -------------------------------------------------------------------------- */
-/*                            Label and Helper text                           */
-/* -------------------------------------------------------------------------- */
+/* ---------------------------------- Base ---------------------------------- */
 
+@layer bq-select.base {
+  :host {
+    display: block;
+    inline-size: 100%;
+  }
+
+  .bq-select {
+    box-sizing: border-box;
+  }
+}
+
+/* ------------------------------- Structure -------------------------------- */
+
+@layer bq-select.structure {
+  .bq-select__label {
+    display: flex;
+    align-items: center;
+    color: var(--bq-select--label-text-color);
+    font-size: var(--bq-select--label-text-size);
+  }
+
+  .bq-select__helper-text {
+    color: var(--bq-select--helper-text-color);
+    font-size: var(--bq-select--helper-text-size);
+  }
+
+  .bq-select__dropdown {
+    inline-size: 100%;
+  }
+
+  .bq-select__control {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    inline-size: 100%;
+    padding-block: var(--bq-select--paddingY);
+    padding-inline: var(--bq-select--padding-start) var(--bq-select--padding-end);
+    color: var(--bq-select--text-color);
+    font-size: var(--bq-select--text-size);
+    user-select: none;
+    background-color: var(--bq-select--background-color);
+    border-color: var(--bq-select--border-color);
+    border-radius: var(--bq-select--border-radius);
+    border-style: var(--bq-select--border-style);
+    border-width: var(--bq-select--border-width);
+    transition-duration: 150ms;
+    transition-property: border-color, box-shadow;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .bq-select__control::placeholder {
+    color: var(--bq-select--text-placeholder-color);
+  }
+
+  .bq-select__input-outline {
+    display: flex;
+    flex: 1 1 0%;
+    overflow-inline: auto;
+  }
+
+  .bq-select__control--input {
+    display: block;
+    flex: 1 1 auto;
+    inline-size: 100%;
+    min-inline-size: 0;
+    min-block-size: var(--bq-select--icon-size);
+    margin-block: 0;
+    margin-inline: 0;
+    padding-block: 0;
+    padding-inline: 0;
+    color: inherit;
+    font: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    user-select: none;
+    appearance: none;
+    cursor: inherit;
+    background-color: inherit;
+    border-style: none;
+    outline: none;
+    box-shadow: none;
+  }
+
+  .bq-select__control--clear {
+    display: none;
+  }
+
+  .bq-select__control--prefix,
+  .bq-select__control--suffix {
+    display: flex;
+    align-items: center;
+    color: var(--bq-select--text-color);
+    pointer-events: none;
+  }
+
+  .bq-select__control--suffix {
+    transform: rotate(0deg);
+    transition-duration: 300ms;
+    transition-property: transform;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .bq-select__tags {
+    display: flex;
+    flex: 1 1 0%;
+    gap: var(--bq-spacing-xs2);
+  }
+}
+
+/*
+ * Keep these spacing rules unlayered while the legacy Tailwind component
+ * prelude still injects BEEQ's preset reset (`beeq-tailwindcss/src/theme/reset.ts`)
+ * as an unlayered `* { margin: 0 }` rule. It outranks declarations in every
+ * named component layer regardless of selector specificity, which otherwise
+ * collapses the label, helper, adornment, clear-button and tag spacing. Move
+ * these rules into `bq-select.structure` once component styles stop receiving
+ * that legacy prelude or its reset is emitted inside `bq.reset`.
+ */
 .bq-select__label {
-  @apply flex items-center m-be-[--bq-select--label-margin-bottom];
-  @apply text-[length:--bq-select--label-text-size] text-[color:--bq-select--label-text-color];
+  margin-block-end: var(--bq-select--label-margin-bottom);
 }
 
 .bq-select__helper-text {
-  @apply text-[length:--bq-select--helper-text-size] text-[color:--bq-select--helper-text-color] m-bs-[--bq-select--helper-margin-top];
+  margin-block-start: var(--bq-select--helper-margin-top);
 }
 
-.bq-select__helper-text.validation-error {
-  @apply text-danger;
+.bq-select__control--prefix {
+  margin-inline-end: var(--bq-select--gap);
 }
 
-.bq-select__helper-text.validation-success {
-  @apply text-success;
+.bq-select__control--suffix,
+.bq-select__control--clear {
+  margin-inline-start: var(--bq-select--gap);
 }
 
-.bq-select__helper-text.validation-warning {
-  @apply text-warning;
-}
-
-/* -------------------------------------------------------------------------- */
-/*                         Select input group control                         */
-/* -------------------------------------------------------------------------- */
-
-.bq-select__dropdown:has(:focus-within, :focus-visible) {
-  // The focus state will be controlled by the dropdown element
-  // if any of its children has focus, the dropdown will set the focus state to the .bq-select__control
-  .bq-select__control {
-    --bq-ring-width: 1px;
-    --bq-ring-offset-width: 0;
-    --bq-ring-color-focus: var(--bq-select--border-color-focus);
-
-    @apply focus border-[color:--bq-select--border-color-focus];
-  }
-}
-
-.bq-select__control {
-  @apply flex items-center bg-[--bq-select--background-color] transition-[border-color,box-shadow] is-full;
-  // Border
-  @apply rounded-[--bq-select--border-radius] border-[length:--bq-select--border-width] border-[color:--bq-select--border-color];
-  // Padding
-  @apply pe-[--bq-select--padding-end] ps-[--bq-select--padding-start] p-b-[var(--bq-select--paddingY)];
-  // Text
-  @apply select-none text-[length:--bq-select--text-size] text-[color:--bq-select--text-color] placeholder:text-[color:--bq-select--text-placeholder-color];
-  // Hover
-  @apply [&:not(.disabled):not(:focus-within)]:hover:border-hover-brand;
-
-  border-style: var(--bq-select--border-style);
-
-  // Enable clear button whenever the input group control is hovered or has focus
-  &:not(.disabled):hover,
-  &:not(.disabled):focus-within {
-    .bq-select__control--clear {
-      @apply inline-block;
-    }
-  }
-}
-
-.bq-select__control.disabled {
-  @apply cursor-not-allowed opacity-60;
+.bq-select__tags {
+  margin-inline-end: var(--bq-spacing-xs2);
 }
 
 /* ------------------------------- Validation ------------------------------- */
 
-.bq-select__control.validation-error {
-  @apply border-danger [&:not(.disabled):not(:focus-within)]:hover:border-hover-danger;
+@layer bq-select.validation {
+  .bq-select__helper-text.validation-error {
+    color: var(--bq-select--helper-text-color-danger);
+  }
 
-  &:not(.disabled):focus-within {
-    --bq-ring-color-focus: theme(stroke.danger);
+  .bq-select__helper-text.validation-success {
+    color: var(--bq-select--helper-text-color-success);
+  }
 
-    @apply border-active-danger;
+  .bq-select__helper-text.validation-warning {
+    color: var(--bq-select--helper-text-color-warning);
+  }
+
+  .bq-select__control.validation-error {
+    --_select-validation-color: var(--bq-select--border-color-danger);
+
+    border-color: var(--_select-validation-color);
+  }
+
+  .bq-select__control.validation-success {
+    --_select-validation-color: var(--bq-select--border-color-success);
+
+    border-color: var(--_select-validation-color);
+  }
+
+  .bq-select__control.validation-warning {
+    --_select-validation-color: var(--bq-select--border-color-warning);
+
+    border-color: var(--_select-validation-color);
+  }
+
+  .bq-select__control:is(.validation-error, .validation-success, .validation-warning) {
+    &:not(.disabled, :focus-within):hover {
+      @include bq-color-mix(border-color, var(--_select-validation-color), hover, 20%);
+    }
+
+    &:not(.disabled):focus-within {
+      --bq-ring-color-focus: var(--_select-validation-color);
+
+      @include bq-color-mix(border-color, var(--_select-validation-color), active, 20%);
+    }
   }
 }
 
-.bq-select__control.validation-success {
-  @apply border-success [&:not(.disabled):not(:focus-within)]:hover:border-hover-success;
+/* --------------------------------- States --------------------------------- */
 
-  &:not(.disabled):focus-within {
-    --bq-ring-color-focus: theme(stroke.success);
+@layer bq-select.states {
+  .bq-select__dropdown:has(:focus-within, :focus-visible) .bq-select__control {
+    --bq-ring-width: 1px;
+    --bq-ring-offset-width: 0;
 
-    @apply border-active-success;
+    @include bq-focus-ring;
+  }
+
+  .bq-select__dropdown:has(:focus-within, :focus-visible)
+    .bq-select__control:not(.validation-error, .validation-success, .validation-warning),
+  .bq-select__dropdown:has(:focus-within, :focus-visible)
+    .bq-select__control:is(.validation-error, .validation-success, .validation-warning):not(:focus-within) {
+    --bq-ring-color-focus: var(--bq-select--border-color-focus);
+
+    border-color: var(--bq-select--border-color-focus);
+  }
+
+  .bq-select__control {
+    &:not(.disabled, .validation-error, .validation-success, .validation-warning, :focus-within):hover {
+      @include bq-color-mix(border-color, var(--bq-stroke--brand), hover);
+    }
+
+    &:not(.disabled):is(:hover, :focus-within) .bq-select__control--clear {
+      display: inline-block;
+    }
+
+    &.disabled {
+      cursor: not-allowed;
+      opacity: var(--bq-disabled-opacity, 0.6);
+    }
+  }
+
+  .bq-select__control--suffix.is-open {
+    transform: rotate(180deg);
   }
 }
 
-.bq-select__control.validation-warning {
-  @apply border-warning [&:not(.disabled):not(:focus-within)]:hover:border-hover-warning;
+/* ---------------------------------- Parts --------------------------------- */
 
-  &:not(.disabled):focus-within {
-    --bq-ring-color-focus: theme(stroke.warning);
+@layer bq-select.parts {
+  .bq-select__control--clear::part(button) {
+    --bq-ring-width: initial;
+    --bq-ring-offset-width: initial;
+    --bq-ring-color-focus: initial;
 
-    @apply border-active-warning;
-  }
-}
-
-/* -------------------------------------------------------------------------- */
-/*                              Native HTML Input                             */
-/* -------------------------------------------------------------------------- */
-
-.bq-select__control--input {
-  @apply flex-auto cursor-inherit select-none appearance-none bg-inherit font-inherit text-[length:inherit] text-inherit;
-  @apply m-0 border-none p-0 min-bs-[var(--bq-select--icon-size)] min-is-0 focus:outline-none focus-visible:outline-none;
-
-  box-shadow: none;
-  font-weight: inherit;
-}
-
-/* -------------------------------------------------------------------------- */
-/*                                Clear button                                */
-/* -------------------------------------------------------------------------- */
-
-.bq-select__control--clear::part(button) {
-  // Since the clear button is inside the input group control,
-  // we need to reset the focus ring styles
-  --bq-ring-width: initial;
-  --bq-ring-offset-width: initial;
-  --bq-ring-color-focus: initial;
-}
-
-/* -------------------------------------------------------------------------- */
-/*                              Prefix and suffix                             */
-/* -------------------------------------------------------------------------- */
-
-.bq-select__control--prefix,
-.bq-select__control--suffix {
-  @apply pointer-events-none flex items-center text-[color:var(--bq-select--text-color)];
-}
-
-.bq-select__control--prefix {
-  @apply me-[--bq-select--gap];
-}
-
-.bq-select__control--suffix {
-  @apply ms-[--bq-select--gap] transition-transform duration-300 ease-in-out;
-}
-
-.bq-select__tags {
-  @apply me-xs2 flex flex-1 gap-xs2;
-
-  bq-tag,
-  ::slotted(bq-tag) {
-    @apply inline-flex;
+    padding-block: 0;
+    padding-inline: 0;
+    border-style: none;
   }
 
-  bq-tag::part(text) {
-    @apply text-nowrap leading-small;
+  .bq-select__control--clear bq-icon {
+    display: flex;
   }
-}
 
-/* -------------------------------------------------------------------------- */
-/*                         Slotted and internal icons                         */
-/* -------------------------------------------------------------------------- */
+  .bq-select__tags bq-tag,
+  .bq-select__tags ::slotted(bq-tag) {
+    display: inline-flex;
+  }
 
-bq-icon,
-::slotted(bq-icon) {
-  /* stylelint-disable-next-line declaration-no-important */
-  --bq-icon--size: var(--bq-select--icon-size) !important;
+  .bq-select__tags bq-tag::part(text) {
+    line-height: var(--bq-font-line-height--small);
+    white-space: nowrap;
+  }
+
+  bq-icon,
+  ::slotted(bq-icon) {
+    /* stylelint-disable-next-line declaration-no-important */
+    --bq-icon--size: var(--bq-select--icon-size) !important;
+  }
 }

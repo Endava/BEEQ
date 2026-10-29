@@ -14,6 +14,7 @@
    * @prop --bq-table--header-padding-inline: Header padding inline
    * @prop --bq-table--row-selected-bg: Row selected background
    * @prop --bq-table--row-selected-border: Row selected border
+   * @prop --bq-table--text-color: Table header and cell text color
    */
   .bq-table {
     --bq-table--border-color: var(--bq-stroke--primary);
@@ -28,6 +29,7 @@
     --bq-table--header-padding-inline: var(--bq-spacing-m);
     --bq-table--row-selected-bg: var(--bq-ui--brand-alt);
     --bq-table--row-selected-border: var(--bq-stroke--brand);
+    --bq-table--text-color: var(--bq-text--primary);
 
     overflow: hidden;
     inline-size: 100%;
@@ -76,7 +78,7 @@
     position: relative;
     padding-block: var(--bq-table--header-padding-block);
     padding-inline: var(--bq-table--header-padding-inline);
-    color: var(--bq-text--primary);
+    color: var(--bq-table--text-color);
     font-weight: var(--bq-font-weight--semibold);
     text-align: start;
   }
@@ -93,7 +95,7 @@
     position: relative;
     padding-block: var(--bq-table--cell-padding-block);
     padding-inline: var(--bq-table--cell-padding-inline);
-    color: var(--bq-text--primary);
+    color: var(--bq-table--text-color);
     text-align: start;
   }
 

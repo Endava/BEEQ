@@ -16,14 +16,26 @@ const PRECISION_ISO_REGEX: Record<TDatePrecision, RegExp> = {
   year: /^\d{4}$/,
 };
 
-/** Expand a wire-format token to a full `YYYY-MM-DD` ISO date. */
+/**
+ * Expands a wire-format token to a full `YYYY-MM-DD` ISO date.
+ *
+ * @param token Precision-specific ISO token.
+ * @param precision Precision represented by the token.
+ * @returns The full ISO date corresponding to the token.
+ */
 const expandToken = (token: string, precision: TDatePrecision): string => {
   if (precision === 'month') return `${token}-01`;
   if (precision === 'year') return `${token}-01-01`;
   return token;
 };
 
-/** Truncate a full `YYYY-MM-DD` ISO date to the wire-format for the precision. */
+/**
+ * Truncates a full `YYYY-MM-DD` ISO date to the wire format for a precision.
+ *
+ * @param iso Full ISO date to truncate.
+ * @param precision Target wire-format precision.
+ * @returns The ISO token serialized at the requested precision.
+ */
 const truncateISO = (iso: string, precision: TDatePrecision): string => {
   if (precision === 'month') return iso.slice(0, 7);
   if (precision === 'year') return iso.slice(0, 4);
@@ -34,6 +46,10 @@ const truncateISO = (iso: string, precision: TDatePrecision): string => {
  * Whether the token matches the precision-specific shape *and* is a real date.
  * For month/year we still expand to a full ISO date so `2026-13` / `2026-02-30`
  * style errors are caught by `isValidISO`.
+ *
+ * @param token Precision-specific ISO token to validate.
+ * @param precision Precision represented by the token.
+ * @returns `true` when the token has the expected shape and represents a real date.
  */
 const isValidToken = (token: string, precision: TDatePrecision): boolean => {
   if (!PRECISION_ISO_REGEX[precision].test(token)) return false;
@@ -54,6 +70,11 @@ const isValidToken = (token: string, precision: TDatePrecision): boolean => {
  * Invalid tokens (malformed strings, impossible dates like `2026-99-99`,
  * non-ISO input) are silently discarded — the returned selection is
  * guaranteed to contain only valid ISO-8601 dates.
+ *
+ * @param value Raw serialized picker value.
+ * @param type Selection mode represented by the value.
+ * @param precision Precision used by the serialized tokens.
+ * @returns Valid, full ISO dates representing the internal selection.
  */
 export const parseValue = (
   value: string | undefined | null,
@@ -89,6 +110,11 @@ export const parseValue = (
 /**
  * Serialize an internal `TSelection` array back to the wire format.
  * Truncates each entry to the precision's ISO shape.
+ *
+ * @param selection Internal full-ISO selection to serialize.
+ * @param type Selection mode represented by the value.
+ * @param precision Precision used by the serialized tokens.
+ * @returns The serialized public picker value.
  */
 export const serializeValue = (
   selection: TSelection,
@@ -96,6 +122,12 @@ export const serializeValue = (
   precision: TDatePrecision = 'day',
 ): string => {
   if (!selection.length) return '';
+  /**
+   * Converts one full ISO date to the requested wire precision.
+   *
+   * @param iso Full ISO date to format.
+   * @returns The precision-truncated ISO token.
+   */
   const format = (iso: string) => truncateISO(iso, precision);
 
   if (type === 'range') {
@@ -117,7 +149,14 @@ export const serializeValue = (
 /*                                Predicates                                  */
 /* -------------------------------------------------------------------------- */
 
-/** Whether the given ISO day is included in the selection. */
+/**
+ * Checks whether an ISO day is included in the selection.
+ *
+ * @param iso Full ISO day to check.
+ * @param selection Internal full-ISO selection.
+ * @param type Selection mode represented by the selection.
+ * @returns `true` when the day is selected, including the interior of a complete range.
+ */
 export const isSelected = (iso: string, selection: TSelection, type: TDatePickerType): boolean => {
   if (!selection.length) return false;
   if (type === 'range') {
@@ -128,15 +167,36 @@ export const isSelected = (iso: string, selection: TSelection, type: TDatePicker
   return selection.includes(iso);
 };
 
-/** Whether the ISO day is the start of a range selection. */
+/**
+ * Checks whether an ISO day is the start of a complete range selection.
+ *
+ * @param iso Full ISO day to check.
+ * @param selection Internal full-ISO selection.
+ * @param type Selection mode represented by the selection.
+ * @returns `true` when the day is the range start.
+ */
 export const isRangeStart = (iso: string, selection: TSelection, type: TDatePickerType): boolean =>
   type === 'range' && selection.length === 2 && iso === selection[0];
 
-/** Whether the ISO day is the end of a range selection. */
+/**
+ * Checks whether an ISO day is the end of a complete range selection.
+ *
+ * @param iso Full ISO day to check.
+ * @param selection Internal full-ISO selection.
+ * @param type Selection mode represented by the selection.
+ * @returns `true` when the day is the range end.
+ */
 export const isRangeEnd = (iso: string, selection: TSelection, type: TDatePickerType): boolean =>
   type === 'range' && selection.length === 2 && iso === selection[1];
 
-/** Whether the ISO day sits strictly inside the range (not start/end). */
+/**
+ * Checks whether an ISO day sits strictly inside a complete range.
+ *
+ * @param iso Full ISO day to check.
+ * @param selection Internal full-ISO selection.
+ * @param type Selection mode represented by the selection.
+ * @returns `true` when the day is inside, but not at an endpoint of, the range.
+ */
 export const isRangeInner = (iso: string, selection: TSelection, type: TDatePickerType): boolean => {
   if (type !== 'range' || selection.length < 2) return false;
   const [start, end] = selection;
@@ -154,6 +214,11 @@ export const isRangeInner = (iso: string, selection: TSelection, type: TDatePick
  * - multi:  toggle (add if missing, remove if present).
  * - range:  if there is no start OR a full range exists, start a new range;
  *           otherwise complete the range (auto-sorted).
+ *
+ * @param iso Full ISO day that was selected.
+ * @param selection Current internal full-ISO selection.
+ * @param type Selection mode to apply.
+ * @returns The next internal selection.
  */
 export const applySelection = (iso: string, selection: TSelection, type: TDatePickerType): TSelection => {
   if (type === 'single') return [iso];
@@ -171,6 +236,10 @@ export const applySelection = (iso: string, selection: TSelection, type: TDatePi
 /**
  * Build the highlighted range while the user is hovering with an in-progress
  * range selection (`tentative` = the pending start).
+ *
+ * @param tentative Pending range-start ISO day.
+ * @param hovered Currently hovered ISO day.
+ * @returns The sorted tentative range, or an empty selection when either date is absent.
  */
 export const buildTentativeRange = (tentative: string | undefined, hovered: string | undefined): TSelection => {
   if (!tentative || !hovered) return [];

@@ -2,6 +2,7 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
+import { fn } from 'storybook/test';
 
 import { ACCORDION_APPEARANCE, ACCORDION_SIZE } from '../bq-accordion.types';
 import mdx from './bq-accordion.mdx';
@@ -21,14 +22,6 @@ const meta: Meta = {
     'no-animation': { control: 'boolean' },
     rotate: { control: 'boolean' },
     size: { control: 'select', options: [...ACCORDION_SIZE] },
-    // Event handlers
-    bqBlur: { action: 'bqBlur' },
-    bqFocus: { action: 'bqFocus' },
-    bqClick: { action: 'bqClick' },
-    bqOpen: { action: 'bqOpen' },
-    bqAfterOpen: { action: 'bqAfterOpen' },
-    bqClose: { action: 'bqClose' },
-    bqAfterClose: { action: 'bqAfterClose' },
     // Not part of the component
     header: { control: 'text', table: { disable: true } },
   },
@@ -41,6 +34,14 @@ const meta: Meta = {
     size: 'medium',
     // Not part of the component
     header: 'Header',
+    // Events
+    bqBlur: fn(),
+    bqFocus: fn(),
+    bqClick: fn(),
+    bqOpen: fn(),
+    bqAfterOpen: fn(),
+    bqClose: fn(),
+    bqAfterClose: fn(),
   },
 };
 export default meta;

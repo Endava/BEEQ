@@ -1,9 +1,8 @@
 {
   "$schema": "../../node_modules/@biomejs/biome/configuration_schema.json",
   "extends": "//",
-    "linter": {
-    "rules": {
-      "style": { "noNonNullAssertion": "off" }
-    }
-  }
+  "linter": {
+    "rules": { "preset": "recommended", "style": { "noNonNullAssertion": "off" } }
+  },
+  "overrides": [{ "includes": ["**/*.css"] }, { "includes": ["**/*.scss"] }]
 }

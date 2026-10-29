@@ -1,0 +1,10 @@
+/* -------------------------------------------------------------------------- */
+/*                         Tab group custom properties                        */
+/* -------------------------------------------------------------------------- */
+
+:host {
+  /**
+   * @prop --bq-tab-group--border-color - Color of the divider line along the tabs
+   */
+  --bq-tab-group--border-color: var(--bq-stroke--primary);
+}

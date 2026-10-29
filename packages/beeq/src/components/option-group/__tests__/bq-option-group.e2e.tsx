@@ -1,6 +1,7 @@
 import { h } from '@stencil/core';
 import { describe, expect, it, render } from '@stencil/vitest';
 
+import { resolveColorToken } from '../../../shared/test-utils/resolveColorToken';
 import { getTextContent } from '../../../shared/utils/slot';
 
 describe('bq-option-group', () => {
@@ -89,5 +90,53 @@ describe('bq-option-group', () => {
 
     expect(container).toEqualAttribute('role', 'group');
     expect(container).toEqualAttribute('aria-label', 'Options');
+  });
+
+  it('should use the public background color variable', async () => {
+    const { root } = await render(
+      <bq-option-group>
+        <span slot="header-label">Food</span>
+        <bq-option value="pizza">Pizza</bq-option>
+      </bq-option-group>,
+    );
+
+    const hostStyle = getComputedStyle(root);
+    expect(hostStyle.getPropertyValue('--bq-option-group--background').trim()).toBe(
+      hostStyle.getPropertyValue('--bq-ui--primary').trim(),
+    );
+
+    root.style.setProperty('--bq-option-group--background', 'rgb(12, 34, 56)');
+
+    const wrapper = root.shadowRoot?.querySelector<HTMLElement>('.bq-option-group');
+    const header = root.shadowRoot?.querySelector<HTMLElement>('.bq-option-group__header');
+    const expectedColor = resolveColorToken('--bq-option-group--background', root);
+
+    expect(getComputedStyle(wrapper).backgroundColor).toBe(expectedColor);
+    expect(getComputedStyle(header).backgroundColor).toBe(expectedColor);
+    expect(wrapper).toHaveClass('bq-option-group');
+  });
+
+  it('should use the public logical header padding variables', async () => {
+    const { root } = await render(
+      <bq-option-group>
+        <span slot="header-label">Food</span>
+      </bq-option-group>,
+    );
+
+    root.style.setProperty('--bq-option-group--label-padding-start', '3px');
+    root.style.setProperty('--bq-option-group--label-padding-end', '7px');
+
+    const header = root.shadowRoot?.querySelector<HTMLElement>('.bq-option-group__header');
+    const headerStyle = getComputedStyle(header);
+
+    expect(headerStyle.paddingInlineStart).toBe('3px');
+    expect(headerStyle.paddingInlineEnd).toBe('7px');
+
+    root.dir = 'rtl';
+
+    const rtlHeaderStyle = getComputedStyle(header);
+
+    expect(rtlHeaderStyle.paddingRight).toBe('3px');
+    expect(rtlHeaderStyle.paddingLeft).toBe('7px');
   });
 });

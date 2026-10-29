@@ -1,0 +1,43 @@
+import { ArgTypes, Title, Subtitle } from '@storybook/addon-docs/blocks';
+
+<div className="bq-doc__wrapper" data-theme="light">
+  <div className="bq-doc__container">
+    <Title>Time picker</Title>
+
+    The time picker lets users type a time into a segmented field or pick it from scrollable hour, minute, second and AM/PM columns. It participates in native form submission and validation.
+
+    <Subtitle>Value format</Subtitle>
+
+    `value` is always a 24-hour time, whatever the clock shown to the user:
+
+    - `precision="hour"`: `HH:00`
+    - `precision="minute"` (default): `HH:mm`
+    - `precision="second"`: `HH:mm:ss`
+
+    `min` and `max` use the same format.
+
+    <Subtitle>Clock and field order</Subtitle>
+
+    `locale` sets the field order, separators, column headers and AM/PM labels. The clock is 24-hour by default; set `hour-format="12"` for a 12-hour clock with an AM/PM segment.
+
+    `labels` overrides the column headers, AM/PM labels, button text and accessible names. Pass an object, or a JSON string through the attribute; missing keys keep the locale names or the English defaults.
+
+    <Subtitle>Confirmation</Subtitle>
+
+    By default each pick in the panel updates `value` and emits `bqChange`. Set `require-confirm` to keep panel picks as a draft until the user presses OK or Enter; Escape, Tab or an outside click discard the draft. Typing in the field always commits directly.
+
+    <Subtitle>👍 When to use</Subtitle>
+
+    - To capture a time of day, such as a meeting start or an opening hour.
+    - When the time must stay within a range or follow fixed intervals (`min`, `max`, `minute-step`).
+
+    <Subtitle>👎 When not to use</Subtitle>
+
+    - For a date or a date with a time: use the date picker, alone or with a time picker next to it.
+    - For a duration or countdown, which isn't a time of day.
+
+    <Title>Properties</Title>
+
+    <ArgTypes of="bq-time-picker" />
+  </div>
+</div>

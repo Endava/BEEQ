@@ -13,7 +13,7 @@
 /* ---------------------------------- Base ---------------------------------- */
 
 .bq-option-group {
-  background-color: var(--bq-ui--primary);
+  background-color: var(--bq-option-group--background);
 }
 
 /* ------------------------------- Structure -------------------------------- */
@@ -23,7 +23,7 @@
   overflow: hidden;
   margin-block-end: var(--bq-option-group--gapY-list);
   padding-block: var(--bq-option-group--label-paddingY);
-  padding-inline: var(--bq-option-group--label-paddingY);
+  padding-inline: var(--bq-option-group--label-padding-start) var(--bq-option-group--label-padding-end);
   font-size: var(--bq-option-group--font-size);
   line-height: var(--bq-option-group--line-height);
   text-overflow: ellipsis;

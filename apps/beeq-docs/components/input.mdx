@@ -13,10 +13,6 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 
 Inputs let users enter a short value in a familiar, single-line control. Use them when people need to type information directly and you want the field to support labels, helper text, inline validation, and optional prefix or suffix content.
 
-<Note>
-  Use `bq-input` for single-line entry. If the answer may span multiple lines, use a textarea. If the user must pick from known options, use a select or dropdown. If the value is a date, use a date picker.
-</Note>
-
 ## When to use
 
 <CardGroup cols={2}>
@@ -44,6 +40,10 @@ Inputs let users enter a short value in a familiar, single-line control. Use the
     - The field purpose would only be understandable through placeholder text
   </Card>
 </CardGroup>
+
+<Tip>
+  Use `bq-input` for free-form, single-line text. Choose [`bq-textarea`](/components/textarea) for multiple lines, [`bq-select`](/components/select) when a choice from known options needs form submission or validation, or [`bq-dropdown`](/components/dropdown) when options trigger actions or lead to destinations. Choose [`bq-date-picker`](/components/date-picker) when users select a calendar date.
+</Tip>
 
 ## Patterns
 
@@ -77,12 +77,13 @@ An input combines a persistent label with a single-line text field and optional 
 | Part | Element | Description |
 |---|---|---|
 | **1** | Label | Persistent field name shown through the `label` slot |
-| **2** | Control | The bordered container that groups the editable field and optional affordances |
-| **3** | Native input | The actual text input used for typing, autofill, and form submission |
-| **4** | Prefix | Optional leading content inside the control, usually an icon |
-| **5** | Suffix | Optional trailing content inside the control, often a status or supporting icon |
-| **6** | Helper text | Supporting guidance or validation feedback shown below the field |
-| **7** | Clear button | Optional action that appears when the field has a value and clearing is enabled |
+| **2** | Control | The bordered container that groups the native input and the optional prefix, suffix and clear button |
+| **3** | Prefix icon | Optional leading icon inside the control, set through the `prefix` slot |
+| **4** | Placeholder | Example text shown by the native input while the field is empty. It is a hint, not a replacement for the label |
+| **5** | Helper text | Supporting guidance or validation feedback shown below the field through the `helper-text` slot |
+| **7** | Suffix icon | Optional trailing icon inside the control, set through the `suffix` slot |
+| **8** | Optional label | Text next to the label that marks the field as optional. Compose it inside the `label` slot |
+| **9** | Label tooltip icon | Optional info icon next to the label that reveals extra context. Compose it inside the `label` slot |
 
 ## Design guidelines
 
@@ -686,6 +687,11 @@ Use the `disabled` attribute when the input field should be visible but non-edit
 
 ## Options
 
+| Dimension | Attribute | Allowed values | Default |
+|---|---|---|---|
+| Type | `type` | `date`, `datetime-local`, `email`, `number`, `password`, `search`, `tel`, `text`, `time`, `url` | `text` |
+| Validation status | `validation-status` | `error`, `none`, `success`, `warning` | `none` |
+
 ### Validation
 
 Use this variant for validation feedback by setting `validation-status` to `error`, `success`, `warning`, or `none`.
@@ -1048,7 +1054,6 @@ Use this style when you want to include an optional marker to provide additional
       </BqInput>
     </template>
 
-
     <style>
       .label-row {
         display: flex;
@@ -1290,7 +1295,6 @@ Use this style when you want to include an informational tooltip alongside the i
       </BqInput>
     </template>
 
-
     <style>
       bq-tooltip {
         margin-inline-start: var(--bq-spacing-xs);
@@ -1499,6 +1503,10 @@ Use this variant when the field does not require supplementary guidance.
 ### Form integration
 
 `bq-input` submits its current string value with the form. Combine `name`, `required`, and `form-validation-message` when the field must pass native validation before submission.
+
+For `type="number"`, user-entered values are numbers in `value`, `bqInput.detail.value`, and `bqChange.detail.value`. Deleting all contents or using Clear sets the value to `''` and submits an empty string, not `"0"`. A deliberate numeric `0` satisfies `required` and supports the Clear action when clearing is enabled.
+
+An incomplete numeric entry, such as `-`, can also expose `''` while you type because the native number input has no complete numeric value yet. Check for `''` before converting event values to numbers so an empty optional filter does not become a zero bound.
 
 <CodeLivePreview mode="iframe" height="20.5rem" removePadding code={`
   <style>
@@ -1791,10 +1799,38 @@ Use this variant when the field does not require supplementary guidance.
 - Built in: when `disabled` is set, the native input receives `aria-disabled="true"` so assistive technologies can detect the unavailable state.
 - Built in: the clear button uses `clearButtonLabel` as its accessible name, and the default clear icon is marked `aria-hidden="true"`.
 - Built in: the component participates in forms and can surface native required-state validity when you combine `required` with `formValidationMessage`.
-- You must: provide meaningful content in the `label` slot for most cases, even when the surrounding layout makes the field purpose look obvious visually.
-- You must: treat helper and validation text as instructions, not decoration. Keep it concise and make recovery steps explicit.
-- You must: avoid placeholder-only labeling because placeholder text disappears as soon as the user types.
-- You must: add alternate context when you intentionally omit the visible label, so screen reader and keyboard users still understand the field purpose.
+- You must provide meaningful content in the `label` slot, even when the surrounding layout makes the field purpose look obvious visually.
+- You must treat helper and validation text as instructions, not decoration. Keep it concise and make recovery steps explicit.
+- You must not use placeholder text as the only label because it disappears as soon as the user types.
+- You must add alternate context when you intentionally omit the visible label, so screen reader and keyboard users still understand the field purpose.
+
+### Keyboard interaction
+
+The component renders a native `input` element and a `bq-button` (a native `button`) for the clear action, so the keys below come from those elements.
+
+| Key | Context | Action |
+|---|---|---|
+| `Tab` | Any | Moves focus to the input, then to the clear button when it is shown, then to the next focusable element |
+| `Shift` + `Tab` | Any | Moves focus to the previous focusable element |
+| Printable characters | Input focused, not `disabled` or `readonly` | Types into the field and emits `bqInput` on every change |
+| `ArrowUp` | Input focused, `type="number"` | Increases the value by `step` (native behavior) |
+| `ArrowDown` | Input focused, `type="number"` | Decreases the value by `step` (native behavior) |
+| `Enter` | Clear button focused | Clears the value, emits `bqClear`, and returns focus to the input |
+| `Space` | Clear button focused | Clears the value, emits `bqClear`, and returns focus to the input |
+
+The input is not focusable when `disabled` is set. When `readonly` is set, it stays focusable but rejects typing.
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Provide a visible label in the `label` slot, or alternate context when you omit it | MUST | manual: inspect the field label or its alternative context |
+| Set `name` so the value is submitted with the form | MUST | automated: [`bq-input.e2e.tsx`](https://github.com/Endava/BEEQ/blob/main/packages/beeq/src/components/input/__tests__/bq-input.e2e.tsx) checks `FormData` |
+| Set `required` for mandatory fields so the form fails validation while the value is empty | MUST | automated: [`bq-input.e2e.tsx`](https://github.com/Endava/BEEQ/blob/main/packages/beeq/src/components/input/__tests__/bq-input.e2e.tsx) checks `form.checkValidity()` |
+| Set `form-validation-message` to tell users how to fix a missing required value | SHOULD | manual: inspect the required-field message in a form |
+| Do not use `placeholder` as the only label | MUST NOT | manual: check the label remains after the placeholder disappears |
+| Provide helper or validation text that explains how to recover from an error | SHOULD | manual: read the helper text after an invalid value |
+| Do not rely on color alone to communicate `validation-status` | MUST NOT | manual: read the error state without relying on color |
 
 ## API reference
 
@@ -1806,7 +1842,7 @@ Use this variant when the field does not require supplementary guidance.
 | `autocomplete` | `autocomplete` | Hints whether and how the browser should autocomplete the field | `string` | `"off"` |
 | `autofocus` | `autofocus` | If `true`, the input is focused on component render | `boolean` | `false` |
 | `clearButtonLabel` | `clear-button-label` | Accessible label for the clear button | `string` | `"Clear value"` |
-| `debounceTime` | `debounce-time` | Delay before the `bqInput` event is emitted after the value changes | `number` | `0` |
+| `debounceTime` | `debounce-time` | Milliseconds to wait before emitting `bqInput` after the value changes. With `0`, `bqInput` is emitted synchronously | `number` | `0` |
 | `disableClear` | `disable-clear` | If `true`, the clear button is hidden | `boolean` | `false` |
 | `disabled` | `disabled` | Disables the input | `boolean` | `false` |
 | `form` | `form` | ID of the form the input belongs to | `string` | `undefined` |
@@ -1826,6 +1862,10 @@ Use this variant when the field does not require supplementary guidance.
 | `validationStatus` | `validation-status` | Validation state of the control | `"error" \| "none" \| "success" \| "warning"` | `"none"` |
 | `value` | `value` | Current input value | `number \| string \| string[]` | `undefined` |
 
+### Invalid combinations
+
+No invalid prop combinations.
+
 ### Events
 
 | Event | Description | Type |
@@ -1834,7 +1874,7 @@ Use this variant when the field does not require supplementary guidance.
 | `bqChange` | Fired when the value changes and the input loses focus | `CustomEvent<{ value: string \| number \| string[]; el: HTMLBqInputElement }>` |
 | `bqClear` | Fired when the value is cleared | `CustomEvent<HTMLBqInputElement>` |
 | `bqFocus` | Fired when the input receives focus | `CustomEvent<HTMLBqInputElement>` |
-| `bqInput` | Fired on every keystroke as the value changes | `CustomEvent<{ value: string \| number \| string[]; el: HTMLBqInputElement }>` |
+| `bqInput` | Fired when the value changes as the user types or clears it; debounced by `debounceTime` when it is greater than `0` | `CustomEvent<{ value: string \| number \| string[]; el: HTMLBqInputElement }>` |
 
 ### Slots
 
@@ -1868,12 +1908,18 @@ Use this variant when the field does not require supplementary guidance.
   | `--bq-input--background-color` | Input background color | `var(--bq-ui--primary)` |
   | `--bq-input--border-color` | Input border color | `var(--bq-stroke--tertiary)` |
   | `--bq-input--border-color-focus` | Input border color on focus | `var(--bq-stroke--brand)` |
+  | `--bq-input--border-color-danger` | Input border color when the validation status is `error` | `var(--bq-stroke--danger)` |
+  | `--bq-input--border-color-success` | Input border color when the validation status is `success` | `var(--bq-stroke--success)` |
+  | `--bq-input--border-color-warning` | Input border color when the validation status is `warning` | `var(--bq-stroke--warning)` |
   | `--bq-input--border-radius` | Input border radius | `var(--bq-radius--s)` |
   | `--bq-input--border-style` | Input border style | `solid` |
   | `--bq-input--border-width` | Input border width | `var(--bq-stroke-s)` |
   | `--bq-input--gap` | Gap between input content and prefix or suffix | `var(--bq-spacing-xs)` |
   | `--bq-input--helper-margin-top` | Helper text margin top | `var(--bq-spacing-xs)` |
   | `--bq-input--helper-text-color` | Helper text color | `var(--bq-text--primary)` |
+  | `--bq-input--helper-text-color-danger` | Helper text color when the validation status is `error` | `var(--bq-text--danger)` |
+  | `--bq-input--helper-text-color-success` | Helper text color when the validation status is `success` | `var(--bq-text--success)` |
+  | `--bq-input--helper-text-color-warning` | Helper text color when the validation status is `warning` | `var(--bq-text--warning)` |
   | `--bq-input--helper-text-size` | Helper text size | `var(--bq-font-size--s)` |
   | `--bq-input--icon-size` | Icon size for prefix, suffix, and clear button | `24px` |
   | `--bq-input--label-margin-bottom` | Label margin bottom | `var(--bq-spacing-xs)` |

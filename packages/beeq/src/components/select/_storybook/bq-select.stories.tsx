@@ -3,7 +3,9 @@ import { html, nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 import { useArgs } from 'storybook/preview-api';
+import { fn } from 'storybook/test';
 
+import { skipSnapshotParameters } from '../../../../.storybook/chromatic-parameters';
 import { INPUT_VALIDATION } from '../../input/bq-input.types';
 import mdx from './bq-select.mdx';
 
@@ -20,10 +22,12 @@ const meta: Meta = {
     'clear-button-label': { control: 'text' },
     'debounce-time': { control: 'number' },
     'disable-clear': { control: 'boolean' },
+    'disable-search': { control: 'boolean' },
     'disable-scroll-lock': { control: 'boolean' },
     distance: { control: 'number' },
     disabled: { control: 'boolean' },
     form: { control: 'text' },
+    'form-validation-message': { control: 'text' },
     'keep-open-on-select': { control: 'boolean' },
     name: { control: 'text' },
     'max-tags-visible': { control: 'number' },
@@ -51,16 +55,11 @@ const meta: Meta = {
     readonly: { control: 'boolean' },
     required: { control: 'boolean' },
     'same-width': { control: 'boolean' },
+    'enable-checkboxes': { control: 'boolean' },
     skidding: { control: 'number' },
     strategy: { control: 'select', options: ['fixed', 'absolute'] },
     'validation-status': { control: 'select', options: [...INPUT_VALIDATION] },
     value: { control: 'object' },
-    // Events
-    bqBlur: { action: 'bqBlur' },
-    bqClear: { action: 'bqClear' },
-    bqFocus: { action: 'bqFocus' },
-    bqSelect: { action: 'bqSelect' },
-    bqInput: { action: 'bqInput' },
     // Not part of the public API, so we don't want to expose it in the docs
     noLabel: { control: 'boolean', table: { disable: true } },
     hasLabelTooltip: { control: 'boolean', table: { disable: true } },
@@ -76,10 +75,12 @@ const meta: Meta = {
     'clear-button-label': 'Clear value',
     'debounce-time': 0,
     'disable-clear': false,
+    'disable-search': false,
     'disable-scroll-lock': false,
     distance: 8,
     disabled: false,
     form: undefined,
+    'form-validation-message': undefined,
     'keep-open-on-select': false,
     name: 'bq-select',
     'max-tags-visible': 2,
@@ -89,6 +90,7 @@ const meta: Meta = {
     placement: 'bottom',
     placeholder: 'Placeholder',
     'same-width': false,
+    'enable-checkboxes': false,
     skidding: 0,
     strategy: 'fixed',
     readonly: false,
@@ -99,30 +101,44 @@ const meta: Meta = {
     // Not part of the public API, so we don't want to expose it in the docs
     options: `
       <bq-option value="running">
-        <bq-icon slot="prefix" name="sneaker-move"></bq-icon> Running
+        <bq-icon slot="prefix" name="sneaker-move"></bq-icon>
+        Running
       </bq-option>
       <bq-option value="hiking">
-        <bq-icon slot="prefix" name="boot"></bq-icon> Hiking
+        <bq-icon slot="prefix" name="boot"></bq-icon>
+        Hiking
       </bq-option>
       <bq-option value="biking">
-        <bq-icon slot="prefix" name="person-simple-bike"></bq-icon> Biking
+        <bq-icon slot="prefix" name="person-simple-bike"></bq-icon>
+        Biking
       </bq-option>
       <bq-option value="swimming">
-        <bq-icon slot="prefix" name="swimming-pool"></bq-icon> Swimming
+        <bq-icon slot="prefix" name="swimming-pool"></bq-icon>
+        Swimming
       </bq-option>
       <bq-option value="pizza">
-        <bq-icon slot="prefix" name="pizza"></bq-icon> Pizza
+        <bq-icon slot="prefix" name="pizza"></bq-icon>
+        Pizza
       </bq-option>
       <bq-option value="hamburger">
-        <bq-icon slot="prefix" name="hamburger"></bq-icon> Hamburger
+        <bq-icon slot="prefix" name="hamburger"></bq-icon>
+        Hamburger
       </bq-option>
       <bq-option value="cookie">
-        <bq-icon slot="prefix" name="cookie"></bq-icon> Cookie
+        <bq-icon slot="prefix" name="cookie"></bq-icon>
+        Cookie
       </bq-option>
       <bq-option value="ice-cream">
-        <bq-icon slot="prefix" name="ice-cream"></bq-icon> Ice-cream
+        <bq-icon slot="prefix" name="ice-cream"></bq-icon>
+        Ice-cream
       </bq-option>
     `,
+    // Events
+    bqBlur: fn(),
+    bqClear: fn(),
+    bqFocus: fn(),
+    bqSelect: fn(),
+    bqInput: fn(),
   },
 };
 export default meta;
@@ -140,6 +156,33 @@ const defaultOptionsData = [
   { value: 'cookie', label: 'Cookie', icon: 'cookie' },
   { value: 'ice-cream', label: 'Ice-cream', icon: 'ice-cream' },
 ];
+
+const nestedOptions = `
+  <bq-option value="javascript">
+    JavaScript
+    <bq-option slot="options" value="javascript:beginner">Beginner</bq-option>
+    <bq-option slot="options" value="javascript:intermediate">Intermediate</bq-option>
+    <bq-option slot="options" value="javascript:advanced">Advanced</bq-option>
+  </bq-option>
+  <bq-option expanded value="react">
+    React
+    <bq-option slot="options" value="react:beginner">Beginner</bq-option>
+    <bq-option slot="options" value="react:intermediate">Intermediate</bq-option>
+    <bq-option slot="options" value="react:advanced">Advanced</bq-option>
+  </bq-option>
+  <bq-option value="node-js">
+    Node.js
+    <bq-option slot="options" value="node-js:beginner">Beginner</bq-option>
+    <bq-option slot="options" value="node-js:intermediate">Intermediate</bq-option>
+    <bq-option slot="options" value="node-js:advanced">Advanced</bq-option>
+  </bq-option>
+  <bq-option value="dotnet-core">
+    .NET Core
+    <bq-option slot="options" value="dotnet-core:beginner">Beginner</bq-option>
+    <bq-option slot="options" value="dotnet-core:intermediate">Intermediate</bq-option>
+    <bq-option slot="options" value="dotnet-core:advanced">Advanced</bq-option>
+  </bq-option>
+`;
 
 const Template = (args: Args) => {
   const [, updateArgs] = useArgs();
@@ -195,10 +238,12 @@ const Template = (args: Args) => {
       clear-button-label=${args['clear-button-label']}
       debounce-time=${args['debounce-time']}
       ?disable-clear=${args['disable-clear']}
+      ?disable-search=${args['disable-search']}
       ?disable-scroll-lock=${args['disable-scroll-lock']}
       ?disabled=${args.disabled}
       distance=${ifDefined(args.distance)}
       form=${ifDefined(args.form)}
+      form-validation-message=${ifDefined(args['form-validation-message'])}
       ?keep-open-on-select=${args['keep-open-on-select']}
       name=${ifDefined(args.name)}
       max-tags-visible=${args['max-tags-visible']}
@@ -210,6 +255,7 @@ const Template = (args: Args) => {
       ?readonly=${args.readonly}
       ?required=${args.required}
       ?same-width=${args['same-width']}
+      ?enable-checkboxes=${args['enable-checkboxes']}
       skidding=${args.skidding}
       strategy=${args.strategy}
       validation-status=${args['validation-status']}
@@ -313,6 +359,16 @@ export const Multiple: Story = {
   },
 };
 
+export const MultipleCheckboxes: Story = {
+  render: Template,
+  args: {
+    'keep-open-on-select': true,
+    multiple: true,
+    'enable-checkboxes': true,
+    value: ['running', 'biking', 'pizza'],
+  },
+};
+
 export const MultipleCustomRender: Story = {
   render: Template,
   args: {
@@ -320,6 +376,26 @@ export const MultipleCustomRender: Story = {
     multiple: true,
     customTags: true,
     value: ['running', 'biking', 'pizza'],
+  },
+};
+
+export const NestedOptions: Story = {
+  name: 'Nested options',
+  render: Template,
+  args: {
+    'keep-open-on-select': true,
+    multiple: true,
+    open: true,
+    options: nestedOptions,
+    value: [
+      'javascript',
+      'javascript:beginner',
+      'javascript:intermediate',
+      'javascript:advanced',
+      'react',
+      'react:beginner',
+      'react:intermediate',
+    ],
   },
 };
 
@@ -504,7 +580,6 @@ export const WithForm: Story = {
       ev.preventDefault();
       const form = ev.target as HTMLFormElement;
       const formData = new FormData(form);
-      // @ts-expect-error FormData.entries is not typed
       const formValues = Object.fromEntries(formData.entries());
 
       const codeElement = document.getElementById('form-data');
@@ -584,6 +659,100 @@ export const WithForm: Story = {
   },
 };
 
+export const AsyncOptions: Story = {
+  args: { 'debounce-time': 200 },
+  parameters: { ...skipSnapshotParameters },
+  render: (args: Args) => {
+    const requests = new WeakMap<HTMLBqSelectElement, number>();
+    const createOption = (value: string, label: string, disabled = false) => {
+      const option = document.createElement('bq-option');
+      option.value = value;
+      option.textContent = label;
+      option.disabled = disabled;
+      return option;
+    };
+    const replaceOptions = (select: HTMLBqSelectElement, options: typeof defaultOptionsData, message?: string) => {
+      const selectedValues = new Set(Array.isArray(select.value) ? select.value : [select.value]);
+      const selectedOptions = defaultOptionsData.filter((option) => selectedValues.has(option.value));
+      const resultOptions = options.filter((option) => !selectedValues.has(option.value));
+      const nodes = [...selectedOptions, ...resultOptions].map((option) => createOption(option.value, option.label));
+      if (message) nodes.push(createOption('status', message, true));
+      select.querySelectorAll('bq-option').forEach((option) => {
+        option.remove();
+      });
+      select.append(...nodes);
+    };
+    const invalidateRequest = (select: HTMLBqSelectElement) => {
+      const request = (requests.get(select) || 0) + 1;
+      requests.set(select, request);
+      return request;
+    };
+    const handleInput = async (event: CustomEvent<{ value: string }>) => {
+      event.preventDefault();
+      args.bqInput(event);
+      const select = event.target as HTMLBqSelectElement;
+      const request = invalidateRequest(select);
+      const query = event.detail.value.trim().toLowerCase();
+      select.open = true;
+
+      if (!query) {
+        replaceOptions(select, defaultOptionsData);
+        return;
+      }
+
+      replaceOptions(select, [], 'Loading...');
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      if (!select.isConnected || requests.get(select) !== request) return;
+
+      const matches = defaultOptionsData.filter(
+        (option) => option.label.toLowerCase().includes(query) || option.value.includes(query),
+      );
+      replaceOptions(select, matches, matches.length ? undefined : 'No results found');
+    };
+    const restoreOptions = (event: Event) => {
+      const select = event.target as HTMLBqSelectElement;
+      invalidateRequest(select);
+      replaceOptions(select, defaultOptionsData);
+    };
+
+    return html`
+      <p class="m-be-l text-text-secondary">
+        Search for "swim" or "pizza" to replace the options after a simulated request.
+        Search for "unknown" to show an empty result. The query stays in the input while options change.
+        Deleting all text clears a single selection; deleting the multiple-select search keeps selected activities.
+      </p>
+      <div class="grid gap-l md:grid-cols-2">
+        ${[false, true].map(
+          (multiple) => html`
+            <bq-select
+              debounce-time=${args['debounce-time']}
+              name=${multiple ? 'async-multiple' : 'async-single'}
+              ?multiple=${multiple}
+              placeholder="Search activities..."
+              same-width
+              @bqInput=${handleInput}
+              @bqSelect=${(event) => {
+                restoreOptions(event);
+                args.bqSelect(event);
+              }}
+              @bqClear=${(event) => {
+                restoreOptions(event);
+                args.bqClear(event);
+              }}
+            >
+              <label slot="label">${multiple ? 'Multiple activities' : 'Single activity'}</label>
+              <span slot="helper-text">Results load after 500 ms. Selected activities stay available.</span>
+              ${defaultOptionsData
+                .slice(0, 3)
+                .map((option) => html`<bq-option value=${option.value}>${option.label}</bq-option>`)}
+            </bq-select>
+          `,
+        )}
+      </div>
+    `;
+  },
+};
+
 export const CustomFiltering: Story = {
   render: (args: Args) => {
     // Simulate an API call with a delay
@@ -607,6 +776,7 @@ export const CustomFiltering: Story = {
       event.preventDefault();
 
       const select = event.target as HTMLBqSelectElement;
+      select.open = true;
       const query = event.detail.value;
 
       // Remove loading/no-results states if they exist
@@ -708,7 +878,7 @@ export const CustomFiltering: Story = {
         <p class="text-secondary">
           This example demonstrates custom filtering of options with loading states and visibility toggling. It uses the
           <code>bqInput</code> (with <code>event.preventDefault()</code>) and <code>bqSelect</code> events to handle the
-          input and selection events.
+          input and selection events. The handler opens the panel explicitly so keyboard searches also show their results.
         </p>
         <pre>
           <code class="language-javascript rounded-m">
@@ -717,6 +887,7 @@ export const CustomFiltering: Story = {
 
             function handleInput(event) {
               event.preventDefault();
+              event.target.open = true;
               ...
             }
           </code>

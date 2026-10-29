@@ -2,57 +2,171 @@
 /*                             Notification styles                            */
 /* -------------------------------------------------------------------------- */
 
-@import './bq-notification.variables';
+@layer bq.reset, bq.tokens, bq.themes, bq.base, bq.public, bq.overrides,
+  bq-notification.tokens, bq-notification.base, bq-notification.structure, bq-notification.variants,
+  bq-notification.states;
 
-:host {
-  @apply block;
+@layer bq-notification.tokens {
+  @import './bq-notification.variables';
 }
 
-:host(.is-hidden) {
-  @apply hidden;
-}
+/* ---------------------------------- Base ---------------------------------- */
 
-.bq-notification {
-  @apply relative flex transition-all min-is-[--bq-notification--min-width] p-b-[--bq-notification--padding] p-i-[--bq-notification--padding];
-  @apply rounded-[--bq-notification--border-radius] bg-[--bq-notification--background] shadow-[shadow:--bq-notification--box-shadow];
-}
-
-/**
- * Set the notification icon color based on the type value selected
- */
-.notification--icon.color {
-  &-error {
-    @apply text-[color:--bq-notification--icon-color-error];
+@layer bq-notification.base {
+  :host {
+    display: block;
   }
 
-  &-info {
-    @apply text-[color:--bq-notification--icon-color-info];
-  }
-
-  &-neutral {
-    @apply text-[color:--bq-notification--icon-color-neutral];
-  }
-
-  &-success {
-    @apply text-[color:--bq-notification--icon-color-success];
-  }
-
-  &-warning {
-    @apply text-[color:--bq-notification--icon-color-warning];
+  .bq-notification {
+    position: relative;
+    display: flex;
+    min-inline-size: var(--bq-notification--min-width);
+    padding-block: var(--bq-notification--padding);
+    padding-inline: var(--bq-notification--padding);
+    background-color: var(--bq-notification--background);
+    border-radius: var(--bq-notification--border-radius);
+    box-shadow: var(--bq-notification--box-shadow);
+    transition-duration: 150ms;
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
 
-/**
- * Here we guarantee that if the footer actions are wrapped in a div container from the consumer side,
- * the styles get applied to the that wrapping container directly
- */
-[part='footer'] ::slotted(*) {
-  @apply flex items-start gap-xs;
+/* ------------------------------- Structure -------------------------------- */
+
+@layer bq-notification.structure {
+  .bq-notification__close {
+    position: absolute;
+    inset-inline-end: var(--bq-spacing-m);
+  }
+
+  .bq-notification__close::part(button) {
+    padding: 0;
+  }
+
+  .bq-notification__close-slot {
+    display: flex;
+  }
+
+  .bq-notification__icon {
+    display: flex;
+    margin-inline-end: var(--bq-spacing-xs);
+    text-align: start;
+    vertical-align: top;
+  }
+
+  .bq-notification__main {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    row-gap: var(--bq-notification--content-footer-gap);
+  }
+
+  .bq-notification__content {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--bq-notification--title-body-gap);
+  }
+
+  .bq-notification__title {
+    font-weight: var(--bq-font-weight--semibold);
+    line-height: var(--bq-font-line-height--regular);
+  }
+
+  .bq-notification__body {
+    font-size: var(--bq-font-size--s);
+    line-height: var(--bq-font-line-height--regular);
+  }
+
+  .bq-notification__footer {
+    display: flex;
+    align-items: flex-start;
+    column-gap: var(--bq-spacing-xs);
+  }
+
+  .bq-notification__footer ::slotted(*) {
+    align-items: flex-start;
+    column-gap: var(--bq-spacing-xs);
+  }
+
+  .bq-notification__body ::slotted(*),
+  .bq-notification__footer ::slotted(*) {
+    display: block;
+    margin-block-start: var(--bq-spacing-m);
+  }
 }
 
-[part='body'],
-[part='footer'] {
-  ::slotted(*) {
-    @apply block m-bs-m;
+/* -------------------------------- Variants -------------------------------- */
+
+@layer bq-notification.variants {
+  :host([type='error']) .bq-notification__icon {
+    color: var(--bq-notification--icon-color-error);
   }
+
+  :host([type='info']) .bq-notification__icon {
+    color: var(--bq-notification--icon-color-info);
+  }
+
+  :host([type='neutral']) .bq-notification__icon {
+    color: var(--bq-notification--icon-color-neutral);
+  }
+
+  :host([type='success']) .bq-notification__icon {
+    color: var(--bq-notification--icon-color-success);
+  }
+
+  :host([type='warning']) .bq-notification__icon {
+    color: var(--bq-notification--icon-color-warning);
+  }
+}
+
+/* --------------------------------- States --------------------------------- */
+
+@layer bq-notification.states {
+  .bq-notification.hidden {
+    display: none;
+  }
+
+  .bq-notification.is-entering,
+  .bq-notification.is-leaving {
+    transition-property: opacity, transform;
+  }
+
+  .bq-notification.is-entering {
+    transition-duration: 300ms;
+    transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+
+  .bq-notification.is-leaving {
+    transition-duration: 100ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
+  }
+
+  .bq-notification.is-enter-start {
+    opacity: 0;
+    transform: translateY(var(--bq-spacing-xs));
+  }
+
+  .bq-notification.is-enter-end,
+  .bq-notification.is-leave-start {
+    opacity: 1;
+    transform: translate(0);
+  }
+
+  .bq-notification.is-leave-end {
+    opacity: 0;
+    transform: translateY(calc(var(--bq-spacing-xs) * -1));
+  }
+
+  @media (width >= 640px) {
+    .bq-notification.is-enter-start,
+    .bq-notification.is-leave-end {
+      transform: translateX(var(--bq-spacing-s));
+    }
+  }
+}
+
+/* The legacy unlayered reset overrides layered margins. */
+.bq-notification__icon {
+  margin-inline-end: var(--bq-spacing-xs);
 }

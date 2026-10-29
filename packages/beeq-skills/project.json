@@ -1,0 +1,89 @@
+{
+  "name": "beeq-skills",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/beeq-skills/src",
+  "projectType": "library",
+  "tags": ["internal", "nonpublishable", "skills"],
+  "implicitDependencies": ["beeq", "beeq-tailwindcss", "tools"],
+  "targets": {
+    "test": {
+      "executor": "nx:run-commands",
+      "syncGenerators": ["@beeq/tools:sync-skills"],
+      "inputs": [
+        "default",
+        "{workspaceRoot}/skills/**/*",
+        "{workspaceRoot}/apps/beeq-docs/skill.md",
+        "{workspaceRoot}/.agents/skills/**/*",
+        "{workspaceRoot}/packages/beeq/src/components/**/*.tsx",
+        "{workspaceRoot}/packages/beeq-tailwindcss/src/**/*",
+        "{workspaceRoot}/tools/src/generators/sync-skills/**/*"
+      ],
+      "options": {
+        "command": "pnpm exec vitest run",
+        "cwd": "{projectRoot}"
+      }
+    },
+    "eval": {
+      "executor": "@beeq/tools:skill-eval",
+      "cache": false,
+      "syncGenerators": ["@beeq/tools:sync-skills"],
+      "options": {
+        "skill": "skills/beeq",
+        "evalsDir": "packages/beeq-skills/evals",
+        "agent": "copilot",
+        "variants": ["with-skill", "baseline"],
+        "trials": 1,
+        "threshold": 0.9,
+        "outputPath": "tmp/skill-evals"
+      },
+      "configurations": {
+        "smoke": {
+          "filter": ["tags=smoke"],
+          "trials": 5
+        },
+        "reliable": {
+          "trials": 15
+        },
+        "regression": {
+          "trials": 30
+        }
+      }
+    },
+    "eval-validate": {
+      "executor": "@beeq/tools:skill-eval",
+      "cache": true,
+      "inputs": [
+        "default",
+        "^default",
+        {
+          "externalDependencies": ["skillgrade"]
+        }
+      ],
+      "options": {
+        "skill": "skills/beeq",
+        "evalsDir": "packages/beeq-skills/evals",
+        "validate": true,
+        "outputPath": "tmp/skill-evals/validate"
+      }
+    },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "pnpm exec tsc -p tsconfig.json",
+        "cwd": "{projectRoot}"
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "pnpm exec biome lint {projectRoot}"
+      }
+    },
+    "check": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "pnpm exec biome check {projectRoot}"
+      }
+    }
+  }
+}

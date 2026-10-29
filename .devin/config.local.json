@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Exec(wc)",
+      "Exec(grep)",
+      "Exec(sed)",
+      "Exec(cat)",
+      "Exec(ls)",
+      "Exec(comm)"
+    ]
+  }
+}

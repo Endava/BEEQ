@@ -22,7 +22,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
         href="/releases/changelog"
         className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold border mb-6 no-underline hover:opacity-80 bq-home-hero__version-badge"
       >
-        <Icon icon="sparkles" size="12" /> v1.13.0 — What's new →
+        <Icon icon="sparkles" size="12" /> v{{BEEQ_VERSION}} — What's new →
       </a>
       <h1 className="text-5xl lg:text-6xl font-bold tracking-tighter leading-none mb-5 bq-home-section__heading">
         Building Excellence,
@@ -66,7 +66,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
           className="box-border inline-flex px-5 py-2.5 rounded-lg text-sm font-semibold text-white no-underline border border-transparent transition-opacity hover:opacity-90 bq-home-action bq-home-action--primary w-full md:w-auto"
         >
           <span className="flex grow items-center justify-center gap-2 md:justify-start">
-            <Icon icon="rocket" color="var(--bq-icon--alt)" />
+            <Icon icon="rocket" color="var(--bq-text--on-brand)" />
             Get started
           </span>
         </a>
@@ -270,13 +270,13 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
         <!-- 1. Load styles -->
         <link
           rel="stylesheet"
-          href="https://esm.sh/@beeq/core/dist/beeq/beeq.css"
+          href="https://cdn.jsdelivr.net/npm/@beeq/core@{{BEEQ_VERSION}}/dist/beeq/beeq.css"
         />
 
         <!-- 2. Load components + icons -->
         <script type="module"
-          src="https://esm.sh/@beeq/core/dist/beeq/beeq.esm.js"
-          data-beeq="https://esm.sh/@beeq/core/dist/beeq/svg">
+          src="https://cdn.jsdelivr.net/npm/@beeq/core@{{BEEQ_VERSION}}/dist/beeq/beeq.esm.js"
+          data-beeq="https://cdn.jsdelivr.net/npm/@beeq/core@{{BEEQ_VERSION}}/dist/beeq/svg/">
         </script>
 
         <!-- 3. Use any component -->
@@ -285,8 +285,8 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 
         ```tsx React icon="react"
         // main.tsx — register icon path once
-        import { setBasePath } from "@beeq/core/loader";
-        setBasePath("https://esm.sh/@beeq/core/dist/beeq/svg");
+        import { setBasePath } from "@beeq/core/dist/components";
+        setBasePath("https://cdn.jsdelivr.net/npm/@beeq/core@{{BEEQ_VERSION}}/dist/beeq/svg/");
 
         // anywhere in your app:
         import { BqButton } from "@beeq/react";
@@ -1003,7 +1003,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 
       <div className="bq-home-showcase__actions">
         <a href="/components/overview" className="bq-home-showcase__button">
-          <Icon icon="binoculars" color="var(--bq-icon--alt)" />
+          <Icon icon="binoculars" color="var(--bq-text--on-brand)" />
           <span>Browse all components</span>
         </a>
 

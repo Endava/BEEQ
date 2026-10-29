@@ -47,10 +47,7 @@ export class BqBadge {
 
   private spanElement?: HTMLSpanElement;
 
-  private observer: MutationObserver = new MutationObserver((mutations) => {
-    const [mutation] = mutations;
-    this.contentLength = mutation.target.textContent?.length ?? 0;
-  });
+  private readonly observer: MutationObserver = new MutationObserver(() => this.updateContentLength());
 
   // Reference to host HTML element
   // ===================================
@@ -66,7 +63,10 @@ export class BqBadge {
   // Public Property API
   // ========================
 
-  /** Badge background color. The value should be a valid value of the palette color */
+  /**
+   * Badge background color. The value should be a valid value of the palette color.
+   * When it changes, set a matching `textColor` (e.g. `text--on-success` for `ui--success`) so the content stays legible.
+   */
   @Prop({ mutable: true, reflect: true }) backgroundColor?: string;
 
   /** Badge number color. The value should be a valid value of the palette color */
@@ -96,6 +96,12 @@ export class BqBadge {
   }
 
   componentDidLoad() {
+    this.observer.observe(this.el, {
+      characterData: true,
+      childList: true,
+      subtree: true,
+    });
+
     this.handleSlotChange();
   }
 
@@ -118,29 +124,14 @@ export class BqBadge {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private handleSlotChange = () => {
-    const slot = this.slot;
-
-    if (isNil(slot)) return;
-
-    this.contentLength = getTextContent(slot, { recurse: true }).length;
-    const [node] = slot.assignedNodes({ flatten: true });
-
-    if (isNil(node)) {
-      this.observer.takeRecords();
-      return;
-    }
-
-    this.observer.observe(node, {
-      characterData: true,
-      childList: true,
-      subtree: true,
-    });
+  private readonly handleSlotChange = () => {
+    this.updateContentLength();
   };
 
-  private get slot(): HTMLSlotElement | null {
-    return this.spanElement?.querySelector('slot') ?? null;
-  }
+  private readonly updateContentLength = () => {
+    const slotElem = this.spanElement?.querySelector('slot') ?? null;
+    this.contentLength = isNil(slotElem) ? 0 : getTextContent(slotElem, { recurse: true }).length;
+  };
 
   // render() function
   // Always the last one in the class.

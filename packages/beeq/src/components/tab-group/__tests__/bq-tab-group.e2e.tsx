@@ -1,6 +1,8 @@
 import { h } from '@stencil/core';
-import { describe, expect, it, render } from '@stencil/vitest';
+import { describe, expect, it, render, waitForStable } from '@stencil/vitest';
 import { userEvent } from 'vitest/browser';
+
+import { resolveColorToken } from '../../../shared/test-utils/resolveColorToken';
 
 // Shared fixture — 4 tabs with a given active value
 const mkGroup = (
@@ -26,6 +28,11 @@ const mkGroup = (
     </bq-tab>
   </bq-tab-group>
 );
+
+const getTabButton = (root: HTMLElement, tabId: string) =>
+  root
+    .querySelector<HTMLBqTabElement>(`bq-tab[tab-id="${tabId}"]`)
+    ?.shadowRoot?.querySelector<HTMLButtonElement>('button');
 
 describe('bq-tab-group', () => {
   it('should render', async () => {
@@ -74,6 +81,45 @@ describe('bq-tab-group', () => {
 
     const changeEvent = bqChange.events[0];
     expect(changeEvent.detail.value).toBe('2');
+  });
+
+  it('should emit bqChange synchronously on tab click with the default debounceTime', async () => {
+    const { root, spyOnEvent } = await render(mkGroup());
+    const bqChange = spyOnEvent('bqChange');
+
+    getTabButton(root, '2').click();
+
+    // Asserted before any await: the event is emitted inside the click
+    expect(bqChange).toHaveReceivedEventTimes(1);
+    expect(bqChange.events[0].detail.value).toBe('2');
+  });
+
+  it('should emit only the latest value after a positive debounceTime', async () => {
+    const { root, spyOnEvent } = await render(
+      <bq-tab-group value="1" debounceTime={100}>
+        <bq-tab tabId="1" controls="panel-1">
+          Tab 1
+        </bq-tab>
+        <bq-tab tabId="2" controls="panel-2">
+          Tab 2
+        </bq-tab>
+        <bq-tab tabId="3" controls="panel-3">
+          Tab 3
+        </bq-tab>
+      </bq-tab-group>,
+    );
+    const bqChange = spyOnEvent('bqChange');
+
+    getTabButton(root, '2').click();
+    getTabButton(root, '3').click();
+
+    expect(bqChange).toHaveReceivedEventTimes(0);
+
+    await new Promise((resolve) => setTimeout(resolve, 200));
+
+    expect(bqChange).toHaveReceivedEventTimes(1);
+    expect(bqChange.events[0].detail.value).toBe('3');
+    expect((root as HTMLBqTabGroupElement).value).toBe('3');
   });
 
   it('should emit bqChange on keyboard navigation via arrow keys', async () => {
@@ -166,18 +212,63 @@ describe('bq-tab-group', () => {
     expect((root as HTMLBqTabGroupElement).value).toBe('2');
   });
 
-  it('should apply `no-divider` class when `disable-divider` is set', async () => {
+  it('should hide the divider when `disable-divider` is set', async () => {
     const { root } = await render(mkGroup('1', { disableDivider: true }));
 
-    const base = root.shadowRoot.querySelector('[part="base"]');
+    const base = root.shadowRoot.querySelector<HTMLElement>('[part="base"]');
 
-    expect(base).toHaveClass('no-divider');
+    expect(root).toHaveAttribute('disable-divider');
+    expect(window.getComputedStyle(base, '::after').content).toBe('none');
   });
 
   it('should render with vertical orientation', async () => {
     const { root } = await render(mkGroup('1', { orientation: 'vertical' }));
-    const base = root.shadowRoot.querySelector('[part="base"]');
+    const tabs = root.shadowRoot.querySelector<HTMLElement>('[part="tabs"]');
 
-    expect(base.className).toContain('bq-tab-group--vertical');
+    expect(root).toEqualAttribute('orientation', 'vertical');
+    expect(window.getComputedStyle(tabs).flexDirection).toBe('column');
   });
+
+  it('should use the border color variable for the divider', async () => {
+    const { root } = await render(
+      <bq-tab-group>
+        <bq-tab tabId="1" controls="panel-1">
+          Tab 1
+        </bq-tab>
+      </bq-tab-group>,
+    );
+
+    const hostStyle = getComputedStyle(root);
+    expect(hostStyle.getPropertyValue('--bq-tab-group--border-color').trim()).toBe(
+      hostStyle.getPropertyValue('--bq-stroke--primary').trim(),
+    );
+
+    const divider = getComputedStyle(root.shadowRoot.querySelector('[part="base"]'), '::after');
+    expect(divider.backgroundColor).toBe(resolveColorToken('--bq-stroke--primary', root));
+  });
+
+  it.each([
+    { orientation: 'horizontal', placement: 'start' },
+    { orientation: 'vertical', placement: 'start' },
+    { orientation: 'vertical', placement: 'end' },
+  ] as const)(
+    'should apply a custom divider colour for $orientation / $placement',
+    async ({ orientation, placement }) => {
+      const { root } = await render(
+        <bq-tab-group
+          orientation={orientation}
+          placement={placement}
+          style={{ '--bq-tab-group--border-color': '#123456' }}
+        >
+          <bq-tab tabId="1" controls="panel-1">
+            Tab 1
+          </bq-tab>
+        </bq-tab-group>,
+      );
+      await waitForStable(root);
+      const divider = getComputedStyle(root.shadowRoot.querySelector('[part="base"]'), '::after');
+      expect(divider.content).not.toBe('none');
+      expect(divider.backgroundColor).toBe(resolveColorToken('--bq-tab-group--border-color', root));
+    },
+  );
 });

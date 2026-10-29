@@ -20,6 +20,10 @@ const KEY_MAP = {
   ArrowLeft: 'backward',
 } as const;
 
+// Single source of truth so `aria-labelledby` and the label slot `id` cannot drift apart.
+// The reference resolves inside the component's own shadow root, so it is safe across multiple instances.
+const LABEL_ID = 'bq-radio-group__label';
+
 type Direction = (typeof KEY_MAP)[keyof typeof KEY_MAP];
 
 /**
@@ -74,7 +78,7 @@ export class BqRadioGroup {
   // ====================
 
   private initialValue?: string;
-  private debouncedBqChange: TDebounce<{ value: string; target: HTMLBqRadioElement }>;
+  private debouncedBqChange?: TDebounce<{ value: string; target: HTMLBqRadioElement }>;
   private focusedBqRadio: HTMLBqRadioElement | null = null;
   private readonly radioElementsSet = new Set<HTMLBqRadioElement>();
   private cachedRadioElements: HTMLBqRadioElement[] = [];
@@ -98,7 +102,10 @@ export class BqRadioGroup {
   /** If true, all radio inputs in the group will display a background on hover */
   @Prop({ reflect: true }) backgroundOnHover = false;
 
-  /** A number representing the delay time (in milliseconds) that `bqChange` event handler gets triggered once the value change */
+  /**
+   * A number representing the delay time (in milliseconds) that `bqChange` event handler gets triggered once the value change.
+   * With `0` (default), the event is emitted synchronously.
+   */
   @Prop({ reflect: true, mutable: true }) debounceTime = 0;
 
   /** If true radio inputs are disabled */
@@ -135,9 +142,13 @@ export class BqRadioGroup {
     }
 
     this.debouncedBqChange?.cancel();
-    this.debouncedBqChange = debounce((event: { value: string; target: HTMLBqRadioElement }): void => {
-      this.bqChange?.emit(event);
-    }, this.debounceTime);
+    // With no delay, `emitBqChange` emits synchronously, inside the click or keydown that changed the value
+    this.debouncedBqChange =
+      this.debounceTime > 0
+        ? debounce((event: { value: string; target: HTMLBqRadioElement }): void => {
+            this.bqChange?.emit(event);
+          }, this.debounceTime)
+        : undefined;
   }
 
   @Watch('disabled')
@@ -166,6 +177,8 @@ export class BqRadioGroup {
 
   @Watch('value')
   handleValueChange() {
+    // Set the form value first: `bqChange` is emitted synchronously and its handlers can change `value` again
+    this.internals?.setFormValue(this.value ?? null);
     this.updateRadioProperties();
     this.updateFormValidity();
 
@@ -173,7 +186,7 @@ export class BqRadioGroup {
     const newCheckedRadio = this.cachedRadioElements.find((radio) => radio.value === this.value);
     if (newCheckedRadio) {
       this.checkedRadio = newCheckedRadio;
-      this.debouncedBqChange?.({ value: this.value, target: newCheckedRadio });
+      this.emitBqChange({ value: this.value, target: newCheckedRadio });
     } else {
       this.checkedRadio = undefined;
     }
@@ -351,7 +364,6 @@ export class BqRadioGroup {
 
     this.checkedRadio = target;
     this.value = target.value;
-    this.internals?.setFormValue(this.value ?? null);
 
     this.updateRadioTabIndexes();
   };
@@ -391,6 +403,15 @@ export class BqRadioGroup {
 
     const nextElement = getNextElement(this.cachedRadioElements, currentIndex, direction);
     this.updateRadioSelection(nextElement);
+  };
+
+  private emitBqChange = (event: { value: string; target: HTMLBqRadioElement }): void => {
+    if (this.debouncedBqChange) {
+      this.debouncedBqChange(event);
+      return;
+    }
+
+    this.bqChange?.emit(event);
   };
 
   private updateFormValidity = async (): Promise<void> => {
@@ -450,13 +471,13 @@ export class BqRadioGroup {
         <fieldset
           aria-controls="bq-radiogroup"
           aria-disabled={this.disabled}
-          aria-labelledby="bq-radio-group__label"
+          aria-labelledby={LABEL_ID}
           class={{ 'bq-radio-group': true, 'has-fieldset': this.fieldset }}
           disabled={this.disabled}
           part="base"
         >
           <legend part="label">
-            <slot id="bq-radiogroup__label" name="label" />
+            <slot id={LABEL_ID} name="label" />
           </legend>
           <div class={`bq-radio-group--${this.orientation}`} part="group">
             <slot id="bq-radiogroup" onSlotchange={this.handleSlotChange} />

@@ -14,7 +14,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 Checkboxes help people make independent selections, confirm agreement, or control optional settings. Use them when more than one option can be selected at the same time, or when a single opt-in needs an explicit checked state.
 
 <Note>
-  Use a clear visible label for every checkbox. When several checkboxes belong to the same decision, group them under a shared descriptive heading.
+  Every checkbox must have a visible label. Checkboxes that belong to the same decision should be grouped under a shared descriptive heading.
 </Note>
 
 ## When to use
@@ -39,6 +39,10 @@ Checkboxes help people make independent selections, confirm agreement, or contro
     - The label is so long or ambiguous that the yes-or-no meaning becomes unclear
   </Card>
 </CardGroup>
+
+<Tip>
+  Choose [`bq-switch`](/components/switch) instead of `bq-checkbox` when the setting takes effect immediately without a form submission, and [`bq-radio`](/components/radio) when users must choose exactly one option from a list. Keep consent and confirmation choices on `bq-checkbox`.
+</Tip>
 
 ## Patterns
 
@@ -94,7 +98,7 @@ Use checkbox labels and grouping patterns that make the selected state easy to u
 
 <CardGroup cols={2}>
   <CardTile title="Write labels as outcomes">
-    Write the label so the checked state reads like a clear statement, especially in settings and consent flows.
+    The label should read as a clear statement of the checked state, especially in settings and consent flows.
   </CardTile>
   <CardTile title="Make hierarchy obvious">
     When a parent checkbox controls child options, make the relationship visually clear and keep the parent state synchronized.
@@ -103,10 +107,10 @@ Use checkbox labels and grouping patterns that make the selected state easy to u
 
 <Steps>
   <Step title="Start with the key meaning">
-    Put the important words at the beginning of the label so people can scan the list quickly.
+    Labels should start with the important words so people can scan the list quickly.
   </Step>
   <Step title="Group related choices">
-    Use a shared heading or fieldset when several checkboxes belong to one decision or category.
+    Checkboxes that belong to one decision or category should share a heading or fieldset.
   </Step>
   <Step title="Use indeterminate as a summary">
     Reserve the indeterminate state for parent checkboxes that represent a partially selected group.
@@ -240,6 +244,8 @@ Use a longer label when people need more context before deciding, but keep the c
 </CodeLivePreview>
 
 ## Options
+
+**Allowed states:** unchecked (default), `checked`, `indeterminate`. Setting `indeterminate` sets `checked` to `false`, and a user toggle clears `indeterminate`.
 
 ### Background on hover
 
@@ -380,7 +386,7 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
     }
   </style>
 
-  <div>
+  <div class="checkbox-group">
     <bq-checkbox name="all-interests" value="all" background-on-hover>
       Interests
     </bq-checkbox>
@@ -401,7 +407,7 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
   <script>
     (() => {
       customElements.whenDefined('bq-checkbox').then(() => {
-        const checkboxGroup = previewRoot?.querySelector('div');
+        const checkboxGroup = previewRoot?.querySelector('.checkbox-group');
         const allInterestCheckbox = checkboxGroup?.querySelector('bq-checkbox[name="all-interests"]');
         const interestCheckboxes = Array.from(checkboxGroup?.querySelectorAll('bq-checkbox[name="interest"]') ?? []);
 
@@ -434,45 +440,37 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
 `}>
   <CodeGroup>
     ```js JavaScript icon="js" expandable
-    const allCheckboxChange = (event) => {
-      const interestCheckboxes = Array.from(
-        previewRoot.querySelectorAll('bq-checkbox[name="interest"]'),
-      );
+    (() => {
+      customElements.whenDefined('bq-checkbox').then(() => {
+        const checkboxGroup = document.querySelector('.checkbox-group');
+        const allInterestCheckbox = checkboxGroup.querySelector('bq-checkbox[name="all-interests"]');
+        const interestCheckboxes = Array.from(checkboxGroup.querySelectorAll('bq-checkbox[name="interest"]'));
 
-      interestCheckboxes.forEach((interestCheckbox) => {
-        interestCheckbox.checked = event.detail.checked;
+        const syncParentCheckbox = () => {
+          const checkedCount = interestCheckboxes.filter((checkbox) => checkbox.checked).length;
+          allInterestCheckbox.indeterminate =
+            checkedCount > 0 && checkedCount < interestCheckboxes.length;
+          allInterestCheckbox.checked = checkedCount === interestCheckboxes.length;
+        };
+
+        const syncChildrenCheckboxes = (event) => {
+          interestCheckboxes.forEach((checkbox) => {
+            checkbox.checked = event.detail.checked;
+          });
+          allInterestCheckbox.indeterminate = false;
+        };
+
+        syncParentCheckbox();
+        allInterestCheckbox.addEventListener('bqChange', syncChildrenCheckboxes);
+        interestCheckboxes.forEach((checkbox) => {
+          checkbox.addEventListener('bqChange', syncParentCheckbox);
+        });
       });
-    };
-
-    const interestCheckboxChange = () => {
-      const allInterestCheckbox = previewRoot.querySelector('bq-checkbox[name="all-interests"]');
-      if (!allInterestCheckbox) return;
-
-      const interestCheckboxes = previewRoot.querySelectorAll('bq-checkbox[name="interest"]');
-      const onlyChecked = previewRoot.querySelectorAll(
-        'bq-checkbox[name="interest"][checked]',
-      ).length;
-
-      allInterestCheckbox.indeterminate =
-        onlyChecked > 0 && onlyChecked < interestCheckboxes.length;
-      allInterestCheckbox.checked = onlyChecked === interestCheckboxes.length;
-    };
-
-    const allInterestCheckbox = previewRoot.querySelector('bq-checkbox[name="all-interests"]');
-    const interestCheckboxes = Array.from(
-      previewRoot.querySelectorAll('bq-checkbox[name="interest"]'),
-    );
-
-    allInterestCheckbox?.addEventListener('bqChange', allCheckboxChange);
-    interestCheckboxes.forEach((checkbox) => {
-      checkbox.addEventListener('bqChange', interestCheckboxChange);
-    });
-
-    interestCheckboxChange();
+    })();
     ```
 
     ```html HTML icon="html5" expandable
-    <div>
+    <div class="checkbox-group">
       <bq-checkbox name="all-interests" value="all" background-on-hover>
         Interests
       </bq-checkbox>
@@ -515,7 +513,7 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
       };
 
       return (
-        <div>
+        <div className="checkbox-group">
           <BqCheckbox
             backgroundOnHover
             checked={allChecked}
@@ -576,7 +574,7 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
       standalone: true,
       imports: [BqCheckbox],
       template: `
-        <div>
+        <div class="checkbox-group">
           <bq-checkbox
             background-on-hover
             [checked]="allChecked"
@@ -665,7 +663,7 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
     </script>
 
     <template>
-      <div>
+      <div class="checkbox-group">
         <BqCheckbox
           backgroundOnHover
           :checked="allChecked"
@@ -720,6 +718,10 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
 
 `bq-checkbox` participates in native forms. A checked checkbox submits `"on"` for its `name`; an unchecked checkbox is omitted from `FormData`. Use `required` for consent or confirmation choices that must be selected before submission.
 
+<Note>
+  The live preview runs in an iframe sandbox that does not allow native form submission. Its Submit button uses `type="button"` and `bqClick` to validate the form and display `FormData` without submitting it. The copyable examples use native `type="submit"` buttons for normal application forms.
+</Note>
+
 <CodeLivePreview mode="iframe" height="20rem" removePadding code={`
   <style>
     body {
@@ -750,15 +752,14 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
 
   <form class="checkbox-form" id="checkbox-form">
     <bq-checkbox
-      form-validation-message="Please accept the terms and conditions"
+      form-validation-message="Accept the terms to continue"
       name="termsAccepted"
-      value="terms"
       required
     >
       By clicking here, I state that I have read and understood the terms and conditions
     </bq-checkbox>
     <div class="checkbox-form__actions">
-      <bq-button appearance="secondary" type="reset">Cancel</bq-button>
+      <bq-button appearance="secondary" type="reset">Reset</bq-button>
       <bq-button type="button">Submit</bq-button>
     </div>
     <pre class="checkbox-form__output" id="checkbox-output">{}</pre>
@@ -984,9 +985,31 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
 - **Built-in native checkbox semantics** — the component uses a native `<input type="checkbox">`, so checked, unchecked, disabled, and required states follow standard browser and assistive technology behavior.
 - **Built-in label association** — the internal input and the slotted text are wrapped in the same `<label>`, so clicking the label toggles the checkbox without extra wiring.
 - **Built-in focus support** — the shadow root delegates focus to the native input, and the component emits `bqFocus` and `bqBlur` when that input gains or loses focus.
-- **Group related choices semantically** — when multiple checkboxes form a set, provide a shared heading or a `<fieldset>` with an accessible label.
-- **Use indeterminate carefully** — it should summarize a partial group selection, not replace clear child options.
-- **Do not rely on color alone** — the checked mark, focus treatment, and label text should all help communicate meaning.
+- **Group related choices semantically** — when multiple checkboxes form a set, they should share a heading or a `<fieldset>` with an accessible label.
+- **Use indeterminate carefully** — it should summarize a partial group selection and must not replace clear child options.
+- **Do not rely on color alone** — the checked mark, focus treatment, and label text together must communicate meaning; color must not be the only cue.
+
+### Keyboard interaction
+
+| Key | Context | Action |
+|---|---|---|
+| `Tab` | Checkbox enabled | Moves focus to the checkbox and emits `bqFocus`; focus leaving emits `bqBlur` |
+| `Shift+Tab` | Checkbox enabled | Moves focus to the previous focusable element |
+| `Space` | Checkbox focused | Toggles the checked state through the native input and emits `bqChange` |
+| `Tab` | Checkbox disabled | Skips the checkbox |
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Provide a visible label in the default slot | MUST | manual: inspect the visible label beside the checkbox |
+| Set `name` so the checked state is submitted with the form | MUST | automated: [`bq-checkbox.e2e.tsx`](https://github.com/Endava/BEEQ/blob/main/packages/beeq/src/components/checkbox/__tests__/bq-checkbox.e2e.tsx) checks `FormData` |
+| Set `required` on checkboxes that must be checked before submission | MUST | automated: [`bq-checkbox.e2e.tsx`](https://github.com/Endava/BEEQ/blob/main/packages/beeq/src/components/checkbox/__tests__/bq-checkbox.e2e.tsx) checks `form.checkValidity()` |
+| Set `form-validation-message` on required checkboxes to give a specific validation message | SHOULD | manual: inspect the required-field message in a form |
+| Keep the parent and child checkboxes synchronized in a nested group | MUST | manual: toggle parent and child items and compare their states |
+| Use `indeterminate` only to summarize a partially selected group | SHOULD | manual: check indeterminate only appears for partial selection |
+| Group related checkboxes under a shared heading or `<fieldset>` | SHOULD | manual: inspect the shared heading or fieldset for a related group |
+| Use more than color to communicate the checked state | MUST | manual: read the checked state without relying on color |
 
 ## API reference
 
@@ -1003,6 +1026,12 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
 | `name` | `name` | Name of the HTML form control submitted with the form | `string` | `undefined` |
 | `required` | `required` | If `true`, the checkbox must be selected before form submission | `boolean` | `undefined` |
 | `value` | `value` | Sets the underlying `<input>` value attribute. The current form submission value is the fixed string `'on'` when checked | `string` | `undefined` |
+
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| `indeterminate` set while `checked` is `true` | SHOULD NOT | `checked` is set to `false` |
 
 ### Events
 
@@ -1038,11 +1067,19 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
 
 ### CSS custom properties
 
-| Variable | Description | Default |
-|---|---|---|
-| `--bq-checkbox--size` | Checkbox size | `24px` |
-| `--bq-checkbox--border-radius` | Checkbox border radius | `var(--bq-radius--xs)` |
-| `--bq-checkbox--border-width` | Checkbox border width | `var(--bq-stroke-m)` |
+<Expandable title="CSS variables" defaultOpen={true}>
+  | Variable | Description | Default |
+  |---|---|---|
+  | `--bq-checkbox--background-color` | Checkbox background color | `var(--bq-ui--primary)` |
+  | `--bq-checkbox--background-color-checked` | Checkbox background color when checked or indeterminate | `var(--bq-ui--brand)` |
+  | `--bq-checkbox--border-color` | Checkbox border color | `var(--bq-stroke--tertiary)` |
+  | `--bq-checkbox--border-color-checked` | Checkbox border color when checked or indeterminate | `var(--bq-ui--brand)` |
+  | `--bq-checkbox--icon-color-checked` | Checkbox check and indeterminate mark color | `var(--bq-text--on-brand)` |
+  | `--bq-checkbox--label-text-color` | Checkbox label text color | `var(--bq-text--primary)` |
+  | `--bq-checkbox--size` | Checkbox size | `24px` |
+  | `--bq-checkbox--border-radius` | Checkbox border radius | `var(--bq-radius--xs)` |
+  | `--bq-checkbox--border-width` | Checkbox border width | `var(--bq-stroke-m)` |
+</Expandable>
 
 <Tip>
   Learn more about [styling with shadow parts](/guides/styles#component-shadow-dom-parts) and [CSS custom properties](/guides/styles#global-css-custom-properties).
