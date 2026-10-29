@@ -263,9 +263,9 @@ export class BqToast {
 
   render() {
     return (
-      <Host aria-hidden={!this.open ? 'true' : 'false'} hidden={!this.open ? 'true' : 'false'} role="status">
+      <Host aria-hidden={!this.open ? 'true' : 'false'} hidden={!this.open} role="status">
         <output class="bq-toast" part="wrapper">
-          <div class="bq-toast__icon" part="icon">
+          <div class="bq-toast__icon" hidden={this.hideIcon} part="icon">
             <slot name="icon">
               <bq-icon exportparts="base,svg" name={this.iconName} size="24" slot="icon" />
             </slot>

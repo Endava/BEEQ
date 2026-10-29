@@ -1,5 +1,6 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit-html';
+import { fn } from 'storybook/test';
 
 import { skipSnapshotParameters } from '../../../../.storybook/chromatic-parameters';
 import { getRandomFromArray } from '../../../shared/utils';
@@ -22,9 +23,6 @@ const meta: Meta = {
     open: { control: 'boolean' },
     time: { control: 'number' },
     text: { control: 'text', table: { disable: true } },
-    // Event handlers
-    bqShow: { action: 'bqShow' },
-    bqHide: { action: 'bqHide' },
   },
   args: {
     border: 's',
@@ -34,6 +32,9 @@ const meta: Meta = {
     open: false,
     time: 3000,
     text: 'This is a message',
+    // Events
+    bqShow: fn(),
+    bqHide: fn(),
   },
 };
 export default meta;

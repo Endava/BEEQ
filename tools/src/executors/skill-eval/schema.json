@@ -1,0 +1,135 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "version": 2,
+  "title": "Skill eval executor",
+  "description": "Runs a skillgrade eval suite for an agent skill, with the skill installed and without it, and writes a benchmark comparing the two. The suite folder holds eval.base.yaml (skillgrade defaults and graders), tasks/*.yaml (one task per file), and optionally footer.md, prepare.ts, and solutions/<task>.sh.",
+  "type": "object",
+  "properties": {
+    "skill": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Skill folder (relative to the workspace root) installed in the with-skill variant."
+    },
+    "evalsDir": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Eval suite folder (relative to the workspace root)."
+    },
+    "agent": {
+      "type": "string",
+      "enum": ["copilot", "claude", "codex"],
+      "default": "copilot",
+      "description": "Coding-agent CLI the suite's agent command runs."
+    },
+    "model": {
+      "type": "string",
+      "description": "Model passed to the agent CLI. Omit to use the CLI default."
+    },
+    "variants": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["with-skill", "baseline"]
+      },
+      "uniqueItems": true,
+      "minItems": 1,
+      "default": ["with-skill", "baseline"],
+      "description": "Runs to compare: with-skill installs the skill in the workspace, baseline does not."
+    },
+    "trials": {
+      "type": "integer",
+      "minimum": 1,
+      "default": 1,
+      "description": "Trials per task and variant."
+    },
+    "parallel": {
+      "type": "integer",
+      "minimum": 1,
+      "default": 1,
+      "description": "Trials run at once. Keep at 1 for CLI agents unless the machine has headroom."
+    },
+    "timeout": {
+      "type": "integer",
+      "minimum": 1,
+      "default": 600,
+      "description": "Agent time limit per trial, in seconds."
+    },
+    "eval": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Task names to run. Omit to run every task."
+    },
+    "filter": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[^=]+=.+$"
+      },
+      "description": "skillgrade metadata filters (KEY=VALUE), e.g. tags=smoke. Repeated keys AND together."
+    },
+    "grader": {
+      "type": "string",
+      "enum": ["auto", "deterministic", "all"],
+      "default": "auto",
+      "description": "Graders to run. auto runs the LLM rubric only when a grader API key (ANTHROPIC_API_KEY, OPENAI_API_KEY, GEMINI_API_KEY) is set."
+    },
+    "graderProvider": {
+      "type": "string",
+      "enum": ["anthropic", "openai", "gemini"],
+      "description": "LLM rubric provider. Defaults to the first provider with an API key set."
+    },
+    "graderModel": {
+      "type": "string",
+      "description": "LLM rubric model. Omit to use skillgrade's default for the provider."
+    },
+    "threshold": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Fail when the with-skill mean reward is below this value."
+    },
+    "validate": {
+      "type": "boolean",
+      "default": false,
+      "description": "Check the graders instead of an agent: run solutions/<task>.sh for each task that has one, and fail unless every solution scores 1.0 on the deterministic graders."
+    },
+    "list": {
+      "type": "boolean",
+      "default": false,
+      "description": "List the selected tasks and exit."
+    },
+    "preview": {
+      "type": "string",
+      "enum": ["cli", "browser"],
+      "description": "Show saved results instead of running: `cli` prints every variant, `browser` serves the first variant in `variants`."
+    },
+    "iteration": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Iteration to preview. Defaults to the latest in outputPath."
+    },
+    "regrade": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Regrade iteration N instead of running agents: replay each variant's saved agent runs from it through the current graders into a new iteration. For grader, rubric, and check changes. Fails when a selected task has no saved run or its prompt or workspace files changed."
+    },
+    "reuseBaseline": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Replay the baseline's saved agent runs from iteration N through the current graders, and run the agent only for with-skill. For skill changes. Fails when a selected task has no saved run, its prompt or workspace files changed, or iteration N used another agent or model."
+    },
+    "concurrent": {
+      "type": "boolean",
+      "default": false,
+      "description": "Run the variants at the same time, one skillgrade process each, with every output line prefixed by its variant. About halves a full run; doubles the agent requests in flight."
+    },
+    "outputPath": {
+      "type": "string",
+      "default": "tmp/skill-evals",
+      "description": "Results folder (relative to the workspace root). Each run writes a new iteration-N folder."
+    }
+  },
+  "required": ["skill", "evalsDir"]
+}

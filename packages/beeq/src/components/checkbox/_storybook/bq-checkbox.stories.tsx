@@ -1,6 +1,7 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { fn } from 'storybook/test';
 
 import mdx from './bq-checkbox.mdx';
 
@@ -22,10 +23,6 @@ const meta: Meta = {
     name: { control: 'text' },
     required: { control: 'boolean' },
     value: { control: 'text' },
-    // Event handlers
-    bqBlur: { action: 'bqBlur' },
-    bqFocus: { action: 'bqFocus' },
-    bqChange: { action: 'bqChange' },
     // Not part of the component
     label: { control: 'text' },
   },
@@ -41,6 +38,10 @@ const meta: Meta = {
     value: 'checkbox-value',
     // Not part of the component
     label: 'Checkbox label',
+    // Events
+    bqBlur: fn(),
+    bqFocus: fn(),
+    bqChange: fn(),
   },
 };
 export default meta;

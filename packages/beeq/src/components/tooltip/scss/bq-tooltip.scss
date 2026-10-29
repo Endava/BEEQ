@@ -11,6 +11,12 @@
   @apply text-[length:--bq-tooltip--font-size] leading-[--bq-tooltip--line-height] text-[color:--bq-tooltip--text-color];
   @apply rounded-[--bq-tooltip--border-radius] border-[length:--bq-tooltip--border-width] border-[color:--bq-tooltip--border-color];
   @apply shadow-[shadow:--bq-tooltip--box-shadow];
+
+  border-style: var(--bq-tooltip--border-style);
+
+  &[popover] {
+    @apply absolute m-0 overflow-visible inset-[unset];
+  }
 }
 
 .bq-tooltip--arrow {

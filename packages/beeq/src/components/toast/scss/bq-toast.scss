@@ -2,29 +2,24 @@
 /*                                Toast styles                                */
 /* -------------------------------------------------------------------------- */
 
-@use 'sass:meta';
-@layer bq.reset, bq.tokens, bq.themes, bq.base, bq.utilities, bq.overrides,
+@layer bq.reset, bq.tokens, bq.themes, bq.base, bq.public, bq.overrides,
   bq-toast.tokens, bq-toast.base, bq-toast.structure, bq-toast.variants, bq-toast.states;
 
 @layer bq-toast.tokens {
-  @include meta.load-css('bq-toast.variables');
+  @import './bq-toast.variables';
 }
 
 /* ---------------------------------- Host ---------------------------------- */
 
 @layer bq-toast.base {
   :host {
+    display: inline-block;
+  }
+
+  .bq-toast {
     --_toast-border-radius: var(--bq-toast--border-radius);
     --_toast-icon-color: var(--bq-toast--icon-color-info);
 
-    display: inline-block;
-  }
-}
-
-/* ---------------------------------- Base ---------------------------------- */
-
-@layer bq-toast.base {
-  .bq-toast {
     @include animation-slide-in;
 
     display: flex;
@@ -53,43 +48,43 @@
 /* -------------------------------- Variants -------------------------------- */
 
 @layer bq-toast.variants {
-  :host([border='none']) {
+  :host([border='none']) .bq-toast {
     --_toast-border-radius: var(--bq-radius--none);
   }
 
-  :host([border='xs2']) {
+  :host([border='xs2']) .bq-toast {
     --_toast-border-radius: var(--bq-radius--xs2);
   }
 
-  :host([border='xs']) {
+  :host([border='xs']) .bq-toast {
     --_toast-border-radius: var(--bq-radius--xs);
   }
 
-  :host([border='m']) {
+  :host([border='m']) .bq-toast {
     --_toast-border-radius: var(--bq-radius--m);
   }
 
-  :host([border='l']) {
+  :host([border='l']) .bq-toast {
     --_toast-border-radius: var(--bq-radius--l);
   }
 
-  :host([border='full']) {
+  :host([border='full']) .bq-toast {
     --_toast-border-radius: var(--bq-radius--full);
   }
 
-  :host([type='success']) {
+  :host([type='success']) .bq-toast {
     --_toast-icon-color: var(--bq-toast--icon-color-success);
   }
 
-  :host([type='alert']) {
+  :host([type='alert']) .bq-toast {
     --_toast-icon-color: var(--bq-toast--icon-color-alert);
   }
 
-  :host([type='error']) {
+  :host([type='error']) .bq-toast {
     --_toast-icon-color: var(--bq-toast--icon-color-error);
   }
 
-  :host([type='loading']) {
+  :host([type='loading']) .bq-toast {
     --_toast-icon-color: var(--bq-toast--icon-color-loading);
   }
 
@@ -97,7 +92,7 @@
     @include animation-spin;
   }
 
-  :host([type='custom']) {
+  :host([type='custom']) .bq-toast {
     --_toast-icon-color: var(--bq-toast--icon-color-custom);
   }
 }
@@ -105,8 +100,8 @@
 /* --------------------------------- States --------------------------------- */
 
 @layer bq-toast.states {
-  :host(:not([open])),
-  :host([hide-icon]) .bq-toast__icon {
+  :host([hidden]),
+  .bq-toast__icon[hidden] {
     display: none;
   }
 }

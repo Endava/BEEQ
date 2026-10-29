@@ -2,8 +2,23 @@ name: NPM publish and Storybook deploy
 
 on:
   workflow_dispatch: # Allows manual triggering
+    inputs:
+      channel:
+        description: 'latest publishes the checked-out ref as is. beta publishes the next X.Y.Z-beta.N from main.'
+        type: choice
+        options: [latest, beta]
+        default: latest
+      dry_run:
+        description: 'Run npm publish in dry-run mode and skip the Storybook deploy'
+        type: boolean
+        default: false
   release:
     types: [published] # Triggers on release publish
+
+# Betas serialize among themselves so two runs can't pick the same beta number
+concurrency:
+  group: npm-publish-${{ inputs.channel || 'latest' }}
+  cancel-in-progress: false
 
 env:
   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -20,10 +35,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NX_BRANCH: ${{ github.head_ref || github.ref_name }}
-      VOLTA_FEATURE_PNPM: 1
     steps:
       - name: 🛎 Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
@@ -32,8 +46,10 @@ jobs:
         with:
           GITHUB_TOKEN: $GH_TOKEN
 
-      - name: 🛠 Setup Volta
-        uses: volta-cli/action@v5
+      - name: 🛠 Setup mise
+        uses: jdx/mise-action@7a4e45a543138629540c9a1616d08632b893e492 # v5.0.1
+        with:
+          version: '2026.9.18'
 
       - name: 🔎 Check Node and PNPM versions
         run: |
@@ -43,19 +59,36 @@ jobs:
       - name: 💫 Load and cache dependencies
         uses: ./.github/actions/cache-deps
 
+      - name: 🧪 Check beta runs from main
+        if: inputs.channel == 'beta' && github.ref != 'refs/heads/main'
+        run: |
+          echo "::error::Beta releases must run from main (current ref: $GITHUB_REF)"
+          exit 1
+        shell: bash
+
+      - name: 🏷 Bump packages to the next beta version
+        id: beta
+        if: inputs.channel == 'beta'
+        run: node tools/scripts/beta-release.mjs
+        shell: bash
+
       - name: ⏳ Build
         run: pnpm build
         shell: bash
 
       - name: 🚀 Publish BEEQ to NPM registry
-        run: pnpm exec nx release publish --parallel=5 --output-style=stream
+        run: pnpm exec nx release publish --parallel=5 --output-style=static --tag "$NPM_TAG" $DRY_RUN_FLAG
+        shell: bash
         env:
           NPM_CONFIG_PROVENANCE: true
+          NPM_TAG: ${{ inputs.channel == 'beta' && 'beta' || 'latest' }}
+          DRY_RUN_FLAG: ${{ inputs.dry_run && '--dry-run' || '' }}
 
       - name: 🚚 Deploy BEEQ Storybook to GitHub Pages
-        uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
+        if: inputs.channel != 'beta' && !inputs.dry_run
+        uses: bitovi/github-actions-storybook-to-github-pages@ddd9d35f670cceedd2bfc444be681001b0709730 # v1.0.4
         with:
-          build_command: pnpm build:storybook
+          build_command: pnpm exec nx storybook-build beeq --output-style=static
           checkout: false
-          install_command: pnpm install --frozen-lockfile
+          install_command: pnpm install --frozen-lockfile --ignore-scripts --prefer-offline
           path: ./dist/storybook/beeq

@@ -1,6 +1,7 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { fn } from 'storybook/test';
 
 import mdx from './bq-dropdown.mdx';
 
@@ -40,7 +41,7 @@ const meta: Meta = {
     skidding: { control: 'number' },
     strategy: { control: 'select', options: ['fixed', 'absolute'] },
     // Event handlers
-    bqSelect: { action: 'bqSelect', table: { disable: true } },
+    bqSelect: { table: { disable: true } },
     // Not part of the public API, so we don't want to expose it in the
     trigger: { control: 'text', table: { disable: true } },
     enableOptionGroup: { control: 'boolean', table: { disable: true } },
@@ -56,6 +57,8 @@ const meta: Meta = {
     'same-width': false,
     skidding: 0,
     strategy: 'fixed',
+    // Events
+    bqSelect: fn(),
   },
 };
 export default meta;

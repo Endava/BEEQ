@@ -2,6 +2,7 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
+import { fn } from 'storybook/test';
 
 import { STEPS_ORIENTATION, STEPS_SIZE, STEPS_TYPE } from '../bq-steps.types';
 import mdx from './bq-steps.mdx';
@@ -20,9 +21,9 @@ const meta: Meta = {
     type: { control: 'select', options: [...STEPS_TYPE] },
     size: { control: 'select', options: [...STEPS_SIZE] },
     // Events
-    bqClick: { action: 'bqClick', table: { disable: true } },
-    bqFocus: { action: 'bqFocus', table: { disable: true } },
-    bqBlur: { action: 'bqBlur', table: { disable: true } },
+    bqClick: { table: { disable: true } },
+    bqFocus: { table: { disable: true } },
+    bqBlur: { table: { disable: true } },
     // Not part of the public API
     children: { control: 'text', table: { disable: true } },
   },
@@ -30,6 +31,10 @@ const meta: Meta = {
     'divider-color': 'stroke--primary',
     orientation: 'horizontal',
     size: 'medium',
+    // Events
+    bqClick: fn(),
+    bqFocus: fn(),
+    bqBlur: fn(),
   },
 };
 export default meta;

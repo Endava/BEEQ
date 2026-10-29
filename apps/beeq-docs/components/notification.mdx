@@ -1,6 +1,6 @@
 ---
 title: Notification
-description: "Notifications deliver important information to users in a non-intrusive way, surfacing system messages, status updates, and alerts without interrupting the current flow."
+description: "Notifications surface system messages, status updates, and alerts to users in a non-intrusive way, without interrupting the current flow."
 ---
 
 import { CardTile } from "/snippets/CardTile.jsx";
@@ -41,6 +41,10 @@ Notifications inform people about significant events, status changes, or updates
     - The message needs detailed explanation rather than a short, scannable summary
   </Card>
 </CardGroup>
+
+<Tip>
+  Choose [`bq-alert`](/components/alert) for a message tied to a page or section that stays in the document flow, [`bq-notification`](/components/notification) for a system message with a description or actions that stacks at the edge of the screen, and [`bq-toast`](/components/toast) for a short status message with no actions that disappears on its own.
+</Tip>
 
 ## Patterns
 
@@ -324,6 +328,10 @@ Use the default `info` notification for standard messages and updates.
 </Tip>
 
 ## Options
+
+**Allowed `type` values:** `info` (default), `success`, `warning`, `error`, `neutral`.
+
+**Allowed `border` values:** `none`, `xs2`, `xs`, `s` (default), `m`, `l`, `full`.
 
 ### Semantic types
 
@@ -1030,10 +1038,30 @@ In framework apps, prefer a framework-owned portal or stack when you want the no
 
 - **Built-in alert role** — the component applies `role="alert"` to the notification host element, which implicitly carries `aria-live="assertive"`. Assistive technology announces new notifications immediately when they appear.
 - **Visibility tied to `open`** — the host also receives `aria-hidden="true"` when `open` is `false`, removing it from the accessibility tree when not visible.
-- **Color alone is not enough**: the icon and message text should work together so users who cannot perceive color still understand the notification.
+- **Color alone is not enough**: the icon and message text must work together so users who cannot perceive color still understand the notification.
 - **Keep interactive elements reachable**: users must be able to tab to the close button, links, and footer actions and activate them with the keyboard.
-- **Use considerate auto-dismiss timing**: if `auto-dismiss` is enabled, give users enough time to read the content before it disappears.
-- **Do not steal focus**: stacked notifications are non-modal and should not move focus unexpectedly away from the current task.
+- **Use considerate auto-dismiss timing**: if `auto-dismiss` is enabled, you must give users enough time to read the content before it disappears.
+- **Do not steal focus**: stacked notifications are non-modal, so you must not move focus unexpectedly away from the current task when showing one.
+
+### Keyboard interaction
+
+The notification itself is not focusable. Only the elements inside it receive focus; the close button is a native `<button>` rendered by `bq-button`.
+
+| Key | Context | Action |
+|---|---|---|
+| `Tab` | Notification open, close button shown | Moves focus to the close button, then to focusable content in the `body` and `footer` slots |
+| `Shift` + `Tab` | Focus inside the notification | Moves focus to the previous focusable element |
+| `Enter` | Close button focused | Activates the button and hides the notification |
+| `Space` | Close button focused | Activates the button and hides the notification |
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Make the icon and message text work together so the notification is understood without color | MUST | manual: read the message without its icon or color |
+| Keep the close button, links, and footer actions reachable and operable with the keyboard | MUST | manual: tab through and activate links and actions |
+| Give users enough time to read the content when `auto-dismiss` is enabled | MUST | manual: time dismissal against the message length |
+| Do not move focus away from the current task when showing a notification | MUST NOT | manual: inspect focus before and after the notification appears |
 
 ## API reference
 
@@ -1048,6 +1076,13 @@ In framework apps, prefer a framework-owned portal or stack when you want the no
 | `open` | `open` | If `true`, the notification is visible | `boolean` | `undefined` |
 | `time` | `time` | Duration in milliseconds before auto-dismissal. Only valid when `auto-dismiss` is `true` | `number` | `3000` |
 | `type` | `type` | The semantic type of the notification | `"error" \| "info" \| "neutral" \| "success" \| "warning"` | `"info"` |
+
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| `time` without `auto-dismiss` | SHOULD NOT | `time` is ignored and the notification never closes itself |
+| `hide-icon` with an `icon` slot | SHOULD NOT | The whole icon container is hidden, including the slotted icon |
 
 ### Events
 
@@ -1111,7 +1146,7 @@ In framework apps, prefer a framework-owned portal or stack when you want the no
   | `--bq-notification--box-shadow` | Notification box shadow | `var(--bq-box-shadow--l)` |
   | `--bq-notification--content-footer-gap` | Gap between content and footer | `var(--bq-spacing-m)` |
   | `--bq-notification--icon-color-error` | Icon color for error notifications | `var(--bq-icon--danger)` |
-  | `--bq-notification--icon-color-info` | Icon color for info notifications | `var(--bq-icon--brand)` |
+  | `--bq-notification--icon-color-info` | Icon color for info notifications | `var(--bq-icon--info)` |
   | `--bq-notification--icon-color-neutral` | Icon color for neutral notifications | `var(--bq-icon--primary)` |
   | `--bq-notification--icon-color-success` | Icon color for success notifications | `var(--bq-icon--success)` |
   | `--bq-notification--icon-color-warning` | Icon color for warning notifications | `var(--bq-icon--warning)` |

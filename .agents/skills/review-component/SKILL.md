@@ -1,136 +1,61 @@
 ---
 name: review-component
-description: 'Review a BEEQ StencilJS component against design system guidelines and project standards. Use for: code review of bq-* components, checking section order, naming conventions, JSDoc completeness, prop validation, event documentation, accessibility, styling practices, and test coverage. Returns a structured review with pass/fail per category and actionable fixes.'
+description: 'Review a `bq-*` component against BEEQ guidelines and return a pass/fail report per category with fixes: structure, naming, JSDoc, props, accessibility, styling, tests and stories. Use before merging or when auditing a component. To fix accessibility issues specifically use fix-accessibility.'
 argument-hint: 'Path to the component tsx file (e.g. packages/beeq/src/components/button/bq-button.tsx)'
+metadata:
+  internal: true
 ---
 
 # Review a BEEQ Component
 
 ## When to Use
 
-- Before opening a PR for a new or modified `bq-*` component
-- Reviewing a PR that adds or modifies a `bq-*` component
-- Auditing an existing component for guideline compliance
-- Self-checking a component before submitting for review
-- When a component "feels off" and you want a holistic check across all dimensions.
+- Before opening a PR for a new or modified `bq-*` component, or when reviewing such a PR.
+- Auditing an existing component for guideline compliance, or when it "feels off" and needs a holistic check.
 
 ## Procedure
 
-### 1. Load the instruction files
+### 1. Load the rules
 
-Read these before evaluating:
-- [StencilJS instructions](../../instructions/stenciljs.instructions.md)
+Read these before evaluating. They are the only source of rules; this skill adds none:
+
+- [Components instructions](../../instructions/components.instructions.md)
 - [Styles instructions](../../instructions/styles.instructions.md)
 - [Tailwind to native SCSS migration instructions](../../instructions/tailwind-to-native-scss.instructions.md)
 - [Accessibility instructions](../../instructions/accessibility.instructions.md)
 - [Testing instructions](../../instructions/testing.instructions.md)
+- [write-stories](../write-stories/SKILL.md) for the Storybook rules
 
 ### 2. Read the component files
 
-Read all files for the component:
-- `bq-<name>.tsx` — component logic
-- `bq-<name>.types.ts` — type definitions
-- `scss/bq-<name>.scss` — styles
-- `scss/bq-<name>.variables.scss` — CSS custom properties
-- `__tests__/bq-<name>.e2e.tsx` — E2E tests
-- `_storybook/bq-<name>.stories.tsx` — Storybook stories
+Read every file of the component:
+
+- `bq-<name>.tsx`: logic
+- `bq-<name>.types.ts`: types
+- `scss/bq-<name>.scss` and `scss/bq-<name>.variables.scss`: styles and CSS custom properties
+- `__tests__/bq-<name>.e2e.tsx`: e2e tests
+- `_storybook/bq-<name>.stories.tsx`: stories
+
+Done when each file exists or its absence is recorded as an issue.
 
 ### 3. Evaluate each category
 
-For each category below, mark ✅ pass, ⚠️ needs improvement, or ❌ fail, and list specific issues.
+Apply every rule of the matching section to the files. Mark each category ✅ pass, ⚠️ needs improvement or ❌ fail, and list each violated rule with its location.
 
----
+| Category | Rules to apply |
+|---|---|
+| File Structure | Component Structure Rules in components (section order and headers, `render()` last, `shadow`, `formAssociated`, `private` over `#`) |
+| Naming | Code Conventions in components (tag, class, event, handler, constant and type names, BEM for SCSS) |
+| JSDoc | Component JSDoc Block in components (component-level tags, `@attr`, `@event`, `@slot`, `@part`, `@cssprop`, props, methods) |
+| Props & Events | Props, Validation and Forms in components (validation with `@Watch()`, defaults versus types, `reflect`, typed `EventEmitter`) |
+| Accessibility | Every rule in the accessibility instructions |
+| Styling | Every rule in the styles instructions, plus the `scss/` layout and `styleUrl` from components |
+| Tests | Every rule in the testing instructions, including a test for every prop, slot, event and public method |
+| Storybook | Story rules in write-stories (import source, `argTypes`, state variants, Chromatic guard) |
 
-#### A. File Structure & Section Order
-- [ ] Sections appear in the exact prescribed order (Own Properties → `@Element()` → `@State()` → `@Prop()` → `@Watch()` → `@Event()` → lifecycle → `@Listen()` → public methods → private methods → `render()`)
-- [ ] Sections header comments are present even if the section is empty
-- [ ] `render()` is the last method in the class
-- [ ] `shadow: true` is set (or `delegatesFocus: true` only when needed)
-- [ ] `formAssociated: true` is present only when the component submits form data
-- [ ] No `#` private fields — only `private` keyword
+Done when every category has a status.
 
-#### B. Naming Conventions
-- [ ] Tag uses `bq-` prefix and kebab-case
-- [ ] Class name is `Bq<Name>` in PascalCase
-- [ ] Events are camelCase with `bq` prefix (e.g. `bqChange`, `bqClick`)
-- [ ] Event handler methods are prefixed with `handle` (e.g. `handleClick`)
-- [ ] State variables, props, and methods are camelCase
-- [ ] Constants and enum values are ALL_CAPS
-- [ ] Private methods use arrow functions with the `private` keyword
-- [ ] All public methods are `async`
-- [ ] Type parameters are prefixed with `T` (e.g. `TButtonSize`)
-- [ ] SCSS class names use BEEQ semantic hooks only where needed, not full BEM everywhere
-
-#### C. JSDoc Completeness
-- [ ] Component-level JSDoc block present above `@Component({})`
-- [ ] `@example`, `@documentation`, `@status`, `@dependency` tags present
-- [ ] Every `@Prop()` documented with `@attr` in component JSDoc
-- [ ] Every `@Event()` has JSDoc on the property and `@event` in component JSDoc
-- [ ] Every `@Method()` has JSDoc with `@param` and `@returns`
-- [ ] Every `@Prop()` has an inline JSDoc comment
-- [ ] Every slot has `@slot` in component JSDoc
-- [ ] Every shadow part has `@part` in component JSDoc
-- [ ] Every CSS custom property has `@cssprop` in component JSDoc
-
-#### D. Props & Events
-- [ ] Props with fixed allowed values use `validatePropValue()` + `@Watch()`
-- [ ] Optional boolean props (`prop?: boolean`) should not also declare `= false`; use either an optional boolean or a required boolean with an explicit `false` default, depending on the intended API shape
-- [ ] String props should not default to `undefined` if they are required.
-- [ ] Styling-related props use `reflect: true`
-- [ ] No prop defaults that contradict the type (e.g. `undefined` typed as `string`)
-- [ ] Events use typed `EventEmitter<T>` (not `EventEmitter<any>`)
-- [ ] Events bubble correctly (check `bubbles`, `cancelable` options if needed)
-
-#### E. Accessibility
-- [ ] Interactive elements use semantic HTML (`<button>`, `<a>`, `<input>`, etc.)
-- [ ] `aria-label` / `aria-labelledby` / `aria-describedby` used where visible label is absent
-- [ ] `role` attributes used only when native semantics are insufficient
-- [ ] Keyboard navigation works (Tab, Enter, Space, Arrow keys as appropriate)
-- [ ] Focus is managed correctly (no focus traps, no lost focus after state change)
-- [ ] `aria-disabled` used instead of (or alongside) the `disabled` attribute where applicable
-- [ ] `aria-expanded`, `aria-selected`, `aria-checked` reflect current state
-- [ ] Color is never the sole means of conveying information
-
-#### F. Styling
-- [ ] Styles are in `scss/` subdirectory, not the component root
-- [ ] `styleUrl` in the decorator references `./scss/bq-<name>.scss`
-- [ ] No Tailwind `@apply`
-- [ ] No Tailwind `theme(...)`
-- [ ] No visual Tailwind utility strings in Shadow DOM render output
-- [ ] CSS logical properties are used for layout, sizing, spacing, positioning, borders, and radii
-- [ ] No `!important` unless absolutely required
-- [ ] CSS custom properties defined in `bq-<name>.variables.scss`
-- [ ] Public `--bq-*` custom property names are preserved
-- [ ] SCSS file imports the variables file first
-- [ ] No global styles; all styles are component-scoped
-- [ ] BEEQ semantic class hooks are used only where needed
-- [ ] SCSS nesting depth is `2` or less
-- [ ] Shared mixins/tokens are used for repeated focus, hover, and active patterns
-- [ ] Focus styles are visible and meet contrast requirements
-- [ ] `prefers-reduced-motion` considered for animations
-
-#### G. Test Coverage
-- [ ] `should render` test present
-- [ ] `should have shadow root` uses `toHaveShadowRoot()` (not `.shadowRoot !== null`)
-- [ ] Every `@Prop()` has a prop-reflection test
-- [ ] Every named slot has a content test
-- [ ] Every `@Event()` has an invocation test using `vi.fn()`
-- [ ] Every public `@Method()` is tested
-- [ ] Keyboard interactions tested with `userEvent`
-- [ ] `afterEach(() => vi.restoreAllMocks())` present when mocks are used
-- [ ] No use of deprecated `newE2EPage` from `@stencil/core/testing`
-
-#### H. Storybook
-- [ ] Import is from `@storybook/web-components-vite` (not `@storybook/web-components`)
-- [ ] `argTypes` cover all public props and events
-- [ ] Story variants exist for all major states / appearances
-- [ ] Chromatic guard applied for animated/loading stories
-
----
-
-### 4. Report Format
-
-Return the review as:
+### 4. Report format
 
 ```
 ## Component Review: bq-<name>

@@ -25,9 +25,11 @@ export const CodeLivePreview = ({ code, children, height, removePadding = false,
   const previewRef = useRef(null);
 
   // Constants are centralized so URLs and selectors are not duplicated.
-  const BEEQ_ESM_URL = 'https://esm.sh/@beeq/core/dist/beeq/beeq.esm.js';
-  const BEEQ_CSS_URL = 'https://esm.sh/@beeq/core/dist/beeq/beeq.css';
-  const BEEQ_ICONS_URL = 'https://esm.sh/@beeq/core/dist/beeq/svg';
+  const BEEQ_VERSION = '{{BEEQ_VERSION}}';
+  const CDN_BASE = 'https://unpkg.com';
+  const BEEQ_ESM_URL = `${CDN_BASE}/@beeq/core@${BEEQ_VERSION}/dist/beeq/beeq.esm.js`;
+  const BEEQ_CSS_URL = `${CDN_BASE}/@beeq/core@${BEEQ_VERSION}/dist/beeq/beeq.css`;
+  const BEEQ_ICONS_URL = `${CDN_BASE}/@beeq/core@${BEEQ_VERSION}/dist/beeq/svg`;
 
   /**
    * Ensures BEEQ web components are loaded in the parent document.
@@ -112,7 +114,8 @@ export const CodeLivePreview = ({ code, children, height, removePadding = false,
       iframe.style.width = '100%';
       iframe.style.border = '0';
       iframe.style.display = 'block';
-      iframe.style.minHeight = height ?? '0px';
+      // Without an explicit height the iframe falls back to the browser default of 150px.
+      iframe.style.height = height ?? '';
       iframe.setAttribute('title', 'Live code preview');
       iframe.setAttribute('loading', 'lazy');
       iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin');
@@ -169,7 +172,8 @@ export const CodeLivePreview = ({ code, children, height, removePadding = false,
         bq-dropdown::part(panel),
         bq-panel::part(panel),
         bq-select::part(panel),
-        bq-date-picker::part(panel) { z-index: 9999; }
+        bq-date-picker::part(panel),
+        bq-time-picker::part(panel) { z-index: 9999; }
         bq-tooltip::part(panel) { position: absolute; }
       `);
       shadowRoot.adoptedStyleSheets = [fixSheet];

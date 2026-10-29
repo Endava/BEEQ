@@ -57,6 +57,7 @@ They provide an efficient way to save space and present a long list of options i
 
  - [bq-date-picker](../date-picker)
  - [bq-select](../select)
+ - [bq-time-picker](../time-picker)
 
 ### Depends on
 
@@ -68,6 +69,7 @@ graph TD;
   bq-dropdown --> bq-panel
   bq-date-picker --> bq-dropdown
   bq-select --> bq-dropdown
+  bq-time-picker --> bq-dropdown
   style bq-dropdown fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

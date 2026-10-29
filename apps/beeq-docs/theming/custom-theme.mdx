@@ -5,7 +5,11 @@ description: This guide walks you through creating and applying a custom theme a
 
 import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 
-To create a custom theme, define your own set of CSS variables that override the base theme variables and declarative colors for both light and dark modes.
+To create a custom theme, override BEEQ's root semantics — the brand, intent, and neutral colors — with your own values. BEEQ's light and dark mode roles already point to those root tokens, so every component picks up your palette in both modes. Override individual mode roles only where your palette needs a different mapping.
+
+<Note>
+  Set `--bq-brand` and the other root semantics here, in the theme. To style UI with the brand color, use the mode role `--bq-ui--brand` instead, as described in [Color architecture](/foundations/colors#color-architecture).
+</Note>
 
 <Note>
   Namespace your theme using the `bq-theme` attribute (e.g., `bq-theme="my-custom-theme"`) or a matching CSS class (e.g., `.my-custom-theme`).
@@ -16,8 +20,8 @@ To create a custom theme, define your own set of CSS variables that override the
 ## Step-by-step guide
 
 <Steps>
-  <Step title="Define base theme variables">
-    Create a CSS file for your custom theme (e.g., `custom-theme.css`) and set the base design tokens:
+  <Step title="Define root semantics">
+    Create a CSS file for your custom theme (e.g., `custom-theme.css`) and set the root tokens. Give each intent you change all five steps — see [Intent scale](/foundations/colors#intent-scale) for what each step is used for:
 
     ```css
     [bq-theme="my-custom-theme"],
@@ -25,196 +29,136 @@ To create a custom theme, define your own set of CSS variables that override the
       /* Override font family */
       --bq-font-family: 'Inter', sans-serif;
 
-      /* Define brand colors using any primitive color from the palette */
-      --bq-brand-light: var(--bq-blue-100);
-      --bq-brand:       var(--bq-blue-600);
-      --bq-brand-dark:  var(--bq-blue-1000);
+      /* Brand: tint, fill, dark tint, and the two text-safe steps */
+      --bq-brand-light:  var(--bq-purple-100);
+      --bq-brand:        var(--bq-purple-600);
+      --bq-brand-dark:   var(--bq-purple-1000);
+      --bq-brand-strong: var(--bq-purple-600); /* text, icons, strokes on light surfaces */
+      --bq-brand-bright: var(--bq-purple-300); /* text, icons, strokes on dark surfaces */
 
-      /* Define accent colors */
-      --bq-accent-light: var(--bq-purple-100);
-      --bq-accent:       var(--bq-purple-600);
-      --bq-accent-dark:  var(--bq-purple-1000);
-
-      /* Override neutral scale if needed */
+      /* Override the neutral scale if needed */
       --bq-neutral-50:  var(--bq-grey-50);
       --bq-neutral-100: var(--bq-grey-100);
       /* ... continue with other neutrals ... */
 
-      /* Define semantic colors */
-      --bq-success: var(--bq-teal-600);
-      --bq-danger:  var(--bq-red-600);
-      --bq-warning: var(--bq-gold-600);
-      --bq-info:    var(--bq-blue-600);
-      --bq-focus:   var(--bq-blue-600);
-
-      /* Interactive state overlays */
-      --bq-state--hover:  rgba(0, 0, 0, 0.08);  /* Subtle hover overlay (light mode) */
-      --bq-state--active: rgba(0, 0, 0, 0.12); /* Pressed state overlay (light mode) */
+      /* Repeat the five steps for accent, info, success, warning, or danger
+         to change them. Intents you don't set keep BEEQ's values. */
     }
     ```
 
     <Tip>
-      Override `--bq-state--hover` and `--bq-state--active` for each mode. In dark mode, use light
-      overlays (e.g. `rgba(255, 255, 255, 0.1)`) instead of dark ones.
+      Don't set `--bq-focus` here. Focus is a mode role that defaults to `--bq-brand-strong` in light mode and `--bq-brand-bright` in dark mode, so it follows your brand automatically.
     </Tip>
   </Step>
 
-  <Step title="Define light mode theme">
-    Define the declarative color tokens for the light mode:
+  <Step title="Adjust mode roles (optional)">
+    Override mode roles only where the defaults don't fit your palette. The most common cases are the on-color of a solid fill, the focus color, and neutral surfaces:
 
     ```css
+    /* Light mode */
     [bq-theme="my-custom-theme"]:not([bq-mode]),    /* Default — no mode specified */
     [bq-theme="my-custom-theme"][bq-mode="light"],  /* Explicit light mode (via attributes) */
     .my-custom-theme:not([bq-mode]),                /* Default — no mode (via CSS class) */
     .my-custom-theme.light {                        /* Explicit light mode (via CSS classes) */
-
-      /* Background colors */
-      --bq-background--primary:   var(--bq-white);
-      --bq-background--secondary: var(--bq-neutral-100);
-      --bq-background--tertiary:  var(--bq-neutral-200);
-      --bq-background--alt:       var(--bq-neutral-300);
-      --bq-background--inverse:   var(--bq-neutral-900);
-      --bq-background--brand:     var(--bq-brand);
-      --bq-background--overlay:   var(--bq-neutral-900);
-
-      /* Icon colors */
-      --bq-icon--primary:   var(--bq-neutral-800);
-      --bq-icon--secondary: var(--bq-neutral-600);
-      --bq-icon--inverse:   var(--bq-neutral-50);
-      --bq-icon--brand:     var(--bq-brand);
-      --bq-icon--alt:       var(--bq-white);
-      --bq-icon--info:      var(--bq-info);
-      --bq-icon--success:   var(--bq-success);
-      --bq-icon--warning:   var(--bq-warning);
-      --bq-icon--danger:    var(--bq-danger);
-
-      /* Stroke colors */
-      --bq-stroke--primary:   var(--bq-neutral-200);
-      --bq-stroke--secondary: var(--bq-neutral-600);
-      --bq-stroke--tertiary:  var(--bq-neutral-900);
-      --bq-stroke--inverse:   var(--bq-white);
-      --bq-stroke--brand:     var(--bq-brand);
-      --bq-stroke--alt:       var(--bq-neutral-50);
-      --bq-stroke--success:   var(--bq-success);
-      --bq-stroke--warning:   var(--bq-warning);
-      --bq-stroke--danger:    var(--bq-danger);
-
-      /* Text colors */
-      --bq-text--primary:   var(--bq-neutral-800);
-      --bq-text--secondary: var(--bq-neutral-600);
-      --bq-text--inverse:   var(--bq-neutral-50);
-      --bq-text--brand:     var(--bq-brand);
-      --bq-text--alt:       var(--bq-white);
-      --bq-text--info:      var(--bq-info);
-      --bq-text--success:   var(--bq-success);
-      --bq-text--warning:   var(--bq-warning);
-      --bq-text--danger:    var(--bq-danger);
-
-      /* UI colors */
-      --bq-ui--primary:      var(--bq-white);
-      --bq-ui--secondary:    var(--bq-neutral-100);
-      --bq-ui--tertiary:     var(--bq-neutral-500);
-      --bq-ui--inverse:      var(--bq-neutral-900);
-      --bq-ui--brand:        var(--bq-brand);
-      --bq-ui--brand-alt:    var(--bq-brand-light);
-      --bq-ui--alt:          var(--bq-neutral-50);
-      --bq-ui--success:      var(--bq-success);
-      --bq-ui--success-alt:  var(--bq-success-light);
-      --bq-ui--warning:      var(--bq-warning);
-      --bq-ui--warning-alt:  var(--bq-warning-light);
-      --bq-ui--danger:       var(--bq-danger);
-      --bq-ui--danger-alt:   var(--bq-danger-light);
+      --bq-text--on-brand: var(--bq-white);
+      --bq-focus:          var(--bq-brand-strong);
     }
-    ```
-  </Step>
 
-  <Step title="Define dark mode theme">
-    Define the declarative color tokens for the dark mode:
-
-    ```css
+    /* Dark mode */
     [bq-theme="my-custom-theme"][bq-mode="dark"],  /* Explicit dark mode (via attributes) */
     .my-custom-theme.dark {                        /* Explicit dark mode (via CSS classes) */
-
-      /* Background colors */
-      --bq-background--primary:   var(--bq-neutral-1000);
-      --bq-background--secondary: var(--bq-neutral-950);
-      --bq-background--tertiary:  var(--bq-neutral-800);
-      --bq-background--alt:       var(--bq-neutral-700);
-      --bq-background--inverse:   var(--bq-neutral-600);
-      --bq-background--brand:     var(--bq-brand);
-      --bq-background--overlay:   var(--bq-neutral-900);
-
-      /* Icon colors */
-      --bq-icon--primary:   var(--bq-neutral-100);
-      --bq-icon--secondary: var(--bq-neutral-400);
-      --bq-icon--inverse:   var(--bq-neutral-800);
-      --bq-icon--brand:     var(--bq-brand);
-      --bq-icon--alt:       var(--bq-white);
-      --bq-icon--info:      var(--bq-info);
-      --bq-icon--success:   var(--bq-success);
-      --bq-icon--warning:   var(--bq-warning);
-      --bq-icon--danger:    var(--bq-danger);
-
-      /* Stroke colors */
-      --bq-stroke--primary:   var(--bq-neutral-900);
-      --bq-stroke--secondary: var(--bq-neutral-700);
-      --bq-stroke--tertiary:  var(--bq-neutral-400);
-      --bq-stroke--inverse:   var(--bq-neutral-950);
-      --bq-stroke--brand:     var(--bq-brand);
-      --bq-stroke--alt:       var(--bq-neutral-1000);
-      --bq-stroke--success:   var(--bq-success);
-      --bq-stroke--warning:   var(--bq-warning);
-      --bq-stroke--danger:    var(--bq-danger);
-
-      /* Text colors */
-      --bq-text--primary:   var(--bq-neutral-100);
-      --bq-text--secondary: var(--bq-neutral-400);
-      --bq-text--inverse:   var(--bq-neutral-800);
-      --bq-text--brand:     var(--bq-brand);
-      --bq-text--alt:       var(--bq-white);
-      --bq-text--info:      var(--bq-info);
-      --bq-text--success:   var(--bq-success);
-      --bq-text--warning:   var(--bq-warning);
-      --bq-text--danger:    var(--bq-danger);
-
-      /* UI colors */
-      --bq-ui--primary:      var(--bq-neutral-900);
-      --bq-ui--secondary:    var(--bq-neutral-950);
-      --bq-ui--tertiary:     var(--bq-neutral-700);
-      --bq-ui--inverse:      var(--bq-neutral-100);
-      --bq-ui--brand:        var(--bq-brand);
-      --bq-ui--brand-alt:    var(--bq-brand-dark);
-      --bq-ui--alt:          var(--bq-neutral-950);
-      --bq-ui--success:      var(--bq-success);
-      --bq-ui--success-alt:  var(--bq-success-dark);
-      --bq-ui--warning:      var(--bq-warning);
-      --bq-ui--warning-alt:  var(--bq-warning-dark);
-      --bq-ui--danger:       var(--bq-danger);
-      --bq-ui--danger-alt:   var(--bq-danger-dark);
+      --bq-background--primary: var(--bq-neutral-1000);
+      --bq-text--on-brand:      var(--bq-white);
+      --bq-focus:               var(--bq-brand-bright);
     }
     ```
+
+    The full list of mode roles and their defaults is in [Colors → Mode roles](/foundations/colors#mode-roles). Hover and active colors aren't roles you set per component: BEEQ mixes them from the rest color with `--bq-hover` and `--bq-active`, so they follow your overrides.
   </Step>
 
   <Step title="Apply your custom theme">
-    Include your custom theme CSS file in your project and set the `bq-theme` and `bq-mode` attributes on the `<html>` element:
+    Include your custom theme CSS file in your project and set the `bq-theme` and `bq-mode` attributes on the `<html>` element.
+
+    <Note>
+      `bq-mode` is optional for light mode: without it, the root element uses BEEQ's light mode roles plus the `:not([bq-mode])` overrides from the previous step. Set `bq-mode="dark"` (or the `.dark` class) to switch to dark mode.
+    </Note>
 
     <Note>
       Always load `beeq.css` **before** your custom theme CSS so that your variables correctly override the defaults.
     </Note>
 
-    ```html
-    <!DOCTYPE html>
-    <html lang="en" bq-theme="my-custom-theme" bq-mode="light">
-      <head>
-        <link rel="stylesheet" href="path/to/beeq.css">
-        <link rel="stylesheet" href="path/to/custom-theme.css">
-      </head>
-      <body>
-        <!-- Your components will automatically use the custom theme -->
-        <bq-button>Click me</bq-button>
-      </body>
-    </html>
-    ```
+    Pick the setup that matches your project:
+
+    <CodeGroup>
+      ```html Plain HTML icon="html5"
+      <!DOCTYPE html>
+      <html lang="en" bq-theme="my-custom-theme" bq-mode="light">
+        <head>
+          <link rel="stylesheet" href="path/to/beeq.css">
+          <link rel="stylesheet" href="path/to/custom-theme.css">
+        </head>
+        <body>
+          <!-- Your components will automatically use the custom theme -->
+          <bq-button>Click me</bq-button>
+        </body>
+      </html>
+      ```
+
+      ```css Bundler (React / Vue / Angular) icon="css"
+      /* src/index.css — load BEEQ first, then your custom theme */
+      @import "@beeq/core/dist/beeq/beeq.css";
+      @import "./custom-theme.css";
+      ```
+
+      ```css Tailwind v4 icon="tailwind"
+      /* src/index.css */
+      @import "tailwindcss";
+      @import "@beeq/core/dist/beeq/beeq.css" layer(base);
+      @plugin "@beeq/tailwindcss";
+      @import "./custom-theme.css";
+      ```
+
+      ```ts Tailwind v3 icon="tailwind" expandable
+      // tailwind.config.ts
+      import beeqPreset from "@beeq/tailwindcss";
+      import type { Config } from "tailwindcss";
+
+      export default {
+        content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx,vue}"],
+        presets: [beeqPreset],
+      } satisfies Config;
+      ```
+    </CodeGroup>
+
+    The `@beeq/tailwindcss` preset maps BEEQ tokens to Tailwind utility classes but does not define your custom theme. Keep the custom theme CSS as a separate file that overrides `--bq-*` variables, and load it after `beeq.css`.
+
+    <Note>
+      With Tailwind v4, `@beeq/tailwindcss` 1.16.2 and earlier fail with `@plugin` (`b is not a function`). On those versions, use `@config "@beeq/tailwindcss";` instead.
+    </Note>
+
+    <Warning>
+      With Tailwind v4, import `beeq.css` with `layer(base)` as shown. Without it, the BEEQ reset overrides Tailwind utilities such as `mx-auto`. See [Apps that use cascade layers](/getting-started/installation#apps-that-use-cascade-layers).
+    </Warning>
+
+    Set the theme and mode on the root element from your app entry so the attributes are present before any component renders:
+
+    <CodeGroup>
+      ```tsx React icon="react"
+      // src/main.tsx
+      document.documentElement.setAttribute("bq-theme", "my-custom-theme");
+      document.documentElement.setAttribute("bq-mode", "light");
+      ```
+
+      ```ts Angular icon="angular"
+      // src/main.ts
+      document.documentElement.setAttribute("bq-theme", "my-custom-theme");
+      document.documentElement.setAttribute("bq-mode", "light");
+      ```
+
+      ```html Plain HTML icon="html5"
+      <html lang="en" bq-theme="my-custom-theme" bq-mode="light">
+      ```
+    </CodeGroup>
 
     To switch to dark mode, change the `bq-mode` attribute:
 
@@ -229,553 +173,429 @@ To create a custom theme, define your own set of CSS variables that override the
     <!-- or -->
     <body class="my-custom-theme dark"> ... </body>
     ```
+
+    <Tip>
+      For a full React setup — packages, styles, icons, and event handling — see the [React framework guide](/guides/frameworks/react). For the Tailwind utility classes that BEEQ ships alongside your custom theme, see [Colors → Tailwind CSS](/foundations/colors#tailwind-css).
+    </Tip>
   </Step>
 </Steps>
 
 ---
 
-## Full example: TechFlow theme
+## Full example: Nebula theme
 
-Here is an almost production-ready custom theme called **TechFlow** — a theme with vibrant teal accents and a sleek design aesthetic.
+**Nebula** pairs a fuchsia brand with a cyan accent on violet-tinted neutrals, and adds rounder corners and Space Grotesk type. It changes every component in three short layers:
 
-<CodeLivePreview mode="shadow" code={`
+1. **Root semantics.** Brand, accent and the neutral scale, plus the font and radius tokens. BEEQ's mode roles read from these, so light and dark mode follow on their own.
+2. **Mode roles.** Four dark-mode overrides: solid brand and accent fills switch to their bright steps, with dark text on top.
+3. **Component variables.** Two component-level choices: cards sit on the raised surface with a hairline border, and the progress bar uses the accent instead of the brand, on a cyan-tinted track in dark mode.
+
+Nebula doesn't set info, success, warning or danger, so those keep BEEQ's values: the info alert stays blue while the brand turns fuchsia. Toggle the mode in the preview to compare both palettes.
+
+<CodeLivePreview mode="iframe" height="44rem" removePadding code={`
   <style>
-    /* TechFlow — Base variables */
+    @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap");
 
-    :host {
-      --bq-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      --bq-radius--none: 0;
-      --bq-radius--xs2: 0.0625rem;
-      --bq-radius--xs: 0.125rem;
-      --bq-radius--s: 0.25rem;
-      --bq-radius--m: 0.5rem;
-      --bq-radius--l: 1rem;
-      --bq-radius--full: 9999px;
+    /* 1. Root semantics: palette, neutrals, type and shape */
+    [bq-theme="nebula"] {
+      --bq-font-family: "Space Grotesk", sans-serif;
 
-      --bq-brand-light: #a8f0e6;
-      --bq-brand: #00836e;
-      --bq-brand-dark: #005a4f;
+      --bq-brand-light:  #fae8ff;
+      --bq-brand:        #c026d3;
+      --bq-brand-dark:   #4a044e;
+      --bq-brand-strong: #a21caf;
+      --bq-brand-bright: #f0abfc;
 
-      --bq-accent-light: #e8d5f2;
-      --bq-accent: #9d4edd;
-      --bq-accent-dark: #5a189a;
+      --bq-accent-light:  #cffafe;
+      --bq-accent:        #0e7490;
+      --bq-accent-dark:   #083344;
+      --bq-accent-strong: #0e7490;
+      --bq-accent-bright: #67e8f9;
 
-      --bq-success-light: #a1e4cb;
-      --bq-success: #05b981;
-      --bq-success-dark: #047857;
+      --bq-neutral-50:   #f7f6fb;
+      --bq-neutral-100:  #efedf7;
+      --bq-neutral-200:  #dedaee;
+      --bq-neutral-300:  #c3bdd9;
+      --bq-neutral-400:  #a29abf;
+      --bq-neutral-500:  #7b729d;
+      --bq-neutral-600:  #5d5580;
+      --bq-neutral-700:  #463f66;
+      --bq-neutral-800:  #2b2644;
+      --bq-neutral-900:  #221d38;
+      --bq-neutral-950:  #18142b;
+      --bq-neutral-1000: #0e0b1c;
 
-      --bq-danger-light: #fecaca;
-      --bq-danger: #ef4444;
-      --bq-danger-dark: #991b1b;
-
-      --bq-warning-light: #fef3c7;
-      --bq-warning: #f59e0b;
-      --bq-warning-dark: #92400e;
-
-      --bq-info-light: #bfdbfe;
-      --bq-info: #3b82f6;
-      --bq-info-dark: #1e3a8a;
-
-      --bq-focus: #00d9c4;
-
-      --bq-white: #ffffff;
-      --bq-black: #000000;
-
-      --bq-neutral-50: #f9fafb;
-      --bq-neutral-100: #f3f4f6;
-      --bq-neutral-200: #e5e7eb;
-      --bq-neutral-300: #d1d5db;
-      --bq-neutral-400: #9ca3af;
-      --bq-neutral-500: #6b7280;
-      --bq-neutral-600: #4b5563;
-      --bq-neutral-700: #374151;
-      --bq-neutral-800: #1f2937;
-      --bq-neutral-900: #111827;
-      --bq-neutral-950: #0f172a;
-      --bq-neutral-1000: #030712;
+      --bq-radius--s: 0.75rem;
+      --bq-radius--m: 1.25rem;
+      --bq-radius--l: 2rem;
     }
 
-    /* TechFlow — Light mode declarative tokens */
-
-    :host([bq-theme="techflow"]),
-    :host(.techflow) {
-
-      --bq-background--primary: #030712;
-      --bq-background--secondary: #0f172a;
-      --bq-background--tertiary: #1f2937;
-      --bq-background--alt: #374151;
-      --bq-background--inverse: #f9fafb;
-      --bq-background--brand: #009b88;
-      --bq-background--overlay: rgba(0, 0, 0, 0.7);
-      --bq-icon--primary: #f3f4f6;
-      --bq-icon--secondary: #9ca3af;
-      --bq-icon--inverse: #1f2937;
-      --bq-icon--brand: #00d9c4;
-      --bq-icon--alt: #ffffff;
-      --bq-icon--info: #60a5fa;
-      --bq-icon--success: #34d399;
-      --bq-icon--warning: #fbbf24;
-      --bq-icon--danger: #f87171;
-      --bq-stroke--primary: #374151;
-      --bq-stroke--secondary: #4b5563;
-      --bq-stroke--tertiary: #9ca3af;
-      --bq-stroke--inverse: #0f172a;
-      --bq-stroke--brand: #00d9c4;
-      --bq-stroke--alt: #1f2937;
-      --bq-stroke--success: #34d399;
-      --bq-stroke--warning: #fbbf24;
-      --bq-stroke--danger: #f87171;
-      --bq-text--primary: #f9fafb;
-      --bq-text--secondary: #9ca3af;
-      --bq-text--inverse: #1f2937;
-      --bq-text--brand: #00d9c4;
-      --bq-text--alt: #ffffff;
-      --bq-text--info: #60a5fa;
-      --bq-text--success: #34d399;
-      --bq-text--warning: #fbbf24;
-      --bq-text--danger: #f87171;
-      --bq-ui--primary: #1f2937;
-      --bq-ui--secondary: #374151;
-      --bq-ui--tertiary: #4b5563;
-      --bq-ui--inverse: #f9fafb;
-      --bq-ui--brand: #00d9c4;
-      --bq-ui--brand-alt: #009b88;
-      --bq-ui--alt: #0f172a;
-      --bq-ui--success: #34d399;
-      --bq-ui--success-alt: #10b981;
-      --bq-ui--warning: #fbbf24;
-      --bq-ui--warning-alt: #f59e0b;
-      --bq-ui--danger: #f87171;
-      --bq-ui--danger-alt: #ef4444;
-
-      --bq-state--hover: rgba(255, 255, 255, 0.1);
-      --bq-state--active: rgba(255, 255, 255, 0.15);
+    /* 2. Mode roles: dark fills use the bright steps, with dark text on top */
+    [bq-theme="nebula"][bq-mode="dark"] {
+      --bq-ui--brand:       var(--bq-brand-bright);
+      --bq-text--on-brand:  var(--bq-neutral-1000);
+      --bq-ui--accent:      var(--bq-accent-bright);
+      --bq-text--on-accent: var(--bq-neutral-1000);
     }
 
-    /* TechFlow — Dark mode declarative tokens */
-
-    :host([bq-theme="techflow"][bq-mode="dark"]),
-    :host(.techflow.dark) {
-      --bq-background--primary: #ffffff;
-      --bq-background--secondary: #f9fafb;
-      --bq-background--tertiary: #f3f4f6;
-      --bq-background--alt: #e5e7eb;
-      --bq-background--inverse: #111827;
-      --bq-background--brand: #a8f0e6;
-      --bq-background--overlay: rgba(0, 0, 0, 0.5);
-
-      --bq-icon--primary: #1f2937;
-      --bq-icon--secondary: #6b7280;
-      --bq-icon--inverse: #f9fafb;
-      --bq-icon--brand: #00836e;
-      --bq-icon--alt: #ffffff;
-      --bq-icon--info: #1d4ed8;
-      --bq-icon--success: #047857;
-      --bq-icon--warning: #92400e;
-      --bq-icon--danger: #b91c1c;
-
-      --bq-stroke--primary: #e5e7eb;
-      --bq-stroke--secondary: #d1d5db;
-      --bq-stroke--tertiary: #9ca3af;
-      --bq-stroke--inverse: #ffffff;
-      --bq-stroke--brand: #00836e;
-      --bq-stroke--alt: #f3f4f6;
-      --bq-stroke--success: #047857;
-      --bq-stroke--warning: #92400e;
-      --bq-stroke--danger: #b91c1c;
-
-      --bq-text--primary: #111827;
-      --bq-text--secondary: #6b7280;
-      --bq-text--inverse: #f9fafb;
-      --bq-text--brand: #00836e;
-      --bq-text--alt: #ffffff;
-      --bq-text--info: #1d4ed8;
-      --bq-text--success: #047857;
-      --bq-text--warning: #92400e;
-      --bq-text--danger: #b91c1c;
-
-      --bq-ui--primary: #ffffff;
-      --bq-ui--secondary: #f3f4f6;
-      --bq-ui--tertiary: #e5e7eb;
-      --bq-ui--inverse: #111827;
-      --bq-ui--brand: #00d9c4;
-      --bq-ui--brand-alt: #a8f0e6;
-      --bq-ui--alt: #f9fafb;
-      --bq-ui--success: #05b981;
-      --bq-ui--success-alt: #a1e4cb;
-      --bq-ui--warning: #f59e0b;
-      --bq-ui--warning-alt: #fef3c7;
-      --bq-ui--danger: #ef4444;
-      --bq-ui--danger-alt: #fecaca;
-
-      --bq-state--hover: rgba(0, 0, 0, 0.08);
-      --bq-state--active: rgba(0, 0, 0, 0.12);
+    /* 3. Component variables: raised, outlined cards and an accent progress bar,
+       with a cyan-tinted track in dark mode */
+    [bq-theme="nebula"] bq-card {
+      --bq-card--background:  var(--bq-ui--primary);
+      --bq-card--borderColor: var(--bq-stroke--primary);
+      --bq-card--borderWidth: var(--bq-stroke-s);
     }
 
-    :host {
-      align-items: stretch !important;
-      flex-direction: column !important;
-      flex-flow: column nowrap !important;
-
-      color: var(--bq-text--primary);
+    [bq-theme="nebula"] bq-progress {
+      --bq-progress-bar--indicatorColor: var(--bq-ui--accent);
     }
 
-    .toolbar {
-      display: flex;
-      justify-content: flex-end;
-      margin-block-end: var(--bq-spacing-m);
+    [bq-theme="nebula"][bq-mode="dark"] bq-progress {
+      --bq-progress-bar--trackColor: color-mix(in srgb, var(--bq-ui--accent) 25%, var(--bq-ui--primary));
     }
 
-    .tab-panel {
-      display: none;
+    /* Demo layout */
+    body {
+      font-family: var(--bq-font-family);
       padding: var(--bq-spacing-l);
+    }
 
-      &.active {
-        display: block;
-      }
+    .mission-card {
+      --bq-card--padding: var(--bq-spacing-xl);
 
-      section {
-        margin-block-start: var(--bq-spacing-l);
-      }
+      max-inline-size: 36rem;
+      margin-inline: auto;
+    }
 
-      section h1,
-      section h2 {
-        margin-block-end: var(--bq-spacing-m);
-      }
+    /* Brand-to-accent bar and two top-corner glows. The glows peak at a 10% tint,
+       so text on the card keeps its contrast in both modes. */
+    .mission-card::part(wrapper) {
+      background-image:
+        linear-gradient(90deg, var(--bq-ui--brand), var(--bq-ui--accent)),
+        radial-gradient(circle at 0 0, color-mix(in srgb, var(--bq-ui--brand) 10%, transparent), transparent 60%),
+        radial-gradient(circle at 100% 0, color-mix(in srgb, var(--bq-ui--accent) 10%, transparent), transparent 60%);
+      background-repeat: no-repeat;
+      background-size: 100% var(--bq-spacing-xs), 100% 100%, 100% 100%;
+      box-shadow: var(--bq-box-shadow--m);
+    }
+
+    .mission {
+      display: flex;
+      flex-direction: column;
+      gap: var(--bq-spacing-l);
+    }
+
+    .mission__header,
+    .mission__tags,
+    .mission__actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--bq-spacing-s);
+    }
+
+    .mission__title {
+      flex: 1;
+    }
+
+    .mission__title h2,
+    .mission__title p {
+      margin: 0;
+    }
+
+    .mission__title h2 {
+      font-size: var(--bq-font-size--xl);
+      font-weight: var(--bq-font-weight--bold);
+    }
+
+    .mission__title p {
+      color: var(--bq-text--secondary);
+    }
+
+    .mission__meter {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .mission__actions {
+      justify-content: flex-end;
     }
   </style>
 
-  <div class="toolbar">
-    <bq-button id="theme-toggle" appearance="secondary" label="Toggle theme" only-icon>
-      <bq-icon id="toggle-icon" name="sun"></bq-icon>
-    </bq-button>
-  </div>
+  <bq-card class="mission-card" border="l">
+    <main class="mission">
+      <header class="mission__header">
+        <bq-avatar initials="OR" label="Orion crew" size="medium"></bq-avatar>
+        <div class="mission__title">
+          <h2>Orion launch window</h2>
+          <p>Mission control · T-minus 42 min</p>
+        </div>
+        <bq-button id="mode-toggle" appearance="secondary" border="full" label="Switch to dark mode" only-icon size="small">
+          <bq-icon id="mode-icon" name="moon"></bq-icon>
+        </bq-button>
+      </header>
 
-  <bq-tab-group value="home">
-    <bq-tab tab-id="home">
-      <bq-icon name="house-line" slot="icon"></bq-icon>
-      Home
-    </bq-tab>
-    <bq-tab tab-id="profile">
-      <bq-icon name="user" slot="icon"></bq-icon>
-      Profile
-    </bq-tab>
-    <bq-tab tab-id="settings">
-      <bq-icon name="gear" slot="icon"></bq-icon>
-      Settings
-    </bq-tab>
-  </bq-tab-group>
+      <bq-alert type="info" open disable-close>
+        Info stays blue
+        <span slot="body">Nebula sets only brand, accent and neutrals, so info, success, warning and danger keep BEEQ's values.</span>
+      </bq-alert>
 
-  <div class="tab-panel active" id="home">
-    <h1>Hello BEEQ(ers)!</h1>
-    <p>
-      This example shows how to create and apply a custom theme to
-      <a class="bq-link" href="https://beeq.design/" target="_blank" rel="noopener noreferrer">
-        BEEQ components
-      </a>
-      using CSS variables.
-      Try toggling the theme and switching between tabs to see how the colors adapt across components and modes.
-    </p>
-    <section>
-      <h2>Buttons</h2>
-      <bq-button appearance="primary">Primary Button</bq-button>
-      <bq-button appearance="secondary">Secondary Button</bq-button>
-      <bq-button variant="danger">Delete</bq-button>
-      <bq-button variant="ghost">Ghost</bq-button>
-    </section>
-    <section>
-      <h2>Input</h2>
-      <bq-input placeholder="Placeholder">
-        <label slot="label">Input label</label>
+      <div class="mission__tags">
+        <bq-tag color="success">Fuel nominal</bq-tag>
+        <bq-tag color="warning">Crosswind 18 kn</bq-tag>
+        <bq-tag color="info" variant="outline">Weather update</bq-tag>
+      </div>
+
+      <div class="mission__meter">
+        <span>Fuel load</span>
+        <bq-progress thickness="large" value="62" label></bq-progress>
+      </div>
+
+      <bq-input name="callsign" placeholder="e.g. Orion-7">
+        <label slot="label">Callsign</label>
       </bq-input>
-    </section>
-  </div>
 
-  <div class="tab-panel" id="profile">
-    <h1>Profile tab!</h1>
-    <span>
-      You can check the logic added to the Tab component in the
-      <code>index.ts</code> file.
-    </span>
-  </div>
+      <bq-switch name="autopilot" checked>Autopilot</bq-switch>
 
-  <div class="tab-panel" id="settings">
-    <h1>Settings tab!</h1>
-  </div>
+      <footer class="mission__actions">
+        <bq-button appearance="text">Cancel</bq-button>
+        <bq-button appearance="secondary">Save draft</bq-button>
+        <bq-button>
+          <bq-icon name="rocket-launch" slot="prefix"></bq-icon>
+          Launch
+        </bq-button>
+      </footer>
+    </main>
+  </bq-card>
 
   <script>
     (() => {
-      const hostBody = previewRoot.host;
-      hostBody.setAttribute('bq-theme', 'techflow');
-      hostBody.setAttribute('bq-mode', 'dark');
+      const root = previewRoot.documentElement;
+      const targets = [root, previewRoot.body];
+      const toggle = previewRoot.querySelector('#mode-toggle');
+      const icon = previewRoot.querySelector('#mode-icon');
 
-      const TAB_ACTIVE_CLASS = 'active';
-      const bqTabElem = previewRoot.querySelector('bq-tab-group');
-      const tabPanels = previewRoot.querySelectorAll('.tab-panel');
+      targets.forEach((el) => el.setAttribute('bq-theme', 'nebula'));
 
-      const toggleBtn = previewRoot.querySelector('#theme-toggle');
-      const toggleIcon = previewRoot.querySelector('#toggle-icon');
+      const syncToggle = () => {
+        const isDark = root.getAttribute('bq-mode') === 'dark';
+        icon?.setAttribute('name', isDark ? 'sun' : 'moon');
+        toggle?.setAttribute('label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+      };
 
-      bqTabElem?.addEventListener('bqChange', (event) => {
-        if (!tabPanels.length) return;
-
-        const activeTab = event.detail.value;
-        if (!activeTab) return;
-
-        tabPanels.forEach((tabPanel) => {
-          tabPanel.classList.remove(TAB_ACTIVE_CLASS);
-          if (tabPanel.id === activeTab) tabPanel.classList.add(TAB_ACTIVE_CLASS);
-        });
+      toggle?.addEventListener('bqClick', () => {
+        const next = root.getAttribute('bq-mode') === 'dark' ? 'light' : 'dark';
+        targets.forEach((el) => el.setAttribute('bq-mode', next));
       });
 
-      toggleBtn?.addEventListener('bqClick', () => {
-        const isDark = hostBody.getAttribute('bq-mode') === 'dark';
-        hostBody.setAttribute('bq-mode', isDark ? 'light' : 'dark');
-
-        if (!toggleIcon) return;
-
-        toggleIcon.setAttribute('name', isDark ? 'moon' : 'sun');
-      });
+      new MutationObserver(syncToggle).observe(root, { attributes: true, attributeFilter: ['bq-mode'] });
+      syncToggle();
     })();
   </script>
 `}>
   <CodeGroup>
     ```css styles.css icon="css" expandable
-    /* -------------------------------------------------------------------------- */
-    /* BASE THEME VARIABLES                                                       */
-    /* -------------------------------------------------------------------------- */
-    [bq-theme="techflow"],
-    .techflow {
-      --bq-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      --bq-brand-light: #a8f0e6;
-      --bq-brand:       #00836e;
-      --bq-brand-dark:  #005a4f;
-      --bq-accent-light: #e8d5f2;
-      --bq-accent:       #9d4edd;
-      --bq-accent-dark:  #5a189a;
-      --bq-success-light: #a1e4cb;
-      --bq-success:       #05b981;
-      --bq-success-dark:  #047857;
-      --bq-danger-light:  #fecaca;
-      --bq-danger:        #ef4444;
-      --bq-danger-dark:   #991b1b;
-      --bq-warning-light: #fef3c7;
-      --bq-warning:       #f59e0b;
-      --bq-warning-dark:  #92400e;
-      --bq-info-light:    #bfdbfe;
-      --bq-info:          #3b82f6;
-      --bq-info-dark:     #1e3a8a;
-      --bq-focus:         #00836e;
-      --bq-white:         #ffffff;
-      --bq-black:         #000000;
-      --bq-neutral-50:    #f9fafb;
-      --bq-neutral-100:   #f3f4f6;
-      --bq-neutral-200:   #e5e7eb;
-      --bq-neutral-300:   #d1d5db;
-      --bq-neutral-400:   #9ca3af;
-      --bq-neutral-500:   #6b7280;
-      --bq-neutral-600:   #4b5563;
-      --bq-neutral-700:   #374151;
-      --bq-neutral-800:   #1f2937;
-      --bq-neutral-900:   #111827;
-      --bq-neutral-950:   #0f172a;
-      --bq-neutral-1000:  #030712;
+    @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap");
+
+    /* 1. Root semantics: palette, neutrals, type and shape */
+    [bq-theme="nebula"] {
+      --bq-font-family: "Space Grotesk", sans-serif;
+
+      --bq-brand-light:  #fae8ff;
+      --bq-brand:        #c026d3;
+      --bq-brand-dark:   #4a044e;
+      --bq-brand-strong: #a21caf;
+      --bq-brand-bright: #f0abfc;
+
+      --bq-accent-light:  #cffafe;
+      --bq-accent:        #0e7490;
+      --bq-accent-dark:   #083344;
+      --bq-accent-strong: #0e7490;
+      --bq-accent-bright: #67e8f9;
+
+      --bq-neutral-50:   #f7f6fb;
+      --bq-neutral-100:  #efedf7;
+      --bq-neutral-200:  #dedaee;
+      --bq-neutral-300:  #c3bdd9;
+      --bq-neutral-400:  #a29abf;
+      --bq-neutral-500:  #7b729d;
+      --bq-neutral-600:  #5d5580;
+      --bq-neutral-700:  #463f66;
+      --bq-neutral-800:  #2b2644;
+      --bq-neutral-900:  #221d38;
+      --bq-neutral-950:  #18142b;
+      --bq-neutral-1000: #0e0b1c;
+
+      --bq-radius--s: 0.75rem;
+      --bq-radius--m: 1.25rem;
+      --bq-radius--l: 2rem;
     }
 
-    /* -------------------------------------------------------------------------- */
-    /* LIGHT MODE                                                                 */
-    /* -------------------------------------------------------------------------- */
-    [bq-theme="techflow"]:not([bq-mode]),
-    [bq-theme="techflow"][bq-mode="light"],
-    .techflow:not([bq-mode]),
-    .techflow.light {
-      --bq-background--primary:   #ffffff;
-      --bq-background--secondary: #f9fafb;
-      --bq-background--tertiary:  #f3f4f6;
-      --bq-background--alt:       #e5e7eb;
-      --bq-background--inverse:   #111827;
-      --bq-background--brand:     #a8f0e6;
-      --bq-background--overlay:   rgba(0, 0, 0, 0.5);
-      --bq-icon--primary:   #1f2937;
-      --bq-icon--secondary: #6b7280;
-      --bq-icon--inverse:   #f9fafb;
-      --bq-icon--brand:     #00836e;
-      --bq-icon--alt:       #ffffff;
-      --bq-icon--info:      #1d4ed8;
-      --bq-icon--success:   #047857;
-      --bq-icon--warning:   #92400e;
-      --bq-icon--danger:    #b91c1c;
-      --bq-stroke--primary:   #e5e7eb;
-      --bq-stroke--secondary: #d1d5db;
-      --bq-stroke--tertiary:  #9ca3af;
-      --bq-stroke--inverse:   #ffffff;
-      --bq-stroke--brand:     #00836e;
-      --bq-stroke--alt:       #f3f4f6;
-      --bq-stroke--success:   #047857;
-      --bq-stroke--warning:   #92400e;
-      --bq-stroke--danger:    #b91c1c;
-      --bq-text--primary:   #111827;
-      --bq-text--secondary: #6b7280;
-      --bq-text--inverse:   #f9fafb;
-      --bq-text--brand:     #00836e;
-      --bq-text--alt:       #ffffff;
-      --bq-text--info:      #1d4ed8;
-      --bq-text--success:   #047857;
-      --bq-text--warning:   #92400e;
-      --bq-text--danger:    #b91c1c;
-      --bq-ui--primary:     #ffffff;
-      --bq-ui--secondary:   #f3f4f6;
-      --bq-ui--tertiary:    #e5e7eb;
-      --bq-ui--inverse:     #111827;
-      --bq-ui--brand:       #00836e;
-      --bq-ui--brand-alt:   #a8f0e6;
-      --bq-ui--alt:         #f9fafb;
-      --bq-ui--success:     #047857;
-      --bq-ui--success-alt: #a1e4cb;
-      --bq-ui--warning:     #92400e;
-      --bq-ui--warning-alt: #fef3c7;
-      --bq-ui--danger:      #b91c1c;
-      --bq-ui--danger-alt:  #fecaca;
-      --bq-state--hover:    rgba(0, 0, 0, 0.08);
-      --bq-state--active:   rgba(0, 0, 0, 0.12);
+    /* 2. Mode roles: dark fills use the bright steps, with dark text on top */
+    [bq-theme="nebula"][bq-mode="dark"] {
+      --bq-ui--brand:       var(--bq-brand-bright);
+      --bq-text--on-brand:  var(--bq-neutral-1000);
+      --bq-ui--accent:      var(--bq-accent-bright);
+      --bq-text--on-accent: var(--bq-neutral-1000);
     }
 
-    /* -------------------------------------------------------------------------- */
-    /* DARK MODE                                                                  */
-    /* -------------------------------------------------------------------------- */
-    [bq-theme="techflow"][bq-mode="dark"],
-    .techflow.dark {
-      --bq-background--primary:   #030712;
-      --bq-background--secondary: #0f172a;
-      --bq-background--tertiary:  #1f2937;
-      --bq-background--alt:       #374151;
-      --bq-background--inverse:   #f9fafb;
-      --bq-background--brand:     #009b88;
-      --bq-background--overlay:   rgba(0, 0, 0, 0.7);
-      --bq-icon--primary:   #f3f4f6;
-      --bq-icon--secondary: #9ca3af;
-      --bq-icon--inverse:   #1f2937;
-      --bq-icon--brand:     #00d9c4;
-      --bq-icon--alt:       #ffffff;
-      --bq-icon--info:      #60a5fa;
-      --bq-icon--success:   #34d399;
-      --bq-icon--warning:   #fbbf24;
-      --bq-icon--danger:    #f87171;
-      --bq-stroke--primary:   #374151;
-      --bq-stroke--secondary: #4b5563;
-      --bq-stroke--tertiary:  #9ca3af;
-      --bq-stroke--inverse:   #0f172a;
-      --bq-stroke--brand:     #00d9c4;
-      --bq-stroke--alt:       #1f2937;
-      --bq-stroke--success:   #34d399;
-      --bq-stroke--warning:   #fbbf24;
-      --bq-stroke--danger:    #f87171;
-      --bq-text--primary:   #f9fafb;
-      --bq-text--secondary: #9ca3af;
-      --bq-text--inverse:   #1f2937;
-      --bq-text--brand:     #00d9c4;
-      --bq-text--alt:       #ffffff;
-      --bq-text--info:      #60a5fa;
-      --bq-text--success:   #34d399;
-      --bq-text--warning:   #fbbf24;
-      --bq-text--danger:    #f87171;
-      --bq-ui--primary:     #1f2937;
-      --bq-ui--secondary:   #374151;
-      --bq-ui--tertiary:    #4b5563;
-      --bq-ui--inverse:     #f9fafb;
-      --bq-ui--brand:       #00d9c4;
-      --bq-ui--brand-alt:   #009b88;
-      --bq-ui--alt:         #0f172a;
-      --bq-ui--success:     #34d399;
-      --bq-ui--success-alt: #10b981;
-      --bq-ui--warning:     #fbbf24;
-      --bq-ui--warning-alt: #f59e0b;
-      --bq-ui--danger:      #f87171;
-      --bq-ui--danger-alt:  #ef4444;
-      --bq-state--hover:    rgba(255, 255, 255, 0.10);
-      --bq-state--active:   rgba(255, 255, 255, 0.15);
+    /* 3. Component variables: raised, outlined cards and an accent progress bar,
+       with a cyan-tinted track in dark mode */
+    [bq-theme="nebula"] bq-card {
+      --bq-card--background:  var(--bq-ui--primary);
+      --bq-card--borderColor: var(--bq-stroke--primary);
+      --bq-card--borderWidth: var(--bq-stroke-s);
+    }
+
+    [bq-theme="nebula"] bq-progress {
+      --bq-progress-bar--indicatorColor: var(--bq-ui--accent);
+    }
+
+    [bq-theme="nebula"][bq-mode="dark"] bq-progress {
+      --bq-progress-bar--trackColor: color-mix(in srgb, var(--bq-ui--accent) 25%, var(--bq-ui--primary));
+    }
+
+    /* Demo layout */
+    body {
+      margin: 0;
+      padding: var(--bq-spacing-l);
+      background-color: var(--bq-background--primary);
+      color: var(--bq-text--primary);
+      font-family: var(--bq-font-family);
+    }
+
+    .mission-card {
+      --bq-card--padding: var(--bq-spacing-xl);
+
+      max-inline-size: 36rem;
+      margin-inline: auto;
+    }
+
+    /* Brand-to-accent bar and two top-corner glows. The glows peak at a 10% tint,
+       so text on the card keeps its contrast in both modes. */
+    .mission-card::part(wrapper) {
+      background-image:
+        linear-gradient(90deg, var(--bq-ui--brand), var(--bq-ui--accent)),
+        radial-gradient(circle at 0 0, color-mix(in srgb, var(--bq-ui--brand) 10%, transparent), transparent 60%),
+        radial-gradient(circle at 100% 0, color-mix(in srgb, var(--bq-ui--accent) 10%, transparent), transparent 60%);
+      background-repeat: no-repeat;
+      background-size: 100% var(--bq-spacing-xs), 100% 100%, 100% 100%;
+      box-shadow: var(--bq-box-shadow--m);
+    }
+
+    .mission {
+      display: flex;
+      flex-direction: column;
+      gap: var(--bq-spacing-l);
+    }
+
+    .mission__header,
+    .mission__tags,
+    .mission__actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--bq-spacing-s);
+    }
+
+    .mission__title {
+      flex: 1;
+    }
+
+    .mission__title h2,
+    .mission__title p {
+      margin: 0;
+    }
+
+    .mission__title h2 {
+      font-size: var(--bq-font-size--xl);
+      font-weight: var(--bq-font-weight--bold);
+    }
+
+    .mission__title p {
+      color: var(--bq-text--secondary);
+    }
+
+    .mission__meter {
+      display: flex;
+      flex-direction: column;
+      gap: var(--bq-spacing-xs);
+    }
+
+    .mission__actions {
+      justify-content: flex-end;
     }
     ```
 
     ```html HTML icon="html5" expandable
     <!DOCTYPE html>
-    <html lang="en" bq-theme="techflow" bq-mode="dark">
+    <html lang="en" bq-theme="nebula" bq-mode="light">
       <head>
-        <link rel="stylesheet" href="path/to/beeq.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@beeq/core/dist/beeq/beeq.css">
         <link rel="stylesheet" href="styles.css">
+        <script
+          type="module"
+          src="https://cdn.jsdelivr.net/npm/@beeq/core/dist/beeq/beeq.esm.js"
+          data-beeq="https://cdn.jsdelivr.net/npm/@beeq/core/dist/beeq/svg/"
+        ></script>
       </head>
       <body>
-        <div class="toolbar">
-          <bq-button appearance="secondary" label="Toggle theme" only-icon id="theme-toggle">
-            <bq-icon id="toggle-icon" name="sun"></bq-icon>
-          </bq-button>
-        </div>
+        <bq-card class="mission-card" border="l">
+          <main class="mission">
+            <header class="mission__header">
+              <bq-avatar initials="OR" label="Orion crew" size="medium"></bq-avatar>
+              <div class="mission__title">
+                <h2>Orion launch window</h2>
+                <p>Mission control · T-minus 42 min</p>
+              </div>
+              <bq-button id="mode-toggle" appearance="secondary" border="full" label="Switch to dark mode" only-icon size="small">
+                <bq-icon id="mode-icon" name="moon"></bq-icon>
+              </bq-button>
+            </header>
 
-        <bq-tab-group value="home" id="tabs">
-          <bq-tab tab-id="home">
-            <bq-icon name="house-line" slot="icon"></bq-icon>
-            Home
-          </bq-tab>
-          <bq-tab tab-id="profile">
-            <bq-icon name="user" slot="icon"></bq-icon>
-            Profile
-          </bq-tab>
-          <bq-tab tab-id="settings">
-            <bq-icon name="gear" slot="icon"></bq-icon>
-            Settings
-          </bq-tab>
-        </bq-tab-group>
+            <bq-alert type="info" open disable-close>
+              Info stays blue
+              <span slot="body">Nebula sets only brand, accent and neutrals, so info, success, warning and danger keep BEEQ's values.</span>
+            </bq-alert>
 
-        <div class="tab-panel active" id="home">
-          <h1>Hello BEEQ(ers)!</h1>
-          <p>
-            This example shows how to create and apply a custom theme to
-            <a class="bq-link" href="https://beeq.design/" target="_blank" rel="noopener noreferrer">
-              BEEQ components
-            </a>
-            using CSS variables. Try toggling the theme and switching between tabs to see how the
-            colors adapt across components and modes.
-          </p>
-          <section style="margin-block-start: var(--bq-spacing-l);">
-            <h2>Buttons</h2>
-            <bq-button appearance="primary">Primary Button</bq-button>
-            <bq-button appearance="secondary">Secondary Button</bq-button>
-            <bq-button variant="danger">Delete</bq-button>
-            <bq-button variant="ghost">Ghost</bq-button>
-          </section>
-          <section style="margin-block-start: var(--bq-spacing-l);">
-            <h2>Input</h2>
-            <bq-input placeholder="Placeholder">
-              <label slot="label">Input label</label>
+            <div class="mission__tags">
+              <bq-tag color="success">Fuel nominal</bq-tag>
+              <bq-tag color="warning">Crosswind 18 kn</bq-tag>
+              <bq-tag color="info" variant="outline">Weather update</bq-tag>
+            </div>
+
+            <div class="mission__meter">
+              <span>Fuel load</span>
+              <bq-progress value="62" label></bq-progress>
+            </div>
+
+            <bq-input name="callsign" placeholder="e.g. Orion-7">
+              <label slot="label">Callsign</label>
             </bq-input>
-          </section>
-        </div>
-        <div class="tab-panel" id="profile">
-          <h1>Profile tab!</h1>
-          <span>You can check the logic added to the Tab component in the <code>index.ts</code> file.</span>
-        </div>
-        <div class="tab-panel" id="settings">
-          <h1>Settings tab!</h1>
-        </div>
 
-        <script type="module">
-          const TAB_ACTIVE_CLASS = 'active';
-          const bqTabElem = document.getElementById('tabs');
-          const tabPanels = document.querySelectorAll('.tab-panel');
-          const toggleBtn = document.getElementById('theme-toggle');
-          const toggleIcon = document.getElementById('toggle-icon');
+            <bq-switch name="autopilot" checked>Autopilot</bq-switch>
 
-          bqTabElem?.addEventListener('bqChange', (event) => {
-            const activeTab = event.detail.value;
-            tabPanels.forEach((panel) => {
-              panel.classList.toggle(TAB_ACTIVE_CLASS, panel.id === activeTab);
-            });
-          });
+            <footer class="mission__actions">
+              <bq-button appearance="text">Cancel</bq-button>
+              <bq-button appearance="secondary">Save draft</bq-button>
+              <bq-button>
+                <bq-icon name="rocket-launch" slot="prefix"></bq-icon>
+                Launch
+              </bq-button>
+            </footer>
+          </main>
+        </bq-card>
 
-          toggleBtn?.addEventListener('bqClick', () => {
-            const isNowLight = document.documentElement.getAttribute('bq-mode') !== 'light';
-            document.documentElement.setAttribute('bq-mode', isNowLight ? 'light' : 'dark');
-            if (toggleIcon) toggleIcon.setAttribute('name', isNowLight ? 'moon' : 'sun');
+        <script>
+          const root = document.documentElement;
+          const toggle = document.querySelector("#mode-toggle");
+          const icon = document.querySelector("#mode-icon");
+
+          toggle.addEventListener("bqClick", () => {
+            const isDark = root.getAttribute("bq-mode") === "dark";
+            root.setAttribute("bq-mode", isDark ? "light" : "dark");
+            icon.setAttribute("name", isDark ? "moon" : "sun");
+            toggle.setAttribute("label", isDark ? "Switch to dark mode" : "Switch to light mode");
           });
         </script>
       </body>
@@ -783,336 +603,165 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
     ```
 
     ```tsx React icon="react" expandable
-    import { useState, useEffect } from "react";
-    import { BqTabGroup, BqTab, BqIcon, BqButton, BqInput } from "@beeq/react";
+    import { useEffect, useState } from "react";
+    import { BqAlert, BqAvatar, BqButton, BqCard, BqIcon, BqInput, BqProgress, BqSwitch, BqTag } from "@beeq/react";
     import "./styles.css";
 
-    // In main.tsx, apply the TechFlow theme:
-    // document.documentElement.setAttribute('bq-theme', 'techflow');
-
-    export function TechFlowDemo() {
-      const [activeTab, setActiveTab] = useState("home");
-      const [isDark, setIsDark] = useState(true);
+    export function NebulaDemo() {
+      const [isDark, setIsDark] = useState(false);
 
       useEffect(() => {
-        document.documentElement.setAttribute("bq-mode", isDark ? "dark" : "light");
+        const root = document.documentElement;
+        root.setAttribute("bq-theme", "nebula");
+        root.setAttribute("bq-mode", isDark ? "dark" : "light");
       }, [isDark]);
 
-      function toggleTheme() {
-        setIsDark((prev) => !prev);
-      }
-
       return (
-        <>
-          <div className="toolbar">
-            <BqButton appearance="secondary" label="Toggle theme" onlyIcon onBqClick={toggleTheme}>
-              <BqIcon name={isDark ? "sun" : "moon"} />
-            </BqButton>
-          </div>
+        <BqCard className="mission-card" border="l">
+          <main className="mission">
+            <header className="mission__header">
+              <BqAvatar initials="OR" label="Orion crew" size="medium" />
+              <div className="mission__title">
+                <h2>Orion launch window</h2>
+                <p>Mission control · T-minus 42 min</p>
+              </div>
+              <BqButton
+                appearance="secondary"
+                border="full"
+                label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+                onlyIcon
+                size="small"
+                onBqClick={() => setIsDark((prev) => !prev)}
+              >
+                <BqIcon name={isDark ? "sun" : "moon"} />
+              </BqButton>
+            </header>
 
-          <BqTabGroup
-            value="home"
-            onBqChange={(e: CustomEvent<{ value: string }>) => setActiveTab(e.detail.value)}
-          >
-            <BqTab tabId="home">
-              <BqIcon name="house-line" slot="icon" />
-              Home
-            </BqTab>
-            <BqTab tabId="profile">
-              <BqIcon name="user" slot="icon" />
-              Profile
-            </BqTab>
-            <BqTab tabId="settings">
-              <BqIcon name="gear" slot="icon" />
-              Settings
-            </BqTab>
-          </BqTabGroup>
-
-          {activeTab === "home" && (
-            <section>
-              <h1>Hello BEEQ(ers)!</h1>
-              <p>
-                This example shows how to create and apply a custom theme to{" "}
-                <a className="bq-link" href="https://beeq.design/" target="_blank" rel="noopener noreferrer">
-                  BEEQ components
-                </a>{" "}
-                using CSS variables. Try toggling the theme and switching between tabs to see how the
-                colors adapt across components and modes.
-              </p>
-              <section style={{ marginBlockStart: "var(--bq-spacing-l)" }}>
-                <h2>Buttons</h2>
-                <BqButton appearance="primary">Primary Button</BqButton>
-                <BqButton appearance="secondary">Secondary Button</BqButton>
-                <BqButton variant="danger">Delete</BqButton>
-                <BqButton variant="ghost">Ghost</BqButton>
-              </section>
-              <section style={{ marginBlockStart: "var(--bq-spacing-l)" }}>
-                <h2>Input</h2>
-                <BqInput placeholder="Placeholder">
-                  <label slot="label">Input label</label>
-                </BqInput>
-              </section>
-            </section>
-          )}
-          {activeTab === "profile" && (
-            <section>
-              <h1>Profile tab!</h1>
-              <span>
-                You can check the logic added to the Tab component in the{" "}
-                <code>index.ts</code> file.
+            <BqAlert type="info" open disableClose>
+              Info stays blue
+              <span slot="body">
+                Nebula sets only brand, accent and neutrals, so info, success, warning and danger keep BEEQ's values.
               </span>
-            </section>
-          )}
-          {activeTab === "settings" && <h1>Settings tab!</h1>}
-        </>
+            </BqAlert>
+
+            <div className="mission__tags">
+              <BqTag color="success">Fuel nominal</BqTag>
+              <BqTag color="warning">Crosswind 18 kn</BqTag>
+              <BqTag color="info" variant="outline">Weather update</BqTag>
+            </div>
+
+            <div className="mission__meter">
+              <span>Fuel load</span>
+              <BqProgress value={62} label />
+            </div>
+
+            <BqInput name="callsign" placeholder="e.g. Orion-7">
+              <label slot="label">Callsign</label>
+            </BqInput>
+
+            <BqSwitch name="autopilot" checked>
+              Autopilot
+            </BqSwitch>
+
+            <footer className="mission__actions">
+              <BqButton appearance="text">Cancel</BqButton>
+              <BqButton appearance="secondary">Save draft</BqButton>
+              <BqButton>
+                <BqIcon name="rocket-launch" slot="prefix" />
+                Launch
+              </BqButton>
+            </footer>
+          </main>
+        </BqCard>
       );
     }
     ```
 
     ```ts Angular icon="angular" expandable
-    import { Component, effect, inject, signal } from "@angular/core";
-    import { DOCUMENT } from "@angular/common";
-    import { BqTabGroup, BqTab, BqIcon, BqButton, BqInput } from "@beeq/angular/standalone";
+    import { Component, effect, signal } from "@angular/core";
+    import {
+      BqAlert,
+      BqAvatar,
+      BqButton,
+      BqCard,
+      BqIcon,
+      BqInput,
+      BqProgress,
+      BqSwitch,
+      BqTag,
+    } from "@beeq/angular/standalone";
 
-    // Apply the TechFlow theme in main.ts:
-    // document.documentElement.setAttribute('bq-theme', 'techflow');
+    // Add styles.css to the "styles" array in angular.json. Component styles are
+    // encapsulated, so the [bq-theme] selectors would never reach <html>.
 
     @Component({
       selector: "app-root",
       standalone: true,
-      imports: [BqTabGroup, BqTab, BqIcon, BqButton, BqInput],
+      imports: [BqAlert, BqAvatar, BqButton, BqCard, BqIcon, BqInput, BqProgress, BqSwitch, BqTag],
       template: `
-        <div class="toolbar">
-          <bq-button appearance="secondary" label="Toggle theme" only-icon (bqClick)="toggleTheme()">
-            <bq-icon [attr.name]="isDark() ? 'sun' : 'moon'"></bq-icon>
-          </bq-button>
-        </div>
+        <bq-card class="mission-card" border="l">
+          <main class="mission">
+            <header class="mission__header">
+              <bq-avatar initials="OR" label="Orion crew" size="medium"></bq-avatar>
+              <div class="mission__title">
+                <h2>Orion launch window</h2>
+                <p>Mission control · T-minus 42 min</p>
+              </div>
+              <bq-button
+                appearance="secondary"
+                border="full"
+                [label]="isDark() ? 'Switch to light mode' : 'Switch to dark mode'"
+                only-icon
+                size="small"
+                (bqClick)="isDark.set(!isDark())"
+              >
+                <bq-icon [name]="isDark() ? 'sun' : 'moon'"></bq-icon>
+              </bq-button>
+            </header>
 
-        <bq-tab-group value="home" (bqChange)="onTabChange($event)">
-          <bq-tab tab-id="home">
-            <bq-icon name="house-line" slot="icon"></bq-icon>
-            Home
-          </bq-tab>
-          <bq-tab tab-id="profile">
-            <bq-icon name="user" slot="icon"></bq-icon>
-            Profile
-          </bq-tab>
-          <bq-tab tab-id="settings">
-            <bq-icon name="gear" slot="icon"></bq-icon>
-            Settings
-          </bq-tab>
-        </bq-tab-group>
+            <bq-alert type="info" open disable-close>
+              Info stays blue
+              <span slot="body">Nebula sets only brand, accent and neutrals, so info, success, warning and danger keep BEEQ's values.</span>
+            </bq-alert>
 
-        @if (activeTab() === 'home') {
-          <section>
-            <h1>Hello BEEQ(ers)!</h1>
-            <p>
-              This example shows how to create and apply a custom theme to
-              <a class="bq-link" href="https://beeq.design/" target="_blank" rel="noopener noreferrer">
-                BEEQ components
-              </a>
-              using CSS variables. Try toggling the theme and switching between tabs to see how the
-              colors adapt across components and modes.
-            </p>
-            <section style="margin-block-start: var(--bq-spacing-l);">
-              <h2>Buttons</h2>
-              <bq-button appearance="primary">Primary Button</bq-button>
-              <bq-button appearance="secondary">Secondary Button</bq-button>
-              <bq-button variant="danger">Delete</bq-button>
-              <bq-button variant="ghost">Ghost</bq-button>
-            </section>
-            <section style="margin-block-start: var(--bq-spacing-l);">
-              <h2>Input</h2>
-              <bq-input placeholder="Placeholder">
-                <label slot="label">Input label</label>
-              </bq-input>
-            </section>
-          </section>
-        }
-        @if (activeTab() === 'profile') {
-          <section>
-            <h1>Profile tab!</h1>
-            <span>You can check the logic added to the Tab component in the <code>index.ts</code> file.</span>
-          </section>
-        }
-        @if (activeTab() === 'settings') {
-          <h1>Settings tab!</h1>
-        }
+            <div class="mission__tags">
+              <bq-tag color="success">Fuel nominal</bq-tag>
+              <bq-tag color="warning">Crosswind 18 kn</bq-tag>
+              <bq-tag color="info" variant="outline">Weather update</bq-tag>
+            </div>
+
+            <div class="mission__meter">
+              <span>Fuel load</span>
+              <bq-progress value="62" label></bq-progress>
+            </div>
+
+            <bq-input name="callsign" placeholder="e.g. Orion-7">
+              <label slot="label">Callsign</label>
+            </bq-input>
+
+            <bq-switch name="autopilot" checked>Autopilot</bq-switch>
+
+            <footer class="mission__actions">
+              <bq-button appearance="text">Cancel</bq-button>
+              <bq-button appearance="secondary">Save draft</bq-button>
+              <bq-button>
+                <bq-icon name="rocket-launch" slot="prefix"></bq-icon>
+                Launch
+              </bq-button>
+            </footer>
+          </main>
+        </bq-card>
       `,
-      styles: [`
-        /* -------------------------------------------------------------------------- */
-        /* BASE THEME VARIABLES                                                       */
-        /* -------------------------------------------------------------------------- */
-        [bq-theme="techflow"],
-        .techflow {
-          --bq-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-          --bq-brand-light: #a8f0e6;
-          --bq-brand:       #00836e;
-          --bq-brand-dark:  #005a4f;
-          --bq-accent-light: #e8d5f2;
-          --bq-accent:       #9d4edd;
-          --bq-accent-dark:  #5a189a;
-          --bq-success-light: #a1e4cb;
-          --bq-success:       #05b981;
-          --bq-success-dark:  #047857;
-          --bq-danger-light:  #fecaca;
-          --bq-danger:        #ef4444;
-          --bq-danger-dark:   #991b1b;
-          --bq-warning-light: #fef3c7;
-          --bq-warning:       #f59e0b;
-          --bq-warning-dark:  #92400e;
-          --bq-info-light:    #bfdbfe;
-          --bq-info:          #3b82f6;
-          --bq-info-dark:     #1e3a8a;
-          --bq-focus:         #00836e;
-          --bq-white:         #ffffff;
-          --bq-black:         #000000;
-          --bq-neutral-50:    #f9fafb;
-          --bq-neutral-100:   #f3f4f6;
-          --bq-neutral-200:   #e5e7eb;
-          --bq-neutral-300:   #d1d5db;
-          --bq-neutral-400:   #9ca3af;
-          --bq-neutral-500:   #6b7280;
-          --bq-neutral-600:   #4b5563;
-          --bq-neutral-700:   #374151;
-          --bq-neutral-800:   #1f2937;
-          --bq-neutral-900:   #111827;
-          --bq-neutral-950:   #0f172a;
-          --bq-neutral-1000:  #030712;
-        }
-
-        /* -------------------------------------------------------------------------- */
-        /* LIGHT MODE                                                                 */
-        /* -------------------------------------------------------------------------- */
-        [bq-theme="techflow"]:not([bq-mode]),
-        [bq-theme="techflow"][bq-mode="light"],
-        .techflow:not([bq-mode]),
-        .techflow.light {
-          --bq-background--primary:   #ffffff;
-          --bq-background--secondary: #f9fafb;
-          --bq-background--tertiary:  #f3f4f6;
-          --bq-background--alt:       #e5e7eb;
-          --bq-background--inverse:   #111827;
-          --bq-background--brand:     #a8f0e6;
-          --bq-background--overlay:   rgba(0, 0, 0, 0.5);
-          --bq-icon--primary:   #1f2937;
-          --bq-icon--secondary: #6b7280;
-          --bq-icon--inverse:   #f9fafb;
-          --bq-icon--brand:     #00836e;
-          --bq-icon--alt:       #ffffff;
-          --bq-icon--info:      #1d4ed8;
-          --bq-icon--success:   #047857;
-          --bq-icon--warning:   #92400e;
-          --bq-icon--danger:    #b91c1c;
-          --bq-stroke--primary:   #e5e7eb;
-          --bq-stroke--secondary: #d1d5db;
-          --bq-stroke--tertiary:  #9ca3af;
-          --bq-stroke--inverse:   #ffffff;
-          --bq-stroke--brand:     #00836e;
-          --bq-stroke--alt:       #f3f4f6;
-          --bq-stroke--success:   #047857;
-          --bq-stroke--warning:   #92400e;
-          --bq-stroke--danger:    #b91c1c;
-          --bq-text--primary:   #111827;
-          --bq-text--secondary: #6b7280;
-          --bq-text--inverse:   #f9fafb;
-          --bq-text--brand:     #00836e;
-          --bq-text--alt:       #ffffff;
-          --bq-text--info:      #1d4ed8;
-          --bq-text--success:   #047857;
-          --bq-text--warning:   #92400e;
-          --bq-text--danger:    #b91c1c;
-          --bq-ui--primary:     #ffffff;
-          --bq-ui--secondary:   #f3f4f6;
-          --bq-ui--tertiary:    #e5e7eb;
-          --bq-ui--inverse:     #111827;
-          --bq-ui--brand:       #00836e;
-          --bq-ui--brand-alt:   #a8f0e6;
-          --bq-ui--alt:         #f9fafb;
-          --bq-ui--success:     #047857;
-          --bq-ui--success-alt: #a1e4cb;
-          --bq-ui--warning:     #92400e;
-          --bq-ui--warning-alt: #fef3c7;
-          --bq-ui--danger:      #b91c1c;
-          --bq-ui--danger-alt:  #fecaca;
-          --bq-state--hover:    rgba(0, 0, 0, 0.08);
-          --bq-state--active:   rgba(0, 0, 0, 0.12);
-        }
-
-        /* -------------------------------------------------------------------------- */
-        /* DARK MODE                                                                  */
-        /* -------------------------------------------------------------------------- */
-        [bq-theme="techflow"][bq-mode="dark"],
-        .techflow.dark {
-          --bq-background--primary:   #030712;
-          --bq-background--secondary: #0f172a;
-          --bq-background--tertiary:  #1f2937;
-          --bq-background--alt:       #374151;
-          --bq-background--inverse:   #f9fafb;
-          --bq-background--brand:     #009b88;
-          --bq-background--overlay:   rgba(0, 0, 0, 0.7);
-          --bq-icon--primary:   #f3f4f6;
-          --bq-icon--secondary: #9ca3af;
-          --bq-icon--inverse:   #1f2937;
-          --bq-icon--brand:     #00d9c4;
-          --bq-icon--alt:       #ffffff;
-          --bq-icon--info:      #60a5fa;
-          --bq-icon--success:   #34d399;
-          --bq-icon--warning:   #fbbf24;
-          --bq-icon--danger:    #f87171;
-          --bq-stroke--primary:   #374151;
-          --bq-stroke--secondary: #4b5563;
-          --bq-stroke--tertiary:  #9ca3af;
-          --bq-stroke--inverse:   #0f172a;
-          --bq-stroke--brand:     #00d9c4;
-          --bq-stroke--alt:       #1f2937;
-          --bq-stroke--success:   #34d399;
-          --bq-stroke--warning:   #fbbf24;
-          --bq-stroke--danger:    #f87171;
-          --bq-text--primary:   #f9fafb;
-          --bq-text--secondary: #9ca3af;
-          --bq-text--inverse:   #1f2937;
-          --bq-text--brand:     #00d9c4;
-          --bq-text--alt:       #ffffff;
-          --bq-text--info:      #60a5fa;
-          --bq-text--success:   #34d399;
-          --bq-text--warning:   #fbbf24;
-          --bq-text--danger:    #f87171;
-          --bq-ui--primary:     #1f2937;
-          --bq-ui--secondary:   #374151;
-          --bq-ui--tertiary:    #4b5563;
-          --bq-ui--inverse:     #f9fafb;
-          --bq-ui--brand:       #00d9c4;
-          --bq-ui--brand-alt:   #009b88;
-          --bq-ui--alt:         #0f172a;
-          --bq-ui--success:     #34d399;
-          --bq-ui--success-alt: #10b981;
-          --bq-ui--warning:     #fbbf24;
-          --bq-ui--warning-alt: #f59e0b;
-          --bq-ui--danger:      #f87171;
-          --bq-ui--danger-alt:  #ef4444;
-          --bq-state--hover:    rgba(255, 255, 255, 0.10);
-          --bq-state--active:   rgba(255, 255, 255, 0.15);
-        }
-      `],
     })
     export class AppComponent {
-      private readonly document = inject(DOCUMENT);
-      readonly activeTab = signal('home');
-      readonly isDark = signal(true);
+      readonly isDark = signal(false);
 
       constructor() {
         effect(() => {
-          this.document.documentElement.setAttribute('bq-mode', this.isDark() ? 'dark' : 'light');
+          const root = document.documentElement;
+          root.setAttribute("bq-theme", "nebula");
+          root.setAttribute("bq-mode", this.isDark() ? "dark" : "light");
         });
-      }
-
-      onTabChange(event: CustomEvent<{ value: string }>) {
-        this.activeTab.set(event.detail.value);
-      }
-
-      toggleTheme() {
-        this.isDark.update((prev) => !prev);
       }
     }
     ```
@@ -1120,236 +769,165 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
     ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
       import { ref, watchEffect } from "vue";
-      import { BqTabGroup, BqTab, BqIcon, BqButton, BqInput } from "@beeq/vue";
+      import { BqAlert, BqAvatar, BqButton, BqCard, BqIcon, BqInput, BqProgress, BqSwitch, BqTag } from "@beeq/vue";
+      import "./styles.css";
 
-      // In main.ts, apply the TechFlow theme:
-      // document.documentElement.setAttribute('bq-theme', 'techflow');
-
-      const activeTab = ref("home");
-      const isDark = ref(true);
+      const isDark = ref(false);
 
       watchEffect(() => {
-        document.documentElement.setAttribute("bq-mode", isDark.value ? "dark" : "light");
+        const root = document.documentElement;
+        root.setAttribute("bq-theme", "nebula");
+        root.setAttribute("bq-mode", isDark.value ? "dark" : "light");
       });
-
-      function onTabChange(event: CustomEvent<{ value: string }>) {
-        activeTab.value = event.detail.value;
-      }
-
-      function toggleTheme() {
-        isDark.value = !isDark.value;
-      }
     </script>
 
     <template>
-      <div class="toolbar">
-        <BqButton appearance="secondary" label="Toggle theme" only-icon @bqClick="toggleTheme">
-          <BqIcon :name="isDark ? 'sun' : 'moon'" />
-        </BqButton>
-      </div>
+      <BqCard class="mission-card" border="l">
+        <main class="mission">
+          <header class="mission__header">
+            <BqAvatar initials="OR" label="Orion crew" size="medium" />
+            <div class="mission__title">
+              <h2>Orion launch window</h2>
+              <p>Mission control · T-minus 42 min</p>
+            </div>
+            <BqButton
+              appearance="secondary"
+              border="full"
+              :label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
+              onlyIcon
+              size="small"
+              @bqClick="isDark = !isDark"
+            >
+              <BqIcon :name="isDark ? 'sun' : 'moon'" />
+            </BqButton>
+          </header>
 
-      <BqTabGroup value="home" @bqChange="onTabChange">
-        <BqTab tabId="home">
-          <BqIcon name="house-line" slot="icon" />
-          Home
-        </BqTab>
-        <BqTab tabId="profile">
-          <BqIcon name="user" slot="icon" />
-          Profile
-        </BqTab>
-        <BqTab tabId="settings">
-          <BqIcon name="gear" slot="icon" />
-          Settings
-        </BqTab>
-      </BqTabGroup>
+          <BqAlert type="info" open disableClose>
+            Info stays blue
+            <span slot="body">
+              Nebula sets only brand, accent and neutrals, so info, success, warning and danger keep BEEQ's values.
+            </span>
+          </BqAlert>
 
-      <section v-if="activeTab === 'home'">
-        <h1>Hello BEEQ(ers)!</h1>
-        <p>
-          This example shows how to create and apply a custom theme to
-          <a class="bq-link" href="https://beeq.design/" target="_blank" rel="noopener noreferrer">
-            BEEQ components
-          </a>
-          using CSS variables. Try toggling the theme and switching between tabs to see how the
-          colors adapt across components and modes.
-        </p>
-        <section style="margin-block-start: var(--bq-spacing-l);">
-          <h2>Buttons</h2>
-          <BqButton appearance="primary">Primary Button</BqButton>
-          <BqButton appearance="secondary">Secondary Button</BqButton>
-          <BqButton variant="danger">Delete</BqButton>
-          <BqButton variant="ghost">Ghost</BqButton>
-        </section>
-        <section style="margin-block-start: var(--bq-spacing-l);">
-          <h2>Input</h2>
-          <BqInput placeholder="Placeholder">
-            <label slot="label">Input label</label>
+          <div class="mission__tags">
+            <BqTag color="success">Fuel nominal</BqTag>
+            <BqTag color="warning">Crosswind 18 kn</BqTag>
+            <BqTag color="info" variant="outline">Weather update</BqTag>
+          </div>
+
+          <div class="mission__meter">
+            <span>Fuel load</span>
+            <BqProgress :value="62" label />
+          </div>
+
+          <BqInput name="callsign" placeholder="e.g. Orion-7">
+            <label slot="label">Callsign</label>
           </BqInput>
-        </section>
-      </section>
-      <section v-if="activeTab === 'profile'">
-        <h1>Profile tab!</h1>
-        <span>You can check the logic added to the Tab component in the <code>index.ts</code> file.</span>
-      </section>
-      <h1 v-if="activeTab === 'settings'">Settings tab!</h1>
+
+          <BqSwitch name="autopilot" checked>
+            Autopilot
+          </BqSwitch>
+
+          <footer class="mission__actions">
+            <BqButton appearance="text">Cancel</BqButton>
+            <BqButton appearance="secondary">Save draft</BqButton>
+            <BqButton>
+              <BqIcon name="rocket-launch" slot="prefix" />
+              Launch
+            </BqButton>
+          </footer>
+        </main>
+      </BqCard>
     </template>
-
-    <style>
-      /* -------------------------------------------------------------------------- */
-      /* BASE THEME VARIABLES                                                       */
-      /* -------------------------------------------------------------------------- */
-      [bq-theme="techflow"],
-      .techflow {
-        --bq-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        --bq-brand-light: #a8f0e6;
-        --bq-brand:       #00836e;
-        --bq-brand-dark:  #005a4f;
-        --bq-accent-light: #e8d5f2;
-        --bq-accent:       #9d4edd;
-        --bq-accent-dark:  #5a189a;
-        --bq-success-light: #a1e4cb;
-        --bq-success:       #05b981;
-        --bq-success-dark:  #047857;
-        --bq-danger-light:  #fecaca;
-        --bq-danger:        #ef4444;
-        --bq-danger-dark:   #991b1b;
-        --bq-warning-light: #fef3c7;
-        --bq-warning:       #f59e0b;
-        --bq-warning-dark:  #92400e;
-        --bq-info-light:    #bfdbfe;
-        --bq-info:          #3b82f6;
-        --bq-info-dark:     #1e3a8a;
-        --bq-focus:         #00836e;
-        --bq-white:         #ffffff;
-        --bq-black:         #000000;
-        --bq-neutral-50:    #f9fafb;
-        --bq-neutral-100:   #f3f4f6;
-        --bq-neutral-200:   #e5e7eb;
-        --bq-neutral-300:   #d1d5db;
-        --bq-neutral-400:   #9ca3af;
-        --bq-neutral-500:   #6b7280;
-        --bq-neutral-600:   #4b5563;
-        --bq-neutral-700:   #374151;
-        --bq-neutral-800:   #1f2937;
-        --bq-neutral-900:   #111827;
-        --bq-neutral-950:   #0f172a;
-        --bq-neutral-1000:  #030712;
-      }
-
-      /* -------------------------------------------------------------------------- */
-      /* LIGHT MODE                                                                 */
-      /* -------------------------------------------------------------------------- */
-      [bq-theme="techflow"]:not([bq-mode]),
-      [bq-theme="techflow"][bq-mode="light"],
-      .techflow:not([bq-mode]),
-      .techflow.light {
-        --bq-background--primary:   #ffffff;
-        --bq-background--secondary: #f9fafb;
-        --bq-background--tertiary:  #f3f4f6;
-        --bq-background--alt:       #e5e7eb;
-        --bq-background--inverse:   #111827;
-        --bq-background--brand:     #a8f0e6;
-        --bq-background--overlay:   rgba(0, 0, 0, 0.5);
-        --bq-icon--primary:   #1f2937;
-        --bq-icon--secondary: #6b7280;
-        --bq-icon--inverse:   #f9fafb;
-        --bq-icon--brand:     #00836e;
-        --bq-icon--alt:       #ffffff;
-        --bq-icon--info:      #1d4ed8;
-        --bq-icon--success:   #047857;
-        --bq-icon--warning:   #92400e;
-        --bq-icon--danger:    #b91c1c;
-        --bq-stroke--primary:   #e5e7eb;
-        --bq-stroke--secondary: #d1d5db;
-        --bq-stroke--tertiary:  #9ca3af;
-        --bq-stroke--inverse:   #ffffff;
-        --bq-stroke--brand:     #00836e;
-        --bq-stroke--alt:       #f3f4f6;
-        --bq-stroke--success:   #047857;
-        --bq-stroke--warning:   #92400e;
-        --bq-stroke--danger:    #b91c1c;
-        --bq-text--primary:   #111827;
-        --bq-text--secondary: #6b7280;
-        --bq-text--inverse:   #f9fafb;
-        --bq-text--brand:     #00836e;
-        --bq-text--alt:       #ffffff;
-        --bq-text--info:      #1d4ed8;
-        --bq-text--success:   #047857;
-        --bq-text--warning:   #92400e;
-        --bq-text--danger:    #b91c1c;
-        --bq-ui--primary:     #ffffff;
-        --bq-ui--secondary:   #f3f4f6;
-        --bq-ui--tertiary:    #e5e7eb;
-        --bq-ui--inverse:     #111827;
-        --bq-ui--brand:       #00836e;
-        --bq-ui--brand-alt:   #a8f0e6;
-        --bq-ui--alt:         #f9fafb;
-        --bq-ui--success:     #047857;
-        --bq-ui--success-alt: #a1e4cb;
-        --bq-ui--warning:     #92400e;
-        --bq-ui--warning-alt: #fef3c7;
-        --bq-ui--danger:      #b91c1c;
-        --bq-ui--danger-alt:  #fecaca;
-        --bq-state--hover:    rgba(0, 0, 0, 0.08);
-        --bq-state--active:   rgba(0, 0, 0, 0.12);
-      }
-
-      /* -------------------------------------------------------------------------- */
-      /* DARK MODE                                                                  */
-      /* -------------------------------------------------------------------------- */
-      [bq-theme="techflow"][bq-mode="dark"],
-      .techflow.dark {
-        --bq-background--primary:   #030712;
-        --bq-background--secondary: #0f172a;
-        --bq-background--tertiary:  #1f2937;
-        --bq-background--alt:       #374151;
-        --bq-background--inverse:   #f9fafb;
-        --bq-background--brand:     #009b88;
-        --bq-background--overlay:   rgba(0, 0, 0, 0.7);
-        --bq-icon--primary:   #f3f4f6;
-        --bq-icon--secondary: #9ca3af;
-        --bq-icon--inverse:   #1f2937;
-        --bq-icon--brand:     #00d9c4;
-        --bq-icon--alt:       #ffffff;
-        --bq-icon--info:      #60a5fa;
-        --bq-icon--success:   #34d399;
-        --bq-icon--warning:   #fbbf24;
-        --bq-icon--danger:    #f87171;
-        --bq-stroke--primary:   #374151;
-        --bq-stroke--secondary: #4b5563;
-        --bq-stroke--tertiary:  #9ca3af;
-        --bq-stroke--inverse:   #0f172a;
-        --bq-stroke--brand:     #00d9c4;
-        --bq-stroke--alt:       #1f2937;
-        --bq-stroke--success:   #34d399;
-        --bq-stroke--warning:   #fbbf24;
-        --bq-stroke--danger:    #f87171;
-        --bq-text--primary:   #f9fafb;
-        --bq-text--secondary: #9ca3af;
-        --bq-text--inverse:   #1f2937;
-        --bq-text--brand:     #00d9c4;
-        --bq-text--alt:       #ffffff;
-        --bq-text--info:      #60a5fa;
-        --bq-text--success:   #34d399;
-        --bq-text--warning:   #fbbf24;
-        --bq-text--danger:    #f87171;
-        --bq-ui--primary:     #1f2937;
-        --bq-ui--secondary:   #374151;
-        --bq-ui--tertiary:    #4b5563;
-        --bq-ui--inverse:     #f9fafb;
-        --bq-ui--brand:       #00d9c4;
-        --bq-ui--brand-alt:   #009b88;
-        --bq-ui--alt:         #0f172a;
-        --bq-ui--success:     #34d399;
-        --bq-ui--success-alt: #10b981;
-        --bq-ui--warning:     #fbbf24;
-        --bq-ui--warning-alt: #f59e0b;
-        --bq-ui--danger:      #f87171;
-        --bq-ui--danger-alt:  #ef4444;
-        --bq-state--hover:    rgba(255, 255, 255, 0.10);
-        --bq-state--active:   rgba(255, 255, 255, 0.15);
-      }
-    </style>
     ```
   </CodeGroup>
 </CodeLivePreview>
+
+<Note>
+  Every Nebula value passes the [contrast checklist](#contrast-checklist-for-custom-brands) in light and dark mode. If you change a color, check the pairs it affects again.
+</Note>
+
+---
+
+## How overrides work
+
+BEEQ wraps every theme and mode selector in `:where()`, for example `:where([bq-mode="dark"])`. `:where()` has zero specificity, so any selector you write — `:root`, `.promo`, `[bq-theme="my-custom-theme"]`, or a component tag — wins over BEEQ's defaults, whichever stylesheet loads first. You don't need `!important` or extra selector weight.
+
+<Note>
+  Mode roles reference root semantics (e.g., `--bq-ui--brand: var(--bq-brand)`), and CSS resolves `var()` on the element that declares the role. Roles are declared on the theme/mode element, usually `<html>`, so overriding a root semantic deeper in the tree doesn't re-derive the roles below it. Override the role itself in that case.
+</Note>
+
+### Override levels
+
+Pick the narrowest level that covers your change:
+
+<Tabs>
+  <Tab title="Global">
+    Change root semantics on `:root` (or your theme selector). Every mode role that points to them updates in both modes:
+
+    ```css
+    :root {
+      --bq-brand-light:  #e0f2fe;
+      --bq-brand:        #0369a1;
+      --bq-brand-dark:   #0c4a6e;
+      --bq-brand-strong: #0369a1;
+      --bq-brand-bright: #7dd3fc;
+    }
+    ```
+
+    A mode role set on `:root` (e.g., `--bq-text--on-brand`) applies in **both** modes. Use the per-mode level if light and dark need different values.
+  </Tab>
+  <Tab title="Per mode">
+    Override a mode role for one mode only:
+
+    ```css
+    [bq-mode="dark"] {
+      --bq-ui--brand:       var(--bq-brand-bright);
+      --bq-text--on-brand:  var(--bq-neutral-1000);
+    }
+    ```
+  </Tab>
+  <Tab title="Subtree">
+    Override **mode roles** on a container to restyle everything inside it:
+
+    ```css
+    .promo {
+      --bq-ui--brand:      var(--bq-purple-600);
+      --bq-text--on-brand: var(--bq-white);
+    }
+    ```
+
+    <Warning>
+      Setting a root semantic such as `--bq-brand` on `.promo` doesn't change `--bq-ui--brand` inside it, because the role was already resolved on the root element. Override the roles directly, or set `bq-mode` on the container so BEEQ re-declares the roles there.
+    </Warning>
+  </Tab>
+  <Tab title="Component">
+    Use a component's own CSS variables for a one-off change. They're listed in each component's **Styling** section:
+
+    ```css
+    bq-alert {
+      --bq-alert--background-info: var(--bq-ui--info-alt);
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Contrast checklist for custom brands
+
+BEEQ's own themes are checked by an automated contrast test. When you bring your own colors, check these pairs in **both** modes before you ship. All ratios follow [WCAG 2.1 Level AA](https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html).
+
+| Pair | Minimum |
+| --- | --- |
+| `--bq-{intent}-strong` (light mode) and `--bq-{intent}-bright` (dark mode) on `--bq-background--primary`, `--bq-background--secondary`, `--bq-ui--primary`, `--bq-ui--secondary` | 4.5:1 |
+| `--bq-text--{intent}` on its tint, `--bq-ui--{intent}-alt` | 4.5:1 |
+| `--bq-{intent}-bright` on the dark surfaces above and on `--bq-ui--{intent}-alt` | APCA Lc 60 |
+| `--bq-text--on-{intent}` on `--bq-ui--{intent}` at rest | 4.5:1 |
+| `--bq-text--on-{intent}` on the hover and active mixes of `--bq-ui--{intent}` (20% `--bq-hover` / `--bq-active`) | 4.5:1 |
+| `--bq-text--primary` and `--bq-text--secondary` on primary and secondary surfaces | 4.5:1 |
+| Icons, `--bq-stroke--tertiary`, `--bq-stroke--{intent}`, and `--bq-focus` on `--bq-background--primary` and `--bq-ui--primary` | 3:1 |
+
+<Tip>
+  Mid-tone brand colors often can't reach 4.5:1 with white **and** stay readable on hover. If white text on your brand fill fails, either use a darker step for the fill in light mode (e.g., `--bq-ui--brand: var(--bq-brand-strong)`) or pick a dark on-color. Then check the hover and active mixes again — they shift the fill toward a dark neutral.
+</Tip>
