@@ -1,8 +1,10 @@
 @mixin bq-focus-ring {
-  @at-root #{&} {
+  /* stylelint-disable block-no-redundant-nested-style-rules -- Keep the caller selector explicit for CSS scoping analysis. */
+  & {
     outline: var(--bq-ring-width, 2px) solid var(--bq-ring-color-focus, var(--bq-focus));
-    outline-offset: var(--bq-ring-offset-width, 1px); /* NOSONAR -- Sass interpolates the caller selector as the scoping root. */
+    outline-offset: var(--bq-ring-offset-width, 1px);
   }
+  /* stylelint-enable block-no-redundant-nested-style-rules */
 }
 
 @mixin bq-focus-visible {
