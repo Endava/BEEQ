@@ -1,5 +1,5 @@
 /* -------------------------------------------------------------------------- */
-/*                          Toast custom properties           */
+/*                          Toast custom properties                           */
 /* -------------------------------------------------------------------------- */
 
 :host {
@@ -22,13 +22,13 @@
    */
 
   --bq-toast--background: var(--bq-ui--primary);
-  --bq-toast--box-shadow: theme(boxShadow.l);
+  --bq-toast--box-shadow: var(--bq-box-shadow--l);
 
-  --bq-toast--padding-y: theme(spacing.s);
-  --bq-toast--padding-x: theme(spacing.m);
-  --bq-toast--gap: theme(spacing.xs);
+  --bq-toast--padding-y: var(--bq-spacing-s);
+  --bq-toast--padding-x: var(--bq-spacing-m);
+  --bq-toast--gap: var(--bq-spacing-xs);
 
-  --bq-toast--border-radius: theme(borderRadius.s);
+  --bq-toast--border-radius: var(--bq-radius--s);
   --bq-toast--border-width: unset;
   --bq-toast--border-style: none;
   --bq-toast--border-color: transparent;
