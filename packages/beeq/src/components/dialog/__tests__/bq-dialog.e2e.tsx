@@ -214,11 +214,13 @@ describe('bq-dialog', () => {
 
     const panelStyle = getComputedStyle(getDialogPanel(dialog));
     const footer = dialog.shadowRoot?.querySelector<HTMLElement>('[part="footer"]');
+    const backdropStyle = getComputedStyle(getDialogPanel(dialog), '::backdrop');
 
     expect(panelStyle.backgroundColor).toBe(resolveColorToken('--bq-ui--primary'));
     expect(panelStyle.color).toBe(resolveColorToken('--bq-text--primary'));
     expect(getComputedStyle(footer).backgroundColor).toBe(resolveColorToken('--bq-ui--alt'));
     expect(getComputedStyle(footer).paddingBlock).toBe('12px');
+    expect(backdropStyle.transitionTimingFunction).toBe('cubic-bezier(0.4, 0, 0.2, 1)');
   });
 
   it('should preserve native layout, spacing and transition styles', async () => {
