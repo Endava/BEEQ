@@ -411,10 +411,10 @@ export class BqTextarea {
 
   render() {
     return (
-      <div class="bq-textarea flex flex-auto flex-col" part="base">
+      <div class="bq-textarea" part="base">
         <label
           aria-label={this.name ?? this.fallbackId}
-          class={{ 'bq-textarea__label': true, '!hidden': !this.hasLabel }}
+          class={{ 'bq-textarea__label': true, 'is-hidden': !this.hasLabel }}
           htmlFor={this.name ?? this.fallbackId}
           part="label"
           ref={(label: HTMLLabelElement) => {
@@ -429,7 +429,7 @@ export class BqTextarea {
           autofocus={this.autofocus}
           class={{
             'bq-textarea__input': true,
-            'resize-none': this.disableResize,
+            'is-resize-disabled': this.disableResize,
             [`validation-${this.validationStatus}`]: true,
           }}
           disabled={this.disabled}
@@ -455,9 +455,9 @@ export class BqTextarea {
         />
         <div
           class={{
-            'bq-textarea__helper flex items-center justify-between': true,
+            'bq-textarea__helper': true,
             [`validation-${this.validationStatus}`]: true,
-            '!hidden': !this.hasHelperText && !this.maxlength,
+            'is-hidden': !this.hasHelperText && !this.maxlength,
           }}
           part="helper-info"
         >
@@ -470,10 +470,7 @@ export class BqTextarea {
           >
             <slot name="helper-text" onSlotchange={this.handleSlotChange} />
           </span>
-          <span
-            class={{ 'bq-textarea__helper--counter [fontVariant:tabular-nums]': true, '!hidden': !this.maxlength }}
-            part="helper-counter"
-          >
+          <span class={{ 'bq-textarea__helper--counter': true, 'is-hidden': !this.maxlength }} part="helper-counter">
             {this.numberOfCharacters}/{this.maxlength}
           </span>
         </div>
