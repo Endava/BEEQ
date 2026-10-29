@@ -1,0 +1,58 @@
+name: Renovate
+
+on:
+  workflow_dispatch:
+
+  schedule:
+    # Monday at 00:00 UTC; this falls within Renovate's 02:00-06:00
+    # Europe/Bucharest schedule in both standard and daylight time.
+    - cron: '0 0 * * 1'
+
+  issues:
+    types: [edited]
+
+  pull_request:
+    types: [closed]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: renovate
+  cancel-in-progress: false
+
+jobs:
+  renovate:
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'schedule' ||
+      (
+        github.event_name == 'pull_request' &&
+        github.event.pull_request.merged == true &&
+        startsWith(github.event.pull_request.title, 'chore(deps):')
+      ) ||
+      (
+        github.event.issue.title == 'Dependency Dashboard' &&
+        github.event.issue.state == 'open' &&
+        github.event.issue.user.login == 'en-beeq' &&
+        contains(fromJSON(vars.RENOVATE_APPROVERS), github.actor) &&
+        contains(github.event.issue.body, 'approve-branch=')
+      )
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Run Renovate
+        uses: renovatebot/github-action@6d26fcf0275dc65624cbc3d51fe78bc773f98321 # v46.3.6
+        with:
+          token: ${{ secrets.RENOVATE_TOKEN }}
+          renovate-version: 44.125.1
+        env:
+          RENOVATE_PLATFORM: github
+          RENOVATE_REPOSITORIES: Endava/BEEQ
+          RENOVATE_GIT_AUTHOR: BEEQ <en-beeq@users.noreply.github.com>
+          RENOVATE_GIT_PRIVATE_KEY: ${{ secrets.RENOVATE_GIT_PRIVATE_KEY }}
+          RENOVATE_GIT_PRIVATE_KEY_PASSPHRASE: ${{ secrets.RENOVATE_GIT_PRIVATE_KEY_PASSPHRASE }}
+          LOG_LEVEL: debug

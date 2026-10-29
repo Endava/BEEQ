@@ -3,7 +3,7 @@ import { Component, Element, Event, h, Listen, Method, Prop, Watch } from '@sten
 
 import type { Placement } from '../../services/interfaces';
 import { FloatingUI } from '../../services/libraries';
-import { isEventTargetChildOfElement } from '../../shared/utils';
+import { isEventTargetChildOfElement, isPopoverSupported } from '../../shared/utils';
 
 /**
  * The Tooltip component is a small pop-up box that appears when a user hovers over or clicks on an element, providing additional information or context.
@@ -62,6 +62,16 @@ export class BqTooltip {
   private panel: HTMLElement;
   private arrow: HTMLElement;
   private floatingUI: FloatingUI;
+  /**
+   * Whether the runtime supports the HTML Popover API. When `true`, the
+   * panel is promoted to the browser top layer via `showPopover()`, which
+   * bypasses containing blocks created by ancestor `transform`, `filter`,
+   * `contain`, `will-change`, etc. When `false`, the panel remains a
+   * regular `position: fixed` element in the shadow root, which still
+   * covers the common case but is subject to those containing-block
+   * quirks.
+   */
+  private readonly supportsPopover = isPopoverSupported();
 
   // Reference to host HTML element
   // ===================================
@@ -111,16 +121,26 @@ export class BqTooltip {
     await this.show();
   }
 
+  @Watch('alwaysVisible')
+  handleAlwaysVisibleChange() {
+    if (this.alwaysVisible || this.visible) {
+      this.showTooltip();
+      return;
+    }
+    this.hideTooltip();
+  }
+
   @Watch('distance')
-  @Watch('hideArrow')
   @Watch('placement')
   @Watch('sameWidth')
   handleFloatingUIOptionsChange() {
-    this.floatingUI.init({
+    this.floatingUI?.configure({
+      ...(!this.hideArrow && { arrow: this.arrow }),
       placement: this.placement,
       distance: this.distance,
       sameWidth: this.sameWidth,
-      strategy: 'fixed',
+      strategy: this.floatingStrategy,
+      skidding: 0,
     });
   }
 
@@ -148,18 +168,55 @@ export class BqTooltip {
   // =====================================
 
   componentDidLoad() {
+    this.setTriggerListeners('addEventListener');
+    // Promote the panel to the top layer when the Popover API is available.
+    // This escapes containing blocks created by ancestor `transform`,
+    // `filter`, `contain`, `will-change`, etc., which is the root cause of
+    // scroll-related tooltip drift inside virtualised or transformed
+    // containers (e.g. tall tables, dialogs). We use `manual` mode so BEEQ
+    // keeps full control of show/hide semantics (delegated close, focus,
+    // Escape) instead of the browser's `auto` light-dismiss behaviour.
+    if (this.supportsPopover) {
+      this.panel.popover = 'manual';
+    }
+
     this.floatingUI = new FloatingUI(this.trigger, this.panel, {
       ...(!this.hideArrow && { arrow: this.arrow }),
       placement: this.placement,
       distance: this.distance,
       sameWidth: this.sameWidth,
-      strategy: 'absolute',
+      strategy: this.floatingStrategy,
       skidding: 0,
     });
+
+    // Honour the initial `visible` / `always-visible` props. Stencil's
+    // `@Watch('visible')` does not fire for the initial value, so components
+    // rendered with `visible` already true (or `always-visible`) would
+    // otherwise stay hidden — in the Popover path because `showPopover()`
+    // is only called from `show()`, and in the fallback path because the
+    // panel's `hidden` attribute reflects the state at first render but
+    // Floating UI would not have run a first positioning pass. Calling
+    // `showTooltip()` here guarantees a consistent first paint.
+    if (this.visible || this.alwaysVisible) {
+      this.showTooltip();
+    }
+  }
+
+  componentDidRender() {
+    const arrow = this.hideArrow ? null : this.arrow;
+    if (!this.floatingUI || this.floatingUI.options.arrow === arrow) return;
+    this.floatingUI.configure({ arrow });
+  }
+
+  connectedCallback() {
+    this.setTriggerListeners('addEventListener');
+    if (!this.floatingUI || (!this.visible && !this.alwaysVisible)) return;
+    this.showTooltip();
   }
 
   disconnectedCallback() {
-    this.floatingUI?.destroy();
+    this.setTriggerListeners('removeEventListener');
+    this.floatingUI?.stop();
   }
 
   // Listeners
@@ -221,6 +278,17 @@ export class BqTooltip {
   // These methods cannot be called from the host element.
   // =======================================================
 
+  private setTriggerListeners = (action: 'addEventListener' | 'removeEventListener') => {
+    if (!this.trigger) return;
+
+    // Delegate native control events without making the slot container a second control.
+    this.trigger[action]('click', this.handleTriggerOnClick);
+    this.trigger[action]('focusin', this.handleTriggerFocusin);
+    this.trigger[action]('focusout', this.handleTriggerFocusout);
+    this.trigger[action]('mouseenter', this.handleTriggerMouseOver);
+    this.trigger[action]('mouseleave', this.handleTriggerMouseLeave);
+  };
+
   private handleTriggerMouseOver = async () => {
     if (this.displayOn !== 'hover') return;
 
@@ -268,13 +336,25 @@ export class BqTooltip {
 
   private showTooltip = () => {
     if (!this.panel) return;
-    this.floatingUI?.update();
+    if (this.supportsPopover && !this.panel.matches(':popover-open')) {
+      this.panel.showPopover();
+    }
+    // Frame tracking also detects movement of zero-sized and animated triggers.
+    this.floatingUI?.start({ animationFrame: true });
   };
 
   private hideTooltip = () => {
     if (!this.panel) return;
+    this.floatingUI?.stop();
+    if (this.supportsPopover && this.panel.matches(':popover-open')) {
+      this.panel.hidePopover();
+    }
     this.visible = false;
   };
+
+  private get floatingStrategy(): 'absolute' | 'fixed' {
+    return this.supportsPopover ? 'absolute' : 'fixed';
+  }
 
   private get isHidden() {
     return !this.visible && !this.alwaysVisible;
@@ -288,21 +368,8 @@ export class BqTooltip {
     return (
       <div class="bq-tooltip relative" part="base">
         {/* TRIGGER */}
-        {/**
-         * NOTE: We could use a native HTML button as trigger container, but it causes issues with
-         * certain interactive elements inside the trigger slot (e.g., buttons, links, inputs...).
-         * This is because nested interactive elements are not allowed inside a button.
-         * Also, that will force the user to focus twice to reach the inner interactive element.
-         */}
-        {/** biome-ignore lint/a11y/noStaticElementInteractions: bypass the "Static Elements should not be interactive." rule */}
-        {/** biome-ignore lint/a11y/useKeyWithClickEvents: bypass the "Enforce to have the onClick mouse event with the onKeyUp, the onKeyDown, or the onKeyPress keyboard event." rule */}
         <div
           class="bq-tooltip--trigger"
-          onClick={this.handleTriggerOnClick}
-          onFocusin={this.handleTriggerFocusin}
-          onFocusout={this.handleTriggerFocusout}
-          onMouseEnter={this.handleTriggerMouseOver}
-          onMouseLeave={this.handleTriggerMouseLeave}
           part="trigger"
           ref={(el: HTMLDivElement) => {
             this.trigger = el;
@@ -311,10 +378,18 @@ export class BqTooltip {
           <slot name="trigger" />
         </div>
         {/* PANEL */}
+        {/*
+         * When the Popover API is supported, visibility is driven imperatively
+         * via `showPopover()` / `hidePopover()`. Setting `hidden={true}` in that
+         * mode would force `display: none`, which makes `showPopover()` throw
+         * an `InvalidStateError`. In the fallback path we keep the `hidden`
+         * attribute so consumers without the Popover API keep the original
+         * visibility behaviour.
+         */}
         <div
-          aria-hidden={this.isHidden}
+          aria-hidden={String(this.isHidden)}
           class="bq-tooltip--panel"
-          hidden={this.isHidden}
+          hidden={this.supportsPopover ? undefined : this.isHidden}
           part="panel"
           ref={(el: HTMLDivElement) => {
             this.panel = el;

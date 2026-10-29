@@ -1,4 +1,4 @@
-import { TAG_COLOR, TAG_SIZE, TAG_VARIANT, type TTagColor, type TTagSize, type TTagVariant } from '../bq-tag.types';
+import { TAG_SIZE, type TTagSize } from '../bq-tag.types';
 
 /**
  * Function to determine the icon size based on the provided tag size.
@@ -18,46 +18,4 @@ export const iconSize = (size: TTagSize): number => {
   };
 
   return SIZE[size] || SIZE[medium];
-};
-
-/**
- * Function to determine the tag text color scheme for a given tag type.
- *
- * @param {TTagType} color - The color of the tag.
- * @returns {Object} An object containing the color scheme for the given tag type. If the provided type does not match any predefined types, the function returns the color scheme for 'default'.
- */
-export const textColor = (color: TTagColor): Partial<{ [K in TTagVariant]: string }> => {
-  const typeError = TAG_COLOR[0];
-  const typeGray = TAG_COLOR[1];
-  const typeInfo = TAG_COLOR[2];
-  const typeSuccess = TAG_COLOR[3];
-  const typeWarning = TAG_COLOR[4];
-
-  const variantOutline = TAG_VARIANT[0];
-  const variantFilled = TAG_VARIANT[1];
-
-  const COLORS = {
-    [typeError]: {
-      [variantOutline]: 'text--danger',
-      [variantFilled]: 'text--alt',
-    },
-    [typeGray]: {
-      [variantOutline]: 'text--primary',
-      [variantFilled]: 'text--alt',
-    },
-    [typeInfo]: {
-      [variantOutline]: 'text--brand',
-      [variantFilled]: 'text--alt',
-    },
-    [typeSuccess]: {
-      [variantOutline]: 'text--success',
-      [variantFilled]: 'text--alt',
-    },
-    [typeWarning]: {
-      [variantOutline]: 'text--warning',
-      [variantFilled]: 'text--alt',
-    },
-  };
-
-  return COLORS[color];
 };

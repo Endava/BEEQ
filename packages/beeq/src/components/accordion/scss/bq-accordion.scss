@@ -2,148 +2,246 @@
 /*                              Accordion styles                              */
 /* -------------------------------------------------------------------------- */
 
-@import './bq-accordion.variables';
+@layer bq.reset, bq.tokens, bq.themes, bq.base, bq.public, bq.overrides,
+  bq-accordion.tokens, bq-accordion.base, bq-accordion.structure, bq-accordion.variants, bq-accordion.states;
 
-:host {
-  @apply block w-full;
+@layer bq-accordion.tokens {
+  @import './bq-accordion.variables';
 }
 
-.bq-accordion:not(.no-animation) {
-  /* -------------------------------------------------------------------- */
-  /* Opt-in the component to animating to/from intrinsic sizing keywords  */
-  /* Details: https://chrome.dev/css-wrapped-2024/#animate-to-height-auto */
-  /* -------------------------------------------------------------------- */
-  @apply supports-[interpolate-size:_allow-keywords]:[interpolate-size:_allow-keywords];
-}
+/* ---------------------------------- Base ---------------------------------- */
 
-.bq-accordion {
-  &.disabled {
-    @apply cursor-not-allowed opacity-60;
+@layer bq-accordion.base {
+  :host {
+    display: block;
+    inline-size: 100%;
+  }
 
-    .bq-accordion__header {
-      @apply pointer-events-none;
+  .bq-accordion {
+    overflow: hidden;
+  }
+
+  @supports (interpolate-size: allow-keywords) {
+    .bq-accordion:not(.no-animation) {
+      interpolate-size: allow-keywords;
     }
   }
+}
 
-  &.small .bq-accordion__header {
-    @apply gap-[--bq-accordion--small-gap] pe-[--bq-accordion--small-padding-end] ps-[--bq-accordion--small-padding-start] p-b-[--bq-accordion--small-padding-y];
-    @apply rounded-ee-[--bq-accordion--small-radius] rounded-es-[--bq-accordion--small-radius] rounded-se-[--bq-accordion--small-radius] rounded-ss-[--bq-accordion--small-radius];
+/* ------------------------------- Structure -------------------------------- */
+
+@layer bq-accordion.structure {
+  .bq-accordion::details-content {
+    display: block;
+    overflow: clip;
+    block-size: 0;
+    transition-duration: 300ms;
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-behavior: allow-discrete;
   }
 
-  &.medium .bq-accordion__header {
-    @apply gap-[--bq-accordion--medium-gap] pe-[--bq-accordion--medium-padding-end] ps-[--bq-accordion--medium-padding-start] p-b-[--bq-accordion--medium-padding-y];
-    @apply rounded-ee-[--bq-accordion--medium-radius] rounded-es-[--bq-accordion--medium-radius] rounded-se-[--bq-accordion--medium-radius] rounded-ss-[--bq-accordion--medium-radius];
+  .bq-accordion[open]::details-content {
+    block-size: auto;
   }
 
-  &[open] .bq-accordion__header {
-    @apply border-[length:--bq-accordion--expanded-border-width] border-[color:--bq-accordion--expanded-border-color];
-    @apply rounded-ee-[0px] rounded-es-[0px];
+  .bq-accordion__header {
+    --bq-ring-offset-width: -2px;
 
+    display: flex;
+    align-items: center;
+    color: inherit;
+    user-select: none;
+    list-style: none;
+    cursor: pointer;
+    border-color: var(--bq-accordion--collapsed-border-color);
+    border-style: var(--bq-accordion--collapsed-border-style);
+    border-width: var(--bq-accordion--collapsed-border-width);
+    transition-duration: 300ms;
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .bq-accordion__header::marker,
+  .bq-accordion__header::-webkit-details-marker {
+    display: none;
+  }
+
+  .bq-accordion__header--text {
+    flex: 1 1 0%;
+  }
+
+  .bq-accordion__header--icon,
+  .bq-accordion__header--prefix,
+  .bq-accordion__header--suffix {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .bq-accordion__header--icon {
+    color: var(--bq-accordion--icon-color);
+  }
+
+  .bq-accordion__header--icon-expand {
+    transform: rotate(0deg);
+    transition-duration: 300ms;
+    transition-property: transform;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .bq-accordion__body {
+    overflow: hidden;
+    color: var(--bq-accordion--panel-text-color);
+    background-color: var(--bq-accordion--panel-background);
+  }
+
+  .bq-accordion__content {
+    display: block;
+  }
+}
+
+/* -------------------------------- Variants -------------------------------- */
+
+@layer bq-accordion.variants {
+  .bq-accordion.small .bq-accordion__header {
+    gap: var(--bq-accordion--small-gap);
+    padding-block: var(--bq-accordion--small-padding-y);
+    padding-inline: var(--bq-accordion--small-padding-start) var(--bq-accordion--small-padding-end);
+    border-radius: var(--bq-accordion--small-radius);
+  }
+
+  .bq-accordion.medium .bq-accordion__header {
+    gap: var(--bq-accordion--medium-gap);
+    padding-block: var(--bq-accordion--medium-padding-y);
+    padding-inline: var(--bq-accordion--medium-padding-start) var(--bq-accordion--medium-padding-end);
+    border-radius: var(--bq-accordion--medium-radius);
+  }
+
+  .bq-accordion.small .bq-accordion__content {
+    border-start-start-radius: 0;
+    border-start-end-radius: 0;
+    border-end-start-radius: var(--bq-accordion--small-radius);
+    border-end-end-radius: var(--bq-accordion--small-radius);
+  }
+
+  .bq-accordion.medium .bq-accordion__content {
+    border-start-start-radius: 0;
+    border-start-end-radius: 0;
+    border-end-start-radius: var(--bq-accordion--medium-radius);
+    border-end-end-radius: var(--bq-accordion--medium-radius);
+  }
+
+  .bq-accordion.filled .bq-accordion__header {
+    background-color: var(--bq-accordion--filled-collapsed-background);
+  }
+
+  .bq-accordion.filled .bq-accordion__header--text {
+    color: var(--bq-accordion--filled-collapsed-text-color);
+  }
+
+  .bq-accordion.filled .bq-accordion__content {
+    border-color: var(--bq-accordion--panel-filled-border-color);
+    border-style: var(--bq-accordion--panel-filled-border-style);
+    border-width: var(--bq-accordion--panel-filled-border-width);
+  }
+
+  .bq-accordion.ghost .bq-accordion__header {
+    background-color: var(--bq-accordion--ghost-collapsed-background);
+  }
+
+  .bq-accordion.ghost .bq-accordion__header--text {
+    color: var(--bq-accordion--ghost-collapsed-text-color);
+  }
+
+  .bq-accordion.ghost .bq-accordion__content {
+    border-color: var(--bq-accordion--panel-ghost-border-color);
+    border-style: var(--bq-accordion--panel-ghost-border-style);
+    border-width: var(--bq-accordion--panel-ghost-border-width);
+  }
+
+  .bq-accordion.small.filled .bq-accordion__content {
+    padding-block: var(--bq-accordion--panel-small-filled-padding-y);
+    padding-inline: var(--bq-accordion--panel-small-filled-padding-start)
+      var(--bq-accordion--panel-small-filled-padding-end);
+  }
+
+  .bq-accordion.medium.filled .bq-accordion__content {
+    padding-block: var(--bq-accordion--panel-medium-filled-padding-y);
+    padding-inline: var(--bq-accordion--panel-medium-filled-padding-start)
+      var(--bq-accordion--panel-medium-filled-padding-end);
+  }
+
+  .bq-accordion.small.ghost .bq-accordion__content {
+    padding-block: var(--bq-accordion--panel-small-ghost-padding-y);
+    padding-inline: var(--bq-accordion--panel-small-ghost-padding-start)
+      var(--bq-accordion--panel-small-ghost-padding-end);
+  }
+
+  .bq-accordion.medium.ghost .bq-accordion__content {
+    padding-block: var(--bq-accordion--panel-medium-ghost-padding-y);
+    padding-inline: var(--bq-accordion--panel-medium-ghost-padding-start)
+      var(--bq-accordion--panel-medium-ghost-padding-end);
+  }
+}
+
+/* --------------------------------- States --------------------------------- */
+
+@layer bq-accordion.states {
+  .bq-accordion.disabled {
+    cursor: not-allowed;
+    opacity: var(--bq-disabled-opacity, 0.6);
+  }
+
+  .bq-accordion.disabled .bq-accordion__header {
+    pointer-events: none;
+  }
+
+  .bq-accordion[open] .bq-accordion__header {
+    border-color: var(--bq-accordion--expanded-border-color);
     border-style: var(--bq-accordion--expanded-border-style);
+    border-width: var(--bq-accordion--expanded-border-width);
+    border-end-start-radius: 0;
+    border-end-end-radius: 0;
   }
 
-  &.small .bq-accordion__content {
-    @apply rounded-ee-[--bq-accordion--small-radius] rounded-es-[--bq-accordion--small-radius] rounded-se-[0px] rounded-ss-[0px];
+  .bq-accordion.filled .bq-accordion__header:hover {
+    @include bq-color-mix(background-color, var(--bq-accordion--filled-collapsed-background), hover, 20%);
   }
 
-  &.medium .bq-accordion__content {
-    @apply rounded-ee-[--bq-accordion--medium-radius] rounded-es-[--bq-accordion--medium-radius] rounded-se-[0px] rounded-ss-[0px];
+  .bq-accordion.filled[open] .bq-accordion__header {
+    background-color: var(--bq-accordion--filled-expanded-background);
   }
 
-  &.filled {
-    .bq-accordion__header {
-      @apply bg-[--bq-accordion--filled-collapsed-background] hover:bg-hover-ui-secondary;
-    }
-
-    .bq-accordion__header--text {
-      @apply text-[--bq-accordion--filled-collapsed-text-color];
-    }
-
-    .bq-accordion__content {
-      @apply border-[length:--bq-accordion--panel-filled-border-width] border-[color:--bq-accordion--panel-filled-border-color];
-
-      border-style: var(--bq-accordion--panel-filled-border-style);
-    }
-
-    &[open] .bq-accordion__header {
-      @apply bg-[--bq-accordion--filled-expanded-background] hover:bg-hover-ui-secondary;
-    }
-
-    &[open] .bq-accordion__header--text {
-      @apply text-[--bq-accordion--filled-expanded-text-color];
-    }
+  .bq-accordion.filled[open] .bq-accordion__header:hover {
+    @include bq-color-mix(background-color, var(--bq-accordion--filled-expanded-collapsed-hover), hover, 20%);
   }
 
-  &.ghost {
-    .bq-accordion__header {
-      @apply bg-[--bq-accordion--ghost-collapsed-background] hover:bg-hover-ui-secondary;
-    }
-
-    .bq-accordion__header--text {
-      @apply text-[--bq-accordion--ghost-collapsed-text-color];
-    }
-
-    .bq-accordion__content {
-      @apply border-[length:--bq-accordion--panel-ghost-border-width] border-[color:--bq-accordion--panel-ghost-border-color];
-
-      border-style: var(--bq-accordion--panel-ghost-border-style);
-    }
-
-    &[open] .bq-accordion__header {
-      @apply bg-[--bq-accordion--ghost-expanded-background] hover:bg-hover-ui-secondary;
-    }
-
-    &[open] .bq-accordion__header--text {
-      @apply text-[--bq-accordion--ghost-expanded-text-color];
-    }
+  .bq-accordion.filled[open] .bq-accordion__header--text {
+    color: var(--bq-accordion--filled-expanded-text-color);
   }
 
-  &.small.filled .bq-accordion__content {
-    @apply pe-[--bq-accordion--panel-small-filled-padding-end] ps-[--bq-accordion--panel-small-filled-padding-start] p-b-[--bq-accordion--panel-small-filled-padding-y];
+  .bq-accordion.ghost .bq-accordion__header:hover {
+    @include bq-color-mix(background-color, var(--bq-accordion--ghost-expanded-collapsed-hover), hover, 20%);
   }
 
-  &.medium.filled .bq-accordion__content {
-    @apply pe-[--bq-accordion--panel-medium-filled-padding-end] ps-[--bq-accordion--panel-medium-filled-padding-start] p-b-[--bq-accordion--panel-medium-filled-padding-y];
+  .bq-accordion.ghost[open] .bq-accordion__header {
+    background-color: var(--bq-accordion--ghost-expanded-background);
   }
 
-  &.small.ghost .bq-accordion__content {
-    @apply pe-[--bq-accordion--panel-small-ghost-padding-end] ps-[--bq-accordion--panel-small-ghost-padding-start] p-b-[--bq-accordion--panel-small-ghost-padding-y];
+  .bq-accordion.ghost[open] .bq-accordion__header:hover {
+    @include bq-color-mix(background-color, var(--bq-accordion--ghost-expanded-collapsed-hover), hover, 20%);
   }
 
-  &.medium.ghost .bq-accordion__content {
-    @apply pe-[--bq-accordion--panel-medium-ghost-padding-end] ps-[--bq-accordion--panel-medium-ghost-padding-start] p-b-[--bq-accordion--panel-medium-ghost-padding-y];
+  .bq-accordion.ghost[open] .bq-accordion__header--text {
+    color: var(--bq-accordion--ghost-expanded-text-color);
   }
-}
 
-.bq-accordion::details-content {
-  @apply block overflow-clip transition-all duration-300 ease-in-out bs-0 [transition-behavior:allow-discrete];
-}
-
-.bq-accordion[open]::details-content {
-  @apply bs-auto;
-}
-
-.bq-accordion__header {
-  // Since there's an overflow on the <summary> element, the focus outline is not visible,
-  // so we force it to be inset to avoid the overflow hidden.
-  --bq-ring-offset-width: -2px;
-
-  @apply flex cursor-pointer select-none list-none items-center transition-colors duration-300 ease-in-out focus-visible:focus;
-  @apply border-[length:--bq-accordion--collapsed-border-width] border-[color:--bq-accordion--collapsed-border-color];
-
-  border-style: var(--bq-accordion--collapsed-border-style);
-
-  &::marker,
-  &::-webkit-details-marker {
-    @apply hidden;
+  .bq-accordion__header:focus-visible {
+    @include bq-focus-ring;
   }
-}
 
-.bq-accordion__header--text {
-  @apply flex-1;
-}
-
-.bq-accordion__header--prefix,
-.bq-accordion__header--suffix {
-  @apply flex items-center justify-center;
+  .bq-accordion__header--icon-expand.is-open {
+    transform: rotate(180deg);
+  }
 }

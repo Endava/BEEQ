@@ -9,7 +9,6 @@
    * @prop --bq-alert--content-footer-gap: The alert content and footer gap
    * @prop --bq-alert--title-body-gap: The alert title and body gap
 
-   * @prop --bq-alert--border-color: The alert border color
    * @prop --bq-alert--border-style: The alert border style
    * @prop --bq-alert--border-width: The alert border width
 
@@ -28,8 +27,11 @@
    * @prop --bq-alert--icon-color-warning: The alert icon color for warning type
    * @prop --bq-alert--icon-color-error: The alert icon color for error type
 
+   * @prop --bq-alert--text-color: The alert text color
+
    * @prop --bq-alert--padding: The alert padding
    * @prop --bq-alert--min-width: The alert min width
+   * @prop --bq-alert--z-index: The stacking order of a sticky alert. No default is declared.
    */
 
   --bq-alert--background: var(--bq-ui--secondary);
@@ -39,13 +41,13 @@
   --bq-alert--content-footer-gap: var(--bq-spacing-s);
   --bq-alert--title-body-gap: var(--bq-spacing-s);
 
-  --bq-alert--background-info: var(--bq-ui--brand-alt);
+  --bq-alert--background-info: var(--bq-ui--info-alt);
   --bq-alert--background-success: var(--bq-ui--success-alt);
   --bq-alert--background-warning: var(--bq-ui--warning-alt);
   --bq-alert--background-error: var(--bq-ui--danger-alt);
   --bq-alert--background-default: var(--bq-ui--primary);
 
-  --bq-alert--border-info: var(--bq-stroke--brand);
+  --bq-alert--border-info: var(--bq-stroke--info);
   --bq-alert--border-success: var(--bq-stroke--success);
   --bq-alert--border-warning: var(--bq-stroke--warning);
   --bq-alert--border-error: var(--bq-stroke--danger);
@@ -53,11 +55,12 @@
   --bq-alert--border-width: var(--bq-stroke-s);
   --bq-alert--border-style: solid;
 
-  --bq-alert--icon-color-info: var(--bq-icon--brand);
+  --bq-alert--icon-color-info: var(--bq-icon--info);
   --bq-alert--icon-color-success: var(--bq-icon--success);
   --bq-alert--icon-color-warning: var(--bq-icon--warning);
   --bq-alert--icon-color-error: var(--bq-icon--danger);
   --bq-alert--icon-color-default: var(--bq-icon--primary);
+  --bq-alert--text-color: var(--bq-text--primary);
 
   --bq-alert--padding: var(--bq-spacing-s);
 

@@ -3,7 +3,7 @@ import { type FunctionalComponent, h } from '@stencil/core';
 import type { TDatePickerType, TSelection } from '../bq-date-picker.types';
 import { isMonthWithinBounds } from '../helper/bounds';
 import { CALENDAR_PARTS } from '../helper/constants';
-import { getMonthNames } from '../helper/intl';
+import { formatMonth, getMonthNames } from '../helper/intl';
 import { isRangeEnd, isRangeInner, isRangeStart, isSelected } from '../helper/selection';
 
 export type TCalendarMonthViewProps = {
@@ -81,8 +81,10 @@ const buildMonthCellState = (
 };
 
 type TRenderMonthCellArgs = {
+  year: number;
   month: number;
   name: string;
+  locale: Intl.LocalesArgument;
   state: TMonthCellState;
   onMonthSelect: (month: number, ev: MouseEvent | KeyboardEvent) => void;
   onMonthFocus: (month: number) => void;
@@ -97,7 +99,16 @@ const chunkMonths = (months: string[], columns: number): Array<Array<{ month: nu
   return rows;
 };
 
-const renderMonthCell = ({ month, name, state, onMonthSelect, onMonthFocus, onMonthHover }: TRenderMonthCellArgs) => (
+const renderMonthCell = ({
+  year,
+  month,
+  name,
+  locale,
+  state,
+  onMonthSelect,
+  onMonthFocus,
+  onMonthHover,
+}: TRenderMonthCellArgs) => (
   // biome-ignore lint/a11y/useFocusableInteractive: gridcell is a structural ARIA container; focus is managed by the child <button> via roving tabindex
   <div
     aria-selected={state.selected ? 'true' : undefined}
@@ -107,6 +118,7 @@ const renderMonthCell = ({ month, name, state, onMonthSelect, onMonthFocus, onMo
   >
     <button
       aria-disabled={state.disabled ? 'true' : undefined}
+      aria-label={formatMonth(new Date(year, month, 1), locale, 'long', true)}
       class={{
         'bq-date-picker__month-cell': true,
         'is-selected': state.selected,
@@ -166,7 +178,7 @@ export const CalendarMonthView: FunctionalComponent<TCalendarMonthViewProps> = (
         <div class="bq-date-picker__month-row" role="row" key={`month-row-${row.map(({ month }) => month).join('-')}`}>
           {row.map(({ month, name }) => {
             const state = buildMonthCellState(year, month, focusedMonth, minISO, maxISO, effectiveSelection, type);
-            return renderMonthCell({ month, name, state, onMonthSelect, onMonthFocus, onMonthHover });
+            return renderMonthCell({ year, month, name, locale, state, onMonthSelect, onMonthFocus, onMonthHover });
           })}
         </div>
       ))}

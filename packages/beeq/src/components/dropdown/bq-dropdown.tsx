@@ -2,7 +2,7 @@ import type { EventEmitter } from '@stencil/core';
 import { Component, Element, Event, h, Listen, Prop, Watch } from '@stencil/core';
 
 import type { Placement } from '../../services/interfaces';
-import { isEventTargetChildOfElement } from '../../shared/utils';
+import { isEventHandled, isEventTargetChildOfElement, isHTMLElement } from '../../shared/utils';
 
 let id = 0;
 
@@ -177,6 +177,17 @@ export class BqDropdown {
     this.open = false;
   }
 
+  /** Keeps a single dropdown panel open: closes this one when another, non-nested dropdown opens. */
+  @Listen('bqOpen', { target: 'document', passive: true })
+  onDropdownOpen(event: CustomEvent<{ open: boolean }>) {
+    const source = event.composedPath()[0];
+    if (!this.open || !event.detail?.open || source === this.el || !isHTMLElement(source, 'bq-dropdown')) return;
+    // A dropdown opening inside this one (nested) must not close its parent.
+    if (isEventTargetChildOfElement(event, this.el)) return;
+
+    this.open = false;
+  }
+
   @Listen('keyup', { target: 'window', passive: true })
   onEscape(event: KeyboardEvent) {
     if (!this.open) return;
@@ -209,7 +220,10 @@ export class BqDropdown {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private togglePanel = (): void => {
+  private togglePanel = (ev: MouseEvent): void => {
+    // The trigger owner already handled this click (e.g. bq-date-picker controls `open` itself).
+    if (isEventHandled(ev)) return;
+
     const isDisabled = this.disabled || this.triggerElem?.hasAttribute('disabled');
     if (isDisabled) return;
 

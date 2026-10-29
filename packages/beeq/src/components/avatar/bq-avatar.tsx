@@ -44,6 +44,7 @@ import { AVATAR_SHAPE, AVATAR_SIZE } from './bq-avatar.types';
  * @cssprop --bq-avatar--border-color - Avatar border color
  * @cssprop --bq-avatar--border-style - Avatar border style
  * @cssprop --bq-avatar--border-width - Avatar border width
+ * @cssprop --bq-avatar--text-color - Avatar initials text color
  *
  * @cssprop --bq-avatar--border-radius-circle - Avatar border radius for circle & any size
  * @cssprop --bq-avatar--border-radius-squareXs - Avatar border radius for square & size xsmall

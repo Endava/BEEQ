@@ -1,6 +1,6 @@
 ---
 title: Breadcrumb
-description: "A breadcrumb shows users their current location within a site hierarchy and lets them navigate back through parent levels."
+description: "Breadcrumb shows users their current location within a site hierarchy and lets them navigate back through parent levels."
 ---
 
 import { CardTile } from '/snippets/CardTile.jsx';
@@ -35,6 +35,10 @@ A breadcrumb is a form of contextual navigation displaying a user's position wit
     - The user is in a multistep process; use a progress indicator instead
   </Card>
 </CardGroup>
+
+<Tip>
+  Choose [`bq-steps`](/components/steps) instead of `bq-breadcrumb` when users move through a fixed sequence with current, completed, and error states. Use `bq-breadcrumb` to show where the page sits in a site hierarchy.
+</Tip>
 
 ## Anatomy
 
@@ -83,7 +87,7 @@ Breadcrumbs should appear near the top of the page, above the page title or dire
     imageLightSrc="/components/images/breadcrumb/breadcrumb-label-icon-light.svg"
     imageDarkSrc="/components/images/breadcrumb/breadcrumb-label-icon-dark.svg"
   >
-    Use small icons (`size="16"`) paired with a text label to aid recognition. Never use an icon alone without a label or `aria-label`.
+    Use small icons (`size="16"`) paired with a text label to aid recognition. Never use an icon alone without a text label or an icon `label`.
   </CardTile>
   <CardTile
     title="Text only"
@@ -101,10 +105,10 @@ All parent breadcrumb items share the same brand primary color. Each interactive
 | State | Visual treatment |
 |---|---|
 | **Default** | Brand primary color text, no decoration |
-| **Hover** | Reduced opacity to signal interactivity |
+| **Hover** | Text color mixes `--bq-breadcrumb-item--text-color` with `--bq-hover` to signal interactivity |
 | **Focus** | Visible focus ring around the item |
 | **Active** | `:active` pressed appearance |
-| **Current page** | Brand color text, non-interactive; `aria-current="page"` is set automatically |
+| **Current page** | Secondary text color (`--bq-breadcrumb-item--text-color-current`); `aria-current="page"` is set automatically |
 
 ### Sizing and spacing
 
@@ -117,7 +121,7 @@ Breadcrumb items use consistent internal padding and separator spacing controlle
 ### Truncation
 
 <Note>
-  Show a maximum of four items in the breadcrumb trail. When the path is deeper, keep the first (root) and last (current page) items visible and collapse the intermediate levels into a dropdown so users can still reach any level.
+  A breadcrumb trail should show a maximum of four items. When the path is deeper, keep the first (root) and last (current page) items visible and collapse the intermediate levels into a dropdown so users can still reach any level.
 </Note>
 
 ## Usage
@@ -214,19 +218,9 @@ Use the `separator` slot to replace the default `/` separator.
     ```html HTML icon="html5" expandable
       <bq-breadcrumb label="Breadcrumb">
         <bq-icon slot="separator" name="caret-right" size="12"></bq-icon>
-        <bq-breadcrumb-item aria-label="Home page">
-          <bq-icon name="house-line" size="16"></bq-icon>
-        </bq-breadcrumb-item>
-        <bq-breadcrumb-item aria-label="Men clothing">
-          Men's Clothing
-        </bq-breadcrumb-item>
-        <bq-breadcrumb-item aria-label="Shirts" >
-          <bq-icon name="shirt-folded" size="16"></bq-icon>
-          Shirts
-        </bq-breadcrumb-item>
-        <bq-breadcrumb-item aria-label="Casual shirts" >
-          Casual shirts
-        </bq-breadcrumb-item>
+        <bq-breadcrumb-item href="/">Home</bq-breadcrumb-item>
+        <bq-breadcrumb-item href="/components">Catalog</bq-breadcrumb-item>
+        <bq-breadcrumb-item>Casual shirts</bq-breadcrumb-item>
       </bq-breadcrumb>
     ```
 
@@ -282,18 +276,41 @@ Use the `separator` slot to replace the default `/` separator.
   Use the same separator throughout a breadcrumb trail. Mixing separator styles in a single trail breaks visual consistency.
 </Note>
 
+### Intercepting navigation
+
+When a `bq-breadcrumb-item` has an `href`, activating it navigates to that URL. The `bqClick` event is cancelable: call `event.preventDefault()` on the event to stop the browser from following the link. Use this to route through a client-side router, prompt the user before leaving an unsaved form, or run analytics before navigating.
+
+```html HTML icon="html5"
+<bq-breadcrumb label="Breadcrumb">
+  <bq-breadcrumb-item href="/">Home</bq-breadcrumb-item>
+  <bq-breadcrumb-item href="/catalog">Catalog</bq-breadcrumb-item>
+  <bq-breadcrumb-item>Casual shirts</bq-breadcrumb-item>
+</bq-breadcrumb>
+
+<script>
+  document.querySelector("bq-breadcrumb").addEventListener("bqClick", (event) => {
+    // Stop the default link navigation and hand control to your router
+    event.preventDefault();
+    const href = event.target.getAttribute("href");
+    if (href) router.push(href);
+  });
+</script>
+```
+
 ## Options
+
+**Allowed `target` values** (on `bq-breadcrumb-item`, only with `href`): `_blank`, `_parent`, `_self`, `_top`. The prop has no default.
 
 The following example shows how to combine icons with breadcrumb items.
 
 ### With icons
 
-Icons next to labels help users recognize categories at a glance. Use `size="16"` icons and always pair them with a text label or `aria-label` for screen reader clarity.
+Icons next to labels help users recognize categories at a glance. Use `size="16"` icons and always pair them with a text label or set `label` on the icon for screen reader clarity.
 
 <CodeLivePreview mode="shadow" code={`
   <bq-breadcrumb label="Breadcrumb">
-    <bq-breadcrumb-item aria-label="Home page">
-      <bq-icon name="house-line" size="16"></bq-icon>
+    <bq-breadcrumb-item>
+      <bq-icon name="house-line" size="16" label="Home page"></bq-icon>
     </bq-breadcrumb-item>
     <bq-breadcrumb-item>
       <bq-icon name="shirt-folded" size="16"></bq-icon>
@@ -305,8 +322,8 @@ Icons next to labels help users recognize categories at a glance. Use `size="16"
   <CodeGroup>
     ```html HTML icon="html5" expandable
     <bq-breadcrumb label="Breadcrumb">
-      <bq-breadcrumb-item aria-label="Home page">
-        <bq-icon name="house-line" size="16"></bq-icon>
+      <bq-breadcrumb-item>
+        <bq-icon name="house-line" size="16" label="Home page"></bq-icon>
       </bq-breadcrumb-item>
       <bq-breadcrumb-item>
         <bq-icon name="shirt-folded" size="16"></bq-icon>
@@ -320,8 +337,8 @@ Icons next to labels help users recognize categories at a glance. Use `size="16"
     import { BqBreadcrumb, BqBreadcrumbItem, BqIcon } from "@beeq/react";
 
     <BqBreadcrumb label="Breadcrumb">
-      <BqBreadcrumbItem aria-label="Home page">
-        <BqIcon name="house-line" size="16" />
+      <BqBreadcrumbItem>
+        <BqIcon name="house-line" size="16" label="Home page" />
       </BqBreadcrumbItem>
       <BqBreadcrumbItem>
         <BqIcon name="shirt-folded" size="16" />
@@ -341,8 +358,8 @@ Icons next to labels help users recognize categories at a glance. Use `size="16"
       imports: [BqBreadcrumb, BqBreadcrumbItem, BqIcon],
       template: `
         <bq-breadcrumb label="Breadcrumb">
-          <bq-breadcrumb-item aria-label="Home page">
-            <bq-icon name="house-line" size="16"></bq-icon>
+          <bq-breadcrumb-item>
+            <bq-icon name="house-line" size="16" label="Home page"></bq-icon>
           </bq-breadcrumb-item>
           <bq-breadcrumb-item>
             <bq-icon name="shirt-folded" size="16"></bq-icon>
@@ -362,8 +379,8 @@ Icons next to labels help users recognize categories at a glance. Use `size="16"
 
     <template>
       <BqBreadcrumb label="Breadcrumb">
-        <BqBreadcrumbItem aria-label="Home page">
-          <BqIcon name="house-line" size="16" />
+        <BqBreadcrumbItem>
+          <BqIcon name="house-line" size="16" label="Home page" />
         </BqBreadcrumbItem>
         <BqBreadcrumbItem>
           <BqIcon name="shirt-folded" size="16" />
@@ -446,11 +463,29 @@ Icons next to labels help users recognize categories at a glance. Use `size="16"
 
 ## Accessibility
 
-- **Navigation** — navigate to each link in the breadcrumb using <kbd>Tab</kbd> and activate it with <kbd>Enter</kbd>.
-- **Landmark label** — use the `label` prop to set an `aria-label` on the `<nav>` landmark. The default value is `Breadcrumbs`; override it when multiple navigation regions exist on the same page.
+- **Landmark label** — the `label` prop sets an `aria-label` on the `<nav>` landmark. The default value is `Breadcrumbs`; you must override it when multiple navigation regions exist on the same page.
 - **Current page** — the last breadcrumb item receives `aria-current="page"` automatically.
-- **Icon-only items** — when a breadcrumb item contains only an icon, set `aria-label` on the `bq-breadcrumb-item` to describe the destination (e.g. `aria-label="Home page"`).
-- **Decorative icons** — when an icon appears alongside a visible text label, set `aria-hidden="true"` on the `bq-icon` so screen readers do not announce it twice.
+- **Icon-only items** — when a breadcrumb item contains only an icon, you must set `label` on the `bq-icon` to describe the destination (e.g. `<bq-icon name="house-line" label="Home page">`). The item does not forward an `aria-label` set on `bq-breadcrumb-item` to its inner link or button.
+- **Decorative icons** — when an icon appears alongside a visible text label, you must set `aria-hidden="true"` on the `bq-icon` so screen readers do not announce it twice.
+
+### Keyboard interaction
+
+Each `bq-breadcrumb-item` renders a native `a` (with `href`) or `button` (without `href`).
+
+| Key | Context | Action |
+|---|---|---|
+| `Tab` | Any | Moves focus to the next breadcrumb item |
+| `Shift` + `Tab` | Any | Moves focus to the previous breadcrumb item |
+| `Enter` | Item focused | Activates the item and emits `bqClick`; with `href`, navigates to the link unless `bqClick` is canceled |
+| `Space` | Item without `href` focused | Activates the button and emits `bqClick` |
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Override `label` (default `Breadcrumbs`) when the page has several navigation regions | MUST | manual: inspect navigation landmark names when several are present |
+| Set `label` on `bq-icon` for icon-only items | MUST | manual: inspect the accessible name of each icon-only item |
+| Set `aria-hidden="true"` on a `bq-icon` that sits next to a visible text label | MUST | manual: inspect decorative icons beside text labels for aria-hidden |
 
 ## API reference
 
@@ -465,18 +500,28 @@ Icons next to labels help users recognize categories at a glance. Use `size="16"
 | Property | Attribute | Description | Type | Default |
 |---|---|---|---|---|
 | `href` | `href` | If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered | `string` | `undefined` |
-| `rel` | `rel` | Where to display the link in the browser context. Relevant only if `href` is set | `string` | `'noreferrer noopener'` |
+| `rel` | `rel` | Space-separated link relationship types (e.g. `external`, `nofollow`) applied to the inner `<a>`. Relevant only if `href` is set. When `target` is set, `noreferrer` and `noopener` are always added | `string` | `undefined` |
 | `target` | `target` | Where to display the link in the browser context. Relevant only if `href` is set | `'_blank'` \| `'_parent'` \| `'_self'` \| `'_top'` | `undefined` |
+
+<Note>
+  When `target` is set, `bq-breadcrumb-item` merges `noreferrer` and `noopener` into the `rel` value you provide, so `rel="external"` with `target="_blank"` renders `rel="external noreferrer noopener"`. Without `target`, only your `rel` value is applied.
+</Note>
+
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| `target` or `rel` on a `bq-breadcrumb-item` without `href` | SHOULD NOT | Both are dropped because the item renders a `<button>` instead of a link |
 
 ### Events
 
 Events are emitted by `bq-breadcrumb-item`.
 
-| Event | Description | Type |
-|---|---|---|
-| `bqBlur` | Handler to be called when item loses focus | `CustomEvent<HTMLBqBreadcrumbItemElement>` |
-| `bqClick` | Handler to be called when item is clicked | `CustomEvent<HTMLBqBreadcrumbItemElement>` |
-| `bqFocus` | Handler to be called when item is focused | `CustomEvent<HTMLBqBreadcrumbItemElement>` |
+| Event | Description | Type | Cancelable |
+|---|---|---|---|
+| `bqBlur` | Handler to be called when item loses focus | `CustomEvent<HTMLBqBreadcrumbItemElement>` | No |
+| `bqClick` | Handler to be called when item is clicked. Call `event.preventDefault()` to stop the underlying link navigation when the item is rendered as an `<a>` | `CustomEvent<HTMLBqBreadcrumbItemElement>` | Yes |
+| `bqFocus` | Handler to be called when item is focused | `CustomEvent<HTMLBqBreadcrumbItemElement>` | No |
 
 ### Slots
 
@@ -492,8 +537,9 @@ Events are emitted by `bq-breadcrumb-item`.
 | Slot | Description |
 |---|---|
 | *(default)* | The default slot is used to add content to the breadcrumb item |
+| `separator` | Per-item separator content, normally populated by `bq-breadcrumb`. Use the parent component's `separator` slot for a consistent trail-wide separator |
 
-### CSS parts
+### Shadow parts
 
 #### `bq-breadcrumb`
 
@@ -523,10 +569,11 @@ Events are emitted by `bq-breadcrumb-item`.
   | `--bq-breadcrumb-item--border-width` | Border width of the breadcrumb item | `var(--bq-stroke-s)` |
   | `--bq-breadcrumb-item--border-radius` | Border radius of the breadcrumb item | `var(--bq-radius--s)` |
   | `--bq-breadcrumb-item--line-height` | Line height of the breadcrumb item | `var(--bq-font-line-height--regular)` |
-  | `--bq-breadcrumb-item--text-color` | Text color of the breadcrumb item | `var(--bq-text--secondary)` |
-  | `--bq-breadcrumb-item--text-color-current` | Text color of the current breadcrumb item | `var(--bq-text--brand)` |
+  | `--bq-breadcrumb-item--text-color` | Text color of the breadcrumb item | `var(--bq-text--brand)` |
+  | `--bq-breadcrumb-item--text-color-current` | Text color of the current breadcrumb item | `var(--bq-text--secondary)` |
   | `--bq-breadcrumb-item--text-size` | Text size of the breadcrumb item | `var(--bq-font-size--s)` |
   | `--bq-breadcrumb-item--text-size-separator` | Text size of the breadcrumb item separator | `var(--bq-font-size--xs)` |
+  | `--bq-breadcrumb-item--separator-color` | Color of the breadcrumb item separator | `var(--bq-ui--tertiary)` |
   | `--bq-breadcrumb-item--padding-start` | Padding start of the breadcrumb item | `var(--bq-spacing-xs2)` |
   | `--bq-breadcrumb-item--padding-end` | Padding end of the breadcrumb item | `var(--bq-spacing-xs2)` |
   | `--bq-breadcrumb-item--paddingY` | Padding top and bottom of the breadcrumb item | `var(--bq-spacing-xs)` |

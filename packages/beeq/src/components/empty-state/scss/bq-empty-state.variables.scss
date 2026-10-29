@@ -1,0 +1,10 @@
+/* -------------------------------------------------------------------------- */
+/*                       Empty state custom properties                        */
+/* -------------------------------------------------------------------------- */
+
+:host {
+  /**
+   * @prop --bq-empty-state--text-color - The text color of the title and body content
+   */
+  --bq-empty-state--text-color: var(--bq-text--primary);
+}

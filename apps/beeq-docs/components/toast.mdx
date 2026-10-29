@@ -13,7 +13,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 Toasts are brief, non-blocking status messages that appear temporarily to confirm an action, report a lightweight issue, or indicate background progress. They keep people informed without pulling them out of their current flow.
 
 <Note>
-  Use a toast for lightweight feedback that does not require a response. If the message is longer, needs actions, or must remain visible until dismissed, prefer a [notification](/components/notification) or [dialog](/components/dialog).
+  You should use a toast for lightweight feedback that does not require a response. If the message is longer, needs actions, or must remain visible until dismissed, you should use a [notification](/components/notification) or [dialog](/components/dialog) instead.
 </Note>
 
 ## When to use
@@ -40,6 +40,10 @@ Toasts are brief, non-blocking status messages that appear temporarily to confir
     - Multiple concurrent messages would compete for attention
   </Card>
 </CardGroup>
+
+<Tip>
+  Choose [`bq-alert`](/components/alert) for a message tied to a page or section that stays in the document flow, [`bq-notification`](/components/notification) for a system message with a description or actions that stacks at the edge of the screen, and [`bq-toast`](/components/toast) for a short status message with no actions that disappears on its own.
+</Tip>
 
 ## Patterns
 
@@ -100,7 +104,7 @@ Use toast messages carefully so they stay brief, noticeable, and easy to underst
 </Steps>
 
 <Note>
-  Show one toast at a time when possible. If several events happen close together, prefer a controlled queue or a tightly managed stack so messages remain readable and do not overlap bottom navigation, floating action buttons, or other critical controls.
+  You should show one toast at a time when possible. If several events happen close together, you should use a controlled queue or a tightly managed stack so messages remain readable and do not overlap bottom navigation, floating action buttons, or other critical controls.
 </Note>
 
 ## Usage
@@ -179,6 +183,12 @@ Use the built-in `type` values to communicate the nature of the message quickly.
 </CodeLivePreview>
 
 ## Options
+
+**Allowed `type` values:** `info` (default), `success`, `alert`, `error`, `loading`, `custom`. Use `custom` with the `icon` slot for your own icon.
+
+**Allowed `placement` values:** `top-left`, `top-center`, `top-right`, `bottom-left`, `bottom-center` (default), `bottom-right`. Placement applies to the fixed-position portal created by `toast()`.
+
+**Allowed `border` values:** `none`, `xs2`, `xs`, `s` (default), `m`, `l`, `full`.
 
 ### Custom icon
 
@@ -536,10 +546,24 @@ Use a dedicated toast container when you want the stacking behavior to be explic
 ## Accessibility
 
 - **Announced as status** - the component uses `role="status"`, so the message should make sense when read aloud without surrounding visual context.
-- **Not color-only** - do not rely on icon color alone to communicate meaning. The message text itself should state what happened clearly.
-- **Allow enough reading time** - increase `time` for longer messages, and avoid auto-dismissing content people may need more than a few seconds to read.
-- **Do not steal focus** - toasts are non-modal status messages and should not interrupt the current keyboard focus or workflow.
-- **Use a stronger pattern when needed** - if the message requires action, contains links, or must remain available, use a persistent notification or dialog instead.
+- **Not color-only** - you must not rely on icon color alone to communicate meaning. The message text itself must state what happened clearly.
+- **Allow enough reading time** - you should increase `time` for longer messages, and should not auto-dismiss content people may need more than a few seconds to read.
+- **Do not steal focus** - toasts are non-modal status messages, so they must not interrupt the current keyboard focus or workflow.
+- **Use a stronger pattern when needed** - if the message requires action, contains links, or must remain available, you must use a persistent notification or dialog instead.
+
+### Keyboard interaction
+
+No keyboard interaction: the component is not focusable.
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Do not rely on icon color alone; the message text states what happened | MUST NOT | manual: read the message with its icon and color hidden |
+| Do not interrupt the current keyboard focus or workflow | MUST NOT | manual: inspect focus before and after the toast appears |
+| Use a persistent notification or dialog when the message requires action, contains links, or must stay available | MUST | manual: review actionable messages for a persistent destination |
+| Write messages that make sense when read aloud without visual context | SHOULD | manual: read the message aloud without the surrounding screen |
+| Increase `time` for longer messages | SHOULD | manual: time dismissal against the message length |
 
 ## API reference
 
@@ -553,6 +577,10 @@ Use a dedicated toast container when you want the stacking behavior to be explic
 | `placement` | `placement` | Placement used by the fixed-position toast portal | `"top-left" \| "top-center" \| "top-right" \| "bottom-left" \| "bottom-center" \| "bottom-right"` | `"bottom-center"` |
 | `time` | `time` | Duration in milliseconds before the toast closes itself | `number` | `3000` |
 | `type` | `type` | Semantic type of the toast | `"info" \| "success" \| "alert" \| "error" \| "loading" \| "custom"` | `"info"` |
+
+### Invalid combinations
+
+No invalid prop combinations.
 
 ### Events
 
@@ -606,7 +634,7 @@ Use a dedicated toast container when you want the stacking behavior to be explic
   | `--bq-toast--border-width` | Border width | `unset` |
   | `--bq-toast--border-style` | Border style | `none` |
   | `--bq-toast--border-color` | Border color | `transparent` |
-  | `--bq-toast--icon-color-info` | Icon color for `info` toasts | `var(--bq-icon--brand)` |
+  | `--bq-toast--icon-color-info` | Icon color for `info` toasts | `var(--bq-icon--info)` |
   | `--bq-toast--icon-color-success` | Icon color for `success` toasts | `var(--bq-icon--success)` |
   | `--bq-toast--icon-color-alert` | Icon color for `alert` toasts | `var(--bq-icon--warning)` |
   | `--bq-toast--icon-color-error` | Icon color for `error` toasts | `var(--bq-icon--danger)` |

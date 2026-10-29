@@ -2,12 +2,11 @@
 /*                                Alert styles                                */
 /* -------------------------------------------------------------------------- */
 
-@use 'sass:meta';
-@layer bq.reset, bq.tokens, bq.themes, bq.base, bq.utilities, bq.overrides,
+@layer bq.reset, bq.tokens, bq.themes, bq.base, bq.public, bq.overrides,
   bq-alert.tokens, bq-alert.base, bq-alert.structure, bq-alert.variants, bq-alert.states;
 
 @layer bq-alert.tokens {
-  @include meta.load-css('./bq-alert.variables');
+  @import './bq-alert.variables';
 }
 
 /* ---------------------------------- Host ---------------------------------- */
@@ -45,6 +44,7 @@
     min-inline-size: var(--bq-alert--min-width);
     padding-block: var(--bq-alert--padding);
     padding-inline: var(--bq-alert--padding);
+    color: var(--bq-alert--text-color);
     background-color: var(--_alert-background);
     border-color: var(--_alert-border-color);
     border-radius: var(--bq-alert--border-radius);
@@ -72,38 +72,36 @@
     display: flex;
     margin-inline-end: var(--bq-spacing-s);
     color: var(--_alert-icon-color);
-    text-align: left;
+    text-align: start;
     vertical-align: top;
   }
 
   .bq-alert__main {
     display: flex;
     flex-direction: column;
-    gap: var(--bq-alert--content-footer-gap);
+    row-gap: var(--bq-alert--content-footer-gap);
     align-items: flex-start;
   }
 
   .bq-alert__content {
     display: flex;
     flex-direction: column;
-    gap: var(--bq-alert--title-body-gap);
+    row-gap: var(--bq-alert--title-body-gap);
   }
 
   .bq-alert__title {
-    color: var(--bq-text--primary);
     font-weight: var(--bq-font-weight--semibold);
     line-height: var(--bq-font-line-height--regular);
   }
 
   .bq-alert__body {
-    color: var(--bq-text--primary);
     font-size: var(--bq-font-size--s);
     line-height: var(--bq-font-line-height--regular);
   }
 
   .bq-alert__footer {
     display: flex;
-    gap: var(--bq-spacing-xs);
+    column-gap: var(--bq-spacing-xs);
     align-items: flex-start;
   }
 }
@@ -150,12 +148,6 @@
 /* --------------------------------- States --------------------------------- */
 
 @layer bq-alert.states {
-  :host([hide-icon]) .bq-alert__icon,
-  .bq-alert__body.is-empty,
-  .bq-alert__footer.is-empty {
-    display: none;
-  }
-
   .bq-alert.is-entering,
   .bq-alert.is-leaving {
     transition-property: opacity;
@@ -163,12 +155,12 @@
 
   .bq-alert.is-entering {
     transition-duration: 300ms;
-    transition-timing-function: ease-out;
+    transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
   }
 
   .bq-alert.is-leaving {
     transition-duration: 200ms;
-    transition-timing-function: ease-in;
+    transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
   }
 
   .bq-alert.is-enter-start,
@@ -180,4 +172,9 @@
   .bq-alert.is-leave-start {
     opacity: 1;
   }
+}
+
+/* The legacy unlayered reset overrides layered margins. */
+.bq-alert__icon {
+  margin-inline-end: var(--bq-spacing-s);
 }

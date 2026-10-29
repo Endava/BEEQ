@@ -1,0 +1,10 @@
+{
+  "lsp": {
+    "biome": {
+      "binary": {
+        "path": "./node_modules/.bin/biome",
+        "arguments": ["lsp-proxy"],
+      },
+    },
+  },
+}

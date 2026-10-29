@@ -68,7 +68,6 @@ import { ALERT_TYPE } from './bq-alert.types';
  * @cssprop --bq-alert--content-footer-gap - The alert content and footer gap
  * @cssprop --bq-alert--title-body-gap - The alert title and body gap
  *
- * @cssprop --bq-alert--border-color - The alert border color
  * @cssprop --bq-alert--border-style - The alert border style
  * @cssprop --bq-alert--border-width - The alert border width
  *
@@ -87,8 +86,11 @@ import { ALERT_TYPE } from './bq-alert.types';
  * @cssprop --bq-alert--icon-color-warning - The alert icon color for warning type
  * @cssprop --bq-alert--icon-color-error - The alert icon color for error type
  *
+ * @cssprop --bq-alert--text-color - The alert text color
+ *
  * @cssprop --bq-alert--padding - The alert padding
  * @cssprop --bq-alert--min-width - The alert min width
+ * @cssprop --bq-alert--z-index - The stacking order of a sticky alert. No default is declared.
  */
 @Component({
   tag: 'bq-alert',
@@ -291,12 +293,7 @@ export class BqAlert {
     };
 
     return (
-      <Host
-        aria-hidden={!this.open ? 'true' : 'false'}
-        hidden={!this.open ? 'true' : 'false'}
-        role="alert"
-        style={style}
-      >
+      <Host aria-hidden={!this.open ? 'true' : 'false'} role="alert" style={style}>
         <div
           class="bq-alert"
           data-transition-enter="is-entering"
@@ -328,7 +325,7 @@ export class BqAlert {
             </bq-button>
           )}
           {/* ICON */}
-          <div class="bq-alert__icon" part="icon-outline">
+          <div class="bq-alert__icon" hidden={this.hideIcon} part="icon-outline">
             <slot name="icon">
               {this.type !== 'default' && <bq-icon exportparts="base,svg" name={this.iconName} part="icon" />}
             </slot>
@@ -342,7 +339,8 @@ export class BqAlert {
               </div>
               {/* BODY */}
               <div
-                class={{ 'bq-alert__body': true, 'is-empty': !this.hasContent }}
+                class="bq-alert__body"
+                hidden={!this.hasContent}
                 part="body"
                 ref={(div) => {
                   this.bodyElem = div;
@@ -353,7 +351,8 @@ export class BqAlert {
             </div>
             {/* FOOTER */}
             <div
-              class={{ 'bq-alert__footer': true, 'is-empty': !this.hasFooter }}
+              class="bq-alert__footer"
+              hidden={!this.hasFooter}
               part="footer"
               ref={(div) => {
                 this.footerElem = div;

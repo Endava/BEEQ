@@ -48,6 +48,7 @@ argument-hint: 'Component or area to migrate, e.g. "button", "public global clas
 - Use public component variables directly when that keeps the CSS explicit and readable.
 - Preserve public `--bq-*` variables as the consumer override API. Do not rename them and do not mutate them internally to model private variant or state changes.
 - Use private `--_property` variables only as optional internal composition helpers.
+- Follow [implementation variable scope](../../instructions/styles.instructions.md#implementation-variable-scope): keep locals on the internal root or nearest owning element; target that same element in reflected variant/state overrides. Document locals that must stay on the host.
 - Introduce private `--_` variables when they reduce meaningful declaration repetition, combine several public tokens into one internal value, or let variants/states update values while base selectors own the declarations.
 - Do not wrap every public component variable in a private variable by default.
 - Do not document private `--_` variables.
@@ -122,6 +123,7 @@ Run relevant tests and Storybook checks based on the component risk. Always incl
 - Check `git diff` for accidental public API changes: prop defaults, reflected attributes, events, slots, parts, CSS custom properties, generated readmes, and generated typings.
 - Check test diffs for expectation changes that merely accept new behavior caused by the migration.
 - Check that public variants use host attributes where possible, and render classes are limited to stable internal structure or private state.
+- When relocating locals, verify default and affected variant/state computed styles, including prop transitions. Check public-variable overrides; treat `--_` names as unsupported internals, not inaccessible properties.
 - Mention any validation that could not run and why.
 
 ## Hard Rules

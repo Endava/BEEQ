@@ -41,13 +41,6 @@ export const LogicalProperties = plugin(({ matchUtilities, theme }) => {
   );
   matchUtilities(
     {
-      // Logical Border properties
-      'border-bl': (value) => ({ 'border-block': value }),
-      'border-bs': (value) => ({ 'border-block-start': value }),
-      'border-be': (value) => ({ 'border-block-end': value }),
-      'border-i': (value) => ({ 'border-inline': value }),
-      'border-is': (value) => ({ 'border-inline-start': value }),
-      'border-ie': (value) => ({ 'border-inline-end': value }),
       // Logical Padding properties (only those not covered by Tailwind CSS)
       'p-b': (value) => ({ 'padding-block': value }),
       'p-bs': (value) => ({ 'padding-block-start': value }),

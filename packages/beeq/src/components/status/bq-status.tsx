@@ -26,6 +26,13 @@ import { STATUS_TYPE } from './bq-status.types';
  * @part text - The `<div>` container that holds the text label of the status component.
  *
  * @cssprop --bq-status-circle--size - Status circle size.
+ * @cssprop --bq-status-circ - Status circle size alias.
+ * @cssprop --bq-status--dot-color-alert - Status circle color when type is `alert`.
+ * @cssprop --bq-status--dot-color-danger - Status circle color when type is `danger`.
+ * @cssprop --bq-status--dot-color-info - Status circle color when type is `info`.
+ * @cssprop --bq-status--dot-color-neutral - Status circle color when type is `neutral`.
+ * @cssprop --bq-status--dot-color-success - Status circle color when type is `success`.
+ * @cssprop --bq-status--text-color - Status text color.
  */
 @Component({
   tag: 'bq-status',

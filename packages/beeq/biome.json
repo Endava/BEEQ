@@ -2,24 +2,28 @@
   "$schema": "../../node_modules/@biomejs/biome/configuration_schema.json",
   "extends": "//",
   "files": {
-    "includes": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "**/*.json", "**/*.jsonc"]
+    "includes": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "**/*.json", "**/*.jsonc", "!**/components.d.ts"]
   },
-  "overrides": [
-    {
-      "includes": ["src/components.d.ts"],
-      "linter": { "enabled": false },
-      "formatter": { "enabled": false }
-    }
-  ],
-  "javascript": { "jsxRuntime": "reactClassic" },
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true,
-      "a11y": { "noAriaHiddenOnFocusable": "off", "useSemanticElements": "off" },
-      "correctness": { "noUnusedImports": "off", "noUnusedPrivateClassMembers": "off" },
-      "nursery": { "useSortedClasses": "error" },
-      "style": { "useImportType": "error", "useNodejsImportProtocol": "error" }
+      "preset": "recommended",
+      "a11y": {
+        "noAriaHiddenOnFocusable": "off",
+        "useSemanticElements": "off"
+      },
+      "correctness": {
+        "noUnusedImports": "off",
+        "noUnusedPrivateClassMembers": "off"
+      },
+      "nursery": {},
+      "style": {
+        "useImportType": "error",
+        "useNodejsImportProtocol": "error"
+      }
     }
+  },
+  "javascript": {
+    "jsxRuntime": "transparent"
   }
 }

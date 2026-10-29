@@ -4,7 +4,7 @@
 
    Handles custom styles that cannot be expressed as Tailwind
    utilities: BEEQ token values, gradients, and brand colours.
-   Imported by style.css.
+   Loaded by Mintlify, which injects every root-level .css file.
 
    Uses modern CSS: logical properties, :is(), CSS custom
    properties. No CSS nesting — postcss-nesting is not in the
@@ -230,7 +230,7 @@ html.dark:has(.bq-home-hero) a.nav-tabs-item {
   align-items: center;
   background: var(--bq-ui--brand);
   border-radius: var(--bq-radius--m);
-  color: var(--bq-text--alt);
+  color: var(--bq-text--on-brand);
   display: inline-flex;
   font-size: var(--bq-font-size--s);
   font-weight: var(--bq-font-weight--bold);
@@ -244,7 +244,7 @@ html.dark:has(.bq-home-hero) a.nav-tabs-item {
 }
 
 .bq-home-showcase__button svg {
-  color: var(--bq-icon--alt);
+  color: var(--bq-text--on-brand);
 }
 
 .bq-home-showcase__button:hover {
@@ -307,7 +307,7 @@ html.dark:has(.bq-home-hero) a.nav-tabs-item {
 
 .bq-home-stats__tag--filled {
   background: var(--bq-ui--brand);
-  color: var(--bq-text--alt);
+  color: var(--bq-text--on-brand);
 }
 
 .bq-home-stats__tag--outlined-brand {

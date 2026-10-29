@@ -134,6 +134,50 @@ Style them using the `::part()` pseudo-element from your own stylesheet:
   </CodeGroup>
 </CodeLivePreview>
 
+### Styling parts with Tailwind CSS
+
+Tailwind utilities style the element they're on, so `rounded-full` on `<bq-button>` never reaches the inner `<button>`. Add an arbitrary `::part()` variant to target a part:
+
+```html
+<bq-button class="[&::part(button)]:rounded-full [&::part(label)]:text-xl">
+  Custom button
+</bq-button>
+```
+
+This works in Tailwind CSS v3 and v4, and with the [`@beeq/tailwindcss`](https://www.npmjs.com/package/@beeq/tailwindcss) preset the values come from BEEQ tokens (`rounded-full` is `var(--bq-radius--full)`).
+
+Keep the variant for one or two declarations. Once a part needs several declarations, or something utilities can't express well, such as several stacked gradients with different sizes, write a named class in your stylesheet instead. A string of arbitrary values is harder to read and review than the CSS it replaces.
+
+<CodeGroup>
+  ```css Tailwind v4 icon="tailwind"
+  @utility custom-button {
+    &::part(button) {
+      background-color: var(--bq-magenta-600);
+      border-radius: var(--bq-radius--full);
+    }
+
+    &::part(label) {
+      font-weight: var(--bq-font-weight--semibold);
+    }
+  }
+  ```
+
+  ```css Tailwind v3 icon="tailwind"
+  @layer components {
+    .custom-button::part(button) {
+      background-color: var(--bq-magenta-600);
+      border-radius: var(--bq-radius--full);
+    }
+
+    .custom-button::part(label) {
+      font-weight: var(--bq-font-weight--semibold);
+    }
+  }
+  ```
+</CodeGroup>
+
+Use it as `class="custom-button"`. Because Tailwind registers the class, variants work too: `hover:custom-button` or `md:custom-button` apply the part styles only in that state.
+
 ### Inspecting parts from JavaScript
 
 Parts are also queryable from JavaScript when you need to reach into component internals programmatically:
@@ -145,18 +189,32 @@ const nativeButton = bqButton?.shadowRoot?.querySelector('[part="button"]');
 
 ## Global CSS custom properties
 
-BEEQ relies on CSS custom properties to maintain a consistent visual system across components. A single global token like `--bq-brand` cascades through colours, focus rings, borders, and related states — so overriding it at the root level changes the look of your whole product at once:
+BEEQ relies on CSS custom properties to maintain a consistent visual system across components. Global color tokens like the `--bq-brand-*` scale cascade through fills, text, focus rings, borders, and related states — so overriding them at the root level changes the look of your whole product at once. Set all five steps of the scale: the base step colors fills, while `-strong` and `-bright` color text, icons, borders, and focus rings in light and dark mode (see [Intent scale](/foundations/colors#intent-scale)):
 
 ```css
 :root {
-  --bq-brand: var(--bq-orange-600);
+  --bq-brand-light:  var(--bq-orange-100);
+  --bq-brand:        var(--bq-orange-700);
+  --bq-brand-dark:   var(--bq-orange-1000);
+  --bq-brand-strong: var(--bq-orange-700);
+  --bq-brand-bright: var(--bq-orange-400);
 }
 ```
 
-<CodeLivePreview mode="shadow" code={`
+<CodeLivePreview mode="iframe" height="6rem" removePadding code={`
   <style>
-    bq-button::part(button) {
-      --bq-ui--brand: var(--bq-orange-600) !important;
+    :root {
+      --bq-brand-light:  var(--bq-orange-100);
+      --bq-brand:        var(--bq-orange-700);
+      --bq-brand-dark:   var(--bq-orange-1000);
+      --bq-brand-strong: var(--bq-orange-700);
+      --bq-brand-bright: var(--bq-orange-400);
+    }
+
+    body {
+      display: grid;
+      place-items: center;
+      padding: var(--bq-spacing-l);
     }
   </style>
 
@@ -167,7 +225,11 @@ BEEQ relies on CSS custom properties to maintain a consistent visual system acro
   <CodeGroup>
     ```css styles.css icon="css"
     :root {
-      --bq-brand: var(--bq-orange-600);
+      --bq-brand-light:  var(--bq-orange-100);
+      --bq-brand:        var(--bq-orange-700);
+      --bq-brand-dark:   var(--bq-orange-1000);
+      --bq-brand-strong: var(--bq-orange-700);
+      --bq-brand-bright: var(--bq-orange-400);
     }
     ```
 
@@ -201,7 +263,11 @@ BEEQ relies on CSS custom properties to maintain a consistent visual system acro
       `,
       styles: [`
         :root {
-          --bq-brand: var(--bq-orange-600);
+          --bq-brand-light:  var(--bq-orange-100);
+          --bq-brand:        var(--bq-orange-700);
+          --bq-brand-dark:   var(--bq-orange-1000);
+          --bq-brand-strong: var(--bq-orange-700);
+          --bq-brand-bright: var(--bq-orange-400);
         }
       `],
     })
@@ -219,7 +285,11 @@ BEEQ relies on CSS custom properties to maintain a consistent visual system acro
 
     <style>
       :root {
-        --bq-brand: var(--bq-orange-600);
+        --bq-brand-light:  var(--bq-orange-100);
+        --bq-brand:        var(--bq-orange-700);
+        --bq-brand-dark:   var(--bq-orange-1000);
+        --bq-brand-strong: var(--bq-orange-700);
+        --bq-brand-bright: var(--bq-orange-400);
       }
     </style>
     ```
@@ -527,7 +597,7 @@ Not every component exposes the same CSS variables or parts. When a component do
 
 <CardGroup cols={2}>
   <Card title="Start with global tokens" icon="check" iconType="solid" color="var(--bq-stroke--success)">
-    When a change should apply across the whole product, override a global token like `--bq-brand`. One change cascades through every component that derives from it.
+    When a change should apply across the whole product, override global tokens like the `--bq-brand-*` scale. One change cascades through every component that derives from it.
   </Card>
   <Card title="Avoid per-component overrides for global decisions" icon="xmark" iconType="solid" color="var(--bq-stroke--danger)">
     Repeating the same CSS variable on every component instance makes the theme harder to update and easy to get out of sync.

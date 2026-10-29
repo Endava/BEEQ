@@ -2,49 +2,142 @@
 /*                                Switch styles                               */
 /* -------------------------------------------------------------------------- */
 
-@import './bq-switch.variables';
+@layer bq.reset, bq.tokens, bq.themes, bq.base, bq.public, bq.overrides,
+  bq-switch.tokens, bq-switch.base, bq-switch.structure, bq-switch.states, bq-switch.parts;
 
-:host {
-  @apply inline-block;
+@layer bq-switch.tokens {
+  @import './bq-switch.variables';
 }
 
-:host(.full-width) {
-  @apply is-full;
-}
+/* ---------------------------------- Base ---------------------------------- */
 
-.bq-switch {
-  @apply flex cursor-pointer select-none items-center rounded-s transition-colors duration-300 p-b-2 p-i-2;
-
-  justify-content: var(--bq-switch--justify-content);
-
-  // Display background on hover (if enabled)
-  &.has-background:not(.is-disabled):hover {
-    @apply bg-hover-ui-primary;
+@layer bq-switch.base {
+  :host {
+    display: inline-block;
   }
 
-  &.is-disabled {
-    @apply cursor-not-allowed opacity-60;
+  :host(.full-width) {
+    inline-size: 100%;
+  }
+
+  .bq-switch {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: var(--bq-switch--justify-content);
+    padding-block: var(--bq-spacing-xs);
+    padding-inline: var(--bq-spacing-xs);
+    cursor: pointer;
+    user-select: none;
+    border-radius: var(--bq-radius--s);
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
   }
 }
 
-.bq-switch--input:not(:disabled):focus,
-.bq-switch--input:not(:disabled):focus-visible {
-  ~ .bq-switch--control {
-    @apply focus;
+/* ------------------------------- Structure -------------------------------- */
+
+@layer bq-switch.structure {
+  .bq-switch.has-label {
+    gap: var(--bq-spacing-s);
+  }
+
+  .bq-switch.is-reversed {
+    flex-direction: row-reverse;
+  }
+
+  .bq-switch--input {
+    @include bq-visually-hidden;
+
+    inline-size: var(--bq-switch--width);
+    block-size: var(--bq-switch--dot-size);
+  }
+
+  .bq-switch--control {
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    inline-size: var(--bq-switch--width);
+    block-size: var(--bq-switch--height);
+    padding-block: var(--bq-spacing-xs2);
+    padding-inline: var(--bq-spacing-xs2);
+    background-color: var(--bq-switch--track-color);
+    border-radius: 9999px;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow,
+      transform, filter, backdrop-filter;
+  }
+
+  .bq-switch--control__dot {
+    position: absolute;
+    inset-block-start: var(--bq-spacing-xs2);
+    inset-inline-start: var(--bq-spacing-xs2);
+    inline-size: var(--bq-switch--dot-size);
+    block-size: var(--bq-switch--dot-size);
+    background-color: var(--bq-switch--dot-color);
+    border-radius: 9999px;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+    transition-property: all;
+  }
+
+  .bq-switch--label {
+    color: var(--bq-switch--label-text-color);
+    font-size: var(--bq-font-size--m);
+    font-weight: var(--bq-font-weight--medium);
+    line-height: var(--bq-font-line-height--regular);
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  }
+
+  slot[name='icon-on'] {
+    color: var(--bq-switch--icon-color-checked);
+  }
+
+  slot[name='icon-off'] {
+    color: var(--bq-switch--icon-color);
   }
 }
 
-.bq-switch--control__dot {
-  @apply absolute start-xs2 rounded-full bg-ui-primary bs-[--bq-switch--dot-size] is-[--bq-switch--dot-size];
-  @apply group-[&.is-checked]:start-[calc(100%_-_var(--bq-switch--dot-size)_-_var(--bq-spacing-xs2))] group-[&.is-checked]:bg-[--bq-icon--alt];
-  @apply transition-all duration-300;
+/* --------------------------------- States --------------------------------- */
+
+@layer bq-switch.states {
+  .bq-switch.has-background:not(.is-disabled):hover {
+    @include bq-color-mix(background-color, var(--bq-ui--primary), hover);
+  }
+
+  .bq-switch.is-disabled {
+    cursor: not-allowed;
+    opacity: var(--bq-disabled-opacity, 0.6);
+  }
+
+  .bq-switch.is-checked .bq-switch--control {
+    background-color: var(--bq-switch--track-color-checked);
+  }
+
+  .bq-switch.is-checked .bq-switch--control__dot {
+    inset-inline-start: calc(100% - var(--bq-switch--dot-size) - var(--bq-spacing-xs2));
+    background-color: var(--bq-switch--dot-color-checked);
+  }
+
+  .bq-switch--input:not(:disabled):is(:focus, :focus-visible) ~ .bq-switch--control {
+    @include bq-focus-ring;
+  }
 }
 
-.bq-switch--control__icon {
-  /* stylelint-disable-next-line declaration-no-important */
-  --bq-icon--size: var(--bq-switch--dot-size) !important;
+/* ---------------------------------- Parts --------------------------------- */
 
-  &::part(base) {
-    @apply flex;
+@layer bq-switch.parts {
+  .bq-switch--control__icon {
+    /* stylelint-disable-next-line declaration-no-important */
+    --bq-icon--size: var(--bq-switch--dot-size) !important;
+  }
+
+  .bq-switch--control__icon::part(base) {
+    display: flex;
   }
 }

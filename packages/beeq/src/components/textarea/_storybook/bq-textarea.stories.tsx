@@ -1,6 +1,7 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { fn } from 'storybook/test';
 
 import { INPUT_VALIDATION } from '../../input/bq-input.types';
 import { TEXTAREA_AUTO_CAPITALIZE, TEXTAREA_WRAP } from '../bq-textarea.types';
@@ -34,11 +35,6 @@ const meta: Meta = {
     'validation-status': { control: 'select', options: [...INPUT_VALIDATION] },
     value: { control: 'text' },
     wrap: { control: 'select', options: [...TEXTAREA_WRAP] },
-    // Events
-    bqBlur: { action: 'bqBlur' },
-    bqChange: { action: 'bqChange' },
-    bqFocus: { action: 'bqFocus' },
-    bqInput: { action: 'bqInput' },
     // Not part of the public API, so we don't want to expose it in the docs
     noHelperText: { control: 'boolean', table: { disable: true } },
   },
@@ -62,6 +58,11 @@ const meta: Meta = {
     'validation-status': 'none',
     value: undefined,
     wrap: 'soft',
+    // Events
+    bqBlur: fn(),
+    bqChange: fn(),
+    bqFocus: fn(),
+    bqInput: fn(),
   },
 };
 export default meta;

@@ -9,11 +9,17 @@
    * @prop --bq-slider--thumb-size - Slider hover thumb size
    * @prop --bq-slider--progress-color - Slider progress background color
    * @prop --bq-slider--trackarea-color - Slider track background color
+   * @prop --bq-slider--thumb-background - Slider thumb background color
+   * @prop --bq-slider--thumb-border-color - Slider thumb border color
+   * @prop --bq-slider--label-color - Slider value indicator (label) text color
    */
 
   --bq-slider--size: 4px;
-  --bq-slider--border-radius: theme(borderRadius.xs);
+  --bq-slider--border-radius: var(--bq-radius--xs);
   --bq-slider--thumb-size: 13px;
-  --bq-slider--progress-color: theme(backgroundColor.ui.brand);
-  --bq-slider--trackarea-color: theme(backgroundColor.ui.secondary);
+  --bq-slider--progress-color: var(--bq-ui--brand);
+  --bq-slider--trackarea-color: var(--bq-ui--tertiary);
+  --bq-slider--thumb-background: var(--bq-ui--primary);
+  --bq-slider--thumb-border-color: var(--bq-stroke--brand);
+  --bq-slider--label-color: var(--bq-text--primary);
 }

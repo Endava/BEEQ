@@ -11,19 +11,10 @@
     margin-inline: 0;
   }
 
-  ul[role='list'],
-  ol[role='list'] {
-    list-style-type: none;
-  }
-
   html {
     font-family: var(--bq-font-family);
     font-size: var(--bq-font-size--m);
     text-size-adjust: none;
-  }
-
-  html:focus-within {
-    scroll-behavior: smooth;
   }
 
   body {
@@ -33,44 +24,60 @@
     color: var(--bq-text--primary);
     background-color: var(--bq-background--primary);
     line-height: var(--bq-font-line-height--regular);
-    text-rendering: optimizeSpeed;
   }
 
-  a:not([class]) {
+  :where(a:not([class])) {
     text-decoration-skip-ink: auto;
   }
 
-  img,
-  picture,
-  video,
-  canvas,
-  svg {
+  :where(img, picture, video, canvas, svg) {
     display: block;
     max-inline-size: 100%;
   }
 
-  input,
-  button,
-  select,
-  textarea {
+  :where(button, input, optgroup, select, textarea) {
     font: inherit;
   }
 
-  p,
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
+  :where(code, kbd, samp, pre) {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 1em;
+  }
+
+  :where(sub, sup) {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+  }
+
+  :where(sub) {
+    inset-block-end: -0.25em;
+  }
+
+  :where(sup) {
+    inset-block-start: -0.5em;
+  }
+
+  :where(p, h1, h2, h3, h4, h5, h6) {
     overflow-wrap: break-word;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    html:focus-within {
-      scroll-behavior: auto;
-    }
+  :where(dialog, [popover]) {
+    margin-block: auto;
+    margin-inline: auto;
+  }
 
+  :where(ul[role='list'], ol[role='list']) {
+    list-style-type: none;
+  }
+
+  :where([hidden]:not([hidden='until-found'])) {
+    /* stylelint-disable-next-line declaration-no-important -- Native hidden state must override component layout styles. */
+    display: none !important;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
     *::after {

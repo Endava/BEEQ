@@ -51,6 +51,13 @@ import type { TSwitchInnerLabel, TSwitchJustifyContent } from './bq-switch.types
  * @cssprop --bq-switch--justify-content - Switch justify content
  * @cssprop --bq-switch--width - Switch width
  * @cssprop --bq-switch--dot-size - Switch dot size
+ * @cssprop --bq-switch--dot-color - Switch dot color
+ * @cssprop --bq-switch--dot-color-checked - Switch dot color when checked
+ * @cssprop --bq-switch--icon-color - Switch inner icon color (unchecked)
+ * @cssprop --bq-switch--icon-color-checked - Switch inner icon color when checked
+ * @cssprop --bq-switch--label-text-color - Switch label text color
+ * @cssprop --bq-switch--track-color - Switch track color
+ * @cssprop --bq-switch--track-color-checked - Switch track color when checked
  */
 @Component({
   tag: 'bq-switch',
@@ -264,21 +271,22 @@ export class BqSwitch {
 
     const labelCssClasses = {
       'has-background': this.backgroundOnHover,
+      'has-label': this.hasLabel,
       'is-checked': this.checked,
       'is-disabled': this.disabled,
-      'flex-row-reverse': this.reverseOrder,
+      'is-reversed': this.reverseOrder,
     };
 
     return (
       <Host class={{ 'full-width': this.fullWidth }} style={hostStyle}>
-        <label class={{ 'bq-switch group': true, ...labelCssClasses }} part="base">
+        <label class={{ 'bq-switch': true, ...labelCssClasses }} part="base">
           {/* Hidden native HTML input */}
           <input
             aria-checked={this.checked ? 'true' : 'false'}
             aria-disabled={this.disabled ? 'true' : 'false'}
             aria-label={this.name}
             checked={this.checked}
-            class="bq-switch--input peer !bs-[--bq-switch--dot-size] !is-[--bq-switch--width] sr-only peer-checked:invisible"
+            class="bq-switch--input"
             disabled={this.disabled}
             name={!isNil(this.name) ? this.name : undefined}
             onBlur={this.handleOnBlur}
@@ -293,16 +301,13 @@ export class BqSwitch {
             value={this.value}
           />
           {/* Control */}
-          <div
-            class="bq-switch--control bs-[--bq-switch--height] is-[--bq-switch--width] relative box-border flex justify-between rounded-full bg-ui-tertiary p-b-xs2 p-i-xs2 transition duration-300 group-[&.is-checked]:bg-ui-brand"
-            part="control"
-          >
-            <slot class="text-icon-alt" name="icon-on">
+          <div class="bq-switch--control" part="control">
+            <slot name="icon-on">
               {this.innerLabel === 'icon' && (
                 <bq-icon class="bq-switch--control__icon on" name="check" part="icon-on" title="On" />
               )}
             </slot>
-            <slot class="text-icon-inverse" name="icon-off">
+            <slot name="icon-off">
               {this.innerLabel === 'icon' && (
                 <bq-icon class="bq-switch--control__icon off" name="x" part="icon-off" title="Off" />
               )}
@@ -312,11 +317,7 @@ export class BqSwitch {
           </div>
           {/* Label */}
           <span
-            class={{
-              'bq-switch--label font-medium text-m text-primary leading-regular transition-colors duration-300': true,
-              'ms-s': this.hasLabel && !this.reverseOrder,
-              'me-s': this.hasLabel && this.reverseOrder,
-            }}
+            class="bq-switch--label"
             part="label"
             ref={(span) => {
               this.labelElem = span;
