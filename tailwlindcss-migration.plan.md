@@ -261,6 +261,7 @@ Use component layers for:
 | `tab` | `tokens`, `base`, `structure`, `states`, `pseudo` |
 | `tag` | `tokens`, `base`, `structure`, `variants`, `states`, `parts` |
 | `textarea` | `tokens`, `base`, `structure`, `validation`, `states`, `native` |
+| `time-picker` | `tokens`, `base`, `structure`, `validation`, `states`, `parts` |
 | `toast` | `tokens`, `base`, `structure`, `variants`, `states` |
 | `tooltip` | `tokens`, `base`, `structure`, `states`, `pseudo` |
 
@@ -390,6 +391,7 @@ Rules:
 - Public variables use existing `--bq-component--property` names.
 - Use public component variables directly when that is the clearest expression of the style.
 - Private variables use `--_property`.
+- Follow [implementation variable scope](.agents/instructions/styles.instructions.md#implementation-variable-scope): place locals on their internal owner and target that element in variant/state overrides. Host-level locals require a documented host consumer; public defaults stay on the host.
 - Private `--_` variables are optional composition helpers, not a mandatory wrapper around every public component variable.
 - Introduce private `--_` variables only when they reduce meaningful repetition, combine multiple public tokens into one internal value, or keep variant/state selectors focused on value changes.
 - Do not document private `--_` variables.
@@ -405,12 +407,12 @@ Example:
   --bq-button--border-radius: var(--bq-radius--s);
   --bq-button--medium-paddingX: var(--bq-spacing-m);
   --bq-button--medium-paddingY: var(--bq-spacing-s);
-
-  --_button-background: var(--bq-ui--brand);
-  --_button-color: var(--bq-text--inverse);
 }
 
 .bq-button {
+  --_button-background: var(--bq-ui--brand);
+  --_button-color: var(--bq-text--inverse);
+
   border-radius: var(--bq-button--border-radius);
   padding-block: var(--bq-button--medium-paddingY);
   padding-inline: var(--bq-button--medium-paddingX);
@@ -733,6 +735,8 @@ packages/beeq/src/global/styles/default.scss
 
 For the Storybook/default.scss path, `build-styles.mjs` must mirror Stencil's `injectGlobalPaths` behavior by prepending `src/global/styles/mixins/index.scss` before compiling. The standalone token/reset/typography entrypoints should not receive that mixin prelude unless they start using mixins.
 
+During the remaining legacy migration, keep `default.scss` native-only. Both Stencil's global CSS transformer and the Storybook builder consume `src/global/styles/legacy-tailwind.scss` as a separate build input containing only the components/utilities directives. Never include Tailwind base in that input: native foundations own tokens, themes and reset. Component CSS retains the existing bridge configuration until its migration is complete.
+
 Stencil remains responsible for:
 
 ```text
@@ -977,6 +981,7 @@ The second command should return no visual Tailwind styling for the migrated com
 Tasks:
 
 - Remove Tailwind plugins from Stencil config.
+- Remove the temporary `legacy-tailwind.scss` input and its Stencil/Storybook wiring once legacy global generation is no longer required.
 - Add `autoprefixCss: true`.
 - Replace Storybook CSS Tailwind commands with `build-styles.mjs`.
 - Remove `stencil-tailwind-plugin`.

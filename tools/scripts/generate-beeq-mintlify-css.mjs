@@ -4,11 +4,32 @@ import path from 'node:path';
 import postcss from 'postcss';
 
 const workspaceRoot = path.resolve(import.meta.dirname, '../..');
-const sourcePath = path.join(workspaceRoot, 'packages/beeq/dist/beeq/beeq.css');
+// `nx build beeq` writes to the workspace dist; a standalone Stencil build writes to the package dist
+const sourceCandidates = ['dist/beeq/dist/beeq/beeq.css', 'packages/beeq/dist/beeq/beeq.css'].map((file) =>
+  path.join(workspaceRoot, file),
+);
+const sourcePath = await (async () => {
+  for (const candidate of sourceCandidates) {
+    try {
+      await fs.access(candidate);
+      return candidate;
+    } catch {}
+  }
+  const searchedPaths = sourceCandidates.map((candidate) => path.relative(workspaceRoot, candidate)).join('\n- ');
+  throw new Error(`beeq.css not found. Run \`pnpm nx run beeq:build\` first. Looked in:\n- ${searchedPaths}`);
+})();
 const outputPath = path.join(workspaceRoot, 'apps/beeq-docs/beeq-mintlify.css');
 
-const isThemeSelector = (selector) => {
+// Theme selectors are wrapped in `:where()` (zero specificity), so match against the inner selector
+const unwrapWhere = (selector) => {
   const value = selector.trim();
+  const match = /^:where\((.*)\)$/.exec(value);
+
+  return match ? match[1].trim() : value;
+};
+
+const isThemeSelector = (selector) => {
+  const value = unwrapWhere(selector);
 
   return (
     value === ':root' ||

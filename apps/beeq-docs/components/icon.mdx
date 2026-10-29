@@ -143,6 +143,8 @@ Use the default icon when you need a simple visual cue inside navigation, action
 
 Adjust `size` when the icon needs to match the surrounding text or visual emphasis more closely.
 
+**Allowed `size` values:** a number of pixels, such as `16`, `24` (default), or `32`.
+
 <CodeLivePreview mode="shadow" code={`
   <bq-icon name="bell-ringing" size="16"></bq-icon>
   <bq-icon name="bell-ringing"></bq-icon>
@@ -271,7 +273,11 @@ An icon inherits color from its parent by default, but you can also assign a tok
 
 ### Styles
 
-Use icon-name suffixes like `-thin`, `-light`, `-bold`, `-duotone`, and `-fill` to select a style. This is the preferred approach over the deprecated `weight` prop.
+**Allowed icon-name style suffixes:** `-thin`, `-light`, `-bold`, `-duotone`, `-fill`. The regular style has no suffix.
+
+**Allowed `weight` values (deprecated):** `thin`, `light`, `regular`, `bold`, `fill`, `duotone`. No default.
+
+Use icon-name suffixes like `-thin`, `-light`, `-bold`, `-duotone`, and `-fill` to select a style. You should use this approach instead of the deprecated `weight` prop.
 
 <CodeLivePreview mode="shadow" code={`
   <bq-icon name="heart"></bq-icon>
@@ -578,10 +584,23 @@ The Phosphor library gives you a broad icon set. The example below shows only a 
 - `bq-icon` renders with `role="img"` and applies an `aria-label` automatically.
 - If you provide `label`, that value becomes the accessible name.
 - For named icons without a `label`, the component falls back to `"[name] icon"`, such as `"bell-ringing icon"`.
-- For custom SVG icons loaded through `src`, add `label` explicitly so assistive technologies get a meaningful name.
-- When an icon is ambiguous, pair it with visible text instead of expecting the symbol alone to carry the meaning.
-- For icon-only interactive patterns, add a `bq-tooltip` so keyboard and pointer users get a visible label. Keep in mind that tooltips are not reliably discoverable on touch devices, so a visible text label is preferred where possible.
+- For custom SVG icons loaded through `src`, you must add `label` explicitly so assistive technologies get a meaningful name.
+- When an icon is ambiguous, you must pair it with visible text instead of expecting the symbol alone to carry the meaning.
+- For icon-only interactive patterns, you should add a `bq-tooltip` so keyboard and pointer users get a visible label. Tooltips are not reliably discoverable on touch devices, so you SHOULD use a visible text label where possible.
 - Choose icons with widely recognized metaphors: a magnifying glass for search, a heart for favorites, a plus for add actions.
+
+### Keyboard interaction
+
+No keyboard interaction: the component is not focusable. Make an icon interactive by wrapping it in a focusable element such as `bq-button`.
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Set `label` on custom SVG icons loaded through `src` | MUST | manual: inspect the accessible name of each custom SVG icon |
+| Pair ambiguous icons with visible text | MUST | manual: read ambiguous icons with their visible text |
+| Add a `bq-tooltip` to icon-only interactive patterns, and a visible text label where possible since tooltips are unreliable on touch | SHOULD | manual: try icon-only controls by touch and keyboard |
+| Pick icons with widely recognized metaphors | SHOULD | manual: ask readers unfamiliar with the screen to identify each icon |
 
 ## API reference
 
@@ -595,6 +614,13 @@ The Phosphor library gives you a broad icon set. The example below shows only a 
 | `size` | `size` | Sets the rendered icon size | `number \| string` | `24` |
 | `src` | `src` | Loads a custom SVG source and overrides `name` when set | `string` | `undefined` |
 | ~~`weight`~~ | ~~`weight`~~ | <strong className="text-red-500">Deprecated!</strong> Legacy icon weight/style prop | `'thin'` \| `'light'` \| `'regular'` \| `'bold'` \| `'fill'` \| `'duotone'` | `undefined` |
+
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| `src` with `name` | SHOULD NOT | `src` takes precedence and `name` is ignored |
+| `weight` | MUST NOT | The deprecated prop logs a console warning; put the weight in `name` instead, for example `bell-fill` |
 
 ### Slots
 

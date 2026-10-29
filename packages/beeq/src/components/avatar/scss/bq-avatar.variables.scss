@@ -10,6 +10,7 @@
   * @prop --bq-avatar--border-color: Avatar border color
   * @prop --bq-avatar--border-style: Avatar border style
   * @prop --bq-avatar--border-width: Avatar border width
+  * @prop --bq-avatar--text-color: Avatar initials text color
 
   * @prop --bq-avatar--border-radius-circle: Avatar border radius for circle & any size
   * @prop --bq-avatar--border-radius-squareXs: Avatar border radius for square & size xsmall
@@ -34,6 +35,7 @@
   --bq-avatar--border-color: var(--bq-stroke--tertiary);
   --bq-avatar--border-style: solid;
   --bq-avatar--border-width: var(--bq-stroke-m);
+  --bq-avatar--text-color: var(--bq-text--primary);
 
   --bq-avatar--border-radius-circle: var(--bq-radius--full);
   --bq-avatar--border-radius-squareXs: var(--bq-radius--xs);

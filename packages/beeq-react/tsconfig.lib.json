@@ -4,6 +4,7 @@
     "outDir": "../../dist/out-tsc",
     "module": "esnext",
     "moduleResolution": "bundler",
+    "inlineSources": true,
     "types": ["node", "@nx/react/typings/cssmodule.d.ts", "@nx/react/typings/image.d.ts"]
   },
   "include": ["src/index.ts", "ssr/index.ts"],

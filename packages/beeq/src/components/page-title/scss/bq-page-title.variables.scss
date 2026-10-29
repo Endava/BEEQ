@@ -4,6 +4,7 @@
 
 :host {
   /**
+   * @prop --bq-page-title--divider-color - Page title divider (border end) color, used by `--subtitle-borderBlockEnd`
    * @prop --paddingY - Padding top and bottom of the page title wrapper
    * @prop --subtitle-borderBlockEnd - Page title border end color
    * @prop --subtitle-fontWeight - Page title font weight for subtitle
@@ -14,9 +15,11 @@
    * @prop --title-textColor - Page title color for title
    * @prop --title-textSize - Page title text size for title
    */
+  --bq-page-title--divider-color: var(--bq-stroke--primary);
+
   /* TODO: Remove this legacy custom property in the next major release, changing them to use `--bq-` prefix */
   --paddingY: var(--bq-spacing-xl);
-  --subtitle-borderBlockEnd: 1px solid var(--bq-stroke--primary);
+  --subtitle-borderBlockEnd: 1px solid var(--bq-page-title--divider-color);
   --subtitle-fontWeight: var(--bq-font-weight--medium);
   --subtitle-textColor: var(--bq-text--secondary);
   --subtitle-textSize: var(--bq-font-size--l);

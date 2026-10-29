@@ -1,49 +1,114 @@
 /* -------------------------------------------------------------------------- */
-/*                                Side menu item styles                */
+/*                         Side menu item styles                              */
 /* -------------------------------------------------------------------------- */
 
-@import './bq-side-menu-item.variables';
+@layer bq.reset, bq.tokens, bq.themes, bq.base, bq.public, bq.overrides,
+  bq-side-menu-item.tokens, bq-side-menu-item.base, bq-side-menu-item.structure, bq-side-menu-item.states;
 
-:host {
-  @apply flex;
+@layer bq-side-menu-item.tokens {
+  @import './bq-side-menu-item.variables';
 }
 
-.bq-side-menu__item {
-  @apply flex flex-grow items-center gap-x-s rounded-s border-none px-[--bq-side-menu-item--paddingX] py-[--bq-side-menu-item--paddingY] no-underline transition-colors duration-150;
+/* ---------------------------------- Base ---------------------------------- */
 
-  // Default state
-  @apply bg-[--bq-side-menu-item--bg-default] text-m text-[color:--bq-side-menu-item--text-default];
+@layer bq-side-menu-item.base {
+  :host {
+    display: flex;
+    font-size: var(--bq-font-size--m);
+  }
 
-  // Focus state
-  @apply [&:not(.disabled)]:focus-visible:focus;
+  .bq-side-menu-item {
+    --_side-menu-item-padding-inline: var(--bq-side-menu-item--paddingX);
 
-  // Hover state
-  @apply [&:not(.disabled)]:hover:cursor-pointer;
-  @apply [&:not(.disabled,.active)]:hover:text-m [&:not(.disabled,.active)]:hover:bg-hover-ui-alt [&:not(.disabled,.active)]:hover:text-hover-primary;
-}
-
-.bq-side-menu__item.active {
-  // Active state
-  @apply bg-[--bq-side-menu-item--bg-active] text-m text-[color:--bq-side-menu-item--text-active];
-}
-
-.bq-side-menu__item.disabled {
-  @apply opacity-60 hover:cursor-not-allowed;
-}
-
-.bq-side-menu__item.is-collapsed {
-  // Decrease the vertical padding (start and end) to make the item more compact when the side menu is collapsed
-  --bq-side-menu-item--paddingX: theme(space.m);
-
-  @apply justify-center gap-0;
-
-  .bq-side-menu__item--label,
-  .bq-side-menu__item--suffix {
-    @apply sr-only scale-0;
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    column-gap: var(--bq-spacing-s);
+    padding-block: var(--bq-side-menu-item--paddingY);
+    padding-inline: var(--_side-menu-item-padding-inline);
+    color: var(--bq-side-menu-item--text-default);
+    background-color: var(--bq-side-menu-item--bg-default);
+    border: 0;
+    border-radius: var(--bq-radius--s);
+    text-decoration-line: none;
+    transition-duration: 150ms;
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
 
-.bq-side-menu__item--label,
-.bq-side-menu__item--suffix {
-  @apply transition-all duration-300 ease-in-out;
+/* ------------------------------- Structure -------------------------------- */
+
+@layer bq-side-menu-item.structure {
+  .bq-side-menu-item__prefix,
+  .bq-side-menu-item__suffix {
+    display: flex;
+    align-items: center;
+  }
+
+  .bq-side-menu-item__label {
+    flex: 1 1 auto;
+    overflow: hidden;
+    text-align: start;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .bq-side-menu-item__tooltip {
+    display: block;
+  }
+
+  .bq-side-menu-item__label,
+  .bq-side-menu-item__suffix {
+    transition-duration: 300ms;
+    transition-property: all;
+    transition-timing-function: ease-in-out;
+  }
+}
+
+/* --------------------------------- States --------------------------------- */
+
+@layer bq-side-menu-item.states {
+  .bq-side-menu-item:not(.disabled):focus-visible {
+    @include bq-focus-ring;
+  }
+
+  .bq-side-menu-item:not(.disabled):hover {
+    cursor: pointer;
+  }
+
+  .bq-side-menu-item:not(.disabled, .active):hover {
+    @include bq-color-mix(background-color, var(--bq-side-menu-item--bg-hover), hover, 20%);
+    @include bq-color-mix(color, var(--bq-side-menu-item--text-hover), hover, 20%);
+  }
+
+  .bq-side-menu-item.active {
+    color: var(--bq-side-menu-item--text-active);
+    background-color: var(--bq-side-menu-item--bg-active);
+  }
+
+  .bq-side-menu-item.disabled {
+    cursor: not-allowed;
+    opacity: var(--bq-disabled-opacity, 0.6);
+  }
+
+  .bq-side-menu-item.is-collapsed {
+    --_side-menu-item-padding-inline: var(--bq-spacing-m);
+
+    justify-content: center;
+    column-gap: 0;
+  }
+
+  .bq-side-menu-item.is-collapsed .bq-side-menu-item__label,
+  .bq-side-menu-item.is-collapsed .bq-side-menu-item__suffix {
+    position: absolute;
+    block-size: 1px;
+    inline-size: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+    transform: scale(0);
+  }
 }

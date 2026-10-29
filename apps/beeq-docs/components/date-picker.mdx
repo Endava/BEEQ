@@ -11,7 +11,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
   <img className="hidden dark:block" src="/components/images/date-picker/date-picker-overview-dark.svg" alt="BEEQ Date-picker component overview" />
 </Frame>
 
-Date pickers provide a guided way to enter dates through a calendar interface. They reduce ambiguity, prevent formatting mistakes, and make it easier to choose a single date, a range, or multiple dates depending on the task.
+Date pickers combine a calendar with locale-ordered day, month, and year segments. They reduce ambiguity, prevent formatting mistakes, and support single dates, ranges, and multiple dates.
 
 <Note>
   Use a date picker when the interface benefits from visual date selection or date validation. If users need to enter very flexible freeform dates or work with a tiny, predictable set of choices, a simpler input or select may be more appropriate.
@@ -42,6 +42,10 @@ Date pickers provide a guided way to enter dates through a calendar interface. T
   </Card>
 </CardGroup>
 
+<Tip>
+  Choose [`bq-time-picker`](/components/time-picker) instead of `bq-date-picker` when users select a time of day rather than a calendar date.
+</Tip>
+
 ## Patterns
 
 <CardGroup cols={2}>
@@ -65,7 +69,7 @@ The date picker combines a labeled field with a calendar surface that helps peop
 | Part | Element | Description |
 |---|---|---|
 | **1** | Label | Describes what date the field is asking for (`label` slot) |
-| **2** | Date field | The input control people focus, type into, or use to open the calendar |
+| **2** | Date segments | The day, month, and year controls people focus and edit, ordered for the active locale |
 | **3** | Icon | The calendar affordance that signals date selection and panel access |
 | **4** | Calendar | The panel surface that contains the date selection interface |
 | **5** | Month and year control | The heading and navigation controls used to move through months and years |
@@ -98,30 +102,29 @@ The date picker combines a labeled field with a calendar surface that helps peop
 
 ## Usage
 
+**Allowed `type` values:** `single` (default), `range`, `multi`.
+
 ### Default
 
 Use the default `single` type when users need to choose one date. This is the best starting point for appointments, due dates, deadlines, and similar tasks.
 
 <Note>
-  Users can also enter a date manually. After pressing <kbd>Tab</kbd>, the component formats the value and reflects it in the calendar view.
+  All selection types use locale-ordered numeric segments. A format hint shows the expected layout before entry starts; for `locale="en-GB"`, day precision uses `dd/mm/yyyy`, month precision uses `mm/yyyy`, and year precision uses `yyyy`. Ranges and multiple dates render separate segment groups.
 
   The wire format of the `value` attribute — and of `min`/`max` — depends on `precision`:
   `day` uses `YYYY-MM-DD`, `month` uses `YYYY-MM`, and `year` uses `YYYY`. For `type="range"` two tokens are joined with `/` (`start/end`); for `type="multi"` tokens are space-separated.
 
-  Supported input formats include:
-  - ISO format: `2024-05-30`
-  - Text format: `30 May 2024`, `May 30, 2024`, `30 January 2024`, `January 1, 1970` (locale-aware)
-  - Numeric format: `30/05/2024`, `05-30-2024`, `30.05.2024`, `05.30.2024` (with day/month heuristics)
+  The locale-derived format hint is always shown before entry starts. On focus, one segment is active. Typing digits replaces that segment. Paste is not supported. See [Keyboard interaction](#keyboard-interaction) for the full key list.
 </Note>
 
 <CodeLivePreview mode="shadow" code={`
-  <bq-date-picker name="appointment-date" placeholder="Select a date">
+  <bq-date-picker name="appointment-date">
     <label slot="label">Appointment date</label>
   </bq-date-picker>
 `}>
   <CodeGroup>
     ```html HTML icon="html5"
-    <bq-date-picker name="appointment-date" placeholder="Select a date">
+    <bq-date-picker name="appointment-date">
       <label slot="label">Appointment date</label>
     </bq-date-picker>
     ```
@@ -129,7 +132,7 @@ Use the default `single` type when users need to choose one date. This is the be
     ```jsx React icon="react"
     import { BqDatePicker } from "@beeq/react";
 
-    <BqDatePicker name="appointment-date" placeholder="Select a date">
+    <BqDatePicker name="appointment-date">
       <label slot="label">Appointment date</label>
     </BqDatePicker>
     ```
@@ -143,7 +146,7 @@ Use the default `single` type when users need to choose one date. This is the be
       standalone: true,
       imports: [BqDatePicker],
       template: `
-        <bq-date-picker name="appointment-date" placeholder="Select a date">
+        <bq-date-picker name="appointment-date">
           <label slot="label">Appointment date</label>
         </bq-date-picker>
       `
@@ -157,7 +160,7 @@ Use the default `single` type when users need to choose one date. This is the be
     </script>
 
     <template>
-      <BqDatePicker name="appointment-date" placeholder="Select a date">
+      <BqDatePicker name="appointment-date">
         <label slot="label">Appointment date</label>
       </BqDatePicker>
     </template>
@@ -166,7 +169,7 @@ Use the default `single` type when users need to choose one date. This is the be
 </CodeLivePreview>
 
 <Tip>
-  `type="single"` is the default. Unlike `range` and `multi`, the single-date picker also supports manual typing with locale-aware parsing.
+  `type="single"` is the default. `range` and `multi` use the same segmented-entry model, so users can type digits or choose dates from the calendar in every selection mode.
 </Tip>
 
 ### Date range
@@ -178,7 +181,6 @@ Use `type="range"` when users need a start and end date. Set `months="2"` so bot
     months="2"
     months-per-view="months"
     name="travel-dates"
-    placeholder="Select departure and return dates"
     type="range"
   >
     <label slot="label">Depart - Return dates</label>
@@ -190,7 +192,6 @@ Use `type="range"` when users need a start and end date. Set `months="2"` so bot
       months="2"
       months-per-view="months"
       name="travel-dates"
-      placeholder="Select departure and return dates"
       type="range"
     >
       <label slot="label">Depart - Return dates</label>
@@ -204,7 +205,6 @@ Use `type="range"` when users need a start and end date. Set `months="2"` so bot
       months={2}
       monthsPerView="months"
       name="travel-dates"
-      placeholder="Select departure and return dates"
       type="range"
     >
       <label slot="label">Depart - Return dates</label>
@@ -224,7 +224,6 @@ Use `type="range"` when users need a start and end date. Set `months="2"` so bot
           months="2"
           months-per-view="months"
           name="travel-dates"
-          placeholder="Select departure and return dates"
           type="range"
         >
           <label slot="label">Depart - Return dates</label>
@@ -244,7 +243,6 @@ Use `type="range"` when users need a start and end date. Set `months="2"` so bot
         :months="2"
         monthsPerView="months"
         name="travel-dates"
-        placeholder="Select departure and return dates"
         type="range"
       >
         <label slot="label">Depart - Return dates</label>
@@ -266,7 +264,6 @@ Use `type="multi"` when users need to pick several non-consecutive dates. Unlike
   <bq-date-picker
     months="2"
     name="training-dates"
-    placeholder="Select training session dates"
     type="multi"
     value="2026-05-08 2026-05-22 2026-06-04"
   >
@@ -278,7 +275,6 @@ Use `type="multi"` when users need to pick several non-consecutive dates. Unlike
     <bq-date-picker
       months="2"
       name="training-dates"
-      placeholder="Select training session dates"
       type="multi"
       value="2026-05-08 2026-05-22 2026-06-04"
     >
@@ -292,7 +288,6 @@ Use `type="multi"` when users need to pick several non-consecutive dates. Unlike
     <BqDatePicker
       months={2}
       name="training-dates"
-      placeholder="Select training session dates"
       type="multi"
       value="2026-05-08 2026-05-22 2026-06-04"
     >
@@ -312,7 +307,6 @@ Use `type="multi"` when users need to pick several non-consecutive dates. Unlike
         <bq-date-picker
           months="2"
           name="training-dates"
-          placeholder="Select training session dates"
           type="multi"
           value="2026-05-08 2026-05-22 2026-06-04"
         >
@@ -332,7 +326,6 @@ Use `type="multi"` when users need to pick several non-consecutive dates. Unlike
       <BqDatePicker
         :months="2"
         name="training-dates"
-        placeholder="Select training session dates"
         type="multi"
         value="2026-05-08 2026-05-22 2026-06-04"
       >
@@ -344,6 +337,14 @@ Use `type="multi"` when users need to pick several non-consecutive dates. Unlike
 </CodeLivePreview>
 
 ## Options
+
+**Allowed `precision` values:** `day` (default), `month`, `year`.<br />
+**Allowed `initial-view` values:** `days` (default), `months`, `years`. Applies only when `precision="day"`.<br />
+**Allowed `months-per-view` values:** `single` (default), `months`.<br />
+**Allowed `validation-status` values:** `none` (default), `error`, `warning`, `success`.<br />
+**Allowed `strategy` values:** `fixed` (default), `absolute`.<br />
+**Allowed `placement` values:** `top`, `top-start`, `top-end`, `right`, `right-start`, `right-end`, `bottom`, `bottom-start`, `bottom-end` (default), `left`, `left-start`, `left-end`.<br />
+**Allowed `first-day-of-week` values:** `0` (Sunday) to `6` (Saturday); `1` (Monday) is the default.
 
 ### Month selection
 
@@ -530,13 +531,13 @@ Use `initial-view` with day precision when people need to start their search fro
 Use `disabled` when the date field should not be interactive, such as when access is restricted based on user permissions or form state.
 
 <CodeLivePreview mode="shadow" code={`
-  <bq-date-picker disabled name="disabled-date" placeholder="Select a date" value="2026-05-25">
+  <bq-date-picker disabled name="disabled-date" value="2026-05-25">
     <label slot="label">Departure date</label>
   </bq-date-picker>
 `}>
   <CodeGroup>
     ```html HTML icon="html5"
-    <bq-date-picker disabled name="disabled-date" placeholder="Select a date" value="2026-05-25">
+    <bq-date-picker disabled name="disabled-date" value="2026-05-25">
       <label slot="label">Departure date</label>
     </bq-date-picker>
     ```
@@ -544,7 +545,7 @@ Use `disabled` when the date field should not be interactive, such as when acces
     ```jsx React icon="react"
     import { BqDatePicker } from "@beeq/react";
 
-    <BqDatePicker disabled name="disabled-date" placeholder="Select a date" value="2026-05-25">
+    <BqDatePicker disabled name="disabled-date" value="2026-05-25">
       <label slot="label">Departure date</label>
     </BqDatePicker>
     ```
@@ -558,7 +559,7 @@ Use `disabled` when the date field should not be interactive, such as when acces
       standalone: true,
       imports: [BqDatePicker],
       template: `
-        <bq-date-picker disabled name="disabled-date" placeholder="Select a date" value="2026-05-25">
+        <bq-date-picker disabled name="disabled-date" value="2026-05-25">
           <label slot="label">Departure date</label>
         </bq-date-picker>
       `
@@ -572,7 +573,7 @@ Use `disabled` when the date field should not be interactive, such as when acces
     </script>
 
     <template>
-      <BqDatePicker disabled name="disabled-date" placeholder="Select a date" value="2026-05-25">
+      <BqDatePicker disabled name="disabled-date" value="2026-05-25">
         <label slot="label">Departure date</label>
       </BqDatePicker>
     </template>
@@ -585,15 +586,6 @@ Use `disabled` when the date field should not be interactive, such as when acces
 Use `validation-status` when the field should show immediate visual feedback after validation.
 
 <CodeLivePreview mode="shadow" code={`
-  <style>
-    :host {
-      justify-content: flex-start !important;
-      position: relative;
-      width: 100%;
-      z-index: 11;
-    }
-  </style>
-
   <bq-date-picker name="date-error" validation-status="error" value="2026-05-25">
     <label slot="label">Error date</label>
   </bq-date-picker>
@@ -882,15 +874,6 @@ Combine the label slot with a tooltip when users may need a short explanation be
 Use `locale` to match date formatting and calendar conventions to regional expectations.
 
 <CodeLivePreview mode="shadow" code={`
-  <style>
-    :host {
-      justify-content: flex-start !important;
-      position: relative;
-      width: 100%;
-      z-index: 11;
-    }
-  </style>
-
   <bq-date-picker locale="en-GB" name="locale-gb" value="2026-10-13">
     <label slot="label">en-GB</label>
   </bq-date-picker>
@@ -921,17 +904,19 @@ Use `locale` to match date formatting and calendar conventions to regional expec
     ```jsx React icon="react" expandable
     import { BqDatePicker } from "@beeq/react";
 
-    <BqDatePicker locale="en-GB" name="locale-gb" value="2026-10-13">
-      <label slot="label">en-GB</label>
-    </BqDatePicker>
+    <>
+      <BqDatePicker locale="en-GB" name="locale-gb" value="2026-10-13">
+        <label slot="label">en-GB</label>
+      </BqDatePicker>
 
-    <BqDatePicker locale="ja-JP" name="locale-jp" value="2026-10-13">
-      <label slot="label">ja-JP</label>
-    </BqDatePicker>
+      <BqDatePicker locale="ja-JP" name="locale-jp" value="2026-10-13">
+        <label slot="label">ja-JP</label>
+      </BqDatePicker>
 
-    <BqDatePicker locale="ar-EG" name="locale-eg" value="2026-10-13">
-      <label slot="label">ar-EG</label>
-    </BqDatePicker>
+      <BqDatePicker locale="ar-EG" name="locale-eg" value="2026-10-13">
+        <label slot="label">ar-EG</label>
+      </BqDatePicker>
+    </>
     ```
 
     ```ts Angular icon="angular" expandable
@@ -986,15 +971,6 @@ Use `locale` to match date formatting and calendar conventions to regional expec
 Use `first-day-of-week` to align the calendar grid with regional or business expectations.
 
 <CodeLivePreview mode="shadow" code={`
-  <style>
-    :host {
-      justify-content: flex-start !important;
-      position: relative;
-      width: 100%;
-      z-index: 11;
-    }
-  </style>
-
   <bq-date-picker first-day-of-week="1" locale="en-GB" name="week-monday" value="2026-10-13">
     <label slot="label">Monday first</label>
   </bq-date-picker>
@@ -1017,13 +993,15 @@ Use `first-day-of-week` to align the calendar grid with regional or business exp
     ```jsx React icon="react" expandable
     import { BqDatePicker } from "@beeq/react";
 
-    <BqDatePicker firstDayOfWeek={1} locale="en-GB" name="week-monday" value="2026-10-13">
-      <label slot="label">Monday first</label>
-    </BqDatePicker>
+    <>
+      <BqDatePicker firstDayOfWeek={1} locale="en-GB" name="week-monday" value="2026-10-13">
+        <label slot="label">Monday first</label>
+      </BqDatePicker>
 
-    <BqDatePicker firstDayOfWeek={0} locale="en-GB" name="week-sunday" value="2026-10-13">
-      <label slot="label">Sunday first</label>
-    </BqDatePicker>
+      <BqDatePicker firstDayOfWeek={0} locale="en-GB" name="week-sunday" value="2026-10-13">
+        <label slot="label">Sunday first</label>
+      </BqDatePicker>
+    </>
     ```
 
     ```ts Angular icon="angular" expandable
@@ -1088,7 +1066,6 @@ By default, the calendar shows only the days of the displayed month. Enable `sho
 
     ```jsx React icon="react"
     import { BqDatePicker } from "@beeq/react";
-
 
     <BqDatePicker name="outside-visible" open showOutsideDays value="2026-05-12">
       <label slot="label">With outside days</label>
@@ -1161,7 +1138,7 @@ Use `isDateDisallowed` to make specific dates unavailable for selection. This is
 `}>
   <CodeGroup>
     ```js JavaScript icon="js"
-    const datePickerElem = previewRoot.querySelector('bq-date-picker[name="disallowed-dates"]');
+    const datePickerElem = document.querySelector('bq-date-picker[name="disallowed-dates"]');
     const disallowedDates = ['2026-12-01', '2026-12-25', '2026-12-26'];
 
     datePickerElem.isDateDisallowed = (date) => {
@@ -1171,7 +1148,7 @@ Use `isDateDisallowed` to make specific dates unavailable for selection. This is
     ```
 
     ```html HTML icon="html5"
-    <bq-date-picker name="disallowed-dates" value="2026-12-12">
+    <bq-date-picker name="disallowed-dates" open value="2026-12-12">
       <label slot="label">Appointment date</label>
     </bq-date-picker>
     ```
@@ -1189,6 +1166,7 @@ Use `isDateDisallowed` to make specific dates unavailable for selection. This is
     <BqDatePicker
       isDateDisallowed={isDateDisallowed}
       name="disallowed-dates"
+      open
       value="2026-12-12"
     >
       <label slot="label">Appointment date</label>
@@ -1207,6 +1185,7 @@ Use `isDateDisallowed` to make specific dates unavailable for selection. This is
         <bq-date-picker
           [isDateDisallowed]="isDateDisallowed"
           name="disallowed-dates"
+          open
           value="2026-12-12"
         >
           <label slot="label">Appointment date</label>
@@ -1239,6 +1218,7 @@ Use `isDateDisallowed` to make specific dates unavailable for selection. This is
       <BqDatePicker
         :isDateDisallowed="isDateDisallowed"
         name="disallowed-dates"
+        open
         value="2026-12-12"
       >
         <label slot="label">Appointment date</label>
@@ -1248,9 +1228,9 @@ Use `isDateDisallowed` to make specific dates unavailable for selection. This is
 </CodeGroup>
 </CodeLivePreview>
 
-### Custom display format
+### Segment layout
 
-Use `formatOptions` to customize the display format of the selected date in the input field. This does not affect the underlying value, which is always stored as `YYYY-MM-DD`.
+Use numeric `formatOptions` to set the segment order and separators. The component supports `numeric` or `2-digit` day/month fields with a numeric year. This does not affect the underlying ISO wire value.
 
 <CodeLivePreview mode="iframe" height="30rem" removePadding code={`
   <style>
@@ -1283,7 +1263,7 @@ Use `formatOptions` to customize the display format of the selected date in the 
 `}>
   <CodeGroup>
     ```js JavaScript icon="js" expandable
-    const datePickerElem = previewRoot.querySelector('bq-date-picker[name="formatted-date"]');
+    const datePickerElem = document.querySelector('bq-date-picker[name="formatted-date"]');
 
     datePickerElem.formatOptions = {
       year: 'numeric',
@@ -1295,6 +1275,7 @@ Use `formatOptions` to customize the display format of the selected date in the 
     ```html HTML icon="html5"
     <bq-date-picker
       name="formatted-date"
+      open
       type="single"
       value="2026-11-18"
     >
@@ -1314,6 +1295,7 @@ Use `formatOptions` to customize the display format of the selected date in the 
     <BqDatePicker
       formatOptions={formatOptions}
       name="formatted-date"
+      open
       type="single"
       value="2026-11-18"
     >
@@ -1333,6 +1315,7 @@ Use `formatOptions` to customize the display format of the selected date in the 
         <bq-date-picker
           [formatOptions]="formatOptions"
           name="formatted-date"
+          open
           type="single"
           value="2026-11-18"
         >
@@ -1364,6 +1347,7 @@ Use `formatOptions` to customize the display format of the selected date in the 
       <BqDatePicker
         :formatOptions="formatOptions"
         name="formatted-date"
+        open
         type="single"
         value="2026-11-18"
       >
@@ -1375,12 +1359,18 @@ Use `formatOptions` to customize the display format of the selected date in the 
 </CodeLivePreview>
 
 <Warning>
-  Use `formatOptions` carefully with `range` and `multi`. Long formats such as `weekday: 'long'` can produce unwieldy display values when multiple dates appear in the input field.
+  Textual or variable-length options such as `month: 'long'`, `weekday`, and `dateStyle` cannot define a numeric segment layout. The component falls back to the locale's numeric layout and logs a development warning.
 </Warning>
 
 ### Form integration
 
 `bq-date-picker` submits its current date value with the form. Use `required` and `form-validation-message` when the date is mandatory; the custom message also applies to invalid typed values and out-of-bounds dates.
+
+<Warning>
+  A non-empty incomplete segment draft becomes invalid when focus leaves the segmented field, even when the picker is optional. The draft stays visible and the last committed `value` is preserved, but native form validation blocks submission until the user completes a valid date, chooses a valid calendar date, or clears the field.
+</Warning>
+
+When focus leaves the segmented field, complete dates outside `min` or `max` are clamped to the nearest bound. Complete inverted ranges are displayed in chronological order. Invalid or incomplete drafts are not generally reverted to the previous displayed date.
 
 <CodeLivePreview mode="iframe" height="30rem" removePadding code={`
   <style>
@@ -1414,7 +1404,6 @@ Use `formatOptions` to customize the display format of the selected date in the 
     <bq-date-picker
       form-validation-message="Choose a start date"
       name="startDate"
-      placeholder="Select a date"
       required
     >
       <label slot="label">Start date</label>
@@ -1457,18 +1446,19 @@ Use `formatOptions` to customize the display format of the selected date in the 
 `}>
   <CodeGroup>
     ```html HTML icon="html5" expandable
-    <form id="date-form">
+    <form class="date-form" id="date-form">
       <bq-date-picker
         form-validation-message="Choose a start date"
         name="startDate"
-        placeholder="Select a date"
         required
       >
         <label slot="label">Start date</label>
       </bq-date-picker>
-      <bq-button appearance="secondary" type="reset">Reset</bq-button>
-      <bq-button type="submit">Submit</bq-button>
-      <pre id="date-output">{}</pre>
+      <div class="date-form__actions">
+        <bq-button appearance="secondary" type="reset">Reset</bq-button>
+        <bq-button type="submit">Submit</bq-button>
+      </div>
+      <pre class="date-form__output" id="date-output">{}</pre>
     </form>
 
     <script>
@@ -1497,6 +1487,7 @@ Use `formatOptions` to customize the display format of the selected date in the 
 
       return (
         <form
+          className="date-form"
           onReset={() => setData("{}")}
           onSubmit={(event) => {
             event.preventDefault();
@@ -1506,14 +1497,15 @@ Use `formatOptions` to customize the display format of the selected date in the 
           <BqDatePicker
             formValidationMessage="Choose a start date"
             name="startDate"
-            placeholder="Select a date"
             required
           >
             <label slot="label">Start date</label>
           </BqDatePicker>
-          <BqButton appearance="secondary" type="reset">Reset</BqButton>
-          <BqButton type="submit">Submit</BqButton>
-          <pre>{data}</pre>
+          <div className="date-form__actions">
+            <BqButton appearance="secondary" type="reset">Reset</BqButton>
+            <BqButton type="submit">Submit</BqButton>
+          </div>
+          <pre className="date-form__output">{data}</pre>
         </form>
       );
     }
@@ -1528,18 +1520,19 @@ Use `formatOptions` to customize the display format of the selected date in the 
       standalone: true,
       imports: [BqButton, BqDatePicker],
       template: `
-        <form (reset)="data = '{}'" (submit)="handleSubmit($event)">
+        <form class="date-form" (reset)="data = '{}'" (submit)="handleSubmit($event)">
           <bq-date-picker
             form-validation-message="Choose a start date"
             name="startDate"
-            placeholder="Select a date"
             required
           >
             <label slot="label">Start date</label>
           </bq-date-picker>
-          <bq-button appearance="secondary" type="reset">Reset</bq-button>
-          <bq-button type="submit">Submit</bq-button>
-          <pre>{{ data }}</pre>
+          <div class="date-form__actions">
+            <bq-button appearance="secondary" type="reset">Reset</bq-button>
+            <bq-button type="submit">Submit</bq-button>
+          </div>
+          <pre class="date-form__output">{{ data }}</pre>
         </form>
       `,
     })
@@ -1566,18 +1559,19 @@ Use `formatOptions` to customize the display format of the selected date in the 
     </script>
 
     <template>
-      <form @reset="data = '{}'" @submit.prevent="handleSubmit">
+      <form class="date-form" @reset="data = '{}'" @submit.prevent="handleSubmit">
         <BqDatePicker
           formValidationMessage="Choose a start date"
           name="startDate"
-          placeholder="Select a date"
           required
         >
           <label slot="label">Start date</label>
         </BqDatePicker>
-        <BqButton appearance="secondary" type="reset">Reset</BqButton>
-        <BqButton type="submit">Submit</BqButton>
-        <pre>{{ data }}</pre>
+        <div class="date-form__actions">
+          <BqButton appearance="secondary" type="reset">Reset</BqButton>
+          <BqButton type="submit">Submit</BqButton>
+        </div>
+        <pre class="date-form__output">{{ data }}</pre>
       </form>
     </template>
     ```
@@ -1647,15 +1641,54 @@ Use `formatOptions` to customize the display format of the selected date in the 
 
 ## Accessibility
 
-- `bq-date-picker` is form-associated and delegates focus, so it participates in native forms and moves focus into the internal `<input>` element when the component receives focus.
-- The input element sets `aria-disabled="true"` when `disabled` is `true`. It sets `aria-invalid="true"` for `validationStatus="error"` and native constraint failures such as required, invalid, or out-of-bounds values.
-- The input uses `aria-haspopup="dialog"` and `aria-controls` to announce the calendar panel. A `label` slot supplies `aria-labelledby` for both the input and calendar panel.
+- `bq-date-picker` is form-associated and delegates focus, so it participates in native forms and moves focus into its segmented date field when the component receives focus.
+- The segmented field is a labelled `group`; each day, month, and year control is a `spinbutton` with localized limits, value text, and roving tabindex. Range endpoints and multi-date groups have their own accessible labels.
+- The segmented field sets `aria-disabled="true"` when `disabled` is `true`. Each segment sets `aria-invalid="true"` for `validationStatus="error"` and native constraint failures such as required, invalid, or out-of-bounds values.
 - The calendar panel carries `role="dialog"` and is labelled via `aria-labelledby` when a label is present, or by its built-in "Date picker" label otherwise. The panel is not modal.
-- The component emits `bqFocus`, `bqBlur`, `bqChange`, and `bqClear`, which give you the hooks needed to announce validation results, react to changes, and keep form state synchronized.
-- Keyboard users can open the calendar panel with `Enter` or `Space`, navigate days with the arrow keys, and close the panel with `Escape`.
-- Always provide a visible label through the `label` slot. Without it, the input has no programmatic label, so nearby context must provide an equivalent accessible name.
-- Validation states should never rely on color alone. Pair `validationStatus` with visible error text so screen reader users receive the same feedback as sighted users.
+- The component announces a completed selection when focus enters the field, after a calendar selection, and announces the current calendar month, year, or year range after previous/next navigation.
+- The panel opens from the keyboard through the segmented field or the calendar icon; see [Keyboard interaction](#keyboard-interaction) for the keys. Calendar-trigger activation moves focus into its active date cell.
+- Clicking the segmented field opens the calendar while keeping segment focus. Clicking the calendar icon opens the panel and moves focus into it. Selecting a value from the panel returns focus to the first segment.
+- Opening the calendar closes any other open date picker, select, or dropdown panel, so only one panel stays open at a time.
+- Calendar days and months expose localized full names to assistive technology. Provide a visible label through the `label` slot so the field and calendar dialog have a programmatic name.
+- Don't rely on color alone to communicate validation states. Pair `validationStatus` with visible error text so screen reader users receive the same feedback as sighted users.
 - Keep `locale`, `first-day-of-week`, and display formatting aligned with user expectations so typed input and visible values remain understandable for all users.
+
+### Keyboard interaction
+
+| Key | Context | Action |
+|---|---|---|
+| `Tab` | Segmented field | Moves focus to the active segment (one tab stop for all segments), then to the clear button when a value is set, then to the calendar icon |
+| `ArrowLeft` / `ArrowRight` | Date segment | Moves focus to the previous or next segment |
+| `Home` / `End` | Date segment | Moves focus to the first or last segment of the group |
+| `0`–`9` | Date segment | Types digits into the segment and advances automatically when the segment is full |
+| `ArrowUp` / `ArrowDown` | Date segment | Increments or decrements the segment value, skipping dates that are not allowed |
+| `Backspace` / `Delete` | Date segment | Clears the segment; `Backspace` then moves focus to the previous segment |
+| `Alt+ArrowDown` | Date segment | Opens the calendar panel without moving segment focus |
+| Any key | Picker disabled | Segment key handling is ignored |
+| `Enter` / `Space` | Calendar icon focused | Opens the panel and moves focus to the active date cell |
+| `ArrowLeft` / `ArrowRight` | Day grid | Moves focus one day backward or forward (reversed in right-to-left layouts) |
+| `ArrowUp` / `ArrowDown` | Day grid | Moves focus one week backward or forward |
+| `Home` / `End` | Day grid | Moves focus to the start or end of the week row, based on `first-day-of-week` |
+| `PageUp` / `PageDown` | Day grid | Moves to the previous or next month; with `Shift`, to the previous or next year |
+| `Enter` / `Space` | Day, month or year cell | Selects the focused cell, ignoring dates and months outside `min`/`max` or disallowed |
+| Arrow keys | Month or year grid | Moves focus between cells by one, or by one row |
+| `Escape` | Day grid, opened from the segments | Closes the panel and returns focus to the segment |
+| `Escape` | Day grid, opened from the calendar icon | Closes the panel and returns focus to the calendar icon |
+| `Escape` | Month grid | Returns to the days view |
+| `Escape` | Year grid | Returns to the months view |
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Provide a visible label through the `label` slot | MUST | manual: inspect the visible label beside the picker |
+| Set `required` when a date is mandatory so form submission is blocked until a value is set | MUST | automated: [`bq-date-picker.e2e.tsx`](https://github.com/Endava/BEEQ/blob/main/packages/beeq/src/components/date-picker/__tests__/bq-date-picker.e2e.tsx) checks required submission |
+| Set `form-validation-message` to provide a specific message for required, invalid typed, and out-of-bounds values | SHOULD | automated: [`bq-date-picker.e2e.tsx`](https://github.com/Endava/BEEQ/blob/main/packages/beeq/src/components/date-picker/__tests__/bq-date-picker.e2e.tsx) checks a custom bounds message; manual: inspect required and invalid-entry messages |
+| Pair `validationStatus` with visible error text | MUST | manual: inspect error text beside each visual error state |
+| Use more than color to communicate validation states | MUST | manual: read validation state without relying on color |
+| Set `min`, `max`, or `isDateDisallowed` when the valid dates are known | SHOULD | manual: review valid-date rules against configured bounds |
+| Keep `locale`, `first-day-of-week`, and display formatting aligned with user expectations | SHOULD | manual: review locale, week start and display format together |
+| Use a placeholder as the only instruction for the field | MUST NOT | manual: check instructions remain visible after the placeholder disappears |
 
 ## API reference
 
@@ -1672,7 +1705,7 @@ Use `formatOptions` to customize the display format of the selected date in the 
 | `firstDayOfWeek` | `first-day-of-week` | First day of the week where Sunday is `0` | `0 \| 1 \| 2 \| 3 \| 4 \| 5 \| 6` | `1` |
 | `form` | `form` | ID of the form the input belongs to | `string` | `undefined` |
 | `formValidationMessage` | `form-validation-message` | Native validation message used for required, invalid typed, and out-of-bounds values | `string` | `undefined` |
-| `formatOptions` | *(property only)* | `Intl.DateTimeFormat` options used for the displayed value. When omitted, defaults are derived from `precision` (`day` → `{ day, month, year }`, `month` → `{ month, year }`, `year` → `{ year }`) | `DateTimeFormatOptions` | `undefined` |
+| `formatOptions` | *(property only)* | Numeric `Intl.DateTimeFormat` options that control segment order and separators. Textual or variable-length options fall back to the locale numeric layout with a development warning. | `Intl.DateTimeFormatOptions` | `undefined` |
 | `initialView` | `initial-view` | Starting view when `precision` is `"day"`; month and year precision always open in their matching view | `"days" \| "months" \| "years"` | `"days"` |
 | `isDateDisallowed` | *(property only)* | Function used to disable specific dates | `(date: Date) => boolean` | `undefined` |
 | `locale` | `locale` | Locale used to format and parse dates | `Intl.LocalesArgument` | `"en-GB"` |
@@ -1683,7 +1716,7 @@ Use `formatOptions` to customize the display format of the selected date in the 
 | `name` | `name` | Name of the underlying input | `string` | `undefined` |
 | `open` | `open` | If `true`, the calendar panel is visible | `boolean` | `false` |
 | `panelHeight` | `panel-height` | Overrides the panel height | `string` | `"auto"` |
-| `placeholder` | `placeholder` | Placeholder text | `string` | `undefined` |
+| `placeholder` | `placeholder` | **Deprecated.** Locale-derived segment format hints always describe the expected entry layout, so this value no longer changes the rendered field. | `string` | `undefined` |
 | `placement` | `placement` | Position of the calendar panel | `"top" \| "top-start" \| "top-end" \| "right" \| "right-start" \| "right-end" \| "bottom" \| "bottom-start" \| "bottom-end" \| "left" \| "left-start" \| "left-end"` | `"bottom-end"` |
 | `precision` | `precision` | Granularity of the committed value (`day` → `YYYY-MM-DD`, `month` → `YYYY-MM`, `year` → `YYYY`) | `"day" \| "month" \| "year"` | `"day"` |
 | `required` | `required` | Marks the date picker as required | `boolean` | `false` |
@@ -1694,12 +1727,22 @@ Use `formatOptions` to customize the display format of the selected date in the 
 | `validationStatus` | `validation-status` | Validation state of the control | `"none" \| "error" \| "warning" \| "success"` | `"none"` |
 | `value` | `value` | Selected value in the wire format matching `precision`; `range` uses `start/end`, `multi` uses space-separated dates | `string` | `undefined` |
 
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| `placeholder` set to any value | SHOULD NOT | Deprecated; the rendered field does not change |
+| `initial-view` other than `days` with `precision` set to `month` or `year` | SHOULD NOT | `initial-view` is ignored; the picker opens in the view matching `precision` |
+| `months` greater than `2` | SHOULD NOT | `months` is clamped to `2` |
+| `months` greater than `1` with `type="single"` | SHOULD NOT | A single picker always shows one month |
+| An unsupported value for `type`, `precision`, `initial-view`, `months-per-view`, `strategy`, `placement`, `validation-status`, or `first-day-of-week` | MUST NOT | A development warning is logged and the default value is used |
+
 ### Events
 
 | Event | Description | Type |
 |---|---|---|
 | `bqBlur` | Fired when the input loses focus | `CustomEvent<HTMLBqDatePickerElement>` |
-| `bqChange` | Fired when the input value changes after typing, pasting, or selecting a date | `CustomEvent<{ value: string \| undefined; el: HTMLBqDatePickerElement }>` |
+| `bqChange` | Fired when the value changes after segment entry or calendar selection | `CustomEvent<{ value: string \| undefined; el: HTMLBqDatePickerElement }>` |
 | `bqClear` | Fired when the value is cleared | `CustomEvent<HTMLBqDatePickerElement>` |
 | `bqFocus` | Fired when the input receives focus | `CustomEvent<HTMLBqDatePickerElement>` |
 | `bqViewChange` | Fired when the calendar view switches between days/months/years | `CustomEvent<{ view: "days" \| "months" \| "years"; el: HTMLBqDatePickerElement }>` |
@@ -1722,7 +1765,7 @@ Use `formatOptions` to customize the display format of the selected date in the 
 |---|---|
 | `label` | Label content for the field |
 | `prefix` | Optional prefix content inside the control |
-| `suffix` | Optional suffix content inside the control |
+| `suffix` | Replaces the icon inside the calendar trigger button; defaults to a calendar icon. Use `calendarButtonLabel` to name the button |
 | `clear-icon` | Replaces the default clear icon |
 
 ### Shadow parts
@@ -1734,7 +1777,9 @@ Use `formatOptions` to customize the display format of the selected date in the 
 | `control` | Input control wrapper |
 | `prefix` | Prefix slot container |
 | `suffix` | Suffix slot container |
-| `input` | Native input element |
+| `input` | Segmented date field group |
+| `segment` | Editable day, month, or year segment |
+| `segment-literal` | Locale-derived separator between date segments |
 | `clear-btn` | Clear button |
 | `calendar-trigger` | Calendar icon trigger button |
 | `button` | Any button rendered inside the calendar (nav or day/month/year cell) |
@@ -1775,6 +1820,9 @@ Use `formatOptions` to customize the display format of the selected date in the 
   | `--bq-date-picker--border-color` | Input border color | `var(--bq-stroke--tertiary)` |
   | `--bq-date-picker--border-color-disabled` | Border color when disabled | `var(--bq-stroke--secondary)` |
   | `--bq-date-picker--border-color-focus` | Border color on focus | `var(--bq-stroke--brand)` |
+  | `--bq-date-picker--border-color-danger` | Border color when the validation status is `error` | `var(--bq-stroke--danger)` |
+  | `--bq-date-picker--border-color-success` | Border color when the validation status is `success` | `var(--bq-stroke--success)` |
+  | `--bq-date-picker--border-color-warning` | Border color when the validation status is `warning` | `var(--bq-stroke--warning)` |
   | `--bq-date-picker--border-radius` | Input border radius | `var(--bq-radius--s)` |
   | `--bq-date-picker--border-style` | Border style | `solid` |
   | `--bq-date-picker--border-width` | Border width | `1px` |
@@ -1800,7 +1848,7 @@ Use `formatOptions` to customize the display format of the selected date in the 
   | `--bq-date-picker--view-cell-background-selected` | Selected background for day/month/year cells | `var(--bq-ui--brand)` |
   | `--bq-date-picker--view-cell-height` | Height of month/year cells | `2.75rem` |
   | `--bq-date-picker--view-cell-radius` | Border radius of day/month/year cells | `0.5rem` |
-  | `--bq-date-picker--view-cell-text-selected` | Text color for selected day/month/year cells | `var(--bq-text--alt)` |
+  | `--bq-date-picker--view-cell-text-selected` | Text color for selected day/month/year cells | `var(--bq-text--on-brand)` |
 </Expandable>
 
 <Tip>

@@ -18,7 +18,7 @@ import {
 
 const inherit: string = 'inherit';
 
-export default {
+const preset = {
   theme: {
     colors: {
       inherit,
@@ -46,6 +46,10 @@ export default {
       s: 'var(--bq-stroke-s)',
       m: 'var(--bq-stroke-m)',
       l: 'var(--bq-stroke-l)',
+      // Tailwind CSS v4 also matches `border-s` and `border-l` as its own side utilities, so use these keys there
+      'stroke-s': 'var(--bq-stroke-s)',
+      'stroke-m': 'var(--bq-stroke-m)',
+      'stroke-l': 'var(--bq-stroke-l)',
     },
     boxShadow: {
       xs: 'var(--bq-box-shadow--xs)',
@@ -157,8 +161,9 @@ export default {
     ColorMix,
     LogicalProperties,
     BeeqThemeSwapper({
+      // Every theme/mode selector is wrapped in :where() (zero specificity), so source order decides precedence
       themes: [
-        // Base theme - always uses :where() for low specificity
+        // Base theme
         {
           name: 'base',
           selectors: [':root'],
@@ -168,10 +173,9 @@ export default {
         {
           name: 'light',
           selectors: [
-            // Default when no theme/mode specified
-            ':root:not([bq-theme]):not([bq-mode])',
-            // Default for BEEQ theme with no mode
-            ':root[bq-theme="beeq"]:not([bq-mode])',
+            // Default when no mode is specified, for any theme (including custom ones).
+            // Endava's light block comes later, so it still wins for bq-theme="endava".
+            ':root:not([bq-mode])',
             '.beeq:not([bq-mode])',
             // Explicit light mode
             '[bq-mode="light"]',
@@ -218,6 +222,15 @@ export default {
     }),
   ],
 } satisfies Partial<Config>;
+
+/**
+ * The default export works both as a Tailwind CSS v3 preset (`presets: [beeqPreset]`, or v4 `@config`)
+ * and as a Tailwind CSS v4 plugin (`@plugin "@beeq/tailwindcss"`), which expects `{ handler, config }`.
+ */
+export default Object.assign(
+  plugin(() => {}, preset),
+  preset,
+);
 
 export {
   CSS_COLORS,

@@ -42,6 +42,10 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
   </Card>
 </CardGroup>
 
+<Tip>
+  Choose [`bq-dialog`](/components/dialog) instead of `bq-drawer` when the user must respond before continuing, such as a blocking confirmation, and [`bq-tooltip`](/components/tooltip) when the content is a short, non-essential hint.
+</Tip>
+
 ## Patterns
 
 <CardGroup cols={2}>
@@ -108,12 +112,12 @@ Add a footer to house actions that apply to all content in the panel (e.g. save 
 
 ### Keep it simple and clear
 
-While drawers can efficiently store additional information not included on the parent page, it is essential to avoid overwhelming users with excessive content. Proper organisation and grouping of information within the drawer are crucial to ensure clarity and usability.
+While drawers can efficiently store additional information not included on the parent page, you should not overwhelm users with excessive content. Organise and group information within the drawer to keep it clear and usable.
 
 ## Usage
 
 <Tip>
-  When using the Drawer component, make sure to place it higher in the DOM hierarchy — for example, as a direct child of `<body>` and not inside a container element. This ensures the drawer's fixed positioning and z-index work correctly across all layouts.
+  When using the Drawer component, you should place it high in the DOM hierarchy, for example as a direct child of `<body>` and not inside a container element. This ensures the drawer's fixed positioning and z-index work correctly across all layouts.
 </Tip>
 
 ### Default
@@ -810,6 +814,10 @@ The `position` prop allows you to specify the edge from which the drawer appears
 </CodeLivePreview>
 
 ## Options
+
+**Allowed `position` values:** `start`, `end` (default). Any other value logs a warning and falls back to `start`.
+
+**Allowed `placement` values (deprecated):** `left`, `right` (default). Any other value logs a warning and falls back to `right`. Use `position` instead.
 
 ### With backdrop
 
@@ -1566,12 +1574,31 @@ By default, clicking outside the panel or pressing `Esc` closes the drawer. Set 
 
 The built-in close button has `label="Close"` and is announced by screen readers as "Close, button".
 
-As a developer, you are responsible for:
+As a developer, you are responsible for the following:
 
-- **Moving focus into the drawer when it opens** — the component does not trap focus automatically. When you call `show()`, move focus to the first interactive element inside the panel or to the panel itself so keyboard users can begin navigating immediately.
-- **Returning focus to the trigger when the drawer closes** — call `hide()` and then restore focus to the element that opened the drawer so keyboard users are not left disoriented.
-- **Providing a descriptive title** — the `aria-labelledby` attribute references the title slot. Screen readers announce this text when the dialog opens. An empty or generic title such as "Panel" makes the dialog purpose unclear.
-- **Avoid nesting focusable elements in the backdrop** — the backdrop does not receive focus; keep interactive content inside the panel.
+- **Moving focus into the drawer when it opens** — the component does not trap focus automatically. When you call `show()`, you must move focus to the first interactive element inside the panel or to the panel itself so keyboard users can begin navigating immediately.
+- **Returning focus to the trigger when the drawer closes** — after `hide()`, you must restore focus to the element that opened the drawer so keyboard users are not left disoriented.
+- **Providing a descriptive title** — the `aria-labelledby` attribute references the title slot. Screen readers announce this text when the dialog opens, so you must not use an empty or generic title such as "Panel", which makes the dialog purpose unclear.
+- **Keeping focusable elements out of the backdrop** — the backdrop does not receive focus, so you must keep interactive content inside the panel.
+
+### Keyboard interaction
+
+| Key | Context | Action |
+|---|---|---|
+| `Escape` | Drawer open, `close-on-esc` not set | Closes the drawer and emits `bqClose` |
+| `Escape` | Drawer open, `close-on-esc` set | Does nothing; the drawer stays open |
+| `Tab` / `Shift` + `Tab` | Drawer open | Follows the native tab order; focus is not trapped inside the drawer |
+| `Enter` or `Space` | Focus on the close button or a native `<button>` inside the drawer | Activates the focused button |
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Move focus into the drawer after `show()`; the component does not trap focus | MUST | manual: open the drawer and inspect the next focused element |
+| Restore focus to the trigger after `hide()` | MUST | manual: close the drawer and inspect where focus returns |
+| Provide a descriptive title in the title slot | MUST | manual: read the title as the drawer accessible name |
+| Do not use an empty or generic title such as "Panel" | MUST NOT | manual: review titles for a specific task or destination |
+| Keep interactive content inside the panel, not the backdrop | MUST | manual: tab through the panel and check backdrop content is not interactive |
 
 ## API reference
 
@@ -1585,6 +1612,12 @@ As a developer, you are responsible for:
 | `open` | `open` | If true, the drawer is visible | `boolean` | `false` |
 | `position` | `position` | Defines the edge the drawer slides from | `'start' \| 'end'` | `'end'` |
 | `placement` | `placement` | **Deprecated.** Use `position` instead. Defines the edge the drawer slides from | `'left' \| 'right'` | `'right'` |
+
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| `placement` | MUST NOT | The deprecated prop logs a console warning and overrides `position`; use `position` instead |
 
 ### Methods
 
@@ -1632,11 +1665,13 @@ As a developer, you are responsible for:
 
 | Variable | Description | Default |
 |---|---|---|
-| `--bq-drawer--backgroundBackdrop` | Background color of the backdrop overlay | `var(--bq-ui--overlay)` |
+| `--bq-drawer--background` | Background color of the drawer panel | `var(--bq-ui--primary)` |
+| `--bq-drawer--backgroundBackdrop` | Background color of the backdrop overlay | `var(--bq-background--overlay)` |
 | `--bq-drawer--gap` | Gap between the drawer panel and the viewport edge | `var(--bq-spacing-l)` |
 | `--bq-drawer--width` | Width of the drawer panel | `320px` |
 | `--bq-drawer--paddingX` | Inline (horizontal) padding of the panel | `var(--bq-spacing-l)` |
 | `--bq-drawer--paddingY` | Block (vertical) padding of the panel | `var(--bq-spacing-m)` |
+| `--bq-drawer--text-color` | Text color of the drawer panel | `var(--bq-text--primary)` |
 | `--bq-drawer--zIndex` | Z-index of the drawer component | `10` |
 
 </Expandable>

@@ -55,10 +55,49 @@ Import the BEEQ stylesheet **once** in your application’s main CSS or SCSS fil
 ```
 
 <Tip>
-  If you use Sass or another CSS preprocessor, keep the full file extension in the import path (for example `beeq.css`, not `beeq`).
+  In a Sass or Less file, keep the `.css` extension so the line stays a plain CSS import that your bundler resolves. Without it, Less can't find the file and Sass falls back to its deprecated `@import`.
 </Tip>
 
 For CDN-based HTML pages without a bundler, link the stylesheet in your document instead — see [HTML / Web Components](/guides/frameworks/html-web-components).
+
+### Apps that use cascade layers
+
+`beeq.css` is not in a cascade layer, and browsers apply unlayered styles over any `@layer`, whatever the selector. Tailwind CSS v4 puts its utilities in `@layer utilities`, so the BEEQ [CSS reset](#css-reset) and heading styles override classes such as `mx-auto` or `text-l`.
+
+Import the stylesheet into the `base` layer instead:
+
+```css
+@import "tailwindcss";
+@import "@beeq/core/dist/beeq/beeq.css" layer(base);
+```
+
+Use `base`, not a new layer name. A layer first named after `@import "tailwindcss"` is ordered after `utilities`, so it would still win. The same applies to any app that puts its own styles in `@layer`.
+
+Tailwind CSS v3 and plain CSS without `@layer` don't need this: their styles are unlayered too, so a class still beats the reset's element selectors.
+
+## CSS reset
+
+`beeq.css` and the [`@beeq/tailwindcss`](https://www.npmjs.com/package/@beeq/tailwindcss) preset include the same reset. It removes browser spacing, sets the theme typography on the page, and keeps native behavior for elements that rely on browser defaults.
+
+Most selectors are wrapped in `:where()`, so they have zero specificity and any rule you write overrides them. `*`, `html`, `body`, and the pseudo-elements stay plain.
+
+| Selector | Rule | Why |
+| --- | --- | --- |
+| `*`, `::before`, `::after` | `box-sizing: border-box` | Width and height include padding and border. |
+| `*` | `margin: 0` | Spacing comes from BEEQ spacing tokens, not browser defaults. |
+| `dialog`, `[popover]` | `margin: auto` | Native dialogs and popovers stay centered. |
+| `ul[role="list"]`, `ol[role="list"]` | `list-style-type: none` | Removes markers only from lists that keep their list semantics with `role="list"`. |
+| `html` | `font-family`, `font-size`, `text-size-adjust: none` | The page starts with the active theme font at `var(--bq-font-size--m)`, and mobile browsers don't inflate text. |
+| `body` | `color`, `background-color`, `line-height`, `min-height: 100vb`, font smoothing | Text and surface follow the active theme and mode. |
+| `a:not([class])` | `text-decoration-skip-ink: auto` | Underlines skip descenders on plain links. |
+| `img`, `picture`, `video`, `canvas`, `svg` | `display: block`, `max-width: 100%` | Media doesn't overflow its container or leave an inline gap below. |
+| `button`, `input`, `optgroup`, `select`, `textarea` | `font: inherit` | Form controls use the surrounding typography. |
+| `code`, `kbd`, `samp`, `pre` | Monospace `font-family`, `font-size: 1em` | Code keeps the surrounding text size. |
+| `sub`, `sup` | `font-size: 75%`, `line-height: 0`, relative offset | Subscripts and superscripts don't change the line height. |
+| `p`, `h1`–`h6` | `overflow-wrap: break-word` | Long words wrap instead of overflowing. |
+| `*`, `::before`, `::after` with `prefers-reduced-motion: reduce` | Animation and transition duration `0.01ms` | Motion stops for people who ask for less of it. |
+
+Elements such as `strong`, `small`, and `em` keep their browser font styles. `beeq.css` also styles `h1`–`h6`; see [Typography](/foundations/typography).
 
 ## Icons
 
@@ -80,3 +119,5 @@ Open the guide for your stack under **Frameworks** in the sidebar:
 - [HTML / Web Components](/guides/frameworks/html-web-components)
 
 Once BEEQ is running, browse the [Components](/components) and review [Theming](/theming/themes-and-modes) if you need brand customization.
+
+If you build with a coding agent, install the BEEQ skill so it follows the same setup and component APIs. See [AI tools](/getting-started/ai-tools#install-the-beeq-skill).

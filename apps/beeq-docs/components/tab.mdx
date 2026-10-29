@@ -45,6 +45,10 @@ Tabs let users navigate between related sections of content within the same page
   </Card>
 </CardGroup>
 
+<Tip>
+  Choose [`bq-tab`](/components/tab) for a small set of peer sections where one panel is shown at a time and users switch freely in any order, [`bq-accordion`](/components/accordion) for sections stacked on one page whose panels expand and collapse in place, and [`bq-steps`](/components/steps) when the sections follow a fixed order with current, completed, and error states.
+</Tip>
+
 ## Anatomy
 
 <Frame className="px-4 py-4" caption="Tab component anatomy">
@@ -58,7 +62,7 @@ The tab group renders a list of tab buttons inside a scrollable container. Each 
 |---|---|---|
 | **1** | Active tab | The currently selected tab button, visually distinguished by brand color and the selected indicator |
 | **2** | Inactive tab | A tab button that is not currently selected; clicking it activates it and deactivates the previous tab |
-| **3** | Selected indicator | The underline beneath the active tab that marks the current selection; exposed as the `underline` shadow part |
+| **3** | Selected indicator | The underline beneath the active tab that marks the current selection |
 | **4** | Text label | The visible label inside each tab button; placed in the default slot and exposed as the `text` shadow part |
 
 ## Design guidelines
@@ -82,6 +86,8 @@ The tab group renders a list of tab buttons inside a scrollable container. Each 
   </CardTile>
 </CardGroup>
 
+**Allowed `orientation` values:** `horizontal` (default), `vertical`.
+
 ### Size
 
 <Steps>
@@ -90,6 +96,8 @@ The tab group renders a list of tab buttons inside a scrollable container. Each 
   <Step title="large">Prominent tabs with increased padding. Use when tabs are a primary navigation element or accessibility requires larger touch targets.</Step>
 </Steps>
 
+**Allowed `size` values:** `small`, `medium` (default), `large`.
+
 <Note>
   Setting `size` on `bq-tab-group` propagates the value to all child `bq-tab` elements automatically. You do not need to set `size` on each tab individually.
 </Note>
@@ -97,6 +105,8 @@ The tab group renders a list of tab buttons inside a scrollable container. Each 
 ### Placement
 
 Use `placement="start"` (default) to left-align horizontal tabs or top-align vertical tabs. Use `placement="end"` to right-align horizontal tabs or bottom-align vertical tabs.
+
+**Allowed `placement` values:** `start` (default), `end`.
 
 ## Usage
 
@@ -746,17 +756,37 @@ import { BqTab, BqTabGroup } from "@beeq/vue";
 
 - The tab list container has `role="tablist"`.
 - Each `bq-tab` renders as a `<button role="tab">` with `aria-selected` and `aria-disabled` set automatically.
-- The `controls` prop maps to `aria-controls`, linking each tab to its panel. Always provide a matching `id` on the panel element and `role="tabpanel"` for correct screen reader announcements.
-- Keyboard navigation is handled by the tab group:
-  - `ArrowRight` / `ArrowDown` — move focus to the next enabled tab
-  - `ArrowLeft` / `ArrowUp` — move focus to the previous enabled tab
+- The `controls` prop maps to `aria-controls`, linking each tab to its panel. You must provide a matching `id` on the panel element and `role="tabpanel"` for correct screen reader announcements.
+- Keyboard navigation is handled by the tab group; see [Keyboard interaction](#keyboard-interaction).
 - Focus management follows the roving `tabindex` pattern: only the active tab is in the tab order; other tabs are reachable via arrow keys.
 - Disabled tabs have `aria-disabled="true"` and `disabled` set on the underlying button, removing them from interaction.
 
 **Your responsibilities:**
-- Provide a meaningful `controls` value on each `bq-tab` that matches the `id` of the corresponding panel.
-- Add `role="tabpanel"` to each panel element.
-- When using icons without a visible label, add a descriptive `aria-label` to the `bq-tab` so screen readers can identify the tab.
+- You must provide a meaningful `controls` value on each `bq-tab` that matches the `id` of the corresponding panel.
+- You must add `role="tabpanel"` to each panel element.
+- When using icons without a visible label, you must add a descriptive `aria-label` to the `bq-tab` so screen readers can identify the tab.
+
+### Keyboard interaction
+
+| Key | Context | Action |
+|---|---|---|
+| `Tab` | Focus outside the tab list | Moves focus to the active tab; inactive tabs have `tabindex="-1"` and are reached with the arrow keys |
+| `ArrowRight` | Tab focused | Moves focus to the next enabled tab, wrapping from the last to the first, and selects it |
+| `ArrowDown` | Tab focused | Moves focus to the next enabled tab, wrapping from the last to the first, and selects it |
+| `ArrowLeft` | Tab focused | Moves focus to the previous enabled tab, wrapping from the first to the last, and selects it |
+| `ArrowUp` | Tab focused | Moves focus to the previous enabled tab, wrapping from the first to the last, and selects it |
+| `Enter` | Tab focused | Selects the focused tab (native button activation) |
+| `Space` | Tab focused | Selects the focused tab (native button activation) |
+
+Arrow keys work in both `horizontal` and `vertical` orientations. Disabled tabs are skipped.
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Set `controls` on each `bq-tab` to the `id` of its panel | MUST | manual: compare each tab controls value with its panel id |
+| Add `role="tabpanel"` and the matching `id` to each panel element | MUST | manual: inspect panel roles and ids in the DOM |
+| Add an `aria-label` to the `bq-tab` when it uses an icon without a visible label | MUST | manual: inspect icon-only tab accessible names |
 
 ## API reference
 
@@ -766,12 +796,18 @@ import { BqTab, BqTabGroup } from "@beeq/vue";
 
 | Property | Attribute | Description | Type | Default |
 |---|---|---|---|---|
-| `debounceTime` | `debounce-time` | Delay in milliseconds before `bqChange` fires | `number` | `0` |
+| `debounceTime` | `debounce-time` | Delay in milliseconds before `bqChange` fires. With `0`, `bqChange` is emitted synchronously | `number` | `0` |
 | `disableDivider` | `disable-divider` | If true, the underline divider is hidden | `boolean` | `false` |
 | `orientation` | `orientation` | Layout direction of the tab list | `"horizontal" \| "vertical"` | `"horizontal"` |
 | `placement` | `placement` | Alignment of tabs within the group | `"start" \| "end"` | `"start"` |
 | `size` | `size` | Size applied to all child tabs | `"small" \| "medium" \| "large"` | `"medium"` |
 | `value` | `value` | The `tab-id` of the currently selected tab | `string` | — |
+
+#### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| `size`, `orientation` or `placement` on a `bq-tab` inside `bq-tab-group` | SHOULD NOT | The group overwrites these values on every tab |
 
 #### Events
 
@@ -792,6 +828,12 @@ import { BqTab, BqTabGroup } from "@beeq/vue";
 | `base` | The outer `<div>` wrapper |
 | `tabs` | The `<div role="tablist">` holding all tab buttons |
 
+#### CSS custom properties
+
+| Variable | Description | Default |
+|---|---|---|
+| `--bq-tab-group--border-color` | Color of the divider line along the tabs | `var(--bq-stroke--primary)` |
+
 ---
 
 ### `bq-tab`
@@ -800,13 +842,13 @@ import { BqTab, BqTabGroup } from "@beeq/vue";
 
 | Property | Attribute | Description | Type | Default |
 |---|---|---|---|---|
-| `active` | `active` | If true, the tab is rendered in its active state | `boolean` | `false` |
+| `active` | `active` | If true, the tab is rendered in its active state | `boolean` | — |
 | `controls` *(required)* | `controls` | The `id` of the panel element this tab controls | `string` | — |
 | `disabled` | `disabled` | If true, the tab is non-interactive | `boolean` | `false` |
 | `orientation` | `orientation` | Layout direction — propagated automatically by `bq-tab-group` | `"horizontal" \| "vertical"` | `"horizontal"` |
 | `placement` | `placement` | Alignment — propagated automatically by `bq-tab-group` | `"start" \| "end"` | `"start"` |
 | `size` | `size` | Size — propagated automatically by `bq-tab-group` | `"small" \| "medium" \| "large"` | `"medium"` |
-| `tabId` *(required)* | `tab-id` | Unique identifier used to match the tab to its panel | `string` | — |
+| `tabId` *(required)* | `tab-id` | Unique identifier of the tab, matched against the `value` of `bq-tab-group` to set the active tab | `string` | — |
 
 #### Events
 
@@ -840,7 +882,6 @@ import { BqTab, BqTabGroup } from "@beeq/vue";
 | `content` | The `<div>` wrapping the icon and text |
 | `icon` | The `<div>` holding the slotted icon |
 | `text` | The `<div>` holding the slotted label text |
-| `underline` | The element that renders the active-state underline indicator |
 
 #### CSS custom properties
 
@@ -848,6 +889,11 @@ import { BqTab, BqTabGroup } from "@beeq/vue";
 
 | Variable | Description | Default |
 |---|---|---|
+| `--bq-tab--background-hover` | Base colour of the hover state background (mixed with `--bq-hover`) | `var(--bq-ui--primary)` |
+| `--bq-tab--indicator-color` | Color of the active tab indicator | `var(--bq-ui--brand)` |
+| `--bq-tab--text-color` | Text color of the tab label | `var(--bq-text--primary)` |
+| `--bq-tab--text-color-active` | Text color of the active tab label | `var(--bq-text--brand)` |
+| `--bq-tab--text-color-hover` | Base colour of the hover state text (mixed with `--bq-hover`) | `var(--bq-text--brand)` |
 | `--bq-tab--font-size` | Font size of the tab label | `var(--bq-font-size--m)` |
 | `--bq-tab--font-weight` | Font weight of the tab label | `var(--bq-font-weight--medium)` |
 | `--bq-tab--line-height` | Line height of the tab label | `var(--bq-font-line-height--regular)` |

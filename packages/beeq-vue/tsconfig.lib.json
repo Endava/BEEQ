@@ -4,6 +4,7 @@
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "outDir": "../../dist/beeq-vue",
+    "inlineSources": true,
     "removeComments": false
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],

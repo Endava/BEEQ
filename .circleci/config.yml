@@ -23,14 +23,10 @@ commands:
   setup-node:
     steps:
       - run:
-          name: 🛠 Setup Volta
+          name: 🛠 Setup Mise
           command: |
-            export VOLTA_FEATURE_PNPM=1
-            curl https://get.volta.sh | bash
-            echo 'export VOLTA_FEATURE_PNPM=1' >> $BASH_ENV
-            echo 'export VOLTA_HOME=$HOME/.volta' >> $BASH_ENV
-            echo 'export PATH=$VOLTA_HOME/bin:$PATH' >> $BASH_ENV
-            source $BASH_ENV
+            ./bin/mise install
+            ./bin/mise env --shell bash >> "$BASH_ENV"
       - run:
           name: 🔎 Check Node and PNPM versions
           command: |
@@ -51,9 +47,8 @@ commands:
       - restore_cache:
           name: 💫 Restore node_modules cache
           keys:
-            - node-modules-{{ arch }}-{{ checksum "package.json" }}-{{ checksum "pnpm-lock.yaml" }}
-            - node-modules-{{ arch }}-
-            - node-modules-
+            - node-modules-{{ arch }}-{{ checksum "mise.toml" }}-{{ checksum "package.json" }}-{{ checksum "pnpm-lock.yaml" }}
+            - node-modules-{{ arch }}-{{ checksum "mise.toml" }}-
 
       # Install dependencies with network access but prefer offline when possible
       - run:
@@ -63,7 +58,7 @@ commands:
             mkdir -p /home/circleci/.pnpm-store
 
             # Install with network access but prefer cached packages
-            pnpm install --frozen-lockfile --prefer-offline --store-dir /home/circleci/.pnpm-store --network-concurrency 8
+            pnpm install --frozen-lockfile --ignore-scripts --prefer-offline --store-dir /home/circleci/.pnpm-store --network-concurrency 8
           no_output_timeout: 5m
 
       # Save the pnpm store cache
@@ -76,7 +71,7 @@ commands:
       # Save the node_modules cache
       - save_cache:
           name: 💾 Save node_modules cache
-          key: node-modules-{{ arch }}-{{ checksum "package.json" }}-{{ checksum "pnpm-lock.yaml" }}
+          key: node-modules-{{ arch }}-{{ checksum "mise.toml" }}-{{ checksum "package.json" }}-{{ checksum "pnpm-lock.yaml" }}
           paths:
             - ./node_modules
             - ./packages/beeq/node_modules
@@ -101,7 +96,7 @@ commands:
 jobs:
   main:
     docker:
-      - image: mcr.microsoft.com/playwright:v1.59.1-noble
+      - image: mcr.microsoft.com/playwright:v1.63.0-noble
     resource_class: large
     environment: *env-vars
     steps:
@@ -113,32 +108,44 @@ jobs:
       - run:
           name: 🧾 NX report
           command: pnpm exec nx report
+      # Nx skips the sync check when it runs tasks in CI, so it needs its own step.
+      # Runs before Nx Cloud starts so a stale workspace fails without starting agents.
+      - run:
+          name: 🔁 Check Nx sync generators
+          command: pnpm exec nx sync:check
       - nx/set-shas
       - run:
           name: ▶️ Start Nx Cloud CI Run
-          command: pnpm dlx nx-cloud start-ci-run --distribute-on="3 linux-medium-plus-js" --with-env-vars="NX_VERBOSE_LOGGING NX_BRANCH"
+          command: pnpm dlx nx-cloud start-ci-run --distribute-on="3 linux-medium-plus-mise" --with-env-vars="NX_VERBOSE_LOGGING NX_BRANCH"
       # Run all Nx commands
       - run:
           name: 🩺 Run Linter, Formatter, and Import Sorting
-          command: pnpm exec nx affected -t check --exclude='*,!tag:core' --parallel=3 --base=$NX_BASE --head=$NX_HEAD --verbose
+          command: pnpm exec nx affected -t check --parallel=3 --output-style=static --base=$NX_BASE --head=$NX_HEAD
+      - run:
+          name: 🔠 Run Type Check
+          command: pnpm exec nx affected -t typecheck --parallel=3 --output-style=static --base=$NX_BASE --head=$NX_HEAD
       - run:
           name: 🧰 Run Unit Tests
-          command: pnpm exec nx affected -t test --exclude='*,!tag:core' --parallel=3 --base=$NX_BASE --head=$NX_HEAD --verbose
+          command: pnpm exec nx affected -t test --parallel=3 --output-style=static --base=$NX_BASE --head=$NX_HEAD
+      - run:
+          name: ✅ Validate Skill Eval Graders
+          # Runs each eval task's reference solution through the deterministic graders. No agent, no tokens.
+          command: pnpm exec nx affected -t eval-validate --exclude='*,!tag:skills' --output-style=static --base=$NX_BASE --head=$NX_HEAD
       - run:
           name: ⏳ Build Libraries
-          command: pnpm exec nx affected -t build --exclude='*,!tag:publishable' --parallel=3 --base=$NX_BASE --head=$NX_HEAD --verbose
+          command: pnpm exec nx affected -t build --exclude='*,!tag:publishable' --output-style=static --parallel=3 --base=$NX_BASE --head=$NX_HEAD
       - run:
           name: 🧪 Run E2E Tests
           # Browser e2e tests use the Playwright Docker image configured on this
           # CircleCI job. Nx managed agents use separate launch templates, so keep
           # this target on the coordinator unless the agents also install browsers.
-          command: pnpm exec nx affected -t e2e --exclude='*,!tag:core' --parallel=3 --base=$NX_BASE --head=$NX_HEAD --verbose --no-agents
+          command: pnpm exec nx affected -t e2e --exclude='*,!tag:core' --parallel=3 --output-style=static --base=$NX_BASE --head=$NX_HEAD --no-agents
       - run:
           name: 📚 Build Storybook
           # Browser e2e tests use the Playwright Docker image configured on this
           # CircleCI job. Nx managed agents use separate launch templates, so keep
           # this target on the coordinator unless the agents also install browsers.
-          command: pnpm exec nx run beeq:storybook-build --output-style=stream --verbose
+          command: pnpm exec nx storybook-build beeq --parallel --output-style=static
       # Stop Nx Cloud agents
       - run:
           name: ⏹️ Stop Nx Cloud Agents
@@ -157,11 +164,13 @@ jobs:
     environment: *env-vars
     steps:
       - checkout
+      - setup-node
+      - setup-deps
       - attach_workspace:
           at: .
       - run:
           name: 🚀 Publish to Chromatic
-          command: pnpm dlx chromatic --project-token=${CHROMATIC_PROJECT_TOKEN} --ci --debug --storybook-build-dir dist/storybook/beeq
+          command: pnpm exec chromatic --project-token="${CHROMATIC_PROJECT_TOKEN}" --ci --debug --storybook-build-dir dist/storybook/beeq --storybook-base-dir packages/beeq --storybook-config-dir packages/beeq/.storybook
 
 # ---------------------------------------------------------------------------- #
 #                                   Workflows                                  #

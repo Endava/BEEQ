@@ -1,6 +1,7 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { fn } from 'storybook/test';
 
 import { TAG_BORDER_RADIUS, TAG_COLOR, TAG_SIZE, TAG_VARIANT } from '../bq-tag.types';
 import mdx from './bq-tag.mdx';
@@ -23,12 +24,6 @@ const meta: Meta = {
     selected: { control: 'boolean' },
     size: { control: 'select', options: [...TAG_SIZE] },
     variant: { control: 'select', options: [...TAG_VARIANT] },
-    // Event handlers
-    bqClose: { action: 'bqClose' },
-    bqOpen: { action: 'bqOpen' },
-    bqClick: { action: 'bqClick' },
-    bqBlur: { action: 'bqBlur' },
-    bqFocus: { action: 'bqFocus' },
     // Not part of the component API, but used for the story
     text: { control: 'text', table: { disable: true } },
     icon: { control: 'text', table: { disable: true } },
@@ -43,6 +38,12 @@ const meta: Meta = {
     selected: false,
     size: 'medium',
     variant: 'filled',
+    // Events
+    bqClose: fn(),
+    bqOpen: fn(),
+    bqClick: fn(),
+    bqBlur: fn(),
+    bqFocus: fn(),
   },
 };
 export default meta;

@@ -1,5 +1,6 @@
 import { h } from '@stencil/core';
-import { describe, expect, it, render } from '@stencil/vitest';
+import { describe, expect, it, render, waitForStable } from '@stencil/vitest';
+import { userEvent } from 'vitest/browser';
 
 describe('bq-option-list', () => {
   it('should render', async () => {
@@ -56,6 +57,31 @@ describe('bq-option-list', () => {
     await waitForChanges();
 
     expect(bqSelect).toHaveReceivedEventTimes(1);
+  });
+
+  it.each([false, true])('should select from option padding once (checkbox=%s)', async (checkbox) => {
+    const { root, spyOnEvent, waitForChanges } = await render(
+      <bq-option-list>
+        <bq-option checkbox={checkbox} value="pizza">
+          Pizza
+        </bq-option>
+      </bq-option-list>,
+    );
+    const option = root.querySelector<HTMLBqOptionElement>('bq-option');
+    const row = option.shadowRoot.querySelector<HTMLElement>('[part="item"]');
+    const bqSelect = spyOnEvent('bqSelect');
+    await waitForStable(root);
+
+    const rect = row.getBoundingClientRect();
+    const position = { x: 2, y: rect.height / 2 };
+    expect(option.shadowRoot.elementFromPoint(rect.left + position.x, rect.top + position.y)).toBe(
+      option.shadowRoot.querySelector('[part="base"]'),
+    );
+    await userEvent.click(row, { position });
+    await waitForChanges();
+
+    expect(bqSelect).toHaveReceivedEventTimes(1);
+    expect(bqSelect).toHaveReceivedEventDetail({ item: option, value: 'pizza' });
   });
 
   it('should trigger bqSelect on Enter', async () => {

@@ -1,0 +1,20 @@
+name: react-settings-form
+metadata:
+  stack: react
+  tags: [forms]
+instruction: >-
+  Create a React settings page with a display-name input, a language select (English, Romanian,
+  Spanish), an email-notifications switch, and Save and Cancel buttons. Keep the values in React state.
+workspace:
+  - src: '{{evals}}/fixtures/react'
+    dest: .
+expected:
+  criteria: >-
+    Values are read from BEEQ event detail (for example event.detail.value), not from native change
+    events. Save is the single primary action and Cancel is secondary.
+  checks:
+    - name: uses-react-wrappers
+      match: ['from [''"]@beeq/react[''"]', '<Bq(Input|Select|Switch)\b']
+    - name: uses-beeq-events
+      match: 'onBq(Input|Change|Select|Clear)='
+      absent: '<Bq(Input|Select)\b[^>]*\sonChange='

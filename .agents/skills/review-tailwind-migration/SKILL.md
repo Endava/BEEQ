@@ -104,6 +104,8 @@ Check that migrated styles follow the plan:
 - Layer names match the strict Stylelint pattern.
 - Public `--bq-*` custom properties are preserved; private implementation variables use `--_property`.
 - Direct use of public component variables is acceptable and often clearer for simple mappings.
+- Check [implementation variable scope](../../instructions/styles.instructions.md#implementation-variable-scope). Flag host-level locals without a documented host consumer, and variant/state overrides left on the host after defaults move to an internal element. Accept documented host requirements and public host defaults.
+- For relocated locals, check default/variant/state computed behaviour and public overrides. Flag claims or tests that treat `--_` names as inaccessible through exposed parts.
 - Do not require private `--_` variables unless they reduce meaningful repetition, combine several public values into one internal value, or keep variant/state selectors focused on value changes.
 - Flag internal mutation of public component variables when it is used to model private variant or state behavior.
 - Focus, hover, and active states use shared SCSS mixins or documented interaction tokens.

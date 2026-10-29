@@ -38,7 +38,11 @@ import { Component, Element, Event, Host, h, Method, Prop } from '@stencil/core'
  * @part label - The `<span>` element that holds the text content.
  *
  * @cssprop --bq-radio--background-color - Radio background color
+ * @cssprop --bq-radio--border-color - Radio border color
+ * @cssprop --bq-radio--border-color-checked - Radio border color when checked
  * @cssprop --bq-radio--border-width - Radio border width
+ * @cssprop --bq-radio--dot-color-checked - Radio inner dot color when checked
+ * @cssprop --bq-radio--label-text-color - Radio label text color
  * @cssprop --bq-radio--size - Radio size
  */
 @Component({
@@ -200,7 +204,7 @@ export class BqRadio {
       <Host>
         <label
           class={{
-            'bq-radio group': true,
+            'bq-radio': true,
             'is-disabled': this.isDisabled,
             'is-checked': this.checked,
             'has-background': this.backgroundOnHover,
@@ -233,10 +237,7 @@ export class BqRadio {
               <div class="bq-radio__checked" />
             </div>
           </div>
-          <span
-            class="bq-radio__label group-hover:text-text-primary-hover group-[.is-disabled]:text-text-primary-disabled"
-            part="label"
-          >
+          <span class="bq-radio__label" part="label">
             <slot id="bq-radio__label"></slot>
           </span>
         </label>

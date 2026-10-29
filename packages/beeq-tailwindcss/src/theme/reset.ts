@@ -4,27 +4,25 @@
 
 import type { CSSRuleObject } from 'tailwindcss/types/config';
 
+/**
+ * Selectors are wrapped in `:where()` (zero specificity) so any consumer style overrides the reset.
+ * `html` and `body` are not wrapped, so these defaults still win over Tailwind CSS preflight by source order.
+ * `*` and pseudo-elements are not wrapped: `*` already has zero specificity and `:where()` cannot hold pseudo-elements.
+ */
 export const reset: CSSRuleObject | CSSRuleObject[] = {
   /* Box sizing rules */
   '*, *::before, *::after': {
     'box-sizing': 'border-box',
   },
-  /* Remove default margin and inherit font styles */
+  /* Remove default margin */
   '*': {
     margin: '0',
-  },
-  /* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
-  'ul[role="list"], ol[role="list"]': {
-    'list-style-type': 'none',
   },
   /* Set core root defaults */
   html: {
     'font-family': 'var(--bq-font-family)',
     'font-size': 'var(--bq-font-size--m)',
     'text-size-adjust': 'none',
-  },
-  'html:focus-within': {
-    'scroll-behavior': 'smooth',
   },
   /* Set core body defaults */
   body: {
@@ -34,30 +32,56 @@ export const reset: CSSRuleObject | CSSRuleObject[] = {
     color: 'var(--bq-text--primary)',
     'line-height': 'var(--bq-font-line-height--regular)',
     'min-height': '100vb',
-    'text-rendering': 'optimizeSpeed',
   },
   /* A elements that don't have a class get default styles */
-  'a:not([class])': {
+  ':where(a:not([class]))': {
     'text-decoration-skip-ink': 'auto',
   },
   /* Make images easier to work with */
-  'img, picture, video, canvas, svg': {
+  ':where(img, picture, video, canvas, svg)': {
     'max-width': '100%',
     display: 'block',
   },
-  /* Inherit fonts for inputs and buttons */
-  'input, button, select, textarea': {
+  /* Inherit fonts for form controls */
+  ':where(button, input, optgroup, select, textarea)': {
     font: 'inherit',
   },
+  /* Keep code at the surrounding text size */
+  ':where(code, kbd, samp, pre)': {
+    'font-family': 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+    'font-size': '1em',
+  },
+  /* Keep subscript and superscript from changing the line height */
+  ':where(sub, sup)': {
+    'font-size': '75%',
+    'line-height': '0',
+    position: 'relative',
+    'vertical-align': 'baseline',
+  },
+  ':where(sub)': {
+    bottom: '-0.25em',
+  },
+  ':where(sup)': {
+    top: '-0.5em',
+  },
   /* Avoid text overflows */
-  'p, h1, h2, h3, h4, h5, h6': {
+  ':where(p, h1, h2, h3, h4, h5, h6)': {
     'overflow-wrap': 'break-word',
   },
-  /* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+  /* Keep native centering for modal dialogs and popovers */
+  ':where(dialog, [popover])': {
+    margin: 'auto',
+  },
+  /* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+  ':where(ul[role="list"], ol[role="list"])': {
+    'list-style-type': 'none',
+  },
+  /* Keep native hidden state authoritative over component layout styles */
+  ':where([hidden]:not([hidden="until-found"]))': {
+    display: 'none !important',
+  },
+  /* Remove all animations and transitions for people that prefer not to see them */
   '@media (prefers-reduced-motion: reduce)': {
-    'html:focus-within': {
-      'scroll-behavior': 'auto',
-    },
     '*, *::before, *::after': {
       'animation-duration': '0.01ms !important',
       'animation-iteration-count': '1 !important',

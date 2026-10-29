@@ -27,7 +27,7 @@
 :host(:not([fieldset])) .bq-radio-group {
   padding-block: 0;
   padding-inline: 0;
-  border: 0;
+  border-width: 0;
 }
 
 :host([orientation='horizontal']) [part='group'] {

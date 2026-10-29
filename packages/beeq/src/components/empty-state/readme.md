@@ -20,6 +20,7 @@ An Empty State is a UI component displayed when there is no data or content avai
 
 | Slot          | Description                                                  |
 | ------------- | ------------------------------------------------------------ |
+|               | The default slot                                             |
 | `"body"`      | The content to be displayed after the thumbnail section      |
 | `"footer"`    | The content to be displayed after the body section as footer |
 | `"thumbnail"` | The element that wraps the thumbnail element                 |
