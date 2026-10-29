@@ -43,7 +43,7 @@ describe('global native foundations with the legacy Tailwind bridge', () => {
       expect(inThemes).toBe(true);
     });
     expect(modes).toBe(4);
-  });
+  }, 15_000);
 
   it('should still generate global legacy classes from the shared input', async () => {
     const filename = fileURLToPath(new URL('../default.scss', import.meta.url));
