@@ -4,6 +4,7 @@ import { cdp, userEvent } from 'vitest/browser';
 
 import { FloatingUI } from '../../../services/libraries/floating-ui';
 import { computedStyle } from '../../../shared/test-utils/computedStyle';
+import { resolveColorToken } from '../../../shared/test-utils/resolveColorToken';
 
 const mkTooltip = () => (
   <div style={{ display: 'grid', placeItems: 'center', height: '100vh', width: '100vw' }}>
@@ -374,6 +375,7 @@ describe('bq-tooltip', () => {
     expectPanelVisibility(panel, true);
     expect(panel.getAttribute('popover')).toBe('manual');
     expect(getComputedStyle(panel).position).toBe('absolute');
+    expect(getComputedStyle(panel).margin).toBe('0px');
   });
 
   it('should retain the fixed-position fallback without the Popover API', async () => {
@@ -459,7 +461,7 @@ describe('bq-tooltip', () => {
       </div>,
     );
     unmountFn = unmount;
-    const arrow = root.querySelector('bq-tooltip').shadowRoot.querySelector('.bq-tooltip--arrow');
+    const arrow = root.querySelector('bq-tooltip').shadowRoot.querySelector('.bq-tooltip__arrow');
     expect(arrow).toBeNull();
   });
 
@@ -475,18 +477,18 @@ describe('bq-tooltip', () => {
     unmountFn = unmount;
 
     const tooltip = root.querySelector('bq-tooltip') as HTMLBqTooltipElement;
-    const initialArrow = tooltip.shadowRoot.querySelector<HTMLElement>('.bq-tooltip--arrow');
+    const initialArrow = tooltip.shadowRoot.querySelector<HTMLElement>('.bq-tooltip__arrow');
     await expect.poll(() => getArrowOffset(initialArrow)).toBe('-4px');
 
     tooltip.hideArrow = true;
     await waitForChanges();
-    expect(tooltip.shadowRoot.querySelector('.bq-tooltip--arrow')).toBeNull();
+    expect(tooltip.shadowRoot.querySelector('.bq-tooltip__arrow')).toBeNull();
 
     tooltip.hideArrow = false;
     await waitForChanges();
     await waitForStable(tooltip);
 
-    const replacementArrow = tooltip.shadowRoot.querySelector<HTMLElement>('.bq-tooltip--arrow');
+    const replacementArrow = tooltip.shadowRoot.querySelector<HTMLElement>('.bq-tooltip__arrow');
     expect(replacementArrow).not.toBe(initialArrow);
     await expect.poll(() => getArrowOffset(replacementArrow)).toBe('-4px');
   });
@@ -829,11 +831,21 @@ describe('bq-tooltip', () => {
   });
 
   it('should respect design style', async () => {
-    await render(mkTooltip());
+    const { root } = await render(mkTooltip());
 
-    const styleProps = ['borderRadius', 'paddingTop', 'paddingBottom', 'paddingLeft', 'paddingRight'] as const;
+    const styleProps = [
+      'backgroundColor',
+      'borderRadius',
+      'color',
+      'paddingTop',
+      'paddingBottom',
+      'paddingLeft',
+      'paddingRight',
+    ] as const;
     const style = computedStyle('bq-tooltip >>> [part="panel"]', styleProps);
 
+    expect(style.backgroundColor).toBe(resolveColorToken('--bq-ui--inverse', root));
+    expect(style.color).toBe(resolveColorToken('--bq-text--inverse', root));
     expect(style.borderRadius).toBeTruthy();
     expect(style.paddingTop).toBeTruthy();
   });
