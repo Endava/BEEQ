@@ -71,6 +71,10 @@ const buildOracle = (object: object, parent: Root | postcss.AtRule): void => {
 
 const expectedRoot = postcss.root();
 buildOracle(reset, expectedRoot);
+// The native reset keeps these rules unlayered so they win over BEEQ layers without `!important`.
+expectedRoot.walkDecls((declaration) => {
+  declaration.important = false;
+});
 const expected = ruleMap(expectedRoot);
 const actual = ruleMap(compileFoundation('reset.scss'));
 

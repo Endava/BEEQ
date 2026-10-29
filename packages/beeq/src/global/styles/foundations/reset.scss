@@ -71,22 +71,23 @@
   :where(ul[role='list'], ol[role='list']) {
     list-style-type: none;
   }
+}
 
-  :where([hidden]:not([hidden='until-found'])) {
-    /* stylelint-disable-next-line declaration-no-important -- Native hidden state must override component layout styles. */
-    display: none !important;
-  }
+/*
+ * Kept outside the cascade layers on purpose: unlayered rules win over every BEEQ layer,
+ * so native hidden state and reduced-motion preferences apply without `!important`.
+ */
+:where([hidden]:not([hidden='until-found'])) {
+  display: none;
+}
 
-  @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-      /* stylelint-disable declaration-no-important -- User motion preferences must win over component animation styles. */
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      scroll-behavior: auto;
-      transition-duration: 0.01ms !important;
-      /* stylelint-enable declaration-no-important */
-    }
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms;
+    animation-iteration-count: 1;
+    scroll-behavior: auto;
+    transition-duration: 0.01ms;
   }
 }
