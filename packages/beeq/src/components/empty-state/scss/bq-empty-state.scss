@@ -2,15 +2,11 @@
 /*                             Empty State Styles                             */
 /* -------------------------------------------------------------------------- */
 
+@import './bq-empty-state.variables';
+
 /* ---------------------------------- Host ---------------------------------- */
 
 :host {
-  --_empty-state-thumbnail-margin-block-end: var(--bq-spacing-xl);
-  --_empty-state-title-font-size: var(--bq-font-size--l);
-  --_empty-state-title-margin-block-end: var(--bq-spacing-m);
-  --_empty-state-body-font-size: var(--bq-font-size--m);
-  --_empty-state-body-margin-block-end: var(--bq-spacing-l);
-
   position: relative;
   display: inline-block;
 }
@@ -18,6 +14,12 @@
 /* ---------------------------------- Base ---------------------------------- */
 
 .bq-empty-state {
+  --_empty-state-thumbnail-margin-block-end: var(--bq-spacing-xl);
+  --_empty-state-title-font-size: var(--bq-font-size--l);
+  --_empty-state-title-margin-block-end: var(--bq-spacing-m);
+  --_empty-state-body-font-size: var(--bq-font-size--m);
+  --_empty-state-body-margin-block-end: var(--bq-spacing-l);
+
   display: inline-flex;
   flex-direction: column;
   align-items: center;
@@ -30,13 +32,14 @@
 }
 
 .bq-empty-state__title {
-  color: var(--bq-text--primary);
+  color: var(--bq-empty-state--text-color);
   font-weight: var(--bq-font-weight--bold);
   font-size: var(--_empty-state-title-font-size);
   line-height: var(--bq-font-line-height--regular);
 }
 
 .bq-empty-state__body {
+  color: var(--bq-empty-state--text-color);
   font-weight: var(--bq-font-weight--regular);
   font-size: var(--_empty-state-body-font-size);
   line-height: var(--bq-font-line-height--regular);
@@ -50,7 +53,7 @@
 
 /* -------------------------------- Variants -------------------------------- */
 
-:host([size='small']) {
+:host([size='small']) .bq-empty-state {
   --_empty-state-thumbnail-margin-block-end: var(--bq-spacing-m);
   --_empty-state-title-font-size: var(--bq-font-size--m);
   --_empty-state-title-margin-block-end: var(--bq-spacing-xs);
@@ -58,7 +61,7 @@
   --_empty-state-body-margin-block-end: var(--bq-spacing-m);
 }
 
-:host([size='large']) {
+:host([size='large']) .bq-empty-state {
   --_empty-state-thumbnail-margin-block-end: var(--bq-spacing-xxl);
   --_empty-state-title-font-size: var(--bq-font-size--xxl2);
   --_empty-state-title-margin-block-end: var(--bq-spacing-l);

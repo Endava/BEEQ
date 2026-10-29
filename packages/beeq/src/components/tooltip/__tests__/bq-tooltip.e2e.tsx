@@ -1,8 +1,10 @@
 import { h } from '@stencil/core';
-import { afterEach, describe, expect, it, render, waitForStable } from '@stencil/vitest';
+import { afterEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
 import { cdp, userEvent } from 'vitest/browser';
 
+import { FloatingUI } from '../../../services/libraries/floating-ui';
 import { computedStyle } from '../../../shared/test-utils/computedStyle';
+import { resolveColorToken } from '../../../shared/test-utils/resolveColorToken';
 
 const mkTooltip = () => (
   <div style={{ display: 'grid', placeItems: 'center', height: '100vh', width: '100vw' }}>
@@ -19,9 +21,37 @@ const mkTooltip = () => (
 // userEvent.unhover() doesn't help — it targets document.body center, same coordinates.
 // Vitest exposes no API to move the cursor to arbitrary coords, so we use CDP directly.
 const moveOff = () => cdp().send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: 0, y: 0 });
+
+const getPanel = (tooltip: HTMLBqTooltipElement) => tooltip.shadowRoot.querySelector<HTMLElement>('[part="panel"]');
+const getTrigger = (tooltip: HTMLBqTooltipElement) => tooltip.shadowRoot.querySelector<HTMLElement>('[part="trigger"]');
+const getCenterError = (tooltip: HTMLBqTooltipElement) => {
+  const panel = getPanel(tooltip).getBoundingClientRect();
+  const trigger = getTrigger(tooltip).getBoundingClientRect();
+  return Math.abs(panel.left + panel.width / 2 - (trigger.left + trigger.width / 2));
+};
+const nextFrame = () => new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+const mkMovingTooltip = (alwaysVisible = true) => (
+  <div style={{ position: 'relative', margin: '100px auto', width: '60vw', height: '100px' }}>
+    <bq-tooltip alwaysVisible={alwaysVisible} style={{ position: 'absolute', insetInlineStart: '20%' }}>
+      Moving tooltip
+      <div slot="trigger" style={{ position: 'absolute', width: '4px', height: '4px' }} />
+    </bq-tooltip>
+  </div>
+);
+
+const getArrowOffset = (arrow: HTMLElement) =>
+  [arrow.style.top, arrow.style.right, arrow.style.bottom, arrow.style.left].find((value) => value === '-4px');
+
+const expectPanelVisibility = (panel: Element, visible: boolean) => {
+  expect(panel.getAttribute('aria-hidden')).toBe(String(!visible));
+  expect(panel.matches(':popover-open')).toBe(visible);
+};
+
 let unmountFn: (() => void) | undefined;
 
 afterEach(async () => {
+  vi.restoreAllMocks();
+  window.scrollTo({ top: 0 });
   await moveOff();
   unmountFn?.();
   unmountFn = undefined;
@@ -42,12 +72,103 @@ describe('bq-tooltip', () => {
     expect(root.querySelector('bq-tooltip')).toHaveShadowRoot();
   });
 
+  it.each(['native', 'beeq'] as const)(
+    'should retain %s trigger semantics and native keyboard activation',
+    async (kind) => {
+      const { root, unmount, waitForChanges } = await render(
+        <div style={{ padding: '100px' }}>
+          <button data-before type="button">
+            Before
+          </button>
+          <bq-tooltip displayOn="click">
+            Save your changes
+            {kind === 'native' ? (
+              <button slot="trigger" type="button" aria-describedby="save-description">
+                Save
+              </button>
+            ) : (
+              <bq-button slot="trigger">Save</bq-button>
+            )}
+          </bq-tooltip>
+          <span id="save-description" hidden>
+            Existing save guidance
+          </span>
+          <button data-after type="button">
+            After
+          </button>
+        </div>,
+      );
+      unmountFn = unmount;
+      const tooltip = root.querySelector('bq-tooltip');
+      const wrapper = getTrigger(tooltip);
+      const slotted = tooltip.querySelector<HTMLElement>('[slot="trigger"]');
+      const button = kind === 'native' ? slotted : slotted.shadowRoot.querySelector<HTMLButtonElement>('button');
+      const click = vi.fn();
+      const handleClick = (event: Event) => {
+        if (event.target === tooltip) click();
+      };
+      tooltip.addEventListener('bqClick', handleClick);
+
+      expect(wrapper).not.toHaveAttribute('role');
+      expect(wrapper).not.toHaveAttribute('tabindex');
+      expect(getPanel(tooltip)).toEqualAttribute('role', 'tooltip');
+      root.querySelector<HTMLButtonElement>('[data-before]').focus();
+      await userEvent.keyboard('{Tab}');
+      expect(kind === 'native' ? document.activeElement : slotted.shadowRoot.activeElement).toBe(button);
+      const { frameTree } = await cdp().send('Page.getFrameTree');
+      const frame = frameTree.childFrames.find((child) => child.frame.name === 'vitest-iframe');
+      const { nodes } = await cdp().send('Accessibility.getFullAXTree', { frameId: frame.frame.id });
+      const controls = nodes.filter((node) => node.role?.value === 'button' && node.name?.value === 'Save');
+      expect(controls).toHaveLength(1);
+      if (kind === 'native') expect(controls[0].description?.value).toBe('Existing save guidance');
+
+      await userEvent.keyboard('{Enter}');
+      await waitForChanges();
+      expectPanelVisibility(getPanel(tooltip), true);
+      await userEvent.keyboard(' ');
+      await waitForChanges();
+      expectPanelVisibility(getPanel(tooltip), false);
+      expect(click).toHaveBeenCalledTimes(2);
+      expect(kind === 'native' ? document.activeElement : slotted.shadowRoot.activeElement).toBe(button);
+      if (kind === 'native') expect(button).toEqualAttribute('aria-describedby', 'save-description');
+
+      await userEvent.keyboard('{Tab}');
+      expect(document.activeElement).toBe(root.querySelector('[data-after]'));
+      tooltip.removeEventListener('bqClick', handleClick);
+    },
+  );
+
+  it('should remove delegated trigger listeners on disconnect and restore them once on reconnect', async () => {
+    const { root, unmount, waitForChanges } = await render(mkTooltip());
+    unmountFn = unmount;
+    const tooltip = root.querySelector('bq-tooltip');
+    tooltip.displayOn = 'click';
+    await waitForChanges();
+    const wrapper = getTrigger(tooltip);
+    const click = vi.fn();
+    tooltip.addEventListener('bqClick', click);
+
+    tooltip.remove();
+    wrapper.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    expect(click).not.toHaveBeenCalled();
+
+    for (let cycle = 0; cycle < 3; cycle++) {
+      root.append(tooltip);
+      wrapper.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      await waitForChanges();
+      expect(click).toHaveBeenCalledTimes(cycle + 1);
+      await tooltip.hide();
+      tooltip.remove();
+    }
+    tooltip.removeEventListener('bqClick', click);
+  });
+
   it('should be hidden by default', async () => {
     const { root, unmount } = await render(mkTooltip());
     unmountFn = unmount;
 
     const panel = root.querySelector('bq-tooltip').shadowRoot.querySelector('[part="panel"]');
-    expect(panel).toHaveAttribute('hidden');
+    expectPanelVisibility(panel, false);
   });
 
   it('should be visible on hover', async () => {
@@ -58,11 +179,11 @@ describe('bq-tooltip', () => {
     const panel = tooltip.shadowRoot.querySelector('[part="panel"]');
     const trigger = tooltip.shadowRoot.querySelector('[part="trigger"]');
 
-    expect(panel).toHaveAttribute('hidden');
+    expectPanelVisibility(panel, false);
     await userEvent.hover(trigger);
     await waitForChanges();
 
-    expect(panel).not.toHaveAttribute('hidden');
+    expectPanelVisibility(panel, true);
   });
 
   it('should not be visible on hover if defaultPrevented', async () => {
@@ -78,7 +199,7 @@ describe('bq-tooltip', () => {
     await userEvent.hover(trigger);
     await waitForChanges();
 
-    expect(panel).toHaveAttribute('hidden');
+    expectPanelVisibility(panel, false);
     expect(bqHoverIn).toHaveReceivedEventTimes(1);
   });
 
@@ -93,12 +214,12 @@ describe('bq-tooltip', () => {
     await userEvent.hover(trigger);
     await waitForChanges();
 
-    expect(panel).not.toHaveAttribute('hidden');
+    expectPanelVisibility(panel, true);
 
     await moveOff();
     await waitForChanges();
 
-    expect(panel).toHaveAttribute('hidden');
+    expectPanelVisibility(panel, false);
   });
 
   it('should emit bqHoverIn and bqHoverOut events', async () => {
@@ -129,17 +250,17 @@ describe('bq-tooltip', () => {
 
     tooltip.displayOn = 'click';
     await waitForChanges();
-    expect(panel).toHaveAttribute('hidden');
+    expectPanelVisibility(panel, false);
 
     // Hover should NOT show it
     await userEvent.hover(trigger);
     await waitForChanges();
-    expect(panel).toHaveAttribute('hidden');
+    expectPanelVisibility(panel, false);
 
     // Click should show it
     await userEvent.click(trigger);
     await waitForChanges();
-    expect(panel).not.toHaveAttribute('hidden');
+    expectPanelVisibility(panel, true);
   });
 
   it('should not be visible on click if defaultPrevented', async () => {
@@ -152,13 +273,13 @@ describe('bq-tooltip', () => {
 
     tooltip.displayOn = 'click';
     await waitForChanges();
-    expect(panel).toHaveAttribute('hidden');
+    expectPanelVisibility(panel, false);
 
     tooltip.addEventListener('bqClick', (e: Event) => e.preventDefault(), { once: true });
     await userEvent.click(trigger);
     await waitForChanges();
 
-    expect(panel).toHaveAttribute('hidden');
+    expectPanelVisibility(panel, false);
   });
 
   it('should toggle visibility on repeated clicks when displayOn is click', async () => {
@@ -174,11 +295,11 @@ describe('bq-tooltip', () => {
 
     await userEvent.click(trigger);
     await waitForChanges();
-    expect(panel).not.toHaveAttribute('hidden');
+    expectPanelVisibility(panel, true);
 
     await userEvent.click(trigger);
     await waitForChanges();
-    expect(panel).toHaveAttribute('hidden');
+    expectPanelVisibility(panel, false);
   });
 
   it('should hide when Escape key is pressed when displayOn is click', async () => {
@@ -193,11 +314,11 @@ describe('bq-tooltip', () => {
 
     await userEvent.click(trigger);
     await waitForChanges();
-    expect(panel).not.toHaveAttribute('hidden');
+    expectPanelVisibility(panel, true);
 
     await userEvent.keyboard('{Escape}');
     await waitForChanges();
-    expect(panel).toHaveAttribute('hidden');
+    expectPanelVisibility(panel, false);
   });
 
   it('should show and hide via public methods', async () => {
@@ -206,15 +327,15 @@ describe('bq-tooltip', () => {
     const tooltip = root.querySelector('bq-tooltip') as HTMLBqTooltipElement;
     const panel = tooltip.shadowRoot.querySelector('[part="panel"]');
 
-    expect(panel).toHaveAttribute('hidden');
+    expectPanelVisibility(panel, false);
 
     await tooltip.show();
     await waitForChanges();
-    expect(panel).not.toHaveAttribute('hidden');
+    expectPanelVisibility(panel, true);
 
     await tooltip.hide();
     await waitForChanges();
-    expect(panel).toHaveAttribute('hidden');
+    expectPanelVisibility(panel, false);
   });
 
   it('should show in specified position', async () => {
@@ -251,7 +372,46 @@ describe('bq-tooltip', () => {
     unmountFn = unmount;
 
     const panel = root.querySelector('bq-tooltip').shadowRoot.querySelector('[part="panel"]');
-    expect(panel).not.toHaveAttribute('hidden');
+    expectPanelVisibility(panel, true);
+    expect(panel.getAttribute('popover')).toBe('manual');
+    expect(getComputedStyle(panel).position).toBe('absolute');
+    expect(getComputedStyle(panel).margin).toBe('0px');
+  });
+
+  it('should retain the fixed-position fallback without the Popover API', async () => {
+    const prototype = HTMLElement.prototype;
+    const showPopover = Object.getOwnPropertyDescriptor(prototype, 'showPopover');
+    const hidePopover = Object.getOwnPropertyDescriptor(prototype, 'hidePopover');
+    let unmount: (() => void) | undefined;
+
+    Object.defineProperty(prototype, 'showPopover', { configurable: true, value: undefined });
+    Object.defineProperty(prototype, 'hidePopover', { configurable: true, value: undefined });
+
+    try {
+      const result = await render(mkTooltip());
+      unmount = result.unmount;
+
+      const tooltip = result.root.querySelector('bq-tooltip') as HTMLBqTooltipElement;
+      const panel = tooltip.shadowRoot.querySelector('[part="panel"]');
+
+      expect(panel).not.toHaveAttribute('popover');
+      expect(panel).toHaveAttribute('hidden');
+      expect(getComputedStyle(panel).position).toBe('fixed');
+
+      await tooltip.show();
+      await result.waitForChanges();
+      expect(panel).not.toHaveAttribute('hidden');
+      expect(panel.getAttribute('aria-hidden')).toBe('false');
+
+      await expect.poll(() => getCenterError(tooltip)).toBeLessThanOrEqual(2);
+      tooltip.style.transform = 'translateX(40px)';
+      await expect.poll(() => getCenterError(tooltip)).toBeLessThanOrEqual(2);
+      expect(getComputedStyle(panel).visibility).toBe('visible');
+    } finally {
+      unmount?.();
+      if (showPopover) Object.defineProperty(prototype, 'showPopover', showPopover);
+      if (hidePopover) Object.defineProperty(prototype, 'hidePopover', hidePopover);
+    }
   });
 
   it('should stay visible when `always-visible` is set and hide() is called', async () => {
@@ -268,11 +428,27 @@ describe('bq-tooltip', () => {
     const tooltip = root.querySelector('bq-tooltip') as HTMLBqTooltipElement;
     const panel = tooltip.shadowRoot.querySelector('[part="panel"]');
 
-    expect(panel).not.toHaveAttribute('hidden');
+    expectPanelVisibility(panel, true);
 
     await tooltip.hide();
     await waitForChanges();
-    expect(panel).not.toHaveAttribute('hidden');
+    expectPanelVisibility(panel, true);
+  });
+
+  it('should react to `always-visible` changes', async () => {
+    const { root, unmount, waitForChanges } = await render(mkTooltip());
+    unmountFn = unmount;
+
+    const tooltip = root.querySelector('bq-tooltip') as HTMLBqTooltipElement;
+    const panel = tooltip.shadowRoot.querySelector('[part="panel"]');
+
+    tooltip.alwaysVisible = true;
+    await waitForChanges();
+    expectPanelVisibility(panel, true);
+
+    tooltip.alwaysVisible = false;
+    await waitForChanges();
+    expectPanelVisibility(panel, false);
   });
 
   it('should not render the arrow when `hide-arrow` is set', async () => {
@@ -287,6 +463,325 @@ describe('bq-tooltip', () => {
     unmountFn = unmount;
     const arrow = root.querySelector('bq-tooltip').shadowRoot.querySelector('.bq-tooltip__arrow');
     expect(arrow).toBeNull();
+  });
+
+  it('should replace the arrow reference when `hide-arrow` changes', async () => {
+    const { root, unmount, waitForChanges } = await render(
+      <div>
+        <bq-tooltip always-visible>
+          Yuhu! A tooltip!
+          <bq-button slot="trigger">Hover me!</bq-button>
+        </bq-tooltip>
+      </div>,
+    );
+    unmountFn = unmount;
+
+    const tooltip = root.querySelector('bq-tooltip') as HTMLBqTooltipElement;
+    const initialArrow = tooltip.shadowRoot.querySelector<HTMLElement>('.bq-tooltip__arrow');
+    await expect.poll(() => getArrowOffset(initialArrow)).toBe('-4px');
+
+    tooltip.hideArrow = true;
+    await waitForChanges();
+    expect(tooltip.shadowRoot.querySelector('.bq-tooltip__arrow')).toBeNull();
+
+    tooltip.hideArrow = false;
+    await waitForChanges();
+    await waitForStable(tooltip);
+
+    const replacementArrow = tooltip.shadowRoot.querySelector<HTMLElement>('.bq-tooltip__arrow');
+    expect(replacementArrow).not.toBe(initialArrow);
+    await expect.poll(() => getArrowOffset(replacementArrow)).toBe('-4px');
+  });
+
+  it('should clear the inline width when `same-width` is disabled', async () => {
+    const { root, unmount, waitForChanges } = await render(
+      <div>
+        <bq-tooltip always-visible>
+          Yuhu! A tooltip!
+          <bq-button slot="trigger">A wider trigger label</bq-button>
+        </bq-tooltip>
+      </div>,
+    );
+    unmountFn = unmount;
+
+    const tooltip = root.querySelector('bq-tooltip') as HTMLBqTooltipElement;
+    const panel = tooltip.shadowRoot.querySelector<HTMLElement>('[part="panel"]');
+    const trigger = tooltip.shadowRoot.querySelector<HTMLElement>('[part="trigger"]');
+
+    tooltip.sameWidth = true;
+    await waitForChanges();
+    await waitForStable(tooltip);
+    expect(parseFloat(panel.style.width)).toBeCloseTo(trigger.getBoundingClientRect().width, 0);
+
+    tooltip.sameWidth = false;
+    await waitForChanges();
+    expect(panel.style.width).toBe('');
+  });
+
+  it('should retain its trigger offset while a transformed ancestor scrolls', async () => {
+    const { root, unmount } = await render(
+      <div data-scroll-container style={{ height: '160px', overflow: 'auto', transform: 'translateZ(0)' }}>
+        <div style={{ height: '700px', paddingTop: '350px' }}>
+          <bq-tooltip always-visible placement="top">
+            Yuhu! A tooltip!
+            <bq-button slot="trigger">Hover me!</bq-button>
+          </bq-tooltip>
+        </div>
+      </div>,
+    );
+    unmountFn = unmount;
+
+    const scrollContainer = root as HTMLElement;
+    const tooltip = root.querySelector('bq-tooltip');
+    const panel = tooltip.shadowRoot.querySelector<HTMLElement>('[part="panel"]');
+    const trigger = tooltip.shadowRoot.querySelector<HTMLElement>('[part="trigger"]');
+
+    await waitForStable(tooltip);
+    const initialOffset = trigger.getBoundingClientRect().top - panel.getBoundingClientRect().bottom;
+
+    scrollContainer.scrollTop = 200;
+    scrollContainer.dispatchEvent(new Event('scroll'));
+    await expect
+      .poll(() => trigger.getBoundingClientRect().top - panel.getBoundingClientRect().bottom)
+      .toBeCloseTo(initialOffset, 0);
+  });
+
+  it('should keep top placement inside nested overflow-hidden ancestors', async () => {
+    const { root, unmount } = await render(
+      <div style={{ minHeight: '1200px', paddingTop: '500px' }}>
+        <div style={{ height: '44px', overflow: 'hidden' }}>
+          <div style={{ height: '44px', overflow: 'hidden' }}>
+            <bq-tooltip always-visible distance={10} placement="top">
+              Yuhu! A tooltip!
+              <bq-button slot="trigger">Hover me!</bq-button>
+            </bq-tooltip>
+          </div>
+        </div>
+      </div>,
+    );
+    unmountFn = unmount;
+
+    const tooltip = root.querySelector('bq-tooltip');
+    const panel = tooltip.shadowRoot.querySelector<HTMLElement>('[part="panel"]');
+    const trigger = tooltip.shadowRoot.querySelector<HTMLElement>('[part="trigger"]');
+    const getTopOffset = () => trigger.getBoundingClientRect().top - panel.getBoundingClientRect().bottom;
+
+    await expect.poll(getTopOffset).toBeCloseTo(10, 0);
+    expect(panel.getBoundingClientRect().bottom).toBeLessThan(trigger.getBoundingClientRect().top);
+
+    window.scrollTo({ top: 200 });
+    window.dispatchEvent(new Event('scroll'));
+
+    await expect.poll(getTopOffset).toBeCloseTo(10, 0);
+    expect(panel.getBoundingClientRect().bottom).toBeLessThan(trigger.getBoundingClientRect().top);
+  });
+
+  it('should resume positioning after reconnection', async () => {
+    const { root, unmount } = await render(
+      <div data-parent>
+        <bq-tooltip visible>
+          Yuhu! A tooltip!
+          <bq-button slot="trigger">Hover me!</bq-button>
+        </bq-tooltip>
+      </div>,
+    );
+    unmountFn = unmount;
+
+    const parent = root as HTMLElement;
+    const tooltip = root.querySelector('bq-tooltip');
+    const panel = tooltip.shadowRoot.querySelector('[part="panel"]');
+
+    await waitForStable(tooltip);
+    expectPanelVisibility(panel, true);
+
+    tooltip.remove();
+    parent.append(tooltip);
+    await waitForStable(tooltip);
+
+    expectPanelVisibility(panel, true);
+  });
+
+  it('should follow a moving host with a zero-sized trigger', async () => {
+    const { root, unmount } = await render(mkMovingTooltip());
+    unmountFn = unmount;
+    const tooltip = root.querySelector('bq-tooltip');
+    const trigger = getTrigger(tooltip);
+    const panel = getPanel(tooltip);
+
+    expect(trigger.getBoundingClientRect().width).toBe(0);
+    expect(trigger.getBoundingClientRect().height).toBe(0);
+    await expect.poll(() => getCenterError(tooltip)).toBeLessThanOrEqual(2);
+
+    for (const position of ['50%', '80%', '30%']) {
+      tooltip.style.insetInlineStart = position;
+      await expect.poll(() => getCenterError(tooltip)).toBeLessThanOrEqual(2);
+      expectPanelVisibility(panel, true);
+      expect(getComputedStyle(panel).visibility).toBe('visible');
+      const distance = trigger.getBoundingClientRect().top - panel.getBoundingClientRect().bottom;
+      expect(Math.abs(distance - 10)).toBeLessThanOrEqual(2);
+    }
+  });
+
+  it('should follow class and ancestor movement while open', async () => {
+    const { root, unmount } = await render(mkMovingTooltip(false));
+    unmountFn = unmount;
+    const tooltip = root.querySelector('bq-tooltip');
+    const sheet = document.createElement('style');
+    sheet.textContent = '.moved-tooltip { inset-inline-start: 70% !important; }';
+    root.append(sheet);
+
+    await tooltip.show();
+    await expect.poll(() => getCenterError(tooltip)).toBeLessThanOrEqual(2);
+    tooltip.classList.add('moved-tooltip');
+    await expect.poll(() => getCenterError(tooltip)).toBeLessThanOrEqual(2);
+    root.style.transform = 'translateX(30px)';
+    await expect.poll(() => getCenterError(tooltip)).toBeLessThanOrEqual(2);
+    expectPanelVisibility(getPanel(tooltip), true);
+
+    await tooltip.hide();
+    tooltip.classList.remove('moved-tooltip');
+    root.style.transform = '';
+    await tooltip.show();
+    await expect.poll(() => getCenterError(tooltip)).toBeLessThanOrEqual(2);
+  });
+
+  it('should track intermediate positions during ancestor animation', async () => {
+    const { root, unmount } = await render(mkMovingTooltip());
+    unmountFn = unmount;
+    const tooltip = root.querySelector('bq-tooltip');
+    await expect.poll(() => getCenterError(tooltip)).toBeLessThanOrEqual(2);
+    const animation = root.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(80px)' }], {
+      duration: 1000,
+      fill: 'forwards',
+    });
+    animation.pause();
+
+    try {
+      for (const time of [250, 500, 750, 1000]) {
+        animation.currentTime = time;
+        await expect.poll(() => getCenterError(tooltip)).toBeLessThanOrEqual(2);
+        expectPanelVisibility(getPanel(tooltip), true);
+      }
+    } finally {
+      animation.cancel();
+    }
+  });
+
+  it('should not keep reading trigger geometry after hide or disconnect', async () => {
+    const { root, unmount } = await render(mkMovingTooltip(false));
+    unmountFn = unmount;
+    const tooltip = root.querySelector('bq-tooltip');
+    await tooltip.show();
+    await expect.poll(() => getCenterError(tooltip)).toBeLessThanOrEqual(2);
+    const rect = vi.spyOn(getTrigger(tooltip), 'getBoundingClientRect');
+
+    await tooltip.hide();
+    await waitForStable(tooltip);
+    await nextFrame();
+    rect.mockClear();
+    for (let frame = 0; frame < 5; frame++) await nextFrame();
+    expect(rect).not.toHaveBeenCalled();
+
+    await tooltip.show();
+    await expect.poll(() => rect.mock.calls.length).toBeGreaterThan(0);
+    tooltip.remove();
+    await nextFrame();
+    rect.mockClear();
+    for (let frame = 0; frame < 5; frame++) await nextFrame();
+    expect(rect).not.toHaveBeenCalled();
+
+    root.append(tooltip);
+    tooltip.style.insetInlineStart = '70%';
+    await expect.poll(() => getCenterError(tooltip)).toBeLessThanOrEqual(2);
+    expectPanelVisibility(getPanel(tooltip), true);
+  });
+
+  it('should not track mounted closed tooltips', async () => {
+    const { root, unmount } = await render(
+      <div style={{ padding: '100px' }}>
+        {Array.from({ length: 200 }, (_, index) => (
+          <bq-tooltip>
+            Tooltip {index}
+            <button slot="trigger" type="button">
+              Trigger {index}
+            </button>
+          </bq-tooltip>
+        ))}
+      </div>,
+    );
+    unmountFn = unmount;
+    await waitForStable(root);
+    const reads = Array.from(root.querySelectorAll('bq-tooltip'), (tooltip) =>
+      vi.spyOn(getTrigger(tooltip), 'getBoundingClientRect'),
+    );
+
+    for (let frame = 0; frame < 5; frame++) await nextFrame();
+    for (const read of reads) expect(read).not.toHaveBeenCalled();
+  });
+
+  it('should not rewrite stationary panels when only one trigger moves', async () => {
+    const { root, unmount } = await render(
+      <div style={{ margin: '100px', position: 'relative' }}>
+        {Array.from({ length: 20 }, (_, index) => (
+          <bq-tooltip alwaysVisible style={{ position: 'absolute', left: `${index * 10}px` }}>
+            Tooltip {index}
+            <span slot="trigger" style={{ position: 'absolute' }} />
+          </bq-tooltip>
+        ))}
+      </div>,
+    );
+    unmountFn = unmount;
+    await waitForStable(root);
+    const tooltips = Array.from(root.querySelectorAll('bq-tooltip'));
+    const panels = tooltips.map(getPanel);
+    for (let frame = 0; frame < 5; frame++) await nextFrame();
+    const mutations = vi.fn<MutationCallback>();
+    const observer = new MutationObserver(mutations);
+    for (const panel of panels) observer.observe(panel, { attributes: true, attributeFilter: ['style'] });
+
+    try {
+      for (let frame = 0; frame < 5; frame++) await nextFrame();
+      expect(mutations).not.toHaveBeenCalled();
+      tooltips[0].style.left = '50px';
+      await expect.poll(() => mutations.mock.calls.length).toBeGreaterThan(0);
+      const records = mutations.mock.calls.flatMap(([records]) => records);
+      expect(records.every((record) => record.target === panels[0])).toBe(true);
+    } finally {
+      observer.disconnect();
+    }
+  });
+
+  it('should compute frame-tracked positions only when a zero-sized reference moves', async () => {
+    const { root, unmount } = await render(
+      <div style={{ position: 'relative', margin: '100px' }}>
+        <div data-reference style={{ position: 'absolute' }} />
+        <div data-floating style={{ position: 'absolute', width: '40px', height: '20px' }} />
+      </div>,
+    );
+    unmountFn = unmount;
+    const trigger = root.querySelector<HTMLElement>('[data-reference]');
+    const panel = root.querySelector<HTMLElement>('[data-floating]');
+    const floating = new FloatingUI(trigger, panel);
+    const reposition = vi.spyOn(floating, 'reposition');
+
+    try {
+      floating.start({ animationFrame: true });
+      floating.start({ animationFrame: true });
+      for (let frame = 0; frame < 10; frame++) await nextFrame();
+      reposition.mockClear();
+      for (let frame = 0; frame < 5; frame++) await nextFrame();
+      expect(reposition).not.toHaveBeenCalled();
+
+      trigger.style.left = '50px';
+      await expect.poll(() => reposition.mock.calls.length).toBeGreaterThan(0);
+      floating.stop();
+      await nextFrame();
+      reposition.mockClear();
+      for (let frame = 0; frame < 5; frame++) await nextFrame();
+      expect(reposition).not.toHaveBeenCalled();
+    } finally {
+      floating.stop();
+    }
   });
 
   it('should emit bqFocusIn and bqFocusOut events on focus/blur', async () => {
@@ -306,12 +801,12 @@ describe('bq-tooltip', () => {
 
     button.focus();
     await waitForChanges();
-    expect(panel).not.toHaveAttribute('hidden');
+    expectPanelVisibility(panel, true);
     expect(bqFocusIn).toHaveReceivedEventTimes(1);
 
     button.blur();
     await waitForChanges();
-    expect(panel).toHaveAttribute('hidden');
+    expectPanelVisibility(panel, false);
     expect(bqFocusOut).toHaveReceivedEventTimes(1);
   });
 
@@ -327,20 +822,30 @@ describe('bq-tooltip', () => {
 
     await userEvent.click(trigger);
     await waitForChanges();
-    expect(panel).not.toHaveAttribute('hidden');
+    expectPanelVisibility(panel, true);
 
     // Click outside the tooltip
     await userEvent.click(document.body);
     await waitForChanges();
-    expect(panel).toHaveAttribute('hidden');
+    expectPanelVisibility(panel, false);
   });
 
   it('should respect design style', async () => {
-    await render(mkTooltip());
+    const { root } = await render(mkTooltip());
 
-    const styleProps = ['borderRadius', 'paddingTop', 'paddingBottom', 'paddingLeft', 'paddingRight'] as const;
+    const styleProps = [
+      'backgroundColor',
+      'borderRadius',
+      'color',
+      'paddingTop',
+      'paddingBottom',
+      'paddingLeft',
+      'paddingRight',
+    ] as const;
     const style = computedStyle('bq-tooltip >>> [part="panel"]', styleProps);
 
+    expect(style.backgroundColor).toBe(resolveColorToken('--bq-ui--inverse', root));
+    expect(style.color).toBe(resolveColorToken('--bq-text--inverse', root));
     expect(style.borderRadius).toBeTruthy();
     expect(style.paddingTop).toBeTruthy();
   });

@@ -2,75 +2,164 @@
 /*                                Tab styles                               */
 /* -------------------------------------------------------------------------- */
 
-@import './bq-tab.variables';
+@layer bq.reset, bq.tokens, bq.themes, bq.base, bq.public, bq.overrides,
+  bq-tab.tokens, bq-tab.base, bq-tab.structure, bq-tab.states, bq-tab.pseudo;
 
-:host {
-  @apply inline-block;
+@layer bq-tab.tokens {
+  @import './bq-tab.variables';
 }
 
-.bq-tab {
-  @apply relative flex cursor-pointer items-center justify-center rounded-s disabled:cursor-not-allowed disabled:opacity-60;
-  @apply text-[length:--bq-tab--font-size] font-[--bq-tab--font-weight] leading-[--bq-tab--line-height] [&:not([disabled])]:hover:bg-hover-ui-primary [&:not([disabled])]:hover:text-hover-brand;
-  @apply border-0 bg-transparent focus-visible:focus;
-  @apply transition-[color,background-color,border-color,box-shadow] duration-300;
+/* ---------------------------------- Base ---------------------------------- */
 
-  &::after {
-    @apply absolute z-[1] block bg-brand opacity-0 content-empty -inset-be-1;
-    @apply transition-opacity duration-300 ease-linear;
+@layer bq-tab.base {
+  :host {
+    display: inline-block;
+    font-size: var(--bq-tab--font-size);
+    font-weight: var(--bq-tab--font-weight);
+    line-height: var(--bq-tab--line-height);
   }
 
-  &--horizontal-start,
-  &--horizontal-end {
-    &::after {
-      /**
-     * This hack will make the underline larger so it fits till the tab bar edges for the first and last tab button,
-     * because the parent container applies some padding to not cut the focus outline style.
-     */
-      @apply -start-xs3 bs-[2px] is-[calc(100%_+_var(--bq-spacing-xs2))];
-    }
+  .bq-tab {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--bq-tab--text-color);
+    background-color: transparent;
+    border: 0;
+    border-radius: var(--bq-radius--s);
+    cursor: pointer;
+    transition-duration: 300ms;
+    transition-property: color, background-color, border-color, box-shadow;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+/* ------------------------------- Structure -------------------------------- */
+
+@layer bq-tab.structure {
+  .bq-tab__content {
+    display: flex;
+    gap: var(--bq-tab--label-icon-gap);
+    align-items: center;
+    justify-content: center;
   }
 
-  &--vertical-start {
-    @apply justify-end is-full;
-
-    &::after {
-      @apply -end-xs2 bs-[calc(100%_+_var(--bq-spacing-xs2))] is-[2px];
-    }
+  .bq-tab__icon {
+    display: flex;
   }
 
-  &--vertical-end {
-    @apply justify-start is-full;
-
-    &::after {
-      @apply -start-xs2 bs-[calc(100%_+_var(--bq-spacing-xs2))] is-[2px];
-    }
+  .bq-tab__text {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
   }
 
-  &[aria-selected='true']::after {
-    @apply opacity-100;
+  .bq-tab--vertical-start {
+    justify-content: flex-end;
+    inline-size: 100%;
   }
 
-  &--small {
-    @apply p-b-[--bq-tab--padding-vertical-small] p-i-[--bq-tab--padding-horizontal-small];
+  .bq-tab--vertical-end {
+    justify-content: flex-start;
+    inline-size: 100%;
+  }
+
+  .bq-tab--small {
+    padding-block: var(--bq-tab--padding-vertical-small);
+    padding-inline: var(--bq-tab--padding-horizontal-small);
 
     ::slotted(bq-icon) {
       --bq-icon--size: var(--bq-tab--icon-size-small) #{!important};
     }
   }
 
-  &--medium {
-    @apply p-b-[--bq-tab--padding-vertical-medium] p-i-[--bq-tab--padding-horizontal-medium];
+  .bq-tab--medium {
+    padding-block: var(--bq-tab--padding-vertical-medium);
+    padding-inline: var(--bq-tab--padding-horizontal-medium);
 
     ::slotted(bq-icon) {
       --bq-icon--size: var(--bq-tab--icon-size-medium) #{!important};
     }
   }
 
-  &--large {
-    @apply text-l p-b-[--bq-tab--padding-vertical-large] p-i-[--bq-tab--padding-horizontal-large];
+  :host([size='large']) {
+    font-size: var(--bq-font-size--l);
+  }
+
+  .bq-tab--large {
+    padding-block: var(--bq-tab--padding-vertical-large);
+    padding-inline: var(--bq-tab--padding-horizontal-large);
 
     ::slotted(bq-icon) {
       --bq-icon--size: var(--bq-tab--icon-size-large) #{!important};
     }
+  }
+}
+
+/* --------------------------------- States --------------------------------- */
+
+@layer bq-tab.states {
+  .bq-tab:disabled {
+    cursor: not-allowed;
+    opacity: var(--bq-disabled-opacity, 0.6);
+  }
+
+  .bq-tab:not(:disabled):hover {
+    @include bq-color-mix(background-color, var(--bq-tab--background-hover), hover, 20%);
+    @include bq-color-mix(color, var(--bq-tab--text-color-hover), hover, 20%);
+  }
+
+  .bq-tab:focus-visible {
+    @include bq-focus-ring;
+  }
+
+  .bq-tab[aria-selected='true'] {
+    color: var(--bq-tab--text-color-active);
+  }
+}
+
+/* --------------------------------- Pseudo --------------------------------- */
+
+@layer bq-tab.pseudo {
+  .bq-tab::after {
+    position: absolute;
+    z-index: 1;
+    display: block;
+    inset-block-end: calc(var(--bq-spacing-xs2) * -1);
+    background-color: var(--bq-tab--indicator-color);
+    content: '';
+    opacity: 0;
+    transition-duration: 300ms;
+    transition-property: opacity;
+    transition-timing-function: linear;
+  }
+
+  .bq-tab--horizontal-start::after,
+  .bq-tab--horizontal-end::after {
+    /**
+     * This hack makes the underline reach the tab bar edges because the parent
+     * container keeps padding around the tabs so focus outlines are not clipped.
+     */
+    inset-inline-start: calc(var(--bq-spacing-xs3) * -1);
+    block-size: var(--bq-spacing-xs3);
+    inline-size: calc(100% + var(--bq-spacing-xs2));
+  }
+
+  .bq-tab--vertical-start::after {
+    inset-inline-end: calc(var(--bq-spacing-xs2) * -1);
+    block-size: calc(100% + var(--bq-spacing-xs2));
+    inline-size: var(--bq-spacing-xs3);
+  }
+
+  .bq-tab--vertical-end::after {
+    inset-inline-start: calc(var(--bq-spacing-xs2) * -1);
+    block-size: calc(100% + var(--bq-spacing-xs2));
+    inline-size: var(--bq-spacing-xs3);
+  }
+
+  .bq-tab[aria-selected='true']::after {
+    opacity: 1;
   }
 }

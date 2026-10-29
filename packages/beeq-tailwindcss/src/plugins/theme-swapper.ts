@@ -10,7 +10,10 @@ export interface ThemeConfig {
   theme: Record<string, string>;
   /** Optional: inherit from another theme */
   extends?: string;
-  /** Optional: specify if this is a mode (dark/light) vs a theme (endava/default) */
+  /**
+   * Optional: flags the entry as a mode (dark/light) vs a theme (endava/default).
+   * Informational only — it no longer affects specificity, since every selector is emitted inside `:where()`.
+   */
   mode?: boolean;
 }
 
@@ -99,11 +102,11 @@ export function createThemeSwapper({ themes, prefix = '', debug = false }: Theme
 
     // Process themes in one pass
     const cssRules = resolveInheritance(themes).reduce(
-      (rules, { name, selectors, theme, mode }) => {
+      (rules, { name, selectors, theme }) => {
         const variables = processVariables(theme, prefix, `${name}-${prefix}`);
-        const useWhere = !mode; // Themes use :where(), modes don't
-
-        const selector = selectors.map((s) => (useWhere ? `:where(${s})` : s)).join(', ');
+        // Every selector (themes and modes) gets zero specificity, so source order decides precedence
+        // and consumer overrides (e.g. a plain `:root { ... }`) always win over BEEQ defaults.
+        const selector = selectors.map((s) => `:where(${s})`).join(', ');
 
         rules[selector] = variables;
         return rules;

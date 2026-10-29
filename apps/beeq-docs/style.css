@@ -1,6 +1,3 @@
-@import url("/beeq-mintlify.css");
-@import url("/home.css");
-
 :root {
   --bq-transition-function: cubic-bezier(0.4, 0, 0.2, 1);
   --bq-transition-duration: 300ms;
@@ -85,6 +82,15 @@ body,
 }
 
 /* ------------------------------ Main content ------------------------------ */
+.dark\:text-primary-light:is(.dark *) {
+    color: var(--bq-iris-400);
+}
+
+@media (hover: hover) {
+  .dark\:group-hover\:text-primary-light:is(.dark *):is(:where(.group):hover *) {
+    color: var(--bq-iris-400);
+  }
+}
 
 /* Components overview — Mintlify Tile uses `truncate` (single-line), not line-clamp */
 .beeq-components-overview .columns {
@@ -233,6 +239,10 @@ body,
         border-radius: 0 !important;
       }
     }
+  }
+
+  [data-component-part="code-block-root"] [data-component-part="scroll-area-content"] {
+    height: auto !important;
   }
 }
 

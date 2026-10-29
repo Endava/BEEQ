@@ -13,12 +13,6 @@
 
 @layer bq-button.base {
   :host {
-    --_button-background-color: transparent;
-    --_button-border-color: var(--bq-button--border-color);
-    --_button-color: var(--bq-text--primary);
-    --_button-hover-background-color: transparent;
-    --_button-active-background-color: transparent;
-
     position: relative;
     display: inline-block;
     inline-size: auto;
@@ -34,6 +28,12 @@
 
 @layer bq-button.base {
   .bq-button {
+    --_button-background-color: transparent;
+    --_button-border-color: var(--bq-button--border-color);
+    --_button-color: var(--bq-text--primary);
+    --_button-hover-background-color: transparent;
+    --_button-active-background-color: transparent;
+
     box-sizing: border-box;
     display: flex;
     align-items: center;
@@ -90,44 +90,45 @@
 
 @layer bq-button.variants {
   .bq-button--primary {
-    --_button-background-color: var(--bq-ui--brand);
-    --_button-color: var(--bq-text--alt);
-    --_button-hover-background-color: var(--bq-ui--brand);
-    --_button-active-background-color: var(--bq-ui--brand);
+    --_button-background-color: var(--bq-button--primary-background);
+    --_button-color: var(--bq-button--primary-text-color);
+    --_button-hover-background-color: var(--bq-button--primary-background);
+    --_button-active-background-color: var(--bq-button--primary-background);
   }
 
   .bq-button--primary.ghost {
     --_button-background-color: transparent;
-    --_button-border-color: var(--bq-stroke--brand);
-    --_button-color: var(--bq-text--brand);
+    --_button-border-color: var(--bq-button--primary-border-color-ghost);
+    --_button-color: var(--bq-button--primary-text-color-ghost);
     --_button-hover-background-color: var(--bq-ui--primary);
     --_button-active-background-color: var(--bq-ui--primary);
   }
 
   .bq-button--primary.danger {
-    --_button-background-color: var(--bq-ui--danger);
-    --_button-color: var(--bq-text--alt);
-    --_button-hover-background-color: var(--bq-ui--danger);
-    --_button-active-background-color: var(--bq-ui--danger);
+    --_button-background-color: var(--bq-button--primary-background-danger);
+    --_button-color: var(--bq-button--primary-text-color-danger);
+    --_button-hover-background-color: var(--bq-button--primary-background-danger);
+    --_button-active-background-color: var(--bq-button--primary-background-danger);
   }
 
   .bq-button--secondary {
-    --_button-background-color: var(--bq-ui--secondary);
-    --_button-color: var(--bq-text--primary);
-    --_button-hover-background-color: var(--bq-ui--secondary);
-    --_button-active-background-color: var(--bq-ui--secondary);
+    --_button-background-color: var(--bq-button--secondary-background);
+    --_button-color: var(--bq-button--secondary-text-color);
+    --_button-hover-background-color: var(--bq-button--secondary-background);
+    --_button-active-background-color: var(--bq-button--secondary-background);
   }
 
   .bq-button--secondary.ghost {
     --_button-background-color: transparent;
-    --_button-border-color: var(--bq-stroke--tertiary);
+    --_button-border-color: var(--bq-button--secondary-border-color-ghost);
+    --_button-color: var(--bq-button--secondary-text-color-ghost);
     --_button-hover-background-color: var(--bq-ui--secondary);
     --_button-active-background-color: var(--bq-ui--secondary);
   }
 
   .bq-button--link {
     --_button-background-color: transparent;
-    --_button-color: var(--bq-text--brand);
+    --_button-color: var(--bq-button--link-text-color);
     --_button-hover-background-color: var(--bq-ui--primary);
     --_button-active-background-color: var(--bq-ui--secondary);
 
@@ -137,7 +138,7 @@
 
   .bq-button--text {
     --_button-background-color: transparent;
-    --_button-color: var(--bq-text--primary);
+    --_button-color: var(--bq-button--text-text-color);
     --_button-hover-background-color: var(--bq-ui--primary);
     --_button-active-background-color: var(--bq-ui--secondary);
   }

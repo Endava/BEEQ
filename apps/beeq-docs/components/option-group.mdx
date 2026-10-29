@@ -42,6 +42,10 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
   </Card>
 </CardGroup>
 
+<Tip>
+  Choose [`bq-option`](/components/option) for a single selectable item, [`bq-option-group`](/components/option-group) to put related options under a shared label, and [`bq-option-list`](/components/option-list) as the listbox container that holds the options and groups and emits `bqSelect`.
+</Tip>
+
 ## Option Group patterns
 
 <CardGroup cols={3}>
@@ -768,15 +772,32 @@ Use the `header-suffix` slot to place a count badge, status chip, or secondary i
 
 As a developer, you are responsible for:
 
-- **Always providing `header-label` content** — the text in this slot is what sighted users and screen reader users rely on to understand what the group is about. Without it, the group boundary is invisible to assistive technologies.
-- **Placing the component inside `bq-option-list`** — `bq-option-group` provides `role="group"`, which must be a descendant of `role="listbox"` (supplied by `bq-option-list`). Rendering option groups outside this context breaks the expected ARIA tree structure.
-- **Keeping groups non-empty** — a group with no options creates an orphaned header with no associated list items, which confuses both sighted users and screen readers.
+- **Providing `header-label` content** — you must provide it. The text in this slot is what sighted users and screen reader users rely on to understand what the group is about. Without it, the group boundary is invisible to assistive technologies.
+- **Placing the component inside `bq-option-list`** — `bq-option-group` provides `role="group"`, which must be a descendant of `role="listbox"` (supplied by `bq-option-list`). You must not render option groups outside this context, because it breaks the expected ARIA tree structure.
+- **Keeping groups non-empty** — a group with no options creates an orphaned header with no associated list items, which confuses both sighted users and screen readers, so you must not leave a group empty.
+
+### Keyboard interaction
+
+No keyboard interaction: the component is not focusable. The `bq-option` items inside the group receive focus; see [Option](/components/option#keyboard-interaction).
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Provide `header-label` content | MUST | manual: inspect each group header label |
+| Place `bq-option-group` inside `bq-option-list` | MUST | manual: inspect the parent of each option group |
+| Do not render option groups outside `bq-option-list` | MUST NOT | manual: check that each group is inside an option list |
+| Do not leave a group empty | MUST NOT | manual: inspect each group for at least one option |
 
 ## API reference
 
 ### Properties
 
 `bq-option-group` has no configurable properties. Its behaviour is entirely controlled through slots.
+
+### Invalid combinations
+
+No invalid prop combinations.
 
 ### Slots
 

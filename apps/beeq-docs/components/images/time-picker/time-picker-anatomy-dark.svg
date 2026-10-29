@@ -1,0 +1,64 @@
+<svg width="416" height="449" viewBox="0 0 416 449" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Time picker anatomy">
+<defs><filter id="shadow-dark" x="-40%" y="-20%" width="180%" height="150%" color-interpolation-filters="sRGB"><feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.12"/></filter></defs>
+<text x="64" y="15" font-family="Outfit, Inter, 'Segoe UI', system-ui, sans-serif" font-size="14" fill="#F1F2F4">Meeting time</text>
+<rect x="64.5" y="29.5" width="299" height="49" rx="8" fill="#1C1D23" stroke="#4F46E5"/>
+<circle cx="93" cy="55" r="8" stroke="#F1F2F4" stroke-width="1.5" fill="none"/><path d="M93 50.5V55H97.5M83.5 49L87 45.5M102.5 49L99 45.5" stroke="#F1F2F4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+<text x="124.5" y="59.5" font-family="Outfit, Inter, 'Segoe UI', system-ui, sans-serif" font-size="16" text-anchor="middle" fill="#F1F2F4">09</text>
+<text x="138" y="59.5" font-family="Outfit, Inter, 'Segoe UI', system-ui, sans-serif" font-size="16" text-anchor="middle" fill="#F1F2F4">:</text>
+<text x="151.5" y="59.5" font-family="Outfit, Inter, 'Segoe UI', system-ui, sans-serif" font-size="16" text-anchor="middle" fill="#F1F2F4">30</text>
+<text x="165" y="59.5" font-family="Outfit, Inter, 'Segoe UI', system-ui, sans-serif" font-size="16" text-anchor="middle" fill="#F1F2F4">:</text>
+<text x="178.5" y="59.5" font-family="Outfit, Inter, 'Segoe UI', system-ui, sans-serif" font-size="16" text-anchor="middle" fill="#F1F2F4">00</text>
+<text x="203.5" y="59.5" font-family="Outfit, Inter, 'Segoe UI', system-ui, sans-serif" font-size="16" text-anchor="middle" fill="#F1F2F4">am</text>
+<circle cx="303" cy="54" r="9" stroke="#F1F2F4" stroke-width="1.5" fill="none"/><path d="M300 51L306 57M306 51L300 57" stroke="#F1F2F4" stroke-width="1.5" stroke-linecap="round"/>
+<circle cx="335" cy="54" r="9" stroke="#F1F2F4" stroke-width="1.5" fill="none"/><path d="M335 48.75V54H340.25" stroke="#F1F2F4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+<g filter="url(#shadow-dark)"><rect x="97" y="87" width="267" height="338" rx="8" fill="#1C1D23"/></g>
+<path d="M97 121.5H364" stroke="#1C1D23"/>
+<path d="M165.5 87V377" stroke="#1C1D23"/>
+<path d="M230.5 87V377" stroke="#1C1D23"/>
+<path d="M295.5 87V377" stroke="#1C1D23"/>
+<clipPath id="col-clip-dark"><rect x="97" y="129" width="267" height="240"/></clipPath>
+<text x="131.0" y="109" font-family="Outfit, Inter, 'Segoe UI', system-ui, sans-serif" font-size="12" font-weight="500" text-anchor="middle" fill="#A6AAB3">HOUR</text>
+<text x="197.5" y="109" font-family="Outfit, Inter, 'Segoe UI', system-ui, sans-serif" font-size="12" font-weight="500" text-anchor="middle" fill="#A6AAB3">MINUTE</text>
+<text x="262.5" y="109" font-family="Outfit, Inter, 'Segoe UI', system-ui, sans-serif" font-size="12" font-weight="500" text-anchor="middle" fill="#A6AAB3">SECOND</text>
+<text x="329.5" y="109" font-family="Outfit, Inter, 'Segoe UI', system-ui, sans-serif" font-size="12" font-weight="500" text-anchor="middle" fill="#A6AAB3">AM/PM</text>
+<g clip-path="url(#col-clip-dark)">
+<text x="133" y="144.5" font-family="Outfit, Inter, 'Segoe UI', system-ui, sans-serif" font-size="16" text-anchor="middle" fill="#F1F2F4">04</text>
+<text x="133" y="186.5" font-family="Outfit, Inter, 'Segoe UI', system-ui, sans-serif" font-size="16" text-anchor="middle" fill="#F1F2F4">05</text>
+<text x="133" y="228.5" font-family="Outfit, Inter, 'Segoe UI', system-ui, sans-serif" font-size="16" text-anchor="middle" fill="#F1F2F4">06</text>
+<text x="133" y="270.5" font-family="Outfit, Inter, 'Segoe UI', system-ui, sans-serif" font-size="16" text-anchor="middle" fill="#F1F2F4">07</text>
+<text x="133" y="312.5" font-family="Outfit, Inter, 'Segoe UI', system-ui, sans-serif" font-size="16" text-anchor="middle" fill="#F1F2F4">08</text>
+<rect x="109" y="329" width="48" height="40" rx="4" fill="#4F46E5"/>
+<text x="133" y="354.5" font-family="Outfit, Inter, 'Segoe UI', system-ui, sans-serif" font-size="16" text-anchor="middle" fill="#FFFFFF">09</text>
+<text x="198" y="144.5" font-family="Outfit, Inter, 'Segoe UI', system-ui, sans-serif" font-size="16" text-anchor="middle" fill="#F1F2F4">25</text>
+<text x="198" y="186.5" font-family="Outfit, Inter, 'Segoe UI', system-ui, sans-serif" font-size="16" text-anchor="middle" fill="#F1F2F4">26</text>
+<text x="198" y="228.5" font-family="Outfit, Inter, 'Segoe UI', system-ui, sans-serif" font-size="16" text-anchor="middle" fill="#F1F2F4">27</text>
+<text x="198" y="270.5" font-family="Outfit, Inter, 'Segoe UI', system-ui, sans-serif" font-size="16" text-anchor="middle" fill="#F1F2F4">28</text>
+<text x="198" y="312.5" font-family="Outfit, Inter, 'Segoe UI', system-ui, sans-serif" font-size="16" text-anchor="middle" fill="#F1F2F4">29</text>
+<rect x="174" y="329" width="48" height="40" rx="4" fill="#4F46E5"/>
+<text x="198" y="354.5" font-family="Outfit, Inter, 'Segoe UI', system-ui, sans-serif" font-size="16" text-anchor="middle" fill="#FFFFFF">30</text>
+<rect x="239" y="129" width="48" height="40" rx="4" fill="#4F46E5"/>
+<text x="263" y="154.5" font-family="Outfit, Inter, 'Segoe UI', system-ui, sans-serif" font-size="16" text-anchor="middle" fill="#FFFFFF">00</text>
+<text x="263" y="196.5" font-family="Outfit, Inter, 'Segoe UI', system-ui, sans-serif" font-size="16" text-anchor="middle" fill="#F1F2F4">01</text>
+<text x="263" y="238.5" font-family="Outfit, Inter, 'Segoe UI', system-ui, sans-serif" font-size="16" text-anchor="middle" fill="#F1F2F4">02</text>
+<text x="263" y="280.5" font-family="Outfit, Inter, 'Segoe UI', system-ui, sans-serif" font-size="16" text-anchor="middle" fill="#F1F2F4">03</text>
+<text x="263" y="322.5" font-family="Outfit, Inter, 'Segoe UI', system-ui, sans-serif" font-size="16" text-anchor="middle" fill="#F1F2F4">04</text>
+<text x="263" y="364.5" font-family="Outfit, Inter, 'Segoe UI', system-ui, sans-serif" font-size="16" text-anchor="middle" fill="#F1F2F4">05</text>
+<rect x="304" y="129" width="48" height="40" rx="4" fill="#4F46E5"/>
+<text x="328" y="154.5" font-family="Outfit, Inter, 'Segoe UI', system-ui, sans-serif" font-size="16" text-anchor="middle" fill="#FFFFFF">am</text>
+<text x="328" y="196.5" font-family="Outfit, Inter, 'Segoe UI', system-ui, sans-serif" font-size="16" text-anchor="middle" fill="#F1F2F4">pm</text>
+</g>
+<path d="M97 377.5H364" stroke="#1C1D23"/>
+<text x="135" y="407" font-family="Outfit, Inter, 'Segoe UI', system-ui, sans-serif" font-size="16" font-weight="500" text-anchor="middle" fill="#F1F2F4">Now</text>
+<rect x="309" y="386" width="43" height="31" rx="12" fill="#4F46E5"/>
+<text x="330.5" y="407" font-family="Outfit, Inter, 'Segoe UI', system-ui, sans-serif" font-size="16" font-weight="500" text-anchor="middle" fill="#FFFFFF">OK</text>
+<path d="M33 10H60" stroke="#E1172F"/><circle cx="24" cy="10" r="9" fill="#E1172F"/><text x="24" y="14" font-family="Outfit, Inter, 'Segoe UI', system-ui, sans-serif" font-size="11" font-weight="600" text-anchor="middle" fill="#FFFFFF">1</text>
+<path d="M33 54H79" stroke="#E1172F"/><circle cx="24" cy="54" r="9" fill="#E1172F"/><text x="24" y="58" font-family="Outfit, Inter, 'Segoe UI', system-ui, sans-serif" font-size="11" font-weight="600" text-anchor="middle" fill="#FFFFFF">2</text>
+<path d="M176 21V41" stroke="#E1172F"/><circle cx="176" cy="12" r="9" fill="#E1172F"/><text x="176" y="16" font-family="Outfit, Inter, 'Segoe UI', system-ui, sans-serif" font-size="11" font-weight="600" text-anchor="middle" fill="#FFFFFF">3</text>
+<path d="M303 21V41" stroke="#E1172F"/><circle cx="303" cy="12" r="9" fill="#E1172F"/><text x="303" y="16" font-family="Outfit, Inter, 'Segoe UI', system-ui, sans-serif" font-size="11" font-weight="600" text-anchor="middle" fill="#FFFFFF">4</text>
+<path d="M335 21V41" stroke="#E1172F"/><circle cx="335" cy="12" r="9" fill="#E1172F"/><text x="335" y="16" font-family="Outfit, Inter, 'Segoe UI', system-ui, sans-serif" font-size="11" font-weight="600" text-anchor="middle" fill="#FFFFFF">5</text>
+<path d="M33 237H97" stroke="#E1172F"/><circle cx="24" cy="237" r="9" fill="#E1172F"/><text x="24" y="241" font-family="Outfit, Inter, 'Segoe UI', system-ui, sans-serif" font-size="11" font-weight="600" text-anchor="middle" fill="#FFFFFF">6</text>
+<path d="M337 279H387" stroke="#E1172F"/><circle cx="396" cy="279" r="9" fill="#E1172F"/><text x="396" y="283" font-family="Outfit, Inter, 'Segoe UI', system-ui, sans-serif" font-size="11" font-weight="600" text-anchor="middle" fill="#FFFFFF">7</text>
+<path d="M33 349H109" stroke="#E1172F"/><circle cx="24" cy="349" r="9" fill="#E1172F"/><text x="24" y="353" font-family="Outfit, Inter, 'Segoe UI', system-ui, sans-serif" font-size="11" font-weight="600" text-anchor="middle" fill="#FFFFFF">8</text>
+<path d="M33 401.5H113" stroke="#E1172F"/><circle cx="24" cy="401.5" r="9" fill="#E1172F"/><text x="24" y="405.5" font-family="Outfit, Inter, 'Segoe UI', system-ui, sans-serif" font-size="11" font-weight="600" text-anchor="middle" fill="#FFFFFF">9</text>
+<path d="M352 401.5H387" stroke="#E1172F"/><circle cx="396" cy="401.5" r="9" fill="#E1172F"/><text x="396" y="405.5" font-family="Outfit, Inter, 'Segoe UI', system-ui, sans-serif" font-size="11" font-weight="600" text-anchor="middle" fill="#FFFFFF">10</text>
+</svg>

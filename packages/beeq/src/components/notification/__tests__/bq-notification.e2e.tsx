@@ -1,5 +1,18 @@
 import { h } from '@stencil/core';
 import { describe, expect, it, render, waitForStable } from '@stencil/vitest';
+import { page } from 'vitest/browser';
+
+import { computedStyle } from '../../../shared/test-utils/computedStyle';
+import { resolveColorToken } from '../../../shared/test-utils/resolveColorToken';
+
+const resolveBoxShadowToken = (name: string) => {
+  const probe = document.createElement('span');
+  probe.style.boxShadow = `var(${name})`;
+  document.body.appendChild(probe);
+  const { boxShadow } = getComputedStyle(probe);
+  probe.remove();
+  return boxShadow;
+};
 
 describe('bq-notification', () => {
   it('should render', async () => {
@@ -18,28 +31,28 @@ describe('bq-notification', () => {
     const { root } = await render(<bq-notification />);
 
     expect(root).toEqualAttribute('aria-hidden', 'true');
-    expect(root).toHaveClass('is-hidden');
+    expect(root).toHaveAttribute('hidden');
   });
 
   it('should render as hidden with `open="false"`', async () => {
     const { root } = await render(<bq-notification open={'false' as never}></bq-notification>);
 
     expect(root).toEqualAttribute('aria-hidden', 'true');
-    expect(root).toHaveClass('is-hidden');
+    expect(root).toHaveAttribute('hidden');
   });
 
   it('should render as open with `open`', async () => {
     const { root } = await render(<bq-notification open></bq-notification>);
 
     expect(root).toEqualAttribute('aria-hidden', 'false');
-    expect(root).not.toHaveClass('is-hidden');
+    expect(root).not.toHaveAttribute('hidden');
   });
 
   it('should render as open with `open="true"`', async () => {
     const { root } = await render(<bq-notification open={'true' as never}></bq-notification>);
 
     expect(root).toEqualAttribute('aria-hidden', 'false');
-    expect(root).not.toHaveClass('is-hidden');
+    expect(root).not.toHaveAttribute('hidden');
   });
 
   it('should render body slot content', async () => {
@@ -73,7 +86,7 @@ describe('bq-notification', () => {
 
     const iconOutline = root.shadowRoot?.querySelector('[part="icon-outline"]');
     expect(iconOutline).not.toBeNull();
-    expect(iconOutline).not.toHaveClass('!hidden');
+    expect(iconOutline).not.toHaveAttribute('hidden');
   });
 
   it('should hide the icon when `hide-icon` is set', async () => {
@@ -84,7 +97,7 @@ describe('bq-notification', () => {
     );
 
     const iconOutline = root.shadowRoot?.querySelector('[part="icon-outline"]');
-    expect(iconOutline).toHaveClass('!hidden');
+    expect(iconOutline).toHaveAttribute('hidden');
   });
 
   it('should render custom icon via `icon` slot when `has-custom-icon` is set', async () => {
@@ -127,14 +140,14 @@ describe('bq-notification', () => {
     await waitForStable(root);
 
     expect(root).toEqualAttribute('aria-hidden', 'false');
-    expect(root).not.toHaveClass('is-hidden');
+    expect(root).not.toHaveAttribute('hidden');
 
     await notification.hide();
     await waitForChanges();
     await waitForStable(root);
 
     expect(root).toEqualAttribute('aria-hidden', 'true');
-    expect(root).toHaveClass('is-hidden');
+    expect(root).toHaveAttribute('hidden');
   });
 
   it('should emit `bqShow` and `bqAfterOpen` when shown', async () => {
@@ -196,6 +209,165 @@ describe('bq-notification', () => {
     await waitForStable(root);
 
     expect(root).toEqualAttribute('aria-hidden', 'true');
-    expect(root).toHaveClass('is-hidden');
+    expect(root).toHaveAttribute('hidden');
+  });
+
+  it('should map the icon color variables to the icon role tokens', async () => {
+    const { root } = await render(<bq-notification open>Notification title</bq-notification>);
+
+    const hostStyle = getComputedStyle(root);
+    const roles = {
+      error: 'danger',
+      info: 'info',
+      neutral: 'primary',
+      success: 'success',
+      warning: 'warning',
+    };
+
+    Object.entries(roles).forEach(([type, role]) => {
+      expect(hostStyle.getPropertyValue(`--bq-notification--icon-color-${type}`).trim()).toBe(
+        hostStyle.getPropertyValue(`--bq-icon--${role}`).trim(),
+      );
+    });
+  });
+
+  it('should use the info icon token (not brand) for `type="info"`', async () => {
+    await render(
+      <bq-notification open type="info">
+        Notification title
+      </bq-notification>,
+    );
+
+    const { color } = computedStyle('bq-notification >>> [part="icon-outline"]', ['color']);
+
+    expect(color).toBe(resolveColorToken('--bq-icon--info'));
+    expect(color).not.toBe(resolveColorToken('--bq-icon--brand'));
+  });
+
+  it('should preserve native layout, spacing, typography and transition styles', async () => {
+    const { root } = await render(
+      <bq-notification open>
+        Notification title
+        <span slot="body">Body content</span>
+        <div slot="footer">Footer content</div>
+      </bq-notification>,
+    );
+
+    await waitForStable(root);
+
+    const wrapper = root.shadowRoot?.querySelector<HTMLElement>('[part="wrapper"]');
+    const close = root.shadowRoot?.querySelector<HTMLElement>('[part="btn-close"]');
+    const icon = root.shadowRoot?.querySelector<HTMLElement>('[part="icon-outline"]');
+    const main = root.shadowRoot?.querySelector<HTMLElement>('[part="main"]');
+    const content = root.shadowRoot?.querySelector<HTMLElement>('[part="content"]');
+    const title = root.shadowRoot?.querySelector<HTMLElement>('[part="title"]');
+    const body = root.shadowRoot?.querySelector<HTMLElement>('[part="body"]');
+    const footer = root.shadowRoot?.querySelector<HTMLElement>('[part="footer"]');
+    const bodyContent = root.querySelector<HTMLElement>('[slot="body"]');
+    const footerContent = root.querySelector<HTMLElement>('[slot="footer"]');
+    const wrapperStyle = getComputedStyle(wrapper);
+
+    expect(getComputedStyle(root).display).toBe('block');
+    expect(wrapperStyle.position).toBe('relative');
+    expect(wrapperStyle.display).toBe('flex');
+    expect(wrapperStyle.minInlineSize).toBe('320px');
+    expect(wrapperStyle.padding).toBe('16px');
+    expect(wrapperStyle.borderRadius).toBe('8px');
+    expect(wrapperStyle.boxShadow).toBe(resolveBoxShadowToken('--bq-box-shadow--l'));
+    expect(getComputedStyle(close).position).toBe('absolute');
+    expect(getComputedStyle(close).insetInlineEnd).toBe('16px');
+    expect(getComputedStyle(icon).display).toBe('flex');
+    expect(getComputedStyle(icon).marginInlineEnd).toBe('8px');
+    expect(getComputedStyle(main).display).toBe('flex');
+    expect(getComputedStyle(main).rowGap).toBe('16px');
+    expect(getComputedStyle(content).rowGap).toBe('12px');
+    expect(getComputedStyle(title).fontWeight).toBe('600');
+    expect(getComputedStyle(title).lineHeight).toBe('24px');
+    expect(getComputedStyle(body).fontSize).toBe('14px');
+    expect(getComputedStyle(footer).columnGap).toBe('8px');
+    expect(getComputedStyle(bodyContent).marginBlockStart).toBe('0px');
+    expect(getComputedStyle(footerContent).display).toBe('block');
+    expect(getComputedStyle(footerContent).marginBlockStart).toBe('0px');
+
+    wrapper.classList.add('is-entering', 'is-enter-start');
+    const transitionStyle = getComputedStyle(wrapper);
+    expect(transitionStyle.transitionProperty.split(', ')).toEqual(expect.arrayContaining(['opacity', 'transform']));
+    expect(transitionStyle.transitionDuration).toBe('0.3s');
+    expect(transitionStyle.transitionTimingFunction).toBe('cubic-bezier(0, 0, 0.2, 1)');
+    await expect.poll(() => getComputedStyle(wrapper).opacity).toBe('0');
+    expect(getComputedStyle(wrapper).transform).not.toBe('none');
+    wrapper.classList.remove('is-entering', 'is-enter-start');
+
+    wrapper.classList.add('is-leaving', 'is-leave-end');
+    expect(getComputedStyle(wrapper).transitionDuration).toBe('0.1s');
+    expect(getComputedStyle(wrapper).transitionTimingFunction).toBe('cubic-bezier(0.4, 0, 1, 1)');
+    await expect.poll(() => getComputedStyle(wrapper).opacity).toBe('0');
+    expect(getComputedStyle(wrapper).transform).not.toBe('none');
+    wrapper.classList.remove('is-leaving', 'is-leave-end');
+  });
+
+  it('should preserve desktop inline-axis transition geometry', async () => {
+    const viewport = { width: window.innerWidth, height: window.innerHeight };
+
+    try {
+      await page.viewport(800, viewport.height);
+      const { root } = await render(<bq-notification open>Notification title</bq-notification>);
+      const wrapper = root.shadowRoot?.querySelector<HTMLElement>('[part="wrapper"]');
+
+      wrapper.classList.add('is-entering', 'is-enter-start');
+      await expect.poll(() => getComputedStyle(wrapper).transform).toBe('matrix(1, 0, 0, 1, 12, 0)');
+    } finally {
+      await page.viewport(viewport.width, viewport.height);
+    }
+  });
+
+  it('should preserve public layout overrides', async () => {
+    const { root } = await render(
+      <bq-notification
+        open
+        style={{
+          '--bq-notification--content-footer-gap': '10px',
+          '--bq-notification--min-width': '360px',
+          '--bq-notification--padding': '20px',
+          '--bq-notification--title-body-gap': '6px',
+        }}
+      >
+        Notification title
+        <span slot="body">Body content</span>
+        <div slot="footer">Footer content</div>
+      </bq-notification>,
+    );
+
+    await waitForStable(root);
+
+    const wrapper = root.shadowRoot?.querySelector<HTMLElement>('[part="wrapper"]');
+    const main = root.shadowRoot?.querySelector<HTMLElement>('[part="main"]');
+    const content = root.shadowRoot?.querySelector<HTMLElement>('[part="content"]');
+
+    expect(getComputedStyle(wrapper).minInlineSize).toBe('360px');
+    expect(getComputedStyle(wrapper).padding).toBe('20px');
+    expect(getComputedStyle(main).rowGap).toBe('10px');
+    expect(getComputedStyle(content).rowGap).toBe('6px');
+  });
+
+  it('should hide optional icon, body and footer with native hidden state', async () => {
+    const { root } = await render(
+      <bq-notification hideIcon open>
+        Notification title
+      </bq-notification>,
+    );
+
+    await waitForStable(root);
+
+    const icon = root.shadowRoot?.querySelector<HTMLElement>('[part="icon-outline"]');
+    const body = root.shadowRoot?.querySelector<HTMLElement>('[part="body"]');
+    const footer = root.shadowRoot?.querySelector<HTMLElement>('[part="footer"]');
+
+    expect(icon).toHaveAttribute('hidden');
+    expect(body).toHaveAttribute('hidden');
+    expect(footer).toHaveAttribute('hidden');
+    expect(getComputedStyle(icon).display).toBe('none');
+    expect(getComputedStyle(body).display).toBe('none');
+    expect(getComputedStyle(footer).display).toBe('none');
   });
 });

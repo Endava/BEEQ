@@ -13,6 +13,7 @@ export const CSS_COLORS = {
   '--bq-blue-700': '#1158bc',
   '--bq-blue-800': '#0d428d',
   '--bq-blue-900': '#082c5e',
+  '--bq-blue-950': '#062147', // Dark-mode intent tint (900/1000 midpoint)
   '--bq-blue-1000': '#04162f',
   /** Corai */
   '--bq-corai-100': '#fff2f2',
@@ -46,6 +47,7 @@ export const CSS_COLORS = {
   '--bq-gold-700': '#ae733a',
   '--bq-gold-800': '#82562b',
   '--bq-gold-900': '#573a1d',
+  '--bq-gold-950': '#412c16', // Dark-mode intent tint (900/1000 midpoint)
   '--bq-gold-1000': '#2b1d0e',
   /** Green */
   '--bq-green-100': '#e8f8ef',
@@ -92,6 +94,7 @@ export const CSS_COLORS = {
   '--bq-iris-700': '#413abd',
   '--bq-iris-800': '#332e95',
   '--bq-iris-900': '#26216d',
+  '--bq-iris-950': '#1f1b59', // Dark-mode intent tint (900/1000 midpoint)
   '--bq-iris-1000': '#181545',
   /** Lime */
   '--bq-lime-100': '#f5fae8',
@@ -139,6 +142,7 @@ export const CSS_COLORS = {
   '--bq-purple-700': '#512d98',
   '--bq-purple-800': '#3d2272',
   '--bq-purple-900': '#28164c',
+  '--bq-purple-950': '#1e1139', // Dark-mode intent tint (900/1000 midpoint)
   '--bq-purple-1000': '#140b26',
   /** Red */
   '--bq-red-100': '#fce7ea',
@@ -150,6 +154,7 @@ export const CSS_COLORS = {
   '--bq-red-700': '#b41226',
   '--bq-red-800': '#870e1c',
   '--bq-red-900': '#5a0913',
+  '--bq-red-950': '#44070e', // Dark-mode intent tint (900/1000 midpoint)
   '--bq-red-1000': '#2d0509',
   /** Sky */
   '--bq-sky-100': '#eff4fb',
@@ -172,6 +177,7 @@ export const CSS_COLORS = {
   '--bq-teal-700': '#00907e',
   '--bq-teal-800': '#006c5e',
   '--bq-teal-900': '#00483f',
+  '--bq-teal-950': '#00362f', // Dark-mode intent tint (900/1000 midpoint)
   '--bq-teal-1000': '#00241f',
   /** Volcano */
   '--bq-volcano-100': '#feede7',
@@ -200,31 +206,80 @@ export const CSS_COLORS = {
   /*               These groups are exclusive for the Endava theme              */
   /* -------------------------------------------------------------------------- */
 
-  /** Endava Grey */
-  '--bq-endava-grey-50': '#f7f7f8',
-  '--bq-endava-grey-100': '#e4e6e7',
-  '--bq-endava-grey-200': '#b5babe',
-  '--bq-endava-grey-300': '#949ca1',
-  '--bq-endava-grey-400': '#737d84',
-  '--bq-endava-grey-500': '#525f67',
-  '--bq-endava-grey-600': '#30404b',
-  '--bq-endava-grey-700': '#2b3942',
-  '--bq-endava-grey-800': '#263139',
-  '--bq-endava-grey-900': '#192b37',
-  '--bq-endava-grey-950': '#151b1e',
-  '--bq-endava-grey-1000': '#0f1316',
+  /**
+   * Endava Grey: the Endava Solid Blue shades (brand.endava.com/visual/colours).
+   * 100-900 = Blue 10-90, 950 = Solid Blue; 50 and 1000 are derived.
+   */
+  '--bq-endava-grey-50': '#f6f7f7',
+  '--bq-endava-grey-100': '#e8eaeb',
+  '--bq-endava-grey-200': '#d1d5d7',
+  '--bq-endava-grey-300': '#babfc3',
+  '--bq-endava-grey-400': '#a3aaaf',
+  '--bq-endava-grey-500': '#8c959b',
+  '--bq-endava-grey-600': '#758087',
+  '--bq-endava-grey-700': '#5e6a73',
+  '--bq-endava-grey-800': '#47555f',
+  '--bq-endava-grey-900': '#30404b',
+  '--bq-endava-grey-950': '#192b37', // Solid Blue
+  '--bq-endava-grey-1000': '#14222c',
   /** Endava Neutral */
-  '--bq-endava-neutral-white': '#fafbfb',
+  '--bq-endava-neutral-white': '#ffffff', // Pure White
   '--bq-endava-neutral-black': '#060708',
-  /** Endava Orange */
-  '--bq-endava-orange-100': '#fef3f1',
-  '--bq-endava-orange-200': '#fbd6d1',
-  '--bq-endava-orange-300': '#fab7af',
-  '--bq-endava-orange-400': '#fa988b',
-  '--bq-endava-orange-500': '#fc7866',
-  '--bq-endava-orange-600': '#ff5640',
-  '--bq-endava-orange-700': '#ce4a39',
-  '--bq-endava-orange-800': '#a03d30',
-  '--bq-endava-orange-900': '#722e25',
-  '--bq-endava-orange-1000': '#471e19',
+  /**
+   * Endava Orange: Red Orange (600) ramp. Tints are mixed on white (100-500)
+   * or on Solid Blue (900-1000); 700-800 are darker shades for text on light surfaces.
+   */
+  '--bq-endava-orange-100': '#ffeeec',
+  '--bq-endava-orange-200': '#ffddd9',
+  '--bq-endava-orange-300': '#ffc4bc',
+  '--bq-endava-orange-400': '#ffaaa0',
+  '--bq-endava-orange-500': '#ff8979',
+  '--bq-endava-orange-600': '#ff5640', // Red Orange
+  '--bq-endava-orange-700': '#e03e00',
+  '--bq-endava-orange-800': '#c33600',
+  '--bq-endava-orange-900': '#753c3b',
+  '--bq-endava-orange-1000': '#423339',
+  /** Endava Positive (success): sparse ramp ordered by lightness */
+  '--bq-endava-positive-100': '#eaf5ef',
+  '--bq-endava-positive-300': '#6edc9c', // 25% white tint of 400: optional dark text override for APCA Lc >= 60
+  '--bq-endava-positive-400': '#3dd17b',
+  '--bq-endava-positive-500': '#2d9c5b',
+  '--bq-endava-positive-600': '#26864e',
+  '--bq-endava-positive-800': '#1d633a',
+  '--bq-endava-positive-1000': '#1f4943',
+  /** Endava Warning: sparse ramp ordered by lightness */
+  '--bq-endava-warning-100': '#fdf4e7',
+  '--bq-endava-warning-300': '#fbba58', // 30% white tint of 400: optional dark text override for APCA Lc >= 60
+  '--bq-endava-warning-400': '#f99c11',
+  '--bq-endava-warning-500': '#eb9410',
+  '--bq-endava-warning-700': '#c77905',
+  '--bq-endava-warning-800': '#975c04',
+  '--bq-endava-warning-1000': '#413f30',
+  /** Endava Negative (danger): sparse ramp ordered by lightness */
+  '--bq-endava-negative-100': '#fbeceb',
+  '--bq-endava-negative-200': '#f6b5b3', // 60% white tint of 400, dark mode text (APCA Lc >= 60)
+  '--bq-endava-negative-300': '#f2958f',
+  '--bq-endava-negative-400': '#e84641',
+  '--bq-endava-negative-500': '#d4403b',
+  '--bq-endava-negative-800': '#a72925',
+  '--bq-endava-negative-1000': '#3e3039',
+  /**
+   * Endava Info: built from the endava.com accent blues Mid Blue (600) and Bright Blue (400),
+   * so info stays distinct from the neutral Solid Blue shades. Sparse ramp ordered by lightness.
+   */
+  '--bq-endava-info-100': '#ecf1f4', // 10% Mid Blue on white
+  '--bq-endava-info-300': '#9dcff0', // 35% white tint of 400, dark mode text and fill (APCA Lc >= 60)
+  '--bq-endava-info-400': '#68b5e8', // Bright Blue
+  '--bq-endava-info-600': '#417191', // Mid Blue
+  '--bq-endava-info-700': '#3b6684', // 85% Mid Blue + 15% Solid Blue, text on light surfaces
+  '--bq-endava-info-1000': '#29475a', // 20% Bright Blue on Solid Blue
+  /** Endava data visualisation colors */
+  '--bq-endava-data-blue': '#5899c4',
+  '--bq-endava-data-yellow': '#cf820e',
+  '--bq-endava-data-green': '#30a661',
+  '--bq-endava-data-violet': '#8684bf',
+  '--bq-endava-data-grass-green': '#7b9922',
+  '--bq-endava-data-avocado': '#998f63',
+  '--bq-endava-data-jeans': '#7c94a6',
+  '--bq-endava-data-teal': '#3e9c8f',
 };

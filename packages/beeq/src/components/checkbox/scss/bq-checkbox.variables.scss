@@ -5,12 +5,22 @@
 :host {
   /**
    * @prop --bq-checkbox--background-color - Checkbox background color
+   * @prop --bq-checkbox--background-color-checked - Checkbox background color when checked or indeterminate
+   * @prop --bq-checkbox--border-color - Checkbox border color
+   * @prop --bq-checkbox--border-color-checked - Checkbox border color when checked or indeterminate
    * @prop --bq-checkbox--border-radius - Checkbox border radius
    * @prop --bq-checkbox--border-width - Checkbox border width
+   * @prop --bq-checkbox--icon-color-checked - Checkbox check and indeterminate mark color
+   * @prop --bq-checkbox--label-text-color - Checkbox label text color
    * @prop --bq-checkbox--size - Checkbox size
    */
-  --bq-checkbox--background-color: theme(backgroundColor.ui.primary);
-  --bq-checkbox--border-radius: theme(borderRadius.xs);
-  --bq-checkbox--border-width: theme(borderWidth.m);
+  --bq-checkbox--background-color: var(--bq-ui--primary);
+  --bq-checkbox--background-color-checked: var(--bq-ui--brand);
+  --bq-checkbox--border-color: var(--bq-stroke--tertiary);
+  --bq-checkbox--border-color-checked: var(--bq-ui--brand);
+  --bq-checkbox--border-radius: var(--bq-radius--xs);
+  --bq-checkbox--border-width: var(--bq-stroke-m);
+  --bq-checkbox--icon-color-checked: var(--bq-text--on-brand);
+  --bq-checkbox--label-text-color: var(--bq-text--primary);
   --bq-checkbox--size: 24px;
 }

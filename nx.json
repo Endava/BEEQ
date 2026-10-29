@@ -14,8 +14,7 @@
     "default": [
       "{projectRoot}/**/*",
       "{workspaceRoot}/nx.json",
-      "{workspaceRoot}/package.json",
-      "{workspaceRoot}/tailwind.config.ts"
+      "{workspaceRoot}/package.json"
     ],
     "production": [
       "default",
@@ -24,11 +23,14 @@
       "!{projectRoot}/jest.config.ts"
     ]
   },
+  "sync": {
+    "applyChanges": true,
+    "globalGenerators": ["@beeq/tools:sync-skills"]
+  },
   "targetDefaults": {
     "icons": { "cache": true },
     "stylelint": { "cache": true },
     "prepare-storybook": { "cache": true },
-    "prebuild": { "cache": true },
     "check": {
       "cache": true,
       "inputs": [
@@ -42,7 +44,23 @@
     },
     "test": {
       "cache": true,
-      "inputs": ["default", "^default", "{workspaceRoot}/jest.preset.js"]
+      "inputs": ["default", "^default"]
+    },
+    "typecheck": {
+      "cache": true,
+      "inputs": [
+        "default",
+        "^default",
+        "{workspaceRoot}/tsconfig.base.json",
+        {
+          "externalDependencies": ["typescript"]
+        }
+      ]
+    },
+    "prebuild": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
     },
     "build": {
       "cache": true,
@@ -115,6 +133,7 @@
     },
     "version": {
       "conventionalCommits": true,
+      "preserveMatchingDependencyRanges": false,
       "versionPrefix": "^"
     },
     "releaseTag": {
@@ -150,5 +169,22 @@
     }
   },
   "analytics": false,
-  "migrate": { "agentic": false }
+  "migrate": { "agentic": false },
+  "plugins": [
+    {
+      "plugin": "@nx/rollup/plugin",
+      "options": {
+        "buildTargetName": "build"
+      }
+    },
+    {
+      "plugin": "@nx/storybook/plugin",
+      "options": {
+        "buildStorybookTargetName": "storybook-build",
+        "serveStorybookTargetName": "storybook",
+        "staticStorybookTargetName": "static-storybook",
+        "testStorybookTargetName": "test-storybook"
+      }
+    }
+  ]
 }

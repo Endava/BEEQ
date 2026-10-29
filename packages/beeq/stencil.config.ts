@@ -14,13 +14,23 @@ import { angularValueAccessorBindings, generateCustomElementsJson, vueComponentM
 const namespace = 'beeq';
 const componentCorePackage = `@${namespace}/core`;
 const customElementsDir = 'dist/components';
-const resolvePath = (path: string) => resolve(__dirname, path).replace(/\\/g, '/');
+const resolvePath = (path: string) => resolve(__dirname, path).replaceAll('\\', '/');
 
 const tailwindOpts: PluginConfigOpts = {
   postcss: resolvePath('../../postcss.config.js'),
   tailwindConf: tailwindConf,
   stripComments: true,
 };
+
+const legacyTailwindStyles = tailwindHMR({ tailwindConf });
+const nativeGlobalStyles = tailwindHMR({
+  tailwindConf,
+  tailwindCssPath: resolvePath('./src/global/styles/legacy-tailwind.scss'),
+});
+const globalStylesheets = new Set([
+  resolvePath('./src/global/styles/default.scss'),
+  resolvePath('./src/global/styles/default.css'),
+]);
 
 export const config: Config = {
   namespace,
@@ -47,7 +57,15 @@ export const config: Config = {
       silenceDeprecations: ['import'],
     }),
     tailwind(tailwindOpts),
-    tailwindHMR({ tailwindConf }),
+    {
+      ...legacyTailwindStyles,
+      transform(sourceText, id, context) {
+        // Global CSS uses native foundations plus the shared legacy-only input.
+        // Component styles still need the bridge's full prelude for @layer/@apply.
+        const plugin = globalStylesheets.has(id.replaceAll('\\', '/')) ? nativeGlobalStyles : legacyTailwindStyles;
+        return plugin.transform?.(sourceText, id, context) ?? null;
+      },
+    },
   ],
   outputTargets: [
     { type: 'docs-readme' },

@@ -11,28 +11,33 @@ allowBuilds:
   '@parcel/watcher': false
   '@swc/core': true
   'core-js': true
+  'cpu-features': false
   'esbuild': false
   'less': false
   'lmdb': false
   'msgpackr-extract': false
   'nx': true
+  'protobufjs': false
   'rs-module-lexer': false
+  'ssh2': false
   'unrs-resolver': false
 
 overrides:
-  '@angular-devkit/core': '22.0.1'
-  '@angular-devkit/schematics': '22.0.1'
+  '@angular-devkit/core': '22.2.3'
+  '@angular-devkit/schematics': '22.2.3'
   '@custom-elements-manifest/analyzer': '0.11.0'
   '@module-federation/enhanced': '0.22.0'
-  '@schematics/angular': '22.0.1'
-  'ng-packagr': '22.0.0'
+  '@schematics/angular': '22.2.3'
+  'ng-packagr': '22.2.4'
   'node-fetch': '3.3.2'
-  'nx': '23.1.0'
-  'postcss': '8.5.12'
-  'storybook': '10.4.3'
-  'vite': '8.0.16'
-  'vitest': '4.1.5'
+  'nx': '24.0.0'
+  'postcss': '8.5.23'
+  'storybook': '10.6.2'
+  'vite': '8.1.6'
+  'vitest': '5.0.5'
 
 minimumReleaseAgeExclude:
   - '@stencil/vitest@1.13.2'
   - vitest-environment-stencil@1.13.2
+  - '@angular-devkit/architect@0.2202.1'
+  - '@angular/cli@22.2.1'

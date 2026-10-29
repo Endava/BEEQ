@@ -201,7 +201,7 @@ describe('isTargetIconEntry()', () => {
   });
 
   it('accepts windows-style paths', () => {
-    expect(isTargetIconEntry(prefix.replace(/\//g, '\\') + '\\regular\\check.svg', 'file', prefix)).toBe(true);
+    expect(isTargetIconEntry(`${prefix.replace(/\//g, '\\')}\\regular\\check.svg`, 'file', prefix)).toBe(true);
   });
 
   it('rejects paths outside the assets folder', () => {

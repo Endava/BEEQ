@@ -1,6 +1,6 @@
 ---
 title: Alert
-description: "An alert conveys status, progress, or required next steps to the user in a clear, contextual message."
+description: "Alert conveys status, progress, or required next steps to the user in a clear, contextual message."
 ---
 
 import { CardTile } from '/snippets/CardTile.jsx';
@@ -35,8 +35,13 @@ Alert is a lightweight message surface for conveying status, progress, or requir
     - The message overlaps essential content or important interface controls
     - Its presence could confuse users or compete with a more relevant inline message
     - A toast, notification, or field-level validation message would be more precise
+    - Content failed to load and the region has nothing else to show; use an [Empty state](/components/empty-state) with a retry action instead
   </Card>
 </CardGroup>
+
+<Tip>
+  Choose [`bq-alert`](/components/alert) for a message tied to a page or section that stays in the document flow, [`bq-notification`](/components/notification) for a system message with a description or actions that stacks at the edge of the screen, and [`bq-toast`](/components/toast) for a short status message with no actions that disappears on its own.
+</Tip>
 
 ## Patterns
 
@@ -129,6 +134,10 @@ Alerts can be used at different scopes, depending on what the message affects.
 </Note>
 
 ## Usage
+
+**Allowed `type` values:** `default` (default), `info`, `success`, `warning`, `error`. Only `info`, `success`, `warning` and `error` render a predefined status icon; `default` renders the `icon` slot content only.
+
+**Allowed `border` values:** `none`, `xs2`, `xs`, `s` (default), `m`, `l`, `full`.
 
 ### Default
 
@@ -1009,7 +1018,7 @@ Use the `sticky` attribute for persistent alerts that remain visible until users
     }
 
     bq-alert.is-sticky {
-      position: absolute !important;
+      position: absolute;
     }
 
     main {
@@ -1279,11 +1288,33 @@ Set `auto-dismiss` to hide the alert automatically after a delay. Use `time` to 
 - The host sets `aria-hidden` from the `open` state, keeping hidden alerts out of the accessibility tree.
 - The default close button has the accessible label "Close alert."
 - `type` provides visual intent and a matching predefined status icon for `info`, `success`, `warning`, and `error`.
-- Provide a concise title in the default slot and supporting details in the `body` slot when users need more context.
-- The built-in type tokens (`info`, `success`, `warning`, `error`) meet WCAG AA color-contrast requirements in both light and dark themes. Verify contrast manually when using custom colors via CSS variables.
-- All interactive elements inside the alert — the close button, footer actions, and body links — must be reachable via `Tab` and have a visible focus indicator.
-- Set `time` to a minimum of 8000 ms for `auto-dismiss` alerts. Do not auto-dismiss while the user has keyboard focus or hover inside the alert.
-- When `sticky` is enabled, keep the page focus order logical so keyboard users can still reach the affected content.
+- Alerts should have a concise title in the default slot and put supporting details in the `body` slot when users need more context.
+- The built-in type tokens (`info`, `success`, `warning`, `error`) meet WCAG AA color-contrast requirements in both light and dark themes. You must verify contrast manually when using custom colors via CSS variables.
+- All interactive elements inside the alert (the close button, footer actions, and body links) must be reachable via `Tab` and must have a visible focus indicator.
+- You should set `time` to at least 8000 ms for `auto-dismiss` alerts, and should not auto-dismiss while the user has keyboard focus or hover inside the alert.
+- When `sticky` is enabled, you must keep the page focus order logical so keyboard users can still reach the affected content.
+
+### Keyboard interaction
+
+The alert itself is not focusable. Only the elements inside it receive focus; the close button is a native `<button>` rendered by `bq-button`.
+
+| Key | Context | Action |
+|---|---|---|
+| `Tab` | Alert open, close button shown | Moves focus to the close button, then to focusable content in the `body` and `footer` slots |
+| `Shift` + `Tab` | Focus inside the alert | Moves focus to the previous focusable element |
+| `Enter` | Close button focused | Activates the button and hides the alert |
+| `Space` | Close button focused | Activates the button and hides the alert |
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Keep every interactive element inside the alert (close button, footer actions, body links) reachable with `Tab` and visibly focused | MUST | manual: tab through links and actions and inspect the focus indicator |
+| Verify color contrast manually when you override colors with CSS variables | MUST | manual: measure contrast after overriding alert colors |
+| Keep the page focus order logical when `sticky` is set | MUST | manual: tab through the page with the alert sticky |
+| Put a concise title in the default slot and details in the `body` slot | SHOULD | manual: read the title and body slots in order |
+| Set `time` to at least 8000 ms for `auto-dismiss` | SHOULD | manual: check the auto-dismiss time in the example |
+| Do not auto-dismiss while the user has focus or hover inside the alert | SHOULD NOT | manual: focus and hover over the alert until dismissal would occur |
 
 ## API reference
 
@@ -1299,6 +1330,12 @@ Set `auto-dismiss` to hide the alert automatically after a delay. Use `time` to 
 | `sticky` | `sticky` | If `true`, the alert remains fixed at the top of the page, occupying the full viewport width | `boolean` | `false` |
 | `time` | `time` | The length of time, in milliseconds, after which the alert closes itself. Only valid when `auto-dismiss` is set | `number` | `3000` |
 | `type` | `type` | Type of alert | `'default'` \| `'error'` \| `'info'` \| `'success'` \| `'warning'` | `'default'` |
+
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| `time` without `auto-dismiss` | SHOULD NOT | `time` is ignored and the alert never closes itself |
 
 ### Events
 
@@ -1357,27 +1394,32 @@ Set `auto-dismiss` to hide the alert automatically after a delay. Use `time` to 
   | `--bq-alert--border-radius` | Alert border radius | `var(--bq-radius--s)` |
   | `--bq-alert--content-footer-gap` | Gap between content and footer | `var(--bq-spacing-s)` |
   | `--bq-alert--title-body-gap` | Gap between title and body | `var(--bq-spacing-s)` |
-  | `--bq-alert--background-info` | Background color for info alerts | `var(--bq-ui--brand-alt)` |
+  | `--bq-alert--background-info` | Background color for info alerts | `var(--bq-ui--info-alt)` |
   | `--bq-alert--background-success` | Background color for success alerts | `var(--bq-ui--success-alt)` |
   | `--bq-alert--background-warning` | Background color for warning alerts | `var(--bq-ui--warning-alt)` |
   | `--bq-alert--background-error` | Background color for error alerts | `var(--bq-ui--danger-alt)` |
   | `--bq-alert--background-default` | Background color for default alerts | `var(--bq-ui--primary)` |
-  | `--bq-alert--border-info` | Border color for info alerts | `var(--bq-stroke--brand)` |
+  | `--bq-alert--border-info` | Border color for info alerts | `var(--bq-stroke--info)` |
   | `--bq-alert--border-success` | Border color for success alerts | `var(--bq-stroke--success)` |
   | `--bq-alert--border-warning` | Border color for warning alerts | `var(--bq-stroke--warning)` |
   | `--bq-alert--border-error` | Border color for error alerts | `var(--bq-stroke--danger)` |
   | `--bq-alert--border-default` | Border color for default alerts | `var(--bq-stroke--secondary)` |
-  | `--bq-alert--border-color` | Alert border color | `undefined` |
   | `--bq-alert--border-width` | Alert border width | `var(--bq-stroke-s)` |
   | `--bq-alert--border-style` | Alert border style | `solid` |
-  | `--bq-alert--icon-color-info` | Icon color for info alerts | `var(--bq-icon--brand)` |
+  | `--bq-alert--icon-color-info` | Icon color for info alerts | `var(--bq-icon--info)` |
   | `--bq-alert--icon-color-success` | Icon color for success alerts | `var(--bq-icon--success)` |
   | `--bq-alert--icon-color-warning` | Icon color for warning alerts | `var(--bq-icon--warning)` |
   | `--bq-alert--icon-color-error` | Icon color for error alerts | `var(--bq-icon--danger)` |
   | `--bq-alert--icon-color-default` | Icon color for default alerts | `var(--bq-icon--primary)` |
+  | `--bq-alert--text-color` | Alert text color | `var(--bq-text--primary)` |
   | `--bq-alert--padding` | Alert padding | `var(--bq-spacing-s)` |
   | `--bq-alert--min-width` | Alert minimum width | `320px` |
+  | `--bq-alert--z-index` | Stacking order of a sticky alert | No declared default |
 </Expandable>
+
+<Note>
+  Set `--bq-alert--z-index` on the alert when your page needs an explicit stacking order. Without an override, the sticky alert's `z-index` computes to `auto`. Use the type-specific `--bq-alert--border-*` variables to customize its border color.
+</Note>
 
 <Tip>
   Learn more about [styling with shadow parts](/guides/styles#component-shadow-dom-parts) and [CSS custom properties](/guides/styles#global-css-custom-properties).

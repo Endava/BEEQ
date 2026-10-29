@@ -18,9 +18,10 @@ The Status Component is a UI element that represents the current state or condit
 
 ## Slots
 
-| Slot                                     | Description |
-| ---------------------------------------- | ----------- |
-| `"The content of the status component."` |             |
+| Slot                                     | Description      |
+| ---------------------------------------- | ---------------- |
+|                                          | The default slot |
+| `"The content of the status component."` |                  |
 
 
 ## Shadow Parts

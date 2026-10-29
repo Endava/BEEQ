@@ -37,6 +37,7 @@ The side menu is a vertical navigation element that sits alongside a page or app
     - The menu reduces the visibility of primary content
     - The interface is focused on reading or content consumption
     - The layout is too narrow to support persistent navigation
+    - The rows do not navigate, such as a list of files or search results; use a native list styled with BEEQ tokens
   </Card>
 </CardGroup>
 
@@ -62,14 +63,14 @@ The side menu is a vertical navigation element that sits alongside a page or app
   <img className="hidden dark:block" src="/components/images/side-menu/side-menu-anatomy-dark.svg" alt="BEEQ Side Menu component anatomy" />
 </Frame>
 
-A side menu is composed of a container, selected item state, navigation items, and optional logo and footer areas.
+A side menu is a vertical container that holds navigation items, with optional `logo` and `footer` slots for brand content and supplementary controls. The logo sits above the items and has no callout in the figure.
 
 | Part | Element | Description |
 |---|---|---|
-| **1** | Container | The root `<aside>` surface that holds the side menu |
-| **2** | Selected | The active item that represents the current location |
-| **3** | Navigation item | A selectable `bq-side-menu-item` with optional prefix and suffix content |
-| **4** | Logo and footer slots | Optional areas for brand content and supplementary actions |
+| **1** | Container | The `<aside>` root (`base` part) that holds the logo, the navigation items and the footer |
+| **2** | Active item | The `bq-side-menu-item` with the `active` attribute, which marks the current location |
+| **3** | Navigation item | A default `bq-side-menu-item` with an optional `prefix` icon, a label and an optional `suffix` |
+| **4** | Collapse control | An action you place in the `footer` slot to expand and collapse the menu. The `collapse` prop on `bq-side-menu` drives the state; the component does not render this control for you |
 
 ## Design guidelines
 
@@ -357,6 +358,12 @@ The default side menu is a versatile container for organizing and displaying nav
 
 `bq-side-menu-item` is a child component, not a standalone navigation pattern. Use it only inside `bq-side-menu`.
 
+Each item has three areas: a `bq-icon` in `slot="prefix"`, the label in the default slot, and a counter such as `bq-badge` in `slot="suffix"`. The item keeps its label on one line and truncates it with an ellipsis when the label is wider than the menu, so a row with an icon, a long name, and a count needs no truncation CSS of its own.
+
+<Note>
+  The full label appears in a tooltip only while the menu is collapsed. An expanded menu shows no tooltip for a truncated label, so keep labels short enough to read and show the complete name on the destination page.
+</Note>
+
 Within a side menu, items support default, active, hover, focus, disabled, and with-counter states.
 
 <CodeLivePreview mode="iframe" height="30rem" removePadding code={`
@@ -501,6 +508,8 @@ Within a side menu, items support default, active, hover, focus, disabled, and w
 
 Use the `appearance` attribute to align the side menu with your application's visual language.
 
+**Allowed `appearance` values:** `default` (default), `brand`, `inverse`.
+
 #### Default
 
 The default appearance is a neutral style that works well in most contexts.
@@ -577,6 +586,7 @@ It pairs with a light or dark background and uses color accents for active and h
         <bq-icon name="files" slot="prefix" ></bq-icon>
         Documents
       </bq-side-menu-item>
+    </bq-side-menu>
     ```
 
     ```jsx React icon="react" expandable
@@ -732,7 +742,7 @@ This creates a strong visual presence and reinforces brand identity.
 `}>
   <CodeGroup>
     ```html HTML icon="html5" expandable
-    <bq-side-menu>
+    <bq-side-menu appearance="brand">
       <div class="app-logo" slot="logo">
         <bq-icon name="square-logo" size="40"></bq-icon>
         <h1>App Name</h1>
@@ -755,12 +765,13 @@ This creates a strong visual presence and reinforces brand identity.
         <bq-icon name="files" slot="prefix" ></bq-icon>
         Documents
       </bq-side-menu-item>
+    </bq-side-menu>
     ```
 
     ```jsx React icon="react" expandable
     import { BqBadge, BqDivider, BqIcon, BqSideMenu, BqSideMenuItem } from "@beeq/react";
 
-    <BqSideMenu>
+    <BqSideMenu appearance="brand">
       <div class="app-logo" slot="logo">
         <BqIcon name="square-logo" size="40" />
         <h1>App Name</h1>
@@ -794,7 +805,7 @@ This creates a strong visual presence and reinforces brand identity.
       standalone: true,
       imports: [BqBadge, BqDivider, BqIcon, BqSideMenu, BqSideMenuItem],
       template: `
-        <bq-side-menu>
+        <bq-side-menu appearance="brand">
           <div class="app-logo" slot="logo">
             <bq-icon name="square-logo" size="40"></bq-icon>
             <h1>App Name</h1>
@@ -829,7 +840,7 @@ This creates a strong visual presence and reinforces brand identity.
     </script>
 
     <template>
-      <BqSideMenu>
+      <BqSideMenu appearance="brand">
         <div class="app-logo" slot="logo">
           <BqIcon name="square-logo" size="40" />
           <h1>App Name</h1>
@@ -911,7 +922,7 @@ For example, if your app uses `bq-mode="light"`, the inverse side menu will use 
 `}>
   <CodeGroup>
     ```html HTML icon="html5" expandable
-    <bq-side-menu>
+    <bq-side-menu appearance="inverse">
       <div class="app-logo" slot="logo">
         <bq-icon name="square-logo" size="40"></bq-icon>
         <h1>App Name</h1>
@@ -934,12 +945,13 @@ For example, if your app uses `bq-mode="light"`, the inverse side menu will use 
         <bq-icon name="files" slot="prefix" ></bq-icon>
         Documents
       </bq-side-menu-item>
+    </bq-side-menu>
     ```
 
     ```jsx React icon="react" expandable
     import { BqBadge, BqDivider, BqIcon, BqSideMenu, BqSideMenuItem } from "@beeq/react";
 
-    <BqSideMenu>
+    <BqSideMenu appearance="inverse">
       <div className="app-logo" slot="logo">
         <BqIcon name="square-logo" size="40" />
         <h1>App Name</h1>
@@ -973,7 +985,7 @@ For example, if your app uses `bq-mode="light"`, the inverse side menu will use 
       standalone: true,
       imports: [BqBadge, BqDivider, BqIcon, BqSideMenu, BqSideMenuItem],
       template: `
-        <bq-side-menu>
+        <bq-side-menu appearance="inverse">
           <div class="app-logo" slot="logo">
             <bq-icon name="square-logo" size="40"></bq-icon>
             <h1>App Name</h1>
@@ -1008,7 +1020,7 @@ For example, if your app uses `bq-mode="light"`, the inverse side menu will use 
     </script>
 
     <template>
-      <BqSideMenu>
+      <BqSideMenu appearance="inverse">
         <div class="app-logo" slot="logo">
           <BqIcon name="square-logo" size="40" />
           <h1>App Name</h1>
@@ -1040,8 +1052,10 @@ For example, if your app uses `bq-mode="light"`, the inverse side menu will use 
 ### Size
 
 The side menu supports two sizes: medium (default) and small.
-The small size is a version of the side menu that shows only icons, hiding the text labels.
+The small size reduces the vertical padding of the menu items for a more compact layout.
 Use the `size` attribute/property to switch between the two sizes.
+
+**Allowed `size` values:** `medium` (default), `small`.
 
 <Tip>
   When using the medium size, there's no need to specify the `size` attribute, as it is the default.
@@ -1119,6 +1133,7 @@ Use the `size` attribute/property to switch between the two sizes.
         <bq-icon name="files" slot="prefix" ></bq-icon>
         Documents
       </bq-side-menu-item>
+    </bq-side-menu>
     ```
 
     ```jsx React icon="react" expandable
@@ -1276,14 +1291,14 @@ Use the footer slot for supplementary actions, links, or information at the bott
     </bq-side-menu-item>
 
     <div slot="footer">
-      <bq-button appearance="text" only-icon>
-        <bq-icon name="bell"></bq-icon>
+      <bq-button appearance="text" label="Notifications" only-icon>
+        <bq-icon name="bell" aria-hidden="true"></bq-icon>
       </bq-button>
-      <bq-button appearance="text" only-icon>
-        <bq-icon name="chats-circle"></bq-icon>
+      <bq-button appearance="text" label="Messages" only-icon>
+        <bq-icon name="chats-circle" aria-hidden="true"></bq-icon>
       </bq-button>
-      <bq-button appearance="text" only-icon>
-        <bq-icon name="sliders"></bq-icon>
+      <bq-button appearance="text" label="Settings" only-icon>
+        <bq-icon name="sliders" aria-hidden="true"></bq-icon>
       </bq-button>
     </div>
   </bq-side-menu>
@@ -1339,14 +1354,14 @@ Use the footer slot for supplementary actions, links, or information at the bott
       </bq-side-menu-item>
 
       <div slot="footer">
-        <bq-button appearance="text" only-icon>
-          <bq-icon name="bell"></bq-icon>
+        <bq-button appearance="text" label="Notifications" only-icon>
+          <bq-icon name="bell" aria-hidden="true"></bq-icon>
         </bq-button>
-        <bq-button appearance="text" only-icon>
-          <bq-icon name="chats-circle"></bq-icon>
+        <bq-button appearance="text" label="Messages" only-icon>
+          <bq-icon name="chats-circle" aria-hidden="true"></bq-icon>
         </bq-button>
-        <bq-button appearance="text" only-icon>
-          <bq-icon name="sliders"></bq-icon>
+        <bq-button appearance="text" label="Settings" only-icon>
+          <bq-icon name="sliders" aria-hidden="true"></bq-icon>
         </bq-button>
       </div>
     </bq-side-menu>
@@ -1385,14 +1400,14 @@ Use the footer slot for supplementary actions, links, or information at the bott
       </BqSideMenuItem>
 
       <div slot="footer">
-        <BqButton appearance="text" only-icon>
-          <BqIcon name="bell"></BqIcon>
+        <BqButton appearance="text" label="Notifications" onlyIcon>
+          <BqIcon name="bell" aria-hidden="true"></BqIcon>
         </BqButton>
-        <BqButton appearance="text" only-icon>
-          <BqIcon name="chats-circle"></BqIcon>
+        <BqButton appearance="text" label="Messages" onlyIcon>
+          <BqIcon name="chats-circle" aria-hidden="true"></BqIcon>
         </BqButton>
-        <BqButton appearance="text" only-icon>
-          <BqIcon name="sliders"></BqIcon>
+        <BqButton appearance="text" label="Settings" onlyIcon>
+          <BqIcon name="sliders" aria-hidden="true"></BqIcon>
         </BqButton>
       </div>
     </BqSideMenu>
@@ -1435,14 +1450,14 @@ Use the footer slot for supplementary actions, links, or information at the bott
           </bq-side-menu-item>
 
           <div slot="footer">
-            <bq-button appearance="text" only-icon>
-              <bq-icon name="bell"></bq-icon>
+            <bq-button appearance="text" label="Notifications" only-icon>
+              <bq-icon name="bell" aria-hidden="true"></bq-icon>
             </bq-button>
-            <bq-button appearance="text" only-icon>
-              <bq-icon name="chats-circle"></bq-icon>
+            <bq-button appearance="text" label="Messages" only-icon>
+              <bq-icon name="chats-circle" aria-hidden="true"></bq-icon>
             </bq-button>
-            <bq-button appearance="text" only-icon>
-              <bq-icon name="sliders"></bq-icon>
+            <bq-button appearance="text" label="Settings" only-icon>
+              <bq-icon name="sliders" aria-hidden="true"></bq-icon>
             </bq-button>
           </div>
         </bq-side-menu>
@@ -1506,14 +1521,14 @@ Use the footer slot for supplementary actions, links, or information at the bott
       </BqSideMenu>
 
       <div slot="footer">
-        <BqButton appearance="text" only-icon>
-          <BqIcon name="bell"></bq-icon>
+        <BqButton appearance="text" label="Notifications" onlyIcon>
+          <BqIcon name="bell" aria-hidden="true"></BqIcon>
         </BqButton>
-        <BqButton appearance="text" only-icon>
-          <BqIcon name="chats-circle"></bq-icon>
+        <BqButton appearance="text" label="Messages" onlyIcon>
+          <BqIcon name="chats-circle" aria-hidden="true"></BqIcon>
         </BqButton>
-        <BqButton appearance="text" only-icon>
-          <BqIcon name="sliders"></bq-icon>
+        <BqButton appearance="text" label="Settings" onlyIcon>
+          <BqIcon name="sliders" aria-hidden="true"></BqIcon>
         </BqButton>
       </div>
     </template>
@@ -1748,22 +1763,24 @@ Wire your app control to the side menu state so the button can expand and collap
     </main>
 
     <script>
-      const sideMenu = document.querySelector('.app-menu');
-      const collapseButton = document.querySelector('bq-button[data-action="collapse"]');
-      if (!sideMenu || !collapseButton) return;
+      (() => {
+        const sideMenu = document.querySelector('.app-menu');
+        const collapseButton = document.querySelector('bq-button[data-action="collapse"]');
+        if (!sideMenu || !collapseButton) return;
 
-      // Keep the icon-only button accessible as the menu state changes.
-      const syncButtonLabel = () => {
-        const isCollapsed = sideMenu.hasAttribute('collapse');
-        collapseButton.setAttribute('label', isCollapsed ? 'Expand side menu' : 'Collapse side menu');
-      };
+        // Keep the icon-only button accessible as the menu state changes.
+        const syncButtonLabel = () => {
+          const isCollapsed = sideMenu.hasAttribute('collapse');
+          collapseButton.setAttribute('label', isCollapsed ? 'Expand side menu' : 'Collapse side menu');
+        };
 
-      collapseButton.addEventListener('bqClick', async () => {
-        await sideMenu.toggleCollapse();
+        collapseButton.addEventListener('bqClick', async () => {
+          await sideMenu.toggleCollapse();
+          syncButtonLabel();
+        });
+
         syncButtonLabel();
-      });
-
-      syncButtonLabel();
+      })();
     </script>
     ```
 
@@ -2108,13 +2125,37 @@ Wire your app control to the side menu state so the button can expand and collap
 
 ## Accessibility
 
-The side menu renders its root surface as an `<aside>` and places menu items inside a `<nav>`. Each `bq-side-menu-item` renders as a focusable button with `role="menuitem"`, and the `disabled` property maps to `aria-disabled="true"` and `tabindex="-1"`.
+The side menu renders its root surface as an `<aside>` and places menu items inside a `<nav>`. Each `bq-side-menu-item` renders as a native `<button>` with no explicit ARIA role, so it exposes the `button` role inside the `<nav>` landmark, and the `disabled` property maps to `aria-disabled="true"` and `tabindex="-1"`.
 
-- **Landmark context** - include semantic heading text in the logo slot to communicate the menu purpose and where its content begins.
-- **Collapsed state** - communicate the expanded or collapsed state through the surrounding layout control when you add one.
-- **Icons** - validate icon meaning when collapsed navigation relies on icons to identify destinations.
-- **Labels** - use unique labels that make sense without additional context. The item text feeds the collapsed tooltip content.
-- **Keyboard navigation** - side menu items support focus, click, <kbd>Enter</kbd>, and <kbd>Space</kbd> interaction through the underlying button.
+The component uses native button Tab navigation, not the composite ARIA menu keyboard pattern, so the items are not exposed as `menuitem` elements.
+
+- **Landmark context** - you should include semantic heading text in the logo slot to communicate the menu purpose and where its content begins.
+- **Collapsed state** - when you add a layout control, it must communicate the expanded or collapsed state.
+- **Icons** - you should validate icon meaning when collapsed navigation relies on icons to identify destinations. You must add `aria-hidden="true"` to prefix icons: the label already names the item, and an unlabelled `bq-icon` adds its own `<name> icon` text to that name.
+- **Labels** - labels must be unique and make sense without additional context. The item text feeds the collapsed tooltip content.
+- **Footer actions** - every icon-only `bq-button` must have a meaningful `label`, and its decorative icon must be hidden from assistive technology.
+
+### Keyboard interaction
+
+Each `bq-side-menu-item` renders a native `<button>`, so there are no arrow-key shortcuts between items.
+
+| Key | Context | Action |
+|---|---|---|
+| `Tab` | Any | Moves focus to the next enabled item; disabled items are skipped |
+| `Shift` + `Tab` | Any | Moves focus to the previous enabled item; disabled items are skipped |
+| `Enter` | Enabled, inactive item focused | Emits `bqClick` and makes the item active |
+| `Space` | Enabled, inactive item focused | Emits `bqClick` and makes the item active |
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Communicate the expanded or collapsed state from any layout control you add | MUST | manual: toggle the layout control and inspect its expanded state |
+| Set `aria-hidden="true"` on prefix icons | MUST | manual: inspect decorative prefix icons for aria-hidden |
+| Give items unique labels that make sense without context | MUST | manual: read item names without surrounding navigation context |
+| Give icon-only `bq-button` controls in the footer a meaningful `label` and hide their decorative icon | MUST | manual: inspect footer button names and decorative icons |
+| Put semantic heading text in the logo slot | SHOULD | manual: read the logo-slot heading in the page outline |
+| Validate icon meaning when collapsed navigation relies on icons | SHOULD | manual: ask readers to identify items from icons in collapsed mode |
 
 ## API reference
 
@@ -2136,6 +2177,10 @@ The side menu renders its root surface as an `<aside>` and places menu items ins
 | `collapse` | `collapse` | If `true`, the item label and suffix will be hidden and the width will be reduced according to its parent | `boolean` | `false` |
 | `disabled` | `disabled` | If `true`, the menu item will be disabled and no interaction is allowed | `boolean` | `false` |
 
+### Invalid combinations
+
+No invalid prop combinations.
+
 ### Slots
 
 #### `bq-side-menu`
@@ -2150,9 +2195,9 @@ The side menu renders its root surface as an `<aside>` and places menu items ins
 
 | Slot | Description |
 |---|---|
-| *(default)* | The content of the menu item |
-| `prefix` | The prefix part of the menu item |
-| `suffix` | The suffix part of the menu item |
+| *(default)* | The item label. It stays on one line and truncates with an ellipsis; while collapsed, it becomes the tooltip text |
+| `prefix` | Leading content, usually a `bq-icon` |
+| `suffix` | Trailing content, such as a `bq-badge` counter. Hidden while collapsed |
 
 ### Shadow parts
 
@@ -2169,8 +2214,7 @@ The side menu renders its root surface as an `<aside>` and places menu items ins
 
 | Part | Description |
 |---|---|
-| `base` | The component wrapper container inside the shadow DOM |
-| `label` | The label slot |
+| `base` | The native `<button>` element of the menu item |
 | `panel` | The `<div>` container that holds the tooltip content when the side menu is collapsed |
 | `prefix` | The prefix slot |
 | `suffix` | The suffix slot |
@@ -2211,21 +2255,25 @@ The side menu renders its root surface as an `<aside>` and places menu items ins
 
 | Variable | Description | Default |
 |---|---|---|
-| `--bq-side-menu--bg-color` | Side menu background color | `var(--bq-background--primary)` |
-| `--bq-side-menu--brand-color` | Side menu logo color | `var(--bq-background--brand)` |
+| `--bq-side-menu--bg-color` | Side menu background color | `var(--bq-ui--primary)` |
+| `--bq-side-menu--brand-color` | Side menu logo color | `var(--bq-ui--brand)` |
 | `--bq-side-menu--border-color` | Side menu border color | `var(--bq-stroke--primary)` |
 | `--bq-side-menu--footer-box-shadow` | Side menu footer box shadow | `0 -10px 12px -12px var(--bq-background--tertiary)` |
 
 #### `bq-side-menu-item`
 
-| Variable | Description | Default |
-|---|---|---|
-| `--bq-side-menu-item--bg-default` | Side menu item default background color | `transparent` |
-| `--bq-side-menu-item--bg-active` | Side menu item active background color | `var(--bq-ui--brand-alt)` |
-| `--bq-side-menu-item--text-default` | Side menu item default text color | `var(--bq-text--primary)` |
-| `--bq-side-menu-item--text-active` | Side menu item active text color | `var(--bq-text--brand)` |
-| `--bq-side-menu-item--paddingX` | Side menu item horizontal padding | `var(--bq-spacing-l)` |
-| `--bq-side-menu-item--paddingY` | Side menu item vertical padding | `var(--bq-spacing-m)` |
+<Expandable title="CSS variables" defaultOpen={true}>
+  | Variable | Description | Default |
+  |---|---|---|
+  | `--bq-side-menu-item--bg-default` | Side menu item default background color | `transparent` |
+  | `--bq-side-menu-item--bg-active` | Side menu item active background color | `var(--bq-ui--brand-alt)` |
+  | `--bq-side-menu-item--bg-hover` | Base colour of the hover background (mixed with `--bq-hover`) | `var(--bq-ui--alt)` |
+  | `--bq-side-menu-item--text-default` | Side menu item default text color | `var(--bq-text--primary)` |
+  | `--bq-side-menu-item--text-active` | Side menu item active text color | `var(--bq-text--brand)` |
+  | `--bq-side-menu-item--text-hover` | Base colour of the hover text (mixed with `--bq-hover`) | `var(--bq-text--primary)` |
+  | `--bq-side-menu-item--paddingX` | Side menu item horizontal padding | `var(--bq-spacing-l)` |
+  | `--bq-side-menu-item--paddingY` | Side menu item vertical padding | `var(--bq-spacing-m)` |
+</Expandable>
 
 <Tip>
   Learn more about [styling with shadow parts](/guides/styles) and [CSS custom properties](/theming/component-css-variables).
