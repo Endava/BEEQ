@@ -2,58 +2,166 @@
 /*                                Dialog styles                               */
 /* -------------------------------------------------------------------------- */
 
-@import './bq-dialog.variables';
+@layer bq.reset, bq.tokens, bq.themes, bq.base, bq.public, bq.overrides,
+  bq-dialog.tokens, bq-dialog.base, bq-dialog.structure, bq-dialog.states, bq-dialog.parts;
 
-:host {
-  @apply invisible #{!important};
+@layer bq-dialog.tokens {
+  @import './bq-dialog.variables';
 }
 
-:host(.bq-dialog--open) {
-  @apply visible #{!important};
-}
+/* ---------------------------------- Base ---------------------------------- */
 
-/* --------------------------------- Dialog --------------------------------- */
-
-.bq-dialog {
-  @apply fixed flex flex-col gap-[--bq-dialog--content-footer-gap] p-b-0 p-i-0;
-  @apply bg-[--bq-dialog--background] text-[--bq-dialog--text-color] shadow-[shadow:--bq-dialog--box-shadow];
-  @apply rounded-[--bq-dialog--border-radius] border-[length:--bq-dialog--border-width] border-[color:--bq-dialog--border-color];
-  // If mobile resolution, dialog will be full width
-  @apply is-[90vw];
-
-  border-style: var(--bq-dialog--border-style);
-
-  &.small {
-    @apply sm:is-[--bq-dialog--width-small];
+@layer bq-dialog.base {
+  :host {
+    visibility: hidden;
   }
 
-  &.medium {
-    @apply sm:is-[--bq-dialog--width-medium];
+  :host(.bq-dialog--open) {
+    visibility: visible;
   }
 
-  &.large {
-    @apply sm:is-[--bq-dialog--width-large];
+  .bq-dialog {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    inline-size: 90vw;
+    margin: auto;
+    padding-block: 0;
+    padding-inline: 0;
+    color: var(--bq-dialog--text-color);
+    background-color: var(--bq-dialog--background);
+    border-color: var(--bq-dialog--border-color);
+    border-style: var(--bq-dialog--border-style);
+    border-width: var(--bq-dialog--border-width);
+    border-radius: var(--bq-dialog--border-radius);
+    box-shadow: var(--bq-dialog--box-shadow);
+  }
+
+  .bq-dialog:focus-visible {
+    outline: none;
   }
 }
 
-/* ----------------------------- Dialog backdrop ---------------------------- */
+/* ------------------------------- Structure -------------------------------- */
 
-.bq-dialog::backdrop {
-  @apply bg-[--bq-dialog--background-backdrop] opacity-0 transition-[opacity] duration-300 ease-in-out;
+@layer bq-dialog.structure {
+  .bq-dialog {
+    row-gap: var(--bq-dialog--content-footer-gap);
+  }
+
+  .bq-dialog__content {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--bq-dialog--title-body-gap);
+    overflow: hidden;
+  }
+
+  .bq-dialog__title {
+    display: flex;
+    flex: 1 1 0%;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  @media (width >= 640px) {
+    :host([size='small']) .bq-dialog {
+      inline-size: var(--bq-dialog--width-small);
+    }
+
+    :host([size='medium']) .bq-dialog {
+      inline-size: var(--bq-dialog--width-medium);
+    }
+
+    :host([size='large']) .bq-dialog {
+      inline-size: var(--bq-dialog--width-large);
+    }
+  }
 }
 
-.bq-dialog[open]::backdrop {
-  @apply opacity-60;
+/* --------------------------------- States --------------------------------- */
+
+@layer bq-dialog.states {
+  .bq-dialog.hidden {
+    display: none;
+  }
+
+  :host([disable-backdrop]) .bq-dialog {
+    inset-block: 50%;
+  }
+
+  .bq-dialog.is-entering,
+  .bq-dialog.is-leaving {
+    transition-property: opacity, transform;
+    transition-duration: 300ms;
+  }
+
+  .bq-dialog.is-entering {
+    transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
+  }
+
+  .bq-dialog.is-leaving {
+    transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+
+  .bq-dialog.is-enter-start,
+  .bq-dialog.is-leave-end {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  .bq-dialog.is-enter-end,
+  .bq-dialog.is-leave-start {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .bq-dialog::backdrop {
+    background-color: var(--bq-dialog--background-backdrop);
+    opacity: 0;
+    transition: opacity 300ms ease-in-out;
+  }
+
+  .bq-dialog[open]::backdrop {
+    opacity: 0.6;
+  }
 }
 
-/* ------------------------------ Dialog header ----------------------------- */
+/* ---------------------------------- Parts --------------------------------- */
 
-.bq-dialog--header {
-  @apply sticky flex items-center gap-m p-b-[--bq-dialog--padding] p-be-0 p-i-[--bq-dialog--padding] inset-bs-0;
-}
+@layer bq-dialog.parts {
+  .bq-dialog__header {
+    position: sticky;
+    inset-block-start: 0;
+    display: flex;
+    align-items: center;
+    column-gap: var(--bq-spacing-m);
+    padding-block: var(--bq-dialog--padding) 0;
+    padding-inline: var(--bq-dialog--padding);
+  }
 
-/* ------------------------------ Dialog footer ----------------------------- */
+  .bq-dialog__body {
+    padding-inline: var(--bq-dialog--padding);
+    overflow-block: auto;
+  }
 
-.bq-dialog--footer {
-  @apply sticky flex items-center justify-end gap-xs is-full p-b-[--bq-dialog--padding] p-bs-0 p-i-[--bq-dialog--padding] inset-bs-[100%];
+  .bq-dialog__body.has-no-footer {
+    padding-block-end: var(--bq-dialog--padding);
+  }
+
+  .bq-dialog__footer {
+    position: sticky;
+    inset-block-start: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    column-gap: var(--bq-spacing-xs);
+    inline-size: 100%;
+    padding-block: 0 var(--bq-dialog--padding);
+    padding-inline: var(--bq-dialog--padding);
+  }
+
+  :host([footer-appearance='highlight']) .bq-dialog__footer {
+    padding-block: var(--bq-spacing-s);
+    background-color: var(--bq-dialog--footer-background);
+  }
 }

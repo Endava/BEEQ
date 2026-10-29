@@ -1,18 +1,20 @@
 import { h } from '@stencil/core';
 import { afterEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
+import { page } from 'vitest/browser';
 
+import { resolveColorToken } from '../../../shared/test-utils/resolveColorToken';
 import { getTextContent } from '../../../shared/utils/slot';
 
 const getDialogPanel = (dialog: HTMLBqDialogElement) =>
   dialog.shadowRoot?.querySelector<HTMLDialogElement>('[part="dialog"]');
 
-const resolveColor = (value: string) => {
+const resolveBoxShadowToken = (name: string) => {
   const probe = document.createElement('span');
-  probe.style.color = value;
+  probe.style.boxShadow = `var(${name})`;
   document.body.appendChild(probe);
-  const { color } = getComputedStyle(probe);
+  const { boxShadow } = getComputedStyle(probe);
   probe.remove();
-  return color;
+  return boxShadow;
 };
 
 afterEach(() => {
@@ -170,13 +172,22 @@ describe('bq-dialog', () => {
     expect(root.shadowRoot?.querySelector('bq-button.bq-dialog--close')).toBeNull();
   });
 
-  it('should apply the size class to the dialog panel', async () => {
-    const { root } = await render(<bq-dialog size="small" />);
-    const dialog = root as HTMLBqDialogElement;
+  it('should apply the selected dialog size', async () => {
+    const viewport = { width: window.innerWidth, height: window.innerHeight };
 
-    const panel = getDialogPanel(dialog);
+    try {
+      await page.viewport(800, viewport.height);
+      const { root } = await render(<bq-dialog open size="small" />);
+      const dialog = root as HTMLBqDialogElement;
 
-    expect(panel).toHaveClass('small');
+      await waitForStable(root);
+
+      const panel = getDialogPanel(dialog);
+
+      expect(getComputedStyle(panel).inlineSize).toBe('320px');
+    } finally {
+      await page.viewport(viewport.width, viewport.height);
+    }
   });
 
   it('should handle invalid size values', async () => {
@@ -204,9 +215,126 @@ describe('bq-dialog', () => {
     const panelStyle = getComputedStyle(getDialogPanel(dialog));
     const footer = dialog.shadowRoot?.querySelector<HTMLElement>('[part="footer"]');
 
-    expect(panelStyle.backgroundColor).toBe(resolveColor('var(--bq-ui--primary)'));
-    expect(panelStyle.color).toBe(resolveColor('var(--bq-text--primary)'));
-    expect(getComputedStyle(footer).backgroundColor).toBe(resolveColor('var(--bq-ui--alt)'));
+    expect(panelStyle.backgroundColor).toBe(resolveColorToken('--bq-ui--primary'));
+    expect(panelStyle.color).toBe(resolveColorToken('--bq-text--primary'));
+    expect(getComputedStyle(footer).backgroundColor).toBe(resolveColorToken('--bq-ui--alt'));
+    expect(getComputedStyle(footer).paddingBlock).toBe('12px');
+  });
+
+  it('should preserve native layout, spacing and transition styles', async () => {
+    const { root } = await render(
+      <bq-dialog open>
+        <h3 slot="title">Dialog Title</h3>
+        <p>Dialog content</p>
+        <div slot="footer">Footer</div>
+      </bq-dialog>,
+    );
+    const dialog = root as HTMLBqDialogElement;
+
+    await waitForStable(root);
+
+    const panel = getDialogPanel(dialog);
+    const content = dialog.shadowRoot?.querySelector<HTMLElement>('[part="content"]');
+    const header = dialog.shadowRoot?.querySelector<HTMLElement>('[part="header"]');
+    const title = dialog.shadowRoot?.querySelector<HTMLElement>('[part="title"]');
+    const body = dialog.shadowRoot?.querySelector<HTMLElement>('[part="body"]');
+    const footer = dialog.shadowRoot?.querySelector<HTMLElement>('[part="footer"]');
+    const panelStyle = getComputedStyle(panel);
+
+    expect(getComputedStyle(dialog).visibility).toBe('visible');
+    expect(panelStyle.display).toBe('flex');
+    expect(panelStyle.position).toBe('fixed');
+    expect(panelStyle.flexDirection).toBe('column');
+    expect(parseFloat(panelStyle.inlineSize)).toBeCloseTo(window.innerWidth * 0.9, 0);
+    expect(panelStyle.rowGap).toBe('24px');
+    expect(panelStyle.padding).toBe('0px');
+    expect(panelStyle.borderRadius).toBe('12px');
+    expect(panelStyle.boxShadow).toBe(resolveBoxShadowToken('--bq-box-shadow--l'));
+    expect(getComputedStyle(content).display).toBe('flex');
+    expect(getComputedStyle(content).flexDirection).toBe('column');
+    expect(getComputedStyle(content).rowGap).toBe('12px');
+    expect(getComputedStyle(header).padding).toBe('24px 24px 0px');
+    expect(getComputedStyle(title).display).toBe('flex');
+    expect(getComputedStyle(title).flexGrow).toBe('1');
+    expect(getComputedStyle(body).paddingInline).toBe('24px');
+    expect(getComputedStyle(body).overflowBlock).toBe('auto');
+    expect(getComputedStyle(footer).padding).toBe('0px 24px 24px');
+    expect(getComputedStyle(footer).columnGap).toBe('8px');
+
+    panel.classList.add('is-entering', 'is-enter-start');
+    const transitionStyle = getComputedStyle(panel);
+    expect(transitionStyle.transitionProperty.split(', ')).toEqual(expect.arrayContaining(['opacity', 'transform']));
+    expect(transitionStyle.transitionDuration).toBe('0.3s');
+    await expect.poll(() => getComputedStyle(panel).opacity).toBe('0');
+    expect(getComputedStyle(panel).transform).not.toBe('none');
+    panel.classList.remove('is-entering', 'is-enter-start');
+  });
+
+  it('should preserve public layout overrides', async () => {
+    const viewport = { width: window.innerWidth, height: window.innerHeight };
+
+    try {
+      await page.viewport(800, viewport.height);
+      const { root } = await render(
+        <bq-dialog
+          open
+          size="medium"
+          style={{
+            '--bq-dialog--content-footer-gap': '10px',
+            '--bq-dialog--padding': '20px',
+            '--bq-dialog--title-body-gap': '6px',
+            '--bq-dialog--width-medium': '520px',
+          }}
+        >
+          <h3 slot="title">Dialog Title</h3>
+          <p>Dialog content</p>
+          <div slot="footer">Footer</div>
+        </bq-dialog>,
+      );
+      const dialog = root as HTMLBqDialogElement;
+
+      await waitForStable(root);
+
+      const panel = getDialogPanel(dialog);
+      const content = dialog.shadowRoot?.querySelector<HTMLElement>('[part="content"]');
+      const header = dialog.shadowRoot?.querySelector<HTMLElement>('[part="header"]');
+      const footer = dialog.shadowRoot?.querySelector<HTMLElement>('[part="footer"]');
+
+      expect(getComputedStyle(panel).inlineSize).toBe('520px');
+      expect(getComputedStyle(panel).rowGap).toBe('10px');
+      expect(getComputedStyle(content).rowGap).toBe('6px');
+      expect(getComputedStyle(header).padding).toBe('20px 20px 0px');
+      expect(getComputedStyle(footer).padding).toBe('0px 20px 20px');
+    } finally {
+      await page.viewport(viewport.width, viewport.height);
+    }
+  });
+
+  it('should hide empty content and footer with native hidden state', async () => {
+    const { root } = await render(<bq-dialog open />);
+    const dialog = root as HTMLBqDialogElement;
+
+    await waitForStable(root);
+
+    const body = dialog.shadowRoot?.querySelector<HTMLElement>('[part="body"]');
+    const footer = dialog.shadowRoot?.querySelector<HTMLElement>('[part="footer"]');
+
+    expect(body).toHaveAttribute('hidden');
+    expect(footer).toHaveAttribute('hidden');
+    expect(getComputedStyle(body).display).toBe('none');
+    expect(getComputedStyle(footer).display).toBe('none');
+  });
+
+  it('should preserve non-modal dialog positioning', async () => {
+    const { root } = await render(<bq-dialog disableBackdrop open />);
+    const dialog = root as HTMLBqDialogElement;
+
+    await waitForStable(root);
+
+    const panelStyle = getComputedStyle(getDialogPanel(dialog));
+
+    expect(panelStyle.insetBlockStart).toBe(panelStyle.insetBlockEnd);
+    expect(panelStyle.insetBlockStart).not.toBe('auto');
   });
 
   it('should apply a custom footer background', async () => {
