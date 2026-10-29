@@ -261,6 +261,17 @@ describe('bq-tag', () => {
     expect(mediumStyle).toEqual({ padding: '3px 11px' });
   });
 
+  it('should preserve the Tailwind color transition timing', async () => {
+    const { root } = await render(<bq-tag>Tag</bq-tag>);
+    const wrapperStyle = getComputedStyle(getWrapper(root));
+
+    expect(wrapperStyle.transitionDuration).toBe('0.3s');
+    expect(wrapperStyle.transitionProperty).toBe(
+      'color, background-color, border-color, text-decoration-color, fill, stroke',
+    );
+    expect(wrapperStyle.transitionTimingFunction).toBe('cubic-bezier(0.4, 0, 0.2, 1)');
+  });
+
   it('should use info tokens (not brand) for the info color', async () => {
     const { root } = await render(
       <div>

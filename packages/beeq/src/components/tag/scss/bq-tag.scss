@@ -2,11 +2,12 @@
 /*                                 Tag styles                                 */
 /* -------------------------------------------------------------------------- */
 
+@use 'sass:meta';
 @layer bq.reset, bq.tokens, bq.themes, bq.base, bq.public, bq.overrides,
   bq-tag.tokens, bq-tag.base, bq-tag.structure, bq-tag.variants, bq-tag.states, bq-tag.parts;
 
 @layer bq-tag.tokens {
-  @import './bq-tag.variables';
+  @include meta.load-css('./bq-tag.variables');
 }
 
 /* ---------------------------------- Host ---------------------------------- */
@@ -53,7 +54,7 @@
     border-radius: var(--_tag-border-radius);
     border-style: var(--bq-tag--border-style);
     border-width: var(--bq-tag--border-width);
-    transition-timing-function: ease-in-out;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 300ms;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
   }
