@@ -19,7 +19,6 @@ metadata:
 1. Read the instruction files for this task:
    - [Components instructions](../../instructions/components.instructions.md)
    - [Styles instructions](../../instructions/styles.instructions.md)
-   - [Tailwind to native SCSS migration instructions](../../instructions/tailwind-to-native-scss.instructions.md)
    - [Accessibility instructions](../../instructions/accessibility.instructions.md)
 2. Pick a similar existing component as a reference:
    - Simple / display: `packages/beeq/src/components/badge/bq-badge.tsx`
@@ -57,7 +56,7 @@ Use the JSDoc template in the components instructions. List every prop, event, m
 ### 5. Style the component (`scss/bq-<name>.scss`)
 
 - Import variables file: `@import './bq-<name>.variables'`
-- Use native SCSS/CSS. Do not add Tailwind `@apply`, `theme(...)`, or visual Tailwind utility classes in render output.
+- Use native SCSS/CSS.
 - Define CSS custom properties (e.g. `--bq-name--border-radius`) in `bq-<name>.variables.scss`
 - Use BEEQ semantic classes only where stable styling hooks are needed, e.g. `.bq-name` and `.bq-name__content`.
 - Use CSS logical properties for layout, sizing, spacing, positioning, borders, and radii.

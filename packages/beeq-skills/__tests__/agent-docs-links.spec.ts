@@ -3,10 +3,7 @@ import path from 'node:path';
 
 import { describe, expect, it } from 'vitest';
 
-import { TEMPORARY_CONTRIBUTOR_SKILLS } from './temporary-contributor-skills.ts';
-
 const repoRoot = path.resolve(import.meta.dirname, '../../..');
-const contributorSkillsDir = path.join(repoRoot, '.agents/skills');
 const NESTED_AGENT_FILES = [
   'AGENTS.md',
   'packages/beeq/AGENTS.md',
@@ -28,7 +25,7 @@ const markdownFiles = (dir: string): string[] =>
 const agentFiles = [
   ...NESTED_AGENT_FILES.map((file) => path.join(repoRoot, file)),
   ...markdownFiles(path.join(repoRoot, '.agents')),
-].filter((file) => !TEMPORARY_CONTRIBUTOR_SKILLS.has(path.relative(contributorSkillsDir, file).split(path.sep)[0]));
+];
 
 const relativeTargets = (file: string) => {
   const text = readFileSync(file, 'utf8').replace(/```[\s\S]*?```/g, '');

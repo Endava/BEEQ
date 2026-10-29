@@ -21,7 +21,6 @@ Read these before evaluating. They are the only source of rules; this skill adds
 
 - [Components instructions](../../instructions/components.instructions.md)
 - [Styles instructions](../../instructions/styles.instructions.md)
-- [Tailwind to native SCSS migration instructions](../../instructions/tailwind-to-native-scss.instructions.md)
 - [Accessibility instructions](../../instructions/accessibility.instructions.md)
 - [Testing instructions](../../instructions/testing.instructions.md)
 - [write-stories](../write-stories/SKILL.md) for the Storybook rules
