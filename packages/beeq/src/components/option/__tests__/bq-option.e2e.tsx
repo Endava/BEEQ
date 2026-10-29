@@ -2,6 +2,7 @@ import { h } from '@stencil/core';
 import { beforeEach, describe, expect, it, render, waitForStable } from '@stencil/vitest';
 import { cdp, userEvent } from 'vitest/browser';
 
+import { resolveColorToken } from '../../../shared/test-utils/resolveColorToken';
 import { getTextContent } from '../../../shared/utils/slot';
 
 const getOptionCheckbox = (option: HTMLBqOptionElement) =>
@@ -17,16 +18,6 @@ const getNestedOptions = (option: HTMLBqOptionElement) =>
 const getSelectionSummary = (option: HTMLBqOptionElement) =>
   option.shadowRoot?.querySelector<HTMLElement>('[part="selection-summary"]');
 const getOptionRow = (option: HTMLBqOptionElement) => option.shadowRoot?.querySelector<HTMLElement>('[part="item"]');
-
-/** Resolves a CSS color value (e.g. `var(--bq-text--brand)`) to its computed `rgb()` form */
-const resolveColor = (value: string): string => {
-  const probe = document.createElement('div');
-  probe.style.color = value;
-  document.body.appendChild(probe);
-  const { color } = getComputedStyle(probe);
-  probe.remove();
-  return color;
-};
 
 /** Waits for any running CSS transition inside the element's shadow root to finish */
 const waitForTransitions = async (element: Element) => {
@@ -65,6 +56,39 @@ describe('bq-option', () => {
     const { root } = await render(<bq-option>Option label</bq-option>);
 
     expect(root).toEqualAttribute('role', 'option');
+  });
+
+  it('should preserve the native row geometry and transition', async () => {
+    const { root } = await render(<bq-option>Option label</bq-option>);
+    const option = root as HTMLBqOptionElement;
+    await waitForStable(root);
+
+    const item = getOptionRow(option);
+    const control = option.shadowRoot?.querySelector<HTMLElement>('[part="base"]');
+    const itemStyle = getComputedStyle(item);
+    const controlStyle = getComputedStyle(control);
+
+    expect(itemStyle.borderRadius).toBe('8px');
+    expect(itemStyle.transitionDuration).toBe('0.15s');
+    expect(itemStyle.transitionProperty).toBe(
+      'color, background-color, border-color, text-decoration-color, fill, stroke',
+    );
+    expect(itemStyle.transitionTimingFunction).toBe('cubic-bezier(0.4, 0, 0.2, 1)');
+    expect(controlStyle.padding).toBe('8px 12px');
+    expect(controlStyle.outline).toBe('rgba(0, 0, 0, 0) solid 2px');
+    expect(controlStyle.outlineOffset).toBe('2px');
+  });
+
+  it('should use native hidden attributes for optional internal content', async () => {
+    const { root } = await render(<bq-option>Option label</bq-option>);
+    const option = root as HTMLBqOptionElement;
+    await waitForStable(root);
+
+    for (const part of ['prefix', 'suffix', 'options']) {
+      const element = option.shadowRoot?.querySelector<HTMLElement>(`[part="${part}"]`);
+      expect(element, part).toHaveAttribute('hidden');
+      expect(getComputedStyle(element).display, part).toBe('none');
+    }
   });
 
   it('should display text', async () => {
@@ -255,6 +279,23 @@ describe('bq-option', () => {
     expect(bqFocus).toHaveReceivedEventTimes(1);
     expect(bqClick).toHaveReceivedEventTimes(0);
     expect(bqBlur).toHaveReceivedEventTimes(0);
+  });
+
+  it('should draw the standard focus ring around the option row', async () => {
+    const { root } = await render(<bq-option>Option label</bq-option>);
+    const option = root as HTMLBqOptionElement;
+    const item = getOptionRow(option);
+    const control = option.shadowRoot?.querySelector<HTMLElement>('[part="base"]');
+    await waitForStable(root);
+
+    control?.focus();
+    await waitForTransitions(root);
+
+    const itemStyle = getComputedStyle(item);
+    expect(itemStyle.outlineColor).toBe(resolveColorToken('--bq-focus'));
+    expect(itemStyle.outlineOffset).toBe('1px');
+    expect(itemStyle.outlineStyle).toBe('solid');
+    expect(itemStyle.outlineWidth).toBe('2px');
   });
 
   it('should handle Enter', async () => {
@@ -526,7 +567,7 @@ describe('bq-option', () => {
 
     expect(option).not.toHaveAttribute('expanded');
     expect(expandButtonControl).toEqualAttribute('aria-expanded', 'false');
-    expect(getNestedOptions(option)).toHaveClass('!hidden');
+    expect(getNestedOptions(option)).toHaveAttribute('hidden');
 
     await userEvent.click(expandButtonControl);
     await waitForChanges();
@@ -534,14 +575,14 @@ describe('bq-option', () => {
     expect(option).toHaveAttribute('expanded');
     expect(option).not.toHaveAttribute('selected');
     expect(expandButtonControl).toEqualAttribute('aria-expanded', 'true');
-    expect(getNestedOptions(option)).not.toHaveClass('!hidden');
+    expect(getNestedOptions(option)).not.toHaveAttribute('hidden');
     expect(bqClick).toHaveReceivedEventTimes(0);
 
     await setProps({ expanded: false });
     await waitForChanges();
 
     expect(expandButtonControl).toEqualAttribute('aria-expanded', 'false');
-    expect(getNestedOptions(option)).toHaveClass('!hidden');
+    expect(getNestedOptions(option)).toHaveAttribute('hidden');
   });
 
   it('should expand nested options with Enter without selecting the parent', async () => {
@@ -598,6 +639,30 @@ describe('bq-option', () => {
     expect(expandButtonControl).toEqualAttribute('tabindex', '-1');
   });
 
+  it('should focus only the tree item row, not the nested subtree', async () => {
+    const { root } = await render(
+      <bq-option value="parent">
+        Parent
+        <bq-option slot="options" value="child">
+          Child
+        </bq-option>
+      </bq-option>,
+    );
+    const option = root as HTMLBqOptionElement;
+    await waitForStable(root);
+
+    option.focus();
+    await waitForTransitions(root);
+
+    const hostStyle = getComputedStyle(option);
+    const itemStyle = getComputedStyle(getOptionRow(option));
+    expect(hostStyle.outlineStyle).toBe('none');
+    expect(itemStyle.outlineColor).toBe(resolveColorToken('--bq-focus'));
+    expect(itemStyle.outlineOffset).toBe('1px');
+    expect(itemStyle.outlineStyle).toBe('solid');
+    expect(itemStyle.outlineWidth).toBe('2px');
+  });
+
   it('should render an optional expand label', async () => {
     const { root } = await render(
       <bq-option value="parent">
@@ -648,10 +713,10 @@ describe('bq-option', () => {
     const itemStyle = getComputedStyle(option.shadowRoot.querySelector('[part="item"]'));
     const selectedItemStyle = getComputedStyle(selectedOption.shadowRoot.querySelector('[part="item"]'));
 
-    expect(itemStyle.backgroundColor).toBe(resolveColor('var(--bq-ui--primary)'));
-    expect(itemStyle.color).toBe(resolveColor('var(--bq-text--primary)'));
-    expect(selectedItemStyle.backgroundColor).toBe(resolveColor('var(--bq-ui--brand-alt)'));
-    expect(selectedItemStyle.color).toBe(resolveColor('var(--bq-text--brand)'));
+    expect(itemStyle.backgroundColor).toBe(resolveColorToken('--bq-ui--primary'));
+    expect(itemStyle.color).toBe(resolveColorToken('--bq-text--primary'));
+    expect(selectedItemStyle.backgroundColor).toBe(resolveColorToken('--bq-ui--brand-alt'));
+    expect(selectedItemStyle.color).toBe(resolveColorToken('--bq-text--brand'));
   });
 
   it('should mix the hover base background with the hover overlay', async () => {
@@ -663,9 +728,13 @@ describe('bq-option', () => {
     );
 
     const item = root.shadowRoot.querySelector<HTMLElement>('[part="item"]');
+    const colorProbe = document.createElement('span');
+    root.shadowRoot.appendChild(colorProbe);
     await userEvent.hover(item);
 
-    const expectedBackground = resolveColor('color-mix(in srgb, var(--bq-ui--secondary), var(--bq-hover) 20%)');
+    colorProbe.style.color = 'color-mix(in srgb, var(--bq-ui--secondary), var(--bq-hover) 20%)';
+    const expectedBackground = getComputedStyle(colorProbe).color;
     await expect.poll(() => getComputedStyle(item).backgroundColor).toBe(expectedBackground);
+    colorProbe.remove();
   });
 });

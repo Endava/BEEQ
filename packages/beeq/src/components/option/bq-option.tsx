@@ -392,13 +392,11 @@ export class BqOption {
     this.selectableDescendantCount = selectableDescendants.length;
   };
 
-  private renderOptionContent = (displayClass: 'flex' | 'inline-flex') => (
+  private renderOptionContent = () => (
     <Fragment>
       <span
-        class={{
-          [`bq-option__prefix me-[--bq-option--gap-start] ${displayClass} items-center`]: true,
-          '!hidden': !this.hasPrefix,
-        }}
+        class="bq-option__prefix"
+        hidden={!this.hasPrefix}
         part="prefix"
         ref={(elem) => {
           this.prefixElem = elem;
@@ -410,10 +408,8 @@ export class BqOption {
         <slot />
       </span>
       <span
-        class={{
-          [`bq-option__suffix ms-[--bq-option--gap-end] ml-auto ${displayClass} items-center`]: true,
-          '!hidden': !this.hasSuffix,
-        }}
+        class="bq-option__suffix"
+        hidden={!this.hasSuffix}
         part="suffix"
         ref={(elem) => {
           this.suffixElem = elem;
@@ -441,7 +437,7 @@ export class BqOption {
       size="small"
       type="button"
     >
-      <span class={{ 'bq-option__expand-label': true, '!hidden': !this.hasExpandLabel }}>
+      <span class="bq-option__expand-label" hidden={!this.hasExpandLabel}>
         <slot name="expand-label" onSlotchange={this.handleSlotChange} />
       </span>
       <bq-icon
@@ -459,7 +455,8 @@ export class BqOption {
     return (
       <div
         aria-hidden={!this.hasOptions || !this.expanded ? 'true' : 'false'}
-        class={{ 'bq-option__options': true, '!hidden': !this.hasOptions || !this.expanded }}
+        class="bq-option__options"
+        hidden={!this.hasOptions || !this.expanded}
         part="options"
         ref={(element) => {
           this.optionsElem = element;
@@ -499,7 +496,7 @@ export class BqOption {
           }}
           value={this.value || 'option'}
         >
-          {this.renderOptionContent('inline-flex')}
+          {this.renderOptionContent()}
         </bq-checkbox>
       );
     }
@@ -507,7 +504,7 @@ export class BqOption {
     if (this.isTreeItem) {
       return (
         <div class="bq-option" part="base">
-          {this.renderOptionContent('flex')}
+          {this.renderOptionContent()}
         </div>
       );
     }
@@ -523,7 +520,7 @@ export class BqOption {
         tabindex={this.isDisabledOrHidden ? '-1' : '0'}
         type="button"
       >
-        {this.renderOptionContent('flex')}
+        {this.renderOptionContent()}
       </button>
     );
   };
