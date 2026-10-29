@@ -1492,7 +1492,8 @@ export class BqSelect {
       <div class="bq-select" part="base">
         {/* Label */}
         <label
-          class={{ 'bq-select__label': true, '!hidden': !this.hasLabel }}
+          class="bq-select__label"
+          hidden={!this.hasLabel}
           htmlFor={this.name || this.fallbackInputId}
           id={labelId}
           part="label"
@@ -1504,7 +1505,7 @@ export class BqSelect {
         </label>
         {/* Select dropdown */}
         <bq-dropdown
-          class="bq-select__dropdown w-full"
+          class="bq-select__dropdown"
           disabled={this.disabled}
           disableScrollLock={this.disableScrollLock}
           distance={this.distance}
@@ -1523,14 +1524,14 @@ export class BqSelect {
               'bq-select__control': true,
               [`validation-${this.validationStatus}`]: true,
               disabled: this.disabled,
-              'select-none': this.isSearchDisabled,
             }}
             part="control"
             slot="trigger"
           >
             {/* Prefix */}
             <span
-              class={{ 'bq-select__control--prefix': true, '!hidden': !this.hasPrefix }}
+              class="bq-select__control--prefix"
+              hidden={!this.hasPrefix}
               part="prefix"
               ref={(spanElem: HTMLSpanElement) => {
                 this.prefixElem = spanElem;
@@ -1538,7 +1539,7 @@ export class BqSelect {
             >
               <slot name="prefix" onSlotchange={this.handleSlotChange} />
             </span>
-            <div class="flex flex-1 overflow-x-auto" part="input-outline">
+            <div class="bq-select__input-outline" part="input-outline">
               {/* Display selected values using BqTags for multiple selection */}
               {this.multiple && (
                 <span class="bq-select__tags" part="tags">
@@ -1553,7 +1554,7 @@ export class BqSelect {
                 aria-haspopup={this.hasNestedOptions ? 'tree' : 'listbox'}
                 autoCapitalize="off"
                 autoComplete="off"
-                class="bq-select__control--input is-full flex-grow"
+                class="bq-select__control--input"
                 disabled={this.disabled}
                 form={this.form}
                 id={this.name || this.fallbackInputId}
@@ -1583,7 +1584,7 @@ export class BqSelect {
               <bq-button
                 appearance="text"
                 border="s"
-                class="bq-select__control--clear ms-[--bq-select--gap] hidden [&::part(button)]:border-none [&::part(button)]:p-0"
+                class="bq-select__control--clear"
                 exportparts="button"
                 label={this.clearButtonLabel}
                 onBqClick={this.handleClearClick}
@@ -1593,20 +1594,20 @@ export class BqSelect {
                 tabIndex={-1}
               >
                 <slot name="clear-icon">
-                  <bq-icon aria-hidden="true" class="flex" name="x-circle" />
+                  <bq-icon aria-hidden="true" name="x-circle" />
                 </slot>
               </bq-button>
             )}
             {/* Suffix */}
             <span
-              class={{ 'bq-select__control--suffix': true, 'rotate-180': this.open, 'rotate-0': !this.open }}
+              class={{ 'bq-select__control--suffix': true, 'is-open': this.open }}
               part="suffix"
               ref={(spanElem: HTMLSpanElement) => {
                 this.suffixElem = spanElem;
               }}
             >
               <slot name="suffix" onSlotchange={this.handleSlotChange}>
-                <bq-icon class="flex" name="caret-down" />
+                <bq-icon name="caret-down" />
               </slot>
             </span>
           </div>
@@ -1633,10 +1634,8 @@ export class BqSelect {
         </bq-dropdown>
         {/* Helper text */}
         <div
-          class={{
-            [`bq-select__helper-text validation-${this.validationStatus}`]: true,
-            '!hidden': !this.hasHelperText,
-          }}
+          class={`bq-select__helper-text validation-${this.validationStatus}`}
+          hidden={!this.hasHelperText}
           part="helper-text"
           ref={(divElem: HTMLDivElement) => {
             this.helperTextElem = divElem;
