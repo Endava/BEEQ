@@ -75,14 +75,19 @@ import { Accordion } from './helper';
  * @cssprop --bq-accordion--filled-collapsed-background - Accordion filled collapsed header background
  * @cssprop --bq-accordion--filled-collapsed-text-color - Accordion filled collapsed header text color
  * @cssprop --bq-accordion--filled-expanded-background - Accordion filled expanded header background
- * @cssprop --bq-accordion--filled-expanded-collapsed-hover - Accordion filled expanded header color on hover
+ * @cssprop --bq-accordion--filled-expanded-collapsed-hover - Base colour of the filled expanded header hover state (mixed with `--bq-hover` on hover)
  * @cssprop --bq-accordion--filled-expanded-text-color - Accordion filled expanded header text color
  *
  * @cssprop --bq-accordion--ghost-collapsed-background - Accordion ghost collapsed header background
  * @cssprop --bq-accordion--ghost-collapsed-text-color - Accordion ghost collapsed header text color
  * @cssprop --bq-accordion--ghost-expanded-background - Accordion ghost expanded header background
- * @cssprop --bq-accordion--ghost-expanded-collapsed-hover - Accordion ghost expanded header color on hover
+ * @cssprop --bq-accordion--ghost-expanded-collapsed-hover - Base colour of the ghost header hover state, collapsed and expanded (mixed with `--bq-hover` on hover)
  * @cssprop --bq-accordion--ghost-expanded-text-color - Accordion ghost expanded header text color
+ *
+ * @cssprop --bq-accordion--icon-color - Accordion expand and collapse icon color
+ *
+ * @cssprop --bq-accordion--panel-background - Accordion panel background
+ * @cssprop --bq-accordion--panel-text-color - Accordion panel text color
  *
  * @cssprop --bq-accordion--panel-filled-border-color - Accordion filled panel border color
  * @cssprop --bq-accordion--panel-filled-border-style - Accordion filled panel border style
@@ -310,7 +315,9 @@ export class BqAccordion {
     return (
       <details
         class={{
-          [`bq-accordion overflow-hidden ${this.size} ${this.appearance}`]: true,
+          'bq-accordion': true,
+          [this.size]: true,
+          [this.appearance]: true,
           'no-animation': this.noAnimation,
           disabled: this.disabled,
         }}
@@ -334,7 +341,8 @@ export class BqAccordion {
           tabindex={this.disabled ? -1 : 0}
         >
           <div
-            class={{ 'bq-accordion__header--prefix': true, '!hidden': !this.hasPrefix }}
+            class="bq-accordion__header--prefix"
+            hidden={!this.hasPrefix}
             part="prefix"
             ref={(element) => {
               this.prefixElem = element;
@@ -346,7 +354,8 @@ export class BqAccordion {
             <slot name="header" />
           </div>
           <div
-            class={{ 'bq-accordion__header--suffix': true, '!hidden': !this.hasSuffix }}
+            class="bq-accordion__header--suffix"
+            hidden={!this.hasSuffix}
             part="suffix"
             ref={(element) => {
               this.suffixElem = element;
@@ -357,10 +366,11 @@ export class BqAccordion {
           <div
             aria-hidden="true"
             class={{
-              'flex items-center justify-center text-primary transition-transform duration-300 ease-in-out': true,
-              '!hidden': this.open && !this.rotate,
-              'rotate-180': this.rotate && this.open,
+              'bq-accordion__header--icon': true,
+              'bq-accordion__header--icon-expand': true,
+              'is-open': this.rotate && this.open,
             }}
+            hidden={this.open && !this.rotate}
           >
             <slot name="expand">
               <bq-icon name="plus" />
@@ -368,23 +378,16 @@ export class BqAccordion {
           </div>
           <div
             aria-hidden="true"
-            class={{
-              'flex items-center justify-center text-primary': true,
-              '!hidden': (!this.open && !this.rotate) || this.rotate,
-            }}
+            class="bq-accordion__header--icon"
+            hidden={(!this.open && !this.rotate) || this.rotate}
           >
             <slot name="collapse">
               <bq-icon name="minus" />
             </slot>
           </div>
         </summary>
-        <div
-          aria-labelledby="bq-accordion__header"
-          class="bq-accordion__body overflow-hidden bg-ui-primary text-primary"
-          part="panel"
-          role="region"
-        >
-          <slot class="bq-accordion__content block" id="bq-accordion__content" />
+        <div aria-labelledby="bq-accordion__header" class="bq-accordion__body" part="panel" role="region">
+          <slot class="bq-accordion__content" id="bq-accordion__content" />
         </div>
       </details>
     );

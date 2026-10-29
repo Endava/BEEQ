@@ -12,7 +12,7 @@
     "editor.defaultFormatter": "biomejs.biome"
   },
   "[json]": {
-    "editor.defaultFormatter": "vscode.json-language-features"
+    "editor.defaultFormatter": "biomejs.biome"
   },
   "[jsonc]": {
     "editor.defaultFormatter": "biomejs.biome"
@@ -32,7 +32,7 @@
   "angular.enable-strict-mode-prompt": false,
   "biome.enabled": true,
   "chat.instructionsFilesLocations": {
-    ".github/instructions": true
+    ".agents/instructions": true
   },
   "commentAnchors.tags.anchors": {
     "!TO BE REMOVED": {

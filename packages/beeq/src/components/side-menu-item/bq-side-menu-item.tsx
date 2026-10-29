@@ -40,8 +40,10 @@ import { getTextContent } from '../../shared/utils';
  *
  * @cssprop --bq-side-menu-item--bg-default - Side menu item default background color
  * @cssprop --bq-side-menu-item--bg-active - Side menu item active background color
+ * @cssprop --bq-side-menu-item--bg-hover - Base colour of the hover background (mixed with `--bq-hover` on hover)
  * @cssprop --bq-side-menu-item--text-default - Side menu item default text color
  * @cssprop --bq-side-menu-item--text-active - Side menu item active text color
+ * @cssprop --bq-side-menu-item--text-hover - Base colour of the hover text (mixed with `--bq-hover` on hover)
  * @cssprop --bq-side-menu-item--paddingX - Side menu item vertical padding
  * @cssprop --bq-side-menu-item--paddingY - Side menu item horizontal padding
  */
@@ -161,7 +163,7 @@ export class BqSideMenuItem {
     <button
       aria-disabled={this.disabled ? 'true' : 'false'}
       class={{
-        'bq-side-menu__item': true,
+        'bq-side-menu-item': true,
         active: this.active,
         disabled: this.disabled,
         'is-collapsed': this.collapse,
@@ -170,23 +172,22 @@ export class BqSideMenuItem {
       onClick={this.handleClick}
       onFocus={this.handleFocus}
       part="base"
-      role="menuitem"
       slot="trigger"
       tabindex={this.disabled ? -1 : 0}
       type="button"
     >
-      <div class="bq-side-menu__item--prefix flex items-center" part="prefix">
+      <div class="bq-side-menu-item__prefix" part="prefix">
         <slot name="prefix" />
       </div>
       <div
-        class="bq-side-menu__item--label overflow-hidden text-ellipsis whitespace-nowrap"
+        class="bq-side-menu-item__label"
         ref={(labelElem) => {
           this.labelElem = labelElem;
         }}
       >
         <slot onSlotchange={this.handleSlotChange} />
       </div>
-      <div class="bq-side-menu__item--suffix ml-auto flex items-center" part="suffix">
+      <div class="bq-side-menu-item__suffix" part="suffix">
         <slot name="suffix" />
       </div>
     </button>
@@ -196,7 +197,7 @@ export class BqSideMenuItem {
     return !this.collapse ? (
       this.menuItem()
     ) : (
-      <bq-tooltip class="bq-side-menu__item--tooltip block" exportparts="trigger, panel" placement="right">
+      <bq-tooltip class="bq-side-menu-item__tooltip" exportparts="trigger, panel" placement="right">
         {this.textContent}
         {this.menuItem()}
       </bq-tooltip>

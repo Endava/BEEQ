@@ -71,6 +71,65 @@ describe(debounce.name, () => {
     expect(spy).toHaveBeenLastCalledWith('test value');
   });
 
+  it('should call the function once when immediate and called only once', () => {
+    const spy = vi.fn<(...args: string[]) => void>();
+
+    const fn = debounce(spy, 250, true);
+
+    fn('test value');
+    vi.advanceTimersByTime(500);
+
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith('test value');
+  });
+
+  it('should call the function immediate again for a new burst after the wait has elapsed', () => {
+    const spy = vi.fn<(...args: string[]) => void>();
+
+    const fn = debounce(spy, 250, true);
+
+    fn('first burst');
+    vi.advanceTimersByTime(250);
+    fn('second burst');
+
+    expect(spy).toHaveBeenCalledTimes(2);
+    expect(spy).toHaveBeenLastCalledWith('second burst');
+  });
+
+  it('should call the function immediate again after cancel', () => {
+    const spy = vi.fn<(...args: string[]) => void>();
+
+    const fn = debounce(spy, 250, true);
+
+    fn('first');
+    fn('pending');
+    fn.cancel();
+    fn('after cancel');
+
+    expect(spy).toHaveBeenCalledTimes(2);
+    expect(spy).toHaveBeenNthCalledWith(1, 'first');
+    expect(spy).toHaveBeenLastCalledWith('after cancel');
+
+    vi.advanceTimersByTime(500);
+
+    expect(spy).toHaveBeenCalledTimes(2);
+  });
+
+  it('should call the function after the wait for every burst', () => {
+    const spy = vi.fn<(...args: string[]) => void>();
+
+    const fn = debounce(spy, 250);
+
+    fn('first burst');
+    vi.advanceTimersByTime(250);
+    fn('second burst');
+    vi.advanceTimersByTime(250);
+
+    expect(spy).toHaveBeenCalledTimes(2);
+    expect(spy).toHaveBeenNthCalledWith(1, 'first burst');
+    expect(spy).toHaveBeenLastCalledWith('second burst');
+  });
+
   it('should not fail if cancel is called but the function is not initialized yet', () => {
     const spy = vi.fn<(...args: string[]) => void>();
 

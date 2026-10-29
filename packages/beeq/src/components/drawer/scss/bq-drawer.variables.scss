@@ -4,18 +4,22 @@
 
 :host {
   /**
+   * @prop --bq-drawer--background - Background color of the drawer panel
    * @prop --bq-drawer--backgroundBackdrop - Background color of the backdrop
    * @prop --bq-drawer--gap - Gap between the drawer and the viewport
    * @prop --bq-drawer--width - Width of the drawer
    * @prop --bq-drawer--paddingX - Padding left and right of the drawer
    * @prop --bq-drawer--paddingY - Padding top and bottom of the drawer
+   * @prop --bq-drawer--text-color - Text color of the drawer panel
    * @prop --bq-drawer--zIndex - Z-index of the drawer component
    */
 
-  --bq-drawer--backgroundBackdrop: theme(backgroundColor.overlay);
-  --bq-drawer--gap: theme(spacing.l);
+  --bq-drawer--background: var(--bq-ui--primary);
+  --bq-drawer--backgroundBackdrop: var(--bq-background--overlay);
+  --bq-drawer--gap: var(--bq-spacing-l);
   --bq-drawer--width: 320px;
-  --bq-drawer--paddingX: theme(spacing.l);
-  --bq-drawer--paddingY: theme(spacing.m);
+  --bq-drawer--paddingX: var(--bq-spacing-l);
+  --bq-drawer--paddingY: var(--bq-spacing-m);
+  --bq-drawer--text-color: var(--bq-text--primary);
   --bq-drawer--zIndex: 10;
 }

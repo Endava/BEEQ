@@ -6,6 +6,7 @@
   "type": "module",
   "typings": "./src/index.d.ts",
   "executors": "./executors.json",
+  "generators": "./generators.json",
   "dependencies": {
     "nanospinner": "^1.1.0",
     "fs-extra": "^11.2.0",

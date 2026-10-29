@@ -2,12 +2,11 @@
 /*                            Breadcrumb item styles                          */
 /* -------------------------------------------------------------------------- */
 
-@use 'sass:meta';
 @layer bq.reset, bq.tokens, bq.themes, bq.base, bq.public, bq.overrides,
   bq-breadcrumb-item.tokens, bq-breadcrumb-item.base, bq-breadcrumb-item.states;
 
 @layer bq-breadcrumb-item.tokens {
-  @include meta.load-css('./bq-breadcrumb-item.variables');
+  @import './bq-breadcrumb-item.variables';
 }
 
 @layer bq-breadcrumb-item.base {
@@ -25,9 +24,11 @@
   }
 
   .bq-breadcrumb-item__control {
+    box-sizing: border-box;
     padding-block: var(--bq-breadcrumb-item--paddingY);
     padding-inline: var(--bq-breadcrumb-item--padding-start) var(--bq-breadcrumb-item--padding-end);
     color: var(--bq-breadcrumb-item--text-color);
+    font: inherit;
     font-weight: var(--bq-font-weight--regular);
     font-size: var(--bq-breadcrumb-item--text-size);
     line-height: var(--bq-breadcrumb-item--line-height);
@@ -39,9 +40,9 @@
     border-radius: var(--bq-breadcrumb-item--border-radius);
     box-shadow: var(--bq-breadcrumb-item--box-shadow);
     cursor: pointer;
-    transition-timing-function: ease-in-out;
     transition-duration: 300ms;
     transition-property: color;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   /* ------------------------------- Structure -------------------------------- */
@@ -57,6 +58,7 @@
     align-items: center;
     padding-inline: var(--bq-breadcrumb-item--padding-start-separator)
       var(--bq-breadcrumb-item--padding-end-separator);
+    color: var(--bq-breadcrumb-item--separator-color);
     font-size: var(--bq-breadcrumb-item--text-size-separator);
   }
 }
@@ -69,7 +71,7 @@
   }
 
   .bq-breadcrumb-item__control:hover {
-    @include bq-color-mix(color, var(--bq-text--brand), hover);
+    @include bq-color-mix(color, var(--bq-breadcrumb-item--text-color), hover);
   }
 
   .bq-breadcrumb-item__control:focus-visible {

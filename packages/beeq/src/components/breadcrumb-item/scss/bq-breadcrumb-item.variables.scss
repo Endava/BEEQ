@@ -15,6 +15,7 @@
   * @prop --bq-breadcrumb-item--text-color-current: Text color of the current breadcrumb item.
   * @prop --bq-breadcrumb-item--text-size: Text size of the breadcrumb item.
   * @prop --bq-breadcrumb-item--text-size-separator: Text size of the breadcrumb item separator.
+  * @prop --bq-breadcrumb-item--separator-color: Color of the breadcrumb item separator.
   * @prop --bq-breadcrumb-item--padding-start: Padding start of the breadcrumb item.
   * @prop --bq-breadcrumb-item--padding-end: Padding end of the breadcrumb item.
   * @prop --bq-breadcrumb-item--paddingY: Padding top and bottom of the breadcrumb item.
@@ -31,10 +32,11 @@
   --bq-breadcrumb-item--border-radius: var(--bq-radius--s);
 
   --bq-breadcrumb-item--line-height: var(--bq-font-line-height--regular);
-  --bq-breadcrumb-item--text-color: var(--bq-text--secondary);
-  --bq-breadcrumb-item--text-color-current: var(--bq-text--brand);
+  --bq-breadcrumb-item--text-color: var(--bq-text--brand);
+  --bq-breadcrumb-item--text-color-current: var(--bq-text--secondary);
   --bq-breadcrumb-item--text-size: var(--bq-font-size--s);
   --bq-breadcrumb-item--text-size-separator: var(--bq-font-size--xs);
+  --bq-breadcrumb-item--separator-color: var(--bq-ui--tertiary);
 
   --bq-breadcrumb-item--padding-start: var(--bq-spacing-xs2);
   --bq-breadcrumb-item--padding-end: var(--bq-spacing-xs2);

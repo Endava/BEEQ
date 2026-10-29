@@ -73,6 +73,17 @@ You can add BEEQ to a Next.js app in a few steps:
     ```css app/globals.css
     @import "@beeq/core/dist/beeq/beeq.css";
     ```
+
+    <Warning>
+      `create-next-app` sets up Tailwind CSS v4. If your `globals.css` starts with `@import "tailwindcss";`, import BEEQ into the `base` layer, or the BEEQ reset overrides Tailwind utilities such as `mx-auto`:
+
+      ```css app/globals.css
+      @import "tailwindcss";
+      @import "@beeq/core/dist/beeq/beeq.css" layer(base);
+      ```
+
+      See [Apps that use cascade layers](/getting-started/installation#apps-that-use-cascade-layers).
+    </Warning>
   </Step>
 
   <Step title="Configure icons" titleSize="h3">

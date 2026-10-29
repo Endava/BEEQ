@@ -32,9 +32,9 @@ The stroke width scale has three values. Use the smallest value for standard sep
 
 | Token | CSS variable | Tailwind keys | Value | Common use |
 | --- | --- | --- | --- | --- |
-| `s` | `--bq-stroke-s` | `border-s`, `stroke-s` | `1px` | Default borders, dividers, table lines, and subtle separation. |
-| `m` | `--bq-stroke-m` | `border-m`, `stroke-m` | `2px` | Focus, active, selected, or emphasized states. |
-| `l` | `--bq-stroke-l` | `border-l`, `stroke-l` | `3px` | Large emphasis surfaces or highly visible outlines. |
+| `s` | `--bq-stroke-s` | `border-stroke-s`, `border-s`, `stroke-s` | `1px` | Default borders, dividers, table lines, and subtle separation. |
+| `m` | `--bq-stroke-m` | `border-stroke-m`, `border-m`, `stroke-m` | `2px` | Focus, active, selected, or emphasized states. |
+| `l` | `--bq-stroke-l` | `border-stroke-l`, `border-l`, `stroke-l` | `3px` | Large emphasis surfaces or highly visible outlines. |
 
 <CodeLivePreview mode="iframe" height="24rem" removePadding code={`
   <style>
@@ -376,7 +376,11 @@ Components are designed around CSS border behavior. With `box-sizing: border-box
 
 Use CSS variables directly when you build custom UI. Use component props and component CSS variables when the stroke belongs to a BEEQ component.
 
-If your project uses the BEEQ Tailwind preset, standard utilities such as `border-s`, `border-primary`, `stroke-m`, and `stroke-brand` map to the same token system. The preset also adds logical border utilities such as `border-bs-s`, `border-be-s`, `border-i-s`, and `border-is-s` for layout direction support.
+If your project uses the BEEQ Tailwind preset, standard utilities such as `border-stroke-s`, `border-primary`, `stroke-m`, and `stroke-brand` map to the same token system. Side utilities work with the same keys, for example `border-s-stroke-m` or `border-b-stroke-l`. The preset also adds logical border utilities such as `border-bs-s`, `border-be-s`, `border-i-s`, and `border-is-s` for layout direction support.
+
+<Warning>
+With Tailwind CSS v4, use `border-stroke-s`, `border-stroke-m`, and `border-stroke-l`. Tailwind CSS v4 also reads `border-s` and `border-l` as its own inline-start and left border utilities, so those classes add a `1px` side border on top of the BEEQ stroke width. The short keys keep working with Tailwind CSS v3.
+</Warning>
 
 <CodeLivePreview mode="iframe" height="24rem" removePadding code={`
   <style>

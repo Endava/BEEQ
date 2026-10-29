@@ -1,6 +1,7 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { fn } from 'storybook/test';
 
 import { ALERT_BORDER_RADIUS, ALERT_TYPE } from '../bq-alert.types';
 import mdx from './bq-alert.mdx';
@@ -22,11 +23,6 @@ const meta: Meta = {
     open: { control: 'boolean' },
     time: { control: 'number' },
     type: { control: 'select', options: [...ALERT_TYPE] },
-    // Events
-    bqShow: { action: 'bqShow' },
-    bqAfterShow: { action: 'bqAfterShow' },
-    bqHide: { action: 'bqHide' },
-    bqAfterHide: { action: 'bqAfterHide' },
   },
   args: {
     'auto-dismiss': false,
@@ -37,6 +33,11 @@ const meta: Meta = {
     open: false,
     time: 3000,
     type: 'default',
+    // Events
+    bqShow: fn(),
+    bqAfterShow: fn(),
+    bqHide: fn(),
+    bqAfterHide: fn(),
   },
 };
 export default meta;

@@ -13,6 +13,7 @@ export const PRIMITIVE_COLORS = {
     700: 'var(--bq-blue-700)',
     800: 'var(--bq-blue-800)',
     900: 'var(--bq-blue-900)',
+    950: 'var(--bq-blue-950)',
     1000: 'var(--bq-blue-1000)',
   },
   corai: {
@@ -49,6 +50,7 @@ export const PRIMITIVE_COLORS = {
     700: 'var(--bq-gold-700)',
     800: 'var(--bq-gold-800)',
     900: 'var(--bq-gold-900)',
+    950: 'var(--bq-gold-950)',
     1000: 'var(--bq-gold-1000)',
   },
   green: {
@@ -99,6 +101,7 @@ export const PRIMITIVE_COLORS = {
     700: 'var(--bq-iris-700)',
     800: 'var(--bq-iris-800)',
     900: 'var(--bq-iris-900)',
+    950: 'var(--bq-iris-950)',
     1000: 'var(--bq-iris-1000)',
   },
   lime: {
@@ -151,6 +154,7 @@ export const PRIMITIVE_COLORS = {
     700: 'var(--bq-purple-700)',
     800: 'var(--bq-purple-800)',
     900: 'var(--bq-purple-900)',
+    950: 'var(--bq-purple-950)',
     1000: 'var(--bq-purple-1000)',
   },
   red: {
@@ -163,6 +167,7 @@ export const PRIMITIVE_COLORS = {
     700: 'var(--bq-red-700)',
     800: 'var(--bq-red-800)',
     900: 'var(--bq-red-900)',
+    950: 'var(--bq-red-950)',
     1000: 'var(--bq-red-1000)',
   },
   sky: {
@@ -187,6 +192,7 @@ export const PRIMITIVE_COLORS = {
     700: 'var(--bq-teal-700)',
     800: 'var(--bq-teal-800)',
     900: 'var(--bq-teal-900)',
+    950: 'var(--bq-teal-950)',
     1000: 'var(--bq-teal-1000)',
   },
   volcano: {

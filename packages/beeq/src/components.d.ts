@@ -22,7 +22,7 @@ import { TIconWeight } from "./components/icon/bq-icon.types";
 import { TNotificationBorderRadius, TNotificationType } from "./components/notification/bq-notification.types";
 import { TProgressBorderShape, TProgressThickness, TProgressType } from "./components/progress/bq-progress.types";
 import { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
-import { TSelectValue } from "./components/select/bq-select";
+import { TSelectChangeDetail, TSelectValue } from "./components/select/bq-select";
 import { TSideMenuAppearance, TSideMenuSize } from "./components/side-menu/bq-side-menu.types";
 import { TSliderType, TSliderValue } from "./components/slider/bq-slider.types";
 import { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
@@ -33,6 +33,7 @@ import { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq
 import { TTabOrientation, TTabPlacement, TTabSize } from "./components/tab/bq-tab.types";
 import { TTagBorderRadius, TTagColor, TTagSize, TTagVariant } from "./components/tag/bq-tag.types";
 import { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq-textarea.types";
+import { TFloatingStrategy as TFloatingStrategy1, THourFormat, TInputValidation as TInputValidation1, TTimePickerLabels, TTimePrecision } from "./components/time-picker/bq-time-picker.types";
 import { TToastBorderRadius, TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
 export { TAccordionAppearance, TAccordionSize } from "./components/accordion/bq-accordion.types";
 export { TAlertBorderRadius, TAlertType } from "./components/alert/bq-alert.types";
@@ -51,7 +52,7 @@ export { TIconWeight } from "./components/icon/bq-icon.types";
 export { TNotificationBorderRadius, TNotificationType } from "./components/notification/bq-notification.types";
 export { TProgressBorderShape, TProgressThickness, TProgressType } from "./components/progress/bq-progress.types";
 export { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
-export { TSelectValue } from "./components/select/bq-select";
+export { TSelectChangeDetail, TSelectValue } from "./components/select/bq-select";
 export { TSideMenuAppearance, TSideMenuSize } from "./components/side-menu/bq-side-menu.types";
 export { TSliderType, TSliderValue } from "./components/slider/bq-slider.types";
 export { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
@@ -62,6 +63,7 @@ export { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq
 export { TTabOrientation, TTabPlacement, TTabSize } from "./components/tab/bq-tab.types";
 export { TTagBorderRadius, TTagColor, TTagSize, TTagVariant } from "./components/tag/bq-tag.types";
 export { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq-textarea.types";
+export { TFloatingStrategy as TFloatingStrategy1, THourFormat, TInputValidation as TInputValidation1, TTimePickerLabels, TTimePrecision } from "./components/time-picker/bq-time-picker.types";
 export { TToastBorderRadius, TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
 export namespace Components {
     /**
@@ -109,13 +111,16 @@ export namespace Components {
      * @cssprop --bq-accordion--filled-collapsed-background - Accordion filled collapsed header background
      * @cssprop --bq-accordion--filled-collapsed-text-color - Accordion filled collapsed header text color
      * @cssprop --bq-accordion--filled-expanded-background - Accordion filled expanded header background
-     * @cssprop --bq-accordion--filled-expanded-collapsed-hover - Accordion filled expanded header color on hover
+     * @cssprop --bq-accordion--filled-expanded-collapsed-hover - Base colour of the filled expanded header hover state (mixed with `--bq-hover` on hover)
      * @cssprop --bq-accordion--filled-expanded-text-color - Accordion filled expanded header text color
      * @cssprop --bq-accordion--ghost-collapsed-background - Accordion ghost collapsed header background
      * @cssprop --bq-accordion--ghost-collapsed-text-color - Accordion ghost collapsed header text color
      * @cssprop --bq-accordion--ghost-expanded-background - Accordion ghost expanded header background
-     * @cssprop --bq-accordion--ghost-expanded-collapsed-hover - Accordion ghost expanded header color on hover
+     * @cssprop --bq-accordion--ghost-expanded-collapsed-hover - Base colour of the ghost header hover state, collapsed and expanded (mixed with `--bq-hover` on hover)
      * @cssprop --bq-accordion--ghost-expanded-text-color - Accordion ghost expanded header text color
+     * @cssprop --bq-accordion--icon-color - Accordion expand and collapse icon color
+     * @cssprop --bq-accordion--panel-background - Accordion panel background
+     * @cssprop --bq-accordion--panel-text-color - Accordion panel text color
      * @cssprop --bq-accordion--panel-filled-border-color - Accordion filled panel border color
      * @cssprop --bq-accordion--panel-filled-border-style - Accordion filled panel border style
      * @cssprop --bq-accordion--panel-filled-border-width - Accordion filled panel border width
@@ -251,7 +256,6 @@ export namespace Components {
      * @cssprop --bq-alert--border-radius - The alert border radius
      * @cssprop --bq-alert--content-footer-gap - The alert content and footer gap
      * @cssprop --bq-alert--title-body-gap - The alert title and body gap
-     * @cssprop --bq-alert--border-color - The alert border color
      * @cssprop --bq-alert--border-style - The alert border style
      * @cssprop --bq-alert--border-width - The alert border width
      * @cssprop --bq-alert--background-info - The alert background color for info type
@@ -266,8 +270,10 @@ export namespace Components {
      * @cssprop --bq-alert--icon-color-success - The alert icon color for success type
      * @cssprop --bq-alert--icon-color-warning - The alert icon color for warning type
      * @cssprop --bq-alert--icon-color-error - The alert icon color for error type
+     * @cssprop --bq-alert--text-color - The alert text color
      * @cssprop --bq-alert--padding - The alert padding
      * @cssprop --bq-alert--min-width - The alert min width
+     * @cssprop --bq-alert--z-index - The stacking order of a sticky alert. No default is declared.
      */
     interface BqAlert {
         /**
@@ -342,6 +348,7 @@ export namespace Components {
      * @cssprop --bq-avatar--border-color - Avatar border color
      * @cssprop --bq-avatar--border-style - Avatar border style
      * @cssprop --bq-avatar--border-width - Avatar border width
+     * @cssprop --bq-avatar--text-color - Avatar initials text color
      * @cssprop --bq-avatar--border-radius-circle - Avatar border radius for circle & any size
      * @cssprop --bq-avatar--border-radius-squareXs - Avatar border radius for square & size xsmall
      * @cssprop --bq-avatar--border-radius-squareS - Avatar border radius for square & size small
@@ -408,7 +415,7 @@ export namespace Components {
      */
     interface BqBadge {
         /**
-          * Badge background color. The value should be a valid value of the palette color
+          * Badge background color. The value should be a valid value of the palette color. When it changes, set a matching `textColor` (e.g. `text--on-success` for `ui--success`) so the content stays legible.
          */
         "backgroundColor"?: string;
         /**
@@ -456,7 +463,7 @@ export namespace Components {
      * @status stable
      * @attr {string} href - If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered.
      * @attr {string} target - Where to display the link in the browser context. Relevant only if `href` is set.
-     * @attr {string} rel - Where to display the link in the browser context. Relevant only if `href` is set.
+     * @attr {string} rel - Space-separated link relationship types (e.g. `external`, `nofollow`) applied to the inner `<a>`. Relevant only if `href` is set. When `target` is set, `noreferrer` and `noopener` are always added.
      * @event bqFocus - Handler to be called when item is focused
      * @event bqClick - Handler to be called when item is clicked
      * @event bqBlur - Handler to be called when item loses focus
@@ -471,6 +478,7 @@ export namespace Components {
      * @cssprop --bq-breadcrumb-item--text-color-current - Text color of the current breadcrumb item (active)
      * @cssprop --bq-breadcrumb-item--text-size - Text size of the breadcrumb item
      * @cssprop --bq-breadcrumb-item--text-size-separator - Text size of the breadcrumb item separator
+     * @cssprop --bq-breadcrumb-item--separator-color - Color of the breadcrumb item separator
      * @cssprop --bq-breadcrumb-item--padding-start - Padding start of the breadcrumb item
      * @cssprop --bq-breadcrumb-item--padding-end - Padding end of the breadcrumb item
      * @cssprop --bq-breadcrumb-item--paddingY - Padding top and bottom of the breadcrumb item
@@ -483,10 +491,9 @@ export namespace Components {
          */
         "href": string;
         /**
-          * Where to display the link in the browser context. Relevant only if `href` is set.
-          * @default 'noreferrer noopener'
+          * Space-separated link relationship types (e.g. `external`, `nofollow`) applied to the inner `<a>`. Relevant only if `href` is set. When `target` is set, `noreferrer` and `noopener` are always added.
          */
-        "rel": string;
+        "rel"?: string;
         /**
           * Where to display the link in the browser context. Relevant only if `href` is set.
          */
@@ -533,6 +540,18 @@ export namespace Components {
      * @cssprop --bq-button--large-paddingX - Button large padding block (top and bottom)
      * @cssprop --bq-button--large-paddingY - Button large padding inline (left and right)
      * @cssprop --bq-button--large-font-size - Button large font size
+     * @cssprop --bq-button--primary-background - Primary button background color
+     * @cssprop --bq-button--primary-text-color - Primary button text color
+     * @cssprop --bq-button--primary-border-color-ghost - Primary ghost button border color
+     * @cssprop --bq-button--primary-text-color-ghost - Primary ghost button text color
+     * @cssprop --bq-button--primary-background-danger - Primary danger button background color
+     * @cssprop --bq-button--primary-text-color-danger - Primary danger button text color
+     * @cssprop --bq-button--secondary-background - Secondary button background color
+     * @cssprop --bq-button--secondary-text-color - Secondary button text color
+     * @cssprop --bq-button--secondary-border-color-ghost - Secondary ghost button border color
+     * @cssprop --bq-button--secondary-text-color-ghost - Secondary ghost button text color
+     * @cssprop --bq-button--link-text-color - Link button text color
+     * @cssprop --bq-button--text-text-color - Text button text color
      */
     interface BqButton {
         /**
@@ -663,8 +682,13 @@ export namespace Components {
      * @event bqFocus - Handler to be called when the checkbox gets focus
      * @event bqBlur - Handler to be called when the checkbox loses focus
      * @cssprop --bq-checkbox--background-color - Checkbox background color
+     * @cssprop --bq-checkbox--background-color-checked - Checkbox background color when checked or indeterminate
+     * @cssprop --bq-checkbox--border-color - Checkbox border color
+     * @cssprop --bq-checkbox--border-color-checked - Checkbox border color when checked or indeterminate
      * @cssprop --bq-checkbox--border-radius - Checkbox border radius
      * @cssprop --bq-checkbox--border-width - Checkbox border width
+     * @cssprop --bq-checkbox--icon-color-checked - Checkbox check and indeterminate mark color
+     * @cssprop --bq-checkbox--label-text-color - Checkbox label text color
      * @cssprop --bq-checkbox--size - Checkbox size
      */
     interface BqCheckbox {
@@ -722,16 +746,16 @@ export namespace Components {
     }
     /**
      * The Date Picker is a pure-Stencil calendar input.
-     * It supports single, multi, and range selection, three navigation views
-     * (days → months → years), full localization via `Intl.DateTimeFormat`,
-     * multi-month side-by-side rendering, and RTL layouts.
+     * It supports single, multi, and range selection through locale-ordered,
+     * keyboard-editable date segments or a calendar panel. It also provides three
+     * navigation views (days → months → years), full localization via
+     * `Intl.DateTimeFormat`, multi-month side-by-side rendering, and RTL layouts.
      * @example How to use it
      * ```html
      * <bq-date-picker
      * first-day-of-week="1"
      * locale="en-GB"
      * name="bq-date-picker"
-     * placeholder="Enter your date"
      * type="single"
      * value="2026-07-15"
      * >
@@ -763,7 +787,7 @@ export namespace Components {
      * @attr {string} name - Input name.
      * @attr {boolean} open - If `true`, the panel is visible.
      * @attr {string} panel-height - Overrides the height of the panel.
-     * @attr {string} placeholder - Input placeholder text.
+     * @attr {string} placeholder - Deprecated. Locale-derived segment format hints always describe the expected entry layout instead.
      * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Placement of the panel.
      * @attr {boolean} required - Whether a value must be selected before submitting the form.
      * @attr {boolean} show-outside-days - Whether to render days that belong to adjacent months.
@@ -787,6 +811,9 @@ export namespace Components {
      * @cssprop --bq-date-picker--border-color - Input border color.
      * @cssprop --bq-date-picker--border-color-disabled - Border color when disabled.
      * @cssprop --bq-date-picker--border-color-focus - Border color on focus.
+     * @cssprop --bq-date-picker--border-color-danger - Border color when the validation status is `error`.
+     * @cssprop --bq-date-picker--border-color-success - Border color when the validation status is `success`.
+     * @cssprop --bq-date-picker--border-color-warning - Border color when the validation status is `warning`.
      * @cssprop --bq-date-picker--border-radius - Input border radius.
      * @cssprop --bq-date-picker--border-style - Border style.
      * @cssprop --bq-date-picker--border-width - Border width.
@@ -864,7 +891,7 @@ export namespace Components {
          */
         "formValidationMessage"?: string;
         /**
-          * Options used when formatting the displayed value.  When omitted, sensible defaults are picked based on `precision`: - `day`   → `{ day: 'numeric', month: 'short', year: 'numeric' }` - `month` → `{ month: 'long', year: 'numeric' }` - `year`  → `{ year: 'numeric' }`
+          * Numeric options used to derive the input mask's field order and separators.  The options must contain numeric or two-digit day/month fields and a numeric year. Textual or variable-length fields fall back to the locale numeric mask and emit a development warning.
          */
         "formatOptions"?: Intl.DateTimeFormatOptions;
         /**
@@ -914,7 +941,7 @@ export namespace Components {
          */
         "panelHeight"?: string;
         /**
-          * Placeholder text shown when no value is selected.
+          * @deprecated Locale-derived segment format hints always describe the expected entry layout, so this value no longer changes the rendered field.
          */
         "placeholder"?: string;
         /**
@@ -1007,6 +1034,8 @@ export namespace Components {
      * @cssprop --bq-dialog--background - Dialog background color
      * @cssprop --bq-dialog--background-backdrop - Dialog backdrop background color
      * @cssprop --bq-dialog--box-shadow - Dialog box shadow
+     * @cssprop --bq-dialog--footer-background - Dialog footer background color (`highlight` footer appearance)
+     * @cssprop --bq-dialog--text-color - Dialog text color
      * @cssprop --bq-dialog--border-color - Dialog border color
      * @cssprop --bq-dialog--border-style - Dialog border style
      * @cssprop --bq-dialog--border-width - Dialog border width
@@ -1173,11 +1202,13 @@ export namespace Components {
      * @event bqOpen - Callback handler to be called when the drawer is opened.
      * @event bqAfterOpen - Callback handler to be called after the drawer has been opened.
      * @event bqAfterClose - Callback handler to be called after the drawer has been closed.
+     * @cssprop --bq-drawer--background - Background color of the drawer panel
      * @cssprop --bq-drawer--backgroundBackdrop - Background color of the backdrop
      * @cssprop --bq-drawer--gap - Gap between the drawer and the viewport
      * @cssprop --bq-drawer--width - Width of the drawer
      * @cssprop --bq-drawer--paddingX - Padding left and right of the drawer
      * @cssprop --bq-drawer--paddingY - Padding top and bottom of the drawer
+     * @cssprop --bq-drawer--text-color - Text color of the drawer panel
      * @cssprop --bq-drawer--zIndex - Z-index of the drawer component
      */
     interface BqDrawer {
@@ -1320,6 +1351,7 @@ export namespace Components {
      * @status stable
      * @dependency bq-icon
      * @attr {"large" | "medium" | "small"} size - The size of the empty state component
+     * @cssprop --bq-empty-state--text-color - The text color of the title and body content
      */
     interface BqEmptyState {
         /**
@@ -1416,12 +1448,18 @@ export namespace Components {
      * @cssprop --bq-input--background-color - Input background color
      * @cssprop --bq-input--border-color - Input border color
      * @cssprop --bq-input--border-color-focus - Input border color on focus
+     * @cssprop --bq-input--border-color-danger - Input border color when the validation status is `error`
+     * @cssprop --bq-input--border-color-success - Input border color when the validation status is `success`
+     * @cssprop --bq-input--border-color-warning - Input border color when the validation status is `warning`
      * @cssprop --bq-input--border-radius - Input border radius
      * @cssprop --bq-input--border-width - Input border width
      * @cssprop --bq-input--border-style - Input border style
      * @cssprop --bq-input--gap - Gap between input content and prefix/suffix
      * @cssprop --bq-input--helper-margin-top - Helper text margin top
      * @cssprop --bq-input--helper-text-color - Helper text color
+     * @cssprop --bq-input--helper-text-color-danger - Helper text color when the validation status is `error`
+     * @cssprop --bq-input--helper-text-color-success - Helper text color when the validation status is `success`
+     * @cssprop --bq-input--helper-text-color-warning - Helper text color when the validation status is `warning`
      * @cssprop --bq-input--helper-text-size - Helper text size
      * @cssprop --bq-input--icon-size - Icon size to use in prefix/suffix and clear button
      * @cssprop --bq-input--label-margin-bottom - Input label margin bottom
@@ -1458,7 +1496,7 @@ export namespace Components {
          */
         "clearButtonLabel"?: string;
         /**
-          * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes. A value of 0 means no debouncing will occur.
+          * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes. With `0` (default), the event is emitted synchronously.
           * @default 0
          */
         "debounceTime"?: number;
@@ -1539,7 +1577,7 @@ export namespace Components {
          */
         "validationStatus": TInputValidation;
         /**
-          * The input value, it can be used to reset the input to a previous value
+          * The input value, it can be used to reset the input to a previous value. User-entered number values are numbers; empty or incomplete numeric input and Clear use an empty string.
          */
         "value": TInputValue;
     }
@@ -1647,16 +1685,33 @@ export namespace Components {
      * ```
      * @documentation https://storybook.beeq.design/?path=/story/components-option--with-option-group
      * @status stable
+     * @dependency bq-checkbox
+     * @dependency bq-button
+     * @dependency bq-icon
      * @attr {boolean} disabled - If true, the option is disabled.
+     * @attr {string} display-value - Overrides the displayed option value.
      * @attr {boolean} hidden - If true, the option is hidden.
+     * @attr {boolean} checkbox - If true, the option renders as a checkbox option.
+     * @attr {boolean} expanded - If true, nested options are displayed.
+     * @attr {boolean} indeterminate - If true, the option checkbox represents a partial nested selection.
+     * @attr {string} all-selected-label - Text displayed when all selectable nested options are selected.
+     * @attr {string} selected-count-label - Text displayed when some selectable nested options are selected. Use `{count}` as the selected option count placeholder.
+     * @attr {boolean} show-selection-summary - If true, displays the nested selection summary beside the expand control.
      * @attr {string} value - A string representing the value of the option. Can be used to identify the item.
      * @attr {boolean} selected - If true, the option is selected and active.
      * @event bqBlur - Handler to be called when item loses focus.
      * @event bqFocus - Handler to be called when item is focused.
      * @event bqClick - Handler to be called when item is clicked.
-     * @event bqEnter - Handler to be called on enter key press.
+     * @event bqEnter - Emitted when Enter or Space activates a focused option. Checkbox control activation emits bqClick instead.
      * @cssprop --bq-option--background - background color
+     * @cssprop --bq-option--background-hover - background base colour of the hover state (mixed with `--bq-hover` on hover)
+     * @cssprop --bq-option--background-selected - background color when selected
+     * @cssprop --bq-option--expand-text-color-hover - expand control text color on hover
      * @cssprop --bq-option--font-size - font size
+     * @cssprop --bq-option--selection-summary-color - nested selection summary text color
+     * @cssprop --bq-option--text-color - text color
+     * @cssprop --bq-option--text-color-selected - text color when selected
+     * @cssprop --bq-option--tree-line-color - color of the lines connecting nested options
      * @cssprop --bq-option--border-color - border color
      * @cssprop --bq-option--border-style - border style
      * @cssprop --bq-option--border-width - border width
@@ -1665,10 +1720,20 @@ export namespace Components {
      * @cssprop --bq-option--gap-start - gap space between prefix and label
      * @cssprop --bq-option--gap-end - gap space between label and suffix
      * @cssprop --bq-option--paddingY - padding Y axis
-     * @cssprop --bq-option--padding-start - option label padding start
-     * @cssprop --bq-option--padding-end - option label padding end
+     * @cssprop --bq-option--padding-start - option item padding start
+     * @cssprop --bq-option--padding-end - option item padding end
      */
     interface BqOption {
+        /**
+          * Text displayed when all selectable nested options are selected.
+          * @default 'All selected'
+         */
+        "allSelectedLabel": string;
+        /**
+          * If true, the option renders as a checkbox option.
+          * @default false
+         */
+        "checkbox": boolean;
         /**
           * If true, the option is disabled.
           * @default false
@@ -1679,15 +1744,39 @@ export namespace Components {
          */
         "displayValue"?: string;
         /**
+          * If true, nested options are displayed.
+          * @default false
+         */
+        "expanded": boolean;
+        /**
           * If true, the option is hidden.
           * @default false
          */
         "hidden": boolean;
         /**
+          * If true, the option checkbox represents a partial nested selection.
+          * @default false
+         */
+        "indeterminate": boolean;
+        /**
           * If true, the option is selected and active.
           * @default false
          */
         "selected": boolean;
+        /**
+          * Text displayed when some selectable nested options are selected. Use `{count}` as the selected option count placeholder.
+          * @default '{count} selected'
+         */
+        "selectedCountLabel": string;
+        /**
+          * If true, displays the nested selection summary beside the expand control.
+          * @default true
+         */
+        "showSelectionSummary": boolean;
+        /**
+          * @default false
+         */
+        "tree": boolean;
         /**
           * A string representing the value of the option. Can be used to identify the item
          */
@@ -1762,6 +1851,7 @@ export namespace Components {
      * ```
      * @documentation https://storybook.beeq.design/?path=/docs/components-page-title--overview
      * @status stable
+     * @cssprop --bq-page-title--divider-color - Page title divider (border end) color, used by `--subtitle-borderBlockEnd`
      * @cssprop --paddingY - Padding top and bottom of the page title wrapper
      * @cssprop --subtitle-borderBlockEnd - Page title border end color
      * @cssprop --subtitle-fontWeight - Page title font weight for subtitle
@@ -1856,6 +1946,9 @@ export namespace Components {
      * @cssprop --bq-progress-bar--height - The progress bars height
      * @cssprop --bq-progress-bar--indeterminateWidth - The progress bar width when its indeterminate
      * @cssprop --bq-progress-bar--indicatorColor - The progress bar color (inside the track area)
+     * @cssprop --bq-progress-bar--indicatorColor-error - The progress bar color when `type="error"`
+     * @cssprop --bq-progress-bar--label-color - The label text color
+     * @cssprop --bq-progress-bar--label-color-error - The label text color when `type="error"`
      * @cssprop --bq-progress-bar--trackColor - The progress bar track area (the grey one)
      */
     interface BqProgress {
@@ -1919,7 +2012,11 @@ export namespace Components {
      * @event bqFocus - Handler to be called when the radio gets focused
      * @event bqKeyDown - The handler is to be called when the radio key is pressed
      * @cssprop --bq-radio--background-color - Radio background color
+     * @cssprop --bq-radio--border-color - Radio border color
+     * @cssprop --bq-radio--border-color-checked - Radio border color when checked
      * @cssprop --bq-radio--border-width - Radio border width
+     * @cssprop --bq-radio--dot-color-checked - Radio inner dot color when checked
+     * @cssprop --bq-radio--label-text-color - Radio label text color
      * @cssprop --bq-radio--size - Radio size
      */
     interface BqRadio {
@@ -2009,7 +2106,7 @@ export namespace Components {
          */
         "backgroundOnHover": boolean;
         /**
-          * A number representing the delay time (in milliseconds) that `bqChange` event handler gets triggered once the value change
+          * A number representing the delay time (in milliseconds) that `bqChange` event handler gets triggered once the value change. With `0` (default), the event is emitted synchronously.
           * @default 0
          */
         "debounceTime": number;
@@ -2072,6 +2169,7 @@ export namespace Components {
      * @attr {string} clear-button-label - The clear button aria label.
      * @attr {number} debounce-time - The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes.
      * @attr {boolean} disable-clear - If `true`, the clear button won't be displayed.
+     * @attr {boolean} disable-search - Disables text filtering while keeping option selection available.
      * @attr {boolean} disabled - Indicates whether the Select input is disabled and cannot be interacted with.
      * @attr {number} distance - Represents the distance (gutter or margin) between the Select panel and the input element.
      * @attr {string} form - The ID of the form that Select input field belongs to.
@@ -2084,28 +2182,34 @@ export namespace Components {
      * @attr {string} panel-height - When set, it will override the height of the Select panel.
      * @attr {string} placeholder - The Select input placeholder text value.
      * @attr {"bottom" | "bottom-end" | "bottom-start" | "left" | "left-end" | "left-start" | "right" | "right-end" | "right-start" | "top" | "top-end" | "top-start"} placement - Position of the Select panel.
-     * @attr {boolean} readonly - If `true`, the Select input cannot be modified.
+     * @attr {boolean} readonly - Deprecated. Use `disable-search` to allow selection without text filtering.
      * @attr {boolean} required - Indicates whether or not the Select input is required to be filled out before submitting the form.
      * @attr {boolean} same-width - Whether the panel should have the Select same width as the input element.
+     * @attr {boolean} enable-checkboxes - If `true` and `multiple` is enabled, flat options render with checkboxes. Nested multi-select options always render with checkboxes.
      * @attr {number} skidding - Represents the skidding between the Select panel and the input element.
      * @attr {"absolute" | "fixed"} strategy - Defines the strategy to position the Select panel.
      * @attr {"error" | "success" | "warning" | "none"} validation-status - The validation status of the Select input.
-     * @attr {"number" | "string" | "string[]"} value - The select input value can be used to reset the field to a previous value.
+     * @attr {string | string[]} value - The select input value can be used to reset the field to a previous value.
      * @method clear - Method to be called to clear the selected value.
-     * @event bqBlur - The callback handler is emitted when the Select input loses focus.
+     * @event bqBlur - Emitted when focus leaves the entire Select, including its input, options, and controls.
      * @event bqClear - The callback handler is emitted when the selected value has been cleared.
-     * @event bqFocus - A callback handler is emitted when the Select input has received focus.
-     * @event bqSelect - The callback handler is emitted when the selected value has changed.
+     * @event bqFocus - Emitted when focus enters the Select from outside the component.
+     * @event bqSelect - The callback handler is emitted when the selected value has changed. Nested multi-select events include selected paths in `selectionTree`.
      * @cssprop --bq-select--background-color - Select background color
      * @cssprop --bq-select--border-color - Select border color
      * @cssprop --bq-select--border-color-focus - Select border color on focus
-     * @cssprop --bq-select--border-color-disabled - Select border color when disabled
+     * @cssprop --bq-select--border-color-danger - Select border color when the validation status is `error`
+     * @cssprop --bq-select--border-color-success - Select border color when the validation status is `success`
+     * @cssprop --bq-select--border-color-warning - Select border color when the validation status is `warning`
      * @cssprop --bq-select--border-radius - Select border radius
      * @cssprop --bq-select--border-width - Select border width
      * @cssprop --bq-select--border-style - Select border style
      * @cssprop --bq-select--gap - Gap between Select content and prefix/suffix
      * @cssprop --bq-select--helper-margin-top - Helper text margin top
      * @cssprop --bq-select--helper-text-color - Helper text color
+     * @cssprop --bq-select--helper-text-color-danger - Helper text color when the validation status is `error`
+     * @cssprop --bq-select--helper-text-color-success - Helper text color when the validation status is `success`
+     * @cssprop --bq-select--helper-text-color-warning - Helper text color when the validation status is `warning`
      * @cssprop --bq-select--helper-text-size - Helper text size
      * @cssprop --bq-select--icon-size - Icon size to use in prefix/suffix and clear button
      * @cssprop --bq-select--label-margin-bottom - Select label margin bottom
@@ -2135,7 +2239,7 @@ export namespace Components {
          */
         "clearButtonLabel"?: string;
         /**
-          * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes. A value of 0 means no debouncing will occur.
+          * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes. A value of 0 means no debouncing will occur: `bqInput` is emitted synchronously and options are filtered right away.
           * @default 0
          */
         "debounceTime"?: number;
@@ -2150,6 +2254,11 @@ export namespace Components {
          */
         "disableScrollLock"?: boolean;
         /**
+          * If true, the search functionality within the Select panel will be disabled. No typing will be allowed
+          * @default false
+         */
+        "disableSearch"?: boolean;
+        /**
           * Indicates whether the Select input is disabled or not. If `true`, the Select is disabled and cannot be interacted with.
           * @default false
          */
@@ -2159,6 +2268,10 @@ export namespace Components {
           * @default 8
          */
         "distance"?: number;
+        /**
+          * If true, flat options render with checkboxes when multiple selection is enabled. Nested multi-select options always render with checkboxes.
+         */
+        "enableCheckboxes"?: boolean;
         /**
           * The ID of the form that the Select input belongs to.
          */
@@ -2205,7 +2318,7 @@ export namespace Components {
          */
         "placement"?: Placement;
         /**
-          * If true, the list of options cannot be filtered (searching won't be available)
+          * @deprecated Use `disableSearch` to allow selection without text filtering. In a future major release, `readonly` will prevent changing the selected value.
          */
         "readonly"?: boolean;
         /**
@@ -2323,8 +2436,10 @@ export namespace Components {
      * @event bqFocus - Handler to be called when the button is clicked.
      * @cssprop --bq-side-menu-item--bg-default - Side menu item default background color
      * @cssprop --bq-side-menu-item--bg-active - Side menu item active background color
+     * @cssprop --bq-side-menu-item--bg-hover - Base colour of the hover background (mixed with `--bq-hover` on hover)
      * @cssprop --bq-side-menu-item--text-default - Side menu item default text color
      * @cssprop --bq-side-menu-item--text-active - Side menu item active text color
+     * @cssprop --bq-side-menu-item--text-hover - Base colour of the hover text (mixed with `--bq-hover` on hover)
      * @cssprop --bq-side-menu-item--paddingX - Side menu item vertical padding
      * @cssprop --bq-side-menu-item--paddingY - Side menu item horizontal padding
      */
@@ -2374,10 +2489,13 @@ export namespace Components {
      * @cssprop --bq-slider--thumb-size - Slider hover thumb size
      * @cssprop --bq-slider--progress-color - Slider progress background color
      * @cssprop --bq-slider--trackarea-color - Slider track background color
+     * @cssprop --bq-slider--thumb-background - Slider thumb background color
+     * @cssprop --bq-slider--thumb-border-color - Slider thumb border color
+     * @cssprop --bq-slider--label-color - Slider value indicator (label) text color
      */
     interface BqSlider {
         /**
-          * The amount of time, in milliseconds, to wait to trigger the `bqChange` event after each value change.
+          * The amount of time, in milliseconds, to wait to trigger the `bqChange` event after each value change. With `0` (default), the event is emitted synchronously.
           * @default 0
          */
         "debounceTime": number;
@@ -2456,6 +2574,7 @@ export namespace Components {
      * @cssprop --bq-spinner--medium-text-fontSize - Spinner medium text font size
      * @cssprop --bq-spinner--small-text-fontSize - Spinner small text font size
      * @cssprop --bq-spinner--text-lineHeight - Spinner text line height
+     * @cssprop --bq-spinner--text-color - Spinner text color
      */
     interface BqSpinner {
         /**
@@ -2485,6 +2604,13 @@ export namespace Components {
      * @dependency bq-badge
      * @attr {"alert" | "danger" | "info" | "neutral" | "success"} type - It defines the type of status to display.
      * @cssprop --bq-status-circle--size - Status circle size.
+     * @cssprop --bq-status-circ - Status circle size alias.
+     * @cssprop --bq-status--dot-color-alert - Status circle color when type is `alert`.
+     * @cssprop --bq-status--dot-color-danger - Status circle color when type is `danger`.
+     * @cssprop --bq-status--dot-color-info - Status circle color when type is `info`.
+     * @cssprop --bq-status--dot-color-neutral - Status circle color when type is `neutral`.
+     * @cssprop --bq-status--dot-color-success - Status circle color when type is `success`.
+     * @cssprop --bq-status--text-color - Status text color.
      */
     interface BqStatus {
         /**
@@ -2514,12 +2640,23 @@ export namespace Components {
      * @event bqClick - Callback handler emitted when the step item is clicked
      * @event bqFocus - Callback handler emitted when the step item is focused
      * @event bqBlur - Callback handler emitted when the step item loses focus
+     * @cssprop --bq-step-item--background-hover - Background base colour of the step item hover state (mixed with `--bq-hover` on hover)
+     * @cssprop --bq-step-item--description-color - Text color of the description
      * @cssprop --bq-step-item--prefix-color - Color of the prefix icon
      * @cssprop --bq-step-item--prefix-color-current - Color of the prefix icon when current
      * @cssprop --bq-step-item--prefix-color-completed - Color of the prefix icon when completed
      * @cssprop --bq-step-item--prefix-color-error - Color of the prefix icon when error
      * @cssprop --bq-step-item--prefix-num-size - Size of the prefix number
      * @cssprop --bq-step-item--prefix-num-bg-color - Background color of the prefix number
+     * @cssprop --bq-step-item--prefix-num-bg-color-current - Background color of the prefix number when current
+     * @cssprop --bq-step-item--prefix-num-bg-color-completed - Background color of the prefix number when completed
+     * @cssprop --bq-step-item--prefix-num-bg-color-error - Background color of the prefix number when error
+     * @cssprop --bq-step-item--prefix-num-text-color - Text color of the prefix number
+     * @cssprop --bq-step-item--prefix-num-text-color-current - Text color of the prefix number when current
+     * @cssprop --bq-step-item--prefix-num-text-color-completed - Text color of the prefix number when completed
+     * @cssprop --bq-step-item--prefix-num-text-color-error - Text color of the prefix number when error
+     * @cssprop --bq-step-item--title-color - Text color of the title
+     * @cssprop --bq-step-item--title-color-current - Text color of the title when current
      */
     interface BqStepItem {
         /**
@@ -2570,7 +2707,6 @@ export namespace Components {
      * @attr {"horizontal" | "vertical"} orientation - The orientation of the steps
      * @attr {"medium" | "small"} size - The size of the steps
      * @attr {"numeric" | "icon" | "dot"} type - The type of prefix element to use on the step items
-     * @cssprop --bq-steps--divider-color - Divider color
      * @cssprop --bq-steps--gap - Gap between steps
      */
     interface BqSteps {
@@ -2630,6 +2766,13 @@ export namespace Components {
      * @cssprop --bq-switch--justify-content - Switch justify content
      * @cssprop --bq-switch--width - Switch width
      * @cssprop --bq-switch--dot-size - Switch dot size
+     * @cssprop --bq-switch--dot-color - Switch dot color
+     * @cssprop --bq-switch--dot-color-checked - Switch dot color when checked
+     * @cssprop --bq-switch--icon-color - Switch inner icon color (unchecked)
+     * @cssprop --bq-switch--icon-color-checked - Switch inner icon color when checked
+     * @cssprop --bq-switch--label-text-color - Switch label text color
+     * @cssprop --bq-switch--track-color - Switch track color
+     * @cssprop --bq-switch--track-color-checked - Switch track color when checked
      */
     interface BqSwitch {
         /**
@@ -2720,11 +2863,13 @@ export namespace Components {
      * @method vClick - Simulate a click event on the native `<button>` HTML element used under the hood
      * @method vFocus - Sets focus on the native `<button>` HTML element used under the hood
      * @method vBlur - Remove focus from the native `<button>` HTML element used under the hood
+     * @cssprop --bq-tab--background-hover - Background base colour of the hover state (mixed with `--bq-hover` on hover)
      * @cssprop --bq-tab--font-size - Font size
      * @cssprop --bq-tab--font-weight - Font weight
      * @cssprop --bq-tab--icon-size-large - Icon size for large tab
      * @cssprop --bq-tab--icon-size-medium - Icon size for medium tab
      * @cssprop --bq-tab--icon-size-small - Icon size for small tab
+     * @cssprop --bq-tab--indicator-color - Color of the active tab indicator
      * @cssprop --bq-tab--label-icon-gap - Gap between label and icon
      * @cssprop --bq-tab--line-height - Line height
      * @cssprop --bq-tab--padding-horizontal-large - Horizontal padding for large tab
@@ -2733,6 +2878,9 @@ export namespace Components {
      * @cssprop --bq-tab--padding-vertical-large - Vertical padding for large tab
      * @cssprop --bq-tab--padding-vertical-medium - Vertical padding for medium tab
      * @cssprop --bq-tab--padding-vertical-small - Vertical padding for small tab
+     * @cssprop --bq-tab--text-color - Text color
+     * @cssprop --bq-tab--text-color-active - Text color of the active tab
+     * @cssprop --bq-tab--text-color-hover - Text base colour of the hover state (mixed with `--bq-hover` on hover)
      */
     interface BqTab {
         /**
@@ -2801,10 +2949,11 @@ export namespace Components {
      * @attr {string} size - The size of the tab
      * @attr {string} value - A string representing the id of the selected tab.
      * @event bqChange - Handler to be called when the tab value changes
+     * @cssprop --bq-tab-group--border-color - Color of the divider line along the tabs
      */
     interface BqTabGroup {
         /**
-          * A number representing the delay value applied to bqChange event handler
+          * A number representing the delay value applied to bqChange event handler. With `0` (default), the event is emitted synchronously.
           * @default 0
          */
         "debounceTime": number;
@@ -2872,6 +3021,34 @@ export namespace Components {
      * @cssprop --bq-tag--medium-gap - Tag medium gap between content
      * @cssprop --bq-tag--medium-padding-x - Tag medium padding horizontal
      * @cssprop --bq-tag--medium-padding-y - Tag medium padding vertical
+     * @cssprop --bq-tag--text-color - Tag text color
+     * @cssprop --bq-tag--background-selected - Tag background color when it is clickable and selected
+     * @cssprop --bq-tag--text-selected - Tag text color when it is clickable and selected
+     * @cssprop --bq-tag--background-error-filled - Tag background color for the error color and filled variant
+     * @cssprop --bq-tag--text-error-filled - Tag text color for the error color and filled variant
+     * @cssprop --bq-tag--background-error-outline - Tag background color for the error color and outline variant
+     * @cssprop --bq-tag--text-error-outline - Tag text color for the error color and outline variant
+     * @cssprop --bq-tag--border-error-outline - Tag border color for the error color and outline variant
+     * @cssprop --bq-tag--background-gray-filled - Tag background color for the gray color and filled variant
+     * @cssprop --bq-tag--text-gray-filled - Tag text color for the gray color and filled variant
+     * @cssprop --bq-tag--background-gray-outline - Tag background color for the gray color and outline variant
+     * @cssprop --bq-tag--text-gray-outline - Tag text color for the gray color and outline variant
+     * @cssprop --bq-tag--border-gray-outline - Tag border color for the gray color and outline variant
+     * @cssprop --bq-tag--background-info-filled - Tag background color for the info color and filled variant
+     * @cssprop --bq-tag--text-info-filled - Tag text color for the info color and filled variant
+     * @cssprop --bq-tag--background-info-outline - Tag background color for the info color and outline variant
+     * @cssprop --bq-tag--text-info-outline - Tag text color for the info color and outline variant
+     * @cssprop --bq-tag--border-info-outline - Tag border color for the info color and outline variant
+     * @cssprop --bq-tag--background-success-filled - Tag background color for the success color and filled variant
+     * @cssprop --bq-tag--text-success-filled - Tag text color for the success color and filled variant
+     * @cssprop --bq-tag--background-success-outline - Tag background color for the success color and outline variant
+     * @cssprop --bq-tag--text-success-outline - Tag text color for the success color and outline variant
+     * @cssprop --bq-tag--border-success-outline - Tag border color for the success color and outline variant
+     * @cssprop --bq-tag--background-warning-filled - Tag background color for the warning color and filled variant
+     * @cssprop --bq-tag--text-warning-filled - Tag text color for the warning color and filled variant
+     * @cssprop --bq-tag--background-warning-outline - Tag background color for the warning color and outline variant
+     * @cssprop --bq-tag--text-warning-outline - Tag text color for the warning color and outline variant
+     * @cssprop --bq-tag--border-warning-outline - Tag border color for the warning color and outline variant
      */
     interface BqTag {
         /**
@@ -2960,17 +3137,23 @@ export namespace Components {
      * @attr {"soft" | "hard"} wrap - Specifies how the text in a text area is to be wrapped when submitted in a form.
      * @event bqBlur - Handler to be called when the textarea loses focus.
      * @event bqChange - Handler to be called when the textarea value has changed and the textarea loses focus.
-     * @event bqClear - Handler to be called when the textarea value has been cleared.
+     * @event bqClear - Deprecated. `bq-textarea` never emits `bqClear`. It will be removed in the next major release.
      * @event bqFocus - Handler to be called when the textarea has received focus.
      * @event bqInput - Handler to be called when the textarea value changes.
      * @cssprop --bq-textarea--background-color - Textarea background color
      * @cssprop --bq-textarea--border-color - Textarea border color
      * @cssprop --bq-textarea--border-color-focus - Textarea border color on focus
+     * @cssprop --bq-textarea--border-color-danger - Textarea border color when the validation status is `error`
+     * @cssprop --bq-textarea--border-color-success - Textarea border color when the validation status is `success`
+     * @cssprop --bq-textarea--border-color-warning - Textarea border color when the validation status is `warning`
      * @cssprop --bq-textarea--border-radius - Textarea border radius
      * @cssprop --bq-textarea--border-width - Textarea border width
      * @cssprop --bq-textarea--border-style - Textarea border style
      * @cssprop --bq-textarea--helper-margin-top - Textarea helper text margin top
      * @cssprop --bq-textarea--helper-text-color - Textarea helper text color
+     * @cssprop --bq-textarea--helper-text-color-danger - Helper text color when the validation status is `error`
+     * @cssprop --bq-textarea--helper-text-color-success - Helper text color when the validation status is `success`
+     * @cssprop --bq-textarea--helper-text-color-warning - Helper text color when the validation status is `warning`
      * @cssprop --bq-textarea--helper-text-size - Textarea helper text size
      * @cssprop --bq-textarea--label-margin-bottom - Textarea label margin bottom
      * @cssprop --bq-textarea--label-text-color - Textarea label text color
@@ -3006,7 +3189,7 @@ export namespace Components {
          */
         "autofocus": boolean;
         /**
-          * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the textarea value changes. A value of 0 means no debouncing will occur.
+          * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the textarea value changes. A value of 0 means no debouncing will occur: `bqInput` is emitted synchronously on every input.
           * @default 0
          */
         "debounceTime"?: number;
@@ -3075,6 +3258,221 @@ export namespace Components {
           * @default 'soft'
          */
         "wrap": TTextareaWrap;
+    }
+    /**
+     * The Time Picker lets users enter a time of day by typing into locale-ordered,
+     * keyboard-editable segments or by picking hours, minutes, seconds and AM/PM
+     * from scrollable columns in a dropdown panel.
+     * @example How to use it
+     * ```html
+     * <bq-time-picker name="meeting-time" value="14:30">
+     * <label slot="label">Meeting time</label>
+     * </bq-time-picker>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/0727e1-time-picker
+     * @status experimental
+     * @dependency bq-button
+     * @dependency bq-dropdown
+     * @dependency bq-icon
+     * @attr {boolean} autofocus - If `true`, the Time picker field will be focused on component render.
+     * @attr {boolean} disable-clear - If `true`, the clear button won't be displayed.
+     * @attr {boolean} disable-now - If `true`, the panel "Now" button won't be displayed.
+     * @attr {boolean} disabled - Indicates whether the Time picker is disabled or not.
+     * @attr {number} distance - Represents the distance between the panel and the field.
+     * @attr {string} form - The form ID the field belongs to.
+     * @attr {string} form-validation-message - Custom native form validation message.
+     * @attr {"12" | "24"} hour-format - The clock used by the field and the panel. Defaults to `"24"`.
+     * @attr {number} hour-step - Step between selectable hours.
+     * @attr {string} labels - JSON object with the text of the column headers, AM/PM labels, buttons and accessible names.
+     * @attr {Intl.LocalesArgument} locale - Locale used for the field layout, separators, column headers and day period labels.
+     * @attr {string} max - Latest selectable time (`HH:mm` or `HH:mm:ss`).
+     * @attr {string} min - Earliest selectable time (`HH:mm` or `HH:mm:ss`).
+     * @attr {number} minute-step - Step between selectable minutes.
+     * @attr {string} name - The Time picker name.
+     * @attr {boolean} open - If `true`, the panel is visible.
+     * @attr {string} panel-height - Overrides the height of the panel.
+     * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Placement of the panel.
+     * @attr {"hour" | "minute" | "second"} precision - The smallest unit edited and submitted.
+     * @attr {boolean} readonly - If `true`, the value can be read and submitted but not changed.
+     * @attr {boolean} require-confirm - If `true`, panel picks are a draft shown only in the panel until confirmed with the OK button or Enter.
+     * @attr {boolean} required - Whether a value must be entered before submitting the form.
+     * @attr {number} second-step - Step between selectable seconds.
+     * @attr {number} skidding - Skidding between the panel and the field.
+     * @attr {"fixed" | "absolute"} strategy - Positioning strategy for the panel.
+     * @attr {"error" | "none" | "success" | "warning"} validation-status - Validation state.
+     * @attr {string} value - The selected time in 24-hour format: `HH:mm` (`HH:00` at hour precision) or `HH:mm:ss`.
+     * @method clear() - Clears the selected value.
+     * @event bqBlur - Emitted when focus leaves the Time picker, including its panel.
+     * @event bqChange - Emitted when the value is committed or cleared.
+     * @event bqClear - Emitted when the value is cleared.
+     * @event bqFocus - Emitted when focus enters the Time picker, including its panel.
+     * @cssprop --bq-time-picker--background-color - Field background color.
+     * @cssprop --bq-time-picker--border-color - Field border color.
+     * @cssprop --bq-time-picker--border-color-disabled - Border color when disabled.
+     * @cssprop --bq-time-picker--border-color-focus - Border color on focus.
+     * @cssprop --bq-time-picker--border-color-danger - Border color when the validation status is `error`.
+     * @cssprop --bq-time-picker--border-color-success - Border color when the validation status is `success`.
+     * @cssprop --bq-time-picker--border-color-warning - Border color when the validation status is `warning`.
+     * @cssprop --bq-time-picker--border-radius - Field border radius.
+     * @cssprop --bq-time-picker--border-style - Border style.
+     * @cssprop --bq-time-picker--border-width - Border width.
+     * @cssprop --bq-time-picker--column-gap - Space between the panel columns.
+     * @cssprop --bq-time-picker--column-header-text-color - Text color of the column headers.
+     * @cssprop --bq-time-picker--column-height - Height of the scrollable panel columns.
+     * @cssprop --bq-time-picker--column-width - Width of a panel column.
+     * @cssprop --bq-time-picker--divider-color - Color of the lines between the panel columns and above the footer.
+     * @cssprop --bq-time-picker--gap - Gap between the field content and prefix/suffix.
+     * @cssprop --bq-time-picker--icon-size - Size of the icons used in prefix/suffix/clear.
+     * @cssprop --bq-time-picker--label-margin-bottom - Space below the label.
+     * @cssprop --bq-time-picker--label-text-color - Label text color.
+     * @cssprop --bq-time-picker--label-text-size - Label text size.
+     * @cssprop --bq-time-picker--option-background-hover - Hover background of a column option.
+     * @cssprop --bq-time-picker--option-background-selected - Background of the selected column option.
+     * @cssprop --bq-time-picker--option-height - Height of a column option.
+     * @cssprop --bq-time-picker--option-width - Width of a column option.
+     * @cssprop --bq-time-picker--option-radius - Border radius of a column option.
+     * @cssprop --bq-time-picker--option-text-selected - Text color of the selected column option.
+     * @cssprop --bq-time-picker--padding-end - Field padding end.
+     * @cssprop --bq-time-picker--padding-start - Field padding start.
+     * @cssprop --bq-time-picker--paddingY - Field vertical padding.
+     * @cssprop --bq-time-picker--text-color - Field text color.
+     * @cssprop --bq-time-picker--text-placeholder-color - Placeholder text color.
+     * @cssprop --bq-time-picker--text-size - Field text size.
+     */
+    interface BqTimePicker {
+        /**
+          * If `true`, the Time picker field will be focused on component render.
+          * @default false
+         */
+        "autofocus": boolean;
+        /**
+          * Clears the selected value and any pending validation state. Emits `bqClear`. No-op when the component is disabled or read-only.
+          * @returns A promise that resolves once the value has been cleared.
+         */
+        "clear": () => Promise<void>;
+        /**
+          * If `true`, the clear button won't be displayed.
+          * @default false
+         */
+        "disableClear": boolean;
+        /**
+          * If `true`, the panel "Now" button won't be displayed.
+          * @default false
+         */
+        "disableNow": boolean;
+        /**
+          * Indicates whether the Time picker is disabled or not.
+          * @default false
+         */
+        "disabled": boolean;
+        /**
+          * Distance (gutter) between the Time picker panel and the field.
+          * @default 8
+         */
+        "distance": number;
+        /**
+          * The ID of the form the field belongs to.
+         */
+        "form"?: string;
+        /**
+          * Native form validation message.
+         */
+        "formValidationMessage"?: string;
+        /**
+          * The clock used by the field and the panel: 24-hour (`"24"`) or 12-hour with an AM/PM period (`"12"`). It doesn't depend on the `locale`.
+          * @default '24'
+         */
+        "hourFormat": THourFormat;
+        /**
+          * Step between selectable hours.
+          * @default 1
+         */
+        "hourStep": number;
+        /**
+          * Text of the column headers, AM/PM labels, buttons and accessible names, as an object or a JSON string. Missing keys fall back to the `locale` names (`hour`, `minute`, `second`, `am`, `pm`), `am/pm` (`period`), or English text: `Now`, `Clear`, `OK`, `Open time picker` and `Choose time`.
+         */
+        "labels"?: TTimePickerLabels | string;
+        /**
+          * Locale used for the field layout, separators, column headers and day period labels. The clock is set by `hour-format`.
+          * @default 'en-GB'
+         */
+        "locale": Intl.LocalesArgument;
+        /**
+          * Latest selectable time, in 24-hour format (`HH:mm` or `HH:mm:ss`). Ignored, together with `min`, when it is earlier than `min`.
+         */
+        "max"?: string;
+        /**
+          * Earliest selectable time, in 24-hour format (`HH:mm` or `HH:mm:ss`). Ignored, together with `max`, when it is later than `max`.
+         */
+        "min"?: string;
+        /**
+          * Step between selectable minutes.
+          * @default 1
+         */
+        "minuteStep": number;
+        /**
+          * The Time picker name.
+         */
+        "name": string;
+        /**
+          * If `true`, the panel is visible.
+          * @default false
+         */
+        "open": boolean;
+        /**
+          * Overrides the height of the Time picker panel.
+          * @default 'auto'
+         */
+        "panelHeight"?: string;
+        /**
+          * Position of the Time picker panel.
+          * @default 'bottom-end'
+         */
+        "placement": Placement;
+        /**
+          * The smallest unit edited and submitted. - `hour`   → `HH:00` - `minute` → `HH:mm` (default) - `second` → `HH:mm:ss`
+          * @default 'minute'
+         */
+        "precision": TTimePrecision;
+        /**
+          * If `true`, the value can be read and submitted but not changed.
+          * @default false
+         */
+        "readonly": boolean;
+        /**
+          * If `true`, picks made in the panel (including "Now") are a draft until confirmed with the OK button or Enter. The field keeps showing the committed value until then. Escape or an outside click discards the draft.
+          * @default false
+         */
+        "requireConfirm": boolean;
+        /**
+          * Whether a value must be entered before submitting the form.
+          * @default false
+         */
+        "required": boolean;
+        /**
+          * Step between selectable seconds.
+          * @default 1
+         */
+        "secondStep": number;
+        /**
+          * Skidding between the panel and the field.
+          * @default 0
+         */
+        "skidding": number;
+        /**
+          * Positioning strategy for the panel.
+          * @default 'fixed'
+         */
+        "strategy": TFloatingStrategy1;
+        /**
+          * Validation state applied to the field.
+          * @default 'none'
+         */
+        "validationStatus": TInputValidation1;
+        /**
+          * The selected time, in 24-hour format: `HH:mm` (`HH:00` at hour precision) or `HH:mm:ss` at second precision.
+         */
+        "value"?: string;
     }
     /**
      * Toasts are time-based components used to display short messages.
@@ -3340,6 +3738,10 @@ export interface BqTextareaCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqTextareaElement;
 }
+export interface BqTimePickerCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqTimePickerElement;
+}
 export interface BqToastCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqToastElement;
@@ -3403,13 +3805,16 @@ declare global {
      * @cssprop --bq-accordion--filled-collapsed-background - Accordion filled collapsed header background
      * @cssprop --bq-accordion--filled-collapsed-text-color - Accordion filled collapsed header text color
      * @cssprop --bq-accordion--filled-expanded-background - Accordion filled expanded header background
-     * @cssprop --bq-accordion--filled-expanded-collapsed-hover - Accordion filled expanded header color on hover
+     * @cssprop --bq-accordion--filled-expanded-collapsed-hover - Base colour of the filled expanded header hover state (mixed with `--bq-hover` on hover)
      * @cssprop --bq-accordion--filled-expanded-text-color - Accordion filled expanded header text color
      * @cssprop --bq-accordion--ghost-collapsed-background - Accordion ghost collapsed header background
      * @cssprop --bq-accordion--ghost-collapsed-text-color - Accordion ghost collapsed header text color
      * @cssprop --bq-accordion--ghost-expanded-background - Accordion ghost expanded header background
-     * @cssprop --bq-accordion--ghost-expanded-collapsed-hover - Accordion ghost expanded header color on hover
+     * @cssprop --bq-accordion--ghost-expanded-collapsed-hover - Base colour of the ghost header hover state, collapsed and expanded (mixed with `--bq-hover` on hover)
      * @cssprop --bq-accordion--ghost-expanded-text-color - Accordion ghost expanded header text color
+     * @cssprop --bq-accordion--icon-color - Accordion expand and collapse icon color
+     * @cssprop --bq-accordion--panel-background - Accordion panel background
+     * @cssprop --bq-accordion--panel-text-color - Accordion panel text color
      * @cssprop --bq-accordion--panel-filled-border-color - Accordion filled panel border color
      * @cssprop --bq-accordion--panel-filled-border-style - Accordion filled panel border style
      * @cssprop --bq-accordion--panel-filled-border-width - Accordion filled panel border width
@@ -3513,7 +3918,6 @@ declare global {
      * @cssprop --bq-alert--border-radius - The alert border radius
      * @cssprop --bq-alert--content-footer-gap - The alert content and footer gap
      * @cssprop --bq-alert--title-body-gap - The alert title and body gap
-     * @cssprop --bq-alert--border-color - The alert border color
      * @cssprop --bq-alert--border-style - The alert border style
      * @cssprop --bq-alert--border-width - The alert border width
      * @cssprop --bq-alert--background-info - The alert background color for info type
@@ -3528,8 +3932,10 @@ declare global {
      * @cssprop --bq-alert--icon-color-success - The alert icon color for success type
      * @cssprop --bq-alert--icon-color-warning - The alert icon color for warning type
      * @cssprop --bq-alert--icon-color-error - The alert icon color for error type
+     * @cssprop --bq-alert--text-color - The alert text color
      * @cssprop --bq-alert--padding - The alert padding
      * @cssprop --bq-alert--min-width - The alert min width
+     * @cssprop --bq-alert--z-index - The stacking order of a sticky alert. No default is declared.
      */
     interface HTMLBqAlertElement extends Components.BqAlert, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqAlertElementEventMap>(type: K, listener: (this: HTMLBqAlertElement, ev: BqAlertCustomEvent<HTMLBqAlertElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -3573,6 +3979,7 @@ declare global {
      * @cssprop --bq-avatar--border-color - Avatar border color
      * @cssprop --bq-avatar--border-style - Avatar border style
      * @cssprop --bq-avatar--border-width - Avatar border width
+     * @cssprop --bq-avatar--text-color - Avatar initials text color
      * @cssprop --bq-avatar--border-radius-circle - Avatar border radius for circle & any size
      * @cssprop --bq-avatar--border-radius-squareXs - Avatar border radius for square & size xsmall
      * @cssprop --bq-avatar--border-radius-squareS - Avatar border radius for square & size small
@@ -3660,7 +4067,7 @@ declare global {
      * @status stable
      * @attr {string} href - If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered.
      * @attr {string} target - Where to display the link in the browser context. Relevant only if `href` is set.
-     * @attr {string} rel - Where to display the link in the browser context. Relevant only if `href` is set.
+     * @attr {string} rel - Space-separated link relationship types (e.g. `external`, `nofollow`) applied to the inner `<a>`. Relevant only if `href` is set. When `target` is set, `noreferrer` and `noopener` are always added.
      * @event bqFocus - Handler to be called when item is focused
      * @event bqClick - Handler to be called when item is clicked
      * @event bqBlur - Handler to be called when item loses focus
@@ -3675,6 +4082,7 @@ declare global {
      * @cssprop --bq-breadcrumb-item--text-color-current - Text color of the current breadcrumb item (active)
      * @cssprop --bq-breadcrumb-item--text-size - Text size of the breadcrumb item
      * @cssprop --bq-breadcrumb-item--text-size-separator - Text size of the breadcrumb item separator
+     * @cssprop --bq-breadcrumb-item--separator-color - Color of the breadcrumb item separator
      * @cssprop --bq-breadcrumb-item--padding-start - Padding start of the breadcrumb item
      * @cssprop --bq-breadcrumb-item--padding-end - Padding end of the breadcrumb item
      * @cssprop --bq-breadcrumb-item--paddingY - Padding top and bottom of the breadcrumb item
@@ -3741,6 +4149,18 @@ declare global {
      * @cssprop --bq-button--large-paddingX - Button large padding block (top and bottom)
      * @cssprop --bq-button--large-paddingY - Button large padding inline (left and right)
      * @cssprop --bq-button--large-font-size - Button large font size
+     * @cssprop --bq-button--primary-background - Primary button background color
+     * @cssprop --bq-button--primary-text-color - Primary button text color
+     * @cssprop --bq-button--primary-border-color-ghost - Primary ghost button border color
+     * @cssprop --bq-button--primary-text-color-ghost - Primary ghost button text color
+     * @cssprop --bq-button--primary-background-danger - Primary danger button background color
+     * @cssprop --bq-button--primary-text-color-danger - Primary danger button text color
+     * @cssprop --bq-button--secondary-background - Secondary button background color
+     * @cssprop --bq-button--secondary-text-color - Secondary button text color
+     * @cssprop --bq-button--secondary-border-color-ghost - Secondary ghost button border color
+     * @cssprop --bq-button--secondary-text-color-ghost - Secondary ghost button text color
+     * @cssprop --bq-button--link-text-color - Link button text color
+     * @cssprop --bq-button--text-text-color - Text button text color
      */
     interface HTMLBqButtonElement extends Components.BqButton, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqButtonElementEventMap>(type: K, listener: (this: HTMLBqButtonElement, ev: BqButtonCustomEvent<HTMLBqButtonElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -3816,8 +4236,13 @@ declare global {
      * @event bqFocus - Handler to be called when the checkbox gets focus
      * @event bqBlur - Handler to be called when the checkbox loses focus
      * @cssprop --bq-checkbox--background-color - Checkbox background color
+     * @cssprop --bq-checkbox--background-color-checked - Checkbox background color when checked or indeterminate
+     * @cssprop --bq-checkbox--border-color - Checkbox border color
+     * @cssprop --bq-checkbox--border-color-checked - Checkbox border color when checked or indeterminate
      * @cssprop --bq-checkbox--border-radius - Checkbox border radius
      * @cssprop --bq-checkbox--border-width - Checkbox border width
+     * @cssprop --bq-checkbox--icon-color-checked - Checkbox check and indeterminate mark color
+     * @cssprop --bq-checkbox--label-text-color - Checkbox label text color
      * @cssprop --bq-checkbox--size - Checkbox size
      */
     interface HTMLBqCheckboxElement extends Components.BqCheckbox, HTMLStencilElement {
@@ -3843,16 +4268,16 @@ declare global {
     }
     /**
      * The Date Picker is a pure-Stencil calendar input.
-     * It supports single, multi, and range selection, three navigation views
-     * (days → months → years), full localization via `Intl.DateTimeFormat`,
-     * multi-month side-by-side rendering, and RTL layouts.
+     * It supports single, multi, and range selection through locale-ordered,
+     * keyboard-editable date segments or a calendar panel. It also provides three
+     * navigation views (days → months → years), full localization via
+     * `Intl.DateTimeFormat`, multi-month side-by-side rendering, and RTL layouts.
      * @example How to use it
      * ```html
      * <bq-date-picker
      * first-day-of-week="1"
      * locale="en-GB"
      * name="bq-date-picker"
-     * placeholder="Enter your date"
      * type="single"
      * value="2026-07-15"
      * >
@@ -3884,7 +4309,7 @@ declare global {
      * @attr {string} name - Input name.
      * @attr {boolean} open - If `true`, the panel is visible.
      * @attr {string} panel-height - Overrides the height of the panel.
-     * @attr {string} placeholder - Input placeholder text.
+     * @attr {string} placeholder - Deprecated. Locale-derived segment format hints always describe the expected entry layout instead.
      * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Placement of the panel.
      * @attr {boolean} required - Whether a value must be selected before submitting the form.
      * @attr {boolean} show-outside-days - Whether to render days that belong to adjacent months.
@@ -3908,6 +4333,9 @@ declare global {
      * @cssprop --bq-date-picker--border-color - Input border color.
      * @cssprop --bq-date-picker--border-color-disabled - Border color when disabled.
      * @cssprop --bq-date-picker--border-color-focus - Border color on focus.
+     * @cssprop --bq-date-picker--border-color-danger - Border color when the validation status is `error`.
+     * @cssprop --bq-date-picker--border-color-success - Border color when the validation status is `success`.
+     * @cssprop --bq-date-picker--border-color-warning - Border color when the validation status is `warning`.
      * @cssprop --bq-date-picker--border-radius - Input border radius.
      * @cssprop --bq-date-picker--border-style - Border style.
      * @cssprop --bq-date-picker--border-width - Border width.
@@ -4001,6 +4429,8 @@ declare global {
      * @cssprop --bq-dialog--background - Dialog background color
      * @cssprop --bq-dialog--background-backdrop - Dialog backdrop background color
      * @cssprop --bq-dialog--box-shadow - Dialog box shadow
+     * @cssprop --bq-dialog--footer-background - Dialog footer background color (`highlight` footer appearance)
+     * @cssprop --bq-dialog--text-color - Dialog text color
      * @cssprop --bq-dialog--border-color - Dialog border color
      * @cssprop --bq-dialog--border-style - Dialog border style
      * @cssprop --bq-dialog--border-width - Dialog border width
@@ -4092,11 +4522,13 @@ declare global {
      * @event bqOpen - Callback handler to be called when the drawer is opened.
      * @event bqAfterOpen - Callback handler to be called after the drawer has been opened.
      * @event bqAfterClose - Callback handler to be called after the drawer has been closed.
+     * @cssprop --bq-drawer--background - Background color of the drawer panel
      * @cssprop --bq-drawer--backgroundBackdrop - Background color of the backdrop
      * @cssprop --bq-drawer--gap - Gap between the drawer and the viewport
      * @cssprop --bq-drawer--width - Width of the drawer
      * @cssprop --bq-drawer--paddingX - Padding left and right of the drawer
      * @cssprop --bq-drawer--paddingY - Padding top and bottom of the drawer
+     * @cssprop --bq-drawer--text-color - Text color of the drawer panel
      * @cssprop --bq-drawer--zIndex - Z-index of the drawer component
      */
     interface HTMLBqDrawerElement extends Components.BqDrawer, HTMLStencilElement {
@@ -4180,6 +4612,7 @@ declare global {
      * @status stable
      * @dependency bq-icon
      * @attr {"large" | "medium" | "small"} size - The size of the empty state component
+     * @cssprop --bq-empty-state--text-color - The text color of the title and body content
      */
     interface HTMLBqEmptyStateElement extends Components.BqEmptyState, HTMLStencilElement {
     }
@@ -4271,12 +4704,18 @@ declare global {
      * @cssprop --bq-input--background-color - Input background color
      * @cssprop --bq-input--border-color - Input border color
      * @cssprop --bq-input--border-color-focus - Input border color on focus
+     * @cssprop --bq-input--border-color-danger - Input border color when the validation status is `error`
+     * @cssprop --bq-input--border-color-success - Input border color when the validation status is `success`
+     * @cssprop --bq-input--border-color-warning - Input border color when the validation status is `warning`
      * @cssprop --bq-input--border-radius - Input border radius
      * @cssprop --bq-input--border-width - Input border width
      * @cssprop --bq-input--border-style - Input border style
      * @cssprop --bq-input--gap - Gap between input content and prefix/suffix
      * @cssprop --bq-input--helper-margin-top - Helper text margin top
      * @cssprop --bq-input--helper-text-color - Helper text color
+     * @cssprop --bq-input--helper-text-color-danger - Helper text color when the validation status is `error`
+     * @cssprop --bq-input--helper-text-color-success - Helper text color when the validation status is `success`
+     * @cssprop --bq-input--helper-text-color-warning - Helper text color when the validation status is `warning`
      * @cssprop --bq-input--helper-text-size - Helper text size
      * @cssprop --bq-input--icon-size - Icon size to use in prefix/suffix and clear button
      * @cssprop --bq-input--label-margin-bottom - Input label margin bottom
@@ -4388,16 +4827,33 @@ declare global {
      * ```
      * @documentation https://storybook.beeq.design/?path=/story/components-option--with-option-group
      * @status stable
+     * @dependency bq-checkbox
+     * @dependency bq-button
+     * @dependency bq-icon
      * @attr {boolean} disabled - If true, the option is disabled.
+     * @attr {string} display-value - Overrides the displayed option value.
      * @attr {boolean} hidden - If true, the option is hidden.
+     * @attr {boolean} checkbox - If true, the option renders as a checkbox option.
+     * @attr {boolean} expanded - If true, nested options are displayed.
+     * @attr {boolean} indeterminate - If true, the option checkbox represents a partial nested selection.
+     * @attr {string} all-selected-label - Text displayed when all selectable nested options are selected.
+     * @attr {string} selected-count-label - Text displayed when some selectable nested options are selected. Use `{count}` as the selected option count placeholder.
+     * @attr {boolean} show-selection-summary - If true, displays the nested selection summary beside the expand control.
      * @attr {string} value - A string representing the value of the option. Can be used to identify the item.
      * @attr {boolean} selected - If true, the option is selected and active.
      * @event bqBlur - Handler to be called when item loses focus.
      * @event bqFocus - Handler to be called when item is focused.
      * @event bqClick - Handler to be called when item is clicked.
-     * @event bqEnter - Handler to be called on enter key press.
+     * @event bqEnter - Emitted when Enter or Space activates a focused option. Checkbox control activation emits bqClick instead.
      * @cssprop --bq-option--background - background color
+     * @cssprop --bq-option--background-hover - background base colour of the hover state (mixed with `--bq-hover` on hover)
+     * @cssprop --bq-option--background-selected - background color when selected
+     * @cssprop --bq-option--expand-text-color-hover - expand control text color on hover
      * @cssprop --bq-option--font-size - font size
+     * @cssprop --bq-option--selection-summary-color - nested selection summary text color
+     * @cssprop --bq-option--text-color - text color
+     * @cssprop --bq-option--text-color-selected - text color when selected
+     * @cssprop --bq-option--tree-line-color - color of the lines connecting nested options
      * @cssprop --bq-option--border-color - border color
      * @cssprop --bq-option--border-style - border style
      * @cssprop --bq-option--border-width - border width
@@ -4406,8 +4862,8 @@ declare global {
      * @cssprop --bq-option--gap-start - gap space between prefix and label
      * @cssprop --bq-option--gap-end - gap space between label and suffix
      * @cssprop --bq-option--paddingY - padding Y axis
-     * @cssprop --bq-option--padding-start - option label padding start
-     * @cssprop --bq-option--padding-end - option label padding end
+     * @cssprop --bq-option--padding-start - option item padding start
+     * @cssprop --bq-option--padding-end - option item padding end
      */
     interface HTMLBqOptionElement extends Components.BqOption, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqOptionElementEventMap>(type: K, listener: (this: HTMLBqOptionElement, ev: BqOptionCustomEvent<HTMLBqOptionElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -4506,6 +4962,7 @@ declare global {
      * ```
      * @documentation https://storybook.beeq.design/?path=/docs/components-page-title--overview
      * @status stable
+     * @cssprop --bq-page-title--divider-color - Page title divider (border end) color, used by `--subtitle-borderBlockEnd`
      * @cssprop --paddingY - Padding top and bottom of the page title wrapper
      * @cssprop --subtitle-borderBlockEnd - Page title border end color
      * @cssprop --subtitle-fontWeight - Page title font weight for subtitle
@@ -4573,6 +5030,9 @@ declare global {
      * @cssprop --bq-progress-bar--height - The progress bars height
      * @cssprop --bq-progress-bar--indeterminateWidth - The progress bar width when its indeterminate
      * @cssprop --bq-progress-bar--indicatorColor - The progress bar color (inside the track area)
+     * @cssprop --bq-progress-bar--indicatorColor-error - The progress bar color when `type="error"`
+     * @cssprop --bq-progress-bar--label-color - The label text color
+     * @cssprop --bq-progress-bar--label-color-error - The label text color when `type="error"`
      * @cssprop --bq-progress-bar--trackColor - The progress bar track area (the grey one)
      */
     interface HTMLBqProgressElement extends Components.BqProgress, HTMLStencilElement {
@@ -4611,7 +5071,11 @@ declare global {
      * @event bqFocus - Handler to be called when the radio gets focused
      * @event bqKeyDown - The handler is to be called when the radio key is pressed
      * @cssprop --bq-radio--background-color - Radio background color
+     * @cssprop --bq-radio--border-color - Radio border color
+     * @cssprop --bq-radio--border-color-checked - Radio border color when checked
      * @cssprop --bq-radio--border-width - Radio border width
+     * @cssprop --bq-radio--dot-color-checked - Radio inner dot color when checked
+     * @cssprop --bq-radio--label-text-color - Radio label text color
      * @cssprop --bq-radio--size - Radio size
      */
     interface HTMLBqRadioElement extends Components.BqRadio, HTMLStencilElement {
@@ -4677,7 +5141,7 @@ declare global {
         "bqBlur": HTMLBqSelectElement;
         "bqClear": HTMLBqSelectElement;
         "bqFocus": HTMLBqSelectElement;
-        "bqSelect": { value: string | number | string[]; item: HTMLBqOptionElement };
+        "bqSelect": TSelectChangeDetail;
         "bqInput": { value: string | number | string[] };
     }
     /**
@@ -4706,6 +5170,7 @@ declare global {
      * @attr {string} clear-button-label - The clear button aria label.
      * @attr {number} debounce-time - The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes.
      * @attr {boolean} disable-clear - If `true`, the clear button won't be displayed.
+     * @attr {boolean} disable-search - Disables text filtering while keeping option selection available.
      * @attr {boolean} disabled - Indicates whether the Select input is disabled and cannot be interacted with.
      * @attr {number} distance - Represents the distance (gutter or margin) between the Select panel and the input element.
      * @attr {string} form - The ID of the form that Select input field belongs to.
@@ -4718,28 +5183,34 @@ declare global {
      * @attr {string} panel-height - When set, it will override the height of the Select panel.
      * @attr {string} placeholder - The Select input placeholder text value.
      * @attr {"bottom" | "bottom-end" | "bottom-start" | "left" | "left-end" | "left-start" | "right" | "right-end" | "right-start" | "top" | "top-end" | "top-start"} placement - Position of the Select panel.
-     * @attr {boolean} readonly - If `true`, the Select input cannot be modified.
+     * @attr {boolean} readonly - Deprecated. Use `disable-search` to allow selection without text filtering.
      * @attr {boolean} required - Indicates whether or not the Select input is required to be filled out before submitting the form.
      * @attr {boolean} same-width - Whether the panel should have the Select same width as the input element.
+     * @attr {boolean} enable-checkboxes - If `true` and `multiple` is enabled, flat options render with checkboxes. Nested multi-select options always render with checkboxes.
      * @attr {number} skidding - Represents the skidding between the Select panel and the input element.
      * @attr {"absolute" | "fixed"} strategy - Defines the strategy to position the Select panel.
      * @attr {"error" | "success" | "warning" | "none"} validation-status - The validation status of the Select input.
-     * @attr {"number" | "string" | "string[]"} value - The select input value can be used to reset the field to a previous value.
+     * @attr {string | string[]} value - The select input value can be used to reset the field to a previous value.
      * @method clear - Method to be called to clear the selected value.
-     * @event bqBlur - The callback handler is emitted when the Select input loses focus.
+     * @event bqBlur - Emitted when focus leaves the entire Select, including its input, options, and controls.
      * @event bqClear - The callback handler is emitted when the selected value has been cleared.
-     * @event bqFocus - A callback handler is emitted when the Select input has received focus.
-     * @event bqSelect - The callback handler is emitted when the selected value has changed.
+     * @event bqFocus - Emitted when focus enters the Select from outside the component.
+     * @event bqSelect - The callback handler is emitted when the selected value has changed. Nested multi-select events include selected paths in `selectionTree`.
      * @cssprop --bq-select--background-color - Select background color
      * @cssprop --bq-select--border-color - Select border color
      * @cssprop --bq-select--border-color-focus - Select border color on focus
-     * @cssprop --bq-select--border-color-disabled - Select border color when disabled
+     * @cssprop --bq-select--border-color-danger - Select border color when the validation status is `error`
+     * @cssprop --bq-select--border-color-success - Select border color when the validation status is `success`
+     * @cssprop --bq-select--border-color-warning - Select border color when the validation status is `warning`
      * @cssprop --bq-select--border-radius - Select border radius
      * @cssprop --bq-select--border-width - Select border width
      * @cssprop --bq-select--border-style - Select border style
      * @cssprop --bq-select--gap - Gap between Select content and prefix/suffix
      * @cssprop --bq-select--helper-margin-top - Helper text margin top
      * @cssprop --bq-select--helper-text-color - Helper text color
+     * @cssprop --bq-select--helper-text-color-danger - Helper text color when the validation status is `error`
+     * @cssprop --bq-select--helper-text-color-success - Helper text color when the validation status is `success`
+     * @cssprop --bq-select--helper-text-color-warning - Helper text color when the validation status is `warning`
      * @cssprop --bq-select--helper-text-size - Helper text size
      * @cssprop --bq-select--icon-size - Icon size to use in prefix/suffix and clear button
      * @cssprop --bq-select--label-margin-bottom - Select label margin bottom
@@ -4846,8 +5317,10 @@ declare global {
      * @event bqFocus - Handler to be called when the button is clicked.
      * @cssprop --bq-side-menu-item--bg-default - Side menu item default background color
      * @cssprop --bq-side-menu-item--bg-active - Side menu item active background color
+     * @cssprop --bq-side-menu-item--bg-hover - Base colour of the hover background (mixed with `--bq-hover` on hover)
      * @cssprop --bq-side-menu-item--text-default - Side menu item default text color
      * @cssprop --bq-side-menu-item--text-active - Side menu item active text color
+     * @cssprop --bq-side-menu-item--text-hover - Base colour of the hover text (mixed with `--bq-hover` on hover)
      * @cssprop --bq-side-menu-item--paddingX - Side menu item vertical padding
      * @cssprop --bq-side-menu-item--paddingY - Side menu item horizontal padding
      */
@@ -4899,6 +5372,9 @@ declare global {
      * @cssprop --bq-slider--thumb-size - Slider hover thumb size
      * @cssprop --bq-slider--progress-color - Slider progress background color
      * @cssprop --bq-slider--trackarea-color - Slider track background color
+     * @cssprop --bq-slider--thumb-background - Slider thumb background color
+     * @cssprop --bq-slider--thumb-border-color - Slider thumb border color
+     * @cssprop --bq-slider--label-color - Slider value indicator (label) text color
      */
     interface HTMLBqSliderElement extends Components.BqSlider, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqSliderElementEventMap>(type: K, listener: (this: HTMLBqSliderElement, ev: BqSliderCustomEvent<HTMLBqSliderElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -4935,6 +5411,7 @@ declare global {
      * @cssprop --bq-spinner--medium-text-fontSize - Spinner medium text font size
      * @cssprop --bq-spinner--small-text-fontSize - Spinner small text font size
      * @cssprop --bq-spinner--text-lineHeight - Spinner text line height
+     * @cssprop --bq-spinner--text-color - Spinner text color
      */
     interface HTMLBqSpinnerElement extends Components.BqSpinner, HTMLStencilElement {
     }
@@ -4953,6 +5430,13 @@ declare global {
      * @dependency bq-badge
      * @attr {"alert" | "danger" | "info" | "neutral" | "success"} type - It defines the type of status to display.
      * @cssprop --bq-status-circle--size - Status circle size.
+     * @cssprop --bq-status-circ - Status circle size alias.
+     * @cssprop --bq-status--dot-color-alert - Status circle color when type is `alert`.
+     * @cssprop --bq-status--dot-color-danger - Status circle color when type is `danger`.
+     * @cssprop --bq-status--dot-color-info - Status circle color when type is `info`.
+     * @cssprop --bq-status--dot-color-neutral - Status circle color when type is `neutral`.
+     * @cssprop --bq-status--dot-color-success - Status circle color when type is `success`.
+     * @cssprop --bq-status--text-color - Status text color.
      */
     interface HTMLBqStatusElement extends Components.BqStatus, HTMLStencilElement {
     }
@@ -4986,12 +5470,23 @@ declare global {
      * @event bqClick - Callback handler emitted when the step item is clicked
      * @event bqFocus - Callback handler emitted when the step item is focused
      * @event bqBlur - Callback handler emitted when the step item loses focus
+     * @cssprop --bq-step-item--background-hover - Background base colour of the step item hover state (mixed with `--bq-hover` on hover)
+     * @cssprop --bq-step-item--description-color - Text color of the description
      * @cssprop --bq-step-item--prefix-color - Color of the prefix icon
      * @cssprop --bq-step-item--prefix-color-current - Color of the prefix icon when current
      * @cssprop --bq-step-item--prefix-color-completed - Color of the prefix icon when completed
      * @cssprop --bq-step-item--prefix-color-error - Color of the prefix icon when error
      * @cssprop --bq-step-item--prefix-num-size - Size of the prefix number
      * @cssprop --bq-step-item--prefix-num-bg-color - Background color of the prefix number
+     * @cssprop --bq-step-item--prefix-num-bg-color-current - Background color of the prefix number when current
+     * @cssprop --bq-step-item--prefix-num-bg-color-completed - Background color of the prefix number when completed
+     * @cssprop --bq-step-item--prefix-num-bg-color-error - Background color of the prefix number when error
+     * @cssprop --bq-step-item--prefix-num-text-color - Text color of the prefix number
+     * @cssprop --bq-step-item--prefix-num-text-color-current - Text color of the prefix number when current
+     * @cssprop --bq-step-item--prefix-num-text-color-completed - Text color of the prefix number when completed
+     * @cssprop --bq-step-item--prefix-num-text-color-error - Text color of the prefix number when error
+     * @cssprop --bq-step-item--title-color - Text color of the title
+     * @cssprop --bq-step-item--title-color-current - Text color of the title when current
      */
     interface HTMLBqStepItemElement extends Components.BqStepItem, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqStepItemElementEventMap>(type: K, listener: (this: HTMLBqStepItemElement, ev: BqStepItemCustomEvent<HTMLBqStepItemElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -5026,7 +5521,6 @@ declare global {
      * @attr {"horizontal" | "vertical"} orientation - The orientation of the steps
      * @attr {"medium" | "small"} size - The size of the steps
      * @attr {"numeric" | "icon" | "dot"} type - The type of prefix element to use on the step items
-     * @cssprop --bq-steps--divider-color - Divider color
      * @cssprop --bq-steps--gap - Gap between steps
      */
     interface HTMLBqStepsElement extends Components.BqSteps, HTMLStencilElement {
@@ -5070,6 +5564,13 @@ declare global {
      * @cssprop --bq-switch--justify-content - Switch justify content
      * @cssprop --bq-switch--width - Switch width
      * @cssprop --bq-switch--dot-size - Switch dot size
+     * @cssprop --bq-switch--dot-color - Switch dot color
+     * @cssprop --bq-switch--dot-color-checked - Switch dot color when checked
+     * @cssprop --bq-switch--icon-color - Switch inner icon color (unchecked)
+     * @cssprop --bq-switch--icon-color-checked - Switch inner icon color when checked
+     * @cssprop --bq-switch--label-text-color - Switch label text color
+     * @cssprop --bq-switch--track-color - Switch track color
+     * @cssprop --bq-switch--track-color-checked - Switch track color when checked
      */
     interface HTMLBqSwitchElement extends Components.BqSwitch, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqSwitchElementEventMap>(type: K, listener: (this: HTMLBqSwitchElement, ev: BqSwitchCustomEvent<HTMLBqSwitchElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -5114,11 +5615,13 @@ declare global {
      * @method vClick - Simulate a click event on the native `<button>` HTML element used under the hood
      * @method vFocus - Sets focus on the native `<button>` HTML element used under the hood
      * @method vBlur - Remove focus from the native `<button>` HTML element used under the hood
+     * @cssprop --bq-tab--background-hover - Background base colour of the hover state (mixed with `--bq-hover` on hover)
      * @cssprop --bq-tab--font-size - Font size
      * @cssprop --bq-tab--font-weight - Font weight
      * @cssprop --bq-tab--icon-size-large - Icon size for large tab
      * @cssprop --bq-tab--icon-size-medium - Icon size for medium tab
      * @cssprop --bq-tab--icon-size-small - Icon size for small tab
+     * @cssprop --bq-tab--indicator-color - Color of the active tab indicator
      * @cssprop --bq-tab--label-icon-gap - Gap between label and icon
      * @cssprop --bq-tab--line-height - Line height
      * @cssprop --bq-tab--padding-horizontal-large - Horizontal padding for large tab
@@ -5127,6 +5630,9 @@ declare global {
      * @cssprop --bq-tab--padding-vertical-large - Vertical padding for large tab
      * @cssprop --bq-tab--padding-vertical-medium - Vertical padding for medium tab
      * @cssprop --bq-tab--padding-vertical-small - Vertical padding for small tab
+     * @cssprop --bq-tab--text-color - Text color
+     * @cssprop --bq-tab--text-color-active - Text color of the active tab
+     * @cssprop --bq-tab--text-color-hover - Text base colour of the hover state (mixed with `--bq-hover` on hover)
      */
     interface HTMLBqTabElement extends Components.BqTab, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqTabElementEventMap>(type: K, listener: (this: HTMLBqTabElement, ev: BqTabCustomEvent<HTMLBqTabElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -5165,6 +5671,7 @@ declare global {
      * @attr {string} size - The size of the tab
      * @attr {string} value - A string representing the id of the selected tab.
      * @event bqChange - Handler to be called when the tab value changes
+     * @cssprop --bq-tab-group--border-color - Color of the divider line along the tabs
      */
     interface HTMLBqTabGroupElement extends Components.BqTabGroup, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqTabGroupElementEventMap>(type: K, listener: (this: HTMLBqTabGroupElement, ev: BqTabGroupCustomEvent<HTMLBqTabGroupElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -5226,6 +5733,34 @@ declare global {
      * @cssprop --bq-tag--medium-gap - Tag medium gap between content
      * @cssprop --bq-tag--medium-padding-x - Tag medium padding horizontal
      * @cssprop --bq-tag--medium-padding-y - Tag medium padding vertical
+     * @cssprop --bq-tag--text-color - Tag text color
+     * @cssprop --bq-tag--background-selected - Tag background color when it is clickable and selected
+     * @cssprop --bq-tag--text-selected - Tag text color when it is clickable and selected
+     * @cssprop --bq-tag--background-error-filled - Tag background color for the error color and filled variant
+     * @cssprop --bq-tag--text-error-filled - Tag text color for the error color and filled variant
+     * @cssprop --bq-tag--background-error-outline - Tag background color for the error color and outline variant
+     * @cssprop --bq-tag--text-error-outline - Tag text color for the error color and outline variant
+     * @cssprop --bq-tag--border-error-outline - Tag border color for the error color and outline variant
+     * @cssprop --bq-tag--background-gray-filled - Tag background color for the gray color and filled variant
+     * @cssprop --bq-tag--text-gray-filled - Tag text color for the gray color and filled variant
+     * @cssprop --bq-tag--background-gray-outline - Tag background color for the gray color and outline variant
+     * @cssprop --bq-tag--text-gray-outline - Tag text color for the gray color and outline variant
+     * @cssprop --bq-tag--border-gray-outline - Tag border color for the gray color and outline variant
+     * @cssprop --bq-tag--background-info-filled - Tag background color for the info color and filled variant
+     * @cssprop --bq-tag--text-info-filled - Tag text color for the info color and filled variant
+     * @cssprop --bq-tag--background-info-outline - Tag background color for the info color and outline variant
+     * @cssprop --bq-tag--text-info-outline - Tag text color for the info color and outline variant
+     * @cssprop --bq-tag--border-info-outline - Tag border color for the info color and outline variant
+     * @cssprop --bq-tag--background-success-filled - Tag background color for the success color and filled variant
+     * @cssprop --bq-tag--text-success-filled - Tag text color for the success color and filled variant
+     * @cssprop --bq-tag--background-success-outline - Tag background color for the success color and outline variant
+     * @cssprop --bq-tag--text-success-outline - Tag text color for the success color and outline variant
+     * @cssprop --bq-tag--border-success-outline - Tag border color for the success color and outline variant
+     * @cssprop --bq-tag--background-warning-filled - Tag background color for the warning color and filled variant
+     * @cssprop --bq-tag--text-warning-filled - Tag text color for the warning color and filled variant
+     * @cssprop --bq-tag--background-warning-outline - Tag background color for the warning color and outline variant
+     * @cssprop --bq-tag--text-warning-outline - Tag text color for the warning color and outline variant
+     * @cssprop --bq-tag--border-warning-outline - Tag border color for the warning color and outline variant
      */
     interface HTMLBqTagElement extends Components.BqTag, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqTagElementEventMap>(type: K, listener: (this: HTMLBqTagElement, ev: BqTagCustomEvent<HTMLBqTagElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -5283,17 +5818,23 @@ declare global {
      * @attr {"soft" | "hard"} wrap - Specifies how the text in a text area is to be wrapped when submitted in a form.
      * @event bqBlur - Handler to be called when the textarea loses focus.
      * @event bqChange - Handler to be called when the textarea value has changed and the textarea loses focus.
-     * @event bqClear - Handler to be called when the textarea value has been cleared.
+     * @event bqClear - Deprecated. `bq-textarea` never emits `bqClear`. It will be removed in the next major release.
      * @event bqFocus - Handler to be called when the textarea has received focus.
      * @event bqInput - Handler to be called when the textarea value changes.
      * @cssprop --bq-textarea--background-color - Textarea background color
      * @cssprop --bq-textarea--border-color - Textarea border color
      * @cssprop --bq-textarea--border-color-focus - Textarea border color on focus
+     * @cssprop --bq-textarea--border-color-danger - Textarea border color when the validation status is `error`
+     * @cssprop --bq-textarea--border-color-success - Textarea border color when the validation status is `success`
+     * @cssprop --bq-textarea--border-color-warning - Textarea border color when the validation status is `warning`
      * @cssprop --bq-textarea--border-radius - Textarea border radius
      * @cssprop --bq-textarea--border-width - Textarea border width
      * @cssprop --bq-textarea--border-style - Textarea border style
      * @cssprop --bq-textarea--helper-margin-top - Textarea helper text margin top
      * @cssprop --bq-textarea--helper-text-color - Textarea helper text color
+     * @cssprop --bq-textarea--helper-text-color-danger - Helper text color when the validation status is `error`
+     * @cssprop --bq-textarea--helper-text-color-success - Helper text color when the validation status is `success`
+     * @cssprop --bq-textarea--helper-text-color-warning - Helper text color when the validation status is `warning`
      * @cssprop --bq-textarea--helper-text-size - Textarea helper text size
      * @cssprop --bq-textarea--label-margin-bottom - Textarea label margin bottom
      * @cssprop --bq-textarea--label-text-color - Textarea label text color
@@ -5318,6 +5859,106 @@ declare global {
     var HTMLBqTextareaElement: {
         prototype: HTMLBqTextareaElement;
         new (): HTMLBqTextareaElement;
+    };
+    interface HTMLBqTimePickerElementEventMap {
+        "bqBlur": HTMLBqTimePickerElement;
+        "bqChange": { value: string | undefined; el: HTMLElement };
+        "bqClear": HTMLBqTimePickerElement;
+        "bqFocus": HTMLBqTimePickerElement;
+    }
+    /**
+     * The Time Picker lets users enter a time of day by typing into locale-ordered,
+     * keyboard-editable segments or by picking hours, minutes, seconds and AM/PM
+     * from scrollable columns in a dropdown panel.
+     * @example How to use it
+     * ```html
+     * <bq-time-picker name="meeting-time" value="14:30">
+     * <label slot="label">Meeting time</label>
+     * </bq-time-picker>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/0727e1-time-picker
+     * @status experimental
+     * @dependency bq-button
+     * @dependency bq-dropdown
+     * @dependency bq-icon
+     * @attr {boolean} autofocus - If `true`, the Time picker field will be focused on component render.
+     * @attr {boolean} disable-clear - If `true`, the clear button won't be displayed.
+     * @attr {boolean} disable-now - If `true`, the panel "Now" button won't be displayed.
+     * @attr {boolean} disabled - Indicates whether the Time picker is disabled or not.
+     * @attr {number} distance - Represents the distance between the panel and the field.
+     * @attr {string} form - The form ID the field belongs to.
+     * @attr {string} form-validation-message - Custom native form validation message.
+     * @attr {"12" | "24"} hour-format - The clock used by the field and the panel. Defaults to `"24"`.
+     * @attr {number} hour-step - Step between selectable hours.
+     * @attr {string} labels - JSON object with the text of the column headers, AM/PM labels, buttons and accessible names.
+     * @attr {Intl.LocalesArgument} locale - Locale used for the field layout, separators, column headers and day period labels.
+     * @attr {string} max - Latest selectable time (`HH:mm` or `HH:mm:ss`).
+     * @attr {string} min - Earliest selectable time (`HH:mm` or `HH:mm:ss`).
+     * @attr {number} minute-step - Step between selectable minutes.
+     * @attr {string} name - The Time picker name.
+     * @attr {boolean} open - If `true`, the panel is visible.
+     * @attr {string} panel-height - Overrides the height of the panel.
+     * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Placement of the panel.
+     * @attr {"hour" | "minute" | "second"} precision - The smallest unit edited and submitted.
+     * @attr {boolean} readonly - If `true`, the value can be read and submitted but not changed.
+     * @attr {boolean} require-confirm - If `true`, panel picks are a draft shown only in the panel until confirmed with the OK button or Enter.
+     * @attr {boolean} required - Whether a value must be entered before submitting the form.
+     * @attr {number} second-step - Step between selectable seconds.
+     * @attr {number} skidding - Skidding between the panel and the field.
+     * @attr {"fixed" | "absolute"} strategy - Positioning strategy for the panel.
+     * @attr {"error" | "none" | "success" | "warning"} validation-status - Validation state.
+     * @attr {string} value - The selected time in 24-hour format: `HH:mm` (`HH:00` at hour precision) or `HH:mm:ss`.
+     * @method clear() - Clears the selected value.
+     * @event bqBlur - Emitted when focus leaves the Time picker, including its panel.
+     * @event bqChange - Emitted when the value is committed or cleared.
+     * @event bqClear - Emitted when the value is cleared.
+     * @event bqFocus - Emitted when focus enters the Time picker, including its panel.
+     * @cssprop --bq-time-picker--background-color - Field background color.
+     * @cssprop --bq-time-picker--border-color - Field border color.
+     * @cssprop --bq-time-picker--border-color-disabled - Border color when disabled.
+     * @cssprop --bq-time-picker--border-color-focus - Border color on focus.
+     * @cssprop --bq-time-picker--border-color-danger - Border color when the validation status is `error`.
+     * @cssprop --bq-time-picker--border-color-success - Border color when the validation status is `success`.
+     * @cssprop --bq-time-picker--border-color-warning - Border color when the validation status is `warning`.
+     * @cssprop --bq-time-picker--border-radius - Field border radius.
+     * @cssprop --bq-time-picker--border-style - Border style.
+     * @cssprop --bq-time-picker--border-width - Border width.
+     * @cssprop --bq-time-picker--column-gap - Space between the panel columns.
+     * @cssprop --bq-time-picker--column-header-text-color - Text color of the column headers.
+     * @cssprop --bq-time-picker--column-height - Height of the scrollable panel columns.
+     * @cssprop --bq-time-picker--column-width - Width of a panel column.
+     * @cssprop --bq-time-picker--divider-color - Color of the lines between the panel columns and above the footer.
+     * @cssprop --bq-time-picker--gap - Gap between the field content and prefix/suffix.
+     * @cssprop --bq-time-picker--icon-size - Size of the icons used in prefix/suffix/clear.
+     * @cssprop --bq-time-picker--label-margin-bottom - Space below the label.
+     * @cssprop --bq-time-picker--label-text-color - Label text color.
+     * @cssprop --bq-time-picker--label-text-size - Label text size.
+     * @cssprop --bq-time-picker--option-background-hover - Hover background of a column option.
+     * @cssprop --bq-time-picker--option-background-selected - Background of the selected column option.
+     * @cssprop --bq-time-picker--option-height - Height of a column option.
+     * @cssprop --bq-time-picker--option-width - Width of a column option.
+     * @cssprop --bq-time-picker--option-radius - Border radius of a column option.
+     * @cssprop --bq-time-picker--option-text-selected - Text color of the selected column option.
+     * @cssprop --bq-time-picker--padding-end - Field padding end.
+     * @cssprop --bq-time-picker--padding-start - Field padding start.
+     * @cssprop --bq-time-picker--paddingY - Field vertical padding.
+     * @cssprop --bq-time-picker--text-color - Field text color.
+     * @cssprop --bq-time-picker--text-placeholder-color - Placeholder text color.
+     * @cssprop --bq-time-picker--text-size - Field text size.
+     */
+    interface HTMLBqTimePickerElement extends Components.BqTimePicker, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLBqTimePickerElementEventMap>(type: K, listener: (this: HTMLBqTimePickerElement, ev: BqTimePickerCustomEvent<HTMLBqTimePickerElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLBqTimePickerElementEventMap>(type: K, listener: (this: HTMLBqTimePickerElement, ev: BqTimePickerCustomEvent<HTMLBqTimePickerElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLBqTimePickerElement: {
+        prototype: HTMLBqTimePickerElement;
+        new (): HTMLBqTimePickerElement;
     };
     interface HTMLBqToastElementEventMap {
         "bqHide": HTMLBqToastElement;
@@ -5471,12 +6112,13 @@ declare global {
         "bq-tab-group": HTMLBqTabGroupElement;
         "bq-tag": HTMLBqTagElement;
         "bq-textarea": HTMLBqTextareaElement;
+        "bq-time-picker": HTMLBqTimePickerElement;
         "bq-toast": HTMLBqToastElement;
         "bq-tooltip": HTMLBqTooltipElement;
     }
 }
 declare namespace LocalJSX {
-    type OneOf<K extends string, PropT, AttrT = PropT> = { [P in K]: PropT } & { [P in `attr:${K}` | `prop:${K}`]?: never } | { [P in `attr:${K}`]: AttrT } & { [P in K | `prop:${K}`]?: never } | { [P in `prop:${K}`]: PropT } & { [P in K | `attr:${K}`]?: never };
+    type OneOf<K extends string, PropT, AttrT = PropT> = { [P in K]: PropT } & { [P in `attr:${K}`]?: never } | { [P in `attr:${K}`]: AttrT } & { [P in K]?: never };
 
     /**
      * The Accordion is a UI component that allows users to toggle between showing and hiding content sections. It provides a collapsible functionality, where only one section can be expanded at a time, while the others remain collapsed.
@@ -5523,13 +6165,16 @@ declare namespace LocalJSX {
      * @cssprop --bq-accordion--filled-collapsed-background - Accordion filled collapsed header background
      * @cssprop --bq-accordion--filled-collapsed-text-color - Accordion filled collapsed header text color
      * @cssprop --bq-accordion--filled-expanded-background - Accordion filled expanded header background
-     * @cssprop --bq-accordion--filled-expanded-collapsed-hover - Accordion filled expanded header color on hover
+     * @cssprop --bq-accordion--filled-expanded-collapsed-hover - Base colour of the filled expanded header hover state (mixed with `--bq-hover` on hover)
      * @cssprop --bq-accordion--filled-expanded-text-color - Accordion filled expanded header text color
      * @cssprop --bq-accordion--ghost-collapsed-background - Accordion ghost collapsed header background
      * @cssprop --bq-accordion--ghost-collapsed-text-color - Accordion ghost collapsed header text color
      * @cssprop --bq-accordion--ghost-expanded-background - Accordion ghost expanded header background
-     * @cssprop --bq-accordion--ghost-expanded-collapsed-hover - Accordion ghost expanded header color on hover
+     * @cssprop --bq-accordion--ghost-expanded-collapsed-hover - Base colour of the ghost header hover state, collapsed and expanded (mixed with `--bq-hover` on hover)
      * @cssprop --bq-accordion--ghost-expanded-text-color - Accordion ghost expanded header text color
+     * @cssprop --bq-accordion--icon-color - Accordion expand and collapse icon color
+     * @cssprop --bq-accordion--panel-background - Accordion panel background
+     * @cssprop --bq-accordion--panel-text-color - Accordion panel text color
      * @cssprop --bq-accordion--panel-filled-border-color - Accordion filled panel border color
      * @cssprop --bq-accordion--panel-filled-border-style - Accordion filled panel border style
      * @cssprop --bq-accordion--panel-filled-border-width - Accordion filled panel border width
@@ -5693,7 +6338,6 @@ declare namespace LocalJSX {
      * @cssprop --bq-alert--border-radius - The alert border radius
      * @cssprop --bq-alert--content-footer-gap - The alert content and footer gap
      * @cssprop --bq-alert--title-body-gap - The alert title and body gap
-     * @cssprop --bq-alert--border-color - The alert border color
      * @cssprop --bq-alert--border-style - The alert border style
      * @cssprop --bq-alert--border-width - The alert border width
      * @cssprop --bq-alert--background-info - The alert background color for info type
@@ -5708,8 +6352,10 @@ declare namespace LocalJSX {
      * @cssprop --bq-alert--icon-color-success - The alert icon color for success type
      * @cssprop --bq-alert--icon-color-warning - The alert icon color for warning type
      * @cssprop --bq-alert--icon-color-error - The alert icon color for error type
+     * @cssprop --bq-alert--text-color - The alert text color
      * @cssprop --bq-alert--padding - The alert padding
      * @cssprop --bq-alert--min-width - The alert min width
+     * @cssprop --bq-alert--z-index - The stacking order of a sticky alert. No default is declared.
      */
     interface BqAlert {
         /**
@@ -5792,6 +6438,7 @@ declare namespace LocalJSX {
      * @cssprop --bq-avatar--border-color - Avatar border color
      * @cssprop --bq-avatar--border-style - Avatar border style
      * @cssprop --bq-avatar--border-width - Avatar border width
+     * @cssprop --bq-avatar--text-color - Avatar initials text color
      * @cssprop --bq-avatar--border-radius-circle - Avatar border radius for circle & any size
      * @cssprop --bq-avatar--border-radius-squareXs - Avatar border radius for square & size xsmall
      * @cssprop --bq-avatar--border-radius-squareS - Avatar border radius for square & size small
@@ -5858,7 +6505,7 @@ declare namespace LocalJSX {
      */
     interface BqBadge {
         /**
-          * Badge background color. The value should be a valid value of the palette color
+          * Badge background color. The value should be a valid value of the palette color. When it changes, set a matching `textColor` (e.g. `text--on-success` for `ui--success`) so the content stays legible.
          */
         "backgroundColor"?: string;
         /**
@@ -5906,7 +6553,7 @@ declare namespace LocalJSX {
      * @status stable
      * @attr {string} href - If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered.
      * @attr {string} target - Where to display the link in the browser context. Relevant only if `href` is set.
-     * @attr {string} rel - Where to display the link in the browser context. Relevant only if `href` is set.
+     * @attr {string} rel - Space-separated link relationship types (e.g. `external`, `nofollow`) applied to the inner `<a>`. Relevant only if `href` is set. When `target` is set, `noreferrer` and `noopener` are always added.
      * @event bqFocus - Handler to be called when item is focused
      * @event bqClick - Handler to be called when item is clicked
      * @event bqBlur - Handler to be called when item loses focus
@@ -5921,6 +6568,7 @@ declare namespace LocalJSX {
      * @cssprop --bq-breadcrumb-item--text-color-current - Text color of the current breadcrumb item (active)
      * @cssprop --bq-breadcrumb-item--text-size - Text size of the breadcrumb item
      * @cssprop --bq-breadcrumb-item--text-size-separator - Text size of the breadcrumb item separator
+     * @cssprop --bq-breadcrumb-item--separator-color - Color of the breadcrumb item separator
      * @cssprop --bq-breadcrumb-item--padding-start - Padding start of the breadcrumb item
      * @cssprop --bq-breadcrumb-item--padding-end - Padding end of the breadcrumb item
      * @cssprop --bq-breadcrumb-item--paddingY - Padding top and bottom of the breadcrumb item
@@ -5945,8 +6593,7 @@ declare namespace LocalJSX {
          */
         "onBqFocus"?: (event: BqBreadcrumbItemCustomEvent<HTMLBqBreadcrumbItemElement>) => void;
         /**
-          * Where to display the link in the browser context. Relevant only if `href` is set.
-          * @default 'noreferrer noopener'
+          * Space-separated link relationship types (e.g. `external`, `nofollow`) applied to the inner `<a>`. Relevant only if `href` is set. When `target` is set, `noreferrer` and `noopener` are always added.
          */
         "rel"?: string;
         /**
@@ -5995,6 +6642,18 @@ declare namespace LocalJSX {
      * @cssprop --bq-button--large-paddingX - Button large padding block (top and bottom)
      * @cssprop --bq-button--large-paddingY - Button large padding inline (left and right)
      * @cssprop --bq-button--large-font-size - Button large font size
+     * @cssprop --bq-button--primary-background - Primary button background color
+     * @cssprop --bq-button--primary-text-color - Primary button text color
+     * @cssprop --bq-button--primary-border-color-ghost - Primary ghost button border color
+     * @cssprop --bq-button--primary-text-color-ghost - Primary ghost button text color
+     * @cssprop --bq-button--primary-background-danger - Primary danger button background color
+     * @cssprop --bq-button--primary-text-color-danger - Primary danger button text color
+     * @cssprop --bq-button--secondary-background - Secondary button background color
+     * @cssprop --bq-button--secondary-text-color - Secondary button text color
+     * @cssprop --bq-button--secondary-border-color-ghost - Secondary ghost button border color
+     * @cssprop --bq-button--secondary-text-color-ghost - Secondary ghost button text color
+     * @cssprop --bq-button--link-text-color - Link button text color
+     * @cssprop --bq-button--text-text-color - Text button text color
      */
     interface BqButton {
         /**
@@ -6145,8 +6804,13 @@ declare namespace LocalJSX {
      * @event bqFocus - Handler to be called when the checkbox gets focus
      * @event bqBlur - Handler to be called when the checkbox loses focus
      * @cssprop --bq-checkbox--background-color - Checkbox background color
+     * @cssprop --bq-checkbox--background-color-checked - Checkbox background color when checked or indeterminate
+     * @cssprop --bq-checkbox--border-color - Checkbox border color
+     * @cssprop --bq-checkbox--border-color-checked - Checkbox border color when checked or indeterminate
      * @cssprop --bq-checkbox--border-radius - Checkbox border radius
      * @cssprop --bq-checkbox--border-width - Checkbox border width
+     * @cssprop --bq-checkbox--icon-color-checked - Checkbox check and indeterminate mark color
+     * @cssprop --bq-checkbox--label-text-color - Checkbox label text color
      * @cssprop --bq-checkbox--size - Checkbox size
      */
     interface BqCheckbox {
@@ -6208,16 +6872,16 @@ declare namespace LocalJSX {
     }
     /**
      * The Date Picker is a pure-Stencil calendar input.
-     * It supports single, multi, and range selection, three navigation views
-     * (days → months → years), full localization via `Intl.DateTimeFormat`,
-     * multi-month side-by-side rendering, and RTL layouts.
+     * It supports single, multi, and range selection through locale-ordered,
+     * keyboard-editable date segments or a calendar panel. It also provides three
+     * navigation views (days → months → years), full localization via
+     * `Intl.DateTimeFormat`, multi-month side-by-side rendering, and RTL layouts.
      * @example How to use it
      * ```html
      * <bq-date-picker
      * first-day-of-week="1"
      * locale="en-GB"
      * name="bq-date-picker"
-     * placeholder="Enter your date"
      * type="single"
      * value="2026-07-15"
      * >
@@ -6249,7 +6913,7 @@ declare namespace LocalJSX {
      * @attr {string} name - Input name.
      * @attr {boolean} open - If `true`, the panel is visible.
      * @attr {string} panel-height - Overrides the height of the panel.
-     * @attr {string} placeholder - Input placeholder text.
+     * @attr {string} placeholder - Deprecated. Locale-derived segment format hints always describe the expected entry layout instead.
      * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Placement of the panel.
      * @attr {boolean} required - Whether a value must be selected before submitting the form.
      * @attr {boolean} show-outside-days - Whether to render days that belong to adjacent months.
@@ -6273,6 +6937,9 @@ declare namespace LocalJSX {
      * @cssprop --bq-date-picker--border-color - Input border color.
      * @cssprop --bq-date-picker--border-color-disabled - Border color when disabled.
      * @cssprop --bq-date-picker--border-color-focus - Border color on focus.
+     * @cssprop --bq-date-picker--border-color-danger - Border color when the validation status is `error`.
+     * @cssprop --bq-date-picker--border-color-success - Border color when the validation status is `success`.
+     * @cssprop --bq-date-picker--border-color-warning - Border color when the validation status is `warning`.
      * @cssprop --bq-date-picker--border-radius - Input border radius.
      * @cssprop --bq-date-picker--border-style - Border style.
      * @cssprop --bq-date-picker--border-width - Border width.
@@ -6345,7 +7012,7 @@ declare namespace LocalJSX {
          */
         "formValidationMessage"?: string;
         /**
-          * Options used when formatting the displayed value.  When omitted, sensible defaults are picked based on `precision`: - `day`   → `{ day: 'numeric', month: 'short', year: 'numeric' }` - `month` → `{ month: 'long', year: 'numeric' }` - `year`  → `{ year: 'numeric' }`
+          * Numeric options used to derive the input mask's field order and separators.  The options must contain numeric or two-digit day/month fields and a numeric year. Textual or variable-length fields fall back to the locale numeric mask and emit a development warning.
          */
         "formatOptions"?: Intl.DateTimeFormatOptions;
         /**
@@ -6415,7 +7082,7 @@ declare namespace LocalJSX {
          */
         "panelHeight"?: string;
         /**
-          * Placeholder text shown when no value is selected.
+          * @deprecated Locale-derived segment format hints always describe the expected entry layout, so this value no longer changes the rendered field.
          */
         "placeholder"?: string;
         /**
@@ -6508,6 +7175,8 @@ declare namespace LocalJSX {
      * @cssprop --bq-dialog--background - Dialog background color
      * @cssprop --bq-dialog--background-backdrop - Dialog backdrop background color
      * @cssprop --bq-dialog--box-shadow - Dialog box shadow
+     * @cssprop --bq-dialog--footer-background - Dialog footer background color (`highlight` footer appearance)
+     * @cssprop --bq-dialog--text-color - Dialog text color
      * @cssprop --bq-dialog--border-color - Dialog border color
      * @cssprop --bq-dialog--border-style - Dialog border style
      * @cssprop --bq-dialog--border-width - Dialog border width
@@ -6682,11 +7351,13 @@ declare namespace LocalJSX {
      * @event bqOpen - Callback handler to be called when the drawer is opened.
      * @event bqAfterOpen - Callback handler to be called after the drawer has been opened.
      * @event bqAfterClose - Callback handler to be called after the drawer has been closed.
+     * @cssprop --bq-drawer--background - Background color of the drawer panel
      * @cssprop --bq-drawer--backgroundBackdrop - Background color of the backdrop
      * @cssprop --bq-drawer--gap - Gap between the drawer and the viewport
      * @cssprop --bq-drawer--width - Width of the drawer
      * @cssprop --bq-drawer--paddingX - Padding left and right of the drawer
      * @cssprop --bq-drawer--paddingY - Padding top and bottom of the drawer
+     * @cssprop --bq-drawer--text-color - Text color of the drawer panel
      * @cssprop --bq-drawer--zIndex - Z-index of the drawer component
      */
     interface BqDrawer {
@@ -6841,6 +7512,7 @@ declare namespace LocalJSX {
      * @status stable
      * @dependency bq-icon
      * @attr {"large" | "medium" | "small"} size - The size of the empty state component
+     * @cssprop --bq-empty-state--text-color - The text color of the title and body content
      */
     interface BqEmptyState {
         /**
@@ -6941,12 +7613,18 @@ declare namespace LocalJSX {
      * @cssprop --bq-input--background-color - Input background color
      * @cssprop --bq-input--border-color - Input border color
      * @cssprop --bq-input--border-color-focus - Input border color on focus
+     * @cssprop --bq-input--border-color-danger - Input border color when the validation status is `error`
+     * @cssprop --bq-input--border-color-success - Input border color when the validation status is `success`
+     * @cssprop --bq-input--border-color-warning - Input border color when the validation status is `warning`
      * @cssprop --bq-input--border-radius - Input border radius
      * @cssprop --bq-input--border-width - Input border width
      * @cssprop --bq-input--border-style - Input border style
      * @cssprop --bq-input--gap - Gap between input content and prefix/suffix
      * @cssprop --bq-input--helper-margin-top - Helper text margin top
      * @cssprop --bq-input--helper-text-color - Helper text color
+     * @cssprop --bq-input--helper-text-color-danger - Helper text color when the validation status is `error`
+     * @cssprop --bq-input--helper-text-color-success - Helper text color when the validation status is `success`
+     * @cssprop --bq-input--helper-text-color-warning - Helper text color when the validation status is `warning`
      * @cssprop --bq-input--helper-text-size - Helper text size
      * @cssprop --bq-input--icon-size - Icon size to use in prefix/suffix and clear button
      * @cssprop --bq-input--label-margin-bottom - Input label margin bottom
@@ -6983,7 +7661,7 @@ declare namespace LocalJSX {
          */
         "clearButtonLabel"?: string;
         /**
-          * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes. A value of 0 means no debouncing will occur.
+          * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes. With `0` (default), the event is emitted synchronously.
           * @default 0
          */
         "debounceTime"?: number;
@@ -7034,7 +7712,7 @@ declare namespace LocalJSX {
          */
         "onBqBlur"?: (event: BqInputCustomEvent<HTMLBqInputElement>) => void;
         /**
-          * Callback handler emitted when the input value has changed and the input loses focus. This handler is called whenever the user finishes typing or pasting text into the input field and then clicks outside of the input field.
+          * Callback handler emitted when the input value has changed and the input loses focus. This handler is called whenever the user finishes typing or pasting text into the input field and then clicks outside of the input field. Numeric input emits a number when complete and an empty string when empty or incomplete.
          */
         "onBqChange"?: (event: BqInputCustomEvent<{ value: string | number | string[]; el: HTMLBqInputElement }>) => void;
         /**
@@ -7046,7 +7724,7 @@ declare namespace LocalJSX {
          */
         "onBqFocus"?: (event: BqInputCustomEvent<HTMLBqInputElement>) => void;
         /**
-          * Callback handler emitted when the input value changes. This handler is called whenever the user types or pastes text into the input field.
+          * Callback handler emitted when the input value changes. This handler is called whenever the user types or pastes text into the input field. Numeric input emits a number when complete and an empty string when empty or incomplete.
          */
         "onBqInput"?: (event: BqInputCustomEvent<{ value: string | number | string[]; el: HTMLBqInputElement }>) => void;
         /**
@@ -7084,7 +7762,7 @@ declare namespace LocalJSX {
          */
         "validationStatus"?: TInputValidation;
         /**
-          * The input value, it can be used to reset the input to a previous value
+          * The input value, it can be used to reset the input to a previous value. User-entered number values are numbers; empty or incomplete numeric input and Clear use an empty string.
          */
         "value"?: TInputValue;
     }
@@ -7196,16 +7874,33 @@ declare namespace LocalJSX {
      * ```
      * @documentation https://storybook.beeq.design/?path=/story/components-option--with-option-group
      * @status stable
+     * @dependency bq-checkbox
+     * @dependency bq-button
+     * @dependency bq-icon
      * @attr {boolean} disabled - If true, the option is disabled.
+     * @attr {string} display-value - Overrides the displayed option value.
      * @attr {boolean} hidden - If true, the option is hidden.
+     * @attr {boolean} checkbox - If true, the option renders as a checkbox option.
+     * @attr {boolean} expanded - If true, nested options are displayed.
+     * @attr {boolean} indeterminate - If true, the option checkbox represents a partial nested selection.
+     * @attr {string} all-selected-label - Text displayed when all selectable nested options are selected.
+     * @attr {string} selected-count-label - Text displayed when some selectable nested options are selected. Use `{count}` as the selected option count placeholder.
+     * @attr {boolean} show-selection-summary - If true, displays the nested selection summary beside the expand control.
      * @attr {string} value - A string representing the value of the option. Can be used to identify the item.
      * @attr {boolean} selected - If true, the option is selected and active.
      * @event bqBlur - Handler to be called when item loses focus.
      * @event bqFocus - Handler to be called when item is focused.
      * @event bqClick - Handler to be called when item is clicked.
-     * @event bqEnter - Handler to be called on enter key press.
+     * @event bqEnter - Emitted when Enter or Space activates a focused option. Checkbox control activation emits bqClick instead.
      * @cssprop --bq-option--background - background color
+     * @cssprop --bq-option--background-hover - background base colour of the hover state (mixed with `--bq-hover` on hover)
+     * @cssprop --bq-option--background-selected - background color when selected
+     * @cssprop --bq-option--expand-text-color-hover - expand control text color on hover
      * @cssprop --bq-option--font-size - font size
+     * @cssprop --bq-option--selection-summary-color - nested selection summary text color
+     * @cssprop --bq-option--text-color - text color
+     * @cssprop --bq-option--text-color-selected - text color when selected
+     * @cssprop --bq-option--tree-line-color - color of the lines connecting nested options
      * @cssprop --bq-option--border-color - border color
      * @cssprop --bq-option--border-style - border style
      * @cssprop --bq-option--border-width - border width
@@ -7214,10 +7909,20 @@ declare namespace LocalJSX {
      * @cssprop --bq-option--gap-start - gap space between prefix and label
      * @cssprop --bq-option--gap-end - gap space between label and suffix
      * @cssprop --bq-option--paddingY - padding Y axis
-     * @cssprop --bq-option--padding-start - option label padding start
-     * @cssprop --bq-option--padding-end - option label padding end
+     * @cssprop --bq-option--padding-start - option item padding start
+     * @cssprop --bq-option--padding-end - option item padding end
      */
     interface BqOption {
+        /**
+          * Text displayed when all selectable nested options are selected.
+          * @default 'All selected'
+         */
+        "allSelectedLabel"?: string;
+        /**
+          * If true, the option renders as a checkbox option.
+          * @default false
+         */
+        "checkbox"?: boolean;
         /**
           * If true, the option is disabled.
           * @default false
@@ -7228,10 +7933,20 @@ declare namespace LocalJSX {
          */
         "displayValue"?: string;
         /**
+          * If true, nested options are displayed.
+          * @default false
+         */
+        "expanded"?: boolean;
+        /**
           * If true, the option is hidden.
           * @default false
          */
         "hidden"?: boolean;
+        /**
+          * If true, the option checkbox represents a partial nested selection.
+          * @default false
+         */
+        "indeterminate"?: boolean;
         /**
           * Handler to be called when item loses focus
          */
@@ -7241,7 +7956,7 @@ declare namespace LocalJSX {
          */
         "onBqClick"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
         /**
-          * Handler to be called on enter key press
+          * Emitted when Enter or Space activates a focused option. Checkbox control activation emits bqClick instead.
          */
         "onBqEnter"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
         /**
@@ -7253,6 +7968,20 @@ declare namespace LocalJSX {
           * @default false
          */
         "selected"?: boolean;
+        /**
+          * Text displayed when some selectable nested options are selected. Use `{count}` as the selected option count placeholder.
+          * @default '{count} selected'
+         */
+        "selectedCountLabel"?: string;
+        /**
+          * If true, displays the nested selection summary beside the expand control.
+          * @default true
+         */
+        "showSelectionSummary"?: boolean;
+        /**
+          * @default false
+         */
+        "tree"?: boolean;
         /**
           * A string representing the value of the option. Can be used to identify the item
          */
@@ -7331,6 +8060,7 @@ declare namespace LocalJSX {
      * ```
      * @documentation https://storybook.beeq.design/?path=/docs/components-page-title--overview
      * @status stable
+     * @cssprop --bq-page-title--divider-color - Page title divider (border end) color, used by `--subtitle-borderBlockEnd`
      * @cssprop --paddingY - Padding top and bottom of the page title wrapper
      * @cssprop --subtitle-borderBlockEnd - Page title border end color
      * @cssprop --subtitle-fontWeight - Page title font weight for subtitle
@@ -7425,6 +8155,9 @@ declare namespace LocalJSX {
      * @cssprop --bq-progress-bar--height - The progress bars height
      * @cssprop --bq-progress-bar--indeterminateWidth - The progress bar width when its indeterminate
      * @cssprop --bq-progress-bar--indicatorColor - The progress bar color (inside the track area)
+     * @cssprop --bq-progress-bar--indicatorColor-error - The progress bar color when `type="error"`
+     * @cssprop --bq-progress-bar--label-color - The label text color
+     * @cssprop --bq-progress-bar--label-color-error - The label text color when `type="error"`
      * @cssprop --bq-progress-bar--trackColor - The progress bar track area (the grey one)
      */
     interface BqProgress {
@@ -7488,7 +8221,11 @@ declare namespace LocalJSX {
      * @event bqFocus - Handler to be called when the radio gets focused
      * @event bqKeyDown - The handler is to be called when the radio key is pressed
      * @cssprop --bq-radio--background-color - Radio background color
+     * @cssprop --bq-radio--border-color - Radio border color
+     * @cssprop --bq-radio--border-color-checked - Radio border color when checked
      * @cssprop --bq-radio--border-width - Radio border width
+     * @cssprop --bq-radio--dot-color-checked - Radio inner dot color when checked
+     * @cssprop --bq-radio--label-text-color - Radio label text color
      * @cssprop --bq-radio--size - Radio size
      */
     interface BqRadio {
@@ -7578,7 +8315,7 @@ declare namespace LocalJSX {
          */
         "backgroundOnHover"?: boolean;
         /**
-          * A number representing the delay time (in milliseconds) that `bqChange` event handler gets triggered once the value change
+          * A number representing the delay time (in milliseconds) that `bqChange` event handler gets triggered once the value change. With `0` (default), the event is emitted synchronously.
           * @default 0
          */
         "debounceTime"?: number;
@@ -7653,6 +8390,7 @@ declare namespace LocalJSX {
      * @attr {string} clear-button-label - The clear button aria label.
      * @attr {number} debounce-time - The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes.
      * @attr {boolean} disable-clear - If `true`, the clear button won't be displayed.
+     * @attr {boolean} disable-search - Disables text filtering while keeping option selection available.
      * @attr {boolean} disabled - Indicates whether the Select input is disabled and cannot be interacted with.
      * @attr {number} distance - Represents the distance (gutter or margin) between the Select panel and the input element.
      * @attr {string} form - The ID of the form that Select input field belongs to.
@@ -7665,28 +8403,34 @@ declare namespace LocalJSX {
      * @attr {string} panel-height - When set, it will override the height of the Select panel.
      * @attr {string} placeholder - The Select input placeholder text value.
      * @attr {"bottom" | "bottom-end" | "bottom-start" | "left" | "left-end" | "left-start" | "right" | "right-end" | "right-start" | "top" | "top-end" | "top-start"} placement - Position of the Select panel.
-     * @attr {boolean} readonly - If `true`, the Select input cannot be modified.
+     * @attr {boolean} readonly - Deprecated. Use `disable-search` to allow selection without text filtering.
      * @attr {boolean} required - Indicates whether or not the Select input is required to be filled out before submitting the form.
      * @attr {boolean} same-width - Whether the panel should have the Select same width as the input element.
+     * @attr {boolean} enable-checkboxes - If `true` and `multiple` is enabled, flat options render with checkboxes. Nested multi-select options always render with checkboxes.
      * @attr {number} skidding - Represents the skidding between the Select panel and the input element.
      * @attr {"absolute" | "fixed"} strategy - Defines the strategy to position the Select panel.
      * @attr {"error" | "success" | "warning" | "none"} validation-status - The validation status of the Select input.
-     * @attr {"number" | "string" | "string[]"} value - The select input value can be used to reset the field to a previous value.
+     * @attr {string | string[]} value - The select input value can be used to reset the field to a previous value.
      * @method clear - Method to be called to clear the selected value.
-     * @event bqBlur - The callback handler is emitted when the Select input loses focus.
+     * @event bqBlur - Emitted when focus leaves the entire Select, including its input, options, and controls.
      * @event bqClear - The callback handler is emitted when the selected value has been cleared.
-     * @event bqFocus - A callback handler is emitted when the Select input has received focus.
-     * @event bqSelect - The callback handler is emitted when the selected value has changed.
+     * @event bqFocus - Emitted when focus enters the Select from outside the component.
+     * @event bqSelect - The callback handler is emitted when the selected value has changed. Nested multi-select events include selected paths in `selectionTree`.
      * @cssprop --bq-select--background-color - Select background color
      * @cssprop --bq-select--border-color - Select border color
      * @cssprop --bq-select--border-color-focus - Select border color on focus
-     * @cssprop --bq-select--border-color-disabled - Select border color when disabled
+     * @cssprop --bq-select--border-color-danger - Select border color when the validation status is `error`
+     * @cssprop --bq-select--border-color-success - Select border color when the validation status is `success`
+     * @cssprop --bq-select--border-color-warning - Select border color when the validation status is `warning`
      * @cssprop --bq-select--border-radius - Select border radius
      * @cssprop --bq-select--border-width - Select border width
      * @cssprop --bq-select--border-style - Select border style
      * @cssprop --bq-select--gap - Gap between Select content and prefix/suffix
      * @cssprop --bq-select--helper-margin-top - Helper text margin top
      * @cssprop --bq-select--helper-text-color - Helper text color
+     * @cssprop --bq-select--helper-text-color-danger - Helper text color when the validation status is `error`
+     * @cssprop --bq-select--helper-text-color-success - Helper text color when the validation status is `success`
+     * @cssprop --bq-select--helper-text-color-warning - Helper text color when the validation status is `warning`
      * @cssprop --bq-select--helper-text-size - Helper text size
      * @cssprop --bq-select--icon-size - Icon size to use in prefix/suffix and clear button
      * @cssprop --bq-select--label-margin-bottom - Select label margin bottom
@@ -7710,7 +8454,7 @@ declare namespace LocalJSX {
          */
         "clearButtonLabel"?: string;
         /**
-          * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes. A value of 0 means no debouncing will occur.
+          * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes. A value of 0 means no debouncing will occur: `bqInput` is emitted synchronously and options are filtered right away.
           * @default 0
          */
         "debounceTime"?: number;
@@ -7725,6 +8469,11 @@ declare namespace LocalJSX {
          */
         "disableScrollLock"?: boolean;
         /**
+          * If true, the search functionality within the Select panel will be disabled. No typing will be allowed
+          * @default false
+         */
+        "disableSearch"?: boolean;
+        /**
           * Indicates whether the Select input is disabled or not. If `true`, the Select is disabled and cannot be interacted with.
           * @default false
          */
@@ -7734,6 +8483,10 @@ declare namespace LocalJSX {
           * @default 8
          */
         "distance"?: number;
+        /**
+          * If true, flat options render with checkboxes when multiple selection is enabled. Nested multi-select options always render with checkboxes.
+         */
+        "enableCheckboxes"?: boolean;
         /**
           * The ID of the form that the Select input belongs to.
          */
@@ -7762,7 +8515,7 @@ declare namespace LocalJSX {
          */
         "name": string;
         /**
-          * Callback handler emitted when the Select input loses focus
+          * Emitted when focus leaves the entire Select, including its input, options, and controls.
          */
         "onBqBlur"?: (event: BqSelectCustomEvent<HTMLBqSelectElement>) => void;
         /**
@@ -7770,7 +8523,7 @@ declare namespace LocalJSX {
          */
         "onBqClear"?: (event: BqSelectCustomEvent<HTMLBqSelectElement>) => void;
         /**
-          * Callback handler emitted when the Select input has received focus
+          * Emitted when focus enters the Select from outside the component.
          */
         "onBqFocus"?: (event: BqSelectCustomEvent<HTMLBqSelectElement>) => void;
         /**
@@ -7778,9 +8531,9 @@ declare namespace LocalJSX {
          */
         "onBqInput"?: (event: BqSelectCustomEvent<{ value: string | number | string[] }>) => void;
         /**
-          * Callback handler emitted when the selected value has changed
+          * Callback handler emitted when the selected value has changed. Nested multi-select also includes selected paths in `selectionTree`.
          */
-        "onBqSelect"?: (event: BqSelectCustomEvent<{ value: string | number | string[]; item: HTMLBqOptionElement }>) => void;
+        "onBqSelect"?: (event: BqSelectCustomEvent<TSelectChangeDetail>) => void;
         /**
           * If true, the Select panel will be visible.
           * @default false
@@ -7800,7 +8553,7 @@ declare namespace LocalJSX {
          */
         "placement"?: Placement;
         /**
-          * If true, the list of options cannot be filtered (searching won't be available)
+          * @deprecated Use `disableSearch` to allow selection without text filtering. In a future major release, `readonly` will prevent changing the selected value.
          */
         "readonly"?: boolean;
         /**
@@ -7915,8 +8668,10 @@ declare namespace LocalJSX {
      * @event bqFocus - Handler to be called when the button is clicked.
      * @cssprop --bq-side-menu-item--bg-default - Side menu item default background color
      * @cssprop --bq-side-menu-item--bg-active - Side menu item active background color
+     * @cssprop --bq-side-menu-item--bg-hover - Base colour of the hover background (mixed with `--bq-hover` on hover)
      * @cssprop --bq-side-menu-item--text-default - Side menu item default text color
      * @cssprop --bq-side-menu-item--text-active - Side menu item active text color
+     * @cssprop --bq-side-menu-item--text-hover - Base colour of the hover text (mixed with `--bq-hover` on hover)
      * @cssprop --bq-side-menu-item--paddingX - Side menu item vertical padding
      * @cssprop --bq-side-menu-item--paddingY - Side menu item horizontal padding
      */
@@ -7978,10 +8733,13 @@ declare namespace LocalJSX {
      * @cssprop --bq-slider--thumb-size - Slider hover thumb size
      * @cssprop --bq-slider--progress-color - Slider progress background color
      * @cssprop --bq-slider--trackarea-color - Slider track background color
+     * @cssprop --bq-slider--thumb-background - Slider thumb background color
+     * @cssprop --bq-slider--thumb-border-color - Slider thumb border color
+     * @cssprop --bq-slider--label-color - Slider value indicator (label) text color
      */
     interface BqSlider {
         /**
-          * The amount of time, in milliseconds, to wait to trigger the `bqChange` event after each value change.
+          * The amount of time, in milliseconds, to wait to trigger the `bqChange` event after each value change. With `0` (default), the event is emitted synchronously.
           * @default 0
          */
         "debounceTime"?: number;
@@ -8076,6 +8834,7 @@ declare namespace LocalJSX {
      * @cssprop --bq-spinner--medium-text-fontSize - Spinner medium text font size
      * @cssprop --bq-spinner--small-text-fontSize - Spinner small text font size
      * @cssprop --bq-spinner--text-lineHeight - Spinner text line height
+     * @cssprop --bq-spinner--text-color - Spinner text color
      */
     interface BqSpinner {
         /**
@@ -8105,6 +8864,13 @@ declare namespace LocalJSX {
      * @dependency bq-badge
      * @attr {"alert" | "danger" | "info" | "neutral" | "success"} type - It defines the type of status to display.
      * @cssprop --bq-status-circle--size - Status circle size.
+     * @cssprop --bq-status-circ - Status circle size alias.
+     * @cssprop --bq-status--dot-color-alert - Status circle color when type is `alert`.
+     * @cssprop --bq-status--dot-color-danger - Status circle color when type is `danger`.
+     * @cssprop --bq-status--dot-color-info - Status circle color when type is `info`.
+     * @cssprop --bq-status--dot-color-neutral - Status circle color when type is `neutral`.
+     * @cssprop --bq-status--dot-color-success - Status circle color when type is `success`.
+     * @cssprop --bq-status--text-color - Status text color.
      */
     interface BqStatus {
         /**
@@ -8134,12 +8900,23 @@ declare namespace LocalJSX {
      * @event bqClick - Callback handler emitted when the step item is clicked
      * @event bqFocus - Callback handler emitted when the step item is focused
      * @event bqBlur - Callback handler emitted when the step item loses focus
+     * @cssprop --bq-step-item--background-hover - Background base colour of the step item hover state (mixed with `--bq-hover` on hover)
+     * @cssprop --bq-step-item--description-color - Text color of the description
      * @cssprop --bq-step-item--prefix-color - Color of the prefix icon
      * @cssprop --bq-step-item--prefix-color-current - Color of the prefix icon when current
      * @cssprop --bq-step-item--prefix-color-completed - Color of the prefix icon when completed
      * @cssprop --bq-step-item--prefix-color-error - Color of the prefix icon when error
      * @cssprop --bq-step-item--prefix-num-size - Size of the prefix number
      * @cssprop --bq-step-item--prefix-num-bg-color - Background color of the prefix number
+     * @cssprop --bq-step-item--prefix-num-bg-color-current - Background color of the prefix number when current
+     * @cssprop --bq-step-item--prefix-num-bg-color-completed - Background color of the prefix number when completed
+     * @cssprop --bq-step-item--prefix-num-bg-color-error - Background color of the prefix number when error
+     * @cssprop --bq-step-item--prefix-num-text-color - Text color of the prefix number
+     * @cssprop --bq-step-item--prefix-num-text-color-current - Text color of the prefix number when current
+     * @cssprop --bq-step-item--prefix-num-text-color-completed - Text color of the prefix number when completed
+     * @cssprop --bq-step-item--prefix-num-text-color-error - Text color of the prefix number when error
+     * @cssprop --bq-step-item--title-color - Text color of the title
+     * @cssprop --bq-step-item--title-color-current - Text color of the title when current
      */
     interface BqStepItem {
         /**
@@ -8202,7 +8979,6 @@ declare namespace LocalJSX {
      * @attr {"horizontal" | "vertical"} orientation - The orientation of the steps
      * @attr {"medium" | "small"} size - The size of the steps
      * @attr {"numeric" | "icon" | "dot"} type - The type of prefix element to use on the step items
-     * @cssprop --bq-steps--divider-color - Divider color
      * @cssprop --bq-steps--gap - Gap between steps
      */
     interface BqSteps {
@@ -8257,6 +9033,13 @@ declare namespace LocalJSX {
      * @cssprop --bq-switch--justify-content - Switch justify content
      * @cssprop --bq-switch--width - Switch width
      * @cssprop --bq-switch--dot-size - Switch dot size
+     * @cssprop --bq-switch--dot-color - Switch dot color
+     * @cssprop --bq-switch--dot-color-checked - Switch dot color when checked
+     * @cssprop --bq-switch--icon-color - Switch inner icon color (unchecked)
+     * @cssprop --bq-switch--icon-color-checked - Switch inner icon color when checked
+     * @cssprop --bq-switch--label-text-color - Switch label text color
+     * @cssprop --bq-switch--track-color - Switch track color
+     * @cssprop --bq-switch--track-color-checked - Switch track color when checked
      */
     interface BqSwitch {
         /**
@@ -8351,11 +9134,13 @@ declare namespace LocalJSX {
      * @method vClick - Simulate a click event on the native `<button>` HTML element used under the hood
      * @method vFocus - Sets focus on the native `<button>` HTML element used under the hood
      * @method vBlur - Remove focus from the native `<button>` HTML element used under the hood
+     * @cssprop --bq-tab--background-hover - Background base colour of the hover state (mixed with `--bq-hover` on hover)
      * @cssprop --bq-tab--font-size - Font size
      * @cssprop --bq-tab--font-weight - Font weight
      * @cssprop --bq-tab--icon-size-large - Icon size for large tab
      * @cssprop --bq-tab--icon-size-medium - Icon size for medium tab
      * @cssprop --bq-tab--icon-size-small - Icon size for small tab
+     * @cssprop --bq-tab--indicator-color - Color of the active tab indicator
      * @cssprop --bq-tab--label-icon-gap - Gap between label and icon
      * @cssprop --bq-tab--line-height - Line height
      * @cssprop --bq-tab--padding-horizontal-large - Horizontal padding for large tab
@@ -8364,6 +9149,9 @@ declare namespace LocalJSX {
      * @cssprop --bq-tab--padding-vertical-large - Vertical padding for large tab
      * @cssprop --bq-tab--padding-vertical-medium - Vertical padding for medium tab
      * @cssprop --bq-tab--padding-vertical-small - Vertical padding for small tab
+     * @cssprop --bq-tab--text-color - Text color
+     * @cssprop --bq-tab--text-color-active - Text color of the active tab
+     * @cssprop --bq-tab--text-color-hover - Text base colour of the hover state (mixed with `--bq-hover` on hover)
      */
     interface BqTab {
         /**
@@ -8435,10 +9223,11 @@ declare namespace LocalJSX {
      * @attr {string} size - The size of the tab
      * @attr {string} value - A string representing the id of the selected tab.
      * @event bqChange - Handler to be called when the tab value changes
+     * @cssprop --bq-tab-group--border-color - Color of the divider line along the tabs
      */
     interface BqTabGroup {
         /**
-          * A number representing the delay value applied to bqChange event handler
+          * A number representing the delay value applied to bqChange event handler. With `0` (default), the event is emitted synchronously.
           * @default 0
          */
         "debounceTime"?: number;
@@ -8510,6 +9299,34 @@ declare namespace LocalJSX {
      * @cssprop --bq-tag--medium-gap - Tag medium gap between content
      * @cssprop --bq-tag--medium-padding-x - Tag medium padding horizontal
      * @cssprop --bq-tag--medium-padding-y - Tag medium padding vertical
+     * @cssprop --bq-tag--text-color - Tag text color
+     * @cssprop --bq-tag--background-selected - Tag background color when it is clickable and selected
+     * @cssprop --bq-tag--text-selected - Tag text color when it is clickable and selected
+     * @cssprop --bq-tag--background-error-filled - Tag background color for the error color and filled variant
+     * @cssprop --bq-tag--text-error-filled - Tag text color for the error color and filled variant
+     * @cssprop --bq-tag--background-error-outline - Tag background color for the error color and outline variant
+     * @cssprop --bq-tag--text-error-outline - Tag text color for the error color and outline variant
+     * @cssprop --bq-tag--border-error-outline - Tag border color for the error color and outline variant
+     * @cssprop --bq-tag--background-gray-filled - Tag background color for the gray color and filled variant
+     * @cssprop --bq-tag--text-gray-filled - Tag text color for the gray color and filled variant
+     * @cssprop --bq-tag--background-gray-outline - Tag background color for the gray color and outline variant
+     * @cssprop --bq-tag--text-gray-outline - Tag text color for the gray color and outline variant
+     * @cssprop --bq-tag--border-gray-outline - Tag border color for the gray color and outline variant
+     * @cssprop --bq-tag--background-info-filled - Tag background color for the info color and filled variant
+     * @cssprop --bq-tag--text-info-filled - Tag text color for the info color and filled variant
+     * @cssprop --bq-tag--background-info-outline - Tag background color for the info color and outline variant
+     * @cssprop --bq-tag--text-info-outline - Tag text color for the info color and outline variant
+     * @cssprop --bq-tag--border-info-outline - Tag border color for the info color and outline variant
+     * @cssprop --bq-tag--background-success-filled - Tag background color for the success color and filled variant
+     * @cssprop --bq-tag--text-success-filled - Tag text color for the success color and filled variant
+     * @cssprop --bq-tag--background-success-outline - Tag background color for the success color and outline variant
+     * @cssprop --bq-tag--text-success-outline - Tag text color for the success color and outline variant
+     * @cssprop --bq-tag--border-success-outline - Tag border color for the success color and outline variant
+     * @cssprop --bq-tag--background-warning-filled - Tag background color for the warning color and filled variant
+     * @cssprop --bq-tag--text-warning-filled - Tag text color for the warning color and filled variant
+     * @cssprop --bq-tag--background-warning-outline - Tag background color for the warning color and outline variant
+     * @cssprop --bq-tag--text-warning-outline - Tag text color for the warning color and outline variant
+     * @cssprop --bq-tag--border-warning-outline - Tag border color for the warning color and outline variant
      */
     interface BqTag {
         /**
@@ -8610,17 +9427,23 @@ declare namespace LocalJSX {
      * @attr {"soft" | "hard"} wrap - Specifies how the text in a text area is to be wrapped when submitted in a form.
      * @event bqBlur - Handler to be called when the textarea loses focus.
      * @event bqChange - Handler to be called when the textarea value has changed and the textarea loses focus.
-     * @event bqClear - Handler to be called when the textarea value has been cleared.
+     * @event bqClear - Deprecated. `bq-textarea` never emits `bqClear`. It will be removed in the next major release.
      * @event bqFocus - Handler to be called when the textarea has received focus.
      * @event bqInput - Handler to be called when the textarea value changes.
      * @cssprop --bq-textarea--background-color - Textarea background color
      * @cssprop --bq-textarea--border-color - Textarea border color
      * @cssprop --bq-textarea--border-color-focus - Textarea border color on focus
+     * @cssprop --bq-textarea--border-color-danger - Textarea border color when the validation status is `error`
+     * @cssprop --bq-textarea--border-color-success - Textarea border color when the validation status is `success`
+     * @cssprop --bq-textarea--border-color-warning - Textarea border color when the validation status is `warning`
      * @cssprop --bq-textarea--border-radius - Textarea border radius
      * @cssprop --bq-textarea--border-width - Textarea border width
      * @cssprop --bq-textarea--border-style - Textarea border style
      * @cssprop --bq-textarea--helper-margin-top - Textarea helper text margin top
      * @cssprop --bq-textarea--helper-text-color - Textarea helper text color
+     * @cssprop --bq-textarea--helper-text-color-danger - Helper text color when the validation status is `error`
+     * @cssprop --bq-textarea--helper-text-color-success - Helper text color when the validation status is `success`
+     * @cssprop --bq-textarea--helper-text-color-warning - Helper text color when the validation status is `warning`
      * @cssprop --bq-textarea--helper-text-size - Textarea helper text size
      * @cssprop --bq-textarea--label-margin-bottom - Textarea label margin bottom
      * @cssprop --bq-textarea--label-text-color - Textarea label text color
@@ -8656,7 +9479,7 @@ declare namespace LocalJSX {
          */
         "autofocus"?: boolean;
         /**
-          * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the textarea value changes. A value of 0 means no debouncing will occur.
+          * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the textarea value changes. A value of 0 means no debouncing will occur: `bqInput` is emitted synchronously on every input.
           * @default 0
          */
         "debounceTime"?: number;
@@ -8695,7 +9518,7 @@ declare namespace LocalJSX {
          */
         "onBqChange"?: (event: BqTextareaCustomEvent<{ value: string; el: HTMLBqTextareaElement }>) => void;
         /**
-          * Callback handler emitted when the textarea value has been cleared
+          * @deprecated `bq-textarea` never emits `bqClear`. It will be removed in the next major release. Listen to `bqInput` or `bqChange` and check for an empty value instead.
          */
         "onBqClear"?: (event: BqTextareaCustomEvent<HTMLBqTextareaElement>) => void;
         /**
@@ -8745,6 +9568,232 @@ declare namespace LocalJSX {
           * @default 'soft'
          */
         "wrap"?: TTextareaWrap;
+    }
+    /**
+     * The Time Picker lets users enter a time of day by typing into locale-ordered,
+     * keyboard-editable segments or by picking hours, minutes, seconds and AM/PM
+     * from scrollable columns in a dropdown panel.
+     * @example How to use it
+     * ```html
+     * <bq-time-picker name="meeting-time" value="14:30">
+     * <label slot="label">Meeting time</label>
+     * </bq-time-picker>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/0727e1-time-picker
+     * @status experimental
+     * @dependency bq-button
+     * @dependency bq-dropdown
+     * @dependency bq-icon
+     * @attr {boolean} autofocus - If `true`, the Time picker field will be focused on component render.
+     * @attr {boolean} disable-clear - If `true`, the clear button won't be displayed.
+     * @attr {boolean} disable-now - If `true`, the panel "Now" button won't be displayed.
+     * @attr {boolean} disabled - Indicates whether the Time picker is disabled or not.
+     * @attr {number} distance - Represents the distance between the panel and the field.
+     * @attr {string} form - The form ID the field belongs to.
+     * @attr {string} form-validation-message - Custom native form validation message.
+     * @attr {"12" | "24"} hour-format - The clock used by the field and the panel. Defaults to `"24"`.
+     * @attr {number} hour-step - Step between selectable hours.
+     * @attr {string} labels - JSON object with the text of the column headers, AM/PM labels, buttons and accessible names.
+     * @attr {Intl.LocalesArgument} locale - Locale used for the field layout, separators, column headers and day period labels.
+     * @attr {string} max - Latest selectable time (`HH:mm` or `HH:mm:ss`).
+     * @attr {string} min - Earliest selectable time (`HH:mm` or `HH:mm:ss`).
+     * @attr {number} minute-step - Step between selectable minutes.
+     * @attr {string} name - The Time picker name.
+     * @attr {boolean} open - If `true`, the panel is visible.
+     * @attr {string} panel-height - Overrides the height of the panel.
+     * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Placement of the panel.
+     * @attr {"hour" | "minute" | "second"} precision - The smallest unit edited and submitted.
+     * @attr {boolean} readonly - If `true`, the value can be read and submitted but not changed.
+     * @attr {boolean} require-confirm - If `true`, panel picks are a draft shown only in the panel until confirmed with the OK button or Enter.
+     * @attr {boolean} required - Whether a value must be entered before submitting the form.
+     * @attr {number} second-step - Step between selectable seconds.
+     * @attr {number} skidding - Skidding between the panel and the field.
+     * @attr {"fixed" | "absolute"} strategy - Positioning strategy for the panel.
+     * @attr {"error" | "none" | "success" | "warning"} validation-status - Validation state.
+     * @attr {string} value - The selected time in 24-hour format: `HH:mm` (`HH:00` at hour precision) or `HH:mm:ss`.
+     * @method clear() - Clears the selected value.
+     * @event bqBlur - Emitted when focus leaves the Time picker, including its panel.
+     * @event bqChange - Emitted when the value is committed or cleared.
+     * @event bqClear - Emitted when the value is cleared.
+     * @event bqFocus - Emitted when focus enters the Time picker, including its panel.
+     * @cssprop --bq-time-picker--background-color - Field background color.
+     * @cssprop --bq-time-picker--border-color - Field border color.
+     * @cssprop --bq-time-picker--border-color-disabled - Border color when disabled.
+     * @cssprop --bq-time-picker--border-color-focus - Border color on focus.
+     * @cssprop --bq-time-picker--border-color-danger - Border color when the validation status is `error`.
+     * @cssprop --bq-time-picker--border-color-success - Border color when the validation status is `success`.
+     * @cssprop --bq-time-picker--border-color-warning - Border color when the validation status is `warning`.
+     * @cssprop --bq-time-picker--border-radius - Field border radius.
+     * @cssprop --bq-time-picker--border-style - Border style.
+     * @cssprop --bq-time-picker--border-width - Border width.
+     * @cssprop --bq-time-picker--column-gap - Space between the panel columns.
+     * @cssprop --bq-time-picker--column-header-text-color - Text color of the column headers.
+     * @cssprop --bq-time-picker--column-height - Height of the scrollable panel columns.
+     * @cssprop --bq-time-picker--column-width - Width of a panel column.
+     * @cssprop --bq-time-picker--divider-color - Color of the lines between the panel columns and above the footer.
+     * @cssprop --bq-time-picker--gap - Gap between the field content and prefix/suffix.
+     * @cssprop --bq-time-picker--icon-size - Size of the icons used in prefix/suffix/clear.
+     * @cssprop --bq-time-picker--label-margin-bottom - Space below the label.
+     * @cssprop --bq-time-picker--label-text-color - Label text color.
+     * @cssprop --bq-time-picker--label-text-size - Label text size.
+     * @cssprop --bq-time-picker--option-background-hover - Hover background of a column option.
+     * @cssprop --bq-time-picker--option-background-selected - Background of the selected column option.
+     * @cssprop --bq-time-picker--option-height - Height of a column option.
+     * @cssprop --bq-time-picker--option-width - Width of a column option.
+     * @cssprop --bq-time-picker--option-radius - Border radius of a column option.
+     * @cssprop --bq-time-picker--option-text-selected - Text color of the selected column option.
+     * @cssprop --bq-time-picker--padding-end - Field padding end.
+     * @cssprop --bq-time-picker--padding-start - Field padding start.
+     * @cssprop --bq-time-picker--paddingY - Field vertical padding.
+     * @cssprop --bq-time-picker--text-color - Field text color.
+     * @cssprop --bq-time-picker--text-placeholder-color - Placeholder text color.
+     * @cssprop --bq-time-picker--text-size - Field text size.
+     */
+    interface BqTimePicker {
+        /**
+          * If `true`, the Time picker field will be focused on component render.
+          * @default false
+         */
+        "autofocus"?: boolean;
+        /**
+          * If `true`, the clear button won't be displayed.
+          * @default false
+         */
+        "disableClear"?: boolean;
+        /**
+          * If `true`, the panel "Now" button won't be displayed.
+          * @default false
+         */
+        "disableNow"?: boolean;
+        /**
+          * Indicates whether the Time picker is disabled or not.
+          * @default false
+         */
+        "disabled"?: boolean;
+        /**
+          * Distance (gutter) between the Time picker panel and the field.
+          * @default 8
+         */
+        "distance"?: number;
+        /**
+          * The ID of the form the field belongs to.
+         */
+        "form"?: string;
+        /**
+          * Native form validation message.
+         */
+        "formValidationMessage"?: string;
+        /**
+          * The clock used by the field and the panel: 24-hour (`"24"`) or 12-hour with an AM/PM period (`"12"`). It doesn't depend on the `locale`.
+          * @default '24'
+         */
+        "hourFormat"?: THourFormat;
+        /**
+          * Step between selectable hours.
+          * @default 1
+         */
+        "hourStep"?: number;
+        /**
+          * Text of the column headers, AM/PM labels, buttons and accessible names, as an object or a JSON string. Missing keys fall back to the `locale` names (`hour`, `minute`, `second`, `am`, `pm`), `am/pm` (`period`), or English text: `Now`, `Clear`, `OK`, `Open time picker` and `Choose time`.
+         */
+        "labels"?: TTimePickerLabels | string;
+        /**
+          * Locale used for the field layout, separators, column headers and day period labels. The clock is set by `hour-format`.
+          * @default 'en-GB'
+         */
+        "locale"?: Intl.LocalesArgument;
+        /**
+          * Latest selectable time, in 24-hour format (`HH:mm` or `HH:mm:ss`). Ignored, together with `min`, when it is earlier than `min`.
+         */
+        "max"?: string;
+        /**
+          * Earliest selectable time, in 24-hour format (`HH:mm` or `HH:mm:ss`). Ignored, together with `max`, when it is later than `max`.
+         */
+        "min"?: string;
+        /**
+          * Step between selectable minutes.
+          * @default 1
+         */
+        "minuteStep"?: number;
+        /**
+          * The Time picker name.
+         */
+        "name": string;
+        /**
+          * Callback handler emitted when focus leaves the Time picker. Moving focus between the field and the panel doesn't emit it.
+         */
+        "onBqBlur"?: (event: BqTimePickerCustomEvent<HTMLBqTimePickerElement>) => void;
+        /**
+          * Callback handler emitted when the value is committed or cleared.
+         */
+        "onBqChange"?: (event: BqTimePickerCustomEvent<{ value: string | undefined; el: HTMLElement }>) => void;
+        /**
+          * Callback handler emitted when the value is cleared.
+         */
+        "onBqClear"?: (event: BqTimePickerCustomEvent<HTMLBqTimePickerElement>) => void;
+        /**
+          * Callback handler emitted when focus enters the Time picker. Moving focus between the field and the panel doesn't emit it.
+         */
+        "onBqFocus"?: (event: BqTimePickerCustomEvent<HTMLBqTimePickerElement>) => void;
+        /**
+          * If `true`, the panel is visible.
+          * @default false
+         */
+        "open"?: boolean;
+        /**
+          * Overrides the height of the Time picker panel.
+          * @default 'auto'
+         */
+        "panelHeight"?: string;
+        /**
+          * Position of the Time picker panel.
+          * @default 'bottom-end'
+         */
+        "placement"?: Placement;
+        /**
+          * The smallest unit edited and submitted. - `hour`   → `HH:00` - `minute` → `HH:mm` (default) - `second` → `HH:mm:ss`
+          * @default 'minute'
+         */
+        "precision"?: TTimePrecision;
+        /**
+          * If `true`, the value can be read and submitted but not changed.
+          * @default false
+         */
+        "readonly"?: boolean;
+        /**
+          * If `true`, picks made in the panel (including "Now") are a draft until confirmed with the OK button or Enter. The field keeps showing the committed value until then. Escape or an outside click discards the draft.
+          * @default false
+         */
+        "requireConfirm"?: boolean;
+        /**
+          * Whether a value must be entered before submitting the form.
+          * @default false
+         */
+        "required"?: boolean;
+        /**
+          * Step between selectable seconds.
+          * @default 1
+         */
+        "secondStep"?: number;
+        /**
+          * Skidding between the panel and the field.
+          * @default 0
+         */
+        "skidding"?: number;
+        /**
+          * Positioning strategy for the panel.
+          * @default 'fixed'
+         */
+        "strategy"?: TFloatingStrategy1;
+        /**
+          * Validation state applied to the field.
+          * @default 'none'
+         */
+        "validationStatus"?: TInputValidation1;
+        /**
+          * The selected time, in 24-hour format: `HH:mm` (`HH:00` at hour precision) or `HH:mm:ss` at second precision.
+         */
+        "value"?: string;
     }
     /**
      * Toasts are time-based components used to display short messages.
@@ -9110,8 +10159,15 @@ declare namespace LocalJSX {
     interface BqOptionAttributes {
         "hidden": boolean;
         "disabled": boolean;
+        "checkbox": boolean;
         "displayValue": string;
+        "expanded": boolean;
+        "indeterminate": boolean;
+        "allSelectedLabel": string;
+        "selectedCountLabel": string;
+        "showSelectionSummary": boolean;
         "selected": boolean;
+        "tree": boolean;
         "value": string;
     }
     interface BqOptionListAttributes {
@@ -9163,6 +10219,7 @@ declare namespace LocalJSX {
         "disableScrollLock": boolean;
         "disabled": boolean;
         "disableClear": boolean;
+        "disableSearch": boolean;
         "distance": number;
         "form": string;
         "formValidationMessage": string;
@@ -9177,6 +10234,7 @@ declare namespace LocalJSX {
         "readonly": boolean;
         "required": boolean;
         "sameWidth": boolean;
+        "enableCheckboxes": boolean;
         "skidding": number;
         "strategy": 'fixed' | 'absolute';
         "validationStatus": TInputValidation;
@@ -9290,6 +10348,35 @@ declare namespace LocalJSX {
         "value": string;
         "wrap": TTextareaWrap;
     }
+    interface BqTimePickerAttributes {
+        "autofocus": boolean;
+        "disableClear": boolean;
+        "disableNow": boolean;
+        "disabled": boolean;
+        "distance": number;
+        "form": string;
+        "formValidationMessage": string;
+        "hourFormat": THourFormat;
+        "hourStep": number;
+        "labels": TTimePickerLabels | string;
+        "locale": Intl.LocalesArgument;
+        "max": string;
+        "min": string;
+        "minuteStep": number;
+        "name": string;
+        "open": boolean;
+        "panelHeight": string;
+        "placement": Placement;
+        "precision": TTimePrecision;
+        "readonly": boolean;
+        "requireConfirm": boolean;
+        "required": boolean;
+        "secondStep": number;
+        "skidding": number;
+        "strategy": TFloatingStrategy;
+        "validationStatus": TInputValidation;
+        "value": string;
+    }
     interface BqToastAttributes {
         "border": TToastBorderRadius;
         "type": TToastType;
@@ -9349,6 +10436,7 @@ declare namespace LocalJSX {
         "bq-tab-group": Omit<BqTabGroup, keyof BqTabGroupAttributes> & { [K in keyof BqTabGroup & keyof BqTabGroupAttributes]?: BqTabGroup[K] } & { [K in keyof BqTabGroup & keyof BqTabGroupAttributes as `attr:${K}`]?: BqTabGroupAttributes[K] } & { [K in keyof BqTabGroup & keyof BqTabGroupAttributes as `prop:${K}`]?: BqTabGroup[K] };
         "bq-tag": Omit<BqTag, keyof BqTagAttributes> & { [K in keyof BqTag & keyof BqTagAttributes]?: BqTag[K] } & { [K in keyof BqTag & keyof BqTagAttributes as `attr:${K}`]?: BqTagAttributes[K] } & { [K in keyof BqTag & keyof BqTagAttributes as `prop:${K}`]?: BqTag[K] };
         "bq-textarea": Omit<BqTextarea, keyof BqTextareaAttributes> & { [K in keyof BqTextarea & keyof BqTextareaAttributes]?: BqTextarea[K] } & { [K in keyof BqTextarea & keyof BqTextareaAttributes as `attr:${K}`]?: BqTextareaAttributes[K] } & { [K in keyof BqTextarea & keyof BqTextareaAttributes as `prop:${K}`]?: BqTextarea[K] } & OneOf<"name", BqTextarea["name"], BqTextareaAttributes["name"]> & OneOf<"placeholder", BqTextarea["placeholder"], BqTextareaAttributes["placeholder"]>;
+        "bq-time-picker": Omit<BqTimePicker, keyof BqTimePickerAttributes> & { [K in keyof BqTimePicker & keyof BqTimePickerAttributes]?: BqTimePicker[K] } & { [K in keyof BqTimePicker & keyof BqTimePickerAttributes as `attr:${K}`]?: BqTimePickerAttributes[K] } & { [K in keyof BqTimePicker & keyof BqTimePickerAttributes as `prop:${K}`]?: BqTimePicker[K] } & OneOf<"name", BqTimePicker["name"], BqTimePickerAttributes["name"]>;
         "bq-toast": Omit<BqToast, keyof BqToastAttributes> & { [K in keyof BqToast & keyof BqToastAttributes]?: BqToast[K] } & { [K in keyof BqToast & keyof BqToastAttributes as `attr:${K}`]?: BqToastAttributes[K] } & { [K in keyof BqToast & keyof BqToastAttributes as `prop:${K}`]?: BqToast[K] };
         "bq-tooltip": Omit<BqTooltip, keyof BqTooltipAttributes> & { [K in keyof BqTooltip & keyof BqTooltipAttributes]?: BqTooltip[K] } & { [K in keyof BqTooltip & keyof BqTooltipAttributes as `attr:${K}`]?: BqTooltipAttributes[K] } & { [K in keyof BqTooltip & keyof BqTooltipAttributes as `prop:${K}`]?: BqTooltip[K] };
     }
@@ -9402,13 +10490,16 @@ declare module "@stencil/core" {
              * @cssprop --bq-accordion--filled-collapsed-background - Accordion filled collapsed header background
              * @cssprop --bq-accordion--filled-collapsed-text-color - Accordion filled collapsed header text color
              * @cssprop --bq-accordion--filled-expanded-background - Accordion filled expanded header background
-             * @cssprop --bq-accordion--filled-expanded-collapsed-hover - Accordion filled expanded header color on hover
+             * @cssprop --bq-accordion--filled-expanded-collapsed-hover - Base colour of the filled expanded header hover state (mixed with `--bq-hover` on hover)
              * @cssprop --bq-accordion--filled-expanded-text-color - Accordion filled expanded header text color
              * @cssprop --bq-accordion--ghost-collapsed-background - Accordion ghost collapsed header background
              * @cssprop --bq-accordion--ghost-collapsed-text-color - Accordion ghost collapsed header text color
              * @cssprop --bq-accordion--ghost-expanded-background - Accordion ghost expanded header background
-             * @cssprop --bq-accordion--ghost-expanded-collapsed-hover - Accordion ghost expanded header color on hover
+             * @cssprop --bq-accordion--ghost-expanded-collapsed-hover - Base colour of the ghost header hover state, collapsed and expanded (mixed with `--bq-hover` on hover)
              * @cssprop --bq-accordion--ghost-expanded-text-color - Accordion ghost expanded header text color
+             * @cssprop --bq-accordion--icon-color - Accordion expand and collapse icon color
+             * @cssprop --bq-accordion--panel-background - Accordion panel background
+             * @cssprop --bq-accordion--panel-text-color - Accordion panel text color
              * @cssprop --bq-accordion--panel-filled-border-color - Accordion filled panel border color
              * @cssprop --bq-accordion--panel-filled-border-style - Accordion filled panel border style
              * @cssprop --bq-accordion--panel-filled-border-width - Accordion filled panel border width
@@ -9488,7 +10579,6 @@ declare module "@stencil/core" {
              * @cssprop --bq-alert--border-radius - The alert border radius
              * @cssprop --bq-alert--content-footer-gap - The alert content and footer gap
              * @cssprop --bq-alert--title-body-gap - The alert title and body gap
-             * @cssprop --bq-alert--border-color - The alert border color
              * @cssprop --bq-alert--border-style - The alert border style
              * @cssprop --bq-alert--border-width - The alert border width
              * @cssprop --bq-alert--background-info - The alert background color for info type
@@ -9503,8 +10593,10 @@ declare module "@stencil/core" {
              * @cssprop --bq-alert--icon-color-success - The alert icon color for success type
              * @cssprop --bq-alert--icon-color-warning - The alert icon color for warning type
              * @cssprop --bq-alert--icon-color-error - The alert icon color for error type
+             * @cssprop --bq-alert--text-color - The alert text color
              * @cssprop --bq-alert--padding - The alert padding
              * @cssprop --bq-alert--min-width - The alert min width
+             * @cssprop --bq-alert--z-index - The stacking order of a sticky alert. No default is declared.
              */
             "bq-alert": LocalJSX.IntrinsicElements["bq-alert"] & JSXBase.HTMLAttributes<HTMLBqAlertElement>;
             /**
@@ -9535,6 +10627,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-avatar--border-color - Avatar border color
              * @cssprop --bq-avatar--border-style - Avatar border style
              * @cssprop --bq-avatar--border-width - Avatar border width
+             * @cssprop --bq-avatar--text-color - Avatar initials text color
              * @cssprop --bq-avatar--border-radius-circle - Avatar border radius for circle & any size
              * @cssprop --bq-avatar--border-radius-squareXs - Avatar border radius for square & size xsmall
              * @cssprop --bq-avatar--border-radius-squareS - Avatar border radius for square & size small
@@ -9602,7 +10695,7 @@ declare module "@stencil/core" {
              * @status stable
              * @attr {string} href - If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered.
              * @attr {string} target - Where to display the link in the browser context. Relevant only if `href` is set.
-             * @attr {string} rel - Where to display the link in the browser context. Relevant only if `href` is set.
+             * @attr {string} rel - Space-separated link relationship types (e.g. `external`, `nofollow`) applied to the inner `<a>`. Relevant only if `href` is set. When `target` is set, `noreferrer` and `noopener` are always added.
              * @event bqFocus - Handler to be called when item is focused
              * @event bqClick - Handler to be called when item is clicked
              * @event bqBlur - Handler to be called when item loses focus
@@ -9617,6 +10710,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-breadcrumb-item--text-color-current - Text color of the current breadcrumb item (active)
              * @cssprop --bq-breadcrumb-item--text-size - Text size of the breadcrumb item
              * @cssprop --bq-breadcrumb-item--text-size-separator - Text size of the breadcrumb item separator
+             * @cssprop --bq-breadcrumb-item--separator-color - Color of the breadcrumb item separator
              * @cssprop --bq-breadcrumb-item--padding-start - Padding start of the breadcrumb item
              * @cssprop --bq-breadcrumb-item--padding-end - Padding end of the breadcrumb item
              * @cssprop --bq-breadcrumb-item--paddingY - Padding top and bottom of the breadcrumb item
@@ -9665,6 +10759,18 @@ declare module "@stencil/core" {
              * @cssprop --bq-button--large-paddingX - Button large padding block (top and bottom)
              * @cssprop --bq-button--large-paddingY - Button large padding inline (left and right)
              * @cssprop --bq-button--large-font-size - Button large font size
+             * @cssprop --bq-button--primary-background - Primary button background color
+             * @cssprop --bq-button--primary-text-color - Primary button text color
+             * @cssprop --bq-button--primary-border-color-ghost - Primary ghost button border color
+             * @cssprop --bq-button--primary-text-color-ghost - Primary ghost button text color
+             * @cssprop --bq-button--primary-background-danger - Primary danger button background color
+             * @cssprop --bq-button--primary-text-color-danger - Primary danger button text color
+             * @cssprop --bq-button--secondary-background - Secondary button background color
+             * @cssprop --bq-button--secondary-text-color - Secondary button text color
+             * @cssprop --bq-button--secondary-border-color-ghost - Secondary ghost button border color
+             * @cssprop --bq-button--secondary-text-color-ghost - Secondary ghost button text color
+             * @cssprop --bq-button--link-text-color - Link button text color
+             * @cssprop --bq-button--text-text-color - Text button text color
              */
             "bq-button": LocalJSX.IntrinsicElements["bq-button"] & JSXBase.HTMLAttributes<HTMLBqButtonElement>;
             /**
@@ -9717,23 +10823,28 @@ declare module "@stencil/core" {
              * @event bqFocus - Handler to be called when the checkbox gets focus
              * @event bqBlur - Handler to be called when the checkbox loses focus
              * @cssprop --bq-checkbox--background-color - Checkbox background color
+             * @cssprop --bq-checkbox--background-color-checked - Checkbox background color when checked or indeterminate
+             * @cssprop --bq-checkbox--border-color - Checkbox border color
+             * @cssprop --bq-checkbox--border-color-checked - Checkbox border color when checked or indeterminate
              * @cssprop --bq-checkbox--border-radius - Checkbox border radius
              * @cssprop --bq-checkbox--border-width - Checkbox border width
+             * @cssprop --bq-checkbox--icon-color-checked - Checkbox check and indeterminate mark color
+             * @cssprop --bq-checkbox--label-text-color - Checkbox label text color
              * @cssprop --bq-checkbox--size - Checkbox size
              */
             "bq-checkbox": LocalJSX.IntrinsicElements["bq-checkbox"] & JSXBase.HTMLAttributes<HTMLBqCheckboxElement>;
             /**
              * The Date Picker is a pure-Stencil calendar input.
-             * It supports single, multi, and range selection, three navigation views
-             * (days → months → years), full localization via `Intl.DateTimeFormat`,
-             * multi-month side-by-side rendering, and RTL layouts.
+             * It supports single, multi, and range selection through locale-ordered,
+             * keyboard-editable date segments or a calendar panel. It also provides three
+             * navigation views (days → months → years), full localization via
+             * `Intl.DateTimeFormat`, multi-month side-by-side rendering, and RTL layouts.
              * @example How to use it
              * ```html
              * <bq-date-picker
              * first-day-of-week="1"
              * locale="en-GB"
              * name="bq-date-picker"
-             * placeholder="Enter your date"
              * type="single"
              * value="2026-07-15"
              * >
@@ -9765,7 +10876,7 @@ declare module "@stencil/core" {
              * @attr {string} name - Input name.
              * @attr {boolean} open - If `true`, the panel is visible.
              * @attr {string} panel-height - Overrides the height of the panel.
-             * @attr {string} placeholder - Input placeholder text.
+             * @attr {string} placeholder - Deprecated. Locale-derived segment format hints always describe the expected entry layout instead.
              * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Placement of the panel.
              * @attr {boolean} required - Whether a value must be selected before submitting the form.
              * @attr {boolean} show-outside-days - Whether to render days that belong to adjacent months.
@@ -9789,6 +10900,9 @@ declare module "@stencil/core" {
              * @cssprop --bq-date-picker--border-color - Input border color.
              * @cssprop --bq-date-picker--border-color-disabled - Border color when disabled.
              * @cssprop --bq-date-picker--border-color-focus - Border color on focus.
+             * @cssprop --bq-date-picker--border-color-danger - Border color when the validation status is `error`.
+             * @cssprop --bq-date-picker--border-color-success - Border color when the validation status is `success`.
+             * @cssprop --bq-date-picker--border-color-warning - Border color when the validation status is `warning`.
              * @cssprop --bq-date-picker--border-radius - Input border radius.
              * @cssprop --bq-date-picker--border-style - Border style.
              * @cssprop --bq-date-picker--border-width - Border width.
@@ -9862,6 +10976,8 @@ declare module "@stencil/core" {
              * @cssprop --bq-dialog--background - Dialog background color
              * @cssprop --bq-dialog--background-backdrop - Dialog backdrop background color
              * @cssprop --bq-dialog--box-shadow - Dialog box shadow
+             * @cssprop --bq-dialog--footer-background - Dialog footer background color (`highlight` footer appearance)
+             * @cssprop --bq-dialog--text-color - Dialog text color
              * @cssprop --bq-dialog--border-color - Dialog border color
              * @cssprop --bq-dialog--border-style - Dialog border style
              * @cssprop --bq-dialog--border-width - Dialog border width
@@ -9929,11 +11045,13 @@ declare module "@stencil/core" {
              * @event bqOpen - Callback handler to be called when the drawer is opened.
              * @event bqAfterOpen - Callback handler to be called after the drawer has been opened.
              * @event bqAfterClose - Callback handler to be called after the drawer has been closed.
+             * @cssprop --bq-drawer--background - Background color of the drawer panel
              * @cssprop --bq-drawer--backgroundBackdrop - Background color of the backdrop
              * @cssprop --bq-drawer--gap - Gap between the drawer and the viewport
              * @cssprop --bq-drawer--width - Width of the drawer
              * @cssprop --bq-drawer--paddingX - Padding left and right of the drawer
              * @cssprop --bq-drawer--paddingY - Padding top and bottom of the drawer
+             * @cssprop --bq-drawer--text-color - Text color of the drawer panel
              * @cssprop --bq-drawer--zIndex - Z-index of the drawer component
              */
             "bq-drawer": LocalJSX.IntrinsicElements["bq-drawer"] & JSXBase.HTMLAttributes<HTMLBqDrawerElement>;
@@ -9988,6 +11106,7 @@ declare module "@stencil/core" {
              * @status stable
              * @dependency bq-icon
              * @attr {"large" | "medium" | "small"} size - The size of the empty state component
+             * @cssprop --bq-empty-state--text-color - The text color of the title and body content
              */
             "bq-empty-state": LocalJSX.IntrinsicElements["bq-empty-state"] & JSXBase.HTMLAttributes<HTMLBqEmptyStateElement>;
             /**
@@ -10051,12 +11170,18 @@ declare module "@stencil/core" {
              * @cssprop --bq-input--background-color - Input background color
              * @cssprop --bq-input--border-color - Input border color
              * @cssprop --bq-input--border-color-focus - Input border color on focus
+             * @cssprop --bq-input--border-color-danger - Input border color when the validation status is `error`
+             * @cssprop --bq-input--border-color-success - Input border color when the validation status is `success`
+             * @cssprop --bq-input--border-color-warning - Input border color when the validation status is `warning`
              * @cssprop --bq-input--border-radius - Input border radius
              * @cssprop --bq-input--border-width - Input border width
              * @cssprop --bq-input--border-style - Input border style
              * @cssprop --bq-input--gap - Gap between input content and prefix/suffix
              * @cssprop --bq-input--helper-margin-top - Helper text margin top
              * @cssprop --bq-input--helper-text-color - Helper text color
+             * @cssprop --bq-input--helper-text-color-danger - Helper text color when the validation status is `error`
+             * @cssprop --bq-input--helper-text-color-success - Helper text color when the validation status is `success`
+             * @cssprop --bq-input--helper-text-color-warning - Helper text color when the validation status is `warning`
              * @cssprop --bq-input--helper-text-size - Helper text size
              * @cssprop --bq-input--icon-size - Icon size to use in prefix/suffix and clear button
              * @cssprop --bq-input--label-margin-bottom - Input label margin bottom
@@ -10130,16 +11255,33 @@ declare module "@stencil/core" {
              * ```
              * @documentation https://storybook.beeq.design/?path=/story/components-option--with-option-group
              * @status stable
+             * @dependency bq-checkbox
+             * @dependency bq-button
+             * @dependency bq-icon
              * @attr {boolean} disabled - If true, the option is disabled.
+             * @attr {string} display-value - Overrides the displayed option value.
              * @attr {boolean} hidden - If true, the option is hidden.
+             * @attr {boolean} checkbox - If true, the option renders as a checkbox option.
+             * @attr {boolean} expanded - If true, nested options are displayed.
+             * @attr {boolean} indeterminate - If true, the option checkbox represents a partial nested selection.
+             * @attr {string} all-selected-label - Text displayed when all selectable nested options are selected.
+             * @attr {string} selected-count-label - Text displayed when some selectable nested options are selected. Use `{count}` as the selected option count placeholder.
+             * @attr {boolean} show-selection-summary - If true, displays the nested selection summary beside the expand control.
              * @attr {string} value - A string representing the value of the option. Can be used to identify the item.
              * @attr {boolean} selected - If true, the option is selected and active.
              * @event bqBlur - Handler to be called when item loses focus.
              * @event bqFocus - Handler to be called when item is focused.
              * @event bqClick - Handler to be called when item is clicked.
-             * @event bqEnter - Handler to be called on enter key press.
+             * @event bqEnter - Emitted when Enter or Space activates a focused option. Checkbox control activation emits bqClick instead.
              * @cssprop --bq-option--background - background color
+             * @cssprop --bq-option--background-hover - background base colour of the hover state (mixed with `--bq-hover` on hover)
+             * @cssprop --bq-option--background-selected - background color when selected
+             * @cssprop --bq-option--expand-text-color-hover - expand control text color on hover
              * @cssprop --bq-option--font-size - font size
+             * @cssprop --bq-option--selection-summary-color - nested selection summary text color
+             * @cssprop --bq-option--text-color - text color
+             * @cssprop --bq-option--text-color-selected - text color when selected
+             * @cssprop --bq-option--tree-line-color - color of the lines connecting nested options
              * @cssprop --bq-option--border-color - border color
              * @cssprop --bq-option--border-style - border style
              * @cssprop --bq-option--border-width - border width
@@ -10148,8 +11290,8 @@ declare module "@stencil/core" {
              * @cssprop --bq-option--gap-start - gap space between prefix and label
              * @cssprop --bq-option--gap-end - gap space between label and suffix
              * @cssprop --bq-option--paddingY - padding Y axis
-             * @cssprop --bq-option--padding-start - option label padding start
-             * @cssprop --bq-option--padding-end - option label padding end
+             * @cssprop --bq-option--padding-start - option item padding start
+             * @cssprop --bq-option--padding-end - option item padding end
              */
             "bq-option": LocalJSX.IntrinsicElements["bq-option"] & JSXBase.HTMLAttributes<HTMLBqOptionElement>;
             /**
@@ -10214,6 +11356,7 @@ declare module "@stencil/core" {
              * ```
              * @documentation https://storybook.beeq.design/?path=/docs/components-page-title--overview
              * @status stable
+             * @cssprop --bq-page-title--divider-color - Page title divider (border end) color, used by `--subtitle-borderBlockEnd`
              * @cssprop --paddingY - Padding top and bottom of the page title wrapper
              * @cssprop --subtitle-borderBlockEnd - Page title border end color
              * @cssprop --subtitle-fontWeight - Page title font weight for subtitle
@@ -10271,6 +11414,9 @@ declare module "@stencil/core" {
              * @cssprop --bq-progress-bar--height - The progress bars height
              * @cssprop --bq-progress-bar--indeterminateWidth - The progress bar width when its indeterminate
              * @cssprop --bq-progress-bar--indicatorColor - The progress bar color (inside the track area)
+             * @cssprop --bq-progress-bar--indicatorColor-error - The progress bar color when `type="error"`
+             * @cssprop --bq-progress-bar--label-color - The label text color
+             * @cssprop --bq-progress-bar--label-color-error - The label text color when `type="error"`
              * @cssprop --bq-progress-bar--trackColor - The progress bar track area (the grey one)
              */
             "bq-progress": LocalJSX.IntrinsicElements["bq-progress"] & JSXBase.HTMLAttributes<HTMLBqProgressElement>;
@@ -10298,7 +11444,11 @@ declare module "@stencil/core" {
              * @event bqFocus - Handler to be called when the radio gets focused
              * @event bqKeyDown - The handler is to be called when the radio key is pressed
              * @cssprop --bq-radio--background-color - Radio background color
+             * @cssprop --bq-radio--border-color - Radio border color
+             * @cssprop --bq-radio--border-color-checked - Radio border color when checked
              * @cssprop --bq-radio--border-width - Radio border width
+             * @cssprop --bq-radio--dot-color-checked - Radio inner dot color when checked
+             * @cssprop --bq-radio--label-text-color - Radio label text color
              * @cssprop --bq-radio--size - Radio size
              */
             "bq-radio": LocalJSX.IntrinsicElements["bq-radio"] & JSXBase.HTMLAttributes<HTMLBqRadioElement>;
@@ -10356,6 +11506,7 @@ declare module "@stencil/core" {
              * @attr {string} clear-button-label - The clear button aria label.
              * @attr {number} debounce-time - The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes.
              * @attr {boolean} disable-clear - If `true`, the clear button won't be displayed.
+             * @attr {boolean} disable-search - Disables text filtering while keeping option selection available.
              * @attr {boolean} disabled - Indicates whether the Select input is disabled and cannot be interacted with.
              * @attr {number} distance - Represents the distance (gutter or margin) between the Select panel and the input element.
              * @attr {string} form - The ID of the form that Select input field belongs to.
@@ -10368,28 +11519,34 @@ declare module "@stencil/core" {
              * @attr {string} panel-height - When set, it will override the height of the Select panel.
              * @attr {string} placeholder - The Select input placeholder text value.
              * @attr {"bottom" | "bottom-end" | "bottom-start" | "left" | "left-end" | "left-start" | "right" | "right-end" | "right-start" | "top" | "top-end" | "top-start"} placement - Position of the Select panel.
-             * @attr {boolean} readonly - If `true`, the Select input cannot be modified.
+             * @attr {boolean} readonly - Deprecated. Use `disable-search` to allow selection without text filtering.
              * @attr {boolean} required - Indicates whether or not the Select input is required to be filled out before submitting the form.
              * @attr {boolean} same-width - Whether the panel should have the Select same width as the input element.
+             * @attr {boolean} enable-checkboxes - If `true` and `multiple` is enabled, flat options render with checkboxes. Nested multi-select options always render with checkboxes.
              * @attr {number} skidding - Represents the skidding between the Select panel and the input element.
              * @attr {"absolute" | "fixed"} strategy - Defines the strategy to position the Select panel.
              * @attr {"error" | "success" | "warning" | "none"} validation-status - The validation status of the Select input.
-             * @attr {"number" | "string" | "string[]"} value - The select input value can be used to reset the field to a previous value.
+             * @attr {string | string[]} value - The select input value can be used to reset the field to a previous value.
              * @method clear - Method to be called to clear the selected value.
-             * @event bqBlur - The callback handler is emitted when the Select input loses focus.
+             * @event bqBlur - Emitted when focus leaves the entire Select, including its input, options, and controls.
              * @event bqClear - The callback handler is emitted when the selected value has been cleared.
-             * @event bqFocus - A callback handler is emitted when the Select input has received focus.
-             * @event bqSelect - The callback handler is emitted when the selected value has changed.
+             * @event bqFocus - Emitted when focus enters the Select from outside the component.
+             * @event bqSelect - The callback handler is emitted when the selected value has changed. Nested multi-select events include selected paths in `selectionTree`.
              * @cssprop --bq-select--background-color - Select background color
              * @cssprop --bq-select--border-color - Select border color
              * @cssprop --bq-select--border-color-focus - Select border color on focus
-             * @cssprop --bq-select--border-color-disabled - Select border color when disabled
+             * @cssprop --bq-select--border-color-danger - Select border color when the validation status is `error`
+             * @cssprop --bq-select--border-color-success - Select border color when the validation status is `success`
+             * @cssprop --bq-select--border-color-warning - Select border color when the validation status is `warning`
              * @cssprop --bq-select--border-radius - Select border radius
              * @cssprop --bq-select--border-width - Select border width
              * @cssprop --bq-select--border-style - Select border style
              * @cssprop --bq-select--gap - Gap between Select content and prefix/suffix
              * @cssprop --bq-select--helper-margin-top - Helper text margin top
              * @cssprop --bq-select--helper-text-color - Helper text color
+             * @cssprop --bq-select--helper-text-color-danger - Helper text color when the validation status is `error`
+             * @cssprop --bq-select--helper-text-color-success - Helper text color when the validation status is `success`
+             * @cssprop --bq-select--helper-text-color-warning - Helper text color when the validation status is `warning`
              * @cssprop --bq-select--helper-text-size - Helper text size
              * @cssprop --bq-select--icon-size - Icon size to use in prefix/suffix and clear button
              * @cssprop --bq-select--label-margin-bottom - Select label margin bottom
@@ -10461,8 +11618,10 @@ declare module "@stencil/core" {
              * @event bqFocus - Handler to be called when the button is clicked.
              * @cssprop --bq-side-menu-item--bg-default - Side menu item default background color
              * @cssprop --bq-side-menu-item--bg-active - Side menu item active background color
+             * @cssprop --bq-side-menu-item--bg-hover - Base colour of the hover background (mixed with `--bq-hover` on hover)
              * @cssprop --bq-side-menu-item--text-default - Side menu item default text color
              * @cssprop --bq-side-menu-item--text-active - Side menu item active text color
+             * @cssprop --bq-side-menu-item--text-hover - Base colour of the hover text (mixed with `--bq-hover` on hover)
              * @cssprop --bq-side-menu-item--paddingX - Side menu item vertical padding
              * @cssprop --bq-side-menu-item--paddingY - Side menu item horizontal padding
              */
@@ -10496,6 +11655,9 @@ declare module "@stencil/core" {
              * @cssprop --bq-slider--thumb-size - Slider hover thumb size
              * @cssprop --bq-slider--progress-color - Slider progress background color
              * @cssprop --bq-slider--trackarea-color - Slider track background color
+             * @cssprop --bq-slider--thumb-background - Slider thumb background color
+             * @cssprop --bq-slider--thumb-border-color - Slider thumb border color
+             * @cssprop --bq-slider--label-color - Slider value indicator (label) text color
              */
             "bq-slider": LocalJSX.IntrinsicElements["bq-slider"] & JSXBase.HTMLAttributes<HTMLBqSliderElement>;
             /**
@@ -10519,6 +11681,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-spinner--medium-text-fontSize - Spinner medium text font size
              * @cssprop --bq-spinner--small-text-fontSize - Spinner small text font size
              * @cssprop --bq-spinner--text-lineHeight - Spinner text line height
+             * @cssprop --bq-spinner--text-color - Spinner text color
              */
             "bq-spinner": LocalJSX.IntrinsicElements["bq-spinner"] & JSXBase.HTMLAttributes<HTMLBqSpinnerElement>;
             /**
@@ -10532,6 +11695,13 @@ declare module "@stencil/core" {
              * @dependency bq-badge
              * @attr {"alert" | "danger" | "info" | "neutral" | "success"} type - It defines the type of status to display.
              * @cssprop --bq-status-circle--size - Status circle size.
+             * @cssprop --bq-status-circ - Status circle size alias.
+             * @cssprop --bq-status--dot-color-alert - Status circle color when type is `alert`.
+             * @cssprop --bq-status--dot-color-danger - Status circle color when type is `danger`.
+             * @cssprop --bq-status--dot-color-info - Status circle color when type is `info`.
+             * @cssprop --bq-status--dot-color-neutral - Status circle color when type is `neutral`.
+             * @cssprop --bq-status--dot-color-success - Status circle color when type is `success`.
+             * @cssprop --bq-status--text-color - Status text color.
              */
             "bq-status": LocalJSX.IntrinsicElements["bq-status"] & JSXBase.HTMLAttributes<HTMLBqStatusElement>;
             /**
@@ -10555,12 +11725,23 @@ declare module "@stencil/core" {
              * @event bqClick - Callback handler emitted when the step item is clicked
              * @event bqFocus - Callback handler emitted when the step item is focused
              * @event bqBlur - Callback handler emitted when the step item loses focus
+             * @cssprop --bq-step-item--background-hover - Background base colour of the step item hover state (mixed with `--bq-hover` on hover)
+             * @cssprop --bq-step-item--description-color - Text color of the description
              * @cssprop --bq-step-item--prefix-color - Color of the prefix icon
              * @cssprop --bq-step-item--prefix-color-current - Color of the prefix icon when current
              * @cssprop --bq-step-item--prefix-color-completed - Color of the prefix icon when completed
              * @cssprop --bq-step-item--prefix-color-error - Color of the prefix icon when error
              * @cssprop --bq-step-item--prefix-num-size - Size of the prefix number
              * @cssprop --bq-step-item--prefix-num-bg-color - Background color of the prefix number
+             * @cssprop --bq-step-item--prefix-num-bg-color-current - Background color of the prefix number when current
+             * @cssprop --bq-step-item--prefix-num-bg-color-completed - Background color of the prefix number when completed
+             * @cssprop --bq-step-item--prefix-num-bg-color-error - Background color of the prefix number when error
+             * @cssprop --bq-step-item--prefix-num-text-color - Text color of the prefix number
+             * @cssprop --bq-step-item--prefix-num-text-color-current - Text color of the prefix number when current
+             * @cssprop --bq-step-item--prefix-num-text-color-completed - Text color of the prefix number when completed
+             * @cssprop --bq-step-item--prefix-num-text-color-error - Text color of the prefix number when error
+             * @cssprop --bq-step-item--title-color - Text color of the title
+             * @cssprop --bq-step-item--title-color-current - Text color of the title when current
              */
             "bq-step-item": LocalJSX.IntrinsicElements["bq-step-item"] & JSXBase.HTMLAttributes<HTMLBqStepItemElement>;
             /**
@@ -10582,7 +11763,6 @@ declare module "@stencil/core" {
              * @attr {"horizontal" | "vertical"} orientation - The orientation of the steps
              * @attr {"medium" | "small"} size - The size of the steps
              * @attr {"numeric" | "icon" | "dot"} type - The type of prefix element to use on the step items
-             * @cssprop --bq-steps--divider-color - Divider color
              * @cssprop --bq-steps--gap - Gap between steps
              */
             "bq-steps": LocalJSX.IntrinsicElements["bq-steps"] & JSXBase.HTMLAttributes<HTMLBqStepsElement>;
@@ -10616,6 +11796,13 @@ declare module "@stencil/core" {
              * @cssprop --bq-switch--justify-content - Switch justify content
              * @cssprop --bq-switch--width - Switch width
              * @cssprop --bq-switch--dot-size - Switch dot size
+             * @cssprop --bq-switch--dot-color - Switch dot color
+             * @cssprop --bq-switch--dot-color-checked - Switch dot color when checked
+             * @cssprop --bq-switch--icon-color - Switch inner icon color (unchecked)
+             * @cssprop --bq-switch--icon-color-checked - Switch inner icon color when checked
+             * @cssprop --bq-switch--label-text-color - Switch label text color
+             * @cssprop --bq-switch--track-color - Switch track color
+             * @cssprop --bq-switch--track-color-checked - Switch track color when checked
              */
             "bq-switch": LocalJSX.IntrinsicElements["bq-switch"] & JSXBase.HTMLAttributes<HTMLBqSwitchElement>;
             /**
@@ -10641,11 +11828,13 @@ declare module "@stencil/core" {
              * @method vClick - Simulate a click event on the native `<button>` HTML element used under the hood
              * @method vFocus - Sets focus on the native `<button>` HTML element used under the hood
              * @method vBlur - Remove focus from the native `<button>` HTML element used under the hood
+             * @cssprop --bq-tab--background-hover - Background base colour of the hover state (mixed with `--bq-hover` on hover)
              * @cssprop --bq-tab--font-size - Font size
              * @cssprop --bq-tab--font-weight - Font weight
              * @cssprop --bq-tab--icon-size-large - Icon size for large tab
              * @cssprop --bq-tab--icon-size-medium - Icon size for medium tab
              * @cssprop --bq-tab--icon-size-small - Icon size for small tab
+             * @cssprop --bq-tab--indicator-color - Color of the active tab indicator
              * @cssprop --bq-tab--label-icon-gap - Gap between label and icon
              * @cssprop --bq-tab--line-height - Line height
              * @cssprop --bq-tab--padding-horizontal-large - Horizontal padding for large tab
@@ -10654,6 +11843,9 @@ declare module "@stencil/core" {
              * @cssprop --bq-tab--padding-vertical-large - Vertical padding for large tab
              * @cssprop --bq-tab--padding-vertical-medium - Vertical padding for medium tab
              * @cssprop --bq-tab--padding-vertical-small - Vertical padding for small tab
+             * @cssprop --bq-tab--text-color - Text color
+             * @cssprop --bq-tab--text-color-active - Text color of the active tab
+             * @cssprop --bq-tab--text-color-hover - Text base colour of the hover state (mixed with `--bq-hover` on hover)
              */
             "bq-tab": LocalJSX.IntrinsicElements["bq-tab"] & JSXBase.HTMLAttributes<HTMLBqTabElement>;
             /**
@@ -10676,6 +11868,7 @@ declare module "@stencil/core" {
              * @attr {string} size - The size of the tab
              * @attr {string} value - A string representing the id of the selected tab.
              * @event bqChange - Handler to be called when the tab value changes
+             * @cssprop --bq-tab-group--border-color - Color of the divider line along the tabs
              */
             "bq-tab-group": LocalJSX.IntrinsicElements["bq-tab-group"] & JSXBase.HTMLAttributes<HTMLBqTabGroupElement>;
             /**
@@ -10717,6 +11910,34 @@ declare module "@stencil/core" {
              * @cssprop --bq-tag--medium-gap - Tag medium gap between content
              * @cssprop --bq-tag--medium-padding-x - Tag medium padding horizontal
              * @cssprop --bq-tag--medium-padding-y - Tag medium padding vertical
+             * @cssprop --bq-tag--text-color - Tag text color
+             * @cssprop --bq-tag--background-selected - Tag background color when it is clickable and selected
+             * @cssprop --bq-tag--text-selected - Tag text color when it is clickable and selected
+             * @cssprop --bq-tag--background-error-filled - Tag background color for the error color and filled variant
+             * @cssprop --bq-tag--text-error-filled - Tag text color for the error color and filled variant
+             * @cssprop --bq-tag--background-error-outline - Tag background color for the error color and outline variant
+             * @cssprop --bq-tag--text-error-outline - Tag text color for the error color and outline variant
+             * @cssprop --bq-tag--border-error-outline - Tag border color for the error color and outline variant
+             * @cssprop --bq-tag--background-gray-filled - Tag background color for the gray color and filled variant
+             * @cssprop --bq-tag--text-gray-filled - Tag text color for the gray color and filled variant
+             * @cssprop --bq-tag--background-gray-outline - Tag background color for the gray color and outline variant
+             * @cssprop --bq-tag--text-gray-outline - Tag text color for the gray color and outline variant
+             * @cssprop --bq-tag--border-gray-outline - Tag border color for the gray color and outline variant
+             * @cssprop --bq-tag--background-info-filled - Tag background color for the info color and filled variant
+             * @cssprop --bq-tag--text-info-filled - Tag text color for the info color and filled variant
+             * @cssprop --bq-tag--background-info-outline - Tag background color for the info color and outline variant
+             * @cssprop --bq-tag--text-info-outline - Tag text color for the info color and outline variant
+             * @cssprop --bq-tag--border-info-outline - Tag border color for the info color and outline variant
+             * @cssprop --bq-tag--background-success-filled - Tag background color for the success color and filled variant
+             * @cssprop --bq-tag--text-success-filled - Tag text color for the success color and filled variant
+             * @cssprop --bq-tag--background-success-outline - Tag background color for the success color and outline variant
+             * @cssprop --bq-tag--text-success-outline - Tag text color for the success color and outline variant
+             * @cssprop --bq-tag--border-success-outline - Tag border color for the success color and outline variant
+             * @cssprop --bq-tag--background-warning-filled - Tag background color for the warning color and filled variant
+             * @cssprop --bq-tag--text-warning-filled - Tag text color for the warning color and filled variant
+             * @cssprop --bq-tag--background-warning-outline - Tag background color for the warning color and outline variant
+             * @cssprop --bq-tag--text-warning-outline - Tag text color for the warning color and outline variant
+             * @cssprop --bq-tag--border-warning-outline - Tag border color for the warning color and outline variant
              */
             "bq-tag": LocalJSX.IntrinsicElements["bq-tag"] & JSXBase.HTMLAttributes<HTMLBqTagElement>;
             /**
@@ -10754,17 +11975,23 @@ declare module "@stencil/core" {
              * @attr {"soft" | "hard"} wrap - Specifies how the text in a text area is to be wrapped when submitted in a form.
              * @event bqBlur - Handler to be called when the textarea loses focus.
              * @event bqChange - Handler to be called when the textarea value has changed and the textarea loses focus.
-             * @event bqClear - Handler to be called when the textarea value has been cleared.
+             * @event bqClear - Deprecated. `bq-textarea` never emits `bqClear`. It will be removed in the next major release.
              * @event bqFocus - Handler to be called when the textarea has received focus.
              * @event bqInput - Handler to be called when the textarea value changes.
              * @cssprop --bq-textarea--background-color - Textarea background color
              * @cssprop --bq-textarea--border-color - Textarea border color
              * @cssprop --bq-textarea--border-color-focus - Textarea border color on focus
+             * @cssprop --bq-textarea--border-color-danger - Textarea border color when the validation status is `error`
+             * @cssprop --bq-textarea--border-color-success - Textarea border color when the validation status is `success`
+             * @cssprop --bq-textarea--border-color-warning - Textarea border color when the validation status is `warning`
              * @cssprop --bq-textarea--border-radius - Textarea border radius
              * @cssprop --bq-textarea--border-width - Textarea border width
              * @cssprop --bq-textarea--border-style - Textarea border style
              * @cssprop --bq-textarea--helper-margin-top - Textarea helper text margin top
              * @cssprop --bq-textarea--helper-text-color - Textarea helper text color
+             * @cssprop --bq-textarea--helper-text-color-danger - Helper text color when the validation status is `error`
+             * @cssprop --bq-textarea--helper-text-color-success - Helper text color when the validation status is `success`
+             * @cssprop --bq-textarea--helper-text-color-warning - Helper text color when the validation status is `warning`
              * @cssprop --bq-textarea--helper-text-size - Textarea helper text size
              * @cssprop --bq-textarea--label-margin-bottom - Textarea label margin bottom
              * @cssprop --bq-textarea--label-text-color - Textarea label text color
@@ -10777,6 +12004,87 @@ declare module "@stencil/core" {
              * @cssprop --bq-textarea--text-placeholder-color - Textarea placeholder text color
              */
             "bq-textarea": LocalJSX.IntrinsicElements["bq-textarea"] & JSXBase.HTMLAttributes<HTMLBqTextareaElement>;
+            /**
+             * The Time Picker lets users enter a time of day by typing into locale-ordered,
+             * keyboard-editable segments or by picking hours, minutes, seconds and AM/PM
+             * from scrollable columns in a dropdown panel.
+             * @example How to use it
+             * ```html
+             * <bq-time-picker name="meeting-time" value="14:30">
+             * <label slot="label">Meeting time</label>
+             * </bq-time-picker>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/0727e1-time-picker
+             * @status experimental
+             * @dependency bq-button
+             * @dependency bq-dropdown
+             * @dependency bq-icon
+             * @attr {boolean} autofocus - If `true`, the Time picker field will be focused on component render.
+             * @attr {boolean} disable-clear - If `true`, the clear button won't be displayed.
+             * @attr {boolean} disable-now - If `true`, the panel "Now" button won't be displayed.
+             * @attr {boolean} disabled - Indicates whether the Time picker is disabled or not.
+             * @attr {number} distance - Represents the distance between the panel and the field.
+             * @attr {string} form - The form ID the field belongs to.
+             * @attr {string} form-validation-message - Custom native form validation message.
+             * @attr {"12" | "24"} hour-format - The clock used by the field and the panel. Defaults to `"24"`.
+             * @attr {number} hour-step - Step between selectable hours.
+             * @attr {string} labels - JSON object with the text of the column headers, AM/PM labels, buttons and accessible names.
+             * @attr {Intl.LocalesArgument} locale - Locale used for the field layout, separators, column headers and day period labels.
+             * @attr {string} max - Latest selectable time (`HH:mm` or `HH:mm:ss`).
+             * @attr {string} min - Earliest selectable time (`HH:mm` or `HH:mm:ss`).
+             * @attr {number} minute-step - Step between selectable minutes.
+             * @attr {string} name - The Time picker name.
+             * @attr {boolean} open - If `true`, the panel is visible.
+             * @attr {string} panel-height - Overrides the height of the panel.
+             * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Placement of the panel.
+             * @attr {"hour" | "minute" | "second"} precision - The smallest unit edited and submitted.
+             * @attr {boolean} readonly - If `true`, the value can be read and submitted but not changed.
+             * @attr {boolean} require-confirm - If `true`, panel picks are a draft shown only in the panel until confirmed with the OK button or Enter.
+             * @attr {boolean} required - Whether a value must be entered before submitting the form.
+             * @attr {number} second-step - Step between selectable seconds.
+             * @attr {number} skidding - Skidding between the panel and the field.
+             * @attr {"fixed" | "absolute"} strategy - Positioning strategy for the panel.
+             * @attr {"error" | "none" | "success" | "warning"} validation-status - Validation state.
+             * @attr {string} value - The selected time in 24-hour format: `HH:mm` (`HH:00` at hour precision) or `HH:mm:ss`.
+             * @method clear() - Clears the selected value.
+             * @event bqBlur - Emitted when focus leaves the Time picker, including its panel.
+             * @event bqChange - Emitted when the value is committed or cleared.
+             * @event bqClear - Emitted when the value is cleared.
+             * @event bqFocus - Emitted when focus enters the Time picker, including its panel.
+             * @cssprop --bq-time-picker--background-color - Field background color.
+             * @cssprop --bq-time-picker--border-color - Field border color.
+             * @cssprop --bq-time-picker--border-color-disabled - Border color when disabled.
+             * @cssprop --bq-time-picker--border-color-focus - Border color on focus.
+             * @cssprop --bq-time-picker--border-color-danger - Border color when the validation status is `error`.
+             * @cssprop --bq-time-picker--border-color-success - Border color when the validation status is `success`.
+             * @cssprop --bq-time-picker--border-color-warning - Border color when the validation status is `warning`.
+             * @cssprop --bq-time-picker--border-radius - Field border radius.
+             * @cssprop --bq-time-picker--border-style - Border style.
+             * @cssprop --bq-time-picker--border-width - Border width.
+             * @cssprop --bq-time-picker--column-gap - Space between the panel columns.
+             * @cssprop --bq-time-picker--column-header-text-color - Text color of the column headers.
+             * @cssprop --bq-time-picker--column-height - Height of the scrollable panel columns.
+             * @cssprop --bq-time-picker--column-width - Width of a panel column.
+             * @cssprop --bq-time-picker--divider-color - Color of the lines between the panel columns and above the footer.
+             * @cssprop --bq-time-picker--gap - Gap between the field content and prefix/suffix.
+             * @cssprop --bq-time-picker--icon-size - Size of the icons used in prefix/suffix/clear.
+             * @cssprop --bq-time-picker--label-margin-bottom - Space below the label.
+             * @cssprop --bq-time-picker--label-text-color - Label text color.
+             * @cssprop --bq-time-picker--label-text-size - Label text size.
+             * @cssprop --bq-time-picker--option-background-hover - Hover background of a column option.
+             * @cssprop --bq-time-picker--option-background-selected - Background of the selected column option.
+             * @cssprop --bq-time-picker--option-height - Height of a column option.
+             * @cssprop --bq-time-picker--option-width - Width of a column option.
+             * @cssprop --bq-time-picker--option-radius - Border radius of a column option.
+             * @cssprop --bq-time-picker--option-text-selected - Text color of the selected column option.
+             * @cssprop --bq-time-picker--padding-end - Field padding end.
+             * @cssprop --bq-time-picker--padding-start - Field padding start.
+             * @cssprop --bq-time-picker--paddingY - Field vertical padding.
+             * @cssprop --bq-time-picker--text-color - Field text color.
+             * @cssprop --bq-time-picker--text-placeholder-color - Placeholder text color.
+             * @cssprop --bq-time-picker--text-size - Field text size.
+             */
+            "bq-time-picker": LocalJSX.IntrinsicElements["bq-time-picker"] & JSXBase.HTMLAttributes<HTMLBqTimePickerElement>;
             /**
              * Toasts are time-based components used to display short messages.
              * Commonly used for errors, confirmations, or progress updates.

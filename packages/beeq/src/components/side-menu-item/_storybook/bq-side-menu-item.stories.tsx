@@ -1,5 +1,6 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit-html';
+import { fn } from 'storybook/test';
 
 import mdx from './bq-side-menu-item.mdx';
 
@@ -17,10 +18,6 @@ const meta: Meta = {
     collapse: { control: 'boolean' },
     // Not part of the component
     text: { control: 'text', table: { disable: true } },
-    // Event handlers
-    bqBlur: { action: 'bqBlur' },
-    bqFocus: { action: 'bqFocus' },
-    bqClick: { action: 'bqClick' },
   },
   args: {
     active: false,
@@ -28,6 +25,10 @@ const meta: Meta = {
     collapse: false,
     // Not part of the component
     text: 'Menu item',
+    // Events
+    bqBlur: fn(),
+    bqFocus: fn(),
+    bqClick: fn(),
   },
 };
 export default meta;

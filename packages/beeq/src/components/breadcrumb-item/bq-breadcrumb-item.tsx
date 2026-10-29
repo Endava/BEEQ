@@ -3,6 +3,8 @@ import { Component, Element, Event, h, Prop } from '@stencil/core';
 
 import { isDefined } from '../../shared/utils';
 
+const SAFE_REL_TOKENS = ['noreferrer', 'noopener'];
+
 /**
  * The Breadcrumb Item helps users understand their current location within a website or application's hierarchical structure.
  *
@@ -19,13 +21,14 @@ import { isDefined } from '../../shared/utils';
  *
  * @attr {string} href - If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered.
  * @attr {string} target - Where to display the link in the browser context. Relevant only if `href` is set.
- * @attr {string} rel - Where to display the link in the browser context. Relevant only if `href` is set.
+ * @attr {string} rel - Space-separated link relationship types (e.g. `external`, `nofollow`) applied to the inner `<a>`. Relevant only if `href` is set. When `target` is set, `noreferrer` and `noopener` are always added.
  *
  * @event bqFocus - Handler to be called when item is focused
  * @event bqClick - Handler to be called when item is clicked
  * @event bqBlur - Handler to be called when item loses focus
  *
  * @slot - The default slot is used to add content to the breadcrumb item.
+ * @slot separator - Per-item separator content, normally populated by bq-breadcrumb.
  *
  * @part base - The component wrapper container
  * @part content - The `span` tag that wraps the content item
@@ -43,6 +46,7 @@ import { isDefined } from '../../shared/utils';
  * @cssprop --bq-breadcrumb-item--text-color-current - Text color of the current breadcrumb item (active)
  * @cssprop --bq-breadcrumb-item--text-size - Text size of the breadcrumb item
  * @cssprop --bq-breadcrumb-item--text-size-separator - Text size of the breadcrumb item separator
+ * @cssprop --bq-breadcrumb-item--separator-color - Color of the breadcrumb item separator
  * @cssprop --bq-breadcrumb-item--padding-start - Padding start of the breadcrumb item
  * @cssprop --bq-breadcrumb-item--padding-end - Padding end of the breadcrumb item
  * @cssprop --bq-breadcrumb-item--paddingY - Padding top and bottom of the breadcrumb item
@@ -76,8 +80,11 @@ export class BqBreadcrumbItem {
   /** Where to display the link in the browser context. Relevant only if `href` is set. */
   @Prop({ reflect: true }) target: '_blank' | '_parent' | '_self' | '_top';
 
-  /** Where to display the link in the browser context. Relevant only if `href` is set. */
-  @Prop({ reflect: true }) rel: string = 'noreferrer noopener';
+  /**
+   * Space-separated link relationship types (e.g. `external`, `nofollow`) applied to the inner `<a>`.
+   * Relevant only if `href` is set. When `target` is set, `noreferrer` and `noopener` are always added.
+   */
+  @Prop({ reflect: true }) rel?: string;
 
   // Prop lifecycle events
   // =======================
@@ -93,7 +100,7 @@ export class BqBreadcrumbItem {
   @Event({ bubbles: true, composed: true }) bqFocus: EventEmitter<HTMLBqBreadcrumbItemElement>;
 
   /** Handler to be called when item is clicked */
-  @Event({ bubbles: true, composed: true }) bqClick: EventEmitter<HTMLBqBreadcrumbItemElement>;
+  @Event({ bubbles: true, cancelable: true, composed: true }) bqClick: EventEmitter<HTMLBqBreadcrumbItemElement>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -122,8 +129,23 @@ export class BqBreadcrumbItem {
     this.bqFocus.emit(this.el);
   };
 
-  private onClick = () => {
-    this.bqClick.emit(this.el);
+  // Custom `rel` tokens are kept and the safety tokens are merged in whenever `target` is set
+  private getRel = (): string | undefined => {
+    const tokens = (this.rel ?? '').split(/\s+/).filter(Boolean);
+    if (this.target) {
+      SAFE_REL_TOKENS.forEach((safeToken) => {
+        if (!tokens.some((token) => token.toLowerCase() === safeToken)) tokens.push(safeToken);
+      });
+    }
+
+    return tokens.length ? tokens.join(' ') : undefined;
+  };
+
+  private onClick = (event: MouseEvent): void => {
+    const bqClickEvent = this.bqClick.emit(this.el);
+    if (!bqClickEvent.defaultPrevented) return;
+
+    event.preventDefault();
   };
 
   // render() function
@@ -143,7 +165,7 @@ export class BqBreadcrumbItem {
           onClick={this.onClick}
           onFocus={this.onFocus}
           part="item"
-          rel={isLink && this.target ? 'noreferrer noopener' : undefined}
+          rel={isLink ? this.getRel() : undefined}
           target={isLink ? this.target : undefined}
         >
           <span class="bq-breadcrumb-item__content" part="content">
@@ -151,7 +173,7 @@ export class BqBreadcrumbItem {
           </span>
         </TagElem>
         {/* @internal use only */}
-        <span class="bq-breadcrumb-item__separator" part="separator">
+        <span aria-hidden="true" class="bq-breadcrumb-item__separator" part="separator">
           <slot name="separator"></slot>
         </span>
       </div>

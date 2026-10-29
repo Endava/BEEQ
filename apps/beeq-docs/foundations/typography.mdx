@@ -41,15 +41,17 @@ Use typography classes and tokens instead of hardcoded font values. The active t
 
 ## Typography reset
 
-BEEQ's Tailwind preset includes an opinionated reset that makes typography predictable before you add any component or layout styles.
+`beeq.css` and the Tailwind preset include an opinionated reset that makes typography predictable before you add any component or layout styles. These are its typography rules; the [full reset](/getting-started/installation#css-reset) also covers box sizing, media, dialogs, and reduced motion.
 
 | Reset behavior | What it does |
 | --- | --- |
 | `html` sets `font-family` and `font-size` | The page starts with the active theme font and a `16px` base size. |
 | `body` sets text color and line height | Body copy uses `var(--bq-text--primary)` and the regular `150%` line height by default. |
-| `*` removes margin and inherits font styles | Browser spacing and font defaults are removed so BEEQ tokens control the rhythm. |
+| `*` removes default margin | Browser spacing is removed so BEEQ tokens control the rhythm. Elements such as `strong`, `small`, and `code` keep their native font styles. |
 | Form controls inherit font styles | Inputs, buttons, selects, and textareas use the same typography as the surrounding interface. |
 | Paragraphs and headings wrap long words | Text is less likely to overflow narrow layouts. |
+
+Most reset selectors use `:where()`, so they have zero specificity and any style you write overrides them.
 
 This reset is why body text does not need a class. Use semantic typography selectors for display, headings, captions, and overlines, then add layout spacing intentionally with BEEQ spacing tokens.
 

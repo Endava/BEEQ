@@ -2,6 +2,7 @@ import { h } from '@stencil/core';
 import { afterEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
 
 import { computedStyle } from '../../../shared/test-utils/computedStyle';
+import { resolveColorToken } from '../../../shared/test-utils/resolveColorToken';
 import { getTextContent } from '../../../shared/utils/slot';
 
 afterEach(() => {
@@ -84,7 +85,7 @@ describe('bq-spinner', () => {
     const slotElement = root.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="icon"]');
     const iconSlotElements = slotElement.assignedElements({ flatten: true });
 
-    expect(spinnerIcon).not.toHaveClass('is-hidden');
+    expect(spinnerIcon).not.toHaveAttribute('hidden');
     expect(iconSlotElements).toHaveLength(1);
   });
 
@@ -148,6 +149,39 @@ describe('bq-spinner', () => {
     expect(smallTextStyle).toEqual(textStyleExpected('12px'));
     expect(mediumTextStyle).toEqual(textStyleExpected('14px'));
     expect(largeTextStyle).toEqual(textStyleExpected('16px'));
+  });
+
+  it('should use the colour custom properties', async () => {
+    const { root } = await render(<bq-spinner textPosition="below">Loading...</bq-spinner>);
+    // Keep icon and stroke roles distinct so the wrong semantic mapping cannot pass.
+    root.style.setProperty('--bq-icon--brand', '#123456');
+
+    await waitForStable(root);
+
+    const loaderStyle = computedStyle('bq-spinner >>> .bq-spinner__loader', ['color']);
+    const textStyle = computedStyle('bq-spinner >>> .bq-spinner__text', ['color']);
+
+    expect(loaderStyle.color).toBe(resolveColorToken('--bq-icon--brand', root));
+    expect(textStyle.color).toBe(resolveColorToken('--bq-text--primary', root));
+  });
+
+  it('should apply custom colour overrides', async () => {
+    const { root } = await render(
+      <bq-spinner
+        style={{ '--bq-spinner--color': 'rgb(255, 0, 0)', '--bq-spinner--text-color': 'rgb(0, 0, 255)' }}
+        textPosition="below"
+      >
+        Loading...
+      </bq-spinner>,
+    );
+
+    await waitForStable(root);
+
+    const loaderStyle = computedStyle('bq-spinner >>> .bq-spinner__loader', ['color']);
+    const textStyle = computedStyle('bq-spinner >>> .bq-spinner__text', ['color']);
+
+    expect(loaderStyle.color).toBe(resolveColorToken('--bq-spinner--color', root));
+    expect(textStyle.color).toBe(resolveColorToken('--bq-spinner--text-color', root));
   });
 
   it('should render default slot text content', async () => {

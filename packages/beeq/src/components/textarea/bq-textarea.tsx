@@ -44,7 +44,7 @@ import type { TTextareaAutoCapitalize, TTextareaWrap } from './bq-textarea.types
  *
  * @event bqBlur - Handler to be called when the textarea loses focus.
  * @event bqChange - Handler to be called when the textarea value has changed and the textarea loses focus.
- * @event bqClear - Handler to be called when the textarea value has been cleared.
+ * @event bqClear - Deprecated. `bq-textarea` never emits `bqClear`. It will be removed in the next major release.
  * @event bqFocus - Handler to be called when the textarea has received focus.
  * @event bqInput - Handler to be called when the textarea value changes.
  *
@@ -61,11 +61,17 @@ import type { TTextareaAutoCapitalize, TTextareaWrap } from './bq-textarea.types
  * @cssprop --bq-textarea--background-color - Textarea background color
  * @cssprop --bq-textarea--border-color - Textarea border color
  * @cssprop --bq-textarea--border-color-focus - Textarea border color on focus
+ * @cssprop --bq-textarea--border-color-danger - Textarea border color when the validation status is `error`
+ * @cssprop --bq-textarea--border-color-success - Textarea border color when the validation status is `success`
+ * @cssprop --bq-textarea--border-color-warning - Textarea border color when the validation status is `warning`
  * @cssprop --bq-textarea--border-radius - Textarea border radius
  * @cssprop --bq-textarea--border-width - Textarea border width
  * @cssprop --bq-textarea--border-style - Textarea border style
  * @cssprop --bq-textarea--helper-margin-top - Textarea helper text margin top
  * @cssprop --bq-textarea--helper-text-color - Textarea helper text color
+ * @cssprop --bq-textarea--helper-text-color-danger - Helper text color when the validation status is `error`
+ * @cssprop --bq-textarea--helper-text-color-success - Helper text color when the validation status is `success`
+ * @cssprop --bq-textarea--helper-text-color-warning - Helper text color when the validation status is `warning`
  * @cssprop --bq-textarea--helper-text-size - Textarea helper text size
  * @cssprop --bq-textarea--label-margin-bottom - Textarea label margin bottom
  * @cssprop --bq-textarea--label-text-color - Textarea label text color
@@ -89,7 +95,7 @@ export class BqTextarea {
   // Own Properties
   // ====================
 
-  private debounceBqInput: TDebounce<void>;
+  private debounceBqInput?: TDebounce<string>;
   private fallbackId = 'textarea';
 
   private helperTextElem?: HTMLElement;
@@ -138,7 +144,7 @@ export class BqTextarea {
 
   /**
    * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the textarea value changes.
-   * A value of 0 means no debouncing will occur.
+   * A value of 0 means no debouncing will occur: `bqInput` is emitted synchronously on every input.
    */
   @Prop({ reflect: true, mutable: true }) debounceTime? = 0;
 
@@ -203,11 +209,18 @@ export class BqTextarea {
   handleValueChange() {
     if (!this.textarea) return;
 
-    if (this.maxlength && this.value?.length >= this.maxlength) {
-      // If the value is longer than the maxlength, we need to truncate it
-      this.value = this.value?.substring(0, this.maxlength);
-      this.textarea.value = this.value ?? '';
+    if (this.maxlength && this.value?.length > this.maxlength) {
+      // Truncate the value; the reassignment re-runs this watcher to sync the native textarea
+      this.value = this.value.substring(0, this.maxlength);
+      return;
     }
+
+    // Keep the native textarea in sync with programmatic value changes (even after user edits)
+    const nextValue = this.value ?? '';
+    if (this.textarea.value !== nextValue) {
+      this.textarea.value = nextValue;
+    }
+    this.autoResize();
 
     this.setFormValue(this.value);
     this.updateFormValidity();
@@ -216,6 +229,16 @@ export class BqTextarea {
   @Watch('required')
   handleRequiredPropChange() {
     this.updateFormValidity();
+  }
+
+  @Watch('debounceTime')
+  handleDebounceTimeChange() {
+    this.debounceBqInput?.cancel();
+    // Only a positive delay is debounced; otherwise `bqInput` is emitted synchronously (see `emitBqInput`)
+    this.debounceBqInput =
+      this.debounceTime > 0
+        ? debounce((value: string) => this.bqInput.emit({ value, el: this.el }), this.debounceTime)
+        : undefined;
   }
 
   // Events section
@@ -231,7 +254,10 @@ export class BqTextarea {
    */
   @Event() bqChange!: EventEmitter<{ value: string; el: HTMLBqTextareaElement }>;
 
-  /** Callback handler emitted when the textarea value has been cleared */
+  /**
+   * @deprecated `bq-textarea` never emits `bqClear`. It will be removed in the next major release.
+   * Listen to `bqInput` or `bqChange` and check for an empty value instead.
+   */
   @Event() bqClear!: EventEmitter<HTMLBqTextareaElement>;
 
   /** Callback handler emitted when the textarea has received focus */
@@ -247,9 +273,17 @@ export class BqTextarea {
   // Ordered by their natural call order
   // =====================================
 
+  componentWillLoad() {
+    this.handleDebounceTimeChange();
+  }
+
   componentDidLoad() {
     this.handleSlotChange();
     this.handleValueChange();
+  }
+
+  disconnectedCallback() {
+    this.debounceBqInput?.cancel();
   }
 
   formAssociatedCallback() {
@@ -280,9 +314,9 @@ export class BqTextarea {
   // =======================================================
 
   private get numberOfCharacters() {
-    if (!this.maxlength || !this.textarea) return 0;
+    if (!this.maxlength) return 0;
 
-    return this.value?.length;
+    return this.value?.length ?? 0;
   }
 
   private handleBlur = () => {
@@ -302,8 +336,6 @@ export class BqTextarea {
 
     if (!isHTMLElement(ev.target, 'textarea')) return;
     this.value = ev.target.value;
-    this.setFormValue(this.value);
-    this.updateFormValidity();
 
     this.bqChange.emit({ value: this.value, el: this.el });
   };
@@ -311,17 +343,21 @@ export class BqTextarea {
   private handleInput = (ev: Event) => {
     if (this.disabled || this.readonly) return;
 
-    this.debounceBqInput?.cancel();
-
     if (!isHTMLElement(ev.target, 'textarea')) return;
     this.value = ev.target.value;
 
-    this.debounceBqInput = debounce(() => {
-      this.bqInput.emit({ value: this.value, el: this.el });
-    }, this.debounceTime);
-    this.debounceBqInput();
+    this.emitBqInput(this.value);
+  };
 
-    this.autoResize();
+  private emitBqInput = (value: string) => {
+    if (this.debounceBqInput) {
+      this.debounceBqInput(value);
+      return;
+    }
+
+    // Emit within the native `input` event so controlled consumers update before any re-render can
+    // write a stale `value` back into the textarea
+    this.bqInput.emit({ value, el: this.el });
   };
 
   private autoResize = () => {
@@ -331,7 +367,11 @@ export class BqTextarea {
     if (!inputElem) return;
 
     inputElem.style.height = 'auto';
-    inputElem.style.height = `${inputElem.scrollHeight}px`;
+    // A hidden textarea (e.g. inside a closed dialog) reports 0; keep the `rows` height instead
+    const { scrollHeight } = inputElem;
+    if (scrollHeight > 0) {
+      inputElem.style.height = `${scrollHeight}px`;
+    }
   };
 
   private handleSlotChange = () => {
@@ -363,7 +403,6 @@ export class BqTextarea {
 
   private clearSelection = () => {
     this.value = '';
-    this.textarea.value = this.value;
   };
 
   // render() function
@@ -372,10 +411,11 @@ export class BqTextarea {
 
   render() {
     return (
-      <div class="bq-textarea flex flex-auto flex-col" part="base">
+      <div class="bq-textarea" part="base">
         <label
           aria-label={this.name ?? this.fallbackId}
-          class={{ 'bq-textarea__label': true, '!hidden': !this.hasLabel }}
+          class="bq-textarea__label"
+          hidden={!this.hasLabel}
           htmlFor={this.name ?? this.fallbackId}
           part="label"
           ref={(label: HTMLLabelElement) => {
@@ -390,7 +430,7 @@ export class BqTextarea {
           autofocus={this.autofocus}
           class={{
             'bq-textarea__input': true,
-            'resize-none': this.disableResize,
+            'is-resize-disabled': this.disableResize,
             [`validation-${this.validationStatus}`]: true,
           }}
           disabled={this.disabled}
@@ -411,16 +451,15 @@ export class BqTextarea {
           required={this.required}
           rows={this.rows}
           spellcheck={this.spellcheck}
+          value={this.value}
           wrap={this.wrap}
-        >
-          {this.value}
-        </textarea>
+        />
         <div
           class={{
-            'bq-textarea__helper flex items-center justify-between': true,
+            'bq-textarea__helper': true,
             [`validation-${this.validationStatus}`]: true,
-            '!hidden': !this.hasHelperText && !this.maxlength,
           }}
+          hidden={!this.hasHelperText && !this.maxlength}
           part="helper-info"
         >
           <span
@@ -432,11 +471,8 @@ export class BqTextarea {
           >
             <slot name="helper-text" onSlotchange={this.handleSlotChange} />
           </span>
-          <span
-            class={{ 'bq-textarea__helper--counter [fontVariant:tabular-nums]': true, '!hidden': !this.maxlength }}
-            part="helper-counter"
-          >
-            {this.numberOfCharacters ?? 0}/{this.maxlength}
+          <span class="bq-textarea__helper--counter" hidden={!this.maxlength} part="helper-counter">
+            {this.numberOfCharacters}/{this.maxlength}
           </span>
         </div>
       </div>
