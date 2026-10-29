@@ -6,7 +6,10 @@
     color: var(--bq-text--brand);
     text-decoration-line: none;
 
-    @include bq-focus-visible;
+    &:focus-visible {
+      outline: var(--bq-ring-width, 2px) solid var(--bq-ring-color-focus, var(--bq-focus));
+      outline-offset: var(--bq-ring-offset-width, 1px);
+    }
 
     &::after {
       position: absolute;

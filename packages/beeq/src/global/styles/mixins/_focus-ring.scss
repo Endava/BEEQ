@@ -1,14 +1,6 @@
 @mixin bq-focus-ring {
-  /* stylelint-disable block-no-redundant-nested-style-rules -- Keep the caller selector explicit for CSS scoping analysis. */
-  & {
+  @at-root :where(:host) #{&} {
     outline: var(--bq-ring-width, 2px) solid var(--bq-ring-color-focus, var(--bq-focus));
     outline-offset: var(--bq-ring-offset-width, 1px);
-  }
-  /* stylelint-enable block-no-redundant-nested-style-rules */
-}
-
-@mixin bq-focus-visible {
-  &:focus-visible {
-    @include bq-focus-ring;
   }
 }
