@@ -4,7 +4,7 @@
  */
 
 @layer bq.themes {
-  :root,
+  :where(:root),
   ::backdrop {
     --bq-ring-width: 2px;
     --bq-ring-offset-width: 1px;

@@ -40,6 +40,10 @@ Dialogs keep people in context while they respond to important information, conf
   </Card>
 </CardGroup>
 
+<Tip>
+  Choose [`bq-drawer`](/components/drawer) instead of `bq-dialog` when users need a larger side panel with richer or longer content while keeping the page visible, and [`bq-tooltip`](/components/tooltip) when the content is a short, non-essential hint that needs no response.
+</Tip>
+
 ## Patterns
 
 <CardGroup cols={2}>
@@ -295,6 +299,12 @@ Use the `default` dialog when you want to overlay content for focused user engag
 </Tip>
 
 ## Options
+
+**Allowed `size` values:** `small`, `medium` (default), `large`. Any other value logs a warning and falls back to `large`.
+
+**Allowed `footer-appearance` values:** `standard` (default), `highlight`. Any other value logs a warning and falls back to `standard`.
+
+**Allowed `border` values:** `none`, `xs2`, `xs`, `s`, `m` (default), `l`, `full`.
 
 ### Highlight footer
 
@@ -1091,12 +1101,34 @@ Use this variant to confirm irreversible actions with clear messaging and focuse
 
 - **Built-in dialog semantics** — the component applies `aria-labelledby="bq-dialog--title"` and `aria-modal="true"` to the native `<dialog>` element, so assistive technology can identify it as a modal surface.
 - **Built-in close control labeling** — when the default close button is shown, it includes an accessible `label="Close"` and a decorative close icon marked with `aria-hidden="true"`.
-- **Built-in focus management** — the native `<dialog>` element automatically traps keyboard focus within the dialog while it is open and restores it to the previously focused element when the dialog closes.
-- **Provide a meaningful title** — the content you place in the `title` slot becomes the dialog's accessible label, so it should clearly describe the decision, task, or message.
-- **Include an explicit dismissal path** — if you hide the close button or disable outside dismissal, provide a clear cancel or close action in the footer.
-- **Preserve keyboard expectations** — keep <kbd>Esc</kbd> enabled for dismissible dialogs unless there is a strong product reason to require an explicit choice.
+- **Built-in focus management** — the native `<dialog>` element automatically traps keyboard focus within the dialog while it is open (unless `disable-backdrop` is set, see below) and restores it to the previously focused element when the dialog closes.
+- **Provide a meaningful title** — the content you place in the `title` slot becomes the dialog's accessible label, so it must clearly describe the decision, task, or message.
+- **Include an explicit dismissal path** — if you hide the close button or disable outside dismissal, you must provide a clear cancel or close action in the footer.
+- **Preserve keyboard expectations** — you should keep <kbd>Esc</kbd> enabled for dismissible dialogs unless there is a strong product reason to require an explicit choice.
 - **Use precise action labels** — button text should describe the result of the action, especially in confirmations and destructive flows.
-- **Use `disable-backdrop` carefully** — removing the backdrop changes the modal emphasis, so make sure the surrounding page does not compete visually with the dialog content.
+- **Use `disable-backdrop` carefully** — with `disable-backdrop` the dialog opens as a non-modal `<dialog>`, so focus is not trapped and the surrounding page stays reachable. The surrounding page should not compete visually with the dialog content.
+
+### Keyboard interaction
+
+| Key | Context | Action |
+|---|---|---|
+| `Tab` | Dialog open with the backdrop (modal) | Moves focus to the next focusable element inside the dialog (native modal `<dialog>` behavior) |
+| `Shift` + `Tab` | Dialog open with the backdrop (modal) | Moves focus to the previous focusable element inside the dialog (native modal `<dialog>` behavior) |
+| `Escape` | Dialog open, `disable-close-esc-keydown` not set | Cancels the dialog and emits `bqCancel` |
+| `Escape` | Dialog open, `disable-close-esc-keydown` set | Does nothing; the dialog stays open |
+| `Enter` or `Space` | Focus on the close button or a native `<button>` in the footer | Activates the focused button |
+
+With `disable-backdrop` the dialog is non-modal, so `Tab` is not confined to the dialog.
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Put a title in the `title` slot that describes the decision, task, or message; it becomes the accessible label | MUST | manual: inspect the title as the dialog accessible name |
+| Provide a clear cancel or close action in the footer when you hide the close button or disable outside dismissal | MUST | manual: check a visible cancel or close action when dismissal is restricted |
+| Keep `Esc` enabled for dismissible dialogs | SHOULD | manual: press Escape in each dismissible dialog |
+| Use action labels that describe the result, especially in confirmations and destructive flows | SHOULD | manual: read action labels without the surrounding body copy |
+| Do not let the page compete visually with the dialog when `disable-backdrop` is set; the dialog is then non-modal and focus is not trapped | SHOULD NOT | manual: inspect focus and page contrast with the backdrop disabled |
 
 ## API reference
 
@@ -1112,6 +1144,12 @@ Use this variant to confirm irreversible actions with clear messaging and focuse
 | `hideCloseButton` | `hide-close-button` | If `true`, hides the close button | `boolean` | `false` |
 | `open` | `open` | If `true`, the dialog is shown as open | `boolean` | `false` |
 | `size` | `size` | The size of the dialog | `"small" \| "medium" \| "large"` | `"medium"` |
+
+### Invalid combinations
+
+| Combination | Strength | Result |
+|---|---|---|
+| `hide-close-button` with a `button-close` slot | SHOULD NOT | The slotted button still renders because the prop only hides the default close button |
 
 ### Events
 
@@ -1159,6 +1197,7 @@ Use this variant to confirm irreversible actions with clear messaging and focuse
   |---|---|---|
   | `--bq-dialog--background` | Dialog background color | `var(--bq-ui--primary)` |
   | `--bq-dialog--background-backdrop` | Dialog backdrop background color | `var(--bq-background--overlay)` |
+  | `--bq-dialog--footer-background` | Dialog footer background color (`highlight` footer appearance) | `var(--bq-ui--alt)` |
   | `--bq-dialog--text-color` | Dialog text color | `var(--bq-text--primary)` |
   | `--bq-dialog--box-shadow` | Dialog box shadow | `var(--bq-box-shadow--l)` |
   | `--bq-dialog--border-color` | Dialog border color | `transparent` |

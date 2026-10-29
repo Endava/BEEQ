@@ -12,8 +12,9 @@
    * @prop --bq-spinner--medium-text-fontSize - Spinner medium text font size
    * @prop --bq-spinner--small-text-fontSize - Spinner small text font size
    * @prop --bq-spinner--text-lineHeight - Spinner text line height
+   * @prop --bq-spinner--text-color - Spinner text color
    */
-  --bq-spinner--color: var(--bq-stroke--brand);
+  --bq-spinner--color: var(--bq-icon--brand);
   --bq-spinner--size-large: 56px;
   --bq-spinner--size-medium: 48px;
   --bq-spinner--size-small: 32px;
@@ -21,4 +22,5 @@
   --bq-spinner--medium-text-fontSize: var(--bq-font-size--s);
   --bq-spinner--small-text-fontSize: var(--bq-font-size--xs);
   --bq-spinner--text-lineHeight: var(--bq-font-line-height--large);
+  --bq-spinner--text-color: var(--bq-text--primary);
 }

@@ -29,6 +29,8 @@ import { EMPTY_STATE_SIZE, SIZE_TO_VALUE_MAP } from './bq-empty-state.types';
  * @part thumbnail - The container `<div>` that wraps the thumbnail element
  * @part title - The container `<div>` that wraps the empty state title content
  * @part wrapper - The wrapper container `<div>` of the element inside the shadow DOM
+ *
+ * @cssprop --bq-empty-state--text-color - The text color of the title and body content
  */
 
 @Component({

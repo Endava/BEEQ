@@ -1,0 +1,364 @@
+/* -------------------------------------------------------------------------- */
+/*                            Time picker styles                              */
+/*                    Native SCSS — no Tailwind utilities.                    */
+/* -------------------------------------------------------------------------- */
+
+@layer bq.reset, bq.tokens, bq.themes, bq.base, bq.public, bq.overrides,
+  bq-time-picker.tokens, bq-time-picker.base, bq-time-picker.structure, bq-time-picker.validation,
+  bq-time-picker.states, bq-time-picker.parts;
+
+@layer bq-time-picker.tokens {
+  @import './bq-time-picker.variables';
+}
+
+/* ---------------------------------- Base ---------------------------------- */
+
+@layer bq-time-picker.base {
+  :host {
+    display: block;
+    inline-size: 100%;
+    box-sizing: border-box;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+}
+
+/* ------------------------------- Structure -------------------------------- */
+
+@layer bq-time-picker.structure {
+  .bq-time-picker__label {
+    display: flex;
+    align-items: center;
+    gap: var(--bq-time-picker--gap);
+    color: var(--bq-time-picker--label-text-color);
+    font-size: var(--bq-time-picker--label-text-size);
+  }
+
+  .bq-time-picker__dropdown {
+    display: block;
+    inline-size: 100%;
+  }
+
+  .bq-time-picker__control {
+    --_time-picker-border-color: var(--bq-time-picker--border-color);
+    --_time-picker-interaction-color: var(--bq-time-picker--border-color-focus);
+    --_time-picker-focus-border-color: var(--bq-time-picker--border-color-focus);
+
+    display: flex;
+    align-items: center;
+    inline-size: 100%;
+    padding-block: var(--bq-time-picker--paddingY);
+    padding-inline: var(--bq-time-picker--padding-start) var(--bq-time-picker--padding-end);
+    border: var(--bq-time-picker--border-width) var(--bq-time-picker--border-style)
+      var(--_time-picker-border-color);
+    border-radius: var(--bq-time-picker--border-radius);
+    background-color: var(--bq-time-picker--background-color);
+    color: var(--bq-time-picker--text-color);
+    font-size: var(--bq-time-picker--text-size);
+    transition: border-color 150ms ease, box-shadow 150ms ease;
+    user-select: none;
+  }
+
+  .bq-time-picker__segments {
+    display: flex;
+    align-items: center;
+    flex: 1 1 auto;
+    min-inline-size: 0;
+    color: inherit;
+    font: inherit;
+    overflow: auto hidden;
+    scrollbar-width: none;
+    white-space: nowrap;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .bq-time-picker__segment {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding-inline: var(--bq-spacing-xs3);
+    color: inherit;
+    cursor: text;
+    font-variant-numeric: tabular-nums;
+    outline: none;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .bq-time-picker__segment-literal {
+    display: inline-flex;
+    align-items: center;
+    color: inherit;
+    pointer-events: none;
+    user-select: none;
+    white-space: pre;
+  }
+
+  .bq-time-picker__mask-description,
+  .bq-time-picker__error-description,
+  .bq-time-picker__announcement {
+    @include bq-visually-hidden;
+  }
+
+  .bq-time-picker__prefix {
+    display: inline-flex;
+    align-items: center;
+    color: var(--bq-time-picker--text-color);
+    pointer-events: none;
+
+    bq-icon {
+      display: inline-flex;
+      font-size: var(--bq-time-picker--icon-size);
+    }
+  }
+
+  .bq-time-picker__clear,
+  .bq-time-picker__trigger {
+    bq-icon {
+      display: flex;
+    }
+  }
+
+  .bq-time-picker__clear {
+    display: none;
+  }
+
+  .bq-time-picker__trigger {
+    display: inline-flex;
+  }
+
+  .bq-time-picker__panel {
+    display: flex;
+    flex-direction: column;
+    color: var(--bq-time-picker--text-color);
+    background-color: var(--bq-time-picker--background-color);
+  }
+
+  .bq-time-picker__columns {
+    display: flex;
+  }
+
+  .bq-time-picker__column-group {
+    display: flex;
+    flex-direction: column;
+    min-inline-size: 0;
+
+    & + & {
+      border-inline-start: 1px solid var(--bq-time-picker--divider-color);
+    }
+  }
+
+  // The header sits outside the scrolling list, so it stays in place while the column scrolls.
+  .bq-time-picker__column-header {
+    overflow: hidden;
+    padding: var(--bq-spacing-xs) var(--bq-spacing-xs2);
+    border-block-end: 1px solid var(--bq-time-picker--divider-color);
+    color: var(--bq-time-picker--column-header-text-color);
+    font-size: var(--bq-font-size--xs);
+    font-weight: var(--bq-font-weight--medium);
+    text-align: center;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .bq-time-picker__column {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--bq-spacing-xs3);
+    inline-size: var(--bq-time-picker--column-width);
+    block-size: var(--bq-time-picker--column-height);
+    overflow-block: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+    scrollbar-width: none;
+  }
+
+  .bq-time-picker__option {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    inline-size: var(--bq-time-picker--option-width);
+    block-size: var(--bq-time-picker--option-height);
+    padding: 0;
+    border: none;
+    border-radius: var(--bq-time-picker--option-radius);
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    font-variant-numeric: tabular-nums;
+    transition: background-color 150ms ease, color 150ms ease;
+    user-select: none;
+  }
+
+  .bq-time-picker__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--bq-spacing-s);
+    padding: var(--bq-spacing-xs) var(--bq-spacing-s);
+    border-block-start: 1px solid var(--bq-time-picker--divider-color);
+  }
+}
+
+/*
+ * Keep these spacing rules unlayered while the legacy Tailwind component
+ * prelude still injects BEEQ's preset reset (`beeq-tailwindcss/src/theme/reset.ts`)
+ * as an unlayered `* { margin: 0 }` rule. It outranks declarations in every
+ * named component layer regardless of selector specificity, which otherwise
+ * collapses the field and panel spacing. Move these rules into
+ * `bq-time-picker.structure` once component styles stop receiving that legacy
+ * prelude or its reset is emitted inside `bq.reset`.
+ */
+.bq-time-picker__label {
+  margin-block-end: var(--bq-time-picker--label-margin-bottom);
+}
+
+.bq-time-picker__prefix {
+  margin-inline-end: var(--bq-time-picker--gap);
+}
+
+.bq-time-picker__clear,
+.bq-time-picker__trigger {
+  margin-inline-start: var(--bq-time-picker--gap);
+}
+
+.bq-time-picker__column {
+  margin: var(--bq-spacing-xs) var(--bq-time-picker--column-gap);
+}
+
+.bq-time-picker__confirm {
+  margin-inline-start: auto;
+}
+
+/* ------------------------------- Validation ------------------------------- */
+
+@layer bq-time-picker.validation {
+  .bq-time-picker__control.validation-error {
+    --_time-picker-validation-color: var(--bq-time-picker--border-color-danger);
+  }
+
+  .bq-time-picker__control.validation-success {
+    --_time-picker-validation-color: var(--bq-time-picker--border-color-success);
+  }
+
+  .bq-time-picker__control.validation-warning {
+    --_time-picker-validation-color: var(--bq-time-picker--border-color-warning);
+  }
+
+  .bq-time-picker__control:is(.validation-error, .validation-success, .validation-warning) {
+    --_time-picker-border-color: var(--_time-picker-validation-color);
+    --_time-picker-interaction-color: var(--_time-picker-validation-color);
+    --_time-picker-focus-border-color: #{bq-color-mix-value(
+        var(--_time-picker-validation-color),
+        active
+      )};
+  }
+}
+
+/* --------------------------------- States --------------------------------- */
+
+@layer bq-time-picker.states {
+  .bq-time-picker__control:not(.is-disabled, :focus-within, .is-open):hover {
+    @include bq-color-mix(border-color, var(--_time-picker-interaction-color));
+  }
+
+  .bq-time-picker__control:not(.is-disabled):is(:focus-within, .is-open) {
+    --bq-ring-width: 1px;
+    --bq-ring-offset-width: 0;
+    --bq-ring-color-focus: var(--_time-picker-interaction-color);
+
+    border-color: var(--_time-picker-focus-border-color);
+
+    @include bq-focus-ring;
+  }
+
+  .bq-time-picker__control.is-disabled {
+    --_time-picker-border-color: var(--bq-time-picker--border-color-disabled);
+
+    cursor: not-allowed;
+    opacity: var(--bq-disabled-opacity);
+  }
+
+  .bq-time-picker__control.is-readonly .bq-time-picker__segment {
+    cursor: default;
+  }
+
+  .bq-time-picker__segment.is-empty {
+    color: var(--bq-time-picker--text-placeholder-color);
+  }
+
+  .bq-time-picker__segments:focus-within .bq-time-picker__segment.is-active {
+    border-radius: var(--bq-radius--xs);
+
+    @include bq-color-mix(background-color, var(--bq-focus), transparent, 88%);
+  }
+
+  // The clear button is only rendered when the picker has a value;
+  // it stays hidden until the control is hovered, focused, or the panel is open.
+  .bq-time-picker__control:is(:hover, :focus-within, .is-open):not(.is-disabled) .bq-time-picker__clear {
+    display: inline-flex;
+  }
+
+  .bq-time-picker__option:hover:not([aria-disabled='true'], .is-selected) {
+    background-color: var(--bq-time-picker--option-background-hover);
+  }
+
+  .bq-time-picker__option:focus-visible {
+    --bq-ring-width: 2px;
+    --bq-ring-offset-width: 1px;
+    --bq-ring-color-focus: var(--bq-time-picker--border-color-focus);
+
+    @include bq-focus-ring;
+  }
+
+  .bq-time-picker__option.is-selected {
+    color: var(--bq-time-picker--option-text-selected);
+    background-color: var(--bq-time-picker--option-background-selected);
+  }
+
+  .bq-time-picker__option[aria-disabled='true'] {
+    cursor: not-allowed;
+    opacity: 0.35;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bq-time-picker__control,
+    .bq-time-picker__option {
+      transition: none;
+    }
+  }
+}
+
+/* ---------------------------------- Parts --------------------------------- */
+
+@layer bq-time-picker.parts {
+  .bq-time-picker__dropdown::part(panel) {
+    --bq-panel--width: max-content;
+
+    inline-size: max-content;
+    max-inline-size: min(calc(100vw - 2rem), 100vw);
+    padding: 0;
+    block-size: auto;
+  }
+
+  .bq-time-picker__clear::part(button),
+  .bq-time-picker__trigger::part(button) {
+    --bq-ring-width: initial;
+    --bq-ring-offset-width: initial;
+
+    padding: 0;
+    border: none;
+  }
+}

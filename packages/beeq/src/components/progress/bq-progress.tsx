@@ -37,6 +37,9 @@ import { PROGRESS_BORDER_SHAPE, PROGRESS_THICKNESS, PROGRESS_TYPE } from './bq-p
  * @cssprop --bq-progress-bar--height - The progress bars height
  * @cssprop --bq-progress-bar--indeterminateWidth - The progress bar width when its indeterminate
  * @cssprop --bq-progress-bar--indicatorColor - The progress bar color (inside the track area)
+ * @cssprop --bq-progress-bar--indicatorColor-error - The progress bar color when `type="error"`
+ * @cssprop --bq-progress-bar--label-color - The label text color
+ * @cssprop --bq-progress-bar--label-color-error - The label text color when `type="error"`
  * @cssprop --bq-progress-bar--trackColor - The progress bar track area (the grey one)
  */
 @Component({

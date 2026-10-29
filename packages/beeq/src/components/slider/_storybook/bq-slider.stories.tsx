@@ -1,6 +1,7 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { fn } from 'storybook/test';
 
 import mdx from './bq-slider.mdx';
 
@@ -25,10 +26,6 @@ const meta: Meta = {
     step: { control: 'number' },
     type: { control: 'inline-radio', options: ['single', 'range'] },
     value: { control: 'object' },
-    // Events
-    bqBlur: { action: 'bqBlur' },
-    bqChange: { action: 'bqChange' },
-    bqFocus: { action: 'bqFocus' },
   },
   args: {
     'debounce-time': 0,
@@ -43,13 +40,18 @@ const meta: Meta = {
     step: 1,
     type: 'single',
     value: undefined,
+    // Events
+    bqBlur: fn(),
+    bqChange: fn(),
+    bqFocus: fn(),
   },
 };
 export default meta;
 
 type Story = StoryObj;
 
-const Template = (args: Args) => html` <div class="is-96">${SliderTemplate(args)}</div> `;
+const Template = (args: Args) =>
+  html`<div class="is-[calc(100vw_-_var(--bq-spacing-xxl3))] max-w-screen-md">${SliderTemplate(args)}</div>`;
 
 const SliderTemplate = (args: Args) => html`
   <bq-slider
@@ -197,7 +199,7 @@ export const WithForm: Story = {
     return html`
       <link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/styles/night-owl.min.css" />
       <div class="grid auto-cols-auto grid-cols-1 gap-y-l sm:grid-cols-2 sm:gap-x-l">
-        <bq-card>
+        <bq-card class="[&::part(wrapper)]:bg-primary">
           <h4 class="m-be-m">Taxi information</h4>
           <form class="flex flex-col gap-y-m" @submit=${handleFormSubmit}>
             <label class="flex items-center gap-x-s"> Number of seats </label>

@@ -38,6 +38,7 @@ import { hasSlotContent } from '../../shared/utils';
  * @part suffix - The `<div>` page title element that acts as suffix slot container.
  * @part sub-title - The `<div>` page title element that acts as sub-title slot container.
  *
+ * @cssprop --bq-page-title--divider-color - Page title divider (border end) color, used by `--subtitle-borderBlockEnd`
  * @cssprop --paddingY - Padding top and bottom of the page title wrapper
  * @cssprop --subtitle-borderBlockEnd - Page title border end color
  * @cssprop --subtitle-fontWeight - Page title font weight for subtitle
@@ -122,7 +123,8 @@ export class BqPageTitle {
       <div class="bq-page-title" part="base">
         {/* Back navigation button */}
         <div
-          class={{ 'bq-page-title__back': true, 'is-hidden': !this.haveBackNavigation }}
+          class="bq-page-title__back"
+          hidden={!this.haveBackNavigation}
           part="back"
           ref={(divElem?: HTMLElement) => {
             this.backNavigationElem = divElem;
@@ -138,7 +140,8 @@ export class BqPageTitle {
             </h1>
             {/* Suffix */}
             <div
-              class={{ 'bq-page-title__suffix': true, 'is-hidden': !this.hasSuffix }}
+              class="bq-page-title__suffix"
+              hidden={!this.hasSuffix}
               part="suffix"
               ref={(divElem?: HTMLElement) => {
                 this.suffixElem = divElem;
@@ -149,10 +152,8 @@ export class BqPageTitle {
           </div>
           {/* Sub-title */}
           <div
-            class={{
-              'bq-page-title__subtitle': true,
-              'is-hidden': !this.hasSubTitle,
-            }}
+            class="bq-page-title__subtitle"
+            hidden={!this.hasSubTitle}
             part="sub-title"
             ref={(divElem?: HTMLElement) => {
               this.subTitleElem = divElem;

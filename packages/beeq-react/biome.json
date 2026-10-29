@@ -2,11 +2,7 @@
   "$schema": "../../node_modules/@biomejs/biome/configuration_schema.json",
   "extends": "//",
   "linter": {
-    "rules": {
-      "suspicious": {
-        "noExplicitAny": "off",
-        "noCommentText": "off"
-      }
-    }
-  }
+    "rules": { "preset": "recommended", "suspicious": { "noCommentText": "off", "noExplicitAny": "off" } }
+  },
+  "overrides": [{ "includes": ["**/*.css"] }, { "includes": ["**/*.scss"] }]
 }

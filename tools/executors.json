@@ -4,6 +4,11 @@
       "implementation": "./src/executors/icons/executor",
       "schema": "./src/executors/icons/schema.json",
       "description": "icons executor"
+    },
+    "skill-eval": {
+      "implementation": "./src/executors/skill-eval/executor",
+      "schema": "./src/executors/skill-eval/schema.json",
+      "description": "Runs a skillgrade eval suite with and without a skill and writes a benchmark"
     }
   }
 }

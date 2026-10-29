@@ -2,6 +2,7 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
+import { fn } from 'storybook/test';
 
 import { DIALOG_BORDER_RADIUS, DIALOG_FOOTER_APPEARANCE, DIALOG_SIZE } from '../bq-dialog.types';
 import mdx from './bq-dialog.mdx';
@@ -23,12 +24,6 @@ const meta: Meta = {
     border: { control: 'select', options: [...DIALOG_BORDER_RADIUS] },
     open: { control: 'boolean' },
     size: { control: 'select', options: [...DIALOG_SIZE] },
-    // Events
-    bqCancel: { action: 'bqCancel' },
-    bqClose: { action: 'bqClose' },
-    bqOpen: { action: 'bqOpen' },
-    bqAfterOpen: { action: 'bqAfterOpen' },
-    bqAfterClose: { action: 'bqAfterClose' },
     // Not part of the public API
     noContent: { control: 'boolean', table: { disable: true } },
     noFooter: { control: 'boolean', table: { disable: true } },
@@ -46,6 +41,12 @@ const meta: Meta = {
     // Not part of the public API
     noContent: false,
     noFooter: false,
+    // Events
+    bqCancel: fn(),
+    bqClose: fn(),
+    bqOpen: fn(),
+    bqAfterOpen: fn(),
+    bqAfterClose: fn(),
   },
 };
 

@@ -3,6 +3,16 @@ import { describe, expect, it, render } from '@stencil/vitest';
 
 import { getTextContent } from '../../../shared/utils/slot';
 
+/** Resolves a CSS color value (e.g. `var(--bq-text--brand)`) to its computed `rgb()` form */
+const resolveColor = (value: string): string => {
+  const probe = document.createElement('div');
+  probe.style.color = value;
+  document.body.appendChild(probe);
+  const { color } = getComputedStyle(probe);
+  probe.remove();
+  return color;
+};
+
 describe('bq-option-group', () => {
   it('should render', async () => {
     const { root } = await render(<bq-option-group />);
@@ -89,5 +99,23 @@ describe('bq-option-group', () => {
 
     expect(container).toEqualAttribute('role', 'group');
     expect(container).toEqualAttribute('aria-label', 'Options');
+  });
+
+  it('should use the background color variable', async () => {
+    const { root } = await render(
+      <bq-option-group>
+        <span slot="header-label">Food</span>
+        <bq-option value="pizza">Pizza</bq-option>
+      </bq-option-group>,
+    );
+
+    const hostStyle = getComputedStyle(root);
+    expect(hostStyle.getPropertyValue('--bq-option-group--background').trim()).toBe(
+      hostStyle.getPropertyValue('--bq-ui--primary').trim(),
+    );
+
+    const wrapper = root.shadowRoot.querySelector('[part="label"]').parentElement;
+    expect(getComputedStyle(wrapper).backgroundColor).toBe(resolveColor('var(--bq-ui--primary)'));
+    expect(wrapper.classList.contains('bg-ui-primary')).toBe(false);
   });
 });

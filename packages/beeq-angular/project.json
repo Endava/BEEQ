@@ -9,11 +9,10 @@
   "targets": {
     "prebuild": {
       "executor": "nx:run-commands",
-      "outputs": ["{projectRoot}/src/directives", "{projectRoot}/standalone/src/directives"],
+      "cache": false,
       "options": {
         "commands": ["tsx packages/beeq-angular/scripts/patch-value-accessor-event-targets.ts"]
-      },
-      "dependsOn": [{ "projects": "beeq", "target": "build-stencil" }]
+      }
     },
     "build": {
       "executor": "@nx/angular:package",
@@ -31,7 +30,7 @@
         }
       },
       "defaultConfiguration": "production",
-      "dependsOn": [{ "projects": "beeq", "target": "build-stencil" }, { "target": "prebuild" }]
+      "dependsOn": ["^build", { "target": "prebuild" }]
     },
     "check": {
       "executor": "nx:run-commands",

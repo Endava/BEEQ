@@ -1,8 +1,9 @@
 import { h } from '@stencil/core';
-import { afterEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
-import { userEvent } from 'vitest/browser';
+import { afterEach, beforeEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
+import { cdp, userEvent } from 'vitest/browser';
 
 import { computedStyle } from '../../../shared/test-utils/computedStyle';
+import { resolveColorToken } from '../../../shared/test-utils/resolveColorToken';
 
 afterEach(() => {
   vi.restoreAllMocks();
@@ -10,6 +11,20 @@ afterEach(() => {
 
 const getMenuItemButton = (item: HTMLBqSideMenuItemElement) =>
   item.shadowRoot?.querySelector<HTMLButtonElement>('[part="base"]');
+
+// Hover/click tests leave the Playwright cursor where they finished, so a freshly rendered element can
+// render under it and pick up `:hover` styles. Before each test, park the cursor in the bottom-right corner
+// of the top-level page (CDP coordinates), which lies outside the scaled test iframe.
+const movePointerOff = () =>
+  cdp().send('Input.dispatchMouseEvent', {
+    type: 'mouseMoved',
+    x: window.top.innerWidth - 1,
+    y: window.top.innerHeight - 1,
+  });
+
+beforeEach(async () => {
+  await movePointerOff();
+});
 
 describe('bq-side-menu', () => {
   it('should render', async () => {
@@ -140,12 +155,163 @@ describe('bq-side-menu', () => {
     expect(tooltip?.textContent?.trim()).toContain('Dashboard');
   });
 
+  it('should preserve native structure, positioning and transitions', async () => {
+    const { root } = await render(
+      <bq-side-menu>
+        <div slot="logo">Logo</div>
+        <bq-side-menu-item>Dashboard</bq-side-menu-item>
+        <div slot="footer">Footer</div>
+      </bq-side-menu>,
+    );
+    await waitForStable(root);
+
+    const base = root.shadowRoot.querySelector<HTMLElement>('[part="base"]');
+    const logo = root.shadowRoot.querySelector<HTMLElement>('[part="logo"]');
+    const nav = root.shadowRoot.querySelector<HTMLElement>('[part="nav"]');
+    const footer = root.shadowRoot.querySelector<HTMLElement>('[part="footer"]');
+    const baseStyle = getComputedStyle(base);
+    const navStyle = getComputedStyle(nav);
+
+    expect(getComputedStyle(root).display).toBe('flex');
+    expect(getComputedStyle(root).overflow).toBe('clip');
+    expect(baseStyle.position).toBe('fixed');
+    expect(baseStyle.insetBlockStart).toBe('0px');
+    expect(baseStyle.insetInlineStart).toBe('0px');
+    expect(baseStyle.display).toBe('flex');
+    expect(baseStyle.flexDirection).toBe('column');
+    expect(baseStyle.blockSize).toBe(`${window.innerHeight}px`);
+    expect(baseStyle.inlineSize).toBe('256px');
+    expect(baseStyle.borderInlineEndWidth).toBe('1px');
+    expect(baseStyle.borderInlineEndStyle).toBe('solid');
+    expect(baseStyle.transitionDuration).toBe('0.15s');
+    expect(baseStyle.transitionProperty).toBe('background-color, inline-size');
+    expect(navStyle.display).toBe('flex');
+    expect(navStyle.flexDirection).toBe('column');
+    expect(navStyle.rowGap).toBe('8px');
+    expect(navStyle.padding).toBe('8px 8px 0px');
+    expect(navStyle.overflowX).toBe('auto');
+    expect(navStyle.overflowY).toBe('auto');
+    expect(getComputedStyle(logo).boxSizing).toBe('content-box');
+    expect(getComputedStyle(logo).position).toBe('sticky');
+    expect(getComputedStyle(footer).position).toBe('sticky');
+    expect(footer.getBoundingClientRect().bottom).toBe(base.getBoundingClientRect().bottom);
+  });
+
+  it('should preserve public expanded and collapsed width overrides', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-side-menu
+        style={{
+          '--bq-side-menu--width': '300px',
+          '--bq-side-menu--width-collapse': '80px',
+        }}
+      >
+        <bq-side-menu-item>Dashboard</bq-side-menu-item>
+      </bq-side-menu>,
+    );
+    const sideMenu = root as HTMLBqSideMenuElement;
+    const base = sideMenu.shadowRoot.querySelector<HTMLElement>('[part="base"]');
+
+    expect(getComputedStyle(base).inlineSize).toBe('300px');
+
+    await sideMenu.toggleCollapse();
+    await waitForChanges();
+
+    await expect.poll(() => getComputedStyle(base).inlineSize).toBe('80px');
+  });
+
   it('should apply appearance styles', async () => {
     await render(<bq-side-menu appearance="brand" />);
 
     const style = computedStyle('bq-side-menu[appearance="brand"] >>> [part="base"]', ['backgroundColor']);
 
-    expect(style.backgroundColor).not.toBe('');
+    expect(style.backgroundColor).toBe(resolveColorToken('--bq-ui--brand'));
+  });
+
+  it('should use on-brand colours for the brand appearance', async () => {
+    const { root } = await render(
+      <bq-side-menu appearance="brand">
+        <bq-side-menu-item>Dashboard</bq-side-menu-item>
+      </bq-side-menu>,
+    );
+    const item = root.querySelector<HTMLBqSideMenuItemElement>('bq-side-menu-item');
+
+    await waitForStable(root);
+
+    const logoStyle = computedStyle('bq-side-menu[appearance="brand"] >>> [part="logo"]', ['color']);
+
+    expect(logoStyle.color).toBe(resolveColorToken('--bq-text--on-brand'));
+    await expect
+      .poll(() => getComputedStyle(getMenuItemButton(item)).color)
+      .toBe(resolveColorToken('--bq-text--on-brand'));
+
+    // The side menu sets the item's hover base roles (no pre-mixed values)
+    const itemStyle = getComputedStyle(item);
+    expect(itemStyle.getPropertyValue('--bq-side-menu-item--bg-hover').trim()).toBe(
+      itemStyle.getPropertyValue('--bq-ui--brand').trim(),
+    );
+    expect(itemStyle.getPropertyValue('--bq-side-menu-item--text-hover').trim()).toBe(
+      itemStyle.getPropertyValue('--bq-text--on-brand').trim(),
+    );
+
+    await userEvent.hover(getMenuItemButton(item));
+
+    const colorProbe = document.createElement('span');
+    item.shadowRoot.appendChild(colorProbe);
+    colorProbe.style.color = 'color-mix(in srgb, var(--bq-ui--brand), var(--bq-hover) 20%)';
+    const expectedHoverBackground = getComputedStyle(colorProbe).color;
+    colorProbe.style.color = 'color-mix(in srgb, var(--bq-text--on-brand), var(--bq-hover) 20%)';
+    const expectedHoverText = getComputedStyle(colorProbe).color;
+
+    await expect.poll(() => getComputedStyle(getMenuItemButton(item)).backgroundColor).toBe(expectedHoverBackground);
+    await expect.poll(() => getComputedStyle(getMenuItemButton(item)).color).toBe(expectedHoverText);
+    colorProbe.remove();
+  });
+
+  it('should use inverse colours for the inverse appearance', async () => {
+    const { root } = await render(
+      <bq-side-menu appearance="inverse">
+        <bq-side-menu-item>Dashboard</bq-side-menu-item>
+      </bq-side-menu>,
+    );
+    const item = root.querySelector<HTMLBqSideMenuItemElement>('bq-side-menu-item');
+
+    await waitForStable(root);
+
+    const baseStyle = computedStyle('bq-side-menu[appearance="inverse"] >>> [part="base"]', [
+      'backgroundColor',
+      'borderInlineEndColor',
+    ]);
+    const logoStyle = computedStyle('bq-side-menu[appearance="inverse"] >>> [part="logo"]', ['color']);
+
+    expect(baseStyle).toEqual({
+      backgroundColor: resolveColorToken('--bq-ui--inverse'),
+      borderInlineEndColor: resolveColorToken('--bq-stroke--inverse'),
+    });
+    expect(logoStyle.color).toBe(resolveColorToken('--bq-text--inverse'));
+    await expect
+      .poll(() => getComputedStyle(getMenuItemButton(item)).color)
+      .toBe(resolveColorToken('--bq-text--inverse'));
+
+    const itemStyle = getComputedStyle(item);
+    expect(itemStyle.getPropertyValue('--bq-side-menu-item--bg-hover').trim()).toBe(
+      itemStyle.getPropertyValue('--bq-ui--inverse').trim(),
+    );
+    expect(itemStyle.getPropertyValue('--bq-side-menu-item--text-hover').trim()).toBe(
+      itemStyle.getPropertyValue('--bq-text--inverse').trim(),
+    );
+
+    await userEvent.hover(getMenuItemButton(item));
+
+    const colorProbe = document.createElement('span');
+    item.shadowRoot.appendChild(colorProbe);
+    colorProbe.style.color = 'color-mix(in srgb, var(--bq-ui--inverse), var(--bq-hover) 20%)';
+    const expectedHoverBackground = getComputedStyle(colorProbe).color;
+    colorProbe.style.color = 'color-mix(in srgb, var(--bq-text--inverse), var(--bq-hover) 20%)';
+    const expectedHoverText = getComputedStyle(colorProbe).color;
+
+    await expect.poll(() => getComputedStyle(getMenuItemButton(item)).backgroundColor).toBe(expectedHoverBackground);
+    await expect.poll(() => getComputedStyle(getMenuItemButton(item)).color).toBe(expectedHoverText);
+    colorProbe.remove();
   });
 
   it('should apply size styles to slotted items', async () => {

@@ -11,10 +11,10 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
   <img className="hidden dark:block" src="/components/images/empty-state/empty-state-overview-dark.svg" alt="BEEQ Empty-state component overview" />
 </Frame>
 
-Empty states appear when a section, page, or workflow has nothing to show yet. A good empty state explains the situation, reduces uncertainty, and helps people recover by pointing them toward the next meaningful action.
+Empty states appear when a section, page, or workflow has nothing to show, whether no content exists yet or it failed to load. A good empty state explains the situation, reduces uncertainty, and helps people recover by pointing them toward the next meaningful action.
 
 <Note>
-  Use empty states when the absence of content is meaningful and persistent enough to deserve guidance. If content is only loading or momentarily unavailable, use a loading or error pattern instead.
+  Use empty states when the absence of content is meaningful enough to deserve guidance, including a region that failed to load and needs a retry. While content is still loading, use a spinner or skeleton instead.
 </Note>
 
 ## When to use
@@ -28,6 +28,7 @@ Empty states appear when a section, page, or workflow has nothing to show yet. A
     - A page or section has no data yet and people need orientation
     - A first-time experience needs guidance before content exists
     - The interface should explain what is missing and what action can create content
+    - Content failed to load and the region has nothing else to show, so people need to know what failed and how to retry
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
@@ -35,7 +36,7 @@ Empty states appear when a section, page, or workflow has nothing to show yet. A
       Do not use empty states when
     </span>
     - Content is still loading and a spinner or skeleton is more accurate
-    - The issue is a temporary system problem that should be communicated as an error state
+    - The message is about content that is still on screen, such as a failed save or stale data; use an alert instead
     - The page already contains enough surrounding guidance to explain what is happening
   </Card>
 </CardGroup>
@@ -461,9 +462,87 @@ Use the footer when the empty state should help people recover immediately. Pref
   Do not overload an empty state with many equal-priority actions. If people need several next steps, pick the primary recovery path and move secondary options elsewhere.
 </Warning>
 
+### Error with retry
+
+When content fails to load and the region has nothing else to show, the failure is the region's state. Replace the default icon with a warning icon, say what failed and what people can do, and offer **Retry** as the single action. Keep [Alert](/components/alert) for messages about content that is still on screen, such as a failed save or stale data.
+
+<CodeLivePreview mode="iframe" height="22rem" code={`
+  <bq-empty-state>
+    <bq-icon name="warning-circle" slot="thumbnail" size="80" color="icon--danger" aria-hidden="true"></bq-icon>
+    Invoices could not be loaded
+    <span slot="body">Check your connection and try again.</span>
+    <bq-button slot="footer" appearance="secondary">Retry</bq-button>
+  </bq-empty-state>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-empty-state>
+      <bq-icon name="warning-circle" slot="thumbnail" size="80" color="icon--danger" aria-hidden="true"></bq-icon>
+      Invoices could not be loaded
+      <span slot="body">Check your connection and try again.</span>
+      <bq-button slot="footer" appearance="secondary">Retry</bq-button>
+    </bq-empty-state>
+    ```
+
+    ```jsx React icon="react" expandable
+    import { BqButton, BqEmptyState, BqIcon } from "@beeq/react";
+
+    <BqEmptyState>
+      <BqIcon name="warning-circle" slot="thumbnail" size={80} color="icon--danger" aria-hidden="true" />
+      Invoices could not be loaded
+      <span slot="body">Check your connection and try again.</span>
+      <BqButton slot="footer" appearance="secondary" onBqClick={retry}>
+        Retry
+      </BqButton>
+    </BqEmptyState>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqButton, BqEmptyState, BqIcon } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqButton, BqEmptyState, BqIcon],
+      template: `
+        <bq-empty-state>
+          <bq-icon name="warning-circle" slot="thumbnail" size="80" color="icon--danger" aria-hidden="true"></bq-icon>
+          Invoices could not be loaded
+          <span slot="body">Check your connection and try again.</span>
+          <bq-button slot="footer" appearance="secondary" (bqClick)="retry()">Retry</bq-button>
+        </bq-empty-state>
+      `,
+    })
+    export class AppComponent {
+      retry() {}
+    }
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqButton, BqEmptyState, BqIcon } from "@beeq/vue";
+
+    const retry = () => {};
+    </script>
+
+    <template>
+      <BqEmptyState>
+        <BqIcon name="warning-circle" slot="thumbnail" size="80" color="icon--danger" aria-hidden="true" />
+        Invoices could not be loaded
+        <span slot="body">Check your connection and try again.</span>
+        <BqButton slot="footer" appearance="secondary" @bqClick="retry">Retry</BqButton>
+      </BqEmptyState>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
 ### Sizes
 
 Choose size based on the available space and the prominence of the moment. `medium` is the default and works for most dashboard or section-level empty states.
+
+**Allowed `size` values:** `small`, `medium` (default), `large`.
 
 | Size | When to use |
 |---|---|
@@ -534,11 +613,25 @@ Choose size based on the available space and the prominence of the moment. `medi
 
 ## Accessibility
 
-- **Keep visuals decorative unless they carry meaning** — if the thumbnail is only illustrative, hide it from assistive technology with `aria-hidden="true"` or an empty `alt` value.
-- **Make the title and body self-sufficient** — people should understand the state without needing to infer meaning from the artwork.
-- **Use semantic, keyboard-accessible actions** — any recovery path in the footer should be a real button or link that can receive focus and has a clear label.
+- **Keep visuals decorative unless they carry meaning** — if the thumbnail is only illustrative, you must hide it from assistive technology with `aria-hidden="true"` or an empty `alt` value.
+- **Make the title and body self-sufficient** — the title and body must let people understand the state without inferring meaning from the artwork.
+- **Use semantic, keyboard-accessible actions** — any recovery path in the footer must be a real button or link that can receive focus and has a clear label.
 - **Preserve reading order** — title, description, and actions should follow a logical visual and DOM sequence.
-- **Do not rely on color or imagery alone** — the message itself should explain what is happening and what can be done next.
+- **Do not rely on color or imagery alone** — the message itself must explain what is happening and what can be done next.
+
+### Keyboard interaction
+
+No keyboard interaction: the component is not focusable. Actions you place in the `footer` slot keep their own keyboard behavior.
+
+### Rules
+
+| Rule | Strength | Verified by |
+|---|---|---|
+| Hide purely decorative thumbnails with `aria-hidden="true"` or an empty `alt` | MUST | manual: inspect decorative images in the accessibility tree |
+| Make the title and body explain the state without the artwork | MUST | manual: read the title and body with artwork hidden |
+| Render recovery actions in the footer as real buttons or links with clear labels | MUST | manual: activate footer actions using the keyboard |
+| Explain what is happening and what to do next, without relying on color or imagery alone | MUST | manual: read the recovery instructions without color or artwork |
+| Keep title, description, and actions in a logical visual and DOM order | SHOULD | manual: compare visual order with keyboard and screen-reader order |
 
 ## API reference
 
@@ -547,6 +640,10 @@ Choose size based on the available space and the prominence of the moment. `medi
 | Property | Attribute | Description | Type | Default |
 |---|---|---|---|---|
 | `size` | `size` | The size of the empty state component | `"large" \| "medium" \| "small"` | `"medium"` |
+
+### Invalid combinations
+
+No invalid prop combinations.
 
 ### Slots
 
@@ -570,7 +667,9 @@ Choose size based on the available space and the prominence of the moment. `medi
 
 ### CSS custom properties
 
-This component does not expose any CSS custom properties.
+| Variable | Description | Default |
+|---|---|---|
+| `--bq-empty-state--text-color` | Text color of the title and body content | `var(--bq-text--primary)` |
 
 <Tip>
   Learn more about [styling with shadow parts](/guides/styles#component-shadow-dom-parts) and [CSS custom properties](/guides/styles#global-css-custom-properties).

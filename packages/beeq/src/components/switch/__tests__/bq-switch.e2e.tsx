@@ -1,7 +1,9 @@
 import { h } from '@stencil/core';
-import { afterEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
-import { userEvent } from 'vitest/browser';
+import { afterEach, beforeEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
+import { cdp, userEvent } from 'vitest/browser';
 
+import { computedStyle } from '../../../shared/test-utils/computedStyle';
+import { resolveColorToken } from '../../../shared/test-utils/resolveColorToken';
 import { getTextContent } from '../../../shared/utils/slot';
 
 const getSwitchInput = (switchElement: HTMLBqSwitchElement) =>
@@ -10,8 +12,28 @@ const getSwitchInput = (switchElement: HTMLBqSwitchElement) =>
 const getSwitchBase = (switchElement: HTMLBqSwitchElement) =>
   switchElement.shadowRoot?.querySelector<HTMLLabelElement>('[part="base"]');
 
+const getSwitchDot = (switchElement: HTMLBqSwitchElement) =>
+  switchElement.shadowRoot?.querySelector<HTMLElement>('[part="dot"]');
+
+/** Waits for any running CSS transition inside the element's shadow root to finish */
+const waitForTransitions = async (element: Element) => {
+  const animations = element.shadowRoot?.getAnimations() ?? [];
+  await Promise.all(animations.map((animation) => animation.finished));
+};
+
 afterEach(() => {
   vi.restoreAllMocks();
+});
+
+const movePointerOff = () =>
+  cdp().send('Input.dispatchMouseEvent', {
+    type: 'mouseMoved',
+    x: window.top.innerWidth - 1,
+    y: window.top.innerHeight - 1,
+  });
+
+beforeEach(async () => {
+  await movePointerOff();
 });
 
 describe('bq-switch', () => {
@@ -120,7 +142,7 @@ describe('bq-switch', () => {
     );
     const sw = root as HTMLBqSwitchElement;
 
-    expect(getSwitchBase(sw)).toHaveClass('flex-row-reverse');
+    expect(getSwitchBase(sw)).toHaveClass('is-reversed');
   });
 
   it('should expose `vClick`, `vFocus`, and `vBlur` methods', async () => {
@@ -197,5 +219,207 @@ describe('bq-switch', () => {
 
     expect(switchElement.checked).toBe(false);
     expect(form.checkValidity()).toBe(false);
+  });
+
+  it('should preserve the native structure, spacing, and transition timing', async () => {
+    const { root } = await render(
+      <bq-switch name="bq-switch" innerLabel="icon">
+        Label
+      </bq-switch>,
+    );
+    const sw = root as HTMLBqSwitchElement;
+
+    await waitForStable(root);
+
+    expect(
+      computedStyle('bq-switch >>> [part="base"]', [
+        'borderRadius',
+        'columnGap',
+        'height',
+        'transitionDuration',
+        'transitionTimingFunction',
+      ]),
+    ).toEqual({
+      borderRadius: '8px',
+      columnGap: '12px',
+      height: '40px',
+      transitionDuration: '0.3s',
+      transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
+    });
+    expect(
+      computedStyle('bq-switch >>> [part="control"]', [
+        'height',
+        'paddingBlockStart',
+        'paddingInlineStart',
+        'transitionDuration',
+        'transitionTimingFunction',
+        'width',
+      ]),
+    ).toEqual({
+      height: '24px',
+      paddingBlockStart: '4px',
+      paddingInlineStart: '4px',
+      transitionDuration: '0.3s',
+      transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
+      width: '44px',
+    });
+    expect(computedStyle('bq-switch >>> [part="dot"]', ['height', 'insetInlineStart', 'width'])).toEqual({
+      height: '16px',
+      insetInlineStart: '4px',
+      width: '16px',
+    });
+    expect(computedStyle('bq-switch >>> [part="label"]', ['fontSize', 'fontWeight', 'lineHeight'])).toEqual({
+      fontSize: '16px',
+      fontWeight: '500',
+      lineHeight: '24px',
+    });
+    expect(getComputedStyle(getSwitchInput(sw)).clipPath).toBe('inset(50%)');
+  });
+
+  it('should paint the hover background with the mixed UI color', async () => {
+    const { root } = await render(
+      <bq-switch backgroundOnHover name="bq-switch">
+        Label
+      </bq-switch>,
+    );
+    const sw = root as HTMLBqSwitchElement;
+
+    await userEvent.hover(getSwitchBase(sw));
+    await waitForTransitions(root);
+
+    const colorProbe = document.createElement('span');
+    root.shadowRoot.appendChild(colorProbe);
+    colorProbe.style.color = 'color-mix(in srgb, var(--bq-ui--primary), var(--bq-hover) var(--bq-state-mix-hover))';
+
+    expect(computedStyle('bq-switch >>> [part="base"]', ['backgroundColor']).backgroundColor).toBe(
+      getComputedStyle(colorProbe).color,
+    );
+
+    colorProbe.remove();
+  });
+
+  it('should expose the focus ring and disabled visual state', async () => {
+    const { root, setProps } = await render(<bq-switch name="bq-switch">Label</bq-switch>);
+    const sw = root as HTMLBqSwitchElement;
+
+    await sw.vFocus();
+    await waitForTransitions(root);
+
+    expect(
+      computedStyle('bq-switch >>> [part="control"]', [
+        'outlineColor',
+        'outlineOffset',
+        'outlineStyle',
+        'outlineWidth',
+      ]),
+    ).toEqual({
+      outlineColor: resolveColorToken('--bq-focus'),
+      outlineOffset: '1px',
+      outlineStyle: 'solid',
+      outlineWidth: '2px',
+    });
+
+    await setProps({ disabled: true });
+
+    expect(computedStyle('bq-switch >>> [part="base"]', ['cursor', 'opacity'])).toEqual({
+      cursor: 'not-allowed',
+      opacity: '0.6',
+    });
+  });
+
+  it('should move the dot and reverse the content order through semantic states', async () => {
+    const { root } = await render(
+      <bq-switch checked name="bq-switch" reverseOrder>
+        Label
+      </bq-switch>,
+    );
+    const sw = root as HTMLBqSwitchElement;
+
+    await waitForStable(root);
+    await waitForTransitions(root);
+
+    expect(getSwitchBase(sw)).toHaveClass('is-checked', 'is-reversed', 'has-label');
+    expect(computedStyle('bq-switch >>> [part="base"]', ['flexDirection']).flexDirection).toBe('row-reverse');
+    expect(getComputedStyle(getSwitchDot(sw)).insetInlineStart).toBe('24px');
+  });
+
+  it('should map the color variables to the theme role tokens', async () => {
+    const { root } = await render(<bq-switch name="bq-switch" />);
+
+    const hostStyle = getComputedStyle(root);
+    const expectedRoles = {
+      '--bq-switch--dot-color': '--bq-ui--primary',
+      '--bq-switch--dot-color-checked': '--bq-text--on-brand',
+      '--bq-switch--icon-color': '--bq-icon--inverse',
+      '--bq-switch--icon-color-checked': '--bq-text--on-brand',
+      '--bq-switch--label-text-color': '--bq-text--primary',
+      '--bq-switch--track-color': '--bq-ui--tertiary',
+      '--bq-switch--track-color-checked': '--bq-ui--brand',
+    };
+
+    for (const [componentVar, roleVar] of Object.entries(expectedRoles)) {
+      expect(hostStyle.getPropertyValue(componentVar).trim()).toBe(hostStyle.getPropertyValue(roleVar).trim());
+    }
+  });
+
+  it('should paint the unchecked state with the color variables', async () => {
+    const { root } = await render(
+      <bq-switch name="bq-switch" innerLabel="icon">
+        Label
+      </bq-switch>,
+    );
+
+    await waitForStable(root);
+    await waitForTransitions(root);
+
+    expect(computedStyle('bq-switch >>> [part="control"]', ['backgroundColor']).backgroundColor).toBe(
+      resolveColorToken('--bq-ui--tertiary'),
+    );
+    expect(computedStyle('bq-switch >>> [part="dot"]', ['backgroundColor']).backgroundColor).toBe(
+      resolveColorToken('--bq-ui--primary'),
+    );
+    expect(computedStyle('bq-switch >>> slot[name="icon-off"]', ['color']).color).toBe(
+      resolveColorToken('--bq-icon--inverse'),
+    );
+    expect(computedStyle('bq-switch >>> [part="label"]', ['color']).color).toBe(
+      resolveColorToken('--bq-text--primary'),
+    );
+  });
+
+  it('should paint the checked state with the on-brand color variables', async () => {
+    const { root } = await render(
+      <bq-switch checked name="bq-switch" innerLabel="icon">
+        Label
+      </bq-switch>,
+    );
+
+    await waitForStable(root);
+    await waitForTransitions(root);
+
+    expect(computedStyle('bq-switch >>> [part="control"]', ['backgroundColor']).backgroundColor).toBe(
+      resolveColorToken('--bq-ui--brand'),
+    );
+    expect(computedStyle('bq-switch >>> [part="dot"]', ['backgroundColor']).backgroundColor).toBe(
+      resolveColorToken('--bq-text--on-brand'),
+    );
+    expect(computedStyle('bq-switch >>> slot[name="icon-on"]', ['color']).color).toBe(
+      resolveColorToken('--bq-text--on-brand'),
+    );
+  });
+
+  it('should allow overriding the track and dot color variables', async () => {
+    const { root } = await render(
+      <bq-switch
+        checked
+        name="bq-switch"
+        style={{ '--bq-switch--track-color-checked': 'rgb(1, 2, 3)', '--bq-switch--dot-color-checked': 'rgb(4, 5, 6)' }}
+      />,
+    );
+
+    await waitForStable(root);
+    await waitForTransitions(root);
+
+    expect(computedStyle('bq-switch >>> [part="control"]', ['backgroundColor']).backgroundColor).toBe('rgb(1, 2, 3)');
+    expect(computedStyle('bq-switch >>> [part="dot"]', ['backgroundColor']).backgroundColor).toBe('rgb(4, 5, 6)');
   });
 });

@@ -3,7 +3,7 @@
 /* -------------------------------------------------------------------------- */
 
 @use 'sass:meta';
-@layer bq.reset, bq.tokens, bq.themes, bq.base, bq.utilities, bq.overrides,
+@layer bq.reset, bq.tokens, bq.themes, bq.base, bq.public, bq.overrides,
   bq-tag.tokens, bq-tag.base, bq-tag.structure, bq-tag.variants, bq-tag.states, bq-tag.parts;
 
 @layer bq-tag.tokens {
@@ -14,16 +14,6 @@
 
 @layer bq-tag.base {
   :host {
-    --_tag-background-color: var(--bq-tag--background-color);
-    --_tag-border-color: var(--bq-tag--border-color);
-    --_tag-border-radius: var(--bq-tag--border-radius);
-    --_tag-gap: var(--bq-tag--medium-gap);
-    --_tag-icon-prefix-size: 24px;
-    --_tag-padding-block: var(--bq-tag--medium-padding-y);
-    --_tag-padding-inline: var(--bq-tag--medium-padding-x);
-    --_tag-text-color: var(--bq-text--primary);
-    --_tag-text-font-size: var(--bq-font-size--m);
-
     position: relative;
     display: inline-block;
   }
@@ -37,6 +27,16 @@
 
 @layer bq-tag.base {
   .bq-tag {
+    --_tag-background-color: var(--bq-tag--background-color);
+    --_tag-border-color: var(--bq-tag--border-color);
+    --_tag-border-radius: var(--bq-tag--border-radius);
+    --_tag-gap: var(--bq-tag--medium-gap);
+    --_tag-icon-prefix-size: var(--bq-tag--icon-prefix-size, 24px);
+    --_tag-padding-block: var(--bq-tag--medium-padding-y);
+    --_tag-padding-inline: var(--bq-tag--medium-padding-x);
+    --_tag-text-color: var(--bq-tag--text-color);
+    --_tag-text-font-size: var(--bq-font-size--m);
+
     box-sizing: border-box;
     display: inline-flex;
     flex-direction: row;
@@ -54,7 +54,7 @@
     border-radius: var(--_tag-border-radius);
     border-style: var(--bq-tag--border-style);
     border-width: var(--bq-tag--border-width);
-    transition-timing-function: ease-in-out;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 300ms;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
   }
@@ -75,84 +75,88 @@
 /* -------------------------------- Variants -------------------------------- */
 
 @layer bq-tag.variants {
-  :host([size='xsmall']),
-  :host([size='small']) {
+  :host([size='xsmall']:not([border])) .bq-tag,
+  :host([size='small']:not([border])) .bq-tag {
     --_tag-border-radius: var(--bq-tag--small-border-radius);
+  }
+
+  :host([size='xsmall']) .bq-tag,
+  :host([size='small']) .bq-tag {
     --_tag-gap: var(--bq-tag--small-gap);
     --_tag-padding-block: var(--bq-tag--small-padding-y);
     --_tag-padding-inline: var(--bq-tag--small-padding-x);
   }
 
-  :host([size='xsmall']) {
+  :host([size='xsmall']) .bq-tag {
     --_tag-text-font-size: var(--bq-font-size--xs);
   }
 
-  :host([size='small']) {
+  :host([size='small']) .bq-tag {
     --_tag-text-font-size: var(--bq-font-size--s);
   }
 
-  :host([color='error'][variant='filled']) {
-    --_tag-background-color: var(--bq-ui--danger);
-    --_tag-text-color: var(--bq-text--alt);
+  :host([color='error'][variant='filled']) .bq-tag {
+    --_tag-background-color: var(--bq-tag--background-error-filled);
+    --_tag-text-color: var(--bq-tag--text-error-filled);
   }
 
-  :host([color='error'][variant='outline']) {
-    --_tag-background-color: var(--bq-ui--danger-alt);
-    --_tag-border-color: var(--bq-stroke--danger);
-    --_tag-text-color: var(--bq-text--danger);
+  :host([color='error'][variant='outline']) .bq-tag {
+    --_tag-background-color: var(--bq-tag--background-error-outline);
+    --_tag-border-color: var(--bq-tag--border-error-outline);
+    --_tag-text-color: var(--bq-tag--text-error-outline);
   }
 
-  :host([color='gray'][variant='filled']) {
-    --_tag-background-color: var(--bq-ui--tertiary);
-    --_tag-text-color: var(--bq-text--alt);
+  :host([color='gray'][variant='filled']) .bq-tag {
+    --_tag-background-color: var(--bq-tag--background-gray-filled);
+    --_tag-text-color: var(--bq-tag--text-gray-filled);
   }
 
-  :host([color='gray'][variant='outline']) {
-    --_tag-background-color: var(--bq-ui--primary);
-    --_tag-border-color: var(--bq-stroke--tertiary);
-    --_tag-text-color: var(--bq-text--primary);
+  :host([color='gray'][variant='outline']) .bq-tag {
+    --_tag-background-color: var(--bq-tag--background-gray-outline);
+    --_tag-border-color: var(--bq-tag--border-gray-outline);
+    --_tag-text-color: var(--bq-tag--text-gray-outline);
   }
 
-  :host([color='info'][variant='filled']) {
-    --_tag-background-color: var(--bq-ui--brand);
-    --_tag-text-color: var(--bq-text--alt);
+  :host([color='info'][variant='filled']) .bq-tag {
+    --_tag-background-color: var(--bq-tag--background-info-filled);
+    --_tag-text-color: var(--bq-tag--text-info-filled);
   }
 
-  :host([color='info'][variant='outline']) {
-    --_tag-background-color: var(--bq-ui--brand-alt);
-    --_tag-border-color: var(--bq-stroke--brand);
-    --_tag-text-color: var(--bq-text--brand);
+  :host([color='info'][variant='outline']) .bq-tag {
+    --_tag-background-color: var(--bq-tag--background-info-outline);
+    --_tag-border-color: var(--bq-tag--border-info-outline);
+    --_tag-text-color: var(--bq-tag--text-info-outline);
   }
 
-  :host([color='success'][variant='filled']) {
-    --_tag-background-color: var(--bq-ui--success);
-    --_tag-text-color: var(--bq-text--alt);
+  :host([color='success'][variant='filled']) .bq-tag {
+    --_tag-background-color: var(--bq-tag--background-success-filled);
+    --_tag-text-color: var(--bq-tag--text-success-filled);
   }
 
-  :host([color='success'][variant='outline']) {
-    --_tag-background-color: var(--bq-ui--success-alt);
-    --_tag-border-color: var(--bq-stroke--success);
-    --_tag-text-color: var(--bq-text--success);
+  :host([color='success'][variant='outline']) .bq-tag {
+    --_tag-background-color: var(--bq-tag--background-success-outline);
+    --_tag-border-color: var(--bq-tag--border-success-outline);
+    --_tag-text-color: var(--bq-tag--text-success-outline);
   }
 
-  :host([color='warning'][variant='filled']) {
-    --_tag-background-color: var(--bq-ui--warning);
-    --_tag-text-color: var(--bq-text--alt);
+  :host([color='warning'][variant='filled']) .bq-tag {
+    --_tag-background-color: var(--bq-tag--background-warning-filled);
+    --_tag-text-color: var(--bq-tag--text-warning-filled);
   }
 
-  :host([color='warning'][variant='outline']) {
-    --_tag-background-color: var(--bq-ui--warning-alt);
-    --_tag-border-color: var(--bq-stroke--warning);
-    --_tag-text-color: var(--bq-text--warning);
+  :host([color='warning'][variant='outline']) .bq-tag {
+    --_tag-background-color: var(--bq-tag--background-warning-outline);
+    --_tag-border-color: var(--bq-tag--border-warning-outline);
+    --_tag-text-color: var(--bq-tag--text-warning-outline);
   }
 }
 
 /* --------------------------------- States --------------------------------- */
 
 @layer bq-tag.states {
-  :host([selected][clickable]:not([color], [removable])) {
-    --_tag-background-color: var(--bq-ui--brand);
-    --_tag-text-color: var(--bq-text--alt);
+  :host([selected][clickable]:not([color], [removable])) .bq-tag {
+    --_tag-background-color: var(--bq-tag--background-selected);
+    --_tag-text-color: var(--bq-tag--text-selected);
   }
 
   :host([clickable]:not([color], [removable])) .bq-tag {
@@ -160,22 +164,17 @@
   }
 
   :host([clickable]:not([color], [removable])) .bq-tag:focus-visible {
-    outline: var(--bq-ring-width, 2px) solid var(--bq-ring-color-focus, var(--bq-focus));
-    outline-offset: var(--bq-ring-offset-width, 1px);
+    @include bq-focus-ring;
   }
 
   :host([clickable]:not([color], [removable])) .bq-tag:hover:enabled {
-    background-color: color-mix(in srgb, var(--_tag-background-color), var(--bq-hover) 20%);
+    @include bq-color-mix(background-color, var(--_tag-background-color), hover);
   }
 
   :host([disabled][clickable]:not([color], [removable])) .bq-tag:disabled {
     cursor: not-allowed;
     border-style: none;
     opacity: 0.6;
-  }
-
-  .bq-tag__prefix.is-hidden {
-    display: none;
   }
 }
 
@@ -194,5 +193,18 @@
   .bq-tag__close::part(button) {
     padding: 0;
     border: none;
+    background-color: transparent;
+  }
+
+  .bq-tag__close::part(button):hover {
+    @include bq-color-mix(background-color, var(--_tag-background-color), hover);
+  }
+
+  .bq-tag__close::part(button):active {
+    @include bq-color-mix(background-color, var(--_tag-background-color), active);
+  }
+
+  .bq-tag__close bq-icon {
+    --bq-icon--color: var(--_tag-text-color);
   }
 }

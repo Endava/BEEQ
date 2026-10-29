@@ -4,6 +4,11 @@ import { DECADE_GRID_SIZE } from './constants';
  * Advances a focused month cursor by `delta` months, carrying over to the
  * previous or next year as needed. Pure — accepts and returns primitives so
  * it can be unit-tested and reused by keyboard handlers.
+ *
+ * @param focusedMonth Current zero-based month.
+ * @param focusedYear Current calendar year.
+ * @param delta Number of months to move; negative values move backward.
+ * @returns The normalized zero-based month and its corresponding year.
  */
 export const advanceFocusedMonth = (
   focusedMonth: number,
@@ -26,6 +31,11 @@ export const advanceFocusedMonth = (
 /**
  * Advances a focused year cursor by `delta` years, sliding the visible
  * decade grid so the focused year always stays in view.
+ *
+ * @param focusedYear Current focused year.
+ * @param decadeStart First year displayed in the decade grid.
+ * @param delta Number of years to move; negative values move backward.
+ * @returns The focused year and adjusted decade-grid start.
  */
 export const advanceFocusedYear = (
   focusedYear: number,
@@ -46,5 +56,8 @@ export const advanceFocusedYear = (
  * Number of columns used to render the months/years grids. The grids widen
  * from 3 → 4 columns when multiple months are visible, so vertical arrow
  * navigation stride must match.
+ *
+ * @param monthCount Number of visible month panels.
+ * @returns The number of columns used by the grid.
  */
 export const getGridColumns = (monthCount: number): number => (monthCount > 1 ? 4 : 3);

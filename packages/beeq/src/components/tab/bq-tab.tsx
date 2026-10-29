@@ -38,13 +38,14 @@ import { TAB_ORIENTATION, TAB_PLACEMENT, TAB_SIZE } from './bq-tab.types';
  * @part content - The HTML `<div>` element that holds the content.
  * @part icon - The HTML `<div>` element that holds the icon content.
  * @part text - The HTML `<div>` element that holds the text content.
- * @part underline - The HTML `<div>` element that display active state.
  *
+ * @cssprop --bq-tab--background-hover - Background base colour of the hover state (mixed with `--bq-hover` on hover)
  * @cssprop --bq-tab--font-size - Font size
  * @cssprop --bq-tab--font-weight - Font weight
  * @cssprop --bq-tab--icon-size-large - Icon size for large tab
  * @cssprop --bq-tab--icon-size-medium - Icon size for medium tab
  * @cssprop --bq-tab--icon-size-small - Icon size for small tab
+ * @cssprop --bq-tab--indicator-color - Color of the active tab indicator
  * @cssprop --bq-tab--label-icon-gap - Gap between label and icon
  * @cssprop --bq-tab--line-height - Line height
  * @cssprop --bq-tab--padding-horizontal-large - Horizontal padding for large tab
@@ -53,6 +54,9 @@ import { TAB_ORIENTATION, TAB_PLACEMENT, TAB_SIZE } from './bq-tab.types';
  * @cssprop --bq-tab--padding-vertical-large - Vertical padding for large tab
  * @cssprop --bq-tab--padding-vertical-medium - Vertical padding for medium tab
  * @cssprop --bq-tab--padding-vertical-small - Vertical padding for small tab
+ * @cssprop --bq-tab--text-color - Text color
+ * @cssprop --bq-tab--text-color-active - Text color of the active tab
+ * @cssprop --bq-tab--text-color-hover - Text base colour of the hover state (mixed with `--bq-hover` on hover)
  */
 @Component({
   tag: 'bq-tab',
@@ -230,8 +234,6 @@ export class BqTab {
         aria-selected={this.active ? 'true' : 'false'}
         class={{
           [`bq-tab bq-tab--${this.size} bq-tab--${this.orientation}-${this.placement}`]: true,
-          'text-brand': this.active,
-          'text-primary': !this.active,
         }}
         disabled={this.disabled}
         id={this.tabId}
@@ -247,9 +249,10 @@ export class BqTab {
         tabindex={this.tabindex}
         type="button"
       >
-        <div class="flex items-center justify-center" part="content">
+        <div class="bq-tab__content" part="content">
           <div
-            class="flex"
+            class="bq-tab__icon"
+            hidden={!this.hasIcon}
             part="icon"
             ref={(span: HTMLSpanElement) => {
               this.iconElement = span;
@@ -257,7 +260,7 @@ export class BqTab {
           >
             <slot name="icon" onSlotchange={this.handleIconSlotChange} />
           </div>
-          <div class={{ 'line-clamp-1': true, 'ms-[--bq-tab--label-icon-gap]': this.hasIcon }} part="text">
+          <div class="bq-tab__text" part="text">
             <slot />
           </div>
         </div>

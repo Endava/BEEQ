@@ -1,0 +1,32 @@
+name: details-panel-drawer
+metadata:
+  stack: vue
+  tags: [patterns, selection]
+instruction: >-
+  In a Vue invoices list, clicking an invoice opens a panel on the right with its details, while the
+  list stays visible and usable.
+workspace:
+  - src: '{{evals}}/fixtures/vue'
+    dest: .
+expected:
+  criteria: >-
+    The panel opens beside the page and the list stays usable, so it is a BqDrawer, not a BqDialog or a
+    card in the page flow. The drawer has a title in slot="title", opens for the clicked invoice
+    through its open prop or show() method, closes through its documented close control, and leaves
+    the backdrop off so the list stays usable. Each invoice in the list is a real button or link, so
+    keyboard users can open it. The project imports the BEEQ stylesheet once and configures icons.
+  checks:
+    - name: drawer
+      match: '<(BqDrawer|bq-drawer)\b'
+    - name: title-slot
+      match: 'slot=["'']title'
+    - name: opens
+      match: '(:open=|v-bind:open=|\.show\(\))'
+    - name: no-dialog
+      absent: '<(BqDialog|bq-dialog)\b'
+    - name: no-backdrop
+      absent: '<(BqDrawer|bq-drawer)\b[^>]*enable-?[bB]ackdrop(?!="false)'
+    - name: stylesheet
+      match: '@beeq/core(@[^/]+)?/dist/beeq/beeq\.css'
+    - name: icon-base-path
+      match: 'setBasePath\(|data-beeq'

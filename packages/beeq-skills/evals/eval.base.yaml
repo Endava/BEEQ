@@ -1,0 +1,17 @@
+# skillgrade settings shared by every task. The skill-eval executor (tools/src/executors/skill-eval) adds the
+# tasks, the skill path, the agent name, and the timeout, and replaces {{evals}} with this folder's temp copy.
+version: '1'
+
+defaults:
+  command: node "{{evals}}/agents/run.ts"
+  threshold: 0.8
+
+# Used by every task that does not list its own graders. The executor runs llm_rubric graders first, so the
+# judge scores without seeing the deterministic results.
+graders:
+  - type: llm_rubric
+    rubric: '{{evals}}/rubric.md'
+    weight: 0.3
+  - type: deterministic
+    run: node "{{evals}}/graders/grade.ts"
+    weight: 0.7

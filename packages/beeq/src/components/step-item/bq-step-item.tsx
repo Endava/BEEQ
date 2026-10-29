@@ -41,12 +41,23 @@ import { STEP_ITEM_STATUS } from './bq-step-item.types';
  * @part title - The component's title.
  * @part description - The component's description.
  *
+ * @cssprop --bq-step-item--background-hover - Background base colour of the step item hover state (mixed with `--bq-hover` on hover)
+ * @cssprop --bq-step-item--description-color - Text color of the description
  * @cssprop --bq-step-item--prefix-color - Color of the prefix icon
  * @cssprop --bq-step-item--prefix-color-current - Color of the prefix icon when current
  * @cssprop --bq-step-item--prefix-color-completed - Color of the prefix icon when completed
  * @cssprop --bq-step-item--prefix-color-error - Color of the prefix icon when error
  * @cssprop --bq-step-item--prefix-num-size - Size of the prefix number
  * @cssprop --bq-step-item--prefix-num-bg-color - Background color of the prefix number
+ * @cssprop --bq-step-item--prefix-num-bg-color-current - Background color of the prefix number when current
+ * @cssprop --bq-step-item--prefix-num-bg-color-completed - Background color of the prefix number when completed
+ * @cssprop --bq-step-item--prefix-num-bg-color-error - Background color of the prefix number when error
+ * @cssprop --bq-step-item--prefix-num-text-color - Text color of the prefix number
+ * @cssprop --bq-step-item--prefix-num-text-color-current - Text color of the prefix number when current
+ * @cssprop --bq-step-item--prefix-num-text-color-completed - Text color of the prefix number when completed
+ * @cssprop --bq-step-item--prefix-num-text-color-error - Text color of the prefix number when error
+ * @cssprop --bq-step-item--title-color - Text color of the title
+ * @cssprop --bq-step-item--title-color-current - Text color of the title when current
  */
 @Component({
   tag: 'bq-step-item',
@@ -185,15 +196,12 @@ export class BqStepItem {
   // ===================================
 
   render() {
-    const isVertical = this.orientation === 'vertical';
-
     return (
-      <div class={{ 'inline-flex': true, 'flex-row': !isVertical, 'flex-col': isVertical }} role="listitem">
+      <div class="bq-step-item__wrapper" role="listitem">
         <button
           class={{
             'bq-step-item': true,
             [`bq-step-item--${this.status}`]: true,
-            'pointer-events-none opacity-60': this.isDisabled,
           }}
           disabled={this.isDisabled}
           onBlur={this.handleBlur}
@@ -203,39 +211,23 @@ export class BqStepItem {
           type="button"
           part="base"
         >
-          <div class={`bq-step-item__prefix relative ${this.type} ${this.size} ${this.status}`}>
+          <div class={`bq-step-item__prefix ${this.type} ${this.size} ${this.status}`}>
             <slot name="prefix" onSlotchange={this.handleIconPrefix} />
           </div>
-          <div class="bq-step-item__content items-start text-start">
+          <div class="bq-step-item__content">
             {/* TITLE */}
-            <div
-              class={{
-                'bq-step-item__content--title pe-xs3 text-m text-primary leading-regular': true,
-                'pointer-events-none': this.isDisabled,
-                'text-brand': this.isCurrent,
-              }}
-              part="title"
-            >
+            <div class="bq-step-item__content--title" part="title">
               <slot />
             </div>
             {/* DESCRIPTION */}
-            <div
-              class={{
-                'bq-step-item__content--description text-s text-secondary leading-regular': true,
-                'opacity-60': this.isDisabled,
-              }}
-              part="description"
-            >
+            <div class="bq-step-item__content--description" part="description">
               <slot name="description" />
             </div>
           </div>
         </button>
         {!this.isLast && (
           <bq-divider
-            class={{
-              '[&::part(base)]:self-start [&::part(base)]:p-m': true,
-              '[&::part(base)]:p-s': isVertical && this.size === 'small',
-            }}
+            class="bq-step-item__divider"
             exportparts="base:divider-base,dash-start:divider-dash-start,dash-end:divider-dash-end"
             orientation={this.orientation}
             strokeColor={this.dividerColor}

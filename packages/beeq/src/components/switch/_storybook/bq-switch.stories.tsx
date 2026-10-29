@@ -1,6 +1,7 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { fn } from 'storybook/test';
 
 import { SWITCH_INNER_LABEL, SWITCH_JUSTIFY_CONTENT } from '../bq-switch.types';
 import mdx from './bq-switch.mdx';
@@ -25,10 +26,6 @@ const meta: Meta = {
     required: { control: 'boolean' },
     'reverse-order': { control: 'boolean' },
     value: { control: 'text' },
-    // Event handlers
-    bqBlur: { action: 'bqBlur' },
-    bqFocus: { action: 'bqFocus' },
-    bqChange: { action: 'bqChange' },
     // Not part of the component
     text: { control: 'text', table: { disable: true } },
   },
@@ -46,6 +43,10 @@ const meta: Meta = {
     value: 'Switch value',
     // Not part of the component
     text: 'Toggle me!',
+    // Events
+    bqBlur: fn(),
+    bqFocus: fn(),
+    bqChange: fn(),
   },
 };
 export default meta;

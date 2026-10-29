@@ -1,7 +1,9 @@
 ---
 name: write-stories
-description: 'Write Storybook stories and MDX docs for BEEQ web components. Use for: adding or updating Storybook stories, writing MDX documentation pages, adding argTypes and controls for component props/events, creating story variants for all component states. Uses @storybook/web-components-vite and lit-html templates. Files live at packages/beeq/src/components/<name>/_storybook/.'
+description: 'Write Storybook stories and MDX for a `bq-*` component: argTypes, controls and variants for every state. Use when adding or updating a component''s stories. Files live in the component''s `_storybook/` folder.'
 argument-hint: 'Component name (e.g. "bq-button") or path to the component tsx file'
+metadata:
+  internal: true
 ---
 
 # Write BEEQ Storybook Stories
@@ -29,6 +31,7 @@ Always import from `@storybook/web-components-vite` (not `@storybook/web-compone
 import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, nothing } from 'lit-html';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js'; // only if dynamic HTML needed
+import { fn } from 'storybook/test';
 
 import { isChromatic, skipSnapshotParameters } from '../../../../.storybook/chromatic-parameters';
 import { BQ_COMPONENT_PROP_CONST } from '../bq-<name>.types';
@@ -45,10 +48,6 @@ const meta: Meta = {
     size: { control: 'select', options: [...BQ_COMPONENT_SIZE] },
     disabled: { control: 'boolean' },
     value: { control: 'text' },
-    // @Event() actions
-    bqChange: { action: 'bqChange' },
-    bqFocus:  { action: 'bqFocus' },
-    bqBlur:   { action: 'bqBlur' },
     // Slot / story-only controls (hide from docs table)
     slotContent: { control: 'text', table: { disable: true } },
   },
@@ -56,12 +55,20 @@ const meta: Meta = {
     size: 'medium',
     disabled: false,
     value: undefined,
+    // @Event() handlers: use fn(), never `argTypes: { bqX: { action: 'bqX' } }`
+    bqChange: fn(),
+    bqFocus: fn(),
+    bqBlur: fn(),
   },
 };
 export default meta;
 
 type Story = StoryObj;
 ```
+
+## Event Actions
+
+Declare every `@Event()` as `args: { bqX: fn() }` (from `storybook/test`) and bind it with `@bqX=${args.bqX}`. Do not use `argTypes: { bqX: { action: 'bqX' } }`: Storybook wraps those actions in mocks, so the Actions panel logs every event twice after a control change.
 
 ## Template Pattern
 
@@ -127,9 +134,6 @@ The `.mdx` file should import and use `<Stories />` and `<ArgTypes />` from `@st
 ## Running Storybook
 
 ```bash
-# Run Storybook locally
-pnpm start
-
-# Build Storybook for production
-pnpm build
+pnpm start             # run locally
+pnpm build:storybook   # production build
 ```

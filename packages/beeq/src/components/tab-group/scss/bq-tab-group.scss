@@ -2,6 +2,8 @@
 /*                              Tab group styles                              */
 /* -------------------------------------------------------------------------- */
 
+@import './bq-tab-group.variables';
+
 /* ---------------------------------- Host ---------------------------------- */
 
 :host {
@@ -29,7 +31,7 @@
   inset-inline: var(--_divider-inset-inline);
   block-size: var(--_divider-block-size);
   inline-size: var(--_divider-inline-size);
-  background-color: var(--bq-stroke--primary);
+  background-color: var(--bq-tab-group--border-color);
 }
 
 /* ------------------------------- Structure -------------------------------- */

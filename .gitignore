@@ -12,7 +12,11 @@ dist
 out-tsc
 tmp/**
 .vitest-attachments
+.vitest
 www
+
+# Local mise installation, tools, and caches
+/.mise/
 
 # source files to ignore
 .angular

@@ -1,6 +1,7 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { fn } from 'storybook/test';
 
 import { INPUT_TYPE, INPUT_VALIDATION } from '../bq-input.types';
 import mdx from './bq-input.mdx';
@@ -34,12 +35,6 @@ const meta: Meta = {
     type: { control: 'select', options: [...INPUT_TYPE] },
     'validation-status': { control: 'select', options: [...INPUT_VALIDATION] },
     value: { control: 'text' },
-    // Events
-    bqBlur: { action: 'bqBlur' },
-    bqChange: { action: 'bqChange' },
-    bqClear: { action: 'bqClear' },
-    bqFocus: { action: 'bqFocus' },
-    bqInput: { action: 'bqInput' },
     // Not part of the public API, so we don't want to expose it in the docs
     noLabel: { control: 'boolean', table: { disable: true } },
     hasLabelTooltip: { control: 'boolean', table: { disable: true } },
@@ -71,6 +66,12 @@ const meta: Meta = {
     placeholder: 'Placeholder',
     'validation-status': 'none',
     value: undefined,
+    // Events
+    bqBlur: fn(),
+    bqChange: fn(),
+    bqClear: fn(),
+    bqFocus: fn(),
+    bqInput: fn(),
   },
 };
 export default meta;
@@ -165,6 +166,18 @@ export const Value: Story = {
   render: Template,
   args: {
     value: 'Hello World!',
+  },
+};
+
+export const Numeric: Story = {
+  render: Template,
+  args: {
+    type: 'number',
+    inputmode: 'numeric',
+    min: 0,
+    step: 1,
+    value: 0,
+    required: true,
   },
 };
 
