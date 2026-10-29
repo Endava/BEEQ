@@ -532,6 +532,12 @@ export class BqOption {
     return this.selected ? 'true' : 'false';
   }
 
+  private get ariaExpanded() {
+    if (!this.isTreeItem || !this.hasOptions) return undefined;
+
+    return this.expanded ? 'true' : 'false';
+  }
+
   private get ariaSelected() {
     if (this.isSelectCheckboxOption) return undefined;
 
@@ -607,7 +613,7 @@ export class BqOption {
     return (
       <Host
         aria-disabled={this.isDisabledOrHidden ? 'true' : 'false'}
-        aria-expanded={this.isTreeItem && this.hasOptions ? (this.expanded ? 'true' : 'false') : undefined}
+        aria-expanded={this.ariaExpanded}
         aria-hidden={this.hidden ? 'true' : 'false'}
         aria-label={this.selectedDescendantAccessibleLabel}
         aria-checked={this.ariaChecked}

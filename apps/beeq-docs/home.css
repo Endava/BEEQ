@@ -41,16 +41,16 @@ html:not(.bq-loaded):has(#bq-page-guard) {
    Mintlify marks the active tab with text/text-shadow classes, data-active="true"
    on the <a>, and a child <div> that renders the coloured underline bar. */
 :root:has(.bq-home-hero) a.nav-tabs-item {
-  text-shadow: none !important;
-  color: rgb(75 85 99) !important;    /* Tailwind gray-600 — inactive tab colour */
+  text-shadow: none;
+  color: rgb(75 85 99);    /* Tailwind gray-600 — inactive tab colour */
 }
 
 html.dark:has(.bq-home-hero) a.nav-tabs-item {
-  color: rgb(156 163 175) !important; /* Tailwind gray-400 — inactive tab colour (dark) */
+  color: rgb(156 163 175); /* Tailwind gray-400 — inactive tab colour (dark) */
 }
 
 :root:has(.bq-home-hero) a.nav-tabs-item[data-active='true'] > div {
-  display: none !important;             /* hide the coloured underline bar */
+  display: none;             /* hide the coloured underline bar */
 }
 
 /* ── Shared landing primitives ────────────────────────────── */
@@ -72,12 +72,12 @@ html.dark:has(.bq-home-hero) a.nav-tabs-item {
 }
 
 .bq-home-section__link::after {
-  content: '' !important;
-  --tw-scale-x: 0 !important;
+  content: '';
+  --tw-scale-x: 0;
 }
 
 .bq-home-section__link:hover::after {
-  --tw-scale-x: 1 !important;
+  --tw-scale-x: 1;
 }
 
 .bq-home-action {

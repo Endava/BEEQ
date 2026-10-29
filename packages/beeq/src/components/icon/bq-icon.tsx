@@ -180,7 +180,7 @@ export class BqIcon {
     const { color, label, name, size } = this;
     const styles = {
       ...(color && { '--bq-icon--color': getColorCSSVariable(color) }),
-      ...(size && { '--bq-icon--size': `${size}px` }),
+      ...(size && { '--_bq-icon--size': `${size}px` }),
     };
 
     return (

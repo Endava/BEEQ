@@ -7,16 +7,6 @@
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  .bq-body--side-menu__collapse {
-    /* stylelint-disable-next-line declaration-no-important -- body layout override must win over page styles */
-    padding-inline-start: var(--bq-side-menu--width-collapse) !important;
-  }
-
-  .bq-body--side-menu__expand {
-    /* stylelint-disable-next-line declaration-no-important -- body layout override must win over page styles */
-    padding-inline-start: var(--bq-side-menu--width) !important;
-  }
-
   /* Use this class for body scroll lock when floating panels are open. */
   .bq-body--scroll-lock {
     overflow: hidden;
@@ -30,4 +20,16 @@
       -webkit-overflow-scrolling: auto;
     }
   }
+}
+
+/*
+ * Side menu body offsets stay outside the cascade layers so they win over layered styles and
+ * plain `body {}` page rules (higher specificity) without `!important`.
+ */
+body.bq-body--side-menu__collapse {
+  padding-inline-start: var(--bq-side-menu--width-collapse);
+}
+
+body.bq-body--side-menu__expand {
+  padding-inline-start: var(--bq-side-menu--width);
 }

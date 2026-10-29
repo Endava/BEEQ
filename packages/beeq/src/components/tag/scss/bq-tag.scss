@@ -182,8 +182,7 @@
 
 @layer bq-tag.structure {
   .bq-tag__prefix ::slotted(bq-icon) {
-    /* stylelint-disable-next-line declaration-no-important -- slotted bq-icon keeps its own default size otherwise */
-    --bq-icon--size: var(--_tag-icon-prefix-size) !important;
+    --bq-icon--size: var(--_tag-icon-prefix-size);
   }
 }
 
