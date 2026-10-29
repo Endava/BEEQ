@@ -261,6 +261,7 @@ Use component layers for:
 | `tab` | `tokens`, `base`, `structure`, `states`, `pseudo` |
 | `tag` | `tokens`, `base`, `structure`, `variants`, `states`, `parts` |
 | `textarea` | `tokens`, `base`, `structure`, `validation`, `states`, `native` |
+| `time-picker` | `tokens`, `base`, `structure`, `validation`, `states`, `parts` |
 | `toast` | `tokens`, `base`, `structure`, `variants`, `states` |
 | `tooltip` | `tokens`, `base`, `structure`, `states`, `pseudo` |
 
