@@ -1,24 +1,28 @@
-/**
- * Temporary test-only migration oracle. Native CSS is loaded by vitest-e2e-setup;
- * pinned preset CSS runs in an isolated iframe, never in the native fixture.
- */
 import { h } from '@stencil/core';
-import {
-  afterAll,
-  afterEach,
-  beforeAll,
-  beforeEach,
-  describe,
-  expect,
-  it,
-  render,
-  waitForStable,
-} from '@stencil/vitest';
+import { afterEach, beforeEach, describe, expect, it, render, waitForStable } from '@stencil/vitest';
 import { userEvent } from 'vitest/browser';
 
 import { resolveColorToken } from '../../../shared/test-utils';
-import presetCss from './fixtures/pinned-preset.css.txt?raw';
-import { roleHex, roleNames, type ThemeMode } from './theme-oracle';
+
+type ThemeMode = 'beeq-light' | 'beeq-dark' | 'endava-light' | 'endava-dark';
+
+const roleNames = [
+  '--bq-text--primary',
+  '--bq-text--danger',
+  '--bq-text--on-danger',
+  '--bq-icon--brand',
+  '--bq-stroke--info',
+  '--bq-ui--info',
+  '--bq-focus',
+] as const;
+
+// Concrete hex values per theme and mode, in `roleNames` order.
+const roleHex: Record<ThemeMode, readonly string[]> = {
+  'beeq-light': ['#2a2c35', '#b41226', '#ffffff', '#4f46e5', '#1158bc', '#156eeb', '#4f46e5'],
+  'beeq-dark': ['#f1f2f4', '#f3a2ac', '#ffffff', '#b2c0fe', '#a1c5f7', '#156eeb', '#b2c0fe'],
+  'endava-light': ['#192b37', '#a72925', '#ffffff', '#ff5640', '#3b6684', '#417191', '#ff5640'],
+  'endava-dark': ['#ffffff', '#e84641', '#14222c', '#ff5640', '#9dcff0', '#9dcff0', '#ff5640'],
+};
 
 interface Fixture {
   name: string;
@@ -120,29 +124,14 @@ const expectFocusRing = (element: HTMLElement, color: string): void => {
 };
 
 describe('native theme runtime contract', () => {
-  let frame: HTMLIFrameElement;
-  let oracleRoot: HTMLElement;
   let originalAttributes: [string, string][];
   let originalBodyAttributes: [string, string][];
   const inserted: HTMLElement[] = [];
-
-  beforeAll(() => {
-    frame = document.createElement('iframe');
-    frame.hidden = true;
-    document.body.appendChild(frame);
-    const oracleDocument = frame.contentDocument;
-    if (!oracleDocument) throw new Error('Could not create the isolated preset oracle');
-    const style = oracleDocument.createElement('style');
-    style.textContent = presetCss;
-    oracleDocument.head.appendChild(style);
-    oracleRoot = oracleDocument.documentElement;
-  });
 
   beforeEach(() => {
     originalAttributes = [...document.documentElement.attributes].map(({ name, value }) => [name, value]);
     originalBodyAttributes = [...document.body.attributes].map(({ name, value }) => [name, value]);
     applyFixture(document.documentElement, { name: 'reset', expected: 'beeq-light' });
-    applyFixture(oracleRoot, { name: 'reset', expected: 'beeq-light' });
   });
 
   afterEach(() => {
@@ -153,35 +142,27 @@ describe('native theme runtime contract', () => {
     for (const [name, value] of originalBodyAttributes) document.body.setAttribute(name, value);
   });
 
-  afterAll(() => frame.remove());
-
-  const fixtureScopes = (fixture: Fixture): [HTMLElement, HTMLElement] => {
+  const fixtureScope = (fixture: Fixture): HTMLElement => {
     if (!fixture.nested) {
       applyFixture(document.documentElement, fixture);
-      applyFixture(oracleRoot, fixture);
-      return [document.documentElement, oracleRoot];
+      return document.documentElement;
     }
     const scope = document.createElement('div');
-    const oracleScope = oracleRoot.ownerDocument.createElement('div');
     applyFixture(scope, fixture);
-    applyFixture(oracleScope, fixture);
     document.body.appendChild(scope);
-    oracleRoot.ownerDocument.body.appendChild(oracleScope);
-    inserted.push(scope, oracleScope);
-    return [scope, oracleScope];
+    inserted.push(scope);
+    return scope;
   };
 
   for (const fixture of [...rootFixtures, ...nestedFixtures]) {
     describe(fixture.name, () => {
       for (const [index, name] of roleNames.entries()) {
-        it(`should resolve ${name} to the preset's concrete colour`, () => {
-          const [scope, oracleScope] = fixtureScopes(fixture);
+        it(`should resolve ${name} to the theme's concrete colour`, () => {
+          const scope = fixtureScope(fixture);
           const expected = concreteColor(roleHex[fixture.expected][index]);
-          // Validate the concrete expectation and conflicting selector outcome
-          // against actual preset output before testing native CSS.
-          expect(resolveColorToken(name, oracleScope), `preset ${fixture.name} ${name}`).toBe(expected);
+
           expect(getComputedStyle(scope).getPropertyValue(name).trim(), `raw ${fixture.name} ${name}`).not.toBe('');
-          expect(resolveColorToken(name, scope), `native ${fixture.name} ${name}`).toBe(expected);
+          expect(resolveColorToken(name, scope), `${fixture.name} ${name}`).toBe(expected);
         });
       }
     });
@@ -259,12 +240,12 @@ describe('native theme runtime contract', () => {
   for (const fixture of [...rootFixtures.slice(0, 8), ...nestedFixtures]) {
     for (const layered of [false, true]) {
       it(`should accept ${layered ? 'later-layer' : 'unlayered'} overrides on ${fixture.name}`, () => {
-        const [scope] = fixtureScopes(fixture);
-        if (fixture.nested) scope.setAttribute('data-parity-scope', '');
-        const selector = fixture.nested ? '[data-parity-scope]' : ':root';
+        const scope = fixtureScope(fixture);
+        if (fixture.nested) scope.setAttribute('data-override-scope', '');
+        const selector = fixture.nested ? '[data-override-scope]' : ':root';
         const rule = `${selector} { --bq-text--primary: red; }`;
         const style = document.createElement('style');
-        style.textContent = layered ? `@layer bq.themes, parityConsumer; @layer parityConsumer { ${rule} }` : rule;
+        style.textContent = layered ? `@layer bq.themes, consumer; @layer consumer { ${rule} }` : rule;
         document.head.appendChild(style);
         inserted.push(style);
         expect(resolveColorToken('--bq-text--primary', scope)).toBe('rgb(255, 0, 0)');
@@ -274,7 +255,7 @@ describe('native theme runtime contract', () => {
 
   for (const fixture of nestedFixtures) {
     it(`should keep ${fixture.name} declarations ahead of inherited root overrides`, () => {
-      const [scope] = fixtureScopes(fixture);
+      const scope = fixtureScope(fixture);
       const style = document.createElement('style');
       style.textContent = ':root { --bq-text--primary: red; }';
       document.head.appendChild(style);
