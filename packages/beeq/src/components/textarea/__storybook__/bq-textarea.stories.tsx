@@ -70,7 +70,15 @@ export default meta;
 type Story = StoryObj;
 
 const Template = (args: Args) => html`
+  <style>
+    .bq-story-textarea span[slot='helper-text'] {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+  </style>
   <bq-textarea
+    class="bq-story-textarea"
     autocapitalize=${ifDefined(args.autocapitalize)}
     autocomplete=${ifDefined(args.autocomplete)}
     ?autofocus=${args.autofocus}
@@ -99,7 +107,7 @@ const Template = (args: Args) => html`
     ${
       !args.noHelperText
         ? html`
-          <span class="flex items-center gap-xs" slot="helper-text">
+          <span slot="helper-text">
             <bq-icon name="star"></bq-icon>
             Helper text
           </span>
@@ -132,7 +140,19 @@ export const Disabled: Story = {
 
 export const DisableResize: Story = {
   render: () => html`
-    <div class="grid grid-cols-1 gap-m sm:grid-cols-2">
+    <style>
+      .bq-story-textarea-disable-resize {
+        display: grid;
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+        gap: var(--bq-spacing-m);
+      }
+      @media (min-width: 640px) {
+        .bq-story-textarea-disable-resize {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+    </style>
+    <div class="bq-story-textarea-disable-resize">
       <!-- Resize enabled -->
       ${Template({ 'disable-resize': false, placeholder: 'Resize is enabled' })}
       <!-- Resize disabled -->
@@ -164,7 +184,19 @@ export const ReadOnly: Story = {
 
 export const Validation: Story = {
   render: (args) => html`
-    <div class="grid grid-cols-1 gap-m sm:grid-cols-3">
+    <style>
+      .bq-story-textarea-validation {
+        display: grid;
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+        gap: var(--bq-spacing-m);
+      }
+      @media (min-width: 640px) {
+        .bq-story-textarea-validation {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+    </style>
+    <div class="bq-story-textarea-validation">
       <!-- Error -->
       ${Template({ ...args, 'validation-status': 'error' })}
       <!-- Warning -->
@@ -196,23 +228,82 @@ export const WithForm: Story = {
     };
 
     return html`
+      <style>
+        .bq-story-textarea-form {
+          display: grid;
+          grid-auto-columns: auto;
+          grid-template-columns: repeat(1, minmax(0, 1fr));
+          row-gap: var(--bq-spacing-l);
+        }
+        @media (min-width: 640px) {
+          .bq-story-textarea-form {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            column-gap: var(--bq-spacing-l);
+          }
+        }
+        .bq-story-textarea-form h4 {
+          margin-block-end: var(--bq-spacing-m);
+        }
+        .bq-story-textarea-form form {
+          display: flex;
+          flex-direction: column;
+          row-gap: var(--bq-spacing-m);
+        }
+        .bq-story-textarea-form__row {
+          display: grid;
+          grid-template-columns: repeat(1, minmax(0, 1fr));
+          row-gap: var(--bq-spacing-m);
+        }
+        @media (min-width: 640px) {
+          .bq-story-textarea-form__row {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            column-gap: var(--bq-spacing-m);
+          }
+        }
+        .bq-story-textarea-form bq-input label {
+          display: flex;
+          flex-grow: 1;
+          align-items: center;
+        }
+        .bq-story-textarea-form bq-input div[slot='label'] {
+          display: flex;
+          flex: 1 1 0%;
+          align-items: center;
+        }
+        .bq-story-textarea-form__actions {
+          display: flex;
+          justify-content: flex-end;
+          column-gap: var(--bq-spacing-s);
+        }
+        .bq-story-textarea-form__data::part(wrapper) {
+          height: 100%;
+        }
+        .bq-story-textarea-form__snippet {
+          overflow-x: scroll;
+          white-space: pre;
+          border-radius: var(--bq-radius--s);
+        }
+        .bq-story-textarea-form code {
+          border-radius: var(--bq-radius--s);
+        }
+      </style>
       <link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/styles/night-owl.min.css" />
-      <div class="grid auto-cols-auto grid-cols-1 gap-y-l sm:grid-cols-2 sm:gap-x-l">
+      <div class="bq-story-textarea-form">
         <bq-card>
-          <h4 class="m-be-m">Submit your issue</h4>
-          <form class="flex flex-col gap-y-m" @submit=${handleFormSubmit}>
-            <div class="grid grid-cols-1 gap-y-m sm:grid-cols-2 sm:gap-x-m">
+          <h4>Submit your issue</h4>
+          <form @submit=${handleFormSubmit}>
+            <div class="bq-story-textarea-form__row">
               <bq-input name="firstName" value="Brad Bernie" autocomplete="given-name" required>
-                <label class="flex flex-grow items-center" slot="label">First Name</label>
+                <label slot="label">First Name</label>
               </bq-input>
               <bq-input name="lastName" value="Beckett" autocomplete="family-name" required>
-                <label class="flex flex-grow items-center" slot="label">Last Name Optional</label>
+                <label slot="label">Last Name Optional</label>
               </bq-input>
             </div>
             <bq-input name="email" type="email" autocomplete="email">
-              <div slot="label" class="flex flex-1 items-center">
-                <label class="flex flex-grow items-center">Email address</label>
-                <span class="text-text-secondary">Optional</span>
+              <div slot="label">
+                <label>Email address</label>
+                <span>Optional</span>
               </div>
             </bq-input>
             <bq-textarea
@@ -225,22 +316,22 @@ export const WithForm: Story = {
             >
               <label slot="label">What's the issue?</label>
             </bq-textarea>
-            <div class="flex justify-end gap-x-s">
+            <div class="bq-story-textarea-form__actions">
               <bq-button appearance="secondary" type="reset">Cancel</bq-button>
               <bq-button type="submit">Save</bq-button>
             </div>
           </form>
         </bq-card>
-        <bq-card class="[&::part(wrapper)]:h-full">
-          <h4 class="m-be-m">Form Data</h4>
-          <div class="language-javascript overflow-x-scroll whitespace-pre rounded-s">
+        <bq-card class="bq-story-textarea-form__data">
+          <h4>Form Data</h4>
+          <div class="language-javascript bq-story-textarea-form__snippet">
             // Handle form submit<br />
             const form = ev.target as HTMLFormElement;<br />
             const formData = new FormData(form);<br />
             const formValues = Object.fromEntries(formData.entries());
           </div>
           <pre>
-            <code id="form-data" class="rounded-s">
+            <code id="form-data">
               { // submit the form to see the data here }
             </code>
           </pre>
