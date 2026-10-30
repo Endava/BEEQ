@@ -80,7 +80,13 @@ export const Default: Story = {
 
 export const Size: Story = {
   render: (args: Args) => html`
-    <div class="flex gap-s">
+    <style>
+      .bq-story-tag {
+        display: flex;
+        gap: var(--bq-spacing-s);
+      }
+    </style>
+    <div class="bq-story-tag">
       <!-- Extra small -->
       ${Template({ ...args, size: 'xsmall', text: 'Extra small' })}
       <!-- Small -->
@@ -93,7 +99,13 @@ export const Size: Story = {
 
 export const Clickable: Story = {
   render: (args: Args) => html`
-    <div class="flex gap-s">
+    <style>
+      .bq-story-tag {
+        display: flex;
+        gap: var(--bq-spacing-s);
+      }
+    </style>
+    <div class="bq-story-tag">
       <!-- Default -->
       ${Template({ ...args })}
       <!-- Active/Selected -->
@@ -109,7 +121,13 @@ export const Clickable: Story = {
 export const ColorFilled: Story = {
   name: 'Color - filled',
   render: (args: Args) => html`
-    <div class="flex gap-s">
+    <style>
+      .bq-story-tag {
+        display: flex;
+        gap: var(--bq-spacing-s);
+      }
+    </style>
+    <div class="bq-story-tag">
       <!-- Success -->
       ${Template({ ...args, color: 'success', text: 'Success' })}
       <!-- Info -->
@@ -127,7 +145,13 @@ export const ColorFilled: Story = {
 export const ColorOutline: Story = {
   name: 'Color - outline',
   render: (args: Args) => html`
-    <div class="flex gap-s">
+    <style>
+      .bq-story-tag {
+        display: flex;
+        gap: var(--bq-spacing-s);
+      }
+    </style>
+    <div class="bq-story-tag">
       <!-- Success -->
       ${Template({ ...args, color: 'success', text: 'Success' })}
       <!-- Info -->
@@ -148,7 +172,13 @@ export const ColorOutline: Story = {
 export const CustomColor: Story = {
   name: 'Color - custom',
   render: (args: Args) => html`
-    <div class="flex gap-s">
+    <style>
+      .bq-story-tag {
+        display: flex;
+        gap: var(--bq-spacing-s);
+      }
+    </style>
+    <div class="bq-story-tag">
       <!-- Hex custom color -->
       ${Template({ ...args, color: '#FF5733', text: 'HEX', icon: 'yin-yang' })}
       <!-- Rgba custom color -->
@@ -165,7 +195,13 @@ export const CustomColor: Story = {
 export const RemovableFilled: Story = {
   name: 'Removable - filled',
   render: (args: Args) => html`
-    <div class="flex gap-s">
+    <style>
+      .bq-story-tag {
+        display: flex;
+        gap: var(--bq-spacing-s);
+      }
+    </style>
+    <div class="bq-story-tag">
       <!-- Default -->
       ${Template({ ...args, text: 'Default' })}
       <!-- Success -->
@@ -188,7 +224,13 @@ export const RemovableFilled: Story = {
 export const RemovableOutline: Story = {
   name: 'Removable - outline',
   render: (args: Args) => html`
-    <div class="flex gap-s">
+    <style>
+      .bq-story-tag {
+        display: flex;
+        gap: var(--bq-spacing-s);
+      }
+    </style>
+    <div class="bq-story-tag">
       <!-- Default -->
       ${Template({ ...args, text: 'Default' })}
       <!-- Success -->
@@ -212,7 +254,13 @@ export const RemovableOutline: Story = {
 export const WithIconFilled: Story = {
   name: 'Prefix - filled',
   render: (args: Args) => html`
-    <div class="flex gap-s">
+    <style>
+      .bq-story-tag {
+        display: flex;
+        gap: var(--bq-spacing-s);
+      }
+    </style>
+    <div class="bq-story-tag">
       <!-- Default -->
       ${Template({ ...args, text: 'Default', icon: 'alarm' })}
       <!-- Success -->
@@ -235,7 +283,13 @@ export const WithIconFilled: Story = {
 export const WithIconOutline: Story = {
   name: 'Prefix - outline',
   render: (args: Args) => html`
-    <div class="flex gap-s">
+    <style>
+      .bq-story-tag {
+        display: flex;
+        gap: var(--bq-spacing-s);
+      }
+    </style>
+    <div class="bq-story-tag">
       <!-- Default -->
       ${Template({ ...args, text: 'Default', icon: 'alarm' })}
       <!-- Success -->
