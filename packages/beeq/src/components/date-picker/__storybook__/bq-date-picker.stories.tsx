@@ -128,7 +128,7 @@ type Story = StoryObj;
 const Template = (args: Args) => {
   const tooltipTemplate = args.hasLabelTooltip
     ? html`
-        <bq-tooltip class="ms-xs">
+        <bq-tooltip>
           <bq-icon name="info" slot="trigger"></bq-icon>
           You can provide more context detail by adding a tooltip to the label.
         </bq-tooltip>
@@ -136,7 +136,7 @@ const Template = (args: Args) => {
     : nothing;
 
   const labelTemplate = html`
-    <label class="flex flex-grow items-center" slot=${ifDefined(!args.optionalLabel ? 'label' : null)}>
+    <label slot=${ifDefined(!args.optionalLabel ? 'label' : null)}>
       Date picker label ${tooltipTemplate}
     </label>
   `;
@@ -144,9 +144,9 @@ const Template = (args: Args) => {
   const label = !args.optionalLabel
     ? labelTemplate
     : html`
-        <div slot="label" class="flex flex-1">
+        <div slot="label">
           ${labelTemplate}
-          <span class="text-text-secondary">Optional</span>
+          <span>Optional</span>
         </div>
       `;
 
@@ -171,8 +171,23 @@ const Template = (args: Args) => {
     : nothing;
 
   return html`
+    <style>
+      .bq-story-date-picker label {
+        display: flex;
+        flex-grow: 1;
+        align-items: center;
+      }
+      .bq-story-date-picker div[slot='label'] {
+        display: flex;
+        flex: 1 1 0%;
+      }
+      .bq-story-date-picker bq-tooltip {
+        margin-inline-start: var(--bq-spacing-xs);
+      }
+    </style>
     ${style}
     <bq-date-picker
+      class="bq-story-date-picker"
       ?autofocus=${args.autofocus}
       clear-button-label=${ifDefined(args['clear-button-label'])}
       ?disable-clear=${args['disable-clear']}
@@ -242,14 +257,31 @@ export const Multi: Story = {
 
 export const InitialValue: Story = {
   render: (args) => html`
-    <div class="grid grid-cols-1 gap-m sm:grid-cols-3">
+    <style>
+      .bq-story-date-picker-grid {
+        display: grid;
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+        gap: var(--bq-spacing-m);
+      }
+      .bq-story-date-picker-grid > div {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      @media (min-width: 640px) {
+        .bq-story-date-picker-grid {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+    </style>
+    <div class="bq-story-date-picker-grid">
       <!-- Default (single) -->
-      <div class="flex flex-col gap-2">
+      <div>
         <p>Default date picker</p>
         ${Template({ ...args, value: '2026-05-25', name: 'bq-date-picker-default', noLabel: true })}
       </div>
       <!-- Range -->
-      <div class="flex flex-col gap-2">
+      <div>
         <p>Range date picker</p>
         ${Template({
           ...args,
@@ -261,7 +293,7 @@ export const InitialValue: Story = {
         })}
       </div>
       <!-- Multi -->
-      <div class="flex flex-col gap-2">
+      <div>
         <p>Multi date picker</p>
         ${Template({
           ...args,
@@ -381,16 +413,33 @@ export const YearPrecisionMulti: Story = {
 
 export const Localized: Story = {
   render: (args) => html`
-    <div class="grid grid-cols-1 gap-m sm:grid-cols-3">
-      <div class="flex flex-col gap-2">
+    <style>
+      .bq-story-date-picker-grid {
+        display: grid;
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+        gap: var(--bq-spacing-m);
+      }
+      .bq-story-date-picker-grid > div {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      @media (min-width: 640px) {
+        .bq-story-date-picker-grid {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+    </style>
+    <div class="bq-story-date-picker-grid">
+      <div>
         <p>German (de-DE)</p>
         ${Template({ ...args, locale: 'de-DE', 'first-day-of-week': 1, value: '2026-05-15', noLabel: true })}
       </div>
-      <div class="flex flex-col gap-2">
+      <div>
         <p>Japanese (ja-JP)</p>
         ${Template({ ...args, locale: 'ja-JP', 'first-day-of-week': 0, value: '2026-05-15', noLabel: true })}
       </div>
-      <div class="flex flex-col gap-2">
+      <div>
         <p>French (fr-FR)</p>
         ${Template({ ...args, locale: 'fr-FR', 'first-day-of-week': 1, value: '2026-05-15', noLabel: true })}
       </div>
@@ -401,8 +450,25 @@ export const Localized: Story = {
 export const FormatOptions: Story = {
   name: 'Custom display format',
   render: (args) => html`
-    <div class="grid grid-cols-1 gap-m sm:grid-cols-2">
-      <div class="flex flex-col gap-2">
+    <style>
+      .bq-story-date-picker-format-options {
+        display: grid;
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+        gap: var(--bq-spacing-m);
+      }
+      .bq-story-date-picker-format-options > div {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      @media (min-width: 640px) {
+        .bq-story-date-picker-format-options {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+    </style>
+    <div class="bq-story-date-picker-format-options">
+      <div>
         <p>Numeric &mdash; <code>{ day: '2-digit', month: '2-digit', year: 'numeric' }</code></p>
         ${Template({
           ...args,
@@ -412,7 +478,7 @@ export const FormatOptions: Story = {
           noLabel: true,
         })}
       </div>
-      <div class="flex flex-col gap-2">
+      <div>
         <p>Long month &mdash; <code>{ day: 'numeric', month: 'long', year: 'numeric' }</code></p>
         ${Template({
           ...args,
@@ -422,7 +488,7 @@ export const FormatOptions: Story = {
           noLabel: true,
         })}
       </div>
-      <div class="flex flex-col gap-2">
+      <div>
         <p>Full date style &mdash; <code>{ dateStyle: 'full' }</code></p>
         ${Template({
           ...args,
@@ -432,7 +498,7 @@ export const FormatOptions: Story = {
           noLabel: true,
         })}
       </div>
-      <div class="flex flex-col gap-2">
+      <div>
         <p>Weekday + short month &mdash; <code>{ weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }</code></p>
         ${Template({
           ...args,
@@ -471,8 +537,25 @@ export const Tooltip: Story = {
 export const ValidationStatus: Story = {
   name: 'Validation',
   render: (args) => html`
-    <div class="grid grid-cols-1 gap-m sm:grid-cols-3">
-      <div class="flex flex-col gap-2">
+    <style>
+      .bq-story-date-picker-grid {
+        display: grid;
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+        gap: var(--bq-spacing-m);
+      }
+      .bq-story-date-picker-grid > div {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      @media (min-width: 640px) {
+        .bq-story-date-picker-grid {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+    </style>
+    <div class="bq-story-date-picker-grid">
+      <div>
         <p>Error</p>
         ${Template({
           ...args,
@@ -482,7 +565,7 @@ export const ValidationStatus: Story = {
           noLabel: true,
         })}
       </div>
-      <div class="flex flex-col gap-2">
+      <div>
         <p>Success</p>
         ${Template({
           ...args,
@@ -492,7 +575,7 @@ export const ValidationStatus: Story = {
           noLabel: true,
         })}
       </div>
-      <div class="flex flex-col gap-2">
+      <div>
         <p>Warning</p>
         ${Template({
           ...args,
@@ -523,18 +606,70 @@ export const WithForm: Story = {
     };
 
     return html`
+      <style>
+        .bq-story-date-picker-form {
+          display: grid;
+          grid-auto-columns: auto;
+          grid-template-columns: repeat(1, minmax(0, 1fr));
+          row-gap: var(--bq-spacing-l);
+        }
+        .bq-story-date-picker-form h4 {
+          margin-block-end: var(--bq-spacing-m);
+        }
+        .bq-story-date-picker-form form {
+          display: flex;
+          flex-direction: column;
+          row-gap: var(--bq-spacing-m);
+        }
+        .bq-story-date-picker-form label[slot='label'] {
+          display: flex;
+          flex-grow: 1;
+          align-items: center;
+        }
+        .bq-story-date-picker-form__row {
+          display: grid;
+          grid-template-columns: repeat(1, minmax(0, 1fr));
+          row-gap: var(--bq-spacing-m);
+        }
+        .bq-story-date-picker-form__actions {
+          display: flex;
+          justify-content: flex-end;
+          column-gap: var(--bq-spacing-s);
+        }
+        .bq-story-date-picker-form__data::part(wrapper) {
+          height: 100%;
+        }
+        .bq-story-date-picker-form .language-javascript {
+          overflow-x: scroll;
+          white-space: pre;
+          border-radius: var(--bq-radius--s);
+        }
+        .bq-story-date-picker-form code {
+          border-radius: var(--bq-radius--s);
+        }
+        @media (min-width: 640px) {
+          .bq-story-date-picker-form {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            column-gap: var(--bq-spacing-l);
+          }
+          .bq-story-date-picker-form__row {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            column-gap: var(--bq-spacing-m);
+          }
+        }
+      </style>
       <link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/styles/night-owl.min.css" />
 
-      <div class="grid auto-cols-auto grid-cols-1 gap-y-l sm:grid-cols-2 sm:gap-x-l">
+      <div class="bq-story-date-picker-form">
         <bq-card>
-          <h4 class="m-be-m">Travel information</h4>
-          <form class="flex flex-col gap-y-m" @submit=${handleFormSubmit}>
+          <h4>Travel information</h4>
+          <form @submit=${handleFormSubmit}>
             <bq-input name="fullName" value="Brad Bernie Beckett" autocomplete="name" required>
-              <label class="flex flex-grow items-center" slot="label">Full Name</label>
+              <label slot="label">Full Name</label>
             </bq-input>
-            <div class="grid grid-cols-1 gap-y-m sm:grid-cols-2 sm:gap-x-m">
+            <div class="bq-story-date-picker-form__row">
               <bq-input name="passportNumber" value="052763786" autocomplete="bday-year" required>
-                <label class="flex flex-grow items-center" slot="label">Passport number</label>
+                <label slot="label">Passport number</label>
               </bq-input>
               <bq-date-picker
                 name="passportExpiration"
@@ -543,7 +678,7 @@ export const WithForm: Story = {
                 type="single"
                 required
               >
-                <label class="flex flex-grow items-center" slot="label">Expiration date</label>
+                <label slot="label">Expiration date</label>
               </bq-date-picker>
             </div>
             <bq-date-picker
@@ -554,24 +689,24 @@ export const WithForm: Story = {
               months="2"
               required
             >
-              <label class="flex flex-grow items-center" slot="label">Travel dates</label>
+              <label slot="label">Travel dates</label>
             </bq-date-picker>
-            <div class="flex justify-end gap-x-s">
+            <div class="bq-story-date-picker-form__actions">
               <bq-button appearance="secondary" type="reset">Cancel</bq-button>
               <bq-button type="submit">Save</bq-button>
             </div>
           </form>
         </bq-card>
-        <bq-card class="[&::part(wrapper)]:h-full">
-          <h4 class="m-be-m">Form Data</h4>
-          <div class="language-javascript overflow-x-scroll whitespace-pre rounded-s">
+        <bq-card class="bq-story-date-picker-form__data">
+          <h4>Form Data</h4>
+          <div class="language-javascript">
             // Handle form submit<br />
             const form = ev.target as HTMLFormElement;<br />
             const formData = new FormData(form);<br />
             const formValues = Object.fromEntries(formData.entries());
           </div>
           <pre>
-            <code id="form-data-2" class="rounded-s">
+            <code id="form-data-2">
               { // submit the form to see the data here }
             </code>
           </pre>
