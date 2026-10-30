@@ -45,11 +45,24 @@ export default meta;
 type Story = StoryObj;
 
 const Template = (args: Args) => html`
+  <style>
+    .bq-story-divider--vertical {
+      block-size: 70dvh;
+    }
+    .bq-story-divider--horizontal {
+      inline-size: 70dvw;
+    }
+    .bq-story-divider p {
+      margin: 0;
+      padding: 0;
+      text-wrap: nowrap;
+    }
+  </style>
   <div
-    class=${classMap({
-      'bs-[70dvh]': args.orientation === 'vertical',
-      'is-[70dvw]': args.orientation === 'horizontal',
-    })}
+    class="bq-story-divider ${classMap({
+      'bq-story-divider--vertical': args.orientation === 'vertical',
+      'bq-story-divider--horizontal': args.orientation === 'horizontal',
+    })}"
   >
     <bq-divider
       orientation=${ifDefined(args.orientation)}
@@ -62,7 +75,7 @@ const Template = (args: Args) => html`
       stroke-linecap=${ifDefined(args['stroke-linecap'])}
       title-alignment=${ifDefined(args['title-alignment'])}
     >
-      ${args['title-text'] ? html`<p class="m-0 text-nowrap p-0">${args['title-text']}</p>` : nothing}
+      ${args['title-text'] ? html`<p>${args['title-text']}</p>` : nothing}
     </bq-divider>
   </div>
 `;
@@ -102,13 +115,23 @@ export const NoTitle: Story = {
 
 export const TextStart: Story = {
   render: (args) => html`
+    <style>
+      .bq-story-divider-group {
+        display: flex;
+        gap: var(--bq-spacing-xxl);
+      }
+      .bq-story-divider-group--column {
+        flex-direction: column;
+      }
+      .bq-story-divider-group--row {
+        flex-direction: row;
+      }
+    </style>
     <div
-      class="flex-col"
-      class=${classMap({
-        'flex gap-xxl': true,
-        'flex-col': args.orientation === 'horizontal',
-        'flex-row': args.orientation === 'vertical',
-      })}
+      class="bq-story-divider-group ${classMap({
+        'bq-story-divider-group--column': args.orientation === 'horizontal',
+        'bq-story-divider-group--row': args.orientation === 'vertical',
+      })}"
     >
       <!-- Default -->
       ${Template(args)}
@@ -125,13 +148,23 @@ export const TextStart: Story = {
 
 export const TextEnd: Story = {
   render: (args) => html`
+    <style>
+      .bq-story-divider-group {
+        display: flex;
+        gap: var(--bq-spacing-xxl);
+      }
+      .bq-story-divider-group--column {
+        flex-direction: column;
+      }
+      .bq-story-divider-group--row {
+        flex-direction: row;
+      }
+    </style>
     <div
-      class="flex-col"
-      class=${classMap({
-        'flex gap-xxl': true,
-        'flex-col': args.orientation === 'horizontal',
-        'flex-row': args.orientation === 'vertical',
-      })}
+      class="bq-story-divider-group ${classMap({
+        'bq-story-divider-group--column': args.orientation === 'horizontal',
+        'bq-story-divider-group--row': args.orientation === 'vertical',
+      })}"
     >
       <!-- Default -->
       ${Template(args)}
