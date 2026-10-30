@@ -170,36 +170,79 @@ export const WithForm: Story = {
     };
 
     return html`
+      <style>
+        .bq-story-checkbox-form {
+          display: grid;
+          grid-auto-columns: auto;
+          grid-template-columns: repeat(1, minmax(0, 1fr));
+          row-gap: var(--bq-spacing-l);
+        }
+        @media (min-width: 640px) {
+          .bq-story-checkbox-form {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            column-gap: var(--bq-spacing-l);
+          }
+        }
+        .bq-story-checkbox-form h4 {
+          margin-block-end: var(--bq-spacing-m);
+        }
+        .bq-story-checkbox-form form {
+          display: flex;
+          flex-direction: column;
+          row-gap: var(--bq-spacing-m);
+        }
+        .bq-story-checkbox-form bq-input label {
+          display: flex;
+          flex-grow: 1;
+          align-items: center;
+        }
+        .bq-story-checkbox-form__actions {
+          display: flex;
+          justify-content: flex-end;
+          column-gap: var(--bq-spacing-s);
+        }
+        .bq-story-checkbox-form__data::part(wrapper) {
+          height: 100%;
+        }
+        .bq-story-checkbox-form__snippet {
+          overflow-x: scroll;
+          white-space: pre;
+          border-radius: var(--bq-radius--s);
+        }
+        .bq-story-checkbox-form code {
+          border-radius: var(--bq-radius--s);
+        }
+      </style>
       <link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/styles/night-owl.min.css" />
-      <div class="grid auto-cols-auto grid-cols-1 gap-y-l sm:grid-cols-2 sm:gap-x-l">
+      <div class="bq-story-checkbox-form">
         <bq-card>
-          <h4 class="m-be-m">Sign in to your account</h4>
-          <form class="flex flex-col gap-y-m" @submit=${handleFormSubmit}>
+          <h4>Sign in to your account</h4>
+          <form @submit=${handleFormSubmit}>
             <bq-input name="email" type="email" autocomplete="email">
-              <label class="flex flex-grow items-center" slot="label">Email address</label>
+              <label slot="label">Email address</label>
             </bq-input>
             <bq-input name="password" type="password" autocomplete="current-password">
-              <label class="flex flex-grow items-center" slot="label">Password</label>
+              <label slot="label">Password</label>
             </bq-input>
             <!-- Checkbox -->
             ${Template({ ...args })}
             <!-- End: Checkbox -->
-            <div class="flex justify-end gap-x-s">
+            <div class="bq-story-checkbox-form__actions">
               <bq-button appearance="secondary" type="reset">Cancel</bq-button>
               <bq-button type="submit">Log in</bq-button>
             </div>
           </form>
         </bq-card>
-        <bq-card class="[&::part(wrapper)]:h-full">
-          <h4 class="m-be-m">Form Data</h4>
-          <div class="language-javascript overflow-x-scroll whitespace-pre rounded-s">
+        <bq-card class="bq-story-checkbox-form__data">
+          <h4>Form Data</h4>
+          <div class="language-javascript bq-story-checkbox-form__snippet">
             // Handle form submit<br />
             const form = ev.target as HTMLFormElement;<br />
             const formData = new FormData(form);<br />
             const formValues = Object.fromEntries(formData.entries());
           </div>
           <pre>
-            <code id="form-data" class="rounded-s">
+            <code id="form-data">
               { // submit the form to see the data here }
             </code>
           </pre>
