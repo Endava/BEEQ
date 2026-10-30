@@ -199,7 +199,7 @@ const Template = (args: Args) => {
 
   const tooltipTemplate = args.hasLabelTooltip
     ? html`
-        <bq-tooltip class="ms-xs">
+        <bq-tooltip>
           <bq-icon name="info" slot="trigger"></bq-icon>
           You can provide more context detail by adding a tooltip to the label.
         </bq-tooltip>
@@ -207,7 +207,7 @@ const Template = (args: Args) => {
     : nothing;
 
   const labelTemplate = html`
-    <label class="flex flex-grow items-center" slot=${ifDefined(!args.optionalLabel ? 'label' : null)}>
+    <label slot=${ifDefined(!args.optionalLabel ? 'label' : null)}>
       Select label ${tooltipTemplate}
     </label>
   `;
@@ -215,9 +215,9 @@ const Template = (args: Args) => {
   const label = !args.optionalLabel
     ? labelTemplate
     : html`
-        <div slot="label" class="flex flex-1">
+        <div slot="label">
           ${labelTemplate}
-          <span class="text-text-secondary">Optional</span>
+          <span>Optional</span>
         </div>
       `;
 
@@ -232,8 +232,61 @@ const Template = (args: Args) => {
     : nothing;
 
   return html`
+    <style>
+      .bq-story-select label {
+        display: flex;
+        flex-grow: 1;
+        align-items: center;
+      }
+      .bq-story-select div[slot='label'] {
+        display: flex;
+        flex: 1 1 0%;
+      }
+      .bq-story-select bq-tooltip {
+        margin-inline-start: var(--bq-spacing-xs);
+      }
+      .bq-story-select bq-tag::part(text) {
+        line-height: var(--bq-font-line-height--small);
+        text-wrap: nowrap;
+      }
+      .bq-story-select span[slot='helper-text'] {
+        display: flex;
+        align-items: center;
+        gap: var(--bq-spacing-xs);
+      }
+      .bq-story-select-multiline {
+        display: flex;
+        flex-direction: column;
+      }
+      .bq-story-select-multiline__description {
+        color: var(--bq-text--secondary);
+        font-size: var(--bq-font-size--s);
+      }
+      .bq-story-select-payment {
+        display: flex;
+        flex-direction: column;
+        gap: var(--bq-spacing-xs2);
+      }
+      .bq-story-select-payment__heading {
+        display: flex;
+        align-items: center;
+        gap: var(--bq-spacing-xs);
+      }
+      .bq-story-select-payment__title {
+        font-weight: var(--bq-font-weight--semibold);
+      }
+      .bq-story-select-payment__detail {
+        padding-inline-start: 28px;
+        color: var(--bq-text--secondary);
+        font-size: var(--bq-font-size--s);
+      }
+      .bq-story-select-payment__detail--small {
+        font-size: var(--bq-font-size--xs);
+      }
+    </style>
     ${style}
     <bq-select
+      class="bq-story-select"
       ?autofocus=${args.autofocus}
       clear-button-label=${args['clear-button-label']}
       debounce-time=${args['debounce-time']}
@@ -277,7 +330,6 @@ const Template = (args: Args) => {
                   size="xsmall"
                   variant="filled"
                   slot="tags"
-                  class="[&::part(text)]:text-nowrap [&::part(text)]:leading-small"
                 >
                   <bq-icon name=${option.icon} slot="prefix"></bq-icon>
                   ${option.value}
@@ -289,7 +341,6 @@ const Template = (args: Args) => {
                     size="xsmall"
                     variant="filled"
                     slot="tags"
-                    class="[&::part(text)]:text-nowrap [&::part(text)]:leading-small"
                   >
                     +${args.value.length - index}
                   </bq-tag>
@@ -305,7 +356,7 @@ const Template = (args: Args) => {
       ${
         !args.noHelperText
           ? html`
-            <span class="flex items-center gap-xs" slot="helper-text">
+            <span slot="helper-text">
               <bq-icon name="star"></bq-icon>
               Helper text
             </span>
@@ -322,7 +373,16 @@ export const Default: Story = {
 };
 
 export const Open: Story = {
-  render: (args: Args) => html` <div class="flex min-h-[150vh] items-center">${Template({ ...args })}</div> `,
+  render: (args: Args) => html`
+    <style>
+      .bq-story-select-open {
+        display: flex;
+        align-items: center;
+        min-height: 150vh;
+      }
+    </style>
+    <div class="bq-story-select-open">${Template({ ...args })}</div>
+  `,
   args: {
     autofocus: true,
     open: true,
@@ -415,7 +475,19 @@ export const Suffix: Story = {
 
 export const Validation: Story = {
   render: (args) => html`
-    <div class="grid grid-cols-1 gap-m sm:grid-cols-3">
+    <style>
+      .bq-story-select-validation {
+        display: grid;
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+        gap: var(--bq-spacing-m);
+      }
+      @media (min-width: 640px) {
+        .bq-story-select-validation {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+    </style>
+    <div class="bq-story-select-validation">
       <!-- Error -->
       ${Template({ ...args, 'validation-status': 'error', value: 1 })}
       <!-- Warning -->
@@ -485,23 +557,23 @@ export const MultilineOptions: Story = {
     options: `
       <bq-option value="hiking">
         <bq-icon slot="prefix" name="boot"></bq-icon>
-        <div class="flex flex-col">
+        <div class="bq-story-select-multiline">
           Hiking
-          <span class="text-secondary text-s">Take your time and enjoy the nature</span>
+          <span class="bq-story-select-multiline__description">Take your time and enjoy the nature</span>
         </div>
       </bq-option>
       <bq-option value="running">
         <bq-icon slot="prefix" name="sneaker-move"></bq-icon>
-        <div class="flex flex-col">
+        <div class="bq-story-select-multiline">
           Running
-          <span class="text-secondary text-s">Get your heart rate up and burn some calories</span>
+          <span class="bq-story-select-multiline__description">Get your heart rate up and burn some calories</span>
         </div>
       </bq-option>
       <bq-option value="biking">
         <bq-icon slot="prefix" name="person-simple-bike"></bq-icon>
-        <div class="flex flex-col">
+        <div class="bq-story-select-multiline">
           Biking
-          <span class="text-secondary text-s">Biking is a great way to stay in shape</span>
+          <span class="bq-story-select-multiline__description">Biking is a great way to stay in shape</span>
         </div>
       </bq-option>
     `,
@@ -515,32 +587,32 @@ export const DisplayValue: Story = {
     readonly: true,
     options: `
       <bq-option value="visa-1234" display-value="Visa •••• 1234">
-        <div class="flex flex-col gap-xs2">
-          <div class="flex items-center gap-xs">
+        <div class="bq-story-select-payment">
+          <div class="bq-story-select-payment__heading">
             <bq-icon name="credit-card" size="20"></bq-icon>
-            <span class="font-semibold">Visa ending in 1234</span>
+            <span class="bq-story-select-payment__title">Visa ending in 1234</span>
           </div>
-          <span class="text-secondary text-s ps-[28px]">Expires 12/2025</span>
-          <span class="text-secondary text-xs ps-[28px]">John Doe</span>
+          <span class="bq-story-select-payment__detail">Expires 12/2025</span>
+          <span class="bq-story-select-payment__detail bq-story-select-payment__detail--small">John Doe</span>
         </div>
       </bq-option>
       <bq-option value="mastercard-5678" display-value="Mastercard •••• 5678">
-        <div class="flex flex-col gap-xs2">
-          <div class="flex items-center gap-xs">
+        <div class="bq-story-select-payment">
+          <div class="bq-story-select-payment__heading">
             <bq-icon name="credit-card" size="20"></bq-icon>
-            <span class="font-semibold">Mastercard ending in 5678</span>
+            <span class="bq-story-select-payment__title">Mastercard ending in 5678</span>
           </div>
-          <span class="text-secondary text-s ps-[28px]">Expires 08/2026</span>
-          <span class="text-secondary text-xs ps-[28px]">Jane Smith</span>
+          <span class="bq-story-select-payment__detail">Expires 08/2026</span>
+          <span class="bq-story-select-payment__detail bq-story-select-payment__detail--small">Jane Smith</span>
         </div>
       </bq-option>
       <bq-option value="paypal" display-value="PayPal">
-        <div class="flex flex-col gap-xs2">
-          <div class="flex items-center gap-xs">
+        <div class="bq-story-select-payment">
+          <div class="bq-story-select-payment__heading">
             <bq-icon name="paypal-logo" size="20"></bq-icon>
-            <span class="font-semibold">Pay with PayPal</span>
+            <span class="bq-story-select-payment__title">Pay with PayPal</span>
           </div>
-          <span class="text-secondary text-s ps-[28px]">john.doe@email.com</span>
+          <span class="bq-story-select-payment__detail">john.doe@email.com</span>
         </div>
       </bq-option>
     `,
@@ -559,9 +631,19 @@ export const Reset: Story = {
     };
 
     return html`
-      <div class="flex flex-col">
+      <style>
+        .bq-story-select-reset {
+          display: flex;
+          flex-direction: column;
+        }
+        .bq-story-select-reset > p {
+          margin-block-end: var(--bq-spacing-l);
+          color: var(--bq-text--secondary);
+        }
+      </style>
+      <div class="bq-story-select-reset">
         <h4>Reset</h4>
-        <p class="text-secondary m-be-l">
+        <p>
           This example demonstrates the <code>reset</code> method. After 2 seconds, the value will be reset to the
           initial value.
         </p>
@@ -589,55 +671,114 @@ export const WithForm: Story = {
     };
 
     return html`
+      <style>
+        .bq-story-select-form {
+          display: grid;
+          grid-auto-columns: auto;
+          grid-template-columns: repeat(1, minmax(0, 1fr));
+          row-gap: var(--bq-spacing-l);
+        }
+        @media (min-width: 640px) {
+          .bq-story-select-form {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            column-gap: var(--bq-spacing-l);
+          }
+        }
+        .bq-story-select-form h4 {
+          margin-block-end: var(--bq-spacing-m);
+        }
+        .bq-story-select-form form {
+          display: flex;
+          flex-direction: column;
+          row-gap: var(--bq-spacing-m);
+        }
+        .bq-story-select-form label[slot='label'] {
+          display: flex;
+          flex-grow: 1;
+          align-items: center;
+        }
+        .bq-story-select-form span[slot='helper-text'] {
+          display: flex;
+          align-items: center;
+          gap: var(--bq-spacing-xs);
+        }
+        .bq-story-select-form__row {
+          display: grid;
+          grid-template-columns: repeat(1, minmax(0, 1fr));
+          row-gap: var(--bq-spacing-m);
+        }
+        @media (min-width: 640px) {
+          .bq-story-select-form__row {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            column-gap: var(--bq-spacing-m);
+          }
+        }
+        .bq-story-select-form__actions {
+          display: flex;
+          justify-content: flex-end;
+          column-gap: var(--bq-spacing-s);
+        }
+        .bq-story-select-form__output::part(wrapper) {
+          height: 100%;
+        }
+        .bq-story-select-form .language-javascript {
+          overflow-x: scroll;
+          white-space: pre;
+          border-radius: var(--bq-radius--s);
+        }
+        .bq-story-select-form pre code {
+          border-radius: var(--bq-radius--s);
+        }
+      </style>
       <link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/styles/night-owl.min.css" />
 
-      <div class="grid auto-cols-auto grid-cols-1 gap-y-l sm:grid-cols-2 sm:gap-x-l">
+      <div class="bq-story-select-form">
         <bq-card>
-          <h4 class="m-be-m">User data</h4>
-          <form class="flex flex-col gap-y-m" @submit=${handleFormSubmit}>
+          <h4>User data</h4>
+          <form @submit=${handleFormSubmit}>
             <bq-input name="fullName" value="Brad Bernie Beckett" autocomplete="name" required>
-              <label class="flex flex-grow items-center" slot="label">Full Name</label>
+              <label slot="label">Full Name</label>
             </bq-input>
-            <div class="grid grid-cols-1 gap-y-m sm:grid-cols-2 sm:gap-x-m">
+            <div class="bq-story-select-form__row">
               <bq-select name="gender" value="male" autocomplete="sex" readonly>
-                <label class="flex flex-grow items-center" slot="label">Gender</label>
+                <label slot="label">Gender</label>
                 <bq-option value="female">Female</bq-option>
                 <bq-option value="male">Male</bq-option>
                 <bq-option value="non-binary">Non-binary</bq-option>
                 <bq-option value="other">Other</bq-option>
               </bq-select>
               <bq-input name="bdayYear" type="number" value="1983" autocomplete="bday-year" required>
-                <label class="flex flex-grow items-center" slot="label">Year of birth date (YYYY)</label>
+                <label slot="label">Year of birth date (YYYY)</label>
               </bq-input>
             </div>
             <bq-select name="prevCountries" value='["ro","us"]' multiple autocomplete="country-name">
-              <label class="flex flex-grow items-center" slot="label">Previous countries</label>
+              <label slot="label">Previous countries</label>
               <bq-option value="au">Australia</bq-option>
               <bq-option value="ca">Canada</bq-option>
               <bq-option value="mx">Mexico</bq-option>
               <bq-option value="pt">Portugal</bq-option>
               <bq-option value="ro">Romania</bq-option>
               <bq-option value="us">United States</bq-option>
-              <span class="flex items-center gap-xs" slot="helper-text">
+              <span slot="helper-text">
                 Please select the countries you have visited before.
               </span>
             </bq-select>
-            <div class="flex justify-end gap-x-s">
+            <div class="bq-story-select-form__actions">
               <bq-button appearance="secondary" type="reset">Cancel</bq-button>
               <bq-button type="submit">Save</bq-button>
             </div>
           </form>
         </bq-card>
-        <bq-card class="[&::part(wrapper)]:h-full">
-          <h4 class="m-be-m">Form Data</h4>
-          <div class="language-javascript overflow-x-scroll whitespace-pre rounded-s">
+        <bq-card class="bq-story-select-form__output">
+          <h4>Form Data</h4>
+          <div class="language-javascript">
             // Handle form submit<br />
             const form = ev.target as HTMLFormElement;<br />
             const formData = new FormData(form);<br />
             const formValues = Object.fromEntries(formData.entries());
           </div>
           <pre>
-            <code id="form-data" class="rounded-s">
+            <code id="form-data">
               { // submit the form to see the data here }
             </code>
           </pre>
@@ -716,12 +857,26 @@ export const AsyncOptions: Story = {
     };
 
     return html`
-      <p class="m-be-l text-text-secondary">
+      <style>
+        .bq-story-select-async__intro {
+          margin-block-end: var(--bq-spacing-l);
+        }
+        .bq-story-select-async__grid {
+          display: grid;
+          gap: var(--bq-spacing-l);
+        }
+        @media (min-width: 768px) {
+          .bq-story-select-async__grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+          }
+        }
+      </style>
+      <p class="bq-story-select-async__intro">
         Search for "swim" or "pizza" to replace the options after a simulated request.
         Search for "unknown" to show an empty result. The query stays in the input while options change.
         Deleting all text clears a single selection; deleting the multiple-select search keeps selected activities.
       </p>
-      <div class="grid gap-l md:grid-cols-2">
+      <div class="bq-story-select-async__grid">
         ${[false, true].map(
           (multiple) => html`
             <bq-select
@@ -872,16 +1027,28 @@ export const CustomFiltering: Story = {
     };
 
     return html`
+      <style>
+        .bq-story-select-filtering {
+          display: flex;
+          flex-direction: column;
+        }
+        .bq-story-select-filtering > p {
+          color: var(--bq-text--secondary);
+        }
+        .bq-story-select-filtering pre code {
+          border-radius: var(--bq-radius--m);
+        }
+      </style>
       <link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/styles/night-owl.min.css" />
-      <div class="flex flex-col">
+      <div class="bq-story-select-filtering">
         <h4>Custom filtering</h4>
-        <p class="text-secondary">
+        <p>
           This example demonstrates custom filtering of options with loading states and visibility toggling. It uses the
           <code>bqInput</code> (with <code>event.preventDefault()</code>) and <code>bqSelect</code> events to handle the
           input and selection events. The handler opens the panel explicitly so keyboard searches also show their results.
         </p>
         <pre>
-          <code class="language-javascript rounded-m">
+          <code class="language-javascript">
             const bqSelectElement = document.querySelector('bq-select');
             bqSelectElement.addEventListener('bqInput', handleInput);
 
@@ -911,23 +1078,63 @@ export const CustomFiltering: Story = {
 
 export const ScrollableContainer: Story = {
   render: (args: Args) => html`
-    <div class="flex h-[150dvh] flex-col gap-m">
+    <style>
+      .bq-story-select-scrollable {
+        display: flex;
+        height: 150dvh;
+        flex-direction: column;
+        gap: var(--bq-spacing-m);
+      }
+      .bq-story-select-scrollable > p {
+        color: var(--bq-text--secondary);
+      }
+      .bq-story-select-scrollable__hint {
+        font-size: var(--bq-font-size--s);
+        font-style: italic;
+      }
+      .bq-story-select-scrollable__box {
+        height: 16rem;
+        overflow-y: auto;
+        border-radius: var(--bq-radius--s);
+        background-color: var(--bq-ui--secondary);
+        padding: var(--bq-spacing-m);
+        color: var(--bq-text--primary);
+      }
+      .bq-story-select-scrollable__content {
+        display: flex;
+        height: 24rem;
+        flex-direction: column;
+        gap: var(--bq-spacing-m);
+      }
+      .bq-story-select-scrollable__select {
+        margin-top: var(--bq-spacing-xs);
+      }
+      .bq-story-select-scrollable__footer {
+        margin-top: var(--bq-spacing-l);
+      }
+      .bq-story-select-scrollable__stack > :not([hidden]) ~ :not([hidden]),
+      .bq-story-select-scrollable__footer > :not([hidden]) ~ :not([hidden]) {
+        margin-top: var(--bq-spacing-xs);
+        margin-bottom: 0;
+      }
+    </style>
+    <div class="bq-story-select-scrollable">
       <h4>Scroll Behavior Demo</h4>
-      <p class="text-secondary">
+      <p>
         This example demonstrates how the Select behaves in scrollable containers. The Select uses a simple and reliable
         approach:
         <strong>body scroll lock</strong> + <strong>auto-close on ancestor scroll</strong>.
       </p>
-      <p class="text-s italic text-secondary">
+      <p class="bq-story-select-scrollable__hint">
         (Try to scroll the container below. The Select will close automatically, while the page body scroll is being
         locked until the Select panel is closed.)
       </p>
 
       <!-- Scrollable container with Select inside -->
-      <div class="border border-stroke-primary h-64 overflow-y-auto rounded-s bg-ui-secondary p-m text-primary">
-        <div class="flex h-96 flex-col gap-m">
+      <div class="bq-story-select-scrollable__box">
+        <div class="bq-story-select-scrollable__content">
           <p>This is a scrollable container with some content...</p>
-          <div class="space-y-xs">
+          <div class="bq-story-select-scrollable__stack">
             <p>📝 <strong>When Select is closed:</strong> You can scroll this container normally.</p>
             <p>🔒 <strong>When Select is open:</strong> Body scroll is locked to prevent background scrolling.</p>
             <p>
@@ -936,9 +1143,9 @@ export const ScrollableContainer: Story = {
           </div>
 
           <!-- Select component inside scrollable container -->
-          <div class="mt-xs">${Template({ ...args, placeholder: 'Select inside scrollable container' })}</div>
+          <div class="bq-story-select-scrollable__select">${Template({ ...args, placeholder: 'Select inside scrollable container' })}</div>
 
-          <div class="space-y-xs">
+          <div class="bq-story-select-scrollable__stack">
             <p>More content below the Select...</p>
             <p>🎯 <strong>Try this:</strong> Open the Select, then try to scroll this container.</p>
             <p>✨ <strong>Expected behavior:</strong> The Select panel will close immediately.</p>
@@ -951,7 +1158,7 @@ export const ScrollableContainer: Story = {
       </div>
 
       <!-- Regular body scroll area -->
-      <div class="mt-l space-y-xs">
+      <div class="bq-story-select-scrollable__footer">
         <p>This content is in the normal page body flow.</p>
         <p>
           <strong>Body scroll behavior:</strong> When the Select above is opened, the body scroll is locked. This
