@@ -30,7 +30,122 @@ export default meta;
 type Story = StoryObj;
 
 const Template = (args: Args) => html`
-  <div class="max-w-sm">
+  <style>
+    .bq-story-card {
+      max-width: 24rem;
+    }
+
+    .bq-story-card h6 {
+      font-size: var(--bq-font-size--m);
+      font-weight: var(--bq-font-weight--medium);
+    }
+
+    .bq-story-card__header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: var(--bq-spacing-xs2);
+    }
+
+    .bq-story-card__stats {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .bq-story-card__metric {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .bq-story-card__metric span {
+      font-weight: var(--bq-font-weight--bold);
+    }
+
+    .bq-story-card__features {
+      display: flex;
+      flex-direction: column;
+      font-weight: var(--bq-font-weight--medium);
+      gap: var(--bq-spacing-m);
+    }
+
+    .bq-story-card__feature-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--bq-spacing-s);
+    }
+
+    .bq-story-card__feature {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+
+    .bq-story-card__performance {
+      display: flex;
+      flex-direction: row;
+      gap: var(--bq-spacing-m);
+    }
+
+    .bq-story-card__trend {
+      display: flex;
+      align-items: flex-end;
+      gap: var(--bq-spacing-xs);
+    }
+
+    .bq-story-card__detail {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--bq-spacing-m);
+    }
+
+    .bq-story-card__detail-text {
+      display: flex;
+      flex-direction: column;
+      gap: var(--bq-spacing-xs2);
+    }
+
+    .bq-story-card__detail-text p {
+      align-items: stretch;
+    }
+
+    .bq-story-card__mini {
+      display: flex;
+      inline-size: 100%;
+    }
+
+    .bq-story-card__mini-icon {
+      display: flex;
+      padding-inline: var(--bq-spacing-l);
+      padding-block: var(--bq-spacing-l);
+      background-color: var(--bq-background--brand);
+      border-start-start-radius: var(--bq-card--borderRadius);
+      border-end-start-radius: var(--bq-card--borderRadius);
+    }
+
+    .bq-story-card__mini-body {
+      display: flex;
+      align-items: center;
+      padding-inline: var(--bq-card--paddingMinimal);
+      padding-block: var(--bq-card--paddingMinimal);
+      justify-content: space-between;
+      inline-size: 100%;
+    }
+
+    .bq-story-card__mini-text {
+      display: flex;
+      flex-direction: column;
+      padding-inline-start: 0.5rem;
+    }
+
+    .bq-story-card__mini-action {
+      padding-inline: var(--bq-card--paddingMinimal);
+      padding-block: var(--bq-card--paddingMinimal);
+    }
+  </style>
+  <div class="bq-story-card">
     <bq-card border=${args.border} type=${ifDefined(args.type)}>
       ${ifDefined(args.content) ? unsafeHTML(args.content) : nothing}
     </bq-card>
@@ -41,20 +156,20 @@ export const Default: Story = {
   render: Template,
   args: {
     content: `
-      <div class="flex flex-col gap-6">
+      <div class="bq-story-card__stats">
         <div>
-          <div class="flex flex-row items-center gap-xs2">
-            <span class="text-text-secondary">Title</span> <bq-icon color="text--brand" size="16" name="star" weight="bold" part="icon"/></bq-icon>
+          <div class="bq-story-card__header">
+            <span>Title</span> <bq-icon color="text--brand" size="16" name="star" weight="bold" part="icon"/></bq-icon>
           </div>
           <h4>194</h4>
         </div>
-        <div class="flex flex-col">
-          <p><span class="font-bold">120</span> days</p>
-          <p class="text-text-secondary">avg resolution</p>
+        <div class="bq-story-card__metric">
+          <p><span>120</span> days</p>
+          <p>avg resolution</p>
         </div>
-        <div class="flex flex-col">
-          <p><span class="font-bold">120</span> days</p>
-          <p class="text-text-secondary">avg resolution</p>
+        <div class="bq-story-card__metric">
+          <p><span>120</span> days</p>
+          <p>avg resolution</p>
         </div>
       </div>
     `,
@@ -65,22 +180,22 @@ export const FeatureHighlights: Story = {
   render: Template,
   args: {
     content: `
-      <div class="flex flex-col font-medium gap-m">
-        <h6 class="text-m font-medium">Title</h6>
-        <div class="flex flex-col gap-s">
-          <div class="flex flex-row items-center gap-xs">
+      <div class="bq-story-card__features">
+        <h6>Title</h6>
+        <div class="bq-story-card__feature-list">
+          <div class="bq-story-card__feature">
             <bq-icon name="star-bold" part="icon"/></bq-icon>
             Lorem Ipsum is simply dummy text
           </div>
-          <div class="flex flex-row items-center gap-xs">
+          <div class="bq-story-card__feature">
             <bq-icon name="star-bold" part="icon"/></bq-icon>
             Lorem Ipsum is simply dummy text
           </div>
-          <div class="flex flex-row items-center gap-xs">
+          <div class="bq-story-card__feature">
             <bq-icon name="star-bold" part="icon"/></bq-icon>
             Lorem Ipsum is simply dummy text
           </div>
-          <div class="flex flex-row items-center gap-xs">
+          <div class="bq-story-card__feature">
             <bq-icon name="star-bold" part="icon"/></bq-icon>
             Lorem Ipsum is simply dummy text
           </div>
@@ -94,16 +209,16 @@ export const PerformanceOverview: Story = {
   render: Template,
   args: {
     content: `
-      <div class="flex flex-row gap-m">
+      <div class="bq-story-card__performance">
         <bq-icon color="text--brand" size="56" name="star-bold" part="icon"/></bq-icon>
         <div>
-          <div class="flex flex-row items-center gap-xs2">
-            <span class="text-text-secondary">Title</span> <bq-icon color="text--brand" size="16" name="star" weight="bold" part="icon"/></bq-icon>
+          <div class="bq-story-card__header">
+            <span>Title</span> <bq-icon color="text--brand" size="16" name="star" weight="bold" part="icon"/></bq-icon>
           </div>
-          <div class="flex items-end gap-xs">
+          <div class="bq-story-card__trend">
             <h4>194</h4>
-            <span class="text-text-success">+24%</span>
-            <span class="text-text-secondary">than last mo.</span>
+            <span>+24%</span>
+            <span>than last mo.</span>
           </div>
         </div>
       </div>
@@ -115,11 +230,11 @@ export const DetailedContent: Story = {
   render: Template,
   args: {
     content: `
-      <div class="flex flex-col items-start gap-m">
+      <div class="bq-story-card__detail">
         <bq-icon color="text--brand" size="56" name="star" weight="bold" part="icon"/></bq-icon>
-        <div class="flex flex-col gap-xs2">
-          <h6 class="text-m font-medium">Title</h6>
-          <p class="text-text-secondary items-stretch">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+        <div class="bq-story-card__detail-text">
+          <h6>Title</h6>
+          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
         </div>
         <bq-button appearance="link">Button</bq-button>
       </div>
@@ -131,16 +246,16 @@ export const MiniCard: Story = {
   render: Template,
   args: {
     content: `
-      <div class="flex is-full">
-        <div class="flex p-i-l p-b-l bg-brand rounded-s-[--bq-card--borderRadius]">
+      <div class="bq-story-card__mini">
+        <div class="bq-story-card__mini-icon">
           <bq-icon color="text--on-brand" size="24" name="star" weight="bold" part="icon"/></bq-icon>
         </div>
-        <div class="flex items-center p-i-[--bq-card--paddingMinimal] p-b-[--bq-card--paddingMinimal] justify-between is-full">
-          <div class="flex flex-col ps-2">
-            <h6 class="text-m font-medium">Title</h6>
-            <p class="text-text-secondary">description</p>
+        <div class="bq-story-card__mini-body">
+          <div class="bq-story-card__mini-text">
+            <h6>Title</h6>
+            <p>description</p>
           </div>
-          <div class="p-i-[--bq-card--paddingMinimal] p-b-[--bq-card--paddingMinimal]">
+          <div class="bq-story-card__mini-action">
             <bq-icon color="text--brand" size="24" name="star" weight="bold" part="icon"/></bq-icon>
           </div>
         </div>
