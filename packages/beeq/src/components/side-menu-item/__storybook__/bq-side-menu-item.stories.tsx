@@ -36,7 +36,13 @@ export default meta;
 type Story = StoryObj;
 
 const Template = (args: Args) => html`
+  <style>
+    .bq-story-side-menu-item bq-badge {
+      margin-left: auto;
+    }
+  </style>
   <bq-side-menu-item
+    class="bq-story-side-menu-item"
     ?active=${args.active}
     ?disabled=${args.disabled}
     ?collapse=${args.collapse}
@@ -46,7 +52,7 @@ const Template = (args: Args) => html`
   >
     <bq-icon name="star-four" slot="prefix"></bq-icon>
     ${args.text}
-    <bq-badge class="ml-auto" slot="suffix"> 5 </bq-badge>
+    <bq-badge slot="suffix"> 5 </bq-badge>
   </bq-side-menu-item>
 `;
 
