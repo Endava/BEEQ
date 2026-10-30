@@ -37,15 +37,52 @@ export default meta;
 type Story = StoryObj;
 
 const Template = (args: Args) => html`
+  <style>
+    .bq-story-side-menu div[slot='logo'] {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-s);
+      padding-block: var(--bq-spacing-m);
+    }
+
+    .bq-story-side-menu div[slot='logo'] svg {
+      height: 2.5rem;
+      width: 2.5rem;
+    }
+
+    .bq-story-side-menu div[slot='logo'] h1 {
+      white-space: nowrap;
+      font-size: var(--bq-font-size--xl);
+    }
+
+    .bq-story-side-menu-main {
+      display: grid;
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+      padding: var(--bq-spacing-m);
+    }
+
+    .bq-story-side-menu-main h1 {
+      margin-bottom: var(--bq-spacing-l);
+    }
+
+    .bq-story-side-menu-main > div {
+      height: 20rem;
+      width: 100%;
+      border-style: dashed;
+      border-color: var(--bq-stroke--primary);
+      background-color: var(--bq-ui--alt);
+    }
+  </style>
   <bq-side-menu
+    class="bq-story-side-menu"
     appearance=${args.appearance}
     ?collapse=${args.collapse}
     size=${args.size}
     @bqCollapse=${args.bqCollapse}
     @bqSelect=${args.bqSelect}
   >
-    <div class="flex items-center gap-s p-b-m" slot="logo">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 1080 1080" class="h-10 w-10">
+    <div slot="logo">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 1080 1080">
         <path
           fill="currentColor"
           fill-rule="evenodd"
@@ -53,7 +90,7 @@ const Template = (args: Args) => html`
           clip-rule="evenodd"
         />
       </svg>
-      ${!args.collapse ? html`<h1 class="whitespace-nowrap text-xl">BEEQ</h1>` : nothing}
+      ${!args.collapse ? html`<h1>BEEQ</h1>` : nothing}
     </div>
     <bq-side-menu-item active>
       <bq-icon name="diamonds-four" slot="prefix"></bq-icon>
@@ -91,9 +128,9 @@ const Template = (args: Args) => html`
     ${ifDefined(args.footerContent) ? unsafeHTML(args.footerContent) : nothing}
   </bq-side-menu>
 
-  <main class="grid grid-cols-1 p-m">
-    <h1 class="mb-l">Dashboard</h1>
-    <div class="border h-80 w-full border-dashed border-primary bg-[--bq-ui--alt]">
+  <main class="bq-story-side-menu-main">
+    <h1>Dashboard</h1>
+    <div>
       <!-- Your content -->
     </div>
   </main>
