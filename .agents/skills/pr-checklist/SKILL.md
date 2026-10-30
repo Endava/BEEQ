@@ -16,7 +16,7 @@ Review the current branch against the merge checklist. The rules live in [git wo
 2. Work through every item of the **PR merge checklist** in the git workflow instructions. Mark each **pass**, **fail** (with a specific reason) or **n/a** (with a brief justification). Typical mappings:
    - `packages/beeq/src/shared/` changed: a `.spec.ts` exists and was updated.
    - Component TSX or SCSS changed: `packages/beeq/src/components/<name>/__tests__/bq-<name>.e2e.tsx` covers the change.
-   - Component added or `@Prop` / `@Event` changed: a story exists under `_storybook/`, and `apps/beeq-docs/components/<name>.mdx` is updated.
+   - Component added or `@Prop` / `@Event` changed: a story exists under `__storybook__/`, and `apps/beeq-docs/components/<name>.mdx` is updated.
    - Public API, pattern or design rule changed: `packages/beeq-skills/src/beeq/` is updated, and `skills/` was regenerated with `pnpm skills:sync`.
 3. Check the PR title (use the argument, otherwise the latest commit message) against the **PR rules** and **Breaking changes** sections: Conventional Commits format, type allowed by `.commitlintrc.ts`, lowercase subject of at most 72 characters, `!` and `BREAKING CHANGE:` footer when breaking, `[ci skip]` when docs-only.
 4. Remind the contributor to run the verification commands listed in the checklist. Do **not** run them yourself.

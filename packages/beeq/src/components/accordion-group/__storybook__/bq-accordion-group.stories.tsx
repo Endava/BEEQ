@@ -2,7 +2,7 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
-import mdx from '../../accordion/_storybook/bq-accordion.mdx';
+import mdx from '../../accordion/__storybook__/bq-accordion.mdx';
 import { ACCORDION_APPEARANCE, ACCORDION_SIZE } from '../../accordion/bq-accordion.types';
 
 const meta: Meta = {

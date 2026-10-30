@@ -1,6 +1,6 @@
 ---
 name: write-stories
-description: 'Write Storybook stories and MDX for a `bq-*` component: argTypes, controls and variants for every state. Use when adding or updating a component''s stories. Files live in the component''s `_storybook/` folder.'
+description: 'Write Storybook stories and MDX for a `bq-*` component: argTypes, controls and variants for every state. Use when adding or updating a component''s stories. Files live in the component''s `__storybook__/` folder.'
 argument-hint: 'Component name (e.g. "bq-button") or path to the component tsx file'
 metadata:
   internal: true
@@ -18,7 +18,7 @@ metadata:
 ## File Locations
 
 ```
-packages/beeq/src/components/<name>/_storybook/
+packages/beeq/src/components/<name>/__storybook__/
 ├── bq-<name>.stories.tsx   # Story definitions
 └── bq-<name>.mdx           # Documentation page
 ```

@@ -17,7 +17,7 @@ export default {
       },
     },
   },
-  stories: ['../src/_storybook/**/*.mdx', '../src/**/*.stories.@(ts|tsx)'],
+  stories: ['../src/__storybook__/**/*.mdx', '../src/**/*.stories.@(ts|tsx)'],
   addons: ['@storybook/addon-docs', '@beeq/storybook-addon-html', '@storybook/addon-a11y', '@chromatic-com/storybook'],
   staticDirs: [
     { from: '../../../dist/beeq/www/assets', to: '/assets' },

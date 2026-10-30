@@ -64,7 +64,7 @@ export default function plopfile(
       },
       {
         type: 'add',
-        path: '../../../../packages/beeq/src/components/{{kebabCase name}}/_storybook/bq-{{kebabCase name}}.mdx',
+        path: '../../../../packages/beeq/src/components/{{kebabCase name}}/__storybook__/bq-{{kebabCase name}}.mdx',
         templateFile: './storybook-docs.hbs',
         skipIfExists: true,
         skip: ({ storybook }) => {
@@ -75,7 +75,7 @@ export default function plopfile(
       },
       {
         type: 'add',
-        path: '../../../../packages/beeq/src/components/{{kebabCase name}}/_storybook/bq-{{kebabCase name}}.stories.tsx',
+        path: '../../../../packages/beeq/src/components/{{kebabCase name}}/__storybook__/bq-{{kebabCase name}}.stories.tsx',
         templateFile: './storybook.hbs',
         skipIfExists: true,
         skip: ({ storybook }) => {

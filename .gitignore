@@ -26,7 +26,7 @@ packages/beeq/.storybook/assets/css/stories.css
 packages/beeq/.storybook/custom-elements.json
 packages/beeq/cem/*
 !packages/beeq/cem/.gitkeep
-packages/beeq/src/_storybook/CHANGELOG.md
+packages/beeq/src/__storybook__/CHANGELOG.md
 packages/beeq/src/components/icon/svg/**
 packages/beeq/vite.config.*.timestamp-*
 packages/beeq-angular/**/directives

@@ -33,7 +33,7 @@ Read every file of the component:
 - `bq-<name>.types.ts`: types
 - `scss/bq-<name>.scss` and `scss/bq-<name>.variables.scss`: styles and CSS custom properties
 - `__tests__/bq-<name>.e2e.tsx`: e2e tests
-- `_storybook/bq-<name>.stories.tsx`: stories
+- `__storybook__/bq-<name>.stories.tsx`: stories
 
 Done when each file exists or its absence is recorded as an issue.
 
