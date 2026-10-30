@@ -100,22 +100,34 @@ type Story = StoryObj;
 
 const Template = (args: Args) => {
   const labelTemplate = html`
-    <label class="flex flex-grow items-center" slot=${ifDefined(args.optionalLabel ? undefined : 'label')}>
+    <label slot=${ifDefined(args.optionalLabel ? undefined : 'label')}>
       Time picker label
     </label>
   `;
 
   const label = args.optionalLabel
     ? html`
-        <div slot="label" class="flex flex-1">
+        <div slot="label">
           ${labelTemplate}
-          <span class="text-text-secondary">Optional</span>
+          <span>Optional</span>
         </div>
       `
     : labelTemplate;
 
   return html`
+    <style>
+      .bq-story-time-picker label {
+        display: flex;
+        flex-grow: 1;
+        align-items: center;
+      }
+      .bq-story-time-picker div[slot='label'] {
+        display: flex;
+        flex: 1 1 0%;
+      }
+    </style>
     <bq-time-picker
+      class="bq-story-time-picker"
       ?autofocus=${args.autofocus}
       ?disable-clear=${args['disable-clear']}
       ?disable-now=${args['disable-now']}
@@ -157,10 +169,27 @@ const Template = (args: Args) => {
 
 /** Lays out labelled variants side by side. */
 const Grid = (items: { title: string; args: Args }[]) => html`
-  <div class="grid grid-cols-1 gap-m sm:grid-cols-3">
+  <style>
+    .bq-story-time-picker-grid {
+      display: grid;
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+      gap: var(--bq-spacing-m);
+    }
+    .bq-story-time-picker-grid > div {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    @media (min-width: 640px) {
+      .bq-story-time-picker-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+  </style>
+  <div class="bq-story-time-picker-grid">
     ${items.map(
       ({ title, args }) => html`
-        <div class="flex flex-col gap-2">
+        <div>
           <p>${title}</p>
           ${Template({ ...args, noLabel: true })}
         </div>
@@ -336,13 +365,65 @@ export const WithForm: Story = {
     };
 
     return html`
+      <style>
+        .bq-story-time-picker-form {
+          display: grid;
+          grid-auto-columns: auto;
+          grid-template-columns: repeat(1, minmax(0, 1fr));
+          row-gap: var(--bq-spacing-l);
+        }
+        .bq-story-time-picker-form h4 {
+          margin-block-end: var(--bq-spacing-m);
+        }
+        .bq-story-time-picker-form form {
+          display: flex;
+          flex-direction: column;
+          row-gap: var(--bq-spacing-m);
+        }
+        .bq-story-time-picker-form label[slot='label'] {
+          display: flex;
+          flex-grow: 1;
+          align-items: center;
+        }
+        .bq-story-time-picker-form__row {
+          display: grid;
+          grid-template-columns: repeat(1, minmax(0, 1fr));
+          row-gap: var(--bq-spacing-m);
+        }
+        .bq-story-time-picker-form__actions {
+          display: flex;
+          justify-content: flex-end;
+          column-gap: var(--bq-spacing-s);
+        }
+        .bq-story-time-picker-form__data::part(wrapper) {
+          height: 100%;
+        }
+        .bq-story-time-picker-form .language-javascript {
+          overflow-x: scroll;
+          white-space: pre;
+          border-radius: var(--bq-radius--s);
+        }
+        .bq-story-time-picker-form code {
+          border-radius: var(--bq-radius--s);
+        }
+        @media (min-width: 640px) {
+          .bq-story-time-picker-form {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            column-gap: var(--bq-spacing-l);
+          }
+          .bq-story-time-picker-form__row {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            column-gap: var(--bq-spacing-m);
+          }
+        }
+      </style>
       <link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/styles/night-owl.min.css" />
 
-      <div class="grid auto-cols-auto grid-cols-1 gap-y-l sm:grid-cols-2 sm:gap-x-l">
+      <div class="bq-story-time-picker-form">
         <bq-card>
-          <h4 class="m-be-m">Book a meeting room</h4>
-          <form class="flex flex-col gap-y-m" @submit=${handleFormSubmit}>
-            <div class="grid grid-cols-1 gap-y-m sm:grid-cols-2 sm:gap-x-m">
+          <h4>Book a meeting room</h4>
+          <form @submit=${handleFormSubmit}>
+            <div class="bq-story-time-picker-form__row">
               <bq-time-picker
                 name="start"
                 min="08:00"
@@ -352,28 +433,28 @@ export const WithForm: Story = {
                 form-validation-message="Please, choose a start time between 08:00 and 18:00"
                 required
               >
-                <label class="flex flex-grow items-center" slot="label">Start time</label>
+                <label slot="label">Start time</label>
               </bq-time-picker>
               <bq-time-picker name="end" min="08:00" max="18:00" minute-step="15" require-confirm required>
-                <label class="flex flex-grow items-center" slot="label">End time</label>
+                <label slot="label">End time</label>
               </bq-time-picker>
             </div>
-            <div class="flex justify-end gap-x-s">
+            <div class="bq-story-time-picker-form__actions">
               <bq-button appearance="secondary" type="reset">Reset</bq-button>
               <bq-button type="submit">Book</bq-button>
             </div>
           </form>
         </bq-card>
-        <bq-card class="[&::part(wrapper)]:h-full">
-          <h4 class="m-be-m">Form data</h4>
-          <div class="language-javascript overflow-x-scroll whitespace-pre rounded-s">
+        <bq-card class="bq-story-time-picker-form__data">
+          <h4>Form data</h4>
+          <div class="language-javascript">
             // Handle form submit<br />
             const form = ev.target as HTMLFormElement;<br />
             const formData = new FormData(form);<br />
             const formValues = Object.fromEntries(formData.entries());
           </div>
           <pre>
-            <code id="time-picker-form-data" class="rounded-s">
+            <code id="time-picker-form-data">
               { // submit the form to see the data here }
             </code>
           </pre>
