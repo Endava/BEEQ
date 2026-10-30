@@ -51,18 +51,45 @@ const Template = (args: Args) => {
 
   const customFooterDivider = args.customFooterDivider
     ? html`
-        <bq-divider
-          slot="footer-divider"
-          class="block m-be-m"
-          stroke-color="stroke--primary"
-          stroke-thickness="1"
-        ></bq-divider>
+        <bq-divider slot="footer-divider" stroke-color="stroke--primary" stroke-thickness="1"></bq-divider>
       `
     : nothing;
 
   return html`
+    <style>
+      .bq-story-drawer div[slot='title'] {
+        display: flex;
+        align-items: center;
+        gap: var(--bq-spacing-xs);
+      }
+
+      .bq-story-drawer__content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--bq-radius--xs);
+        border-width: var(--bq-stroke-s);
+        border-style: dashed;
+        border-color: var(--bq-stroke--brand);
+        background-color: var(--bq-background--secondary);
+        block-size: 100%;
+      }
+
+      .bq-story-drawer bq-divider[slot='footer-divider'] {
+        display: block;
+        margin-block-end: var(--bq-spacing-m);
+      }
+
+      .bq-story-drawer div[slot='footer'] {
+        display: flex;
+        flex: 1 1 0%;
+        justify-content: center;
+        gap: var(--bq-spacing-xs);
+      }
+    </style>
     <bq-button @bqClick=${handleOpenDrawer}>Open Drawer</bq-button>
     <bq-drawer
+      class="bq-story-drawer"
       ?close-on-click-outside=${args['close-on-click-outside']}
       ?close-on-esc=${args['close-on-esc']}
       ?enable-backdrop=${args['enable-backdrop']}
@@ -74,18 +101,18 @@ const Template = (args: Args) => {
       @bqAfterClose=${args.bqAfterClose}
     >
       ${ifDefined(args.customCloseIcon) ? unsafeHTML(args.customCloseIcon) : nothing}
-      <div class="flex items-center gap-xs" slot="title">
+      <div slot="title">
         <bq-icon name="user-circle" weight="bold" role="img" title="Info"></bq-icon>
         Title
       </div>
-      <div class="flex items-center justify-center rounded-xs border-s border-dashed border-brand bg-secondary bs-full">
+      <div class="bq-story-drawer__content">
         Slot
       </div>
       ${
         !args.noFooter
           ? html`
             ${customFooterDivider}
-            <div class="flex flex-1 justify-center gap-xs" slot="footer">
+            <div slot="footer">
               <bq-button appearance="primary" block size="small"> Button </bq-button>
               <bq-button appearance="link" block size="small"> Button </bq-button>
             </div>
