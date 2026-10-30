@@ -2,7 +2,19 @@
  * Temporary test-only migration oracle. Native CSS is loaded by vitest-e2e-setup;
  * pinned preset CSS runs in an isolated iframe, never in the native fixture.
  */
-import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from 'vitest';
+import { h } from '@stencil/core';
+import {
+  afterAll,
+  afterEach,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  render,
+  waitForStable,
+} from '@stencil/vitest';
+import { userEvent } from 'vitest/browser';
 
 import { resolveColorToken } from '../../../shared/test-utils';
 import presetCss from './fixtures/pinned-preset.css.txt?raw';
@@ -15,6 +27,7 @@ interface Fixture {
   classes?: string;
   expected: ThemeMode;
   nested?: boolean;
+  body?: boolean;
 }
 
 const rootFixtures: Fixture[] = [
@@ -50,6 +63,13 @@ const nestedFixtures: Fixture[] = ['beeq', 'endava'].flatMap((theme) =>
   })),
 );
 
+const bodyFixtures: Fixture[] = nestedFixtures.map((fixture) => ({
+  ...fixture,
+  name: fixture.name.replace('nested', 'body'),
+  nested: false,
+  body: true,
+}));
+
 const applyFixture = (element: HTMLElement, fixture: Fixture): void => {
   for (const name of ['bq-theme', 'bq-mode', 'class']) element.removeAttribute(name);
   if (fixture.theme) element.setAttribute('bq-theme', fixture.theme);
@@ -68,10 +88,42 @@ const concreteColor = (hex: string): string => {
   }
 };
 
+const renderThemedControls = async (fixture: Fixture) => {
+  const { root } = await render(
+    <div>
+      <bq-button>Focus button</bq-button>
+      <a class="bq-link" href="#focus-target">
+        Focus link
+      </a>
+    </div>,
+  );
+  let scope = document.documentElement;
+  if (fixture.nested) scope = root;
+  if (fixture.body) scope = document.body;
+  applyFixture(scope, fixture);
+  await waitForStable(root);
+
+  const button = root.querySelector('bq-button')?.shadowRoot?.querySelector<HTMLButtonElement>('[part="button"]');
+  const link = root.querySelector<HTMLAnchorElement>('a');
+  if (!button || !link) throw new Error('Could not render the focus controls');
+  return { scope, button, link };
+};
+
+const expectFocusRing = (element: HTMLElement, color: string): void => {
+  expect(element.matches(':focus-visible')).toBe(true);
+  expect(getComputedStyle(element)).toMatchObject({
+    outlineColor: color,
+    outlineStyle: 'solid',
+    outlineWidth: '2px',
+    outlineOffset: '1px',
+  });
+};
+
 describe('native theme runtime contract', () => {
   let frame: HTMLIFrameElement;
   let oracleRoot: HTMLElement;
   let originalAttributes: [string, string][];
+  let originalBodyAttributes: [string, string][];
   const inserted: HTMLElement[] = [];
 
   beforeAll(() => {
@@ -88,6 +140,7 @@ describe('native theme runtime contract', () => {
 
   beforeEach(() => {
     originalAttributes = [...document.documentElement.attributes].map(({ name, value }) => [name, value]);
+    originalBodyAttributes = [...document.body.attributes].map(({ name, value }) => [name, value]);
     applyFixture(document.documentElement, { name: 'reset', expected: 'beeq-light' });
     applyFixture(oracleRoot, { name: 'reset', expected: 'beeq-light' });
   });
@@ -96,6 +149,8 @@ describe('native theme runtime contract', () => {
     for (const node of inserted.splice(0)) node.remove();
     for (const { name } of [...document.documentElement.attributes]) document.documentElement.removeAttribute(name);
     for (const [name, value] of originalAttributes) document.documentElement.setAttribute(name, value);
+    for (const { name } of [...document.body.attributes]) document.body.removeAttribute(name);
+    for (const [name, value] of originalBodyAttributes) document.body.setAttribute(name, value);
   });
 
   afterAll(() => frame.remove());
@@ -129,6 +184,75 @@ describe('native theme runtime contract', () => {
           expect(resolveColorToken(name, scope), `native ${fixture.name} ${name}`).toBe(expected);
         });
       }
+    });
+  }
+
+  for (const fixture of [...rootFixtures, ...nestedFixtures, ...bodyFixtures]) {
+    describe(fixture.name, () => {
+      it('should use the local theme focus colour for components and public links', async () => {
+        const { button, link } = await renderThemedControls(fixture);
+        const expected = concreteColor(roleHex[fixture.expected][roleNames.indexOf('--bq-focus')]);
+
+        await userEvent.tab();
+        expectFocusRing(button, expected);
+        await userEvent.tab();
+        expectFocusRing(link, expected);
+      });
+
+      it('should use the local theme font for components and public links', async () => {
+        const { button, link } = await renderThemedControls(fixture);
+        const family = fixture.expected.startsWith('endava') ? 'Poppins, sans-serif' : 'Outfit, sans-serif';
+
+        expect(getComputedStyle(button).fontFamily).toBe(family);
+        expect(getComputedStyle(link).fontFamily).toBe(family);
+      });
+    });
+  }
+
+  for (const initialFixture of [nestedFixtures[0], bodyFixtures[0]]) {
+    it(`should update a focused control when ${initialFixture.name} changes theme or mode`, async () => {
+      const { scope, button } = await renderThemedControls(initialFixture);
+      await userEvent.tab();
+
+      for (const fixture of [nestedFixtures[2], nestedFixtures[3], nestedFixtures[1], nestedFixtures[0]]) {
+        applyFixture(scope, fixture);
+        expectFocusRing(button, concreteColor(roleHex[fixture.expected][roleNames.indexOf('--bq-focus')]));
+        expect(getComputedStyle(button).fontFamily).toBe(
+          fixture.expected.startsWith('endava') ? 'Poppins, sans-serif' : 'Outfit, sans-serif',
+        );
+      }
+    });
+  }
+
+  for (const token of ['--bq-focus', '--bq-ring-color-focus']) {
+    it(`should honor a scoped ${token} override`, async () => {
+      const { scope, button, link } = await renderThemedControls(nestedFixtures[2]);
+      scope.style.setProperty(token, '#007a5e');
+
+      await userEvent.tab();
+      expectFocusRing(button, 'rgb(0, 122, 94)');
+      await userEvent.tab();
+      expectFocusRing(link, 'rgb(0, 122, 94)');
+    });
+  }
+
+  it('should preserve an inherited explicit ring override inside a nested theme', async () => {
+    document.documentElement.style.setProperty('--bq-ring-color-focus', '#007a5e');
+    const { button, link } = await renderThemedControls(nestedFixtures[2]);
+
+    await userEvent.tab();
+    expectFocusRing(button, 'rgb(0, 122, 94)');
+    await userEvent.tab();
+    expectFocusRing(link, 'rgb(0, 122, 94)');
+  });
+
+  for (const property of ['--bq-font-family', 'font-family']) {
+    it(`should honor a scoped ${property} override`, async () => {
+      const { scope, button, link } = await renderThemedControls(nestedFixtures[2]);
+      scope.style.setProperty(property, 'Georgia, serif');
+
+      expect(getComputedStyle(button).fontFamily).toBe('Georgia, serif');
+      expect(getComputedStyle(link).fontFamily).toBe('Georgia, serif');
     });
   }
 

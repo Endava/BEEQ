@@ -1,5 +1,10 @@
 // Shared typography foundation imported by default.scss and the standalone typography.scss entrypoint.
 @layer bq.base {
+  // Recompute the font at theme boundaries instead of inheriting the root's resolved family.
+  :where([bq-theme], .beeq, .endava) {
+    font-family: var(--bq-font-family);
+  }
+
   .display {
     font-family: inherit;
     font-size: var(--bq-font-size--xxl5);

@@ -1,6 +1,7 @@
 /*
  * Shared interaction aliases that sit on top of the active theme/mode values.
  * --bq-hover and --bq-active remain mode-specific in the theme files.
+ * Focus rules resolve --bq-focus locally; --bq-ring-color-focus is override-only.
  */
 
 @layer bq.themes {
@@ -8,7 +9,6 @@
   ::backdrop {
     --bq-ring-width: 2px;
     --bq-ring-offset-width: 1px;
-    --bq-ring-color-focus: var(--bq-focus);
 
     --bq-disabled-opacity: 0.6;
     --bq-state-mix-hover: 20%;

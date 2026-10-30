@@ -46,7 +46,6 @@ const nativeOnlyNames: Partial<Record<BlockName, readonly string[]>> = { 'beeq-r
 const sharedNames = [
   '--bq-ring-width',
   '--bq-ring-offset-width',
-  '--bq-ring-color-focus',
   '--bq-disabled-opacity',
   '--bq-state-mix-hover',
   '--bq-state-mix-active',
