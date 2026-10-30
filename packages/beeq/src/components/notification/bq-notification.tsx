@@ -26,7 +26,7 @@ const NOTIFICATION_PORTAL_SELECTOR = 'bq-notification-portal';
  *     This is some description text text
  *     <a class="bq-link" href="https://example.com">Link</a>
  *   </span>
- *   <div class="flex gap-xs" slot="footer">
+ *   <div slot="footer" style="display: flex; gap: var(--bq-spacing-xs)">
  *     <bq-button appearance="primary" size="small">Button</bq-button>
  *     <bq-button appearance="link" size="small">Button</bq-button>
  *   </div>

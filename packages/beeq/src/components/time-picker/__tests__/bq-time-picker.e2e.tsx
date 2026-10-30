@@ -1322,9 +1322,9 @@ describe('bq-time-picker', () => {
     expect(getComputedStyle(prefix).marginInlineEnd).toBe('8px');
     expect(getComputedStyle(clearButton).marginInlineStart).toBe('8px');
     expect(getComputedStyle(triggerButton).marginInlineStart).toBe('8px');
-    expect(getComputedStyle(control).transitionDuration).toBe('0.15s, 0.15s, 0.15s');
-    expect(getComputedStyle(control).transitionProperty).toBe('border-color, box-shadow, -webkit-box-shadow');
-    expect(getComputedStyle(control).transitionTimingFunction).toBe('ease, ease, ease');
+    expect(getComputedStyle(control).transitionDuration).toBe('0.15s, 0.15s');
+    expect(getComputedStyle(control).transitionProperty).toBe('border-color, box-shadow');
+    expect(getComputedStyle(control).transitionTimingFunction).toBe('ease, ease');
   });
 
   it('should preserve panel column spacing', async () => {

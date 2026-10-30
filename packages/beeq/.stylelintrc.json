@@ -1,11 +1,23 @@
 {
   "extends": ["../../.stylelintrc.json"],
-  "plugins": ["./.eslint/tw-no-quotes-theme-function.mjs"],
   "overrides": [
+    {
+      "files": ["**/*.css"],
+      "extends": ["stylelint-config-standard"],
+      "rules": {
+        "comment-empty-line-before": null,
+        "custom-property-empty-line-before": null,
+        "custom-property-pattern": null,
+        "no-descending-specificity": null,
+        "no-invalid-position-at-import-rule": null,
+        "max-nesting-depth": 3,
+        "value-keyword-case": null,
+        "selector-class-pattern": null
+      }
+    },
     {
       "files": ["**/*.scss"],
       "rules": {
-        "@beeq/tailwindcss-no-quotes-in-theme-function": true,
         "comment-empty-line-before": null,
         "custom-property-empty-line-before": null,
         "custom-property-pattern": null,
@@ -16,13 +28,43 @@
         "scss/at-rule-no-unknown": [
           true,
           {
-            "ignoreAtRules": ["apply", "include", "mixin", "responsive", "screen", "tailwind", "variants"]
+            "ignoreAtRules": ["include", "mixin"]
           }
         ],
         "scss/double-slash-comment-empty-line-before": null,
         "scss/operator-no-unspaced": null,
         "value-keyword-case": null,
         "selector-class-pattern": null
+      }
+    },
+    {
+      "files": ["src/**/*.{css,scss}"],
+      "rules": {
+        "property-layout-mappings": "flow-relative",
+        "layer-name-pattern": "^(bq\\.[a-z0-9-]+|bq-[a-z0-9-]+\\.(tokens|base|structure|variants|validation|placement|states|parts|native|pseudo|vendor-parts|overrides))$",
+        "custom-property-pattern": "^(?:bq(?:(?:-{1,2})[a-zA-Z0-9]+)+|_[a-z][a-z0-9]*(?:(?:-{1,2})[a-z0-9]+)*)$",
+        "max-nesting-depth": [
+          2,
+          {
+            "ignore": ["blockless-at-rules"],
+            "ignoreAtRules": ["layer", "media", "supports", "container"]
+          }
+        ],
+        "scss/at-rule-no-unknown": [
+          true,
+          {
+            "ignoreAtRules": ["include", "mixin", "use", "forward"]
+          }
+        ]
+      }
+    },
+    {
+      "files": [
+        "src/components/page-title/scss/bq-page-title.scss",
+        "src/components/page-title/scss/bq-page-title.variables.scss"
+      ],
+      "rules": {
+        "custom-property-pattern": "^(?:bq(?:(?:-{1,2})[a-zA-Z0-9]+)+|_[a-z][a-z0-9]*(?:(?:-{1,2})[a-z0-9]+)*)$|^(?:paddingY|subtitle-borderBlockEnd|subtitle-fontWeight|subtitle-textColor|subtitle-textSize|title-fontWeight|title-lineHeight|title-textColor|title-textSize)$"
       }
     }
   ]

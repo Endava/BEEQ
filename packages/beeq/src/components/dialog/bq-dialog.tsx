@@ -12,7 +12,7 @@ import { DIALOG_FOOTER_APPEARANCE, DIALOG_SIZE } from './bq-dialog.types';
  * @example How to use it
  * ```html
  * <bq-dialog footer-appearance="standard" border="m" size="medium">
- *   <h5 class="bold flex items-center gap-s" slot="title">
+ *   <h5 slot="title" style="display: flex; align-items: center; gap: var(--bq-spacing-s); font-weight: 700">
  *     <bq-icon name="info" size="30" color="text--accent" role="img" title="Info"></bq-icon>
  *     Title
  *   </h5>
@@ -21,7 +21,7 @@ import { DIALOG_FOOTER_APPEARANCE, DIALOG_SIZE } from './bq-dialog.types';
  *     standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
  *     type specimen book.
  *   </p>
- *   <div class="flex gap-xs" slot="footer">
+ *   <div slot="footer" style="display: flex; gap: var(--bq-spacing-xs)">
  *     <bq-button appearance="link">Button</bq-button>
  *     <bq-button variant="ghost">Button</bq-button>
  *     <bq-button variant="standard" slot="footer">Button</bq-button>

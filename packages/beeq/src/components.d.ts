@@ -995,7 +995,7 @@ export namespace Components {
      * @example How to use it
      * ```html
      * <bq-dialog footer-appearance="standard" border="m" size="medium">
-     * <h5 class="bold flex items-center gap-s" slot="title">
+     * <h5 slot="title" style="display: flex; align-items: center; gap: var(--bq-spacing-s); font-weight: 700">
      * <bq-icon name="info" size="30" color="text--accent" role="img" title="Info"></bq-icon>
      * Title
      * </h5>
@@ -1004,7 +1004,7 @@ export namespace Components {
      * standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
      * type specimen book.
      * </p>
-     * <div class="flex gap-xs" slot="footer">
+     * <div slot="footer" style="display: flex; gap: var(--bq-spacing-xs)">
      * <bq-button appearance="link">Button</bq-button>
      * <bq-button variant="ghost">Button</bq-button>
      * <bq-button variant="standard" slot="footer">Button</bq-button>
@@ -1176,11 +1176,11 @@ export namespace Components {
      * @example How to use it
      * ```html
      * <bq-drawer position="end">
-     * <div class="flex gap-xs" slot="title">Title</div>
-     * <div class="...">
+     * <div slot="title" style="display: flex; gap: var(--bq-spacing-xs)">Title</div>
+     * <div>
      * Content
      * </div>
-     * <div class="flex flex-1 justify-center gap-xs" slot="footer">
+     * <div slot="footer" style="display: flex; flex: 1; justify-content: center; gap: var(--bq-spacing-xs)">
      * <bq-button appearance="primary" block="" size="small">Button</bq-button>
      * <bq-button appearance="link" block="" size="small">Button</bq-button>
      * </div>
@@ -1591,7 +1591,7 @@ export namespace Components {
      * This is some description text text
      * <a class="bq-link" href="https://example.com">Link</a>
      * </span>
-     * <div class="flex gap-xs" slot="footer">
+     * <div slot="footer" style="display: flex; gap: var(--bq-spacing-xs)">
      * <bq-button appearance="primary" size="small">Button</bq-button>
      * <bq-button appearance="link" size="small">Button</bq-button>
      * </div>
@@ -3108,7 +3108,7 @@ export namespace Components {
      * ```html
      * <bq-textarea maxlength="0" name="textarea" placeholder="Placeholder..." rows="5">
      * <label slot="label">Label</label>
-     * <span class="flex items-center gap-xs" slot="helper-text">
+     * <span slot="helper-text" style="display: flex; align-items: center; gap: var(--bq-spacing-xs)">
      * <bq-icon name="star"></bq-icon>
      * Helper text
      * </span>
@@ -4390,7 +4390,7 @@ declare global {
      * @example How to use it
      * ```html
      * <bq-dialog footer-appearance="standard" border="m" size="medium">
-     * <h5 class="bold flex items-center gap-s" slot="title">
+     * <h5 slot="title" style="display: flex; align-items: center; gap: var(--bq-spacing-s); font-weight: 700">
      * <bq-icon name="info" size="30" color="text--accent" role="img" title="Info"></bq-icon>
      * Title
      * </h5>
@@ -4399,7 +4399,7 @@ declare global {
      * standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
      * type specimen book.
      * </p>
-     * <div class="flex gap-xs" slot="footer">
+     * <div slot="footer" style="display: flex; gap: var(--bq-spacing-xs)">
      * <bq-button appearance="link">Button</bq-button>
      * <bq-button variant="ghost">Button</bq-button>
      * <bq-button variant="standard" slot="footer">Button</bq-button>
@@ -4496,11 +4496,11 @@ declare global {
      * @example How to use it
      * ```html
      * <bq-drawer position="end">
-     * <div class="flex gap-xs" slot="title">Title</div>
-     * <div class="...">
+     * <div slot="title" style="display: flex; gap: var(--bq-spacing-xs)">Title</div>
+     * <div>
      * Content
      * </div>
-     * <div class="flex flex-1 justify-center gap-xs" slot="footer">
+     * <div slot="footer" style="display: flex; flex: 1; justify-content: center; gap: var(--bq-spacing-xs)">
      * <bq-button appearance="primary" block="" size="small">Button</bq-button>
      * <bq-button appearance="link" block="" size="small">Button</bq-button>
      * </div>
@@ -4758,7 +4758,7 @@ declare global {
      * This is some description text text
      * <a class="bq-link" href="https://example.com">Link</a>
      * </span>
-     * <div class="flex gap-xs" slot="footer">
+     * <div slot="footer" style="display: flex; gap: var(--bq-spacing-xs)">
      * <bq-button appearance="primary" size="small">Button</bq-button>
      * <bq-button appearance="link" size="small">Button</bq-button>
      * </div>
@@ -5789,7 +5789,7 @@ declare global {
      * ```html
      * <bq-textarea maxlength="0" name="textarea" placeholder="Placeholder..." rows="5">
      * <label slot="label">Label</label>
-     * <span class="flex items-center gap-xs" slot="helper-text">
+     * <span slot="helper-text" style="display: flex; align-items: center; gap: var(--bq-spacing-xs)">
      * <bq-icon name="star"></bq-icon>
      * Helper text
      * </span>
@@ -7136,7 +7136,7 @@ declare namespace LocalJSX {
      * @example How to use it
      * ```html
      * <bq-dialog footer-appearance="standard" border="m" size="medium">
-     * <h5 class="bold flex items-center gap-s" slot="title">
+     * <h5 slot="title" style="display: flex; align-items: center; gap: var(--bq-spacing-s); font-weight: 700">
      * <bq-icon name="info" size="30" color="text--accent" role="img" title="Info"></bq-icon>
      * Title
      * </h5>
@@ -7145,7 +7145,7 @@ declare namespace LocalJSX {
      * standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
      * type specimen book.
      * </p>
-     * <div class="flex gap-xs" slot="footer">
+     * <div slot="footer" style="display: flex; gap: var(--bq-spacing-xs)">
      * <bq-button appearance="link">Button</bq-button>
      * <bq-button variant="ghost">Button</bq-button>
      * <bq-button variant="standard" slot="footer">Button</bq-button>
@@ -7325,11 +7325,11 @@ declare namespace LocalJSX {
      * @example How to use it
      * ```html
      * <bq-drawer position="end">
-     * <div class="flex gap-xs" slot="title">Title</div>
-     * <div class="...">
+     * <div slot="title" style="display: flex; gap: var(--bq-spacing-xs)">Title</div>
+     * <div>
      * Content
      * </div>
-     * <div class="flex flex-1 justify-center gap-xs" slot="footer">
+     * <div slot="footer" style="display: flex; flex: 1; justify-content: center; gap: var(--bq-spacing-xs)">
      * <bq-button appearance="primary" block="" size="small">Button</bq-button>
      * <bq-button appearance="link" block="" size="small">Button</bq-button>
      * </div>
@@ -7776,7 +7776,7 @@ declare namespace LocalJSX {
      * This is some description text text
      * <a class="bq-link" href="https://example.com">Link</a>
      * </span>
-     * <div class="flex gap-xs" slot="footer">
+     * <div slot="footer" style="display: flex; gap: var(--bq-spacing-xs)">
      * <bq-button appearance="primary" size="small">Button</bq-button>
      * <bq-button appearance="link" size="small">Button</bq-button>
      * </div>
@@ -9398,7 +9398,7 @@ declare namespace LocalJSX {
      * ```html
      * <bq-textarea maxlength="0" name="textarea" placeholder="Placeholder..." rows="5">
      * <label slot="label">Label</label>
-     * <span class="flex items-center gap-xs" slot="helper-text">
+     * <span slot="helper-text" style="display: flex; align-items: center; gap: var(--bq-spacing-xs)">
      * <bq-icon name="star"></bq-icon>
      * Helper text
      * </span>
@@ -10937,7 +10937,7 @@ declare module "@stencil/core" {
              * @example How to use it
              * ```html
              * <bq-dialog footer-appearance="standard" border="m" size="medium">
-             * <h5 class="bold flex items-center gap-s" slot="title">
+             * <h5 slot="title" style="display: flex; align-items: center; gap: var(--bq-spacing-s); font-weight: 700">
              * <bq-icon name="info" size="30" color="text--accent" role="img" title="Info"></bq-icon>
              * Title
              * </h5>
@@ -10946,7 +10946,7 @@ declare module "@stencil/core" {
              * standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
              * type specimen book.
              * </p>
-             * <div class="flex gap-xs" slot="footer">
+             * <div slot="footer" style="display: flex; gap: var(--bq-spacing-xs)">
              * <bq-button appearance="link">Button</bq-button>
              * <bq-button variant="ghost">Button</bq-button>
              * <bq-button variant="standard" slot="footer">Button</bq-button>
@@ -11019,11 +11019,11 @@ declare module "@stencil/core" {
              * @example How to use it
              * ```html
              * <bq-drawer position="end">
-             * <div class="flex gap-xs" slot="title">Title</div>
-             * <div class="...">
+             * <div slot="title" style="display: flex; gap: var(--bq-spacing-xs)">Title</div>
+             * <div>
              * Content
              * </div>
-             * <div class="flex flex-1 justify-center gap-xs" slot="footer">
+             * <div slot="footer" style="display: flex; flex: 1; justify-content: center; gap: var(--bq-spacing-xs)">
              * <bq-button appearance="primary" block="" size="small">Button</bq-button>
              * <bq-button appearance="link" block="" size="small">Button</bq-button>
              * </div>
@@ -11205,7 +11205,7 @@ declare module "@stencil/core" {
              * This is some description text text
              * <a class="bq-link" href="https://example.com">Link</a>
              * </span>
-             * <div class="flex gap-xs" slot="footer">
+             * <div slot="footer" style="display: flex; gap: var(--bq-spacing-xs)">
              * <bq-button appearance="primary" size="small">Button</bq-button>
              * <bq-button appearance="link" size="small">Button</bq-button>
              * </div>
@@ -11946,7 +11946,7 @@ declare module "@stencil/core" {
              * ```html
              * <bq-textarea maxlength="0" name="textarea" placeholder="Placeholder..." rows="5">
              * <label slot="label">Label</label>
-             * <span class="flex items-center gap-xs" slot="helper-text">
+             * <span slot="helper-text" style="display: flex; align-items: center; gap: var(--bq-spacing-xs)">
              * <bq-icon name="star"></bq-icon>
              * Helper text
              * </span>

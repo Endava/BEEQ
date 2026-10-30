@@ -133,3 +133,11 @@
 .bq-drawer__footer-divider {
   margin-block-end: var(--bq-spacing-m);
 }
+
+/*
+ * Keep the closed panel rendered so its inset transition runs on open and close; the host's
+ * `visibility` and `aria-hidden` hide it instead. Unlayered so it outranks the reset's `[hidden]` rule.
+ */
+.bq-drawer[hidden] {
+  display: flex;
+}

@@ -55,7 +55,7 @@ describe('bq-accordion', () => {
     expect(contentStyle.borderWidth).toBe('1px');
     expect(iconStyle.display).toBe('flex');
     expect(expandIconStyle.transitionDuration).toBe('0.3s');
-    expect(expandIconStyle.transitionProperty).toBe('transform, -webkit-transform');
+    expect(expandIconStyle.transitionProperty).toBe('transform');
     expect(expandIconStyle.transitionTimingFunction).toBe('cubic-bezier(0.4, 0, 0.2, 1)');
   });
 

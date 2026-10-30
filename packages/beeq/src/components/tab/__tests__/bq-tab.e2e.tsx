@@ -271,7 +271,7 @@ describe('bq-tab', () => {
     expect(baseStyle.fontWeight).toBe('500');
     expect(baseStyle.lineHeight).toBe('24px');
     expect(baseStyle.transitionDuration).toBe('0.3s');
-    expect(baseStyle.transitionProperty).toBe('color, background-color, border-color, box-shadow, -webkit-box-shadow');
+    expect(baseStyle.transitionProperty).toBe('color, background-color, border-color, box-shadow');
     expect(baseStyle.transitionTimingFunction).toBe('cubic-bezier(0.4, 0, 0.2, 1)');
     expect(contentStyle.display).toBe('flex');
     expect(textStyle.overflow).toBe('hidden');

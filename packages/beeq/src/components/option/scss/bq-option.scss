@@ -131,35 +131,28 @@
   }
 }
 
-/*
- * Keep these spacing rules unlayered while the legacy Tailwind component
- * prelude still injects BEEQ's preset reset (`beeq-tailwindcss/src/theme/reset.ts`)
- * as an unlayered `* { margin: 0 }` rule. It outranks declarations in every
- * named component layer regardless of selector specificity, which otherwise
- * collapses the option content and tree spacing. Move these rules into
- * `bq-option.base` once component styles stop receiving that legacy prelude or
- * its reset is emitted inside `bq.reset`.
- */
-.bq-option__prefix {
-  margin-inline-end: var(--bq-option--gap-start);
-}
+@layer bq-option.base {
+  .bq-option__prefix {
+    margin-inline-end: var(--bq-option--gap-start);
+  }
 
-.bq-option__suffix {
-  margin-inline-start: var(--bq-option--gap-end);
-}
+  .bq-option__suffix {
+    margin-inline-start: var(--bq-option--gap-end);
+  }
 
-.bq-option__selection-summary {
-  margin-inline-start: var(--bq-spacing-s);
-}
+  .bq-option__selection-summary {
+    margin-inline-start: var(--bq-spacing-s);
+  }
 
-.bq-option__options {
-  margin-block-start: var(--bq-spacing-xs2);
-  margin-inline-start: calc(var(--bq-option--padding-start) * 2);
-}
+  .bq-option__options {
+    margin-block-start: var(--bq-spacing-xs2);
+    margin-inline-start: calc(var(--bq-option--padding-start) * 2);
+  }
 
-:host([slot='options'])::before,
-:host([slot='options']:not(:last-child))::after {
-  margin-inline-start: -1px;
+  :host([slot='options'])::before,
+  :host([slot='options']:not(:last-child))::after {
+    margin-inline-start: -1px;
+  }
 }
 
 /* --------------------------------- States --------------------------------- */

@@ -24,12 +24,15 @@
 
 /*
  * Side menu body offsets stay outside the cascade layers so they win over layered styles and
- * plain `body {}` page rules (higher specificity) without `!important`.
+ * plain `body {}` page rules without `!important`. The compound selector (0,2,1) also outranks
+ * two-class host rules such as Storybook's `.sb-show-main.sb-main-fullscreen { padding: 0 }`.
  */
-body.bq-body--side-menu__collapse {
+body.bq-body--side-menu__collapse,
+body.bq-body--side-menu.bq-body--side-menu__collapse {
   padding-inline-start: var(--bq-side-menu--width-collapse);
 }
 
-body.bq-body--side-menu__expand {
+body.bq-body--side-menu__expand,
+body.bq-body--side-menu.bq-body--side-menu__expand {
   padding-inline-start: var(--bq-side-menu--width);
 }

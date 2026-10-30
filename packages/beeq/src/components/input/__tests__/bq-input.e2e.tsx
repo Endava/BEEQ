@@ -818,7 +818,7 @@ describe('bq-input', () => {
       borderRadius: '8px',
       borderWidth: '1px',
       transitionDuration: '0.15s',
-      transitionProperty: 'border-color, box-shadow, -webkit-box-shadow',
+      transitionProperty: 'border-color, box-shadow',
       transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
     });
 

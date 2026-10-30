@@ -1,6 +1,5 @@
 /* -------------------------------------------------------------------------- */
 /*                        Date picker styles                               */
-/*                    Native SCSS — no Tailwind utilities.                    */
 /* -------------------------------------------------------------------------- */
 
 @import './bq-date-picker.variables';
@@ -530,4 +529,12 @@
   .bq-date-picker__year-cell {
     transition: none;
   }
+}
+
+/* --------------------------------- States --------------------------------- */
+
+/* Unlayered component rules outrank the reset's `[hidden]` rule, so restate it here. */
+.bq-date-picker__label[hidden],
+.bq-date-picker__prefix[hidden] {
+  display: none;
 }

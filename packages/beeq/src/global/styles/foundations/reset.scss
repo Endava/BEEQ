@@ -1,4 +1,6 @@
-// Shared reset foundation imported by default.scss and the standalone reset.scss entrypoint.
+// Shared reset foundation for default.scss, the standalone reset.scss entrypoint and, through the
+// injected mixins/index.scss, every component stylesheet so each shadow root gets the same reset.
+// Load it with `@use` where a stylesheet can reach it twice: Sass emits a module once per compilation.
 @layer bq.reset {
   *,
   *::before,

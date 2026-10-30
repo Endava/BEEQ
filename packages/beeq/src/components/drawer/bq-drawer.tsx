@@ -11,11 +11,11 @@ import { DRAWER_PLACEMENT, DRAWER_POSITIONS } from './bq-drawer.types';
  * @example How to use it
  * ```html
  * <bq-drawer position="end">
- *   <div class="flex gap-xs" slot="title">Title</div>
- *   <div class="...">
+ *   <div slot="title" style="display: flex; gap: var(--bq-spacing-xs)">Title</div>
+ *   <div>
  *     Content
  *   </div>
- *   <div class="flex flex-1 justify-center gap-xs" slot="footer">
+ *   <div slot="footer" style="display: flex; flex: 1; justify-content: center; gap: var(--bq-spacing-xs)">
  *     <bq-button appearance="primary" block="" size="small">Button</bq-button>
  *     <bq-button appearance="link" block="" size="small">Button</bq-button>
  *   </div>

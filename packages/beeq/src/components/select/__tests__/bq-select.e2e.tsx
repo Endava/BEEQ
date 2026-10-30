@@ -149,7 +149,7 @@ describe('bq-select', () => {
     expect(controlStyle.borderRadius).toBe('8px');
     expect(controlStyle.borderWidth).toBe('1px');
     expect(controlStyle.transitionDuration).toBe('0.15s');
-    expect(controlStyle.transitionProperty).toBe('border-color, box-shadow, -webkit-box-shadow');
+    expect(controlStyle.transitionProperty).toBe('border-color, box-shadow');
     expect(controlStyle.transitionTimingFunction).toBe('cubic-bezier(0.4, 0, 0.2, 1)');
     expect(inputOutlineStyle.display).toBe('flex');
     expect(inputOutlineStyle.flex).toBe('1 1 0%');
@@ -282,7 +282,7 @@ describe('bq-select', () => {
     let suffixStyle = getComputedStyle(suffix);
     expect(suffixStyle.transform).toBe('matrix(1, 0, 0, 1, 0, 0)');
     expect(suffixStyle.transitionDuration).toBe('0.3s');
-    expect(suffixStyle.transitionProperty).toBe('transform, -webkit-transform');
+    expect(suffixStyle.transitionProperty).toBe('transform');
     expect(suffixStyle.transitionTimingFunction).toBe('cubic-bezier(0.4, 0, 0.2, 1)');
 
     await setProps({ open: true });

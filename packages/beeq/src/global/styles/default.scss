@@ -1,3 +1,6 @@
+// Loaded with `@use` so it is emitted once even though the injected mixins also load it.
+@use './foundations/reset';
+
 /* -------------------------------------------------------------------------- */
 /*                  Sass tools needed by public global styles                 */
 /* -------------------------------------------------------------------------- */
@@ -11,7 +14,6 @@
 @import './font-face';
 @import './foundations/tokens';
 @import './foundations/themes';
-@import './foundations/reset';
 @import './foundations/typography';
 
 /* -------------------------------------------------------------------------- */

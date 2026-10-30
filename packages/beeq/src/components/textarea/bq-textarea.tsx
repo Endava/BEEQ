@@ -12,7 +12,7 @@ import type { TTextareaAutoCapitalize, TTextareaWrap } from './bq-textarea.types
  * ```html
  * <bq-textarea maxlength="0" name="textarea" placeholder="Placeholder..." rows="5">
  *   <label slot="label">Label</label>
- *   <span class="flex items-center gap-xs" slot="helper-text">
+ *   <span slot="helper-text" style="display: flex; align-items: center; gap: var(--bq-spacing-xs)">
  *     <bq-icon name="star"></bq-icon>
  *     Helper text
  *   </span>

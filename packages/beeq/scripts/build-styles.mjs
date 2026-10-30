@@ -1,8 +1,6 @@
 #!/usr/bin/env node
 
-import { spawnSync } from 'node:child_process';
 import { mkdirSync, readFileSync, watch, writeFileSync } from 'node:fs';
-import { tmpdir } from 'node:os';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
@@ -14,7 +12,6 @@ const sourceRoot = resolve(projectRoot, 'src/global/styles');
 const outputRoot = resolve(workspaceRoot, 'dist/beeq/dist/beeq');
 const optionalCssOutputRoot = resolve(outputRoot, 'css');
 const injectedMixins = resolve(sourceRoot, 'mixins/index.scss');
-const legacyGlobalInput = resolve(sourceRoot, 'legacy-tailwind.scss');
 const args = new Set(process.argv.slice(2));
 
 const entries = [
@@ -37,8 +34,8 @@ const compileSass = (source, { injectMixins = false } = {}) => {
   const sourceContent = readFileSync(source, 'utf8');
   const mixinsPath = injectedMixins.replaceAll('\\', '/');
 
-  // Mirrors Stencil's injectGlobalPaths for standalone Sass builds.
-  return sass.compileString(`@import '${mixinsPath}';\n${sourceContent}`, {
+  // Mirrors Stencil's injectGlobalPaths (`@use ... as *`) for standalone Sass builds.
+  return sass.compileString(`@use '${mixinsPath}' as *;\n${sourceContent}`, {
     ...sassOptions,
     url: pathToFileURL(source),
   }).css;
@@ -56,37 +53,13 @@ const compileEntrypoints = () => {
   }
 };
 
-const compileStorybook = ({ minify = false } = {}) => {
+const compileStorybook = () => {
   const source = resolve(sourceRoot, 'default.scss');
-  const tempInput = resolve(tmpdir(), `beeq-storybook-${process.pid}.css`);
   const output = resolve(projectRoot, '.storybook/assets/css/stories.css');
   const css = compileSass(source, { injectMixins: true });
-  const legacyCss = readFileSync(legacyGlobalInput, 'utf8');
 
   mkdirSync(dirname(output), { recursive: true });
-  // Matches Stencil's global-only Tailwind input; native foundations supply base.
-  writeFileSync(tempInput, `${legacyCss}\n${css}\n`);
-
-  // Tailwind remains temporary here while legacy component/global styles still use @apply.
-  const result = spawnSync(
-    process.execPath,
-    [
-      resolve(workspaceRoot, 'node_modules/tailwindcss/lib/cli.js'),
-      '-i',
-      tempInput,
-      '-o',
-      output,
-      '--postcss',
-      resolve(workspaceRoot, 'postcss.config.js'),
-      ...(minify ? ['--minify'] : []),
-    ],
-    { cwd: workspaceRoot, stdio: 'inherit' },
-  );
-
-  if (result.status !== 0) {
-    throw new Error('Failed to compile Storybook CSS.');
-  }
-
+  writeFileSync(output, `${css}\n`);
   console.log(`Compiled default.scss -> ${output}`);
 };
 
@@ -107,14 +80,14 @@ const watchStorybook = () => {
   compileStorybook();
   console.log('Watching BEEQ sources for Storybook CSS changes...');
 
-  watch(resolve(projectRoot, 'src'), { recursive: true }, rebuild);
+  watch(sourceRoot, { recursive: true }, rebuild);
 };
 
 if (args.has('--storybook')) {
   if (args.has('--watch')) {
     watchStorybook();
   } else {
-    compileStorybook({ minify: args.has('--minify') });
+    compileStorybook();
   }
 } else {
   compileEntrypoints();

@@ -115,3 +115,8 @@
 :host([animation]) .bq-spinner__loader > svg {
   @include animation-spin;
 }
+
+/* Unlayered component rules outrank the reset's `[hidden]` rule, so restate it here. */
+.bq-spinner__icon[hidden] {
+  display: none;
+}

@@ -94,6 +94,29 @@ export const Default: Story = {
 };
 ```
 
+## Story Styling
+
+Keep story-only styles inline in the story template. Use a `<style>` block and semantic markup instead of utility classes:
+
+```tsx
+const Template = () => html`
+  <style>
+    main {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--bq-spacing-m);
+      padding: var(--bq-spacing-m);
+    }
+  </style>
+  <main>
+    <section>...</section>
+    <section>...</section>
+  </main>
+`;
+```
+
+Add a BEM-style class when a selector needs to target a specific element, or when styling is reused. Do not add a separate stylesheet for a story.
+
 ## Required Story Variants
 
 At minimum, provide stories for:

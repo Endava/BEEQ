@@ -261,7 +261,7 @@ describe('bq-tag', () => {
     expect(mediumStyle).toEqual({ padding: '3px 11px' });
   });
 
-  it('should preserve the Tailwind color transition timing', async () => {
+  it('should preserve the color transition timing', async () => {
     const { root } = await render(<bq-tag>Tag</bq-tag>);
     const wrapperStyle = getComputedStyle(getWrapper(root));
 

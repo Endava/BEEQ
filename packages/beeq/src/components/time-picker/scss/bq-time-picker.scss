@@ -1,6 +1,5 @@
 /* -------------------------------------------------------------------------- */
 /*                            Time picker styles                              */
-/*                    Native SCSS — no Tailwind utilities.                    */
 /* -------------------------------------------------------------------------- */
 
 @layer bq.reset, bq.tokens, bq.themes, bq.base, bq.public, bq.overrides,
@@ -212,34 +211,27 @@
   }
 }
 
-/*
- * Keep these spacing rules unlayered while the legacy Tailwind component
- * prelude still injects BEEQ's preset reset (`beeq-tailwindcss/src/theme/reset.ts`)
- * as an unlayered `* { margin: 0 }` rule. It outranks declarations in every
- * named component layer regardless of selector specificity, which otherwise
- * collapses the field and panel spacing. Move these rules into
- * `bq-time-picker.structure` once component styles stop receiving that legacy
- * prelude or its reset is emitted inside `bq.reset`.
- */
-.bq-time-picker__label {
-  margin-block-end: var(--bq-time-picker--label-margin-bottom);
-}
+@layer bq-time-picker.structure {
+  .bq-time-picker__label {
+    margin-block-end: var(--bq-time-picker--label-margin-bottom);
+  }
 
-.bq-time-picker__prefix {
-  margin-inline-end: var(--bq-time-picker--gap);
-}
+  .bq-time-picker__prefix {
+    margin-inline-end: var(--bq-time-picker--gap);
+  }
 
-.bq-time-picker__clear,
-.bq-time-picker__trigger {
-  margin-inline-start: var(--bq-time-picker--gap);
-}
+  .bq-time-picker__clear,
+  .bq-time-picker__trigger {
+    margin-inline-start: var(--bq-time-picker--gap);
+  }
 
-.bq-time-picker__column {
-  margin: var(--bq-spacing-xs) var(--bq-time-picker--column-gap);
-}
+  .bq-time-picker__column {
+    margin: var(--bq-spacing-xs) var(--bq-time-picker--column-gap);
+  }
 
-.bq-time-picker__confirm {
-  margin-inline-start: auto;
+  .bq-time-picker__confirm {
+    margin-inline-start: auto;
+  }
 }
 
 /* ------------------------------- Validation ------------------------------- */

@@ -63,3 +63,12 @@
   font-weight: var(--subtitle-fontWeight);
   font-size: var(--subtitle-textSize);
 }
+
+/* --------------------------------- States --------------------------------- */
+
+/* Unlayered component rules outrank the reset's `[hidden]` rule, so restate it here. */
+.bq-page-title__back[hidden],
+.bq-page-title__suffix[hidden],
+.bq-page-title__subtitle[hidden] {
+  display: none;
+}

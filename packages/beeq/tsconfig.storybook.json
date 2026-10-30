@@ -6,7 +6,6 @@
     "resolveJsonModule": true
   },
   "include": [
-    "../../tailwind.config.ts",
     "./vite.config.mts",
     ".storybook/*.json",
     ".storybook/*.ts",

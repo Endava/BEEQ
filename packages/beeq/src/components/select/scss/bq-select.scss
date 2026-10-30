@@ -120,34 +120,27 @@
   }
 }
 
-/*
- * Keep these spacing rules unlayered while the legacy Tailwind component
- * prelude still injects BEEQ's preset reset (`beeq-tailwindcss/src/theme/reset.ts`)
- * as an unlayered `* { margin: 0 }` rule. It outranks declarations in every
- * named component layer regardless of selector specificity, which otherwise
- * collapses the label, helper, adornment, clear-button and tag spacing. Move
- * these rules into `bq-select.structure` once component styles stop receiving
- * that legacy prelude or its reset is emitted inside `bq.reset`.
- */
-.bq-select__label {
-  margin-block-end: var(--bq-select--label-margin-bottom);
-}
+@layer bq-select.structure {
+  .bq-select__label {
+    margin-block-end: var(--bq-select--label-margin-bottom);
+  }
 
-.bq-select__helper-text {
-  margin-block-start: var(--bq-select--helper-margin-top);
-}
+  .bq-select__helper-text {
+    margin-block-start: var(--bq-select--helper-margin-top);
+  }
 
-.bq-select__control--prefix {
-  margin-inline-end: var(--bq-select--gap);
-}
+  .bq-select__control--prefix {
+    margin-inline-end: var(--bq-select--gap);
+  }
 
-.bq-select__control--suffix,
-.bq-select__control--clear {
-  margin-inline-start: var(--bq-select--gap);
-}
+  .bq-select__control--suffix,
+  .bq-select__control--clear {
+    margin-inline-start: var(--bq-select--gap);
+  }
 
-.bq-select__tags {
-  margin-inline-end: var(--bq-spacing-xs2);
+  .bq-select__tags {
+    margin-inline-end: var(--bq-spacing-xs2);
+  }
 }
 
 /* ------------------------------- Validation ------------------------------- */
