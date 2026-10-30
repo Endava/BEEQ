@@ -2,6 +2,8 @@
 
 BEEQ TailwindCSS is a preset that adds BEEQ's opinionated TailwindCSS configuration to your application. It works with Tailwind CSS v3 and v4.
 
+Its design tokens, base reset and typography styles are generated from the `@beeq/core` style foundations, so they always match the BEEQ components. The preset is standalone: it has no runtime dependency on `@beeq/core`.
+
 ## Prerequisites 🧰
 
 Before starting to use BEEQ TailwindCSS, you need to have installed:

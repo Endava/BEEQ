@@ -1,6 +1,7 @@
 import type { Config } from 'tailwindcss';
 import plugin from 'tailwindcss/plugin';
 
+import { CSS_COLORS_SELECTOR, SHARED_TOKENS, SHARED_TOKENS_SELECTOR, THEME_SELECTORS } from './generated/tokens';
 import { BeeqThemeSwapper, ColorMix, LogicalProperties } from './plugins';
 import {
   CSS_COLORS,
@@ -134,10 +135,12 @@ const preset = {
     plugin(({ addBase, addComponents, theme }) => {
       addBase({
         // CSS variables
-        ':root, ::backdrop': { ...CSS_COLORS },
+        [CSS_COLORS_SELECTOR]: { ...CSS_COLORS },
         // CSS reset
         ...reset,
       });
+      // Interaction aliases shared by every theme and mode (ring, disabled opacity, state mixes)
+      addBase({ [SHARED_TOKENS_SELECTOR]: { ...SHARED_TOKENS } });
       addComponents({
         /**
          * Common `FOCUS` state that should be used within `focus-visible` Tailwind CSS utility
@@ -161,60 +164,28 @@ const preset = {
     ColorMix,
     LogicalProperties,
     BeeqThemeSwapper({
-      // Every theme/mode selector is wrapped in :where() (zero specificity), so source order decides precedence
+      // Selectors come from the SCSS theme files. Each one is wrapped in :where() (zero specificity),
+      // so source order decides precedence: Endava's blocks come later and win for bq-theme="endava".
       themes: [
         // Base theme
-        {
-          name: 'base',
-          selectors: [':root'],
-          theme: { ...DefaultRootTheme },
-        },
-        // Light mode - default mode when no other mode is specified
-        {
-          name: 'light',
-          selectors: [
-            // Default when no mode is specified, for any theme (including custom ones).
-            // Endava's light block comes later, so it still wins for bq-theme="endava".
-            ':root:not([bq-mode])',
-            '.beeq:not([bq-mode])',
-            // Explicit light mode
-            '[bq-mode="light"]',
-            '.light',
-          ],
-          theme: { ...DefaultLightTheme },
-          mode: true,
-        },
+        { name: 'base', selectors: THEME_SELECTORS.base, theme: { ...DefaultRootTheme } },
+        // Light mode - default mode when no other mode is specified, for any theme (including custom ones)
+        { name: 'light', selectors: THEME_SELECTORS.light, theme: { ...DefaultLightTheme }, mode: true },
         // Dark mode - only when explicitly set
-        {
-          name: 'dark',
-          selectors: ['[bq-mode="dark"]', '.dark'],
-          theme: { ...DefaultDarkTheme },
-          mode: true,
-        },
+        { name: 'dark', selectors: THEME_SELECTORS.dark, theme: { ...DefaultDarkTheme }, mode: true },
         // Endava base theme
-        {
-          name: 'endava',
-          selectors: ['[bq-theme="endava"]', '.endava'],
-          theme: { ...EndavaRootTheme },
-        },
+        { name: 'endava', selectors: THEME_SELECTORS.endava, theme: { ...EndavaRootTheme } },
         // Endava light mode - default mode for Endava theme
         {
           name: 'endava-light',
-          selectors: [
-            // Default light for Endava theme when no mode specified
-            '[bq-theme="endava"]:not([bq-mode])',
-            '.endava:not([bq-mode])',
-            // Explicit light mode for Endava theme
-            '[bq-theme="endava"][bq-mode="light"]',
-            '.endava.light',
-          ],
+          selectors: THEME_SELECTORS['endava-light'],
           theme: { ...EndavaLightTheme },
           mode: true,
         },
         // Endava dark mode - only when explicitly set
         {
           name: 'endava-dark',
-          selectors: ['[bq-theme="endava"][bq-mode="dark"]', '.endava.dark'],
+          selectors: THEME_SELECTORS['endava-dark'],
           theme: { ...EndavaDarkTheme },
           mode: true,
         },

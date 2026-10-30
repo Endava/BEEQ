@@ -1,6 +1,6 @@
 # AGENTS.md
 
-BEEQ is a StencilJS web component library and design system, in an Nx monorepo. Components live in `packages/beeq`, design tokens and the Tailwind preset in `packages/beeq-tailwindcss`, framework wrappers in `packages/beeq-{angular,react,vue}`, consumer agent skills in `packages/beeq-skills`, and the Mintlify docs in `apps/beeq-docs`.
+BEEQ is a StencilJS web component library and design system, in an Nx monorepo. Components and design tokens live in `packages/beeq` (tokens in `src/global/styles/foundations`), the standalone Tailwind preset generated from those tokens in `packages/beeq-tailwindcss`, framework wrappers in `packages/beeq-{angular,react,vue}`, consumer agent skills in `packages/beeq-skills`, and the Mintlify docs in `apps/beeq-docs`.
 
 ## Package manager and commands
 

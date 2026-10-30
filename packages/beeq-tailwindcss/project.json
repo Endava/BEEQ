@@ -5,6 +5,18 @@
   "projectType": "library",
   "tags": ["publishable", "preset", "tailwindcss"],
   "targets": {
+    "generate": {
+      "executor": "nx:run-commands",
+      "inputs": [
+        "{projectRoot}/scripts/**/*",
+        "{workspaceRoot}/packages/beeq/src/global/styles/foundations/**/*.scss"
+      ],
+      "outputs": ["{projectRoot}/src/generated"],
+      "options": {
+        "command": "pnpm exec tsx scripts/generate-tokens.ts",
+        "cwd": "{projectRoot}"
+      }
+    },
     "test": {
       "executor": "nx:run-commands",
       "options": {

@@ -3,7 +3,6 @@ import { describe, expect, it } from 'vitest';
 import { CSS_COLORS, DECLARATIVE_COLORS } from '../colors';
 import { DefaultDarkTheme, DefaultLightTheme, DefaultRootTheme } from '../default';
 import { EndavaDarkTheme, EndavaLightTheme, EndavaRootTheme } from '../endava';
-import { DARK_BOX_SHADOWS, LIGHT_BOX_SHADOWS } from '../shadows';
 import {
   apcaContrast,
   contrastRatio,
@@ -610,6 +609,19 @@ describe('mode role parity', () => {
 });
 
 describe('mode box shadows', () => {
+  const SHADOW_KEYS = ['bq-box-shadow--xs', 'bq-box-shadow--s', 'bq-box-shadow--m', 'bq-box-shadow--l'];
+  const shadowsOf = (tokens: Record<string, string>) =>
+    Object.fromEntries(Object.entries(tokens).filter(([key]) => key.startsWith('bq-box-shadow--')));
+  const LIGHT_BOX_SHADOWS = shadowsOf(DefaultLightTheme);
+  const DARK_BOX_SHADOWS = shadowsOf(DefaultDarkTheme);
+
+  it.each([
+    ['light', LIGHT_BOX_SHADOWS],
+    ['dark', DARK_BOX_SHADOWS],
+  ])('the default %s mode should define the elevation shadows', (_, shadows) => {
+    expect(Object.keys(shadows)).toEqual(SHADOW_KEYS);
+  });
+
   it.each(COMBOS)('$name should use the $mode shadow set', ({ name, mode }) => {
     const expected = mode === 'dark' ? DARK_BOX_SHADOWS : LIGHT_BOX_SHADOWS;
 
@@ -625,7 +637,7 @@ describe('mode box shadows', () => {
   });
 
   it('should give dark elevated shadows an edge ring from the decorative stroke', () => {
-    for (const key of ['bq-box-shadow--s', 'bq-box-shadow--m', 'bq-box-shadow--l'] as const) {
+    for (const key of ['bq-box-shadow--s', 'bq-box-shadow--m', 'bq-box-shadow--l']) {
       expect(DARK_BOX_SHADOWS[key]).toMatch(/^0 0 0 1px var\(--bq-stroke--primary\), /);
     }
   });
