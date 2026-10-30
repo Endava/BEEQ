@@ -143,7 +143,22 @@ export const Default: Story = {
 
 export const Placement: Story = {
   render: (args: Args) => html`
-    <div class="grid grid-cols-1 place-items-center gap-m m-bs-xxl3 sm:grid-cols-2">
+    <style>
+      .bq-story-dropdown {
+        display: grid;
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+        place-items: center;
+        gap: var(--bq-spacing-m);
+        margin-block-start: var(--bq-spacing-xxl3);
+      }
+
+      @media (min-width: 640px) {
+        .bq-story-dropdown {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+    </style>
+    <div class="bq-story-dropdown">
       <!-- Bottom end -->
       ${Template({
         ...args,
@@ -174,13 +189,34 @@ export const Placement: Story = {
 
 export const CustomTrigger: Story = {
   render: (args: Args) => html`
-    <div class="grid grid-cols-1 place-items-center gap-m m-bs-xxl3 sm:grid-cols-2">
+    <style>
+      .bq-story-dropdown {
+        display: grid;
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+        place-items: center;
+        gap: var(--bq-spacing-m);
+        margin-block-start: var(--bq-spacing-xxl3);
+      }
+
+      @media (min-width: 640px) {
+        .bq-story-dropdown {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      .bq-story-dropdown bq-button > span {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+      }
+    </style>
+    <div class="bq-story-dropdown">
       <!-- Button icon -->
       ${Template({
         ...args,
         trigger: html`
           <bq-button appearance="secondary" size="medium" type="button" variant="standard" slot="trigger">
-            <span class="flex items-center gap-1">
+            <span>
               <bq-icon name="dots-three-vertical"></bq-icon>
             </span>
           </bq-button>
@@ -208,9 +244,27 @@ export const CustomTrigger: Story = {
 
 export const KeepOpen: Story = {
   render: (args: Args) => html`
-    <div class="rounded-m border-s border-solid border-success bg-ui-success-alt p-b-m p-i-m m-be-l">
-      <p class="text-m font-bold m-be-xs">💡 NOTE:</p>
-      If <code class="text-text-danger">keepOpenOnSelect</code> is set, the dropdown will remain open after a selection
+    <style>
+      .bq-story-dropdown-note {
+        border-radius: var(--bq-radius--m);
+        border-width: var(--bq-stroke-s);
+        border-style: solid;
+        border-color: var(--bq-stroke--success);
+        background-color: var(--bq-ui--success-alt);
+        padding-block: var(--bq-spacing-m);
+        padding-inline: var(--bq-spacing-m);
+        margin-block-end: var(--bq-spacing-l);
+      }
+
+      .bq-story-dropdown-note p {
+        font-size: var(--bq-font-size--m);
+        font-weight: var(--bq-font-weight--bold);
+        margin-block-end: var(--bq-spacing-xs);
+      }
+    </style>
+    <div class="bq-story-dropdown-note">
+      <p>💡 NOTE:</p>
+      If <code>keepOpenOnSelect</code> is set, the dropdown will remain open after a selection
       is made.
     </div>
     ${Template({
