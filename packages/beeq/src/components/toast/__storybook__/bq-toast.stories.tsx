@@ -47,24 +47,31 @@ const Template = (args: Args) => {
     event.preventDefault();
   };
 
-  return html`${TOAST_TYPE.map(
-    (type) => html`
-      <div class="m-be-xs2">
-        <bq-toast
-          border=${args.border}
-          type=${type}
-          ?hide-icon=${args['hide-icon']}
-          ?open=${args.open}
-          time=${args.time}
-          placement=${args.placement}
-          @bqShow=${args.bqShow}
-          @bqHide=${onToastHide}
-        >
-          ${args.text} ${type === 'custom' ? html`<bq-icon slot="icon" size="24" name="star-bold"></bq-icon>` : null}
-        </bq-toast>
-      </div>
-    `,
-  )} `;
+  return html`
+    <style>
+      .bq-story-toast {
+        margin-block-end: var(--bq-spacing-xs2);
+      }
+    </style>
+    ${TOAST_TYPE.map(
+      (type) => html`
+        <div class="bq-story-toast">
+          <bq-toast
+            border=${args.border}
+            type=${type}
+            ?hide-icon=${args['hide-icon']}
+            ?open=${args.open}
+            time=${args.time}
+            placement=${args.placement}
+            @bqShow=${args.bqShow}
+            @bqHide=${onToastHide}
+          >
+            ${args.text} ${type === 'custom' ? html`<bq-icon slot="icon" size="24" name="star-bold"></bq-icon>` : null}
+          </bq-toast>
+        </div>
+      `,
+    )}
+  `;
 };
 
 export const Default: Story = {
