@@ -2,6 +2,27 @@ import { Meta, Source, Typeset } from '@storybook/addon-docs/blocks';
 
 <Meta title="Foundation/Typography" />
 
+<style>{`
+  .bq-doc-typography b {
+    font-weight: var(--bq-font-weight--bold);
+  }
+
+  .bq-doc-typography__note {
+    border-width: var(--bq-stroke-s);
+    border-style: solid;
+    border-radius: var(--bq-radius--xs);
+    padding: var(--bq-spacing-m);
+  }
+
+  .bq-doc-typography__note--success {
+    background-color: var(--bq-ui--success-alt);
+  }
+
+  .bq-doc-typography__note--warning {
+    background-color: var(--bq-ui--warning-alt);
+  }
+`}</style>
+
 export const theme = () => document.querySelector('body').getAttribute('bq-theme');
 
 export const typography = {
@@ -27,20 +48,20 @@ export const typography = {
 export const SampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
 
 <div className="bq-doc__wrapper">
-  <div className="bq-doc__container" >
+  <div className="bq-doc__container bq-doc-typography">
     <h1>Typography</h1>
 
     <p>
       Typography is an essential part of any design system, and it's important to understand the different types of typography and how to use them effectively.
       <ul>
-        <li>The <b className="font-bold">BEEQ default theme uses the Outfit font</b>, a versatile and modern typeface that caters to a wide range of typographical needs, from body text to display headings.</li>
-        <li>The <b className="font-bold">BEEQ Endava theme uses the Poppins font</b>, a clean and modern typeface that is easy to read and works well in a variety of contexts.</li>
+        <li>The <b>BEEQ default theme uses the Outfit font</b>, a versatile and modern typeface that caters to a wide range of typographical needs, from body text to display headings.</li>
+        <li>The <b>BEEQ Endava theme uses the Poppins font</b>, a clean and modern typeface that is easy to read and works well in a variety of contexts.</li>
       </ul>
     </p>
 
     <p>
-      <b className="font-bold">Font:</b>{' '}
-      <a className="bq-link text-text-brand" href={`https://fonts.google.com/specimen/${theme() === 'beeq' ? 'Outfit' : 'Poppins'}`}>
+      <b>Font:</b>{' '}
+      <a className="bq-link" href={`https://fonts.google.com/specimen/${theme() === 'beeq' ? 'Outfit' : 'Poppins'}`}>
         {theme() === 'beeq' ? 'Outfit' : 'Poppins'}
       </a>
     </p>
@@ -55,9 +76,9 @@ export const SampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing el
       To use the display font, add the `display` class to the element (recommended to be a <code>h1</code> HTML element).
     </p>
 
-    <Source dark format="dedent" language="html" code={`<h1 class="display text-text-primary">${SampleText}</h1>`} />
+    <Source dark format="dedent" language="html" code={`<h1 class="display">${SampleText}</h1>`} />
 
-    <div className="rounded-xs border-s border-solid border-stroke-success bg-ui-success-alt p-m">
+    <div className="bq-doc-typography__note bq-doc-typography__note--success">
       <strong>💡 NOTE:</strong>
       <p>
         In addition to the `.display` class, you can also add the `.semibold` or `.bold` classes to change the font weight of the text.
@@ -285,7 +306,7 @@ export const SampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing el
 
     <p>The body text is used for the main content of a page, and should be visually distinct from other headings on the page.</p>
 
-    <div className="rounded-xs border-s border-solid border-stroke-warning bg-ui-warning-alt p-m">
+    <div className="bq-doc-typography__note bq-doc-typography__note--warning">
       ❗️ BEEQ set by default the body styles in the global CSS, so **you don't need to add any class to use it**.
     </div>
 

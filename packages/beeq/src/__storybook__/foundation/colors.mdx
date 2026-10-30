@@ -4,12 +4,79 @@ import { capitalize, getVariableValue } from './helper';
 
 <Meta title="Foundation/Colors" />
 
+<style>{`
+  .bq-doc-colors__intro {
+    margin-block-end: var(--bq-spacing-xxl3);
+  }
+
+  .bq-doc-colors__notice {
+    display: flex;
+    align-items: center;
+    gap: var(--bq-spacing-s);
+    margin-block-end: var(--bq-spacing-xxl);
+    border-width: var(--bq-stroke-s);
+    border-style: solid;
+    border-radius: var(--bq-radius--xs);
+    background-color: var(--bq-ui--warning-alt);
+    padding: var(--bq-spacing-s);
+  }
+
+  .bq-doc-colors__notice b {
+    font-weight: var(--bq-font-weight--bold);
+  }
+
+  .bq-doc-colors__group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-block: var(--bq-spacing-xl);
+  }
+
+  .bq-doc-colors__group-title {
+    display: block;
+    margin-block-end: var(--bq-spacing-s);
+  }
+
+  .bq-doc-colors__swatches {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--bq-spacing-xs);
+    inline-size: 100%;
+  }
+
+  .bq-doc-colors__swatch {
+    display: flex;
+    flex: 1 1 0%;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .bq-doc-colors__swatch-color {
+    display: flex;
+    inline-size: 100%;
+    block-size: 3.5rem;
+    margin-block-end: var(--bq-spacing-xs);
+    border-style: solid;
+    border-width: var(--bq-stroke-s);
+  }
+
+  /* The block prefix outranks the .sbdocs-content p rule of preview.css, so these declarations do not need to be forced */
+  .bq-doc-colors .bq-doc-colors__swatch-name {
+    font-size: var(--bq-font-size--xs);
+    font-weight: var(--bq-font-weight--bold);
+  }
+
+  .bq-doc-colors .bq-doc-colors__swatch-value {
+    font-size: var(--bq-font-size--xs);
+  }
+`}</style>
+
 <div className="bq-doc__wrapper">
-  <div className="bq-doc__container" >
+  <div className="bq-doc__container bq-doc-colors">
     <Unstyled>
       <Title>Colors</Title>
 
-      <p className="m-be-xxl3">
+      <p className="bq-doc-colors__intro">
         The core color categories include brand color, accent, neutral, system and data.
         These colors are further grouped based on their intended application: text (colors for typography), UI (colors for small shapes and elements), background (colors for large surfaces), stroke (colors for outlines and borders), and data & system colors (colors for charts, graphs, and system messages).
       </p>
@@ -37,9 +104,9 @@ import { capitalize, getVariableValue } from './helper';
       ))}
 
       {(document.querySelector('body').getAttribute('bq-theme') === 'beeq') && (
-        <div className="flex gap-s items-center rounded-xs border-s border-solid border-stroke-warning bg-ui-warning-alt p-s m-be-xxl">
+        <div className="bq-doc-colors__notice">
           <bq-icon name="warning" color="icon--warning" weight="fill"></bq-icon>
-          <p className="text-s">In BEEQ default theme <b className="font-bold">Accent color is not used</b>.</p>
+          <p>In BEEQ default theme <b>Accent color is not used</b>.</p>
         </div>
       )}
 
@@ -100,14 +167,14 @@ import { capitalize, getVariableValue } from './helper';
 </div>
 
 export const ColorItem = ({ name, values }) => (
-  <div className="flex flex-col items-start m-b-xl">
-    <div className="block m-be-s">{capitalize(name)}</div>
-    <div className="flex flex-wrap gap-xs is-full">
+  <div className="bq-doc-colors__group">
+    <div className="bq-doc-colors__group-title">{capitalize(name)}</div>
+    <div className="bq-doc-colors__swatches">
       {values.map((colorName) => (
-        <div key={colorName} className="flex flex-1 flex-col text-center">
-          <div className="flex is-full bs-14 border-solid border-s border-stroke-primary m-be-xs" style={{ backgroundColor: `var(--${colorName})` }}></div>
-          <p className="!text-xs !font-bold">{`--${colorName}`}</p>
-          <p className="!text-xs !text-text-secondary">{getVariableValue(colorName)}</p>
+        <div key={colorName} className="bq-doc-colors__swatch">
+          <div className="bq-doc-colors__swatch-color" style={{ backgroundColor: `var(--${colorName})` }}></div>
+          <p className="bq-doc-colors__swatch-name">{`--${colorName}`}</p>
+          <p className="bq-doc-colors__swatch-value">{getVariableValue(colorName)}</p>
         </div>
       ))}
     </div>
