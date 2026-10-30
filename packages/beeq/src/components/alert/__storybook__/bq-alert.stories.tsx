@@ -45,7 +45,19 @@ export default meta;
 type Story = StoryObj;
 
 const Template = (args: Args) => html`
-  <div class="flex flex-row gap-4">
+  <style>
+    .bq-story-alert {
+      display: flex;
+      flex-direction: row;
+      gap: 1rem;
+    }
+
+    .bq-story-alert div[slot='footer'] {
+      display: flex;
+      gap: var(--bq-spacing-xs);
+    }
+  </style>
+  <div class="bq-story-alert">
     <bq-alert
       ?auto-dismiss=${args['auto-dismiss']}
       ?disable-close=${args['disable-close']}
@@ -103,7 +115,7 @@ const Template = (args: Args) => html`
               Description
               <a class="bq-link" href="https://example.com">Link</a>
             </span>
-            <div class="flex gap-xs" slot="footer">
+            <div slot="footer">
               <bq-button appearance="primary" size="small"> Button </bq-button>
               <bq-button appearance="link" size="small"> Button </bq-button>
             </div>
@@ -115,6 +127,26 @@ const Template = (args: Args) => html`
 `;
 
 const TemplateSticky = (args: Args) => html`
+  <style>
+    .bq-story-alert-sticky {
+      display: grid;
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+      padding-block: var(--bq-spacing-m);
+      padding-inline: var(--bq-spacing-m);
+    }
+
+    .bq-story-alert-sticky h1 {
+      margin-block-end: var(--bq-spacing-l);
+    }
+
+    .bq-story-alert-sticky > div {
+      border-style: dashed;
+      border-color: var(--bq-stroke--primary);
+      background-color: var(--bq-ui--alt);
+      block-size: 20rem;
+      inline-size: 100%;
+    }
+  </style>
   <bq-alert
     ?auto-dismiss=${args['auto-dismiss']}
     ?disable-close=${args['disable-close']}
@@ -132,9 +164,9 @@ const TemplateSticky = (args: Args) => html`
     ${args.type === 'default' ? html`<bq-icon name="star" slot="icon"></bq-icon>` : nothing} Title
     <bq-button appearance="link" size="small"> Button </bq-button>
   </bq-alert>
-  <main class="grid grid-cols-1 p-b-m p-i-m">
-    <h1 class="m-be-l">Dashboard</h1>
-    <div class="border border-dashed border-primary bg-[--bq-ui--alt] bs-80 is-full"></div>
+  <main class="bq-story-alert-sticky">
+    <h1>Dashboard</h1>
+    <div></div>
   </main>
 `;
 
@@ -206,8 +238,33 @@ export const WithTrigger: Story = {
     };
 
     return html`
-      <bq-card>
-        <form id="change-password" class="flex flex-col gap-y-m" @submit=${handleFormSubmit} @reset=${handleFormReset}>
+      <style>
+        .bq-story-alert-form form {
+          display: flex;
+          flex-direction: column;
+          row-gap: var(--bq-spacing-m);
+        }
+
+        .bq-story-alert-form ul {
+          padding-inline-start: var(--bq-spacing-m);
+          margin-block-end: 0px;
+          margin-block-start: 0px;
+        }
+
+        .bq-story-alert-form label[slot='label'] {
+          display: flex;
+          flex-grow: 1;
+          align-items: center;
+        }
+
+        .bq-story-alert-form form > div {
+          display: flex;
+          justify-content: flex-end;
+          column-gap: var(--bq-spacing-m);
+        }
+      </style>
+      <bq-card class="bq-story-alert-form">
+        <form id="change-password" @submit=${handleFormSubmit} @reset=${handleFormReset}>
           <!-- Alert -->
           <bq-alert
             ?auto-dismiss=${args['auto-dismiss']}
@@ -225,19 +282,19 @@ export const WithTrigger: Story = {
           >
             There were 2 errors with your submission
             <span slot="body">
-              <ul class="ps-m m-be-0 m-bs-0">
+              <ul>
                 <li>Your password must be at least 8 characters</li>
                 <li>Your password must include at least one pro wrestling finishing move</li>
               </ul>
             </span>
           </bq-alert>
           <bq-input name="password" type="password" required>
-            <label class="flex flex-grow items-center" slot="label">Password</label>
+            <label slot="label">Password</label>
           </bq-input>
           <bq-input name="confirm-password" type="password" required>
-            <label class="flex flex-grow items-center" slot="label">Confirm Password</label>
+            <label slot="label">Confirm Password</label>
           </bq-input>
-          <div class="flex justify-end gap-x-m">
+          <div>
             <bq-button appearance="secondary" type="reset">Cancel</bq-button>
             <bq-button type="submit">Save</bq-button>
           </div>
