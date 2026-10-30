@@ -81,29 +81,29 @@ type Story = StoryObj;
 const Template = (args: Args) => {
   const tooltipTemplate = args.hasLabelTooltip
     ? html`
-        <bq-tooltip class="ms-xs">
+        <bq-tooltip>
           <bq-icon name="info" slot="trigger"></bq-icon>
           You can provide more context detail by adding a tooltip to the label.
         </bq-tooltip>
       `
     : nothing;
   const labelTemplate = html`
-    <label class="flex flex-grow items-center" slot=${ifDefined(!args.optionalLabel ? 'label' : null)}>
+    <label slot=${ifDefined(!args.optionalLabel ? 'label' : null)}>
       Input label ${tooltipTemplate}
     </label>
   `;
   const label = !args.optionalLabel
     ? labelTemplate
     : html`
-        <div slot="label" class="flex flex-1 items-center">
+        <div slot="label">
           ${labelTemplate}
-          <span class="text-text-secondary">Optional</span>
+          <span>Optional</span>
         </div>
       `;
   const style = args.hasLabelTooltip
     ? html`
         <style>
-          bq-input {
+          .bq-story-input {
             inline-size: 75vw;
           }
         </style>
@@ -111,8 +111,32 @@ const Template = (args: Args) => {
     : nothing;
 
   return html`
+    <style>
+      .bq-story-input label {
+        display: flex;
+        flex-grow: 1;
+        align-items: center;
+      }
+
+      .bq-story-input div[slot='label'] {
+        display: flex;
+        flex: 1 1 0%;
+        align-items: center;
+      }
+
+      .bq-story-input span[slot='helper-text'] {
+        display: flex;
+        align-items: center;
+        gap: var(--bq-spacing-xs);
+      }
+
+      .bq-story-input bq-tooltip {
+        margin-inline-start: var(--bq-spacing-xs);
+      }
+    </style>
     ${style}
     <bq-input
+      class="bq-story-input"
       autocapitalize=${ifDefined(args.autocapitalize)}
       autocomplete=${ifDefined(args.autocomplete)}
       ?autofocus=${args.autofocus}
@@ -147,7 +171,7 @@ const Template = (args: Args) => {
       ${
         !args.noHelperText
           ? html`
-            <span class="flex items-center gap-xs" slot="helper-text">
+            <span slot="helper-text">
               <bq-icon name="star"></bq-icon>
               Helper text
             </span>
@@ -216,7 +240,14 @@ export const Disabled: Story = {
 export const ValidationStatus: Story = {
   name: 'Validation',
   render: (args) => html`
-    <div class="flex flex-col gap-l">
+    <style>
+      .bq-story-input-validation {
+        display: flex;
+        flex-direction: column;
+        gap: var(--bq-spacing-l);
+      }
+    </style>
+    <div class="bq-story-input-validation">
       <!-- Error -->
       ${Template({ ...args, name: 'bq-input-error', 'validation-status': 'error' })}
       <!-- Success -->
@@ -290,13 +321,75 @@ export const WithForm: Story = {
     };
 
     return html`
+      <style>
+        .bq-story-input-form {
+          display: grid;
+          grid-auto-columns: auto;
+          grid-template-columns: repeat(1, minmax(0, 1fr));
+          row-gap: var(--bq-spacing-l);
+        }
+
+        .bq-story-input-form h4 {
+          margin-block-end: var(--bq-spacing-m);
+        }
+
+        .bq-story-input-form form {
+          display: flex;
+          flex-direction: column;
+          row-gap: var(--bq-spacing-m);
+        }
+
+        .bq-story-input-form__row {
+          display: grid;
+          grid-template-columns: repeat(1, minmax(0, 1fr));
+          row-gap: var(--bq-spacing-m);
+        }
+
+        .bq-story-input-form label {
+          display: flex;
+          flex-grow: 1;
+          align-items: center;
+        }
+
+        .bq-story-input-form__actions {
+          display: flex;
+          justify-content: flex-end;
+          column-gap: var(--bq-spacing-s);
+        }
+
+        .bq-story-input-form__data::part(wrapper) {
+          height: 100%;
+        }
+
+        .bq-story-input-form .language-javascript {
+          overflow-x: scroll;
+          white-space: pre;
+          border-radius: var(--bq-radius--s);
+        }
+
+        .bq-story-input-form code {
+          border-radius: var(--bq-radius--s);
+        }
+
+        @media (min-width: 640px) {
+          .bq-story-input-form {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            column-gap: var(--bq-spacing-l);
+          }
+
+          .bq-story-input-form__row {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            column-gap: var(--bq-spacing-m);
+          }
+        }
+      </style>
       <link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/styles/night-owl.min.css" />
 
-      <div class="grid auto-cols-auto grid-cols-1 gap-y-l sm:grid-cols-2 sm:gap-x-l">
+      <div class="bq-story-input-form">
         <bq-card>
-          <h4 class="m-be-m">Shipping Information</h4>
-          <form class="flex flex-col gap-y-m" @submit=${handleFormSubmit} method="post">
-            <div class="grid grid-cols-1 gap-y-m sm:grid-cols-2 sm:gap-x-m">
+          <h4>Shipping Information</h4>
+          <form @submit=${handleFormSubmit} method="post">
+            <div class="bq-story-input-form__row">
               <bq-input
                 name="firstName"
                 value="Brad Bernie"
@@ -304,7 +397,7 @@ export const WithForm: Story = {
                 form-validation-message="Please, tell us what's your name"
                 required
               >
-                <label class="flex flex-grow items-center" slot="label">First Name</label>
+                <label slot="label">First Name</label>
               </bq-input>
               <bq-input
                 name="lastName"
@@ -313,7 +406,7 @@ export const WithForm: Story = {
                 form-validation-message="Please, tell us your family name"
                 required
               >
-                <label class="flex flex-grow items-center" slot="label">Last Name</label>
+                <label slot="label">Last Name</label>
               </bq-input>
             </div>
             <bq-input
@@ -323,7 +416,7 @@ export const WithForm: Story = {
               form-validation-message="Please, tell us your company name"
               required
             >
-              <label class="flex flex-grow items-center" slot="label">Company</label>
+              <label slot="label">Company</label>
             </bq-input>
             <bq-input
               name="address"
@@ -332,19 +425,19 @@ export const WithForm: Story = {
               form-validation-message="Please, tell us your address"
               required
             >
-              <label class="flex flex-grow items-center" slot="label">Address</label>
+              <label slot="label">Address</label>
             </bq-input>
-            <div class="grid grid-cols-1 gap-y-m sm:grid-cols-2 sm:gap-x-m" autocomplete="address-level2">
+            <div class="bq-story-input-form__row" autocomplete="address-level2">
               <bq-input
                 name="city"
                 value="Oklahoma"
                 form-validation-message="Please, tell us in which city you live"
                 required
               >
-                <label class="flex flex-grow items-center" slot="label">City</label>
+                <label slot="label">City</label>
               </bq-input>
               <bq-select name="country" value="us" autocomplete="country-name">
-                <label class="flex flex-grow items-center" slot="label">Country</label>
+                <label slot="label">Country</label>
                 <bq-option value="au">Australia</bq-option>
                 <bq-option value="ca">Canada</bq-option>
                 <bq-option value="mx">Mexico</bq-option>
@@ -353,22 +446,22 @@ export const WithForm: Story = {
                 <bq-option value="us">United States</bq-option>
               </bq-select>
             </div>
-            <div class="flex justify-end gap-x-s">
+            <div class="bq-story-input-form__actions">
               <bq-button appearance="secondary" type="reset">Cancel</bq-button>
               <bq-button type="submit">Save</bq-button>
             </div>
           </form>
         </bq-card>
-        <bq-card class="[&::part(wrapper)]:h-full">
-          <h4 class="m-be-m">Form Data</h4>
-          <div class="language-javascript overflow-x-scroll whitespace-pre rounded-s">
+        <bq-card class="bq-story-input-form__data">
+          <h4>Form Data</h4>
+          <div class="language-javascript">
             // Handle form submit<br />
             const form = ev.target as HTMLFormElement;<br />
             const formData = new FormData(form);<br />
             const formValues = Object.fromEntries(formData.entries());
           </div>
           <pre>
-            <code id="form-data" class="rounded-s">
+            <code id="form-data">
               { // submit the form to see the data here }
             </code>
           </pre>
