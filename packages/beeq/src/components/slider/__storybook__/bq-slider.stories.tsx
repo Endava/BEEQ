@@ -50,8 +50,15 @@ export default meta;
 
 type Story = StoryObj;
 
-const Template = (args: Args) =>
-  html`<div class="is-[calc(100vw_-_var(--bq-spacing-xxl3))] max-w-screen-md">${SliderTemplate(args)}</div>`;
+const Template = (args: Args) => html`
+  <style>
+    .bq-story-slider {
+      inline-size: calc(100vw - var(--bq-spacing-xxl3));
+      max-width: 768px;
+    }
+  </style>
+  <div class="bq-story-slider">${SliderTemplate(args)}</div>
+`;
 
 const SliderTemplate = (args: Args) => html`
   <bq-slider
@@ -197,32 +204,82 @@ export const WithForm: Story = {
     };
 
     return html`
+      <style>
+        .bq-story-slider-form {
+          display: grid;
+          grid-auto-columns: auto;
+          grid-template-columns: repeat(1, minmax(0, 1fr));
+          row-gap: var(--bq-spacing-l);
+        }
+        @media (min-width: 640px) {
+          .bq-story-slider-form {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            column-gap: var(--bq-spacing-l);
+          }
+        }
+        .bq-story-slider-form__fields::part(wrapper) {
+          background-color: var(--bq-background--primary);
+        }
+        .bq-story-slider-form h4 {
+          margin-block-end: var(--bq-spacing-m);
+        }
+        .bq-story-slider-form form {
+          display: flex;
+          flex-direction: column;
+          row-gap: var(--bq-spacing-m);
+        }
+        .bq-story-slider-form label {
+          display: flex;
+          align-items: center;
+          column-gap: var(--bq-spacing-s);
+        }
+        .bq-story-slider-form__range-label {
+          margin-block-start: var(--bq-spacing-m);
+        }
+        .bq-story-slider-form__actions {
+          display: flex;
+          justify-content: flex-end;
+          column-gap: var(--bq-spacing-s);
+          margin-block-start: var(--bq-spacing-l);
+        }
+        .bq-story-slider-form__data::part(wrapper) {
+          height: 100%;
+        }
+        .bq-story-slider-form__snippet {
+          overflow-x: scroll;
+          white-space: pre;
+          border-radius: var(--bq-radius--s);
+        }
+        .bq-story-slider-form code {
+          border-radius: var(--bq-radius--s);
+        }
+      </style>
       <link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/styles/night-owl.min.css" />
-      <div class="grid auto-cols-auto grid-cols-1 gap-y-l sm:grid-cols-2 sm:gap-x-l">
-        <bq-card class="[&::part(wrapper)]:bg-primary">
-          <h4 class="m-be-m">Taxi information</h4>
-          <form class="flex flex-col gap-y-m" @submit=${handleFormSubmit}>
-            <label class="flex items-center gap-x-s"> Number of seats </label>
+      <div class="bq-story-slider-form">
+        <bq-card class="bq-story-slider-form__fields">
+          <h4>Taxi information</h4>
+          <form @submit=${handleFormSubmit}>
+            <label> Number of seats </label>
             ${SliderTemplate({ ...args, name: 'numSeats', max: 8, value: 3 })}
             <!-- Range  -->
-            <label class="flex items-center gap-x-s m-bs-m"> Price range (€) </label>
+            <label class="bq-story-slider-form__range-label"> Price range (€) </label>
             ${SliderTemplate({ ...args, name: 'priceRange', value: [30, 70], type: 'range' })}
-            <div class="flex justify-end gap-x-s m-bs-l">
+            <div class="bq-story-slider-form__actions">
               <bq-button appearance="secondary" type="reset">Cancel</bq-button>
               <bq-button type="submit">Save</bq-button>
             </div>
           </form>
         </bq-card>
-        <bq-card class="[&::part(wrapper)]:h-full">
-          <h4 class="m-be-m">Form Data</h4>
-          <div class="language-javascript overflow-x-scroll whitespace-pre rounded-s">
+        <bq-card class="bq-story-slider-form__data">
+          <h4>Form Data</h4>
+          <div class="language-javascript bq-story-slider-form__snippet">
             // Handle form submit<br />
             const form = ev.target as HTMLFormElement;<br />
             const formData = new FormData(form);<br />
             const formValues = Object.fromEntries(formData.entries());
           </div>
           <pre>
-            <code id="form-data" class="rounded-s">
+            <code id="form-data">
               { // submit the form to see the data here }
             </code>
           </pre>
