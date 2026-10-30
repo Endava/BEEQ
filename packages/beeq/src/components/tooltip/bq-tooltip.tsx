@@ -366,10 +366,10 @@ export class BqTooltip {
 
   render() {
     return (
-      <div class="bq-tooltip relative" part="base">
+      <div class="bq-tooltip" part="base">
         {/* TRIGGER */}
         <div
-          class="bq-tooltip--trigger"
+          class="bq-tooltip__trigger"
           part="trigger"
           ref={(el: HTMLDivElement) => {
             this.trigger = el;
@@ -388,7 +388,7 @@ export class BqTooltip {
          */}
         <div
           aria-hidden={String(this.isHidden)}
-          class="bq-tooltip--panel"
+          class="bq-tooltip__panel"
           hidden={this.supportsPopover ? undefined : this.isHidden}
           part="panel"
           ref={(el: HTMLDivElement) => {
@@ -398,7 +398,7 @@ export class BqTooltip {
         >
           {!this.hideArrow && (
             <div
-              class="bq-tooltip--arrow"
+              class="bq-tooltip__arrow"
               ref={(el: HTMLDivElement) => {
                 this.arrow = el;
               }}

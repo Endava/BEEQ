@@ -1,15 +1,24 @@
 import { h } from '@stencil/core';
-import { afterEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
-import { userEvent } from 'vitest/browser';
+import { afterEach, beforeEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
+import { cdp, userEvent } from 'vitest/browser';
+
+import { resolveColorToken } from '../../../shared/test-utils/resolveColorToken';
 
 type TField = 'hour' | 'minute' | 'second' | 'dayPeriod';
 
 const nextFrame = (): Promise<void> => new Promise((resolve) => requestAnimationFrame(() => resolve()));
 
+const waitForTransitions = async (element: Element) => {
+  const animations = element.shadowRoot?.getAnimations() ?? [];
+  await Promise.all(animations.map((animation) => animation.finished));
+};
+
 const settle = async (): Promise<void> => {
   await nextFrame();
   await nextFrame();
 };
+
+const getControl = (tp: HTMLBqTimePickerElement) => tp.shadowRoot?.querySelector<HTMLElement>('[part="control"]');
 
 const getSegment = (tp: HTMLBqTimePickerElement, field: TField) =>
   tp.shadowRoot?.querySelector<HTMLElement>(`[data-segment-field="${field}"]`);
@@ -60,6 +69,19 @@ const openPanel = async (tp: HTMLBqTimePickerElement, waitForChanges: () => Prom
   await waitForChanges();
   await settle();
 };
+
+// Hover/click tests leave the Playwright cursor where they finished. Park it outside the
+// scaled test iframe before each test so newly rendered controls do not start hovered.
+const movePointerOff = () =>
+  cdp().send('Input.dispatchMouseEvent', {
+    type: 'mouseMoved',
+    x: window.top.innerWidth - 1,
+    y: window.top.innerHeight - 1,
+  });
+
+beforeEach(async () => {
+  await movePointerOff();
+});
 
 afterEach(() => {
   vi.useRealTimers();
@@ -143,8 +165,8 @@ describe('bq-time-picker', () => {
     const tp = root as HTMLBqTimePickerElement;
     await waitForStable(root);
 
-    expect(tp.shadowRoot?.querySelector('[part="label"]')).not.toHaveClass('is-hidden');
-    expect(tp.shadowRoot?.querySelector('[part="prefix"]')).not.toHaveClass('is-hidden');
+    expect(tp.shadowRoot?.querySelector('[part="label"]')).not.toHaveAttribute('hidden');
+    expect(tp.shadowRoot?.querySelector('[part="prefix"]')).not.toHaveAttribute('hidden');
   });
 
   it('should hide the label and prefix wrappers without slot content', async () => {
@@ -152,8 +174,13 @@ describe('bq-time-picker', () => {
     const tp = root as HTMLBqTimePickerElement;
     await waitForStable(root);
 
-    expect(tp.shadowRoot?.querySelector('[part="label"]')).toHaveClass('is-hidden');
-    expect(tp.shadowRoot?.querySelector('[part="prefix"]')).toHaveClass('is-hidden');
+    const label = tp.shadowRoot?.querySelector('[part="label"]');
+    const prefix = tp.shadowRoot?.querySelector('[part="prefix"]');
+
+    expect(label).toHaveAttribute('hidden');
+    expect(prefix).toHaveAttribute('hidden');
+    expect(getComputedStyle(label).display).toBe('none');
+    expect(getComputedStyle(prefix).display).toBe('none');
   });
 
   /* ---------------------------- Locale and format ---------------------------- */
@@ -1273,19 +1300,153 @@ describe('bq-time-picker', () => {
     expect(getComputedStyle(control).borderTopColor).toBe('rgb(255, 0, 0)');
   });
 
-  it('should color the validation border through the component variable', async () => {
+  it('should preserve the reset-sensitive spacing and transition geometry', async () => {
+    const { root } = await render(
+      <bq-time-picker name="time" value="09:30">
+        <span slot="label">Start time</span>
+        <bq-icon name="clock" slot="prefix" />
+      </bq-time-picker>,
+    );
+    const tp = root as HTMLBqTimePickerElement;
+    await waitForStable(root);
+
+    const base = tp.shadowRoot?.querySelector<HTMLElement>('[part="base"]');
+    const control = getControl(tp);
+    const label = tp.shadowRoot?.querySelector<HTMLElement>('[part="label"]');
+    const prefix = tp.shadowRoot?.querySelector<HTMLElement>('[part="prefix"]');
+    const clearButton = getClearButton(tp);
+    const triggerButton = tp.shadowRoot?.querySelector<HTMLElement>('[part~="time-trigger"]');
+
+    expect(getComputedStyle(base).display).toBe('block');
+    expect(getComputedStyle(label).marginBlockEnd).toBe('8px');
+    expect(getComputedStyle(prefix).marginInlineEnd).toBe('8px');
+    expect(getComputedStyle(clearButton).marginInlineStart).toBe('8px');
+    expect(getComputedStyle(triggerButton).marginInlineStart).toBe('8px');
+    expect(getComputedStyle(control).transitionDuration).toBe('0.15s, 0.15s');
+    expect(getComputedStyle(control).transitionProperty).toBe('border-color, box-shadow');
+    expect(getComputedStyle(control).transitionTimingFunction).toBe('ease, ease');
+  });
+
+  it('should preserve panel column spacing', async () => {
+    const { root, waitForChanges } = await render(<bq-time-picker name="time" value="09:30" />);
+    const tp = root as HTMLBqTimePickerElement;
+    await openPanel(tp, waitForChanges);
+
+    const columns = Array.from(tp.shadowRoot?.querySelectorAll<HTMLElement>('[part="column"]') ?? []);
+    expect(columns).toHaveLength(2);
+
+    expect(getComputedStyle(columns[0]).marginBlock).toBe('8px');
+    expect(getComputedStyle(columns[0]).marginInlineStart).toBe('4px');
+    expect(getComputedStyle(columns[0]).marginInlineEnd).toBe('4px');
+    expect(getComputedStyle(columns[1]).marginBlock).toBe('8px');
+    expect(getComputedStyle(columns[1]).marginInlineStart).toBe('4px');
+    expect(getComputedStyle(columns[1]).marginInlineEnd).toBe('4px');
+  });
+
+  it('should paint idle, hover, and focus states through the public focus variable', async () => {
+    const focusColor = 'rgb(120, 40, 200)';
+    const { root } = await render(
+      <bq-time-picker name="time" style={{ '--bq-time-picker--border-color-focus': focusColor }} />,
+    );
+    const tp = root as HTMLBqTimePickerElement;
+    const control = getControl(tp);
+    const colorProbe = document.createElement('span');
+    root.shadowRoot?.appendChild(colorProbe);
+
+    await waitForStable(root);
+    await waitForTransitions(root);
+
+    expect(getComputedStyle(control).backgroundColor).toBe(resolveColorToken('--bq-ui--primary'));
+    expect(getComputedStyle(control).borderTopColor).toBe(resolveColorToken('--bq-stroke--tertiary'));
+    expect(getComputedStyle(control).color).toBe(resolveColorToken('--bq-text--primary'));
+
+    await userEvent.hover(control);
+    await waitForTransitions(root);
+    colorProbe.style.color =
+      'color-mix(in srgb, var(--bq-time-picker--border-color-focus), var(--bq-hover) var(--bq-state-mix-hover))';
+    expect(getComputedStyle(control).borderTopColor).toBe(getComputedStyle(colorProbe).color);
+
+    const segment = getSegment(tp, 'hour');
+    segment?.focus();
+    await waitForTransitions(root);
+    expect(getComputedStyle(control).borderTopColor).toBe(focusColor);
+    expect(getComputedStyle(control).outlineColor).toBe(focusColor);
+    expect(getComputedStyle(control).outlineOffset).toBe('0px');
+    expect(getComputedStyle(control).outlineStyle).toBe('solid');
+    expect(getComputedStyle(control).outlineWidth).toBe('1px');
+    colorProbe.style.backgroundColor = 'color-mix(in srgb, var(--bq-focus), transparent 88%)';
+    expect(getComputedStyle(segment).backgroundColor).toBe(getComputedStyle(colorProbe).backgroundColor);
+    expect(getComputedStyle(segment).borderRadius).toBe('4px');
+
+    colorProbe.remove();
+  });
+
+  it('should mix validation borders on hover and focus', async () => {
+    const { root, setProps } = await render(<bq-time-picker name="time" validationStatus="error" />);
+    const tp = root as HTMLBqTimePickerElement;
+    const control = getControl(tp);
+    const segment = getSegment(tp, 'hour');
+    const colorProbe = document.createElement('span');
+    root.shadowRoot?.appendChild(colorProbe);
+
+    for (const [validationStatus, role] of Object.entries({
+      error: 'danger',
+      success: 'success',
+      warning: 'warning',
+    })) {
+      segment?.blur();
+      await movePointerOff();
+      await setProps({ validationStatus });
+      await waitForTransitions(root);
+
+      expect(getComputedStyle(control).borderTopColor).toBe(resolveColorToken(`--bq-stroke--${role}`));
+
+      await userEvent.hover(control);
+      await waitForTransitions(root);
+      colorProbe.style.color = `color-mix(in srgb, var(--bq-time-picker--border-color-${role}), var(--bq-hover) var(--bq-state-mix-hover))`;
+      expect(getComputedStyle(control).borderTopColor).toBe(getComputedStyle(colorProbe).color);
+
+      segment?.focus();
+      await waitForTransitions(root);
+      colorProbe.style.color = `color-mix(in srgb, var(--bq-time-picker--border-color-${role}), var(--bq-active) var(--bq-state-mix-active))`;
+      expect(getComputedStyle(control).borderTopColor).toBe(getComputedStyle(colorProbe).color);
+      expect(getComputedStyle(control).outlineColor).toBe(resolveColorToken(`--bq-stroke--${role}`));
+    }
+
+    colorProbe.remove();
+  });
+
+  it('should let the disabled state override validation styling', async () => {
     const { root } = await render(
       <bq-time-picker
+        disabled
         name="time"
-        style={{ '--bq-time-picker--border-color-danger': 'rgb(0, 128, 0)' }}
+        style={{
+          '--bq-time-picker--border-color-danger': 'rgb(0, 128, 0)',
+          '--bq-time-picker--border-color-disabled': 'rgb(30, 60, 90)',
+        }}
         validationStatus="error"
       />,
     );
     const tp = root as HTMLBqTimePickerElement;
     await waitForStable(root);
 
-    const control = tp.shadowRoot?.querySelector<HTMLElement>('[part="control"]');
-    expect(getComputedStyle(control).borderTopColor).toBe('rgb(0, 128, 0)');
+    const control = getControl(tp);
+    expect(getComputedStyle(control).borderTopColor).toBe('rgb(30, 60, 90)');
+    expect(getComputedStyle(control).opacity).toBe('0.6');
+  });
+
+  it('should reveal the clear button only for interactive control states', async () => {
+    const { root } = await render(<bq-time-picker name="time" value="09:30" />);
+    const tp = root as HTMLBqTimePickerElement;
+    const clearButton = getClearButton(tp);
+    await waitForStable(root);
+
+    expect(getComputedStyle(clearButton).display).toBe('none');
+
+    getSegment(tp, 'hour')?.focus();
+    await waitForTransitions(root);
+    expect(getComputedStyle(clearButton).display).not.toBe('none');
   });
 
   it.each([

@@ -320,10 +320,6 @@ pnpm g
 
 Need help? Check out the Stenciljs docs here (https://stenciljs.com/).
 
-### Tailwind CSS
-
-We use Tailwind CSS for the style of the components, please take a look at their documentation here: (https://tailwindcss.com/docs/)
-
 ## Thanks 🙏
 
 <a href="https://www.chromatic.com/">

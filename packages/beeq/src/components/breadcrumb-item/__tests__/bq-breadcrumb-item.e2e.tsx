@@ -2,15 +2,7 @@ import { h } from '@stencil/core';
 import { afterEach, beforeEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
 import { cdp, userEvent } from 'vitest/browser';
 
-/** Resolves a CSS color value (e.g. `var(--bq-text--brand)`) to its computed `rgb()` form */
-const resolveColor = (value: string): string => {
-  const probe = document.createElement('div');
-  probe.style.color = value;
-  document.body.appendChild(probe);
-  const { color } = getComputedStyle(probe);
-  probe.remove();
-  return color;
-};
+import { resolveColorToken } from '../../../shared/test-utils/resolveColorToken';
 
 afterEach(() => {
   vi.restoreAllMocks();
@@ -60,7 +52,7 @@ describe('bq-breadcrumb-item', () => {
   it('should render `button` tag', async () => {
     const { root } = await render(<bq-breadcrumb-item>Home</bq-breadcrumb-item>);
 
-    const element = root.shadowRoot.querySelector('.breadcrumb-item');
+    const element = root.shadowRoot.querySelector('[part="item"]');
 
     expect(element?.tagName.toLowerCase()).toBe('button');
   });
@@ -68,7 +60,7 @@ describe('bq-breadcrumb-item', () => {
   it('should render `a` tag', async () => {
     const { root } = await render(<bq-breadcrumb-item href="https://example.com/">Home</bq-breadcrumb-item>);
 
-    const element = root.shadowRoot.querySelector('.breadcrumb-item');
+    const element = root.shadowRoot.querySelector('[part="item"]');
 
     expect(element?.tagName.toLowerCase()).toBe('a');
   });
@@ -88,7 +80,7 @@ describe('bq-breadcrumb-item', () => {
       </bq-breadcrumb-item>,
     );
 
-    const element = root.shadowRoot?.querySelector<HTMLAnchorElement>('.breadcrumb-item');
+    const element = root.shadowRoot?.querySelector<HTMLAnchorElement>('[part="item"]');
 
     expect(element.target).toBe('_blank');
   });
@@ -100,7 +92,7 @@ describe('bq-breadcrumb-item', () => {
       </bq-breadcrumb-item>,
     );
 
-    const element = root.shadowRoot?.querySelector<HTMLAnchorElement>('.breadcrumb-item');
+    const element = root.shadowRoot?.querySelector<HTMLAnchorElement>('[part="item"]');
 
     expect(element.rel).toBe('noreferrer noopener');
   });
@@ -108,7 +100,7 @@ describe('bq-breadcrumb-item', () => {
   it('should not set `rel` when neither `rel` nor `target` is provided', async () => {
     const { root } = await render(<bq-breadcrumb-item href="https://example.com/">Home</bq-breadcrumb-item>);
 
-    const element = root.shadowRoot?.querySelector<HTMLAnchorElement>('.breadcrumb-item');
+    const element = root.shadowRoot?.querySelector<HTMLAnchorElement>('[part="item"]');
 
     expect(element).not.toHaveAttribute('rel');
   });
@@ -120,7 +112,7 @@ describe('bq-breadcrumb-item', () => {
       </bq-breadcrumb-item>,
     );
 
-    const element = root.shadowRoot?.querySelector<HTMLAnchorElement>('.breadcrumb-item');
+    const element = root.shadowRoot?.querySelector<HTMLAnchorElement>('[part="item"]');
 
     expect(element.rel).toBe('nofollow');
   });
@@ -132,7 +124,7 @@ describe('bq-breadcrumb-item', () => {
       </bq-breadcrumb-item>,
     );
 
-    const element = root.shadowRoot?.querySelector<HTMLAnchorElement>('.breadcrumb-item');
+    const element = root.shadowRoot?.querySelector<HTMLAnchorElement>('[part="item"]');
 
     expect(element.target).toBe('_blank');
     expect(element.rel).toBe('external noreferrer noopener');
@@ -145,7 +137,7 @@ describe('bq-breadcrumb-item', () => {
       </bq-breadcrumb-item>,
     );
 
-    const element = root.shadowRoot?.querySelector<HTMLAnchorElement>('.breadcrumb-item');
+    const element = root.shadowRoot?.querySelector<HTMLAnchorElement>('[part="item"]');
 
     expect(Array.from(element.relList, (token) => token.toLowerCase()).sort()).toEqual([
       'nofollow',
@@ -160,7 +152,7 @@ describe('bq-breadcrumb-item', () => {
         Home
       </bq-breadcrumb-item>,
     );
-    const element = root.shadowRoot?.querySelector<HTMLAnchorElement>('.breadcrumb-item');
+    const element = root.shadowRoot?.querySelector<HTMLAnchorElement>('[part="item"]');
 
     await setProps({ rel: 'nofollow' });
 
@@ -174,7 +166,7 @@ describe('bq-breadcrumb-item', () => {
       </bq-breadcrumb-item>,
     );
 
-    const element = root.shadowRoot?.querySelector('.breadcrumb-item');
+    const element = root.shadowRoot?.querySelector('[part="item"]');
 
     expect(element?.tagName.toLowerCase()).toBe('button');
     expect(element).not.toHaveAttribute('rel');
@@ -183,7 +175,7 @@ describe('bq-breadcrumb-item', () => {
 
   it('should emit focus, click, and blur events', async () => {
     const { root, spyOnEvent } = await render(<bq-breadcrumb-item>Home</bq-breadcrumb-item>);
-    const element = root.shadowRoot?.querySelector<HTMLButtonElement>('.breadcrumb-item');
+    const element = root.shadowRoot?.querySelector<HTMLButtonElement>('[part="item"]');
 
     const bqFocus = spyOnEvent('bqFocus');
     const bqClick = spyOnEvent('bqClick');
@@ -199,7 +191,7 @@ describe('bq-breadcrumb-item', () => {
 
   it('should prevent native navigation without stopping click propagation when bqClick is canceled', async () => {
     const { root, spyOnEvent } = await render(<bq-breadcrumb-item href="#destination">Home</bq-breadcrumb-item>);
-    const anchor = root.shadowRoot.querySelector<HTMLAnchorElement>('.breadcrumb-item');
+    const anchor = root.shadowRoot.querySelector<HTMLAnchorElement>('[part="item"]');
     const nativeClick = new MouseEvent('click', { bubbles: true, cancelable: true, composed: true });
     const clickHandler = vi.fn();
     const bqClick = spyOnEvent('bqClick');
@@ -219,7 +211,7 @@ describe('bq-breadcrumb-item', () => {
         Home
       </bq-breadcrumb-item>,
     );
-    const anchor = root.shadowRoot.querySelector<HTMLAnchorElement>('.breadcrumb-item');
+    const anchor = root.shadowRoot.querySelector<HTMLAnchorElement>('[part="item"]');
     const nativeClick = new MouseEvent('click', { bubbles: true, cancelable: true, composed: true });
 
     root.addEventListener('bqClick', (event) => event.preventDefault(), { once: true });
@@ -248,10 +240,103 @@ describe('bq-breadcrumb-item', () => {
     await waitForTransitions(root);
 
     const item = getComputedStyle(root.shadowRoot.querySelector('[part="item"]'));
-    const separator = getComputedStyle(root.shadowRoot.querySelector('.breadcrumb-separator'));
+    const separator = getComputedStyle(root.shadowRoot.querySelector('[part="separator"]'));
 
-    expect(item.color).toBe(resolveColor('var(--bq-text--brand)'));
-    expect(separator.color).toBe(resolveColor('var(--bq-ui--tertiary)'));
+    expect(item.color).toBe(resolveColorToken('--bq-text--brand', root));
+    expect(separator.color).toBe(resolveColorToken('--bq-ui--tertiary', root));
+  });
+
+  it('should apply native geometry, typography, and transition styles from public variables', async () => {
+    const { root } = await render(
+      <bq-breadcrumb-item
+        style={{
+          '--bq-breadcrumb-item--background': 'rgb(10, 20, 30)',
+          '--bq-breadcrumb-item--border-color': 'rgb(40, 50, 60)',
+          '--bq-breadcrumb-item--border-radius': '6px',
+          '--bq-breadcrumb-item--border-style': 'solid',
+          '--bq-breadcrumb-item--border-width': '2px',
+          '--bq-breadcrumb-item--line-height': '24px',
+          '--bq-breadcrumb-item--padding-end': '7px',
+          '--bq-breadcrumb-item--padding-end-separator': '13px',
+          '--bq-breadcrumb-item--padding-start': '3px',
+          '--bq-breadcrumb-item--padding-start-separator': '11px',
+          '--bq-breadcrumb-item--paddingY': '5px',
+          '--bq-breadcrumb-item--separator-color': 'rgb(70, 80, 90)',
+          '--bq-breadcrumb-item--text-size': '16px',
+          '--bq-breadcrumb-item--text-size-separator': '12px',
+        }}
+      >
+        Home
+        <span slot="separator">/</span>
+      </bq-breadcrumb-item>,
+    );
+
+    await waitForStable(root);
+
+    const baseStyle = getComputedStyle(root.shadowRoot.querySelector('[part="base"]'));
+    const itemStyle = getComputedStyle(root.shadowRoot.querySelector('[part="item"]'));
+    const contentStyle = getComputedStyle(root.shadowRoot.querySelector('[part="content"]'));
+    const separatorStyle = getComputedStyle(root.shadowRoot.querySelector('[part="separator"]'));
+
+    expect(baseStyle.display).toBe('flex');
+    expect(baseStyle.alignItems).toBe('center');
+    expect(itemStyle).toMatchObject({
+      backgroundColor: 'rgb(10, 20, 30)',
+      borderBlockStartColor: 'rgb(40, 50, 60)',
+      borderBlockStartStyle: 'solid',
+      borderBlockStartWidth: '2px',
+      borderStartStartRadius: '6px',
+      boxSizing: 'border-box',
+      fontSize: '16px',
+      lineHeight: '24px',
+      paddingBlockStart: '5px',
+      paddingInlineEnd: '7px',
+      paddingInlineStart: '3px',
+      textDecorationLine: 'none',
+      transitionDuration: '0.3s',
+      transitionProperty: 'color',
+      transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
+    });
+    expect(contentStyle.display).toBe('flex');
+    expect(contentStyle.alignItems).toBe('center');
+    expect(separatorStyle).toMatchObject({
+      color: 'rgb(70, 80, 90)',
+      display: 'flex',
+      fontSize: '12px',
+      paddingInlineEnd: '13px',
+      paddingInlineStart: '11px',
+    });
+  });
+
+  it('should use the current text color when marked as the current page', async () => {
+    const { root } = await render(
+      <bq-breadcrumb-item aria-current="page" style={{ '--bq-breadcrumb-item--text-color-current': 'rgb(20, 40, 60)' }}>
+        Current page
+      </bq-breadcrumb-item>,
+    );
+
+    const item = root.shadowRoot.querySelector('[part="item"]');
+
+    expect(getComputedStyle(item).color).toBe('rgb(20, 40, 60)');
+  });
+
+  it('should map logical padding to the RTL writing direction', async () => {
+    const { root } = await render(
+      <bq-breadcrumb-item
+        dir="rtl"
+        style={{
+          '--bq-breadcrumb-item--padding-end': '7px',
+          '--bq-breadcrumb-item--padding-start': '3px',
+        }}
+      >
+        Home
+      </bq-breadcrumb-item>,
+    );
+
+    const itemStyle = getComputedStyle(root.shadowRoot.querySelector('[part="item"]'));
+
+    expect(itemStyle.paddingLeft).toBe('7px');
+    expect(itemStyle.paddingRight).toBe('3px');
   });
 
   it('should derive the hover text color from the text color variable', async () => {
@@ -264,7 +349,8 @@ describe('bq-breadcrumb-item', () => {
     const item = root.shadowRoot.querySelector<HTMLElement>('[part="item"]');
     await userEvent.hover(item);
 
-    const expectedText = resolveColor('color-mix(in srgb, rgb(1, 2, 3), var(--bq-hover) 20%)');
+    root.style.setProperty('--expected-hover-color', 'color-mix(in srgb, rgb(1, 2, 3), var(--bq-hover) 20%)');
+    const expectedText = resolveColorToken('--expected-hover-color', root);
     await expect.poll(() => getComputedStyle(item).color).toBe(expectedText);
   });
 });

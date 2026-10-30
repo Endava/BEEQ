@@ -1,13 +1,35 @@
 /* -------------------------------------------------------------------------- */
-/*                                Steps styles                */
+/*                                Steps styles                                */
 /* -------------------------------------------------------------------------- */
 
 @import './bq-steps.variables';
 
+/* ---------------------------------- Host ---------------------------------- */
+
 :host {
-  @apply box-border inline-flex;
+  box-sizing: border-box;
+  display: inline-flex;
 }
 
+/* ---------------------------------- Base ---------------------------------- */
+
+.bq-steps {
+  position: relative;
+  display: inline-flex;
+  align-items: flex-start;
+  flex-direction: row;
+  justify-content: space-between;
+  inline-size: 100%;
+}
+
+/* -------------------------------- Variants -------------------------------- */
+
 :host([orientation='vertical']) {
-  @apply flex bs-full;
+  display: flex;
+  block-size: 100%;
+}
+
+:host([orientation='vertical']) .bq-steps {
+  flex-direction: column;
+  block-size: 100%;
 }

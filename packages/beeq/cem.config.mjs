@@ -61,7 +61,7 @@ export default {
   /** Files to exclude */
   exclude: [
     'packages/beeq/src/components/**/*.types.tsx',
-    'packages/beeq/src/components/**/_storybook/**/*',
+    'packages/beeq/src/components/**/__storybook__/**/*',
     'packages/beeq/src/components/**/__test__/**/*',
   ],
   /** Directory to write the output to */

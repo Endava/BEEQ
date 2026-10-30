@@ -1,100 +1,145 @@
 /* -------------------------------------------------------------------------- */
-/*                                Side menu styles                */
+/*                             Side menu styles                               */
 /* -------------------------------------------------------------------------- */
 
-@import './bq-side-menu.variables';
+@layer bq.reset, bq.tokens, bq.themes, bq.base, bq.public, bq.overrides,
+  bq-side-menu.tokens, bq-side-menu.base, bq-side-menu.structure, bq-side-menu.variants, bq-side-menu.states,
+  bq-side-menu.parts;
 
-:host {
-  @apply flex overflow-clip;
+@layer bq-side-menu.tokens {
+  @import './bq-side-menu.variables';
 }
 
-/* -------------------------------------------------------------------------- */
-/*                               Aside container                              */
-/* -------------------------------------------------------------------------- */
+/* ---------------------------------- Base ---------------------------------- */
 
-.bq-side-menu {
-  @apply fixed flex h-dynamic-vh grow flex-col bg-[--bq-side-menu--bg-color] is-[--bq-side-menu--width] inset-bs-0 inset-is-0;
-  @apply border-0 border-e-s border-solid border-[color:--bq-side-menu--border-color];
-  @apply transition-[background-color,width] duration-150;
-}
+@layer bq-side-menu.base {
+  :host {
+    display: flex;
+    overflow: clip;
+  }
 
-.bq-side-menu--nav {
-  @include hide-scrollbar;
-}
-
-.bq-side-menu.is-collapsed {
-  @apply is-[--bq-side-menu--width-collapse];
-}
-
-/* -------------------------------------------------------------------------- */
-/*                               Logo container                               */
-/* -------------------------------------------------------------------------- */
-
-.bq-side-menu--logo {
-  @apply sticky top-0 z-[1] p-xs;
-  @apply box-content flex items-center bg-[--bq-side-menu--bg-color] text-[color:--bq-side-menu--brand-color];
-}
-
-/* -------------------------------------------------------------------------- */
-/*                              Footer container                              */
-/* -------------------------------------------------------------------------- */
-
-.bq-side-menu--footer {
-  box-shadow: var(--bq-side-menu--footer-box-shadow);
-}
-
-/* -------------------------------------------------------------------------- */
-/*                                 APPEARANCE                                 */
-/* -------------------------------------------------------------------------- */
-
-/**
- * The following change the default values of some CSS custom properties
- * to make it complain with the side menu appearance selected
- */
-
-:host([size='small']) {
-  ::slotted(bq-side-menu-item) {
-    --bq-side-menu-item--paddingY: theme(space.s);
+  .bq-side-menu {
+    position: fixed;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    block-size: 100dvh;
+    inline-size: var(--bq-side-menu--width);
+    background-color: var(--bq-side-menu--bg-color);
+    border: 0;
+    border-inline-end: var(--bq-stroke-s) solid var(--bq-side-menu--border-color);
+    transition-duration: 150ms;
+    transition-property: background-color, inline-size;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
 
-:host([appearance='brand']) {
-  --bq-focus: var(--bq-text--on-brand);
-  --bq-side-menu--bg-color: var(--bq-ui--brand);
-  --bq-side-menu--brand-color: var(--bq-text--on-brand);
-  --bq-side-menu--border-color: var(--bq-stroke--brand);
+/* ------------------------------- Structure -------------------------------- */
 
-  ::slotted(bq-side-menu-item) {
+@layer bq-side-menu.structure {
+  .bq-side-menu__nav {
+    display: flex;
+    flex: 1 1 0%;
+    flex-direction: column;
+    row-gap: var(--bq-spacing-xs);
+    padding-block-start: var(--bq-spacing-xs);
+    padding-inline: var(--bq-spacing-xs);
+    overflow: auto;
+
+    @include hide-scrollbar;
+  }
+
+  .bq-side-menu__logo {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    padding: var(--bq-spacing-xs);
+    color: var(--bq-side-menu--brand-color);
+    background-color: var(--bq-side-menu--bg-color);
+  }
+
+  .bq-side-menu__footer {
+    position: sticky;
+    inset-block-end: 0;
+    display: flex;
+    justify-content: center;
+    padding: var(--bq-spacing-xs);
+    background-color: var(--bq-side-menu--bg-color);
+    box-shadow: var(--bq-side-menu--footer-box-shadow);
+  }
+}
+
+/* -------------------------------- Variants -------------------------------- */
+
+@layer bq-side-menu.variants {
+  :host([appearance='brand']) {
+    --bq-focus: var(--bq-text--on-brand);
+    --bq-side-menu--bg-color: var(--bq-ui--brand);
+    --bq-side-menu--brand-color: var(--bq-text--on-brand);
+    --bq-side-menu--border-color: var(--bq-stroke--brand);
+  }
+
+  :host([appearance='inverse']) {
+    --bq-side-menu--bg-color: var(--bq-ui--inverse);
+    --bq-side-menu--brand-color: var(--bq-text--inverse);
+    --bq-side-menu--border-color: var(--bq-stroke--inverse);
+  }
+}
+
+/* --------------------------------- States --------------------------------- */
+
+@layer bq-side-menu.states {
+  .bq-side-menu.is-collapsed {
+    inline-size: var(--bq-side-menu--width-collapse);
+  }
+}
+
+/* ---------------------------------- Parts --------------------------------- */
+
+@layer bq-side-menu.parts {
+  :host([size='small']) ::slotted(bq-side-menu-item) {
+    --bq-side-menu-item--paddingY: var(--bq-spacing-s);
+  }
+
+  :host([appearance='brand']) ::slotted(bq-side-menu-item) {
     --bq-side-menu-item--bg-hover: var(--bq-ui--brand);
-
     --bq-side-menu-item--text-default: var(--bq-text--on-brand);
     --bq-side-menu-item--text-hover: var(--bq-text--on-brand);
   }
 
-  .bq-side-menu--footer ::slotted([slot='footer']) {
-    --bq-ui--secondary: transparent;
-    --bq-button--icon-color: var(--bq-text--on-brand);
-    --bq-button-hover--icon-color: var(--bq-text--primary);
-  }
-}
-
-:host([appearance='inverse']) {
-  --bq-side-menu--bg-color: var(--bq-ui--inverse);
-  --bq-side-menu--brand-color: var(--bq-text--inverse);
-  --bq-side-menu--border-color: var(--bq-stroke--inverse);
-
-  ::slotted(bq-side-menu-item) {
+  :host([appearance='inverse']) ::slotted(bq-side-menu-item) {
     --bq-side-menu-item--bg-hover: var(--bq-ui--inverse);
     --bq-side-menu-item--bg-active: color-mix(in srgb, var(--bq-ui--alt), var(--bq-active) 20%);
-
     --bq-side-menu-item--text-default: var(--bq-text--inverse);
     --bq-side-menu-item--text-hover: var(--bq-text--inverse);
     --bq-side-menu-item--text-active: var(--bq-text--primary);
   }
 
-  .bq-side-menu--footer ::slotted([slot='footer']) {
+  :host([appearance='brand']) .bq-side-menu__footer ::slotted([slot='footer']) {
+    --bq-ui--secondary: transparent;
+    --bq-button--icon-color: var(--bq-text--on-brand);
+    --bq-button-hover--icon-color: var(--bq-text--primary);
+  }
+
+  :host([appearance='inverse']) .bq-side-menu__footer ::slotted([slot='footer']) {
     --bq-ui--secondary: transparent;
     --bq-button--icon-color: var(--bq-text--inverse);
     --bq-button-hover--icon-color: var(--bq-text--primary);
   }
+}
+
+/*
+ * The legacy unlayered reset overrides layered box-sizing and margin declarations.
+ * Keep these parity declarations unlayered until that reset participates in bq.reset.
+ */
+.bq-side-menu__logo {
+  box-sizing: content-box;
+}
+
+.bq-side-menu__footer {
+  margin-block-start: auto;
 }

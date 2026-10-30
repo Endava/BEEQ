@@ -293,21 +293,15 @@ export class BqAlert {
     };
 
     return (
-      <Host
-        aria-hidden={!this.open ? 'true' : 'false'}
-        class={{ 'is-sticky': this.sticky }}
-        hidden={!this.open ? 'true' : 'false'}
-        role="alert"
-        style={style}
-      >
+      <Host aria-hidden={!this.open ? 'true' : 'false'} role="alert" style={style}>
         <div
-          class={{ [`bq-alert bq-alert__${this.type}`]: true, 'is-sticky': this.sticky }}
-          data-transition-enter="transition ease-out duration-300"
-          data-transition-enter-end="opacity-100"
-          data-transition-enter-start="opacity-0"
-          data-transition-leave="transition ease-in duration-200"
-          data-transition-leave-end="opacity-0"
-          data-transition-leave-start="opacity-100"
+          class="bq-alert"
+          data-transition-enter="is-entering"
+          data-transition-enter-end="is-enter-end"
+          data-transition-enter-start="is-enter-start"
+          data-transition-leave="is-leaving"
+          data-transition-leave-end="is-leave-end"
+          data-transition-leave-start="is-leave-start"
           part="wrapper"
           ref={(div) => {
             this.alertElement = div;
@@ -318,7 +312,7 @@ export class BqAlert {
             <bq-button
               appearance="text"
               border="s"
-              class="absolute end-s [&::part(label)]:inline-flex"
+              class="bq-alert__close-button"
               exportparts="button:btn-close"
               label="Close alert"
               onBqClick={() => this.hide()}
@@ -331,33 +325,22 @@ export class BqAlert {
             </bq-button>
           )}
           {/* ICON */}
-          <div
-            class={{
-              [`bq-alert__icon--${this.type} me-s flex text-left align-top`]: true,
-              '!hidden': this.hideIcon,
-            }}
-            part="icon-outline"
-          >
+          <div class="bq-alert__icon" hidden={this.hideIcon} part="icon-outline">
             <slot name="icon">
               {this.type !== 'default' && <bq-icon exportparts="base,svg" name={this.iconName} part="icon" />}
             </slot>
           </div>
           {/* MAIN */}
-          <div class="flex flex-col items-start gap-[--bq-alert--content-footer-gap]" part="main">
-            <div class="flex flex-col gap-[--bq-alert--title-body-gap]" part="content">
+          <div class="bq-alert__main" part="main">
+            <div class="bq-alert__content" part="content">
               {/* TITLE */}
-              <div
-                class={{
-                  'title-font font-semibold leading-regular': true,
-                  'flex items-center': this.sticky,
-                }}
-                part="title"
-              >
+              <div class="bq-alert__title" part="title">
                 <slot />
               </div>
               {/* BODY */}
               <div
-                class={{ 'text-s leading-regular': true, '!hidden': !this.hasContent }}
+                class="bq-alert__body"
+                hidden={!this.hasContent}
                 part="body"
                 ref={(div) => {
                   this.bodyElem = div;
@@ -368,7 +351,8 @@ export class BqAlert {
             </div>
             {/* FOOTER */}
             <div
-              class={{ 'flex items-start gap-xs': true, '!hidden': !this.hasFooter }}
+              class="bq-alert__footer"
+              hidden={!this.hasFooter}
               part="footer"
               ref={(div) => {
                 this.footerElem = div;

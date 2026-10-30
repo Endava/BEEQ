@@ -1,0 +1,95 @@
+// Shared reset foundation for default.scss, the standalone reset.scss entrypoint and, through the
+// injected mixins/index.scss, every component stylesheet so each shadow root gets the same reset.
+// Load it with `@use` where a stylesheet can reach it twice: Sass emits a module once per compilation.
+@layer bq.reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  * {
+    margin-block: 0;
+    margin-inline: 0;
+  }
+
+  html {
+    font-family: var(--bq-font-family);
+    font-size: var(--bq-font-size--m);
+    text-size-adjust: none;
+  }
+
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-block-size: 100vb;
+    color: var(--bq-text--primary);
+    background-color: var(--bq-background--primary);
+    line-height: var(--bq-font-line-height--regular);
+  }
+
+  :where(a:not([class])) {
+    text-decoration-skip-ink: auto;
+  }
+
+  :where(img, picture, video, canvas, svg) {
+    display: block;
+    max-inline-size: 100%;
+  }
+
+  :where(button, input, optgroup, select, textarea) {
+    font: inherit;
+  }
+
+  :where(code, kbd, samp, pre) {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 1em;
+  }
+
+  :where(sub, sup) {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+  }
+
+  :where(sub) {
+    inset-block-end: -0.25em;
+  }
+
+  :where(sup) {
+    inset-block-start: -0.5em;
+  }
+
+  :where(p, h1, h2, h3, h4, h5, h6) {
+    overflow-wrap: break-word;
+  }
+
+  :where(dialog, [popover]) {
+    margin-block: auto;
+    margin-inline: auto;
+  }
+
+  :where(ul[role='list'], ol[role='list']) {
+    list-style-type: none;
+  }
+}
+
+/*
+ * Kept outside the cascade layers on purpose: unlayered rules win over every BEEQ layer,
+ * so native hidden state and reduced-motion preferences apply without `!important`.
+ */
+:where([hidden]:not([hidden='until-found'])) {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms;
+    animation-iteration-count: 1;
+    scroll-behavior: auto;
+    transition-duration: 0.01ms;
+  }
+}

@@ -1,12 +1,10 @@
 /* -------------------------------------------------------------------------- */
-/*                          Steps custom properties           */
+/*                          Steps custom properties                           */
 /* -------------------------------------------------------------------------- */
 
 :host {
   /**
-   * @prop --bq-steps--divider-color - Divider color
    * @prop --bq-steps--gap - Gap between steps
    */
-  --bq-steps--divider-color: var(--bq-stroke--primary);
-  --bq-steps--gap: theme(spacing.m);
+  --bq-steps--gap: var(--bq-spacing-m);
 }

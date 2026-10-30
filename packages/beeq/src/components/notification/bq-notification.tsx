@@ -26,7 +26,7 @@ const NOTIFICATION_PORTAL_SELECTOR = 'bq-notification-portal';
  *     This is some description text text
  *     <a class="bq-link" href="https://example.com">Link</a>
  *   </span>
- *   <div class="flex gap-xs" slot="footer">
+ *   <div slot="footer" style="display: flex; gap: var(--bq-spacing-xs)">
  *     <bq-button appearance="primary" size="small">Button</bq-button>
  *     <bq-button appearance="link" size="small">Button</bq-button>
  *   </div>
@@ -319,21 +319,15 @@ export class BqNotification {
     };
 
     return (
-      <Host
-        aria-hidden={!this.open ? 'true' : 'false'}
-        class={{ 'is-hidden': !this.open }}
-        hidden={!this.open ? 'true' : 'false'}
-        role="alert"
-        style={style}
-      >
+      <Host aria-hidden={!this.open ? 'true' : 'false'} hidden={!this.open} role="alert" style={style}>
         <div
           class="bq-notification"
-          data-transition-enter="transform transition ease-out duration-300"
-          data-transition-enter-end="translate-y-0 opacity-100 sm:translate-x-0"
-          data-transition-enter-start="translate-y-xs opacity-0 sm:translate-y-0 sm:translate-x-s"
-          data-transition-leave="transform transition ease-in duration-100"
-          data-transition-leave-end="-translate-y-xs opacity-0 sm:translate-y-0 sm:translate-x-s"
-          data-transition-leave-start="translate-y-0 opacity-100 sm:translate-x-0"
+          data-transition-enter="is-entering"
+          data-transition-enter-end="is-enter-end"
+          data-transition-enter-start="is-enter-start"
+          data-transition-leave="is-leaving"
+          data-transition-leave-end="is-leave-end"
+          data-transition-leave-start="is-leave-start"
           part="wrapper"
           ref={(div) => {
             this.notificationElem = div;
@@ -344,41 +338,35 @@ export class BqNotification {
             <bq-button
               appearance="text"
               border="s"
-              class="absolute inset-ie-m [&::part(button)]:p-0"
+              class="bq-notification__close"
               label="Close"
               onBqClick={() => this.hide()}
               onlyIcon
               part="btn-close"
               size="small"
             >
-              <slot class="flex" name="btn-close">
+              <slot class="bq-notification__close-slot" name="btn-close">
                 <bq-icon aria-hidden="true" name="x" />
               </slot>
             </bq-button>
           )}
           {/* ICON */}
-          <div
-            class={{
-              '!hidden': this.hideIcon,
-              [`color-${this.type}`]: true, // The icon color will be based on the type (info, success, warning, error)
-              'notification--icon me-xs flex text-left align-top': true,
-            }}
-            part="icon-outline"
-          >
+          <div class="bq-notification__icon" hidden={this.hideIcon} part="icon-outline">
             <slot name="icon">
               <bq-icon exportparts="base,svg" name={this.iconName} part="icon" />
             </slot>
           </div>
           {/* MAIN */}
-          <div class="flex flex-col items-start gap-[--bq-notification--content-footer-gap]" part="main">
-            <div class="flex flex-col gap-[--bq-notification--title-body-gap]" part="content">
+          <div class="bq-notification__main" part="main">
+            <div class="bq-notification__content" part="content">
               {/* TITLE */}
-              <div class="title-font font-semibold leading-regular" part="title">
+              <div class="bq-notification__title" part="title">
                 <slot />
               </div>
               {/* BODY */}
               <div
-                class={{ 'text-s leading-regular': true, '!hidden': !this.hasContent }}
+                class="bq-notification__body"
+                hidden={!this.hasContent}
                 part="body"
                 ref={(div) => {
                   this.bodyElem = div;
@@ -389,7 +377,8 @@ export class BqNotification {
             </div>
             {/* FOOTER */}
             <div
-              class={{ 'flex items-start gap-xs': true, '!hidden': !this.hasFooter }}
+              class="bq-notification__footer"
+              hidden={!this.hasFooter}
               part="footer"
               ref={(div) => {
                 this.footerElem = div;

@@ -203,7 +203,6 @@ We would like all our contributors to have the same experience while developing 
   - [SonarLint](https://marketplace.visualstudio.com/items?itemName=SonarSource.sonarlint-vscode)
   - [NX Console](https://marketplace.visualstudio.com/items?itemName=nrwl.angular-console)
   - [Stencil Snippets](https://marketplace.visualstudio.com/items?itemName=fdom.stencil-snippets)
-  - [Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss)
   - [Lit HTML](https://marketplace.visualstudio.com/items?itemName=bierner.lit-html)
   - [Lit Plugin](https://marketplace.visualstudio.com/items?itemName=runem.lit-plugin)
   - [HTML CSS Support](https://marketplace.visualstudio.com/items?itemName=ecmel.vscode-html-css)

@@ -1,111 +1,169 @@
 /* -------------------------------------------------------------------------- */
-/*                                Textarea styles                */
+/*                               Textarea styles                              */
 /* -------------------------------------------------------------------------- */
 
-@import './bq-textarea.variables';
+@layer bq.reset, bq.tokens, bq.themes, bq.base, bq.public, bq.overrides,
+  bq-textarea.tokens, bq-textarea.base, bq-textarea.structure, bq-textarea.validation, bq-textarea.states,
+  bq-textarea.native;
 
-:host {
-  @apply block is-full;
+@layer bq-textarea.tokens {
+  @import './bq-textarea.variables';
 }
 
-/* -------------------------------------------------------------------------- */
-/*                                    Label                                   */
-/* -------------------------------------------------------------------------- */
+/* ---------------------------------- Base ---------------------------------- */
 
+@layer bq-textarea.base {
+  :host {
+    display: block;
+    inline-size: 100%;
+  }
+
+  .bq-textarea {
+    box-sizing: border-box;
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+  }
+}
+
+/* ------------------------------- Structure -------------------------------- */
+
+@layer bq-textarea.structure {
+  .bq-textarea__label {
+    color: var(--bq-textarea--label-text-color);
+    font-size: var(--bq-textarea--label-text-size);
+  }
+
+  .bq-textarea__helper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--bq-textarea--helper-text-color);
+    font-size: var(--bq-textarea--helper-text-size);
+  }
+
+  .bq-textarea__helper--counter {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/*
+ * Keep these spacing rules unlayered to preserve the current label and helper
+ * text layout. The shadow-root reset is also unlayered, so its `margin: 0`
+ * outranks normal declarations in every named component layer, regardless of
+ * selector specificity. Move these rules into `bq-textarea.structure` once the
+ * reset itself is assigned to `bq.reset`.
+ */
 .bq-textarea__label {
-  @apply text-[length:--bq-textarea--label-text-size] text-[color:--bq-textarea--label-text-color] m-be-[--bq-textarea--label-margin-bottom];
+  margin-block-end: var(--bq-textarea--label-margin-bottom);
 }
-
-/* -------------------------------------------------------------------------- */
-/*                        Native HTML Textarea control                        */
-/* -------------------------------------------------------------------------- */
-
-.bq-textarea__input {
-  @apply flex-auto resize-y bg-[--bq-textarea--background-color] bs-[inherit];
-  // Border
-  @apply rounded-[--bq-textarea--border-radius] border-[length:--bq-textarea--border-width] border-[color:--bq-textarea--border-color];
-  // Padding
-  @apply pe-[--bq-textarea--padding-end] ps-[--bq-textarea--padding-start] p-b-[--bq-textarea--paddingY];
-  // Text
-  @apply text-[length:--bq-textarea--text-size] text-[color:--bq-textarea--text-color] placeholder:text-[color:--bq-textarea--text-placeholder-color];
-  // Transition
-  @apply transition-colors ease-in-out;
-  // Hover
-  @apply [&:not([disabled]):not(:focus-within)]:hover:border-hover-brand;
-  // Disabled
-  @apply disabled:cursor-not-allowed disabled:opacity-60;
-  // Focus
-  &:not([disabled]):focus-within {
-    --bq-ring-width: 1px;
-    --bq-ring-offset-width: 0;
-    --bq-ring-color-focus: var(--bq-textarea--border-color-focus);
-
-    @apply focus border-[color:--bq-ring-color-focus];
-  }
-}
-
-/* ------------------------------- Validations ------------------------------- */
-
-.bq-textarea__input.validation-error {
-  @apply border-[color:--bq-textarea--border-color-danger];
-  @apply [&:not(.disabled):not(:focus-within)]:hover:border-[color:color-mix(in_srgb,_var(--bq-textarea--border-color-danger),_var(--bq-hover)_20%)];
-
-  &:not(.disabled):focus-within {
-    --bq-ring-color-focus: var(--bq-textarea--border-color-danger);
-
-    @apply border-[color:color-mix(in_srgb,_var(--bq-textarea--border-color-danger),_var(--bq-active)_20%)];
-  }
-}
-
-.bq-textarea__input.validation-success {
-  @apply border-[color:--bq-textarea--border-color-success];
-  @apply [&:not(.disabled):not(:focus-within)]:hover:border-[color:color-mix(in_srgb,_var(--bq-textarea--border-color-success),_var(--bq-hover)_20%)];
-
-  &:not(.disabled):focus-within {
-    --bq-ring-color-focus: var(--bq-textarea--border-color-success);
-
-    @apply border-[color:color-mix(in_srgb,_var(--bq-textarea--border-color-success),_var(--bq-active)_20%)];
-  }
-}
-
-.bq-textarea__input.validation-warning {
-  @apply border-[color:--bq-textarea--border-color-warning];
-  @apply [&:not(.disabled):not(:focus-within)]:hover:border-[color:color-mix(in_srgb,_var(--bq-textarea--border-color-warning),_var(--bq-hover)_20%)];
-
-  &:not(.disabled):focus-within {
-    --bq-ring-color-focus: var(--bq-textarea--border-color-warning);
-
-    @apply border-[color:color-mix(in_srgb,_var(--bq-textarea--border-color-warning),_var(--bq-active)_20%)];
-  }
-}
-
-/* -------------------------------------------------------------------------- */
-/*                                 Helper text                                */
-/* -------------------------------------------------------------------------- */
 
 .bq-textarea__helper {
-  @apply text-[length:--bq-textarea--helper-text-size] text-[color:--bq-textarea--helper-text-color] m-bs-[--bq-textarea--helper-margin-top];
+  margin-block-start: var(--bq-textarea--helper-margin-top);
 }
 
-/* ------------------------------- Validations ------------------------------ */
+/* ------------------------------- Validation ------------------------------- */
 
-.bq-textarea__helper.validation-error {
-  @apply text-[color:--bq-textarea--helper-text-color-danger];
+@layer bq-textarea.validation {
+  .bq-textarea__input.validation-error {
+    --bq-textarea--validation-color: var(--bq-textarea--border-color-danger);
+    --_textarea-border-color: var(--bq-textarea--validation-color);
+  }
+
+  .bq-textarea__input.validation-success {
+    --bq-textarea--validation-color: var(--bq-textarea--border-color-success);
+    --_textarea-border-color: var(--bq-textarea--validation-color);
+  }
+
+  .bq-textarea__input.validation-warning {
+    --bq-textarea--validation-color: var(--bq-textarea--border-color-warning);
+    --_textarea-border-color: var(--bq-textarea--validation-color);
+  }
+
+  .bq-textarea__input:is(.validation-error, .validation-success, .validation-warning) {
+    &:not(:disabled, :focus-within):hover {
+      @include bq-color-mix(--_textarea-border-color, var(--bq-textarea--validation-color), hover, 20%);
+    }
+
+    &:not(:disabled):focus-within {
+      --bq-ring-color-focus: var(--bq-textarea--validation-color);
+
+      @include bq-color-mix(--_textarea-border-color, var(--bq-textarea--validation-color), active, 20%);
+    }
+  }
+
+  .bq-textarea__helper.validation-error {
+    color: var(--bq-textarea--helper-text-color-danger);
+  }
+
+  .bq-textarea__helper.validation-success {
+    color: var(--bq-textarea--helper-text-color-success);
+  }
+
+  .bq-textarea__helper.validation-warning {
+    color: var(--bq-textarea--helper-text-color-warning);
+  }
 }
 
-.bq-textarea__helper.validation-success {
-  @apply text-[color:--bq-textarea--helper-text-color-success];
+/* --------------------------------- States --------------------------------- */
+
+@layer bq-textarea.states {
+  .bq-textarea__input {
+    &:not(:disabled, .validation-error, .validation-success, .validation-warning, :focus-within):hover {
+      @include bq-color-mix(--_textarea-border-color, var(--bq-stroke--brand), hover);
+    }
+
+    &:not(:disabled):focus-within {
+      --bq-ring-width: 1px;
+      --bq-ring-offset-width: 0;
+
+      @include bq-focus-ring;
+    }
+
+    &:not(:disabled, .validation-error, .validation-success, .validation-warning):focus-within {
+      --bq-ring-color-focus: var(--bq-textarea--border-color-focus);
+      --_textarea-border-color: var(--bq-textarea--border-color-focus);
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: var(--bq-disabled-opacity, 0.6);
+    }
+
+    &.is-resize-disabled {
+      --_textarea-resize: none;
+    }
+  }
+
+  .bq-textarea__helper.validation-none .bq-textarea__helper--counter {
+    opacity: var(--bq-disabled-opacity, 0.6);
+  }
 }
 
-.bq-textarea__helper.validation-warning {
-  @apply text-[color:--bq-textarea--helper-text-color-warning];
-}
+/* --------------------------- Native HTML textarea ------------------------- */
 
-/* ----------------------------- Helper counter ----------------------------- */
+@layer bq-textarea.native {
+  .bq-textarea__input {
+    box-sizing: border-box;
+    flex: 1 1 auto;
+    block-size: inherit;
+    padding-block: var(--bq-textarea--paddingY);
+    padding-inline: var(--bq-textarea--padding-start) var(--bq-textarea--padding-end);
+    color: var(--bq-textarea--text-color);
+    font: inherit;
+    font-size: var(--bq-textarea--text-size);
+    resize: var(--_textarea-resize, vertical);
+    background-color: var(--bq-textarea--background-color);
+    border-color: var(--_textarea-border-color, var(--bq-textarea--border-color));
+    border-radius: var(--bq-textarea--border-radius);
+    border-style: var(--bq-textarea--border-style);
+    border-width: var(--bq-textarea--border-width);
+    transition-timing-function: ease-in-out;
+    transition-duration: 150ms;
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  }
 
-/** Apply a disabled text color style to the textarea counter when the validation is none. */
-.bq-textarea__helper[class~='validation-none'] {
-  .bq-textarea__helper--counter {
-    @apply opacity-60;
+  .bq-textarea__input::placeholder {
+    color: var(--bq-textarea--text-placeholder-color);
   }
 }

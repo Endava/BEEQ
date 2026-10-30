@@ -204,7 +204,7 @@ export class BqRadio {
       <Host>
         <label
           class={{
-            'bq-radio group': true,
+            'bq-radio': true,
             'is-disabled': this.isDisabled,
             'is-checked': this.checked,
             'has-background': this.backgroundOnHover,

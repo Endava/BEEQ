@@ -11,11 +11,11 @@ import { DRAWER_PLACEMENT, DRAWER_POSITIONS } from './bq-drawer.types';
  * @example How to use it
  * ```html
  * <bq-drawer position="end">
- *   <div class="flex gap-xs" slot="title">Title</div>
- *   <div class="...">
+ *   <div slot="title" style="display: flex; gap: var(--bq-spacing-xs)">Title</div>
+ *   <div>
  *     Content
  *   </div>
- *   <div class="flex flex-1 justify-center gap-xs" slot="footer">
+ *   <div slot="footer" style="display: flex; flex: 1; justify-content: center; gap: var(--bq-spacing-xs)">
  *     <bq-button appearance="primary" block="" size="small">Button</bq-button>
  *     <bq-button appearance="link" block="" size="small">Button</bq-button>
  *   </div>
@@ -274,16 +274,6 @@ export class BqDrawer {
     this.el.classList.remove(this.OPEN_CSS_CLASS);
   };
 
-  private get isPositionStart() {
-    // !TO BE REMOVED: `placement` is deprecated and will be removed in the future
-    return this.position === 'start' || this.placement === 'left';
-  }
-
-  private get isPositionEnd() {
-    // !TO BE REMOVED: `placement` is deprecated and will be removed in the future
-    return this.position === 'end' || this.placement === 'right';
-  }
-
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -292,29 +282,13 @@ export class BqDrawer {
     return (
       <Host>
         {/* BACKDROP */}
-        {this.enableBackdrop && (
-          <div
-            class={{
-              'fixed inset-0 block bg-[--bq-drawer--backgroundBackdrop] opacity-0 transition-opacity duration-300': true,
-              'pointer-events-none': !this.open,
-              'opacity-60': this.open,
-            }}
-            part="backdrop"
-            tabIndex={-1}
-          />
-        )}
+        {this.enableBackdrop && <div class="bq-drawer__backdrop" part="backdrop" tabIndex={-1} />}
         {/* DRAWER PANEL */}
         <div
           aria-hidden={!this.open ? 'true' : 'false'}
           aria-labelledby="bq-drawer__title"
           aria-modal="true"
-          class={{
-            [`bq-drawer transition-all duration-300 ease-in-out ${this.position || this.placement}`]: true,
-            '-start-[--bq-drawer--width]': this.isPositionStart,
-            '-end-[--bq-drawer--width]': this.isPositionEnd,
-            'start-0': this.open && this.isPositionStart,
-            'end-0': this.open && this.isPositionEnd,
-          }}
+          class="bq-drawer"
           hidden={!this.open}
           part="panel"
           ref={(div) => {
@@ -322,19 +296,15 @@ export class BqDrawer {
           }}
           role="dialog"
         >
-          <header class="flex items-center" part="header">
-            <h2
-              class="flex-1 items-center justify-between font-bold text-xl leading-regular"
-              id="bq-drawer__title"
-              part="title"
-            >
+          <header class="bq-drawer__header" part="header">
+            <h2 class="bq-drawer__title" id="bq-drawer__title" part="title">
               <slot name="title" />
             </h2>
-            <div class="flex" part="button-close">
+            <div class="bq-drawer__close" part="button-close">
               <bq-button
                 appearance="text"
                 border="s"
-                class="[&::part(label)]:inline-flex"
+                class="bq-drawer__close-button"
                 exportparts="button:button-close__btn,label:button-close__label"
                 label="Close"
                 onBqClick={() => this.hide()}
@@ -348,21 +318,19 @@ export class BqDrawer {
               </bq-button>
             </div>
           </header>
-          <main class="block flex-auto overflow-auto" part="body">
+          <main class="bq-drawer__body" part="body">
             <slot />
           </main>
           <footer
-            class={{
-              block: true,
-              '!hidden': !this.hasFooter,
-            }}
+            class="bq-drawer__footer"
+            hidden={!this.hasFooter}
             part="footer"
             ref={(footerElem) => {
               this.footerElem = footerElem;
             }}
           >
             <slot name="footer-divider">
-              <bq-divider class="mb-m block" dashed />
+              <bq-divider class="bq-drawer__footer-divider" dashed />
             </slot>
             <slot name="footer" onSlotchange={this.handleFooterSlotChange} />
           </footer>

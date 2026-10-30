@@ -31,37 +31,37 @@
    * @prop --bq-select--text-size - Select text size
    * @prop --bq-select--text-placeholder-color - Select placeholder text color
    */
-  --bq-select--background-color: theme(backgroundColor.ui.primary);
+  --bq-select--background-color: var(--bq-ui--primary);
 
-  --bq-select--border-color: theme(stroke.tertiary);
-  --bq-select--border-color-focus: theme(stroke.brand);
+  --bq-select--border-color: var(--bq-stroke--tertiary);
+  --bq-select--border-color-focus: var(--bq-stroke--brand);
   --bq-select--border-color-danger: var(--bq-stroke--danger);
   --bq-select--border-color-success: var(--bq-stroke--success);
   --bq-select--border-color-warning: var(--bq-stroke--warning);
-  --bq-select--border-radius: theme(borderRadius.s);
-  --bq-select--border-width: theme(borderWidth.s);
+  --bq-select--border-radius: var(--bq-radius--s);
+  --bq-select--border-width: var(--bq-stroke-s);
   --bq-select--border-style: solid;
 
-  --bq-select--gap: theme(spacing.xs);
+  --bq-select--gap: var(--bq-spacing-xs);
 
-  --bq-select--helper-margin-top: theme(spacing.xs);
-  --bq-select--helper-text-size: theme(fontSize.s);
-  --bq-select--helper-text-color: theme(textColor.primary);
+  --bq-select--helper-margin-top: var(--bq-spacing-xs);
+  --bq-select--helper-text-size: var(--bq-font-size--s);
+  --bq-select--helper-text-color: var(--bq-text--primary);
   --bq-select--helper-text-color-danger: var(--bq-text--danger);
   --bq-select--helper-text-color-success: var(--bq-text--success);
   --bq-select--helper-text-color-warning: var(--bq-text--warning);
 
   --bq-select--icon-size: 24px;
 
-  --bq-select--label-margin-bottom: theme(spacing.xs);
-  --bq-select--label-text-size: theme(fontSize.s);
-  --bq-select--label-text-color: theme(textColor.primary);
+  --bq-select--label-margin-bottom: var(--bq-spacing-xs);
+  --bq-select--label-text-size: var(--bq-font-size--s);
+  --bq-select--label-text-color: var(--bq-text--primary);
 
   --bq-select--padding-start: calc(var(--bq-spacing-m) - var(--bq-select--border-width));
   --bq-select--padding-end: calc(var(--bq-spacing-m) - var(--bq-select--border-width));
   --bq-select--paddingY: calc(var(--bq-spacing-s) - var(--bq-select--border-width));
 
-  --bq-select--text-color: theme(textColor.primary);
-  --bq-select--text-size: theme(fontSize.m);
-  --bq-select--text-placeholder-color: theme(textColor.secondary);
+  --bq-select--text-color: var(--bq-text--primary);
+  --bq-select--text-size: var(--bq-font-size--m);
+  --bq-select--text-placeholder-color: var(--bq-text--secondary);
 }

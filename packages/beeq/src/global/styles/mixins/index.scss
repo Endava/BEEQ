@@ -2,5 +2,13 @@
  * The mixins are imported via the globalStyle option in the stencil.config.ts file.
  * @see packages/beeq/stencil.config.ts
  */
+
+// Not a mixin: emits the shared reset so every component shadow root receives it in `bq.reset`.
+@use '../foundations/reset';
+@import './color-mix';
+@import './focus-ring';
 @import './keyframes';
+@import './logical';
 @import './scrollbar';
+@import './typography';
+@import './visibility';

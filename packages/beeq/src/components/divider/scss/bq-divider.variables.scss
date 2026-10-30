@@ -1,5 +1,5 @@
 /* -------------------------------------------------------------------------- */
-/*                          Divider custom properties                          */
+/*                          Divider custom properties                         */
 /* -------------------------------------------------------------------------- */
 
 :host {
@@ -8,5 +8,5 @@
    * @prop --bq-divider--title-marginX - Divider space between title and delimiters
    */
   --bq-divider--color: var(--bq-stroke--primary);
-  --bq-divider--title-marginX: theme(spacing.m);
+  --bq-divider--title-marginX: var(--bq-spacing-m);
 }

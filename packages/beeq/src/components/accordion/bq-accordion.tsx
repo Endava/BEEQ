@@ -315,7 +315,9 @@ export class BqAccordion {
     return (
       <details
         class={{
-          [`bq-accordion overflow-hidden ${this.size} ${this.appearance}`]: true,
+          'bq-accordion': true,
+          [this.size]: true,
+          [this.appearance]: true,
           'no-animation': this.noAnimation,
           disabled: this.disabled,
         }}
@@ -339,7 +341,8 @@ export class BqAccordion {
           tabindex={this.disabled ? -1 : 0}
         >
           <div
-            class={{ 'bq-accordion__header--prefix': true, '!hidden': !this.hasPrefix }}
+            class="bq-accordion__header--prefix"
+            hidden={!this.hasPrefix}
             part="prefix"
             ref={(element) => {
               this.prefixElem = element;
@@ -351,7 +354,8 @@ export class BqAccordion {
             <slot name="header" />
           </div>
           <div
-            class={{ 'bq-accordion__header--suffix': true, '!hidden': !this.hasSuffix }}
+            class="bq-accordion__header--suffix"
+            hidden={!this.hasSuffix}
             part="suffix"
             ref={(element) => {
               this.suffixElem = element;
@@ -362,10 +366,11 @@ export class BqAccordion {
           <div
             aria-hidden="true"
             class={{
-              'bq-accordion__header--icon transition-transform duration-300 ease-in-out': true,
-              '!hidden': this.open && !this.rotate,
-              'rotate-180': this.rotate && this.open,
+              'bq-accordion__header--icon': true,
+              'bq-accordion__header--icon-expand': true,
+              'is-open': this.rotate && this.open,
             }}
+            hidden={this.open && !this.rotate}
           >
             <slot name="expand">
               <bq-icon name="plus" />
@@ -373,10 +378,8 @@ export class BqAccordion {
           </div>
           <div
             aria-hidden="true"
-            class={{
-              'bq-accordion__header--icon': true,
-              '!hidden': (!this.open && !this.rotate) || this.rotate,
-            }}
+            class="bq-accordion__header--icon"
+            hidden={(!this.open && !this.rotate) || this.rotate}
           >
             <slot name="collapse">
               <bq-icon name="minus" />
@@ -384,7 +387,7 @@ export class BqAccordion {
           </div>
         </summary>
         <div aria-labelledby="bq-accordion__header" class="bq-accordion__body" part="panel" role="region">
-          <slot class="bq-accordion__content block" id="bq-accordion__content" />
+          <slot class="bq-accordion__content" id="bq-accordion__content" />
         </div>
       </details>
     );

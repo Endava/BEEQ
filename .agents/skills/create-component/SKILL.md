@@ -56,9 +56,12 @@ Use the JSDoc template in the components instructions. List every prop, event, m
 ### 5. Style the component (`scss/bq-<name>.scss`)
 
 - Import variables file: `@import './bq-<name>.variables'`
-- Use Tailwind `@apply` for abstracting long utility combinations
+- Use native SCSS/CSS.
 - Define CSS custom properties (e.g. `--bq-name--border-radius`) in `bq-<name>.variables.scss`
-- Follow BEM for any extra class names
+- Use BEEQ semantic classes only where stable styling hooks are needed, e.g. `.bq-name` and `.bq-name__content`.
+- Use CSS logical properties for layout, sizing, spacing, positioning, borders, and radii.
+- Use shared SCSS mixins for repeated focus, hover, and active patterns.
+- Keep SCSS nesting depth at `2` or less.
 
 ## 6. After all files are created and implemented, ask the user:
 

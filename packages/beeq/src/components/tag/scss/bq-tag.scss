@@ -1,194 +1,209 @@
 /* -------------------------------------------------------------------------- */
-/*                        Tag styles                        */
+/*                                 Tag styles                                 */
 /* -------------------------------------------------------------------------- */
 
-@import './bq-tag.variables';
+@use 'sass:meta';
+@layer bq.reset, bq.tokens, bq.themes, bq.base, bq.public, bq.overrides,
+  bq-tag.tokens, bq-tag.base, bq-tag.structure, bq-tag.variants, bq-tag.states, bq-tag.parts;
 
-:host {
-  @apply relative inline-block;
+@layer bq-tag.tokens {
+  @include meta.load-css('./bq-tag.variables');
 }
 
-:host([hidden]) {
-  @apply hidden;
-}
+/* ---------------------------------- Host ---------------------------------- */
 
-.bq-tag {
-  @apply box-border inline-flex select-none flex-row items-center justify-center bg-[--bq-tag--background-color];
-  @apply gap-[--bq-tag--medium-gap] font-medium leading-regular text-[color:--bq-tag--text-color] p-b-[--bq-tag--medium-padding-y] p-i-[--bq-tag--medium-padding-x];
-  @apply rounded-[--bq-tag--border-radius] border-[length:--bq-tag--border-width] border-[color:--bq-tag--border-color];
-  @apply transition-colors duration-300 ease-in-out;
+@layer bq-tag.base {
+  :host {
+    position: relative;
+    display: inline-block;
+  }
 
-  border-style: var(--bq-tag--border-style);
-}
-
-.bq-tag__close bq-icon {
-  --bq-icon--color: var(--bq-tag--text-color);
-}
-
-/* ---------------------------------- Size ---------------------------------- */
-
-.bq-tag__xsmall,
-.bq-tag__small {
-  @apply gap-[--bq-tag--small-gap] p-b-[--bq-tag--small-padding-y] p-i-[--bq-tag--small-padding-x];
-
-  /* Apply predefined border radius only if the border property have NO VALUE */
-  &:not(.has-border) {
-    @apply rounded-[--bq-tag--small-border-radius];
+  :host([hidden]) {
+    display: none;
   }
 }
 
-/* --------------------------------- Action --------------------------------- */
+/* ---------------------------------- Base ---------------------------------- */
 
-.bq-tag__default.is-clickable {
-  @apply cursor-pointer;
-  // Focus
-  @apply focus-visible:focus;
-  // Hover
-  @apply hover:enabled:bg-[color-mix(in_srgb,_var(--bq-tag--background-color),_var(--bq-hover)_20%)];
-  // Disabled
-  @apply disabled:cursor-not-allowed disabled:border-none disabled:opacity-60;
+@layer bq-tag.base {
+  .bq-tag {
+    --_tag-background-color: var(--bq-tag--background-color);
+    --_tag-border-color: var(--bq-tag--border-color);
+    --_tag-border-radius: var(--bq-tag--border-radius);
+    --_tag-gap: var(--bq-tag--medium-gap);
+    --_tag-icon-prefix-size: var(--bq-tag--icon-prefix-size, 24px);
+    --_tag-padding-block: var(--bq-tag--medium-padding-y);
+    --_tag-padding-inline: var(--bq-tag--medium-padding-x);
+    --_tag-text-color: var(--bq-tag--text-color);
+    --_tag-text-font-size: var(--bq-font-size--m);
 
-  // Active/Selected
-  &.active {
-    @apply bg-[--bq-tag--background-selected] text-[color:--bq-tag--text-selected];
-    @apply hover:enabled:bg-[color-mix(in_srgb,_var(--bq-tag--background-selected),_var(--bq-hover)_20%)];
+    box-sizing: border-box;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: var(--_tag-gap);
+    padding-block: var(--_tag-padding-block);
+    padding-inline: var(--_tag-padding-inline);
+    color: var(--_tag-text-color);
+    font-weight: var(--bq-font-weight--medium);
+    line-height: var(--bq-font-line-height--regular);
+    user-select: none;
+    background-color: var(--_tag-background-color);
+    border-color: var(--_tag-border-color);
+    border-radius: var(--_tag-border-radius);
+    border-style: var(--bq-tag--border-style);
+    border-width: var(--bq-tag--border-width);
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
   }
 }
 
-/* ------------------------------ Color styles ------------------------------ */
+/* ------------------------------- Structure -------------------------------- */
 
-.bq-tag__error {
-  &.bq-tag__filled {
-    @apply bg-[--bq-tag--background-error-filled] text-[color:--bq-tag--text-error-filled];
-
-    .bq-tag__close bq-icon {
-      --bq-icon--color: var(--bq-tag--text-error-filled);
-    }
-
-    .bq-tag__close::part(button) {
-      @apply hover:bg-[color-mix(in_srgb,_var(--bq-tag--background-error-filled),_var(--bq-hover)_20%)] active:bg-[color-mix(in_srgb,_var(--bq-tag--background-error-filled),_var(--bq-active)_20%)];
-    }
+@layer bq-tag.structure {
+  .bq-tag__prefix {
+    display: inline-flex;
   }
 
-  &.bq-tag__outline {
-    @apply border-[color:--bq-tag--border-error-outline] bg-[--bq-tag--background-error-outline] text-[color:--bq-tag--text-error-outline];
-
-    .bq-tag__close bq-icon {
-      --bq-icon--color: var(--bq-tag--text-error-outline);
-    }
-
-    .bq-tag__close::part(button) {
-      @apply hover:bg-[color-mix(in_srgb,_var(--bq-tag--background-error-outline),_var(--bq-hover)_20%)] active:bg-[color-mix(in_srgb,_var(--bq-tag--background-error-outline),_var(--bq-active)_20%)];
-    }
+  .bq-tag__text {
+    font-size: var(--_tag-text-font-size);
   }
 }
 
-.bq-tag__gray {
-  &.bq-tag__filled {
-    @apply bg-[--bq-tag--background-gray-filled] text-[color:--bq-tag--text-gray-filled];
+/* -------------------------------- Variants -------------------------------- */
 
-    .bq-tag__close bq-icon {
-      --bq-icon--color: var(--bq-tag--text-gray-filled);
-    }
-
-    .bq-tag__close::part(button) {
-      @apply hover:bg-[color-mix(in_srgb,_var(--bq-tag--background-gray-filled),_var(--bq-hover)_20%)] active:bg-[color-mix(in_srgb,_var(--bq-tag--background-gray-filled),_var(--bq-active)_20%)];
-    }
+@layer bq-tag.variants {
+  :host([size='xsmall']:not([border])) .bq-tag,
+  :host([size='small']:not([border])) .bq-tag {
+    --_tag-border-radius: var(--bq-tag--small-border-radius);
   }
 
-  &.bq-tag__outline {
-    @apply border-[color:--bq-tag--border-gray-outline] bg-[--bq-tag--background-gray-outline] text-[color:--bq-tag--text-gray-outline];
-
-    .bq-tag__close bq-icon {
-      --bq-icon--color: var(--bq-tag--text-gray-outline);
-    }
-
-    .bq-tag__close::part(button) {
-      @apply hover:bg-[color-mix(in_srgb,_var(--bq-tag--background-gray-outline),_var(--bq-hover)_20%)] active:bg-[color-mix(in_srgb,_var(--bq-tag--background-gray-outline),_var(--bq-active)_20%)];
-    }
-  }
-}
-
-.bq-tag__info {
-  &.bq-tag__filled {
-    @apply bg-[--bq-tag--background-info-filled] text-[color:--bq-tag--text-info-filled];
-
-    .bq-tag__close bq-icon {
-      --bq-icon--color: var(--bq-tag--text-info-filled);
-    }
-
-    .bq-tag__close::part(button) {
-      @apply hover:bg-[color-mix(in_srgb,_var(--bq-tag--background-info-filled),_var(--bq-hover)_20%)] active:bg-[color-mix(in_srgb,_var(--bq-tag--background-info-filled),_var(--bq-active)_20%)];
-    }
+  :host([size='xsmall']) .bq-tag,
+  :host([size='small']) .bq-tag {
+    --_tag-gap: var(--bq-tag--small-gap);
+    --_tag-padding-block: var(--bq-tag--small-padding-y);
+    --_tag-padding-inline: var(--bq-tag--small-padding-x);
   }
 
-  &.bq-tag__outline {
-    @apply border-[color:--bq-tag--border-info-outline] bg-[--bq-tag--background-info-outline] text-[color:--bq-tag--text-info-outline];
-
-    .bq-tag__close bq-icon {
-      --bq-icon--color: var(--bq-tag--text-info-outline);
-    }
-
-    .bq-tag__close::part(button) {
-      @apply hover:bg-[color-mix(in_srgb,_var(--bq-tag--background-info-outline),_var(--bq-hover)_20%)] active:bg-[color-mix(in_srgb,_var(--bq-tag--background-info-outline),_var(--bq-active)_20%)];
-    }
-  }
-}
-
-.bq-tag__success {
-  &.bq-tag__filled {
-    @apply bg-[--bq-tag--background-success-filled] text-[color:--bq-tag--text-success-filled];
-
-    .bq-tag__close bq-icon {
-      --bq-icon--color: var(--bq-tag--text-success-filled);
-    }
-
-    .bq-tag__close::part(button) {
-      @apply hover:bg-[color-mix(in_srgb,_var(--bq-tag--background-success-filled),_var(--bq-hover)_20%)] active:bg-[color-mix(in_srgb,_var(--bq-tag--background-success-filled),_var(--bq-active)_20%)];
-    }
+  :host([size='xsmall']) .bq-tag {
+    --_tag-text-font-size: var(--bq-font-size--xs);
   }
 
-  &.bq-tag__outline {
-    @apply border-[color:--bq-tag--border-success-outline] bg-[--bq-tag--background-success-outline] text-[color:--bq-tag--text-success-outline];
-
-    .bq-tag__close bq-icon {
-      --bq-icon--color: var(--bq-tag--text-success-outline);
-    }
-
-    .bq-tag__close::part(button) {
-      @apply hover:bg-[color-mix(in_srgb,_var(--bq-tag--background-success-outline),_var(--bq-hover)_20%)] active:bg-[color-mix(in_srgb,_var(--bq-tag--background-success-outline),_var(--bq-active)_20%)];
-    }
-  }
-}
-
-.bq-tag__warning {
-  &.bq-tag__filled {
-    @apply bg-[--bq-tag--background-warning-filled] text-[color:--bq-tag--text-warning-filled];
-
-    .bq-tag__close bq-icon {
-      --bq-icon--color: var(--bq-tag--text-warning-filled);
-    }
-
-    .bq-tag__close::part(button) {
-      @apply hover:bg-[color-mix(in_srgb,_var(--bq-tag--background-warning-filled),_var(--bq-hover)_20%)] active:bg-[color-mix(in_srgb,_var(--bq-tag--background-warning-filled),_var(--bq-active)_20%)];
-    }
+  :host([size='small']) .bq-tag {
+    --_tag-text-font-size: var(--bq-font-size--s);
   }
 
-  &.bq-tag__outline {
-    @apply border-[color:--bq-tag--border-warning-outline] bg-[--bq-tag--background-warning-outline] text-[color:--bq-tag--text-warning-outline];
+  :host([color='error'][variant='filled']) .bq-tag {
+    --_tag-background-color: var(--bq-tag--background-error-filled);
+    --_tag-text-color: var(--bq-tag--text-error-filled);
+  }
 
-    .bq-tag__close bq-icon {
-      --bq-icon--color: var(--bq-tag--text-warning-outline);
-    }
+  :host([color='error'][variant='outline']) .bq-tag {
+    --_tag-background-color: var(--bq-tag--background-error-outline);
+    --_tag-border-color: var(--bq-tag--border-error-outline);
+    --_tag-text-color: var(--bq-tag--text-error-outline);
+  }
 
-    .bq-tag__close::part(button) {
-      @apply hover:bg-[color-mix(in_srgb,_var(--bq-tag--background-warning-outline),_var(--bq-hover)_20%)] active:bg-[color-mix(in_srgb,_var(--bq-tag--background-warning-outline),_var(--bq-active)_20%)];
-    }
+  :host([color='gray'][variant='filled']) .bq-tag {
+    --_tag-background-color: var(--bq-tag--background-gray-filled);
+    --_tag-text-color: var(--bq-tag--text-gray-filled);
+  }
+
+  :host([color='gray'][variant='outline']) .bq-tag {
+    --_tag-background-color: var(--bq-tag--background-gray-outline);
+    --_tag-border-color: var(--bq-tag--border-gray-outline);
+    --_tag-text-color: var(--bq-tag--text-gray-outline);
+  }
+
+  :host([color='info'][variant='filled']) .bq-tag {
+    --_tag-background-color: var(--bq-tag--background-info-filled);
+    --_tag-text-color: var(--bq-tag--text-info-filled);
+  }
+
+  :host([color='info'][variant='outline']) .bq-tag {
+    --_tag-background-color: var(--bq-tag--background-info-outline);
+    --_tag-border-color: var(--bq-tag--border-info-outline);
+    --_tag-text-color: var(--bq-tag--text-info-outline);
+  }
+
+  :host([color='success'][variant='filled']) .bq-tag {
+    --_tag-background-color: var(--bq-tag--background-success-filled);
+    --_tag-text-color: var(--bq-tag--text-success-filled);
+  }
+
+  :host([color='success'][variant='outline']) .bq-tag {
+    --_tag-background-color: var(--bq-tag--background-success-outline);
+    --_tag-border-color: var(--bq-tag--border-success-outline);
+    --_tag-text-color: var(--bq-tag--text-success-outline);
+  }
+
+  :host([color='warning'][variant='filled']) .bq-tag {
+    --_tag-background-color: var(--bq-tag--background-warning-filled);
+    --_tag-text-color: var(--bq-tag--text-warning-filled);
+  }
+
+  :host([color='warning'][variant='outline']) .bq-tag {
+    --_tag-background-color: var(--bq-tag--background-warning-outline);
+    --_tag-border-color: var(--bq-tag--border-warning-outline);
+    --_tag-text-color: var(--bq-tag--text-warning-outline);
   }
 }
 
-/* --------------- Apply the right size to the bq-icon prefix --------------- */
+/* --------------------------------- States --------------------------------- */
 
-.bq-tag__prefix ::slotted(bq-icon) {
-  --bq-icon--size: var(--bq-tag--icon-prefix-size) !important;
+@layer bq-tag.states {
+  :host([selected][clickable]:not([color], [removable])) .bq-tag {
+    --_tag-background-color: var(--bq-tag--background-selected);
+    --_tag-text-color: var(--bq-tag--text-selected);
+  }
+
+  :host([clickable]:not([color], [removable])) .bq-tag {
+    cursor: pointer;
+  }
+
+  :host([clickable]:not([color], [removable])) .bq-tag:focus-visible {
+    @include bq-focus-ring;
+  }
+
+  :host([clickable]:not([color], [removable])) .bq-tag:hover:enabled {
+    @include bq-color-mix(background-color, var(--_tag-background-color), hover);
+  }
+
+  :host([disabled][clickable]:not([color], [removable])) .bq-tag:disabled {
+    cursor: not-allowed;
+    border-style: none;
+    opacity: 0.6;
+  }
+}
+
+/* ---------------------------------- Slots --------------------------------- */
+
+@layer bq-tag.structure {
+  .bq-tag__prefix ::slotted(bq-icon) {
+    --bq-icon--size: var(--_tag-icon-prefix-size);
+  }
+}
+
+/* ---------------------------------- Parts --------------------------------- */
+
+@layer bq-tag.parts {
+  .bq-tag__close::part(button) {
+    padding: 0;
+    border: none;
+    background-color: transparent;
+  }
+
+  .bq-tag__close::part(button):hover {
+    @include bq-color-mix(background-color, var(--_tag-background-color), hover);
+  }
+
+  .bq-tag__close::part(button):active {
+    @include bq-color-mix(background-color, var(--_tag-background-color), active);
+  }
+
+  .bq-tag__close bq-icon {
+    --bq-icon--color: var(--_tag-text-color);
+  }
 }

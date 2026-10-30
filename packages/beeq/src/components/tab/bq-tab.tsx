@@ -249,9 +249,10 @@ export class BqTab {
         tabindex={this.tabindex}
         type="button"
       >
-        <div class="flex items-center justify-center" part="content">
+        <div class="bq-tab__content" part="content">
           <div
-            class="flex"
+            class="bq-tab__icon"
+            hidden={!this.hasIcon}
             part="icon"
             ref={(span: HTMLSpanElement) => {
               this.iconElement = span;
@@ -259,7 +260,7 @@ export class BqTab {
           >
             <slot name="icon" onSlotchange={this.handleIconSlotChange} />
           </div>
-          <div class={{ 'line-clamp-1': true, 'ms-[--bq-tab--label-icon-gap]': this.hasIcon }} part="text">
+          <div class="bq-tab__text" part="text">
             <slot />
           </div>
         </div>

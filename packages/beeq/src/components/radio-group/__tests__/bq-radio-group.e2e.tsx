@@ -2,6 +2,7 @@ import { h } from '@stencil/core';
 import { describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
 import { page, userEvent } from 'vitest/browser';
 
+import { computedStyle } from '../../../shared/test-utils/computedStyle';
 import { getTextContent } from '../../../shared/utils/slot';
 
 const getRadio = (element: ParentNode, value: string) =>
@@ -61,9 +62,56 @@ describe('bq-radio-group', () => {
     );
     const bqRadioGroup = root as HTMLBqRadioGroupElement;
 
-    expect(bqRadioGroup.shadowRoot?.querySelector('[part="base"]')).toHaveClass('has-fieldset');
     expect(getTextContent(getLabelSlot(bqRadioGroup), { recurse: true })).toBe('Radio group label');
-    expect(bqRadioGroup.shadowRoot?.querySelector('[part="group"]')).toHaveClass('bq-radio-group--horizontal');
+    expect(bqRadioGroup).toHaveAttribute('fieldset');
+    expect(computedStyle('bq-radio-group >>> [part="group"]', ['flexDirection'])).toEqual({
+      flexDirection: 'row',
+    });
+  });
+
+  it('should preserve the unframed vertical layout by default', async () => {
+    await render(
+      <bq-radio-group name="test-option">
+        <bq-radio name="test-option" value="option1">
+          Option 1
+        </bq-radio>
+      </bq-radio-group>,
+    );
+
+    expect(computedStyle('bq-radio-group', ['display'])).toEqual({ display: 'inline-block' });
+    expect(
+      computedStyle('bq-radio-group >>> [part="base"]', [
+        'borderBlockEndWidth',
+        'borderBlockStartWidth',
+        'borderInlineEndWidth',
+        'borderInlineStartWidth',
+        'marginBlockEnd',
+        'marginBlockStart',
+        'marginInlineEnd',
+        'marginInlineStart',
+        'paddingBlockEnd',
+        'paddingBlockStart',
+        'paddingInlineEnd',
+        'paddingInlineStart',
+      ]),
+    ).toEqual({
+      borderBlockEndWidth: '0px',
+      borderBlockStartWidth: '0px',
+      borderInlineEndWidth: '0px',
+      borderInlineStartWidth: '0px',
+      marginBlockEnd: '0px',
+      marginBlockStart: '0px',
+      marginInlineEnd: '0px',
+      marginInlineStart: '0px',
+      paddingBlockEnd: '0px',
+      paddingBlockStart: '0px',
+      paddingInlineEnd: '0px',
+      paddingInlineStart: '0px',
+    });
+    expect(computedStyle('bq-radio-group >>> [part="group"]', ['display', 'flexDirection'])).toEqual({
+      display: 'flex',
+      flexDirection: 'column',
+    });
   });
 
   it('should become valid only after one option is selected when required', async () => {
@@ -565,8 +613,12 @@ describe('bq-radio-group', () => {
     await setProps({ orientation: 'invalid' });
 
     expect(bqRadioGroup.orientation).toBe('vertical');
-    expect(bqRadioGroup.shadowRoot?.querySelector('[part="group"]')).toHaveClass('bq-radio-group--vertical');
-    expect(warn).toHaveBeenCalledTimes(1);
+    expect(warn).toHaveBeenCalledWith(
+      '[BQ-RADIO-GROUP] Please notice that "orientation" should be one of horizontal|vertical',
+    );
+    expect(computedStyle('bq-radio-group >>> [part="group"]', ['flexDirection'])).toEqual({
+      flexDirection: 'column',
+    });
 
     warn.mockRestore();
   });

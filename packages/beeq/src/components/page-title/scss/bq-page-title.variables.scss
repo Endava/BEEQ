@@ -1,5 +1,5 @@
 /* -------------------------------------------------------------------------- */
-/*                   Page title custom properties                  */
+/*                         Page Title Custom Properties                       */
 /* -------------------------------------------------------------------------- */
 
 :host {
@@ -16,14 +16,15 @@
    * @prop --title-textSize - Page title text size for title
    */
   --bq-page-title--divider-color: var(--bq-stroke--primary);
-  /* stylelint-disable custom-property-pattern */
-  --paddingY: theme(spacing.xl);
+
+  /* TODO: Remove this legacy custom property in the next major release, changing them to use `--bq-` prefix */
+  --paddingY: var(--bq-spacing-xl);
   --subtitle-borderBlockEnd: 1px solid var(--bq-page-title--divider-color);
-  --subtitle-fontWeight: theme(fontWeight.medium);
+  --subtitle-fontWeight: var(--bq-font-weight--medium);
   --subtitle-textColor: var(--bq-text--secondary);
-  --subtitle-textSize: theme(fontSize.l);
-  --title-fontWeight: theme(fontWeight.bold);
-  --title-lineHeight: theme(lineHeight.regular);
+  --subtitle-textSize: var(--bq-font-size--l);
+  --title-fontWeight: var(--bq-font-weight--bold);
+  --title-lineHeight: var(--bq-font-line-height--regular);
   --title-textColor: var(--bq-text--primary);
-  --title-textSize: theme(fontSize.xxl);
+  --title-textSize: var(--bq-font-size--xxl);
 }

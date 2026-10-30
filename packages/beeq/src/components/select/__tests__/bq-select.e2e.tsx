@@ -4,16 +4,7 @@ import { cdp, userEvent } from 'vitest/browser';
 
 import { sleep } from '../../../shared/test-utils';
 import { computedStyle } from '../../../shared/test-utils/computedStyle';
-
-/** Resolves a CSS color value (e.g. `var(--bq-stroke--danger)`) to its computed `rgb()` form */
-const resolveColor = (value: string): string => {
-  const probe = document.createElement('div');
-  probe.style.color = value;
-  document.body.appendChild(probe);
-  const { color } = getComputedStyle(probe);
-  probe.remove();
-  return color;
-};
+import { resolveColorToken } from '../../../shared/test-utils/resolveColorToken';
 
 /** Waits for any running CSS transition inside the element's shadow root to finish */
 const waitForTransitions = async (element: Element) => {
@@ -129,6 +120,61 @@ describe('bq-select', () => {
     expect(root).toHaveShadowRoot();
   });
 
+  it('should preserve the native control geometry and transition', async () => {
+    const { root } = await render(
+      <bq-select name="bq-select">
+        <span slot="label">Select label</span>
+        <span slot="helper-text">Helper text</span>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    await waitForStable(root);
+
+    const label = select.shadowRoot?.querySelector<HTMLElement>('[part="label"]');
+    const helper = getHelperText(select);
+    const control = getControl(select);
+    const input = getInput(select);
+    const inputOutline = select.shadowRoot?.querySelector<HTMLElement>('[part="input-outline"]');
+    const labelStyle = getComputedStyle(label);
+    const helperStyle = getComputedStyle(helper);
+    const controlStyle = getComputedStyle(control);
+    const inputStyle = getComputedStyle(input);
+    const inputOutlineStyle = getComputedStyle(inputOutline);
+
+    expect(labelStyle.marginBlockEnd).toBe('8px');
+    expect(labelStyle.fontSize).toBe('14px');
+    expect(helperStyle.marginBlockStart).toBe('8px');
+    expect(helperStyle.fontSize).toBe('14px');
+    expect(controlStyle.padding).toBe('11px 15px');
+    expect(controlStyle.borderRadius).toBe('8px');
+    expect(controlStyle.borderWidth).toBe('1px');
+    expect(controlStyle.transitionDuration).toBe('0.15s');
+    expect(controlStyle.transitionProperty).toBe('border-color, box-shadow');
+    expect(controlStyle.transitionTimingFunction).toBe('cubic-bezier(0.4, 0, 0.2, 1)');
+    expect(inputOutlineStyle.display).toBe('flex');
+    expect(inputOutlineStyle.flex).toBe('1 1 0%');
+    expect(inputOutlineStyle.overflowX).toBe('auto');
+    expect(inputStyle.display).toBe('block');
+    expect(inputStyle.flex).toBe('1 1 auto');
+    expect(inputStyle.minBlockSize).toBe('24px');
+    expect(inputStyle.minInlineSize).toBe('0px');
+    expect(inputStyle.padding).toBe('0px');
+    expect(inputStyle.borderStyle).toBe('none');
+    expect(inputStyle.outlineStyle).toBe('none');
+  });
+
+  it('should use native hidden attributes for optional internal content', async () => {
+    const { root } = await render(<bq-select name="bq-select" />);
+    const select = root as HTMLBqSelectElement;
+    await waitForStable(root);
+
+    for (const part of ['label', 'prefix', 'helper-text']) {
+      const element = select.shadowRoot?.querySelector<HTMLElement>(`[part="${part}"]`);
+      expect(element, part).toHaveAttribute('hidden');
+      expect(getComputedStyle(element).display, part).toBe('none');
+    }
+  });
+
   it('should render the default suffix icon', async () => {
     const { root } = await render(<bq-select name="bq-select" />);
     const select = root as HTMLBqSelectElement;
@@ -146,7 +192,7 @@ describe('bq-select', () => {
 
     await waitForStable(root);
 
-    expect(select.shadowRoot?.querySelector('.bq-select__control--prefix')).not.toHaveClass('!hidden');
+    expect(select.shadowRoot?.querySelector('.bq-select__control--prefix')).not.toHaveAttribute('hidden');
   });
 
   it('should render with label content', async () => {
@@ -159,7 +205,7 @@ describe('bq-select', () => {
 
     await waitForStable(root);
 
-    expect(select.shadowRoot?.querySelector('.bq-select__label')).not.toHaveClass('!hidden');
+    expect(select.shadowRoot?.querySelector('.bq-select__label')).not.toHaveAttribute('hidden');
   });
 
   it('should render with helper content', async () => {
@@ -172,7 +218,7 @@ describe('bq-select', () => {
 
     await waitForStable(root);
 
-    expect(select.shadowRoot?.querySelector('.bq-select__helper-text')).not.toHaveClass('!hidden');
+    expect(select.shadowRoot?.querySelector('.bq-select__helper-text')).not.toHaveAttribute('hidden');
   });
 
   it('should render with options', async () => {
@@ -185,6 +231,66 @@ describe('bq-select', () => {
     );
 
     expect(root.querySelectorAll('bq-option')).toHaveLength(3);
+  });
+
+  it('should draw the standard focus ring around the control', async () => {
+    const { root } = await render(<bq-select name="bq-select" />);
+    const select = root as HTMLBqSelectElement;
+    const input = getInput(select);
+    await waitForStable(root);
+
+    await userEvent.click(input);
+    await waitForTransitions(root);
+
+    const controlStyle = getComputedStyle(getControl(select));
+    expect(controlStyle.borderColor).toBe(resolveColorToken('--bq-stroke--brand'));
+    expect(controlStyle.outlineColor).toBe(resolveColorToken('--bq-stroke--brand'));
+    expect(controlStyle.outlineOffset).toBe('0px');
+    expect(controlStyle.outlineStyle).toBe('solid');
+    expect(controlStyle.outlineWidth).toBe('1px');
+  });
+
+  it('should reveal the clear button with the original spacing and part reset', async () => {
+    const { root } = await render(
+      <bq-select name="bq-select" value="1">
+        <bq-option value="1">Option 1</bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    await waitForStable(root);
+
+    const clearButton = select.shadowRoot?.querySelector<HTMLBqButtonElement>('[part="clear-btn"]');
+    const clearButtonControl = getClearButton(select);
+    const clearIcon = clearButton?.querySelector('bq-icon');
+    expect(getComputedStyle(clearButton).display).toBe('none');
+
+    await userEvent.hover(getControl(select));
+    await expect.poll(() => getComputedStyle(clearButton).display).toBe('block');
+
+    expect(getComputedStyle(clearButton).marginInlineStart).toBe('8px');
+    expect(getComputedStyle(clearButtonControl).padding).toBe('0px');
+    expect(getComputedStyle(clearButtonControl).borderStyle).toBe('none');
+    expect(getComputedStyle(clearIcon).display).toBe('flex');
+  });
+
+  it('should preserve suffix rotation and transition timing', async () => {
+    const { root, setProps } = await render(<bq-select name="bq-select" />);
+    const select = root as HTMLBqSelectElement;
+    const suffix = select.shadowRoot?.querySelector<HTMLElement>('[part="suffix"]');
+    await waitForStable(root);
+
+    let suffixStyle = getComputedStyle(suffix);
+    expect(suffixStyle.transform).toBe('matrix(1, 0, 0, 1, 0, 0)');
+    expect(suffixStyle.transitionDuration).toBe('0.3s');
+    expect(suffixStyle.transitionProperty).toBe('transform');
+    expect(suffixStyle.transitionTimingFunction).toBe('cubic-bezier(0.4, 0, 0.2, 1)');
+
+    await setProps({ open: true });
+    await waitForStable(root);
+    await waitForTransitions(root);
+
+    suffixStyle = getComputedStyle(suffix);
+    expect(suffixStyle.transform).toBe('matrix(-1, 0, 0, -1, 0, 0)');
   });
 
   it('should reflect `enable-checkboxes`', async () => {
@@ -3414,10 +3520,52 @@ describe('bq-select', () => {
     expect(getInput(select).value).toBe('Option 2');
   });
 
-  it('should map the validation color variables to the theme role tokens', async () => {
+  it('should allow overriding the base color variables', async () => {
+    const { root } = await render(
+      <bq-select
+        name="bq-select"
+        style={{
+          '--bq-select--background-color': 'rgb(1, 2, 3)',
+          '--bq-select--border-color': 'rgb(4, 5, 6)',
+          '--bq-select--helper-text-color': 'rgb(7, 8, 9)',
+          '--bq-select--label-text-color': 'rgb(10, 11, 12)',
+          '--bq-select--text-color': 'rgb(13, 14, 15)',
+        }}
+      >
+        <span slot="label">Label</span>
+        <span slot="helper-text">Helper text</span>
+      </bq-select>,
+    );
+
+    await waitForStable(root);
+    await waitForTransitions(root);
+
+    expect(computedStyle('bq-select >>> [part="control"]', ['backgroundColor', 'borderTopColor', 'color'])).toEqual({
+      backgroundColor: 'rgb(1, 2, 3)',
+      borderTopColor: 'rgb(4, 5, 6)',
+      color: 'rgb(13, 14, 15)',
+    });
+    expect(computedStyle('bq-select >>> [part="helper-text"]', ['color']).color).toBe('rgb(7, 8, 9)');
+    expect(computedStyle('bq-select >>> [part="label"]', ['color']).color).toBe('rgb(10, 11, 12)');
+  });
+
+  it('should map the color variables to the theme role tokens', async () => {
     const { root } = await render(<bq-select name="bq-select" />);
 
     const hostStyle = getComputedStyle(root);
+    const expectedRoles = {
+      '--bq-select--background-color': '--bq-ui--primary',
+      '--bq-select--border-color': '--bq-stroke--tertiary',
+      '--bq-select--border-color-focus': '--bq-stroke--brand',
+      '--bq-select--helper-text-color': '--bq-text--primary',
+      '--bq-select--label-text-color': '--bq-text--primary',
+      '--bq-select--text-color': '--bq-text--primary',
+      '--bq-select--text-placeholder-color': '--bq-text--secondary',
+    };
+
+    for (const [componentVar, roleVar] of Object.entries(expectedRoles)) {
+      expect(hostStyle.getPropertyValue(componentVar).trim()).toBe(hostStyle.getPropertyValue(roleVar).trim());
+    }
 
     for (const status of ['danger', 'success', 'warning']) {
       expect(hostStyle.getPropertyValue(`--bq-select--border-color-${status}`).trim()).toBe(
@@ -3443,10 +3591,10 @@ describe('bq-select', () => {
       await waitForTransitions(root);
 
       expect(computedStyle('bq-select >>> [part="control"]', ['borderTopColor']).borderTopColor).toBe(
-        resolveColor(`var(--bq-stroke--${role})`),
+        resolveColorToken(`--bq-stroke--${role}`),
       );
       expect(computedStyle('bq-select >>> [part="helper-text"]', ['color']).color).toBe(
-        resolveColor(`var(--bq-text--${role})`),
+        resolveColorToken(`--bq-text--${role}`),
       );
     }
   });

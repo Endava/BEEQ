@@ -3,17 +3,8 @@ import { afterEach, beforeEach, describe, expect, it, render, vi, waitForStable 
 import { cdp, userEvent } from 'vitest/browser';
 
 import { computedStyle } from '../../../shared/test-utils/computedStyle';
+import { resolveColorToken } from '../../../shared/test-utils/resolveColorToken';
 import type { TInputValue } from '../bq-input.types';
-
-/** Resolves a CSS color value (e.g. `var(--bq-stroke--danger)`) to its computed `rgb()` form */
-const resolveColor = (value: string): string => {
-  const probe = document.createElement('div');
-  probe.style.color = value;
-  document.body.appendChild(probe);
-  const { color } = getComputedStyle(probe);
-  probe.remove();
-  return color;
-};
 
 /** Waits for any running CSS transition inside the element's shadow root to finish */
 const waitForTransitions = async (element: Element) => {
@@ -22,6 +13,7 @@ const waitForTransitions = async (element: Element) => {
 };
 
 const getInput = (el: HTMLBqInputElement) => el.shadowRoot?.querySelector<HTMLInputElement>('[part="input"]');
+const getControl = (el: HTMLBqInputElement) => el.shadowRoot?.querySelector<HTMLElement>('[part="control"]');
 const getClearButton = (el: HTMLBqInputElement) =>
   el.shadowRoot?.querySelector<HTMLBqButtonElement>('[part="clear-btn"]');
 
@@ -70,7 +62,7 @@ describe('bq-input', () => {
     );
 
     const prefixContainerElem = root?.shadowRoot?.querySelector('.bq-input--control__prefix');
-    expect(prefixContainerElem).not.toHaveClass('hidden');
+    expect(prefixContainerElem).not.toHaveAttribute('hidden');
   });
 
   it('should render with suffix icon', async () => {
@@ -81,7 +73,7 @@ describe('bq-input', () => {
     );
 
     const suffixContainerElem = root?.shadowRoot?.querySelector('.bq-input--control__suffix');
-    expect(suffixContainerElem).not.toHaveClass('hidden');
+    expect(suffixContainerElem).not.toHaveAttribute('hidden');
   });
 
   it('should render with label content', async () => {
@@ -94,7 +86,7 @@ describe('bq-input', () => {
     );
 
     const labelContainerElem = root?.shadowRoot?.querySelector('.bq-input--label');
-    expect(labelContainerElem).not.toHaveClass('hidden');
+    expect(labelContainerElem).not.toHaveAttribute('hidden');
   });
 
   it('should render with helper content', async () => {
@@ -105,7 +97,22 @@ describe('bq-input', () => {
     );
 
     const helperContainerElem = root?.shadowRoot?.querySelector('.bq-input--helper-text');
-    expect(helperContainerElem).not.toHaveClass('hidden');
+    expect(helperContainerElem).not.toHaveAttribute('hidden');
+  });
+
+  it('should hide empty slot wrappers with the native hidden attribute', async () => {
+    const { root } = await render(<bq-input name="bq-input" />);
+
+    for (const selector of [
+      '.bq-input--label',
+      '.bq-input--control__prefix',
+      '.bq-input--control__suffix',
+      '.bq-input--helper-text',
+    ]) {
+      const wrapper = root.shadowRoot?.querySelector(selector);
+      expect(wrapper).toHaveAttribute('hidden');
+      expect(getComputedStyle(wrapper as Element).display).toBe('none');
+    }
   });
 
   it('should write and emit change event', async () => {
@@ -787,10 +794,199 @@ describe('bq-input', () => {
     });
   });
 
-  it('should map the validation color variables to the theme role tokens', async () => {
+  it('should preserve the native control geometry and transition timing', async () => {
+    const { root } = await render(
+      <bq-input name="bq-input">
+        <span slot="label">Label</span>
+        <span slot="helper-text">Helper text</span>
+      </bq-input>,
+    );
+
+    await waitForStable(root);
+
+    expect(computedStyle('bq-input >>> [part="label"]', ['marginBlockEnd']).marginBlockEnd).toBe('8px');
+    expect(computedStyle('bq-input >>> [part="helper-text"]', ['marginBlockStart']).marginBlockStart).toBe('8px');
+    expect(
+      computedStyle('bq-input >>> [part="control"]', [
+        'borderRadius',
+        'borderWidth',
+        'transitionDuration',
+        'transitionProperty',
+        'transitionTimingFunction',
+      ]),
+    ).toEqual({
+      borderRadius: '8px',
+      borderWidth: '1px',
+      transitionDuration: '0.15s',
+      transitionProperty: 'border-color, box-shadow',
+      transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
+    });
+
+    expect(computedStyle('bq-input >>> [part="input"]', ['minHeight', 'minWidth'])).toEqual({
+      minHeight: '24px',
+      minWidth: '0px',
+    });
+  });
+
+  it('should paint the idle, hover, and focus states with native CSS', async () => {
+    const { root } = await render(<bq-input name="bq-input" />);
+    const host = root as HTMLBqInputElement;
+
+    await waitForStable(root);
+    await waitForTransitions(root);
+
+    expect(computedStyle('bq-input >>> [part="control"]', ['backgroundColor', 'borderTopColor', 'color'])).toEqual({
+      backgroundColor: resolveColorToken('--bq-ui--primary'),
+      borderTopColor: resolveColorToken('--bq-stroke--tertiary'),
+      color: resolveColorToken('--bq-text--primary'),
+    });
+
+    await userEvent.hover(getControl(host));
+    await waitForTransitions(root);
+
+    const colorProbe = document.createElement('span');
+    root.shadowRoot?.appendChild(colorProbe);
+    colorProbe.style.color = 'color-mix(in srgb, var(--bq-stroke--brand), var(--bq-hover) var(--bq-state-mix-hover))';
+
+    expect(computedStyle('bq-input >>> [part="control"]', ['borderTopColor']).borderTopColor).toBe(
+      getComputedStyle(colorProbe).color,
+    );
+
+    getInput(host).focus();
+    await waitForTransitions(root);
+
+    expect(
+      computedStyle('bq-input >>> [part="control"]', [
+        'borderTopColor',
+        'outlineColor',
+        'outlineOffset',
+        'outlineStyle',
+        'outlineWidth',
+      ]),
+    ).toEqual({
+      borderTopColor: resolveColorToken('--bq-stroke--brand'),
+      outlineColor: resolveColorToken('--bq-stroke--brand'),
+      outlineOffset: '0px',
+      outlineStyle: 'solid',
+      outlineWidth: '1px',
+    });
+
+    colorProbe.remove();
+  });
+
+  it('should mix validation borders on hover and focus', async () => {
+    const { root, setProps } = await render(<bq-input name="bq-input" validationStatus="error" />);
+    const host = root as HTMLBqInputElement;
+    const control = getControl(host);
+    const input = getInput(host);
+    const colorProbe = document.createElement('span');
+    root.shadowRoot?.appendChild(colorProbe);
+
+    for (const [validationStatus, role] of Object.entries({
+      error: 'danger',
+      success: 'success',
+      warning: 'warning',
+    })) {
+      input.blur();
+      await movePointerOff();
+      await setProps({ validationStatus });
+      await waitForTransitions(root);
+
+      await userEvent.hover(control);
+      await waitForTransitions(root);
+      colorProbe.style.color = `color-mix(in srgb, var(--bq-input--border-color-${role}), var(--bq-hover) 20%)`;
+      expect(computedStyle('bq-input >>> [part="control"]', ['borderTopColor']).borderTopColor).toBe(
+        getComputedStyle(colorProbe).color,
+      );
+
+      input.focus();
+      await waitForTransitions(root);
+      colorProbe.style.color = `color-mix(in srgb, var(--bq-input--border-color-${role}), var(--bq-active) 20%)`;
+      expect(computedStyle('bq-input >>> [part="control"]', ['borderTopColor']).borderTopColor).toBe(
+        getComputedStyle(colorProbe).color,
+      );
+      expect(computedStyle('bq-input >>> [part="control"]', ['outlineColor']).outlineColor).toBe(
+        resolveColorToken(`--bq-stroke--${role}`),
+      );
+    }
+
+    colorProbe.remove();
+  });
+
+  it('should reveal and reset the clear button when the control is interactive', async () => {
+    const { root } = await render(<bq-input name="bq-input" value="Hello" />);
+    const host = root as HTMLBqInputElement;
+    const clearButton = getClearButton(host);
+
+    expect(getComputedStyle(clearButton as Element).display).toBe('none');
+
+    getInput(host).focus();
+    await waitForStable(root);
+
+    expect(getComputedStyle(clearButton as Element).display).toBe('block');
+
+    const button = clearButton.shadowRoot?.querySelector('[part="button"]');
+    expect(getComputedStyle(button as Element).borderTopStyle).toBe('none');
+    expect(getComputedStyle(button as Element).paddingBlockStart).toBe('0px');
+    expect(getComputedStyle(button as Element).paddingInlineStart).toBe('0px');
+  });
+
+  it('should expose the disabled visual state', async () => {
+    const { root } = await render(<bq-input disabled name="bq-input" value="Hello" />);
+
+    expect(computedStyle('bq-input >>> [part="control"]', ['cursor', 'opacity'])).toEqual({
+      cursor: 'not-allowed',
+      opacity: '0.6',
+    });
+    expect((root as HTMLBqInputElement).shadowRoot?.querySelector('[part="clear-btn"]')).toBeNull();
+  });
+
+  it('should allow overriding the base color variables', async () => {
+    const { root } = await render(
+      <bq-input
+        name="bq-input"
+        style={{
+          '--bq-input--background-color': 'rgb(1, 2, 3)',
+          '--bq-input--border-color': 'rgb(4, 5, 6)',
+          '--bq-input--helper-text-color': 'rgb(7, 8, 9)',
+          '--bq-input--label-text-color': 'rgb(10, 11, 12)',
+          '--bq-input--text-color': 'rgb(13, 14, 15)',
+        }}
+      >
+        <span slot="label">Label</span>
+        <span slot="helper-text">Helper text</span>
+      </bq-input>,
+    );
+
+    await waitForStable(root);
+    await waitForTransitions(root);
+
+    expect(computedStyle('bq-input >>> [part="control"]', ['backgroundColor', 'borderTopColor', 'color'])).toEqual({
+      backgroundColor: 'rgb(1, 2, 3)',
+      borderTopColor: 'rgb(4, 5, 6)',
+      color: 'rgb(13, 14, 15)',
+    });
+    expect(computedStyle('bq-input >>> [part="helper-text"]', ['color']).color).toBe('rgb(7, 8, 9)');
+    expect(computedStyle('bq-input >>> [part="label"]', ['color']).color).toBe('rgb(10, 11, 12)');
+  });
+
+  it('should map the color variables to the theme role tokens', async () => {
     const { root } = await render(<bq-input name="bq-input" />);
 
     const hostStyle = getComputedStyle(root);
+    const expectedRoles = {
+      '--bq-input--background-color': '--bq-ui--primary',
+      '--bq-input--border-color': '--bq-stroke--tertiary',
+      '--bq-input--border-color-focus': '--bq-stroke--brand',
+      '--bq-input--helper-text-color': '--bq-text--primary',
+      '--bq-input--label-text-color': '--bq-text--primary',
+      '--bq-input--text-color': '--bq-text--primary',
+      '--bq-input--text-placeholder-color': '--bq-text--secondary',
+    };
+
+    for (const [componentVar, roleVar] of Object.entries(expectedRoles)) {
+      expect(hostStyle.getPropertyValue(componentVar).trim()).toBe(hostStyle.getPropertyValue(roleVar).trim());
+    }
 
     for (const status of ['danger', 'success', 'warning']) {
       expect(hostStyle.getPropertyValue(`--bq-input--border-color-${status}`).trim()).toBe(
@@ -816,10 +1012,10 @@ describe('bq-input', () => {
       await waitForTransitions(root);
 
       expect(computedStyle('bq-input >>> [part="control"]', ['borderTopColor']).borderTopColor).toBe(
-        resolveColor(`var(--bq-stroke--${role})`),
+        resolveColorToken(`--bq-stroke--${role}`),
       );
       expect(computedStyle('bq-input >>> [part="helper-text"]', ['color']).color).toBe(
-        resolveColor(`var(--bq-text--${role})`),
+        resolveColorToken(`--bq-text--${role}`),
       );
     }
   });

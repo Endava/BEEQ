@@ -1,31 +1,58 @@
 /* -------------------------------------------------------------------------- */
-/*                                Badge styles                               */
+/*                                Badge Styles                                */
 /* -------------------------------------------------------------------------- */
 
 @import './bq-badge.variables';
 
+/* ---------------------------------- Host ---------------------------------- */
+
 :host {
-  @apply inline-block;
+  --_badge-size: var(--bq-badge--size-small);
+
+  display: inline-block;
 }
 
-.bq-badge {
-  @apply flex items-center justify-center bg-[color:--bq-badge--background-color] text-[color:--bq-badge--text-color];
-  @apply rounded-[--bq-badge--border-radius] border-[length:--bq-badge--border-width] border-[color:--bq-badge--border-color];
+/* ---------------------------------- Base ---------------------------------- */
 
+.bq-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--bq-badge--text-color);
+  background-color: var(--bq-badge--background-color);
+  border-color: var(--bq-badge--border-color);
+  border-radius: var(--bq-badge--border-radius);
   border-style: var(--bq-badge--border-style);
+  border-width: var(--bq-badge--border-width);
   box-shadow: var(--bq-badge--box-shadow);
 }
 
-.size {
-  &--small {
-    @apply bs-[--bq-badge--size-small] is-[--bq-badge--size-small];
-  }
+/* ------------------------------- Structure -------------------------------- */
 
-  &--medium {
-    @apply bs-[--bq-badge--size-medium] is-[--bq-badge--size-medium];
-  }
+.bq-badge__number {
+  font-weight: var(--bq-font-weight--bold);
+  font-size: var(--bq-font-size--xs);
+  line-height: var(--bq-font-line-height--small);
 }
 
-.digit {
-  @apply min-bs-[--bq-badge--size-large] min-is-[--bq-badge--size-large];
+/* -------------------------------- Variants -------------------------------- */
+
+:host([size='medium']) {
+  --_badge-size: var(--bq-badge--size-medium);
+}
+
+/* --------------------------------- States --------------------------------- */
+
+.bq-badge.is-empty {
+  block-size: var(--_badge-size);
+  inline-size: var(--_badge-size);
+}
+
+.bq-badge.is-populated {
+  min-block-size: var(--bq-badge--size-large);
+  min-inline-size: var(--bq-badge--size-large);
+}
+
+.bq-badge.is-multiple {
+  padding-inline: var(--bq-spacing-xs2);
 }

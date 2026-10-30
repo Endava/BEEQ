@@ -2,6 +2,8 @@
 
 BEEQ TailwindCSS is a preset that adds BEEQ's opinionated TailwindCSS configuration to your application. It works with Tailwind CSS v3 and v4.
 
+Its design tokens, base reset and typography styles are generated from the `@beeq/core` style foundations, so they always match the BEEQ components. The preset is standalone: it has no runtime dependency on `@beeq/core`.
+
 ## Prerequisites 🧰
 
 Before starting to use BEEQ TailwindCSS, you need to have installed:
@@ -154,3 +156,21 @@ export default {
 ## Documentation 📙
 
 Your can find more details about TailwindCSS presets in [the official documentation](https://tailwindcss.com/docs/presets).
+
+## Maintaining the preset
+
+The source of truth is `packages/beeq/src/global/styles/foundations/`: primitives, themes, shared tokens, reset and typography. After editing those SCSS files, run this from the repository root and commit the regenerated files with the source change:
+
+```bash
+pnpm exec nx run beeq-tailwindcss:generate
+pnpm exec nx run beeq-tailwindcss:test --skip-nx-cache
+```
+
+Do not edit `src/generated/` by hand. The staleness test checks it against the SCSS, and utility mappings remain curated in TypeScript so adding a foundation token does not automatically add a utility. Sass and PostCSS are used only during generation, not by consumers of the published preset.
+
+The SCSS-derived preset retains the existing exports, utility names and Tailwind v3/v4 entrypoints. Compared with the former hand-maintained values, its base styles intentionally align with the foundations:
+
+- White and shadow colors use the SCSS spellings (`#fff` and `rgb()`).
+- The reset uses logical properties for margins, sizing and subscript/superscript offsets. Hidden-state and reduced-motion rules carry `!important` to retain precedence inside Tailwind's base layer.
+- Shared ring, disabled-opacity and interaction-state tokens are now emitted.
+- `TYPOGRAPHY_DEFAULT` follows the SCSS selector groupings and adds a theme-scoped font-family rule. Inject it with `addBase` as shown above rather than relying on its internal selector keys.

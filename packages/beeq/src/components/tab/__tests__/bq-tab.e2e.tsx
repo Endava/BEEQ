@@ -3,16 +3,7 @@ import { beforeEach, describe, expect, it, render } from '@stencil/vitest';
 import { cdp, userEvent } from 'vitest/browser';
 
 import { computedStyle } from '../../../shared/test-utils/computedStyle';
-
-/** Resolves a CSS color value (e.g. `var(--bq-text--brand)`) to its computed `rgb()` form */
-const resolveColor = (value: string): string => {
-  const probe = document.createElement('div');
-  probe.style.color = value;
-  document.body.appendChild(probe);
-  const { color } = getComputedStyle(probe);
-  probe.remove();
-  return color;
-};
+import { resolveColorToken } from '../../../shared/test-utils/resolveColorToken';
 
 /** Waits for any running CSS transition inside the element's shadow root to finish */
 const waitForTransitions = async (element: Element) => {
@@ -77,8 +68,28 @@ describe('bq-tab', () => {
     );
 
     const iconSlot = root.shadowRoot.querySelector<HTMLSlotElement>('[part="icon"] > slot');
+    const icon = root.shadowRoot.querySelector<HTMLElement>('[part="icon"]');
+    const content = root.shadowRoot.querySelector<HTMLElement>('[part="content"]');
+    const slottedIcon = root.querySelector<HTMLElement>('bq-icon');
 
     expect(iconSlot.assignedElements({ flatten: true })).toHaveLength(1);
+    expect(icon).not.toHaveAttribute('hidden');
+    expect(getComputedStyle(icon).display).toBe('flex');
+    expect(getComputedStyle(content).columnGap).toBe('8px');
+    expect(getComputedStyle(slottedIcon).getPropertyValue('--bq-icon--size').trim()).toBe('24px');
+  });
+
+  it('should hide the optional icon wrapper with the native hidden attribute', async () => {
+    const { root } = await render(
+      <bq-tab tabId="1" controls="panel-1">
+        Tab text
+      </bq-tab>,
+    );
+
+    const icon = root.shadowRoot.querySelector<HTMLElement>('[part="icon"]');
+
+    expect(icon).toHaveAttribute('hidden');
+    expect(getComputedStyle(icon).display).toBe('none');
   });
 
   it('should render as active when `active` prop is set', async () => {
@@ -210,6 +221,8 @@ describe('bq-tab', () => {
     // bq-tab has no explicit guard in handleClick — the browser's disabled state handles it.
     expect(btn).toHaveAttribute('disabled');
     expect(btn).toEqualAttribute('aria-disabled', 'true');
+    expect(getComputedStyle(btn).cursor).toBe('not-allowed');
+    expect(getComputedStyle(btn).opacity).toBe('0.6');
   });
 
   it('should respect design style', async () => {
@@ -227,13 +240,104 @@ describe('bq-tab', () => {
       </div>,
     );
 
-    const smallStyle = computedStyle('bq-tab[size="small"] >>> [part="base"]', ['padding']);
-    const mediumStyle = computedStyle('bq-tab[size="medium"] >>> [part="base"]', ['padding']);
-    const largeStyle = computedStyle('bq-tab[size="large"] >>> [part="base"]', ['padding']);
+    const smallStyle = computedStyle('bq-tab[size="small"] >>> [part="base"]', ['fontSize', 'padding']);
+    const mediumStyle = computedStyle('bq-tab[size="medium"] >>> [part="base"]', ['fontSize', 'padding']);
+    const largeStyle = computedStyle('bq-tab[size="large"] >>> [part="base"]', ['fontSize', 'padding']);
 
-    expect(smallStyle).toEqual({ padding: '4px 16px' });
-    expect(mediumStyle).toEqual({ padding: '8px 24px' });
-    expect(largeStyle).toEqual({ padding: '12px 24px' });
+    expect(smallStyle).toEqual({ fontSize: '16px', padding: '4px 16px' });
+    expect(mediumStyle).toEqual({ fontSize: '16px', padding: '8px 24px' });
+    expect(largeStyle).toEqual({ fontSize: '18px', padding: '12px 24px' });
+  });
+
+  it('should preserve native structure, typography and transition timing', async () => {
+    const { root } = await render(
+      <bq-tab tabId="1" controls="panel-1">
+        Tab text
+      </bq-tab>,
+    );
+
+    const base = root.shadowRoot.querySelector<HTMLElement>('[part="base"]');
+    const content = root.shadowRoot.querySelector<HTMLElement>('[part="content"]');
+    const text = root.shadowRoot.querySelector<HTMLElement>('[part="text"]');
+    const baseStyle = getComputedStyle(base);
+    const contentStyle = getComputedStyle(content);
+    const textStyle = getComputedStyle(text);
+
+    expect(baseStyle.display).toBe('flex');
+    expect(baseStyle.alignItems).toBe('center');
+    expect(baseStyle.justifyContent).toBe('center');
+    expect(baseStyle.borderRadius).toBe('8px');
+    expect(baseStyle.fontSize).toBe('16px');
+    expect(baseStyle.fontWeight).toBe('500');
+    expect(baseStyle.lineHeight).toBe('24px');
+    expect(baseStyle.transitionDuration).toBe('0.3s');
+    expect(baseStyle.transitionProperty).toBe('color, background-color, border-color, box-shadow');
+    expect(baseStyle.transitionTimingFunction).toBe('cubic-bezier(0.4, 0, 0.2, 1)');
+    expect(contentStyle.display).toBe('flex');
+    expect(textStyle.overflow).toBe('hidden');
+    expect(textStyle.webkitLineClamp).toBe('1');
+  });
+
+  it.each([
+    {
+      orientation: 'horizontal',
+      placement: 'start',
+      expectedInsets: { 'inset-block-end': '-4px', 'inset-inline-start': '-2px' },
+    },
+    {
+      orientation: 'vertical',
+      placement: 'start',
+      expectedInsets: { 'inset-block-end': '-4px', 'inset-inline-end': '-4px' },
+    },
+    {
+      orientation: 'vertical',
+      placement: 'end',
+      expectedInsets: { 'inset-block-end': '-4px', 'inset-inline-start': '-4px' },
+    },
+  ] as const)(
+    'should preserve the $orientation-$placement indicator geometry',
+    async ({ orientation, placement, expectedInsets }) => {
+      const { root } = await render(
+        <bq-tab tabId="1" controls="panel-1" orientation={orientation} placement={placement} active>
+          Tab text
+        </bq-tab>,
+      );
+
+      const base = root.shadowRoot.querySelector<HTMLElement>('[part="base"]');
+      const indicator = getComputedStyle(base, '::after');
+      const baseRect = base.getBoundingClientRect();
+
+      if (orientation === 'horizontal') {
+        expect(indicator.blockSize).toBe('2px');
+        expect(Number.parseFloat(indicator.inlineSize)).toBeCloseTo(baseRect.width + 4);
+      } else {
+        expect(Number.parseFloat(indicator.blockSize)).toBeCloseTo(baseRect.height + 4);
+        expect(indicator.inlineSize).toBe('2px');
+      }
+      expect(indicator.opacity).toBe('1');
+      expect(indicator.transitionDuration).toBe('0.3s');
+      expect(indicator.transitionProperty).toBe('opacity');
+      expect(indicator.transitionTimingFunction).toBe('linear');
+      for (const [property, value] of Object.entries(expectedInsets)) {
+        expect(indicator.getPropertyValue(property)).toBe(value);
+      }
+    },
+  );
+
+  it('should draw the standard focus ring around the native button', async () => {
+    const { root } = await render(
+      <bq-tab tabId="1" controls="panel-1">
+        Tab text
+      </bq-tab>,
+    );
+
+    await userEvent.tab();
+
+    const baseStyle = getComputedStyle(root.shadowRoot.querySelector('[part="base"]'));
+    expect(baseStyle.outlineColor).toBe(resolveColorToken('--bq-focus'));
+    expect(baseStyle.outlineOffset).toBe('1px');
+    expect(baseStyle.outlineStyle).toBe('solid');
+    expect(baseStyle.outlineWidth).toBe('2px');
   });
 
   it('should use the text and indicator color variables', async () => {
@@ -268,9 +372,9 @@ describe('bq-tab', () => {
       '::after',
     );
 
-    expect(inactiveBase.color).toBe(resolveColor('var(--bq-text--primary)'));
-    expect(activeBase.color).toBe(resolveColor('var(--bq-text--brand)'));
-    expect(activeIndicator.backgroundColor).toBe(resolveColor('var(--bq-ui--brand)'));
+    expect(inactiveBase.color).toBe(resolveColorToken('--bq-text--primary'));
+    expect(activeBase.color).toBe(resolveColorToken('--bq-text--brand'));
+    expect(activeIndicator.backgroundColor).toBe(resolveColorToken('--bq-ui--brand'));
   });
 
   it('should allow overriding the active text color variable', async () => {
@@ -303,10 +407,15 @@ describe('bq-tab', () => {
     const base = root.shadowRoot.querySelector<HTMLElement>('[part="base"]');
     await userEvent.hover(base);
 
-    const expectedBackground = resolveColor('color-mix(in srgb, var(--bq-ui--primary), var(--bq-hover) 20%)');
-    const expectedText = resolveColor('color-mix(in srgb, var(--bq-text--brand), var(--bq-hover) 20%)');
+    const colorProbe = document.createElement('span');
+    root.shadowRoot.appendChild(colorProbe);
+    colorProbe.style.backgroundColor = 'color-mix(in srgb, var(--bq-ui--primary), var(--bq-hover) 20%)';
+    colorProbe.style.color = 'color-mix(in srgb, var(--bq-text--brand), var(--bq-hover) 20%)';
+    const expectedBackground = getComputedStyle(colorProbe).backgroundColor;
+    const expectedText = getComputedStyle(colorProbe).color;
 
     await expect.poll(() => getComputedStyle(base).backgroundColor).toBe(expectedBackground);
     await expect.poll(() => getComputedStyle(base).color).toBe(expectedText);
+    colorProbe.remove();
   });
 });
