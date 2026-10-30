@@ -27,10 +27,25 @@ export default meta;
 type Story = StoryObj;
 
 const Template = (args: Args) => {
-  const actionsSlotClass = args['custom-style'] ? 'flex flex-grow justify-end' : 'flex';
+  const actionsSlotClass = args['custom-style']
+    ? 'bq-story-page-title__actions bq-story-page-title__actions--custom'
+    : 'bq-story-page-title__actions';
 
   return html`
-    <bq-page-title>
+    <style>
+      .bq-story-page-title__actions {
+        display: flex;
+      }
+      .bq-story-page-title__actions--custom {
+        flex-grow: 1;
+        justify-content: flex-end;
+      }
+      .bq-story-page-title__action {
+        padding-block: var(--bq-spacing-xs2);
+        padding-inline: var(--bq-spacing-xs2);
+      }
+    </style>
+    <bq-page-title class="bq-story-page-title">
       ${
         args['have-back-navigation']
           ? html`
@@ -86,8 +101,8 @@ export const TitleBackActions: Story = {
     title: 'Title',
     'sub-title': 'Sub-title',
     actions: `
-      <bq-icon class="p-b-xs2 p-i-xs2" color="text--brand" name="pencil-simple-bold"></bq-icon>
-      <bq-icon class="p-b-xs2 p-i-xs2" color="text--brand" name="download-simple-bold"></bq-icon>
+      <bq-icon class="bq-story-page-title__action" color="text--brand" name="pencil-simple-bold"></bq-icon>
+      <bq-icon class="bq-story-page-title__action" color="text--brand" name="download-simple-bold"></bq-icon>
     `,
     'custom-style': true,
   },
@@ -101,8 +116,8 @@ export const TitleBackActionsCustomDefault: Story = {
     title: 'Title',
     'sub-title': 'Sub-title',
     actions: `
-      <bq-icon class="p-b-xs2 p-i-xs2" color="text--brand" name="pencil-simple-bold"></bq-icon>
-      <bq-icon class="p-b-xs2 p-i-xs2" color="text--brand" name="download-simple-bold"></bq-icon>
+      <bq-icon class="bq-story-page-title__action" color="text--brand" name="pencil-simple-bold"></bq-icon>
+      <bq-icon class="bq-story-page-title__action" color="text--brand" name="download-simple-bold"></bq-icon>
     `,
   },
 };
@@ -116,8 +131,8 @@ export const TitleBackActionsCustom: Story = {
     title: 'Title',
     'sub-title': 'Sub-title',
     actions: `
-      <bq-icon class="p-b-xs2 p-i-xs2" color="text--brand" name="pencil-simple-bold"></bq-icon>
-      <bq-icon class="p-b-xs2 p-i-xs2" color="text--brand" name="download-simple-bold"></bq-icon>
+      <bq-icon class="bq-story-page-title__action" color="text--brand" name="pencil-simple-bold"></bq-icon>
+      <bq-icon class="bq-story-page-title__action" color="text--brand" name="download-simple-bold"></bq-icon>
     `,
     'custom-style': true,
   },
