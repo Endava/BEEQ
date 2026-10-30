@@ -109,11 +109,23 @@ export const ReverseOrder: Story = {
 
 export const FullWidth: Story = {
   render: (args) => html`
-    <div class="max-is-[28rem] m-b-[auto] m-i-[auto]">
-      <div class="text-m font-regular m-be-4">
-        Use a combination of <code class="bg-ui-secondary-disabled text-text-primary">full-width</code>,
-        <code class="bg-ui-secondary-disabled text-text-primary">justify-content</code> and
-        <code class="bg-ui-secondary-disabled text-text-primary">reverse-order</code>
+    <style>
+      .bq-story-switch-full-width {
+        max-inline-size: 28rem;
+        margin-block: auto;
+        margin-inline: auto;
+      }
+      .bq-story-switch-full-width > div {
+        font-size: var(--bq-font-size--m);
+        font-weight: var(--bq-font-weight--regular);
+        margin-block-end: 1rem;
+      }
+    </style>
+    <div class="bq-story-switch-full-width">
+      <div>
+        Use a combination of <code>full-width</code>,
+        <code>justify-content</code> and
+        <code>reverse-order</code>
       </div>
       ${Template({ ...args, text: 'Show app list in menu', value: 'show-app-list' })}
       ${Template({ ...args, text: 'Show recently added apps', value: 'show-recently-apps', checked: true })}
@@ -145,11 +157,49 @@ export const WithForm: Story = {
     };
 
     return html`
+      <style>
+        .bq-story-switch-form {
+          display: grid;
+          grid-auto-columns: auto;
+          grid-template-columns: repeat(1, minmax(0, 1fr));
+          row-gap: var(--bq-spacing-l);
+        }
+        @media (min-width: 640px) {
+          .bq-story-switch-form {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            column-gap: var(--bq-spacing-l);
+          }
+        }
+        .bq-story-switch-form h4 {
+          margin-block-end: var(--bq-spacing-m);
+        }
+        .bq-story-switch-form form {
+          display: flex;
+          flex-direction: column;
+          row-gap: var(--bq-spacing-m);
+        }
+        .bq-story-switch-form__actions {
+          display: flex;
+          justify-content: flex-end;
+          column-gap: var(--bq-spacing-s);
+        }
+        .bq-story-switch-form__data::part(wrapper) {
+          height: 100%;
+        }
+        .bq-story-switch-form__snippet {
+          overflow-x: scroll;
+          white-space: pre;
+          border-radius: var(--bq-radius--s);
+        }
+        .bq-story-switch-form code {
+          border-radius: var(--bq-radius--s);
+        }
+      </style>
       <link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/styles/night-owl.min.css" />
-      <div class="grid auto-cols-auto grid-cols-1 gap-y-l sm:grid-cols-2 sm:gap-x-l">
+      <div class="bq-story-switch-form">
         <bq-card style="--bq-card--background: transparent">
-          <h4 class="m-be-m">Account settings</h4>
-          <form class="flex flex-col gap-y-m" @submit=${handleFormSubmit}>
+          <h4>Account settings</h4>
+          <form @submit=${handleFormSubmit}>
             ${Template({
               ...args,
               text: 'Show app list in the menu',
@@ -160,22 +210,22 @@ export const WithForm: Story = {
             ${Template({ ...args, text: 'Show recently added apps', name: 'showRecentlyApps', checked: true })}
             ${Template({ ...args, text: 'Show most used apps', name: 'showUsedApps' })}
             ${Template({ ...args, text: 'Show app notifications', name: 'showAppNotifications', checked: true })}
-            <div class="flex justify-end gap-x-s">
+            <div class="bq-story-switch-form__actions">
               <bq-button appearance="secondary" type="reset">Cancel</bq-button>
               <bq-button type="submit">Save</bq-button>
             </div>
           </form>
         </bq-card>
-        <bq-card class="[&::part(wrapper)]:h-full">
-          <h4 class="m-be-m">Form Data</h4>
-          <div class="language-javascript overflow-x-scroll whitespace-pre rounded-s">
+        <bq-card class="bq-story-switch-form__data">
+          <h4>Form Data</h4>
+          <div class="language-javascript bq-story-switch-form__snippet">
             // Handle form submit<br />
             const form = ev.target as HTMLFormElement;<br />
             const formData = new FormData(form);<br />
             const formValues = Object.fromEntries(formData.entries());
           </div>
           <pre>
-            <code id="form-data" class="rounded-s">
+            <code id="form-data">
               { // submit the form to see the data here }
             </code>
           </pre>
