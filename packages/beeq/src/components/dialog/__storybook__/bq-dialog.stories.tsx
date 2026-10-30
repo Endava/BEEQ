@@ -61,8 +61,25 @@ const Template = (args: Args) => {
   };
 
   return html`
+    <style>
+      .bq-story-dialog h5[slot='title'] {
+        display: flex;
+        align-items: center;
+        gap: var(--bq-spacing-s);
+      }
+
+      .bq-story-dialog div[slot='footer'] {
+        display: flex;
+        gap: var(--bq-spacing-xs);
+      }
+
+      .bq-story-dialog__close-icon {
+        cursor: pointer;
+      }
+    </style>
     <bq-button @bqClick=${handleOpenDialog}>Open Dialog</bq-button>
     <bq-dialog
+      class="bq-story-dialog"
       ?disable-backdrop=${args['disable-backdrop']}
       ?disable-close-esc-keydown=${args['disable-close-esc-keydown']}
       ?disable-close-click-outside=${args['disable-close-click-outside']}
@@ -78,7 +95,7 @@ const Template = (args: Args) => {
       @bqAfterClose=${args.bqAfterClose}
     >
       ${ifDefined(args.customClose) ? unsafeHTML(args.customClose) : nothing}
-      <h5 class="bold flex items-center gap-s" slot="title">
+      <h5 class="bold" slot="title">
         <bq-icon name="info" size="30" color="text--accent" role="img" title="Info"></bq-icon>
         Title
       </h5>
@@ -96,7 +113,7 @@ const Template = (args: Args) => {
       ${
         !args.noFooter
           ? html`
-            <div class="flex gap-xs" slot="footer">
+            <div slot="footer">
               <bq-button appearance="link"> Button </bq-button>
               <bq-button variant="ghost"> Button </bq-button>
               <bq-button variant="standard" slot="footer"> Button </bq-button>
@@ -156,7 +173,7 @@ export const CustomCloseButton: Story = {
         }
       </style>
       <bq-button appearance="text" size="small" slot="button-close">
-        <bq-icon class="cursor-pointer" name="x" role="img" title="Close"></bq-icon>
+        <bq-icon class="bq-story-dialog__close-icon" name="x" role="img" title="Close"></bq-icon>
       </bq-button>
     `,
   },
@@ -180,8 +197,26 @@ const ConfirmTemplate = (args: Args) => {
   };
 
   return html`
+    <style>
+      .bq-story-dialog h5[slot='title'] {
+        display: flex;
+        align-items: center;
+        gap: var(--bq-spacing-s);
+      }
+
+      .bq-story-dialog > span {
+        font-size: var(--bq-font-size--s);
+        color: var(--bq-text--secondary);
+      }
+
+      .bq-story-dialog div[slot='footer'] {
+        display: flex;
+        gap: var(--bq-spacing-xs);
+      }
+    </style>
     <bq-button variant="ghost" @bqClick=${handleOpenDialog}>Deactivate account</bq-button>
     <bq-dialog
+      class="bq-story-dialog"
       ?disable-backdrop=${args['disable-backdrop']}
       ?disable-close-esc-keydown=${args['disable-close-esc-keydown']}
       ?disable-close-click-outside=${args['disable-close-click-outside']}
@@ -196,13 +231,13 @@ const ConfirmTemplate = (args: Args) => {
       @bqAfterOpen=${args.bqAfterOpen}
       @bqAfterClose=${args.bqAfterClose}
     >
-      <h5 class="bold flex items-center gap-s" slot="title">
+      <h5 class="bold" slot="title">
         <bq-icon name="info" size="30" color="icon--danger" role="img" title="Danger"></bq-icon>
         Deactivate account
       </h5>
       <p>Are your sure you want to deactivate your account? All of your data will be permanently removed.</p>
-      <span class="text-s text-secondary"> This action cannot be undone </span>
-      <div class="flex gap-xs" slot="footer">
+      <span> This action cannot be undone </span>
+      <div slot="footer">
         <bq-button appearance="secondary" @bqClick=${handleDialogCancel}> Cancel </bq-button>
         <bq-button variant="danger" @bqClick=${handleDialogConfirm}> Yes, deactivate </bq-button>
       </div>
