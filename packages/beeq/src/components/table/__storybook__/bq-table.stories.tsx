@@ -134,8 +134,23 @@ const Template = (args: Args) => {
           --bq-panel--width: fit-content;
         }
       }
+
+      .bq-story-table td > div {
+        display: flex;
+        align-items: center;
+        gap: var(--bq-spacing-xs);
+      }
+
+      .bq-story-table td:first-child > div {
+        gap: var(--bq-spacing-s);
+      }
+
+      .bq-story-table th:last-child,
+      .bq-story-table td:last-child {
+        text-align: center;
+      }
     </style>
-    <div class="bq-table--container">
+    <div class="bq-table--container bq-story-table">
       <table class=${classMap({ 'bq-table': true, compact: compact, bordered: bordered })}>
         <thead>
           <tr>
@@ -146,7 +161,7 @@ const Template = (args: Args) => {
             <th>Amount</th>
             <th>Stage</th>
             <th>Country</th>
-            <th class="!text-center">Actions</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -154,7 +169,7 @@ const Template = (args: Args) => {
             (row) => html`
               <tr class=${classMap({ selected: row.id === activeRowId })}>
                 <td>
-                  <div class="flex items-center gap-s">
+                  <div>
                     <bq-avatar initials=${row.user.initials} size="small"></bq-avatar>
                     <span>${row.user.name}</span>
                   </div>
@@ -168,18 +183,18 @@ const Template = (args: Args) => {
                 </td>
                 <td>${row.amount}</td>
                 <td>
-                  <div class="flex items-center gap-xs">
+                  <div>
                     <bq-icon name="arrow-right"></bq-icon>
                     <span>${row.stage.label}</span>
                   </div>
                 </td>
                 <td>
-                  <div class="flex items-center gap-xs">
+                  <div>
                     <bq-avatar size="xsmall" image=${row.country.flag}></bq-avatar>
                     <span>${row.country.name}</span>
                   </div>
                 </td>
-                <td class="!text-center">
+                <td>
                   <bq-dropdown placement="bottom-end">
                     <bq-button appearance="text" size="small" slot="trigger">
                       <bq-icon name="dots-three-vertical" size="20"></bq-icon>
