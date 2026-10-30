@@ -53,15 +53,46 @@ type Story = StoryObj;
 
 const Template = (args: Args) => {
   return html`
+    <style>
+      .bq-story-tab-group {
+        gap: var(--bq-spacing-xs2);
+      }
+
+      .bq-story-tab-group--vertical {
+        display: flex;
+      }
+
+      /* Only has an effect together with --vertical, the only modifier that makes the container flex */
+      .bq-story-tab-group--placement-end {
+        flex-direction: row-reverse;
+      }
+
+      .bq-story-tab-group__tabs--horizontal {
+        margin-block-end: var(--bq-spacing-m);
+      }
+
+      .bq-story-tab-group > div {
+        height: 20rem;
+        width: 100%;
+        flex: 1 1 0%;
+        border-style: dashed;
+        border-color: var(--bq-stroke--primary);
+        background-color: var(--bq-ui--alt);
+      }
+
+      .bq-story-tab-group h3 {
+        margin: var(--bq-spacing-l);
+      }
+    </style>
     <main
       class=${classMap({
-        flex: args.orientation === 'vertical',
-        'flex-row-reverse': args.placement === 'end',
-        'gap-xs2': true,
+        'bq-story-tab-group': true,
+        'bq-story-tab-group--vertical': args.orientation === 'vertical',
+        'bq-story-tab-group--placement-end': args.placement === 'end',
       })}
     >
       <bq-tab-group
-        class=${classMap({ 'm-be-m': args.orientation !== 'vertical' })}
+        class=${classMap({ 'bq-story-tab-group__tabs--horizontal': args.orientation !== 'vertical' })}
         value="5"
         .size=${args.size}
         .orientation=${args.orientation}
@@ -84,8 +115,8 @@ const Template = (args: Args) => {
           `,
         )}
       </bq-tab-group>
-      <div class="border h-80 w-full flex-1 border-dashed border-primary bg-ui-alt">
-        <h3 class="m-l">Tab content</h3>
+      <div>
+        <h3>Tab content</h3>
       </div>
     </main>
   `;
