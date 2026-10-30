@@ -138,34 +138,85 @@ export const WithForm: Story = {
     };
 
     return html`
+      <style>
+        .bq-story-radio-group {
+          display: grid;
+          grid-auto-columns: auto;
+          grid-template-columns: repeat(1, minmax(0, 1fr));
+          row-gap: var(--bq-spacing-l);
+        }
+
+        @media (min-width: 640px) {
+          .bq-story-radio-group {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            column-gap: var(--bq-spacing-l);
+          }
+        }
+
+        .bq-story-radio-group h4 {
+          margin-block-end: var(--bq-spacing-m);
+        }
+
+        .bq-story-radio-group form {
+          display: flex;
+          flex-direction: column;
+          row-gap: var(--bq-spacing-m);
+        }
+
+        .bq-story-radio-group label[slot='label'] {
+          display: flex;
+          flex-grow: 1;
+          align-items: center;
+        }
+
+        .bq-story-radio-group form > div {
+          display: flex;
+          justify-content: flex-end;
+          column-gap: var(--bq-spacing-s);
+        }
+
+        .bq-story-radio-group__data::part(wrapper) {
+          height: 100%;
+        }
+
+        .bq-story-radio-group .language-javascript {
+          overflow-x: scroll;
+          white-space: pre;
+          border-radius: var(--bq-radius--s);
+        }
+
+        .bq-story-radio-group code {
+          border-radius: var(--bq-radius--s);
+        }
+      </style>
       <link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/styles/night-owl.min.css" />
 
-      <div class="grid auto-cols-auto grid-cols-1 gap-y-l sm:grid-cols-2 sm:gap-x-l">
+      <div class="bq-story-radio-group">
         <bq-card>
-          <h4 class="m-be-m">Marketing consent</h4>
-          <form class="flex flex-col gap-y-m" @submit=${handleFormSubmit} method="post">
+          <h4>Marketing consent</h4>
+          <form @submit=${handleFormSubmit} method="post">
             <bq-input name="email" value="brad.beckett202@dontsp.am" type="email" autocomplete="organization" required>
-              <label class="flex flex-grow items-center" slot="label">Email address</label>
+              <label slot="label">Email address</label>
             </bq-input>
             <!-- Radio group -->
             ${Template({ ...args, value: undefined })}
             <!-- End of radio group -->
-            <div class="flex justify-end gap-x-s">
+            <div>
               <bq-button appearance="secondary" type="reset">Cancel</bq-button>
               <bq-button type="submit">Save</bq-button>
             </div>
           </form>
         </bq-card>
-        <bq-card class="[&::part(wrapper)]:h-full">
-          <h4 class="m-be-m">Form Data</h4>
-          <div class="language-javascript overflow-x-scroll whitespace-pre rounded-s">
+        <bq-card class="bq-story-radio-group__data">
+          <h4>Form Data</h4>
+          <div class="language-javascript">
             // Handle form submit<br />
             const form = ev.target as HTMLFormElement;<br />
             const formData = new FormData(form);<br />
             const formValues = Object.fromEntries(formData.entries());
           </div>
           <pre>
-            <code id="form-data" class="rounded-s">
+            <code id="form-data">
               { // submit the form to see the data here }
             </code>
           </pre>
