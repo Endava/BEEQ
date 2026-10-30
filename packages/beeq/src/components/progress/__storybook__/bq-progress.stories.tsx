@@ -44,7 +44,12 @@ const Template = (args: Args) => {
   const indeterminate = isChromatic() ? false : args.indeterminate;
 
   return html`
-    <div class="is-64">
+    <style>
+      .bq-story-progress {
+        inline-size: 16rem;
+      }
+    </style>
+    <div class="bq-story-progress">
       <bq-progress
         value=${args.value}
         ?indeterminate=${indeterminate}
