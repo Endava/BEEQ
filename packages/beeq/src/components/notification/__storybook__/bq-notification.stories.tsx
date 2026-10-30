@@ -47,7 +47,18 @@ export default meta;
 type Story = StoryObj;
 
 const Template = (args: Args) => html`
-  <div class="flex flex-row gap-4">
+  <style>
+    .bq-story-notification {
+      display: flex;
+      flex-direction: row;
+      gap: 1rem;
+    }
+    .bq-story-notification [slot='footer'] {
+      display: flex;
+      gap: var(--bq-spacing-xs);
+    }
+  </style>
+  <div class="bq-story-notification">
     <bq-notification
       ?auto-dismiss=${args['auto-dismiss']}
       ?disable-close=${args['disable-close']}
@@ -102,7 +113,7 @@ const Template = (args: Args) => html`
         This is some description text text
         <a class="bq-link" href="https://example.com">Link</a>
       </span>
-      <div class="flex gap-xs" slot="footer">
+      <div slot="footer">
         <bq-button appearance="primary" size="small"> Button </bq-button>
         <bq-button appearance="link" size="small"> Button </bq-button>
       </div>
@@ -188,11 +199,19 @@ export const Stacked: Story = {
     };
 
     return html`
-      <p class="m-be-0">
+      <style>
+        .bq-story-notification-stacked__summary {
+          margin-block-end: 0;
+        }
+        .bq-story-notification-stacked__note {
+          margin-block-end: 1.5rem;
+        }
+      </style>
+      <p class="bq-story-notification-stacked__summary">
         The notification component creates and manages the notification portal, a fixed-position element that allows for
         stacking multiple notifications vertically.
       </p>
-      <p class="m-be-6">
+      <p class="bq-story-notification-stacked__note">
         Only one instance of the notification portal exists and it is added or removed from the DOM as required when
         notifications are displayed.
       </p>
