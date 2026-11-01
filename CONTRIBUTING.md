@@ -140,6 +140,7 @@ Maintainers can publish a branch to npm before it is merged, so a change can be 
 1. Go to **Actions** → **NPM preview publish** → **Run workflow**.
 2. Under **Use workflow from**, pick the branch. The branch must contain the workflow and the latest release, so merge `main` into older branches first.
 3. Tick **dry run** to see the version and package contents without publishing.
+4. A required reviewer of the `npm-preview` environment approves the run under **Review deployments**. Nothing runs before that, dry runs included.
 
 Every package is published as `X.Y.Z-preview.N` under the `preview` dist-tag:
 
@@ -148,7 +149,10 @@ Every package is published as `X.Y.Z-preview.N` under the `preview` dist-tag:
 
 Install the exact version, for example `npm install @beeq/core@1.18.0-preview.2`, because `@preview` points to the latest preview from any branch. Preview runs never commit, tag, create a GitHub release or deploy Storybook.
 
-❗️ npm only accepts these publishes once `publish-preview.yml` is a trusted publisher, with `npm publish` allowed, for `@beeq/core`, `@beeq/angular`, `@beeq/react`, `@beeq/vue` and `@beeq/tailwindcss`. A new trusted publisher expires unless it publishes within 2 days, so add them just before the first preview run.
+❗️ One-time setup, before the first preview run:
+
+1. In **Settings** → **Environments**, create `npm-preview` with **Required reviewers** and no deployment branch restriction. Create it before the workflow first runs, because GitHub creates a missing environment without any protection rules.
+2. On npmjs.com, add a trusted publisher to `@beeq/core`, `@beeq/angular`, `@beeq/react`, `@beeq/vue` and `@beeq/tailwindcss` with workflow `publish-preview.yml`, environment `npm-preview` and `npm publish` allowed. npm then rejects any preview publish that did not go through the environment's approval. A new trusted publisher expires unless it publishes within 2 days, so add them just before the first real preview.
 
 ### <a name="git-commit-messages"></a> Git Commit Messages
 

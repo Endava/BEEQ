@@ -2,7 +2,8 @@ name: NPM preview publish
 
 # Publishes the branch picked in "Use workflow from" as X.Y.Z-preview.N under the `preview` dist-tag.
 # It never commits, tags, creates a GitHub release or deploys Storybook.
-# npm needs a trusted publisher for this file on every package (see "Preview releases" in CONTRIBUTING.md).
+# Every run waits for a reviewer of the `npm-preview` environment, and npm's trusted publisher for this file
+# requires that environment (see "Preview releases" in CONTRIBUTING.md).
 on:
   workflow_dispatch: # Allows manual triggering
     inputs:
@@ -28,6 +29,8 @@ jobs:
   main:
     name: 📦 NPM preview publish
     runs-on: ubuntu-latest
+    # The job gets no OIDC token until a required reviewer approves it, so write access alone can't publish
+    environment: npm-preview
     env:
       NX_BRANCH: ${{ github.ref_name }}
     steps:
