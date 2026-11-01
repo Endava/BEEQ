@@ -4,7 +4,7 @@ on:
   workflow_dispatch: # Allows manual triggering
     inputs:
       channel:
-        description: 'latest publishes the checked-out ref as is. beta publishes the next X.Y.Z-beta.N from main.'
+        description: 'latest publishes the checked-out ref as is. beta publishes the next X.Y.Z-beta.N from main. Use the NPM preview publish workflow for branch previews.'
         type: choice
         options: [latest, beta]
         default: latest
@@ -69,7 +69,7 @@ jobs:
       - name: 🏷 Bump packages to the next beta version
         id: beta
         if: inputs.channel == 'beta'
-        run: node tools/scripts/beta-release.mjs
+        run: node tools/scripts/prerelease.mjs --preid beta
         shell: bash
 
       - name: ⏳ Build
