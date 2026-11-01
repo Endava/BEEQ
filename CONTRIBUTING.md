@@ -14,6 +14,7 @@ As a contributor, here are the guidelines we would like you to follow:
   - [🎨 Styleguides](#-styleguides)
     - [ Code formatting](#-code-formatting)
     - [ Branching strategy](#-branching-strategy)
+    - [ Preview releases](#-preview-releases)
     - [ Git Commit Messages](#-git-commit-messages)
       - [ Type](#-type)
       - [ Subject](#-subject)
@@ -131,6 +132,27 @@ git checkout -b docs/<doc-change> main
   - **refactor**: a code change that neither fixes a bug nor adds a feature
   - **perf**: a code change that improves performance
   - **revert**, **ci**, **build**: reverts, CI changes and build-system changes
+
+### <a name="preview-releases"></a> Preview releases
+
+Maintainers can publish a branch to npm before it is merged, so a change can be tried in a real project:
+
+1. Go to **Actions** → **NPM preview publish** → **Run workflow**.
+2. Under **Use workflow from**, pick the branch. The branch must contain the workflow and the latest release, so merge `main` into older branches first.
+3. Tick **dry run** to see the version and package contents without publishing.
+4. A required reviewer of the `npm-preview` environment approves the run under **Review deployments**. Nothing runs before that, dry runs included.
+
+Every package is published as `X.Y.Z-preview.N` under the `preview` dist-tag:
+
+- `X.Y.Z` is the next stable version implied by the branch's commits since its latest release tag: `feat` bumps the minor, breaking changes bump the major and the other releasable types bump the patch (see `release.conventionalCommits` in `nx.json`). A branch with only `docs`, `ci` or `release` commits has nothing to preview, so the run fails.
+- `N` is the next free preview number for `X.Y.Z` on npm. A higher `N` was published later, but it only contains the changes of its own branch. The run summary shows the branch and commit.
+
+Install the exact version, for example `npm install @beeq/core@1.18.0-preview.2`, because `@preview` points to the latest preview from any branch. Preview runs never commit, tag, create a GitHub release or deploy Storybook.
+
+❗️ One-time setup, before the first preview run:
+
+1. In **Settings** → **Environments**, create `npm-preview` with **Required reviewers** and no deployment branch restriction. Create it before the workflow first runs, because GitHub creates a missing environment without any protection rules.
+2. On npmjs.com, add a trusted publisher to `@beeq/core`, `@beeq/angular`, `@beeq/react`, `@beeq/vue` and `@beeq/tailwindcss` with workflow `publish-preview.yml`, environment `npm-preview` and `npm publish` allowed. npm then rejects any preview publish that did not go through the environment's approval. A new trusted publisher expires unless it publishes within 2 days, so add them just before the first real preview.
 
 ### <a name="git-commit-messages"></a> Git Commit Messages
 
