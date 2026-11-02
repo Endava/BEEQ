@@ -1,21 +1,20 @@
 import type { Config } from 'tailwindcss';
 import plugin from 'tailwindcss/plugin';
 
-import { CSS_COLORS_SELECTOR, SHARED_TOKENS, SHARED_TOKENS_SELECTOR, THEME_SELECTORS } from './generated/tokens';
-import { BeeqThemeSwapper, ColorMix, LogicalProperties } from './plugins';
 import {
-  CSS_COLORS,
-  DECLARATIVE_COLORS,
+  CSS_COLORS_SELECTOR,
   DefaultDarkTheme,
   DefaultLightTheme,
   DefaultRootTheme,
   EndavaDarkTheme,
   EndavaLightTheme,
   EndavaRootTheme,
-  PRIMITIVE_COLORS,
-  reset,
-  TYPOGRAPHY_DEFAULT,
-} from './theme';
+  SHARED_TOKENS,
+  SHARED_TOKENS_SELECTOR,
+  THEME_SELECTORS,
+} from './generated/tokens';
+import { BeeqThemeSwapper, ColorMix, LogicalProperties } from './plugins';
+import { CSS_COLORS, DECLARATIVE_COLORS, PRIMITIVE_COLORS, reset, TYPOGRAPHY_DEFAULT } from './theme';
 
 const inherit: string = 'inherit';
 

@@ -1,8 +1,14 @@
 import { describe, expect, it } from 'vitest';
 
+import {
+  DefaultDarkTheme,
+  DefaultLightTheme,
+  DefaultRootTheme,
+  EndavaDarkTheme,
+  EndavaLightTheme,
+  EndavaRootTheme,
+} from '../../generated/tokens';
 import { CSS_COLORS, DECLARATIVE_COLORS } from '../colors';
-import { DefaultDarkTheme, DefaultLightTheme, DefaultRootTheme } from '../default';
-import { EndavaDarkTheme, EndavaLightTheme, EndavaRootTheme } from '../endava';
 import {
   apcaContrast,
   contrastRatio,
