@@ -1,5 +1,6 @@
 import { h } from '@stencil/core';
 import { afterEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
+import { cdp } from 'vitest/browser';
 
 import { resolveColorToken } from '../../../shared/test-utils/resolveColorToken';
 
@@ -20,9 +21,37 @@ const getAlignmentError = (element: HTMLBqProgressElement) => {
   return Math.abs(panel.left + panel.width / 2 - (bar.left + (bar.width * element.value) / 100));
 };
 
+const emulateReducedMotion = (value: 'no-preference' | 'reduce') =>
+  cdp().send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value }] });
+
 describe('bq-progress', () => {
   afterEach(() => {
     vi.restoreAllMocks();
+  });
+
+  it('should stop the indeterminate animation when the user prefers reduced motion', async () => {
+    const { root } = await render(<bq-progress indeterminate value={60} />);
+    const progress = root as HTMLBqProgressElement;
+    await waitForStable(root);
+    const indicator = getIndeterminate(progress);
+    const bar = getProgressBar(progress);
+
+    expect(indicator).not.toBeNull();
+    expect(getComputedStyle(indicator).animationName).toBe('move-indeterminate');
+
+    try {
+      await emulateReducedMotion('reduce');
+      expect(matchMedia('(prefers-reduced-motion: reduce)').matches).toBe(true);
+      expect(getComputedStyle(indicator).animationName).toBe('none');
+      expect(indicator.getBoundingClientRect().width).toBeGreaterThan(0);
+      expect(indicator.getBoundingClientRect().height).toBeGreaterThan(0);
+      expect(bar).not.toHaveAttribute('value');
+      expect(bar.position).toBe(-1);
+    } finally {
+      await emulateReducedMotion('no-preference');
+    }
+
+    expect(getComputedStyle(indicator).animationName).toBe('move-indeterminate');
   });
 
   it('should render', async () => {

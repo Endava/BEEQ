@@ -134,3 +134,14 @@
 .bq-progress__bar:indeterminate::-moz-progress-bar {
   background-color: var(--bq-progress-bar--trackColor);
 }
+
+// Unlayered animation rules outrank the reset's zero-specificity reduced-motion rule.
+@media (prefers-reduced-motion: reduce) {
+  .bq-progress__indeterminate {
+    animation: none;
+  }
+
+  .bq-progress__bar::-moz-progress-bar {
+    animation: none;
+  }
+}
