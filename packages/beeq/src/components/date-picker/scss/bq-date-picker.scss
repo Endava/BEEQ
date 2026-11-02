@@ -533,7 +533,7 @@
 
 /* --------------------------------- States --------------------------------- */
 
-/* Unlayered component rules outrank the reset's `[hidden]` rule, so restate it here. */
+/* The reset's `[hidden]` rule has no specificity, so the unlayered `display` rules above outrank it. Restate it. */
 .bq-date-picker__label[hidden],
 .bq-date-picker__prefix[hidden] {
   display: none;

@@ -78,6 +78,8 @@
 /*
  * Kept outside the cascade layers on purpose: unlayered rules win over every BEEQ layer,
  * so native hidden state and reduced-motion preferences apply without `!important`.
+ * The selectors have no specificity, so a component rule that is not layered can outrank them
+ * and has to restate the exception itself (see the date-picker, drawer, page-title and spinner stylesheets).
  */
 :where([hidden]:not([hidden='until-found'])) {
   display: none;

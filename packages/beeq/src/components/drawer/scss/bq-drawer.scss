@@ -127,14 +127,6 @@
 }
 
 /*
- * The legacy unlayered reset overrides layered margins.
- * Keep this parity declaration unlayered until that reset participates in bq.reset.
- */
-.bq-drawer__footer-divider {
-  margin-block-end: var(--bq-spacing-m);
-}
-
-/*
  * Keep the closed panel rendered so its inset transition runs on open and close; the host's
  * `visibility` and `aria-hidden` hide it instead. Unlayered so it outranks the reset's `[hidden]` rule.
  */

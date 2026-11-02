@@ -29,11 +29,13 @@
     display: flex;
     flex-grow: 1;
     align-items: center;
+    margin-block-end: var(--bq-input--label-margin-bottom);
     color: var(--bq-input--label-text-color);
     font-size: var(--bq-input--label-text-size);
   }
 
   .bq-input--helper-text {
+    margin-block-start: var(--bq-input--helper-margin-top);
     color: var(--bq-input--helper-text-color);
     font-size: var(--bq-input--helper-text-size);
   }
@@ -98,21 +100,6 @@
   ::slotted(bq-icon) {
     --bq-icon--size: var(--bq-input--icon-size);
   }
-}
-
-/*
- * Keep these spacing rules unlayered to preserve the current label and helper
- * text layout. The shadow-root reset is also unlayered, so its `margin: 0`
- * outranks normal declarations in every named component layer, regardless of
- * selector specificity. Move these rules into `bq-input.structure` once the
- * reset itself is assigned to `bq.reset`.
- */
-.bq-input--label {
-  margin-block-end: var(--bq-input--label-margin-bottom);
-}
-
-.bq-input--helper-text {
-  margin-block-start: var(--bq-input--helper-margin-top);
 }
 
 /* ------------------------------- Validation ------------------------------- */

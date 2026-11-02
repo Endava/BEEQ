@@ -173,8 +173,3 @@
     opacity: 1;
   }
 }
-
-/* The legacy unlayered reset overrides layered margins. */
-.bq-alert__icon {
-  margin-inline-end: var(--bq-spacing-s);
-}

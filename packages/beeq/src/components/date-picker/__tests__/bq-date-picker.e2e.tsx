@@ -1364,6 +1364,7 @@ describe('bq-date-picker', () => {
     const labelSlot = label?.querySelector<HTMLSlotElement>('slot[name="label"]');
 
     expect(label).not.toHaveAttribute('hidden');
+    expect(getComputedStyle(label).display).toBe('flex');
     expect(labelSlot).not.toBeNull();
     if (!labelSlot) throw new Error('Expected label slot to exist');
     expect(getTextContent(labelSlot, { recurse: true })).toBe('Pick a date');
@@ -1381,6 +1382,18 @@ describe('bq-date-picker', () => {
     const prefix = datePicker.shadowRoot?.querySelector<HTMLElement>('[part="prefix"]');
 
     expect(prefix).not.toHaveAttribute('hidden');
+    expect(getComputedStyle(prefix).display).not.toBe('none');
+  });
+
+  it('should hide the prefix wrapper when the `prefix` slot is empty', async () => {
+    const { root } = await render(<bq-date-picker name="date-picker" />);
+    const datePicker = root as HTMLBqDatePickerElement;
+
+    await waitForStable(root);
+    const prefix = datePicker.shadowRoot?.querySelector<HTMLElement>('[part="prefix"]');
+
+    expect(prefix).toHaveAttribute('hidden');
+    expect(getComputedStyle(prefix).display).toBe('none');
   });
 
   it('should render slotted `suffix` content in place of the default calendar icon', async () => {
@@ -1417,7 +1430,10 @@ describe('bq-date-picker', () => {
 
     await waitForStable(root);
 
-    expect(datePicker.shadowRoot?.querySelector('[part="label"]')).toHaveAttribute('hidden');
+    const label = datePicker.shadowRoot?.querySelector<HTMLElement>('[part="label"]');
+
+    expect(label).toHaveAttribute('hidden');
+    expect(getComputedStyle(label).display).toBe('none');
   });
 
   /* ---------------------------- isDateDisallowed ---------------------------- */

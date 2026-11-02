@@ -30,6 +30,7 @@
 
 @layer bq-textarea.structure {
   .bq-textarea__label {
+    margin-block-end: var(--bq-textarea--label-margin-bottom);
     color: var(--bq-textarea--label-text-color);
     font-size: var(--bq-textarea--label-text-size);
   }
@@ -38,6 +39,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-block-start: var(--bq-textarea--helper-margin-top);
     color: var(--bq-textarea--helper-text-color);
     font-size: var(--bq-textarea--helper-text-size);
   }
@@ -45,21 +47,6 @@
   .bq-textarea__helper--counter {
     font-variant-numeric: tabular-nums;
   }
-}
-
-/*
- * Keep these spacing rules unlayered to preserve the current label and helper
- * text layout. The shadow-root reset is also unlayered, so its `margin: 0`
- * outranks normal declarations in every named component layer, regardless of
- * selector specificity. Move these rules into `bq-textarea.structure` once the
- * reset itself is assigned to `bq.reset`.
- */
-.bq-textarea__label {
-  margin-block-end: var(--bq-textarea--label-margin-bottom);
-}
-
-.bq-textarea__helper {
-  margin-block-start: var(--bq-textarea--helper-margin-top);
 }
 
 /* ------------------------------- Validation ------------------------------- */

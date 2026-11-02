@@ -73,11 +73,3 @@
     transform: rotate(45deg);
   }
 }
-
-/*
- * The legacy unlayered popover reset overrides layered margins.
- * Keep this parity declaration unlayered until that reset participates in bq.reset.
- */
-.bq-tooltip__panel[popover] {
-  margin: 0;
-}

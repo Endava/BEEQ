@@ -29,6 +29,7 @@ describe('bq-page-title', () => {
 
     const backContainer = root.shadowRoot?.querySelector<HTMLElement>('[part="back"]');
     expect(backContainer).toHaveAttribute('hidden');
+    expect(getComputedStyle(backContainer).display).toBe('none');
   });
 
   it('should show back navigation when back slot has content', async () => {
@@ -41,6 +42,7 @@ describe('bq-page-title', () => {
 
     const backContainer = root.shadowRoot?.querySelector<HTMLElement>('[part="back"]');
     expect(backContainer).not.toHaveAttribute('hidden');
+    expect(getComputedStyle(backContainer).display).toBe('flex');
   });
 
   it('should render sub-title slot', async () => {
@@ -59,6 +61,15 @@ describe('bq-page-title', () => {
 
     const subTitleContainer = root.shadowRoot?.querySelector<HTMLElement>('[part="sub-title"]');
     expect(subTitleContainer).toHaveAttribute('hidden');
+    expect(getComputedStyle(subTitleContainer).display).toBe('none');
+  });
+
+  it('should hide suffix by default', async () => {
+    const { root } = await render(<bq-page-title>Title</bq-page-title>);
+
+    const suffixContainer = root.shadowRoot?.querySelector<HTMLElement>('[part="suffix"]');
+    expect(suffixContainer).toHaveAttribute('hidden');
+    expect(getComputedStyle(suffixContainer).display).toBe('none');
   });
 
   it('should render suffix slot', async () => {
@@ -72,7 +83,10 @@ describe('bq-page-title', () => {
     );
 
     const suffixSlot = root.shadowRoot?.querySelector('slot[name="suffix"]');
+    const suffixContainer = root.shadowRoot?.querySelector<HTMLElement>('[part="suffix"]');
     expect(suffixSlot).not.toBeNull();
+    expect(suffixContainer).not.toHaveAttribute('hidden');
+    expect(getComputedStyle(suffixContainer).display).toBe('flex');
   });
   it('should use the default colours', async () => {
     const { root } = await render(

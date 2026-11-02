@@ -197,19 +197,3 @@
     cursor: not-allowed;
   }
 }
-
-/*
- * The legacy unlayered reset overrides layered box-sizing and margins.
- * Keep these parity declarations unlayered until that reset participates in bq.reset.
- */
-.bq-slider__label {
-  box-sizing: content-box;
-}
-
-.bq-slider__label[part='label-start'] {
-  margin-inline-end: var(--bq-spacing-xs);
-}
-
-.bq-slider__label[part='label-end'] {
-  margin-inline-start: var(--bq-spacing-xs);
-}

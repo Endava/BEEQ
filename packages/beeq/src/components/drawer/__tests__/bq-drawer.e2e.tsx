@@ -288,6 +288,18 @@ describe('bq-drawer', () => {
     expect(getComputedStyle(divider).marginBlockEnd).toBe('16px');
   });
 
+  it('should keep the closed panel rendered so its transition can run', async () => {
+    const { root } = await render(<bq-drawer />);
+    const drawer = root as HTMLBqDrawerElement;
+
+    await waitForStable(root);
+
+    const panel = getDrawerPanel(drawer);
+
+    expect(panel).toHaveAttribute('hidden');
+    expect(getComputedStyle(panel).display).toBe('flex');
+  });
+
   it('should preserve backdrop styles and open state', async () => {
     const { root } = await render(<bq-drawer enableBackdrop open />);
     const drawer = root as HTMLBqDrawerElement;
