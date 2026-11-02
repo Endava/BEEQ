@@ -93,6 +93,37 @@ describe('bq-dialog', () => {
     expect(panel).not.toHaveAttribute('open');
   });
 
+  it('should hide the closed dialog host', async () => {
+    const { root } = await render(
+      <bq-dialog>
+        <h3 slot="title">Dialog Title</h3>
+      </bq-dialog>,
+    );
+    const dialog = root as HTMLBqDialogElement;
+
+    await waitForStable(root);
+
+    expect(getComputedStyle(dialog).visibility).toBe('hidden');
+
+    const afterOpen = new Promise<void>((resolve) =>
+      root.addEventListener('bqAfterOpen', () => resolve(), { once: true }),
+    );
+
+    await dialog.show();
+    await afterOpen;
+
+    expect(getComputedStyle(dialog).visibility).toBe('visible');
+
+    const afterClose = new Promise<void>((resolve) =>
+      root.addEventListener('bqAfterClose', () => resolve(), { once: true }),
+    );
+
+    await dialog.hide();
+    await afterClose;
+
+    expect(getComputedStyle(dialog).visibility).toBe('hidden');
+  });
+
   it('should cancel on "Escape"', async () => {
     const { root } = await render(
       <bq-dialog open>

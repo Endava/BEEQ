@@ -12,13 +12,19 @@
 /* ---------------------------------- Base ---------------------------------- */
 
 @layer bq-dialog.base {
+  /*
+   * Stencil's lazy loader injects `.hydrated { visibility: inherit }` into the document, and a
+   * normal document rule beats a normal `:host` rule. `!important` keeps the closed dialog hidden.
+   */
+  /* stylelint-disable declaration-no-important */
   :host {
-    visibility: hidden;
+    visibility: hidden !important;
   }
 
   :host(.bq-dialog--open) {
-    visibility: visible;
+    visibility: visible !important;
   }
+  /* stylelint-enable declaration-no-important */
 
   .bq-dialog {
     position: fixed;

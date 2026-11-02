@@ -12,13 +12,20 @@
 /* ---------------------------------- Base ---------------------------------- */
 
 @layer bq-drawer.base {
+  /*
+   * Stencil's lazy loader injects `.hydrated { visibility: inherit }` into the document, and a
+   * normal document rule beats a normal `:host` rule. `!important` keeps the closed drawer hidden
+   * so its off-screen panel stays out of the tab order and the accessibility tree.
+   */
+  /* stylelint-disable declaration-no-important */
   :host {
-    visibility: hidden;
+    visibility: hidden !important;
   }
 
   :host(.bq-drawer--open) {
-    visibility: visible;
+    visibility: visible !important;
   }
+  /* stylelint-enable declaration-no-important */
 
   .bq-drawer {
     position: fixed;

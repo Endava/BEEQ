@@ -300,6 +300,71 @@ describe('bq-drawer', () => {
     expect(getComputedStyle(panel).display).toBe('flex');
   });
 
+  it('should hide the closed drawer host and its contents', async () => {
+    const { root } = await render(
+      <bq-drawer>
+        <div slot="title">Drawer Title</div>
+        <button type="button">Body action</button>
+      </bq-drawer>,
+    );
+    const drawer = root as HTMLBqDrawerElement;
+
+    await waitForStable(root);
+
+    const panel = getDrawerPanel(drawer);
+    const close = drawer.shadowRoot?.querySelector<HTMLElement>('[part="button-close"]');
+    const bodyAction = drawer.querySelector('button');
+
+    expect(getComputedStyle(drawer).visibility).toBe('hidden');
+    expect(getComputedStyle(panel).visibility).toBe('hidden');
+    expect(getComputedStyle(close).visibility).toBe('hidden');
+    expect(getComputedStyle(bodyAction).visibility).toBe('hidden');
+
+    const afterOpen = new Promise<void>((resolve) =>
+      root.addEventListener('bqAfterOpen', () => resolve(), { once: true }),
+    );
+
+    await drawer.show();
+    await afterOpen;
+
+    expect(getComputedStyle(drawer).visibility).toBe('visible');
+    expect(getComputedStyle(bodyAction).visibility).toBe('visible');
+
+    const afterClose = new Promise<void>((resolve) =>
+      root.addEventListener('bqAfterClose', () => resolve(), { once: true }),
+    );
+
+    await drawer.hide();
+    await afterClose;
+
+    expect(getComputedStyle(drawer).visibility).toBe('hidden');
+    expect(getComputedStyle(bodyAction).visibility).toBe('hidden');
+  });
+
+  it('should show an initially open drawer and hide it after closing', async () => {
+    const { root } = await render(
+      <bq-drawer open>
+        <div slot="title">Drawer Title</div>
+      </bq-drawer>,
+    );
+    const drawer = root as HTMLBqDrawerElement;
+
+    await waitForStable(root);
+
+    expect(drawer).toHaveClass('bq-drawer--open');
+    expect(getComputedStyle(drawer).visibility).toBe('visible');
+
+    const afterClose = new Promise<void>((resolve) =>
+      root.addEventListener('bqAfterClose', () => resolve(), { once: true }),
+    );
+
+    await drawer.hide();
+    await afterClose;
+
+    expect(drawer).not.toHaveClass('bq-drawer--open');
+    expect(getComputedStyle(drawer).visibility).toBe('hidden');
+  });
+
   it('should preserve backdrop styles and open state', async () => {
     const { root } = await render(<bq-drawer enableBackdrop open />);
     const drawer = root as HTMLBqDrawerElement;

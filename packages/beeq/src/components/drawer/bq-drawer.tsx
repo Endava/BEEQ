@@ -185,6 +185,8 @@ export class BqDrawer {
     this.handlePositionChange();
     // !TO BE REMOVED: Delete this once the deprecated `placement` property is removed
     this.handlePlacementChange();
+    // `@Watch('open')` doesn't run for the initial value, so an initially open drawer needs the class here
+    if (this.open) this.el.classList.add(this.OPEN_CSS_CLASS);
   }
 
   componentDidLoad() {
