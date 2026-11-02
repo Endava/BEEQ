@@ -59,6 +59,9 @@ node_modules
 !.vscode/extensions.json
 !.vscode/stencil-component-starter.code-snippets
 
+# Agent tools (personal config)
+.devin/config.local.json
+
 # misc
 .cache
 .eslintcache
