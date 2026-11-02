@@ -11,6 +11,7 @@ As a contributor, here are the guidelines we would like you to follow:
   - [Any contributions you make will be under the Apache 2.0 Software License](#any-contributions-you-make-will-be-under-the-apache-20-software-license)
     - [ Report an Error or Bug](#-report-an-error-or-bug)
   - [🛠 Project setup](#-project-setup)
+    - [Visual previews](#visual-previews)
   - [🎨 Styleguides](#-styleguides)
     - [ Code formatting](#-code-formatting)
     - [ Branching strategy](#-branching-strategy)
@@ -64,6 +65,14 @@ Report a bug by [opening a new issue](https://github.com/Endava/BEEQ/issues/new/
 ## <a name="project-setup"></a>🛠 Project setup
 
 For running the project in your local development environment please [follow the README instructions](README.md).
+
+### Visual previews
+
+Storybook loads the prebuilt BEEQ components and global styles from `dist/beeq` through static assets and script tags. Chromatic's TurboSnap dependency graph cannot trace those files back to their sources. Without explicit tracking, a component fix can pass CI while the Storybook link still serves an older build.
+
+The `externals` in `chromatic.config.json` track the component, global and shared sources, the Stencil build configuration and runner, and the Chromatic configuration itself. Paths are relative to the repository root, not the Storybook directory. Keep these entries pointing at tracked sources, not ignored `dist` files.
+
+Changes in these paths trigger a full snapshot run, including tests or stories stored in the same directories. Other changes remain eligible for TurboSnap's selective snapshots. This trades additional snapshots for reliable component previews; changing the Chromatic configuration also forces the next build to include fixes skipped by an earlier run.
 
 ## <a name="styleguides"></a>🎨 Styleguides
 
