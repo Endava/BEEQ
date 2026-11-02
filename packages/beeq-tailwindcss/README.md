@@ -37,7 +37,7 @@ Load the preset with `@plugin` in your CSS entry file:
 
 > Note: `@beeq/tailwindcss` 1.16.2 and earlier fail with `@plugin` (`b is not a function`). On those versions, use `@config "@beeq/tailwindcss";` instead.
 
-> Note: If you also import `@beeq/core/dist/beeq/beeq.css`, import it into Tailwind's `base` layer: `@import "@beeq/core/dist/beeq/beeq.css" layer(base);`. `beeq.css` is unlayered, and unlayered styles override Tailwind CSS v4 utilities, so its reset would turn `mx-auto` into `margin: 0`.
+> Note: If you also import `@beeq/core/dist/beeq/beeq.css`, name the `bq` layer before Tailwind's layers by adding `@layer theme, base, bq, components, utilities;` above `@import "tailwindcss";`. `beeq.css` puts its reset and heading styles in `@layer bq.*`, and a layer first named after `@import "tailwindcss"` ranks above Tailwind CSS v4 utilities, so its reset would turn `mx-auto` into `margin: 0`. Don't import it with `layer(base)`: Tailwind's own `base` rules outrank the nested BEEQ layers and the headings lose their BEEQ styles. See [Apps that use cascade layers](https://www.beeq.design/getting-started/installation#apps-that-use-cascade-layers).
 
 > Note: For stroke widths, use `border-stroke-s`, `border-stroke-m`, and `border-stroke-l`. Tailwind CSS v4 also reads `border-s` and `border-l` as its own inline-start and left border utilities, so those classes add a `1px` side border on top of the BEEQ stroke width.
 
@@ -69,7 +69,7 @@ export default {
 
 The preset includes an opinionated CSS reset, the same one `@beeq/core` ships in `beeq.css`. Most of its selectors use `:where()`, so they have zero specificity and your own styles override them. See the [full list of rules](https://www.beeq.design/getting-started/installation#css-reset).
 
-To add your own reset rules on top, put them in Tailwind's `base` layer.
+To add your own reset rules on top, put them in Tailwind's `base` layer. If you also import `beeq.css` with the `bq` layer ordered as described above, `bq` ranks above `base`, so put your overrides of BEEQ's reset in `components`, in `utilities` or outside any layer instead.
 
 Tailwind CSS v4:
 

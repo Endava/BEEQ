@@ -90,7 +90,7 @@ You can add BEEQ to an existing Angular project in a few steps.
     </Tip>
 
     <Tip>
-      Using Tailwind CSS v4? Import BEEQ with `layer(base)` so Tailwind utilities still override the BEEQ reset. See [Apps that use cascade layers](/getting-started/installation#apps-that-use-cascade-layers).
+      Using Tailwind CSS v4? Add `@layer theme, base, bq, components, utilities;` above your imports so Tailwind utilities still override the BEEQ reset. See [Apps that use cascade layers](/getting-started/installation#apps-that-use-cascade-layers).
     </Tip>
   </Step>
 
