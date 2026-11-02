@@ -116,7 +116,15 @@
   @include animation-spin;
 }
 
-/* Unlayered component rules outrank the reset's `[hidden]` rule, so restate it here. */
+/* The reset's reduced-motion rule has no specificity, so the unlayered animation above outranks it. Stop it here. */
+@media (prefers-reduced-motion: reduce) {
+  :host([animation]) .bq-spinner__icon,
+  :host([animation]) .bq-spinner__loader > svg {
+    animation: none;
+  }
+}
+
+/* The reset's `[hidden]` rule has no specificity, so the unlayered `display` rule above outranks it. Restate it. */
 .bq-spinner__icon[hidden] {
   display: none;
 }

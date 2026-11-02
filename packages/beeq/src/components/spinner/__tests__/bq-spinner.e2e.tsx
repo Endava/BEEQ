@@ -1,9 +1,13 @@
 import { h } from '@stencil/core';
 import { afterEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
+import { cdp } from 'vitest/browser';
 
 import { computedStyle } from '../../../shared/test-utils/computedStyle';
 import { resolveColorToken } from '../../../shared/test-utils/resolveColorToken';
 import { getTextContent } from '../../../shared/utils/slot';
+
+const emulateReducedMotion = (value: 'no-preference' | 'reduce') =>
+  cdp().send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value }] });
 
 afterEach(() => {
   vi.restoreAllMocks();
@@ -36,6 +40,46 @@ describe('bq-spinner', () => {
 
     expect(spinner).not.toHaveAttribute('animation');
     expect(getComputedStyle(loaderIcon).animationName).toBe('none');
+  });
+
+  it('should stop the loader animation when the user prefers reduced motion', async () => {
+    const { root } = await render(<bq-spinner animation />);
+    const loaderIcon = root.shadowRoot?.querySelector<SVGElement>('.bq-spinner__loader > svg');
+
+    expect(loaderIcon).not.toBeNull();
+    expect(getComputedStyle(loaderIcon).animationName).toBe('spin');
+
+    try {
+      await emulateReducedMotion('reduce');
+      expect(matchMedia('(prefers-reduced-motion: reduce)').matches).toBe(true);
+      expect(getComputedStyle(loaderIcon).animationName).toBe('none');
+    } finally {
+      await emulateReducedMotion('no-preference');
+    }
+
+    expect(getComputedStyle(loaderIcon).animationName).toBe('spin');
+  });
+
+  it('should stop the custom icon animation when the user prefers reduced motion', async () => {
+    const { root } = await render(
+      <bq-spinner animation>
+        <bq-icon name="spinner-gap" slot="icon" />
+      </bq-spinner>,
+    );
+    await waitForStable(root);
+    const iconContainer = root.shadowRoot?.querySelector<HTMLElement>('.bq-spinner__icon');
+
+    expect(iconContainer).not.toBeNull();
+    expect(getComputedStyle(iconContainer).animationName).toBe('spin');
+
+    try {
+      await emulateReducedMotion('reduce');
+      expect(getComputedStyle(iconContainer).animationName).toBe('none');
+    } finally {
+      await emulateReducedMotion('no-preference');
+    }
+
+    expect(getComputedStyle(iconContainer).animationName).toBe('spin');
   });
 
   it('should handle `size` property', async () => {
@@ -86,7 +130,19 @@ describe('bq-spinner', () => {
     const iconSlotElements = slotElement.assignedElements({ flatten: true });
 
     expect(spinnerIcon).not.toHaveAttribute('hidden');
+    expect(getComputedStyle(spinnerIcon).display).toBe('flex');
     expect(iconSlotElements).toHaveLength(1);
+  });
+
+  it('should hide the icon container until an icon is slotted', async () => {
+    const { root } = await render(<bq-spinner />);
+
+    await waitForStable(root);
+
+    const spinnerIcon = root.shadowRoot?.querySelector<HTMLElement>('.bq-spinner__icon');
+
+    expect(spinnerIcon).toHaveAttribute('hidden');
+    expect(getComputedStyle(spinnerIcon).display).toBe('none');
   });
 
   it('should handle invalid properties', async () => {

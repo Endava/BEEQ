@@ -451,7 +451,7 @@ Use the `icon` slot when you need a different spinner icon treatment. Make sure 
 - **Built-in loading indicator** — the default spinner includes a status element with an accessible loading label that assistive technology can announce. When `textPosition` is set to any value other than `"none"`, the visible label text is also available to screen readers. If you replace the default loader with the `icon` slot, you must test that the loading state is still communicated clearly in context.
 - **Use meaningful status text when needed**: you should add a short visible label such as "Loading results..." when the spinner appears away from the triggering action or when the wait may last several seconds.
 - **Keep the message task-oriented**: labels should describe the current action, such as "Syncing changes" or "Submitting form", instead of generic filler.
-- **Be careful with motion changes**: setting `animation={false}` can make an active process look stalled, so you should stop the animation only when another clear status treatment explains that work is still ongoing.
+- **Be careful with motion changes**: setting `animation={false}` can make an active process look stalled, so you should stop the animation only when another clear status treatment explains that work is still ongoing. The spinner also stops animating by itself when the user's system asks for reduced motion (`prefers-reduced-motion: reduce`), so a visible label or other status text keeps the waiting state clear for those users.
 - **Avoid competing announcements**: too many independent loading indicators can create noise for screen reader users and make it harder to understand which region is updating. You should not show several independent spinners at once.
 
 ### Keyboard interaction
@@ -463,7 +463,7 @@ No keyboard interaction: the component is not focusable.
 | Rule | Strength | Verified by |
 |---|---|---|
 | Add a short task-oriented visible label when the spinner is far from the triggering action or the wait may last several seconds | SHOULD | manual: review the visible label beside the waiting task |
-| Stop the animation (`animation={false}`) only when another clear status treatment shows that work is ongoing | SHOULD | manual: pause animation and inspect the remaining status cue |
+| Stop the animation (`animation={false}`) only when another clear status treatment shows that work is ongoing | SHOULD | manual: pause animation, or enable reduced motion, and inspect the remaining status cue |
 | Do not show several independent spinners at once | SHOULD NOT | manual: inspect the screen for competing independent spinners |
 
 ## API reference
