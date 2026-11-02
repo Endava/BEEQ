@@ -43,6 +43,9 @@ describe('bq-divider', () => {
     );
     const divider = root as HTMLBqDividerElement;
 
+    await waitForStable(root);
+    warnSpy.mockClear();
+
     await setProps({ orientation: 'invalid', titleAlignment: 'invalid', strokeLinecap: 'invalid' });
 
     expect({
@@ -77,11 +80,14 @@ describe('bq-divider', () => {
     expect(style).toEqual({ height: '1px' });
   });
 
-  it('should apply the vertical orientation class', async () => {
+  it('should apply vertical orientation styles', async () => {
     const { root } = await render(<bq-divider orientation="vertical" />);
-    const base = root.shadowRoot?.querySelector('[part="base"]');
 
-    expect(base).toHaveClass('bq-divider--vertical');
+    await waitForStable(root);
+
+    const style = computedStyle('bq-divider[orientation="vertical"] >>> [part="base"]', ['flexDirection']);
+
+    expect(style).toEqual({ flexDirection: 'column' });
   });
 
   it('should render title slot content', async () => {

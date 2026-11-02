@@ -3,22 +3,15 @@ import { beforeEach, describe, expect, it, render, waitForStable } from '@stenci
 import { cdp, userEvent } from 'vitest/browser';
 
 import { computedStyle } from '../../../shared/test-utils/computedStyle';
-
-/** Resolves a CSS color value (e.g. `var(--bq-stroke--danger)`) to its computed `rgb()` form */
-const resolveColor = (value: string): string => {
-  const probe = document.createElement('div');
-  probe.style.color = value;
-  document.body.appendChild(probe);
-  const { color } = getComputedStyle(probe);
-  probe.remove();
-  return color;
-};
+import { resolveColorToken } from '../../../shared/test-utils/resolveColorToken';
 
 /** Waits for any running CSS transition inside the element's shadow root to finish */
 const waitForTransitions = async (element: Element) => {
   const animations = element.shadowRoot?.getAnimations() ?? [];
   await Promise.all(animations.map((animation) => animation.finished));
 };
+
+const getTextarea = (el: HTMLBqTextareaElement) => el.shadowRoot.querySelector<HTMLTextAreaElement>('[part="input"]');
 
 // Hover/click tests leave the Playwright cursor where they finished, so a freshly rendered element can
 // render under it and pick up `:hover` styles. Before each test, park the cursor in the bottom-right corner
@@ -63,7 +56,7 @@ describe('bq-textarea', () => {
     );
     const labelContainer = root.shadowRoot.querySelector('.bq-textarea__label');
 
-    expect(labelContainer).not.toHaveClass('!hidden');
+    expect(labelContainer).not.toHaveAttribute('hidden');
   });
 
   it('should render with helper text', async () => {
@@ -74,21 +67,36 @@ describe('bq-textarea', () => {
     );
     const helperContainer = root.shadowRoot.querySelector('.bq-textarea__helper');
 
-    expect(helperContainer).not.toHaveClass('!hidden');
+    expect(helperContainer).not.toHaveAttribute('hidden');
   });
 
   it('should render with maxlength counter', async () => {
     const { root } = await render(<bq-textarea maxlength={100} name="textarea" placeholder="Placeholder..." />);
     const counterElem = root.shadowRoot.querySelector('.bq-textarea__helper--counter');
 
-    expect(counterElem).not.toHaveClass('!hidden');
+    expect(counterElem).not.toHaveAttribute('hidden');
   });
 
   it('should hide helper content if no helper text and no maxlength', async () => {
     const { root } = await render(<bq-textarea name="textarea" placeholder="Placeholder..." />);
     const helperContainer = root.shadowRoot.querySelector('.bq-textarea__helper');
 
-    expect(helperContainer).toHaveClass('!hidden');
+    expect(helperContainer).toHaveAttribute('hidden');
+  });
+
+  it('should hide empty slot wrappers with the native hidden attribute', async () => {
+    const { root } = await render(<bq-textarea name="textarea" />);
+
+    const label = root.shadowRoot.querySelector('.bq-textarea__label');
+    const helper = root.shadowRoot.querySelector('.bq-textarea__helper');
+    const counter = root.shadowRoot.querySelector('.bq-textarea__helper--counter');
+
+    expect(label).toHaveAttribute('hidden');
+    expect(helper).toHaveAttribute('hidden');
+    expect(counter).toHaveAttribute('hidden');
+    expect(getComputedStyle(label).display).toBe('none');
+    expect(getComputedStyle(helper).display).toBe('none');
+    expect(getComputedStyle(counter).display).toBe('none');
   });
 
   it('should write and emit bqChange event on blur', async () => {
@@ -370,11 +378,12 @@ describe('bq-textarea', () => {
     expect(nativeTextarea.rows).toBe(8);
   });
 
-  it('should apply resize-none class when disable-resize is set', async () => {
+  it('should disable native resizing when disable-resize is set', async () => {
     const { root } = await render(<bq-textarea disable-resize name="textarea" placeholder="Placeholder..." />);
     const nativeTextarea = root.shadowRoot.querySelector('.bq-textarea__input');
 
-    expect(nativeTextarea).toHaveClass('resize-none');
+    expect(nativeTextarea).toHaveClass('is-resize-disabled');
+    expect(getComputedStyle(nativeTextarea).resize).toBe('none');
   });
 
   it('should not emit bqChange when readonly', async () => {
@@ -391,10 +400,192 @@ describe('bq-textarea', () => {
     expect(bqChange).toHaveReceivedEventTimes(0);
   });
 
-  it('should map the validation color variables to the theme role tokens', async () => {
+  it('should preserve the native structure, spacing, and transition timing', async () => {
+    const { root } = await render(
+      <bq-textarea maxlength={100} name="textarea">
+        <span slot="label">Label</span>
+        <span slot="helper-text">Helper text</span>
+      </bq-textarea>,
+    );
+
+    await waitForStable(root);
+
+    expect(computedStyle('bq-textarea >>> [part="base"]', ['display', 'flexDirection'])).toEqual({
+      display: 'flex',
+      flexDirection: 'column',
+    });
+    expect(computedStyle('bq-textarea >>> [part="label"]', ['marginBlockEnd']).marginBlockEnd).toBe('8px');
+    expect(computedStyle('bq-textarea >>> [part="helper-info"]', ['display', 'marginBlockStart'])).toEqual({
+      display: 'flex',
+      marginBlockStart: '8px',
+    });
+    expect(computedStyle('bq-textarea >>> [part="helper-counter"]', ['fontVariantNumeric', 'opacity'])).toEqual({
+      fontVariantNumeric: 'tabular-nums',
+      opacity: '0.6',
+    });
+    expect(
+      computedStyle('bq-textarea >>> [part="input"]', [
+        'borderRadius',
+        'borderWidth',
+        'resize',
+        'transitionDuration',
+        'transitionProperty',
+        'transitionTimingFunction',
+      ]),
+    ).toEqual({
+      borderRadius: '8px',
+      borderWidth: '1px',
+      resize: 'vertical',
+      transitionDuration: '0.15s',
+      transitionProperty: 'color, background-color, border-color, text-decoration-color, fill, stroke',
+      transitionTimingFunction: 'ease-in-out',
+    });
+  });
+
+  it('should paint the idle, hover, and focus states with native CSS', async () => {
+    const { root } = await render(<bq-textarea name="textarea" />);
+    const host = root as HTMLBqTextareaElement;
+    const textarea = getTextarea(host);
+
+    await waitForStable(root);
+    await waitForTransitions(root);
+
+    expect(computedStyle('bq-textarea >>> [part="input"]', ['backgroundColor', 'borderTopColor', 'color'])).toEqual({
+      backgroundColor: 'rgba(0, 0, 0, 0)',
+      borderTopColor: resolveColorToken('--bq-stroke--tertiary'),
+      color: resolveColorToken('--bq-text--primary'),
+    });
+
+    await userEvent.hover(textarea);
+    await waitForTransitions(root);
+
+    const colorProbe = document.createElement('span');
+    root.shadowRoot.appendChild(colorProbe);
+    colorProbe.style.color = 'color-mix(in srgb, var(--bq-stroke--brand), var(--bq-hover) var(--bq-state-mix-hover))';
+    expect(computedStyle('bq-textarea >>> [part="input"]', ['borderTopColor']).borderTopColor).toBe(
+      getComputedStyle(colorProbe).color,
+    );
+
+    textarea.focus();
+    await waitForTransitions(root);
+
+    expect(
+      computedStyle('bq-textarea >>> [part="input"]', [
+        'borderTopColor',
+        'outlineColor',
+        'outlineOffset',
+        'outlineStyle',
+        'outlineWidth',
+      ]),
+    ).toEqual({
+      borderTopColor: resolveColorToken('--bq-stroke--brand'),
+      outlineColor: resolveColorToken('--bq-stroke--brand'),
+      outlineOffset: '0px',
+      outlineStyle: 'solid',
+      outlineWidth: '1px',
+    });
+
+    colorProbe.remove();
+  });
+
+  it('should mix validation borders on hover and focus', async () => {
+    const { root, setProps } = await render(<bq-textarea name="textarea" validationStatus="error" />);
+    const host = root as HTMLBqTextareaElement;
+    const textarea = getTextarea(host);
+    const colorProbe = document.createElement('span');
+    root.shadowRoot.appendChild(colorProbe);
+
+    for (const [validationStatus, role] of Object.entries({
+      error: 'danger',
+      success: 'success',
+      warning: 'warning',
+    })) {
+      textarea.blur();
+      await movePointerOff();
+      await setProps({ validationStatus });
+      await waitForTransitions(root);
+
+      await userEvent.hover(textarea);
+      await waitForTransitions(root);
+      colorProbe.style.color = `color-mix(in srgb, var(--bq-textarea--border-color-${role}), var(--bq-hover) 20%)`;
+      expect(computedStyle('bq-textarea >>> [part="input"]', ['borderTopColor']).borderTopColor).toBe(
+        getComputedStyle(colorProbe).color,
+      );
+
+      textarea.focus();
+      await waitForTransitions(root);
+      colorProbe.style.color = `color-mix(in srgb, var(--bq-textarea--border-color-${role}), var(--bq-active) 20%)`;
+      expect(computedStyle('bq-textarea >>> [part="input"]', ['borderTopColor']).borderTopColor).toBe(
+        getComputedStyle(colorProbe).color,
+      );
+      expect(computedStyle('bq-textarea >>> [part="input"]', ['outlineColor']).outlineColor).toBe(
+        resolveColorToken(`--bq-stroke--${role}`),
+      );
+    }
+
+    colorProbe.remove();
+  });
+
+  it('should expose the disabled visual state without hover styling', async () => {
+    const { root } = await render(<bq-textarea disabled name="textarea" />);
+    const host = root as HTMLBqTextareaElement;
+    const textarea = getTextarea(host);
+
+    await userEvent.hover(textarea);
+    await waitForTransitions(root);
+
+    expect(computedStyle('bq-textarea >>> [part="input"]', ['borderTopColor', 'cursor', 'opacity'])).toEqual({
+      borderTopColor: resolveColorToken('--bq-stroke--tertiary'),
+      cursor: 'not-allowed',
+      opacity: '0.6',
+    });
+  });
+
+  it('should allow overriding the base color variables', async () => {
+    const { root } = await render(
+      <bq-textarea
+        name="textarea"
+        style={{
+          '--bq-textarea--background-color': 'rgb(1, 2, 3)',
+          '--bq-textarea--border-color': 'rgb(4, 5, 6)',
+          '--bq-textarea--helper-text-color': 'rgb(7, 8, 9)',
+          '--bq-textarea--label-text-color': 'rgb(10, 11, 12)',
+          '--bq-textarea--text-color': 'rgb(13, 14, 15)',
+        }}
+      >
+        <span slot="label">Label</span>
+        <span slot="helper-text">Helper text</span>
+      </bq-textarea>,
+    );
+
+    await waitForStable(root);
+    await waitForTransitions(root);
+
+    expect(computedStyle('bq-textarea >>> [part="input"]', ['backgroundColor', 'borderTopColor', 'color'])).toEqual({
+      backgroundColor: 'rgb(1, 2, 3)',
+      borderTopColor: 'rgb(4, 5, 6)',
+      color: 'rgb(13, 14, 15)',
+    });
+    expect(computedStyle('bq-textarea >>> [part="helper-info"]', ['color']).color).toBe('rgb(7, 8, 9)');
+    expect(computedStyle('bq-textarea >>> [part="label"]', ['color']).color).toBe('rgb(10, 11, 12)');
+  });
+
+  it('should map the color variables to the theme role tokens', async () => {
     const { root } = await render(<bq-textarea name="textarea" placeholder="Placeholder..." />);
 
     const hostStyle = getComputedStyle(root);
+    const expectedRoles = {
+      '--bq-textarea--border-color': '--bq-stroke--tertiary',
+      '--bq-textarea--border-color-focus': '--bq-stroke--brand',
+      '--bq-textarea--helper-text-color': '--bq-text--primary',
+      '--bq-textarea--label-text-color': '--bq-text--primary',
+      '--bq-textarea--text-color': '--bq-text--primary',
+      '--bq-textarea--text-placeholder-color': '--bq-text--secondary',
+    };
+
+    for (const [componentVar, roleVar] of Object.entries(expectedRoles)) {
+      expect(hostStyle.getPropertyValue(componentVar).trim()).toBe(hostStyle.getPropertyValue(roleVar).trim());
+    }
 
     for (const status of ['danger', 'success', 'warning']) {
       expect(hostStyle.getPropertyValue(`--bq-textarea--border-color-${status}`).trim()).toBe(
@@ -420,10 +611,10 @@ describe('bq-textarea', () => {
       await waitForTransitions(root);
 
       expect(computedStyle('bq-textarea >>> [part="input"]', ['borderTopColor']).borderTopColor).toBe(
-        resolveColor(`var(--bq-stroke--${role})`),
+        resolveColorToken(`--bq-stroke--${role}`),
       );
       expect(computedStyle('bq-textarea >>> [part="helper-info"]', ['color']).color).toBe(
-        resolveColor(`var(--bq-text--${role})`),
+        resolveColorToken(`--bq-text--${role}`),
       );
     }
   });

@@ -62,24 +62,37 @@ For CDN-based HTML pages without a bundler, link the stylesheet in your document
 
 ### Apps that use cascade layers
 
-`beeq.css` is not in a cascade layer, and browsers apply unlayered styles over any `@layer`, whatever the selector. Tailwind CSS v4 puts its utilities in `@layer utilities`, so the BEEQ [CSS reset](#css-reset) and heading styles override classes such as `mx-auto` or `text-l`.
+`beeq.css` puts its tokens, themes, [CSS reset](#css-reset) and heading styles in `@layer bq.*`. Layers rank by the order they are first named, and the last one wins. A `bq` layer first named after `@import "tailwindcss"` ranks above Tailwind CSS v4's `utilities` layer, so the BEEQ reset and heading styles would override classes such as `mx-auto` or `text-xl`.
 
-Import the stylesheet into the `base` layer instead:
+Name the layers yourself, before the imports, so `bq` sits between Tailwind's `base` and `components`:
 
 ```css
+@layer theme, base, bq, components, utilities;
 @import "tailwindcss";
-@import "@beeq/core/dist/beeq/beeq.css" layer(base);
+@import "@beeq/core/dist/beeq/beeq.css";
 ```
 
-Use `base`, not a new layer name. A layer first named after `@import "tailwindcss"` is ordered after `utilities`, so it would still win. The same applies to any app that puts its own styles in `@layer`.
+The BEEQ reset and headings now apply over Tailwind's `base`, while your utilities and components win over BEEQ. The same applies to any app that uses its own `@layer` rules: list `bq` first, for example `@layer bq, app;`.
 
-Tailwind CSS v3 and plain CSS without `@layer` don't need this: their styles are unlayered too, so a class still beats the reset's element selectors.
+<Warning>
+  Don't import `beeq.css` with `layer(base)`. It nests the BEEQ layers inside `base`, where Tailwind's own `base` rules outrank them, so `h1`–`h6` lose their BEEQ heading styles.
+</Warning>
+
+Two rules stay outside any layer on purpose, so they beat layered styles, including utilities: `[hidden]` keeps `display: none`, and `prefers-reduced-motion: reduce` shortens animations and transitions. To let your own layers override them, add `layer(bq)` to the import and keep the `@layer` line:
+
+```css
+@layer theme, base, bq, components, utilities;
+@import "tailwindcss";
+@import "@beeq/core/dist/beeq/beeq.css" layer(bq);
+```
+
+Tailwind CSS v3 and plain CSS without `@layer` don't need any of this: their styles are unlayered, so they always beat the BEEQ layers and your classes win. Tailwind v3's preflight resets `h1`–`h6`, which hides the BEEQ heading styles. Inject the typography base styles from the [`@beeq/tailwindcss`](https://www.npmjs.com/package/@beeq/tailwindcss) preset to restore them.
 
 ## CSS reset
 
 `beeq.css` and the [`@beeq/tailwindcss`](https://www.npmjs.com/package/@beeq/tailwindcss) preset include the same reset. It removes browser spacing, sets the theme typography on the page, and keeps native behavior for elements that rely on browser defaults.
 
-Most selectors are wrapped in `:where()`, so they have zero specificity and any rule you write overrides them. `*`, `html`, `body`, and the pseudo-elements stay plain.
+In `beeq.css` the reset lives in the `bq.reset` layer. Your rules override it when they have no layer or sit in a layer ranked after `bq`, so your [layer order](#apps-that-use-cascade-layers) matters. Most selectors are wrapped in `:where()`, so they also have zero specificity and are easy to override within the same layer. `*`, `html`, `body`, and the pseudo-elements stay plain.
 
 | Selector | Rule | Why |
 | --- | --- | --- |

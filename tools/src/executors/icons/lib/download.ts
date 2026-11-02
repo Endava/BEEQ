@@ -47,7 +47,7 @@ const sha256 = (buffer: Buffer): string => `sha256-${createHash('sha256').update
  * @returns A promise that resolves with the fully-buffered response.
  */
 const readResponse = async (body: ReadableStream<Uint8Array>): Promise<Buffer> => {
-  const stream = Readable.fromWeb(body as never);
+  const stream = Readable.fromWeb(body);
   const chunks: Buffer[] = [];
   for await (const chunk of stream) {
     chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));

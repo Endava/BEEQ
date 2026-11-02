@@ -472,14 +472,14 @@ export class BqRadioGroup {
           aria-controls="bq-radiogroup"
           aria-disabled={this.disabled}
           aria-labelledby={LABEL_ID}
-          class={{ 'bq-radio-group': true, 'has-fieldset': this.fieldset }}
+          class="bq-radio-group"
           disabled={this.disabled}
           part="base"
         >
           <legend part="label">
             <slot id={LABEL_ID} name="label" />
           </legend>
-          <div class={`bq-radio-group--${this.orientation}`} part="group">
+          <div part="group">
             <slot id="bq-radiogroup" onSlotchange={this.handleSlotChange} />
           </div>
         </fieldset>

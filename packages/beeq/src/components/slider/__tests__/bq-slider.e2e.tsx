@@ -4,6 +4,7 @@ import { cdp, page, userEvent } from 'vitest/browser';
 
 import { sleep } from '../../../shared/test-utils';
 import { computedStyle } from '../../../shared/test-utils/computedStyle';
+import { resolveColorToken } from '../../../shared/test-utils/resolveColorToken';
 import type { TSliderValue } from '../bq-slider.types';
 
 afterEach(async () => {
@@ -11,16 +12,6 @@ afterEach(async () => {
   window.scrollTo({ top: 0 });
   await cdp().send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: 0, y: 0 });
 });
-
-/** Resolves a CSS color value (e.g. `var(--bq-ui--brand)`) to its computed `rgb()` form */
-const resolveColor = (value: string): string => {
-  const probe = document.createElement('div');
-  probe.style.color = value;
-  document.body.appendChild(probe);
-  const { color } = getComputedStyle(probe);
-  probe.remove();
-  return color;
-};
 
 const renderWithSpace = (template: Parameters<typeof render>[0]) =>
   render(template, {
@@ -100,6 +91,8 @@ describe('bq-slider', () => {
     const inputs = getRangeInputs(slider);
 
     expect(base).toEqualAttribute('aria-disabled', 'true');
+    expect(getComputedStyle(base).cursor).toBe('not-allowed');
+    expect(getComputedStyle(base).opacity).toBe('0.6');
     expect(inputs).toHaveLength(2);
     expect(inputs[0]).toBeDisabled();
     expect(inputs[1]).toBeDisabled();
@@ -123,8 +116,8 @@ describe('bq-slider', () => {
     const leftLabel = slider.shadowRoot?.querySelector('[part="label-start"]');
     const rightLabel = slider.shadowRoot?.querySelector('[part="label-end"]');
 
-    expect(leftLabel).not.toHaveClass('hidden');
-    expect(rightLabel).not.toHaveClass('hidden');
+    expect(leftLabel).not.toHaveAttribute('hidden');
+    expect(rightLabel).not.toHaveAttribute('hidden');
     expect(leftLabel?.textContent?.trim()).toBe('30');
     expect(rightLabel?.textContent?.trim()).toBe('70');
   });
@@ -186,8 +179,8 @@ describe('bq-slider', () => {
     const tooltips = slider.shadowRoot?.querySelectorAll('bq-tooltip') ?? [];
 
     expect(tooltips).toHaveLength(2);
-    expect(tooltips[0]).not.toHaveClass('hidden');
-    expect(tooltips[1]).not.toHaveClass('hidden');
+    expect(tooltips[0]).not.toHaveAttribute('hidden');
+    expect(tooltips[1]).not.toHaveAttribute('hidden');
   });
 
   it('should follow both thumbs after programmatic and keyboard changes', async () => {
@@ -392,7 +385,7 @@ describe('bq-slider', () => {
     }
     await waitForChanges();
     expect(panel).toEqualAttribute('aria-hidden', 'true');
-    expect(getTooltips(slider)[0]).toHaveClass('hidden');
+    expect(getTooltips(slider)[0]).toHaveAttribute('hidden');
   });
 
   it('should close idle tooltips when persistent mode is disabled and reopen them on press', async () => {
@@ -410,7 +403,7 @@ describe('bq-slider', () => {
     await setProps({ tooltipAlwaysVisible: false });
     for (const tooltip of getTooltips(slider)) {
       expect(getPanel(tooltip)).toEqualAttribute('aria-hidden', 'true');
-      expect(tooltip).toHaveClass('hidden');
+      expect(tooltip).toHaveAttribute('hidden');
     }
 
     const input = getRangeInputs(slider)[1];
@@ -474,7 +467,7 @@ describe('bq-slider', () => {
     document.body.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
     await waitForChanges();
     expect(getPanel(getTooltips(slider)[0])).toEqualAttribute('aria-hidden', 'true');
-    expect(getTooltips(slider)[0]).toHaveClass('hidden');
+    expect(getTooltips(slider)[0]).toHaveAttribute('hidden');
   });
 
   it('should clear pressed tooltip state when disabled or disconnected', async () => {
@@ -637,16 +630,123 @@ describe('bq-slider', () => {
     await waitForStable(root);
 
     const label = computedStyle('bq-slider >>> span[part="label-start"]', [
+      'boxSizing',
       'fontSize',
       'fontWeight',
+      'lineHeight',
       'marginInlineEnd',
+      'minInlineSize',
     ]);
-    const track = computedStyle('bq-slider >>> span[part="track-area"]', ['borderRadius', 'height']);
-    const progress = computedStyle('bq-slider >>> span[part="progress-area"]', ['borderRadius', 'height']);
+    const track = computedStyle('bq-slider >>> span[part="track-area"]', [
+      'borderRadius',
+      'height',
+      'position',
+      'transform',
+      'width',
+    ]);
+    const progressStyle = computedStyle('bq-slider >>> span[part="progress-area"]', [
+      'borderRadius',
+      'height',
+      'position',
+      'transform',
+    ]);
+    const slider = root as HTMLBqSliderElement;
+    const base = slider.shadowRoot?.querySelector<HTMLElement>('[part="base"]');
+    const container = slider.shadowRoot?.querySelector<HTMLElement>('[part="container"]');
+    const progress = slider.shadowRoot?.querySelector<HTMLElement>('[part="progress-area"]');
+    const input = getRangeInputs(slider)[0];
+    const inputStyle = getComputedStyle(input);
+    const thumbStyle = getComputedStyle(input, '::-webkit-slider-thumb');
 
-    expect(label).toEqual({ fontSize: '14px', fontWeight: '500', marginInlineEnd: '8px' });
-    expect(track).toEqual({ borderRadius: '4px', height: '4px' });
-    expect(progress).toEqual({ borderRadius: '4px', height: '4px' });
+    expect(getComputedStyle(root).display).toBe('block');
+    expect(getComputedStyle(root).inlineSize).toBe(getComputedStyle(base).inlineSize);
+    expect(getComputedStyle(base).display).toBe('flex');
+    expect(getComputedStyle(container).position).toBe('relative');
+    expect(inputStyle.position).toBe('absolute');
+    expect(inputStyle.insetBlockStart).toBe('0px');
+    expect(inputStyle.insetInlineStart).toBe('0px');
+    expect(inputStyle.inlineSize).toBe(getComputedStyle(container).inlineSize);
+    expect(inputStyle.cursor).toBe('pointer');
+    expect(inputStyle.backgroundColor).toBe('rgba(0, 0, 0, 0)');
+    expect(inputStyle.transform).not.toBe('none');
+    expect(thumbStyle.blockSize).toBe('17px');
+    expect(label).toEqual({
+      boxSizing: 'content-box',
+      fontSize: '14px',
+      fontWeight: '500',
+      lineHeight: '21px',
+      marginInlineEnd: '8px',
+      minInlineSize: '32px',
+    });
+    expect(track).toEqual({
+      borderRadius: '4px',
+      height: '4px',
+      position: 'absolute',
+      transform: 'matrix(1, 0, 0, 1, 0, -2)',
+      width: getComputedStyle(container).inlineSize,
+    });
+    expect(progressStyle).toEqual({
+      borderRadius: '4px',
+      height: '4px',
+      position: 'absolute',
+      transform: 'matrix(1, 0, 0, 1, 0, -2)',
+    });
+    expect(parseFloat(getComputedStyle(progress).inlineSize)).toBeCloseTo(
+      parseFloat(getComputedStyle(container).inlineSize) * 0.3,
+      1,
+    );
+  });
+
+  it('should preserve range overlap and native hidden states', async () => {
+    const { root } = await render(<bq-slider enableTooltip type="range" value="[30,70]" />);
+    const slider = root as HTMLBqSliderElement;
+    const [minInput, maxInput] = getRangeInputs(slider);
+    const labels = slider.shadowRoot?.querySelectorAll<HTMLElement>('.bq-slider__label') ?? [];
+    const tooltips = getTooltips(slider);
+
+    expect(getComputedStyle(minInput).pointerEvents).toBe('none');
+    expect(getComputedStyle(maxInput).pointerEvents).toBe('none');
+    expect(labels[0]).toHaveAttribute('hidden');
+    expect(labels[1]).toHaveAttribute('hidden');
+    expect(getComputedStyle(labels[0]).display).toBe('none');
+    expect(getComputedStyle(labels[1]).display).toBe('none');
+    expect(tooltips[0]).toHaveAttribute('hidden');
+    expect(tooltips[1]).toHaveAttribute('hidden');
+    expect(getComputedStyle(tooltips[0]).display).toBe('none');
+    expect(getComputedStyle(tooltips[1]).display).toBe('none');
+  });
+
+  it('should preserve public geometry and color overrides', async () => {
+    const { root } = await render(
+      <bq-slider
+        enableValueIndicator
+        value={30}
+        style={{
+          '--bq-slider--border-radius': '10px',
+          '--bq-slider--label-color': 'rgb(1, 2, 3)',
+          '--bq-slider--progress-color': 'rgb(4, 5, 6)',
+          '--bq-slider--size': '6px',
+          '--bq-slider--thumb-background': 'rgb(7, 8, 9)',
+          '--bq-slider--thumb-size': '21px',
+          '--bq-slider--trackarea-color': 'rgb(10, 11, 12)',
+        }}
+      />,
+    );
+    const slider = root as HTMLBqSliderElement;
+    const track = slider.shadowRoot?.querySelector<HTMLElement>('[part="track-area"]');
+    const progress = slider.shadowRoot?.querySelector<HTMLElement>('[part="progress-area"]');
+    const label = slider.shadowRoot?.querySelector<HTMLElement>('[part="label-start"]');
+    const input = getRangeInputs(slider)[0];
+    const thumbStyle = getComputedStyle(input, '::-webkit-slider-thumb');
+
+    expect(getComputedStyle(track).blockSize).toBe('6px');
+    expect(getComputedStyle(track).borderRadius).toBe('10px');
+    expect(getComputedStyle(track).backgroundColor).toBe('rgb(10, 11, 12)');
+    expect(getComputedStyle(progress).blockSize).toBe('6px');
+    expect(getComputedStyle(progress).borderRadius).toBe('10px');
+    expect(getComputedStyle(progress).backgroundColor).toBe('rgb(4, 5, 6)');
+    expect(getComputedStyle(label).color).toBe('rgb(1, 2, 3)');
+    expect(thumbStyle.blockSize).toBe('25px');
   });
 
   it('should map the color variables to the theme role tokens', async () => {
@@ -672,16 +772,16 @@ describe('bq-slider', () => {
     await waitForStable(root);
 
     expect(computedStyle('bq-slider >>> span[part="track-area"]', ['backgroundColor']).backgroundColor).toBe(
-      resolveColor('var(--bq-ui--tertiary)'),
+      resolveColorToken('--bq-ui--tertiary'),
     );
     expect(computedStyle('bq-slider >>> span[part="progress-area"]', ['backgroundColor']).backgroundColor).toBe(
-      resolveColor('var(--bq-ui--brand)'),
+      resolveColorToken('--bq-ui--brand'),
     );
     expect(computedStyle('bq-slider >>> span[part="label-start"]', ['color']).color).toBe(
-      resolveColor('var(--bq-text--primary)'),
+      resolveColorToken('--bq-text--primary'),
     );
     expect(computedStyle('bq-slider >>> span[part="label-end"]', ['color']).color).toBe(
-      resolveColor('var(--bq-text--primary)'),
+      resolveColorToken('--bq-text--primary'),
     );
   });
 

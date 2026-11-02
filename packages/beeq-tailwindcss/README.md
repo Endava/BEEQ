@@ -2,6 +2,8 @@
 
 BEEQ TailwindCSS is a preset that adds BEEQ's opinionated TailwindCSS configuration to your application. It works with Tailwind CSS v3 and v4.
 
+Its design tokens, base reset and typography styles are generated from the `@beeq/core` style foundations, so they always match the BEEQ components. The preset is standalone: it has no runtime dependency on `@beeq/core`.
+
 ## Prerequisites 🧰
 
 Before starting to use BEEQ TailwindCSS, you need to have installed:
@@ -35,7 +37,7 @@ Load the preset with `@plugin` in your CSS entry file:
 
 > Note: `@beeq/tailwindcss` 1.16.2 and earlier fail with `@plugin` (`b is not a function`). On those versions, use `@config "@beeq/tailwindcss";` instead.
 
-> Note: If you also import `@beeq/core/dist/beeq/beeq.css`, import it into Tailwind's `base` layer: `@import "@beeq/core/dist/beeq/beeq.css" layer(base);`. `beeq.css` is unlayered, and unlayered styles override Tailwind CSS v4 utilities, so its reset would turn `mx-auto` into `margin: 0`.
+> Note: If you also import `@beeq/core/dist/beeq/beeq.css`, name the `bq` layer before Tailwind's layers by adding `@layer theme, base, bq, components, utilities;` above `@import "tailwindcss";`. `beeq.css` puts its reset and heading styles in `@layer bq.*`, and a layer first named after `@import "tailwindcss"` ranks above Tailwind CSS v4 utilities, so its reset would turn `mx-auto` into `margin: 0`. Don't import it with `layer(base)`: Tailwind's own `base` rules outrank the nested BEEQ layers and the headings lose their BEEQ styles. See [Apps that use cascade layers](https://www.beeq.design/getting-started/installation#apps-that-use-cascade-layers).
 
 > Note: For stroke widths, use `border-stroke-s`, `border-stroke-m`, and `border-stroke-l`. Tailwind CSS v4 also reads `border-s` and `border-l` as its own inline-start and left border utilities, so those classes add a `1px` side border on top of the BEEQ stroke width.
 
@@ -67,7 +69,7 @@ export default {
 
 The preset includes an opinionated CSS reset, the same one `@beeq/core` ships in `beeq.css`. Most of its selectors use `:where()`, so they have zero specificity and your own styles override them. See the [full list of rules](https://www.beeq.design/getting-started/installation#css-reset).
 
-To add your own reset rules on top, put them in Tailwind's `base` layer.
+To add your own reset rules on top, put them in Tailwind's `base` layer. If you also import `beeq.css` with the `bq` layer ordered as described above, `bq` ranks above `base`, so put your overrides of BEEQ's reset in `components`, in `utilities` or outside any layer instead.
 
 Tailwind CSS v4:
 
@@ -154,3 +156,21 @@ export default {
 ## Documentation 📙
 
 Your can find more details about TailwindCSS presets in [the official documentation](https://tailwindcss.com/docs/presets).
+
+## Maintaining the preset
+
+The source of truth is `packages/beeq/src/global/styles/foundations/`: primitives, themes, shared tokens, reset and typography. After editing those SCSS files, run this from the repository root and commit the regenerated files with the source change:
+
+```bash
+pnpm exec nx run beeq-tailwindcss:generate
+pnpm exec nx run beeq-tailwindcss:test --skip-nx-cache
+```
+
+Do not edit `src/generated/` by hand. The staleness test checks it against the SCSS, and utility mappings remain curated in TypeScript so adding a foundation token does not automatically add a utility. Sass and PostCSS are used only during generation, not by consumers of the published preset.
+
+The SCSS-derived preset retains the existing exports, utility names and Tailwind v3/v4 entrypoints. Compared with the former hand-maintained values, its base styles intentionally align with the foundations:
+
+- White and shadow colors use the SCSS spellings (`#fff` and `rgb()`).
+- The reset uses logical properties for margins, sizing and subscript/superscript offsets. Hidden-state and reduced-motion rules carry `!important` to retain precedence inside Tailwind's base layer.
+- Shared ring, disabled-opacity and interaction-state tokens are now emitted.
+- `TYPOGRAPHY_DEFAULT` follows the SCSS selector groupings and adds a theme-scoped font-family rule. Inject it with `addBase` as shown above rather than relying on its internal selector keys.

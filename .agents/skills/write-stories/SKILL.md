@@ -1,6 +1,6 @@
 ---
 name: write-stories
-description: 'Write Storybook stories and MDX for a `bq-*` component: argTypes, controls and variants for every state. Use when adding or updating a component''s stories. Files live in the component''s `_storybook/` folder.'
+description: 'Write Storybook stories and MDX for a `bq-*` component: argTypes, controls and variants for every state. Use when adding or updating a component''s stories. Files live in the component''s `__storybook__/` folder.'
 argument-hint: 'Component name (e.g. "bq-button") or path to the component tsx file'
 metadata:
   internal: true
@@ -18,7 +18,7 @@ metadata:
 ## File Locations
 
 ```
-packages/beeq/src/components/<name>/_storybook/
+packages/beeq/src/components/<name>/__storybook__/
 ├── bq-<name>.stories.tsx   # Story definitions
 └── bq-<name>.mdx           # Documentation page
 ```
@@ -93,6 +93,29 @@ export const Default: Story = {
   args: {},
 };
 ```
+
+## Story Styling
+
+Keep story-only styles inline in the story template. Use a `<style>` block and semantic markup instead of utility classes:
+
+```tsx
+const Template = () => html`
+  <style>
+    main {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--bq-spacing-m);
+      padding: var(--bq-spacing-m);
+    }
+  </style>
+  <main>
+    <section>...</section>
+    <section>...</section>
+  </main>
+`;
+```
+
+Add a BEM-style class when a selector needs to target a specific element, or when styling is reused. Do not add a separate stylesheet for a story.
 
 ## Required Story Variants
 

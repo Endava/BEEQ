@@ -1,46 +1,72 @@
 /* -------------------------------------------------------------------------- */
-/*                                Button styles                               */
+/*                               Divider Styles                               */
 /* -------------------------------------------------------------------------- */
 
 @import './bq-divider.variables';
 
+/* ---------------------------------- Host ---------------------------------- */
+
 :host {
-  @apply inline-flex;
+  display: inline-flex;
 }
 
 :host([orientation='horizontal']) {
-  @apply is-full;
+  inline-size: 100%;
 }
 
 :host([orientation='vertical']) {
-  @apply flex bs-full;
+  display: flex;
+  block-size: 100%;
 }
+
+/* ---------------------------------- Base ---------------------------------- */
 
 .bq-divider {
-  @apply flex items-center gap-[--bq-divider--title-marginX];
+  display: flex;
+  align-items: center;
+  gap: var(--bq-divider--title-marginX);
 }
 
-.bq-divider--stroke {
-  @apply flex-grow stroke-[color:--bq-divider--stroke-color] bs-[--bq-divider--stroke-thickness] is-full;
+/* ------------------------------- Structure -------------------------------- */
 
-  &.end {
-    @apply rotate-180;
+.bq-divider__stroke {
+  flex-grow: 1;
+  stroke: var(--bq-divider--color);
+  block-size: var(--bq-divider--stroke-thickness);
+  inline-size: 100%;
+
+  &.is-end {
+    transform: rotate(180deg);
   }
 }
 
-.bq-divider--title__start .bq-divider--stroke.start,
-.bq-divider--title__end .bq-divider--stroke.end {
-  @apply flex-grow-0 basis-[--bq-divider--stroke-basis];
+/* -------------------------------- Variants -------------------------------- */
+
+:host([orientation='horizontal']) .bq-divider {
+  flex-grow: 1;
 }
 
-.bq-divider--horizontal {
-  @apply flex-grow;
+:host([orientation='vertical']) .bq-divider {
+  flex-direction: column;
+  block-size: 100%;
 }
 
-.bq-divider--vertical {
-  @apply bs-full flex-col items-center gap-[--bq-divider--title-marginX];
+:host([orientation='vertical']) .bq-divider__stroke {
+  inline-size: var(--bq-divider--stroke-thickness);
+}
 
-  .bq-divider--stroke {
-    @apply is-[--bq-divider--stroke-thickness];
-  }
+:host([title-alignment='start']) .bq-divider__stroke.is-start,
+:host([title-alignment='end']) .bq-divider__stroke.is-end {
+  flex-grow: 0;
+  flex-basis: var(--bq-divider--stroke-basis);
+}
+
+/* --------------------------------- States --------------------------------- */
+
+.bq-divider.is-gapless {
+  gap: 0;
+}
+
+.bq-divider__stroke.is-hidden {
+  display: none;
 }

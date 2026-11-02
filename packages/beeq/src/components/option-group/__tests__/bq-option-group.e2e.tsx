@@ -1,17 +1,8 @@
 import { h } from '@stencil/core';
 import { describe, expect, it, render } from '@stencil/vitest';
 
+import { resolveColorToken } from '../../../shared/test-utils/resolveColorToken';
 import { getTextContent } from '../../../shared/utils/slot';
-
-/** Resolves a CSS color value (e.g. `var(--bq-text--brand)`) to its computed `rgb()` form */
-const resolveColor = (value: string): string => {
-  const probe = document.createElement('div');
-  probe.style.color = value;
-  document.body.appendChild(probe);
-  const { color } = getComputedStyle(probe);
-  probe.remove();
-  return color;
-};
 
 describe('bq-option-group', () => {
   it('should render', async () => {
@@ -101,7 +92,7 @@ describe('bq-option-group', () => {
     expect(container).toEqualAttribute('aria-label', 'Options');
   });
 
-  it('should use the background color variable', async () => {
+  it('should use the public background color variable', async () => {
     const { root } = await render(
       <bq-option-group>
         <span slot="header-label">Food</span>
@@ -114,8 +105,38 @@ describe('bq-option-group', () => {
       hostStyle.getPropertyValue('--bq-ui--primary').trim(),
     );
 
-    const wrapper = root.shadowRoot.querySelector('[part="label"]').parentElement;
-    expect(getComputedStyle(wrapper).backgroundColor).toBe(resolveColor('var(--bq-ui--primary)'));
-    expect(wrapper.classList.contains('bg-ui-primary')).toBe(false);
+    root.style.setProperty('--bq-option-group--background', 'rgb(12, 34, 56)');
+
+    const wrapper = root.shadowRoot?.querySelector<HTMLElement>('.bq-option-group');
+    const header = root.shadowRoot?.querySelector<HTMLElement>('.bq-option-group__header');
+    const expectedColor = resolveColorToken('--bq-option-group--background', root);
+
+    expect(getComputedStyle(wrapper).backgroundColor).toBe(expectedColor);
+    expect(getComputedStyle(header).backgroundColor).toBe(expectedColor);
+    expect(wrapper).toHaveClass('bq-option-group');
+  });
+
+  it('should use the public logical header padding variables', async () => {
+    const { root } = await render(
+      <bq-option-group>
+        <span slot="header-label">Food</span>
+      </bq-option-group>,
+    );
+
+    root.style.setProperty('--bq-option-group--label-padding-start', '3px');
+    root.style.setProperty('--bq-option-group--label-padding-end', '7px');
+
+    const header = root.shadowRoot?.querySelector<HTMLElement>('.bq-option-group__header');
+    const headerStyle = getComputedStyle(header);
+
+    expect(headerStyle.paddingInlineStart).toBe('3px');
+    expect(headerStyle.paddingInlineEnd).toBe('7px');
+
+    root.dir = 'rtl';
+
+    const rtlHeaderStyle = getComputedStyle(header);
+
+    expect(rtlHeaderStyle.paddingRight).toBe('3px');
+    expect(rtlHeaderStyle.paddingLeft).toBe('7px');
   });
 });

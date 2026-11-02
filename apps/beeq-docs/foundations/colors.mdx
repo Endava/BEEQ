@@ -670,7 +670,7 @@ export default {
 </Note>
 
 <Warning>
-  If you also import `beeq.css`, add `layer(base)` to that import so the BEEQ reset doesn't override Tailwind utilities. See [Apps that use cascade layers](/getting-started/installation#apps-that-use-cascade-layers).
+  If you also import `beeq.css`, add `@layer theme, base, bq, components, utilities;` above your imports so the BEEQ reset doesn't override Tailwind utilities. See [Apps that use cascade layers](/getting-started/installation#apps-that-use-cascade-layers).
 </Warning>
 
 Once set up, all mode roles are available as utility classes:
@@ -1081,7 +1081,7 @@ The Endava theme draws from its own `--bq-endava-*` primitives, named after the 
   <Card title="Custom theming" icon="paintbrush" href="/theming/custom-theme">
     Full walkthrough for applying a custom brand, including light/dark mode token overrides.
   </Card>
-  <Card title="GitHub — Theme source" icon="github" href="https://github.com/Endava/BEEQ/tree/main/packages/beeq-tailwindcss/src/theme">
+  <Card title="GitHub — Theme source" icon="github" href="https://github.com/Endava/BEEQ/tree/main/packages/beeq/src/global/styles/foundations">
     Browse the full primitive palette, semantic tokens, and theme definitions.
   </Card>
 </CardGroup>

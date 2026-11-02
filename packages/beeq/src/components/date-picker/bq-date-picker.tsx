@@ -1889,7 +1889,8 @@ export class BqDatePicker {
       <div class="bq-date-picker" part={CALENDAR_PARTS.base}>
         {/* biome-ignore lint/a11y/useKeyWithClickEvents: pointer activation forwards focus; keyboard users tab directly to the roving segment group. */}
         <label
-          class={{ 'bq-date-picker__label': true, 'is-hidden': !this.hasLabel }}
+          class="bq-date-picker__label"
+          hidden={!this.hasLabel}
           htmlFor={this.name || DEFAULT_INPUT_ID}
           onClick={
             this
@@ -1929,7 +1930,8 @@ export class BqDatePicker {
             slot="trigger"
           >
             <span
-              class={{ 'bq-date-picker__prefix': true, 'is-hidden': !this.hasPrefix }}
+              class="bq-date-picker__prefix"
+              hidden={!this.hasPrefix}
               part={CALENDAR_PARTS.prefix}
               ref={(el) => {
                 this.prefixElem = el;

@@ -1,5 +1,5 @@
 /* -------------------------------------------------------------------------- */
-/*                           Icon custom propoerties                          */
+/*                           Icon Custom Properties                           */
 /* -------------------------------------------------------------------------- */
 
 :host {
@@ -8,5 +8,5 @@
    * @prop --bq-icon--size: Icon size
    */
   --bq-icon--color: currentColor;
-  --bq-icon--size: 24px;
+  --bq-icon--size: var(--_bq-icon--size, 24px);
 }

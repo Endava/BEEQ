@@ -1,21 +1,17 @@
 import { h } from '@stencil/core';
 import { afterEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
+import { cdp } from 'vitest/browser';
 
 import { computedStyle } from '../../../shared/test-utils/computedStyle';
+import { resolveColorToken } from '../../../shared/test-utils/resolveColorToken';
 import { getTextContent } from '../../../shared/utils/slot';
+
+const emulateReducedMotion = (value: 'no-preference' | 'reduce') =>
+  cdp().send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value }] });
 
 afterEach(() => {
   vi.restoreAllMocks();
 });
-
-const resolveColor = (value: string) => {
-  const probe = document.createElement('span');
-  probe.style.color = value;
-  document.body.appendChild(probe);
-  const { color } = getComputedStyle(probe);
-  probe.remove();
-  return color;
-};
 
 describe('bq-spinner', () => {
   it('should render', async () => {
@@ -34,52 +30,90 @@ describe('bq-spinner', () => {
     const { root, setProps } = await render(<bq-spinner animation />);
     const spinner = root as HTMLBqSpinnerElement;
 
-    const element = spinner.shadowRoot?.querySelector('.bq-spinner');
+    const loaderIcon = spinner.shadowRoot?.querySelector<SVGElement>('.bq-spinner__loader > svg');
 
-    expect(element).toHaveClass('is-animated');
+    expect(spinner).toHaveAttribute('animation');
+    expect(loaderIcon).not.toBeNull();
+    expect(getComputedStyle(loaderIcon).animationName).toBe('spin');
 
     await setProps({ animation: false });
 
-    expect(element).not.toHaveClass('is-animated');
+    expect(spinner).not.toHaveAttribute('animation');
+    expect(getComputedStyle(loaderIcon).animationName).toBe('none');
+  });
+
+  it('should stop the loader animation when the user prefers reduced motion', async () => {
+    const { root } = await render(<bq-spinner animation />);
+    const loaderIcon = root.shadowRoot?.querySelector<SVGElement>('.bq-spinner__loader > svg');
+
+    expect(loaderIcon).not.toBeNull();
+    expect(getComputedStyle(loaderIcon).animationName).toBe('spin');
+
+    try {
+      await emulateReducedMotion('reduce');
+      expect(matchMedia('(prefers-reduced-motion: reduce)').matches).toBe(true);
+      expect(getComputedStyle(loaderIcon).animationName).toBe('none');
+    } finally {
+      await emulateReducedMotion('no-preference');
+    }
+
+    expect(getComputedStyle(loaderIcon).animationName).toBe('spin');
+  });
+
+  it('should stop the custom icon animation when the user prefers reduced motion', async () => {
+    const { root } = await render(
+      <bq-spinner animation>
+        <bq-icon name="spinner-gap" slot="icon" />
+      </bq-spinner>,
+    );
+    await waitForStable(root);
+    const iconContainer = root.shadowRoot?.querySelector<HTMLElement>('.bq-spinner__icon');
+
+    expect(iconContainer).not.toBeNull();
+    expect(getComputedStyle(iconContainer).animationName).toBe('spin');
+
+    try {
+      await emulateReducedMotion('reduce');
+      expect(getComputedStyle(iconContainer).animationName).toBe('none');
+    } finally {
+      await emulateReducedMotion('no-preference');
+    }
+
+    expect(getComputedStyle(iconContainer).animationName).toBe('spin');
   });
 
   it('should handle `size` property', async () => {
     const { root, setProps } = await render(<bq-spinner />);
     const spinner = root as HTMLBqSpinnerElement;
 
-    const loader = () => spinner.shadowRoot?.querySelector('.bq-spinner--loader');
-
-    expect(loader()).toHaveClass('medium');
+    expect(spinner).toEqualAttribute('size', 'medium');
 
     await setProps({ size: 'large' });
-    expect(loader()).toHaveClass('large');
+    expect(spinner).toEqualAttribute('size', 'large');
 
     await setProps({ size: 'small' });
-    expect(loader()).toHaveClass('small');
+    expect(spinner).toEqualAttribute('size', 'small');
   });
 
   it('should handle `text-position` property', async () => {
     const { root, setProps } = await render(<bq-spinner textPosition="above" />);
     const spinner = root as HTMLBqSpinnerElement;
 
-    const spinnerEl = () => spinner.shadowRoot?.querySelector('.bq-spinner');
-    const spinnerText = () => spinner.shadowRoot?.querySelector('.bq-spinner--text');
-
-    expect(spinnerEl()).toHaveClass('text-above');
+    expect(spinner).toEqualAttribute('text-position', 'above');
 
     await setProps({ textPosition: 'below' });
-    expect(spinnerEl()).toHaveClass('text-below');
+    expect(spinner).toEqualAttribute('text-position', 'below');
 
     await setProps({ textPosition: 'left' });
-    expect(spinnerEl()).toHaveClass('text-left');
+    expect(spinner).toEqualAttribute('text-position', 'left');
 
     await setProps({ textPosition: 'right' });
-    expect(spinnerEl()).toHaveClass('text-right');
+    expect(spinner).toEqualAttribute('text-position', 'right');
 
     await setProps({ textPosition: 'none' });
 
-    expect(spinnerText()).toHaveClass('!hidden');
-    expect(spinnerEl()).toHaveClass('text-none');
+    expect(spinner).toEqualAttribute('text-position', 'none');
+    expect(computedStyle('bq-spinner >>> .bq-spinner__text', ['display'])).toEqual({ display: 'none' });
   });
 
   it('should render icon slot element', async () => {
@@ -91,12 +125,24 @@ describe('bq-spinner', () => {
 
     await waitForStable(root);
 
-    const spinnerIcon = root.shadowRoot?.querySelector<HTMLSlotElement>('.bq-spinner--icon');
+    const spinnerIcon = root.shadowRoot?.querySelector<HTMLSlotElement>('.bq-spinner__icon');
     const slotElement = root.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="icon"]');
     const iconSlotElements = slotElement.assignedElements({ flatten: true });
 
-    expect(spinnerIcon).not.toHaveClass('hidden');
+    expect(spinnerIcon).not.toHaveAttribute('hidden');
+    expect(getComputedStyle(spinnerIcon).display).toBe('flex');
     expect(iconSlotElements).toHaveLength(1);
+  });
+
+  it('should hide the icon container until an icon is slotted', async () => {
+    const { root } = await render(<bq-spinner />);
+
+    await waitForStable(root);
+
+    const spinnerIcon = root.shadowRoot?.querySelector<HTMLElement>('.bq-spinner__icon');
+
+    expect(spinnerIcon).toHaveAttribute('hidden');
+    expect(getComputedStyle(spinnerIcon).display).toBe('none');
   });
 
   it('should handle invalid properties', async () => {
@@ -136,41 +182,43 @@ describe('bq-spinner', () => {
 
     const sizeStyleProps = ['width', 'height'] as const;
 
-    const smallStyle = computedStyle('bq-spinner[size="small"] >>> .bq-spinner--loader', sizeStyleProps);
-    const mediumStyle = computedStyle('bq-spinner[size="medium"] >>> .bq-spinner--loader', sizeStyleProps);
-    const largeStyle = computedStyle('bq-spinner[size="large"] >>> .bq-spinner--loader', sizeStyleProps);
+    const smallStyle = computedStyle('bq-spinner[size="small"] >>> .bq-spinner__loader', sizeStyleProps);
+    const mediumStyle = computedStyle('bq-spinner[size="medium"] >>> .bq-spinner__loader', sizeStyleProps);
+    const largeStyle = computedStyle('bq-spinner[size="large"] >>> .bq-spinner__loader', sizeStyleProps);
 
     const textStyleProps = ['fontSize', 'fontWeight', 'lineHeight'] as const;
 
-    const smallTextStyle = computedStyle('bq-spinner[size="small"] >>> .bq-spinner--text', textStyleProps);
-    const mediumTextStyle = computedStyle('bq-spinner[size="medium"] >>> .bq-spinner--text', textStyleProps);
-    const largeTextStyle = computedStyle('bq-spinner[size="large"] >>> .bq-spinner--text', textStyleProps);
+    const smallTextStyle = computedStyle('bq-spinner[size="small"] >>> .bq-spinner__text', textStyleProps);
+    const mediumTextStyle = computedStyle('bq-spinner[size="medium"] >>> .bq-spinner__text', textStyleProps);
+    const largeTextStyle = computedStyle('bq-spinner[size="large"] >>> .bq-spinner__text', textStyleProps);
 
     expect(smallStyle).toEqual({ width: '32px', height: '32px' });
     expect(mediumStyle).toEqual({ width: '48px', height: '48px' });
     expect(largeStyle).toEqual({ width: '56px', height: '56px' });
 
-    const textStyleExpected = {
-      fontSize: '16px',
+    const textStyleExpected = (fontSize: string) => ({
+      fontSize,
       fontWeight: '500',
-      lineHeight: getLineHeightValue(smallTextStyle.fontSize),
-    };
+      lineHeight: getLineHeightValue(fontSize),
+    });
 
-    expect(smallTextStyle).toEqual(textStyleExpected);
-    expect(mediumTextStyle).toEqual(textStyleExpected);
-    expect(largeTextStyle).toEqual(textStyleExpected);
+    expect(smallTextStyle).toEqual(textStyleExpected('12px'));
+    expect(mediumTextStyle).toEqual(textStyleExpected('14px'));
+    expect(largeTextStyle).toEqual(textStyleExpected('16px'));
   });
 
   it('should use the colour custom properties', async () => {
     const { root } = await render(<bq-spinner textPosition="below">Loading...</bq-spinner>);
+    // Keep icon and stroke roles distinct so the wrong semantic mapping cannot pass.
+    root.style.setProperty('--bq-icon--brand', '#123456');
 
     await waitForStable(root);
 
-    const loaderStyle = computedStyle('bq-spinner >>> .bq-spinner--loader', ['color']);
-    const textStyle = computedStyle('bq-spinner >>> .bq-spinner--text', ['color']);
+    const loaderStyle = computedStyle('bq-spinner >>> .bq-spinner__loader', ['color']);
+    const textStyle = computedStyle('bq-spinner >>> .bq-spinner__text', ['color']);
 
-    expect(loaderStyle.color).toBe(resolveColor('var(--bq-icon--brand)'));
-    expect(textStyle.color).toBe(resolveColor('var(--bq-text--primary)'));
+    expect(loaderStyle.color).toBe(resolveColorToken('--bq-icon--brand', root));
+    expect(textStyle.color).toBe(resolveColorToken('--bq-text--primary', root));
   });
 
   it('should apply custom colour overrides', async () => {
@@ -185,11 +233,11 @@ describe('bq-spinner', () => {
 
     await waitForStable(root);
 
-    const loaderStyle = computedStyle('bq-spinner >>> .bq-spinner--loader', ['color']);
-    const textStyle = computedStyle('bq-spinner >>> .bq-spinner--text', ['color']);
+    const loaderStyle = computedStyle('bq-spinner >>> .bq-spinner__loader', ['color']);
+    const textStyle = computedStyle('bq-spinner >>> .bq-spinner__text', ['color']);
 
-    expect(loaderStyle.color).toBe('rgb(255, 0, 0)');
-    expect(textStyle.color).toBe('rgb(0, 0, 255)');
+    expect(loaderStyle.color).toBe(resolveColorToken('--bq-spinner--color', root));
+    expect(textStyle.color).toBe(resolveColorToken('--bq-spinner--text-color', root));
   });
 
   it('should render default slot text content', async () => {
@@ -205,7 +253,7 @@ describe('bq-spinner', () => {
     const slot = textEl?.querySelector<HTMLSlotElement>('slot');
     const assigned = slot.assignedElements({ flatten: true });
 
-    expect(textEl).not.toHaveClass('!hidden');
+    expect(getComputedStyle(textEl as HTMLElement).display).not.toBe('none');
     expect(assigned).toHaveLength(1);
     expect(getTextContent(slot, { recurse: true })).toBe('Loading...');
   });

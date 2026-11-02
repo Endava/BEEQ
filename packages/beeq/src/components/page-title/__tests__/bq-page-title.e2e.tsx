@@ -1,16 +1,8 @@
 import { h } from '@stencil/core';
 import { describe, expect, it, render, waitForStable } from '@stencil/vitest';
 
+import { resolveColorToken } from '../../../shared/test-utils/resolveColorToken';
 import { getTextContent } from '../../../shared/utils/slot';
-
-const resolveColor = (value: string) => {
-  const probe = document.createElement('span');
-  probe.style.color = value;
-  document.body.appendChild(probe);
-  const { color } = getComputedStyle(probe);
-  probe.remove();
-  return color;
-};
 
 describe('bq-page-title', () => {
   it('should render', async () => {
@@ -36,7 +28,8 @@ describe('bq-page-title', () => {
     const { root } = await render(<bq-page-title>Title</bq-page-title>);
 
     const backContainer = root.shadowRoot?.querySelector<HTMLElement>('[part="back"]');
-    expect(backContainer).toHaveClass('!hidden');
+    expect(backContainer).toHaveAttribute('hidden');
+    expect(getComputedStyle(backContainer).display).toBe('none');
   });
 
   it('should show back navigation when back slot has content', async () => {
@@ -48,7 +41,8 @@ describe('bq-page-title', () => {
     );
 
     const backContainer = root.shadowRoot?.querySelector<HTMLElement>('[part="back"]');
-    expect(backContainer).not.toHaveClass('!hidden');
+    expect(backContainer).not.toHaveAttribute('hidden');
+    expect(getComputedStyle(backContainer).display).toBe('flex');
   });
 
   it('should render sub-title slot', async () => {
@@ -66,7 +60,16 @@ describe('bq-page-title', () => {
     const { root } = await render(<bq-page-title>Title</bq-page-title>);
 
     const subTitleContainer = root.shadowRoot?.querySelector<HTMLElement>('[part="sub-title"]');
-    expect(subTitleContainer).toHaveClass('hidden');
+    expect(subTitleContainer).toHaveAttribute('hidden');
+    expect(getComputedStyle(subTitleContainer).display).toBe('none');
+  });
+
+  it('should hide suffix by default', async () => {
+    const { root } = await render(<bq-page-title>Title</bq-page-title>);
+
+    const suffixContainer = root.shadowRoot?.querySelector<HTMLElement>('[part="suffix"]');
+    expect(suffixContainer).toHaveAttribute('hidden');
+    expect(getComputedStyle(suffixContainer).display).toBe('none');
   });
 
   it('should render suffix slot', async () => {
@@ -80,7 +83,10 @@ describe('bq-page-title', () => {
     );
 
     const suffixSlot = root.shadowRoot?.querySelector('slot[name="suffix"]');
+    const suffixContainer = root.shadowRoot?.querySelector<HTMLElement>('[part="suffix"]');
     expect(suffixSlot).not.toBeNull();
+    expect(suffixContainer).not.toHaveAttribute('hidden');
+    expect(getComputedStyle(suffixContainer).display).toBe('flex');
   });
   it('should use the default colours', async () => {
     const { root } = await render(
@@ -96,9 +102,12 @@ describe('bq-page-title', () => {
     const title = root.shadowRoot?.querySelector<HTMLElement>('[part="title"]');
     const subTitle = root.shadowRoot?.querySelector<HTMLElement>('[part="sub-title"]');
 
-    expect(getComputedStyle(base).borderBlockEndColor).toBe(resolveColor('var(--bq-stroke--primary)'));
-    expect(getComputedStyle(title).color).toBe(resolveColor('var(--bq-text--primary)'));
-    expect(getComputedStyle(subTitle).color).toBe(resolveColor('var(--bq-text--secondary)'));
+    expect(resolveColorToken('--bq-page-title--divider-color', root)).toBe(
+      resolveColorToken('--bq-stroke--primary', root),
+    );
+    expect(getComputedStyle(base).borderBlockEndColor).toBe(resolveColorToken('--bq-stroke--primary', root));
+    expect(getComputedStyle(title).color).toBe(resolveColorToken('--bq-text--primary', root));
+    expect(getComputedStyle(subTitle).color).toBe(resolveColorToken('--bq-text--secondary', root));
   });
 
   it('should apply a custom divider colour', async () => {
@@ -110,6 +119,22 @@ describe('bq-page-title', () => {
 
     const base = root.shadowRoot?.querySelector<HTMLElement>('[part="base"]');
 
-    expect(getComputedStyle(base).borderBlockEndColor).toBe('rgb(255, 0, 0)');
+    expect(getComputedStyle(base).borderBlockEndColor).toBe(resolveColorToken('--bq-page-title--divider-color', root));
+  });
+
+  it('should preserve the legacy divider shorthand override', async () => {
+    const { root } = await render(
+      <bq-page-title
+        style={{ '--bq-page-title--divider-color': 'red', '--subtitle-borderBlockEnd': '3px dashed blue' }}
+      >
+        Title
+      </bq-page-title>,
+    );
+    await waitForStable(root);
+    const base = root.shadowRoot.querySelector<HTMLElement>('[part="base"]');
+    const style = getComputedStyle(base);
+    expect(style.borderBlockEndWidth).toBe('3px');
+    expect(style.borderBlockEndStyle).toBe('dashed');
+    expect(style.borderBlockEndColor).toBe('rgb(0, 0, 255)');
   });
 });

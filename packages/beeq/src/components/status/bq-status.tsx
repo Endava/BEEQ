@@ -25,12 +25,13 @@ import { STATUS_TYPE } from './bq-status.types';
  * @part circle - The colored circle that marks the status type.
  * @part text - The `<div>` container that holds the text label of the status component.
  *
- * @cssprop --bq-status-circ - Status circle size.
- * @cssprop --bq-status--dot-color-alert - Status circle color when type is 'alert'.
- * @cssprop --bq-status--dot-color-danger - Status circle color when type is 'danger'.
- * @cssprop --bq-status--dot-color-info - Status circle color when type is 'info'.
- * @cssprop --bq-status--dot-color-neutral - Status circle color when type is 'neutral'.
- * @cssprop --bq-status--dot-color-success - Status circle color when type is 'success'.
+ * @cssprop --bq-status-circle--size - Status circle size.
+ * @cssprop --bq-status-circ - Status circle size alias.
+ * @cssprop --bq-status--dot-color-alert - Status circle color when type is `alert`.
+ * @cssprop --bq-status--dot-color-danger - Status circle color when type is `danger`.
+ * @cssprop --bq-status--dot-color-info - Status circle color when type is `info`.
+ * @cssprop --bq-status--dot-color-neutral - Status circle color when type is `neutral`.
+ * @cssprop --bq-status--dot-color-success - Status circle color when type is `success`.
  * @cssprop --bq-status--text-color - Status text color.
  */
 @Component({
@@ -93,12 +94,9 @@ export class BqStatus {
   // ===================================
   render() {
     return (
-      <div class="bq-status inline-flex items-center gap-xs" part="base" role="status">
-        <bq-badge class={`bq-status__circle rounded-full ${this.type}`} part="circle" size="medium" />
-        <div
-          class="bq-status__text max-bs-[20px] m-b-0 m-i-0 p-b-0 p-i-0 font-medium text-[color:--bq-status--text-color] text-s leading-regular"
-          part="text"
-        >
+      <div class="bq-status" part="base" role="status">
+        <bq-badge class="bq-status__circle" part="circle" size="medium" />
+        <div class="bq-status__text" part="text">
           <slot />
         </div>
       </div>

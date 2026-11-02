@@ -6,21 +6,13 @@ import { reactOutputTarget as react } from '@stencil/react-output-target';
 import { sass } from '@stencil/sass';
 import { vueOutputTarget as vue } from '@stencil/vue-output-target';
 import { cemAnalyzerPlugin } from '@wc-toolkit/cem-analyzer-plugin/vite';
-import tailwind, { type PluginConfigOpts, tailwindHMR } from 'stencil-tailwind-plugin';
 
-import tailwindConf from '../../tailwind.config';
 import { angularValueAccessorBindings, generateCustomElementsJson, vueComponentModels } from './src/tools';
 
 const namespace = 'beeq';
 const componentCorePackage = `@${namespace}/core`;
 const customElementsDir = 'dist/components';
-const resolvePath = (path: string) => resolve(__dirname, path).replace(/\\/g, '/');
-
-const tailwindOpts: PluginConfigOpts = {
-  postcss: resolvePath('../../postcss.config.js'),
-  tailwindConf: tailwindConf,
-  stripComments: true,
-};
+const resolvePath = (path: string) => resolve(__dirname, path).replaceAll('\\', '/');
 
 export const config: Config = {
   namespace,
@@ -46,8 +38,6 @@ export const config: Config = {
       sourceMapContents: true,
       silenceDeprecations: ['import'],
     }),
-    tailwind(tailwindOpts),
-    tailwindHMR({ tailwindConf }),
   ],
   outputTargets: [
     { type: 'docs-readme' },

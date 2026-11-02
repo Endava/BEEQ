@@ -81,8 +81,7 @@
       ]
     },
     "storybook-build-css": {
-      "cache": true,
-      "dependsOn": [{ "target": "build", "projects": "beeq-tailwindcss" }]
+      "cache": true
     },
     "nx-release-publish": {
       "options": {

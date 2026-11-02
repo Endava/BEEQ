@@ -1,0 +1,38 @@
+@layer bq.public {
+  /* Use these classes in the document.body when side menu component is present. */
+  .bq-body--side-menu {
+    position: relative;
+    transition-duration: 300ms;
+    transition-property: padding-inline-start;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Use this class for body scroll lock when floating panels are open. */
+  .bq-body--scroll-lock {
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+
+  @supports (-webkit-touch-callout: none) {
+    .bq-body--scroll-lock {
+      overscroll-behavior: none;
+      /* iOS-specific: prevent rubber band scrolling */
+      -webkit-overflow-scrolling: auto;
+    }
+  }
+}
+
+/*
+ * Side menu body offsets stay outside the cascade layers so they win over layered styles and
+ * plain `body {}` page rules without `!important`. The compound selector (0,2,1) also outranks
+ * two-class host rules such as Storybook's `.sb-show-main.sb-main-fullscreen { padding: 0 }`.
+ */
+body.bq-body--side-menu__collapse,
+body.bq-body--side-menu.bq-body--side-menu__collapse {
+  padding-inline-start: var(--bq-side-menu--width-collapse);
+}
+
+body.bq-body--side-menu__expand,
+body.bq-body--side-menu.bq-body--side-menu__expand {
+  padding-inline-start: var(--bq-side-menu--width);
+}

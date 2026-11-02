@@ -1,0 +1,22 @@
+@use 'sass:list';
+@use 'sass:selector';
+@use 'sass:string';
+
+// Scopes each selector to the shadow host. Selectors that already start at `:host(...)` are kept
+// as they are: prefixing them would require the host to be its own descendant and never match.
+@mixin bq-focus-ring {
+  $scoped: ();
+
+  @each $complex in selector.parse(&) {
+    @if string.index('#{list.nth($complex, 1)}', ':host') == 1 {
+      $scoped: list.append($scoped, $complex, comma);
+    } @else {
+      $scoped: list.append($scoped, selector.nest(':where(:host)', $complex), comma);
+    }
+  }
+
+  @at-root #{$scoped} {
+    outline: var(--bq-ring-width, 2px) solid var(--bq-ring-color-focus, var(--bq-focus));
+    outline-offset: var(--bq-ring-offset-width, 1px);
+  }
+}

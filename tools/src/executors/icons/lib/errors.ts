@@ -45,6 +45,22 @@ class IconsExecutorError extends Error {
 }
 
 /**
+ * Turn an arbitrary caught value into a readable message.
+ *
+ * @param cause - Value caught in a `try/catch`.
+ * @returns A human-readable description of the cause.
+ */
+const describeCause = (cause: unknown): string => {
+  if (cause instanceof Error) return cause.message;
+  if (typeof cause === 'string') return cause;
+  try {
+    return JSON.stringify(cause) ?? 'undefined';
+  } catch {
+    return 'Unserializable error value';
+  }
+};
+
+/**
  * Wrap any thrown value in an {@link IconsExecutorError} tagged with the
  * given `phase`, preserving the original error as the `cause`.
  *
@@ -65,7 +81,7 @@ const asIconsError = (
   context?: Record<string, unknown>,
 ): IconsExecutorError => {
   if (cause instanceof IconsExecutorError) return cause;
-  const causeMessage = cause instanceof Error ? cause.message : String(cause);
+  const causeMessage = describeCause(cause);
   return new IconsExecutorError(phase, `${message}: ${causeMessage}`, { cause, context });
 };
 

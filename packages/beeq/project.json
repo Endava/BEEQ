@@ -4,7 +4,6 @@
   "sourceRoot": "packages/beeq/src",
   "projectType": "library",
   "tags": ["components", "core", "publishable"],
-  "implicitDependencies": ["beeq-tailwindcss"],
   "namedInputs": {
     "production": [
       "default",
@@ -19,11 +18,10 @@
   "targets": {
     "start": {
       "executor": "nx:run-commands",
-      "dependsOn": [{ "projects": "beeq-tailwindcss", "target": "build" }],
       "outputs": ["{workspaceRoot}/dist/beeq"],
       "continuous": true,
       "readyWhen": { "logMatches": "build finished, watching for changes..." },
-      "inputs": ["default", "{workspaceRoot}/tailwind.config.ts", "{workspaceRoot}/postcss.config.js"],
+      "inputs": ["default"],
       "options": {
         "command": "node tools/scripts/stencil-build.mjs --dev --watch --serve --no-open --docs"
       }
@@ -49,12 +47,7 @@
     "build": {
       "dependsOn": ["^build", { "target": "icons" }],
       "executor": "nx:run-commands",
-      "inputs": [
-        "production",
-        "^production",
-        "{workspaceRoot}/tailwind.config.ts",
-        "{workspaceRoot}/postcss.config.js"
-      ],
+      "inputs": ["production", "^production"],
       "outputs": [
         "{workspaceRoot}/dist/beeq",
         "{projectRoot}/.storybook/custom-elements.json",
@@ -75,6 +68,17 @@
         }
       }
     },
+    "build-styles": {
+      "executor": "nx:run-commands",
+      "outputs": [
+        "{workspaceRoot}/dist/beeq/dist/beeq/css/tokens.css",
+        "{workspaceRoot}/dist/beeq/dist/beeq/css/reset.css",
+        "{workspaceRoot}/dist/beeq/dist/beeq/css/typography.css"
+      ],
+      "options": {
+        "command": "node packages/beeq/scripts/build-styles.mjs"
+      }
+    },
     "storybook-build": {
       "outputs": ["{workspaceRoot}/dist/storybook/beeq"],
       "options": {
@@ -90,21 +94,20 @@
     },
     "storybook-start-css": {
       "executor": "nx:run-commands",
-      "dependsOn": [{ "projects": "beeq-tailwindcss", "target": "build" }],
       "outputs": ["{projectRoot}/.storybook/assets/css/stories.css"],
       "continuous": true,
-      "readyWhen": { "logMatches": "Done in" },
-      "inputs": ["default", "{workspaceRoot}/tailwind.config.ts", "{workspaceRoot}/postcss.config.js"],
+      "readyWhen": { "logMatches": "Watching BEEQ sources" },
+      "inputs": ["default"],
       "options": {
-        "command": "pnpm exec tailwindcss -i packages/beeq/.storybook/tailwind.css -o packages/beeq/.storybook/assets/css/stories.css --postcss ./postcss.config.js --watch"
+        "command": "node packages/beeq/scripts/build-styles.mjs --storybook --watch"
       }
     },
     "storybook-build-css": {
       "executor": "nx:run-commands",
       "outputs": ["{projectRoot}/.storybook/assets/css/stories.css"],
-      "inputs": ["default", "{workspaceRoot}/tailwind.config.ts", "{workspaceRoot}/postcss.config.js"],
+      "inputs": ["default"],
       "options": {
-        "command": "pnpm exec tailwindcss -i packages/beeq/.storybook/tailwind.css -o packages/beeq/.storybook/assets/css/stories.css --postcss ./postcss.config.js --minify"
+        "command": "node packages/beeq/scripts/build-styles.mjs --storybook"
       }
     },
     "icons": {
@@ -122,8 +125,7 @@
     },
     "test": {
       "executor": "nx:run-commands",
-      "dependsOn": [{ "target": "build", "projects": "beeq-tailwindcss" }],
-      "inputs": ["default", "^default", "{workspaceRoot}/tailwind.config.ts", "{workspaceRoot}/postcss.config.js"],
+      "inputs": ["default", "^default"],
       "options": {
         "command": "pnpm exec vitest run --project spec --coverage",
         "cwd": "packages/beeq"
@@ -131,7 +133,7 @@
     },
     "e2e": {
       "executor": "nx:run-commands",
-      "inputs": ["default", "^production", "{workspaceRoot}/tailwind.config.ts", "{workspaceRoot}/postcss.config.js"],
+      "inputs": ["default", "^production"],
       "options": {
         "command": "pnpm exec vitest run --project e2e",
         "cwd": "packages/beeq"
@@ -160,7 +162,6 @@
     "stylelint": {
       "executor": "nx-stylelint:lint",
       "outputs": ["{options.outputFile}"],
-      "dependsOn": [{ "target": "build", "projects": "beeq-tailwindcss" }],
       "options": {
         "lintFilePatterns": ["{projectRoot}/**/*.css", "{projectRoot}/**/*.scss"],
         "configFile": "packages/beeq/.stylelintrc.json",
@@ -169,10 +170,10 @@
     },
     "prepare-storybook": {
       "executor": "nx:run-commands",
-      "outputs": ["{projectRoot}/src/_storybook/CHANGELOG.md"],
+      "outputs": ["{projectRoot}/src/__storybook__/CHANGELOG.md"],
       "inputs": ["default", "{workspaceRoot}/CHANGELOG.md"],
       "options": {
-        "command": "cp CHANGELOG.md {projectRoot}/src/_storybook"
+        "command": "cp CHANGELOG.md {projectRoot}/src/__storybook__"
       }
     }
   }

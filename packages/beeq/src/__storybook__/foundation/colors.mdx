@@ -1,0 +1,206 @@
+import React from 'react';
+import { Meta, Title, Subtitle, Unstyled } from '@storybook/addon-docs/blocks';
+import { capitalize, getVariableValue } from './helper';
+
+<Meta title="Foundation/Colors" />
+
+<style>{`
+  .bq-doc-colors__intro {
+    margin-block-end: var(--bq-spacing-xxl3);
+  }
+
+  .bq-doc-colors__notice {
+    display: flex;
+    align-items: center;
+    gap: var(--bq-spacing-s);
+    margin-block-end: var(--bq-spacing-xxl);
+    border-width: var(--bq-stroke-s);
+    border-style: solid;
+    border-radius: var(--bq-radius--xs);
+    background-color: var(--bq-ui--warning-alt);
+    padding: var(--bq-spacing-s);
+  }
+
+  .bq-doc-colors__notice b {
+    font-weight: var(--bq-font-weight--bold);
+  }
+
+  .bq-doc-colors__group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-block: var(--bq-spacing-xl);
+  }
+
+  .bq-doc-colors__group-title {
+    display: block;
+    margin-block-end: var(--bq-spacing-s);
+  }
+
+  .bq-doc-colors__swatches {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--bq-spacing-xs);
+    inline-size: 100%;
+  }
+
+  .bq-doc-colors__swatch {
+    display: flex;
+    flex: 1 1 0%;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .bq-doc-colors__swatch-color {
+    display: flex;
+    inline-size: 100%;
+    block-size: 3.5rem;
+    margin-block-end: var(--bq-spacing-xs);
+    border-style: solid;
+    border-width: var(--bq-stroke-s);
+  }
+
+  /* The block prefix outranks the .sbdocs-content p rule of preview.css, so these declarations do not need to be forced */
+  .bq-doc-colors .bq-doc-colors__swatch-name {
+    font-size: var(--bq-font-size--xs);
+    font-weight: var(--bq-font-weight--bold);
+  }
+
+  .bq-doc-colors .bq-doc-colors__swatch-value {
+    font-size: var(--bq-font-size--xs);
+  }
+`}</style>
+
+<div className="bq-doc__wrapper">
+  <div className="bq-doc__container bq-doc-colors">
+    <Unstyled>
+      <Title>Colors</Title>
+
+      <p className="bq-doc-colors__intro">
+        The core color categories include brand color, accent, neutral, system and data.
+        These colors are further grouped based on their intended application: text (colors for typography), UI (colors for small shapes and elements), background (colors for large surfaces), stroke (colors for outlines and borders), and data & system colors (colors for charts, graphs, and system messages).
+      </p>
+
+      <Subtitle>Brand colors</Subtitle>
+
+      They represent the cornerstone of our visual identity and is carefully selected to reflect our brand's essence and values.
+      Use the brand color judiciously to create a strong and cohesive visual language.
+
+      Every intent (brand, accent, success, danger, warning and info) ships five steps, each with a single job:
+      `-light` is the subtle tint in light mode, the base step is the solid fill, `-dark` is the subtle tint in dark mode,
+      `-strong` is text, icon and stroke on light surfaces, and `-bright` is text, icon and stroke on dark surfaces.
+      Components never read these steps directly; they read the mode roles below (`--bq-text--brand`, `--bq-ui--success-alt`, ...).
+
+      {Object.entries({ brand }).map(([name, values]) => (
+        <ColorItem name={name} values={values} />
+      ))}
+
+      <Subtitle>Accent colors</Subtitle>
+
+      The accent colors are used as a highlight to create visual interest and draw attention to specific design elements within the overall color scheme.
+
+      {Object.entries({ accent }).map(([name, values]) => (
+        <ColorItem name={name} values={values} />
+      ))}
+
+      {(document.querySelector('body').getAttribute('bq-theme') === 'beeq') && (
+        <div className="bq-doc-colors__notice">
+          <bq-icon name="warning" color="icon--warning" weight="fill"></bq-icon>
+          <p>In BEEQ default theme <b>Accent color is not used</b>.</p>
+        </div>
+      )}
+
+      <Subtitle>Background colors</Subtitle>
+
+      Background colors are used to create visual hierarchy and structure in the interface. They are used to separate content and create a clear distinction between different sections of the interface.
+
+      {Object.entries({ background }).map(([name, values]) => (
+        <ColorItem name={name} values={values} />
+      ))}
+
+      <Subtitle>User interface colors</Subtitle>
+
+      These are used to create a consistent and harmonious visual language across the interface. They are used to create a clear distinction between different elements and to guide the user through the interface.
+
+      {[
+        ['UI', ui],
+        ['UI intents', uiIntents],
+        ['Text', text],
+        ['Text intents', textIntents],
+        ['Text on intent fills', textOnIntents],
+        ['Icon', icon],
+        ['Icon intents', iconIntents],
+        ['Stroke', stroke],
+        ['Stroke intents', strokeIntents],
+        ['Interaction states', states],
+      ].map(([name, values]) => (
+        <ColorItem name={name} values={values} />
+      ))}
+
+      <Subtitle>System colors</Subtitle>
+
+      System colors are used to convey information to the user. They are used to indicate the status of an action or to provide feedback to the user.
+      Info is its own intent and never depends on brand, so rebranding a theme doesn't change informational messages.
+
+      {Object.entries({ success, danger, warning, info }).map(([name, values]) => (
+        <ColorItem name={name} values={values} />
+      ))}
+
+      <Subtitle>Neutral colors</Subtitle>
+
+      These colors help create a comfortable and easily accessible user experience, complementing other colors in the palette.
+
+      {Object.entries({ whiteBlack, neutral }).map(([name, values]) => {
+        if (name === 'whiteBlack') name = 'White & Black';
+        return <ColorItem name={name} values={values} />;
+      })}
+
+      <Subtitle>Data colors</Subtitle>
+
+      Data colors are a set of distinct and easily distinguishable hues specifically designed for visualizing and presenting data in charts, graphs, and other data-driven elements.
+
+      {Object.entries({ data }).map(([name, values]) => (
+        <ColorItem name={name} values={values} />
+      ))}
+    </Unstyled>
+  </div>
+</div>
+
+export const ColorItem = ({ name, values }) => (
+  <div className="bq-doc-colors__group">
+    <div className="bq-doc-colors__group-title">{capitalize(name)}</div>
+    <div className="bq-doc-colors__swatches">
+      {values.map((colorName) => (
+        <div key={colorName} className="bq-doc-colors__swatch">
+          <div className="bq-doc-colors__swatch-color" style={{ backgroundColor: `var(--${colorName})` }}></div>
+          <p className="bq-doc-colors__swatch-name">{`--${colorName}`}</p>
+          <p className="bq-doc-colors__swatch-value">{getVariableValue(colorName)}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
+export const intentSteps = (intent) => ['light', '', 'dark', 'strong', 'bright'].map((step) => (step ? `bq-${intent}-${step}` : `bq-${intent}`));
+export const intents = ['brand', 'accent', 'info', 'success', 'warning', 'danger'];
+
+export const brand = intentSteps('brand');
+export const accent = intentSteps('accent');
+export const background = ['bq-background--primary', 'bq-background--secondary', 'bq-background--tertiary', 'bq-background--alt', 'bq-background--inverse', 'bq-background--brand', 'bq-background--overlay'];
+export const ui = ['bq-ui--primary', 'bq-ui--secondary', 'bq-ui--tertiary', 'bq-ui--inverse', 'bq-ui--alt'];
+export const uiIntents = intents.flatMap((intent) => [`bq-ui--${intent}`, `bq-ui--${intent}-alt`]);
+export const text = ['bq-text--primary', 'bq-text--secondary', 'bq-text--inverse', 'bq-text--alt'];
+export const textIntents = intents.map((intent) => `bq-text--${intent}`);
+export const textOnIntents = intents.map((intent) => `bq-text--on-${intent}`);
+export const icon = ['bq-icon--primary', 'bq-icon--alt', 'bq-icon--secondary', 'bq-icon--inverse'];
+export const iconIntents = intents.map((intent) => `bq-icon--${intent}`);
+export const stroke = ['bq-stroke--primary', 'bq-stroke--secondary', 'bq-stroke--tertiary', 'bq-stroke--inverse', 'bq-stroke--alt'];
+export const strokeIntents = [...intents.map((intent) => `bq-stroke--${intent}`), 'bq-stroke--brand-alt'];
+export const states = ['bq-hover', 'bq-active', 'bq-focus'];
+export const success = intentSteps('success');
+export const danger = intentSteps('danger');
+export const warning = intentSteps('warning');
+export const info = intentSteps('info');
+export const whiteBlack = ['bq-white', 'bq-black'];
+export const neutral = ['bq-neutral-50', 'bq-neutral-100', 'bq-neutral-200', 'bq-neutral-300', 'bq-neutral-400', 'bq-neutral-500', 'bq-neutral-600', 'bq-neutral-700', 'bq-neutral-800', 'bq-neutral-900', 'bq-neutral-950', 'bq-neutral-1000'];
+export const data = ['bq-data-01', 'bq-data-02', 'bq-data-03', 'bq-data-04', 'bq-data-05', 'bq-data-06', 'bq-data-07', 'bq-data-08', 'bq-data-09', 'bq-data-10', 'bq-data-11', 'bq-data-12'];

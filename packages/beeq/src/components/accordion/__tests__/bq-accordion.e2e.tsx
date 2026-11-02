@@ -3,19 +3,10 @@ import { describe, expect, it, render, waitForStable } from '@stencil/vitest';
 import { userEvent } from 'vitest/browser';
 
 import { computedStyle } from '../../../shared/test-utils/computedStyle';
+import { resolveColorToken } from '../../../shared/test-utils/resolveColorToken';
 import { getTextContent } from '../../../shared/utils/slot';
 
 const HEADER_TEXT = 'Test text';
-
-/** Resolves a CSS color value (e.g. `var(--bq-text--brand)`) to its computed `rgb()` form */
-const resolveColor = (value: string): string => {
-  const probe = document.createElement('div');
-  probe.style.color = value;
-  document.body.appendChild(probe);
-  const { color } = getComputedStyle(probe);
-  probe.remove();
-  return color;
-};
 
 describe('bq-accordion', () => {
   it('should render', async () => {
@@ -26,6 +17,104 @@ describe('bq-accordion', () => {
   it('should have shadow root', async () => {
     const { root } = await render(<bq-accordion />);
     expect(root).toHaveShadowRoot();
+  });
+
+  it('should preserve the native geometry and transition timing', async () => {
+    const { root } = await render(
+      <bq-accordion expanded>
+        <span slot="header">{HEADER_TEXT}</span>
+        <p>Panel content</p>
+      </bq-accordion>,
+    );
+    await waitForStable(root);
+
+    const details = root.shadowRoot?.querySelector<HTMLElement>('[part="base"]');
+    const header = root.shadowRoot?.querySelector<HTMLElement>('[part="header"]');
+    const content = root.shadowRoot?.querySelector<HTMLElement>('.bq-accordion__content');
+    const icon = root.shadowRoot?.querySelector<HTMLElement>('.bq-accordion__header--icon:not([hidden])');
+    const expandIcon = root.shadowRoot?.querySelector<HTMLElement>('.bq-accordion__header--icon-expand');
+    const detailsStyle = getComputedStyle(details);
+    const headerStyle = getComputedStyle(header);
+    const contentStyle = getComputedStyle(content);
+    const iconStyle = getComputedStyle(icon);
+    const expandIconStyle = getComputedStyle(expandIcon);
+
+    expect(detailsStyle.overflow).toBe('hidden');
+    expect(headerStyle.display).toBe('flex');
+    expect(headerStyle.gap).toBe('16px');
+    expect(headerStyle.padding).toBe('12px 16px');
+    expect(headerStyle.borderRadius).toBe('12px 12px 0px 0px');
+    expect(headerStyle.transitionDuration).toBe('0.3s');
+    expect(headerStyle.transitionProperty).toBe(
+      'color, background-color, border-color, text-decoration-color, fill, stroke',
+    );
+    expect(headerStyle.transitionTimingFunction).toBe('cubic-bezier(0.4, 0, 0.2, 1)');
+    expect(contentStyle.display).toBe('block');
+    expect(contentStyle.padding).toBe('16px');
+    expect(contentStyle.borderRadius).toBe('0px 0px 12px 12px');
+    expect(contentStyle.borderWidth).toBe('1px');
+    expect(iconStyle.display).toBe('flex');
+    expect(expandIconStyle.transitionDuration).toBe('0.3s');
+    expect(expandIconStyle.transitionProperty).toBe('transform');
+    expect(expandIconStyle.transitionTimingFunction).toBe('cubic-bezier(0.4, 0, 0.2, 1)');
+  });
+
+  it('should use native hidden attributes for optional content and state icons', async () => {
+    const { root } = await render(
+      <bq-accordion>
+        <span slot="header">{HEADER_TEXT}</span>
+      </bq-accordion>,
+    );
+    await waitForStable(root);
+
+    for (const part of ['prefix', 'suffix']) {
+      const element = root.shadowRoot?.querySelector<HTMLElement>(`[part="${part}"]`);
+      expect(element, part).toHaveAttribute('hidden');
+      expect(getComputedStyle(element).display, part).toBe('none');
+    }
+
+    const icons = root.shadowRoot?.querySelectorAll<HTMLElement>('.bq-accordion__header--icon');
+    expect(icons[0]).not.toHaveAttribute('hidden');
+    expect(icons[1]).toHaveAttribute('hidden');
+    expect(getComputedStyle(icons[1]).display).toBe('none');
+  });
+
+  it('should rotate the expand icon without swapping state icons when rotate is enabled', async () => {
+    const { root, setProps } = await render(
+      <bq-accordion rotate>
+        <span slot="header">{HEADER_TEXT}</span>
+      </bq-accordion>,
+    );
+    await waitForStable(root);
+
+    const icons = root.shadowRoot?.querySelectorAll<HTMLElement>('.bq-accordion__header--icon');
+    expect(icons[0]).not.toHaveAttribute('hidden');
+    expect(icons[1]).toHaveAttribute('hidden');
+    expect(getComputedStyle(icons[0]).transform).toBe('matrix(1, 0, 0, 1, 0, 0)');
+
+    await setProps({ expanded: true });
+    await waitForStable(root);
+
+    expect(icons[0]).not.toHaveAttribute('hidden');
+    expect(icons[1]).toHaveAttribute('hidden');
+    await expect.poll(() => getComputedStyle(icons[0]).transform).toBe('matrix(-1, 0, 0, -1, 0, 0)');
+  });
+
+  it('should draw the standard inset focus ring around the header', async () => {
+    const { root } = await render(
+      <bq-accordion>
+        <span slot="header">{HEADER_TEXT}</span>
+      </bq-accordion>,
+    );
+    await waitForStable(root);
+
+    await userEvent.tab();
+
+    const headerStyle = getComputedStyle(root.shadowRoot?.querySelector('[part="header"]'));
+    expect(headerStyle.outlineColor).toBe(resolveColorToken('--bq-focus'));
+    expect(headerStyle.outlineOffset).toBe('-2px');
+    expect(headerStyle.outlineStyle).toBe('solid');
+    expect(headerStyle.outlineWidth).toBe('2px');
   });
 
   it('should display header text', async () => {
@@ -208,8 +297,8 @@ describe('bq-accordion', () => {
 
     const panelStyle = computedStyle('bq-accordion >>> [part="panel"]', ['backgroundColor', 'color']);
     expect(panelStyle).toEqual({
-      backgroundColor: resolveColor('var(--bq-ui--primary)'),
-      color: resolveColor('var(--bq-text--primary)'),
+      backgroundColor: resolveColorToken('--bq-ui--primary'),
+      color: resolveColorToken('--bq-text--primary'),
     });
   });
 
@@ -239,8 +328,12 @@ describe('bq-accordion', () => {
     const header = root.shadowRoot.querySelector<HTMLElement>('[part="header"]');
     await userEvent.hover(header);
 
-    const expectedBackground = resolveColor('color-mix(in srgb, rgb(1, 2, 3), var(--bq-hover) 20%)');
+    const colorProbe = document.createElement('span');
+    root.shadowRoot.appendChild(colorProbe);
+    colorProbe.style.color = 'color-mix(in srgb, rgb(1, 2, 3), var(--bq-hover) 20%)';
+    const expectedBackground = getComputedStyle(colorProbe).color;
     await expect.poll(() => getComputedStyle(header).backgroundColor).toBe(expectedBackground);
+    colorProbe.remove();
   });
 
   it('should mix the hover base variables with the hover overlay', async () => {
@@ -264,7 +357,11 @@ describe('bq-accordion', () => {
     const header = root.shadowRoot.querySelector<HTMLElement>('[part="header"]');
     await userEvent.hover(header);
 
-    const expectedBackground = resolveColor('color-mix(in srgb, var(--bq-ui--secondary), var(--bq-hover) 20%)');
+    const colorProbe = document.createElement('span');
+    root.shadowRoot.appendChild(colorProbe);
+    colorProbe.style.color = 'color-mix(in srgb, var(--bq-ui--secondary), var(--bq-hover) 20%)';
+    const expectedBackground = getComputedStyle(colorProbe).color;
     await expect.poll(() => getComputedStyle(header).backgroundColor).toBe(expectedBackground);
+    colorProbe.remove();
   });
 });

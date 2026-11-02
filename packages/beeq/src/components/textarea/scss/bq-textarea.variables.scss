@@ -29,33 +29,33 @@
    * @prop --bq-textarea--text-size - Textarea text size
    * @prop --bq-textarea--text-placeholder-color - Textarea placeholder text color
    */
-  --bq-textarea--background-color: theme(colors.transparent);
+  --bq-textarea--background-color: transparent;
 
-  --bq-textarea--border-color: theme(stroke.tertiary);
-  --bq-textarea--border-color-focus: theme(stroke.brand);
+  --bq-textarea--border-color: var(--bq-stroke--tertiary);
+  --bq-textarea--border-color-focus: var(--bq-stroke--brand);
   --bq-textarea--border-color-danger: var(--bq-stroke--danger);
   --bq-textarea--border-color-success: var(--bq-stroke--success);
   --bq-textarea--border-color-warning: var(--bq-stroke--warning);
-  --bq-textarea--border-radius: theme(borderRadius.s);
-  --bq-textarea--border-width: theme(borderWidth.s);
+  --bq-textarea--border-radius: var(--bq-radius--s);
+  --bq-textarea--border-width: var(--bq-stroke-s);
   --bq-textarea--border-style: solid;
 
-  --bq-textarea--helper-margin-top: theme(spacing.xs);
-  --bq-textarea--helper-text-size: theme(fontSize.s);
-  --bq-textarea--helper-text-color: theme(textColor.primary);
+  --bq-textarea--helper-margin-top: var(--bq-spacing-xs);
+  --bq-textarea--helper-text-size: var(--bq-font-size--s);
+  --bq-textarea--helper-text-color: var(--bq-text--primary);
   --bq-textarea--helper-text-color-danger: var(--bq-text--danger);
   --bq-textarea--helper-text-color-success: var(--bq-text--success);
   --bq-textarea--helper-text-color-warning: var(--bq-text--warning);
 
-  --bq-textarea--label-margin-bottom: theme(spacing.xs);
-  --bq-textarea--label-text-size: theme(fontSize.s);
-  --bq-textarea--label-text-color: theme(textColor.primary);
+  --bq-textarea--label-margin-bottom: var(--bq-spacing-xs);
+  --bq-textarea--label-text-size: var(--bq-font-size--s);
+  --bq-textarea--label-text-color: var(--bq-text--primary);
 
-  --bq-textarea--paddingY: theme(spacing.s);
-  --bq-textarea--padding-start: theme(spacing.m);
-  --bq-textarea--padding-end: theme(spacing.m);
+  --bq-textarea--paddingY: var(--bq-spacing-s);
+  --bq-textarea--padding-start: var(--bq-spacing-m);
+  --bq-textarea--padding-end: var(--bq-spacing-m);
 
-  --bq-textarea--text-color: theme(textColor.primary);
-  --bq-textarea--text-size: theme(fontSize.m);
-  --bq-textarea--text-placeholder-color: theme(textColor.secondary);
+  --bq-textarea--text-color: var(--bq-text--primary);
+  --bq-textarea--text-size: var(--bq-font-size--m);
+  --bq-textarea--text-placeholder-color: var(--bq-text--secondary);
 }

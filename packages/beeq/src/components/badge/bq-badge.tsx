@@ -47,12 +47,12 @@ export class BqBadge {
 
   private spanElement?: HTMLSpanElement;
 
-  private observer: MutationObserver = new MutationObserver(() => this.updateContentLength());
+  private readonly observer: MutationObserver = new MutationObserver(() => this.updateContentLength());
 
   // Reference to host HTML element
   // ===================================
 
-  @Element() el: HTMLBqBadgeElement;
+  @Element() el!: HTMLBqBadgeElement;
 
   // State() variables
   // Inlined decorator, alphabetical order
@@ -73,7 +73,7 @@ export class BqBadge {
   @Prop({ mutable: true, reflect: true }) textColor?: string;
 
   /** The size of the badge. Relevant if badge has no content. */
-  @Prop({ reflect: true, mutable: true }) size?: TBadgeSize = 'small';
+  @Prop({ reflect: true, mutable: true }) size: TBadgeSize = 'small';
 
   // Prop lifecycle events
   // =======================
@@ -124,11 +124,11 @@ export class BqBadge {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private handleSlotChange = () => {
+  private readonly handleSlotChange = () => {
     this.updateContentLength();
   };
 
-  private updateContentLength = () => {
+  private readonly updateContentLength = () => {
     const slotElem = this.spanElement?.querySelector('slot') ?? null;
     this.contentLength = isNil(slotElem) ? 0 : getTextContent(slotElem, { recurse: true }).length;
   };
@@ -148,14 +148,14 @@ export class BqBadge {
         <div
           class={{
             'bq-badge': true,
-            [`size--${this.size}`]: this.contentLength === 0,
-            digit: this.contentLength > 0,
-            'p-i-xs2': this.contentLength > 1,
+            'is-empty': this.contentLength === 0,
+            'is-populated': this.contentLength > 0,
+            'is-multiple': this.contentLength > 1,
           }}
           part="base"
         >
           <span
-            class="font-bold text-xs leading-small"
+            class="bq-badge__number"
             part="number"
             ref={(element) => {
               this.spanElement = element;

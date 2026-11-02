@@ -367,15 +367,12 @@ export class BqSlider {
     return this.tooltipAlwaysVisible && this.enableTooltip;
   }
 
-  private renderLabel = (value: number, position: 'start' | 'end', css?: string) => {
+  private renderLabel = (value: number, position: 'start' | 'end') => {
+    const isHidden =
+      position === 'start' ? !this.enableValueIndicator : !this.enableValueIndicator || !this.isRangeType;
+
     return (
-      <span
-        class={{
-          [`${css} is-fit min-is-8 box-content block font-medium text-[--bq-slider--label-color] text-s leading-regular [font-variant:tabular-nums]`]: true,
-          hidden: position === 'start' ? !this.enableValueIndicator : !this.enableValueIndicator || !this.isRangeType,
-        }}
-        part={`label-${position}`}
-      >
+      <span class="bq-slider__label" hidden={isHidden} part={`label-${position}`}>
         {value.toFixed(this.decimalCount)}
       </span>
     );
@@ -395,10 +392,7 @@ export class BqSlider {
 
     return (
       <input
-        class={{
-          'is-full absolute inset-bs-[50%] start-0 -translate-y-1/2 cursor-pointer appearance-none bg-transparent outline-none disabled:cursor-not-allowed': true,
-          'pointer-events-none': this.isRangeType,
-        }}
+        class="bq-slider__input"
         disabled={this.disabled}
         max={this.max}
         min={this.min}
@@ -425,19 +419,16 @@ export class BqSlider {
     return (
       <bq-tooltip
         alwaysVisible={isVisible}
-        class={{
-          'absolute [&::part(panel)]:absolute': true,
-          hidden: !isVisible,
-        }}
+        class="bq-slider__tooltip"
         distance={this.enableValueIndicator ? 6 : 16}
         exportparts="base,trigger,panel"
+        hidden={!isVisible}
         style={{
           // Include the thumb's two 2px borders and its inset at the track ends.
           insetInlineStart: `calc(${percent}% + (var(--bq-slider--thumb-size) + 4px) * ${0.5 - percent / 100})`,
-          fontVariant: 'tabular-nums',
         }}
       >
-        <div class="bs-1 is-1 absolute" slot="trigger" />
+        <div class="bq-slider__tooltip-trigger" slot="trigger" />
         {value.toFixed(this.decimalCount)}
       </bq-tooltip>
     );
@@ -449,23 +440,16 @@ export class BqSlider {
 
   render() {
     return (
-      <div
-        aria-disabled={this.disabled ? 'true' : 'false'}
-        class={{ 'is-full flex': true, 'cursor-not-allowed opacity-60': this.disabled }}
-        part="base"
-      >
+      <div aria-disabled={this.disabled ? 'true' : 'false'} class="bq-slider" part="base">
         {/* LABEL (start) */}
-        {this.renderLabel(this.minValue, 'start', 'me-xs text-end')}
+        {this.renderLabel(this.minValue, 'start')}
         {/* SLIDER */}
-        <div class="is-full relative" part="container">
+        <div class="bq-slider__container" part="container">
           {/* TRACK AREA */}
-          <span
-            class="bs-1 is-full absolute inset-bs-[50%] start-0 -translate-y-1/2 rounded-xs bg-[--bq-slider--trackarea-color]"
-            part="track-area"
-          />
+          <span class="bq-slider__track" part="track-area" />
           {/* PROGRESS AREA */}
           <span
-            class="bs-1 is-[50%] absolute inset-bs-[50%] -translate-y-1/2 rounded-xs bg-[--bq-slider--progress-color]"
+            class="bq-slider__progress"
             part="progress-area"
             ref={(elem) => {
               this.progressElem = elem;
@@ -486,7 +470,7 @@ export class BqSlider {
             })}
         </div>
         {/* LABEL (end) */}
-        {this.renderLabel(this.maxValue, 'end', 'ms-xs text-start')}
+        {this.renderLabel(this.maxValue, 'end')}
       </div>
     );
   }

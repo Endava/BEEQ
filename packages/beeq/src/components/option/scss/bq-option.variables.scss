@@ -27,7 +27,7 @@
   --bq-option--background: var(--bq-ui--primary);
   --bq-option--background-hover: var(--bq-ui--secondary);
   --bq-option--background-selected: var(--bq-ui--brand-alt);
-  --bq-option--font-size: theme(fontSize.m);
+  --bq-option--font-size: var(--bq-font-size--m);
 
   --bq-option--text-color: var(--bq-text--primary);
   --bq-option--text-color-selected: var(--bq-text--brand);
@@ -37,14 +37,14 @@
 
   --bq-option--border-color: transparent;
   --bq-option--border-style: none;
-  --bq-option--border-width: theme(borderWidth.0);
-  --bq-option--border-radius: theme(borderRadius.s);
+  --bq-option--border-width: 0;
+  --bq-option--border-radius: var(--bq-radius--s);
 
   --bq-option--box-shadow: none;
 
-  --bq-option--gap-start: theme(spacing.s);
-  --bq-option--gap-end: theme(spacing.s);
-  --bq-option--paddingY: theme(spacing.xs);
-  --bq-option--padding-start: theme(spacing.s);
-  --bq-option--padding-end: theme(spacing.s);
+  --bq-option--gap-start: var(--bq-spacing-s);
+  --bq-option--gap-end: var(--bq-spacing-s);
+  --bq-option--paddingY: var(--bq-spacing-xs);
+  --bq-option--padding-start: var(--bq-spacing-s);
+  --bq-option--padding-end: var(--bq-spacing-s);
 }

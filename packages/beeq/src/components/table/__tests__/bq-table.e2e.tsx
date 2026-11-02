@@ -1,16 +1,7 @@
 import { h } from '@stencil/core';
 import { describe, expect, it, render } from '@stencil/vitest';
 
-import { computedStyle } from '../../../shared/test-utils/computedStyle';
-
-const resolveColor = (value: string) => {
-  const probe = document.createElement('span');
-  probe.style.color = value;
-  document.body.appendChild(probe);
-  const { color } = getComputedStyle(probe);
-  probe.remove();
-  return color;
-};
+import { computedStyle, resolveColorToken } from '../../../shared/test-utils';
 
 // Minimal table fixture — reused across tests
 const mkTable = (extraTableClass = '', extraRowClass = '') => (
@@ -116,20 +107,21 @@ describe('bq-table', () => {
     expect(style.overflowX).toBe('auto');
   });
   it('should use the default text colour for headers and cells', async () => {
-    await render(mkTable());
-    const expected = resolveColor('var(--bq-text--primary)');
+    const { root } = await render(mkTable());
+    const expected = resolveColorToken('--bq-text--primary', root);
 
+    expect(resolveColorToken('--bq-table--text-color', root)).toBe(expected);
     expect(computedStyle('table.bq-table th', ['color']).color).toBe(expected);
     expect(computedStyle('table.bq-table td', ['color']).color).toBe(expected);
   });
 
   it('should use the brand colours for the selected row', async () => {
-    await render(mkTable('', 'selected'));
+    const { root } = await render(mkTable('', 'selected'));
     const style = computedStyle('table.bq-table tr.selected', ['backgroundColor', 'outlineColor']);
 
     expect(style).toEqual({
-      backgroundColor: resolveColor('var(--bq-ui--brand-alt)'),
-      outlineColor: resolveColor('var(--bq-stroke--brand)'),
+      backgroundColor: resolveColorToken('--bq-ui--brand-alt', root),
+      outlineColor: resolveColorToken('--bq-stroke--brand', root),
     });
   });
 
@@ -137,7 +129,7 @@ describe('bq-table', () => {
     const { root } = await render(mkTable('bordered'));
 
     expect(computedStyle('table.bq-table.bordered td', ['borderInlineStartColor']).borderInlineStartColor).toBe(
-      resolveColor('var(--bq-stroke--primary)'),
+      resolveColorToken('--bq-stroke--primary', root),
     );
 
     root.style.setProperty('--bq-table--border-color', 'rgb(255, 0, 0)');
@@ -155,6 +147,7 @@ describe('bq-table', () => {
 
     root.style.setProperty('--bq-table--text-color', 'rgb(0, 0, 255)');
 
+    expect(computedStyle('table.bq-table th', ['color']).color).toBe('rgb(0, 0, 255)');
     expect(computedStyle('table.bq-table td', ['color']).color).toBe('rgb(0, 0, 255)');
   });
 });

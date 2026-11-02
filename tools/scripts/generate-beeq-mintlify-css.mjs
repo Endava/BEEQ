@@ -45,17 +45,22 @@ const isThemeSelector = (selector) => {
   );
 };
 
-const isNamespacedSelector = (selector) => /(^|[\s>+~])(?:bq-[\w-]+|\.bq-[\w-]+)/.test(selector);
+const isNamespacedSelector = (selector) => /(^|[\s>+~])(?:bq-[\w-]+|(?:body)?\.bq-[\w-]+)/.test(selector);
 
-const onlyBeeqCustomProperties = (rule) =>
-  rule.nodes?.every((node) => node.type !== 'decl' || node.prop.startsWith('--bq-')) ?? false;
+const onlyBeeqThemeDeclarations = (rule) =>
+  rule.nodes?.every(
+    (node) =>
+      node.type !== 'decl' ||
+      node.prop.startsWith('--bq-') ||
+      (node.prop === 'font-family' && node.value === 'var(--bq-font-family)'),
+  ) ?? false;
 
 const keepRule = (rule) => {
   const selectors = postcss.list.comma(rule.selector);
 
   if (selectors.every(isNamespacedSelector)) return true;
 
-  return selectors.every(isThemeSelector) && onlyBeeqCustomProperties(rule);
+  return selectors.every(isThemeSelector) && onlyBeeqThemeDeclarations(rule);
 };
 
 const filterContainer = (container) => {
@@ -89,7 +94,7 @@ const output = [
   ' * Generated from @beeq/core/dist/beeq/beeq.css.',
   ' *',
   ' * This host-safe bundle retains BEEQ fonts, tokens, themes, and .bq-*',
-  ' * light-DOM helpers. It intentionally omits resets, element styles, and',
+  ' * light-DOM helpers. It intentionally omits resets, unscoped element styles, and',
   ' * unprefixed utility classes so it can coexist with Mintlify.',
   ' *',
   ' * Regenerate with: node tools/scripts/generate-beeq-mintlify-css.mjs',

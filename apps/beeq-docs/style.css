@@ -8,14 +8,14 @@ body {
 }
 
 body.bq-body--scroll-lock {
-  overflow: unset !important;
+  overflow: unset;
 }
 
 body,
 .prose {
-  color: var(--bq-text--primary) !important;
-  line-height: var(--bq-font-line-height--regular) !important;
-  font-size: var(--bq-font-size--m) !important;
+  color: var(--bq-text--primary);
+  line-height: var(--bq-font-line-height--regular);
+  font-size: var(--bq-font-size--m);
   max-width: none; /* Allow full width for better readability in docs */
 }
 
@@ -124,8 +124,8 @@ body,
 
 .beeq-components-overview .columns > a.link.tile {
   height: 100%;
-  align-items: stretch !important;
-  justify-content: flex-start !important;
+  align-items: stretch;
+  justify-content: flex-start;
 }
 
 .beeq-components-overview [data-component-part="tile-text-container"] {
@@ -143,10 +143,10 @@ body,
 
 .beeq-components-overview p[data-component-part="tile-title"],
 .beeq-components-overview p[data-component-part="tile-description"] {
-  overflow: visible !important;
-  text-overflow: unset !important;
-  white-space: normal !important;
-  max-width: 100% !important;
+  overflow: visible;
+  text-overflow: unset;
+  white-space: normal;
+  max-width: 100%;
   text-align: center;
   text-wrap: balance;
 }
@@ -192,12 +192,12 @@ body,
 }
 
 [data-name="frame"] {
-  background-color: var(--bq-background--primary) !important;
+  background-color: var(--bq-background--primary);
 }
 
 [data-name="frame"] div:first-child {
-  background-image: unset !important;
-  mask-image: unset !important;
+  background-image: unset;
+  mask-image: unset;
 }
 
 /* ------------------------------ CodeLivePreview ------------------------------ */
@@ -236,13 +236,13 @@ body,
       padding: unset;
 
       [data-component-part="code-block-root"] {
-        border-radius: 0 !important;
+        border-radius: 0;
       }
     }
   }
 
   [data-component-part="code-block-root"] [data-component-part="scroll-area-content"] {
-    height: auto !important;
+    height: auto;
   }
 }
 

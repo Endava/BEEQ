@@ -252,4 +252,4 @@ Use the most specific source. Current source and component API references win ov
 4. [Storybook](https://storybook.beeq.design) for each component's states.
 5. [llms.txt](https://www.beeq.design/llms.txt), then [llms-full.txt](https://www.beeq.design/llms-full.txt), or the [MCP server](https://www.beeq.design/mcp) in compatible tools.
 6. The installed package: wrapper type definitions, and the Custom Elements Manifest named by the `customElements` field of `node_modules/@beeq/core/package.json` when that file is present.
-7. Source, with repository access: `packages/beeq/src/components/<name>/` and `packages/beeq-tailwindcss/src/`.
+7. Source, with repository access: `packages/beeq/src/components/<name>/`, the design tokens in `packages/beeq/src/global/styles/foundations/`, and the Tailwind preset in `packages/beeq-tailwindcss/src/`.

@@ -29,20 +29,20 @@
   --bq-tab--text-color-active: var(--bq-text--brand);
   --bq-tab--text-color-hover: var(--bq-text--brand);
 
-  --bq-tab--font-size: theme(fontSize.m);
-  --bq-tab--font-weight: theme(fontWeight.medium);
-  --bq-tab--line-height: theme(lineHeight.regular);
+  --bq-tab--font-size: var(--bq-font-size--m);
+  --bq-tab--font-weight: var(--bq-font-weight--medium);
+  --bq-tab--line-height: var(--bq-font-line-height--regular);
 
-  --bq-tab--label-icon-gap: theme(spacing.xs);
+  --bq-tab--label-icon-gap: var(--bq-spacing-xs);
 
-  --bq-tab--padding-vertical-small: theme(spacing.xs2);
-  --bq-tab--padding-horizontal-small: theme(spacing.m);
+  --bq-tab--padding-vertical-small: var(--bq-spacing-xs2);
+  --bq-tab--padding-horizontal-small: var(--bq-spacing-m);
 
-  --bq-tab--padding-vertical-medium: theme(spacing.xs);
-  --bq-tab--padding-horizontal-medium: theme(spacing.l);
+  --bq-tab--padding-vertical-medium: var(--bq-spacing-xs);
+  --bq-tab--padding-horizontal-medium: var(--bq-spacing-l);
 
-  --bq-tab--padding-vertical-large: theme(spacing.s);
-  --bq-tab--padding-horizontal-large: theme(spacing.l);
+  --bq-tab--padding-vertical-large: var(--bq-spacing-s);
+  --bq-tab--padding-horizontal-large: var(--bq-spacing-l);
 
   --bq-tab--icon-size-small: 20px;
   --bq-tab--icon-size-medium: 24px;

@@ -18,8 +18,8 @@
   --bq-checkbox--background-color-checked: var(--bq-ui--brand);
   --bq-checkbox--border-color: var(--bq-stroke--tertiary);
   --bq-checkbox--border-color-checked: var(--bq-ui--brand);
-  --bq-checkbox--border-radius: theme(borderRadius.xs);
-  --bq-checkbox--border-width: theme(borderWidth.m);
+  --bq-checkbox--border-radius: var(--bq-radius--xs);
+  --bq-checkbox--border-width: var(--bq-stroke-m);
   --bq-checkbox--icon-color-checked: var(--bq-text--on-brand);
   --bq-checkbox--label-text-color: var(--bq-text--primary);
   --bq-checkbox--size: 24px;

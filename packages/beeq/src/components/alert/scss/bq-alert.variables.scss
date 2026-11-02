@@ -36,10 +36,10 @@
 
   --bq-alert--background: var(--bq-ui--secondary);
 
-  --bq-alert--border-radius: theme(borderRadius.s);
+  --bq-alert--border-radius: var(--bq-radius--s);
 
-  --bq-alert--content-footer-gap: theme(spacing.s);
-  --bq-alert--title-body-gap: theme(spacing.s);
+  --bq-alert--content-footer-gap: var(--bq-spacing-s);
+  --bq-alert--title-body-gap: var(--bq-spacing-s);
 
   --bq-alert--background-info: var(--bq-ui--info-alt);
   --bq-alert--background-success: var(--bq-ui--success-alt);
@@ -52,7 +52,7 @@
   --bq-alert--border-warning: var(--bq-stroke--warning);
   --bq-alert--border-error: var(--bq-stroke--danger);
   --bq-alert--border-default: var(--bq-stroke--secondary);
-  --bq-alert--border-width: theme(borderWidth.s);
+  --bq-alert--border-width: var(--bq-stroke-s);
   --bq-alert--border-style: solid;
 
   --bq-alert--icon-color-info: var(--bq-icon--info);
@@ -60,10 +60,9 @@
   --bq-alert--icon-color-warning: var(--bq-icon--warning);
   --bq-alert--icon-color-error: var(--bq-icon--danger);
   --bq-alert--icon-color-default: var(--bq-icon--primary);
-
   --bq-alert--text-color: var(--bq-text--primary);
 
-  --bq-alert--padding: theme(padding.s);
+  --bq-alert--padding: var(--bq-spacing-s);
 
   --bq-alert--min-width: 320px;
 }

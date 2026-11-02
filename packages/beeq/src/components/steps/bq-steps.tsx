@@ -35,7 +35,6 @@ import { STEPS_ORIENTATION, STEPS_SIZE, STEPS_TYPE } from './bq-steps.types';
  * @part divider-dash-start - The dash start wrapper of the divider component
  * @part divider-dash-end - The dash end wrapper of the divider component
  *
- * @cssprop --bq-steps--divider-color - Divider color
  * @cssprop --bq-steps--gap - Gap between steps
  */
 @Component({
@@ -47,7 +46,7 @@ export class BqSteps {
   // Own Properties
   // ====================
 
-  private stepElem: HTMLElement;
+  private stepElem?: HTMLDivElement;
 
   // Reference to host HTML element
   // ===================================
@@ -71,7 +70,7 @@ export class BqSteps {
   @Prop({ reflect: true }) size: TStepsSize = 'medium';
 
   /** The type of prefix element to use on the step items */
-  @Prop({ reflect: true }) type: TStepsType;
+  @Prop({ reflect: true }) type: TStepsType = 'numeric';
 
   // Prop lifecycle events
   // =======================
@@ -129,12 +128,12 @@ export class BqSteps {
   // =======================================================
 
   private get bqSteps(): HTMLBqStepItemElement[] {
-    if (!this.stepElem) return [];
+    const slot = this.stepElem?.querySelector('slot');
+    if (!slot) return [];
 
-    const slot = this.stepElem.querySelector('slot');
-    return [...slot.assignedElements({ flatten: true })].filter(
-      (el: HTMLBqStepItemElement) => el.tagName.toLowerCase() === 'bq-step-item',
-    ) as [HTMLBqStepItemElement];
+    return Array.from(slot.assignedElements({ flatten: true })).filter(
+      (el: Element): el is HTMLBqStepItemElement => el.tagName.toLowerCase() === 'bq-step-item',
+    );
   }
 
   private setStepItemProps = () => {
@@ -158,14 +157,10 @@ export class BqSteps {
   render() {
     return (
       <div
-        class={{
-          'relative inline-flex items-start justify-between': true,
-          'is-full flex-row': this.orientation === 'horizontal',
-          'bs-full flex-col': this.orientation === 'vertical',
-        }}
+        class="bq-steps"
         part="container"
         role="list"
-        ref={(div) => {
+        ref={(div?: HTMLDivElement) => {
           this.stepElem = div;
         }}
       >

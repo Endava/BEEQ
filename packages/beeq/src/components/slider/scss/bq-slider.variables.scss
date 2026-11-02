@@ -15,7 +15,7 @@
    */
 
   --bq-slider--size: 4px;
-  --bq-slider--border-radius: theme(borderRadius.xs);
+  --bq-slider--border-radius: var(--bq-radius--xs);
   --bq-slider--thumb-size: 13px;
   --bq-slider--progress-color: var(--bq-ui--brand);
   --bq-slider--trackarea-color: var(--bq-ui--tertiary);

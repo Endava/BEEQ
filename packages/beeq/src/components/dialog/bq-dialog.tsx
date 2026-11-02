@@ -12,7 +12,7 @@ import { DIALOG_FOOTER_APPEARANCE, DIALOG_SIZE } from './bq-dialog.types';
  * @example How to use it
  * ```html
  * <bq-dialog footer-appearance="standard" border="m" size="medium">
- *   <h5 class="bold flex items-center gap-s" slot="title">
+ *   <h5 slot="title" style="display: flex; align-items: center; gap: var(--bq-spacing-s); font-weight: 700">
  *     <bq-icon name="info" size="30" color="text--accent" role="img" title="Info"></bq-icon>
  *     Title
  *   </h5>
@@ -21,7 +21,7 @@ import { DIALOG_FOOTER_APPEARANCE, DIALOG_SIZE } from './bq-dialog.types';
  *     standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
  *     type specimen book.
  *   </p>
- *   <div class="flex gap-xs" slot="footer">
+ *   <div slot="footer" style="display: flex; gap: var(--bq-spacing-xs)">
  *     <bq-button appearance="link">Button</bq-button>
  *     <bq-button variant="ghost">Button</bq-button>
  *     <bq-button variant="standard" slot="footer">Button</bq-button>
@@ -320,16 +320,13 @@ export class BqDialog {
       <dialog
         aria-labelledby="bq-dialog--title"
         aria-modal="true"
-        class={{
-          [`bq-dialog hidden ${this.size} m-auto focus-visible:outline-none`]: true,
-          'inset-be-[50%] inset-bs-[50%]': this.disableBackdrop,
-        }}
-        data-transition-enter="transition ease-in duration-300"
-        data-transition-enter-end="opacity-100 scale-100"
-        data-transition-enter-start="opacity-0 scale-90"
-        data-transition-leave="transition ease-out duration-300"
-        data-transition-leave-end="opacity-0 scale-90"
-        data-transition-leave-start="opacity-100 scale-100"
+        class="bq-dialog hidden"
+        data-transition-enter="is-entering"
+        data-transition-enter-end="is-enter-end"
+        data-transition-enter-start="is-enter-start"
+        data-transition-leave="is-leaving"
+        data-transition-leave-end="is-leave-end"
+        data-transition-leave-start="is-leave-start"
         inert={this.open ? undefined : true}
         part="dialog"
         ref={(dialogElem) => {
@@ -337,9 +334,9 @@ export class BqDialog {
         }}
         style={style}
       >
-        <main class="flex flex-col gap-[--bq-dialog--title-body-gap] overflow-hidden" part="content">
-          <header class="bq-dialog--header" part="header">
-            <div class="bq-dialog--title flex flex-1 items-center justify-between" id="bq-dialog--title" part="title">
+        <main class="bq-dialog__content" part="content">
+          <header class="bq-dialog__header" part="header">
+            <div class="bq-dialog__title" id="bq-dialog--title" part="title">
               <slot name="title" />
             </div>
             <slot name="button-close">
@@ -351,11 +348,8 @@ export class BqDialog {
             </slot>
           </header>
           <div
-            class={{
-              '!hidden': !this.hasContent,
-              'overflow-y-auto p-i-[--bq-dialog--padding]': this.hasContent,
-              '!p-be-[--bq-dialog--padding]': !this.hasFooter,
-            }}
+            class={{ 'bq-dialog__body': true, 'has-no-footer': !this.hasFooter }}
+            hidden={!this.hasContent}
             part="body"
             ref={(mainElem) => {
               this.contentElem = mainElem;
@@ -365,11 +359,8 @@ export class BqDialog {
           </div>
         </main>
         <footer
-          class={{
-            '!hidden': !this.hasFooter,
-            'bq-dialog--footer': this.hasFooter,
-            '!p-b-s bg-[--bq-dialog--footer-background]': this.footerAppearance === 'highlight',
-          }}
+          class="bq-dialog__footer"
+          hidden={!this.hasFooter}
           part="footer"
           ref={(footerElem) => {
             this.footerElem = footerElem;

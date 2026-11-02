@@ -2,17 +2,8 @@ import { h } from '@stencil/core';
 import { afterEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
 
 import { computedStyle } from '../../../shared/test-utils/computedStyle';
+import { resolveColorToken } from '../../../shared/test-utils/resolveColorToken';
 import { getTextContent } from '../../../shared/utils/slot';
-
-/** Resolves a CSS color value (e.g. `var(--bq-ui--danger)`) to its computed `rgb()` form */
-const resolveColor = (value: string): string => {
-  const probe = document.createElement('div');
-  probe.style.color = value;
-  document.body.appendChild(probe);
-  const { color } = getComputedStyle(probe);
-  probe.remove();
-  return color;
-};
 
 afterEach(() => {
   vi.restoreAllMocks();
@@ -36,10 +27,8 @@ describe('bq-badge', () => {
 
     await waitForStable(root);
 
-    const badge = root.shadowRoot.querySelector('.bq-badge') as HTMLDivElement;
     const style = computedStyle('bq-badge >>> .bq-badge', ['height', 'width']);
 
-    expect(badge).toHaveClass('size--small');
     expect(style).toEqual({ height: '8px', width: '8px' });
   });
 
@@ -48,10 +37,8 @@ describe('bq-badge', () => {
 
     await waitForStable(root);
 
-    const badge = root.shadowRoot.querySelector('.bq-badge') as HTMLDivElement;
     const style = computedStyle('bq-badge >>> .bq-badge', ['height', 'width']);
 
-    expect(badge).toHaveClass('size--medium');
     expect(style).toEqual({ height: '12px', width: '12px' });
   });
 
@@ -60,12 +47,12 @@ describe('bq-badge', () => {
 
     await waitForStable(root);
 
-    const badge = root.shadowRoot.querySelector('.bq-badge') as HTMLDivElement;
+    const badge = root.shadowRoot?.querySelector('.bq-badge') as HTMLDivElement;
     const numberSlot = badge.querySelector('slot') as HTMLSlotElement;
 
-    expect(badge).toHaveClass('digit');
+    expect(badge).toHaveClass('is-populated');
     expect(getTextContent(numberSlot, { recurse: true })).toBe('2');
-    expect(badge).not.toHaveClass('p-i-xs2');
+    expect(badge).not.toHaveClass('is-multiple');
   });
 
   it('should apply inline CSS variables from color props', async () => {
@@ -80,6 +67,9 @@ describe('bq-badge', () => {
   it('should use the on-danger text color on the default danger background', async () => {
     const { root } = await render(<bq-badge>2</bq-badge>);
 
+    // Give this role a distinct value so text--alt cannot accidentally satisfy the test.
+    root.style.setProperty('--bq-text--on-danger', '#123456');
+
     await waitForStable(root);
 
     const hostStyle = getComputedStyle(root);
@@ -92,8 +82,8 @@ describe('bq-badge', () => {
 
     const style = computedStyle('bq-badge >>> .bq-badge', ['backgroundColor', 'color']);
     expect(style).toEqual({
-      backgroundColor: resolveColor('var(--bq-ui--danger)'),
-      color: resolveColor('var(--bq-text--on-danger)'),
+      backgroundColor: resolveColorToken('--bq-ui--danger', root),
+      color: resolveColorToken('--bq-text--on-danger', root),
     });
   });
 
@@ -115,12 +105,12 @@ describe('bq-badge', () => {
 
     await waitForStable(root);
 
-    const badge = root.shadowRoot.querySelector('.bq-badge') as HTMLDivElement;
+    const badge = root.shadowRoot?.querySelector('.bq-badge') as HTMLDivElement;
     const numberSlot = badge.querySelector('slot') as HTMLSlotElement;
 
     expect(getTextContent(numberSlot, { recurse: true })).toBe('12');
-    expect(badge).toHaveClass('digit');
-    expect(badge).toHaveClass('p-i-xs2');
+    expect(badge).toHaveClass('is-populated');
+    expect(badge).toHaveClass('is-multiple');
   });
 
   it('should update content length when a non-first slotted node changes', async () => {
@@ -136,9 +126,20 @@ describe('bq-badge', () => {
     const badge = root.shadowRoot.querySelector('.bq-badge') as HTMLDivElement;
     const [, secondNode] = root.querySelectorAll<HTMLSpanElement>('span');
 
+    expect(badge).toHaveClass('is-populated');
+    expect(badge).toHaveClass('is-multiple');
+    const multiplePadding = getComputedStyle(badge);
+    expect(multiplePadding.paddingInlineStart).toBe('4px');
+    expect(multiplePadding.paddingInlineEnd).toBe('4px');
+
     secondNode.textContent = '';
 
-    expect(badge).toHaveClass('digit');
-    await expect.poll(() => badge.classList.contains('p-i-xs2')).toBe(false);
+    await expect.poll(() => badge.classList.contains('is-multiple')).toBe(false);
+    await waitForStable(root);
+    expect(badge).toHaveClass('is-populated');
+    expect(getTextContent(badge.querySelector('slot'), { recurse: true })).toBe('1');
+    const singlePadding = getComputedStyle(badge);
+    expect(singlePadding.paddingInlineStart).toBe('0px');
+    expect(singlePadding.paddingInlineEnd).toBe('0px');
   });
 });

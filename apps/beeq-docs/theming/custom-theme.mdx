@@ -112,8 +112,9 @@ To create a custom theme, override BEEQ's root semantics — the brand, intent, 
 
       ```css Tailwind v4 icon="tailwind"
       /* src/index.css */
+      @layer theme, base, bq, components, utilities;
       @import "tailwindcss";
-      @import "@beeq/core/dist/beeq/beeq.css" layer(base);
+      @import "@beeq/core/dist/beeq/beeq.css";
       @plugin "@beeq/tailwindcss";
       @import "./custom-theme.css";
       ```
@@ -137,7 +138,7 @@ To create a custom theme, override BEEQ's root semantics — the brand, intent, 
     </Note>
 
     <Warning>
-      With Tailwind v4, import `beeq.css` with `layer(base)` as shown. Without it, the BEEQ reset overrides Tailwind utilities such as `mx-auto`. See [Apps that use cascade layers](/getting-started/installation#apps-that-use-cascade-layers).
+      With Tailwind v4, name the `bq` layer before Tailwind's layers as shown. Without it, the BEEQ reset overrides Tailwind utilities such as `mx-auto`. See [Apps that use cascade layers](/getting-started/installation#apps-that-use-cascade-layers).
     </Warning>
 
     Set the theme and mode on the root element from your app entry so the attributes are present before any component renders:

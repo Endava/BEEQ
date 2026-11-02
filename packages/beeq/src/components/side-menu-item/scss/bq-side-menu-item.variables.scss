@@ -19,6 +19,6 @@
   --bq-side-menu-item--text-default: var(--bq-text--primary);
   --bq-side-menu-item--text-active: var(--bq-text--brand);
   --bq-side-menu-item--text-hover: var(--bq-text--primary);
-  --bq-side-menu-item--paddingX: theme(space.l);
-  --bq-side-menu-item--paddingY: theme(space.m);
+  --bq-side-menu-item--paddingX: var(--bq-spacing-l);
+  --bq-side-menu-item--paddingY: var(--bq-spacing-m);
 }

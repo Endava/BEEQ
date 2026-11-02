@@ -1,5 +1,5 @@
 /* -------------------------------------------------------------------------- */
-/*                          Spinner custom properties           */
+/*                         Spinner custom properties                          */
 /* -------------------------------------------------------------------------- */
 
 :host {
@@ -18,9 +18,9 @@
   --bq-spinner--size-large: 56px;
   --bq-spinner--size-medium: 48px;
   --bq-spinner--size-small: 32px;
-  --bq-spinner--large-text-fontSize: theme(fontSize.m);
-  --bq-spinner--medium-text-fontSize: theme(fontSize.s);
-  --bq-spinner--small-text-fontSize: theme(fontSize.xs);
-  --bq-spinner--text-lineHeight: theme(lineHeight.large);
+  --bq-spinner--large-text-fontSize: var(--bq-font-size--m);
+  --bq-spinner--medium-text-fontSize: var(--bq-font-size--s);
+  --bq-spinner--small-text-fontSize: var(--bq-font-size--xs);
+  --bq-spinner--text-lineHeight: var(--bq-font-line-height--large);
   --bq-spinner--text-color: var(--bq-text--primary);
 }

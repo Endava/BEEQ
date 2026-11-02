@@ -1,18 +1,9 @@
 import { h } from '@stencil/core';
-import { describe, expect, it, render } from '@stencil/vitest';
+import { describe, expect, it, render, waitForStable } from '@stencil/vitest';
 import { userEvent } from 'vitest/browser';
 
 import { computedStyle } from '../../../shared/test-utils/computedStyle';
-
-/** Resolves a CSS color value (e.g. `var(--bq-icon--info)`) to its computed `rgb()` form */
-const resolveColor = (value: string): string => {
-  const probe = document.createElement('div');
-  probe.style.color = value;
-  document.body.appendChild(probe);
-  const { color } = getComputedStyle(probe);
-  probe.remove();
-  return color;
-};
+import { resolveColorToken } from '../../../shared/test-utils/resolveColorToken';
 
 describe('bq-alert', () => {
   it('should render', async () => {
@@ -111,7 +102,7 @@ describe('bq-alert', () => {
 
     expect(root).not.toHaveClass('is-hidden');
     expect(root).toEqualAttribute('aria-hidden', 'false');
-    expect(root).toEqualAttribute('hidden', 'false');
+    expect(root).not.toHaveAttribute('hidden');
   });
 
   it('should call hide() method', async () => {
@@ -134,7 +125,7 @@ describe('bq-alert', () => {
     await afterHide;
 
     expect(root.getAttribute('aria-hidden')).toBe('true');
-    expect(root.getAttribute('hidden')).toBe('true');
+    expect(root).not.toHaveAttribute('hidden');
     expect(root).toHaveClass('is-hidden');
   });
 
@@ -231,14 +222,15 @@ describe('bq-alert', () => {
 
   it('should hide the icon when hideIcon is true', async () => {
     const { root } = await render(
-      <bq-alert type="info" hide-icon>
+      <bq-alert open type="info" hide-icon>
         Alert title
       </bq-alert>,
     );
 
-    const iconOutline = root.shadowRoot.querySelector('[part="icon-outline"]');
+    const iconOutline = root.shadowRoot.querySelector<HTMLElement>('[part="icon-outline"]');
     expect(iconOutline).not.toBeNull();
-    expect(iconOutline).toHaveClass('!hidden');
+    expect(iconOutline).toHaveAttribute('hidden');
+    expect(getComputedStyle(iconOutline).display).toBe('none');
   });
 
   it('should close when the close button is clicked', async () => {
@@ -284,11 +276,11 @@ describe('bq-alert', () => {
     const iconStyle = computedStyle('bq-alert >>> [part="icon-outline"]', ['color']);
 
     expect(wrapperStyle).toEqual({
-      backgroundColor: resolveColor('var(--bq-ui--info-alt)'),
-      borderTopColor: resolveColor('var(--bq-stroke--info)'),
+      backgroundColor: resolveColorToken('--bq-ui--info-alt', root),
+      borderTopColor: resolveColorToken('--bq-stroke--info', root),
     });
-    expect(iconStyle.color).toBe(resolveColor('var(--bq-icon--info)'));
-    expect(iconStyle.color).not.toBe(resolveColor('var(--bq-icon--brand)'));
+    expect(iconStyle.color).toBe(resolveColorToken('--bq-icon--info', root));
+    expect(iconStyle.color).not.toBe(resolveColorToken('--bq-icon--brand', root));
   });
 
   it('should use the text color variable for the title and body', async () => {
@@ -301,7 +293,9 @@ describe('bq-alert', () => {
     expect(getComputedStyle(root).getPropertyValue('--bq-alert--text-color').trim()).toBe(
       getComputedStyle(root).getPropertyValue('--bq-text--primary').trim(),
     );
-    expect(computedStyle('bq-alert >>> [part="title"]', ['color']).color).toBe(resolveColor('var(--bq-text--primary)'));
+    expect(computedStyle('bq-alert >>> [part="title"]', ['color']).color).toBe(
+      resolveColorToken('--bq-text--primary', root),
+    );
   });
 
   it('should allow overriding the text color variable', async () => {
@@ -313,5 +307,128 @@ describe('bq-alert', () => {
 
     expect(computedStyle('bq-alert >>> [part="title"]', ['color']).color).toBe('rgb(1, 2, 3)');
     expect(computedStyle('bq-alert >>> [part="body"]', ['color']).color).toBe('rgb(1, 2, 3)');
+  });
+
+  it('should preserve native geometry, typography and transitions', async () => {
+    const { root } = await render(
+      <bq-alert open type="success">
+        Alert title
+        <span slot="body">Body content</span>
+        <div slot="footer">Footer content</div>
+      </bq-alert>,
+    );
+
+    await waitForStable(root);
+
+    const wrapper = root.shadowRoot.querySelector<HTMLElement>('[part="wrapper"]');
+    const close = root.shadowRoot.querySelector<HTMLElement>('bq-button');
+    const icon = root.shadowRoot.querySelector<HTMLElement>('[part="icon-outline"]');
+    const main = root.shadowRoot.querySelector<HTMLElement>('[part="main"]');
+    const content = root.shadowRoot.querySelector<HTMLElement>('[part="content"]');
+    const title = root.shadowRoot.querySelector<HTMLElement>('[part="title"]');
+    const body = root.shadowRoot.querySelector<HTMLElement>('[part="body"]');
+    const footer = root.shadowRoot.querySelector<HTMLElement>('[part="footer"]');
+    const wrapperStyle = getComputedStyle(wrapper);
+
+    expect(getComputedStyle(root).display).toBe('block');
+    expect(wrapperStyle.position).toBe('relative');
+    expect(wrapperStyle.display).toBe('flex');
+    expect(wrapperStyle.minInlineSize).toBe('320px');
+    expect(wrapperStyle.padding).toBe('12px');
+    expect(wrapperStyle.borderRadius).toBe('8px');
+    expect(wrapperStyle.borderWidth).toBe('1px');
+    expect(wrapperStyle.color).toBe(resolveColorToken('--bq-text--primary', root));
+    expect(getComputedStyle(close).position).toBe('absolute');
+    expect(getComputedStyle(close).insetInlineEnd).toBe('12px');
+    expect(getComputedStyle(icon).display).toBe('flex');
+    expect(getComputedStyle(icon).marginInlineEnd).toBe('12px');
+    expect(getComputedStyle(main).display).toBe('flex');
+    expect(getComputedStyle(main).rowGap).toBe('12px');
+    expect(getComputedStyle(content).rowGap).toBe('12px');
+    expect(getComputedStyle(title).fontWeight).toBe('600');
+    expect(getComputedStyle(title).lineHeight).toBe('24px');
+    expect(getComputedStyle(body).fontSize).toBe('14px');
+    expect(getComputedStyle(body).lineHeight).toBe('21px');
+    expect(getComputedStyle(footer).columnGap).toBe('8px');
+
+    wrapper.classList.add('is-entering', 'is-enter-start');
+    expect(getComputedStyle(wrapper).transitionProperty).toBe('opacity');
+    expect(getComputedStyle(wrapper).transitionDuration).toBe('0.3s');
+    expect(getComputedStyle(wrapper).transitionTimingFunction).toBe('cubic-bezier(0, 0, 0.2, 1)');
+    await expect.poll(() => getComputedStyle(wrapper).opacity).toBe('0');
+    wrapper.classList.remove('is-entering', 'is-enter-start');
+
+    wrapper.classList.add('is-leaving', 'is-leave-end');
+    expect(getComputedStyle(wrapper).transitionDuration).toBe('0.2s');
+    expect(getComputedStyle(wrapper).transitionTimingFunction).toBe('cubic-bezier(0.4, 0, 1, 1)');
+    await expect.poll(() => getComputedStyle(wrapper).opacity).toBe('0');
+    wrapper.classList.remove('is-leaving', 'is-leave-end');
+  });
+
+  it('should preserve sticky geometry and logical RTL positioning', async () => {
+    const { root } = await render(
+      <bq-alert dir="rtl" open sticky type="error">
+        Alert title
+      </bq-alert>,
+    );
+
+    const wrapper = root.shadowRoot.querySelector<HTMLElement>('[part="wrapper"]');
+    const close = root.shadowRoot.querySelector<HTMLElement>('bq-button');
+    const icon = root.shadowRoot.querySelector<HTMLElement>('[part="icon-outline"]');
+    const hostStyle = getComputedStyle(root);
+    const wrapperStyle = getComputedStyle(wrapper);
+
+    expect(hostStyle.position).toBe('fixed');
+    expect(hostStyle.insetBlockStart).toBe('0px');
+    expect(hostStyle.insetInlineStart).toBe('0px');
+    expect(wrapperStyle.alignItems).toBe('center');
+    expect(wrapperStyle.justifyContent).toBe('center');
+    expect(wrapperStyle.borderRadius).toBe('0px');
+    expect(getComputedStyle(close).insetInlineEnd).toBe('12px');
+    expect(getComputedStyle(close).left).toBe('12px');
+    expect(getComputedStyle(icon).marginInlineEnd).toBe('12px');
+  });
+
+  it('should preserve public layout overrides', async () => {
+    const { root } = await render(
+      <bq-alert
+        open
+        style={{
+          '--bq-alert--content-footer-gap': '10px',
+          '--bq-alert--min-width': '360px',
+          '--bq-alert--padding': '20px',
+          '--bq-alert--title-body-gap': '6px',
+        }}
+      >
+        Alert title
+        <span slot="body">Body content</span>
+        <div slot="footer">Footer content</div>
+      </bq-alert>,
+    );
+
+    await waitForStable(root);
+
+    const wrapper = root.shadowRoot.querySelector<HTMLElement>('[part="wrapper"]');
+    const main = root.shadowRoot.querySelector<HTMLElement>('[part="main"]');
+    const content = root.shadowRoot.querySelector<HTMLElement>('[part="content"]');
+
+    expect(getComputedStyle(wrapper).minInlineSize).toBe('360px');
+    expect(getComputedStyle(wrapper).padding).toBe('20px');
+    expect(getComputedStyle(main).rowGap).toBe('10px');
+    expect(getComputedStyle(content).rowGap).toBe('6px');
+  });
+
+  it('should hide optional body and footer with native hidden state', async () => {
+    const { root } = await render(<bq-alert open>Alert title</bq-alert>);
+
+    await waitForStable(root);
+
+    const body = root.shadowRoot.querySelector<HTMLElement>('[part="body"]');
+    const footer = root.shadowRoot.querySelector<HTMLElement>('[part="footer"]');
+
+    expect(body).toHaveAttribute('hidden');
+    expect(footer).toHaveAttribute('hidden');
+    expect(getComputedStyle(body).display).toBe('none');
+    expect(getComputedStyle(footer).display).toBe('none');
   });
 });

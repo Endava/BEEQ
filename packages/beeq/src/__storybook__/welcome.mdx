@@ -1,0 +1,54 @@
+import { Meta, Unstyled } from '@storybook/addon-docs/blocks';
+
+
+<Meta title="Welcome" />
+
+<style>{`
+  .bq-doc-welcome {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    block-size: 100%;
+  }
+
+  .bq-doc-welcome img {
+    margin-block-end: var(--bq-spacing-xxl);
+  }
+
+  .bq-doc-welcome h1 {
+    margin-block-end: var(--bq-spacing-xl);
+    font-size: var(--bq-font-size--xxl2);
+    font-weight: var(--bq-font-weight--regular);
+    text-align: center;
+    text-wrap: balance;
+  }
+
+  .bq-doc-welcome h1 b {
+    font-weight: var(--bq-font-weight--bold);
+  }
+
+  .bq-doc-welcome p {
+    text-align: center;
+    text-wrap: balance;
+  }
+
+  @media (min-width: 768px) {
+    .bq-doc-welcome h1 {
+      font-size: var(--bq-font-size--xxl5);
+    }
+  }
+`}</style>
+
+<div className="bq-doc__wrapper">
+  <div className="bq-doc__container">
+    <div className="bq-doc-welcome">
+      <Unstyled>
+        <img src="./assets/beeq-cover.svg" alt="Welcome to BEEQ" />
+        <h1><b>B</b>uilding <b>E</b>xcellence, <b>E</b>nhancing <b>Q</b>uality</h1>
+
+        <p>For more in detail information about BEEQ Design System, please visit our <a href="https://beeq.design" target="_blank" rel="noopener noreferrer" className="bq-link">official documentation</a>.</p>
+      </Unstyled>
+    </div>
+  </div>
+</div>

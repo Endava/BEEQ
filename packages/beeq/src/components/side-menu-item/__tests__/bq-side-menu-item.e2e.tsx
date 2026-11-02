@@ -2,6 +2,7 @@ import { h } from '@stencil/core';
 import { afterEach, beforeEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
 import { cdp, page, userEvent } from 'vitest/browser';
 
+import { resolveColorToken } from '../../../shared/test-utils/resolveColorToken';
 import { getTextContent } from '../../../shared/utils/slot';
 
 afterEach(() => {
@@ -10,15 +11,6 @@ afterEach(() => {
 
 const getMenuButton = (item: HTMLBqSideMenuItemElement) =>
   item.shadowRoot?.querySelector<HTMLButtonElement>('[part="base"]');
-
-const resolveColor = (value: string) => {
-  const probe = document.createElement('span');
-  probe.style.color = value;
-  document.body.appendChild(probe);
-  const { color } = getComputedStyle(probe);
-  probe.remove();
-  return color;
-};
 
 /** Waits for any running CSS transition inside the element's shadow root to finish */
 const waitForTransitions = async (element: Element) => {
@@ -293,6 +285,119 @@ describe('bq-side-menu-item', () => {
     expect(tooltip?.textContent?.trim()).toContain('Menu item label');
   });
 
+  it('should preserve native structure, spacing, typography and transitions', async () => {
+    const { root } = await render(
+      <bq-side-menu-item style={{ width: '320px' }}>
+        <bq-icon name="house" slot="prefix" />
+        Menu item label
+        <bq-badge slot="suffix">5</bq-badge>
+      </bq-side-menu-item>,
+    );
+    const item = root as HTMLBqSideMenuItemElement;
+    await waitForStable(root);
+
+    const button = getMenuButton(item);
+    const label = item.shadowRoot.querySelector<HTMLElement>('.bq-side-menu-item__label');
+    const suffix = item.shadowRoot.querySelector<HTMLElement>('.bq-side-menu-item__suffix');
+    const buttonStyle = getComputedStyle(button);
+    const labelStyle = getComputedStyle(label);
+
+    expect(buttonStyle.display).toBe('flex');
+    expect(buttonStyle.columnGap).toBe('12px');
+    expect(buttonStyle.padding).toBe('16px 24px');
+    expect(buttonStyle.borderRadius).toBe('8px');
+    expect(buttonStyle.fontSize).toBe('16px');
+    expect(buttonStyle.transitionDuration).toBe('0.15s');
+    expect(buttonStyle.transitionProperty).toBe(
+      'color, background-color, border-color, text-decoration-color, fill, stroke',
+    );
+    expect(labelStyle.overflow).toBe('hidden');
+    expect(labelStyle.textAlign).toBe('start');
+    expect(labelStyle.textOverflow).toBe('ellipsis');
+    expect(labelStyle.whiteSpace).toBe('nowrap');
+    expect(suffix.getBoundingClientRect().right).toBeLessThanOrEqual(button.getBoundingClientRect().right - 23);
+  });
+
+  it('should preserve public padding overrides and the collapsed inline padding', async () => {
+    const paddingOverrides = {
+      '--bq-side-menu-item--paddingX': '20px',
+      '--bq-side-menu-item--paddingY': '8px',
+    };
+    const { root } = await render(
+      <div>
+        <bq-side-menu-item style={paddingOverrides}>Expanded item</bq-side-menu-item>
+        <bq-side-menu-item collapse style={paddingOverrides}>
+          Collapsed item
+        </bq-side-menu-item>
+      </div>,
+    );
+    const [expandedItem, collapsedItem] = Array.from(
+      root.querySelectorAll<HTMLBqSideMenuItemElement>('bq-side-menu-item'),
+    );
+    await waitForStable(root);
+
+    expect(getComputedStyle(getMenuButton(expandedItem)).padding).toBe('8px 20px');
+    expect(getComputedStyle(getMenuButton(collapsedItem)).padding).toBe('8px 16px');
+  });
+
+  it('should preserve collapsed geometry while retaining an accessible label', async () => {
+    const { root } = await render(
+      <bq-side-menu-item collapse>
+        <bq-icon name="house" slot="prefix" />
+        Menu item label
+        <bq-badge slot="suffix">5</bq-badge>
+      </bq-side-menu-item>,
+    );
+    const item = root as HTMLBqSideMenuItemElement;
+    await waitForStable(root);
+
+    const button = getMenuButton(item);
+    const label = item.shadowRoot.querySelector<HTMLElement>('.bq-side-menu-item__label');
+    const suffix = item.shadowRoot.querySelector<HTMLElement>('.bq-side-menu-item__suffix');
+    const buttonStyle = getComputedStyle(button);
+    const labelStyle = getComputedStyle(label);
+
+    expect(buttonStyle.columnGap).toBe('0px');
+    expect(buttonStyle.justifyContent).toBe('center');
+    expect(buttonStyle.padding).toBe('16px');
+    expect(labelStyle.position).toBe('absolute');
+    expect(labelStyle.blockSize).toBe('1px');
+    expect(labelStyle.inlineSize).toBe('1px');
+    expect(labelStyle.clipPath).toBe('inset(50%)');
+    expect(labelStyle.transform).toBe('matrix(0, 0, 0, 0, 0, 0)');
+    expect(getComputedStyle(suffix).position).toBe('absolute');
+    await expect.element(page.getByRole('button', { name: /Menu item label/ })).toBeInTheDocument();
+  });
+
+  it('should preserve focus, disabled and RTL behavior', async () => {
+    const { root } = await render(
+      <div>
+        <bq-side-menu-item dir="rtl" style={{ width: '320px' }}>
+          <bq-icon name="house" slot="prefix" />
+          RTL item
+          <bq-badge slot="suffix">5</bq-badge>
+        </bq-side-menu-item>
+        <bq-side-menu-item disabled>Disabled item</bq-side-menu-item>
+      </div>,
+    );
+    const [rtlItem, disabledItem] = Array.from(root.querySelectorAll<HTMLBqSideMenuItemElement>('bq-side-menu-item'));
+    await waitForStable(root);
+    await userEvent.tab();
+
+    const rtlButton = getMenuButton(rtlItem);
+    const prefix = rtlItem.shadowRoot.querySelector<HTMLElement>('.bq-side-menu-item__prefix');
+    const suffix = rtlItem.shadowRoot.querySelector<HTMLElement>('.bq-side-menu-item__suffix');
+    const focusStyle = getComputedStyle(rtlButton);
+    const disabledStyle = getComputedStyle(getMenuButton(disabledItem));
+
+    expect(focusStyle.outlineColor).toBe(resolveColorToken('--bq-focus'));
+    expect(focusStyle.outlineStyle).toBe('solid');
+    expect(focusStyle.outlineWidth).toBe('2px');
+    expect(prefix.getBoundingClientRect().left).toBeGreaterThan(suffix.getBoundingClientRect().left);
+    expect(disabledStyle.cursor).toBe('not-allowed');
+    expect(disabledStyle.opacity).toBe('0.6');
+  });
+
   it('should retain focus-triggered right positioning after movement and remove the tooltip on expansion', async () => {
     const { root, setProps, waitForChanges } = await render(
       <bq-side-menu-item collapse style={{ display: 'block', width: '64px', margin: '100px' }}>
@@ -332,7 +437,7 @@ describe('bq-side-menu-item', () => {
 
     const style = getComputedStyle(getMenuButton(item));
 
-    expect(style.color).toBe(resolveColor('var(--bq-text--primary)'));
+    expect(style.color).toBe(resolveColorToken('--bq-text--primary'));
     expect(style.backgroundColor).toBe('rgba(0, 0, 0, 0)');
   });
 
@@ -345,8 +450,8 @@ describe('bq-side-menu-item', () => {
 
     const style = getComputedStyle(getMenuButton(item));
 
-    expect(style.color).toBe(resolveColor('var(--bq-text--brand)'));
-    expect(style.backgroundColor).toBe(resolveColor('var(--bq-ui--brand-alt)'));
+    expect(style.color).toBe(resolveColorToken('--bq-text--brand'));
+    expect(style.backgroundColor).toBe(resolveColorToken('--bq-ui--brand-alt'));
   });
 
   it('should apply the hover colour custom properties', async () => {
@@ -366,11 +471,16 @@ describe('bq-side-menu-item', () => {
 
     await userEvent.hover(getMenuButton(item));
 
-    const expectedBackground = resolveColor('color-mix(in srgb, var(--bq-ui--alt), var(--bq-hover) 20%)');
-    const expectedText = resolveColor('color-mix(in srgb, var(--bq-text--primary), var(--bq-hover) 20%)');
+    const colorProbe = document.createElement('span');
+    item.shadowRoot.appendChild(colorProbe);
+    colorProbe.style.color = 'color-mix(in srgb, var(--bq-ui--alt), var(--bq-hover) 20%)';
+    const expectedBackground = getComputedStyle(colorProbe).color;
+    colorProbe.style.color = 'color-mix(in srgb, var(--bq-text--primary), var(--bq-hover) 20%)';
+    const expectedText = getComputedStyle(colorProbe).color;
 
     await expect.poll(() => getComputedStyle(getMenuButton(item)).backgroundColor).toBe(expectedBackground);
     await expect.poll(() => getComputedStyle(getMenuButton(item)).color).toBe(expectedText);
+    colorProbe.remove();
   });
 
   it('should consume custom hover colour overrides', async () => {
@@ -389,10 +499,15 @@ describe('bq-side-menu-item', () => {
     await waitForStable(root);
     await userEvent.hover(getMenuButton(item));
 
-    const expectedBackground = resolveColor('color-mix(in srgb, rgb(255, 0, 0), var(--bq-hover) 20%)');
-    const expectedText = resolveColor('color-mix(in srgb, rgb(0, 0, 255), var(--bq-hover) 20%)');
+    const colorProbe = document.createElement('span');
+    item.shadowRoot.appendChild(colorProbe);
+    colorProbe.style.color = 'color-mix(in srgb, rgb(255, 0, 0), var(--bq-hover) 20%)';
+    const expectedBackground = getComputedStyle(colorProbe).color;
+    colorProbe.style.color = 'color-mix(in srgb, rgb(0, 0, 255), var(--bq-hover) 20%)';
+    const expectedText = getComputedStyle(colorProbe).color;
 
     await expect.poll(() => getComputedStyle(getMenuButton(item)).backgroundColor).toBe(expectedBackground);
     await expect.poll(() => getComputedStyle(getMenuButton(item)).color).toBe(expectedText);
+    colorProbe.remove();
   });
 });

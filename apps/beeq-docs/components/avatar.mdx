@@ -182,12 +182,13 @@ Use initials when no uploaded image is available or when the interface is intent
 </CodeLivePreview>
 
 <Tip>
-  When using the `Text` variant, you can customise the avatar background color via the `--bq-avatar-background` CSS custom property. For example:
+  Customise the text avatar's background using `--bq-avatar--background`:
   ```css
   bq-avatar {
-    --bq-avatar-background: var(--bq-ui--success);
+    --bq-avatar--background: var(--bq-ui--success);
   }
   ```
+  The legacy `--bq-avatar-background` name remains supported as a fallback.
 </Tip>
 
 ### Image
@@ -870,7 +871,8 @@ No keyboard interaction: the component is not focusable. If you place an avatar 
 <Expandable title="CSS variables" defaultOpen={true}>
   | Variable | Description | Default |
   |---|---|---|
-  | `--bq-avatar-background` | Avatar background color | `var(--bq-ui--alt)` |
+  | `--bq-avatar--background` | Avatar background color | `var(--bq-avatar-background)` |
+  | `--bq-avatar-background` | Deprecated fallback for the avatar background color | `var(--bq-ui--alt)` |
   | `--bq-avatar--border-color` | Avatar border color | `var(--bq-stroke--tertiary)` |
   | `--bq-avatar--border-style` | Avatar border style | `solid` |
   | `--bq-avatar--border-width` | Avatar border width | `var(--bq-stroke-m)` |

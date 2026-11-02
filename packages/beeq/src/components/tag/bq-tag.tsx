@@ -272,25 +272,20 @@ export class BqTag {
     return this.color !== undefined ? !TAG_COLOR.includes(this.color) : false;
   }
 
-  private get computedHostClasses() {
+  private get computedHostStyles() {
     return {
       '--bq-tag--icon-prefix-size': `${iconSize(this.size)}px`,
       ...(this.border && { '--bq-tag--border-radius': `var(--bq-radius--${this.border})` }),
       ...(this.hasCustomColor && {
         '--bq-tag--background-color': getColorCSSVariable(this.color) ?? this.color,
-        '--bq-tag--text-color': 'var(--bq-text--alt)',
+        '--bq-tag--text-color': `var(--bq-text--alt)`,
       }),
     };
   }
 
   private get computeWrapperClasses() {
     return {
-      [`bq-tag bq-tag__${this.size}`]: true,
-      [`bq-tag__${this.color || 'default'} bq-tag__${this.variant}`]: !this.hasCustomColor,
-      'is-clickable': this.isClickable,
-      'is-removable': this.removable,
-      active: this.isClickable && this.selected,
-      'has-border': !!this.border,
+      'bq-tag': true,
     };
   }
 
@@ -316,7 +311,7 @@ export class BqTag {
     const ariaHidden = this.hidden ? 'true' : 'false';
 
     return (
-      <Host aria-hidden={ariaHidden} hidden={this.hidden || undefined} style={this.computedHostClasses}>
+      <Host aria-hidden={ariaHidden} hidden={this.hidden || undefined} style={this.computedHostStyles}>
         <TagElement
           class={this.computeWrapperClasses}
           disabled={this.isClickable ? this.disabled : undefined}
@@ -324,7 +319,8 @@ export class BqTag {
           {...this.computeButtonInteractiveProps}
         >
           <span
-            class={{ 'bq-tag__prefix inline-flex': true, '!hidden': !this.hasPrefix }}
+            class="bq-tag__prefix"
+            hidden={!this.hasPrefix}
             part="prefix"
             ref={(spanElem) => {
               this.prefixElem = spanElem;
@@ -332,21 +328,14 @@ export class BqTag {
           >
             <slot name="prefix" onSlotchange={this.handleSlotChange} />
           </span>
-          <div
-            class={{
-              'text-xs': this.size === 'xsmall',
-              'text-s': this.size === 'small',
-              'text-m': this.size === 'medium',
-            }}
-            part="text"
-          >
+          <div class="bq-tag__text" part="text">
             <slot />
           </div>
           {this.isRemovable && !this.disabled && (
             <bq-button
               appearance="text"
               border="s"
-              class="bq-tag__close [&::part(button)]:border-none [&::part(button)]:p-0"
+              class="bq-tag__close"
               label="Close"
               onClick={this.handleClose}
               onlyIcon

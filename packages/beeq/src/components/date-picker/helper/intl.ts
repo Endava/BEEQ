@@ -6,6 +6,9 @@
  * keyed by locale + option shape.
  */
 
+/** Month name width accepted by `Intl.DateTimeFormat`. */
+export type MonthStyle = 'long' | 'short' | 'narrow';
+
 const cache = new Map<string, Intl.DateTimeFormat>();
 
 /** Prevents unbounded growth in long-running apps. */
@@ -70,7 +73,7 @@ export const formatDate = (
 export const formatMonth = (
   date: Date,
   locale: Intl.LocalesArgument,
-  monthStyle: 'long' | 'short' | 'narrow' = 'long',
+  monthStyle: MonthStyle = 'long',
   includeYear = true,
 ): string =>
   getFormatter(locale, {
@@ -99,7 +102,7 @@ export const formatYear = (date: Date, locale: Intl.LocalesArgument): string =>
 export const getWeekdayNames = (
   locale: Intl.LocalesArgument,
   firstDayOfWeek: number,
-  style: 'long' | 'short' | 'narrow' = 'short',
+  style: MonthStyle = 'short',
 ): Array<{ short: string; long: string }> => {
   const shortFormatter = getFormatter(locale, { weekday: style });
   const longFormatter = getFormatter(locale, { weekday: 'long' });
@@ -121,7 +124,7 @@ export const getWeekdayNames = (
  * @param style  Month style (long, short, narrow).
  * @returns An array of localized month names in calendar order.
  */
-export const getMonthNames = (locale: Intl.LocalesArgument, style: 'long' | 'short' | 'narrow' = 'short'): string[] => {
+export const getMonthNames = (locale: Intl.LocalesArgument, style: MonthStyle = 'short'): string[] => {
   const formatter = getFormatter(locale, { month: style });
   return Array.from({ length: 12 }, (_, month) => formatter.format(new Date(2024, month, 1)));
 };

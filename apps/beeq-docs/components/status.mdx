@@ -446,7 +446,8 @@ No invalid prop combinations.
 <Expandable title="CSS variables" defaultOpen={true}>
   | Variable | Description | Default |
   |---|---|---|
-  | `--bq-status-circle--size` | Status circle size | `12px` |
+  | `--bq-status-circle--size` | Status circle size | `var(--bq-status-circ, 12px)` |
+  | `--bq-status-circ` | Legacy fallback for the status circle size | Not set |
   | `--bq-status--dot-color-alert` | Status circle color when `type` is `alert` | `var(--bq-icon--warning)` |
   | `--bq-status--dot-color-danger` | Status circle color when `type` is `danger` | `var(--bq-icon--danger)` |
   | `--bq-status--dot-color-info` | Status circle color when `type` is `info` | `var(--bq-icon--info)` |
