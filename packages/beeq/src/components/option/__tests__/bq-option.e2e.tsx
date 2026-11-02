@@ -281,15 +281,18 @@ describe('bq-option', () => {
     expect(bqBlur).toHaveReceivedEventTimes(0);
   });
 
-  it('should draw the standard focus ring around the option row', async () => {
-    const { root } = await render(<bq-option>Option label</bq-option>);
+  it.each(['control', 'host'])('should draw the standard focus ring when the %s is focused', async (target) => {
+    const { root } = await render(<bq-option tree={target === 'host'}>Option label</bq-option>);
     const option = root as HTMLBqOptionElement;
     const item = getOptionRow(option);
-    const control = option.shadowRoot?.querySelector<HTMLElement>('[part="base"]');
+    const focusTarget = target === 'host' ? option : option.shadowRoot.querySelector<HTMLElement>('[part="base"]');
     await waitForStable(root);
 
-    control?.focus();
+    await userEvent.tab();
     await waitForTransitions(root);
+
+    expect(focusTarget.matches(':focus')).toBe(true);
+    expect(item.matches(':focus-within')).toBe(target === 'control');
 
     const itemStyle = getComputedStyle(item);
     expect(itemStyle.outlineColor).toBe(resolveColorToken('--bq-focus'));

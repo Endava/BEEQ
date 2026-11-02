@@ -189,6 +189,33 @@ describe('bq-tag', () => {
     expect(tag).not.toHaveAttribute('selected');
   });
 
+  it('should draw the themed focus ring on a focused clickable tag', async () => {
+    const { root } = await render(
+      <bq-tag
+        clickable
+        style={{
+          '--bq-ring-width': '6px',
+          '--bq-ring-color-focus': 'rgb(255, 0, 0)',
+          '--bq-ring-offset-width': '3px',
+        }}
+      >
+        Tag
+      </bq-tag>,
+    );
+    const wrapper = getWrapper(root);
+
+    await userEvent.tab();
+
+    expect(wrapper.matches(':focus-visible')).toBe(true);
+    const { outlineColor, outlineOffset, outlineStyle, outlineWidth } = getComputedStyle(wrapper);
+    expect({ outlineColor, outlineOffset, outlineStyle, outlineWidth }).toEqual({
+      outlineColor: 'rgb(255, 0, 0)',
+      outlineOffset: '3px',
+      outlineStyle: 'solid',
+      outlineWidth: '6px',
+    });
+  });
+
   it('should emit bqClick when clickable tag is clicked', async () => {
     const { root, spyOnEvent, waitForChanges } = await render(<bq-tag clickable>Tag</bq-tag>);
     const bqClick = spyOnEvent('bqClick');
