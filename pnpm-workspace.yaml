@@ -23,12 +23,12 @@ allowBuilds:
   'unrs-resolver': false
 
 overrides:
-  '@angular-devkit/core': '22.2.3'
-  '@angular-devkit/schematics': '22.2.3'
+  '@angular-devkit/core': '22.2.5'
+  '@angular-devkit/schematics': '22.2.5'
   '@custom-elements-manifest/analyzer': '0.11.0'
   '@module-federation/enhanced': '0.22.0'
-  '@schematics/angular': '22.2.3'
-  'ng-packagr': '22.2.4'
+  '@schematics/angular': '22.2.5'
+  'ng-packagr': '22.2.5'
   'node-fetch': '3.3.2'
   'nx': '24.0.3'
   'postcss': '8.5.23'
