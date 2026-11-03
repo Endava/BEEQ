@@ -275,14 +275,14 @@ importers:
         specifier: 22.2.5
         version: 22.2.5(chokidar@5.0.0)
       '@stencil/angular-output-target':
-        specifier: 1.5.2
-        version: 1.5.2(@stencil/core@4.45.2)
+        specifier: 1.5.3
+        version: 1.5.3(@stencil/core@4.45.2)
       '@stencil/core':
         specifier: 4.45.2
         version: 4.45.2
       '@stencil/react-output-target':
-        specifier: 1.6.5
-        version: 1.6.5(@stencil/core@4.45.2)(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        specifier: 1.7.0
+        version: 1.7.0(@stencil/core@4.45.2)(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@stencil/sass':
         specifier: 3.3.3
         version: 3.3.3(@stencil/core@4.45.2)
@@ -290,8 +290,8 @@ importers:
         specifier: 1.16.1
         version: 1.16.1(@stencil/core@4.45.2)(@vitest/browser-playwright@5.0.5)(playwright@1.63.0)(vitest@5.0.5)
       '@stencil/vue-output-target':
-        specifier: 0.14.6
-        version: 0.14.6(@stencil/core@4.45.2)(vue@3.5.33(typescript@6.0.3))
+        specifier: 0.14.7
+        version: 0.14.7(@stencil/core@4.45.2)(vue@3.5.33(typescript@6.0.3))
       '@storybook/addon-a11y':
         specifier: 10.6.2
         version: 10.6.2(storybook@10.6.2(@types/react@19.3.0)(prettier@3.8.4)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))
@@ -3747,8 +3747,8 @@ packages:
   '@standard-schema/spec@1.1.0':
     resolution: {integrity: sha512-l2aFy5jALhniG5HgqrD6jXLi/rUWrKvqN/qJx6yoJsgKhblVd+iqqU4RCXavm/jPityDo5TCvKMnpjKnOriy0w==}
 
-  '@stencil/angular-output-target@1.5.2':
-    resolution: {integrity: sha512-QzVH3d26mHgEbyVoFOzE5vAOKWSBl7t7VV2npK0LhF0JtdorYqEVWkV7sRyV80j/xodptB50wbWZZ5hQA1VVwg==}
+  '@stencil/angular-output-target@1.5.3':
+    resolution: {integrity: sha512-aq1m4qmB1eQgqFC1jyESc4phS5NddQ0OKT/0cYjdehObqra3YOnpW4H8dqVHRkaFlMIn4SR826YNTfywH/4Dpg==}
     peerDependencies:
       '@stencil/core': '>=2.0.0 || >=3 || >=4.0.0 || ^5.0.0 || >=5.0.0-beta.18'
 
@@ -3769,8 +3769,8 @@ packages:
       react: ^18 || ^19
       react-dom: ^18 || ^19
 
-  '@stencil/react-output-target@1.6.5':
-    resolution: {integrity: sha512-S7ldaSwjjysJIo3E/ksxApHzRxEncT191wb5bovDZx5da+5B33k2cyiz4lOZ0zk2I5GRWniDsHIJJs94vKU6rQ==}
+  '@stencil/react-output-target@1.7.0':
+    resolution: {integrity: sha512-oKaPLciK5num1ArH5bYQV/OOCgp8mkgPylMESRwLv4eXy5d15rS71EGQnXrZsbD1c5Xa85Xc0rLTKri9VhzrLg==}
     peerDependencies:
       '@stencil/core': '>=3 || >=4.0.0 || ^5.0.0 || >=5.0.0-beta.18'
       react: ^18 || ^19
@@ -3830,8 +3830,8 @@ packages:
       vue-router:
         optional: true
 
-  '@stencil/vue-output-target@0.14.6':
-    resolution: {integrity: sha512-IkgRf6UjoZg83CWguSxiRMqNLIRI29C0SBDj3m6OuB5ShVDqt2idV+kROdHhzR9DQFEPbKZqp7XNJIfrYN1zhg==}
+  '@stencil/vue-output-target@0.14.7':
+    resolution: {integrity: sha512-otE09Jzgd7+eRAApsvCsIIv+Yv+GakJrofd9gXA5dXbgIfK+nqWIMoYD4HlrXVKjI8KbUvPBuFdAQ8J3tqTVjg==}
     peerDependencies:
       '@stencil/core': '>=2.0.0 || >=3 || >=4.0.0 || ^5.0.0 || >=5.0.0-beta.18'
       vue: ^3.4.38
@@ -11910,7 +11910,7 @@ snapshots:
 
   '@standard-schema/spec@1.1.0': {}
 
-  '@stencil/angular-output-target@1.5.2(@stencil/core@4.45.2)':
+  '@stencil/angular-output-target@1.5.3(@stencil/core@4.45.2)':
     dependencies:
       '@stencil/core': 4.45.2
 
@@ -11948,7 +11948,7 @@ snapshots:
     transitivePeerDependencies:
       - '@types/react'
 
-  '@stencil/react-output-target@1.6.5(@stencil/core@4.45.2)(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
+  '@stencil/react-output-target@1.7.0(@stencil/core@4.45.2)(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
     dependencies:
       '@lit/react': 1.0.8(@types/react@19.3.0)
       '@stencil/core': 4.45.2
@@ -11982,7 +11982,7 @@ snapshots:
     optionalDependencies:
       '@stencil/core': 4.45.2
 
-  '@stencil/vue-output-target@0.14.6(@stencil/core@4.45.2)(vue@3.5.33(typescript@6.0.3))':
+  '@stencil/vue-output-target@0.14.7(@stencil/core@4.45.2)(vue@3.5.33(typescript@6.0.3))':
     dependencies:
       vue: 3.5.33(typescript@6.0.3)
     optionalDependencies:
