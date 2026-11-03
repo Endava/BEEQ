@@ -22,10 +22,10 @@ The default side menu serves as a versatile container for organizing and display
 
 ## Events
 
-| Event        | Description                                                                                                 | Type                                     |
-| ------------ | ----------------------------------------------------------------------------------------------------------- | ---------------------------------------- |
-| `bqCollapse` | Callback handler to be called when the Side menu changes its width from expanded to collapse and vice versa | `CustomEvent<{ collapse: boolean; }>`    |
-| `bqSelect`   | Callback handler to be called when the active/selected menu item changes                                    | `CustomEvent<HTMLBqSideMenuItemElement>` |
+| Event        | Description                                                                                                  | Type                                     |
+| ------------ | ------------------------------------------------------------------------------------------------------------ | ---------------------------------------- |
+| `bqCollapse` | Callback handler to be called when the Side menu changes its width from expanded to collapsed and vice versa | `CustomEvent<{ collapse: boolean; }>`    |
+| `bqSelect`   | Callback handler to be called when the active/selected menu item changes                                     | `CustomEvent<HTMLBqSideMenuItemElement>` |
 
 
 ## Methods

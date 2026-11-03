@@ -39,7 +39,7 @@ import type { TSideMenuAppearance, TSideMenuSize } from './bq-side-menu.types';
  *
  * @method toggleCollapse - Method to be called to toggle the collapse state of the side menu.
  *
- * @event bqCollapse - Callback handler to be called when the Side menu changes its width from expanded to collapse and vice versa.
+ * @event bqCollapse - Callback handler to be called when the Side menu changes its width from expanded to collapsed and vice versa.
  * @event bqSelect - Callback handler to be called when the active/selected menu item changes.
  *
  * @slot logo - The section for displaying the logo or brand in the side menu.
@@ -106,7 +106,7 @@ export class BqSideMenu {
   // Requires JSDocs for public API documentation
   // ==============================================
 
-  /** Callback handler to be called when the Side menu changes its width from expanded to collapse and vice versa */
+  /** Callback handler to be called when the Side menu changes its width from expanded to collapsed and vice versa */
   @Event() bqCollapse: EventEmitter<{ collapse: boolean }>;
 
   /** Callback handler to be called when the active/selected menu item changes */
