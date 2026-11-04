@@ -1,6 +1,6 @@
 import { h } from '@stencil/core';
 import { afterEach, beforeEach, describe, expect, it, render, waitForStable } from '@stencil/vitest';
-import { userEvent } from 'vitest/browser';
+import { cdp, userEvent } from 'vitest/browser';
 
 import { resolveColorToken } from '../../../shared/test-utils';
 
@@ -23,6 +23,22 @@ const roleHex: Record<ThemeMode, readonly string[]> = {
   'endava-light': ['#192b37', '#a72925', '#ffffff', '#ff5640', '#3b6684', '#417191', '#ff5640'],
   'endava-dark': ['#ffffff', '#e84641', '#14222c', '#ff5640', '#9dcff0', '#9dcff0', '#ff5640'],
 };
+
+const endavaParity = [
+  ['--bq-background--secondary', '#e8eaeb', '#47555f'],
+  ['--bq-background--tertiary', '#babfc3', '#758087'],
+  ['--bq-ui--secondary', '#e8eaeb', '#47555f'],
+  ['--bq-ui--success', '#2d9c5b', '#3dd17b'],
+  ['--bq-ui--warning', '#eb9410', '#f99c11'],
+  ['--bq-text--warning', '#c77905', '#f99c11'],
+  ['--bq-icon--warning', '#c77905', '#f99c11'],
+  ['--bq-icon--info', '#192b37', '#ffffff'],
+  ['--bq-stroke--primary', '#e8eaeb', '#30404b'],
+  ['--bq-stroke--secondary', '#a3aaaf', '#758087'],
+  ['--bq-stroke--tertiary', '#192b37', '#ffffff'],
+  ['--bq-stroke--success', '#2d9c5b', '#3dd17b'],
+  ['--bq-stroke--warning', '#eb9410', '#f99c11'],
+] as const;
 
 interface Fixture {
   name: string;
@@ -128,7 +144,12 @@ describe('native theme runtime contract', () => {
   let originalBodyAttributes: [string, string][];
   const inserted: HTMLElement[] = [];
 
-  beforeEach(() => {
+  beforeEach(async () => {
+    await cdp().send('Input.dispatchMouseEvent', {
+      type: 'mouseMoved',
+      x: window.top.innerWidth - 1,
+      y: window.top.innerHeight - 1,
+    });
     originalAttributes = [...document.documentElement.attributes].map(({ name, value }) => [name, value]);
     originalBodyAttributes = [...document.body.attributes].map(({ name, value }) => [name, value]);
     applyFixture(document.documentElement, { name: 'reset', expected: 'beeq-light' });
@@ -143,6 +164,10 @@ describe('native theme runtime contract', () => {
   });
 
   const fixtureScope = (fixture: Fixture): HTMLElement => {
+    if (fixture.body) {
+      applyFixture(document.body, fixture);
+      return document.body;
+    }
     if (!fixture.nested) {
       applyFixture(document.documentElement, fixture);
       return document.documentElement;
@@ -153,6 +178,74 @@ describe('native theme runtime contract', () => {
     inserted.push(scope);
     return scope;
   };
+
+  for (const [mode, surface, border, icon, infoColor] of [
+    ['light', '#e8eaeb', '#eb9410', '#c77905', '#192b37'],
+    ['dark', '#47555f', '#f99c11', '#f99c11', '#ffffff'],
+  ]) {
+    it(`should paint Endava ${mode} component surfaces and distinct validation/icon roles`, async () => {
+      const { root } = await render(
+        <div bq-theme="endava" bq-mode={mode}>
+          <bq-button appearance="secondary">Secondary action</bq-button>
+          <bq-input name="warning" validation-status="warning" />
+          <bq-alert type="warning" open disableClose>
+            Warning
+          </bq-alert>
+          <bq-alert type="info" open disableClose>
+            Information
+          </bq-alert>
+        </div>,
+      );
+      await waitForStable(root);
+      const button = root.querySelector('bq-button')?.shadowRoot?.querySelector<HTMLElement>('[part="button"]');
+      const input = root.querySelector('bq-input')?.shadowRoot?.querySelector<HTMLElement>('[part="control"]');
+      const warning = root.querySelector('bq-alert[type="warning"]')?.shadowRoot;
+      const info = root.querySelector('bq-alert[type="info"]')?.shadowRoot;
+      const warningBorder = warning?.querySelector<HTMLElement>('[part="wrapper"]');
+      const warningIcon = warning?.querySelector<HTMLElement>('[part="icon-outline"]');
+      const infoIcon = info?.querySelector<HTMLElement>('[part="icon-outline"]');
+      if (!button || !input || !warningBorder || !warningIcon || !infoIcon) {
+        throw new Error('Could not render the Endava parity controls');
+      }
+      expect(getComputedStyle(button).backgroundColor).toBe(concreteColor(surface));
+      expect(getComputedStyle(input).borderTopColor).toBe(concreteColor(border));
+      expect(getComputedStyle(warningBorder).borderTopColor).toBe(concreteColor(border));
+      expect(getComputedStyle(warningIcon).color).toBe(concreteColor(icon));
+      expect(getComputedStyle(infoIcon).color).toBe(concreteColor(infoColor));
+
+      root.querySelector('bq-button')?.style.setProperty('--bq-button--secondary-background', '#007a5e');
+      await Promise.all(button.getAnimations().map((animation) => animation.finished));
+      expect(getComputedStyle(button).backgroundColor).toBe('rgb(0, 122, 94)');
+    });
+  }
+
+  for (const fixture of [...rootFixtures, ...nestedFixtures, ...bodyFixtures].filter(({ expected }) =>
+    expected.startsWith('endava'),
+  )) {
+    it(`should paint the approved Endava role matrix on ${fixture.name}`, () => {
+      const scope = fixtureScope(fixture);
+      const probe = document.createElement('span');
+      scope.appendChild(probe);
+      inserted.push(probe);
+      for (const [role, light, dark] of endavaParity) {
+        probe.style.borderColor = `var(${role})`;
+        expect(getComputedStyle(probe).borderTopColor, role).toBe(
+          concreteColor(fixture.expected === 'endava-light' ? light : dark),
+        );
+      }
+      for (const [role, width] of [
+        ['s', '1px'],
+        ['m', '2px'],
+        ['l', '3px'],
+      ]) {
+        probe.style.border = `var(--bq-stroke-${role}) solid var(--bq-stroke--tertiary)`;
+        expect(getComputedStyle(probe).borderTopWidth).toBe(width);
+      }
+      probe.style.setProperty('--bq-stroke-s', '5px');
+      probe.style.borderWidth = 'var(--bq-stroke-s)';
+      expect(getComputedStyle(probe).borderTopWidth).toBe('5px');
+    });
+  }
 
   for (const fixture of [...rootFixtures, ...nestedFixtures]) {
     describe(fixture.name, () => {

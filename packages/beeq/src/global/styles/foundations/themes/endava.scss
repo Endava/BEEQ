@@ -31,7 +31,7 @@
     --bq-accent-strong: var(--bq-brand-strong);
     --bq-accent-bright: var(--bq-brand-bright);
     --bq-success-light: var(--bq-endava-positive-100);
-    --bq-success: var(--bq-endava-positive-600);
+    --bq-success: var(--bq-endava-positive-500);
     --bq-success-dark: var(--bq-endava-positive-1000);
     --bq-success-strong: var(--bq-endava-positive-800);
     --bq-success-bright: var(--bq-endava-positive-400);
@@ -41,9 +41,9 @@
     --bq-danger-strong: var(--bq-endava-negative-800);
     --bq-danger-bright: var(--bq-endava-negative-400);
     --bq-warning-light: var(--bq-endava-warning-100);
-    --bq-warning: var(--bq-endava-warning-400);
+    --bq-warning: var(--bq-endava-warning-500);
     --bq-warning-dark: var(--bq-endava-warning-1000);
-    --bq-warning-strong: var(--bq-endava-warning-800);
+    --bq-warning-strong: var(--bq-endava-warning-700);
     --bq-warning-bright: var(--bq-endava-warning-400);
     --bq-info-light: var(--bq-endava-info-100);
     --bq-info: var(--bq-endava-info-600);
@@ -84,12 +84,12 @@
     --bq-icon--alt: var(--bq-white);
     --bq-icon--brand: var(--bq-brand-strong);
     --bq-icon--accent: var(--bq-accent-strong);
-    --bq-icon--info: var(--bq-info-strong);
+    --bq-icon--info: var(--bq-neutral-950);
     --bq-icon--success: var(--bq-success-strong);
     --bq-icon--warning: var(--bq-warning-strong);
     --bq-icon--danger: var(--bq-danger-strong);
     // Decorative dividers and separators
-    --bq-stroke--primary: var(--bq-neutral-200);
+    --bq-stroke--primary: var(--bq-neutral-100);
     // Subtle or disabled borders
     --bq-stroke--secondary: var(--bq-neutral-400);
     // Interactive control borders (>= 3:1)
@@ -100,8 +100,8 @@
     --bq-stroke--brand-alt: var(--bq-brand-light);
     --bq-stroke--accent: var(--bq-accent-strong);
     --bq-stroke--info: var(--bq-info-strong);
-    --bq-stroke--success: var(--bq-success-strong);
-    --bq-stroke--warning: var(--bq-warning-strong);
+    --bq-stroke--success: var(--bq-success);
+    --bq-stroke--warning: var(--bq-warning);
     --bq-stroke--danger: var(--bq-danger-strong);
     --bq-text--primary: var(--bq-neutral-950);
     --bq-text--secondary: var(--bq-neutral-700);
@@ -149,8 +149,8 @@
 
   :where([bq-theme='endava'][bq-mode='dark'], .endava.dark) {
     --bq-background--primary: var(--bq-neutral-950);
-    --bq-background--secondary: var(--bq-neutral-900);
-    --bq-background--tertiary: var(--bq-neutral-800);
+    --bq-background--secondary: var(--bq-neutral-800);
+    --bq-background--tertiary: var(--bq-neutral-600);
     --bq-background--alt: var(--bq-neutral-700);
     --bq-background--inverse: var(--bq-white);
     --bq-background--brand: var(--bq-brand);
@@ -162,12 +162,12 @@
     --bq-icon--alt: var(--bq-white);
     --bq-icon--brand: var(--bq-brand-bright);
     --bq-icon--accent: var(--bq-accent-bright);
-    --bq-icon--info: var(--bq-info-bright);
+    --bq-icon--info: var(--bq-white);
     --bq-icon--success: var(--bq-success-bright);
     --bq-icon--warning: var(--bq-warning-bright);
     --bq-icon--danger: var(--bq-danger-bright);
     // Decorative dividers and separators
-    --bq-stroke--primary: var(--bq-neutral-800);
+    --bq-stroke--primary: var(--bq-neutral-900);
     // Subtle or disabled borders
     --bq-stroke--secondary: var(--bq-neutral-600);
     // Interactive control borders (>= 3:1)
@@ -200,7 +200,7 @@
     --bq-text--on-warning: var(--bq-black);
     --bq-text--on-danger: var(--bq-black);
     --bq-ui--primary: var(--bq-neutral-950);
-    --bq-ui--secondary: var(--bq-neutral-900);
+    --bq-ui--secondary: var(--bq-neutral-800);
     --bq-ui--tertiary: var(--bq-neutral-500);
     --bq-ui--inverse: var(--bq-white);
     --bq-ui--alt: var(--bq-neutral-900);

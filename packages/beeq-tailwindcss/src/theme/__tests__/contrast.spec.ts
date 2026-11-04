@@ -322,14 +322,20 @@ const ENDAVA_DARK_BRIGHT_FILLS: Intent[] = ['info', 'success', 'warning', 'dange
 const expectedIntentRoles = ({ name, mode }: Combo): [string, string][] => [
   ...INTENTS.flatMap((intent): [string, string][] => {
     const foreground = `var(--bq-${intent}-${mode === 'light' ? 'strong' : 'bright'})`;
+    const icon =
+      name.startsWith('endava') && intent === 'info'
+        ? `var(--bq-${mode === 'light' ? 'neutral-950' : 'white'})`
+        : foreground;
+    const stroke =
+      name === 'endava-light' && (intent === 'success' || intent === 'warning') ? `var(--bq-${intent})` : foreground;
     const fill =
       name === 'endava-dark' && ENDAVA_DARK_BRIGHT_FILLS.includes(intent)
         ? `var(--bq-${intent}-bright)`
         : `var(--bq-${intent})`;
     return [
       [`text--${intent}`, foreground],
-      [`icon--${intent}`, foreground],
-      [`stroke--${intent}`, foreground],
+      [`icon--${intent}`, icon],
+      [`stroke--${intent}`, stroke],
       [`ui--${intent}`, fill],
       [`ui--${intent}-alt`, `var(--bq-${intent}-${mode})`],
       [`text--on-${intent}`, `var(--bq-${ON_COLOR[name][intent]})`],

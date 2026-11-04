@@ -28,6 +28,18 @@ If your application uses the BEEQ Tailwind preset, the same values are also avai
 
 ## Stroke width scale
 
+Endava keeps BEEQ's 1/2/3px scale. The inspected EWR library has no standalone stroke-width foundation or named global width variables; these widths are not claimed as Figma parity. Its Colors page defines border colors by intent:
+
+| EWR border intent | BEEQ color role | Endava light / dark |
+| --- | --- | --- |
+| Primary control boundary | `--bq-stroke--tertiary` | #192B37 / white |
+| Secondary decorative separator | `--bq-stroke--primary` | #E8EAEB / #30404B |
+| Quarterly subtle/disabled boundary | `--bq-stroke--secondary` | #A3AAAF / #758087 |
+| Success border | `--bq-stroke--success` | #2D9C5B / #3DD17B |
+| Warning border | `--bq-stroke--warning` | #EB9410 / #F99C11 |
+
+Figma's intermediate tertiary border has no separate BEEQ slot. It does not replace the strong control boundary merely because both names say tertiary. Light success/warning borders deliberately differ from their text/icon colors. Control-border states and focus have unresolved [design approval holds](/foundations/colors#design-approval-holds); changing width or elevation does not resolve them.
+
 The stroke width scale has three values. Use the smallest value for standard separation, the medium value for selected or focused states, and the largest value only when the surface has enough size and emphasis.
 
 | Token | CSS variable | Tailwind keys | Value | Common use |

@@ -56,7 +56,9 @@ Intents set the hue per theme; roles (`--bq-text--*`, `--bq-ui--*`, and the rest
 | Inverted fill | `--bq-ui--inverse` with `--bq-text--inverse` |
 | Borders | `--bq-stroke--tertiary` for interactive boundaries; `--bq-stroke--primary` for decorative separators |
 
-These pairs pass WCAG AA in the built-in themes, with two accepted Endava exceptions. `--bq-text--on-brand` (white on Red Orange, 3.15:1) meets 3:1 only, so keep text on Endava brand fills large (24px, or 18.66px bold). In light mode, `--bq-text--brand`, `--bq-icon--brand`, `--bq-stroke--brand` and `--bq-focus` are Red Orange too, to match the brand fill: 3.15:1 on white and below 3:1 on `--bq-ui--secondary` and `--bq-ui--brand-alt`. Avoid small brand text there, or set `--bq-brand-strong: #c33600` when the product needs 4.5:1. They are not a guarantee for arbitrary overrides: check contrast in every active theme and mode after changing a token.
+These pairings preserve semantic intent, not universal WCAG conformance. Endava follows approved EWR values even when contrast falls short; test the actual theme, surface and state. White on Endava Red Orange is 3.15:1, and other Endava warnings, fills and dark secondary-surface pairs also have shortfalls. Preserve brand defaults and obtain an explicit design/accessibility decision for product-specific alternatives. See [Endava parity and approval holds](https://www.beeq.design/foundations/colors#endava-figma-parity).
+
+Endava information icons are neutral. Light success/warning strokes use the base fill steps, not the darker text/icon steps. Figma UI-primary maps to BEEQ UI-inverse (strong fill); Figma UI-inverse maps to BEEQ UI-primary (surface). Control boundaries use BEEQ stroke-tertiary; decorative separators use stroke-primary.
 
 ### Primitive palette escape hatch
 
