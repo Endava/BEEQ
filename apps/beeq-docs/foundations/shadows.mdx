@@ -29,6 +29,8 @@ Components that need elevation expose component-level shadow variables. Prefer t
 
 The shadow scale moves from subtle interaction lift to pronounced floating surfaces. Use the smallest shadow that communicates the layer relationship.
 
+The following values belong to the default BEEQ theme. Endava has a separate dark set below.
+
 | Token | CSS variable | Tailwind key | Light mode | Dark mode | Common use |
 | --- | --- | --- | --- | --- | --- |
 | `xs` | `--bq-box-shadow--xs` | `shadow-xs` | `0 2px 0 rgba(0, 0, 0, 0.016)` | `0 1px 2px rgba(0, 0, 0, 0.4)` | Subtle interactive lift on compact elements. |
@@ -157,12 +159,29 @@ The shadow scale moves from subtle interaction lift to pronounced floating surfa
 
 ### Shadows in dark mode
 
-A soft black shadow disappears on a near-black page, so dark mode uses a different set in both the BEEQ and Endava themes:
+A soft black shadow disappears on a near-black page, so the default BEEQ dark theme adds:
 
 - **Edge ring.** `s`, `m`, and `l` start with a 1px ring in `--bq-stroke--primary`. It outlines the layer even when the layer and the surface below it share a color, such as a dropdown inside a card.
 - **Denser shadow.** The drop shadow keeps its offset and blur, with 40–70% black instead of 1.6–16%.
 
 The values are defined per mode, so a `[bq-mode]` subtree always gets the set for its own mode. The ring reads `--bq-stroke--primary` where the mode is set, so override the stroke token on that same element to change the ring color.
+
+### Endava elevation parity
+
+The [EWR Elevations page](https://www.figma.com/design/bfGWgYe1WjHL2HDMJLw8GQ/EWR-Design-Library--main-?node-id=73-634) maps 500/600/700/800 to `xs/s/m/l`: interaction controls, static cards, sticky surfaces and floating dropdowns/modals. Endava dark uses two source drop shadows at every size, with no added shadow edge ring. Component borders remain independent.
+
+| Token / Figma size | Layer 1: x y blur spread (px) | Layer 2: x y blur spread (px) | Dark paint, layer 1 / layer 2 |
+| --- | --- | --- | --- |
+| xs / 500 | 0 9.680215 30.976685 -3.872086 | 0 5.808129 13.552299 -5.808129 | Pure black 10% / pure black 15% |
+| s / 600 | 0 11.616258 40.656902 -3.872086 | 0 7.744171 17.424385 -5.808129 | RGB fractions (0.0287500024, 0.1014999896, 0.1500000060) 12% / pure black 12% |
+| m / 700 | 0 13.552299 61.953369 -3.872086 | 0 7.744171 21.296473 -5.808129 | Pure black 12% / pure black 12% |
+| l / 800 | 0 17.424385 85.185890 -3.872086 | 0 7.744171 27.104599 -5.808129 | Pure black 14% / RGB fractions (0, 0.0424999930, 0.0708333328) 12% |
+
+This table rounds geometry for readability. Source tokens preserve Figma precision and the two fractional RGB paints, without new palette tokens or a nearest-neutral substitution. Pure black here is not Endava's `--bq-black` (#14222C). Dark page samples 4148:19170–173 agree with their named effect styles.
+
+**Light shadows remain blocked by design conflict E1.** Page samples 4956:21318/322/326/330 use #192B37 at 20% for both layers. Named styles use xs 10/12%, s/m 12/12%, and l 14/12%. Until design confirms the authority, Endava retains the complete existing light definitions shown in the default table; these are compatibility values, not certified Figma matches. Geometry and opacity are not combined into an invented hybrid.
+
+Sidebar, scroll, hover-only effects and the disputed focus shadow are not aliases for the four standard elevations. Existing component choices (for example panel/tooltip m and dialog/toast l) remain unchanged.
 
 ---
 

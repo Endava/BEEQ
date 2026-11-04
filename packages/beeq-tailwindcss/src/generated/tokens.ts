@@ -719,10 +719,14 @@ export const EndavaDarkTheme = {
   'bq-ui--warning-alt': 'var(--bq-warning-dark)',
   'bq-ui--danger': 'var(--bq-danger-bright)',
   'bq-ui--danger-alt': 'var(--bq-danger-dark)',
-  'bq-box-shadow--xs': '0 1px 2px rgb(0 0 0 / 40%)',
-  'bq-box-shadow--s': '0 0 0 1px var(--bq-stroke--primary), 0 8px 24px rgb(0 0 0 / 40%)',
-  'bq-box-shadow--m': '0 0 0 1px var(--bq-stroke--primary), 0 10px 48px -16px rgb(0 0 0 / 60%)',
-  'bq-box-shadow--l': '0 0 0 1px var(--bq-stroke--primary), 0 20px 58px -16px rgb(0 0 0 / 70%)',
+  'bq-box-shadow--xs':
+    '0 9.680214881896973px 30.9766845703125px -3.8720855712890625px rgb(0 0 0 / 10%),\n      0 5.808128833770752px 13.552299499511719px -5.808128833770752px rgb(0 0 0 / 15%)',
+  'bq-box-shadow--s':
+    '0 11.616257667541504px 40.65690231323242px -3.8720855712890625px\n        rgb(2.875000238418579% 10.149998962879181% 15.000000596046448% / 12%),\n      0 7.744171142578125px 17.42438507080078px -5.808128833770752px rgb(0 0 0 / 12%)',
+  'bq-box-shadow--m':
+    '0 13.552299499511719px 61.953369140625px -3.8720855712890625px rgb(0 0 0 / 12%),\n      0 7.744171142578125px 21.296472549438477px -5.808128833770752px rgb(0 0 0 / 12%)',
+  'bq-box-shadow--l':
+    '0 17.42438507080078px 85.1858901977539px -3.8720855712890625px rgb(0 0 0 / 14%),\n      0 7.744171142578125px 27.104598999023438px -5.808128833770752px\n        rgb(0% 4.249999299645424% 7.083333283662796% / 12%)',
   'bq-hover': '#444546',
   'bq-active': '#1f2026',
   'bq-focus': 'var(--bq-brand-bright)',

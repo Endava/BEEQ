@@ -634,13 +634,16 @@ describe('mode box shadows', () => {
     expect(Object.keys(shadows)).toEqual(SHADOW_KEYS);
   });
 
-  it.each(COMBOS)('$name should use the $mode shadow set', ({ name, mode }) => {
-    const expected = mode === 'dark' ? DARK_BOX_SHADOWS : LIGHT_BOX_SHADOWS;
+  it.each(COMBOS.filter(({ mode, theme }) => theme === 'default' || mode === 'light'))(
+    '$name should retain the default $mode shadow set',
+    ({ name, mode }) => {
+      const expected = mode === 'dark' ? DARK_BOX_SHADOWS : LIGHT_BOX_SHADOWS;
 
-    for (const [key, value] of Object.entries(expected)) {
-      expect(MODE_OBJECTS[name][key]).toBe(value);
-    }
-  });
+      for (const [key, value] of Object.entries(expected)) {
+        expect(MODE_OBJECTS[name][key]).toBe(value);
+      }
+    },
+  );
 
   it('should keep the light shadows as the root fallback', () => {
     for (const [key, value] of Object.entries(LIGHT_BOX_SHADOWS)) {

@@ -40,6 +40,25 @@ const endavaParity = [
   ['--bq-stroke--warning', '#eb9410', '#f99c11'],
 ] as const;
 
+const endavaDarkShadows = [
+  [
+    'xs',
+    '0 9.680214881896973px 30.9766845703125px -3.8720855712890625px rgb(0 0 0 / 10%), 0 5.808128833770752px 13.552299499511719px -5.808128833770752px rgb(0 0 0 / 15%)',
+  ],
+  [
+    's',
+    '0 11.616257667541504px 40.65690231323242px -3.8720855712890625px rgb(2.875000238418579% 10.149998962879181% 15.000000596046448% / 12%), 0 7.744171142578125px 17.42438507080078px -5.808128833770752px rgb(0 0 0 / 12%)',
+  ],
+  [
+    'm',
+    '0 13.552299499511719px 61.953369140625px -3.8720855712890625px rgb(0 0 0 / 12%), 0 7.744171142578125px 21.296472549438477px -5.808128833770752px rgb(0 0 0 / 12%)',
+  ],
+  [
+    'l',
+    '0 17.42438507080078px 85.1858901977539px -3.8720855712890625px rgb(0 0 0 / 14%), 0 7.744171142578125px 27.104598999023438px -5.808128833770752px rgb(0% 4.249999299645424% 7.083333283662796% / 12%)',
+  ],
+] as const;
+
 interface Fixture {
   name: string;
   theme?: string;
@@ -103,6 +122,17 @@ const concreteColor = (hex: string): string => {
   document.body.appendChild(probe);
   try {
     return getComputedStyle(probe).color;
+  } finally {
+    probe.remove();
+  }
+};
+
+const concreteShadow = (value: string): string => {
+  const probe = document.createElement('span');
+  probe.style.boxShadow = value;
+  document.body.appendChild(probe);
+  try {
+    return getComputedStyle(probe).boxShadow;
   } finally {
     probe.remove();
   }
@@ -178,6 +208,36 @@ describe('native theme runtime contract', () => {
     inserted.push(scope);
     return scope;
   };
+
+  for (const fixture of [...rootFixtures, ...nestedFixtures, ...bodyFixtures].filter(
+    ({ expected }) => expected === 'endava-dark',
+  )) {
+    it(`should paint all four exact Figma elevation effects on ${fixture.name}`, () => {
+      const scope = fixtureScope(fixture);
+      const probe = document.createElement('span');
+      scope.appendChild(probe);
+      inserted.push(probe);
+      for (const [size, expected] of endavaDarkShadows) {
+        probe.style.boxShadow = `var(--bq-box-shadow--${size})`;
+        expect(getComputedStyle(probe).boxShadow, size).toBe(concreteShadow(expected));
+      }
+    });
+  }
+
+  it('should use the Endava dark elevation on a panel and preserve its component override', async () => {
+    const { root } = await render(
+      <div bq-theme="endava" bq-mode="dark">
+        <bq-panel open>Elevated content</bq-panel>
+      </div>,
+    );
+    await waitForStable(root);
+    const host = root.querySelector('bq-panel');
+    const panel = host?.shadowRoot?.querySelector<HTMLElement>('[part="panel"]');
+    if (!host || !panel) throw new Error('Could not render the Endava elevation panel');
+    expect(getComputedStyle(panel).boxShadow).toBe(concreteShadow(endavaDarkShadows[2][1]));
+    host.style.setProperty('--bq-panel--box-shadow', 'none');
+    expect(getComputedStyle(panel).boxShadow).toBe('none');
+  });
 
   for (const [mode, surface, border, icon, infoColor] of [
     ['light', '#e8eaeb', '#eb9410', '#c77905', '#192b37'],

@@ -172,6 +172,8 @@ Truncated text needs a way to read it in full, such as a tooltip or a detail vie
 
 Use the smallest BEEQ shadow that communicates the required layer relationship. A stable surface, panel, and temporary floating surface should have progressively stronger separation.
 
+Endava dark elevations copy the EWR two-layer effects, including fractional geometry and source paints; they do not have default BEEQ's additional shadow edge rings. Endava light shadows remain compatibility values while the Figma page/style opacity conflict is unresolved. Preserve existing component shadow overrides and consult [Shadows](https://www.beeq.design/foundations/shadows#endava-elevation-parity) before claiming parity.
+
 Prefer documented component shadow variables when changing a BEEQ component. Use global shadow tokens only for custom application surfaces. Shadows communicate elevation, not interactive state or decoration.
 
 | Elevation | CSS variable | Typical use |

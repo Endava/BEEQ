@@ -39,6 +39,59 @@ const modes = [
   ['dark', EndavaDarkTheme, 2],
 ] as const;
 
+// Elevations 73:634, samples 4148:19170..173 reference the corresponding local effect styles.
+const darkEffects = [
+  [
+    'xs',
+    '9.680214881896973',
+    '30.9766845703125',
+    '5.808128833770752',
+    '13.552299499511719',
+    'rgb(0 0 0 / 10%)',
+    'rgb(0 0 0 / 15%)',
+  ],
+  [
+    's',
+    '11.616257667541504',
+    '40.65690231323242',
+    '7.744171142578125',
+    '17.42438507080078',
+    'rgb(2.875000238418579% 10.149998962879181% 15.000000596046448% / 12%)',
+    'rgb(0 0 0 / 12%)',
+  ],
+  [
+    'm',
+    '13.552299499511719',
+    '61.953369140625',
+    '7.744171142578125',
+    '21.296472549438477',
+    'rgb(0 0 0 / 12%)',
+    'rgb(0 0 0 / 12%)',
+  ],
+  [
+    'l',
+    '17.42438507080078',
+    '85.1858901977539',
+    '7.744171142578125',
+    '27.104598999023438',
+    'rgb(0 0 0 / 14%)',
+    'rgb(0% 4.249999299645424% 7.083333283662796% / 12%)',
+  ],
+] as const;
+
+describe('Endava dark Figma elevations', () => {
+  it.each(darkEffects)(
+    '%s preserves both source layers without an additional stroke ring',
+    (size, y1, blur1, y2, blur2, color1, color2) => {
+      const expected = [
+        `0 ${y1}px ${blur1}px -3.8720855712890625px ${color1}`,
+        `0 ${y2}px ${blur2}px -5.808128833770752px ${color2}`,
+      ].join(', ');
+      expect(EndavaDarkTheme[`bq-box-shadow--${size}`].replace(/\s+/g, ' ')).toBe(expected);
+    },
+  );
+});
+
 describe.each(modes)('Endava %s Figma parity', (_, mode, index) => {
   const resolver = createResolver(mergeTokenMaps(CSS_COLORS, DefaultRootTheme, EndavaRootTheme, mode));
 
@@ -73,6 +126,15 @@ describe('uncontested primitive selection', () => {
 });
 
 describe('design approval holds (compatibility pins, not certified Figma matches)', () => {
+  it('retains complete light shadows pending E1 opacity authority', () => {
+    expect(EndavaLightTheme).toMatchObject({
+      'bq-box-shadow--xs': '0 2px 0 rgb(0 0 0 / 1.6%)',
+      'bq-box-shadow--s': '0 8px 24px rgb(0 0 0 / 4%)',
+      'bq-box-shadow--m': '0 10px 48px -16px rgb(0 0 0 / 12%)',
+      'bq-box-shadow--l': '0 20px 58px -16px rgb(0 0 0 / 16%)',
+    });
+  });
+
   it('retains the unresolved C2-C5 primitive and foreground mappings', () => {
     expect(EndavaRootTheme).toMatchObject({
       'bq-neutral-300': 'var(--bq-endava-grey-300)',
