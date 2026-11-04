@@ -120,7 +120,7 @@
 
 @layer bq-step-item.states {
   .bq-step-item:hover {
-    @include bq-color-mix(background-color, var(--bq-step-item--background-hover), hover, 20%);
+    @include bq-color-mix(background-color, var(--bq-step-item--background-hover), hover);
   }
 
   .bq-step-item:focus-visible {

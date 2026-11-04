@@ -115,7 +115,7 @@
 
   :host([appearance='inverse']) ::slotted(bq-side-menu-item) {
     --bq-side-menu-item--bg-hover: var(--bq-ui--inverse);
-    --bq-side-menu-item--bg-active: color-mix(in srgb, var(--bq-ui--alt), var(--bq-active) 20%);
+    --bq-side-menu-item--bg-active: color-mix(in srgb, var(--bq-ui--alt), var(--bq-active) var(--bq-state-mix-active, 20%));
     --bq-side-menu-item--text-default: var(--bq-text--inverse);
     --bq-side-menu-item--text-hover: var(--bq-text--inverse);
     --bq-side-menu-item--text-active: var(--bq-text--primary);

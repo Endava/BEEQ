@@ -108,13 +108,13 @@ Light Endava brand foregrounds retain Red Orange: 3.15:1 on white, 2.61:1 on sec
 
 ## Hover and pressed states
 
-BEEQ mixes hover and pressed colours where they are used: `color-mix(in srgb, <base>, var(--bq-hover) 20%)`, and the same with `--bq-active`. Component variables hold only the resting colour, so overriding one re-colours its hover and pressed states too. A component has a separate `-hover` variable, such as `--bq-option--background-hover`, only when hover starts from a different colour than rest; it holds that base, and BEEQ still mixes it.
+BEEQ mixes hover and pressed colours at the point of use, using the existing `--bq-state-mix-hover` and `--bq-state-mix-active` controls (both default to 20%). Native components and Tailwind blend utilities honor scoped overrides. Component variables hold the resting colour; separate `-hover` variables such as `--bq-option--background-hover` hold an alternate base, not a pre-mixed colour.
 
 Follow the same rule in custom CSS. Mix at the point of use, and never store a pre-mixed colour in a variable:
 
 ```css
 .chip:hover {
-  background-color: color-mix(in srgb, var(--bq-ui--secondary), var(--bq-hover) 20%);
+  background-color: color-mix(in srgb, var(--bq-ui--secondary), var(--bq-hover) var(--bq-state-mix-hover, 20%));
 }
 ```
 

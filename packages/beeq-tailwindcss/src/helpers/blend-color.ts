@@ -1,7 +1,7 @@
 type BlendOptions = {
   color: string;
   base: string;
-  percentage?: number;
+  percentage?: number | `var(--bq-state-mix-${'hover' | 'active'}, 20%)`;
   property?: string;
 };
 
@@ -11,9 +11,9 @@ type BlendOptions = {
  * @param {Object} opt - The blendColor options object
  * @param {string} opt.color - The color to blend
  * @param {string} opt.base - The base color layer to blend with
- * @param {number} opt.percentage - The percentage to blend
+ * @param {number | string} opt.percentage - A numeric percentage or the shared state percentage variable
  * @param {string} [opt.property ='background-color'] - The CSS property to blend (e.g: 'background-color', 'color')
  */
 export const blendColor = ({ color, base, percentage = 20, property = 'background-color' }: BlendOptions) => ({
-  [property]: `color-mix(in srgb, ${color}, ${base} ${percentage}%)`,
+  [property]: `color-mix(in srgb, ${color}, ${base} ${typeof percentage === 'number' ? `${percentage}%` : percentage})`,
 });

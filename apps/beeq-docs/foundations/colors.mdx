@@ -575,7 +575,7 @@ The following conflicts remain unresolved. Existing mappings remain for compatib
 
 Hover/active endpoints and percentages remain unchanged. A shared mix cannot reproduce every explicit Figma state, and changing it would also affect unresolved rows. Measured candidates are not approved theme settings. Light elevation opacity has a separate [shadow approval hold](/foundations/shadows).
 
-### States
+## States
 
 State tokens drive hover, pressed, and focus feedback. They're mode roles, so they follow the active theme and mode.
 
@@ -585,15 +585,15 @@ State tokens drive hover, pressed, and focus feedback. They're mode roles, so th
 | `--bq-active` | `#1f2026` | Mixing base for pressed states — never painted directly |
 | `--bq-focus` | `brand-strong` (light), `brand-bright` (dark) | Keyboard focus outlines |
 
-Hover and active colors are derived where they're used, by mixing the rest color with the state base at 20%:
+Hover and active colors are derived where they're used. The existing controls `--bq-state-mix-hover` and `--bq-state-mix-active` both default to 20%; native components and Tailwind blend utilities honor scoped overrides:
 
 ```css
 .my-action:hover {
-  background-color: color-mix(in srgb, var(--bq-ui--brand), var(--bq-hover) 20%);
+  background-color: color-mix(in srgb, var(--bq-ui--brand), var(--bq-hover) var(--bq-state-mix-hover, 20%));
 }
 
 .my-action:active {
-  background-color: color-mix(in srgb, var(--bq-ui--brand), var(--bq-active) 20%);
+  background-color: color-mix(in srgb, var(--bq-ui--brand), var(--bq-active) var(--bq-state-mix-active, 20%));
 }
 ```
 

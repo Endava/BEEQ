@@ -178,13 +178,13 @@
 
   .bq-select__control:is(.validation-error, .validation-success, .validation-warning) {
     &:not(.disabled, :focus-within):hover {
-      @include bq-color-mix(border-color, var(--_select-validation-color), hover, 20%);
+      @include bq-color-mix(border-color, var(--_select-validation-color), hover);
     }
 
     &:not(.disabled):focus-within {
       --bq-ring-color-focus: var(--_select-validation-color);
 
-      @include bq-color-mix(border-color, var(--_select-validation-color), active, 20%);
+      @include bq-color-mix(border-color, var(--_select-validation-color), active);
     }
   }
 }

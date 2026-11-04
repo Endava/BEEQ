@@ -874,44 +874,49 @@ describe('bq-input', () => {
     colorProbe.remove();
   });
 
-  it('should mix validation borders on hover and focus', async () => {
-    const { root, setProps } = await render(<bq-input name="bq-input" validationStatus="error" />);
-    const host = root as HTMLBqInputElement;
-    const control = getControl(host);
-    const input = getInput(host);
-    const colorProbe = document.createElement('span');
-    root.shadowRoot?.appendChild(colorProbe);
+  it.each([0, 20, 50, 100])(
+    'should honor a %s%% hover mix and independent active mix on validation borders',
+    async (percentage) => {
+      const { root, setProps } = await render(<bq-input name="bq-input" validationStatus="error" />);
+      const host = root as HTMLBqInputElement;
+      host.style.setProperty('--bq-state-mix-hover', `${percentage}%`);
+      host.style.setProperty('--bq-state-mix-active', `${100 - percentage}%`);
+      const control = getControl(host);
+      const input = getInput(host);
+      const colorProbe = document.createElement('span');
+      root.shadowRoot?.appendChild(colorProbe);
 
-    for (const [validationStatus, role] of Object.entries({
-      error: 'danger',
-      success: 'success',
-      warning: 'warning',
-    })) {
-      input.blur();
-      await movePointerOff();
-      await setProps({ validationStatus });
-      await waitForTransitions(root);
+      for (const [validationStatus, role] of Object.entries({
+        error: 'danger',
+        success: 'success',
+        warning: 'warning',
+      })) {
+        input.blur();
+        await movePointerOff();
+        await setProps({ validationStatus });
+        await waitForTransitions(root);
 
-      await userEvent.hover(control);
-      await waitForTransitions(root);
-      colorProbe.style.color = `color-mix(in srgb, var(--bq-input--border-color-${role}), var(--bq-hover) 20%)`;
-      expect(computedStyle('bq-input >>> [part="control"]', ['borderTopColor']).borderTopColor).toBe(
-        getComputedStyle(colorProbe).color,
-      );
+        await userEvent.hover(control);
+        await waitForTransitions(root);
+        colorProbe.style.color = `color-mix(in srgb, var(--bq-input--border-color-${role}), var(--bq-hover) ${percentage}%)`;
+        expect(computedStyle('bq-input >>> [part="control"]', ['borderTopColor']).borderTopColor).toBe(
+          getComputedStyle(colorProbe).color,
+        );
 
-      input.focus();
-      await waitForTransitions(root);
-      colorProbe.style.color = `color-mix(in srgb, var(--bq-input--border-color-${role}), var(--bq-active) 20%)`;
-      expect(computedStyle('bq-input >>> [part="control"]', ['borderTopColor']).borderTopColor).toBe(
-        getComputedStyle(colorProbe).color,
-      );
-      expect(computedStyle('bq-input >>> [part="control"]', ['outlineColor']).outlineColor).toBe(
-        resolveColorToken(`--bq-stroke--${role}`),
-      );
-    }
+        input.focus();
+        await waitForTransitions(root);
+        colorProbe.style.color = `color-mix(in srgb, var(--bq-input--border-color-${role}), var(--bq-active) ${100 - percentage}%)`;
+        expect(computedStyle('bq-input >>> [part="control"]', ['borderTopColor']).borderTopColor).toBe(
+          getComputedStyle(colorProbe).color,
+        );
+        expect(computedStyle('bq-input >>> [part="control"]', ['outlineColor']).outlineColor).toBe(
+          resolveColorToken(`--bq-stroke--${role}`),
+        );
+      }
 
-    colorProbe.remove();
-  });
+      colorProbe.remove();
+    },
+  );
 
   it('should reveal and reset the clear button when the control is interactive', async () => {
     const { root } = await render(<bq-input name="bq-input" value="Hello" />);

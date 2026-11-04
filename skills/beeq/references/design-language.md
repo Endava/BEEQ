@@ -128,7 +128,7 @@ Use native CSS Grid for page structure and BEEQ spacing tokens for gutters and m
 | Spacing | `--bq-spacing-xs3`, `--bq-spacing-xs2`, `--bq-spacing-xs`, `--bq-spacing-s`, `--bq-spacing-m`, `--bq-spacing-l`, `--bq-spacing-xl`, `--bq-spacing-xxl`, `--bq-spacing-xxl2`, `--bq-spacing-xxl3`, `--bq-spacing-xxl4` |
 | Viewport-height layout | Tailwind `h-dynamic-vh` maps to `100dvh` |
 | Direction-aware layout | Use `bs-*`, `is-*`, `border-{bl,bs,be,i,is,ie}-*`, `p-{b,bs,be,i}-*`, `m-{b,bs,be,i}-*`, and `inset-{b,bs,be,i,is,ie}-*` rather than physical left/right values when direction can change |
-| Hover and active blends | Use `bg-{hover,active}-*`, `border-{hover,active}-*`, `text-{hover,active}-*`, and `stroke-{hover,active}-*`; they blend the selected token with `--bq-hover` or `--bq-active`. In plain CSS, mix at the point of use: `color-mix(in srgb, var(--bq-ui--secondary), var(--bq-hover) 20%)` |
+| Hover and active blends | Use `bg-{hover,active}-*`, `border-{hover,active}-*`, `text-{hover,active}-*`, and `stroke-{hover,active}-*`; they use `--bq-hover`/`--bq-active` and the existing `--bq-state-mix-hover`/`--bq-state-mix-active` controls (default 20%). In plain CSS: `color-mix(in srgb, var(--bq-ui--secondary), var(--bq-hover) var(--bq-state-mix-hover, 20%))` |
 
 The utilities in this table require the `@beeq/tailwindcss` preset. Without it, use the CSS variables directly.
 

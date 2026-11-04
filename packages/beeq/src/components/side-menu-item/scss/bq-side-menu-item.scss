@@ -78,8 +78,8 @@
   }
 
   .bq-side-menu-item:not(.disabled, .active):hover {
-    @include bq-color-mix(background-color, var(--bq-side-menu-item--bg-hover), hover, 20%);
-    @include bq-color-mix(color, var(--bq-side-menu-item--text-hover), hover, 20%);
+    @include bq-color-mix(background-color, var(--bq-side-menu-item--bg-hover), hover);
+    @include bq-color-mix(color, var(--bq-side-menu-item--text-hover), hover);
   }
 
   .bq-side-menu-item.active {

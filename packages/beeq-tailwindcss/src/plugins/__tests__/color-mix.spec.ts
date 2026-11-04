@@ -2,6 +2,7 @@ import postcss, { type Rule } from 'postcss';
 import tailwindcss from 'tailwindcss';
 import { describe, expect, it } from 'vitest';
 
+import { blendColor } from '../../helpers';
 import preset from '../../index';
 
 type Declarations = Record<string, string>;
@@ -45,7 +46,30 @@ describe('ColorMix', () => {
     expect(declarations).toBeDefined();
     expect(Object.keys(declarations)).toEqual([property]);
     expect(declarations[property]).toMatch(/^color-mix\(in srgb, /);
-    expect(declarations[property]).toContain(`, ${base} 20%)`);
+    const state = base === 'var(--bq-hover)' ? 'hover' : 'active';
+    expect(declarations[property]).toContain(`, ${base} var(--bq-state-mix-${state}, 20%))`);
+  });
+
+  it.each([0, 20, 37.41, 100])('preserves explicit numeric helper percentages (%s)', (percentage) => {
+    expect(blendColor({ color: '#ffffff', base: '#000000', percentage })).toEqual({
+      'background-color': `color-mix(in srgb, #ffffff, #000000 ${percentage}%)`,
+    });
+  });
+
+  it('preserves the helper default and accepts a shared state percentage expression', () => {
+    expect(blendColor({ color: '#ffffff', base: '#000000' })).toEqual({
+      'background-color': 'color-mix(in srgb, #ffffff, #000000 20%)',
+    });
+    expect(
+      blendColor({
+        color: '#ffffff',
+        base: 'var(--bq-hover)',
+        percentage: 'var(--bq-state-mix-hover, 20%)',
+        property: 'color',
+      }),
+    ).toEqual({
+      color: 'color-mix(in srgb, #ffffff, var(--bq-hover) var(--bq-state-mix-hover, 20%))',
+    });
   });
 
   it('should emit each blend utility once', async () => {
