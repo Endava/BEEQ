@@ -759,7 +759,7 @@ To apply a custom brand, override the CSS custom properties in your stylesheet â
 
 Color alone must never be the only way information is communicated. Always pair color with text labels, icons, or patterns.
 
-BEEQ's test suite evaluates the targets below. They are accessibility requirements, not a guarantee that every Endava pairing passes. Endava follows approved brand values even when a value falls short; fidelity tests and contrast diagnostics serve different purposes.
+BEEQ's test suite enforces the targets below for the default BEEQ theme. Endava is instead gated against its approved Figma values, because changing those colors to satisfy a generic threshold would break brand fidelity. Treat the same targets as review criteria for Endava and custom themes, and test the actual surface and state combinations used by your product.
 
 <Note>
   Those tests don't run in your app, so if you override colors, check your values against the same pairs and minimums â€” see the [contrast checklist for custom brands](/theming/custom-theme#contrast-checklist-for-custom-brands).
