@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { DefaultRootTheme, EndavaDarkTheme, EndavaLightTheme, EndavaRootTheme } from '../../generated/tokens';
-import { CSS_COLORS } from '../colors';
+import { CSS_COLORS, PRIMITIVE_COLORS } from '../colors';
 import { createResolver, mergeTokenMaps } from './helpers/resolve-tokens';
 
 // EWR Design Library (main), bfGWgYe1WjHL2HDMJLw8GQ, Colors 5253:40.
@@ -25,7 +25,6 @@ const parity = [
   ['icon--warning', '#c77905', '#f99c11', '5529:538/651'],
   ['ui--success', '#2d9c5b', '#3dd17b', '5529:513/626'],
   ['ui--warning', '#eb9410', '#f99c11', '5529:516/629'],
-  ['ui--danger', '#d4403b', '#e84641', '5529:514/627'],
   ['stroke--primary', '#e8eaeb', '#30404b', '5529:547/660 (decorative)'],
   ['stroke--secondary', '#a3aaaf', '#758087', '5529:555/668 (subtle)'],
   ['stroke--tertiary', '#192b37', '#ffffff', '5529:542/655 (control boundary)'],
@@ -106,12 +105,34 @@ describe.each(modes)('Endava %s Figma parity', (_, mode, index) => {
   });
 });
 
-describe('uncontested primitive selection', () => {
-  it('uses existing Figma primitives, with no text-step substitution for solid borders', () => {
+describe('Endava palette boundary', () => {
+  it('keeps only the established grey and orange primitive families', () => {
+    const endavaPrimitives = Object.keys(CSS_COLORS).filter((key) => key.startsWith('--bq-endava-'));
+
+    expect(endavaPrimitives).toHaveLength(22);
+    expect(endavaPrimitives.every((key) => /^--bq-endava-(grey|orange)-/.test(key))).toBe(true);
+    expect(JSON.stringify(PRIMITIVE_COLORS)).not.toContain('--bq-endava-');
+  });
+
+  it('stores feedback, information and data values at the semantic layer', () => {
     expect(EndavaRootTheme).toMatchObject({
-      'bq-success': 'var(--bq-endava-positive-500)',
-      'bq-warning': 'var(--bq-endava-warning-500)',
-      'bq-warning-strong': 'var(--bq-endava-warning-700)',
+      'bq-white': '#fff',
+      'bq-success': '#2d9c5b',
+      'bq-warning': '#eb9410',
+      'bq-warning-strong': '#c77905',
+      'bq-danger': '#d4403b',
+      'bq-info': '#417191',
+      'bq-data-02': '#5899c4',
+    });
+  });
+
+  it('uses semantic aliases, with no text-step substitution for solid borders', () => {
+    expect(EndavaRootTheme).toMatchObject({
+      'bq-brand': 'var(--bq-endava-orange-600)',
+      'bq-brand-strong': 'var(--bq-brand)',
+      'bq-brand-bright': 'var(--bq-brand)',
+      'bq-data-01': 'var(--bq-brand)',
+      'bq-data-10': 'var(--bq-neutral-700)',
     });
     expect(EndavaLightTheme).toMatchObject({
       'bq-stroke--success': 'var(--bq-success)',
@@ -138,11 +159,24 @@ describe('design approval holds (compatibility pins, not certified Figma matches
   it('retains the unresolved C2-C5 primitive and foreground mappings', () => {
     expect(EndavaRootTheme).toMatchObject({
       'bq-neutral-300': 'var(--bq-endava-grey-300)',
-      'bq-success-strong': 'var(--bq-endava-positive-800)',
-      'bq-danger-strong': 'var(--bq-endava-negative-800)',
-      'bq-brand-strong': 'var(--bq-endava-orange-600)',
+      'bq-success-strong': '#1d633a',
+      'bq-danger-strong': '#a72925',
+      'bq-brand-strong': 'var(--bq-brand)',
     });
     expect(EndavaLightTheme['bq-text--brand']).toBe('var(--bq-brand-strong)');
+  });
+
+  it('retains compatibility-only values without manufacturing primitive scales', () => {
+    expect(EndavaRootTheme).toMatchObject({
+      'bq-neutral-50': 'var(--bq-endava-grey-50)',
+      'bq-neutral-1000': 'var(--bq-endava-grey-1000)',
+      'bq-brand-light': 'var(--bq-endava-orange-100)',
+      'bq-brand-dark': 'var(--bq-endava-orange-1000)',
+      'bq-success-light': '#eaf5ef',
+      'bq-success-dark': '#1f4943',
+      'bq-info-light': '#ecf1f4',
+      'bq-info-dark': '#29475a',
+    });
   });
 
   it.each(modes)('retains %s state endpoints while C1/C4/C7/C8 and the fit remain unresolved', (_, mode) => {
@@ -153,6 +187,13 @@ describe('design approval holds (compatibility pins, not certified Figma matches
   });
 
   it.each(modes)('retains %s focus treatment pending C9', (_, mode, index) => {
-    expect(mode['bq-focus']).toBe(index === 1 ? 'var(--bq-brand-strong)' : 'var(--bq-brand-bright)');
+    expect(mode['bq-focus']).toBe(index === 1 ? 'var(--bq-brand-strong)' : 'var(--bq-brand)');
+  });
+
+  it('preserves the current dark danger decisions without certifying them as Figma parity', () => {
+    expect(EndavaDarkTheme).toMatchObject({
+      'bq-text--on-danger': 'var(--bq-white)',
+      'bq-ui--danger': 'var(--bq-danger)',
+    });
   });
 });

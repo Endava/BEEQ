@@ -21,7 +21,7 @@ const roleHex: Record<ThemeMode, readonly string[]> = {
   'beeq-light': ['#2a2c35', '#b41226', '#ffffff', '#4f46e5', '#1158bc', '#156eeb', '#4f46e5'],
   'beeq-dark': ['#f1f2f4', '#f3a2ac', '#ffffff', '#b2c0fe', '#a1c5f7', '#156eeb', '#b2c0fe'],
   'endava-light': ['#192b37', '#a72925', '#ffffff', '#ff5640', '#3b6684', '#417191', '#ff5640'],
-  'endava-dark': ['#ffffff', '#e84641', '#14222c', '#ff5640', '#9dcff0', '#9dcff0', '#ff5640'],
+  'endava-dark': ['#ffffff', '#e84641', '#ffffff', '#ff5640', '#9dcff0', '#9dcff0', '#ff5640'],
 };
 
 const endavaParity = [

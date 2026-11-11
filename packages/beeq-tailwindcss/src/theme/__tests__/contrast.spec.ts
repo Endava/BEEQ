@@ -166,9 +166,6 @@ const ENDAVA_DARK_RED_ORANGE_TEXT =
 const ENDAVA_LIGHT_RED_ORANGE_TEXT =
   'Endava brand fidelity: light brand text, icons, strokes and focus are Red Orange #FF5640 (`--bq-brand-strong`), so they match the brand fill side by side. 3.15:1 on white, 2.81:1 on the brand tint and 2.61:1 on Blue 10, so AA for large text only on white and below the 3:1 floor on the other surfaces. Decided with the user and documented in the Endava deviation log; override `--bq-brand-strong` with #C33600 for 4.5:1 on every light surface.';
 
-const ENDAVA_DARK_DANGER_FILL =
-  'Endava brand fidelity: the dark danger fill is the brand Negative #E84641. Solid Blue on it is 3.73:1, so `--bq-black` is the darker #14222C (grey-1000), which reaches 4.16:1 at rest. Passes AA for large text and UI components only. Decided with the user and documented in the Endava deviation log.';
-
 const ENDAVA_DARK_DANGER_TEXT =
   'Endava brand fidelity: dark danger text is the brand Negative #E84641 (`--bq-danger-bright`). 3.73:1 on the base surface, 3.19:1 on the danger tint and 2.75:1 on raised surfaces, so it misses AA for normal text and the 3:1 large-text floor on raised surfaces (APCA Lc 27–33). Decided with the user and documented in the Endava deviation log; override `--bq-danger-bright` with #F6B5B3 for 4.5:1 on every dark surface.';
 
@@ -177,7 +174,6 @@ const CONTRAST_EXCEPTIONS: ContrastException[] = [
   { combo: 'endava-light', fg: 'text--on-accent', bg: 'ui--accent', min: 3, reason: ENDAVA_WHITE_ON_RED_ORANGE },
   { combo: 'endava-dark', fg: 'text--on-brand', bg: 'ui--brand', min: 3, reason: ENDAVA_WHITE_ON_RED_ORANGE },
   { combo: 'endava-dark', fg: 'text--on-accent', bg: 'ui--accent', min: 3, reason: ENDAVA_WHITE_ON_RED_ORANGE },
-  { combo: 'endava-dark', fg: 'text--on-danger', bg: 'ui--danger', min: 3, reason: ENDAVA_DARK_DANGER_FILL },
   ...(
     [
       ['background--primary', 3.7],
@@ -222,7 +218,7 @@ const CONTRAST_EXCEPTIONS: ContrastException[] = [
     })),
   ),
 ];
-const EXPECTED_EXCEPTION_COUNT = 26;
+const EXPECTED_EXCEPTION_COUNT = 25;
 const EXPECTED_BELOW_FLOOR_COUNT = 8;
 
 const findException = (combo: ComboName, { fg, bg }: Pair) =>
@@ -311,12 +307,12 @@ const ON_COLOR: Record<ComboName, Record<Intent, 'white' | 'black'>> = {
     info: 'black',
     success: 'black',
     warning: 'black',
-    danger: 'black',
+    danger: 'white',
   },
 };
 
 /** Endava dark fills use `-bright` for these intents (plan §4.1 rule 3) */
-const ENDAVA_DARK_BRIGHT_FILLS: Intent[] = ['info', 'success', 'warning', 'danger'];
+const ENDAVA_DARK_BRIGHT_FILLS: Intent[] = ['info', 'success', 'warning'];
 
 /** Expected raw mode-role references per combination (plan §4.1 rule 3) */
 const expectedIntentRoles = ({ name, mode }: Combo): [string, string][] => [
@@ -342,7 +338,7 @@ const expectedIntentRoles = ({ name, mode }: Combo): [string, string][] => [
     ];
   }),
   ['stroke--brand-alt', `var(--bq-brand-${mode})`],
-  ['focus', `var(--bq-brand-${mode === 'light' ? 'strong' : 'bright'})`],
+  ['focus', name === 'endava-dark' ? 'var(--bq-brand)' : `var(--bq-brand-${mode === 'light' ? 'strong' : 'bright'})`],
 ];
 
 /** Literal values allowed in mode objects (state bases, mixed at 20%) */
