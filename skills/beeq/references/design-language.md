@@ -71,7 +71,8 @@ Do not hard-code the underlying values. If a semantic token cannot express the i
 | Neutral | `--bq-neutral-white`, `--bq-neutral-black` |
 | Endava orange | `--bq-endava-orange-100` through `--bq-endava-orange-1000` in 100-step increments |
 | Endava grey | `--bq-endava-grey-50`, `--bq-endava-grey-100` through `--bq-endava-grey-900`, `--bq-endava-grey-950`, `--bq-endava-grey-1000` |
-| Endava neutral | `--bq-endava-neutral-white`, `--bq-endava-neutral-black` |
+
+Endava feedback, information, and data colors are semantic-only. Use `--bq-success-*`, `--bq-danger-*`, `--bq-warning-*`, `--bq-info-*`, and `--bq-data-*`; do not recreate `--bq-endava-positive-*`, `--bq-endava-negative-*`, `--bq-endava-warning-*`, `--bq-endava-info-*`, or `--bq-endava-data-*` primitive families. Use `--bq-white`, `--bq-black`, and `--bq-neutral-*` instead of the removed `--bq-endava-neutral-*` aliases.
 
 ## Themes
 

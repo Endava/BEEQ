@@ -26,11 +26,11 @@ Color in BEEQ serves communication, not decoration. The system gives every color
 
 ## Color architecture
 
-BEEQ resolves every color through four layers. Each layer only references the layer above it, so a change at the top flows through every role, component, and mode below.
+BEEQ resolves colors through up to four layers. Shared palettes use primitives; theme-specific values with no reusable scale can start at root semantics. Mode roles and component variables always keep the same stable API.
 
 | Layer | Examples | Defined per | What it's for |
 |---|---|---|---|
-| **1. Primitives** | `--bq-iris-600`, `--bq-grey-800`, `--bq-endava-orange-600` | Palette | Raw hex values. Pick from them when you define a theme. |
+| **1. Primitives (when reusable)** | `--bq-iris-600`, `--bq-grey-800`, `--bq-endava-orange-600` | Palette | Shared raw values for a complete or established palette. |
 | **2. Root semantics** | `--bq-brand`, `--bq-brand-strong`, `--bq-info`, `--bq-neutral-800`, `--bq-white`, `--bq-black` | Theme (`bq-theme`) | The theme's intents and neutrals. Change these to rebrand. |
 | **3. Mode roles** | `--bq-background--primary`, `--bq-text--brand`, `--bq-ui--brand`, `--bq-text--on-brand`, `--bq-focus` | Theme × mode (`bq-mode`) | What you style UI with. Each role maps to a root semantic and flips between light and dark. |
 | **4. Component variables** | `--bq-button--primary-background`, `--bq-alert--background-info` | Component | Per-component hooks. Each defaults to a mode role. |
@@ -41,13 +41,13 @@ For example, the primary button fill in the BEEQ theme resolves like this:
 --bq-iris-600 → --bq-brand → --bq-ui--brand → --bq-button--primary-background → <bq-button>
 ```
 
-BEEQ components only read mode roles and component variables — never primitives or root semantics directly. Mode roles in turn only reference root semantics, which is why rebranding the root layer is enough to restyle every component in both modes.
+BEEQ components only read mode roles and component variables — never primitives or root semantics directly. Mode roles in turn only reference root semantics, which is why rebranding the root layer is enough to restyle every component in both modes. Endava keeps its established grey/orange primitives, while feedback, information, and data values live directly at the semantic layer.
 
 ---
 
 ## Color palette
 
-The palette on this page is the **root semantics** layer — the colors each theme assigns to its intents, neutrals, and data series. Every color is shown for both built-in themes, and each swatch shows the primitive it points to — the hex codes are in [Primitive color scales](#primitive-color-scales). To switch themes in your app, see [Themes and modes](/theming/themes-and-modes).
+The palette on this page is the **root semantics** layer — the colors each theme assigns to its intents, neutrals, and data series. Every color is shown for both built-in themes; a swatch may resolve through an established primitive or directly from its theme semantic. To switch themes in your app, see [Themes and modes](/theming/themes-and-modes).
 
 ### Intent scale
 
@@ -129,32 +129,32 @@ The base step is a solid fill. Text and icons generally use `-strong` in light m
       <Color.Item name="accent-bright" value="var(--bq-endava-orange-600)" />
     </Color>
     <Color variant="compact">
-      <Color.Item name="info-light" value="var(--bq-endava-info-100)" />
-      <Color.Item name="info" value="var(--bq-endava-info-600)" />
-      <Color.Item name="info-dark" value="var(--bq-endava-info-1000)" />
-      <Color.Item name="info-strong" value="var(--bq-endava-info-700)" />
-      <Color.Item name="info-bright" value="var(--bq-endava-info-300)" />
+      <Color.Item name="info-light" value="#ecf1f4" />
+      <Color.Item name="info" value="#417191" />
+      <Color.Item name="info-dark" value="#29475a" />
+      <Color.Item name="info-strong" value="#3b6684" />
+      <Color.Item name="info-bright" value="#9dcff0" />
     </Color>
     <Color variant="compact">
-      <Color.Item name="success-light" value="var(--bq-endava-positive-100)" />
-      <Color.Item name="success" value="var(--bq-endava-positive-500)" />
-      <Color.Item name="success-dark" value="var(--bq-endava-positive-1000)" />
-      <Color.Item name="success-strong" value="var(--bq-endava-positive-800)" />
-      <Color.Item name="success-bright" value="var(--bq-endava-positive-400)" />
+      <Color.Item name="success-light" value="#eaf5ef" />
+      <Color.Item name="success" value="#2d9c5b" />
+      <Color.Item name="success-dark" value="#1f4943" />
+      <Color.Item name="success-strong" value="#1d633a" />
+      <Color.Item name="success-bright" value="#3dd17b" />
     </Color>
     <Color variant="compact">
-      <Color.Item name="warning-light" value="var(--bq-endava-warning-100)" />
-      <Color.Item name="warning" value="var(--bq-endava-warning-500)" />
-      <Color.Item name="warning-dark" value="var(--bq-endava-warning-1000)" />
-      <Color.Item name="warning-strong" value="var(--bq-endava-warning-700)" />
-      <Color.Item name="warning-bright" value="var(--bq-endava-warning-400)" />
+      <Color.Item name="warning-light" value="#fdf4e7" />
+      <Color.Item name="warning" value="#eb9410" />
+      <Color.Item name="warning-dark" value="#413f30" />
+      <Color.Item name="warning-strong" value="#c77905" />
+      <Color.Item name="warning-bright" value="#f99c11" />
     </Color>
     <Color variant="compact">
-      <Color.Item name="danger-light" value="var(--bq-endava-negative-100)" />
-      <Color.Item name="danger" value="var(--bq-endava-negative-500)" />
-      <Color.Item name="danger-dark" value="var(--bq-endava-negative-1000)" />
-      <Color.Item name="danger-strong" value="var(--bq-endava-negative-800)" />
-      <Color.Item name="danger-bright" value="var(--bq-endava-negative-400)" />
+      <Color.Item name="danger-light" value="#fbeceb" />
+      <Color.Item name="danger" value="#d4403b" />
+      <Color.Item name="danger-dark" value="#3e3039" />
+      <Color.Item name="danger-strong" value="#a72925" />
+      <Color.Item name="danger-bright" value="#e84641" />
     </Color>
   </Tab>
 </Tabs>
@@ -163,7 +163,7 @@ Swatch names drop the `--bq-` prefix — for example, `brand-strong` is `--bq-br
 
 ### Neutral
 
-The neutral scale underpins surfaces, text, borders, and icons. `--bq-white` and `--bq-black` complete it. In the BEEQ theme the neutrals alias the grey primitives, and `--bq-white` and `--bq-black` are plain hex values with no primitive behind them; in the Endava theme they're the Endava Solid Blue shades, `--bq-neutral-950` is Solid Blue itself, and `--bq-black` is the slightly darker `--bq-endava-grey-1000` (`#14222C`).
+The neutral scale underpins surfaces, text, borders, and icons. `--bq-white` and `--bq-black` complete it. In the BEEQ theme the neutrals alias the grey primitives, and `--bq-white` and `--bq-black` are plain hex values with no primitive behind them. In the Endava theme the neutral steps use the Endava Solid Blue scale, `--bq-white` is `#fff`, `--bq-neutral-950` is Solid Blue itself, and `--bq-black` is the slightly darker `--bq-endava-grey-1000` (`#14222C`).
 
 <Tabs>
   <Tab title="BEEQ theme">
@@ -186,7 +186,7 @@ The neutral scale underpins surfaces, text, borders, and icons. `--bq-white` and
   </Tab>
   <Tab title="Endava theme">
     <Color variant="compact">
-      <Color.Item name="bq-white" value="var(--bq-endava-neutral-white)" />
+      <Color.Item name="bq-white" value="#ffffff" />
       <Color.Item name="bq-neutral-50" value="var(--bq-endava-grey-50)" />
       <Color.Item name="bq-neutral-100" value="var(--bq-endava-grey-100)" />
       <Color.Item name="bq-neutral-200" value="var(--bq-endava-grey-200)" />
@@ -228,23 +228,23 @@ A curated set of 12 distinct hues for charts, graphs, and data-driven visualizat
   <Tab title="Endava theme">
     <Color variant="compact">
       <Color.Item name="bq-data-01" value="var(--bq-endava-orange-600)" />
-      <Color.Item name="bq-data-02" value="var(--bq-endava-data-blue)" />
-      <Color.Item name="bq-data-03" value="var(--bq-endava-data-yellow)" />
-      <Color.Item name="bq-data-04" value="var(--bq-endava-data-green)" />
-      <Color.Item name="bq-data-05" value="var(--bq-endava-data-violet)" />
-      <Color.Item name="bq-data-06" value="var(--bq-endava-data-grass-green)" />
-      <Color.Item name="bq-data-07" value="var(--bq-endava-data-avocado)" />
-      <Color.Item name="bq-data-08" value="var(--bq-endava-data-jeans)" />
-      <Color.Item name="bq-data-09" value="var(--bq-endava-data-teal)" />
+      <Color.Item name="bq-data-02" value="#5899c4" />
+      <Color.Item name="bq-data-03" value="#cf820e" />
+      <Color.Item name="bq-data-04" value="#30a661" />
+      <Color.Item name="bq-data-05" value="#8684bf" />
+      <Color.Item name="bq-data-06" value="#7b9922" />
+      <Color.Item name="bq-data-07" value="#998f63" />
+      <Color.Item name="bq-data-08" value="#7c94a6" />
+      <Color.Item name="bq-data-09" value="#3e9c8f" />
       <Color.Item name="bq-data-10" value="var(--bq-endava-grey-700)" />
       <Color.Item name="bq-data-11" value="var(--bq-endava-grey-1000)" />
-      <Color.Item name="bq-data-12" value="var(--bq-endava-neutral-white)" />
+      <Color.Item name="bq-data-12" value="#ffffff" />
     </Color>
   </Tab>
 </Tabs>
 
 <Tip>
-  The full primitive palette — all hue scales grouped by color — is available in the [Primitive color scales](#primitive-color-scales) reference section below.
+  The reusable primitive palettes are available in [Primitive color scales](#primitive-color-scales). Endava exposes only its established grey and orange primitive families; feedback, information, and data colors are semantic tokens.
 </Tip>
 
 ---
@@ -273,11 +273,11 @@ Use background tokens for page surfaces, cards, modals, drawers, and overlays.
   </Tab>
   <Tab title="Endava theme">
     <Color variant="compact">
-      <Color.Item name="--bq-background--primary" value={{ light: "var(--bq-endava-neutral-white)", dark: "var(--bq-endava-grey-950)" }} />
+      <Color.Item name="--bq-background--primary" value={{ light: "#ffffff", dark: "var(--bq-endava-grey-950)" }} />
       <Color.Item name="--bq-background--secondary" value={{ light: "var(--bq-endava-grey-100)", dark: "var(--bq-endava-grey-800)" }} />
       <Color.Item name="--bq-background--tertiary" value={{ light: "var(--bq-endava-grey-300)", dark: "var(--bq-endava-grey-600)" }} />
       <Color.Item name="--bq-background--alt" value={{ light: "var(--bq-endava-grey-200)", dark: "var(--bq-endava-grey-700)" }} />
-      <Color.Item name="--bq-background--inverse" value={{ light: "var(--bq-endava-grey-950)", dark: "var(--bq-endava-neutral-white)" }} />
+      <Color.Item name="--bq-background--inverse" value={{ light: "var(--bq-endava-grey-950)", dark: "#ffffff" }} />
       <Color.Item name="--bq-background--brand" value="var(--bq-endava-orange-600)" />
       <Color.Item name="--bq-background--overlay" value={{ light: "var(--bq-endava-grey-950)", dark: "var(--bq-endava-grey-1000)" }} />
     </Color>
@@ -322,23 +322,23 @@ Use UI tokens for component fills — buttons, toggles, chips, selects, badges, 
   </Tab>
   <Tab title="Endava theme">
     <Color variant="compact">
-      <Color.Item name="--bq-ui--primary" value={{ light: "var(--bq-endava-neutral-white)", dark: "var(--bq-endava-grey-950)" }} />
+      <Color.Item name="--bq-ui--primary" value={{ light: "#ffffff", dark: "var(--bq-endava-grey-950)" }} />
       <Color.Item name="--bq-ui--secondary" value={{ light: "var(--bq-endava-grey-100)", dark: "var(--bq-endava-grey-800)" }} />
       <Color.Item name="--bq-ui--tertiary" value="var(--bq-endava-grey-500)" />
-      <Color.Item name="--bq-ui--inverse" value={{ light: "var(--bq-endava-grey-950)", dark: "var(--bq-endava-neutral-white)" }} />
+      <Color.Item name="--bq-ui--inverse" value={{ light: "var(--bq-endava-grey-950)", dark: "#ffffff" }} />
       <Color.Item name="--bq-ui--alt" value={{ light: "var(--bq-endava-grey-50)", dark: "var(--bq-endava-grey-900)" }} />
       <Color.Item name="--bq-ui--brand" value="var(--bq-endava-orange-600)" />
       <Color.Item name="--bq-ui--brand-alt" value={{ light: "var(--bq-endava-orange-100)", dark: "var(--bq-endava-orange-1000)" }} />
       <Color.Item name="--bq-ui--accent" value="var(--bq-endava-orange-600)" />
       <Color.Item name="--bq-ui--accent-alt" value={{ light: "var(--bq-endava-orange-100)", dark: "var(--bq-endava-orange-1000)" }} />
-      <Color.Item name="--bq-ui--info" value={{ light: "var(--bq-endava-info-600)", dark: "var(--bq-endava-info-300)" }} />
-      <Color.Item name="--bq-ui--info-alt" value={{ light: "var(--bq-endava-info-100)", dark: "var(--bq-endava-info-1000)" }} />
-      <Color.Item name="--bq-ui--success" value={{ light: "var(--bq-endava-positive-500)", dark: "var(--bq-endava-positive-400)" }} />
-      <Color.Item name="--bq-ui--success-alt" value={{ light: "var(--bq-endava-positive-100)", dark: "var(--bq-endava-positive-1000)" }} />
-      <Color.Item name="--bq-ui--warning" value={{ light: "var(--bq-endava-warning-500)", dark: "var(--bq-endava-warning-400)" }} />
-      <Color.Item name="--bq-ui--warning-alt" value={{ light: "var(--bq-endava-warning-100)", dark: "var(--bq-endava-warning-1000)" }} />
-      <Color.Item name="--bq-ui--danger" value={{ light: "var(--bq-endava-negative-500)", dark: "var(--bq-endava-negative-400)" }} />
-      <Color.Item name="--bq-ui--danger-alt" value={{ light: "var(--bq-endava-negative-100)", dark: "var(--bq-endava-negative-1000)" }} />
+      <Color.Item name="--bq-ui--info" value={{ light: "#417191", dark: "#9dcff0" }} />
+      <Color.Item name="--bq-ui--info-alt" value={{ light: "#ecf1f4", dark: "#29475a" }} />
+      <Color.Item name="--bq-ui--success" value={{ light: "#2d9c5b", dark: "#3dd17b" }} />
+      <Color.Item name="--bq-ui--success-alt" value={{ light: "#eaf5ef", dark: "#1f4943" }} />
+      <Color.Item name="--bq-ui--warning" value={{ light: "#eb9410", dark: "#f99c11" }} />
+      <Color.Item name="--bq-ui--warning-alt" value={{ light: "#fdf4e7", dark: "#413f30" }} />
+      <Color.Item name="--bq-ui--danger" value="#d4403b" />
+      <Color.Item name="--bq-ui--danger-alt" value={{ light: "#fbeceb", dark: "#3e3039" }} />
     </Color>
   </Tab>
 </Tabs>
@@ -355,7 +355,7 @@ Intent fills follow the same rule for every intent:
 
 | Token | Light mode | Dark mode | When to use |
 |---|---|---|---|
-| `--bq-ui--{intent}` | `{intent}` | `{intent}` — Endava uses `{intent}-bright` for info, success, warning, and danger | Solid fill. Pair with `--bq-text--on-{intent}`. |
+| `--bq-ui--{intent}` | `{intent}` | `{intent}` — Endava uses `{intent}-bright` for info, success, and warning; its current danger override stays on `danger` | Solid fill. Pair with `--bq-text--on-{intent}`. |
 | `--bq-ui--{intent}-alt` | `{intent}-light` | `{intent}-dark` | Subtle tint for badges, alerts, and selected rows. Pair with `--bq-text--{intent}`. |
 
 `{intent}` is one of `brand`, `accent`, `info`, `success`, `warning`, or `danger`.
@@ -380,15 +380,15 @@ Use text tokens for all typographic content — headings, body copy, labels, cap
   </Tab>
   <Tab title="Endava theme">
     <Color variant="compact">
-      <Color.Item name="--bq-text--primary" value={{ light: "var(--bq-endava-grey-950)", dark: "var(--bq-endava-neutral-white)" }} />
+      <Color.Item name="--bq-text--primary" value={{ light: "var(--bq-endava-grey-950)", dark: "#ffffff" }} />
       <Color.Item name="--bq-text--secondary" value={{ light: "var(--bq-endava-grey-700)", dark: "var(--bq-endava-grey-400)" }} />
-      <Color.Item name="--bq-text--inverse" value={{ light: "var(--bq-endava-neutral-white)", dark: "var(--bq-endava-grey-950)" }} />
+      <Color.Item name="--bq-text--inverse" value={{ light: "#ffffff", dark: "var(--bq-endava-grey-950)" }} />
       <Color.Item name="--bq-text--brand" value={{ light: "var(--bq-endava-orange-600)", dark: "var(--bq-endava-orange-600)" }} />
       <Color.Item name="--bq-text--accent" value={{ light: "var(--bq-endava-orange-600)", dark: "var(--bq-endava-orange-600)" }} />
-      <Color.Item name="--bq-text--info" value={{ light: "var(--bq-endava-info-700)", dark: "var(--bq-endava-info-300)" }} />
-      <Color.Item name="--bq-text--success" value={{ light: "var(--bq-endava-positive-800)", dark: "var(--bq-endava-positive-400)" }} />
-      <Color.Item name="--bq-text--warning" value={{ light: "var(--bq-endava-warning-700)", dark: "var(--bq-endava-warning-400)" }} />
-      <Color.Item name="--bq-text--danger" value={{ light: "var(--bq-endava-negative-800)", dark: "var(--bq-endava-negative-400)" }} />
+      <Color.Item name="--bq-text--info" value={{ light: "#3b6684", dark: "#9dcff0" }} />
+      <Color.Item name="--bq-text--success" value={{ light: "#1d633a", dark: "#3dd17b" }} />
+      <Color.Item name="--bq-text--warning" value={{ light: "#c77905", dark: "#f99c11" }} />
+      <Color.Item name="--bq-text--danger" value={{ light: "#a72925", dark: "#e84641" }} />
     </Color>
   </Tab>
 </Tabs>
@@ -418,12 +418,12 @@ On-color tokens set the text and icon color on a solid intent fill. Each one is 
   </Tab>
   <Tab title="Endava theme">
     <Color variant="compact">
-      <Color.Item name="--bq-text--on-brand" value="var(--bq-endava-neutral-white)" />
-      <Color.Item name="--bq-text--on-accent" value="var(--bq-endava-neutral-white)" />
-      <Color.Item name="--bq-text--on-info" value={{ light: "var(--bq-endava-neutral-white)", dark: "var(--bq-endava-grey-1000)" }} />
-      <Color.Item name="--bq-text--on-success" value={{ light: "var(--bq-endava-neutral-white)", dark: "var(--bq-endava-grey-1000)" }} />
+      <Color.Item name="--bq-text--on-brand" value="#ffffff" />
+      <Color.Item name="--bq-text--on-accent" value="#ffffff" />
+      <Color.Item name="--bq-text--on-info" value={{ light: "#ffffff", dark: "var(--bq-endava-grey-1000)" }} />
+      <Color.Item name="--bq-text--on-success" value={{ light: "#ffffff", dark: "var(--bq-endava-grey-1000)" }} />
       <Color.Item name="--bq-text--on-warning" value="var(--bq-endava-grey-1000)" />
-      <Color.Item name="--bq-text--on-danger" value={{ light: "var(--bq-endava-neutral-white)", dark: "var(--bq-endava-grey-1000)" }} />
+      <Color.Item name="--bq-text--on-danger" value="#ffffff" />
     </Color>
   </Tab>
 </Tabs>
@@ -435,7 +435,7 @@ On-color tokens set the text and icon color on a solid intent fill. Each one is 
 | `--bq-text--on-info` | `white` | `white` | `white` | `black` | `--bq-ui--info` |
 | `--bq-text--on-success` | `black` | `black` | `white` | `black` | `--bq-ui--success` |
 | `--bq-text--on-warning` | `black` | `black` | `black` | `black` | `--bq-ui--warning` |
-| `--bq-text--on-danger` | `white` | `white` | `white` | `black` | `--bq-ui--danger` |
+| `--bq-text--on-danger` | `white` | `white` | `white` | `white` | `--bq-ui--danger` |
 
 <Warning>
   Treat a fill and its on-color as a pair. If you override `--bq-ui--{intent}` or `--bq-{intent}`, check `--bq-text--on-{intent}` against the new fill and override it too when needed.
@@ -461,15 +461,15 @@ Use icon tokens for SVG fills. Pair each icon token with the text token of the s
   </Tab>
   <Tab title="Endava theme">
     <Color variant="compact">
-      <Color.Item name="--bq-icon--primary" value={{ light: "var(--bq-endava-grey-950)", dark: "var(--bq-endava-neutral-white)" }} />
+      <Color.Item name="--bq-icon--primary" value={{ light: "var(--bq-endava-grey-950)", dark: "#ffffff" }} />
       <Color.Item name="--bq-icon--secondary" value={{ light: "var(--bq-endava-grey-700)", dark: "var(--bq-endava-grey-400)" }} />
-      <Color.Item name="--bq-icon--inverse" value={{ light: "var(--bq-endava-neutral-white)", dark: "var(--bq-endava-grey-950)" }} />
+      <Color.Item name="--bq-icon--inverse" value={{ light: "#ffffff", dark: "var(--bq-endava-grey-950)" }} />
       <Color.Item name="--bq-icon--brand" value={{ light: "var(--bq-endava-orange-600)", dark: "var(--bq-endava-orange-600)" }} />
       <Color.Item name="--bq-icon--accent" value={{ light: "var(--bq-endava-orange-600)", dark: "var(--bq-endava-orange-600)" }} />
-      <Color.Item name="--bq-icon--info" value={{ light: "var(--bq-endava-grey-950)", dark: "var(--bq-endava-neutral-white)" }} />
-      <Color.Item name="--bq-icon--success" value={{ light: "var(--bq-endava-positive-800)", dark: "var(--bq-endava-positive-400)" }} />
-      <Color.Item name="--bq-icon--warning" value={{ light: "var(--bq-endava-warning-700)", dark: "var(--bq-endava-warning-400)" }} />
-      <Color.Item name="--bq-icon--danger" value={{ light: "var(--bq-endava-negative-800)", dark: "var(--bq-endava-negative-400)" }} />
+      <Color.Item name="--bq-icon--info" value={{ light: "var(--bq-endava-grey-950)", dark: "#ffffff" }} />
+      <Color.Item name="--bq-icon--success" value={{ light: "#1d633a", dark: "#3dd17b" }} />
+      <Color.Item name="--bq-icon--warning" value={{ light: "#c77905", dark: "#f99c11" }} />
+      <Color.Item name="--bq-icon--danger" value={{ light: "#a72925", dark: "#e84641" }} />
     </Color>
   </Tab>
 </Tabs>
@@ -507,16 +507,16 @@ Use stroke tokens for borders, dividers, and outlines.
     <Color variant="compact">
       <Color.Item name="--bq-stroke--primary" value={{ light: "var(--bq-endava-grey-100)", dark: "var(--bq-endava-grey-900)" }} />
       <Color.Item name="--bq-stroke--secondary" value={{ light: "var(--bq-endava-grey-400)", dark: "var(--bq-endava-grey-600)" }} />
-      <Color.Item name="--bq-stroke--tertiary" value={{ light: "var(--bq-endava-grey-950)", dark: "var(--bq-endava-neutral-white)" }} />
-      <Color.Item name="--bq-stroke--inverse" value={{ light: "var(--bq-endava-neutral-white)", dark: "var(--bq-endava-grey-950)" }} />
+      <Color.Item name="--bq-stroke--tertiary" value={{ light: "var(--bq-endava-grey-950)", dark: "#ffffff" }} />
+      <Color.Item name="--bq-stroke--inverse" value={{ light: "#ffffff", dark: "var(--bq-endava-grey-950)" }} />
       <Color.Item name="--bq-stroke--alt" value={{ light: "var(--bq-endava-grey-100)", dark: "var(--bq-endava-grey-900)" }} />
       <Color.Item name="--bq-stroke--brand" value={{ light: "var(--bq-endava-orange-600)", dark: "var(--bq-endava-orange-600)" }} />
       <Color.Item name="--bq-stroke--brand-alt" value={{ light: "var(--bq-endava-orange-100)", dark: "var(--bq-endava-orange-1000)" }} />
       <Color.Item name="--bq-stroke--accent" value={{ light: "var(--bq-endava-orange-600)", dark: "var(--bq-endava-orange-600)" }} />
-      <Color.Item name="--bq-stroke--info" value={{ light: "var(--bq-endava-info-700)", dark: "var(--bq-endava-info-300)" }} />
-      <Color.Item name="--bq-stroke--success" value={{ light: "var(--bq-endava-positive-500)", dark: "var(--bq-endava-positive-400)" }} />
-      <Color.Item name="--bq-stroke--warning" value={{ light: "var(--bq-endava-warning-500)", dark: "var(--bq-endava-warning-400)" }} />
-      <Color.Item name="--bq-stroke--danger" value={{ light: "var(--bq-endava-negative-800)", dark: "var(--bq-endava-negative-400)" }} />
+      <Color.Item name="--bq-stroke--info" value={{ light: "#3b6684", dark: "#9dcff0" }} />
+      <Color.Item name="--bq-stroke--success" value={{ light: "#2d9c5b", dark: "#3dd17b" }} />
+      <Color.Item name="--bq-stroke--warning" value={{ light: "#eb9410", dark: "#f99c11" }} />
+      <Color.Item name="--bq-stroke--danger" value={{ light: "#a72925", dark: "#e84641" }} />
     </Color>
   </Tab>
 </Tabs>
@@ -548,7 +548,7 @@ The [EWR Design Library (main), Colors page](https://www.figma.com/design/bfGWgY
 | Inverse text/icon | `text--inverse`, `icon--inverse` | White / #192B37 | Matched |
 | Information icon | `icon--info` | #192B37 / white | Matched; informational text/fill keep their own semantics |
 | Success / warning solid fill | `ui--success` / `ui--warning` | #2D9C5B / #3DD17B; #EB9410 / #F99C11 | Matched |
-| Danger solid fill | `ui--danger` | #D4403B / #E84641 | Matched |
+| Danger solid fill | `ui--danger` | #D4403B / #D4403B | Light matched; current dark override is not certified Figma parity |
 | Warning text/icon | `text--warning`, `icon--warning` | #C77905 / #F99C11 | Matched |
 | Secondary decorative border | `stroke--primary` | #E8EAEB / #30404B | Matched by separator intent |
 | Primary control boundary | `stroke--tertiary` | #192B37 / white | Rest matched; disputed light states held |
@@ -583,7 +583,7 @@ State tokens drive hover, pressed, and focus feedback. They're mode roles, so th
 |---|---|---|
 | `--bq-hover` | `#444546` | Mixing base for hover states — never painted directly |
 | `--bq-active` | `#1f2026` | Mixing base for pressed states — never painted directly |
-| `--bq-focus` | `brand-strong` (light), `brand-bright` (dark) | Keyboard focus outlines |
+| `--bq-focus` | `brand-strong` (light), `brand` (dark) | Keyboard focus outlines |
 
 Hover and active colors are derived where they're used. The existing controls `--bq-state-mix-hover` and `--bq-state-mix-active` both default to 20%; native components and Tailwind blend utilities honor scoped overrides:
 
@@ -1041,7 +1041,7 @@ The complete raw hue scales — grouped by color, not by meaning. Each step is a
   </Color.Row>
 </Color>
 
-The Endava theme draws from its own `--bq-endava-*` primitives, named after the Endava brand palette. Some scales only include the steps the theme uses.
+The Endava theme retains its established grey and orange primitives. Feedback, information, and data values are defined directly by Endava root semantic tokens rather than exposed as additional primitive scales.
 
 <Color variant="table">
   <Color.Row title="Endava Orange">
@@ -1070,42 +1070,11 @@ The Endava theme draws from its own `--bq-endava-*` primitives, named after the 
     <Color.Item name="endava-grey-950" value="var(--bq-endava-grey-950)" />
     <Color.Item name="endava-grey-1000" value="var(--bq-endava-grey-1000)" />
   </Color.Row>
-  <Color.Row title="Endava Positive">
-    <Color.Item name="endava-positive-100" value="var(--bq-endava-positive-100)" />
-    <Color.Item name="endava-positive-300" value="var(--bq-endava-positive-300)" />
-    <Color.Item name="endava-positive-400" value="var(--bq-endava-positive-400)" />
-    <Color.Item name="endava-positive-500" value="var(--bq-endava-positive-500)" />
-    <Color.Item name="endava-positive-600" value="var(--bq-endava-positive-600)" />
-    <Color.Item name="endava-positive-800" value="var(--bq-endava-positive-800)" />
-    <Color.Item name="endava-positive-1000" value="var(--bq-endava-positive-1000)" />
-  </Color.Row>
-  <Color.Row title="Endava Negative">
-    <Color.Item name="endava-negative-100" value="var(--bq-endava-negative-100)" />
-    <Color.Item name="endava-negative-200" value="var(--bq-endava-negative-200)" />
-    <Color.Item name="endava-negative-300" value="var(--bq-endava-negative-300)" />
-    <Color.Item name="endava-negative-400" value="var(--bq-endava-negative-400)" />
-    <Color.Item name="endava-negative-500" value="var(--bq-endava-negative-500)" />
-    <Color.Item name="endava-negative-800" value="var(--bq-endava-negative-800)" />
-    <Color.Item name="endava-negative-1000" value="var(--bq-endava-negative-1000)" />
-  </Color.Row>
-  <Color.Row title="Endava Info">
-    <Color.Item name="endava-info-100" value="var(--bq-endava-info-100)" />
-    <Color.Item name="endava-info-300" value="var(--bq-endava-info-300)" />
-    <Color.Item name="endava-info-400" value="var(--bq-endava-info-400)" />
-    <Color.Item name="endava-info-600" value="var(--bq-endava-info-600)" />
-    <Color.Item name="endava-info-700" value="var(--bq-endava-info-700)" />
-    <Color.Item name="endava-info-1000" value="var(--bq-endava-info-1000)" />
-  </Color.Row>
-  <Color.Row title="Endava Warning">
-    <Color.Item name="endava-warning-100" value="var(--bq-endava-warning-100)" />
-    <Color.Item name="endava-warning-300" value="var(--bq-endava-warning-300)" />
-    <Color.Item name="endava-warning-400" value="var(--bq-endava-warning-400)" />
-    <Color.Item name="endava-warning-500" value="var(--bq-endava-warning-500)" />
-    <Color.Item name="endava-warning-700" value="var(--bq-endava-warning-700)" />
-    <Color.Item name="endava-warning-800" value="var(--bq-endava-warning-800)" />
-    <Color.Item name="endava-warning-1000" value="var(--bq-endava-warning-1000)" />
-  </Color.Row>
 </Color>
+
+<Warning>
+  Endava feedback, information, and data colors are semantic-only. Replace removed `--bq-endava-positive-*`, `--bq-endava-negative-*`, `--bq-endava-warning-*`, `--bq-endava-info-*`, and `--bq-endava-data-*` references with the corresponding `--bq-success-*`, `--bq-danger-*`, `--bq-warning-*`, `--bq-info-*`, or `--bq-data-*` semantic token. Replace `--bq-endava-neutral-white` and `--bq-endava-neutral-black` with the appropriate `--bq-white`, `--bq-black`, or `--bq-neutral-*` semantic token.
+</Warning>
 
 ---
 
