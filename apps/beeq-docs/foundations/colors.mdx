@@ -531,50 +531,6 @@ Use stroke tokens for borders, dividers, and outlines.
 | `--bq-stroke--brand-alt` | `brand-light` | `brand-dark` | `brand-light` | `brand-dark` | Low-emphasis brand borders, such as around `--bq-ui--brand-alt` |
 | `--bq-stroke--{intent}` | `{intent}-strong` | `{intent}-bright` | `{intent}` for success/warning; otherwise `{intent}-strong` | `{intent}-bright` | Selected, valid, warning, and invalid borders |
 
-## Endava Figma parity
-
-The [EWR Design Library (main), Colors page](https://www.figma.com/design/bfGWgYe1WjHL2HDMJLw8GQ/EWR-Design-Library--main-?node-id=5253-40) defines the targets below. Match intent, not the role name. Values are light / dark; the mode tables above cover the complete shipped inventory.
-
-| Figma intent | BEEQ role | Light / dark value | Status |
-|---|---|---|---|
-| Background primary / inverse | `background--primary` / `background--inverse` | White / #192B37, reversed for inverse | Matched |
-| Secondary surface | `background--secondary`, `ui--secondary` | #E8EAEB / #47555F | Matched; Figma UI-secondary is a foreground, not this surface |
-| Tertiary surface | `background--tertiary` | #BABFC3 / #758087 | Dark matched; light Blue 30 source disputed |
-| UI inverse | `ui--primary` | White / #192B37 | Matched by surface intent |
-| UI primary | `ui--inverse` | #192B37 / white | Matched by strong/inverted fill intent |
-| UI tertiary | `ui--tertiary` | #8C959B / #8C959B | Matched |
-| Primary text/icon | `text--primary`, `icon--primary` | #192B37 / white | Matched |
-| Secondary text/icon | `text--secondary`, `icon--secondary` | #5E6A73 / #A3AAAF | Matched |
-| Inverse text/icon | `text--inverse`, `icon--inverse` | White / #192B37 | Matched |
-| Information icon | `icon--info` | #192B37 / white | Matched; informational text/fill keep their own semantics |
-| Success / warning solid fill | `ui--success` / `ui--warning` | #2D9C5B / #3DD17B; #EB9410 / #F99C11 | Matched |
-| Danger solid fill | `ui--danger` | #D4403B / #D4403B | Light matched; current dark override is not certified Figma parity |
-| Warning text/icon | `text--warning`, `icon--warning` | #C77905 / #F99C11 | Matched |
-| Secondary decorative border | `stroke--primary` | #E8EAEB / #30404B | Matched by separator intent |
-| Primary control boundary | `stroke--tertiary` | #192B37 / white | Rest matched; disputed light states held |
-| Quarterly subtle border | `stroke--secondary` | #A3AAAF / #758087 | Rest matched; disabled opacity is not exact color parity |
-| Success / warning border | `stroke--success` / `stroke--warning` | #2D9C5B / #3DD17B; #EB9410 / #F99C11 | Matched; deliberately distinct from light text/icon steps |
-| Intermediate border / tertiary text | No dedicated BEEQ role | No automatic alias | Gap; equal hex does not establish intent |
-| Other accents, chart colors, tints, on-fill contracts and overlay opacity | Existing compatibility roles | See shipped inventory | Not certified by this foundation review |
-
-### Design approval holds
-
-The following conflicts remain unresolved. Existing mappings remain for compatibility, not because they have been certified as the design answer.
-
-| ID | Competing Figma specifications | Disposition |
-|---|---|---|
-| C1 | Brand hover #FF7866 in cards/variables; #B61B16 in local paint; #A81300 in text-hover numeric collection | Await role/mode-specific decision |
-| C2 | Blue 30 #BABFC3 in card/variable versus #D1D5D7 in paint style | Retain #BABFC3 primitive and dependent aliases |
-| C3 | Positive foreground #1D633A in label/roles versus #1D7C45 in primitive fill/style | Retain existing success foreground; base fill is independent |
-| C4 | Negative primitive label #D4403B, fill #B61B16, foreground roles #A72925 | Retain existing danger foreground; hover remains uncertified |
-| C5 | Light brand text #FF5640 in generic roles, #E03E00 in explicit light-mode style, #D63B10 contrast variant | Retain #FF5640; no automatic change to icons/fills/strokes |
-| C6 | Accent bb #68B5E8 printed versus #DCEEFA rendered/style/variable | No new primitive or semantic mapping |
-| C7 | Light control-border hover #47555F rendered versus #5E6A73 label/variables | Await design decision |
-| C8 | Light control-border active #192B37 in card versus #30404B in older variable | Await design decision |
-| C9 | Neutral 4px-spread focus shadow versus current orange outline | Preserve existing focus treatment pending technique/color approval |
-
-Hover/active endpoints and percentages remain unchanged. A shared mix cannot reproduce every explicit Figma state, and changing it would also affect unresolved rows. Measured candidates are not approved theme settings. Light elevation opacity has a separate [shadow approval hold](/foundations/shadows).
-
 ## States
 
 State tokens drive hover, pressed, and focus feedback. They're mode roles, so they follow the active theme and mode.
@@ -759,7 +715,7 @@ To apply a custom brand, override the CSS custom properties in your stylesheet â
 
 Color alone must never be the only way information is communicated. Always pair color with text labels, icons, or patterns.
 
-BEEQ's test suite enforces the targets below for the default BEEQ theme. Endava is instead gated against its approved Figma values, because changing those colors to satisfy a generic threshold would break brand fidelity. Treat the same targets as review criteria for Endava and custom themes, and test the actual surface and state combinations used by your product.
+BEEQ's test suite enforces the targets below for the default BEEQ theme. The Endava theme preserves its brand palette and is not included in the generic contrast gate. Treat these targets as review criteria for Endava and custom themes, and test the actual surface and state combinations used by your product.
 
 <Note>
   Those tests don't run in your app, so if you override colors, check your values against the same pairs and minimums â€” see the [contrast checklist for custom brands](/theming/custom-theme#contrast-checklist-for-custom-brands).
@@ -779,7 +735,7 @@ Important constraints include:
 - `--bq-stroke--primary` is decorative and `--bq-stroke--secondary` marks subtle or disabled borders, so neither carries the 3:1 non-text requirement. Use `--bq-stroke--tertiary` for borders that identify an interactive control.
 - In the BEEQ theme, dark-mode `--bq-text--accent` and `--bq-text--danger` reach APCA Lc 59.5 and 59.8 on `--bq-ui--secondary`, just under Lc 60. They still meet about 7:1.
 - In the Endava theme, check secondary text on each surface, particularly the lighter dark-mode secondary surface (#47555F). Don't assume tertiary or alternative surfaces support it.
-- In the Endava theme, light-mode brand text, icons, strokes, focus and their accent aliases retain Red Orange (#FF5640). It is 3.15:1 on white, 2.61:1 on secondary surfaces and 2.81:1 on the brand tint. These are compatibility values pending the specific design decisions above, not permission to darken the official palette.
+- In the Endava theme, light-mode brand text, icons, strokes, focus and their accent aliases use Red Orange (#FF5640). It is 3.15:1 on white, 2.61:1 on secondary surfaces and 2.81:1 on the brand tint. These values preserve brand fidelity; they do not establish accessibility conformance or prevent product-specific alternatives after design and accessibility review.
 - Endava dark brand/accent text (#FF5640) falls short of 4.5:1 on secondary surfaces (#47555F) and the brand tint. Dark success/warning foregrounds also have APCA shortfalls. Test the actual pair instead of changing these brand defaults to satisfy a test.
 - Light Endava warning text/icons (#C77905), success borders (#2D9C5B) and solid-fill labels can fall short of the targets above. Use written state labels and review the product's accessibility requirements explicitly.
 
