@@ -532,7 +532,7 @@ Here is a working example showing how to read the user's preferred color scheme 
 
 ## Endava theme
 
-The `endava` theme maps the [EWR Design Library (main)](https://www.figma.com/design/bfGWgYe1WjHL2HDMJLw8GQ/EWR-Design-Library--main-?node-id=5253-40) by intent. Approved brand values are not replaced with nearby shades to satisfy contrast tests. See [Endava parity and approval holds](/foundations/colors#endava-figma-parity) for the source-backed mappings and unresolved design questions.
+The `endava` theme maps the [EWR Design Library (main)](https://www.figma.com/design/bfGWgYe1WjHL2HDMJLw8GQ/EWR-Design-Library--main-?node-id=5253-40) by intent. Approved brand values are not replaced with nearby shades to satisfy contrast tests. See [Endava parity and approval holds](#state-fidelity-and-pending-decisions) for the source-backed mappings and unresolved design questions.
 
 - **Brand and accent:** Red Orange `#FF5640` is the brand fill. Accent aliases the brand, so `--bq-accent-*` matches `--bq-brand-*`.
 - **Brand foregrounds:** `--bq-brand-strong` and `--bq-brand-bright` retain #FF5640. Conflicting light text variants remain blocked; they do not authorize a change to icons, fills, strokes or focus.
@@ -541,7 +541,7 @@ The `endava` theme maps the [EWR Design Library (main)](https://www.figma.com/de
 - **Dark mode fills:** info, success, warning, and danger fills use their `-bright` step, with `--bq-black` (`#14222C`) as the on-color.
 - **Signals:** light success fill/stroke #2D9C5B, warning fill/stroke #EB9410 and warning text/icon #C77905 follow their distinct Figma roles. Dark success/warning/danger remain #3DD17B/#F99C11/#E84641. Light success/danger foreground conflicts remain blocked.
 - **Stroke:** BEEQ primary is decorative, secondary subtle/disabled and tertiary a control boundary. This differs from Figma naming. Widths remain 1/2/3px because no authoritative global EWR width scale was found.
-- **Elevations:** dark mode uses the exact two-layer EWR effects without extra shadow rings. Light mode remains held for conflicting page/style opacity. See [Shadows](/foundations/shadows#endava-elevation-parity).
+- **Elevations:** dark mode uses the exact two-layer EWR effects without extra shadow rings. Light mode remains held for conflicting page/style opacity. See [Shadows](/foundations/shadows#shadows-in-dark-mode).
 - **Data, accent aliases and tints:** existing values remain for compatibility; the inspected foundations do not establish full parity for these intents.
 
 <Warning>
@@ -556,7 +556,7 @@ The `endava` theme maps the [EWR Design Library (main)](https://www.figma.com/de
 
 Hover/active use the existing endpoints and 20% defaults. Native components and Tailwind utilities honor `--bq-state-mix-hover`/`--bq-state-mix-active` overrides, but Endava's fitted alternatives are not approved: changing a shared mix also changes disputed brand, danger and border states. Disabled opacity is likewise an approximation, not role-by-role hex parity.
 
-The [conflict register](/foundations/colors#design-approval-holds) records the exact competing values and retained mappings. Light elevation replacement awaits a separate opacity decision. Radius, spacing and typography corrections are outside this update.
+The [conflict register](/foundations/colors#accessibility) records the exact competing values and retained mappings. Light elevation replacement awaits a separate opacity decision. Radius, spacing and typography corrections are outside this update.
 
 ---
 
