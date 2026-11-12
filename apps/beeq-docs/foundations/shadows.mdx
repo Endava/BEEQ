@@ -29,6 +29,8 @@ Components that need elevation expose component-level shadow variables. Prefer t
 
 The shadow scale moves from subtle interaction lift to pronounced floating surfaces. Use the smallest shadow that communicates the layer relationship.
 
+The following values belong to the default BEEQ theme. Endava has a separate dark set below.
+
 | Token | CSS variable | Tailwind key | Light mode | Dark mode | Common use |
 | --- | --- | --- | --- | --- | --- |
 | `xs` | `--bq-box-shadow--xs` | `shadow-xs` | `0 2px 0 rgba(0, 0, 0, 0.016)` | `0 1px 2px rgba(0, 0, 0, 0.4)` | Subtle interactive lift on compact elements. |
@@ -157,12 +159,14 @@ The shadow scale moves from subtle interaction lift to pronounced floating surfa
 
 ### Shadows in dark mode
 
-A soft black shadow disappears on a near-black page, so dark mode uses a different set in both the BEEQ and Endava themes:
+A soft black shadow disappears on a near-black page, so the default BEEQ dark theme adds:
 
 - **Edge ring.** `s`, `m`, and `l` start with a 1px ring in `--bq-stroke--primary`. It outlines the layer even when the layer and the surface below it share a color, such as a dropdown inside a card.
 - **Denser shadow.** The drop shadow keeps its offset and blur, with 40–70% black instead of 1.6–16%.
 
 The values are defined per mode, so a `[bq-mode]` subtree always gets the set for its own mode. The ring reads `--bq-stroke--primary` where the mode is set, so override the stroke token on that same element to change the ring color.
+
+The Endava dark theme uses two drop-shadow layers at each size and omits the edge ring used by the default BEEQ dark theme. Component borders remain independent.
 
 ---
 

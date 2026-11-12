@@ -69,13 +69,13 @@
 
   .bq-textarea__input:is(.validation-error, .validation-success, .validation-warning) {
     &:not(:disabled, :focus-within):hover {
-      @include bq-color-mix(--_textarea-border-color, var(--bq-textarea--validation-color), hover, 20%);
+      @include bq-color-mix(--_textarea-border-color, var(--bq-textarea--validation-color), hover);
     }
 
     &:not(:disabled):focus-within {
       --bq-ring-color-focus: var(--bq-textarea--validation-color);
 
-      @include bq-color-mix(--_textarea-border-color, var(--bq-textarea--validation-color), active, 20%);
+      @include bq-color-mix(--_textarea-border-color, var(--bq-textarea--validation-color), active);
     }
   }
 

@@ -5,8 +5,11 @@
 
 @layer bq.themes {
   :where([bq-theme='endava'], .endava) {
+    /* Typography */
     --bq-font-family: 'Poppins', sans-serif;
-    --bq-white: var(--bq-endava-neutral-white);
+
+    /* Neutrals */
+    --bq-white: #fff;
     --bq-black: var(--bq-endava-grey-1000);
     --bq-neutral-50: var(--bq-endava-grey-50);
     --bq-neutral-100: var(--bq-endava-grey-100);
@@ -20,46 +23,60 @@
     --bq-neutral-900: var(--bq-endava-grey-900);
     --bq-neutral-950: var(--bq-endava-grey-950);
     --bq-neutral-1000: var(--bq-endava-grey-1000);
+
+    /* Brand */
     --bq-brand-light: var(--bq-endava-orange-100);
     --bq-brand: var(--bq-endava-orange-600);
     --bq-brand-dark: var(--bq-endava-orange-1000);
-    --bq-brand-strong: var(--bq-endava-orange-600);
-    --bq-brand-bright: var(--bq-endava-orange-600);
+    --bq-brand-strong: var(--bq-brand);
+    --bq-brand-bright: var(--bq-brand);
+
+    /* Accent */
     --bq-accent-light: var(--bq-brand-light);
     --bq-accent: var(--bq-brand);
     --bq-accent-dark: var(--bq-brand-dark);
     --bq-accent-strong: var(--bq-brand-strong);
     --bq-accent-bright: var(--bq-brand-bright);
-    --bq-success-light: var(--bq-endava-positive-100);
-    --bq-success: var(--bq-endava-positive-600);
-    --bq-success-dark: var(--bq-endava-positive-1000);
-    --bq-success-strong: var(--bq-endava-positive-800);
-    --bq-success-bright: var(--bq-endava-positive-400);
-    --bq-danger-light: var(--bq-endava-negative-100);
-    --bq-danger: var(--bq-endava-negative-500);
-    --bq-danger-dark: var(--bq-endava-negative-1000);
-    --bq-danger-strong: var(--bq-endava-negative-800);
-    --bq-danger-bright: var(--bq-endava-negative-400);
-    --bq-warning-light: var(--bq-endava-warning-100);
-    --bq-warning: var(--bq-endava-warning-400);
-    --bq-warning-dark: var(--bq-endava-warning-1000);
-    --bq-warning-strong: var(--bq-endava-warning-800);
-    --bq-warning-bright: var(--bq-endava-warning-400);
-    --bq-info-light: var(--bq-endava-info-100);
-    --bq-info: var(--bq-endava-info-600);
-    --bq-info-dark: var(--bq-endava-info-1000);
-    --bq-info-strong: var(--bq-endava-info-700);
-    --bq-info-bright: var(--bq-endava-info-300);
+
+    /* Success */
+    --bq-success-light: #eaf5ef;
+    --bq-success: #2d9c5b;
+    --bq-success-dark: #1f4943;
+    --bq-success-strong: #1d633a;
+    --bq-success-bright: #3dd17b;
+
+    /* Danger */
+    --bq-danger-light: #fbeceb;
+    --bq-danger: #d4403b;
+    --bq-danger-dark: #3e3039;
+    --bq-danger-strong: #a72925;
+    --bq-danger-bright: #e84641;
+
+    /* Warning */
+    --bq-warning-light: #fdf4e7;
+    --bq-warning: #eb9410;
+    --bq-warning-dark: #413f30;
+    --bq-warning-strong: #c77905;
+    --bq-warning-bright: #f99c11;
+
+    /* Information */
+    --bq-info-light: #ecf1f4;
+    --bq-info: #417191;
+    --bq-info-dark: #29475a;
+    --bq-info-strong: #3b6684;
+    --bq-info-bright: #9dcff0;
+
+    /* Data visualization */
     --bq-data-01: var(--bq-brand);
-    --bq-data-02: var(--bq-endava-data-blue);
-    --bq-data-03: var(--bq-endava-data-yellow);
-    --bq-data-04: var(--bq-endava-data-green);
-    --bq-data-05: var(--bq-endava-data-violet);
-    --bq-data-06: var(--bq-endava-data-grass-green);
-    --bq-data-07: var(--bq-endava-data-avocado);
-    --bq-data-08: var(--bq-endava-data-jeans);
-    --bq-data-09: var(--bq-endava-data-teal);
-    --bq-data-10: var(--bq-endava-grey-700);
+    --bq-data-02: #5899c4;
+    --bq-data-03: #cf820e;
+    --bq-data-04: #30a661;
+    --bq-data-05: #8684bf;
+    --bq-data-06: #7b9922;
+    --bq-data-07: #998f63;
+    --bq-data-08: #7c94a6;
+    --bq-data-09: #3e9c8f;
+    --bq-data-10: var(--bq-neutral-700);
     --bq-data-11: var(--bq-black);
     --bq-data-12: var(--bq-white);
   }
@@ -70,6 +87,7 @@
     [bq-theme='endava'][bq-mode='light'],
     .endava.light
   ) {
+    /* Backgrounds */
     --bq-background--primary: var(--bq-white);
     --bq-background--secondary: var(--bq-neutral-100);
     --bq-background--tertiary: var(--bq-neutral-300);
@@ -78,18 +96,22 @@
     --bq-background--brand: var(--bq-brand);
     // with opacity: 60%
     --bq-background--overlay: var(--bq-neutral-950);
+
+    /* Icons */
     --bq-icon--primary: var(--bq-neutral-950);
     --bq-icon--secondary: var(--bq-neutral-700);
     --bq-icon--inverse: var(--bq-white);
     --bq-icon--alt: var(--bq-white);
     --bq-icon--brand: var(--bq-brand-strong);
     --bq-icon--accent: var(--bq-accent-strong);
-    --bq-icon--info: var(--bq-info-strong);
+    --bq-icon--info: var(--bq-neutral-950);
     --bq-icon--success: var(--bq-success-strong);
     --bq-icon--warning: var(--bq-warning-strong);
     --bq-icon--danger: var(--bq-danger-strong);
+
+    /* Strokes */
     // Decorative dividers and separators
-    --bq-stroke--primary: var(--bq-neutral-200);
+    --bq-stroke--primary: var(--bq-neutral-100);
     // Subtle or disabled borders
     --bq-stroke--secondary: var(--bq-neutral-400);
     // Interactive control borders (>= 3:1)
@@ -100,9 +122,11 @@
     --bq-stroke--brand-alt: var(--bq-brand-light);
     --bq-stroke--accent: var(--bq-accent-strong);
     --bq-stroke--info: var(--bq-info-strong);
-    --bq-stroke--success: var(--bq-success-strong);
-    --bq-stroke--warning: var(--bq-warning-strong);
+    --bq-stroke--success: var(--bq-success);
+    --bq-stroke--warning: var(--bq-warning);
     --bq-stroke--danger: var(--bq-danger-strong);
+
+    /* Text */
     --bq-text--primary: var(--bq-neutral-950);
     --bq-text--secondary: var(--bq-neutral-700);
     --bq-text--inverse: var(--bq-white);
@@ -113,6 +137,8 @@
     --bq-text--success: var(--bq-success-strong);
     --bq-text--warning: var(--bq-warning-strong);
     --bq-text--danger: var(--bq-danger-strong);
+
+    /* Text on solid fills */
     // Accepted exception: white on Red Orange is 3.15:1 (large/bold labels only)
     --bq-text--on-brand: var(--bq-white);
     // Accepted exception: aliases brand
@@ -121,6 +147,8 @@
     --bq-text--on-success: var(--bq-white);
     --bq-text--on-warning: var(--bq-black);
     --bq-text--on-danger: var(--bq-white);
+
+    /* UI surfaces */
     --bq-ui--primary: var(--bq-white);
     --bq-ui--secondary: var(--bq-neutral-100);
     --bq-ui--tertiary: var(--bq-neutral-500);
@@ -138,36 +166,45 @@
     --bq-ui--warning-alt: var(--bq-warning-light);
     --bq-ui--danger: var(--bq-danger);
     --bq-ui--danger-alt: var(--bq-danger-light);
+
+    /* Elevation */
     --bq-box-shadow--xs: 0 2px 0 rgb(0 0 0 / 1.6%);
     --bq-box-shadow--s: 0 8px 24px rgb(0 0 0 / 4%);
     --bq-box-shadow--m: 0 10px 48px -16px rgb(0 0 0 / 12%);
     --bq-box-shadow--l: 0 20px 58px -16px rgb(0 0 0 / 16%);
+
+    /* Interaction */
     --bq-hover: #444546;
     --bq-active: #1f2026;
     --bq-focus: var(--bq-brand-strong);
   }
 
   :where([bq-theme='endava'][bq-mode='dark'], .endava.dark) {
+    /* Backgrounds */
     --bq-background--primary: var(--bq-neutral-950);
-    --bq-background--secondary: var(--bq-neutral-900);
-    --bq-background--tertiary: var(--bq-neutral-800);
+    --bq-background--secondary: var(--bq-neutral-800);
+    --bq-background--tertiary: var(--bq-neutral-600);
     --bq-background--alt: var(--bq-neutral-700);
     --bq-background--inverse: var(--bq-white);
     --bq-background--brand: var(--bq-brand);
     // with opacity: 60%
     --bq-background--overlay: var(--bq-neutral-1000);
+
+    /* Icons */
     --bq-icon--primary: var(--bq-white);
     --bq-icon--secondary: var(--bq-neutral-400);
     --bq-icon--inverse: var(--bq-neutral-950);
     --bq-icon--alt: var(--bq-white);
     --bq-icon--brand: var(--bq-brand-bright);
     --bq-icon--accent: var(--bq-accent-bright);
-    --bq-icon--info: var(--bq-info-bright);
+    --bq-icon--info: var(--bq-white);
     --bq-icon--success: var(--bq-success-bright);
     --bq-icon--warning: var(--bq-warning-bright);
     --bq-icon--danger: var(--bq-danger-bright);
+
+    /* Strokes */
     // Decorative dividers and separators
-    --bq-stroke--primary: var(--bq-neutral-800);
+    --bq-stroke--primary: var(--bq-neutral-900);
     // Subtle or disabled borders
     --bq-stroke--secondary: var(--bq-neutral-600);
     // Interactive control borders (>= 3:1)
@@ -181,6 +218,8 @@
     --bq-stroke--success: var(--bq-success-bright);
     --bq-stroke--warning: var(--bq-warning-bright);
     --bq-stroke--danger: var(--bq-danger-bright);
+
+    /* Text */
     --bq-text--primary: var(--bq-white);
     --bq-text--secondary: var(--bq-neutral-400);
     --bq-text--inverse: var(--bq-neutral-950);
@@ -191,6 +230,8 @@
     --bq-text--success: var(--bq-success-bright);
     --bq-text--warning: var(--bq-warning-bright);
     --bq-text--danger: var(--bq-danger-bright);
+
+    /* Text on solid fills */
     // Accepted exception: white on Red Orange is 3.15:1 (large/bold labels only)
     --bq-text--on-brand: var(--bq-white);
     // Accepted exception: aliases brand
@@ -198,9 +239,11 @@
     --bq-text--on-info: var(--bq-black);
     --bq-text--on-success: var(--bq-black);
     --bq-text--on-warning: var(--bq-black);
-    --bq-text--on-danger: var(--bq-black);
+    --bq-text--on-danger: var(--bq-white);
+
+    /* UI surfaces */
     --bq-ui--primary: var(--bq-neutral-950);
-    --bq-ui--secondary: var(--bq-neutral-900);
+    --bq-ui--secondary: var(--bq-neutral-800);
     --bq-ui--tertiary: var(--bq-neutral-500);
     --bq-ui--inverse: var(--bq-white);
     --bq-ui--alt: var(--bq-neutral-900);
@@ -214,14 +257,30 @@
     --bq-ui--success-alt: var(--bq-success-dark);
     --bq-ui--warning: var(--bq-warning-bright);
     --bq-ui--warning-alt: var(--bq-warning-dark);
-    --bq-ui--danger: var(--bq-danger-bright);
+    --bq-ui--danger: var(--bq-danger);
     --bq-ui--danger-alt: var(--bq-danger-dark);
-    --bq-box-shadow--xs: 0 1px 2px rgb(0 0 0 / 40%);
-    --bq-box-shadow--s: 0 0 0 1px var(--bq-stroke--primary), 0 8px 24px rgb(0 0 0 / 40%);
-    --bq-box-shadow--m: 0 0 0 1px var(--bq-stroke--primary), 0 10px 48px -16px rgb(0 0 0 / 60%);
-    --bq-box-shadow--l: 0 0 0 1px var(--bq-stroke--primary), 0 20px 58px -16px rgb(0 0 0 / 70%);
+
+    /* Elevation */
+    /* stylelint-disable number-max-precision -- Preserve approved Figma effect geometry and RGB paints. */
+    --bq-box-shadow--xs:
+      0 9.680214881896973px 30.9766845703125px -3.8720855712890625px rgb(0 0 0 / 10%),
+      0 5.808128833770752px 13.552299499511719px -5.808128833770752px rgb(0 0 0 / 15%);
+    --bq-box-shadow--s:
+      0 11.616257667541504px 40.65690231323242px -3.8720855712890625px
+        rgb(2.875000238418579% 10.149998962879181% 15.000000596046448% / 12%),
+      0 7.744171142578125px 17.42438507080078px -5.808128833770752px rgb(0 0 0 / 12%);
+    --bq-box-shadow--m:
+      0 13.552299499511719px 61.953369140625px -3.8720855712890625px rgb(0 0 0 / 12%),
+      0 7.744171142578125px 21.296472549438477px -5.808128833770752px rgb(0 0 0 / 12%);
+    --bq-box-shadow--l:
+      0 17.42438507080078px 85.1858901977539px -3.8720855712890625px rgb(0 0 0 / 14%),
+      0 7.744171142578125px 27.104598999023438px -5.808128833770752px
+        rgb(0% 4.249999299645424% 7.083333283662796% / 12%);
+    /* stylelint-enable number-max-precision */
+
+    /* Interaction */
     --bq-hover: #444546;
     --bq-active: #1f2026;
-    --bq-focus: var(--bq-brand-bright);
+    --bq-focus: var(--bq-brand);
   }
 }

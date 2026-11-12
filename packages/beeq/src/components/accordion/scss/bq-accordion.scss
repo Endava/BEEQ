@@ -206,7 +206,7 @@
   }
 
   .bq-accordion.filled .bq-accordion__header:hover {
-    @include bq-color-mix(background-color, var(--bq-accordion--filled-collapsed-background), hover, 20%);
+    @include bq-color-mix(background-color, var(--bq-accordion--filled-collapsed-background), hover);
   }
 
   .bq-accordion.filled[open] .bq-accordion__header {
@@ -214,7 +214,7 @@
   }
 
   .bq-accordion.filled[open] .bq-accordion__header:hover {
-    @include bq-color-mix(background-color, var(--bq-accordion--filled-expanded-collapsed-hover), hover, 20%);
+    @include bq-color-mix(background-color, var(--bq-accordion--filled-expanded-collapsed-hover), hover);
   }
 
   .bq-accordion.filled[open] .bq-accordion__header--text {
@@ -222,7 +222,7 @@
   }
 
   .bq-accordion.ghost .bq-accordion__header:hover {
-    @include bq-color-mix(background-color, var(--bq-accordion--ghost-expanded-collapsed-hover), hover, 20%);
+    @include bq-color-mix(background-color, var(--bq-accordion--ghost-expanded-collapsed-hover), hover);
   }
 
   .bq-accordion.ghost[open] .bq-accordion__header {
@@ -230,7 +230,7 @@
   }
 
   .bq-accordion.ghost[open] .bq-accordion__header:hover {
-    @include bq-color-mix(background-color, var(--bq-accordion--ghost-expanded-collapsed-hover), hover, 20%);
+    @include bq-color-mix(background-color, var(--bq-accordion--ghost-expanded-collapsed-hover), hover);
   }
 
   .bq-accordion.ghost[open] .bq-accordion__header--text {

@@ -107,8 +107,8 @@
   }
 
   .bq-tab:not(:disabled):hover {
-    @include bq-color-mix(background-color, var(--bq-tab--background-hover), hover, 20%);
-    @include bq-color-mix(color, var(--bq-tab--text-color-hover), hover, 20%);
+    @include bq-color-mix(background-color, var(--bq-tab--background-hover), hover);
+    @include bq-color-mix(color, var(--bq-tab--text-color-hover), hover);
   }
 
   .bq-tab:focus-visible {

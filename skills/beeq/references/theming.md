@@ -76,6 +76,8 @@ Every intent has the same five steps:
 
 Change an intent to re-colour every role and component that reads it, in both modes. Info is its own intent: informational states read `--bq-info*`, never `--bq-brand*`, so a re-brand leaves them alone.
 
+Endava exceptions by intent: information icons use neutral foregrounds; light success/warning borders use their base fill steps rather than `-strong`. Figma UI-primary is foreground/control, whereas BEEQ UI-primary is a surface. Match intent rather than copying Figma role names.
+
 ## What beeq.css already styles
 
 The stylesheet sets `font-family: var(--bq-font-family)` and `font-size: var(--bq-font-size--m)` on `html`, and `background-color: var(--bq-background--primary)`, `color: var(--bq-text--primary)`, and `line-height: var(--bq-font-line-height--regular)` on `body`. Pages inherit the active theme and mode from these rules, so product CSS starts at layout. Set a different surface or text role only on the element that needs it.
@@ -98,21 +100,21 @@ Each colour family has one job. Pair a fill with the foreground made for it.
 | `--bq-hover`, `--bq-active` | Mixing state colours | See [Hover and pressed states](#hover-and-pressed-states) | Direct paint |
 | `--bq-focus` | Focus outlines | — | Brand decoration |
 
-Feedback also needs a written label, never colour alone. These pairs pass WCAG AA in the built-in themes; check contrast in every active theme and mode after an override.
+Feedback also needs a written label, never colour alone. These pairs preserve intent, not universal WCAG conformance. Endava preserves approved brand values even when they fall short; check every actual theme, surface and state.
 
 **Endava exceptions.** In the Endava theme, `--bq-text--on-brand` and `--bq-text--on-accent` are white on Red Orange: 3.15:1. That meets 3:1 for large text (24px, or 18.66px bold) and UI glyphs, not 4.5:1 for normal text. Keep text on Endava brand fills large, or override the pair if the product needs 4.5:1.
 
-In light mode, Endava `--bq-brand-strong` is Red Orange as well, so `--bq-text--brand`, `--bq-icon--brand`, `--bq-stroke--brand` and `--bq-focus` match the brand fill. That's 3.15:1 on white, 2.61:1 on `--bq-ui--secondary` and 2.81:1 on `--bq-ui--brand-alt`. For 4.5:1 on every light surface, set `--bq-brand-strong: #c33600` on `[bq-theme="endava"]`.
+Light Endava brand foregrounds retain Red Orange: 3.15:1 on white, 2.61:1 on secondary surfaces and 2.81:1 on the brand tint. Warning text/icons, solid labels and dark secondary-surface pairs have additional shortfalls. Keep approved defaults; any product-specific alternative needs explicit design/accessibility approval. Conflicting brand, Blue 30, success/danger foreground, accent, control-border and focus sources remain [design approval holds](https://www.beeq.design/foundations/colors#design-approval-holds). Existing shared hover/active endpoints and percentages remain unchanged pending approval of a global fit.
 
 ## Hover and pressed states
 
-BEEQ mixes hover and pressed colours where they are used: `color-mix(in srgb, <base>, var(--bq-hover) 20%)`, and the same with `--bq-active`. Component variables hold only the resting colour, so overriding one re-colours its hover and pressed states too. A component has a separate `-hover` variable, such as `--bq-option--background-hover`, only when hover starts from a different colour than rest; it holds that base, and BEEQ still mixes it.
+BEEQ mixes hover and pressed colours at the point of use, using the existing `--bq-state-mix-hover` and `--bq-state-mix-active` controls (both default to 20%). Native components and Tailwind blend utilities honor scoped overrides. Component variables hold the resting colour; separate `-hover` variables such as `--bq-option--background-hover` hold an alternate base, not a pre-mixed colour.
 
 Follow the same rule in custom CSS. Mix at the point of use, and never store a pre-mixed colour in a variable:
 
 ```css
 .chip:hover {
-  background-color: color-mix(in srgb, var(--bq-ui--secondary), var(--bq-hover) 20%);
+  background-color: color-mix(in srgb, var(--bq-ui--secondary), var(--bq-hover) var(--bq-state-mix-hover, 20%));
 }
 ```
 

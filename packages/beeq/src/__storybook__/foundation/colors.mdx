@@ -91,6 +91,20 @@ import { capitalize, getVariableValue } from './helper';
       `-strong` is text, icon and stroke on light surfaces, and `-bright` is text, icon and stroke on dark surfaces.
       Components never read these steps directly; they read the mode roles below (`--bq-text--brand`, `--bq-ui--success-alt`, ...).
 
+      <p>
+        Endava follows EWR intent rather than matching Figma role names: its UI primary is a surface
+        (Figma UI inverse), and its tertiary stroke is a control boundary (Figma primary stroke).
+        Light success and warning strokes use the solid steps, not the darker text/icon steps.
+        Information icons are neutral in both modes. Brand fidelity is not a contrast guarantee.
+      </p>
+      <p>
+        Conflicting brand, Blue 30, success/danger foreground, accent and focus specifications remain
+        unchanged pending design approval. Hover and active still use the existing shared mix.
+        Native components and Tailwind blend utilities honor `--bq-state-mix-hover` and
+        `--bq-state-mix-active` (both default to 20%). Endava calibration remains blocked; these
+        states are not certified as exact Figma matches. See the <a href="https://www.beeq.design/foundations/colors#endava-figma-parity">Endava parity and approval holds</a>.
+      </p>
+
       {Object.entries({ brand }).map(([name, values]) => (
         <ColorItem name={name} values={values} />
       ))}

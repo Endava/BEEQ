@@ -71,7 +71,7 @@
     border-color: color-mix(
       in srgb,
       var(--bq-date-picker--border-color-focus),
-      var(--bq-hover) 20%
+      var(--bq-hover) var(--bq-state-mix-hover, 20%)
     );
   }
 
@@ -98,20 +98,20 @@
 
 // Validation states rules ({state} = --bq-date-picker--border-color-{danger|success|warning}):
 // - Idle:     border = {state}
-// - Hover:    border = color-mix({state}, hover 20%)
-// - Focus:    border = color-mix({state}, active 20%)
+// - Hover:    border = color-mix({state}, hover with the shared percentage)
+// - Focus:    border = color-mix({state}, active with the shared percentage)
 //             ring   = {state}
 %dp-validation-state {
   --bq-date-picker--border-color: var(--bq-date-picker--validation-color);
 
   &:not(.is-disabled, :focus-within, .is-open):hover {
-    border-color: color-mix(in srgb, var(--bq-date-picker--validation-color), var(--bq-hover) 20%);
+    border-color: color-mix(in srgb, var(--bq-date-picker--validation-color), var(--bq-hover) var(--bq-state-mix-hover, 20%));
   }
 
   &:not(.is-disabled):is(:focus-within, .is-open) {
     --bq-ring-color-focus: var(--bq-date-picker--validation-color);
 
-    border-color: color-mix(in srgb, var(--bq-date-picker--validation-color), var(--bq-active) 20%);
+    border-color: color-mix(in srgb, var(--bq-date-picker--validation-color), var(--bq-active) var(--bq-state-mix-active, 20%));
   }
 }
 

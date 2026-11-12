@@ -2995,7 +2995,7 @@ export namespace Components {
      * @dependency bq-icon
      * @attr {string} border - The corner radius of the Tag (will override size's predefined border)
      * @attr {boolean} clickable - If `true`, the Tag can be clickable
-     * @attr {"error" | "gray" | "info" | "success" | "warning"} color - The color style of the Tag
+     * @attr {string} color - A preset, CSS color, or BEEQ color token for the Tag
      * @attr {boolean} disabled - If `true`, the Tag will be disabled (only if clickable = `true`, no interaction allowed)
      * @attr {boolean} hidden - If `true`, the Tag component will be hidden
      * @attr {boolean} removable - If `true`, the Tag component can be removed
@@ -3061,7 +3061,7 @@ export namespace Components {
          */
         "clickable": boolean;
         /**
-          * The color style of the Tag
+          * A preset, CSS color, or BEEQ color token for the Tag
          */
         "color": TTagColor;
         /**
@@ -5707,7 +5707,7 @@ declare global {
      * @dependency bq-icon
      * @attr {string} border - The corner radius of the Tag (will override size's predefined border)
      * @attr {boolean} clickable - If `true`, the Tag can be clickable
-     * @attr {"error" | "gray" | "info" | "success" | "warning"} color - The color style of the Tag
+     * @attr {string} color - A preset, CSS color, or BEEQ color token for the Tag
      * @attr {boolean} disabled - If `true`, the Tag will be disabled (only if clickable = `true`, no interaction allowed)
      * @attr {boolean} hidden - If `true`, the Tag component will be hidden
      * @attr {boolean} removable - If `true`, the Tag component can be removed
@@ -9273,7 +9273,7 @@ declare namespace LocalJSX {
      * @dependency bq-icon
      * @attr {string} border - The corner radius of the Tag (will override size's predefined border)
      * @attr {boolean} clickable - If `true`, the Tag can be clickable
-     * @attr {"error" | "gray" | "info" | "success" | "warning"} color - The color style of the Tag
+     * @attr {string} color - A preset, CSS color, or BEEQ color token for the Tag
      * @attr {boolean} disabled - If `true`, the Tag will be disabled (only if clickable = `true`, no interaction allowed)
      * @attr {boolean} hidden - If `true`, the Tag component will be hidden
      * @attr {boolean} removable - If `true`, the Tag component can be removed
@@ -9339,7 +9339,7 @@ declare namespace LocalJSX {
          */
         "clickable"?: boolean;
         /**
-          * The color style of the Tag
+          * A preset, CSS color, or BEEQ color token for the Tag
          */
         "color"?: TTagColor;
         /**
@@ -11884,7 +11884,7 @@ declare module "@stencil/core" {
              * @dependency bq-icon
              * @attr {string} border - The corner radius of the Tag (will override size's predefined border)
              * @attr {boolean} clickable - If `true`, the Tag can be clickable
-             * @attr {"error" | "gray" | "info" | "success" | "warning"} color - The color style of the Tag
+             * @attr {string} color - A preset, CSS color, or BEEQ color token for the Tag
              * @attr {boolean} disabled - If `true`, the Tag will be disabled (only if clickable = `true`, no interaction allowed)
              * @attr {boolean} hidden - If `true`, the Tag component will be hidden
              * @attr {boolean} removable - If `true`, the Tag component can be removed

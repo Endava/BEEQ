@@ -217,7 +217,7 @@ The box shadow scale provides elevation effects for UI elements.
 --bq-box-shadow--l:  0 20px 58px -16px rgba(0, 0, 0, 0.16);
 ```
 
-Dark mode replaces the scale with denser shadows and a 1px `--bq-stroke--primary` edge ring, so elevated layers stay visible on dark surfaces:
+Default BEEQ dark mode replaces the scale with denser shadows and a 1px `--bq-stroke--primary` edge ring. Endava dark instead uses the two-layer [EWR elevation definitions](/foundations/shadows#endava-elevation-parity), without this extra ring:
 
 ```css
 [bq-mode="dark"] {
@@ -335,12 +335,16 @@ Used for interactive states. Hover and active colors aren't separate tokens per 
 --bq-hover:  /* Hover blend color */
 --bq-active: /* Active/pressed blend color */
 --bq-focus:  /* Focus ring color */
+--bq-state-mix-hover: 20%;
+--bq-state-mix-active: 20%;
 
 /* Example usage */
-background-color: color-mix(in srgb, var(--bq-ui--brand), var(--bq-hover) 20%);
+background-color: color-mix(in srgb, var(--bq-ui--brand), var(--bq-hover) var(--bq-state-mix-hover, 20%));
 ```
 
 See [States](/foundations/colors#states) for how components derive hover and active colors.
+
+Native components and Tailwind blend utilities use these percentage controls consistently. Both themes retain their current 20% defaults; Endava calibration is held for design approval because a shared endpoint change also affects disputed brand/danger/border states.
 
 Focus indicators use the active scope's `--bq-focus`, including nested themes and light/dark mode changes. Set `--bq-ring-color-focus` for an explicit ring-color override; leave it unset to follow the theme.
 

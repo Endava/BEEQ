@@ -170,22 +170,22 @@
   }
 
   .bq-slider__input:hover::-webkit-slider-thumb {
-    border-color: color-mix(in srgb, var(--bq-slider--thumb-border-color), var(--bq-hover) 20%);
+    border-color: color-mix(in srgb, var(--bq-slider--thumb-border-color), var(--bq-hover) var(--bq-state-mix-hover, 20%));
   }
 
   .bq-slider__input:hover::-moz-range-thumb {
-    border-color: color-mix(in srgb, var(--bq-slider--thumb-border-color), var(--bq-hover) 20%);
+    border-color: color-mix(in srgb, var(--bq-slider--thumb-border-color), var(--bq-hover) var(--bq-state-mix-hover, 20%));
   }
 
   .bq-slider__input:active::-webkit-slider-thumb {
-    background-color: color-mix(in srgb, var(--bq-ui--brand), var(--bq-active) 20%);
-    border-color: color-mix(in srgb, var(--bq-slider--thumb-border-color), var(--bq-active) 20%);
+    background-color: color-mix(in srgb, var(--bq-ui--brand), var(--bq-active) var(--bq-state-mix-active, 20%));
+    border-color: color-mix(in srgb, var(--bq-slider--thumb-border-color), var(--bq-active) var(--bq-state-mix-active, 20%));
     cursor: grabbing;
   }
 
   .bq-slider__input:active::-moz-range-thumb {
-    background-color: color-mix(in srgb, var(--bq-ui--brand), var(--bq-active) 20%);
-    border-color: color-mix(in srgb, var(--bq-slider--thumb-border-color), var(--bq-active) 20%);
+    background-color: color-mix(in srgb, var(--bq-ui--brand), var(--bq-active) var(--bq-state-mix-active, 20%));
+    border-color: color-mix(in srgb, var(--bq-slider--thumb-border-color), var(--bq-active) var(--bq-state-mix-active, 20%));
     cursor: grabbing;
   }
 

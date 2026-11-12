@@ -137,13 +137,13 @@
 
   .bq-input--control:is(.validation-error, .validation-success, .validation-warning) {
     &:not(.disabled, :focus-within):hover {
-      @include bq-color-mix(border-color, var(--bq-input--validation-color), hover, 20%);
+      @include bq-color-mix(border-color, var(--bq-input--validation-color), hover);
     }
 
     &:not(.disabled):focus-within {
       --bq-ring-color-focus: var(--bq-input--validation-color);
 
-      @include bq-color-mix(border-color, var(--bq-input--validation-color), active, 20%);
+      @include bq-color-mix(border-color, var(--bq-input--validation-color), active);
     }
   }
 }

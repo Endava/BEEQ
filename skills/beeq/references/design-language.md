@@ -56,7 +56,9 @@ Intents set the hue per theme; roles (`--bq-text--*`, `--bq-ui--*`, and the rest
 | Inverted fill | `--bq-ui--inverse` with `--bq-text--inverse` |
 | Borders | `--bq-stroke--tertiary` for interactive boundaries; `--bq-stroke--primary` for decorative separators |
 
-These pairs pass WCAG AA in the built-in themes, with two accepted Endava exceptions. `--bq-text--on-brand` (white on Red Orange, 3.15:1) meets 3:1 only, so keep text on Endava brand fills large (24px, or 18.66px bold). In light mode, `--bq-text--brand`, `--bq-icon--brand`, `--bq-stroke--brand` and `--bq-focus` are Red Orange too, to match the brand fill: 3.15:1 on white and below 3:1 on `--bq-ui--secondary` and `--bq-ui--brand-alt`. Avoid small brand text there, or set `--bq-brand-strong: #c33600` when the product needs 4.5:1. They are not a guarantee for arbitrary overrides: check contrast in every active theme and mode after changing a token.
+These pairings preserve semantic intent, not universal WCAG conformance. Endava follows approved EWR values even when contrast falls short; test the actual theme, surface and state. White on Endava Red Orange is 3.15:1, and other Endava warnings, fills and dark secondary-surface pairs also have shortfalls. Preserve brand defaults and obtain an explicit design/accessibility decision for product-specific alternatives. See [Endava parity and approval holds](https://www.beeq.design/foundations/colors#endava-figma-parity).
+
+Endava information icons are neutral. Light success/warning strokes use the base fill steps, not the darker text/icon steps. Figma UI-primary maps to BEEQ UI-inverse (strong fill); Figma UI-inverse maps to BEEQ UI-primary (surface). Control boundaries use BEEQ stroke-tertiary; decorative separators use stroke-primary.
 
 ### Primitive palette escape hatch
 
@@ -69,7 +71,8 @@ Do not hard-code the underlying values. If a semantic token cannot express the i
 | Neutral | `--bq-neutral-white`, `--bq-neutral-black` |
 | Endava orange | `--bq-endava-orange-100` through `--bq-endava-orange-1000` in 100-step increments |
 | Endava grey | `--bq-endava-grey-50`, `--bq-endava-grey-100` through `--bq-endava-grey-900`, `--bq-endava-grey-950`, `--bq-endava-grey-1000` |
-| Endava neutral | `--bq-endava-neutral-white`, `--bq-endava-neutral-black` |
+
+Endava feedback, information, and data colors are semantic-only. Use `--bq-success-*`, `--bq-danger-*`, `--bq-warning-*`, `--bq-info-*`, and `--bq-data-*`; do not recreate `--bq-endava-positive-*`, `--bq-endava-negative-*`, `--bq-endava-warning-*`, `--bq-endava-info-*`, or `--bq-endava-data-*` primitive families. Use `--bq-white`, `--bq-black`, and `--bq-neutral-*` instead of the removed `--bq-endava-neutral-*` aliases.
 
 ## Themes
 
@@ -126,7 +129,7 @@ Use native CSS Grid for page structure and BEEQ spacing tokens for gutters and m
 | Spacing | `--bq-spacing-xs3`, `--bq-spacing-xs2`, `--bq-spacing-xs`, `--bq-spacing-s`, `--bq-spacing-m`, `--bq-spacing-l`, `--bq-spacing-xl`, `--bq-spacing-xxl`, `--bq-spacing-xxl2`, `--bq-spacing-xxl3`, `--bq-spacing-xxl4` |
 | Viewport-height layout | Tailwind `h-dynamic-vh` maps to `100dvh` |
 | Direction-aware layout | Use `bs-*`, `is-*`, `border-{bl,bs,be,i,is,ie}-*`, `p-{b,bs,be,i}-*`, `m-{b,bs,be,i}-*`, and `inset-{b,bs,be,i,is,ie}-*` rather than physical left/right values when direction can change |
-| Hover and active blends | Use `bg-{hover,active}-*`, `border-{hover,active}-*`, `text-{hover,active}-*`, and `stroke-{hover,active}-*`; they blend the selected token with `--bq-hover` or `--bq-active`. In plain CSS, mix at the point of use: `color-mix(in srgb, var(--bq-ui--secondary), var(--bq-hover) 20%)` |
+| Hover and active blends | Use `bg-{hover,active}-*`, `border-{hover,active}-*`, `text-{hover,active}-*`, and `stroke-{hover,active}-*`; they use `--bq-hover`/`--bq-active` and the existing `--bq-state-mix-hover`/`--bq-state-mix-active` controls (default 20%). In plain CSS: `color-mix(in srgb, var(--bq-ui--secondary), var(--bq-hover) var(--bq-state-mix-hover, 20%))` |
 
 The utilities in this table require the `@beeq/tailwindcss` preset. Without it, use the CSS variables directly.
 
@@ -170,6 +173,8 @@ Truncated text needs a way to read it in full, such as a tooltip or a detail vie
 ## Elevation & Depth
 
 Use the smallest BEEQ shadow that communicates the required layer relationship. A stable surface, panel, and temporary floating surface should have progressively stronger separation.
+
+Endava dark elevations copy the EWR two-layer effects, including fractional geometry and source paints; they do not have default BEEQ's additional shadow edge rings. Endava light shadows remain compatibility values while the Figma page/style opacity conflict is unresolved. Preserve existing component shadow overrides and consult [Shadows](https://www.beeq.design/foundations/shadows#endava-elevation-parity) before claiming parity.
 
 Prefer documented component shadow variables when changing a BEEQ component. Use global shadow tokens only for custom application surfaces. Shadows communicate elevation, not interactive state or decoration.
 

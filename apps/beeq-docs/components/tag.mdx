@@ -319,7 +319,7 @@ Apply `disabled` alongside `clickable` when a tag action is temporarily unavaila
 |---|---|---|
 | `size` | `xsmall`, `small`, `medium` | `medium` |
 | `variant` | `filled`, `outline` | `filled` |
-| `color` | `error`, `gray`, `info`, `success`, `warning` | none (default neutral style) |
+| `color` | `error`, `gray`, `info`, `success`, `warning`, or a [custom color](#color-custom) | none (default neutral style) |
 | `border` | `none`, `xs2`, `xs`, `s`, `m`, `l`, `full` | none (size's predefined radius) |
 
 ### Color - filled
@@ -451,6 +451,79 @@ Use `variant="outline"` when you want a subtler visual distinction without a fil
     ```
   </CodeGroup>
 </CodeLivePreview>
+
+### Color - custom
+
+Set `color` to a value outside the presets when a category needs a specific color. The tag accepts:
+
+- a HEX value, such as `#0d428d`
+- an RGB or RGBA value, such as `rgba(133, 12, 89, 0.9)`
+- a BEEQ color token name without the `--bq-` prefix, such as `purple-700`
+- a CSS custom property reference, such as `var(--bq-orange-800)`
+
+Token names resolve to `var(--bq-<name>)` when that token is defined on `:root`. Otherwise, the value is used as written and must be a valid CSS color or a custom property that resolves to one.
+
+<CodeLivePreview mode="shadow" code={`
+  <bq-tag color="#0d428d">HEX</bq-tag>
+  <bq-tag color="rgba(133, 12, 89, 0.9)">RGBA</bq-tag>
+  <bq-tag color="purple-700">Theme token</bq-tag>
+  <bq-tag color="var(--bq-orange-800)">CSS variable</bq-tag>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-tag color="#0d428d">HEX</bq-tag>
+    <bq-tag color="rgba(133, 12, 89, 0.9)">RGBA</bq-tag>
+    <bq-tag color="purple-700">Theme token</bq-tag>
+    <bq-tag color="var(--bq-orange-800)">CSS variable</bq-tag>
+    ```
+
+    ```jsx React icon="react" expandable
+    import { BqTag } from "@beeq/react";
+
+    <>
+      <BqTag color="#0d428d">HEX</BqTag>
+      <BqTag color="rgba(133, 12, 89, 0.9)">RGBA</BqTag>
+      <BqTag color="purple-700">Theme token</BqTag>
+      <BqTag color="var(--bq-orange-800)">CSS variable</BqTag>
+    </>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqTag } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqTag],
+      template: `
+        <bq-tag color="#0d428d">HEX</bq-tag>
+        <bq-tag color="rgba(133, 12, 89, 0.9)">RGBA</bq-tag>
+        <bq-tag color="purple-700">Theme token</bq-tag>
+        <bq-tag color="var(--bq-orange-800)">CSS variable</bq-tag>
+      `,
+    })
+    export class CustomColorTagComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqTag } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqTag color="#0d428d">HEX</BqTag>
+      <BqTag color="rgba(133, 12, 89, 0.9)">RGBA</BqTag>
+      <BqTag color="purple-700">Theme token</BqTag>
+      <BqTag color="var(--bq-orange-800)">CSS variable</BqTag>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Warning>
+  A custom color sets the background, while text and icons use `--bq-text--alt` rather than an automatically calculated color. Check contrast in each theme and mode, including the surface behind transparent colors. The `outline` variant does not apply the preset border treatment to custom colors, and colored tags cannot be clickable.
+</Warning>
 
 ### Removable - filled
 
@@ -1051,7 +1124,7 @@ A tag is focusable only when it is clickable (and not disabled) or removable (an
 |---|---|---|---|---|
 | `border` | `border` | The corner radius of the Tag (will override size's predefined border) | `'none'` \| `'xs2'` \| `'xs'` \| `'s'` \| `'m'` \| `'l'` \| `'full'` | `undefined` |
 | `clickable` | `clickable` | If `true`, the Tag can be clickable | `boolean` | `false` |
-| `color` | `color` | The color style of the Tag | `'error'` \| `'gray'` \| `'info'` \| `'success'` \| `'warning'` | `undefined` |
+| `color` | `color` | A preset, CSS color, BEEQ color token name (for example `sky-800`), or CSS custom property reference | `'error'` \| `'gray'` \| `'info'` \| `'success'` \| `'warning'` \| `string` | `undefined` |
 | `disabled` | `disabled` | If `true`, the Tag will be disabled (only if clickable) | `boolean` | `false` |
 | `hidden` | `hidden` | If `true`, the Tag component will be hidden | `boolean` | `undefined` |
 | `removable` | `removable` | If `true`, the Tag component can be removed | `boolean` | `false` |
@@ -1065,6 +1138,7 @@ A tag is focusable only when it is clickable (and not disabled) or removable (an
 |---|---|---|
 | `selected` or `disabled` without `clickable` | SHOULD NOT | Both are ignored because only a clickable tag renders as a button |
 | `clickable` with `removable`, `color` or a custom color | SHOULD NOT | The tag is not clickable, and `removable` only works on a non-clickable tag |
+| A custom `color` with `variant="outline"` | SHOULD NOT | The custom color fills the background; the preset outline treatment is not applied |
 
 ### Events
 
