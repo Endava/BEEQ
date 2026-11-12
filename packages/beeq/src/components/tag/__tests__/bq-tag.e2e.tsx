@@ -79,7 +79,7 @@ describe('bq-tag', () => {
   });
 
   it('should render the close icon with alt text color for custom color removable tags', async () => {
-    const customColor = '#ff5733' as HTMLBqTagElement['color'];
+    const customColor: HTMLBqTagElement['color'] = '#ff5733';
     const { root } = await render(
       <bq-tag color={customColor} removable>
         Tag
@@ -377,11 +377,23 @@ describe('bq-tag', () => {
   });
 
   it('should set the tag text color variable (not the global token) for custom colors', async () => {
-    const { root } = await render(<bq-tag color={'#ff0000' as HTMLBqTagElement['color']}>Custom</bq-tag>);
+    const { root } = await render(<bq-tag color="#ff0000">Custom</bq-tag>);
 
     expect(root.style.getPropertyValue('--bq-tag--background-color')).toBe('#ff0000');
     expect(root.style.getPropertyValue('--bq-tag--text-color')).toBe('var(--bq-text--alt)');
     expect(root.style.getPropertyValue('--bq-text--primary')).toBe('');
+  });
+
+  it.each([
+    ['#0d428d', 'rgb(13, 66, 141)'],
+    ['rgba(13, 66, 141, 0.9)', 'rgba(13, 66, 141, 0.9)'],
+    ['sky-800', '--bq-sky-800'],
+    ['var(--bq-blue-800)', '--bq-blue-800'],
+  ] satisfies [HTMLBqTagElement['color'], string][])('should render custom color %s', async (color, expected) => {
+    const { root } = await render(<bq-tag color={color}>Custom</bq-tag>);
+    const background = expected.startsWith('--') ? resolveColorToken(expected, root) : expected;
+
+    await expect.poll(() => getComputedStyle(getWrapper(root)).backgroundColor).toBe(background);
   });
 
   it('should color the close icon with the tag text color', async () => {
@@ -451,9 +463,7 @@ describe('bq-tag', () => {
   );
 
   it('should clear custom colour mappings when the colour changes to info or is removed', async () => {
-    const { root, setProps, waitForChanges } = await render(
-      <bq-tag color={'#ff0000' as HTMLBqTagElement['color']}>Tag</bq-tag>,
-    );
+    const { root, setProps, waitForChanges } = await render(<bq-tag color="#ff0000">Tag</bq-tag>);
     const wrapper = getWrapper(root);
     await expect
       .poll(() => getComputedStyle(wrapper).backgroundColor)

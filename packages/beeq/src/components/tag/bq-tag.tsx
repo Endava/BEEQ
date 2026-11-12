@@ -23,7 +23,7 @@ import { iconSize } from './helper';
  *
  * @attr {string} border - The corner radius of the Tag (will override size's predefined border)
  * @attr {boolean} clickable - If `true`, the Tag can be clickable
- * @attr {"error" | "gray" | "info" | "success" | "warning"} color - The color style of the Tag
+ * @attr {string} color - A preset, CSS color, or BEEQ color token for the Tag
  * @attr {boolean} disabled - If `true`, the Tag will be disabled (only if clickable = `true`, no interaction allowed)
  * @attr {boolean} hidden - If `true`, the Tag component will be hidden
  * @attr {boolean} removable - If `true`, the Tag component can be removed
@@ -122,7 +122,7 @@ export class BqTag {
   /** If true, the Tag can be clickable */
   @Prop({ reflect: true }) clickable: boolean = false;
 
-  /** The color style of the Tag */
+  /** A preset, CSS color, or BEEQ color token for the Tag */
   @Prop({ reflect: true }) color: TTagColor;
 
   /** If true, the Tag will be disabled (only if clickable = `true`, no interaction allowed) */
@@ -269,7 +269,7 @@ export class BqTag {
   }
 
   private get hasCustomColor(): boolean {
-    return this.color !== undefined ? !TAG_COLOR.includes(this.color) : false;
+    return this.color !== undefined && !TAG_COLOR.some((preset) => preset === this.color);
   }
 
   private get computedHostStyles() {
