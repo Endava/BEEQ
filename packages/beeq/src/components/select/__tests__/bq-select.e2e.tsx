@@ -505,6 +505,34 @@ describe('bq-select', () => {
     expect(displayTags[1].textContent?.trim()).toContain('Option 2');
   });
 
+  it('should contain a long checkbox option label and keep selection working', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-select enableCheckboxes keepOpenOnSelect multiple name="bq-select" style={{ width: '260px' }}>
+        <bq-option value="long">A very long option label that exceeds the available dropdown width</bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const option = select.querySelector<HTMLBqOptionElement>('bq-option');
+
+    await userEvent.click(getControl(select));
+    await waitForChanges();
+    await waitForStable(option);
+
+    const base = getOptionCheckboxBase(option);
+    const label = option.shadowRoot.querySelector<HTMLElement>('[part="label"]');
+    const baseRect = base.getBoundingClientRect();
+    const labelRect = label.getBoundingClientRect();
+    const baseStyle = getComputedStyle(base);
+    expect(label.scrollWidth).toBeGreaterThan(label.clientWidth);
+    expect(getComputedStyle(label).textOverflow).toBe('ellipsis');
+    expect(labelRect.right).toBeLessThanOrEqual(baseRect.right - parseFloat(baseStyle.paddingRight) + 0.5);
+
+    await userEvent.click(base);
+    await waitForChanges();
+    expect(option.selected).toBe(true);
+    expect(select.value).toEqual(['long']);
+  });
+
   it('should render and toggle checkbox options when enabled', async () => {
     const { root, spyOnEvent, waitForChanges } = await render(
       <bq-select name="bq-select" keepOpenOnSelect multiple enableCheckboxes>

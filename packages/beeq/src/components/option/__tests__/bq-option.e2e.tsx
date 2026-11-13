@@ -127,6 +127,49 @@ describe('bq-option', () => {
     expect(bqClick).toHaveReceivedEventTimes(1);
   });
 
+  it.each([
+    { dir: 'ltr', affixes: false },
+    { dir: 'ltr', affixes: true },
+    { dir: 'rtl', affixes: false },
+    { dir: 'rtl', affixes: true },
+  ])('should contain and truncate long checkbox option labels ($dir, affixes=$affixes)', async ({ dir, affixes }) => {
+    const text = 'A very long option label that exceeds the available dropdown width';
+    const { root } = await render(
+      <bq-option checkbox dir={dir} selected style={{ width: '260px' }} value="long-option">
+        {affixes && <span slot="prefix">P</span>}
+        {text}
+        {affixes && <span slot="suffix">S</span>}
+      </bq-option>,
+    );
+    const option = root as HTMLBqOptionElement;
+    await waitForStable(option);
+
+    const checkbox = getOptionCheckbox(option);
+    const base = getCheckboxBase(checkbox);
+    const control = checkbox.shadowRoot.querySelector<HTMLElement>('[part="control"]');
+    const label = option.shadowRoot.querySelector<HTMLElement>('[part="label"]');
+    const suffix = option.shadowRoot.querySelector<HTMLElement>('[part="suffix"]');
+    const baseRect = base.getBoundingClientRect();
+    const baseStyle = getComputedStyle(base);
+    const labelRect = label.getBoundingClientRect();
+    const tolerance = 0.5;
+
+    expect(label.scrollWidth).toBeGreaterThan(label.clientWidth);
+    expect(getComputedStyle(label).textOverflow).toBe('ellipsis');
+    expect(getTextContent(label.querySelector('slot'), { recurse: true })).toBe(text);
+    expect(labelRect.left).toBeGreaterThanOrEqual(baseRect.left + parseFloat(baseStyle.paddingLeft) - tolerance);
+    expect(labelRect.right).toBeLessThanOrEqual(baseRect.right - parseFloat(baseStyle.paddingRight) + tolerance);
+    if (affixes) {
+      const suffixRect = suffix.getBoundingClientRect();
+      expect(suffixRect.left).toBeGreaterThanOrEqual(baseRect.left + parseFloat(baseStyle.paddingLeft) - tolerance);
+      expect(suffixRect.right).toBeLessThanOrEqual(baseRect.right - parseFloat(baseStyle.paddingRight) + tolerance);
+    }
+    expect(control.getBoundingClientRect().width).toBeCloseTo(
+      parseFloat(getComputedStyle(checkbox).getPropertyValue('--bq-checkbox--size')),
+      1,
+    );
+  });
+
   describe.each([
     { checkbox: false, dir: 'ltr' },
     { checkbox: true, dir: 'ltr' },
