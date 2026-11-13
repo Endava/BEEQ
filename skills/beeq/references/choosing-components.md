@@ -92,7 +92,7 @@ When no row fits the job, BEEQ has no component for it; see [When BEEQ has nothi
 | Pick a time of day | [`bq-time-picker`](https://www.beeq.design/components/time-picker.md) | Separate selects for hours and minutes, or `bq-input` with a time pattern. |
 | Pick a value on a continuous scale | [`bq-slider`](https://www.beeq.design/components/slider.md) | An input when precision matters more than the range. |
 
-For `bq-time-picker`, `time-zone="UTC"` or a browser-supported IANA zone affects only the Now action. Values remain time-only; invalid zones warn and disable Now.
+For `bq-time-picker`, set the `nowProvider` function property to customize Now; it returns a wall-clock `HH:mm` or `HH:mm:ss` string. Values remain time-only; invalid results warn and disable Now.
 
 ### Feedback and status
 
