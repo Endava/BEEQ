@@ -167,7 +167,8 @@
   }
 
   .bq-option__item:focus-within,
-  :host(:focus) .bq-option__item {
+  :host(:focus) .bq-option__item,
+  :host([data-select-active]) .bq-option__item {
     @include bq-focus-ring;
   }
 

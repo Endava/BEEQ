@@ -49,10 +49,10 @@ const setDropdownOpen = (select: HTMLBqSelectElement, open: boolean) => {
   );
 };
 /**
- * Resolves the accessible name of the select's native input from Chromium's accessibility tree.
+ * Resolves the select's native input from Chromium's accessibility tree.
  * The test runs inside an iframe, so the CDP evaluation (top-level page) reaches the input through it.
  */
-const getAccessibleName = async (select: HTMLBqSelectElement): Promise<string> => {
+const getInputAccessibleNode = async (select: HTMLBqSelectElement) => {
   const probe = `bq-ax-${Math.random().toString(36).slice(2)}`;
   const input = getInput(select);
   input?.setAttribute('data-ax-probe', probe);
@@ -76,11 +76,14 @@ const getAccessibleName = async (select: HTMLBqSelectElement): Promise<string> =
       objectId: result.objectId,
       fetchRelatives: false,
     });
-    return nodes[0]?.name?.value ?? '';
+    return nodes[0];
   } finally {
     input?.removeAttribute('data-ax-probe');
   }
 };
+
+const getAccessibleName = async (select: HTMLBqSelectElement): Promise<string> =>
+  (await getInputAccessibleNode(select))?.name?.value ?? '';
 
 const createOption = (value: string, label = value) => {
   const option = document.createElement('bq-option');
@@ -2249,9 +2252,9 @@ describe('bq-select', () => {
     expect(document.activeElement).toBe(deltaOption);
   });
 
-  it('should navigate nested options with roving tree focus', async () => {
+  it('should navigate non-searchable nested options with roving tree focus', async () => {
     const { root, waitForChanges } = await render(
-      <bq-select multiple name="bq-select">
+      <bq-select disableSearch multiple name="bq-select">
         <bq-option value="frontend">
           Frontend
           <bq-option slot="options" value="react">
@@ -2320,6 +2323,277 @@ describe('bq-select', () => {
 
     expect(frontendOption.expanded).toBe(false);
     expect(document.activeElement).toBe(frontendOption);
+  });
+
+  it('should navigate and select nested search results while keeping the input focused', async () => {
+    const { root, spyOnEvent, waitForChanges } = await render(
+      <bq-select keepOpenOnSelect multiple name="skills">
+        <bq-option value="frontend">
+          Frontend
+          <bq-option id="focus-test-react" slot="options" value="react">
+            React
+          </bq-option>
+        </bq-option>
+        <bq-option value="backend">
+          Backend
+          <bq-option slot="options" value="java">
+            Java
+          </bq-option>
+        </bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const input = getInput(select);
+    const parent = root.querySelector<HTMLBqOptionElement>('bq-option[value="frontend"]');
+    const child = root.querySelector<HTMLBqOptionElement>('bq-option[value="react"]');
+    const java = root.querySelector<HTMLBqOptionElement>('bq-option[value="java"]');
+    const bqSelect = spyOnEvent('bqSelect');
+
+    input.focus();
+    await userEvent.keyboard('React');
+    await waitForChanges();
+    await userEvent.keyboard('{ArrowDown}{ArrowDown}');
+    await waitForChanges();
+
+    expect(select.shadowRoot.activeElement).toBe(input);
+    expect(input.ariaActiveDescendantElement).toBe(child);
+    expect(input.ariaControlsElements).toContain(select.shadowRoot.querySelector('bq-option-list'));
+    expect(child).toHaveAttribute('data-select-active');
+    expect(parent).not.toHaveAttribute('data-select-active');
+    const accessibleInput = await getInputAccessibleNode(select);
+    expect(
+      accessibleInput.properties.find((property) => property.name === 'activedescendant')?.value?.relatedNodes?.[0]
+        ?.idref,
+    ).toBe('focus-test-react');
+    expect(
+      accessibleInput.properties.find((property) => property.name === 'controls')?.value?.relatedNodes,
+    ).toHaveLength(1);
+
+    await userEvent.keyboard('{Enter}');
+    await waitForChanges();
+
+    expect(select.open).toBe(true);
+    expect(select.shadowRoot.activeElement).toBe(input);
+    expect(select.value).toEqual(['frontend', 'react']);
+    expect(bqSelect).toHaveReceivedEventTimes(1);
+    expect(input.ariaActiveDescendantElement).toBeNull();
+
+    await userEvent.keyboard('Java');
+    await waitForChanges();
+    expect(input.value).toBe('Java');
+    expect(java.hidden).toBe(false);
+    expect(parent.hidden).toBe(true);
+  });
+
+  it.each(['parent', 'child'])('should return search focus after clicking a nested %s', async (target) => {
+    const { root, spyOnEvent, waitForChanges } = await render(
+      <bq-select keepOpenOnSelect multiple name="skills">
+        <bq-option value="frontend">
+          Frontend
+          <bq-option slot="options" value="react">
+            React
+          </bq-option>
+        </bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const input = getInput(select);
+    const parent = root.querySelector<HTMLBqOptionElement>('bq-option[value="frontend"]');
+    const child = root.querySelector<HTMLBqOptionElement>('bq-option[value="react"]');
+    const bqSelect = spyOnEvent('bqSelect');
+
+    input.focus();
+    await userEvent.keyboard('React');
+    await waitForChanges();
+    await userEvent.click(getOptionSelectionControl(target === 'parent' ? parent : child));
+    await waitForChanges();
+
+    expect(select.open).toBe(true);
+    expect(select.shadowRoot.activeElement).toBe(input);
+    expect(select.value).toEqual(['frontend', 'react']);
+    expect(bqSelect).toHaveReceivedEventTimes(1);
+
+    await userEvent.keyboard('next');
+    await waitForChanges();
+    expect(input.value).toBe('next');
+  });
+
+  it('should preserve input editing keys and allow keyboard access to tree expansion', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-select keepOpenOnSelect multiple name="skills">
+        <bq-option value="frontend">
+          Frontend
+          <bq-option slot="options" value="react">
+            React
+          </bq-option>
+        </bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const input = getInput(select);
+    const parent = root.querySelector<HTMLBqOptionElement>('bq-option[value="frontend"]');
+
+    input.focus();
+    await userEvent.keyboard('Reac{ArrowLeft} {ArrowRight}');
+    await waitForChanges();
+    expect(input.value).toBe('Rea c');
+    expect(input.selectionStart).toBe(5);
+
+    await userEvent.clear(input);
+    await waitForChanges();
+    const composingKey = new KeyboardEvent('keydown', {
+      bubbles: true,
+      cancelable: true,
+      composed: true,
+      isComposing: true,
+      key: 'ArrowDown',
+    });
+    input.dispatchEvent(composingKey);
+    expect(composingKey.defaultPrevented).toBe(false);
+    expect(input.ariaActiveDescendantElement).toBeNull();
+
+    await userEvent.keyboard('{ArrowDown}');
+    await waitForChanges();
+    expect(input.ariaActiveDescendantElement).toBe(parent);
+
+    await userEvent.tab();
+    await waitForChanges();
+    expect(document.activeElement).toBe(parent);
+    await userEvent.keyboard('{ArrowRight}');
+    await waitForChanges();
+    expect(parent.expanded).toBe(true);
+  });
+
+  it('should clear virtual focus when an active result becomes unavailable', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-select keepOpenOnSelect multiple name="skills">
+        <bq-option expanded value="frontend">
+          Frontend
+          <bq-option slot="options" value="react">
+            React
+          </bq-option>
+        </bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const input = getInput(select);
+    const child = root.querySelector<HTMLBqOptionElement>('bq-option[value="react"]');
+
+    input.focus();
+    await userEvent.keyboard('{ArrowDown}{ArrowDown}');
+    await waitForChanges();
+    expect(input.ariaActiveDescendantElement).toBe(child);
+
+    child.disabled = true;
+    await waitForChanges();
+    await waitForStable(root);
+    expect(input.ariaActiveDescendantElement).toBeNull();
+    expect(child).not.toHaveAttribute('data-select-active');
+    expect(select.shadowRoot.activeElement).toBe(input);
+  });
+
+  it('should clear virtual focus on dismissal and not select without a visible result', async () => {
+    const { root, spyOnEvent, waitForChanges } = await render(
+      <bq-select keepOpenOnSelect multiple name="skills">
+        <bq-option value="frontend">
+          Frontend
+          <bq-option slot="options" value="react">
+            React
+          </bq-option>
+        </bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const input = getInput(select);
+    const parent = root.querySelector<HTMLBqOptionElement>('bq-option[value="frontend"]');
+    const bqSelect = spyOnEvent('bqSelect');
+
+    input.focus();
+    await userEvent.keyboard('{ArrowDown}');
+    await waitForChanges();
+    expect(input.ariaActiveDescendantElement).toBe(parent);
+
+    await userEvent.keyboard('{Escape}');
+    await waitForChanges();
+    expect(select.open).toBe(false);
+    expect(input.ariaActiveDescendantElement).toBeNull();
+    expect(parent).not.toHaveAttribute('data-select-active');
+    expect(select.shadowRoot.activeElement).toBe(input);
+
+    await userEvent.keyboard('unmatched{ArrowDown}{Enter}');
+    await waitForChanges();
+    expect(input.ariaActiveDescendantElement).toBeNull();
+    expect(bqSelect).toHaveReceivedEventTimes(0);
+    expect(select.shadowRoot.activeElement).toBe(input);
+  });
+
+  it('should retain real tree focus when element-reference ARIA is unavailable', async () => {
+    const descriptor = Object.getOwnPropertyDescriptor(Element.prototype, 'ariaActiveDescendantElement');
+    if (!descriptor) throw new Error('Chromium does not expose ariaActiveDescendantElement');
+    Reflect.deleteProperty(Element.prototype, 'ariaActiveDescendantElement');
+    try {
+      const { root, waitForChanges } = await render(
+        <bq-select multiple name="skills">
+          <bq-option value="frontend">
+            Frontend
+            <bq-option slot="options" value="react">
+              React
+            </bq-option>
+          </bq-option>
+        </bq-select>,
+      );
+      const select = root as HTMLBqSelectElement;
+      const input = getInput(select);
+      const parent = root.querySelector<HTMLBqOptionElement>('bq-option[value="frontend"]');
+
+      input.focus();
+      await userEvent.keyboard('{ArrowDown}');
+      await waitForChanges();
+      expect(document.activeElement).toBe(parent);
+      expect(parent).not.toHaveAttribute('data-select-active');
+    } finally {
+      Object.defineProperty(Element.prototype, 'ariaActiveDescendantElement', descriptor);
+    }
+  });
+
+  it('should scroll the active nested option into view without closing the panel', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-select keepOpenOnSelect multiple name="skills" panelHeight="100px">
+        <bq-option expanded value="parent">
+          Parent
+          <bq-option slot="options" value="one">
+            One
+          </bq-option>
+          <bq-option slot="options" value="two">
+            Two
+          </bq-option>
+          <bq-option slot="options" value="three">
+            Three
+          </bq-option>
+          <bq-option slot="options" value="four">
+            Four
+          </bq-option>
+          <bq-option slot="options" value="five">
+            Five
+          </bq-option>
+        </bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const input = getInput(select);
+    const last = root.querySelector<HTMLBqOptionElement>('bq-option[value="five"]');
+    const panel = getDropdown(select)
+      .shadowRoot.querySelector<HTMLBqPanelElement>('bq-panel')
+      .shadowRoot.querySelector<HTMLElement>('[part="panel"]');
+
+    input.focus();
+    await userEvent.keyboard('{ArrowDown}{ArrowDown}{ArrowDown}{ArrowDown}{ArrowDown}{ArrowDown}');
+    await waitForChanges();
+    await waitForStable(root);
+    expect(select.open).toBe(true);
+    expect(select.shadowRoot.activeElement).toBe(input);
+    expect(input.ariaActiveDescendantElement).toBe(last);
+    expect(last.getBoundingClientRect().bottom).toBeLessThanOrEqual(panel.getBoundingClientRect().bottom + 1);
   });
 
   it('should cascade nested parent selection without selecting on expand', async () => {
@@ -2402,7 +2676,7 @@ describe('bq-select', () => {
 
       expect(bqSelect).toHaveReceivedEventTimes(index + 1);
       expect(bqSelect.events[index].detail.item).toBe(option);
-      expect(document.activeElement).toBe(option);
+      expect(select.shadowRoot.activeElement).toBe(getInput(select));
     }
 
     expect(select.value).toEqual(['frontend', 'stencil']);
@@ -2685,7 +2959,7 @@ describe('bq-select', () => {
 
     expect(frontendOption).toHaveAttribute('selected');
     expect(reactOption).toHaveAttribute('selected');
-    expect(document.activeElement).toBe(reactOption);
+    expect(select.shadowRoot.activeElement).toBe(getInput(select));
     expect(bqSelect).toHaveReceivedEventTimes(1);
 
     await setProps({ value: [] });
@@ -2696,7 +2970,7 @@ describe('bq-select', () => {
 
     expect(frontendOption).toHaveAttribute('selected');
     expect(reactOption).toHaveAttribute('selected');
-    expect(document.activeElement).toBe(reactOption);
+    expect(select.shadowRoot.activeElement).toBe(getInput(select));
     expect(bqSelect).toHaveReceivedEventTimes(2);
   });
 
@@ -3314,6 +3588,7 @@ describe('bq-select', () => {
 
       const parent = createOption('JavaScript');
       const child = createOption('Advanced');
+      parent.expanded = true;
       child.slot = 'options';
       parent.append(child);
       select.replaceChildren(parent);
@@ -3323,25 +3598,23 @@ describe('bq-select', () => {
       await waitForChanges();
       await waitForStable(select);
 
-      expect(document.activeElement).toBe(parent);
+      expect(select.shadowRoot.activeElement).toBe(input);
+      expect(input.ariaActiveDescendantElement).toBe(parent);
 
       if (focusTarget === 'child') {
-        await userEvent.keyboard('{ArrowRight}');
-        await waitForChanges();
-        await waitForStable(child);
         await userEvent.keyboard('{ArrowDown}');
         await waitForChanges();
       }
 
       const focusedOption = focusTarget === 'child' ? child : parent;
-      expect(document.activeElement).toBe(focusedOption);
+      expect(input.ariaActiveDescendantElement).toBe(focusedOption);
 
       await userEvent.keyboard('{Enter}');
       await waitForChanges();
       await waitForStable(select);
 
       expect(select.open).toBe(true);
-      expect(document.activeElement).toBe(focusedOption);
+      expect(select.shadowRoot.activeElement).toBe(input);
       expect(select.value).toEqual(['JavaScript', 'Advanced']);
 
       await userEvent.keyboard('{Escape}');
@@ -3364,7 +3637,7 @@ describe('bq-select', () => {
       await waitForChanges();
 
       expect(select.open).toBe(true);
-      expect(document.activeElement).toBe(parent);
+      expect(input.ariaActiveDescendantElement).toBe(parent);
       expect(bqBlur).toHaveReceivedEventTimes(0);
     },
   );

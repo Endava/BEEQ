@@ -177,6 +177,8 @@ export class BqSelect {
 
   private debounceInput?: TDebounce<string>;
   private activeTreeOption?: HTMLBqOptionElement;
+  private virtualTreeOption?: HTMLBqOptionElement;
+  private virtualScrollFrame?: number;
   private expansionObserver?: MutationObserver;
   private optionsObserver?: MutationObserver;
   private restoringSearchExpandedOptions = new WeakSet<HTMLBqOptionElement>();
@@ -329,6 +331,13 @@ export class BqSelect {
     this.syncOptionPresentation(this.getOptionStructure().all);
   }
 
+  @Watch('disableSearch')
+  @Watch('readonly')
+  @Watch('disabled')
+  handleSearchAvailabilityChange() {
+    if (this.disabled || this.isSearchDisabled) this.clearVirtualTreeOption();
+  }
+
   @Watch('multiple')
   handleMultipleChange(multiple: boolean, previousMultiple?: boolean) {
     this.resetSearch();
@@ -350,6 +359,7 @@ export class BqSelect {
 
   @Watch('open')
   handleOpenStateChange() {
+    if (!this.open) this.clearVirtualTreeOption();
     this.updateInternalsAccessibility();
   }
 
@@ -401,6 +411,7 @@ export class BqSelect {
   }
 
   disconnectedCallback() {
+    this.clearVirtualTreeOption();
     this.hasFocus = false;
     this.debounceInput?.cancel();
     this.expansionObserver?.disconnect();
@@ -592,11 +603,12 @@ export class BqSelect {
 
     this.resetOptionsVisibility();
 
-    if (this.hasNestedOptions && this.keepOpenOnSelect) {
+    if (this.hasNestedOptions && this.keepOpenOnSelect && this.isSearchDisabled) {
       this.focusTreeOption(item);
       return;
     }
 
+    this.clearVirtualTreeOption();
     this.focusInput();
   };
 
@@ -676,6 +688,8 @@ export class BqSelect {
   private handleKeydown = (ev: KeyboardEvent) => {
     if (this.disabled) return;
 
+    if (this.handleVirtualTreeKeydown(ev)) return;
+
     if (ev.key === 'ArrowDown' || ev.key === 'ArrowUp') {
       ev.preventDefault();
 
@@ -701,6 +715,34 @@ export class BqSelect {
       const lastOption = this.selectedOptions[this.selectedOptions.length - 1];
       this.handleTagRemove(lastOption);
     }
+  };
+
+  private handleVirtualTreeKeydown = (ev: KeyboardEvent) => {
+    if (!this.hasNestedOptions || this.isSearchDisabled || !this.inputElem) return false;
+    if (!('ariaActiveDescendantElement' in this.inputElem)) return false;
+    if (ev.isComposing || ev.altKey || ev.ctrlKey || ev.metaKey || ev.shiftKey) return true;
+
+    if (ev.key === 'ArrowDown' || ev.key === 'ArrowUp') {
+      ev.preventDefault();
+      this.navigateVirtualTree(ev.key === 'ArrowDown' ? 1 : -1);
+      return true;
+    }
+
+    const option = this.virtualTreeOption;
+    if (ev.key !== 'Enter' || !this.open || !option || !this.isVisibleTreeOption(option)) return false;
+
+    ev.preventDefault();
+    option.dispatchEvent(new CustomEvent('bqEnter', { bubbles: true, composed: true, detail: option }));
+    return true;
+  };
+
+  private navigateVirtualTree = (direction: 1 | -1) => {
+    const options = this.getVisibleTreeOptions();
+    const currentIndex = this.virtualTreeOption ? options.indexOf(this.virtualTreeOption) : -1;
+    const nextIndex = currentIndex < 0 ? (direction === 1 ? 0 : options.length - 1) : currentIndex + direction;
+    const option = options[nextIndex];
+    this.open = true;
+    if (option) this.setVirtualTreeOption(option);
   };
 
   private handleInput = (ev: Event) => {
@@ -1020,6 +1062,7 @@ export class BqSelect {
 
   private syncTreeTabIndexes = (options = this.getActiveOptions(this.getOptionStructure())) => {
     if (!this.hasNestedOptions) {
+      this.clearVirtualTreeOption();
       this.activeTreeOption = undefined;
       options.forEach((option) => {
         option.removeAttribute('data-tree-tab-index');
@@ -1029,6 +1072,7 @@ export class BqSelect {
     }
 
     const visibleOptions = options.filter((option) => this.isVisibleTreeOption(option));
+    if (this.virtualTreeOption && !visibleOptions.includes(this.virtualTreeOption)) this.clearVirtualTreeOption();
     const activeOption =
       this.activeTreeOption && visibleOptions.includes(this.activeTreeOption)
         ? this.activeTreeOption
@@ -1047,6 +1091,28 @@ export class BqSelect {
 
     this.activeTreeOption = option;
     this.syncTreeTabIndexes();
+  };
+
+  private clearVirtualTreeOption = () => {
+    if (this.virtualScrollFrame !== undefined) cancelAnimationFrame(this.virtualScrollFrame);
+    this.virtualScrollFrame = undefined;
+    this.virtualTreeOption?.removeAttribute('data-select-active');
+    this.virtualTreeOption = undefined;
+    if (this.inputElem && 'ariaActiveDescendantElement' in this.inputElem)
+      this.inputElem.ariaActiveDescendantElement = null;
+  };
+
+  private setVirtualTreeOption = (option: HTMLBqOptionElement) => {
+    this.clearVirtualTreeOption();
+    this.virtualTreeOption = option;
+    this.setActiveTreeOption(option);
+    option.setAttribute('data-select-active', '');
+    if (this.inputElem && 'ariaActiveDescendantElement' in this.inputElem)
+      this.inputElem.ariaActiveDescendantElement = option;
+    this.virtualScrollFrame = requestAnimationFrame(() => {
+      this.virtualScrollFrame = undefined;
+      if (this.open && this.virtualTreeOption === option) option.scrollIntoView({ block: 'nearest' });
+    });
   };
 
   private syncValueState = (optionStructure: TSelectOptionStructure) => {
@@ -1371,6 +1437,13 @@ export class BqSelect {
   };
 
   private handleOptionMarkupMutations = (mutations: MutationRecord[]) => {
+    if (
+      mutations.some(
+        (mutation) => mutation.type === 'attributes' && ['disabled', 'hidden'].includes(mutation.attributeName),
+      )
+    ) {
+      this.syncTreeTabIndexes();
+    }
     if (!mutations.some(this.isOptionMarkupMutation)) return;
 
     this.syncOptionsAndValue();
@@ -1378,7 +1451,7 @@ export class BqSelect {
 
   private isOptionMarkupMutation = (mutation: MutationRecord) => {
     if (mutation.type === 'attributes') {
-      return isHTMLElement(mutation.target, 'bq-option');
+      return ['slot', 'value'].includes(mutation.attributeName) && isHTMLElement(mutation.target, 'bq-option');
     }
 
     return [...Array.from(mutation.addedNodes), ...Array.from(mutation.removedNodes)].some(this.isOptionMarkupNode);
@@ -1390,7 +1463,7 @@ export class BqSelect {
   private observeOptions = () => {
     this.optionsObserver = new MutationObserver(this.handleOptionMarkupMutations);
     this.optionsObserver.observe(this.el, {
-      attributeFilter: ['slot', 'value'],
+      attributeFilter: ['disabled', 'hidden', 'slot', 'value'],
       attributes: true,
       childList: true,
       subtree: true,
@@ -1559,6 +1632,7 @@ export class BqSelect {
                 form={this.form}
                 id={this.name || this.fallbackInputId}
                 name={this.name}
+                onBlur={this.clearVirtualTreeOption}
                 onFocus={this.collapseInputSelection}
                 onInput={this.handleInput}
                 onKeyDown={this.handleKeydown}
