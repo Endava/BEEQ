@@ -158,6 +158,8 @@ Every package is published as `X.Y.Z-preview.N` under the `preview` dist-tag:
 
 Install the exact version, for example `npm install @beeq/core@1.18.0-preview.2`, because `@preview` points to the latest preview from any branch. Preview runs never commit, tag, create a GitHub release or deploy Storybook.
 
+Both beta and preview releases pin internal BEEQ dependencies to the exact prerelease version, so a wrapper cannot resolve core from another prerelease channel. Stable releases retain the dependency ranges configured in `nx.json`.
+
 ❗️ One-time setup, before the first preview run:
 
 1. In **Settings** → **Environments**, create `npm-preview` with **Required reviewers** and no deployment branch restriction. Create it before the workflow first runs, because GitHub creates a missing environment without any protection rules.

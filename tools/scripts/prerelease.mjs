@@ -5,6 +5,7 @@
  * conventional commits), and it must be newer than every stable version on npm.
  * `N` is the next free number for that preid on npm, because prereleases are never tagged in git.
  * Nothing is committed or tagged: the manifests are updated in the working tree only.
+ * Internal dependencies are pinned exactly for prereleases; stable release ranges are unchanged.
  *
  * Usage: node tools/scripts/prerelease.mjs --preid <beta|preview> [--dry-run]
  */
@@ -93,7 +94,11 @@ const originalNxJson = fs.readFileSync(nxJsonPath, 'utf8');
 const patchNxJson = () => {
   const config = JSON.parse(originalNxJson);
   delete config.release.git;
-  config.release.version = { ...config.release.version, git: { commit: false, tag: false, stageChanges: false } };
+  config.release.version = {
+    ...config.release.version,
+    versionPrefix: '',
+    git: { commit: false, tag: false, stageChanges: false },
+  };
   fs.writeFileSync(nxJsonPath, `${JSON.stringify(config, null, 2)}\n`);
 };
 
