@@ -17,6 +17,15 @@ const getControl = (select: HTMLBqSelectElement) =>
   select.shadowRoot?.querySelector<HTMLElement>('.bq-select__control');
 const getDropdown = (select: HTMLBqSelectElement) =>
   select.shadowRoot?.querySelector<HTMLBqDropdownElement>('bq-dropdown');
+const getOptionsPanel = (select: HTMLBqSelectElement) =>
+  getDropdown(select)
+    ?.shadowRoot?.querySelector<HTMLBqPanelElement>('bq-panel')
+    ?.shadowRoot?.querySelector<HTMLElement>('[part="panel"]');
+const getOptionRow = (option: HTMLBqOptionElement) => option.shadowRoot?.querySelector<HTMLElement>('[part="item"]');
+const waitForReveal = () =>
+  new Promise<void>((resolve) =>
+    requestAnimationFrame(() => requestAnimationFrame(() => requestAnimationFrame(() => resolve()))),
+  );
 const getClearButton = (select: HTMLBqSelectElement) =>
   select.shadowRoot?.querySelector('bq-button')?.shadowRoot?.querySelector<HTMLButtonElement>('[part="button"]');
 const getOptionButton = (option: HTMLBqOptionElement) =>
@@ -2320,6 +2329,238 @@ describe('bq-select', () => {
 
     expect(frontendOption.expanded).toBe(false);
     expect(document.activeElement).toBe(frontendOption);
+  });
+
+  it.each(['pointer', 'keyboard'])(
+    'should reveal expanded children with %s without scrolling the page',
+    async (method) => {
+      const { root, waitForChanges, spyOnEvent } = await render(
+        <bq-select multiple name="bq-select" panelHeight="150px">
+          {Array.from({ length: 8 }, (_, index) => (
+            <bq-option value={`before-${index}`}>Before {index}</bq-option>
+          ))}
+          <bq-option value="parent">
+            Parent
+            <bq-option slot="options" value="child-1">
+              First child
+            </bq-option>
+            <bq-option slot="options" value="child-2">
+              Second child
+            </bq-option>
+          </bq-option>
+          {Array.from({ length: 6 }, (_, index) => (
+            <bq-option value={`after-${index}`}>After {index}</bq-option>
+          ))}
+        </bq-select>,
+      );
+      const select = root as HTMLBqSelectElement;
+      const parent = select.querySelector<HTMLBqOptionElement>('bq-option[value="parent"]');
+      const child = select.querySelector<HTMLBqOptionElement>('bq-option[value="child-2"]');
+      const selectEvent = spyOnEvent('bqSelect');
+      select.open = true;
+      await waitForChanges();
+      await waitForStable(select);
+
+      const panel = getOptionsPanel(select);
+      const row = getOptionRow(parent);
+      const panelTop = () => panel.getBoundingClientRect().top + panel.clientTop;
+      panel.scrollTop += row.getBoundingClientRect().bottom - (panelTop() + panel.clientHeight) + 1;
+      const initialScroll = panel.scrollTop;
+      const pageScroll = window.scrollY;
+
+      if (method === 'pointer') {
+        await userEvent.click(getOptionExpandButtonControl(parent));
+      } else {
+        parent.focus({ preventScroll: true });
+        await userEvent.keyboard('{ArrowRight}');
+      }
+      await waitForChanges();
+      await waitForReveal();
+
+      const bottom = panelTop() + panel.clientHeight;
+      expect(panel.scrollTop).toBeGreaterThan(initialScroll);
+      expect(getOptionRow(child).getBoundingClientRect().bottom).toBeLessThanOrEqual(bottom + 1);
+      expect(getOptionRow(child).getBoundingClientRect().bottom).toBeGreaterThanOrEqual(bottom - 1);
+      expect(getOptionRow(parent).getBoundingClientRect().top).toBeGreaterThanOrEqual(panelTop() - 1);
+      expect(window.scrollY).toBe(pageScroll);
+      expect(select.open).toBe(true);
+      expect(selectEvent).toHaveReceivedEventTimes(0);
+      if (method === 'keyboard') expect(document.activeElement).toBe(parent);
+    },
+  );
+
+  it('should not scroll when expanded children are already visible or expanded programmatically', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-select multiple name="bq-select" panelHeight="300px">
+        <bq-option value="parent">
+          Parent
+          <bq-option slot="options" value="child">
+            Child
+          </bq-option>
+        </bq-option>
+        {Array.from({ length: 12 }, (_, index) => (
+          <bq-option value={`after-${index}`}>After {index}</bq-option>
+        ))}
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const parent = select.querySelector<HTMLBqOptionElement>('bq-option[value="parent"]');
+    select.open = true;
+    await waitForChanges();
+    await waitForStable(select);
+    const panel = getOptionsPanel(select);
+
+    await userEvent.click(getOptionExpandButtonControl(parent));
+    await waitForChanges();
+    await waitForReveal();
+    expect(panel.scrollTop).toBe(0);
+
+    parent.expanded = false;
+    await waitForChanges();
+    panel.style.overflowAnchor = 'none';
+    panel.scrollTop = 100;
+    const initialScroll = panel.scrollTop;
+    parent.expanded = true;
+    await waitForChanges();
+    await waitForReveal();
+    expect(panel.scrollTop).toBe(initialScroll);
+  });
+
+  it('should reveal the first visible child of an oversized branch while keeping its parent visible', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-select multiple name="bq-select" panelHeight="150px">
+        {Array.from({ length: 8 }, (_, index) => (
+          <bq-option value={`before-${index}`}>Before {index}</bq-option>
+        ))}
+        <bq-option value="parent">
+          Parent
+          <bq-option hidden slot="options" value="hidden">
+            Hidden child
+          </bq-option>
+          {Array.from({ length: 10 }, (_, index) => (
+            <bq-option slot="options" value={`child-${index}`}>
+              Child {index}
+            </bq-option>
+          ))}
+        </bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const parent = select.querySelector<HTMLBqOptionElement>('bq-option[value="parent"]');
+    const child = select.querySelector<HTMLBqOptionElement>('bq-option[value="child-0"]');
+    select.open = true;
+    await waitForChanges();
+    await waitForStable(select);
+    const panel = getOptionsPanel(select);
+    const panelTop = () => panel.getBoundingClientRect().top + panel.clientTop;
+    panel.scrollTop += getOptionRow(parent).getBoundingClientRect().bottom - (panelTop() + panel.clientHeight) + 1;
+    const initialScroll = panel.scrollTop;
+    await userEvent.click(getOptionExpandButtonControl(parent));
+    await waitForChanges();
+    await waitForReveal();
+    expect(panel.scrollTop).toBeGreaterThan(initialScroll);
+    expect(getOptionRow(parent).getBoundingClientRect().top).toBeGreaterThanOrEqual(panelTop() - 1);
+    expect(getOptionRow(child).getBoundingClientRect().bottom).toBeLessThanOrEqual(panelTop() + panel.clientHeight + 1);
+    expect(select.open).toBe(true);
+  });
+
+  it('should include already-expanded descendants when revealing a branch that fits', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-select multiple name="bq-select" panelHeight="250px">
+        {Array.from({ length: 10 }, (_, index) => (
+          <bq-option value={`before-${index}`}>Before {index}</bq-option>
+        ))}
+        <bq-option value="parent">
+          Parent
+          <bq-option expanded slot="options" value="child">
+            Child
+            <bq-option slot="options" value="grandchild">
+              Grandchild
+            </bq-option>
+          </bq-option>
+        </bq-option>
+        {Array.from({ length: 6 }, (_, index) => (
+          <bq-option value={`after-${index}`}>After {index}</bq-option>
+        ))}
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const parent = select.querySelector<HTMLBqOptionElement>('bq-option[value="parent"]');
+    const grandchild = select.querySelector<HTMLBqOptionElement>('bq-option[value="grandchild"]');
+    select.open = true;
+    await waitForChanges();
+    await waitForStable(select);
+    const panel = getOptionsPanel(select);
+    const viewportTop = () => panel.getBoundingClientRect().top + panel.clientTop;
+    panel.scrollTop += getOptionRow(parent).getBoundingClientRect().bottom - (viewportTop() + panel.clientHeight) + 1;
+    const initialScroll = panel.scrollTop;
+
+    await userEvent.click(getOptionExpandButtonControl(parent));
+    await waitForChanges();
+    await waitForReveal();
+    expect(panel.scrollTop).toBeGreaterThan(initialScroll);
+    expect(getOptionRow(parent).getBoundingClientRect().top).toBeGreaterThanOrEqual(viewportTop() - 1);
+    expect(getOptionRow(grandchild).getBoundingClientRect().bottom).toBeLessThanOrEqual(
+      viewportTop() + panel.clientHeight + 1,
+    );
+  });
+
+  it('should not schedule a reveal for search-driven expansion', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-select multiple name="bq-select" panelHeight="150px">
+        {Array.from({ length: 8 }, (_, index) => (
+          <bq-option value={`before-${index}`}>Before {index}</bq-option>
+        ))}
+        <bq-option value="parent">
+          Parent
+          <bq-option slot="options" value="needle">
+            Needle
+          </bq-option>
+        </bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const parent = select.querySelector<HTMLBqOptionElement>('bq-option[value="parent"]');
+    select.open = true;
+    await waitForChanges();
+    await waitForStable(select);
+    const panel = getOptionsPanel(select);
+    const scrollSetter = vi.spyOn(panel, 'scrollTop', 'set');
+
+    await userEvent.fill(getInput(select), 'Needle');
+    await waitForChanges();
+    await waitForReveal();
+    expect(parent.expanded).toBe(true);
+    expect(scrollSetter).not.toHaveBeenCalled();
+  });
+
+  it('should discard a pending reveal when the option collapses', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-select multiple name="bq-select" panelHeight="150px">
+        {Array.from({ length: 8 }, (_, index) => (
+          <bq-option value={`before-${index}`}>Before {index}</bq-option>
+        ))}
+        <bq-option value="parent">
+          Parent
+          <bq-option slot="options" value="child">
+            Child
+          </bq-option>
+        </bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const parent = select.querySelector<HTMLBqOptionElement>('bq-option[value="parent"]');
+    select.open = true;
+    await waitForChanges();
+    await waitForStable(select);
+    const panel = getOptionsPanel(select);
+    const scrollSetter = vi.spyOn(panel, 'scrollTop', 'set');
+
+    parent.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, composed: true }));
+    parent.expanded = false;
+    await waitForChanges();
+    await waitForReveal();
+    expect(scrollSetter).not.toHaveBeenCalled();
   });
 
   it('should cascade nested parent selection without selecting on expand', async () => {

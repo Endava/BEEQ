@@ -172,6 +172,7 @@ export class BqSelect {
   private inputElem?: HTMLInputElement;
   private labelElem?: HTMLElement;
   private pendingOptionFocus?: HTMLBqOptionElement;
+  private revealFrame?: number;
   private prefixElem?: HTMLElement;
   private suffixElem?: HTMLElement;
 
@@ -350,6 +351,7 @@ export class BqSelect {
 
   @Watch('open')
   handleOpenStateChange() {
+    if (!this.open) this.cancelOptionReveal();
     this.updateInternalsAccessibility();
   }
 
@@ -402,6 +404,7 @@ export class BqSelect {
 
   disconnectedCallback() {
     this.hasFocus = false;
+    this.cancelOptionReveal();
     this.debounceInput?.cancel();
     this.expansionObserver?.disconnect();
     this.optionsObserver?.disconnect();
@@ -421,6 +424,17 @@ export class BqSelect {
 
   // Listeners
   // ==============
+
+  @Listen('bqClick', { capture: true })
+  handleExpandControlClick(event: CustomEvent<HTMLBqButtonElement>) {
+    if (!this.open || !this.hasNestedOptions) return;
+
+    const option = event.composedPath().find((target) => isHTMLElement(target, 'bq-option'));
+    if (!isHTMLElement(option, 'bq-option') || !this.el.contains(option) || option.expanded || option.disabled) return;
+    if (option.shadowRoot?.querySelector('[part="expand"]') !== event.detail) return;
+
+    this.scheduleOptionReveal(option);
+  }
 
   @Listen('focusin')
   handleFocus(event: FocusEvent) {
@@ -923,6 +937,60 @@ export class BqSelect {
   private getTreeOptionChildren = (option: HTMLBqOptionElement) =>
     this.getOptionStructure().childrenByParent.get(option) || [];
 
+  private cancelOptionReveal = () => {
+    if (this.revealFrame !== undefined) cancelAnimationFrame(this.revealFrame);
+    this.revealFrame = undefined;
+  };
+
+  private scheduleOptionReveal = (option: HTMLBqOptionElement) => {
+    this.cancelOptionReveal();
+    // The option's own Stencil render must finish before its child geometry is measured.
+    this.revealFrame = requestAnimationFrame(() => {
+      this.revealFrame = requestAnimationFrame(() => {
+        this.revealFrame = undefined;
+        this.revealOptionChildren(option);
+      });
+    });
+  };
+
+  private revealOptionChildren = (option: HTMLBqOptionElement) => {
+    if (!this.open || !this.hasNestedOptions || !option.isConnected || !this.el.contains(option) || !option.expanded)
+      return;
+
+    const panel = this.el.shadowRoot
+      ?.querySelector('bq-dropdown')
+      ?.shadowRoot?.querySelector('bq-panel')
+      ?.shadowRoot?.querySelector<HTMLElement>('[part="panel"]');
+    const parentRow = option.shadowRoot?.querySelector<HTMLElement>('[part="item"]');
+    const group = option.shadowRoot?.querySelector<HTMLElement>('[part="options"]');
+    if (!panel || !parentRow || !group || group.hidden || !panel.clientHeight) return;
+
+    const children = this.getTreeOptionChildren(option);
+    const firstChildRow = children
+      .filter((child) => child.getAttribute('slot') === 'options' && !child.hidden)
+      .map((child) => child.shadowRoot?.querySelector<HTMLElement>('[part="item"]'))
+      .find((row) => row && row.getBoundingClientRect().height > 0);
+    if (!firstChildRow) return;
+
+    const panelRect = panel.getBoundingClientRect();
+    const viewportTop = panelRect.top + panel.clientTop;
+    const viewportBottom = viewportTop + panel.clientHeight;
+    const parentRect = parentRow.getBoundingClientRect();
+    const groupRect = group.getBoundingClientRect();
+    const firstChildRect = firstChildRow.getBoundingClientRect();
+    const branchFits = groupRect.bottom - parentRect.top <= panel.clientHeight;
+    const targetBottom = branchFits ? groupRect.bottom : firstChildRect.bottom;
+
+    if (groupRect.top >= viewportTop && groupRect.bottom <= viewportBottom) return;
+    if (!branchFits && parentRect.top >= viewportTop && targetBottom <= viewportBottom) return;
+
+    const minimumScroll = targetBottom - viewportBottom;
+    const maximumScroll = parentRect.top - viewportTop;
+    const delta = Math.min(Math.max(0, minimumScroll), Math.max(0, maximumScroll));
+    if (delta > 0) panel.scrollTop += delta;
+    else if (parentRect.top < viewportTop) panel.scrollTop += parentRect.top - viewportTop;
+  };
+
   private isOptionNavigationKey = (key: string) =>
     ['ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'End', 'Home'].includes(key);
 
@@ -985,6 +1053,7 @@ export class BqSelect {
 
       if (!currentOption.expanded) {
         currentOption.expanded = true;
+        this.scheduleOptionReveal(currentOption);
         return;
       }
 
