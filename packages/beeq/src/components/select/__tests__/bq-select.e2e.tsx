@@ -1419,7 +1419,8 @@ describe('bq-select', () => {
         await userEvent.keyboard('{ArrowDown}');
         await waitForChanges();
 
-        expect(document.activeElement).toBe(spanish);
+        expect(select.shadowRoot.activeElement).toBe(input);
+        expect(input.ariaActiveDescendantElement).toBe(spanish);
         expect(select.open).toBe(true);
         expect(input.value).toBe('Span');
         expect(bqFocus).toHaveReceivedEventTimes(1);
@@ -1480,7 +1481,8 @@ describe('bq-select', () => {
       await userEvent.keyboard('{ArrowDown}');
       await waitForChanges();
 
-      expect(document.activeElement).toBe(spanish);
+      expect(select.shadowRoot.activeElement).toBe(input);
+      expect(input.ariaActiveDescendantElement).toBe(spanish);
       expect(input.value).toBe('Span');
       expect(bqFocus).toHaveReceivedEventTimes(1);
       expect(bqBlur).toHaveReceivedEventTimes(0);
@@ -1683,7 +1685,8 @@ describe('bq-select', () => {
       await userEvent.keyboard('{ArrowDown}');
       await waitForChanges();
 
-      expect(document.activeElement).toBe(spanish);
+      expect(select.shadowRoot.activeElement).toBe(input);
+      expect(input.ariaActiveDescendantElement).toBe(spanish);
       expect(select.open).toBe(true);
       expect(input.value).toBe('Spanish');
       expect(getInput(select)).toBe(input);
@@ -1694,9 +1697,9 @@ describe('bq-select', () => {
       expect(new FormData(form).get('spoken-languages')).toBe('English');
 
       await userEvent.keyboard('{ArrowDown}');
-      expect(document.activeElement).toBe(spanishSpain);
+      expect(input.ariaActiveDescendantElement).toBe(spanishSpain);
       await userEvent.keyboard('{ArrowUp}');
-      expect(document.activeElement).toBe(spanish);
+      expect(input.ariaActiveDescendantElement).toBe(spanish);
       expect(resetSearch).not.toHaveBeenCalled();
 
       await userEvent.click(outside);
@@ -1714,7 +1717,8 @@ describe('bq-select', () => {
       await userEvent.fill(input, 'Spanish');
       await userEvent.keyboard('{ArrowDown}');
       await waitForChanges();
-      expect(document.activeElement).toBe(spanish);
+      expect(select.shadowRoot.activeElement).toBe(input);
+      expect(input.ariaActiveDescendantElement).toBe(spanish);
       expect(select.open).toBe(true);
 
       await userEvent.keyboard('{Enter}');
@@ -2195,9 +2199,9 @@ describe('bq-select', () => {
     expect(childOption).not.toHaveAttribute('aria-selected');
   });
 
-  it('should open and navigate flat options with Arrow Down and Arrow Up', async () => {
+  it('should open and navigate non-searchable flat options with Arrow Down and Arrow Up', async () => {
     const { root, waitForChanges } = await render(
-      <bq-select name="bq-select">
+      <bq-select disableSearch name="bq-select">
         <bq-option value="alpha">Alpha</bq-option>
         <bq-option value="beta">Beta</bq-option>
         <bq-option value="gamma">Gamma</bq-option>
@@ -2228,7 +2232,7 @@ describe('bq-select', () => {
 
   it('should skip disabled and hidden options during keyboard navigation', async () => {
     const { root, waitForChanges } = await render(
-      <bq-select name="bq-select">
+      <bq-select disableSearch name="bq-select">
         <bq-option value="alpha">Alpha</bq-option>
         <bq-option disabled value="beta">
           Beta
@@ -2250,6 +2254,167 @@ describe('bq-select', () => {
     await waitForChanges();
 
     expect(document.activeElement).toBe(deltaOption);
+  });
+
+  it.each([
+    { multiple: false, enableCheckboxes: false, keepOpenOnSelect: false },
+    { multiple: false, enableCheckboxes: false, keepOpenOnSelect: true },
+    { multiple: true, enableCheckboxes: false, keepOpenOnSelect: false },
+    { multiple: true, enableCheckboxes: false, keepOpenOnSelect: true },
+    { multiple: true, enableCheckboxes: true, keepOpenOnSelect: true },
+  ])('should retain search focus for flat selection: %o', async (props) => {
+    const { root, spyOnEvent, waitForChanges } = await render(
+      <bq-select {...props} name="languages">
+        <bq-option value="alpha">Alpha</bq-option>
+        <bq-option disabled value="alpine">
+          Alpine
+        </bq-option>
+        <bq-option id="flat-active-result" value="alps">
+          Alps
+        </bq-option>
+        <bq-option value="beta">Beta</bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const input = getInput(select);
+    const alpha = select.querySelector<HTMLBqOptionElement>('bq-option[value="alpha"]');
+    const alps = select.querySelector<HTMLBqOptionElement>('bq-option[value="alps"]');
+    const bqSelect = spyOnEvent('bqSelect');
+
+    input.focus();
+    await userEvent.keyboard('Al{ArrowDown}{ArrowDown}');
+    await waitForChanges();
+    expect(select.shadowRoot.activeElement).toBe(input);
+    expect(input.ariaActiveDescendantElement).toBe(alps);
+    expect(alps).toHaveAttribute('data-select-active');
+    expect(alpha).not.toHaveAttribute('data-select-active');
+    const accessibleInput = await getInputAccessibleNode(select);
+    expect(
+      accessibleInput.properties.find((property) => property.name === 'activedescendant')?.value?.relatedNodes?.[0]
+        ?.idref,
+    ).toBe('flat-active-result');
+
+    await userEvent.keyboard('{ArrowUp}{ArrowDown}{Enter}');
+    await waitForChanges();
+    await waitForStable(root);
+    expect(select.value).toEqual(props.multiple ? ['alps'] : 'alps');
+    expect(select.open).toBe(props.multiple || props.keepOpenOnSelect);
+    expect(select.shadowRoot.activeElement).toBe(input);
+    expect(input.ariaActiveDescendantElement).toBeNull();
+    expect(bqSelect).toHaveReceivedEventTimes(1);
+
+    await userEvent.clear(input);
+    await userEvent.keyboard('Be{ArrowLeft} {ArrowRight}');
+    await waitForChanges();
+    expect(input.value).toBe('B e');
+    expect(select.shadowRoot.activeElement).toBe(input);
+  });
+
+  it.each([false, true])(
+    'should return search focus after clicking a flat option with checkboxes=%s',
+    async (checkboxes) => {
+      const { root, waitForChanges } = await render(
+        <bq-select enableCheckboxes={checkboxes} keepOpenOnSelect multiple name="languages">
+          <bq-option value="alpha">Alpha</bq-option>
+          <bq-option value="beta">Beta</bq-option>
+        </bq-select>,
+      );
+      const select = root as HTMLBqSelectElement;
+      const input = getInput(select);
+      const alpha = select.querySelector<HTMLBqOptionElement>('bq-option[value="alpha"]');
+
+      input.focus();
+      await userEvent.keyboard('Al');
+      await waitForChanges();
+      await userEvent.click(getOptionSelectionControl(alpha));
+      await waitForChanges();
+      expect(select.value).toEqual(['alpha']);
+      expect(select.open).toBe(true);
+      expect(select.shadowRoot.activeElement).toBe(input);
+
+      await userEvent.keyboard('Be');
+      await waitForChanges();
+      expect(input.value).toBe('Be');
+      expect(alpha.hidden).toBe(true);
+    },
+  );
+
+  it('should continue filtering after navigating flat results', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-select multiple name="languages">
+        <bq-option value="alpha">Alpha</bq-option>
+        <bq-option value="alps">Alps</bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const input = getInput(select);
+    const alpha = select.querySelector<HTMLBqOptionElement>('bq-option[value="alpha"]');
+    const alps = select.querySelector<HTMLBqOptionElement>('bq-option[value="alps"]');
+
+    input.focus();
+    await userEvent.keyboard('Al{ArrowDown}');
+    expect(input.ariaActiveDescendantElement).toBe(alpha);
+    await userEvent.keyboard('ps');
+    await waitForChanges();
+    expect(input.value).toBe('Alps');
+    expect(select.shadowRoot.activeElement).toBe(input);
+    expect(input.ariaActiveDescendantElement).toBeNull();
+    expect(alpha.hidden).toBe(true);
+    expect(alps.hidden).toBe(false);
+    await userEvent.keyboard('{ArrowDown}{Enter}');
+    await waitForChanges();
+    expect(select.value).toEqual(['alps']);
+  });
+
+  it('should clear flat virtual focus when the active option is removed or filtered out', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-select name="languages">
+        <bq-option value="alpha">Alpha</bq-option>
+        <bq-option value="beta">Beta</bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const input = getInput(select);
+    const alpha = select.querySelector<HTMLBqOptionElement>('bq-option[value="alpha"]');
+    const beta = select.querySelector<HTMLBqOptionElement>('bq-option[value="beta"]');
+
+    input.focus();
+    await userEvent.keyboard('{ArrowDown}');
+    expect(input.ariaActiveDescendantElement).toBe(alpha);
+    await userEvent.keyboard('Be');
+    await waitForChanges();
+    expect(input.ariaActiveDescendantElement).toBeNull();
+    expect(alpha).not.toHaveAttribute('data-select-active');
+    await userEvent.keyboard('{ArrowDown}');
+    expect(input.ariaActiveDescendantElement).toBe(beta);
+    beta.remove();
+    await waitForChanges();
+    await waitForStable(root);
+    expect(input.ariaActiveDescendantElement).toBeNull();
+    expect(beta).not.toHaveAttribute('data-select-active');
+  });
+
+  it('should retain real flat option focus when element-reference ARIA is unavailable', async () => {
+    const descriptor = Object.getOwnPropertyDescriptor(Element.prototype, 'ariaActiveDescendantElement');
+    if (!descriptor) throw new Error('Chromium does not expose ariaActiveDescendantElement');
+    Reflect.deleteProperty(Element.prototype, 'ariaActiveDescendantElement');
+    try {
+      const { root, waitForChanges } = await render(
+        <bq-select name="languages">
+          <bq-option value="alpha">Alpha</bq-option>
+        </bq-select>,
+      );
+      const select = root as HTMLBqSelectElement;
+      const alpha = select.querySelector<HTMLBqOptionElement>('bq-option');
+
+      getInput(select).focus();
+      await userEvent.keyboard('{ArrowDown}');
+      await waitForChanges();
+      expect(document.activeElement).toBe(alpha);
+      expect(alpha).not.toHaveAttribute('data-select-active');
+    } finally {
+      Object.defineProperty(Element.prototype, 'ariaActiveDescendantElement', descriptor);
+    }
   });
 
   it('should navigate non-searchable nested options with roving tree focus', async () => {
@@ -3504,7 +3669,8 @@ describe('bq-select', () => {
       await waitForChanges();
       await waitForStable(root);
 
-      expect(document.activeElement).toBe(spanish);
+      expect(select.shadowRoot.activeElement).toBe(input);
+      expect(input.ariaActiveDescendantElement).toBe(spanish);
       expect(select.open).toBe(true);
 
       await userEvent.keyboard('{Escape}');
@@ -3523,7 +3689,8 @@ describe('bq-select', () => {
 
       await userEvent.keyboard('{ArrowDown}');
       await waitForChanges();
-      expect(document.activeElement).toBe(spanish);
+      expect(select.shadowRoot.activeElement).toBe(input);
+      expect(input.ariaActiveDescendantElement).toBe(spanish);
 
       await userEvent.keyboard('{Enter}');
       await waitForChanges();

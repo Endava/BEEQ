@@ -177,7 +177,7 @@ export class BqSelect {
 
   private debounceInput?: TDebounce<string>;
   private activeTreeOption?: HTMLBqOptionElement;
-  private virtualTreeOption?: HTMLBqOptionElement;
+  private virtualOption?: HTMLBqOptionElement;
   private virtualScrollFrame?: number;
   private expansionObserver?: MutationObserver;
   private optionsObserver?: MutationObserver;
@@ -335,7 +335,7 @@ export class BqSelect {
   @Watch('readonly')
   @Watch('disabled')
   handleSearchAvailabilityChange() {
-    if (this.disabled || this.isSearchDisabled) this.clearVirtualTreeOption();
+    if (this.disabled || this.isSearchDisabled) this.clearVirtualOption();
   }
 
   @Watch('multiple')
@@ -359,7 +359,7 @@ export class BqSelect {
 
   @Watch('open')
   handleOpenStateChange() {
-    if (!this.open) this.clearVirtualTreeOption();
+    if (!this.open) this.clearVirtualOption();
     this.updateInternalsAccessibility();
   }
 
@@ -411,7 +411,7 @@ export class BqSelect {
   }
 
   disconnectedCallback() {
-    this.clearVirtualTreeOption();
+    this.clearVirtualOption();
     this.hasFocus = false;
     this.debounceInput?.cancel();
     this.expansionObserver?.disconnect();
@@ -608,7 +608,7 @@ export class BqSelect {
       return;
     }
 
-    this.clearVirtualTreeOption();
+    this.clearVirtualOption();
     this.focusInput();
   };
 
@@ -688,7 +688,7 @@ export class BqSelect {
   private handleKeydown = (ev: KeyboardEvent) => {
     if (this.disabled) return;
 
-    if (this.handleVirtualTreeKeydown(ev)) return;
+    if (this.handleVirtualKeydown(ev)) return;
 
     if (ev.key === 'ArrowDown' || ev.key === 'ArrowUp') {
       ev.preventDefault();
@@ -717,32 +717,32 @@ export class BqSelect {
     }
   };
 
-  private handleVirtualTreeKeydown = (ev: KeyboardEvent) => {
-    if (!this.hasNestedOptions || this.isSearchDisabled || !this.inputElem) return false;
+  private handleVirtualKeydown = (ev: KeyboardEvent) => {
+    if (this.isSearchDisabled || !this.inputElem) return false;
     if (!('ariaActiveDescendantElement' in this.inputElem)) return false;
     if (ev.isComposing || ev.altKey || ev.ctrlKey || ev.metaKey || ev.shiftKey) return true;
 
     if (ev.key === 'ArrowDown' || ev.key === 'ArrowUp') {
       ev.preventDefault();
-      this.navigateVirtualTree(ev.key === 'ArrowDown' ? 1 : -1);
+      this.navigateVirtualOptions(ev.key === 'ArrowDown' ? 1 : -1);
       return true;
     }
 
-    const option = this.virtualTreeOption;
-    if (ev.key !== 'Enter' || !this.open || !option || !this.isVisibleTreeOption(option)) return false;
+    const option = this.virtualOption;
+    if (ev.key !== 'Enter' || !this.open || !option || !this.getVisibleOptions().includes(option)) return false;
 
     ev.preventDefault();
     option.dispatchEvent(new CustomEvent('bqEnter', { bubbles: true, composed: true, detail: option }));
     return true;
   };
 
-  private navigateVirtualTree = (direction: 1 | -1) => {
-    const options = this.getVisibleTreeOptions();
-    const currentIndex = this.virtualTreeOption ? options.indexOf(this.virtualTreeOption) : -1;
+  private navigateVirtualOptions = (direction: 1 | -1) => {
+    const options = this.getVisibleOptions();
+    const currentIndex = this.virtualOption ? options.indexOf(this.virtualOption) : -1;
     const nextIndex = currentIndex < 0 ? (direction === 1 ? 0 : options.length - 1) : currentIndex + direction;
     const option = options[nextIndex];
     this.open = true;
-    if (option) this.setVirtualTreeOption(option);
+    if (option) this.setVirtualOption(option);
   };
 
   private handleInput = (ev: Event) => {
@@ -1061,8 +1061,9 @@ export class BqSelect {
   };
 
   private syncTreeTabIndexes = (options = this.getActiveOptions(this.getOptionStructure())) => {
+    if (this.virtualOption && !this.getVisibleOptions().includes(this.virtualOption)) this.clearVirtualOption();
+
     if (!this.hasNestedOptions) {
-      this.clearVirtualTreeOption();
       this.activeTreeOption = undefined;
       options.forEach((option) => {
         option.removeAttribute('data-tree-tab-index');
@@ -1072,7 +1073,6 @@ export class BqSelect {
     }
 
     const visibleOptions = options.filter((option) => this.isVisibleTreeOption(option));
-    if (this.virtualTreeOption && !visibleOptions.includes(this.virtualTreeOption)) this.clearVirtualTreeOption();
     const activeOption =
       this.activeTreeOption && visibleOptions.includes(this.activeTreeOption)
         ? this.activeTreeOption
@@ -1093,25 +1093,25 @@ export class BqSelect {
     this.syncTreeTabIndexes();
   };
 
-  private clearVirtualTreeOption = () => {
+  private clearVirtualOption = () => {
     if (this.virtualScrollFrame !== undefined) cancelAnimationFrame(this.virtualScrollFrame);
     this.virtualScrollFrame = undefined;
-    this.virtualTreeOption?.removeAttribute('data-select-active');
-    this.virtualTreeOption = undefined;
+    this.virtualOption?.removeAttribute('data-select-active');
+    this.virtualOption = undefined;
     if (this.inputElem && 'ariaActiveDescendantElement' in this.inputElem)
       this.inputElem.ariaActiveDescendantElement = null;
   };
 
-  private setVirtualTreeOption = (option: HTMLBqOptionElement) => {
-    this.clearVirtualTreeOption();
-    this.virtualTreeOption = option;
-    this.setActiveTreeOption(option);
+  private setVirtualOption = (option: HTMLBqOptionElement) => {
+    this.clearVirtualOption();
+    this.virtualOption = option;
+    if (this.hasNestedOptions) this.setActiveTreeOption(option);
     option.setAttribute('data-select-active', '');
     if (this.inputElem && 'ariaActiveDescendantElement' in this.inputElem)
       this.inputElem.ariaActiveDescendantElement = option;
     this.virtualScrollFrame = requestAnimationFrame(() => {
       this.virtualScrollFrame = undefined;
-      if (this.open && this.virtualTreeOption === option) option.scrollIntoView({ block: 'nearest' });
+      if (this.open && this.virtualOption === option) option.scrollIntoView({ block: 'nearest' });
     });
   };
 
@@ -1632,7 +1632,7 @@ export class BqSelect {
                 form={this.form}
                 id={this.name || this.fallbackInputId}
                 name={this.name}
-                onBlur={this.clearVirtualTreeOption}
+                onBlur={this.clearVirtualOption}
                 onFocus={this.collapseInputSelection}
                 onInput={this.handleInput}
                 onKeyDown={this.handleKeydown}
