@@ -3649,16 +3649,16 @@ These events no longer follow input-only focus changes. If your handler needs to
 
 The clear button has `tabindex="-1"` and the nested expand buttons are removed from the Tab order. When a nested tree is open, `Tab` moves from the input to its active tree item; use that item to expand or collapse branches with Left and Right.
 
-Searchable nested selects use virtual focus when the browser supports `ariaActiveDescendantElement`, so the input remains focused while moving through results. Browsers without that API move focus into the tree instead.
+Searchable selects use virtual focus when the browser supports `ariaActiveDescendantElement`, so the input remains focused while moving through results. Browsers without that API move focus into the options instead.
 
 | Key | Context | Action |
 |---|---|---|
 | `Tab` | Input focused, nested panel open | Moves focus to the active tree item |
 | `Tab` | Panel closed | Moves focus to the input without opening the panel |
 | Printable characters | Input focused, `disable-search` not set | Filters the options |
-| `ArrowDown` / `ArrowUp` | Searchable nested input focused | Opens the panel or moves the active tree item, keeping input focus |
-| `ArrowDown` / `ArrowUp` | Flat or non-searchable input focused | Opens the panel and moves focus to the first / last option |
-| `Enter` | Searchable nested input with an active item | Selects the active item |
+| `ArrowDown` / `ArrowUp` | Searchable input focused | Opens the panel or moves the active option, keeping input focus where supported |
+| `ArrowDown` / `ArrowUp` | Non-searchable input focused | Opens the panel and moves focus to the first / last option |
+| `Enter` | Searchable input with an active item | Selects the active item |
 | `ArrowDown` | Option focused | Moves focus to the next option |
 | `ArrowUp` | Option focused | Moves focus to the previous option |
 | `Home` | Option focused | Moves focus to the first option |
