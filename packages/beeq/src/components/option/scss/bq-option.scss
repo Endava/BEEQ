@@ -195,9 +195,13 @@
 
 @layer bq-option.parts {
   .bq-option__checkbox,
-  .bq-option__checkbox::part(base),
-  .bq-option__checkbox::part(label) {
+  .bq-option__checkbox::part(base) {
     inline-size: 100%;
+  }
+
+  .bq-option__checkbox::part(label) {
+    flex: 1;
+    min-inline-size: 0;
   }
 
   .bq-option__checkbox {
