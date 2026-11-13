@@ -110,6 +110,8 @@ Use nested options when people need to select a category, its related choices, o
 
 In the input, nested selections render one tag per selected top-level parent. A partial selection adds the descendant count, such as `Frontend (2)`; a fully selected branch keeps the parent label without a count.
 
+With search enabled, use `ArrowDown` and `ArrowUp` to highlight visible tree items while typing in the input, then press `Enter` to select. With `keep-open-on-select`, the input remains ready for the next search.
+
 ### Validation states
 
 <CardGroup cols={2}>
@@ -3645,16 +3647,18 @@ These events no longer follow input-only focus changes. If your handler needs to
 
 ### Keyboard interaction
 
-The native `input` is the only tab stop. The clear button has `tabindex="-1"` and the nested expand buttons are removed from the Tab order.
+The clear button has `tabindex="-1"` and the nested expand buttons are removed from the Tab order. When a nested tree is open, `Tab` moves from the input to its active tree item; use that item to expand or collapse branches with Left and Right.
+
+Searchable nested selects use virtual focus when the browser supports `ariaActiveDescendantElement`, so the input remains focused while moving through results. Browsers without that API move focus into the tree instead.
 
 | Key | Context | Action |
 |---|---|---|
-| `Tab` | Any | Moves focus to the input without opening the panel |
+| `Tab` | Input focused, nested panel open | Moves focus to the active tree item |
+| `Tab` | Panel closed | Moves focus to the input without opening the panel |
 | Printable characters | Input focused, `disable-search` not set | Filters the options |
-| `ArrowDown` | Input focused, panel closed | Opens the panel and moves focus to the first option |
-| `ArrowUp` | Input focused, panel closed | Opens the panel and moves focus to the last option |
-| `ArrowDown` | Input focused, panel open | Moves focus to the first option |
-| `ArrowUp` | Input focused, panel open | Moves focus to the last option |
+| `ArrowDown` / `ArrowUp` | Searchable nested input focused | Opens the panel or moves the active tree item, keeping input focus |
+| `ArrowDown` / `ArrowUp` | Flat or non-searchable input focused | Opens the panel and moves focus to the first / last option |
+| `Enter` | Searchable nested input with an active item | Selects the active item |
 | `ArrowDown` | Option focused | Moves focus to the next option |
 | `ArrowUp` | Option focused | Moves focus to the previous option |
 | `Home` | Option focused | Moves focus to the first option |
