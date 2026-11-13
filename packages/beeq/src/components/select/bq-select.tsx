@@ -14,6 +14,7 @@ import {
   type TDebounce,
 } from '../../shared/utils';
 import type { TInputValidation } from '../input/bq-input.types';
+import { revealOptionChildren } from './helper/scroll';
 
 export type TSelectValue = string | string[];
 
@@ -963,32 +964,9 @@ export class BqSelect {
       ?.shadowRoot?.querySelector<HTMLElement>('[part="panel"]');
     const parentRow = option.shadowRoot?.querySelector<HTMLElement>('[part="item"]');
     const group = option.shadowRoot?.querySelector<HTMLElement>('[part="options"]');
-    if (!panel || !parentRow || !group || group.hidden || !panel.clientHeight) return;
+    if (!panel || !parentRow || !group) return;
 
-    const children = this.getTreeOptionChildren(option);
-    const firstChildRow = children
-      .filter((child) => child.getAttribute('slot') === 'options' && !child.hidden)
-      .map((child) => child.shadowRoot?.querySelector<HTMLElement>('[part="item"]'))
-      .find((row) => row && row.getBoundingClientRect().height > 0);
-    if (!firstChildRow) return;
-
-    const panelRect = panel.getBoundingClientRect();
-    const viewportTop = panelRect.top + panel.clientTop;
-    const viewportBottom = viewportTop + panel.clientHeight;
-    const parentRect = parentRow.getBoundingClientRect();
-    const groupRect = group.getBoundingClientRect();
-    const firstChildRect = firstChildRow.getBoundingClientRect();
-    const branchFits = groupRect.bottom - parentRect.top <= panel.clientHeight;
-    const targetBottom = branchFits ? groupRect.bottom : firstChildRect.bottom;
-
-    if (groupRect.top >= viewportTop && groupRect.bottom <= viewportBottom) return;
-    if (!branchFits && parentRect.top >= viewportTop && targetBottom <= viewportBottom) return;
-
-    const minimumScroll = targetBottom - viewportBottom;
-    const maximumScroll = parentRect.top - viewportTop;
-    const delta = Math.min(Math.max(0, minimumScroll), Math.max(0, maximumScroll));
-    if (delta > 0) panel.scrollTop += delta;
-    else if (parentRect.top < viewportTop) panel.scrollTop += parentRect.top - viewportTop;
+    revealOptionChildren(panel, parentRow, group, option);
   };
 
   private isOptionNavigationKey = (key: string) =>

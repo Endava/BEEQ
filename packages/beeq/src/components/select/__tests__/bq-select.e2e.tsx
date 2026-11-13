@@ -2434,11 +2434,14 @@ describe('bq-select', () => {
         ))}
         <bq-option value="parent">
           Parent
-          <bq-option hidden slot="options" value="hidden">
+          <bq-option expanded hidden slot="options" value="hidden">
             Hidden child
+            <bq-option slot="options" value="hidden-grandchild">
+              Hidden grandchild
+            </bq-option>
           </bq-option>
           {Array.from({ length: 10 }, (_, index) => (
-            <bq-option slot="options" value={`child-${index}`}>
+            <bq-option disabled={index === 0} slot="options" value={`child-${index}`}>
               Child {index}
             </bq-option>
           ))}
