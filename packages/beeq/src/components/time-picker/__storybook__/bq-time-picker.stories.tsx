@@ -37,6 +37,7 @@ const meta: Meta = {
     min: { control: 'text' },
     'minute-step': { control: 'number' },
     name: { control: 'text' },
+    nowProvider: { control: false },
     open: { control: 'boolean' },
     'panel-height': { control: 'text' },
     placement: { control: 'select', options: [...FLOATING_PLACEMENT] },
@@ -47,7 +48,6 @@ const meta: Meta = {
     'second-step': { control: 'number' },
     skidding: { control: 'number' },
     strategy: { control: 'select', options: [...FLOATING_STRATEGY] },
-    'time-zone': { control: 'text' },
     'validation-status': { control: 'select', options: [...INPUT_VALIDATION] },
     value: { control: 'text' },
     // Not part of the public API — hidden from docs table
@@ -72,6 +72,7 @@ const meta: Meta = {
     min: undefined,
     'minute-step': 1,
     name: 'bq-time-picker',
+    nowProvider: undefined,
     open: false,
     'panel-height': 'auto',
     placement: 'bottom-end',
@@ -82,7 +83,6 @@ const meta: Meta = {
     'second-step': 1,
     skidding: 0,
     strategy: 'fixed',
-    'time-zone': undefined,
     'validation-status': 'none',
     value: undefined,
     noLabel: false,
@@ -145,6 +145,7 @@ const Template = (args: Args) => {
       min=${ifDefined(args.min)}
       minute-step=${ifDefined(args['minute-step'])}
       name=${ifDefined(args.name)}
+      .nowProvider=${args.nowProvider}
       ?open=${args.open}
       panel-height=${ifDefined(args['panel-height'])}
       placement=${ifDefined(args.placement)}
@@ -155,7 +156,6 @@ const Template = (args: Args) => {
       second-step=${ifDefined(args['second-step'])}
       skidding=${ifDefined(args.skidding)}
       strategy=${ifDefined(args.strategy)}
-      time-zone=${ifDefined(args['time-zone'])}
       validation-status=${ifDefined(args['validation-status'])}
       value=${ifDefined(args.value)}
       @bqBlur=${args.bqBlur}
@@ -304,7 +304,7 @@ export const Steps: Story = {
 export const UtcNow: Story = {
   name: 'Now in UTC',
   render: Template,
-  args: { open: true, 'time-zone': 'UTC' },
+  args: { open: true, nowProvider: () => new Date().toISOString().slice(11, 19) },
 };
 
 export const RequireConfirm: Story = {

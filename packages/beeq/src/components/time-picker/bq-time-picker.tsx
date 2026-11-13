@@ -127,7 +127,6 @@ type TOpenSource = 'input' | 'keyboard' | 'trigger' | 'programmatic';
  * @attr {number} second-step - Step between selectable seconds.
  * @attr {number} skidding - Skidding between the panel and the field.
  * @attr {"fixed" | "absolute"} strategy - Positioning strategy for the panel.
- * @attr {string} time-zone - Time zone used by "Now"; defaults to browser-local time.
  * @attr {"error" | "none" | "success" | "warning"} validation-status - Validation state.
  * @attr {string} value - The selected time in 24-hour format: `HH:mm` (`HH:00` at hour precision) or `HH:mm:ss`.
  *
@@ -234,7 +233,6 @@ export class BqTimePicker {
   private isCommittingSegmentDraft = false;
 
   private labelElem?: HTMLElement;
-  private nowFormatter?: Intl.DateTimeFormat | null;
   private panelElem?: HTMLElement;
   /** Keeps the selected options visible once the panel gets its final size. */
   private panelResizeObserver?: ResizeObserver;
@@ -330,6 +328,12 @@ export class BqTimePicker {
   /** The Time picker name. */
   @Prop({ reflect: true }) name!: string;
 
+  /**
+   * Supplies the wall-clock time used by "Now" as `HH:mm` or `HH:mm:ss`.
+   * Defaults to browser-local time. An invalid result disables "Now" and logs a warning.
+   */
+  @Prop() nowProvider?: () => string;
+
   /** If `true`, the panel is visible. */
   @Prop({ reflect: true, mutable: true }) open: boolean = false;
 
@@ -368,12 +372,6 @@ export class BqTimePicker {
 
   /** Positioning strategy for the panel. */
   @Prop({ reflect: true }) strategy: TFloatingStrategy = 'fixed';
-
-  /**
-   * Time zone used by "Now", such as `UTC` or `America/New_York`. Defaults to browser-local time.
-   * An invalid or unsupported time zone disables "Now" and logs a warning.
-   */
-  @Prop({ reflect: true }) timeZone?: string;
 
   /** Validation state applied to the field. */
   @Prop({ reflect: true }) validationStatus: TInputValidation = 'none';
@@ -428,28 +426,6 @@ export class BqTimePicker {
   @Watch('secondStep')
   handleConstraintsChange() {
     this.syncValidity();
-  }
-
-  @Watch('timeZone')
-  handleTimeZoneChange() {
-    if (this.timeZone == null) {
-      this.nowFormatter = undefined;
-      return;
-    }
-
-    try {
-      this.nowFormatter = new Intl.DateTimeFormat('en-US-u-nu-latn', {
-        timeZone: this.timeZone,
-        hourCycle: 'h23',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-      });
-    } catch (error) {
-      if (!(error instanceof RangeError)) throw error;
-      this.nowFormatter = null;
-      console.warn(`[${this.el.tagName}] Invalid or unsupported timeZone "${this.timeZone}"; "Now" is disabled.`);
-    }
   }
 
   @Watch('placement')
@@ -512,7 +488,6 @@ export class BqTimePicker {
 
   componentWillLoad() {
     this.checkPropValues();
-    this.handleTimeZoneChange();
     this.value = normalizeTimeValue(this.value, this.precision);
     this.initialValue = this.value;
     this.syncDerivedFromValue();
@@ -1034,8 +1009,27 @@ export class BqTimePicker {
     this.closePanel(true);
   };
 
-  private getCurrentTime = (): TTime | undefined =>
-    this.nowFormatter === null ? undefined : getNowTime(this.constraints, new Date(), this.nowFormatter);
+  private getCurrentTime = (): TTime | undefined => {
+    if (this.nowProvider == null) return getNowTime(this.constraints);
+    if (typeof this.nowProvider !== 'function') {
+      console.warn(`[${this.el.tagName}] nowProvider must be a function; "Now" is disabled.`);
+      return undefined;
+    }
+
+    let value: string;
+    try {
+      value = this.nowProvider();
+    } catch (error) {
+      console.error(`[${this.el.tagName}] nowProvider failed; "Now" is disabled.`, error);
+      return undefined;
+    }
+    const time = typeof value === 'string' ? parseTime(value) : undefined;
+    if (!time) {
+      console.warn(`[${this.el.tagName}] nowProvider must return HH:mm or HH:mm:ss; "Now" is disabled.`);
+      return undefined;
+    }
+    return getNowTime(this.constraints, time);
+  };
 
   private handleConfirmClick = (ev: CustomEvent): void => {
     ev.stopPropagation();
@@ -1219,7 +1213,7 @@ export class BqTimePicker {
 
   private renderPanel = (): JSX.Element => {
     const selected = this.panelPartial;
-    const canPickNow = this.isInteractive && !!this.getCurrentTime();
+    const canPickNow = this.open && !this.disableNow && this.isInteractive && !!this.getCurrentTime();
     const showFixedMinute = this.precision === 'hour' && this.hourFormat !== '12';
 
     return (

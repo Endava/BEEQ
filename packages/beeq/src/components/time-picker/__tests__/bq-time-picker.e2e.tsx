@@ -711,11 +711,10 @@ describe('bq-time-picker', () => {
     expect(getInnerButton(tp, 'now-btn')).toHaveAttribute('disabled');
   });
 
-  it('should pick the configured zone time with existing steps and event detail', async () => {
-    vi.useFakeTimers({ toFake: ['Date'] });
-    vi.setSystemTime(new Date('2026-01-01T23:37:42Z'));
+  it('should pick the provided time with existing steps and event detail', async () => {
+    const nowProvider = vi.fn(() => '05:22:42');
     const { root, spyOnEvent, waitForChanges } = await render(
-      <bq-time-picker minuteStep={15} name="time" timeZone="Asia/Kathmandu" />,
+      <bq-time-picker minuteStep={15} name="time" nowProvider={nowProvider} />,
     );
     const tp = root as HTMLBqTimePickerElement;
     const bqChange = spyOnEvent('bqChange');
@@ -725,19 +724,20 @@ describe('bq-time-picker', () => {
     await waitForChanges();
 
     expect(tp.value).toBe('05:15');
+    expect(nowProvider).toHaveBeenCalled();
     expect(bqChange).toHaveReceivedEventTimes(1);
     expect(bqChange).toHaveReceivedEventDetail({ value: '05:15', el: tp });
   });
 
-  it('should use the configured zone for bounds and update Now when the zone changes', async () => {
-    vi.useFakeTimers({ toFake: ['Date'] });
-    vi.setSystemTime(new Date('2026-01-01T23:37:42Z'));
-    const { root, waitForChanges } = await render(<bq-time-picker max="06:00" name="time" timeZone="UTC" />);
+  it('should use the provided time for bounds and update Now when the provider changes', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-time-picker max="06:00" name="time" nowProvider={() => '23:37'} />,
+    );
     const tp = root as HTMLBqTimePickerElement;
     await openPanel(tp, waitForChanges);
     expect(getInnerButton(tp, 'now-btn')).toHaveAttribute('disabled');
 
-    tp.timeZone = 'Asia/Kathmandu';
+    tp.nowProvider = () => '05:22';
     await waitForChanges();
     expect(getInnerButton(tp, 'now-btn')).not.toHaveAttribute('disabled');
     getInnerButton(tp, 'now-btn')?.click();
@@ -745,33 +745,71 @@ describe('bq-time-picker', () => {
     expect(tp.value).toBe('05:22');
   });
 
-  it('should warn and disable Now for an invalid zone until corrected or removed', async () => {
+  it('should warn and disable Now for an invalid result until the provider is corrected or removed', async () => {
     const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
-    const { root, waitForChanges } = await render(<bq-time-picker name="time" timeZone="Invalid/Zone" value="09:30" />);
+    const { root, waitForChanges } = await render(
+      <bq-time-picker name="time" nowProvider={() => '25:00'} value="09:30" />,
+    );
     const tp = root as HTMLBqTimePickerElement;
     await openPanel(tp, waitForChanges);
-    expect(warn).toHaveBeenCalledOnce();
-    expect(warn).toHaveBeenCalledWith(expect.stringContaining('Invalid/Zone'));
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining('nowProvider'));
     expect(getInnerButton(tp, 'now-btn')).toHaveAttribute('disabled');
     expect(tp.value).toBe('09:30');
 
-    tp.timeZone = 'UTC';
+    tp.nowProvider = () => '12:00';
     await waitForChanges();
     expect(getInnerButton(tp, 'now-btn')).not.toHaveAttribute('disabled');
 
-    tp.timeZone = 'Invalid/Zone';
+    tp.nowProvider = () => '25:00';
     await waitForChanges();
     expect(getInnerButton(tp, 'now-btn')).toHaveAttribute('disabled');
-    tp.removeAttribute('time-zone');
+    tp.nowProvider = undefined;
     await waitForChanges();
     expect(getInnerButton(tp, 'now-btn')).not.toHaveAttribute('disabled');
   });
 
-  it('should keep a UTC Now pick as a draft until confirmed', async () => {
-    vi.useFakeTimers({ toFake: ['Date'] });
-    vi.setSystemTime(new Date('2026-01-01T00:37:42Z'));
+  it('should report a failing provider and disable Now', async () => {
+    const error = vi.spyOn(console, 'error').mockImplementation(() => {});
+    const failure = new Error('clock unavailable');
+    const { root, waitForChanges } = await render(
+      <bq-time-picker
+        name="time"
+        nowProvider={() => {
+          throw failure;
+        }}
+      />,
+    );
+    const tp = root as HTMLBqTimePickerElement;
+    await openPanel(tp, waitForChanges);
+    expect(error).toHaveBeenCalledWith(expect.stringContaining('nowProvider failed'), failure);
+    expect(getInnerButton(tp, 'now-btn')).toHaveAttribute('disabled');
+  });
+
+  it('should read the provider again on click', async () => {
+    const nowProvider = vi.fn(() => '09:00');
+    const { root, waitForChanges } = await render(<bq-time-picker name="time" nowProvider={nowProvider} />);
+    const tp = root as HTMLBqTimePickerElement;
+    await openPanel(tp, waitForChanges);
+    nowProvider.mockReturnValue('10:30');
+    getInnerButton(tp, 'now-btn')?.click();
+    await waitForChanges();
+    expect(tp.value).toBe('10:30');
+  });
+
+  it('should not call the provider when the panel is closed or Now is hidden', async () => {
+    const nowProvider = vi.fn(() => '12:00');
+    const { root, waitForChanges } = await render(<bq-time-picker name="time" nowProvider={nowProvider} />);
+    const tp = root as HTMLBqTimePickerElement;
+    expect(nowProvider).not.toHaveBeenCalled();
+
+    tp.disableNow = true;
+    await openPanel(tp, waitForChanges);
+    expect(nowProvider).not.toHaveBeenCalled();
+  });
+
+  it('should keep a provided Now pick as a draft until confirmed', async () => {
     const { root, spyOnEvent, waitForChanges } = await render(
-      <bq-time-picker name="time" precision="second" requireConfirm timeZone="UTC" value="09:30:00" />,
+      <bq-time-picker name="time" nowProvider={() => '00:37:42'} precision="second" requireConfirm value="09:30:00" />,
     );
     const tp = root as HTMLBqTimePickerElement;
     const bqChange = spyOnEvent('bqChange');
@@ -787,8 +825,8 @@ describe('bq-time-picker', () => {
     expect(bqChange).toHaveReceivedEventDetail({ value: '00:37:42', el: tp });
   });
 
-  it('should not convert typed values when a time zone is configured', async () => {
-    const { root } = await render(<bq-time-picker name="time" timeZone="Asia/Kathmandu" />);
+  it('should not change typed values when a provider is configured', async () => {
+    const { root } = await render(<bq-time-picker name="time" nowProvider={() => '05:22'} />);
     const tp = root as HTMLBqTimePickerElement;
     await typeInSegment(tp, 'hour', '1015');
     expect(tp.value).toBe('10:15');
