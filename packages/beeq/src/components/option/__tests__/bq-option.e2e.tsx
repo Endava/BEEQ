@@ -1,5 +1,5 @@
 import { h } from '@stencil/core';
-import { beforeEach, describe, expect, it, render, waitForStable } from '@stencil/vitest';
+import { afterEach, beforeEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
 import { cdp, userEvent } from 'vitest/browser';
 
 import { resolveColorToken } from '../../../shared/test-utils/resolveColorToken';
@@ -37,6 +37,10 @@ const movePointerOff = () =>
 
 beforeEach(async () => {
   await movePointerOff();
+});
+
+afterEach(() => {
+  vi.restoreAllMocks();
 });
 
 describe('bq-option', () => {
@@ -551,6 +555,64 @@ describe('bq-option', () => {
     await waitForChanges();
 
     expect(getSelectionSummary(option)).toBeNull();
+  });
+
+  it('should refresh descendant summaries after repeated reconnections', async () => {
+    const { root, waitForChanges } = await render(
+      <div>
+        <bq-option allSelectedLabel="All levels" selectedCountLabel="{count} levels" value="parent">
+          Parent
+          <bq-option slot="options" value="child-one">
+            Child one
+          </bq-option>
+          <bq-option slot="options" value="child-two">
+            Child two
+          </bq-option>
+        </bq-option>
+      </div>,
+    );
+    const parent = root.querySelector<HTMLBqOptionElement>('bq-option[value="parent"]');
+    const firstChild = root.querySelector<HTMLBqOptionElement>('bq-option[value="child-one"]');
+    const secondChild = root.querySelector<HTMLBqOptionElement>('bq-option[value="child-two"]');
+    await waitForStable(root);
+
+    const observe = vi.spyOn(MutationObserver.prototype, 'observe');
+    const disconnect = vi.spyOn(MutationObserver.prototype, 'disconnect');
+    parent.remove();
+    firstChild.selected = true;
+    await waitForChanges();
+    root.appendChild(parent);
+    await waitForChanges();
+    await waitForStable(root);
+
+    expect(getSelectionSummary(parent)).toHaveTextContent('1 levels');
+    expect(parent).toEqualAttribute('aria-label', 'Parent, Child one selected');
+
+    for (let i = 0; i < 2; i++) {
+      parent.remove();
+      root.appendChild(parent);
+      await waitForChanges();
+    }
+
+    const parentObservers = observe.mock.calls
+      .map(([target], index) => (target === parent ? observe.mock.contexts[index] : undefined))
+      .filter((observer) => observer !== undefined);
+    expect(parentObservers).toHaveLength(3);
+    expect(new Set(parentObservers).size).toBe(1);
+    expect(disconnect.mock.contexts.filter((observer) => observer === parentObservers[0])).toHaveLength(3);
+
+    secondChild.selected = true;
+    await waitForChanges();
+    await waitForStable(root);
+    expect(getSelectionSummary(parent)).toHaveTextContent('All levels');
+    expect(parent).toEqualAttribute('aria-label', 'Parent, 2 selected');
+
+    firstChild.selected = false;
+    secondChild.selected = false;
+    await waitForChanges();
+    await waitForStable(root);
+    expect(getSelectionSummary(parent)).toBeNull();
+    expect(parent).not.toHaveAttribute('aria-label');
   });
 
   it('should expand and collapse nested options without changing selection', async () => {

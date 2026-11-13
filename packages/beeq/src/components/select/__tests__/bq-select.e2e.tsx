@@ -2419,6 +2419,54 @@ describe('bq-select', () => {
     expect(bqSelect).toHaveReceivedEventTimes(2);
   });
 
+  it('should keep expanded nested option summaries current after reordering', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-select multiple name="skills" keepOpenOnSelect>
+        <bq-option expanded value="other">
+          Other
+          <bq-option slot="options" value="other-child">
+            Other child
+          </bq-option>
+        </bq-option>
+        <bq-option expanded value="frontend">
+          Frontend
+          <bq-option slot="options" value="react">
+            React
+          </bq-option>
+          <bq-option slot="options" value="stencil">
+            Stencil
+          </bq-option>
+        </bq-option>
+      </bq-select>,
+    );
+    const select = root as HTMLBqSelectElement;
+    const other = root.querySelector<HTMLBqOptionElement>('bq-option[value="other"]');
+    const parent = root.querySelector<HTMLBqOptionElement>('bq-option[value="frontend"]');
+    const react = root.querySelector<HTMLBqOptionElement>('bq-option[value="react"]');
+    const stencil = root.querySelector<HTMLBqOptionElement>('bq-option[value="stencil"]');
+
+    await userEvent.click(getControl(select));
+    await userEvent.click(getOptionCheckboxBase(parent));
+    await waitForChanges();
+    expect(getOptionSelectionSummary(parent)).toHaveTextContent('All selected');
+
+    select.insertBefore(parent, other);
+    await waitForChanges();
+    await waitForStable(root);
+    expect(select.firstElementChild).toBe(parent);
+    expect(parent.expanded).toBe(true);
+    expect(other.expanded).toBe(true);
+
+    await userEvent.click(getOptionCheckboxBase(stencil));
+    await waitForChanges();
+    expect(getOptionSelectionSummary(parent)).toHaveTextContent('1 selected');
+
+    await userEvent.click(getOptionCheckboxBase(react));
+    await waitForChanges();
+    expect(getOptionSelectionSummary(parent)).toBeNull();
+    expect(parent.expanded).toBe(true);
+  });
+
   it('should select ancestors, expose indeterminate state, and emit the nested selection tree', async () => {
     const { root, spyOnEvent, waitForChanges } = await render(
       <bq-select multiple name="skills" keepOpenOnSelect>
