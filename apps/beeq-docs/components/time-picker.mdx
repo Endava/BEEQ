@@ -765,6 +765,63 @@ With `require-confirm`, panel picks, including "Now", stay a draft until people 
   </CodeGroup>
 </CodeLivePreview>
 
+### Now in a time zone
+
+By default, "Now" uses the browser's local time. Set `time-zone` to `UTC` or a browser-supported IANA time zone such as `America/New_York` to use that zone instead. Daylight-saving rules follow the browser's time-zone data.
+
+The option affects only "Now": manual values, `min`, and `max` are not converted, and the submitted time contains no date or time-zone information. An invalid or unsupported time zone disables "Now" and logs a warning; manual entry remains available.
+
+<CodeLivePreview mode="shadow" code={`
+  <bq-time-picker name="utc-time" time-zone="UTC">
+    <label slot="label">Time in UTC</label>
+  </bq-time-picker>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-time-picker name="utc-time" time-zone="UTC">
+      <label slot="label">Time in UTC</label>
+    </bq-time-picker>
+    ```
+
+    ```jsx React icon="react"
+    import { BqTimePicker } from "@beeq/react";
+
+    <BqTimePicker name="utc-time" timeZone="UTC">
+      <label slot="label">Time in UTC</label>
+    </BqTimePicker>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqTimePicker } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqTimePicker],
+      template: `
+        <bq-time-picker name="utc-time" time-zone="UTC">
+          <label slot="label">Time in UTC</label>
+        </bq-time-picker>
+      `
+    })
+    export class TimePickerUtcComponent {}
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqTimePicker } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqTimePicker name="utc-time" time-zone="UTC">
+        <label slot="label">Time in UTC</label>
+      </BqTimePicker>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
 ### Without the Now button
 
 Set `disable-now` to hide the "Now" button when the current time isn't a meaningful choice, such as for reminders set for later in the day. The OK button is always shown.
@@ -1514,6 +1571,7 @@ When focus leaves the field, complete times outside `min` or `max` are clamped t
 | `secondStep` | `second-step` | Step between selectable seconds | `number` | `1` |
 | `skidding` | `skidding` | Skidding between the panel and the field | `number` | `0` |
 | `strategy` | `strategy` | Positioning strategy for the panel | `"absolute" \| "fixed"` | `"fixed"` |
+| `timeZone` | `time-zone` | Time zone used by "Now"; an invalid or unsupported zone disables it and logs a warning | `string` | `undefined` (browser-local) |
 | `validationStatus` | `validation-status` | Validation state applied to the field | `"error" \| "none" \| "success" \| "warning"` | `"none"` |
 | `value` | `value` | The selected time, in 24-hour format: `HH:mm` (`HH:00` at hour precision) or `HH:mm:ss` at second precision | `string` | `undefined` |
 
@@ -1525,6 +1583,7 @@ When focus leaves the field, complete times outside `min` or `max` are clamped t
 | `hour-step` above `23`, or `minute-step` or `second-step` above `59` | MUST NOT | The step is capped at `23` or `59` |
 | `hour-step`, `minute-step` or `second-step` below `1` or not a number | MUST NOT | The step is treated as `1` |
 | `open` set with `disabled` or `readonly` | SHOULD NOT | The panel does not open |
+| An invalid or unsupported `time-zone` | MUST NOT | A warning is logged and "Now" is disabled |
 | An unsupported value for `precision`, `hour-format`, `strategy`, `placement`, or `validation-status` | MUST NOT | A development warning is logged and the default value is used |
 
 ### Events
