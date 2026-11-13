@@ -142,6 +142,33 @@ export const Checkbox: Story = {
     })}`,
 };
 
+export const LongCheckboxLabels: Story = {
+  render: (args: Args) => html`
+    <div style="width: 260px; max-width: 100%;">
+      ${TemplateList({
+        ...args,
+        children: html`
+          ${Template({
+            ...args,
+            checkbox: true,
+            selected: true,
+            text: 'A very long option label that exceeds the available dropdown width',
+            value: 'long-option',
+          })}
+          ${Template({
+            ...args,
+            checkbox: true,
+            text: 'Another long option label with an icon at the end',
+            iconSuffix: 'user',
+            value: 'long-option-with-suffix',
+          })}
+          ${Template({ ...args, checkbox: true, text: 'Short label', value: 'short-option' })}
+        `,
+      })}
+    </div>
+  `,
+};
+
 export const Nested: Story = {
   render: (args: Args) => html`
     ${TemplateList({
