@@ -97,6 +97,17 @@ describe('getNowTime', () => {
   it('returns undefined outside the bounds', () => {
     expect(getNowTime(createTimeConstraints({ precision: 'minute', max: '12:00' }), now)).toBeUndefined();
   });
+
+  it('applies precision, steps and bounds to a provided wall-clock time', () => {
+    const time = at(23, 37, 42);
+    expect(getNowTime(createTimeConstraints({ precision: 'hour', hourStep: 2 }), time)).toEqual(at(22));
+    expect(getNowTime(createTimeConstraints({ precision: 'minute', minuteStep: 15 }), time)).toEqual(at(23, 30));
+    expect(getNowTime(createTimeConstraints({ precision: 'second', secondStep: 10 }), time)).toEqual(at(23, 37, 40));
+    expect(getNowTime(createTimeConstraints({ precision: 'minute', max: '23:29' }), time)).toBeUndefined();
+    expect(
+      getNowTime(createTimeConstraints({ precision: 'minute', minuteStep: 15, min: '23:35' }), time),
+    ).toBeUndefined();
+  });
 });
 
 describe('getTimeValidityFlags', () => {

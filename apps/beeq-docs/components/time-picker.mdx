@@ -765,6 +765,80 @@ With `require-confirm`, panel picks, including "Now", stay a draft until people 
   </CodeGroup>
 </CodeLivePreview>
 
+### Customize Now
+
+By default, "Now" uses the browser's local time. Set the `nowProvider` property to a synchronous function that returns a 24-hour `HH:mm` or `HH:mm:ss` string. For example, return the current UTC time:
+
+<CodeLivePreview mode="iframe" height="12rem" code={`
+  <bq-time-picker id="utc-time" name="utc-time">
+    <label slot="label">Time in UTC</label>
+  </bq-time-picker>
+  <script>
+    (() => {
+      customElements.whenDefined('bq-time-picker').then(() => {
+        previewRoot.querySelector('#utc-time').nowProvider = () => new Date().toISOString().slice(11, 19);
+      });
+    })();
+  </script>
+`}>
+  <CodeGroup>
+    ```html HTML and JavaScript icon="html5"
+    <bq-time-picker id="utc-time" name="utc-time">
+      <label slot="label">Time in UTC</label>
+    </bq-time-picker>
+    <script>
+      customElements.whenDefined('bq-time-picker').then(() => {
+        document.querySelector('#utc-time').nowProvider = () => new Date().toISOString().slice(11, 19);
+      });
+    </script>
+    ```
+
+    ```jsx React icon="react"
+    import { BqTimePicker } from "@beeq/react";
+
+    <BqTimePicker name="utc-time" nowProvider={() => new Date().toISOString().slice(11, 19)}>
+      <label slot="label">Time in UTC</label>
+    </BqTimePicker>
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqTimePicker } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqTimePicker],
+      template: `
+        <bq-time-picker name="utc-time" [nowProvider]="utcNow">
+          <label slot="label">Time in UTC</label>
+        </bq-time-picker>
+      `
+    })
+    export class TimePickerUtcComponent {
+      utcNow = () => new Date().toISOString().slice(11, 19);
+    }
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqTimePicker } from "@beeq/vue";
+    const utcNow = () => new Date().toISOString().slice(11, 19);
+    </script>
+
+    <template>
+      <BqTimePicker name="utc-time" :nowProvider="utcNow">
+        <label slot="label">Time in UTC</label>
+      </BqTimePicker>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+The provider is a JavaScript property, not an HTML attribute. It must be synchronous and free of side effects: the picker calls it when rendering the open panel and again when Now is clicked. The picker applies precision, steps and bounds to its result. An invalid result logs a warning and disables Now; a thrown error is logged and disables Now. The button state is refreshed on render, not continuously; update the provider property or reopen the panel if its result changes while the panel is open.
+
+The provider affects only Now. Manual values, `min`, and `max` are not converted, and the submitted time contains no date or time-zone information.
+
 ### Without the Now button
 
 Set `disable-now` to hide the "Now" button when the current time isn't a meaningful choice, such as for reminders set for later in the day. The OK button is always shown.
@@ -1504,6 +1578,7 @@ When focus leaves the field, complete times outside `min` or `max` are clamped t
 | `min` | `min` | Earliest selectable time, in 24-hour format (`HH:mm` or `HH:mm:ss`). Ignored, together with `max`, when it is later than `max` | `string` | `undefined` |
 | `minuteStep` | `minute-step` | Step between selectable minutes | `number` | `1` |
 | `name` | `name` | Name submitted with the form data (required) | `string` | `undefined` |
+| `nowProvider` | — | Synchronous function returning the wall-clock time for "Now" as `HH:mm` or `HH:mm:ss` | `() => string` | `undefined` (browser-local) |
 | `open` | `open` | If `true`, the panel is visible | `boolean` | `false` |
 | `panelHeight` | `panel-height` | Overrides the height of the Time picker panel | `string` | `"auto"` |
 | `placement` | `placement` | Position of the Time picker panel | `"bottom" \| "bottom-end" \| "bottom-start" \| "left" \| "left-end" \| "left-start" \| "right" \| "right-end" \| "right-start" \| "top" \| "top-end" \| "top-start"` | `"bottom-end"` |
@@ -1525,6 +1600,7 @@ When focus leaves the field, complete times outside `min` or `max` are clamped t
 | `hour-step` above `23`, or `minute-step` or `second-step` above `59` | MUST NOT | The step is capped at `23` or `59` |
 | `hour-step`, `minute-step` or `second-step` below `1` or not a number | MUST NOT | The step is treated as `1` |
 | `open` set with `disabled` or `readonly` | SHOULD NOT | The panel does not open |
+| An invalid value returned by `nowProvider` | MUST NOT | A warning is logged and "Now" is disabled |
 | An unsupported value for `precision`, `hour-format`, `strategy`, `placement`, or `validation-status` | MUST NOT | A development warning is logged and the default value is used |
 
 ### Events

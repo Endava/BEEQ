@@ -185,17 +185,19 @@ export const clampTimeToBounds = (time: TTime, constraints: TTimeConstraints): T
  * Returns the current time truncated to the precision and floored to the step grid.
  *
  * @param constraints Resolved constraints.
- * @param now Reference date. Defaults to the current time.
+ * @param now Reference date or wall-clock time. Defaults to the current local time.
  * @returns The snapped current time, or `undefined` when it is outside the bounds.
  */
-export const getNowTime = (constraints: TTimeConstraints, now: Date = new Date()): TTime | undefined => {
+export const getNowTime = (constraints: TTimeConstraints, now: Date | TTime = new Date()): TTime | undefined => {
   const { steps } = constraints;
   const floor = (value: number, step: number) => Math.floor(value / step) * step;
+  const current =
+    now instanceof Date ? { hour: now.getHours(), minute: now.getMinutes(), second: now.getSeconds() } : now;
   const time = truncateTime(
     {
-      hour: floor(now.getHours(), steps.hour),
-      minute: floor(now.getMinutes(), steps.minute),
-      second: floor(now.getSeconds(), steps.second),
+      hour: floor(current.hour, steps.hour),
+      minute: floor(current.minute, steps.minute),
+      second: floor(current.second, steps.second),
     },
     constraints.precision,
   );

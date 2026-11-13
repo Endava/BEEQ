@@ -3415,6 +3415,10 @@ export namespace Components {
          */
         "name": string;
         /**
+          * Supplies the wall-clock time used by "Now" as `HH:mm` or `HH:mm:ss`. Defaults to browser-local time. An invalid result disables "Now" and logs a warning.
+         */
+        "nowProvider"?: () => string;
+        /**
           * If `true`, the panel is visible.
           * @default false
          */
@@ -9719,6 +9723,10 @@ declare namespace LocalJSX {
           * The Time picker name.
          */
         "name": string;
+        /**
+          * Supplies the wall-clock time used by "Now" as `HH:mm` or `HH:mm:ss`. Defaults to browser-local time. An invalid result disables "Now" and logs a warning.
+         */
+        "nowProvider"?: () => string;
         /**
           * Callback handler emitted when focus leaves the Time picker. Moving focus between the field and the panel doesn't emit it.
          */

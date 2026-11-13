@@ -37,6 +37,7 @@ const meta: Meta = {
     min: { control: 'text' },
     'minute-step': { control: 'number' },
     name: { control: 'text' },
+    nowProvider: { control: false },
     open: { control: 'boolean' },
     'panel-height': { control: 'text' },
     placement: { control: 'select', options: [...FLOATING_PLACEMENT] },
@@ -71,6 +72,7 @@ const meta: Meta = {
     min: undefined,
     'minute-step': 1,
     name: 'bq-time-picker',
+    nowProvider: undefined,
     open: false,
     'panel-height': 'auto',
     placement: 'bottom-end',
@@ -143,6 +145,7 @@ const Template = (args: Args) => {
       min=${ifDefined(args.min)}
       minute-step=${ifDefined(args['minute-step'])}
       name=${ifDefined(args.name)}
+      .nowProvider=${args.nowProvider}
       ?open=${args.open}
       panel-height=${ifDefined(args['panel-height'])}
       placement=${ifDefined(args.placement)}
@@ -297,6 +300,12 @@ export const Steps: Story = {
 };
 
 /* ----------------------------- Confirm and Now ----------------------------- */
+
+export const UtcNow: Story = {
+  name: 'Now in UTC',
+  render: Template,
+  args: { open: true, nowProvider: () => new Date().toISOString().slice(11, 19) },
+};
 
 export const RequireConfirm: Story = {
   name: 'Require confirmation',

@@ -328,6 +328,12 @@ export class BqTimePicker {
   /** The Time picker name. */
   @Prop({ reflect: true }) name!: string;
 
+  /**
+   * Supplies the wall-clock time used by "Now" as `HH:mm` or `HH:mm:ss`.
+   * Defaults to browser-local time. An invalid result disables "Now" and logs a warning.
+   */
+  @Prop() nowProvider?: () => string;
+
   /** If `true`, the panel is visible. */
   @Prop({ reflect: true, mutable: true }) open: boolean = false;
 
@@ -991,7 +997,7 @@ export class BqTimePicker {
     ev.stopPropagation();
     if (!this.isInteractive) return;
 
-    const now = getNowTime(this.constraints);
+    const now = this.getCurrentTime();
     if (!now) return;
 
     this.applyPanelTime(now);
@@ -1001,6 +1007,28 @@ export class BqTimePicker {
     }
 
     this.closePanel(true);
+  };
+
+  private getCurrentTime = (): TTime | undefined => {
+    if (this.nowProvider == null) return getNowTime(this.constraints);
+    if (typeof this.nowProvider !== 'function') {
+      console.warn(`[${this.el.tagName}] nowProvider must be a function; "Now" is disabled.`);
+      return undefined;
+    }
+
+    let value: string;
+    try {
+      value = this.nowProvider();
+    } catch (error) {
+      console.error(`[${this.el.tagName}] nowProvider failed; "Now" is disabled.`, error);
+      return undefined;
+    }
+    const time = typeof value === 'string' ? parseTime(value) : undefined;
+    if (!time) {
+      console.warn(`[${this.el.tagName}] nowProvider must return HH:mm or HH:mm:ss; "Now" is disabled.`);
+      return undefined;
+    }
+    return getNowTime(this.constraints, time);
   };
 
   private handleConfirmClick = (ev: CustomEvent): void => {
@@ -1185,7 +1213,7 @@ export class BqTimePicker {
 
   private renderPanel = (): JSX.Element => {
     const selected = this.panelPartial;
-    const canPickNow = this.isInteractive && !!getNowTime(this.constraints);
+    const canPickNow = this.open && !this.disableNow && this.isInteractive && !!this.getCurrentTime();
     const showFixedMinute = this.precision === 'hour' && this.hourFormat !== '12';
 
     return (
