@@ -183,9 +183,16 @@ export class BqOption {
   // Ordered by their natural call order
   // =====================================
 
+  connectedCallback() {
+    if (!this.selectedDescendantObserver) return;
+
+    this.observeSelectedDescendants();
+  }
+
   componentDidLoad() {
     this.handleSlotChange();
-    this.observeSelectedDescendants();
+    this.selectedDescendantObserver = new MutationObserver(this.syncSelectedDescendants);
+    if (this.el.isConnected) this.observeSelectedDescendants();
   }
 
   componentDidRender() {
@@ -371,13 +378,13 @@ export class BqOption {
   };
 
   private observeSelectedDescendants = () => {
-    this.selectedDescendantObserver = new MutationObserver(this.syncSelectedDescendants);
-    this.selectedDescendantObserver.observe(this.el, {
+    this.selectedDescendantObserver?.observe(this.el, {
       attributeFilter: ['disabled', 'hidden', 'selected'],
       attributes: true,
       childList: true,
       subtree: true,
     });
+    this.syncSelectedDescendants();
   };
 
   private syncSelectedDescendants = () => {

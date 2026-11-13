@@ -1,5 +1,5 @@
 import { h } from '@stencil/core';
-import { beforeEach, describe, expect, it, render, waitForStable } from '@stencil/vitest';
+import { afterEach, beforeEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
 import { cdp, userEvent } from 'vitest/browser';
 
 import { resolveColorToken } from '../../../shared/test-utils/resolveColorToken';
@@ -37,6 +37,10 @@ const movePointerOff = () =>
 
 beforeEach(async () => {
   await movePointerOff();
+});
+
+afterEach(() => {
+  vi.restoreAllMocks();
 });
 
 describe('bq-option', () => {
@@ -125,6 +129,49 @@ describe('bq-option', () => {
     expect(bqFocus).toHaveReceivedEventTimes(0);
     expect(bqBlur).toHaveReceivedEventTimes(0);
     expect(bqClick).toHaveReceivedEventTimes(1);
+  });
+
+  it.each([
+    { dir: 'ltr', affixes: false },
+    { dir: 'ltr', affixes: true },
+    { dir: 'rtl', affixes: false },
+    { dir: 'rtl', affixes: true },
+  ])('should contain and truncate long checkbox option labels ($dir, affixes=$affixes)', async ({ dir, affixes }) => {
+    const text = 'A very long option label that exceeds the available dropdown width';
+    const { root } = await render(
+      <bq-option checkbox dir={dir} selected style={{ width: '260px' }} value="long-option">
+        {affixes && <span slot="prefix">P</span>}
+        {text}
+        {affixes && <span slot="suffix">S</span>}
+      </bq-option>,
+    );
+    const option = root as HTMLBqOptionElement;
+    await waitForStable(option);
+
+    const checkbox = getOptionCheckbox(option);
+    const base = getCheckboxBase(checkbox);
+    const control = checkbox.shadowRoot.querySelector<HTMLElement>('[part="control"]');
+    const label = option.shadowRoot.querySelector<HTMLElement>('[part="label"]');
+    const suffix = option.shadowRoot.querySelector<HTMLElement>('[part="suffix"]');
+    const baseRect = base.getBoundingClientRect();
+    const baseStyle = getComputedStyle(base);
+    const labelRect = label.getBoundingClientRect();
+    const tolerance = 0.5;
+
+    expect(label.scrollWidth).toBeGreaterThan(label.clientWidth);
+    expect(getComputedStyle(label).textOverflow).toBe('ellipsis');
+    expect(getTextContent(label.querySelector('slot'), { recurse: true })).toBe(text);
+    expect(labelRect.left).toBeGreaterThanOrEqual(baseRect.left + parseFloat(baseStyle.paddingLeft) - tolerance);
+    expect(labelRect.right).toBeLessThanOrEqual(baseRect.right - parseFloat(baseStyle.paddingRight) + tolerance);
+    if (affixes) {
+      const suffixRect = suffix.getBoundingClientRect();
+      expect(suffixRect.left).toBeGreaterThanOrEqual(baseRect.left + parseFloat(baseStyle.paddingLeft) - tolerance);
+      expect(suffixRect.right).toBeLessThanOrEqual(baseRect.right - parseFloat(baseStyle.paddingRight) + tolerance);
+    }
+    expect(control.getBoundingClientRect().width).toBeCloseTo(
+      parseFloat(getComputedStyle(checkbox).getPropertyValue('--bq-checkbox--size')),
+      1,
+    );
   });
 
   describe.each([
@@ -551,6 +598,64 @@ describe('bq-option', () => {
     await waitForChanges();
 
     expect(getSelectionSummary(option)).toBeNull();
+  });
+
+  it('should refresh descendant summaries after repeated reconnections', async () => {
+    const { root, waitForChanges } = await render(
+      <div>
+        <bq-option allSelectedLabel="All levels" selectedCountLabel="{count} levels" value="parent">
+          Parent
+          <bq-option slot="options" value="child-one">
+            Child one
+          </bq-option>
+          <bq-option slot="options" value="child-two">
+            Child two
+          </bq-option>
+        </bq-option>
+      </div>,
+    );
+    const parent = root.querySelector<HTMLBqOptionElement>('bq-option[value="parent"]');
+    const firstChild = root.querySelector<HTMLBqOptionElement>('bq-option[value="child-one"]');
+    const secondChild = root.querySelector<HTMLBqOptionElement>('bq-option[value="child-two"]');
+    await waitForStable(root);
+
+    const observe = vi.spyOn(MutationObserver.prototype, 'observe');
+    const disconnect = vi.spyOn(MutationObserver.prototype, 'disconnect');
+    parent.remove();
+    firstChild.selected = true;
+    await waitForChanges();
+    root.appendChild(parent);
+    await waitForChanges();
+    await waitForStable(root);
+
+    expect(getSelectionSummary(parent)).toHaveTextContent('1 levels');
+    expect(parent).toEqualAttribute('aria-label', 'Parent, Child one selected');
+
+    for (let i = 0; i < 2; i++) {
+      parent.remove();
+      root.appendChild(parent);
+      await waitForChanges();
+    }
+
+    const parentObservers = observe.mock.calls
+      .map(([target], index) => (target === parent ? observe.mock.contexts[index] : undefined))
+      .filter((observer) => observer !== undefined);
+    expect(parentObservers).toHaveLength(3);
+    expect(new Set(parentObservers).size).toBe(1);
+    expect(disconnect.mock.contexts.filter((observer) => observer === parentObservers[0])).toHaveLength(3);
+
+    secondChild.selected = true;
+    await waitForChanges();
+    await waitForStable(root);
+    expect(getSelectionSummary(parent)).toHaveTextContent('All levels');
+    expect(parent).toEqualAttribute('aria-label', 'Parent, 2 selected');
+
+    firstChild.selected = false;
+    secondChild.selected = false;
+    await waitForChanges();
+    await waitForStable(root);
+    expect(getSelectionSummary(parent)).toBeNull();
+    expect(parent).not.toHaveAttribute('aria-label');
   });
 
   it('should expand and collapse nested options without changing selection', async () => {
