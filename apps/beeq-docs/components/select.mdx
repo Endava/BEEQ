@@ -106,6 +106,7 @@ Use nested options when people need to select a category, its related choices, o
 - Nested multi-select always renders checkboxes. You do not need `enable-checkboxes`.
 - Selecting a parent selects its selectable descendants. Selecting a child also selects its selectable ancestors.
 - A parent becomes indeterminate while only some of its selectable descendants are selected. Disabled and hidden descendants are not changed by a cascade.
+- Expanding a parent with the pointer or keyboard scrolls the options panel as needed to reveal its children. For branches taller than the panel, the first children are revealed and the rest remain scrollable.
 - Use a unique `value` for every option in the tree. Duplicate values are reported in the browser console because they make the value and event payload ambiguous.
 
 In the input, nested selections render one tag per selected top-level parent. A partial selection adds the descendant count, such as `Frontend (2)`; a fully selected branch keeps the parent label without a count.
