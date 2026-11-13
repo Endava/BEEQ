@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import {
   clampTimeToBounds,
@@ -87,6 +87,14 @@ describe('clampTimeToBounds', () => {
 
 describe('getNowTime', () => {
   const now = new Date(2026, 0, 1, 14, 37, 42);
+  const formatter = (timeZone: string) =>
+    new Intl.DateTimeFormat('en-US-u-nu-latn', {
+      timeZone,
+      hourCycle: 'h23',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    });
 
   it('truncates to the precision and floors to the step', () => {
     expect(getNowTime(createTimeConstraints({ precision: 'minute', minuteStep: 15 }), now)).toEqual(at(14, 30));
@@ -96,6 +104,47 @@ describe('getNowTime', () => {
 
   it('returns undefined outside the bounds', () => {
     expect(getNowTime(createTimeConstraints({ precision: 'minute', max: '12:00' }), now)).toBeUndefined();
+  });
+
+  it('applies precision, steps and bounds to the time in the configured zone', () => {
+    const instant = new Date('2026-01-01T23:37:42Z');
+    const utc = formatter('UTC');
+    expect(getNowTime(createTimeConstraints({ precision: 'hour', hourStep: 2 }), instant, utc)).toEqual(at(22));
+    expect(getNowTime(createTimeConstraints({ precision: 'minute', minuteStep: 15 }), instant, utc)).toEqual(
+      at(23, 30),
+    );
+    expect(getNowTime(createTimeConstraints({ precision: 'second', secondStep: 10 }), instant, utc)).toEqual(
+      at(23, 37, 40),
+    );
+    expect(getNowTime(createTimeConstraints({ precision: 'minute', max: '23:29' }), instant, utc)).toBeUndefined();
+    expect(
+      getNowTime(createTimeConstraints({ precision: 'minute', minuteStep: 15, min: '23:35' }), instant, utc),
+    ).toBeUndefined();
+    expect(getNowTime(createTimeConstraints({ precision: 'minute' }), instant, formatter('Asia/Kathmandu'))).toEqual(
+      at(5, 22),
+    );
+    expect(getNowTime(createTimeConstraints({ precision: 'second' }), new Date('2026-01-01T00:00:00Z'), utc)).toEqual(
+      at(0),
+    );
+  });
+
+  it('uses local getters only when no zone is configured', () => {
+    const instant = new Date('2026-01-01T00:37:42Z');
+    vi.spyOn(instant, 'getHours').mockReturnValue(18);
+    vi.spyOn(instant, 'getMinutes').mockReturnValue(22);
+    vi.spyOn(instant, 'getSeconds').mockReturnValue(10);
+    const constraints = createTimeConstraints({ precision: 'second' });
+    expect(getNowTime(constraints, instant)).toEqual(at(18, 22, 10));
+    expect(getNowTime(constraints, instant, formatter('UTC'))).toEqual(at(0, 37, 42));
+  });
+
+  it('uses the named zone offset at each daylight-saving transition instant', () => {
+    const constraints = createTimeConstraints({ precision: 'minute' });
+    const newYork = formatter('America/New_York');
+    expect(getNowTime(constraints, new Date('2026-03-08T06:59:00Z'), newYork)).toEqual(at(1, 59));
+    expect(getNowTime(constraints, new Date('2026-03-08T07:00:00Z'), newYork)).toEqual(at(3));
+    expect(getNowTime(constraints, new Date('2026-11-01T05:30:00Z'), newYork)).toEqual(at(1, 30));
+    expect(getNowTime(constraints, new Date('2026-11-01T06:30:00Z'), newYork)).toEqual(at(1, 30));
   });
 });
 

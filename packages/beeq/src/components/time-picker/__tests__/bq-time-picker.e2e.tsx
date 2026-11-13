@@ -711,6 +711,89 @@ describe('bq-time-picker', () => {
     expect(getInnerButton(tp, 'now-btn')).toHaveAttribute('disabled');
   });
 
+  it('should pick the configured zone time with existing steps and event detail', async () => {
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(new Date('2026-01-01T23:37:42Z'));
+    const { root, spyOnEvent, waitForChanges } = await render(
+      <bq-time-picker minuteStep={15} name="time" timeZone="Asia/Kathmandu" />,
+    );
+    const tp = root as HTMLBqTimePickerElement;
+    const bqChange = spyOnEvent('bqChange');
+    await openPanel(tp, waitForChanges);
+
+    getInnerButton(tp, 'now-btn')?.click();
+    await waitForChanges();
+
+    expect(tp.value).toBe('05:15');
+    expect(bqChange).toHaveReceivedEventTimes(1);
+    expect(bqChange).toHaveReceivedEventDetail({ value: '05:15', el: tp });
+  });
+
+  it('should use the configured zone for bounds and update Now when the zone changes', async () => {
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(new Date('2026-01-01T23:37:42Z'));
+    const { root, waitForChanges } = await render(<bq-time-picker max="06:00" name="time" timeZone="UTC" />);
+    const tp = root as HTMLBqTimePickerElement;
+    await openPanel(tp, waitForChanges);
+    expect(getInnerButton(tp, 'now-btn')).toHaveAttribute('disabled');
+
+    tp.timeZone = 'Asia/Kathmandu';
+    await waitForChanges();
+    expect(getInnerButton(tp, 'now-btn')).not.toHaveAttribute('disabled');
+    getInnerButton(tp, 'now-btn')?.click();
+    await waitForChanges();
+    expect(tp.value).toBe('05:22');
+  });
+
+  it('should warn and disable Now for an invalid zone until corrected or removed', async () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const { root, waitForChanges } = await render(<bq-time-picker name="time" timeZone="Invalid/Zone" value="09:30" />);
+    const tp = root as HTMLBqTimePickerElement;
+    await openPanel(tp, waitForChanges);
+    expect(warn).toHaveBeenCalledOnce();
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining('Invalid/Zone'));
+    expect(getInnerButton(tp, 'now-btn')).toHaveAttribute('disabled');
+    expect(tp.value).toBe('09:30');
+
+    tp.timeZone = 'UTC';
+    await waitForChanges();
+    expect(getInnerButton(tp, 'now-btn')).not.toHaveAttribute('disabled');
+
+    tp.timeZone = 'Invalid/Zone';
+    await waitForChanges();
+    expect(getInnerButton(tp, 'now-btn')).toHaveAttribute('disabled');
+    tp.removeAttribute('time-zone');
+    await waitForChanges();
+    expect(getInnerButton(tp, 'now-btn')).not.toHaveAttribute('disabled');
+  });
+
+  it('should keep a UTC Now pick as a draft until confirmed', async () => {
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(new Date('2026-01-01T00:37:42Z'));
+    const { root, spyOnEvent, waitForChanges } = await render(
+      <bq-time-picker name="time" precision="second" requireConfirm timeZone="UTC" value="09:30:00" />,
+    );
+    const tp = root as HTMLBqTimePickerElement;
+    const bqChange = spyOnEvent('bqChange');
+    await openPanel(tp, waitForChanges);
+    getInnerButton(tp, 'now-btn')?.click();
+    await waitForChanges();
+    expect(tp.value).toBe('09:30:00');
+    expect(bqChange).toHaveReceivedEventTimes(0);
+
+    getInnerButton(tp, 'confirm-btn')?.click();
+    await waitForChanges();
+    expect(tp.value).toBe('00:37:42');
+    expect(bqChange).toHaveReceivedEventDetail({ value: '00:37:42', el: tp });
+  });
+
+  it('should not convert typed values when a time zone is configured', async () => {
+    const { root } = await render(<bq-time-picker name="time" timeZone="Asia/Kathmandu" />);
+    const tp = root as HTMLBqTimePickerElement;
+    await typeInSegment(tp, 'hour', '1015');
+    expect(tp.value).toBe('10:15');
+  });
+
   it('should hide the Now button when `disable-now` is set', async () => {
     const { root, waitForChanges } = await render(<bq-time-picker disableNow name="time" />);
     const tp = root as HTMLBqTimePickerElement;

@@ -47,6 +47,7 @@ const meta: Meta = {
     'second-step': { control: 'number' },
     skidding: { control: 'number' },
     strategy: { control: 'select', options: [...FLOATING_STRATEGY] },
+    'time-zone': { control: 'text' },
     'validation-status': { control: 'select', options: [...INPUT_VALIDATION] },
     value: { control: 'text' },
     // Not part of the public API — hidden from docs table
@@ -81,6 +82,7 @@ const meta: Meta = {
     'second-step': 1,
     skidding: 0,
     strategy: 'fixed',
+    'time-zone': undefined,
     'validation-status': 'none',
     value: undefined,
     noLabel: false,
@@ -153,6 +155,7 @@ const Template = (args: Args) => {
       second-step=${ifDefined(args['second-step'])}
       skidding=${ifDefined(args.skidding)}
       strategy=${ifDefined(args.strategy)}
+      time-zone=${ifDefined(args['time-zone'])}
       validation-status=${ifDefined(args['validation-status'])}
       value=${ifDefined(args.value)}
       @bqBlur=${args.bqBlur}
@@ -297,6 +300,12 @@ export const Steps: Story = {
 };
 
 /* ----------------------------- Confirm and Now ----------------------------- */
+
+export const UtcNow: Story = {
+  name: 'Now in UTC',
+  render: Template,
+  args: { open: true, 'time-zone': 'UTC' },
+};
 
 export const RequireConfirm: Story = {
   name: 'Require confirmation',

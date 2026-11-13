@@ -3299,6 +3299,7 @@ export namespace Components {
      * @attr {number} second-step - Step between selectable seconds.
      * @attr {number} skidding - Skidding between the panel and the field.
      * @attr {"fixed" | "absolute"} strategy - Positioning strategy for the panel.
+     * @attr {string} time-zone - Time zone used by "Now"; defaults to browser-local time.
      * @attr {"error" | "none" | "success" | "warning"} validation-status - Validation state.
      * @attr {string} value - The selected time in 24-hour format: `HH:mm` (`HH:00` at hour precision) or `HH:mm:ss`.
      * @method clear() - Clears the selected value.
@@ -3464,6 +3465,10 @@ export namespace Components {
           * @default 'fixed'
          */
         "strategy": TFloatingStrategy1;
+        /**
+          * Time zone used by "Now", such as `UTC` or `America/New_York`. Defaults to browser-local time. An invalid or unsupported time zone disables "Now" and logs a warning.
+         */
+        "timeZone"?: string;
         /**
           * Validation state applied to the field.
           * @default 'none'
@@ -5906,6 +5911,7 @@ declare global {
      * @attr {number} second-step - Step between selectable seconds.
      * @attr {number} skidding - Skidding between the panel and the field.
      * @attr {"fixed" | "absolute"} strategy - Positioning strategy for the panel.
+     * @attr {string} time-zone - Time zone used by "Now"; defaults to browser-local time.
      * @attr {"error" | "none" | "success" | "warning"} validation-status - Validation state.
      * @attr {string} value - The selected time in 24-hour format: `HH:mm` (`HH:00` at hour precision) or `HH:mm:ss`.
      * @method clear() - Clears the selected value.
@@ -9609,6 +9615,7 @@ declare namespace LocalJSX {
      * @attr {number} second-step - Step between selectable seconds.
      * @attr {number} skidding - Skidding between the panel and the field.
      * @attr {"fixed" | "absolute"} strategy - Positioning strategy for the panel.
+     * @attr {string} time-zone - Time zone used by "Now"; defaults to browser-local time.
      * @attr {"error" | "none" | "success" | "warning"} validation-status - Validation state.
      * @attr {string} value - The selected time in 24-hour format: `HH:mm` (`HH:00` at hour precision) or `HH:mm:ss`.
      * @method clear() - Clears the selected value.
@@ -9785,6 +9792,10 @@ declare namespace LocalJSX {
           * @default 'fixed'
          */
         "strategy"?: TFloatingStrategy1;
+        /**
+          * Time zone used by "Now", such as `UTC` or `America/New_York`. Defaults to browser-local time. An invalid or unsupported time zone disables "Now" and logs a warning.
+         */
+        "timeZone"?: string;
         /**
           * Validation state applied to the field.
           * @default 'none'
@@ -10374,6 +10385,7 @@ declare namespace LocalJSX {
         "secondStep": number;
         "skidding": number;
         "strategy": TFloatingStrategy;
+        "timeZone": string;
         "validationStatus": TInputValidation;
         "value": string;
     }
@@ -12044,6 +12056,7 @@ declare module "@stencil/core" {
              * @attr {number} second-step - Step between selectable seconds.
              * @attr {number} skidding - Skidding between the panel and the field.
              * @attr {"fixed" | "absolute"} strategy - Positioning strategy for the panel.
+             * @attr {string} time-zone - Time zone used by "Now"; defaults to browser-local time.
              * @attr {"error" | "none" | "success" | "warning"} validation-status - Validation state.
              * @attr {string} value - The selected time in 24-hour format: `HH:mm` (`HH:00` at hour precision) or `HH:mm:ss`.
              * @method clear() - Clears the selected value.

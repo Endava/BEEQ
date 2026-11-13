@@ -186,16 +186,27 @@ export const clampTimeToBounds = (time: TTime, constraints: TTimeConstraints): T
  *
  * @param constraints Resolved constraints.
  * @param now Reference date. Defaults to the current time.
+ * @param formatter Formatter for the configured time zone, or omitted for local time.
  * @returns The snapped current time, or `undefined` when it is outside the bounds.
  */
-export const getNowTime = (constraints: TTimeConstraints, now: Date = new Date()): TTime | undefined => {
+export const getNowTime = (
+  constraints: TTimeConstraints,
+  now: Date = new Date(),
+  formatter?: Intl.DateTimeFormat,
+): TTime | undefined => {
   const { steps } = constraints;
   const floor = (value: number, step: number) => Math.floor(value / step) * step;
+  const parts = formatter?.formatToParts(now);
+  const getPart = (type: Intl.DateTimeFormatPartTypes) => {
+    const part = parts?.find((item) => item.type === type);
+    if (!part || !Number.isInteger(Number(part.value))) throw new Error(`Missing or invalid time part: ${type}`);
+    return Number(part.value);
+  };
   const time = truncateTime(
     {
-      hour: floor(now.getHours(), steps.hour),
-      minute: floor(now.getMinutes(), steps.minute),
-      second: floor(now.getSeconds(), steps.second),
+      hour: floor(parts ? getPart('hour') : now.getHours(), steps.hour),
+      minute: floor(parts ? getPart('minute') : now.getMinutes(), steps.minute),
+      second: floor(parts ? getPart('second') : now.getSeconds(), steps.second),
     },
     constraints.precision,
   );
