@@ -769,7 +769,7 @@ With `require-confirm`, panel picks, including "Now", stay a draft until people 
 
 By default, "Now" uses the browser's local time. Set the `nowProvider` property to a synchronous function that returns a 24-hour `HH:mm` or `HH:mm:ss` string. For example, return the current UTC time:
 
-<CodeLivePreview mode="iframe" height="12rem" code={`
+<CodeLivePreview mode="shadow" code={`
   <bq-time-picker id="utc-time" name="utc-time">
     <label slot="label">Time in UTC</label>
   </bq-time-picker>
@@ -782,7 +782,7 @@ By default, "Now" uses the browser's local time. Set the `nowProvider` property 
   </script>
 `}>
   <CodeGroup>
-    ```html HTML and JavaScript icon="html5"
+    ```html HTML icon="html5"
     <bq-time-picker id="utc-time" name="utc-time">
       <label slot="label">Time in UTC</label>
     </bq-time-picker>
