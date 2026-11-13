@@ -835,9 +835,9 @@ By default, "Now" uses the browser's local time. Set the `nowProvider` property 
   </CodeGroup>
 </CodeLivePreview>
 
-The provider is a JavaScript property, not an HTML attribute. It must be synchronous and free of side effects: the picker calls it when rendering the open panel and again when Now is clicked. The picker applies precision, steps and bounds to its result. An invalid result logs a warning and disables Now; a thrown error is logged and disables Now. The button state is refreshed on render, not continuously; update the provider property or reopen the panel if its result changes while the panel is open.
+The provider is a JavaScript property, not an HTML attribute. Keep it synchronous and free of side effects: the picker calls it when it renders the open panel and again when someone clicks Now. The picker applies precision, steps and bounds to its result. If the provider returns an invalid value, the picker logs a warning and disables Now. If the provider throws, the picker logs the error and disables Now. The picker refreshes the button state on render, not continuously. If the provider's result changes while the panel is open, update the `nowProvider` property or reopen the panel.
 
-The provider affects only Now. Manual values, `min`, and `max` are not converted, and the submitted time contains no date or time-zone information.
+The provider affects only Now. The picker doesn't convert manual values, `min`, or `max`, and the submitted time contains no date or time-zone information.
 
 ### Without the Now button
 
