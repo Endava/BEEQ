@@ -4,6 +4,34 @@ description: New features, bug fixes, and improvements to the BEEQ Design System
 rss: true
 ---
 
+<Update label="v1.18.0" description="November 2026">
+  This release migrates `@beeq/core` styling to native CSS, adds a custom now provider to the [**Time Picker**](/components/time-picker), and reveals expanded nested options in the [**Select**](/components/select). It also fixes focus and label issues in the [**Select**](/components/select) and [**Option**](/components/option) components and aligns the Endava theme foundations with its branding specifications in [themes and modes](/theming/themes-and-modes).
+
+  ### Features ⚡️
+
+  - **Select:** reveal expanded nested options ([#1913](https://github.com/Endava/BEEQ/pull/1913)).
+  - **Styles:** migrate `@beeq/core` styling to native CSS ([#1744](https://github.com/Endava/BEEQ/pull/1744)).
+  - **Time picker:** allow a custom now provider ([#1916](https://github.com/Endava/BEEQ/pull/1916)).
+
+  ### Bug Fixes 🐞
+
+  - **Option:** contain checkbox option labels ([#1912](https://github.com/Endava/BEEQ/pull/1912)).
+  - **Option:** reconnect descendant observer after moves ([#1914](https://github.com/Endava/BEEQ/pull/1914)).
+  - **Release workflow:** pin internal prerelease dependencies ([#1918](https://github.com/Endava/BEEQ/pull/1918)).
+  - **Select:** retain focus when searching options ([#1915](https://github.com/Endava/BEEQ/pull/1915)).
+  - **Themes:** align Endava theme foundations with branding specifications ([#1910](https://github.com/Endava/BEEQ/pull/1910)).
+
+  ### Chore ⚙️
+
+  - Dependency bumps: Storybook → v10.6.2 ([#1889](https://github.com/Endava/BEEQ/pull/1889)), Angular → v22.2.3 ([#1890](https://github.com/Endava/BEEQ/pull/1890), [#1906](https://github.com/Endava/BEEQ/pull/1906)), React → v19.3.1 ([#1891](https://github.com/Endava/BEEQ/pull/1891)), Stencil ([#1908](https://github.com/Endava/BEEQ/pull/1908)), `@stencil/vitest` → v1.16.1 ([#1893](https://github.com/Endava/BEEQ/pull/1893)), Nx → v24.0.3 ([#1894](https://github.com/Endava/BEEQ/pull/1894), [#1899](https://github.com/Endava/BEEQ/pull/1899), [#1905](https://github.com/Endava/BEEQ/pull/1905)), Vite → v8.1.6 [security] ([#1897](https://github.com/Endava/BEEQ/pull/1897)), Vitest → v5 ([#1898](https://github.com/Endava/BEEQ/pull/1898)), Biome → v2.6.2 ([#1900](https://github.com/Endava/BEEQ/pull/1900)), Chromatic ([#1892](https://github.com/Endava/BEEQ/pull/1892), [#1902](https://github.com/Endava/BEEQ/pull/1902)).
+
+  ### ❤️ Thank You
+
+  - [Andrei Morosan](https://github.com/Morosan)
+  - [Dabiel Gonzalez-Ramos](https://github.com/dgonzalezr)
+  - [Léon Simmons](https://github.com/Avicennasis)
+</Update>
+
 <Update label="v1.17.1" description="October 2026">
   This patch release makes `bqInput` and `bqChange` events fire synchronously when `debounceTime` is `0` across the [**Input**](/components/input), [**Select**](/components/select), [**Slider**](/components/slider), [**Tab**](/components/tab), [**Radio**](/components/radio), and [**Textarea**](/components/textarea) components. It also refines the Endava light brand colors in [themes and modes](/theming/themes-and-modes).
 
