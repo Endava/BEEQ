@@ -1,3 +1,43 @@
+## 1.18.0 (2026-11-13)
+
+### Features ⚡️
+
+- **Select:** reveal expanded nested options ([#1913](https://github.com/Endava/BEEQ/pull/1913))
+- **Styles:** migrate `@beeq/core` styling to native CSS ([#1744](https://github.com/Endava/BEEQ/pull/1744))
+- **Time picker:** allow a custom now provider ([#1916](https://github.com/Endava/BEEQ/pull/1916))
+
+### Bug Fixes 🐞
+
+- **Option:** contain checkbox option labels ([#1912](https://github.com/Endava/BEEQ/pull/1912))
+- **Option:** reconnect descendant observer after moves ([#1914](https://github.com/Endava/BEEQ/pull/1914))
+- **Release workflow:** pin internal prerelease dependencies ([#1918](https://github.com/Endava/BEEQ/pull/1918))
+- **Select:** retain focus when searching options ([#1915](https://github.com/Endava/BEEQ/pull/1915))
+- **Themes:** align Endava theme foundations with branding especifications ([#1910](https://github.com/Endava/BEEQ/pull/1910))
+
+### Chore ⚙️
+
+- **deps:** update storybook to v10.6.2 ([#1889](https://github.com/Endava/BEEQ/pull/1889))
+- **deps:** update dependency @stencil/vitest to v1.16.1 ([#1893](https://github.com/Endava/BEEQ/pull/1893))
+- **deps:** update angular to v22.2.3 ([#1890](https://github.com/Endava/BEEQ/pull/1890))
+- **deps:** update chromatic ([#1892](https://github.com/Endava/BEEQ/pull/1892))
+- **deps:** update react to v19.3.1 ([#1891](https://github.com/Endava/BEEQ/pull/1891))
+- **deps:** update nx to v23.3.0 ([#1894](https://github.com/Endava/BEEQ/pull/1894))
+- **deps:** update dependency vite to v8.1.6 [security] ([#1897](https://github.com/Endava/BEEQ/pull/1897))
+- **deps:** update vitest to v5 ([#1898](https://github.com/Endava/BEEQ/pull/1898))
+- **deps:** update nx to v24 ([#1899](https://github.com/Endava/BEEQ/pull/1899))
+- **deps:** update dependency @biomejs/biome to v2.6.2 ([#1900](https://github.com/Endava/BEEQ/pull/1900))
+- **deps:** update chromatic ([#1902](https://github.com/Endava/BEEQ/pull/1902))
+- **deps:** update nx to v24.0.3 ([#1905](https://github.com/Endava/BEEQ/pull/1905))
+- **deps:** update angular ([#1906](https://github.com/Endava/BEEQ/pull/1906))
+- **deps:** update stencil ([#1908](https://github.com/Endava/BEEQ/pull/1908))
+
+### ❤️ Thank You
+
+- Andrei Morosan
+- BEEQ @en-beeq
+- BEEQ Design System @en-beeq
+- Dabiel Gonzalez-Ramos @dgonzalezr
+
 ## 1.17.1 (2026-10-19)
 
 ### Bug Fixes 🐞
