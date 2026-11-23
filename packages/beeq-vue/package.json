@@ -7,7 +7,7 @@
   "types": "./src/index.d.ts",
   "dependencies": {
     "@beeq/core": "^1.18.0",
-    "@stencil/vue-output-target": "^0.14.0"
+    "@stencil/vue-output-target": "^0.15.0"
   },
   "peerDependencies": {
     "vue": ">=3.3.0"
